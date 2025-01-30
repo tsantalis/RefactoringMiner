@@ -1,0 +1,2379 @@
+{
+  "results": [
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "65501fcc719eb39db60b24a281986a1f7d1ef291",
+      "url": "https://github.com/junit-team/junit5/commit/65501fcc719eb39db60b24a281986a1f7d1ef291",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.junit.jupiter.engine.LifecycleMethodOverridingAndSupersedingTests renamed to org.junit.jupiter.engine.LifecycleMethodOverridingTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage beforeAllAndAfterAllCallbacksInSubSubclassWithStaticMethodHiding() : void renamed to package beforeAllAndAfterAllCallbacksInSubSubclassWithoutStaticMethodHiding() : void in class org.junit.jupiter.engine.extension.BeforeAndAfterAllTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage classLevelWithDefaultOrderShadowingOrderFromSuperclass() : void renamed to package classLevelWithDefaultOrderShadowingOrderFromSuperclassInLegacyMode() : void in class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage classLevelWithExplicitOrderShadowingOrderFromSuperclass() : void renamed to package classLevelWithExplicitOrderShadowingOrderFromSuperclassInLegacyMode() : void in class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage instanceLevelWithInheritedAndHiddenExtensions() : void renamed to package instanceLevelWithInheritedAndHiddenExtensionsInLegacyMode() : void in class org.junit.jupiter.engine.extension.ProgrammaticExtensionRegistrationTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage classLevelWithInheritedAndHiddenExtensions() : void renamed to package classLevelWithInheritedAndHiddenExtensionsInLegacyMode() : void in class org.junit.jupiter.engine.extension.ProgrammaticExtensionRegistrationTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate isMethodShadowedByLocalMethods(method Method, localMethods List<Method>) : boolean renamed to private isMethodOverriddenByLocalMethods(method Method, localMethods List<Method>) : boolean in class org.junit.platform.commons.util.ReflectionUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate isMethodShadowedBy(upper Method, lower Method) : boolean renamed to private isMethodOverriddenBy(upper Method, lower Method) : boolean in class org.junit.platform.commons.util.ReflectionUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tList<Field> to List<String> in method private findShadowingAnnotatedFields(annotationType Class<? extends Annotation>) : List<String> from class org.junit.platform.commons.util.AnnotationUtilsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage findMethodsWithStaticHidingUsingHierarchyUpMode() : void renamed to package findMethodsWithStaticHidingUsingHierarchyUpModeInLegacyMode() : void in class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage findMethodsWithStaticHidingUsingHierarchyDownMode() : void renamed to package findMethodsWithStaticHidingUsingHierarchyDownModeInLegacyMode() : void in class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage findMethodsReturnsAllOverloadedMethodsThatAreNotShadowed() : void renamed to package findMethodsReturnsAllOverloadedMethodsInGenericTypeHieararchy() : void in class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.jupiter.engine.LifecycleMethodOverridingAndSupersedingTests.PackagePrivateSuperClassInDifferentPackageTests.ProtectedExtendsPackagePrivateLifecycleMethod moved to org.junit.jupiter.engine.LifecycleMethodOverridingTests.PackagePrivateSuperClassInDifferentPackageTests.ProtectedExtendsPackagePrivateLifecycleMethod",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.jupiter.engine.LifecycleMethodOverridingAndSupersedingTests.PackagePrivateSuperClassInDifferentPackageTests.PackagePrivateExtendsPackagePrivateLifecycleMethod moved to org.junit.jupiter.engine.LifecycleMethodOverridingTests.PackagePrivateSuperClassInDifferentPackageTests.PackagePrivateExtendsPackagePrivateLifecycleMethod",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.jupiter.engine.LifecycleMethodOverridingAndSupersedingTests.PackagePrivateSuperClassInDifferentPackageTests.PublicExtendsPackagePrivateLifecycleMethod moved to org.junit.jupiter.engine.LifecycleMethodOverridingTests.PackagePrivateSuperClassInDifferentPackageTests.PublicExtendsPackagePrivateLifecycleMethod",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "23b69c18d0071b9c36000da137d77e829daf62a8",
+      "url": "https://github.com/junit-team/junit5/commit/23b69c18d0071b9c36000da137d77e829daf62a8",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\ttype : null to it : null in method protected printDeclarationSection(statuses Set<Status>, status Status, declarations List<Declaration>, out PrintWriter) : void from class org.junit.api.tools.AbstractApiReportWriter",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate scanClasspath(packages String[]) : ScanResult extracted from package generateReport(packages String...) : ApiReport in class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate collectTypes(scanResult ScanResult) : SortedSet<ClassInfo> extracted from package generateReport(packages String...) : ApiReport in class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tapiReport : ApiReport to apiReport : var in method public main(args String...) : void from class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\twriter : PrintWriter to writer : var in method public main(args String...) : void from class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\treportGenerator : ApiReportGenerator to reportGenerator : var in method public main(args String...) : void from class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tstatus : Status to status : var in method package generateReport(packages String...) : ApiReport from class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tbuilder : StringBuilder to builder : var in method private collectTypes(scanResult ScanResult) : SortedSet<ClassInfo> from class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tdeclarationsMap : Map<Status,List<Class<?>>> to declarations : Map<Status,List<Declaration>> in method package generateReport(packages String...) : ApiReport from class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tdeclarationsMap : Map<Status,List<Class<?>>> to declarations : Map<Status,List<Declaration>> in method package generateReport(packages String...) : ApiReport from class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tclassGraph : ClassGraph to classGraph : var in method private scanClasspath(packages String[]) : ScanResult from class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tapiClasspath : String to apiClasspath : var in method private scanClasspath(packages String[]) : ScanResult from class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tclassesWithApiAnnotation : ClassInfoList to types : var in method private collectTypes(scanResult ScanResult) : SortedSet<ClassInfo> from class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tclassesWithApiAnnotation : ClassInfoList to types : var in method private collectTypes(scanResult ScanResult) : SortedSet<ClassInfo> from class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttypes : List<Class<?>> to types : var in method package generateReport(packages String...) : ApiReport from class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tscanResult : ScanResult to scanResult : var in method package generateReport(packages String...) : ApiReport from class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttypes : List<Class<?>> to types : var in method private collectTypes(scanResult ScanResult) : SortedSet<ClassInfo> from class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "abb5ed16be3a9ce552f4a45c11264ded608ae9da",
+      "url": "https://github.com/junit-team/junit5/commit/abb5ed16be3a9ce552f4a45c11264ded608ae9da",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tT to Field in method public makeAccessible(field Field) : Field from class org.junit.platform.commons.util.ReflectionUtils",
+          "validation": false
+        },
+        {
+          "type": "RENAME_PARAMETER",
+          "description": "Rename Parameter\tobject : T to executable : T in method public makeAccessible(executable T) : T from class org.junit.platform.commons.util.ReflectionUtils",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "926e03c7ce9b4a88fce274ca24102f913d747108",
+      "url": "https://github.com/junit-team/junit5/commit/926e03c7ce9b4a88fce274ca24102f913d747108",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.StringsInterface1 moved to org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests.StringsInterface1",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.StringsInterface2 moved to org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests.StringsInterface2",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.DoubleInheritedInterfaceMethodTestCase moved to org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests.DoubleInheritedInterfaceMethodTestCase",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage returnsPrimitiveVoid() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package returnsPrimitiveVoid() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage getAllAssignmentCompatibleClassesWithNullClass() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package getAllAssignmentCompatibleClassesWithNullClass() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage getAllAssignmentCompatibleClasses() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package getAllAssignmentCompatibleClasses() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage newInstance() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package newInstance() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage wideningConversion() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package wideningConversion() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage getAllClasspathRootDirectories(tempDirectory Path) : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package getAllClasspathRootDirectories(tempDirectory Path) : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate createDirectories(paths Path...) : void from class org.junit.platform.commons.util.ReflectionUtilsTests to private createDirectories(paths Path...) : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage getDeclaredConstructorPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package getDeclaredConstructorPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage getDeclaredConstructor() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package getDeclaredConstructor() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage isGeneric() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package isGeneric() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage isPublic() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package isPublic() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ModifierTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage isPrivate() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package isPrivate() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ModifierTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage isNotPrivate() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package isNotPrivate() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ModifierTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage isAbstract() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package isAbstract() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ModifierTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage isStatic() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package isStatic() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ModifierTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage isNotStatic() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package isNotStatic() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ModifierTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage isFinal() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package isFinal() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ModifierTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage isNotFinal() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package isNotFinal() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ModifierTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage invokeMethodPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package invokeMethodPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MethodInvocationTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage invokePublicMethod() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package invokePublicMethod() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MethodInvocationTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage invokePrivateMethod() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package invokePrivateMethod() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MethodInvocationTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage invokePublicStaticMethod() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package invokePublicStaticMethod() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MethodInvocationTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage invokePrivateStaticMethod() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package invokePrivateStaticMethod() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MethodInvocationTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToLoadClassPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToLoadClassPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage loadClassWhenClassNotFoundException() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package loadClassWhenClassNotFoundException() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToLoadClassWhenClassNotFoundException() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToLoadClassWhenClassNotFoundException() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToLoadClassFailsWithinReasonableTimeForInsanelyLargeAndInvalidMultidimensionalPrimitiveArrayName() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToLoadClassFailsWithinReasonableTimeForInsanelyLargeAndInvalidMultidimensionalPrimitiveArrayName() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage loadClass() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package loadClass() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToLoadClass() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToLoadClass() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToLoadClassTrimsClassName() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToLoadClassTrimsClassName() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToLoadClassForPrimitive() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToLoadClassForPrimitive() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToLoadClassForPrimitiveArray() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToLoadClassForPrimitiveArray() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToLoadClassForPrimitiveArrayUsingSourceCodeSyntax() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToLoadClassForPrimitiveArrayUsingSourceCodeSyntax() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToLoadClassForObjectArray() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToLoadClassForObjectArray() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToLoadClassForObjectArrayUsingSourceCodeSyntax() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToLoadClassForObjectArrayUsingSourceCodeSyntax() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToLoadClassForTwoDimensionalPrimitiveArray() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToLoadClassForTwoDimensionalPrimitiveArray() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToLoadClassForTwoDimensionaldimensionalPrimitiveArrayUsingSourceCodeSyntax() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToLoadClassForTwoDimensionaldimensionalPrimitiveArrayUsingSourceCodeSyntax() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToLoadClassForMultidimensionalPrimitiveArray() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToLoadClassForMultidimensionalPrimitiveArray() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToLoadClassForMultidimensionalPrimitiveArrayUsingSourceCodeSyntax() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToLoadClassForMultidimensionalPrimitiveArrayUsingSourceCodeSyntax() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToLoadClassForMultidimensionalObjectArray() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToLoadClassForMultidimensionalObjectArray() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToLoadClassForMultidimensionalObjectArrayUsingSourceCodeSyntax() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToLoadClassForMultidimensionalObjectArrayUsingSourceCodeSyntax() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage getFullyQualifiedMethodNamePreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package getFullyQualifiedMethodNamePreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FullyQualifiedMethodNameTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage getFullyQualifiedMethodNameForMethodWithoutParameters() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package getFullyQualifiedMethodNameForMethodWithoutParameters() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FullyQualifiedMethodNameTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage getFullyQualifiedMethodNameForMethodWithNullParameters() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package getFullyQualifiedMethodNameForMethodWithNullParameters() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FullyQualifiedMethodNameTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage getFullyQualifiedMethodNameForMethodWithSingleParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package getFullyQualifiedMethodNameForMethodWithSingleParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FullyQualifiedMethodNameTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage getFullyQualifiedMethodNameForMethodWithMultipleParameters() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package getFullyQualifiedMethodNameForMethodWithMultipleParameters() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FullyQualifiedMethodNameTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage parseFullyQualifiedMethodNamePreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package parseFullyQualifiedMethodNamePreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FullyQualifiedMethodNameTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage parseFullyQualifiedMethodNameForMethodWithoutParameters() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package parseFullyQualifiedMethodNameForMethodWithoutParameters() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FullyQualifiedMethodNameTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage parseFullyQualifiedMethodNameForMethodWithSingleParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package parseFullyQualifiedMethodNameForMethodWithSingleParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FullyQualifiedMethodNameTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage parseFullyQualifiedMethodNameForMethodWithMultipleParameters() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package parseFullyQualifiedMethodNameForMethodWithMultipleParameters() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FullyQualifiedMethodNameTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findNestedClassesPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findNestedClassesPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findNestedClasses() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findNestedClasses() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findNestedClassesWithSeeminglyRecursiveHierarchies() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findNestedClassesWithSeeminglyRecursiveHierarchies() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findNestedClassesWithRecursiveHierarchies() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findNestedClassesWithRecursiveHierarchies() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate findNestedClasses(clazz Class<?>) : List<Class<?>> from class org.junit.platform.commons.util.ReflectionUtilsTests to private findNestedClasses(clazz Class<?>) : List<Class<?>> from class org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate assertNestedCycle(from Class<?>, to Class<?>) : void from class org.junit.platform.commons.util.ReflectionUtilsTests to private assertNestedCycle(from Class<?>, to Class<?>) : void from class org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate assertNestedCycle(start Class<?>, from Class<?>, to Class<?>) : void from class org.junit.platform.commons.util.ReflectionUtilsTests to private assertNestedCycle(start Class<?>, from Class<?>, to Class<?>) : void from class org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findNestedClassesWithInvalidNestedClassFile(listener LogRecordListener) : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findNestedClassesWithInvalidNestedClassFile(listener LogRecordListener) : void from class org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToGetMethodPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToGetMethodPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MethodUtilitiesTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToGetMethod() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToGetMethod() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MethodUtilitiesTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage isMethodPresentPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package isMethodPresentPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MethodUtilitiesTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage isMethodPresent() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package isMethodPresent() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.MethodUtilitiesTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodByParameterTypesPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodByParameterTypesPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodByParameterTypes() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodByParameterTypes() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodByParameterTypesInGenericInterface() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodByParameterTypesInGenericInterface() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodByParameterTypesInGenericInterfaceViaParameterizedSubclass() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodByParameterTypesInGenericInterfaceViaParameterizedSubclass() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodByParameterTypesWithOverloadedMethodNextToGenericDefaultMethod() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodByParameterTypesWithOverloadedMethodNextToGenericDefaultMethod() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodByParameterNamesWithPrimitiveArrayParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodByParameterNamesWithPrimitiveArrayParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodByParameterNamesWithTwoDimensionalPrimitiveArrayParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodByParameterNamesWithTwoDimensionalPrimitiveArrayParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodByParameterNamesWithMultidimensionalPrimitiveArrayParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodByParameterNamesWithMultidimensionalPrimitiveArrayParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodByParameterNamesWithObjectArrayParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodByParameterNamesWithObjectArrayParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodByParameterNamesWithMultidimensionalObjectArrayParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodByParameterNamesWithMultidimensionalObjectArrayParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodByParameterNamesWithWithCustomTypeFromDifferentClassLoader() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodByParameterNamesWithWithCustomTypeFromDifferentClassLoader() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodByParameterNamesWithParameterizedMapParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodByParameterNamesWithParameterizedMapParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tclazz : var in method package findMethodByParameterNamesWithParameterizedMapParameter() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate assertFindMethodByParameterNames(methodName String, parameterType Class<?>) : void from class org.junit.platform.commons.util.ReflectionUtilsTests to private assertFindMethodByParameterNames(methodName String, parameterType Class<?>) : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tclazz : var in method private assertFindMethodByParameterNames(methodName String, parameterType Class<?>) : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage methodWithPrimitiveArray(nums int[]) : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package methodWithPrimitiveArray(nums int[]) : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage methodWithTwoDimensionalPrimitiveArray(grid int[][]) : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package methodWithTwoDimensionalPrimitiveArray(grid int[][]) : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage methodWithMultidimensionalPrimitiveArray(grid int[][][][][]) : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package methodWithMultidimensionalPrimitiveArray(grid int[][][][][]) : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage methodWithObjectArray(info String[]) : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package methodWithObjectArray(info String[]) : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage methodWithTwoDimensionalObjectArray(info String[][]) : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package methodWithTwoDimensionalObjectArray(info String[][]) : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage methodWithMultidimensionalObjectArray(data Double[][][][][]) : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package methodWithMultidimensionalObjectArray(data Double[][][][][]) : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage methodWithParameterizedMap(map Map<String,String>) : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package methodWithParameterizedMap(map Map<String,String>) : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsInInterface() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsInInterface() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate assertOneFooMethodIn(clazz Class<?>) : void from class org.junit.platform.commons.util.ReflectionUtilsTests to private assertOneFooMethodIn(clazz Class<?>) : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsFindsDistinctMethodsDeclaredInMultipleInterfaces() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsFindsDistinctMethodsDeclaredInMultipleInterfaces() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsInObject() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsInObject() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsInVoid() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsInVoid() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsInPrimitive() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsInPrimitive() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsInArrays() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsInArrays() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsIgnoresSyntheticMethods() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsIgnoresSyntheticMethods() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsUsingHierarchyUpMode() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsUsingHierarchyUpMode() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsUsingHierarchyDownMode() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsUsingHierarchyDownMode() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsWithShadowingUsingHierarchyUpMode() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsWithShadowingUsingHierarchyUpMode() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsWithShadowingUsingHierarchyDownMode() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsWithShadowingUsingHierarchyDownMode() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsWithStaticHidingUsingHierarchyUpMode() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsWithStaticHidingUsingHierarchyUpMode() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsWithStaticHidingUsingHierarchyDownMode() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsWithStaticHidingUsingHierarchyDownMode() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsReturnsAllOverloadedMethodsThatAreNotShadowed() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsReturnsAllOverloadedMethodsThatAreNotShadowed() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsDoesNotReturnOverriddenDefaultMethods() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsDoesNotReturnOverriddenDefaultMethods() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate signaturesOf(methods List<Method>) : List<String> from class org.junit.platform.commons.util.ReflectionUtilsTests to private signaturesOf(methods List<Method>) : List<String> from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsIgnoresBridgeMethods() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsIgnoresBridgeMethods() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findMethodsDoesNotAllowInstanceMethodToHideStaticMethod() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findMethodsDoesNotAllowInstanceMethodToHideStaticMethod() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage readFieldValueOfNonexistentStaticField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package readFieldValueOfNonexistentStaticField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ReadFieldTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToReadFieldValueOfNonexistentStaticField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToReadFieldValueOfNonexistentStaticField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ReadFieldTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage readFieldValueOfNonexistentInstanceField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package readFieldValueOfNonexistentInstanceField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ReadFieldTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToReadFieldValueOfNonexistentInstanceField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToReadFieldValueOfNonexistentInstanceField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ReadFieldTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage readFieldValueOfExistingStaticField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package readFieldValueOfExistingStaticField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ReadFieldTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToReadFieldValueOfExistingStaticField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToReadFieldValueOfExistingStaticField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ReadFieldTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage readFieldValueOfExistingInstanceField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package readFieldValueOfExistingInstanceField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ReadFieldTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage attemptToReadFieldValueOfExistingInstanceFieldAsStaticField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package attemptToReadFieldValueOfExistingInstanceFieldAsStaticField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ReadFieldTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage tryToReadFieldValueOfExistingInstanceField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package tryToReadFieldValueOfExistingInstanceField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.ReadFieldTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage findFieldsDoesNotAllowInstanceFieldToHideStaticField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package findFieldsDoesNotAllowInstanceFieldToHideStaticField() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage readFieldValuesPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package readFieldValuesPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tfields : List<Field> in method package readFieldValuesPreconditions() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage readFieldValuesFromInstance() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package readFieldValuesFromInstance() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage readFieldValuesFromClass() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package readFieldValuesFromClass() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage readFieldValuesFromInteracesAndClassesInTypeHierarchy() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package readFieldValuesFromInteracesAndClassesInTypeHierarchy() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage readFieldValuesFromInstanceWithTypeFilterForString() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package readFieldValuesFromInstanceWithTypeFilterForString() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage readFieldValuesFromClassWithTypeFilterForString() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package readFieldValuesFromClassWithTypeFilterForString() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage readFieldValuesFromInstanceWithTypeFilterForInteger() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package readFieldValuesFromInstanceWithTypeFilterForInteger() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage readFieldValuesFromClassWithTypeFilterForInteger() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package readFieldValuesFromClassWithTypeFilterForInteger() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage readFieldValuesFromInstanceWithTypeFilterForDouble() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package readFieldValuesFromInstanceWithTypeFilterForDouble() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage readFieldValuesFromClassWithTypeFilterForDouble() : void from class org.junit.platform.commons.util.ReflectionUtilsTests to package readFieldValuesFromClassWithTypeFilterForDouble() : void from class org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate isA(type Class<?>) : Predicate<Field> from class org.junit.platform.commons.util.ReflectionUtilsTests to private isA(type Class<?>) : Predicate<Field> from class org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests from class org.junit.platform.commons.util.ReflectionUtilsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.commons.util.ReflectionUtilsTests.ModifierTests from class org.junit.platform.commons.util.ReflectionUtilsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.commons.util.ReflectionUtilsTests.MethodInvocationTests from class org.junit.platform.commons.util.ReflectionUtilsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.commons.util.ReflectionUtilsTests.ClassLoadingTests from class org.junit.platform.commons.util.ReflectionUtilsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.commons.util.ReflectionUtilsTests.FullyQualifiedMethodNameTests from class org.junit.platform.commons.util.ReflectionUtilsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests from class org.junit.platform.commons.util.ReflectionUtilsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.commons.util.ReflectionUtilsTests.MethodUtilitiesTests from class org.junit.platform.commons.util.ReflectionUtilsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.commons.util.ReflectionUtilsTests.FindMethodTests from class org.junit.platform.commons.util.ReflectionUtilsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.commons.util.ReflectionUtilsTests.FindMethodsTests from class org.junit.platform.commons.util.ReflectionUtilsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.commons.util.ReflectionUtilsTests.ReadFieldTests from class org.junit.platform.commons.util.ReflectionUtilsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests from class org.junit.platform.commons.util.ReflectionUtilsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.Exploder moved to org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests.Exploder",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.AbstractClass moved to org.junit.platform.commons.util.ReflectionUtilsTests.ModifierTests.AbstractClass",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.ClassWithVoidAndNonVoidMethods moved to org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests.ClassWithVoidAndNonVoidMethods",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.InvocationTracker moved to org.junit.platform.commons.util.ReflectionUtilsTests.MethodInvocationTests.InvocationTracker",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.PrivateClass moved to org.junit.platform.commons.util.ReflectionUtilsTests.ModifierTests.PrivateClass",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.FinalClass moved to org.junit.platform.commons.util.ReflectionUtilsTests.ModifierTests.FinalClass",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.SubclassWithFieldAndFieldFromInterface moved to org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests.SubclassWithFieldAndFieldFromInterface",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.C moved to org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests.C",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.ClassWithNestedClasses moved to org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests.ClassWithNestedClasses",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.ClassWithTwoConstructors moved to org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests.ClassWithTwoConstructors",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.PublicClass moved to org.junit.platform.commons.util.ReflectionUtilsTests.ModifierTests.PublicClass",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.StaticClass moved to org.junit.platform.commons.util.ReflectionUtilsTests.ModifierTests.StaticClass",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.ProtectedClass moved to org.junit.platform.commons.util.ReflectionUtilsTests.ModifierTests.ProtectedClass",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.SuperclassWithFieldAndFieldFromInterface moved to org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests.SuperclassWithFieldAndFieldFromInterface",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.A moved to org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests.A",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.InterfaceWithField moved to org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests.InterfaceWithField",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.ClassWithFields moved to org.junit.platform.commons.util.ReflectionUtilsTests.FindAndReadFieldsTests.ClassWithFields",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.ClassWithOneCustomConstructor moved to org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests.ClassWithOneCustomConstructor",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.PackageVisibleClass moved to org.junit.platform.commons.util.ReflectionUtilsTests.ModifierTests.PackageVisibleClass",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.InterfaceA moved to org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests.InterfaceA",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.InterfaceB moved to org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests.InterfaceB",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.InterfaceC moved to org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests.InterfaceC",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.InterfaceD moved to org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests.InterfaceD",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.B moved to org.junit.platform.commons.util.ReflectionUtilsTests.MiscellaneousTests.B",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.InterfaceWithNestedClass moved to org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests.InterfaceWithNestedClass",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.Interface45 moved to org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests.Interface45",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.ClassExtendingClassWithNestedClasses moved to org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests.ClassExtendingClassWithNestedClasses",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.ClassWithNestedClasses.Nested1 moved to org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests.ClassWithNestedClasses.Nested1",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.ClassWithNestedClasses.Nested2 moved to org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests.ClassWithNestedClasses.Nested2",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.ClassWithNestedClasses.Nested3 moved to org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests.ClassWithNestedClasses.Nested3",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.InterfaceWithNestedClass.Nested4 moved to org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests.InterfaceWithNestedClass.Nested4",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.commons.util.ReflectionUtilsTests.Interface45.Nested5 moved to org.junit.platform.commons.util.ReflectionUtilsTests.NestedClassTests.Interface45.Nested5",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "a8447445d4aba316325fae2a12d68a672abb8148",
+      "url": "https://github.com/junit-team/junit5/commit/a8447445d4aba316325fae2a12d68a672abb8148",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tcallSequence : List<Integer> to callSequence : List<String> in class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\textension1 : BeforeEachCallback to extension1 : Extension in class org.junit.jupiter.engine.extension.ProgrammaticExtensionRegistrationTests.ClassLevelExtensionRegistrationParentTestCase",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\textension2 : BeforeEachCallback to extension2 : Extension in class org.junit.jupiter.engine.extension.ProgrammaticExtensionRegistrationTests.ClassLevelExtensionRegistrationParentTestCase",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\textension2 : BeforeEachCallback to extension2 : Extension in class org.junit.jupiter.engine.extension.ProgrammaticExtensionRegistrationTests.ClassLevelExtensionRegistrationChildTestCase",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\textension3 : BeforeEachCallback to extension3 : Extension in class org.junit.jupiter.engine.extension.ProgrammaticExtensionRegistrationTests.ClassLevelExtensionRegistrationChildTestCase",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\textension1 : BeforeEachCallback to extension1 : Extension in class org.junit.jupiter.engine.extension.ProgrammaticExtensionRegistrationTests.InstanceLevelExtensionRegistrationParentTestCase",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\textension2 : BeforeEachCallback to extension2 : Extension in class org.junit.jupiter.engine.extension.ProgrammaticExtensionRegistrationTests.InstanceLevelExtensionRegistrationParentTestCase",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\textension2 : BeforeEachCallback to extension2 : Extension in class org.junit.jupiter.engine.extension.ProgrammaticExtensionRegistrationTests.InstanceLevelExtensionRegistrationChildTestCase",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\textension3 : BeforeEachCallback to extension3 : Extension in class org.junit.jupiter.engine.extension.ProgrammaticExtensionRegistrationTests.InstanceLevelExtensionRegistrationChildTestCase",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tid : int to prefix : String in class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests.BeforeEachExtension",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tid : int to prefix : String in class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests.BeforeEachExtension",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tid : int to prefix : String in class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests.AfterEachExtension",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tid : int to prefix : String in class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests.AfterEachExtension",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttestClass : Class<?> in method package instanceLevelWithDefaultOrder() : void from class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttestClass : Class<?> in method package instanceLevelWithExplicitOrder() : void from class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttestClass : Class<?> in method package instanceLevelWithDefaultOrderAndExplicitOrder() : void from class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttestClass : Class<?> in method package instanceLevelWithDefaultOrderPlusOneAndDefaultOrder() : void from class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttestClass : Class<?> in method package instanceLevelWithDefaultOrderAndExplicitOrderWithTestInstancePerClassLifecycle() : void from class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttestClass : Class<?> in method package classLevelWithDefaultOrderAndExplicitOrder() : void from class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttestClass : Class<?> in method package classLevelWithDefaultOrderAndExplicitOrderInheritedFromSuperclass() : void from class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttestClass : Class<?> in method package classLevelWithDefaultOrderShadowingOrderFromSuperclass() : void from class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttestClass : Class<?> in method package classLevelWithExplicitOrderShadowingOrderFromSuperclass() : void from class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttestClass : Class<?> in method package classLevelWithDefaultOrderAndExplicitOrderFromInterface() : void from class org.junit.jupiter.engine.extension.OrderedProgrammaticExtensionRegistrationTests",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "f53e690beab53c87e1d48f06a3c9b8b9ff1e3b88",
+      "url": "https://github.com/junit-team/junit5/commit/f53e690beab53c87e1d48f06a3c9b8b9ff1e3b88",
+      "commonRefactoring": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tstaticField1 : String in method package allFieldsAreClosedIfAnyFieldThrowsAnException() : void from class org.junit.jupiter.engine.extension.AutoCloseTests",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tstaticField2 : String in method package allFieldsAreClosedIfAnyFieldThrowsAnException() : void from class org.junit.jupiter.engine.extension.AutoCloseTests",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tstaticField3 : String in method package allFieldsAreClosedIfAnyFieldThrowsAnException() : void from class org.junit.jupiter.engine.extension.AutoCloseTests",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tfield1 : String in method package allFieldsAreClosedIfAnyFieldThrowsAnException() : void from class org.junit.jupiter.engine.extension.AutoCloseTests",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tfield2 : String in method package allFieldsAreClosedIfAnyFieldThrowsAnException() : void from class org.junit.jupiter.engine.extension.AutoCloseTests",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tfield3 : String in method package allFieldsAreClosedIfAnyFieldThrowsAnException() : void from class org.junit.jupiter.engine.extension.AutoCloseTests",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "89a0201073efd12b0732ceaeba52c6d7d7029f3a",
+      "url": "https://github.com/junit-team/junit5/commit/89a0201073efd12b0732ceaeba52c6d7d7029f3a",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.jupiter.api.AutoCloseExtension moved to org.junit.jupiter.engine.extension.AutoCloseExtension",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.junit.jupiter.engine.extension.AutoCloseTests.AutoCloseInstancePerClassTestCase renamed to org.junit.jupiter.engine.extension.AutoCloseTests.InstancePerClassTestCase",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.junit.jupiter.engine.extension.AutoCloseTests.AutoCloseTestCase renamed to org.junit.jupiter.engine.extension.AutoCloseTests.InstancePerMethodTestCase",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.junit.jupiter.engine.extension.AutoCloseTests.AutoCloseNoCloseMethodFailingTestCase renamed to org.junit.jupiter.engine.extension.AutoCloseTests.NoCloseMethodTestCase",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.junit.jupiter.engine.extension.AutoCloseTests.AutoCloseNoShutdownMethodFailingTestCase renamed to org.junit.jupiter.engine.extension.AutoCloseTests.NoShutdownMethodTestCase",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertMissingCloseMethod(testClass Class<?>, methodName String) : void extracted from package noCloseMethod() : void in class org.junit.jupiter.engine.extension.AutoCloseTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertMissingCloseMethod(testClass Class<?>, methodName String) : void extracted from package noShutdownMethod() : void in class org.junit.jupiter.engine.extension.AutoCloseTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate registerCloseables(contextStore Store, testClass Class<?>, testInstance Object) : void renamed to private closeFields(testClass Class<?>, testInstance Object) : void in class org.junit.jupiter.engine.extension.AutoCloseExtension",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage instancePerClass() : void renamed to package fieldsAreProperlyClosedWithInstancePerClassTestClass() : void in class org.junit.jupiter.engine.extension.AutoCloseTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage fieldsAreProperlyClosed() : void renamed to package fieldsAreProperlyClosedWithInstancePerMethodTestClass() : void in class org.junit.jupiter.engine.extension.AutoCloseTests",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\torg.junit.jupiter.engine.extension.AutoCloseTests.AutoCloseTestCase moved and renamed to org.junit.jupiter.engine.extension.AutoCloseTests.InstancePerMethodEnclosingTestCase.NestedTestCase",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.junit.jupiter.engine.extension.AutoCloseTests.AutoCloseTestCase renamed to org.junit.jupiter.engine.extension.AutoCloseTests.InstancePerMethodEnclosingTestCase",
+          "validation": false
+        },
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\torg.junit.jupiter.engine.extension.AutoCloseTests.AutoCloseTestCase moved and renamed to org.junit.jupiter.engine.extension.AutoCloseTests.InstancePerClassEnclosingTestCase.NestedTestCase",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.junit.jupiter.engine.extension.AutoCloseTests.AutoCloseTestCase renamed to org.junit.jupiter.engine.extension.AutoCloseTests.InstancePerClassEnclosingTestCase",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.junit.jupiter.engine.extension.AutoCloseTests.AutoCloseNoCloseMethodFailingTestCase renamed to org.junit.jupiter.engine.extension.AutoCloseTests.BlankCloseMethodNameTestCase",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.junit.jupiter.engine.extension.AutoCloseTests.AutoCloseNoCloseMethodFailingTestCase renamed to org.junit.jupiter.engine.extension.AutoCloseTests.NullCloseableFieldTestCase",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.junit.jupiter.engine.extension.AutoCloseTests.AutoCloseNoCloseMethodFailingTestCase renamed to org.junit.jupiter.engine.extension.AutoCloseTests.NoShutdownMethodTestCase",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.junit.jupiter.engine.extension.AutoCloseTests.AutoCloseNoShutdownMethodFailingTestCase renamed to org.junit.jupiter.engine.extension.AutoCloseTests.BlankCloseMethodNameTestCase",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.junit.jupiter.engine.extension.AutoCloseTests.AutoCloseNoShutdownMethodFailingTestCase renamed to org.junit.jupiter.engine.extension.AutoCloseTests.NullCloseableFieldTestCase",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.junit.jupiter.engine.extension.AutoCloseTests.AutoCloseNoShutdownMethodFailingTestCase renamed to org.junit.jupiter.engine.extension.AutoCloseTests.NoCloseMethodTestCase",
+          "validation": false
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage resetRecorder() : void renamed to package resetTracking() : void in class org.junit.jupiter.engine.extension.AutoCloseTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage fieldsAreProperlyClosed() : void renamed to package fieldsAreProperlyClosedWithNestedTestClassesWithInstancePerMethod() : void in class org.junit.jupiter.engine.extension.AutoCloseTests",
+          "validation": false
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage instancePerClass() : void renamed to package fieldsAreProperlyClosedWithNestedTestClassesWithInstancePerClass() : void in class org.junit.jupiter.engine.extension.AutoCloseTests",
+          "validation": false
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\ttestClass : Class<?> in method public afterAll(context ExtensionContext) : void from class org.junit.jupiter.api.AutoCloseExtension",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttargetType : Class<?> in method private invokeCloseMethod(field Field, target Object, methodName String) : void from class org.junit.jupiter.engine.extension.AutoCloseExtension",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tstaticClosable : AutoCloseable to nestedStaticClosable : AutoCloseSpy in class org.junit.jupiter.engine.extension.AutoCloseTests.InstancePerMethodEnclosingTestCase.NestedTestCase",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tstaticClosable : AutoCloseable to nestedStaticClosable : AutoCloseSpy in class org.junit.jupiter.engine.extension.AutoCloseTests.InstancePerMethodEnclosingTestCase.NestedTestCase",
+          "validation": false
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tstaticClosable : AutoCloseable to enclosingStaticClosable : AutoCloseSpy in class org.junit.jupiter.engine.extension.AutoCloseTests.InstancePerMethodEnclosingTestCase",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tstaticClosable : AutoCloseable to enclosingStaticClosable : AutoCloseSpy in class org.junit.jupiter.engine.extension.AutoCloseTests.InstancePerMethodEnclosingTestCase",
+          "validation": false
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tstaticClosable : AutoCloseable to nestedStaticClosable : AutoCloseSpy in class org.junit.jupiter.engine.extension.AutoCloseTests.InstancePerClassEnclosingTestCase.NestedTestCase",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tstaticClosable : AutoCloseable to nestedStaticClosable : AutoCloseSpy in class org.junit.jupiter.engine.extension.AutoCloseTests.InstancePerClassEnclosingTestCase.NestedTestCase",
+          "validation": false
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tstaticClosable : AutoCloseable to enclosingStaticClosable : AutoCloseSpy in class org.junit.jupiter.engine.extension.AutoCloseTests.InstancePerClassEnclosingTestCase",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tstaticClosable : AutoCloseable to enclosingStaticClosable : AutoCloseSpy in class org.junit.jupiter.engine.extension.AutoCloseTests.InstancePerClassEnclosingTestCase",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tfield : String to field : AutoCloseable in class org.junit.jupiter.engine.extension.AutoCloseTests.NullCloseableFieldTestCase",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tfield : String to field : AutoCloseable in class org.junit.jupiter.engine.extension.AutoCloseTests.NullCloseableFieldTestCase",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "30dbf58c77f477fe8a4645ba320148f653246d3e",
+      "url": "https://github.com/junit-team/junit5/commit/30dbf58c77f477fe8a4645ba320148f653246d3e",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate toWrapperType(targetType Class<?>) : Class<?> from class org.junit.jupiter.params.converter.DefaultArgumentConverter to private toWrapperType(targetType Class<?>) : Class<?> from class org.junit.platform.commons.support.conversion.StringConversionSupport",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate stringToObjectConverters : List<StringToObjectConverter> from class org.junit.jupiter.params.converter.DefaultArgumentConverter to private stringToObjectConverters : List<StringToObjectConverter> from class org.junit.platform.commons.support.conversion.StringConversionSupport",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.commons.support.conversion.StringConversionSupport from class org.junit.jupiter.params.converter.DefaultArgumentConverter",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic convert(source String, targetType Class<T>, classLoader ClassLoader) : T extracted from public convert(source Object, targetType Class<?>, context ParameterContext) : Object in class org.junit.jupiter.params.converter.DefaultArgumentConverter & moved to class org.junit.platform.commons.support.conversion.StringConversionSupport",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\ttargetTypeToUse : Class<?> in method public convert(source Object, targetType Class<?>, context ParameterContext) : Object from class org.junit.jupiter.params.converter.DefaultArgumentConverter",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tex : Exception to ex : ConversionException in method public convert(source Object, targetType Class<?>, context ParameterContext) : Object from class org.junit.jupiter.params.converter.DefaultArgumentConverter",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "3f6c32b76540ce9c7816c8b77cdcf10df5427eff",
+      "url": "https://github.com/junit-team/junit5/commit/3f6c32b76540ce9c7816c8b77cdcf10df5427eff",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpackage deleteIfNotNullAndExists(dir Path) : void extracted from package afterAll() : void in class org.junit.jupiter.engine.extension.TempDirectoryCleanupTests.TempDirFieldTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpackage deleteIfNotNullAndExists(dir Path) : void extracted from package afterAll() : void in class org.junit.jupiter.engine.extension.TempDirectoryCleanupTests.TempDirFieldTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpackage deleteIfNotNullAndExists(dir Path) : void extracted from package afterAll() : void in class org.junit.jupiter.engine.extension.TempDirectoryCleanupTests.TempDirFieldTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpackage deleteIfNotNullAndExists(dir Path) : void extracted from package afterAll() : void in class org.junit.jupiter.engine.extension.TempDirectoryCleanupTests.TempDirFieldTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpackage deleteIfNotNullAndExists(dir Path) : void extracted from package afterAll() : void in class org.junit.jupiter.engine.extension.TempDirectoryCleanupTests.TempDirFieldTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpackage deleteIfNotNullAndExists(dir Path) : void extracted from package afterAll() : void in class org.junit.jupiter.engine.extension.TempDirectoryCleanupTests.TempDirParameterTests & moved to class org.junit.jupiter.engine.extension.TempDirectoryCleanupTests.TempDirFieldTests",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "3184a6e350590aa23142cb31d919bd68c257cad4",
+      "url": "https://github.com/junit-team/junit5/commit/3184a6e350590aa23142cb31d919bd68c257cad4",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getExitCodeMessage(result Result) : String extracted from package compile() : void in class platform.tooling.support.tests.StandaloneTests",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "cb3445283961678a18ada304d7a33aba4cc6736d",
+      "url": "https://github.com/junit-team/junit5/commit/cb3445283961678a18ada304d7a33aba4cc6736d",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tRUNNER_BUILDER : RunnerBuilder to RUNNER_BUILDER : DefensiveAllDefaultPossibilitiesBuilder in class org.junit.vintage.engine.discovery.ClassSelectorResolver",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tRunner to IgnoringRunnerDecorator in method private decorateIgnoredTestClass(runner Runner) : IgnoringRunnerDecorator from class org.junit.vintage.engine.discovery.DefensiveAllDefaultPossibilitiesBuilder",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttestDescriptor : TestDescriptor in method public testIgnored(description Description) : void from class org.junit.vintage.engine.execution.RunListenerAdapter",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tString to Optional<String> in method private determineReasonForIgnoredTest(testDescriptor TestDescriptor, description Description) : Optional<String> from class org.junit.vintage.engine.execution.RunListenerAdapter",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getReason(annotation Ignore) : Optional<String> extracted from private determineReasonForIgnoredTest(description Description) : String in class org.junit.vintage.engine.execution.RunListenerAdapter",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "309a696f4f7a2cda191521b43b0f2482832a6123",
+      "url": "https://github.com/junit-team/junit5/commit/309a696f4f7a2cda191521b43b0f2482832a6123",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.junit.platform.StackTracePruningTests.StackTracePruningTestCase renamed to org.junit.platform.StackTracePruningTests.FailingTestTestCase",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate pruneStackTrace(throwable Throwable) : void renamed to private getTestClassNames(testDescriptor TestDescriptor) : List<String> in class org.junit.platform.launcher.core.StackTracePruningEngineExecutionListener",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to List<String> in method private getTestClassNames(testDescriptor TestDescriptor) : List<String> from class org.junit.platform.launcher.core.StackTracePruningEngineExecutionListener",
+          "validation": false
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage shouldPruneStackTraceAccordingToPattern() : void renamed to package shouldKeepEverythingAfterTestCall() : void in class org.junit.platform.StackTracePruningTests",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate pruneStackTrace(throwable Throwable) : void inlined to public executionFinished(testDescriptor TestDescriptor, testExecutionResult TestExecutionResult) : void in class org.junit.platform.launcher.core.StackTracePruningEngineExecutionListener",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage shouldPruneStackTraceAccordingToPattern() : void renamed to package shouldKeepEverythingAfterLifecycleMethodCall(methodClass Class<?>) : void in class org.junit.platform.StackTracePruningTests",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\te : JUnitException to exception : JUnitException in method package pruneStackTraceOfEverythingPriorToFirstLauncherCall() : void from class org.junit.platform.commons.util.ExceptionUtilsTests",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "eb35aa9cdecd71f49af177f2cad32f5257311874",
+      "url": "https://github.com/junit-team/junit5/commit/eb35aa9cdecd71f49af177f2cad32f5257311874",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to Stream<DynamicTest> in method package selectOneMethodWithNoParameters() : Stream<DynamicTest> from class org.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage selectTwoMethodWithTwoParameters() : void renamed to package selectTwoMethodsWithTwoParameters() : void in class org.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests.selectOneMethodWithNoParameters.Suite moved to org.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests.selectTwoMethodsWithTwoParameters.Suite",
+          "validation": false
+        },
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\torg.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests.selectOneMethodWithNoParameters.TestClass moved and renamed to org.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests.NoParameterTestCase",
+          "validation": true
+        },
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\torg.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests.selectOneMethodWithOneParameters.TestClass moved and renamed to org.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests.OneParameterTestCase",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests.selectTwoMethodWithTwoParameters.TestClass moved to org.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests.selectTwoMethodsWithTwoParameters.TestClass",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic parameters() : String renamed to public value() : String in class org.junit.platform.suite.api.SelectMethod",
+          "validation": false
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage selectOneMethodWithOneParameters() : void renamed to package selectTwoMethodsWithTwoParameters() : void in class org.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests",
+          "validation": false
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage selectOneMethodWithOneParameters() : void renamed to package selectOneMethodWithOneParameter() : Stream<DynamicTest> in class org.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to Stream<DynamicTest> in method package selectOneMethodWithOneParameter() : Stream<DynamicTest> from class org.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic parameters() : String renamed to public parameterTypeNames() : String in class org.junit.platform.suite.api.SelectMethod",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "6fadfabadf449d9eb7956a3531a97cc2fa1a3882",
+      "url": "https://github.com/junit-team/junit5/commit/6fadfabadf449d9eb7956a3531a97cc2fa1a3882",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage testWatcherInvokedForTestMethodsInTestCaseWithProblematicConstructor() : void renamed to package testWatcherIsInvokedForTestMethodsInTestCaseWithProblematicConstructor() : void in class org.junit.jupiter.engine.extension.TestWatcherTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tuidList : null to testMethodNames : null in method package testWatcherIsInvokedForTestMethodsInTopLevelAndNestedTestClasses() : void from class org.junit.jupiter.engine.extension.TestWatcherTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tuidList : null to testMethodNames : null in method package testWatcherIsInvokedForRepeatedTestMethods() : void from class org.junit.jupiter.engine.extension.TestWatcherTests",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmethodName : null to testWatcherMethod : null in method package testWatcherIsInvokedForRepeatedTestMethods() : void from class org.junit.jupiter.engine.extension.TestWatcherTests",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\texpectedMethods : ArrayList<String> in method package testWatcherIsInvokedForRepeatedTestMethods() : void from class org.junit.jupiter.engine.extension.TestWatcherTests",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "c71d6715e01e2bd65fcce9675955a851da24d384",
+      "url": "https://github.com/junit-team/junit5/commit/c71d6715e01e2bd65fcce9675955a851da24d384",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectNestedClassAndSelectNestedMethodTests.AbstractClassWithNestedInnerClass.NestedClass moved to org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectNestedClassAndSelectNestedMethodTests.ClassWithNestedInnerClass.NestedClass",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage selectClassByNameAndClassLoader() : void renamed to package selectClassByNameWithExplicitClassLoader() : void in class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectClassTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage selectMethodByFullyQualifiedNameAndClassLoader() : void renamed to package selectMethodByFullyQualifiedNameWithExplicitClassLoader() : void in class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage selectNestedClassByClassNamesAndClassLoader() : void renamed to package selectNestedClassByClassNamesWithExplicitClassLoader() : void in class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectNestedClassAndSelectNestedMethodTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage selectNestedMethodByEnclosingClassNamesAndMethodNameWithParameterTypes() : void renamed to package selectNestedMethodByEnclosingClassNamesMethodNameAndParameterTypeNames() : void in class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectNestedClassAndSelectNestedMethodTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tenclosingClass : var in method package selectNestedMethodByEnclosingClassNamesMethodNameAndParameterTypeNamesWithExplicitClassLoader() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectNestedClassAndSelectNestedMethodTests",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage selectNestedMethodByEnclosingClassNamesAndMethodNameWithParameterTypesAndClassLoader() : void renamed to package selectNestedMethodByEnclosingClassNamesMethodNameAndParameterTypeNamesWithExplicitClassLoader() : void in class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectNestedClassAndSelectNestedMethodTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage selectNestedMethodByEnclosingClassNamesAndMethodNameAndClassLoader() : void renamed to package selectNestedMethodByEnclosingClassNamesAndMethodNameWithExplicitClassLoader() : void in class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectNestedClassAndSelectNestedMethodTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage selectNestedMethodPreconditions() : void renamed to package selectNestedMethodByEnclosingClassNamesMethodNameAndParameterTypeNamesPreconditions() : void in class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectNestedClassAndSelectNestedMethodTests",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\ttestClasses : var to nestedClass : var in method package selectNestedMethodByEnclosingClassNamesMethodNameAndParameterTypeNamesWithExplicitClassLoader() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectNestedClassAndSelectNestedMethodTests",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage selectNestedMethodByEnclosingClassNamesAndMethodNameAndClassLoader() : void renamed to package selectNestedMethodByEnclosingClassNamesMethodNameAndParameterTypeNamesWithExplicitClassLoader() : void in class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectNestedClassAndSelectNestedMethodTests",
+          "validation": false
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage selectNestedMethodByEnclosingClassNamesAndMethodNameWithParameterTypesAndClassLoader() : void renamed to package selectNestedMethodByEnclosingClassNamesAndMethodNameWithExplicitClassLoader() : void in class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectNestedClassAndSelectNestedMethodTests",
+          "validation": false
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage selectNestedMethodPreconditions() : void renamed to package selectNestedMethodByEnclosingClassNamesMethodNameAndParameterTypesPreconditions() : void in class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectNestedClassAndSelectNestedMethodTests",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tnestedClass : var in method package selectNestedMethodByEnclosingClassNamesMethodNameAndParameterTypeNamesWithExplicitClassLoader() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectNestedClassAndSelectNestedMethodTests",
+          "validation": true
+        },
+        {
+          "type": "SPLIT_METHOD",
+          "description": "Split Method\tpackage selectNestedMethodPreconditions() : void to [package selectNestedMethodByEnclosingClassNamesMethodNameAndParameterTypeNamesPreconditions() : void, package selectNestedMethodByEnclosingClassNamesAndMethodNamePreconditions() : void] in class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectNestedClassAndSelectNestedMethodTests",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "7cfdfeb6db4f08cc72597b4d11720d10ba5830dd",
+      "url": "https://github.com/junit-team/junit5/commit/7cfdfeb6db4f08cc72597b4d11720d10ba5830dd",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tList<ClassSelector> to Stream<ClassSelector> in method package selectClasses(classes Class<?>...) : Stream<ClassSelector> from class org.junit.platform.suite.commons.AdditionalDiscoverySelectors",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tselectedClassNames : List<String> to selectedClassNames : Set<String> in class org.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilder",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage selectClasses() : void renamed to package selectClassesByReference() : void in class org.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests.selectClasses.TestCase moved to org.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests.selectClassesByReference.TestCase",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests.selectClasses.Suite moved to org.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests.selectClassesByReference.Suite",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "bd733b57007a4330393ea1de5236f50aca76ca2f",
+      "url": "https://github.com/junit-team/junit5/commit/bd733b57007a4330393ea1de5236f50aca76ca2f",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.junit.platform.engine.discovery.DiscoverySelectorsTests.NestedClassAndMethodSelectors renamed to org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectNestedClassAndSelectNestedMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectUriByName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectUriByName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectUriTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectUriByURI() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectUriByURI() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectUriTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectFileByName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectFileByName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectFileTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectFileByNameAndPosition() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectFileByNameAndPosition() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectFileTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectFileByFileReference() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectFileByFileReference() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectFileTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectFileByFileReferenceAndPosition() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectFileByFileReferenceAndPosition() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectFileTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectDirectoryByName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectDirectoryByName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectDirectoryTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectDirectoryByFileReference() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectDirectoryByFileReference() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectDirectoryTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectClasspathResources() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectClasspathResources() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectClasspathResourceTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectClasspathResourcesWithFilePosition() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectClasspathResourcesWithFilePosition() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectClasspathResourceTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectModuleByName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectModuleByName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectModuleTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectModuleByNamePreconditions() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectModuleByNamePreconditions() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectModuleTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectModulesByNames() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectModulesByNames() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectModuleTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectModulesByNamesPreconditions() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectModulesByNamesPreconditions() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectModuleTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectPackageByName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectPackageByName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectPackageTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectClasspathRootsWithNonExistingDirectory() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectClasspathRootsWithNonExistingDirectory() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectClasspathRootsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectClasspathRootsWithNonExistingJarFile() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectClasspathRootsWithNonExistingJarFile() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectClasspathRootsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectClasspathRootsWithExistingDirectory(tempDir Path) : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectClasspathRootsWithExistingDirectory(tempDir Path) : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectClasspathRootsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectClasspathRootsWithExistingJarFile() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectClasspathRootsWithExistingJarFile() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectClasspathRootsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectClassByName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectClassByName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectClassTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectClassByNameAndClassLoader() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectClassByNameAndClassLoader() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectClassTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByClassNameAndMethodNamePreconditions() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByClassNameAndMethodNamePreconditions() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByClassAndMethodNamePreconditions() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByClassAndMethodNamePreconditions() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByClassAndMethodPreconditions() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByClassAndMethodPreconditions() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNamePreconditions(fqmn String, message String) : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNamePreconditions(fqmn String, message String) : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage invalidFullyQualifiedMethodNames() : Stream<Arguments> from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package invalidFullyQualifiedMethodNames() : Stream<Arguments> from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameAndClassLoader() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameAndClassLoader() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameForDefaultMethodInInterface() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameForDefaultMethodInInterface() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameWithPrimitiveParameter() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameWithPrimitiveParameter() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameWithPrimitiveParameterUsingSourceCodeSyntax() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameWithPrimitiveParameterUsingSourceCodeSyntax() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameWithObjectParameter() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameWithObjectParameter() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameWithObjectParameterUsingSourceCodeSyntax() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameWithObjectParameterUsingSourceCodeSyntax() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameWithPrimitiveArrayParameter() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameWithPrimitiveArrayParameter() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameWithPrimitiveArrayParameterUsingSourceCodeSyntax() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameWithPrimitiveArrayParameterUsingSourceCodeSyntax() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameWithObjectArrayParameter() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameWithObjectArrayParameter() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameWithObjectArrayParameterUsingSourceCodeSyntax() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameWithObjectArrayParameterUsingSourceCodeSyntax() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameWithTwoDimensionalPrimitiveArrayParameter() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameWithTwoDimensionalPrimitiveArrayParameter() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameWithTwoDimensionalPrimitiveArrayParameterUsingSourceCodeSyntax() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameWithTwoDimensionalPrimitiveArrayParameterUsingSourceCodeSyntax() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameWithTwoDimensionalObjectArrayParameter() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameWithTwoDimensionalObjectArrayParameter() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameWithTwoDimensionalObjectArrayParameterUsingSourceCodeSyntax() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameWithTwoDimensionalObjectArrayParameterUsingSourceCodeSyntax() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameWithMultidimensionalPrimitiveArrayParameter() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameWithMultidimensionalPrimitiveArrayParameter() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameWithMultidimensionalPrimitiveArrayParameterUsingSourceCodeSyntax() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameWithMultidimensionalPrimitiveArrayParameterUsingSourceCodeSyntax() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameWithMultidimensionalObjectArrayParameter() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameWithMultidimensionalObjectArrayParameter() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameWithMultidimensionalObjectArrayParameterUsingSourceCodeSyntax() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameWithMultidimensionalObjectArrayParameterUsingSourceCodeSyntax() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameEndingInOpeningParenthesis() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameEndingInOpeningParenthesis() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameContainingHashtags() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameContainingHashtags() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameContainingHashtagsAndWithParameterList() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameContainingHashtagsAndWithParameterList() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameContainingParentheses() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameContainingParentheses() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameEndingWithParentheses() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameEndingWithParentheses() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByFullyQualifiedNameEndingWithParenthesesAndWithParameterList() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByFullyQualifiedNameEndingWithParenthesesAndWithParameterList() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate assertSelectMethodByFullyQualifiedName(clazz Class<?>, method Method) : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to private assertSelectMethodByFullyQualifiedName(clazz Class<?>, method Method) : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate assertSelectMethodByFullyQualifiedName(clazz Class<?>, method Method, parameterType Class<?>, expectedParameterTypes String) : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to private assertSelectMethodByFullyQualifiedName(clazz Class<?>, method Method, parameterType Class<?>, expectedParameterTypes String) : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate assertSelectMethodByFullyQualifiedName(clazz Class<?>, method Method, parameterName String, expectedParameterTypes String) : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to private assertSelectMethodByFullyQualifiedName(clazz Class<?>, method Method, parameterName String, expectedParameterTypes String) : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByClassAndMethodName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByClassAndMethodName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodWithParametersByMethodReference() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodWithParametersByMethodReference() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectClassByNameForSpockSpec() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectClassByNameForSpockSpec() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage selectMethodByClassAndNameForSpockSpec() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByClassAndNameForSpockSpec() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectUriTests from class org.junit.platform.engine.discovery.DiscoverySelectorsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectFileTests from class org.junit.platform.engine.discovery.DiscoverySelectorsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectDirectoryTests from class org.junit.platform.engine.discovery.DiscoverySelectorsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectClasspathResourceTests from class org.junit.platform.engine.discovery.DiscoverySelectorsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectModuleTests from class org.junit.platform.engine.discovery.DiscoverySelectorsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectPackageTests from class org.junit.platform.engine.discovery.DiscoverySelectorsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectClasspathRootsTests from class org.junit.platform.engine.discovery.DiscoverySelectorsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectClassTests from class org.junit.platform.engine.discovery.DiscoverySelectorsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests from class org.junit.platform.engine.discovery.DiscoverySelectorsTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpackage selectMethodByClassNameMethodNameAndMethodParameterTypesPreconditions() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByClassNameMethodNameAndParameterTypeNamesPreconditions() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpackage selectMethodByClassMethodNameAndMethodParameterTypesPreconditions() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByClassMethodNameAndParameterTypeNamesPreconditions() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpackage selectMethodByClassAndMethodNameWithParameterTypes() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByClassAndMethodName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "cd4d060aea9b828a1a3fd7ca3b54fbb6fe8b3b27",
+      "url": "https://github.com/junit-team/junit5/commit/cd4d060aea9b828a1a3fd7ca3b54fbb6fe8b3b27",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic getClassLoader(clazz Class<?>) : ClassLoader extracted from package getConditionMethod(fullyQualifiedMethodName String, context ExtensionContext) : Method in class org.junit.jupiter.api.condition.MethodBasedCondition & moved to class org.junit.platform.commons.util.ClassLoaderUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic getClassLoader(clazz Class<?>) : ClassLoader extracted from package findFactoryMethodByFullyQualifiedName(testClass Class<?>, testMethod Method, fullyQualifiedMethodName String) : Method in class org.junit.jupiter.params.provider.MethodArgumentsProvider & moved to class org.junit.platform.commons.util.ClassLoaderUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic getClassLoader(clazz Class<?>) : ClassLoader extracted from private loadRequiredParameterType(clazz Class<?>, methodName String, typeName String) : Class<?> in class org.junit.platform.commons.util.ReflectionUtils & moved to class org.junit.platform.commons.util.ClassLoaderUtils",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tdeclaringClass : Class<?> in method public convert(source Object, targetType Class<?>, context ParameterContext) : Object from class org.junit.jupiter.params.converter.DefaultArgumentConverter",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic getClassLoader(clazz Class<?>) : ClassLoader extracted from public convert(source Object, targetType Class<?>, context ParameterContext) : Object in class org.junit.jupiter.params.converter.DefaultArgumentConverter & moved to class org.junit.platform.commons.util.ClassLoaderUtils",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "c4ee492c27e97c96174e1cc2e0130cb7b8a5c808",
+      "url": "https://github.com/junit-team/junit5/commit/c4ee492c27e97c96174e1cc2e0130cb7b8a5c808",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate valueOf(targetType Class, source String) : Object inlined to public convert(source String, targetType Class) : Object in class org.junit.jupiter.params.converter.StringToEnumConverter",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/junit-team/junit5.git",
+      "sha1": "f6e73acdbe9133bdd4286241c88f707a3a3228cc",
+      "url": "https://github.com/junit-team/junit5/commit/f6e73acdbe9133bdd4286241c88f707a3a3228cc",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package argumentsMustNotBeNull() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package getNull() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package getWithNullCastToWrapperType() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package getWithCastToPrimitiveType() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package getLong() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package getFloat() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package getDouble() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate convert(input Object, targetClass Class<?>, parameterContext ParameterContext) : Object extracted from private convert(input Object, targetClass Class<?>) : Object in class org.junit.jupiter.params.converter.DefaultArgumentConverterTests",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate convertToTargetType(source Object, targetType Class<?>) : Object renamed to public convert(source Object, targetType Class<?>, context ParameterContext) : Object in class org.junit.jupiter.params.converter.DefaultArgumentConverter",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package indexMustNotBeNegative() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package indexMustBeSmallerThanLength() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package get() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package getWithCast() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package getWithCastToIncompatibleType() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package getCharacter() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package getBoolean() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package getByte() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package getShort() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package getInteger() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package getString() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package toArray() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package toList() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate defaultArgumentsAccessor(invocationIndex int, arguments Object...) : DefaultArgumentsAccessor extracted from package size() : void in class org.junit.jupiter.params.aggregator.DefaultArgumentsAccessorTests",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.junit.jupiter.params.converter.DefaultArgumentConverter.StringToClassConverter from class org.junit.jupiter.params.converter.DefaultArgumentConverter",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tClass<?> to Object in method public convert(className String, targetType Class<?>, classLoader ClassLoader) : Object from class org.junit.jupiter.params.converter.DefaultArgumentConverter.StringToClassConverter",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tprivate toClass(type String) : Class<?> from class org.junit.jupiter.params.converter.DefaultArgumentConverter.StringToCommonJavaTypesConverter to public convert(className String, targetType Class<?>, classLoader ClassLoader) : Object from class org.junit.jupiter.params.converter.DefaultArgumentConverter.StringToClassConverter",
+          "validation": true
+        }
+      ]
+    }
+  ]
+}

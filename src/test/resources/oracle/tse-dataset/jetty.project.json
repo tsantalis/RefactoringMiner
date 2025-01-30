@@ -1,0 +1,1032 @@
+{
+  "results": [
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "9b2cfc4483c7174accca413ae0db841e8af4b069",
+      "url": "https://github.com/eclipse/jetty.project/commit/9b2cfc4483c7174accca413ae0db841e8af4b069",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tpathQuery : String in method protected sendHeaders(exchange HttpExchange, contentBuffer ByteBuffer, lastContent boolean, callback Callback) : void from class org.eclipse.jetty.http2.client.http.HttpSenderOverHTTP2",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tpathQuery : String in method protected sendHeaders(exchange HttpExchange, contentBuffer ByteBuffer, lastContent boolean, callback Callback) : void from class org.eclipse.jetty.http3.client.http.internal.HttpSenderOverHTTP3",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "9fdfa464d765e7f999c28efd7b89b944f6ac59d2",
+      "url": "https://github.com/eclipse/jetty.project/commit/9fdfa464d765e7f999c28efd7b89b944f6ac59d2",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate reset() : void extracted from public accept(frame Frame, callback Callback) : void in class org.eclipse.jetty.websocket.core.internal.messages.StringMessageSink",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate reset() : void extracted from public fail(failure Throwable) : void in class org.eclipse.jetty.websocket.core.internal.messages.StringMessageSink",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "efda64631919479ac8c1bab033cbeb47a4363bfc",
+      "url": "https://github.com/eclipse/jetty.project/commit/efda64631919479ac8c1bab033cbeb47a4363bfc",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\trequest : HttpRequest in method public associate(exchange HttpExchange) : boolean from class org.eclipse.jetty.client.HttpChannel",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tl : AutoLock to ignored : AutoLock in method public associate(exchange HttpExchange) : boolean from class org.eclipse.jetty.client.HttpChannel",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tl : AutoLock to ignored : AutoLock in method public disassociate(exchange HttpExchange) : boolean from class org.eclipse.jetty.client.HttpChannel",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tl : AutoLock to ignored : AutoLock in method public getHttpExchange() : HttpExchange from class org.eclipse.jetty.client.HttpChannel",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tl : AutoLock to ignored : AutoLock in method private acquireRequest() : int from class org.eclipse.jetty.fcgi.client.http.HttpConnectionOverFCGI",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tl : AutoLock to ignored : AutoLock in method private releaseRequest(request int) : void from class org.eclipse.jetty.fcgi.client.http.HttpConnectionOverFCGI",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\trequest : Request in method public testFailureBeforeRequestCommit() : void from class org.eclipse.jetty.client.HttpClientFailureTest",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprotected getConnection() : Connection extracted from public testFailureBeforeRequestCommit() : void in class org.eclipse.jetty.client.HttpClientFailureTest & moved to class org.eclipse.jetty.client.http.HttpChannelOverHTTP",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprotected getConnection() : Connection extracted from public testFailureBeforeRequestCommit() : void in class org.eclipse.jetty.client.HttpClientFailureTest & moved to class org.eclipse.jetty.fcgi.client.http.HttpChannelOverFCGI",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprotected getConnection() : Connection extracted from public testFailureBeforeRequestCommit() : void in class org.eclipse.jetty.client.HttpClientFailureTest & moved to class org.eclipse.jetty.http2.client.http.HttpChannelOverHTTP2",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprotected getConnection() : Connection extracted from public testFailureBeforeRequestCommit() : void in class org.eclipse.jetty.client.HttpClientFailureTest & moved to class org.eclipse.jetty.http3.client.http.internal.HttpChannelOverHTTP3",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "f82844e2a256c3426df029f028bf0fee8cd4879b",
+      "url": "https://github.com/eclipse/jetty.project/commit/f82844e2a256c3426df029f028bf0fee8cd4879b",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic HttpCookie(name String, value String, domain String, path String, maxAge long, httpOnly boolean, secure boolean, comment String, version int, sameSite SameSite, partitioned boolean) extracted from public HttpCookie(name String, value String, domain String, path String, maxAge long, httpOnly boolean, secure boolean, comment String, version int, sameSite SameSite) in class org.eclipse.jetty.http.HttpCookie",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic getCommentWithAttributes(comment String, httpOnly boolean, sameSite SameSite, partitioned boolean) : String extracted from public getCommentWithAttributes(comment String, httpOnly boolean, sameSite SameSite) : String in class org.eclipse.jetty.http.HttpCookie",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tcookie : HttpCookie in method public getSessionCookie(session HttpSession, contextPath String, requestIsSecure boolean) : HttpCookie from class org.eclipse.jetty.server.session.SessionHandler",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcomment : String in method public getSessionCookie(session HttpSession, contextPath String, requestIsSecure boolean) : HttpCookie from class org.eclipse.jetty.server.session.SessionHandler",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "fa166d09c5c83f6f61c83f24f43d6b383a5b6541",
+      "url": "https://github.com/eclipse/jetty.project/commit/fa166d09c5c83f6f61c83f24f43d6b383a5b6541",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tselector : Selector in method public getTotalKeys() : int from class org.eclipse.jetty.io.ManagedSelector",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tselector : Selector in method private processUpdates() : void from class org.eclipse.jetty.io.ManagedSelector.SelectorProducer",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "168d8715d4148dafe7f818c4bb01dcd0d6e2347f",
+      "url": "https://github.com/eclipse/jetty.project/commit/168d8715d4148dafe7f818c4bb01dcd0d6e2347f",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\t_queues : Map<RateType,Queue<AsyncContext>> to _queue : Queue<AsyncContext> in class org.eclipse.jetty.servlets.DoSFilter",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\t_queues : Map<RateType,Queue<AsyncContext>> to _queue : Queue<AsyncContext> in class org.eclipse.jetty.servlets.DoSFilter",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tsb : StringBuilder in method public toString() : String from class org.eclipse.jetty.servlets.DoSFilter.RateTracker.Overage",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "8c94490e186f76e41c56b1bd4dc246291b46462f",
+      "url": "https://github.com/eclipse/jetty.project/commit/8c94490e186f76e41c56b1bd4dc246291b46462f",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic newStreamId(streamType StreamType) : long extracted from public ClientHTTP3Session(configuration HTTP3Configuration, quicSession ClientQuicSession, listener Session.Client.Listener, promise Promise<Session.Client>) in class org.eclipse.jetty.http3.client.internal.ClientHTTP3Session",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic newStreamId(streamType StreamType) : long extracted from public ClientHTTP3Session(configuration HTTP3Configuration, quicSession ClientQuicSession, listener Session.Client.Listener, promise Promise<Session.Client>) in class org.eclipse.jetty.http3.client.internal.ClientHTTP3Session",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic newStreamId(streamType StreamType) : long extracted from public ClientHTTP3Session(configuration HTTP3Configuration, quicSession ClientQuicSession, listener Session.Client.Listener, promise Promise<Session.Client>) in class org.eclipse.jetty.http3.client.internal.ClientHTTP3Session",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic newStreamId(streamType StreamType) : long extracted from public ServerHTTP3Session(configuration HTTP3Configuration, quicSession ServerQuicSession, listener Session.Server.Listener) in class org.eclipse.jetty.http3.server.internal.ServerHTTP3Session",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic newStreamId(streamType StreamType) : long extracted from public ServerHTTP3Session(configuration HTTP3Configuration, quicSession ServerQuicSession, listener Session.Server.Listener) in class org.eclipse.jetty.http3.server.internal.ServerHTTP3Session",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic newStreamId(streamType StreamType) : long extracted from public ServerHTTP3Session(configuration HTTP3Configuration, quicSession ServerQuicSession, listener Session.Server.Listener) in class org.eclipse.jetty.http3.server.internal.ServerHTTP3Session",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic generateGreaseValue() : long extracted from public randomReservedCode() : long in class org.eclipse.jetty.http3.internal.HTTP3ErrorCode & moved to class org.eclipse.jetty.http3.internal.Grease",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "909e99ec377adcd833cc126a851ad0d7e78cef5a",
+      "url": "https://github.com/eclipse/jetty.project/commit/909e99ec377adcd833cc126a851ad0d7e78cef5a",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic setupEnvironment() : void renamed to private startEnvironment() : void in class org.eclipse.jetty.deploy.providers.WebAppProviderTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tsrcDir : File to srcDir : Path in method public testWebappSymlinkDir() : void from class org.eclipse.jetty.deploy.providers.WebAppProviderTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttestsDir : File to testsDir : Path in method public testBaseDirSymlink() : void from class org.eclipse.jetty.deploy.providers.WebAppProviderTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic configure(xmls List<Resource>, properties Map<String,String>) : Map<String,Object> extracted from public loadConfigurations(configurations List<Resource>, properties Map<String,String>) : Server in class org.eclipse.jetty.deploy.test.XmlConfiguredJetty",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic startScanning() : void extracted from public doStart() : void in class org.eclipse.jetty.util.Scanner",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tfoundServer : Server to server : Server in method public loadConfigurations(configurations List<Resource>, properties Map<String,String>) : Server from class org.eclipse.jetty.deploy.test.XmlConfiguredJetty",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "40a31b839475f20d9b8639c738444d9fe3307462",
+      "url": "https://github.com/eclipse/jetty.project/commit/40a31b839475f20d9b8639c738444d9fe3307462",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tex : Exception to t : Throwable in method public testMissingDirectory() : void from class org.eclipse.jetty.util.RolloverFileOutputStreamTest",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texClassOK : boolean to error : Throwable in method public testMissingDirectory() : void from class org.eclipse.jetty.util.RolloverFileOutputStreamTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tex : Exception to t : Throwable in method public testMissingDirectory() : void from class org.eclipse.jetty.util.RolloverFileOutputStreamTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\texClassOK : boolean to error : Throwable in method public testMissingDirectory() : void from class org.eclipse.jetty.util.RolloverFileOutputStreamTest",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "07f320ab6a625cd5afebb794799c6d6ab8021553",
+      "url": "https://github.com/eclipse/jetty.project/commit/07f320ab6a625cd5afebb794799c6d6ab8021553",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\thttpClient : HttpClient to client : HttpClient in class org.eclipse.jetty.websocket.core.client.WebSocketCoreClient",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tpublic WebSocketClient(httpClient HttpClient, webSocketComponents WebSocketComponents) inlined to public WebSocketClient(httpClient HttpClient) in class org.eclipse.jetty.websocket.client.WebSocketClient",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tsess : Session to ignored : Session in method public testLocalRemoteAddress() : void from class org.eclipse.jetty.websocket.tests.client.WebSocketClientTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tinuseExecutor : Executor to wsExecutor : Executor in method public testCustomizeExecutorDirectly(startHttpClient boolean) : void from class org.eclipse.jetty.websocket.tests.client.WebSocketClientTest",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "cc8f976d0cd2ece0030f90bc0fa4cb80ea19ff79",
+      "url": "https://github.com/eclipse/jetty.project/commit/cc8f976d0cd2ece0030f90bc0fa4cb80ea19ff79",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate writeState(action String, lifecycle LifeCycle) : void renamed to private appendStateChange(action String, obj Object) : void in class org.eclipse.jetty.server.StateLifeCycleListener",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\te : Exception to e : IOException in method private appendStateChange(action String, obj Object) : void from class org.eclipse.jetty.server.StateLifeCycleListener",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\t_filename : Path to stateFile : Path in class org.eclipse.jetty.server.StateLifeCycleListener",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tentry : String in method private appendStateChange(action String, obj Object) : void from class org.eclipse.jetty.server.StateLifeCycleListener",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "0928204db79b68223c69194d0b9327ce62f5ab4c",
+      "url": "https://github.com/eclipse/jetty.project/commit/0928204db79b68223c69194d0b9327ce62f5ab4c",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tscheduler : ScheduledThreadPoolExecutor to scheduler : ScheduledExecutorService in class org.eclipse.jetty.util.thread.ScheduledExecutorScheduler",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ts : ScheduledThreadPoolExecutor to s : ScheduledExecutorService in method public schedule(task Runnable, delay long, unit TimeUnit) : Task from class org.eclipse.jetty.util.thread.ScheduledExecutorScheduler",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tscheduler : ScheduledThreadPoolExecutor in method protected doStart() : void from class org.eclipse.jetty.util.thread.ScheduledExecutorScheduler",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "c55363d43f6a2e0c9e20c16c7a7e3f427df877df",
+      "url": "https://github.com/eclipse/jetty.project/commit/c55363d43f6a2e0c9e20c16c7a7e3f427df877df",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testDateCacheFormatNow() : void renamed to public testDateCache() : void in class org.eclipse.jetty.util.jmh.DateCacheBenchmark",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.eclipse.jetty.util.DateCache.TickHolder from class org.eclipse.jetty.util.DateCache",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tseconds : long to ms : long in method public format(inDate long) : String from class org.eclipse.jetty.util.DateCache.Tick",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tformat1 : String in method public DateCache(format String, l Locale, tz TimeZone, subSecondPrecision boolean) from class org.eclipse.jetty.util.DateCache",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tformat2 : String in method public DateCache(format String, l Locale, tz TimeZone, subSecondPrecision boolean) from class org.eclipse.jetty.util.DateCache",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\t_string : String to _suffix : String in class org.eclipse.jetty.util.DateCache.Tick",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic DateCache(format String, l Locale, tz TimeZone, subSecondPrecision boolean) extracted from public DateCache(format String, l Locale, tz TimeZone) in class org.eclipse.jetty.util.DateCache",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tzIndex : int to msIndex : int in method public DateCache(format String, l Locale, tz TimeZone, subSecondPrecision boolean) from class org.eclipse.jetty.util.DateCache",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttick : Tick to holder : TickHolder in method protected formatTick(inDate long) : Tick from class org.eclipse.jetty.util.DateCache",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\ttick : Tick to holder : TickHolder in method protected formatTick(inDate long) : Tick from class org.eclipse.jetty.util.DateCache",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\ts : String to suffix : String in method protected formatTick(inDate long) : Tick from class org.eclipse.jetty.util.DateCache",
+          "validation": false
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testDateCacheNow() : void renamed to public testDateTimeFormatter() : void in class org.eclipse.jetty.util.jmh.DateCacheBenchmark",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "e91a68923a72faac04cdfe9884cfb9a5be34cda8",
+      "url": "https://github.com/eclipse/jetty.project/commit/e91a68923a72faac04cdfe9884cfb9a5be34cda8",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcontentEncoding : String to contentEncoding : AtomicReference<String> in method public testGetParams() : void from class org.eclipse.jetty.demos.ManyHandlersTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcontentEncoding : String to contentEncoding : AtomicReference<String> in method public testGetHello() : void from class org.eclipse.jetty.demos.ManyHandlersTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tresponseHeaders : HttpFields in method protected responseHeaders(exchange HttpExchange) : boolean from class org.eclipse.jetty.client.HttpReceiver",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcontentEncodings : List<String> to contentEncoding : String in method protected responseHeaders(exchange HttpExchange) : boolean from class org.eclipse.jetty.client.HttpReceiver",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcontentEncodings : List<String> to contentEncoding : String in method protected responseHeaders(exchange HttpExchange) : boolean from class org.eclipse.jetty.client.HttpReceiver",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "30ed83f3d082fc914330de2d5bbde4d0f4b91371",
+      "url": "https://github.com/eclipse/jetty.project/commit/30ed83f3d082fc914330de2d5bbde4d0f4b91371",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tbuffer : RetainableByteBuffer in method private evict(direct boolean, excess long) : void from class org.eclipse.jetty.io.ArrayRetainableByteBufferPool",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tbuffer : RetainableByteBuffer in method private findOldestEntry(now long, bucket Pool<RetainableByteBuffer>) : Pool<RetainableByteBuffer>.Entry from class org.eclipse.jetty.io.ArrayRetainableByteBufferPool",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tentryAge : long to age : long in method private findOldestEntry(now long, bucket Pool<RetainableByteBuffer>) : Pool<RetainableByteBuffer>.Entry from class org.eclipse.jetty.io.ArrayRetainableByteBufferPool",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "b2477d1c38127b58129cf253aabf7efd78646838",
+      "url": "https://github.com/eclipse/jetty.project/commit/b2477d1c38127b58129cf253aabf7efd78646838",
+      "commonRefactoring": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\trequestURI : URI in method public onComplete(result Result) : void from class org.eclipse.jetty.client.AuthenticationProtocolHandler.AuthenticationListener",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate startProxy(connectHandler ConnectHandler, proxyServlet ForwardProxyServlet) : void extracted from private startProxy(connectHandler ConnectHandler) : void in class org.eclipse.jetty.http.client.ProxyWithDynamicTransportTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpackage copy(newURI URI) : HttpRequest extracted from protected copyRequest(oldRequest HttpRequest, newURI URI) : Request in class org.eclipse.jetty.client.HttpClient & moved to class org.eclipse.jetty.client.HttpRequest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tprivate proxySpeaksServerProtocol(serverProtocol Origin.Protocol) : boolean from class org.eclipse.jetty.client.HttpProxy.HttpProxyClientConnectionFactory to package requiresTunnel(serverOrigin Origin) : boolean from class org.eclipse.jetty.client.HttpProxy",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tversion : HttpVersion to http1 : boolean in method protected normalizeRequest(request HttpRequest) : void from class org.eclipse.jetty.client.HttpConnection",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tversion : HttpVersion to http1 : boolean in method protected normalizeRequest(request HttpRequest) : void from class org.eclipse.jetty.client.HttpConnection",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tconnectionFactory : ClientConnectionFactory to factory : ClientConnectionFactory in method private tunnelSucceeded(endPoint EndPoint) : void from class org.eclipse.jetty.client.HttpProxy.CreateTunnelPromise",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tproxy : ProxyConfiguration.Proxy to proxyDestination : HttpDestination in method private tunnel(connection Connection) : void from class org.eclipse.jetty.client.HttpProxy.CreateTunnelPromise",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tproxy : ProxyConfiguration.Proxy to proxyDestination : HttpDestination in method private tunnel(connection Connection) : void from class org.eclipse.jetty.client.HttpProxy.CreateTunnelPromise",
+          "validation": false
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tproxyAddress : Origin.Address in method private tunnel(destination HttpDestination, connection Connection) : void from class org.eclipse.jetty.client.HttpProxy.CreateTunnelPromise",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tserverProtocols : List<String> in method package requiresTunnel(serverOrigin Origin) : boolean from class org.eclipse.jetty.client.HttpProxy",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tpath : String in method public onComplete(result Result) : void from class org.eclipse.jetty.client.AuthenticationProtocolHandler.AuthenticationListener",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tpath : String in method protected normalizeRequest(request HttpRequest) : void from class org.eclipse.jetty.client.HttpConnection",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tproxy : ProxyConfiguration.Proxy in method private tunnel(destination HttpDestination, connection Connection) : void from class org.eclipse.jetty.client.HttpProxy.CreateTunnelPromise",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprotected newHttpClient(clientConnector ClientConnector) : HttpClient extracted from private startProxy(connectHandler ConnectHandler) : void in class org.eclipse.jetty.http.client.ProxyWithDynamicTransportTest & moved to class org.eclipse.jetty.http.client.ProxyWithDynamicTransportTest.ForwardProxyServlet",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpackage requiresTunnel(serverOrigin Origin) : boolean extracted from protected normalizeRequest(request HttpRequest) : void in class org.eclipse.jetty.client.HttpConnection & moved to class org.eclipse.jetty.client.HttpProxy",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpackage requiresTunnel(serverOrigin Origin) : boolean extracted from public newConnection(endPoint EndPoint, context Map<String,Object>) : org.eclipse.jetty.io.Connection in class org.eclipse.jetty.client.HttpProxy.HttpProxyClientConnectionFactory & moved to class org.eclipse.jetty.client.HttpProxy",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "a5a0a6c887753139c6b17fe7b142ade56e4d4174",
+      "url": "https://github.com/eclipse/jetty.project/commit/a5a0a6c887753139c6b17fe7b142ade56e4d4174",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\toshutCallback : Callback in method public shutdownOutput() : void from class org.eclipse.jetty.http2.HTTP2StreamEndPoint",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tl : AutoLock to ignored : AutoLock in method public fill(sink ByteBuffer) : int from class org.eclipse.jetty.http2.HTTP2StreamEndPoint",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tl : AutoLock to ignored : AutoLock in method public fill(sink ByteBuffer) : int from class org.eclipse.jetty.http2.HTTP2StreamEndPoint",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tl : AutoLock to ignored : AutoLock in method public fill(sink ByteBuffer) : int from class org.eclipse.jetty.http2.HTTP2StreamEndPoint",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tl : AutoLock to ignored : AutoLock in method private offer(buffer ByteBuffer, callback Callback, failure Throwable) : void from class org.eclipse.jetty.http2.HTTP2StreamEndPoint",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tl : AutoLock to ignored : AutoLock in method protected process() : void from class org.eclipse.jetty.http2.HTTP2StreamEndPoint",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate flushFailure(failure Throwable) : void inlined to public flush(buffers ByteBuffer...) : boolean in class org.eclipse.jetty.http2.HTTP2StreamEndPoint",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tl : AutoLock to ignored : AutoLock in method public fill(sink ByteBuffer) : int from class org.eclipse.jetty.http2.HTTP2StreamEndPoint",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tdataCallback : Callback in method public write(callback Callback, buffers ByteBuffer...) : void from class org.eclipse.jetty.http2.HTTP2StreamEndPoint",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "a9c596e3d79fbfa14bf8ae20148881dc9f0f8b05",
+      "url": "https://github.com/eclipse/jetty.project/commit/a9c596e3d79fbfa14bf8ae20148881dc9f0f8b05",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage getParser() : ConfigurationParser renamed to public getXmlParser() : XmlParser in class org.eclipse.jetty.xml.XmlConfiguration",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tConfigurationParser to XmlParser in method public getXmlParser() : XmlParser from class org.eclipse.jetty.xml.XmlConfiguration",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tString[] to Stream<Arguments> in method public xmlConfigs() : Stream<Arguments> from class org.eclipse.jetty.xml.XmlConfigurationTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tdtd : String in method protected resolveEntity(pid String, sid String) : InputSource from class org.eclipse.jetty.xml.XmlParser",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tparser : ConfigurationParser to parser : XmlParser in method public XmlConfiguration(resource Resource) from class org.eclipse.jetty.xml.XmlConfiguration",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "420ec7cc1db65b42693dc002aca0faa567f62f7e",
+      "url": "https://github.com/eclipse/jetty.project/commit/420ec7cc1db65b42693dc002aca0faa567f62f7e",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tmaxFrameLength : int to maxFrameSize : int in class org.eclipse.jetty.http2.client.HTTP2Client",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tmaxDynamicTableSize : int to maxDecoderTableCapacity : int in class org.eclipse.jetty.http2.client.HTTP2Client",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tpromise : Promise<Session> to sessionPromise : Promise<Session> in method public newConnection(endPoint EndPoint, context Map<String,Object>) : Connection from class org.eclipse.jetty.http2.client.HTTP2ClientConnectionFactory",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tsession : Session to clientSession : Session in method public testClientFlowControlOneBigWrite() : void from class org.eclipse.jetty.http2.client.FlowControlStrategyTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tsession : ISession to session : HTTP2Session in class org.eclipse.jetty.http2.HTTP2Connection",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate configure(settings Map<Integer,Integer>, local boolean) : void extracted from public onSettings(frame SettingsFrame, reply boolean) : void in class org.eclipse.jetty.http2.HTTP2Session",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic Generator(byteBufferPool ByteBufferPool, maxHeaderBlockFragment int) extracted from public Generator(byteBufferPool ByteBufferPool, maxDynamicTableSize int, maxHeaderBlockFragment int) in class org.eclipse.jetty.http2.generator.Generator",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic Generator(byteBufferPool ByteBufferPool, useDirectByteBuffers boolean, maxHeaderBlockFragment int) extracted from public Generator(byteBufferPool ByteBufferPool, useDirectByteBuffers boolean, maxDynamicTableSize int, maxHeaderBlockFragment int) in class org.eclipse.jetty.http2.generator.Generator",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tmaxFrameLength : int to maxFrameSize : int in class org.eclipse.jetty.http2.parser.Parser",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate validateFrame(buffer ByteBuffer, streamId int, bodyLength int) : boolean extracted from private parse(buffer ByteBuffer, streamId int, bodyLength int) : boolean in class org.eclipse.jetty.http2.parser.SettingsBodyParser",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\t_dynamicTableSizeInBytes : int to _tableSize : int in class org.eclipse.jetty.http2.hpack.HpackContext",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\t_maxDynamicTableSizeInBytes : int to _maxTableSize : int in class org.eclipse.jetty.http2.hpack.HpackContext",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmaxSize : int in method public decode(buffer ByteBuffer) : MetaData from class org.eclipse.jetty.http2.hpack.HpackDecoder",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\t_localMaxDynamicTableSize : int to _maxTableCapacity : int in class org.eclipse.jetty.http2.hpack.HpackDecoder",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tpublic HpackEncoder(localMaxDynamicTableSize int, remoteMaxDynamicTableSize int, maxHeaderListSize int) inlined to public HpackEncoder() in class org.eclipse.jetty.http2.hpack.HpackEncoder",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\t_maxDynamicTableSize : int to _tableCapacity : int in class org.eclipse.jetty.http2.hpack.HpackPerfTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tmaxFrameLength : int to maxFrameSize : int in class org.eclipse.jetty.http2.server.AbstractHTTP2ServerConnectionFactory",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tinitialStreamRecvWindow : int in method protected newSettings() : Map<Integer,Integer> from class org.eclipse.jetty.http2.server.AbstractHTTP2ServerConnectionFactory",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tmaxConcurrentStreams : int in method protected newSettings() : Map<Integer,Integer> from class org.eclipse.jetty.http2.server.AbstractHTTP2ServerConnectionFactory",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmaxHeadersSize : int in method protected newSettings() : Map<Integer,Integer> from class org.eclipse.jetty.http2.server.AbstractHTTP2ServerConnectionFactory",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tmaxDynamicTableSize : int to maxDecoderTableCapacity : int in class org.eclipse.jetty.http2.server.AbstractHTTP2ServerConnectionFactory",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic getInitialEncoderTableCapacity() : int renamed to public getMaxEncoderTableCapacity() : int in class org.eclipse.jetty.http3.HTTP3Configuration",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic setInitialEncoderTableCapacity(initialTableCapacity int) : void renamed to public setMaxEncoderTableCapacity(maxTableCapacity int) : void in class org.eclipse.jetty.http3.HTTP3Configuration",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tmaxTableCapacity : int to maxDecoderTableCapacity : int in class org.eclipse.jetty.http3.HTTP3Configuration",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tinitialTableCapacity : int to maxEncoderTableCapacity : int in class org.eclipse.jetty.http3.HTTP3Configuration",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprotected getParser() : Parser from class org.eclipse.jetty.http2.HTTP2Connection to public getParser() : Parser from class org.eclipse.jetty.http2.HTTP2Session",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprotected getParser() : ServerParser from class org.eclipse.jetty.http2.server.HTTP2ServerConnection to public getParser() : ServerParser from class org.eclipse.jetty.http2.server.HTTP2ServerSession",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic onData(frame DataFrame) : void from class org.eclipse.jetty.http2.HTTP2Connection.ParserListener to public onData(frame DataFrame) : void from class org.eclipse.jetty.http2.HTTP2Connection",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic directUpgrade() : void extracted from public upgrade(request Request, responseFields HttpFields.Mutable) : boolean in class org.eclipse.jetty.http2.server.HTTP2ServerConnection & moved to class org.eclipse.jetty.http2.server.HTTP2ServerSession",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic standardUpgrade() : void extracted from public upgrade(request Request, responseFields HttpFields.Mutable) : boolean in class org.eclipse.jetty.http2.server.HTTP2ServerConnection & moved to class org.eclipse.jetty.http2.server.HTTP2ServerSession",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate parser : Parser from class org.eclipse.jetty.http2.HTTP2Connection to private parser : Parser from class org.eclipse.jetty.http2.HTTP2Session",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic onConnectionFailure(error int, reason String) : void from class org.eclipse.jetty.http2.HTTP2Connection.ParserListener to public onConnectionFailure(error int, reason String) : void from class org.eclipse.jetty.http2.HTTP2Connection",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\t_remoteMaxDynamicTableSize : int to _tableCapacity : int in class org.eclipse.jetty.http2.hpack.HpackEncoder",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmaxDynamicTableSize : int to maxHeaderListSize : int in method public encode(buffer ByteBuffer, metadata MetaData) : void from class org.eclipse.jetty.http2.hpack.HpackEncoder",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tgenerator : Generator in method public testRequestTrailerInvalidHpackReceived() : void from class org.eclipse.jetty.http2.client.TrailersTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tsettings : Map<Integer,Integer> in method public onSettings(frame SettingsFrame, reply boolean) : void from class org.eclipse.jetty.http2.HTTP2Session",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tgenerator : Generator in method public testInvalidResponseHPack() : void from class org.eclipse.jetty.http2.client.http.HttpClientTransportOverHTTP2Test",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic getMaxFrameSize() : int extracted from public getMaxFrameLength() : int in class org.eclipse.jetty.http2.client.HTTP2Client",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic setMaxFrameSize(maxFrameSize int) : void extracted from public setMaxFrameLength(maxFrameLength int) : void in class org.eclipse.jetty.http2.client.HTTP2Client",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic getMaxDecoderTableCapacity() : int extracted from public getMaxDynamicTableSize() : int in class org.eclipse.jetty.http2.client.HTTP2Client",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic setMaxDecoderTableCapacity(maxDecoderTableCapacity int) : void extracted from public setMaxDynamicTableSize(maxDynamicTableSize int) : void in class org.eclipse.jetty.http2.client.HTTP2Client",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tsettings : Map<Integer,Integer> in method private configure(settings Map<Integer,Integer>, local boolean) : void from class org.eclipse.jetty.http2.HTTP2Session",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic Generator(byteBufferPool ByteBufferPool, maxHeaderBlockFragment int) extracted from public Generator(byteBufferPool ByteBufferPool) in class org.eclipse.jetty.http2.generator.Generator",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic getMaxFrameSize() : int extracted from public getMaxFrameLength() : int in class org.eclipse.jetty.http2.parser.Parser",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic setMaxFrameSize(maxFrameSize int) : void extracted from public setMaxFrameLength(maxFrameLength int) : void in class org.eclipse.jetty.http2.parser.Parser",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic Parser(byteBufferPool ByteBufferPool, maxTableCapacity int, maxHeaderSize int) extracted from public Parser(byteBufferPool ByteBufferPool, listener Listener, maxDynamicTableSize int, maxHeaderSize int) in class org.eclipse.jetty.http2.parser.Parser",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tparser : Parser in method public testMaxFrameSize() : void from class org.eclipse.jetty.http2.frames.MaxFrameSizeParseTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic setMaxTableCapacity(maxTableCapacity int) : void extracted from public setLocalMaxDynamicTableSize(localMaxdynamciTableSize int) : void in class org.eclipse.jetty.http2.hpack.HpackDecoder",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic setMaxTableCapacity(maxTableCapacity int) : void extracted from public HpackDecoder(localMaxDynamicTableSize int, maxHeaderSize int) in class org.eclipse.jetty.http2.hpack.HpackDecoder",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic setMaxTableCapacity(maxTableSizeLimit int) : void extracted from public HpackEncoder() in class org.eclipse.jetty.http2.hpack.HpackEncoder",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic setMaxTableCapacity(maxTableSizeLimit int) : void extracted from public setLocalMaxDynamicTableSize(localMaxDynamicTableSize int) : void in class org.eclipse.jetty.http2.hpack.HpackEncoder",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmaxDynamicTableSize : int to tableCapacity : int in method public encode(buffer ByteBuffer, metadata MetaData) : void from class org.eclipse.jetty.http2.hpack.HpackEncoder",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic getMaxDecoderTableCapacity() : int extracted from public getMaxDynamicTableSize() : int in class org.eclipse.jetty.http2.server.AbstractHTTP2ServerConnectionFactory",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic setMaxDecoderTableCapacity(maxDecoderTableCapacity int) : void extracted from public setMaxDynamicTableSize(maxDynamicTableSize int) : void in class org.eclipse.jetty.http2.server.AbstractHTTP2ServerConnectionFactory",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic getMaxFrameSize() : int extracted from public getMaxFrameLength() : int in class org.eclipse.jetty.http2.server.AbstractHTTP2ServerConnectionFactory",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic setMaxFrameSize(maxFrameSize int) : void extracted from public setMaxFrameLength(maxFrameLength int) : void in class org.eclipse.jetty.http2.server.AbstractHTTP2ServerConnectionFactory",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse/jetty.project.git",
+      "sha1": "9982381e18eed715a9cc8f2d8b9c14380ca8eee7",
+      "url": "https://github.com/eclipse/jetty.project/commit/9982381e18eed715a9cc8f2d8b9c14380ca8eee7",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tvalue : Pointer in method public getValueAsString(len int, charset Charset) : String from class org.eclipse.jetty.quic.quiche.jna.char_pointer",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tvalue : Pointer in method public getValueAsBytes(len int) : byte[] from class org.eclipse.jetty.quic.quiche.jna.char_pointer",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcertificateWorkPath : Path in method protected doStart() : void from class org.eclipse.jetty.quic.server.QuicServerConnector",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\ttrustStorePath : Path to implCtx : Map<String,Object> in method public onOpen() : void from class org.eclipse.jetty.quic.client.ClientQuicConnection",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttrustStorePath : Path to implCtx : Map<String,Object> in method public onOpen() : void from class org.eclipse.jetty.quic.client.ClientQuicConnection",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\timplCtx : Map<String,Object> in method public onOpen() : void from class org.eclipse.jetty.quic.client.ClientQuicConnection",
+          "validation": true
+        }
+      ]
+    }
+  ]
+}

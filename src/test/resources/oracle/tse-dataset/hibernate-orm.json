@@ -1,0 +1,905 @@
+{
+  "results": [
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "0ea86a9d07e61f1c5963713cfce0815aa9def5db",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/0ea86a9d07e61f1c5963713cfce0815aa9def5db",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tparameterResolvers : Map<String,ManagedBean<? extends Supplier>> to parameterResolvers : Map<String,ManagedBean<? extends Supplier<?>>> in method public bindFilterDef(filterDef FilterDef, context MetadataBuildingContext) : void from class org.hibernate.boot.model.internal.FilterDefBinder",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tManagedBean<? extends Supplier> to ManagedBean<? extends Supplier<?>> in method private resolveParamResolver(paramDef ParamDef, context MetadataBuildingContext) : ManagedBean<? extends Supplier<?>> from class org.hibernate.boot.model.internal.FilterDefBinder",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tparameterResolverMap : Map<String,ManagedBean<? extends Supplier>> to parameterResolverMap : Map<String,ManagedBean<? extends Supplier<?>>> in class org.hibernate.engine.spi.FilterDefinition",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tresolver : ManagedBean<? extends Supplier> to resolver : ManagedBean<? extends Supplier<?>> in method public getParameterResolver(parameterName String) : Supplier<?> from class org.hibernate.engine.spi.FilterDefinition",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tSupplier to Supplier<?> in method public getParameterResolver(parameterName String) : Supplier<?> from class org.hibernate.engine.spi.FilterDefinition",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate hasResolver(parameterName String) : boolean extracted from public validate() : void in class org.hibernate.internal.FilterImpl",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tSupplier to Supplier<?> in method public getParameterResolver(name String) : Supplier<?> from class org.hibernate.internal.FilterImpl",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfilterParamResolver : Supplier to filterParamResolver : Supplier<?> in method private retrieveParamValue(filter FilterImpl, paramName String) : Object from class org.hibernate.sql.ast.tree.predicate.FilterPredicate.FilterFragmentPredicate",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate hasArgument(parameterName String) : boolean extracted from public validate() : void in class org.hibernate.internal.FilterImpl",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tbeanRegistry : ManagedBeanRegistry to bootstrapContext : BootstrapContext in method private resolveParamResolver(paramDef ParamDef, context MetadataBuildingContext) : ManagedBean<? extends Supplier<?>> from class org.hibernate.boot.model.internal.FilterDefBinder",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tbeanRegistry : ManagedBeanRegistry to bootstrapContext : BootstrapContext in method private resolveParamResolver(paramDef ParamDef, context MetadataBuildingContext) : ManagedBean<? extends Supplier<?>> from class org.hibernate.boot.model.internal.FilterDefBinder",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "ec8cdd9dbbd67b326b22ce0f373ccab2e522276d",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/ec8cdd9dbbd67b326b22ce0f373ccab2e522276d",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate memberMethodType(method ExecutableElement) : ExecutableType extracted from private addQueryMethod(method ExecutableElement) : void in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate memberMethodType(method ExecutableElement) : ExecutableType extracted from private parameterType(parameter VariableElement) : TypeMirror in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "MOVE_RENAME_ATTRIBUTE",
+          "description": "Move And Rename Attribute\tprivate returnType : String renamed to package fullReturnType : String and moved from class org.hibernate.processor.annotation.CriteriaDeleteMethod to class org.hibernate.processor.annotation.AbstractQueryMethod",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpackage preamble(declaration StringBuilder) : void moved from class org.hibernate.processor.annotation.AbstractFinderMethod to class org.hibernate.processor.annotation.IdFinderMethod & inlined to public getAttributeDeclarationString() : String",
+          "validation": false
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpackage preamble(declaration StringBuilder) : void moved from class org.hibernate.processor.annotation.AbstractFinderMethod to class org.hibernate.processor.annotation.NaturalIdFinderMethod & inlined to public getAttributeDeclarationString() : String",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "15a2d5cb8b0d55c599a5fe9e7c8dbc96d66b2638",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/15a2d5cb8b0d55c599a5fe9e7c8dbc96d66b2638",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate hasPageRequest(method ExecutableElement) : boolean extracted from private validatedQueryReturnType(method ExecutableElement, typeElement TypeElement) : boolean in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate hashKeyedPage(method ExecutableElement) : boolean extracted from private validatedQueryReturnType(method ExecutableElement, typeElement TypeElement) : boolean in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate hasOrder(method ExecutableElement) : boolean extracted from private validatedQueryReturnType(method ExecutableElement, typeElement TypeElement) : boolean in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "37714a6b1af5e65811eb26e951fba344c20aa303",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/37714a6b1af5e65811eb26e951fba344c20aa303",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\ttype : DomainType<Y> in method private basicDomainType(typeContext ValueContext, context MetadataContext) : DomainType<Y> from class org.hibernate.metamodel.internal.AttributeFactory",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\thibernateValue : Value in method private basicDomainType(typeContext ValueContext, context MetadataContext) : DomainType<Y> from class org.hibernate.metamodel.internal.AttributeFactory",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "f51d8dbe0da2ba2e166cbe2f0d6c078e595cc718",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/f51d8dbe0da2ba2e166cbe2f0d6c078e595cc718",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate removeDollar(simpleName String) : String extracted from public getSimpleName() : String in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate addQueryMethod(method ExecutableElement, returnType TypeMirror, containerTypeName String, mirror AnnotationMirror, isNative boolean, value AnnotationValue, queryString String) : void extracted from private addQueryMethod(method ExecutableElement, returnType TypeMirror, containerType TypeElement, mirror AnnotationMirror, isNative boolean) : void in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tsessionVariableName : String in method private setupQuarkusDaoConstructor() : String from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tquery : Object to queryString : Object in method private addQueryMethod(method ExecutableElement, returnType TypeMirror, containerType TypeElement, mirror AnnotationMirror, isNative boolean) : void from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getConstructorName() : String extracted from private addDefaultConstructor() : void in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getConstructorName() : String extracted from private addDaoConstructor(method ExecutableElement) : String in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getConstructorName() : String extracted from private setupQuarkusDaoConstructor() : String in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tqueryString : String in method private addQueryMethod(method ExecutableElement, returnType TypeMirror, containerType TypeElement, mirror AnnotationMirror, isNative boolean) : void from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "eb1b78ff0b76153fbc39d12888ea043631f8c0ec",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/eb1b78ff0b76153fbc39d12888ea043631f8c0ec",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate checkOrdinalParameter(param SqmParameter<?>, paramNames List<String>, paramTypes List<String>, method ExecutableElement, mirror AnnotationMirror, value AnnotationValue, queryParamType String) : void extracted from private checkParameter(param SqmParameter<?>, paramNames List<String>, paramTypes List<String>, method ExecutableElement, mirror AnnotationMirror, value AnnotationValue) : void in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate checkNamedParameter(param SqmParameter<?>, paramNames List<String>, paramTypes List<String>, method ExecutableElement, mirror AnnotationMirror, value AnnotationValue, queryParamType String) : void extracted from private checkParameter(param SqmParameter<?>, paramNames List<String>, paramTypes List<String>, method ExecutableElement, mirror AnnotationMirror, value AnnotationValue) : void in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\targType : String in method private checkOrdinalParameter(param SqmParameter<?>, paramNames List<String>, paramTypes List<String>, method ExecutableElement, mirror AnnotationMirror, value AnnotationValue, queryParamType String) : void from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\targType : String in method private checkNamedParameter(param SqmParameter<?>, paramNames List<String>, paramTypes List<String>, method ExecutableElement, mirror AnnotationMirror, value AnnotationValue, queryParamType String) : void from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate isLegalAssignment(param SqmParameter<?>, argType String, queryParamType String) : boolean extracted from private checkParameter(param SqmParameter<?>, paramNames List<String>, paramTypes List<String>, method ExecutableElement, mirror AnnotationMirror, value AnnotationValue) : void in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate isLegalAssignment(param SqmParameter<?>, argType String, queryParamType String) : boolean extracted from private checkParameter(param SqmParameter<?>, paramNames List<String>, paramTypes List<String>, method ExecutableElement, mirror AnnotationMirror, value AnnotationValue) : void in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tindex : int to argType : String in method private isLegalAssignment(param SqmParameter<?>, argType String, queryParamType String) : boolean from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\targType : String in method private isLegalAssignment(param SqmParameter<?>, argType String, queryParamType String) : boolean from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "3cfec2fd914c3f3a29378580172398bfe80563c0",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/3cfec2fd914c3f3a29378580172398bfe80563c0",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic setAddSuppressWarningsAnnotation(addSuppressWarningsAnnotation boolean) : void renamed to public setSuppressedWarnings(suppressedWarnings String[]) : void in class org.hibernate.processor.Context",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tsuppressedWarnings : String in method private handleSettings(environment ProcessingEnvironment) : boolean from class org.hibernate.processor.HibernateProcessor",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\taddSuppressWarningsAnnotation : boolean to suppressedWarnings : String[] in class org.hibernate.processor.Context",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\taddSuppressWarningsAnnotation : boolean to suppressedWarnings : String[] in class org.hibernate.processor.Context",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "024fd31a3ce0a2d580446533340d4748323768c2",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/024fd31a3ce0a2d580446533340d4748323768c2",
+      "commonRefactoring": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\telementUtils : Elements in method public getTypeElementForFullyQualifiedName(qualifiedName String) : TypeElement from class org.hibernate.processor.Context",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tprovider : String to provider : AnnotationValue in method private processClasses(roundEnvironment RoundEnvironment) : void from class org.hibernate.processor.HibernateProcessor",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tvalue : Object to value : AnnotationValue in method private handleNamedQueryRepeatableAnnotation(annotationName String, checkHql boolean) : void from class org.hibernate.processor.annotation.AnnotationMeta",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tnameValue : Object to nameValue : AnnotationValue in method private handleNamedQuery(mirror AnnotationMirror, checkHql boolean) : void from class org.hibernate.processor.annotation.AnnotationMeta",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tvalue : Object to value : AnnotationValue in method private addAuxiliaryMembersForRepeatableAnnotation(annotationName String, prefix String) : void from class org.hibernate.processor.annotation.AnnotationMeta",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate entityName(resultType DeclaredType, annotation AnnotationMirror) : String extracted from private implicitEntityName(resultType DeclaredType) : String in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tname : String to name : AnnotationValue in method private entityName(resultType DeclaredType, annotation AnnotationMirror) : String from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tdataStoreValue : AnnotationValue in method private dataStore() : String from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttarget : TypeMirror to target : AnnotationValue in method private validateToOneAssociation(memberOfClass Element, annotation AnnotationMirror, type TypeMirror) : void from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttarget : TypeMirror to target : AnnotationValue in method private validateToManyAssociation(memberOfClass Element, annotation AnnotationMirror, type TypeMirror) : void from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tmappedBy : String to mappedBy : AnnotationValue in method private validateAssociation(memberOfClass Element, annotation AnnotationMirror, typeMirror TypeMirror) : void from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tdescendingOrNull : Boolean to descendingOrNull : AnnotationValue in method private orderByExpression(orderBy AnnotationMirror, entityType TypeElement, method ExecutableElement) : OrderBy from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tignoreCaseOrNull : Boolean to ignoreCaseOrNull : AnnotationValue in method private orderByExpression(orderBy AnnotationMirror, entityType TypeElement, method ExecutableElement) : OrderBy from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tenabledFetchProfiles : Object to enabledFetchProfiles : AnnotationValue in method private enabledFetchProfiles(method ExecutableElement) : List<String> from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tvalue : Object to value : AnnotationValue in method private validateFinderParameter(entityType TypeElement, param VariableElement) : FieldType from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\taccessType : Object to accessType : AnnotationValue in method public determineAnnotationSpecifiedAccessType(element Element) : AccessType from class org.hibernate.processor.util.TypeUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tparameterValue : Object to value : AnnotationValue in method public getFullyQualifiedClassNameOfTargetEntity(mirror AnnotationMirror, member String) : String from class org.hibernate.processor.util.TypeUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tparameterValue : Object to value : AnnotationValue in method public getFullyQualifiedClassNameOfTargetEntity(mirror AnnotationMirror, member String) : String from class org.hibernate.processor.util.TypeUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tObject to AnnotationValue in method public getAnnotationValue(annotationMirror AnnotationMirror, member String) : AnnotationValue from class org.hibernate.processor.util.TypeUtils",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tvalue : Object to name : AnnotationValue in method private entityName(resultType DeclaredType, annotation AnnotationMirror) : String from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tvalue : Object to name : AnnotationValue in method private entityName(resultType DeclaredType, annotation AnnotationMirror) : String from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\toptional : AnnotationValue in method private isNullable(member Element) : boolean from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttypeElement : TypeElement in method public isAnnotationMirrorOfType(annotationMirror AnnotationMirror, qualifiedName String) : boolean from class org.hibernate.processor.util.TypeUtils",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tpropertyName : String in method private validateAssociation(memberOfClass Element, annotation AnnotationMirror, typeMirror TypeMirror) : void from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "3dc5896a08dd544c55f9358dcc8d7bbe0b8396fe",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/3dc5896a08dd544c55f9358dcc8d7bbe0b8396fe",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tclassLoaderService : ClassLoaderService in method public getEnumType(prefix String) : EnumJavaType<?> from class org.hibernate.metamodel.model.domain.internal.JpaMetamodelImpl",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tregistry : JavaTypeRegistry in method public getEnumType(prefix String) : EnumJavaType<?> from class org.hibernate.metamodel.model.domain.internal.JpaMetamodelImpl",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tignore : Exception to ignore : ClassLoadingException in method public getEnumType(prefix String) : EnumJavaType<?> from class org.hibernate.metamodel.model.domain.internal.JpaMetamodelImpl",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tsimplePathContext : HqlParser.SimplePathContext in method private getPossibleEnumValue(expressionContext HqlParser.ExpressionContext) : String from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "ce317960fc7b04881969f66512f2a7baf0eef84b",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/ce317960fc7b04881969f66512f2a7baf0eef84b",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tallowedEnumLiteralTexts : Map<String,Map<Class<?>,Enum<?>>> to allowedEnumLiteralTexts : Map<String,Set<String>> in class org.hibernate.metamodel.model.domain.internal.JpaMetamodelImpl",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tMap<String,Map<Class<?>,Enum<?>>> to Set<String> in method public getAllowedEnumLiteralTexts(enumValue String) : Set<String> from class org.hibernate.metamodel.model.domain.internal.MappingMetamodelImpl",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate getPossibleEnumValues(expressionContext HqlParser.ExpressionContext) : Map<Class<?>,Enum<?>> renamed to private getPossibleEnumTypes(expressionContext HqlParser.ExpressionContext) : Set<String> in class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttargetPathJavaType : Class<?> to targetPathJavaType : String in method public visitInsertStatement(ctx HqlParser.InsertStatementContext) : SqmInsertStatement<R> from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttargetPathJavaType : Class<?> to targetPathJavaType : String in method public visitAssignment(ctx HqlParser.AssignmentContext) : SqmAssignment<?> from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpossibleEnumValues : Map<Class<?>,Enum<?>> to possibleEnumValues : Set<String> in method public visitAssignment(ctx HqlParser.AssignmentContext) : SqmAssignment<?> from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttestExpressionJavaType : Class<?> to testExpressionJavaType : String in method public visitInPredicate(ctx HqlParser.InPredicateContext) : SqmPredicate from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tMap<Class<?>,Enum<?>> to Set<String> in method private getPossibleEnumTypes(expressionContext HqlParser.ExpressionContext) : Set<String> from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tMap<String,Map<Class<?>,Enum<?>>> to Set<String> in method public getAllowedEnumLiteralTexts(enumValue String) : Set<String> from class org.hibernate.metamodel.model.domain.JpaMetamodel",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tMap<String,Map<Class<?>,Enum<?>>> to Set<String> in method public getAllowedEnumLiteralTexts(enumValue String) : Set<String> from class org.hibernate.metamodel.model.domain.internal.JpaMetamodelImpl",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpossibleEnumValues : Map<Class<?>,Enum<?>> to possibleEnumTypes : Set<String> in method public visitInsertStatement(ctx HqlParser.InsertStatementContext) : SqmInsertStatement<R> from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tpossibleEnumValues : Map<Class<?>,Enum<?>> to possibleEnumTypes : Set<String> in method public visitInsertStatement(ctx HqlParser.InsertStatementContext) : SqmInsertStatement<R> from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpossibleEnumValues : Map<Class<?>,Enum<?>> to possibleEnumTypes : Set<String> in method private createComparisonPredicate(comparisonOperator ComparisonOperator, leftExpressionContext HqlParser.ExpressionContext, rightExpressionContext HqlParser.ExpressionContext) : SqmComparisonPredicate from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tpossibleEnumValues : Map<Class<?>,Enum<?>> to possibleEnumTypes : Set<String> in method private createComparisonPredicate(comparisonOperator ComparisonOperator, leftExpressionContext HqlParser.ExpressionContext, rightExpressionContext HqlParser.ExpressionContext) : SqmComparisonPredicate from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpossibleEnumValues : Map<Class<?>,Enum<?>> to possibleEnumTypes : Set<String> in method public visitInPredicate(ctx HqlParser.InPredicateContext) : SqmPredicate from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tpossibleEnumValues : Map<Class<?>,Enum<?>> to possibleEnumTypes : Set<String> in method public visitInPredicate(ctx HqlParser.InPredicateContext) : SqmPredicate from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpossibleEnumValues : Map<Class<?>,Enum<?>> to possibleEnumTypes : Set<String> in method public visitSimpleCaseList(ctx HqlParser.SimpleCaseListContext) : SqmCaseSimple<?,?> from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tpossibleEnumValues : Map<Class<?>,Enum<?>> to possibleEnumTypes : Set<String> in method public visitSimpleCaseList(ctx HqlParser.SimpleCaseListContext) : SqmCaseSimple<?,?> from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tenumValue : Enum<?> to enumValue : String in method private resolveEnumShorthandLiteral(expressionContext HqlParser.ExpressionContext, enumValue String, enumType String, enumTypes Set<String>) : SqmExpression<?> from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "f0c9d4ec4cf902a5a09f35acade24b97a3c69445",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/f0c9d4ec4cf902a5a09f35acade24b97a3c69445",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.hibernate.processor.test.data.Author moved to org.hibernate.processor.test.data.basic.Author",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.hibernate.processor.test.data.Book moved to org.hibernate.processor.test.data.basic.Book",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.hibernate.processor.test.data.DataTest moved to org.hibernate.processor.test.data.basic.DataTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.hibernate.processor.test.data.BookAuthorRepository moved to org.hibernate.processor.test.data.basic.BookAuthorRepository",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tjpaMetamodel : JpaMetamodelImplementor in method public resolvePathPart(identifier String, isTerminal boolean, creationState SqmCreationState) : SemanticPathPart from class org.hibernate.query.hql.internal.BasicDotIdentifierConsumer.BaseLocalSequencePart",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tnodeBuilder : NodeBuilder in method public resolvePathPart(identifier String, isTerminal boolean, creationState SqmCreationState) : SemanticPathPart from class org.hibernate.query.hql.internal.BasicDotIdentifierConsumer.BaseLocalSequencePart",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tjavaTypeRegistry : JavaTypeRegistry in method public resolvePathPart(identifier String, isTerminal boolean, creationState SqmCreationState) : SemanticPathPart from class org.hibernate.query.hql.internal.BasicDotIdentifierConsumer.BaseLocalSequencePart",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "95641b23663324da675a06f301611567b22bab33",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/95641b23663324da675a06f301611567b22bab33",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate addAuxiliaryDatabaseObjects(javaType JavaType<?>, database Database, sortEnumValues boolean) : void extracted from public addAuxiliaryDatabaseObjects(javaType JavaType<?>, columnSize Size, database Database, typeConfiguration TypeConfiguration) : void in class org.hibernate.dialect.PostgreSQLEnumJdbcType",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic addAuxiliaryDatabaseObjects(javaType JavaType<?>, columnSize Size, database Database, context JdbcTypeIndicators) : void extracted from public resolve() : Resolution<?> in class org.hibernate.mapping.BasicValue & moved to class org.hibernate.type.descriptor.jdbc.JdbcType",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "fdd3ded88878d9cfdd6a7f6f68d17c204135e0d8",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/fdd3ded88878d9cfdd6a7f6f68d17c204135e0d8",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getTypeNameOrNull(simpleValue SimpleValue) : String extracted from public isSame(other Any) : boolean in class org.hibernate.mapping.Any",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getTypeNameOrNull(simpleValue SimpleValue) : String extracted from public isSame(other Any) : boolean in class org.hibernate.mapping.Any",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "454e1cb7749dd2701da49f40807280b69fe6c845",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/454e1cb7749dd2701da49f40807280b69fe6c845",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttestScope : Object in method public resolveParameter(parameterContext ParameterContext, extensionContext ExtensionContext) : Object from class org.hibernate.testing.orm.junit.EntityManagerFactoryParameterResolver",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "ddcfc54661fd366c5306634d2d2dee97e77c0efa",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/ddcfc54661fd366c5306634d2d2dee97e77c0efa",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.hibernate.orm.test.boot.jaxb.mapping.JaxbHelper moved to org.hibernate.orm.test.boot.jaxb.JaxbHelper",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tpluralAttributeInfo : PluralAttributeInfo to hbmCollection : PluralAttributeInfo in method private transferAttributes(hbmAttributeMappings List, attributes AttributesContainer) : void from class org.hibernate.boot.jaxb.hbm.transform.HbmXmlTransformer",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate transformElementCollection(source PluralAttributeInfo) : JaxbElementCollection renamed to private transferElementInfo(hbmCollection PluralAttributeInfo, element JaxbHbmBasicCollectionElementType, target JaxbElementCollection) : void in class org.hibernate.boot.jaxb.hbm.transform.HbmXmlTransformer",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tJaxbElementCollection to void in method private transferElementInfo(hbmCollection PluralAttributeInfo, element JaxbHbmBasicCollectionElementType, target JaxbElementCollection) : void from class org.hibernate.boot.jaxb.hbm.transform.HbmXmlTransformer",
+          "validation": false
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate transformManyToManyCollection(pluralAttributeInfo PluralAttributeInfo) : JaxbManyToMany renamed to private transferManyToManyInfo(hbmCollection PluralAttributeInfo, manyToMany JaxbHbmManyToManyCollectionElementType, target JaxbManyToMany) : void in class org.hibernate.boot.jaxb.hbm.transform.HbmXmlTransformer",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tJaxbManyToMany to void in method private transferManyToManyInfo(hbmCollection PluralAttributeInfo, manyToMany JaxbHbmManyToManyCollectionElementType, target JaxbManyToMany) : void from class org.hibernate.boot.jaxb.hbm.transform.HbmXmlTransformer",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate transformOneToManyCollection(pluralAttributeInfo PluralAttributeInfo) : JaxbOneToMany renamed to private transferOneToManyInfo(hbmAttributeInfo PluralAttributeInfo, hbmOneToMany JaxbHbmOneToManyCollectionElementType, target JaxbOneToMany) : void in class org.hibernate.boot.jaxb.hbm.transform.HbmXmlTransformer",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tJaxbOneToMany to void in method private transferOneToManyInfo(hbmAttributeInfo PluralAttributeInfo, hbmOneToMany JaxbHbmOneToManyCollectionElementType, target JaxbOneToMany) : void from class org.hibernate.boot.jaxb.hbm.transform.HbmXmlTransformer",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate determineEmbeddableName(hbmComponent JaxbHbmCompositeAttributeType) : String extracted from private convertEmbeddable(hbmComponent JaxbHbmCompositeAttributeType) : JaxbEmbeddable in class org.hibernate.boot.jaxb.hbm.transform.HbmXmlTransformer",
+          "validation": true
+        },
+        {
+          "type": "SPLIT_METHOD",
+          "description": "Split Method\tprivate transformElementCollection(source PluralAttributeInfo) : JaxbElementCollection to [private transferElementInfo(hbmCollection PluralAttributeInfo, element JaxbHbmBasicCollectionElementType, target JaxbElementCollection) : void, private transferElementInfo(hbmCollection PluralAttributeInfo, compositeElement JaxbHbmCompositeCollectionElementType, target JaxbElementCollection) : void] in class org.hibernate.boot.jaxb.hbm.transform.HbmXmlTransformer",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tembeddedable : JaxbEmbeddable to embeddable : JaxbEmbeddable in method private transferElementInfo(hbmCollection PluralAttributeInfo, compositeElement JaxbHbmCompositeCollectionElementType, target JaxbElementCollection) : void from class org.hibernate.boot.jaxb.hbm.transform.HbmXmlTransformer",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "bab8b98a59eb8b9966fd21278939bda9cae2edf3",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/bab8b98a59eb8b9966fd21278939bda9cae2edf3",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tsuperBound : TypeMirror in method private getTypeArgument(parameterType TypeMirror, entity TypeElement) : TypeMirror from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "2955e0b91d78b4879e62d6957d27d49bcb2f8a4c",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/2955e0b91d78b4879e62d6957d27d49bcb2f8a4c",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tprocessedQuery : String in method private addQueryMethod(method ExecutableElement, returnType TypeMirror, containerType TypeElement, mirror AnnotationMirror, isNative boolean) : void from class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "76ca5fb790c624a85d1da267767635757de60538",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/76ca5fb790c624a85d1da267767635757de60538",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tconnection : Connection to connection : ConnectionWrapper in class org.hibernate.testing.jta.JtaAwareConnectionProviderImpl.XAResourceWrapper",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.hibernate.testing.jta.JtaAwareConnectionProviderImpl.ConnectionWrapper from class org.hibernate.testing.jta.JtaAwareConnectionProviderImpl.XAResourceWrapper",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprivate wrapStatement(statement Statement) : Statement extracted from public getConnection() : Connection in class org.hibernate.testing.jta.JtaAwareConnectionProviderImpl & moved to class org.hibernate.testing.jta.JtaAwareConnectionProviderImpl.ConnectionWrapper",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "3315135d90efdd4a037686f3f0106c5acf01cc51",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/3315135d90efdd4a037686f3f0106c5acf01cc51",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate typeName(parameterType TypeMirror) : String extracted from private createCriteriaFinder(method ExecutableElement, returnType TypeMirror, containerType String, entity TypeElement) : void in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate typeName(parameterType TypeMirror) : String extracted from private getTypeArgument(parameterType TypeMirror) : TypeMirror in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate typeName(parameterType TypeMirror) : String extracted from private checkParameters(method ExecutableElement, returnType TypeMirror, paramNames List<String>, paramTypes List<String>, mirror AnnotationMirror, value AnnotationValue, hql String) : void in class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "sha1": "b4c1b636c5453c19e14f60b50eb02e822cca6d32",
+      "url": "https://github.com/hibernate/hibernate-orm/commit/b4c1b636c5453c19e14f60b50eb02e822cca6d32",
+      "commonRefactoring": [
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpublic getHostingEntity() : Metamodel from class org.hibernate.processor.annotation.AbstractQueryMethod to public getHostingEntity() : Metamodel from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpackage isUsingEntityManager() : boolean from class org.hibernate.processor.annotation.AbstractQueryMethod to package isUsingEntityManager() : boolean from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpackage isUsingStatelessSession() : boolean from class org.hibernate.processor.annotation.AbstractQueryMethod to package isUsingStatelessSession() : boolean from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpackage localSessionName() : String from class org.hibernate.processor.annotation.AbstractQueryMethod to package localSessionName() : String from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_ATTRIBUTE",
+          "description": "Pull Up Attribute\tpackage annotationMetaEntity : AnnotationMetaEntity from class org.hibernate.processor.annotation.AbstractQueryMethod to package annotationMetaEntity : AnnotationMetaEntity from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_ATTRIBUTE",
+          "description": "Pull Up Attribute\tpackage sessionType : String from class org.hibernate.processor.annotation.AbstractQueryMethod to package sessionType : String from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_ATTRIBUTE",
+          "description": "Pull Up Attribute\tpackage sessionName : String from class org.hibernate.processor.annotation.AbstractQueryMethod to package sessionName : String from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpublic getHostingEntity() : Metamodel from class org.hibernate.processor.annotation.LifecycleMethod to public getHostingEntity() : Metamodel from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpackage localSessionName() : String from class org.hibernate.processor.annotation.LifecycleMethod to package localSessionName() : String from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_ATTRIBUTE",
+          "description": "Pull Up Attribute\tprivate annotationMetaEntity : AnnotationMetaEntity from class org.hibernate.processor.annotation.LifecycleMethod to package annotationMetaEntity : AnnotationMetaEntity from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_ATTRIBUTE",
+          "description": "Pull Up Attribute\tprivate sessionType : String from class org.hibernate.processor.annotation.LifecycleMethod to package sessionType : String from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_ATTRIBUTE",
+          "description": "Pull Up Attribute\tprivate sessionName : String from class org.hibernate.processor.annotation.LifecycleMethod to package sessionName : String from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_SUPERCLASS",
+          "description": "Extract Superclass\torg.hibernate.processor.annotation.AbstractAnnotatedMethod from classes [org.hibernate.processor.annotation.AbstractQueryMethod, org.hibernate.processor.annotation.LifecycleMethod]",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpackage isReactiveSession() : boolean from class org.hibernate.processor.annotation.AbstractQueryMethod to package isReactiveSessionAccess() : boolean from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpackage isReactiveSession() : boolean from class org.hibernate.processor.annotation.LifecycleMethod to package isReactiveSessionAccess() : boolean from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpackage usingReactiveSessionAccess(sessionType String) : boolean extracted from package isReactiveSession() : boolean in class org.hibernate.processor.annotation.AbstractQueryMethod & moved to class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpackage usingReactiveSessionAccess(sessionType String) : boolean extracted from package isReactiveSession() : boolean in class org.hibernate.processor.annotation.LifecycleMethod & moved to class org.hibernate.processor.annotation.AnnotationMetaEntity",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpackage isReactive() : boolean from class org.hibernate.processor.annotation.AbstractQueryMethod to package isReactive() : boolean from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tprivate isReactive() : boolean from class org.hibernate.processor.annotation.LifecycleMethod to package isReactive() : boolean from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpackage isReactiveSession() : boolean from class org.hibernate.processor.annotation.AbstractQueryMethod to package isUsingEntityManager() : boolean from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": false
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpackage isReactiveSession() : boolean from class org.hibernate.processor.annotation.LifecycleMethod to package isUsingEntityManager() : boolean from class org.hibernate.processor.annotation.AbstractAnnotatedMethod",
+          "validation": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1003 @@
+{
+  "results": [
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "093bde518118175e1542fa2561f8d2f20649879b",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/093bde518118175e1542fa2561f8d2f20649879b",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate parseReachable(id ObjectId) : void renamed to private markReachable(id ObjectId) : void in class org.eclipse.jgit.transport.BasePackFetchConnection",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate translateToLocalTips(want Collection<Ref>) : Collection<Ref> extracted from private markReachable(want Collection<Ref>, have Set<ObjectId>, maxTime int) : void in class org.eclipse.jgit.transport.BasePackFetchConnection",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\twantRefs : Set<String> to refs : String[] in method private translateToLocalTips(want Collection<Ref>) : Collection<Ref> from class org.eclipse.jgit.transport.BasePackFetchConnection",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\twantRefs : Set<String> to refs : String[] in method private translateToLocalTips(want Collection<Ref>) : Collection<Ref> from class org.eclipse.jgit.transport.BasePackFetchConnection",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getRefObjectId(ref Ref) : ObjectId extracted from private markReachable(want Collection<Ref>, have Set<ObjectId>, maxTime int) : void in class org.eclipse.jgit.transport.BasePackFetchConnection",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getRefObjectId(ref Ref) : ObjectId extracted from private markReachable(want Collection<Ref>, have Set<ObjectId>, maxTime int) : void in class org.eclipse.jgit.transport.BasePackFetchConnection",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "621685d3ca5fbaba37a8fc79b347644b3e4425c0",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/621685d3ca5fbaba37a8fc79b347644b3e4425c0",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate deleteBranches(result List<String>, shortNames Set<String>) : void extracted from public call() : List<String> in class org.eclipse.jgit.api.DeleteBranchCommand",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tok : boolean to changed : boolean in method private updateConfig(shortNames Set<String>, error Exception) : void from class org.eclipse.jgit.api.DeleteBranchCommand",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate updateConfig(shortNames Set<String>, error Exception) : void extracted from public call() : List<String> in class org.eclipse.jgit.api.DeleteBranchCommand",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "f1a9d92a30abaf8c3d8cfc8030f864d4c642bf1e",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/f1a9d92a30abaf8c3d8cfc8030f864d4c642bf1e",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate createChunks(stats Stats) : List<ChunkHeader> renamed to private createCoreChunks(hashsz int, graphCommits GraphCommits) : List<ChunkHeader> in class org.eclipse.jgit.internal.storage.commitgraph.CommitGraphWriter",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "642f160236817ff1392ac96085cd5a3f3a96bc1f",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/642f160236817ff1392ac96085cd5a3f3a96bc1f",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tcleanupHook : Thread to shutdownListener : ShutdownHook.Listener in class org.eclipse.jgit.internal.storage.file.GC.PidLock",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tcleanupHook : Thread to shutdownListener : ShutdownHook.Listener in class org.eclipse.jgit.internal.storage.file.GC.PidLock",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage removed(tmp File) : void from class org.eclipse.jgit.junit.LocalDiskRepositoryTestCase.CleanupThread to package removed(tmp File) : void from class org.eclipse.jgit.junit.LocalDiskRepositoryTestCase.Cleanup",
+          "validation": false
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage deleteOnShutdown(tmp File) : void from class org.eclipse.jgit.junit.LocalDiskRepositoryTestCase.CleanupThread to package deleteOnShutdown(tmp File) : void from class org.eclipse.jgit.junit.LocalDiskRepositoryTestCase.Cleanup",
+          "validation": false
+        },
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpublic run() : void from class org.eclipse.jgit.junit.LocalDiskRepositoryTestCase.CleanupThread to private onShutdown() : void from class org.eclipse.jgit.junit.LocalDiskRepositoryTestCase.Cleanup",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.eclipse.jgit.junit.LocalDiskRepositoryTestCase.CleanupThread renamed to org.eclipse.jgit.junit.LocalDiskRepositoryTestCase.Cleanup",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic run() : void renamed to private onShutdown() : void in class org.eclipse.jgit.junit.LocalDiskRepositoryTestCase.Cleanup",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\ttoDelete : List<File> to toDelete : Set<File> in class org.eclipse.jgit.junit.LocalDiskRepositoryTestCase.Cleanup",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "f94be665f12d85304db056c6cb8934870de3e45a",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/f94be665f12d85304db056c6cb8934870de3e45a",
+      "commonRefactoring": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tcleanupHook : Thread in method package lock() : boolean from class org.eclipse.jgit.internal.storage.file.GC.PidLock",
+          "validation": false
+        }
+      ],
+      "ourApproach": [],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "9072103f3b3cf64dd12ad2949836ab98f62dabf1",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/9072103f3b3cf64dd12ad2949836ab98f62dabf1",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tgitPath : String in method private resetUntracked(tree RevTree) : void from class org.eclipse.jgit.api.StashApplyCommand",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tgitPath : String in method private writeMergedFile(rawMerged TemporaryBuffer, attributes Attributes) : File from class org.eclipse.jgit.merge.ResolveMerger",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate checkoutGitlink(path String, entry DirCacheEntry) : void from class org.eclipse.jgit.dircache.DirCacheCheckout to public checkoutGitlink(entry DirCacheEntry, gitPath String) : void from class org.eclipse.jgit.dircache.Checkout",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate options : WorkingTreeOptions from class org.eclipse.jgit.dircache.DirCacheCheckout to private options : WorkingTreeOptions from class org.eclipse.jgit.dircache.Checkout",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.eclipse.jgit.dircache.Checkout from class org.eclipse.jgit.dircache.DirCacheCheckout",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic checkout(entry DirCacheEntry, metadata CheckoutMetadata, reader ObjectReader, gitPath String) : void extracted from public checkoutEntry(repo Repository, entry DirCacheEntry, or ObjectReader, deleteRecursive boolean, checkoutMetadata CheckoutMetadata, options WorkingTreeOptions) : void in class org.eclipse.jgit.dircache.DirCacheCheckout & moved to class org.eclipse.jgit.dircache.Checkout",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\topt : WorkingTreeOptions to checkout : Checkout in method public checkoutEntry(repo Repository, entry DirCacheEntry, or ObjectReader, deleteRecursive boolean, checkoutMetadata CheckoutMetadata, options WorkingTreeOptions) : void from class org.eclipse.jgit.dircache.DirCacheCheckout",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\topt : WorkingTreeOptions to checkout : Checkout in method public checkoutEntry(repo Repository, entry DirCacheEntry, or ObjectReader, deleteRecursive boolean, checkoutMetadata CheckoutMetadata, options WorkingTreeOptions) : void from class org.eclipse.jgit.dircache.DirCacheCheckout",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tgitPath : String in method private checkout() : void from class org.eclipse.jgit.merge.ResolveMerger.WorkTreeUpdater",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\toptions : WorkingTreeOptions to checkout : Checkout in method protected checkoutPaths() : CheckoutCommand from class org.eclipse.jgit.api.CheckoutCommand",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\toptions : WorkingTreeOptions to checkout : Checkout in method protected checkoutPaths() : CheckoutCommand from class org.eclipse.jgit.api.CheckoutCommand",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tworkingTree : File in method public checkoutGitlink(entry DirCacheEntry, gitPath String) : void from class org.eclipse.jgit.dircache.Checkout",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic setRecursiveDeletion(recursive boolean) : Checkout extracted from public checkoutEntry(repo Repository, entry DirCacheEntry, or ObjectReader, deleteRecursive boolean, checkoutMetadata CheckoutMetadata, options WorkingTreeOptions) : void in class org.eclipse.jgit.dircache.DirCacheCheckout & moved to class org.eclipse.jgit.dircache.Checkout",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tpath : String in method public checkout(entry DirCacheEntry, metadata CheckoutMetadata, reader ObjectReader, gitPath String) : void from class org.eclipse.jgit.dircache.Checkout",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "e7a09e316dbbfff5d23cbb9687f7b0a5d44e7da0",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/e7a09e316dbbfff5d23cbb9687f7b0a5d44e7da0",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tloadedIdx : PackIndex to loadedIdx : Optionally<PackIndex> in class org.eclipse.jgit.internal.storage.file.Pack",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\treverseIdx : PackReverseIndex to reverseIdx : Optionally<PackReverseIndex> in class org.eclipse.jgit.internal.storage.file.Pack",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tbitmapIdx : PackBitmapIndex to bitmapIdx : Optionally<PackBitmapIndex> in class org.eclipse.jgit.internal.storage.file.Pack",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\trevIdx : PackReverseIndex in method private getReverseIdx() : PackReverseIndex from class org.eclipse.jgit.internal.storage.file.Pack",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "c353645a09b677644c55daa9dcff7df54529dc04",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/c353645a09b677644c55daa9dcff7df54529dc04",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate parse(msg String) : RevCommit renamed to private buildMessage(msg String) : String in class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tRevCommit to String in method private buildMessage(msg String) : String from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate guessEncoding() : Charset from class org.eclipse.jgit.revwalk.RevCommit to public guessEncoding(buffer byte[]) : Charset from class org.eclipse.jgit.util.RawParseUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic fromMessage(raw byte[]) : List<FooterLine> extracted from public getFooterLines() : List<FooterLine> in class org.eclipse.jgit.revwalk.RevCommit & moved to class org.eclipse.jgit.revwalk.FooterLine",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic getValues(footers List<FooterLine>, key FooterKey) : List<String> extracted from public getFooterLines(keyName FooterKey) : List<String> in class org.eclipse.jgit.revwalk.RevCommit & moved to class org.eclipse.jgit.revwalk.FooterLine",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testSignedOffBy_OneUserNoLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testSignedOffBy_OneUserNoLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testSignedOffBy_OneUserWithLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testSignedOffBy_OneUserWithLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testSignedOffBy_IgnoreWhitespace() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testSignedOffBy_IgnoreWhitespace() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testEmptyValueNoLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testEmptyValueNoLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testEmptyValueWithLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testEmptyValueWithLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testShortKey() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testShortKey() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testNonDelimtedEmail() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testNonDelimtedEmail() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testNotEmail() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testNotEmail() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testSignedOffBy_ManyUsers() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testSignedOffBy_ManyUsers() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testSignedOffBy_SkipNonFooter() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testSignedOffBy_SkipNonFooter() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testFilterFootersIgnoreCase() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testFilterFootersIgnoreCase() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testMatchesBugId() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testMatchesBugId() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testNoFooters_EmptyBody() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testNoFooters_EmptyBody() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testNoFooters_NewlineOnlyBody1() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testNoFooters_NewlineOnlyBody1() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testNoFooters_NewlineOnlyBody5() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testNoFooters_NewlineOnlyBody5() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testNoFooters_OneLineBodyNoLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testNoFooters_OneLineBodyNoLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testNoFooters_OneLineBodyWithLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testNoFooters_OneLineBodyWithLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testNoFooters_ShortBodyNoLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testNoFooters_ShortBodyNoLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcommit : RevCommit to msg : String in method public testNoFooters_ShortBodyWithLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testNoFooters_ShortBodyWithLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "ec3d919aa5ae891edc3d5e7eafe09cf272801878",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/ec3d919aa5ae891edc3d5e7eafe09cf272801878",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic renamed(entry DiffEntry, commit RevCommit) : void extracted from private updateFollowFilter(trees ObjectId[], cfg DiffConfig) : void in class org.eclipse.jgit.revwalk.TreeRevFilter & moved to class org.eclipse.jgit.revwalk.RenameCallback",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "7d2669587f475f3fba1acce9df257aed3c0714cd",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/7d2669587f475f3fba1acce9df257aed3c0714cd",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tnth : int[] to indexPosInOffsetOrder : int[] in class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tith : int to i : int in method package PackReverseIndexComputed(packIndex PackIndex) from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\to : long to offset : long in method package PackReverseIndexComputed(packIndex PackIndex) from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\to : long to offset : long in method package PackReverseIndexComputed(packIndex PackIndex) from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\to : long to offset : long in method package PackReverseIndexComputed(packIndex PackIndex) from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tme : MutableEntry to entry : MutableEntry in method package PackReverseIndexComputed(packIndex PackIndex) from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\toffsetsBySha1 : long[] to offsetsInIndexOrder : long[] in method package PackReverseIndexComputed(packIndex PackIndex) from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tbucketIndex : int[] to headValues : int[] in method package PackReverseIndexComputed(packIndex PackIndex) from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tbucketValues : int[] to furtherValues : int[] in method package PackReverseIndexComputed(packIndex PackIndex) from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tbucketValuesPos : int to asBucketValue : int in method package PackReverseIndexComputed(packIndex PackIndex) from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\toi : int to indexPos : int in method package PackReverseIndexComputed(packIndex PackIndex) from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\toffsetIndex : int[] to nextBucketStart : int[] in class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcnt : long to rawCnt : long in method package PackReverseIndexComputed(packIndex PackIndex) from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcnt : int in method package PackReverseIndexComputed(packIndex PackIndex) from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcnt : long to cnt : int in method package PackReverseIndexComputed(packIndex PackIndex) from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "23758d7a61081be4e28c9fc2a0256d7774962455",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/23758d7a61081be4e28c9fc2a0256d7774962455",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate identitiesOnly() : Collection<PublicKey> extracted from protected initializeAgentIdentities(session ClientSession) : Iterable<KeyAgentIdentity> in class org.eclipse.jgit.internal.transport.sshd.JGitPublicKeyAuthentication.KeyIterator",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tval : Map.Entry<PublicKey,String> to val : KeyAgentIdentity in method protected initializeAgentIdentities(session ClientSession) : Iterable<KeyAgentIdentity> from class org.eclipse.jgit.internal.transport.sshd.JGitPublicKeyAuthentication.KeyIterator",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tkeyPasswordProvider : Supplier<KeyPasswordProvider> in method public getSession(uri URIish, credentialsProvider CredentialsProvider, fs FS, tms int) : SshdSession from class org.eclipse.jgit.transport.sshd.SshdSessionFactory",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getAgentIdentities() : Iterable<KeyAgentIdentity> extracted from protected initializeAgentIdentities(session ClientSession) : Iterable<KeyAgentIdentity> in class org.eclipse.jgit.internal.transport.sshd.JGitPublicKeyAuthentication.KeyIterator",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tnext : Map.Entry<PublicKey,String> to next : KeyAgentIdentity in class org.eclipse.jgit.internal.transport.sshd.JGitPublicKeyAuthentication.KeyIterator.initializeAgentIdentities.new Iterator<>",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tval : Map.Entry<PublicKey,String> to val : KeyAgentIdentity in method public hasNext() : boolean from class org.eclipse.jgit.internal.transport.sshd.JGitPublicKeyAuthentication.KeyIterator.initializeAgentIdentities.new Iterator<>",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\titer : Iterator<? extends Map.Entry<PublicKey,String>> to identities : Iterator<KeyAgentIdentity> in class org.eclipse.jgit.internal.transport.sshd.JGitPublicKeyAuthentication.KeyIterator.initializeAgentIdentities.new Iterator<>",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\titer : Iterator<? extends Map.Entry<PublicKey,String>> to identities : Iterator<KeyAgentIdentity> in class org.eclipse.jgit.internal.transport.sshd.JGitPublicKeyAuthentication.KeyIterator.initializeAgentIdentities.new Iterator<>",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tresult : KeyAgentIdentity in method public next() : KeyAgentIdentity from class org.eclipse.jgit.internal.transport.sshd.JGitPublicKeyAuthentication.KeyIterator.getAgentIdentities.new Iterator<>",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "afb013b9837a385b658469f4595b65413e4d0dbf",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/afb013b9837a385b658469f4595b65413e4d0dbf",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpack : TemporaryBuffer.Heap to pack : InMemoryPack in method public testTinyThinPack() : void from class org.eclipse.jgit.transport.PackParserTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpack : TemporaryBuffer.Heap to pack : InMemoryPack in method public testPackWithDuplicateBlob() : void from class org.eclipse.jgit.transport.PackParserTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpack : TemporaryBuffer.Heap to pack : InMemoryPack in method public testParseOfsDeltaFullSize() : void from class org.eclipse.jgit.transport.PackParserTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpack : TemporaryBuffer.Heap to pack : InMemoryPack in method public testPackWithTrailingGarbage() : void from class org.eclipse.jgit.transport.PackParserTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpack : TemporaryBuffer.Heap to pack : InMemoryPack in method public testMaxObjectSizeFullBlob() : void from class org.eclipse.jgit.transport.PackParserTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpack : TemporaryBuffer.Heap to pack : InMemoryPack in method public testMaxObjectSizeDeltaBlock() : void from class org.eclipse.jgit.transport.PackParserTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpack : TemporaryBuffer.Heap to pack : InMemoryPack in method public testMaxObjectSizeDeltaResultSize() : void from class org.eclipse.jgit.transport.PackParserTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpack : TemporaryBuffer.Heap to pack : InMemoryPack in method public testNonMarkingInputStream() : void from class org.eclipse.jgit.transport.PackParserTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpack : TemporaryBuffer.Heap to pack : InMemoryPack in method public testDataAfterPackFooterSingleRead() : void from class org.eclipse.jgit.transport.PackParserTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpack : TemporaryBuffer.Heap to pack : InMemoryPack in method public testDataAfterPackFooterSplitObjectRead() : void from class org.eclipse.jgit.transport.PackParserTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpack : TemporaryBuffer.Heap to pack : InMemoryPack in method public testDataAfterPackFooterSplitHeaderRead() : void from class org.eclipse.jgit.transport.PackParserTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to InMemoryPack in method public header(cnt int) : InMemoryPack from class org.eclipse.jgit.transport.InMemoryPack",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tprivate packHeader(tinyPack TemporaryBuffer.Heap, cnt int) : void from class org.eclipse.jgit.transport.PackParserTest to public header(cnt int) : InMemoryPack from class org.eclipse.jgit.transport.InMemoryPack",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to InMemoryPack in method public deflate(content byte[]) : InMemoryPack from class org.eclipse.jgit.transport.InMemoryPack",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate deflate(tinyPack TemporaryBuffer.Heap, content byte[]) : void from class org.eclipse.jgit.transport.PackParserTest to public deflate(content byte[]) : InMemoryPack from class org.eclipse.jgit.transport.InMemoryPack",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate digest(buf TemporaryBuffer.Heap) : void from class org.eclipse.jgit.transport.PackParserTest to public digest() : InMemoryPack from class org.eclipse.jgit.transport.InMemoryPack",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to InMemoryPack in method public digest() : InMemoryPack from class org.eclipse.jgit.transport.InMemoryPack",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic toInputStream() : InputStream extracted from public testTinyThinPack() : void in class org.eclipse.jgit.transport.PackParserTest & moved to class org.eclipse.jgit.transport.InMemoryPack",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic toInputStream() : InputStream extracted from public testPackWithDuplicateBlob() : void in class org.eclipse.jgit.transport.PackParserTest & moved to class org.eclipse.jgit.transport.InMemoryPack",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic toInputStream() : InputStream extracted from public testParseOfsDeltaFullSize() : void in class org.eclipse.jgit.transport.PackParserTest & moved to class org.eclipse.jgit.transport.InMemoryPack",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic toInputStream() : InputStream extracted from public testPackWithTrailingGarbage() : void in class org.eclipse.jgit.transport.PackParserTest & moved to class org.eclipse.jgit.transport.InMemoryPack",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic toInputStream() : InputStream extracted from public testMaxObjectSizeFullBlob() : void in class org.eclipse.jgit.transport.PackParserTest & moved to class org.eclipse.jgit.transport.InMemoryPack",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic toInputStream() : InputStream extracted from public testMaxObjectSizeDeltaBlock() : void in class org.eclipse.jgit.transport.PackParserTest & moved to class org.eclipse.jgit.transport.InMemoryPack",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic toInputStream() : InputStream extracted from public testMaxObjectSizeDeltaResultSize() : void in class org.eclipse.jgit.transport.PackParserTest & moved to class org.eclipse.jgit.transport.InMemoryPack",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.eclipse.jgit.transport.InMemoryPack from class org.eclipse.jgit.transport.PackParserTest",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "8e61971620708548c32a37b3b74294ad99e3c72a",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/8e61971620708548c32a37b3b74294ad99e3c72a",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.eclipse.jgit.internal.storage.file.PackReverseIndexTest renamed to org.eclipse.jgit.internal.storage.file.PackReverseIndexComputedTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_TYPE_DECLARATION_KIND",
+          "description": "Change Type Declaration Kind\tclass to interface in type org.eclipse.jgit.internal.storage.file.PackReverseIndex",
+          "validation": true
+        },
+        {
+          "type": "PUSH_DOWN_OPERATION",
+          "description": "Push Down Method\tpublic findObject(offset long) : ObjectId from class org.eclipse.jgit.internal.storage.file.PackReverseIndex to public findObject(offset long) : ObjectId from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "PUSH_DOWN_OPERATION",
+          "description": "Push Down Method\tpublic findNextOffset(offset long, maxOffset long) : long from class org.eclipse.jgit.internal.storage.file.PackReverseIndex to public findNextOffset(offset long, maxOffset long) : long from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "PUSH_DOWN_OPERATION",
+          "description": "Push Down Method\tpackage findPosition(offset long) : int from class org.eclipse.jgit.internal.storage.file.PackReverseIndex to public findPosition(offset long) : int from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "PUSH_DOWN_OPERATION",
+          "description": "Push Down Method\tprivate binarySearch(offset long) : int from class org.eclipse.jgit.internal.storage.file.PackReverseIndex to private binarySearch(offset long) : int from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "PUSH_DOWN_OPERATION",
+          "description": "Push Down Method\tpackage findObjectByPosition(nthPosition int) : ObjectId from class org.eclipse.jgit.internal.storage.file.PackReverseIndex to public findObjectByPosition(nthPosition int) : ObjectId from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "PUSH_DOWN_ATTRIBUTE",
+          "description": "Push Down Attribute\tprivate index : PackIndex from class org.eclipse.jgit.internal.storage.file.PackReverseIndex to private index : PackIndex from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "PUSH_DOWN_ATTRIBUTE",
+          "description": "Push Down Attribute\tprivate bucketSize : long from class org.eclipse.jgit.internal.storage.file.PackReverseIndex to private bucketSize : long from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "PUSH_DOWN_ATTRIBUTE",
+          "description": "Push Down Attribute\tprivate offsetIndex : int[] from class org.eclipse.jgit.internal.storage.file.PackReverseIndex to private offsetIndex : int[] from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "PUSH_DOWN_ATTRIBUTE",
+          "description": "Push Down Attribute\tprivate nth : int[] from class org.eclipse.jgit.internal.storage.file.PackReverseIndex to private nth : int[] from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_SUBCLASS",
+          "description": "Extract Subclass\torg.eclipse.jgit.internal.storage.file.PackReverseIndexComputed from class org.eclipse.jgit.internal.storage.file.PackReverseIndex",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic computeFromIndex(packIndex PackIndex) : PackReverseIndex from class org.eclipse.jgit.internal.storage.file.PackReverseIndex to public computeFromIndex(packIndex PackIndex) : PackReverseIndex from class org.eclipse.jgit.internal.storage.file.PackReverseIndexFactory",
+          "validation": true
+        },
+        {
+          "type": "PUSH_DOWN_OPERATION",
+          "description": "Push Down Method\tprivate PackReverseIndex(packIndex PackIndex) from class org.eclipse.jgit.internal.storage.file.PackReverseIndex to package PackReverseIndexComputed(packIndex PackIndex) from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.eclipse.jgit.internal.storage.file.PackReverseIndexFactory from class org.eclipse.jgit.internal.storage.file.PackReverseIndex",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "faefa90f990858db7bec199501cb37f2631c43d0",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/faefa90f990858db7bec199501cb37f2631c43d0",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\thomeDir : String to homeDir : File in method public testCommitTemplatePathInHomeDirecory() : void from class org.eclipse.jgit.lib.CommitTemplateConfigTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\thome : File in method public getXdgConfigDirectory(fileSystem FS) : Path from class org.eclipse.jgit.util.SystemReader",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tprivate getXDGConfigHome(fs FS) : Path from class org.eclipse.jgit.util.SystemReader.Default to public getXdgConfigDirectory(fileSystem FS) : Path from class org.eclipse.jgit.util.SystemReader",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "PULL_UP_ATTRIBUTE",
+          "description": "Pull Up Attribute\tprivate homeDir : File from class org.eclipse.jgit.junit.ssh.SshTestHarness to private homeDir : File from class org.eclipse.jgit.junit.LocalDiskRepositoryTestCase",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate homeDir : File from class org.eclipse.jgit.junit.ssh.SshTestHarness to private homeDir : File from class org.eclipse.jgit.junit.LocalDiskRepositoryTestCase",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "3ed4cdda6b99f812258ca50bd77447a28d9d4596",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/3ed4cdda6b99f812258ca50bd77447a28d9d4596",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tpathFilter : TreeFilter in method public call() : DirCache from class org.eclipse.jgit.api.AddCommand",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate possiblyFilteredLength(e Entry, len long) : long extracted from public getEntryContentLength() : long in class org.eclipse.jgit.treewalk.WorkingTreeIterator",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "61d4e31349719778bce67fc9ec707cbb0a98def6",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/61d4e31349719778bce67fc9ec707cbb0a98def6",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic testCommitTemplatePathInHomeDirecory() : void from class org.eclipse.jgit.lib.ConfigTest to public testCommitTemplatePathInHomeDirecory() : void from class org.eclipse.jgit.lib.CommitTemplateConfigTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.eclipse.jgit.lib.CommitTemplateConfigTest from class org.eclipse.jgit.lib.ConfigTest",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "064691e90c4cbf1c550cb65b41b91e6fa07c7c81",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/064691e90c4cbf1c550cb65b41b91e6fa07c7c81",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\to : RevObject in method private sendPack(pm ProgressMonitor, pckOut PacketLineOut, packOut OutputStream, req FetchRequest, accumulator PackStatistics.Accumulator, allTags Collection<Ref>, unshallowCommits List<ObjectId>, deepenNots List<ObjectId>) : void from class org.eclipse.jgit.transport.UploadPack",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "96d9e3eb197c2cd95fc5277b71d8f03f1893bcda",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/96d9e3eb197c2cd95fc5277b71d8f03f1893bcda",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tretries : int in method private getPackedObjectSize(curs WindowCursor, id AnyObjectId) : long from class org.eclipse.jgit.internal.storage.file.ObjectDirectory",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "d7400517bf2744937746ac2912c93eb8d172ed28",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/d7400517bf2744937746ac2912c93eb8d172ed28",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\torigSize : int in method public testGetRefs_LooseSorting_Bug_348834() : void from class org.eclipse.jgit.internal.storage.file.RefDirectoryTest",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/eclipse-jgit/jgit.git",
+      "sha1": "23b9693a75b899c97da8a04c0b531874b225d236",
+      "url": "https://github.com/eclipse-jgit/jgit/commit/23b9693a75b899c97da8a04c0b531874b225d236",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate readConfig() : void extracted from package writeTo(dir File, os OutputStream) : void in class org.eclipse.jgit.dircache.DirCache",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate newMessageDigest() : MessageDigest extracted from private readFrom(inStream InputStream) : void in class org.eclipse.jgit.dircache.DirCache",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate newMessageDigest() : MessageDigest extracted from package writeTo(dir File, os OutputStream) : void in class org.eclipse.jgit.dircache.DirCache",
+          "validation": true
+        }
+      ]
+    }
+  ]
+}

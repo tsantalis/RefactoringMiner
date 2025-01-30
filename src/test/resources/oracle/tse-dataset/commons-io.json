@@ -1,0 +1,748 @@
+{
+  "results": [
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "59129bcf283ffa5a46d0872e173a4e037575c581",
+      "url": "https://github.com/apache/commons-io/commit/59129bcf283ffa5a46d0872e173a4e037575c581",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage freeSpaceOS(pathStr String, os int, kb boolean, timeout Duration) : long renamed to package getFreeSpace(pathStr String) : long in class org.apache.commons.io.FileSystemUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testGetFreeSpaceWindows_IllegalFileName(illegalFileNameChar char) : void renamed to public testGetFreeSpace_IllegalFileName(illegalFileNameChar char) : void in class org.apache.commons.io.FileSystemUtilsTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testGetFreeSpaceWindows_IllegalFileNames() : void renamed to public testGetFreeSpace_IllegalFileNames() : void in class org.apache.commons.io.FileSystemUtilsTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "4b47b44bc0b10b456d03a04cb52433c15df21496",
+      "url": "https://github.com/apache/commons-io/commit/4b47b44bc0b10b456d03a04cb52433c15df21496",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testForceDeleteUnwritableDirectory() : void renamed to public testForceDeleteUnwritableFile() : void in class org.apache.commons.io.FileUtilsTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tdestDir : TempDirectory to destination : TempFile in method public testForceDeleteUnwritableFile() : void from class org.apache.commons.io.FileUtilsTest",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tdestDir : TempDirectory to destination : TempFile in method public testForceDeleteUnwritableFile() : void from class org.apache.commons.io.FileUtilsTest",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tdestDir : TempDirectory to destination : TempFile in method public testForceDeleteUnwritableFile() : void from class org.apache.commons.io.FileUtilsTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tdestDir : TempDirectory to destination : TempFile in method public testForceDeleteUnwritableFile() : void from class org.apache.commons.io.FileUtilsTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tdestDir : TempDirectory to destination : TempFile in method public testForceDeleteUnwritableFile() : void from class org.apache.commons.io.FileUtilsTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tdestDir : TempDirectory to destination : TempFile in method public testForceDeleteUnwritableFile() : void from class org.apache.commons.io.FileUtilsTest",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "f6b8c06559524003d001d59002749c062aa40757",
+      "url": "https://github.com/apache/commons-io/commit/f6b8c06559524003d001d59002749c062aa40757",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testForceDeleteUnwritableFile() : void renamed to public testForceDeleteUnwritableDirectory() : void in class org.apache.commons.io.FileUtilsTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tdestination : TempFile to destDir : TempDirectory in method public testForceDeleteUnwritableDirectory() : void from class org.apache.commons.io.FileUtilsTest",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tdestination : TempFile to destDir : TempDirectory in method public testForceDeleteUnwritableDirectory() : void from class org.apache.commons.io.FileUtilsTest",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tdestination : TempFile to destDir : TempDirectory in method public testForceDeleteUnwritableDirectory() : void from class org.apache.commons.io.FileUtilsTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tdestination : TempFile to destDir : TempDirectory in method public testForceDeleteUnwritableDirectory() : void from class org.apache.commons.io.FileUtilsTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tdestination : TempFile to destDir : TempDirectory in method public testForceDeleteUnwritableDirectory() : void from class org.apache.commons.io.FileUtilsTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tdestination : TempFile to destDir : TempDirectory in method public testForceDeleteUnwritableDirectory() : void from class org.apache.commons.io.FileUtilsTest",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "d1ff1830af1f4b9865a6728db95293b37d4ffd36",
+      "url": "https://github.com/apache/commons-io/commit/d1ff1830af1f4b9865a6728db95293b37d4ffd36",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate checkPath(pathStr String, allowEmpty boolean) : Path extracted from package freeSpaceWindows(pathStr String, timeout Duration) : long in class org.apache.commons.io.FileSystemUtils",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcmdAttribs : String[] to trimPathStr : String in method private checkPath(pathStr String, allowEmpty boolean) : Path from class org.apache.commons.io.FileSystemUtils",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcmdAttribs : String[] to trimPathStr : String in method private checkPath(pathStr String, allowEmpty boolean) : Path from class org.apache.commons.io.FileSystemUtils",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tpathStr : String in method package freeSpaceUnix(path String, kb boolean, posix boolean, timeout Duration) : long from class org.apache.commons.io.FileSystemUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\ttrimPathStr : String in method package freeSpaceWindows(pathStr String, timeout Duration) : long from class org.apache.commons.io.FileSystemUtils",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "812d8a4b53d9758b4f081d9b98a70ea9ef131a0e",
+      "url": "https://github.com/apache/commons-io/commit/812d8a4b53d9758b4f081d9b98a70ea9ef131a0e",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tskip : long in method public skip(n long) : long from class org.apache.commons.io.input.BoundedInputStream",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpublic setPropagateClose(propagateClose boolean) : Builder from class org.apache.commons.io.input.BoundedInputStream.Builder to public setPropagateClose(propagateClose boolean) : T from class org.apache.commons.io.input.BoundedInputStream.AbstractBuilder",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tBuilder to T in method public setPropagateClose(propagateClose boolean) : T from class org.apache.commons.io.input.BoundedInputStream.AbstractBuilder",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_ATTRIBUTE",
+          "description": "Pull Up Attribute\tprivate maxCount : long from class org.apache.commons.io.input.BoundedInputStream.Builder to private maxCount : long from class org.apache.commons.io.input.BoundedInputStream.AbstractBuilder",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_ATTRIBUTE",
+          "description": "Pull Up Attribute\tprivate propagateClose : boolean from class org.apache.commons.io.input.BoundedInputStream.Builder to private propagateClose : boolean from class org.apache.commons.io.input.BoundedInputStream.AbstractBuilder",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_SUPERCLASS",
+          "description": "Extract Superclass\torg.apache.commons.io.input.BoundedInputStream.AbstractBuilder from classes [org.apache.commons.io.input.BoundedInputStream.Builder]",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpublic setMaxCount(maxCount long) : Builder from class org.apache.commons.io.input.BoundedInputStream.Builder to public setMaxCount(maxCount long) : T from class org.apache.commons.io.input.BoundedInputStream.AbstractBuilder",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tBuilder to T in method public setMaxCount(maxCount long) : T from class org.apache.commons.io.input.BoundedInputStream.AbstractBuilder",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate getCountingInputStream() : CountingInputStream inlined to public getCount() : long in class org.apache.commons.io.input.BoundedInputStream",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "57ab49f51f16dadf6ad246dbbcaad18fa3dd7a0e",
+      "url": "https://github.com/apache/commons-io/commit/57ab49f51f16dadf6ad246dbbcaad18fa3dd7a0e",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate sort(files File[]) : File[] extracted from private listFiles(directory File) : File[] in class org.apache.commons.io.monitor.FileAlterationObserver",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tchildren : File[] in method private listFiles(directory File) : File[] from class org.apache.commons.io.monitor.FileAlterationObserver",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcurrent : FileEntry[] to actual : FileEntry[] in method private checkAndFire(parent FileEntry, previous FileEntry[], current File[]) : void from class org.apache.commons.io.monitor.FileAlterationObserver",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "89ce8c14a24969cde0d155aba77c3ad8065bf5f1",
+      "url": "https://github.com/apache/commons-io/commit/89ce8c14a24969cde0d155aba77c3ad8065bf5f1",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate checkAndNotify(parent FileEntry, previous FileEntry[], files File[]) : void renamed to private checkAndFire(parent FileEntry, previous FileEntry[], files File[]) : void in class org.apache.commons.io.monitor.FileAlterationObserver",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate doMatch(entry FileEntry, file File) : void renamed to private fireOnChange(entry FileEntry, file File) : void in class org.apache.commons.io.monitor.FileAlterationObserver",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate doDelete(entry FileEntry) : void renamed to private fireOnDelete(entry FileEntry) : void in class org.apache.commons.io.monitor.FileAlterationObserver",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate doCreate(entry FileEntry) : void renamed to private fireOnCreate(entry FileEntry) : void in class org.apache.commons.io.monitor.FileAlterationObserver",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate doCreate(entry FileEntry) : void renamed to private fireOnDelete(entry FileEntry) : void in class org.apache.commons.io.monitor.FileAlterationObserver",
+          "validation": false
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate doDelete(entry FileEntry) : void renamed to private fireOnChange(entry FileEntry, file File) : void in class org.apache.commons.io.monitor.FileAlterationObserver",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate fireOnCreate(entry FileEntry) : void extracted from private doCreate(entry FileEntry) : void in class org.apache.commons.io.monitor.FileAlterationObserver",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "3b95c8c4987955b2f3bedc37dc217cb2e190b63d",
+      "url": "https://github.com/apache/commons-io/commit/3b95c8c4987955b2f3bedc37dc217cb2e190b63d",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprotected getReader() : Reader extracted from public get() : UncheckedBufferedReader in class org.apache.commons.io.input.UncheckedBufferedReader.Builder & moved to class org.apache.commons.io.build.AbstractStreamBuilder",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprotected getReader() : Reader extracted from public get() : UncheckedFilterReader in class org.apache.commons.io.input.UncheckedFilterReader.Builder & moved to class org.apache.commons.io.build.AbstractStreamBuilder",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprotected getReader() : Reader extracted from public get() : ReaderInputStream in class org.apache.commons.io.input.ReaderInputStream.Builder & moved to class org.apache.commons.io.build.AbstractStreamBuilder",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "d53a5f39fc6966062180f24523caf2f5f50daccf",
+      "url": "https://github.com/apache/commons-io/commit/d53a5f39fc6966062180f24523caf2f5f50daccf",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tintOne : int in method public testSkip() : void from class org.apache.commons.io.input.ChecksumInputStreamTest",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "7ea97b34f0f75e88773947e71120e8e75165f781",
+      "url": "https://github.com/apache/commons-io/commit/7ea97b34f0f75e88773947e71120e8e75165f781",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getSimpleName() : String extracted from public getFile() : File in class org.apache.commons.io.build.AbstractOrigin",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getSimpleName() : String extracted from public getPath() : Path in class org.apache.commons.io.build.AbstractOrigin",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getSimpleName() : String extracted from public toString() : String in class org.apache.commons.io.build.AbstractOrigin",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "fc8a044fd013505b6af378b15942af875af949df",
+      "url": "https://github.com/apache/commons-io/commit/fc8a044fd013505b6af378b15942af875af949df",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcharset : Charset to origin : T in method public getReader(charset Charset) : Reader from class org.apache.commons.io.build.AbstractOrigin.CharSequenceOrigin",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "9293f5f402e7c22d5526cc1df7aa180318ee640f",
+      "url": "https://github.com/apache/commons-io/commit/9293f5f402e7c22d5526cc1df7aa180318ee640f",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate doEndOfFile() : int renamed to private handleEof() : int in class org.apache.commons.io.input.NullInputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate checkThrowEof(message String) : void extracted from private doEndOfFile() : int in class org.apache.commons.io.input.NullInputStream",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\te : IOException to count4 : int in method public testReadByteArray() : void from class org.apache.commons.io.input.NullInputStreamTest",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\te : IOException to count4 : int in method public testReadByteArray() : void from class org.apache.commons.io.input.NullInputStreamTest",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate checkThrowEof(message String) : void extracted from public read() : int in class org.apache.commons.io.input.NullInputStream",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate checkThrowEof(message String) : void extracted from public read(bytes byte[], offset int, length int) : int in class org.apache.commons.io.input.NullInputStream",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate checkThrowEof(message String) : void extracted from public skip(numberOfBytes long) : long in class org.apache.commons.io.input.NullInputStream",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "99702ec5ce4c25a909299c4f4a8be616d8ce04dc",
+      "url": "https://github.com/apache/commons-io/commit/99702ec5ce4c25a909299c4f4a8be616d8ce04dc",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getCountingInputStream() : CountingInputStream extracted from public getCount() : long in class org.apache.commons.io.input.BoundedInputStream",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "d0c53cdba912bf259bf0ba32a5940d820dde4ec8",
+      "url": "https://github.com/apache/commons-io/commit/d0c53cdba912bf259bf0ba32a5940d820dde4ec8",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate toReadLen(len long) : long extracted from public read(b byte[], off int, len int) : int in class org.apache.commons.io.input.BoundedInputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate toReadLen(len long) : long extracted from public skip(n long) : long in class org.apache.commons.io.input.BoundedInputStream",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tresult : int in method public read() : int from class org.apache.commons.io.input.BoundedInputStream",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "7806142dfe5dfdc2e1ff84d07b716da6ad926da9",
+      "url": "https://github.com/apache/commons-io/commit/7806142dfe5dfdc2e1ff84d07b716da6ad926da9",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\ttempDir : Path in method public testTempFileAboveThresholdPrefixOnly(initialBufferSize int) : void from class org.apache.commons.io.output.DeferredFileOutputStreamTest",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "9aa8ef35d805df0e2c0b635c62c31c0eb5fa2579",
+      "url": "https://github.com/apache/commons-io/commit/9aa8ef35d805df0e2c0b635c62c31c0eb5fa2579",
+      "commonRefactoring": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate requireFileCopy(source File, destination File) : void inlined to public copyDirectory(srcDir File, destDir File, fileFilter FileFilter, preserveFileDate boolean, copyOptions CopyOption...) : void in class org.apache.commons.io.FileUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\te : IOException to ex : IOException in method public forceDelete(file File) : void from class org.apache.commons.io.FileUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tFile to void in method private checkFileExists(file File, name String) : void from class org.apache.commons.io.FileUtils",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate requireFileCopy(source File, destination File) : void inlined to public copyFile(srcFile File, destFile File, preserveFileDate boolean, copyOptions CopyOption...) : void in class org.apache.commons.io.FileUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmessage : String in method public testThrowsOnCannotDeleteFile() : void from class org.apache.commons.io.FileUtilsDeleteDirectoryLinuxTest",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "dd63fa3b53b4029b026d276a3c5564fa5aac42d1",
+      "url": "https://github.com/apache/commons-io/commit/dd63fa3b53b4029b026d276a3c5564fa5aac42d1",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\torg.apache.commons.io.input.BrokenInputStreamTest.CustomeException moved and renamed to org.apache.commons.io.BrokenTestFactories.CustomException",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\texceptionSupplier : Supplier<IOException> to exceptionSupplier : Supplier<Throwable> in class org.apache.commons.io.input.BrokenReader",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\texceptionSupplier : Supplier<IOException> to exceptionSupplier : Supplier<Throwable> in class org.apache.commons.io.output.BrokenOutputStream",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\texceptionSupplier : Supplier<IOException> to exceptionSupplier : Supplier<Throwable> in class org.apache.commons.io.output.BrokenWriter",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage parameters() : Stream<Class<? extends Throwable>> from class org.apache.commons.io.input.BrokenInputStreamTest to public parameters() : Stream<Class<? extends Throwable>> from class org.apache.commons.io.BrokenTestFactories",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public close() : void in class org.apache.commons.io.input.BrokenReader",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public mark(readAheadLimit int) : void in class org.apache.commons.io.input.BrokenReader",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public read(cbuf char[], off int, len int) : int in class org.apache.commons.io.input.BrokenReader",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public ready() : boolean in class org.apache.commons.io.input.BrokenReader",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public reset() : void in class org.apache.commons.io.input.BrokenReader",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public skip(n long) : long in class org.apache.commons.io.input.BrokenReader",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public close() : void in class org.apache.commons.io.output.BrokenOutputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public flush() : void in class org.apache.commons.io.output.BrokenOutputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public write(b int) : void in class org.apache.commons.io.output.BrokenOutputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public close() : void in class org.apache.commons.io.output.BrokenWriter",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public flush() : void in class org.apache.commons.io.output.BrokenWriter",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public write(cbuf char[], off int, len int) : void in class org.apache.commons.io.output.BrokenWriter",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.apache.commons.io.BrokenTestFactories from class org.apache.commons.io.input.BrokenInputStreamTest",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "33db63489777c9782f054f50b434c70a528527d7",
+      "url": "https://github.com/apache/commons-io/commit/33db63489777c9782f054f50b434c70a528527d7",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate requireExistsChecked(file File, fileParamName String) : File renamed to private checkFileObjectExists(file File, fileParamName String) : File in class org.apache.commons.io.FileUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tFile to void in method private requireDirectoryExists(directory File, name String) : void from class org.apache.commons.io.FileUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tFile to void in method private requireDirectoryIfExists(directory File, name String) : void from class org.apache.commons.io.FileUtils",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate requireFile(file File, name String) : File renamed to private checkFileExists(file File, name String) : File in class org.apache.commons.io.FileUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate requireDirectory(directory File, name String) : File renamed to private requireDirectoryExists(directory File, name String) : void in class org.apache.commons.io.FileUtils",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate requireFileIfExists(file File, name String) : File inlined to public copyFile(srcFile File, destFile File, preserveFileDate boolean, copyOptions CopyOption...) : void in class org.apache.commons.io.FileUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate requireDirectory(directory File, name String) : File inlined to private requireDirectoryExists(directory File, name String) : void in class org.apache.commons.io.FileUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate requireFile(file File, name String) : File inlined to private checkFileExists(file File, name String) : File in class org.apache.commons.io.FileUtils",
+          "validation": false
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate requireFile(file File, name String) : File inlined to public checksum(file File, checksum Checksum) : Checksum in class org.apache.commons.io.FileUtils",
+          "validation": false
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate requireFile(file File, name String) : File inlined to public contentEquals(file1 File, file2 File) : boolean in class org.apache.commons.io.FileUtils",
+          "validation": false
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate requireFile(file File, name String) : File inlined to public contentEqualsIgnoreEOL(file1 File, file2 File, charsetName String) : boolean in class org.apache.commons.io.FileUtils",
+          "validation": false
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate requireFile(file File, name String) : File inlined to public contentEqualsIgnoreEOL(file1 File, file2 File, charsetName String) : boolean in class org.apache.commons.io.FileUtils",
+          "validation": false
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate requireFile(file File, name String) : File inlined to public openOutputStream(file File, append boolean) : FileOutputStream in class org.apache.commons.io.FileUtils",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "6b0ed87f7bbcd807b30436888de445f36b19ce9a",
+      "url": "https://github.com/apache/commons-io/commit/6b0ed87f7bbcd807b30436888de445f36b19ce9a",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\texceptionSupplier : Supplier<IOException> to exceptionSupplier : Supplier<Throwable> in class org.apache.commons.io.input.BrokenInputStream",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public available() : int in class org.apache.commons.io.input.BrokenInputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public close() : void in class org.apache.commons.io.input.BrokenInputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public read() : int in class org.apache.commons.io.input.BrokenInputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public reset() : void in class org.apache.commons.io.input.BrokenInputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate rethrow() : RuntimeException extracted from public skip(n long) : long in class org.apache.commons.io.input.BrokenInputStream",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/commons-io.git",
+      "sha1": "c070fefba1f8e4e9725dcce9da67ce3edbb76743",
+      "url": "https://github.com/apache/commons-io/commit/c070fefba1f8e4e9725dcce9da67ce3edbb76743",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate UnsynchronizedByteArrayInputStream(data byte[], eod int, offset int, markedOffset int) extracted from public UnsynchronizedByteArrayInputStream(data byte[]) in class org.apache.commons.io.input.UnsynchronizedByteArrayInputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate UnsynchronizedByteArrayInputStream(data byte[], eod int, offset int, markedOffset int) extracted from public UnsynchronizedByteArrayInputStream(data byte[], offset int) in class org.apache.commons.io.input.UnsynchronizedByteArrayInputStream",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate minPosLen(data byte[], defaultValue int) : int extracted from public UnsynchronizedByteArrayInputStream(data byte[], offset int) in class org.apache.commons.io.input.UnsynchronizedByteArrayInputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate minPosLen(data byte[], defaultValue int) : int extracted from public UnsynchronizedByteArrayInputStream(data byte[], offset int, length int) in class org.apache.commons.io.input.UnsynchronizedByteArrayInputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate requireNonNegative(value int, name String) : int extracted from public UnsynchronizedByteArrayInputStream(data byte[], offset int) in class org.apache.commons.io.input.UnsynchronizedByteArrayInputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate requireNonNegative(value int, name String) : int extracted from public UnsynchronizedByteArrayInputStream(data byte[], offset int, length int) in class org.apache.commons.io.input.UnsynchronizedByteArrayInputStream",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    }
+  ]
+}

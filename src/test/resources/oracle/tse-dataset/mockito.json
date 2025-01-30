@@ -1,0 +1,707 @@
+{
+  "results": [
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "917352266b61870c47a7da97965778f0288d50cb",
+      "url": "https://github.com/mockito/mockito/commit/917352266b61870c47a7da97965778f0288d50cb",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tDO_NOT_MOCK_ENFORCER : DoNotMockEnforcer to DO_NOT_MOCK_ENFORCER : DoNotMockEnforcerWithType in class org.mockito.internal.MockitoCore",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tdoNotMockEnforcer : DoNotMockEnforcer to doNotMockEnforcer : DoNotMockEnforcerWithType in class org.mockito.internal.configuration.plugins.PluginRegistry",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tDoNotMockEnforcer to DoNotMockEnforcerWithType in method package getDoNotMockEnforcer() : DoNotMockEnforcerWithType from class org.mockito.internal.configuration.plugins.PluginRegistry",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tDoNotMockEnforcer to DoNotMockEnforcerWithType in method public getDoNotMockEnforcer() : DoNotMockEnforcerWithType from class org.mockito.internal.configuration.plugins.Plugins",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate buildCreationSettings(classToMock Class<T>, source CreationSettings<T>, mockType MockType) : CreationSettings<T> extracted from private validatedSettings(typeToMock Class<T>, source CreationSettings<T>) : CreationSettings<T> in class org.mockito.internal.creation.MockSettingsImpl",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate buildCreationSettings(classToMock Class<T>, source CreationSettings<T>, mockType MockType) : CreationSettings<T> extracted from private validatedStaticSettings(classToMock Class<T>, source CreationSettings<T>) : CreationSettings<T> in class org.mockito.internal.creation.MockSettingsImpl",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate checkDoNotMockAnnotationForType(type Class<?>) : void renamed to private checkDoNotMockAnnotation(creationSettings MockCreationSettings<?>) : void in class org.mockito.internal.MockitoCore",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "a8adbf5027bfc295b002e5d87120e7c0d1229f96",
+      "url": "https://github.com/mockito/mockito/commit/a8adbf5027bfc295b002e5d87120e7c0d1229f96",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpackage isAndroidPlatform() : boolean extracted from package InlineDelegateByteBuddyMockMaker() in class org.mockito.internal.creation.bytebuddy.InlineDelegateByteBuddyMockMaker & moved to class org.mockito.internal.creation.bytebuddy.PlatformUtils",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "9342e9a15c8a1d0ba9fb0334b5f0b0ed661079f1",
+      "url": "https://github.com/mockito/mockito/commit/9342e9a15c8a1d0ba9fb0334b5f0b0ed661079f1",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic shouldStackTraceGetFilteredOnUserExceptionsReflection() : void renamed to public shouldStackTraceGetFilteredOnUserExceptionsReflectionForJavaOfVersionLessThan21() : void in class org.mockitousage.spies.PartialMockingWithSpiesTest",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "741fe8102eba820dcabc66f57ce9f5bb82694120",
+      "url": "https://github.com/mockito/mockito/commit/741fe8102eba820dcabc66f57ce9f5bb82694120",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmockedType : Class<T> in method public mockClass(params MockFeatures<T>) : Class<T> from class org.mockito.internal.creation.bytebuddy.TypeCachingBytecodeGenerator",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tkey : MockitoMockKey in method public mockClass(params MockFeatures<T>) : Class<T> from class org.mockito.internal.creation.bytebuddy.TypeCachingBytecodeGenerator",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "8497f1752331acd30987d666dd099b089c69c68d",
+      "url": "https://github.com/mockito/mockito/commit/8497f1752331acd30987d666dd099b089c69c68d",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate processInjectMocks(clazz Class<?>, testInstance Object) : List<AutoCloseable> inlined to public process(clazz Class<?>, testInstance Object) : AutoCloseable in class org.mockito.internal.configuration.InjectingAnnotationEngine",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "393f0a16982ef3060d5db164bf51bfba8ce09a48",
+      "url": "https://github.com/mockito/mockito/commit/393f0a16982ef3060d5db164bf51bfba8ce09a48",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.mockitousage.GenericTypeMockTest.MultipleCandidatesByTypeTest moved to org.mockitousage.GenericTypeMockMultipleMatchesTest.MultipleCandidatesByTypeTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tresult : OngoingInjector in method public filterCandidate(mocks Collection<Object>, candidateFieldToBeInjected Field, allRemainingCandidateFields List<Field>, injectee Object, injectMocksField Field) : OngoingInjector from class org.mockito.internal.configuration.injection.filter.TypeBasedCandidateFilter",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "50b21cf68b400a29369de58b9286d29e368212a7",
+      "url": "https://github.com/mockito/mockito/commit/50b21cf68b400a29369de58b9286d29e368212a7",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic create(inline boolean) : Location extracted from public create(inline boolean) : Location in class org.mockito.internal.debugging.LocationFactory & moved to class org.mockito.internal.debugging.LocationFactory.DefaultLocationFactory",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "064fe9028993a11ccf0ae12b5975b96baffcf305",
+      "url": "https://github.com/mockito/mockito/commit/064fe9028993a11ccf0ae12b5975b96baffcf305",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate reportMatcher(matcher HamcrestArgumentMatcher<T>) : void extracted from private reportMatcher(matcher Matcher<T>) : void in class org.mockito.hamcrest.MockitoHamcrest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tmatcher : Matcher to matcher : Matcher<T> in class org.mockito.internal.hamcrest.HamcrestArgumentMatcher",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate lastMatcher() : ArgumentMatcher<?> renamed to private lastMatcherType() : Class<?> in class org.mockito.internal.invocation.MatcherApplicationStrategy",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tArgumentMatcher<?> to Class<?> in method private lastMatcherType() : Class<?> from class org.mockito.internal.invocation.MatcherApplicationStrategy",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tm : CapturingMatcher to m : CapturingMatcher<String[]> in method public should_capture_varargs_as_vararg() : void from class org.mockito.internal.invocation.InvocationMatcherTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic shouldAllowanyWithMixedVarargs() : void renamed to public shouldAllowAnyWithMixedVarargs() : void in class org.mockito.internal.invocation.MatcherApplicationStrategyTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tany : InstanceOf.VarArgAware to any : InstanceOf in method public shouldMatchAnyThatMatchesRawVarArgType() : void from class org.mockito.internal.invocation.MatcherApplicationStrategyTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic should_capture_all_vararg() : void renamed to public should_capture_multiple_invocations_with_captor() : void in class org.mockitousage.matchers.CapturingArgumentsTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic should_capture_vararg() : void renamed to public should_capture_single_vararg_with_single_captor() : void in class org.mockitousage.matchers.CapturingArgumentsTest",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate HamcrestArgumentMatcher(type Class<?>, matcher Matcher<T>) extracted from public HamcrestArgumentMatcher(matcher Matcher<T>) in class org.mockito.internal.hamcrest.HamcrestArgumentMatcher",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic should_capture_vararg() : void renamed to public should_capture_multiple_vararg_with_array_captor() : void in class org.mockitousage.matchers.CapturingArgumentsTest",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\targumentCaptor : ArgumentCaptor<String> to argumentCaptor : ArgumentCaptor<String[]> in method public should_capture_multiple_vararg_with_array_captor() : void from class org.mockitousage.matchers.CapturingArgumentsTest",
+          "validation": false
+        },
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpublic shouldAllowUsinganyForVarArgs() : void from class org.mockitousage.bugs.varargs.VarargsNotPlayingWithAnyTest to public verify_vararg_with_multiple_item() : void from class org.mockitousage.matchers.HamcrestMatchersTest",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "fe1cb2de0923e78bf7d7ae46cbab792dd4e94136",
+      "url": "https://github.com/mockito/mockito/commit/fe1cb2de0923e78bf7d7ae46cbab792dd4e94136",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tisVararg : boolean to maybeVararg : boolean in method public forEachMatcherAndArgument(action ArgumentMatcherAction) : boolean from class org.mockito.internal.invocation.MatcherApplicationStrategy",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tNOT_NULL : NotNull to NOT_NULL : NotNull<Object> in class org.mockito.internal.matchers.NotNull",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tNULL : Null to NULL : Null<Object> in class org.mockito.internal.matchers.Null",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate assertThat(captor ArgumentCaptor<T>) : AbstractListAssert<?,?,T,ObjectAssert<T>> renamed to private assertThatCaptor(captor ArgumentCaptor<T>) : AbstractListAssert<?,?,T,ObjectAssert<T>> in class org.mockitousage.matchers.VarargsTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic shouldMatchEmptyVarArgs_noArgsIsNotNullArray() : void renamed to public shouldVerifyVarArgs_any_NullArrayArg1() : void in class org.mockitousage.matchers.VarargsTest",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic shouldMatchEmptyVarArgs_noArgsIsNotNullArray() : void renamed to public shouldVerifyVarArgs_isNull_NullArrayArg2() : void in class org.mockitousage.matchers.VarargsTest",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "8f4af189a9f98190c1ead3aff630e05cda721a89",
+      "url": "https://github.com/mockito/mockito/commit/8f4af189a9f98190c1ead3aff630e05cda721a89",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tmatchers : List<ArgumentMatcher<?>> to matchers : List<? extends ArgumentMatcher<?>> in class org.mockito.internal.invocation.MatcherApplicationStrategy",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate argsMatch(arguments Object[], matchers List<? extends ArgumentMatcher<?>>, action ArgumentMatcherAction) : boolean extracted from public forEachMatcherAndArgument(action ArgumentMatcherAction) : boolean in class org.mockito.internal.invocation.MatcherApplicationStrategy",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tList<ArgumentMatcher<?>> to List<? extends ArgumentMatcher<?>> in method private appendLastMatcherNTimes(timesToAppendLastMatcher int) : List<? extends ArgumentMatcher<?>> from class org.mockito.internal.invocation.MatcherApplicationStrategy",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tmatchers : List to matchers : List<? extends ArgumentMatcher<?>> in class org.mockito.internal.invocation.MatcherApplicationStrategyTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\targumentMatcher : HamcrestArgumentMatcher to argumentMatcher : HamcrestArgumentMatcher<Integer> in method public shouldMatchAnyEvenIfMatcherIsWrappedInHamcrestMatcher() : void from class org.mockito.internal.invocation.MatcherApplicationStrategyTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\targuments : Object[] in method public forEachMatcherAndArgument(action ArgumentMatcherAction) : boolean from class org.mockito.internal.invocation.MatcherApplicationStrategy",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "3e910ea990e61b29ec76d8b47a6d1b1607d9da3f",
+      "url": "https://github.com/mockito/mockito/commit/3e910ea990e61b29ec76d8b47a6d1b1607d9da3f",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tmockMaker : MockMaker to defaultMockMaker : MockMaker in class org.mockito.internal.util.MockUtil",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getMockHandlerOrNull(mock Object) : MockHandler<?> extracted from public getMockHandler(mock Object) : MockHandler<?> in class org.mockito.internal.util.MockUtil",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic isTypeMockable(typeToMock Class<?>) : boolean moved from class org.mockito.internal.MockitoCore to class org.mockito.internal.stubbing.defaultanswers.RetrieveGenericsForDefaultAnswers & inlined to package returnTypeForMockWithCorrectGenerics(invocation InvocationOnMock, answerCallback AnswerCallback) : Object",
+          "validation": false
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic isTypeMockable(typeToMock Class<?>) : boolean moved from class org.mockito.internal.MockitoCore to class org.mockito.internal.stubbing.defaultanswers.ReturnsDeepStubs & inlined to public answer(invocation InvocationOnMock) : Object",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tdefaultAnswer : Answer<?> in method public answer(invocation InvocationOnMock) : Object from class org.mockito.internal.stubbing.defaultanswers.ReturnsSmartNulls",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tdefaultAnswer : Answer<?> in method public apply(type Class<?>) : Object from class org.mockito.internal.stubbing.defaultanswers.ReturnsSmartNulls.answer.returnTypeForMockWithCorrectGenerics.new RetrieveGenericsForDefaultAnswers.AnswerCallback",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getMockHandlerOrNull(mock Object) : MockHandler<?> extracted from public isMock(mock Object) : boolean in class org.mockito.internal.util.MockUtil",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\thandler : MockHandler to handler : MockHandler<?> in method private getMockHandlerOrNull(mock Object) : MockHandler<?> from class org.mockito.internal.util.MockUtil",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "73a861f778e117ad0ccd7388b8d7a614e65c1623",
+      "url": "https://github.com/mockito/mockito/commit/73a861f778e117ad0ccd7388b8d7a614e65c1623",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.mockitousage.internal.debugging.LocationImplTest renamed to org.mockitousage.internal.debugging.LocationFactoryTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate isIn(className String) : boolean extracted from public isIn(e StackTraceElement) : boolean in class org.mockito.internal.exceptions.stacktrace.DefaultStackTraceCleaner",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\te : Throwable to e : ClassNotFoundException|LinkageError in method public checkLoadability(className String) : void from class org.mockitointegration.ClassLoadabilityChecker",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\te : Throwable to e : ClassNotFoundException|LinkageError in method public checkLoadability(className String) : void from class org.mockitointegration.ClassLoadabilityChecker",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tprivate checkDependency(classLoader_without_JUnit ClassLoader, pureMockitoAPIClass String) : void from class org.mockitointegration.NoJUnitDependenciesTest to public checkLoadability(className String) : void from class org.mockitointegration.ClassLoadabilityChecker",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.mockito.internal.debugging.LocationImpl renamed to org.mockito.internal.debugging.Java8LocationImpl",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.mockitointegration.ClassLoadabilityChecker from class org.mockitointegration.NoJUnitDependenciesTest",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tprivate checkDependency(classLoader ClassLoader, pureMockitoAPIClass String) : void from class org.mockitointegration.NoByteCodeDependenciesTest to public checkLoadability(className String) : void from class org.mockitointegration.ClassLoadabilityChecker",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "ce4e64dc782a132e4f32faf56a2630187a703a00",
+      "url": "https://github.com/mockito/mockito/commit/ce4e64dc782a132e4f32faf56a2630187a703a00",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tinvocation : Invocation in method public validateFor(invocationOnMock InvocationOnMock) : void from class org.mockito.internal.stubbing.answers.ReturnsArgumentAt",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpublic getRawArguments() : Object[] from class org.mockito.invocation.Invocation to public getRawArguments() : Object[] from class org.mockito.invocation.InvocationOnMock",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate wantedArgumentPositionIsValidForInvocation(invocation InvocationOnMock, argumentPosition int) : boolean renamed to private wantedArgumentPositionIsValidForTheoreticalInvocation(invocation InvocationOnMock, argumentPosition int) : boolean in class org.mockito.internal.stubbing.answers.ReturnsArgumentAt",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tinvocation : InvocationOnMock to invocation : Invocation in method public validateFor(invocationOnMock InvocationOnMock) : void from class org.mockito.internal.stubbing.answers.ReturnsArgumentAt",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "ff98622a8f4bbe96ef5405434b5d788fcd118bb4",
+      "url": "https://github.com/mockito/mockito/commit/ff98622a8f4bbe96ef5405434b5d788fcd118bb4",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic mock_is_lenient() : void from class org.mockitousage.strictness.StrictnessMockAnnotationTest to public mock_is_lenient() : void from class org.mockitousage.strictness.StrictnessMockAnnotationTest.StrictStubsTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic mock_is_strict() : void from class org.mockitousage.strictness.StrictnessMockAnnotationTest to public mock_is_strict() : void from class org.mockitousage.strictness.StrictnessMockAnnotationTest.StrictStubsTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage lenientMock : IMethods from class org.mockitousage.strictness.StrictnessMockAnnotationTest to package lenientMock : IMethods from class org.mockitousage.strictness.StrictnessMockAnnotationTest.StrictStubsTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage regularMock : IMethods from class org.mockitousage.strictness.StrictnessMockAnnotationTest to package regularMock : IMethods from class org.mockitousage.strictness.StrictnessMockAnnotationTest.StrictStubsTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.mockitousage.strictness.StrictnessMockAnnotationTest.StrictStubsTest from class org.mockitousage.strictness.StrictnessMockAnnotationTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpublic rule : MockitoRule from class org.mockitousage.strictness.StrictnessMockAnnotationTest to public rule : MockitoRule from class org.mockitousage.strictness.StrictnessMockAnnotationTest.LenientStubsTest",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.mockitousage.strictness.StrictnessMockAnnotationTest.LenientStubsTest from class org.mockitousage.strictness.StrictnessMockAnnotationTest",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpublic rule : MockitoRule from class org.mockitousage.strictness.StrictnessMockAnnotationTest to public rule : MockitoRule from class org.mockitousage.strictness.StrictnessMockAnnotationTest.StrictStubsTest",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "70cf2d2f48506fca24f16963e9c3d2223898ae5a",
+      "url": "https://github.com/mockito/mockito/commit/70cf2d2f48506fca24f16963e9c3d2223898ae5a",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tlenient : boolean to strictness : Strictness in class org.mockito.internal.creation.settings.CreationSettings",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tlenient : boolean to strictness : Strictness in class org.mockito.internal.creation.settings.CreationSettings",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "d539af2d7afdcfaf1eda4a57911d7f9df107db2a",
+      "url": "https://github.com/mockito/mockito/commit/d539af2d7afdcfaf1eda4a57911d7f9df107db2a",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tprivate isGroovyMethod() : ElementMatcher<MethodDescription> from class org.mockito.internal.creation.bytebuddy.SubclassBytecodeGenerator to public isGroovyMethod(inline boolean) : ElementMatcher<MethodDescription> from class org.mockito.internal.creation.bytebuddy.BytecodeGenerator",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmatcher : ElementMatcher.Junction<MethodDescription> in method public isGroovyMethod(inline boolean) : ElementMatcher<MethodDescription> from class org.mockito.internal.creation.bytebuddy.BytecodeGenerator",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "331ff01c5f840ff8a3c5b0859185ba78f9446cf0",
+      "url": "https://github.com/mockito/mockito/commit/331ff01c5f840ff8a3c5b0859185ba78f9446cf0",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertExceptionTypeCanNotBeNull(throwingCallable ThrowingCallable) : void extracted from public shouldNotAllowSettingNullThrowableClass() : void in class org.mockitousage.stubbing.StubbingWithThrowablesTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertExceptionTypeCanNotBeNull(throwingCallable ThrowingCallable) : void extracted from public shouldNotAllowSettingNullThrowableClasses() : void in class org.mockitousage.stubbing.StubbingWithThrowablesTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertExceptionTypeCanNotBeNull(throwingCallable ThrowingCallable) : void extracted from public shouldNotAllowSettingNullVarArgThrowableClass() : void in class org.mockitousage.stubbing.StubbingWithThrowablesTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmap1 : Map<String,Object> in method public prints_values() : void from class org.mockito.internal.matchers.text.ValuePrinterTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmap2 : Map<String,Object> in method public prints_values() : void from class org.mockito.internal.matchers.text.ValuePrinterTest",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "aabb8f62a2b44e99938d0cccf17e9877f4fc6189",
+      "url": "https://github.com/mockito/mockito/commit/aabb8f62a2b44e99938d0cccf17e9877f4fc6189",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tunused : LinkedList<Stubbing> to unused : List<Stubbing> in method public printInvocations(mock Object) : String from class org.mockito.internal.debugging.InvocationsPrinter",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tverifiedOnly : LinkedList<Invocation> to verifiedOnly : List<Invocation> in method public findPreviousVerifiedInOrder(invocations List<Invocation>, context InOrderContext) : Invocation from class org.mockito.internal.invocation.InvocationsFinder",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tdeclaredFields : List<Field> in method private orderedInstanceFieldsFrom(awaitingInjectionClazz Class<?>) : List<Field> from class org.mockito.internal.configuration.injection.PropertyAndSetterInjection",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tinvocations : List<Invocation> in method public find(mocks List<?>) : List<Invocation> from class org.mockito.internal.invocation.finder.VerifiableInvocationsFinder",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "f6ce1bb04fe0d0ca65f88e4395dea528b6b749bc",
+      "url": "https://github.com/mockito/mockito/commit/f6ce1bb04fe0d0ca65f88e4395dea528b6b749bc",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate isValidException(method Method, throwable Throwable) : boolean extracted from public isValidException(throwable Throwable) : boolean in class org.mockito.internal.stubbing.answers.InvocationInfo",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic should_know_valid_throwables() : void from class org.mockito.internal.stubbing.answers.InvocationInfoTest to public should_know_valid_throwables() : void from class org.mockito.internal.stubbing.answers.InvocationInfoExceptionTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate isValidExceptionForParents(parent Class<?>, throwable Throwable) : boolean extracted from public isValidException(throwable Throwable) : boolean in class org.mockito.internal.stubbing.answers.InvocationInfo",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.mockito.internal.stubbing.answers.InvocationInfoExceptionTest from class org.mockito.internal.stubbing.answers.InvocationInfoTest",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/mockito/mockito.git",
+      "sha1": "6b818baa1006338501a5fde5ba368593475cee9c",
+      "url": "https://github.com/mockito/mockito/commit/6b818baa1006338501a5fde5ba368593475cee9c",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.mockitousage.verification.VerificationInOrderMixedWithOrdiraryVerificationTest renamed to org.mockitousage.verification.VerificationInOrderMixedWithOrdinaryVerificationTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate containsTimes(value String, amount int) : BaseMatcher<String> renamed to private messageContaining(value String, amountOfOccurrences int) : Condition<? super Throwable> in class org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tBaseMatcher<String> to Condition<? super Throwable> in method private messageContaining(value String, amountOfOccurrences int) : Condition<? super Throwable> from class org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate containsTimes(value String, amount int) : BaseMatcher<String> renamed to private messageContaining(value String, amountOfOccurrences int) : Condition<? super Throwable> in class org.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tBaseMatcher<String> to Condition<? super Throwable> in method private messageContaining(value String, amountOfOccurrences int) : Condition<? super Throwable> from class org.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_RENAME_ATTRIBUTE",
+          "description": "Move And Rename Attribute\tprivate expected : String renamed to private value : String and moved from class org.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest.StringContainsNumberMatcher to class org.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest.ThrowableMessageContainsOccurrencesCondition",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpublic matchesSafely(text String) : boolean from class org.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest.StringContainsNumberMatcher to public matches(ex Throwable) : boolean from class org.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest.ThrowableMessageContainsOccurrencesCondition",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tinvocation : Invocation in method public should_report_bogus_default_answer() : void from class org.mockito.internal.handler.MockHandlerImplTest",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic matchesSafely(text String) : boolean renamed to public matches(ex Throwable) : boolean in class org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest.ThrowableMessageContainsOccurrencesCondition",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic matchesSafely(text String) : boolean renamed to public matches(ex Throwable) : boolean in class org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest.ThrowableMessageContainsOccurrencesCondition",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\texpected : String to value : String in class org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest.ThrowableMessageContainsOccurrencesCondition",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\texpected : String to value : String in class org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest.ThrowableMessageContainsOccurrencesCondition",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tamount : int to expectedOccurrences : int in class org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest.ThrowableMessageContainsOccurrencesCondition",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tamount : int to expectedOccurrences : int in class org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest.ThrowableMessageContainsOccurrencesCondition",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest.StringContainsNumberMatcher renamed to org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest.ThrowableMessageContainsOccurrencesCondition",
+          "validation": true
+        },
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\torg.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest.StringContainsNumberMatcher moved and renamed to org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest.ThrowableMessageContainsOccurrencesCondition",
+          "validation": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1586 @@
+{
+  "results": [
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "571e547a9f7b0a05503b8d76f34181059a8c3bbf",
+      "url": "https://github.com/checkstyle/checkstyle/commit/571e547a9f7b0a05503b8d76f34181059a8c3bbf",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.emptylineseparator.SuppressionXpathRegressionEmptyLineSeparator5 renamed to org.checkstyle.suppressionxpathfilter.emptylineseparator.InputXpathEmptyLineSeparatorFive",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.equalshashcode.SuppressionXpathRegressionEqualsHashCode1 renamed to org.checkstyle.suppressionxpathfilter.equalshashcode.InputXpathEqualsHashCodeEqualsOnly",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.equalshashcode.SuppressionXpathRegressionEqualsHashCode2 renamed to org.checkstyle.suppressionxpathfilter.equalshashcode.InputXpathEqualsHashCodeHashCodeOnly",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.equalshashcode.SuppressionXpathRegressionEqualsHashCodeNestedCase renamed to org.checkstyle.suppressionxpathfilter.equalshashcode.InputXpathEqualsHashCodeNestedCase",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.explicitinitialization.SuppressionXpathRegressionExplicitInitializationOne renamed to org.checkstyle.suppressionxpathfilter.explicitinitialization.InputXpathExplicitInitializationPrimitiveType",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.explicitinitialization.SuppressionXpathRegressionExplicitInitializationTwo renamed to org.checkstyle.suppressionxpathfilter.explicitinitialization.InputXpathExplicitInitializationObjectType",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.fallthrough.SuppressionXpathRegressionFallThroughTwo renamed to org.checkstyle.suppressionxpathfilter.fallthrough.InputXpathFallThroughDefaultCase",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.finalclass.SuppressionXpathRegressionFinalClass1 renamed to org.checkstyle.suppressionxpathfilter.finalclass.InputXpathFinalClassDefault",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.finalclass.SuppressionXpathRegressionFinalClass2 renamed to org.checkstyle.suppressionxpathfilter.finalclass.InputXpathFinalClassInnerClass",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testOne() : void renamed to public testPrimitiveType() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionExplicitInitializationTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testTwo() : void renamed to public testObjectType() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionExplicitInitializationTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testOne() : void renamed to public testFallThrough() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionFallThroughTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testTwo() : void renamed to public testDefaultCase() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionFallThroughTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testOne() : void renamed to public testDefault() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionFinalClassTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testTwo() : void renamed to public testInnerClass() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionFinalClassTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.emptylineseparator.SuppressionXpathRegressionEmptyLineSeparator4 renamed to org.checkstyle.suppressionxpathfilter.emptylineseparator.InputXpathEmptyLineSeparatorFour",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.emptylineseparator.SuppressionXpathRegressionEmptyLineSeparator3 renamed to org.checkstyle.suppressionxpathfilter.emptylineseparator.InputXpathEmptyLineSeparatorThree",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.equalsavoidnull.SuppressionXpathRegressionEqualsAvoidNull renamed to org.checkstyle.suppressionxpathfilter.equalsavoidnull.InputXpathEqualsAvoidNull",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.equalsavoidnull.SuppressionXpathRegressionEqualsAvoidNullIgnoreCase renamed to org.checkstyle.suppressionxpathfilter.equalsavoidnull.InputXpathEqualsAvoidNullIgnoreCase",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.fallthrough.SuppressionXpathRegressionFallThroughOne renamed to org.checkstyle.suppressionxpathfilter.fallthrough.InputXpathFallThrough",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.emptylineseparator.SuppressionXpathRegressionEmptyLineSeparator3 renamed to org.checkstyle.suppressionxpathfilter.emptylineseparator.InputXpathEmptyLineSeparatorFour",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.emptylineseparator.SuppressionXpathRegressionEmptyLineSeparator4 renamed to org.checkstyle.suppressionxpathfilter.emptylineseparator.InputXpathEmptyLineSeparatorThree",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "e30260d88bfc5ae5ff110560e28371a8fd8074ba",
+      "url": "https://github.com/checkstyle/checkstyle/commit/e30260d88bfc5ae5ff110560e28371a8fd8074ba",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidnoargumentsuperconstructorcall.SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCall renamed to org.checkstyle.suppressionxpathfilter.avoidnoargumentsuperconstructorcall.InputXpathAvoidNoArgumentSuperConstructorCallDefault",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidnoargumentsuperconstructorcall.SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCallInnerClass renamed to org.checkstyle.suppressionxpathfilter.avoidnoargumentsuperconstructorcall.InputXpathAvoidNoArgumentSuperConstructorCallInnerClass",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.booleanexpressioncomplexity.SuppressionXpathRegressionBooleanExpressionComplexityOne renamed to org.checkstyle.suppressionxpathfilter.booleanexpressioncomplexity.InputXpathBooleanExpressionComplexityCatchBlock",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.booleanexpressioncomplexity.SuppressionXpathRegressionBooleanExpressionComplexityThree renamed to org.checkstyle.suppressionxpathfilter.booleanexpressioncomplexity.InputXpathBooleanExpressionComplexityConditionals",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.booleanexpressioncomplexity.SuppressionXpathRegressionBooleanExpressionComplexityTwo renamed to org.checkstyle.suppressionxpathfilter.booleanexpressioncomplexity.InputXpathBooleanExpressionComplexityClassFields",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.catchparametername.SuppressionXpathRegressionCatchParameterNameAnonymous renamed to org.checkstyle.suppressionxpathfilter.catchparametername.InputXpathCatchParameterNameAnonymous",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.catchparametername.SuppressionXpathRegressionCatchParameterNameEnum renamed to org.checkstyle.suppressionxpathfilter.catchparametername.InputXpathCatchParameterNameEnum",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.catchparametername.SuppressionXpathRegressionCatchParameterNameInterface renamed to org.checkstyle.suppressionxpathfilter.catchparametername.InputXpathCatchParameterNameInterface",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.catchparametername.SuppressionXpathRegressionCatchParameterNameLambda renamed to org.checkstyle.suppressionxpathfilter.catchparametername.InputXpathCatchParameterNameLambda",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.catchparametername.SuppressionXpathRegressionCatchParameterNameNested renamed to org.checkstyle.suppressionxpathfilter.catchparametername.InputXpathCatchParameterNameNested",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.catchparametername.SuppressionXpathRegressionCatchParameterNameSimple renamed to org.checkstyle.suppressionxpathfilter.catchparametername.InputXpathCatchParameterNameSimple",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testMethodOne() : void renamed to public testCatchBlock() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionBooleanExpressionComplexityTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testMethodTwo() : void renamed to public testClassFields() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionBooleanExpressionComplexityTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testMethodThree() : void renamed to public testConditionals() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionBooleanExpressionComplexityTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.catchparametername.SuppressionXpathRegressionCatchParameterNameStaticInit renamed to org.checkstyle.suppressionxpathfilter.catchparametername.InputXpathCatchParameterNameStaticInit",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidstarimport.SuppressionXpathRegressionAvoidStarImport1 renamed to org.checkstyle.suppressionxpathfilter.avoidstarimport.InputXpathAvoidStarImportOne",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidstarimport.SuppressionXpathRegressionAvoidStarImport2 renamed to org.checkstyle.suppressionxpathfilter.avoidstarimport.InputXpathAvoidStarImportTwo",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidstaticimport.SuppressionXpathRegressionAvoidStaticImport1 renamed to org.checkstyle.suppressionxpathfilter.avoidstaticimport.InputXpathAvoidStaticImportOne",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidstaticimport.SuppressionXpathRegressionAvoidStaticImport2 renamed to org.checkstyle.suppressionxpathfilter.avoidstaticimport.InputXpathAvoidStaticImportTwo",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.checkstyle.suppressionxpathfilter.avoidnoargumentsuperconstructorcall.SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCallInnerClass.test.Inner moved to org.checkstyle.suppressionxpathfilter.avoidnoargumentsuperconstructorcall.InputXpathAvoidNoArgumentSuperConstructorCallInnerClass.test.Inner",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "8591ca2f4791531ac81b76956e3e837fd12e0003",
+      "url": "https://github.com/checkstyle/checkstyle/commit/8591ca2f4791531ac81b76956e3e837fd12e0003",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.genericwhitespace.SuppressionXpathRegressionGenericWhitespaceEnd renamed to org.checkstyle.suppressionxpathfilter.genericwhitespace.InputXpathGenericWhitespaceEnd",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.genericwhitespace.SuppressionXpathRegressionGenericWhitespaceNestedGenericsOne renamed to org.checkstyle.suppressionxpathfilter.genericwhitespace.InputXpathGenericWhitespaceNestedOne",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.genericwhitespace.SuppressionXpathRegressionGenericWhitespaceNestedGenericsThree renamed to org.checkstyle.suppressionxpathfilter.genericwhitespace.InputXpathGenericWhitespaceNestedThree",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.genericwhitespace.SuppressionXpathRegressionGenericWhitespaceNestedGenericsTwo renamed to org.checkstyle.suppressionxpathfilter.genericwhitespace.InputXpathGenericWhitespaceNestedTwo",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.genericwhitespace.SuppressionXpathRegressionGenericWhitespaceSingleGenericOne renamed to org.checkstyle.suppressionxpathfilter.genericwhitespace.InputXpathGenericWhitespaceSingleOne",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.genericwhitespace.SuppressionXpathRegressionGenericWhitespaceStartTwo renamed to org.checkstyle.suppressionxpathfilter.genericwhitespace.InputXpathGenericWhitespaceStartTwo",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.hiddenfield.SuppressionXpathRegressionHiddenFieldOne renamed to org.checkstyle.suppressionxpathfilter.hiddenfield.InputXpathHiddenFieldLambdaExpInMethodCall",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.hiddenfield.SuppressionXpathRegressionHiddenFieldTwo renamed to org.checkstyle.suppressionxpathfilter.hiddenfield.InputXpathHiddenFieldMethodParam",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.illegalcatch.SuppressionXpathRegressionIllegalCatchOne renamed to org.checkstyle.suppressionxpathfilter.illegalcatch.InputXpathIllegalCatchOne",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.illegalcatch.SuppressionXpathRegressionIllegalCatchTwo renamed to org.checkstyle.suppressionxpathfilter.illegalcatch.InputXpathIllegalCatchTwo",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testOne() : void renamed to public testLambdaExpInMethodCall() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionHiddenFieldTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testTwo() : void renamed to public testMethodParam() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionHiddenFieldTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testOne() : void renamed to public testDefault() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionIllegalImportTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testTwo() : void renamed to public testStatic() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionIllegalImportTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.genericwhitespace.SuppressionXpathRegressionGenericWhitespaceSingleGenericTwo renamed to org.checkstyle.suppressionxpathfilter.genericwhitespace.InputXpathGenericWhitespaceSingleTwo",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.genericwhitespace.SuppressionXpathRegressionGenericWhitespaceStartOne renamed to org.checkstyle.suppressionxpathfilter.genericwhitespace.InputXpathGenericWhitespaceStartOne",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.genericwhitespace.SuppressionXpathRegressionGenericWhitespaceStartThree renamed to org.checkstyle.suppressionxpathfilter.genericwhitespace.InputXpathGenericWhitespaceStartThree",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.illegalimport.SuppressionXpathRegressionIllegalImportOne renamed to org.checkstyle.suppressionxpathfilter.illegalimport.InputXpathIllegalImportDefault",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.illegalimport.SuppressionXpathRegressionIllegalImportTwo renamed to org.checkstyle.suppressionxpathfilter.illegalimport.InputXpathIllegalImportStatic",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "7dc907356508ce037afe1ae4d5aa7859239ada45",
+      "url": "https://github.com/checkstyle/checkstyle/commit/7dc907356508ce037afe1ae4d5aa7859239ada45",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.onestatementperline.SuppressionXpathRegressionOneStatementPerLineOne renamed to org.checkstyle.suppressionxpathfilter.onestatementperline.InputXpathOneStatementPerLineClassFields",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.onestatementperline.SuppressionXpathRegressionOneStatementPerLineTwo renamed to org.checkstyle.suppressionxpathfilter.onestatementperline.InputXpathOneStatementPerLineForLoopBlock",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.onetoplevelclass.SuppressionXpathRegressionOneTopLevelClassFirst renamed to org.checkstyle.suppressionxpathfilter.onetoplevelclass.InputXpathOneTopLevelClassFirst",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.onetoplevelclass.SuppressionXpathRegressionOneTopLevelClassSecond renamed to org.checkstyle.suppressionxpathfilter.onetoplevelclass.InputXpathOneTopLevelClassSecond",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.operatorwrap.SuppressionXpathRegressionOperatorWrapNewLine renamed to org.checkstyle.suppressionxpathfilter.operatorwrap.InputXpathOperatorWrapNewLine",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.operatorwrap.SuppressionXpathRegressionOperatorWrapPreviousLine renamed to org.checkstyle.suppressionxpathfilter.operatorwrap.InputXpathOperatorWrapPreviousLine",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.outertypenumber.SuppressionXpathRegressionOuterTypeNumber renamed to org.checkstyle.suppressionxpathfilter.outertypenumber.InputXpathOuterTypeNumber",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.outertypenumber.SuppressionXpathRegressionOuterTypeNumberDefault renamed to org.checkstyle.suppressionxpathfilter.outertypenumber.InputXpathOuterTypeNumberDefault",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.packagename.SuppressionXpathRegressionPackageNameTwo renamed to org.checkstyle.suppressionxpathfilter.packagename.InputXpathPackageNameTwo",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testOne() : void renamed to public testClassFields() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionOneStatementPerLineTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testTwo() : void renamed to public testForLoopBlock() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionOneStatementPerLineTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.PACKAGENAME.SuppressionXpathRegressionPackageName renamed to org.checkstyle.suppressionxpathfilter.PACKAGENAME.InputXpathPackageName",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.packagename.SuppressionXpathRegressionPackageNameOne renamed to org.checkstyle.suppressionxpathfilter.packagename.InputXpathPackageNameOne",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "53102225e1e821b2b510975b75cc10931c50373d",
+      "url": "https://github.com/checkstyle/checkstyle/commit/53102225e1e821b2b510975b75cc10931c50373d",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.needbraces.SuppressionXpathRegressionNeedBracesDo renamed to org.checkstyle.suppressionxpathfilter.needbraces.InputXpathNeedBracesDo",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.needbraces.SuppressionXpathRegressionNeedBracesEmptyLoopBody renamed to org.checkstyle.suppressionxpathfilter.needbraces.InputXpathNeedBracesEmptyLoopBody",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.needbraces.SuppressionXpathRegressionNeedBracesSingleLineLambda renamed to org.checkstyle.suppressionxpathfilter.needbraces.InputXpathNeedBracesSingleLineLambda",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.noarraytrailingcomma.SuppressionXpathRegressionNoArrayTrailingCommaOne renamed to org.checkstyle.suppressionxpathfilter.noarraytrailingcomma.InputXpathNoArrayTrailingCommaOne",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.noarraytrailingcomma.SuppressionXpathRegressionNoArrayTrailingCommaTwo renamed to org.checkstyle.suppressionxpathfilter.noarraytrailingcomma.InputXpathNoArrayTrailingCommaTwo",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.noclone.SuppressionXpathRegressionNoCloneOne renamed to org.checkstyle.suppressionxpathfilter.noclone.InputXpathNoCloneMethod",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.noclone.SuppressionXpathRegressionNoCloneTwo renamed to org.checkstyle.suppressionxpathfilter.noclone.InputXpathNoCloneInnerClass",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testOne() : void renamed to public testMethod() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionNoCloneTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.needbraces.SuppressionXpathRegressionNeedBracesSingleLine renamed to org.checkstyle.suppressionxpathfilter.needbraces.InputXpathNeedBracesSingleLine",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.nestedfordepth.SuppressionXpathRegressionNestedForDepth renamed to org.checkstyle.suppressionxpathfilter.nestedfordepth.InputXpathNestedForDepth",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.nestedfordepth.SuppressionXpathRegressionNestedForDepthMax renamed to org.checkstyle.suppressionxpathfilter.nestedfordepth.InputXpathNestedForDepthMax",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.nestedifdepth.SuppressionXpathRegressionNestedIfDepth renamed to org.checkstyle.suppressionxpathfilter.nestedifdepth.InputXpathNestedIfDepth",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.nestedifdepth.SuppressionXpathRegressionNestedIfDepthMax renamed to org.checkstyle.suppressionxpathfilter.nestedifdepth.InputXpathNestedIfDepthMax",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.nestedtrydepth.SuppressionXpathRegressionNestedTryDepth renamed to org.checkstyle.suppressionxpathfilter.nestedtrydepth.InputXpathNestedTryDepth",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.nestedtrydepth.SuppressionXpathRegressionNestedTryDepthMax renamed to org.checkstyle.suppressionxpathfilter.nestedtrydepth.InputXpathNestedTryDepthMax",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.checkstyle.suppressionxpathfilter.needbraces.SuppressionXpathRegressionNeedBracesSingleLine.SomeClass moved to org.checkstyle.suppressionxpathfilter.needbraces.InputXpathNeedBracesSingleLine.SomeClass",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "b5431ae95b94aff51a340d8a86441caaec5acca2",
+      "url": "https://github.com/checkstyle/checkstyle/commit/b5431ae95b94aff51a340d8a86441caaec5acca2",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.declarationorder.SuppressionXpathRegressionDeclarationOrderOne renamed to org.checkstyle.suppressionxpathfilter.declarationorder.InputXpathDeclarationOrderNonStatic",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.declarationorder.SuppressionXpathRegressionDeclarationOrderTwo renamed to org.checkstyle.suppressionxpathfilter.declarationorder.InputXpathDeclarationOrderStatic",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.defaultcomeslast.SuppressionXpathRegressionDefaultComesLastOne renamed to org.checkstyle.suppressionxpathfilter.defaultcomeslast.InputXpathDefaultComesLastNonEmptyCase",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.defaultcomeslast.SuppressionXpathRegressionDefaultComesLastTwo renamed to org.checkstyle.suppressionxpathfilter.defaultcomeslast.InputXpathDefaultComesLastEmptyCase",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.emptyblock.SuppressionXpathRegressionEmptyBlockEmpty renamed to org.checkstyle.suppressionxpathfilter.emptyblock.InputXpathEmptyBlockEmpty",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.emptycatchblock.SuppressionXpathRegressionEmptyCatchBlock1 renamed to org.checkstyle.suppressionxpathfilter.emptycatchblock.InputXpathEmptyCatchBlockOne",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.emptycatchblock.SuppressionXpathRegressionEmptyCatchBlock2 renamed to org.checkstyle.suppressionxpathfilter.emptycatchblock.InputXpathEmptyCatchBlockTwo",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.emptystatement.SuppressionXpathRegressionEmptyStatement1 renamed to org.checkstyle.suppressionxpathfilter.emptystatement.InputXpathEmptyStatementLoops",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.emptystatement.SuppressionXpathRegressionEmptyStatement2 renamed to org.checkstyle.suppressionxpathfilter.emptystatement.InputXpathEmptyStatementConditionals",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testOne() : void renamed to public testNonStatic() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionDeclarationOrderTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testTwo() : void renamed to public testStatic() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionDeclarationOrderTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testOne() : void renamed to public testNonEmptyCase() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionDefaultComesLastTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testTwo() : void renamed to public testEmptyCase() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionDefaultComesLastTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.emptyforinitializerpad.SuppressionXpathRegressionEmptyForInitializerPadNotPreceded renamed to org.checkstyle.suppressionxpathfilter.emptyforinitializerpad.InputXpathEmptyForInitializerPadNotPreceded",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.emptyforinitializerpad.SuppressionXpathRegressionEmptyForInitializerPadPreceded renamed to org.checkstyle.suppressionxpathfilter.emptyforinitializerpad.InputXpathEmptyForInitializerPadPreceded",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.emptyforiteratorpad.SuppressionXpathRegressionEmptyForIteratorPadFollowed renamed to org.checkstyle.suppressionxpathfilter.emptyforiteratorpad.InputXpathEmptyForIteratorPadFollowed",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.emptyforiteratorpad.SuppressionXpathRegressionEmptyForIteratorPadNotFollowed renamed to org.checkstyle.suppressionxpathfilter.emptyforiteratorpad.InputXpathEmptyForIteratorPadNotFollowed",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "341cb5e207ccdb004a5b15e6749a92fdd5a506b2",
+      "url": "https://github.com/checkstyle/checkstyle/commit/341cb5e207ccdb004a5b15e6749a92fdd5a506b2",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoiddoublebraceinitialization.SuppressionXpathRegressionAvoidDoubleBraceInitialization renamed to org.checkstyle.suppressionxpathfilter.avoiddoublebraceinitialization.InputXpathAvoidDoubleBraceInitializationClassFields",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoiddoublebraceinitialization.SuppressionXpathRegressionAvoidDoubleBraceInitializationTwo renamed to org.checkstyle.suppressionxpathfilter.avoiddoublebraceinitialization.InputXpathAvoidDoubleBraceInitializationMethodDef",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidescapedunicodecharacters.SuppressionXpathRegressionAvoidEscapedUnicodeCharactersAllEscaped renamed to org.checkstyle.suppressionxpathfilter.avoidescapedunicodecharacters.InputXpathAvoidEscapedUnicodeCharactersAllEscaped",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidescapedunicodecharacters.SuppressionXpathRegressionAvoidEscapedUnicodeCharactersControlCharacters renamed to org.checkstyle.suppressionxpathfilter.avoidescapedunicodecharacters.InputXpathAvoidEscapedUnicodeCharactersControlCharacters",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidescapedunicodecharacters.SuppressionXpathRegressionAvoidEscapedUnicodeCharactersDefault renamed to org.checkstyle.suppressionxpathfilter.avoidescapedunicodecharacters.InputXpathAvoidEscapedUnicodeCharactersDefault",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidescapedunicodecharacters.SuppressionXpathRegressionAvoidEscapedUnicodeCharactersNonPrintable renamed to org.checkstyle.suppressionxpathfilter.avoidescapedunicodecharacters.InputXpathAvoidEscapedUnicodeCharactersNonPrintable",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidescapedunicodecharacters.SuppressionXpathRegressionAvoidEscapedUnicodeCharactersTailComment renamed to org.checkstyle.suppressionxpathfilter.avoidescapedunicodecharacters.InputXpathAvoidEscapedUnicodeCharactersTailComment",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidinlineconditionals.SuppressionXpathRegressionAvoidInlineConditionalsAssert renamed to org.checkstyle.suppressionxpathfilter.avoidinlineconditionals.InputXpathAvoidInlineConditionalsAssert",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidinlineconditionals.SuppressionXpathRegressionAvoidInlineConditionalsAssign renamed to org.checkstyle.suppressionxpathfilter.avoidinlineconditionals.InputXpathAvoidInlineConditionalsAssign",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidinlineconditionals.SuppressionXpathRegressionAvoidInlineConditionalsVariableDef renamed to org.checkstyle.suppressionxpathfilter.avoidinlineconditionals.InputXpathAvoidInlineConditionalsVariableDef",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidnestedblocks.SuppressionXpathRegressionAvoidNestedBlocksEmpty renamed to org.checkstyle.suppressionxpathfilter.avoidnestedblocks.InputXpathAvoidNestedBlocksEmpty",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidnestedblocks.SuppressionXpathRegressionAvoidNestedBlocksVariable renamed to org.checkstyle.suppressionxpathfilter.avoidnestedblocks.InputXpathAvoidNestedBlocksVariable",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testOne() : void renamed to public testClassFields() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionAvoidDoubleBraceInitializationTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testTwo() : void renamed to public testMethodDef() : void in class org.checkstyle.suppressionxpathfilter.XpathRegressionAvoidDoubleBraceInitializationTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidnestedblocks.SuppressionXpathRegressionAvoidNestedBlocksAllowedInSwitchCase renamed to org.checkstyle.suppressionxpathfilter.avoidnestedblocks.InputXpathAvoidNestedBlocksAllowedInSwitchCase",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidnestedblocks.SuppressionXpathRegressionAvoidNestedBlocksBreakOutside renamed to org.checkstyle.suppressionxpathfilter.avoidnestedblocks.InputXpathAvoidNestedBlocksBreakOutside",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidnestedblocks.SuppressionXpathRegressionAvoidNestedBlocksNotAllowedInSwitchCase renamed to org.checkstyle.suppressionxpathfilter.avoidnestedblocks.InputXpathAvoidNestedBlocksNotAllowedInSwitchCase",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "d35128bb545aa740836c49c45245d504d7f72076",
+      "url": "https://github.com/checkstyle/checkstyle/commit/d35128bb545aa740836c49c45245d504d7f72076",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.abbreviationaswordinname.SuppressionXpathRegressionAbbreviationAsWordInNameAnnotation renamed to org.checkstyle.suppressionxpathfilter.abbreviationaswordinname.InputXpathAbbreviationAsWordInNameAnnotation",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.abbreviationaswordinname.SuppressionXpathRegressionAbbreviationAsWordInNameAnnotationField renamed to org.checkstyle.suppressionxpathfilter.abbreviationaswordinname.InputXpathAbbreviationAsWordInNameAnnotationField",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.abbreviationaswordinname.SuppressionXpathRegressionAbbreviationAsWordInNameClass renamed to org.checkstyle.suppressionxpathfilter.abbreviationaswordinname.InputXpathAbbreviationAsWordInNameClass",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.abbreviationaswordinname.SuppressionXpathRegressionAbbreviationAsWordInNameEnum renamed to org.checkstyle.suppressionxpathfilter.abbreviationaswordinname.InputXpathAbbreviationAsWordInNameEnum",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.abbreviationaswordinname.SuppressionXpathRegressionAbbreviationAsWordInNameField renamed to org.checkstyle.suppressionxpathfilter.abbreviationaswordinname.InputXpathAbbreviationAsWordInNameField",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.abbreviationaswordinname.SuppressionXpathRegressionAbbreviationAsWordInNameInterface renamed to org.checkstyle.suppressionxpathfilter.abbreviationaswordinname.InputXpathAbbreviationAsWordInNameInterface",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.abbreviationaswordinname.SuppressionXpathRegressionAbbreviationAsWordInNameMethod renamed to org.checkstyle.suppressionxpathfilter.abbreviationaswordinname.InputXpathAbbreviationAsWordInNameMethod",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.abbreviationaswordinname.SuppressionXpathRegressionAbbreviationAsWordInNameParameter renamed to org.checkstyle.suppressionxpathfilter.abbreviationaswordinname.InputXpathAbbreviationAsWordInNameParameter",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.abbreviationaswordinname.SuppressionXpathRegressionAbbreviationAsWordInNameVariable renamed to org.checkstyle.suppressionxpathfilter.abbreviationaswordinname.InputXpathAbbreviationAsWordInNameVariable",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.abstractclassname.SuppressionXpathRegressionAbstractClassNameInner renamed to org.checkstyle.suppressionxpathfilter.abstractclassname.InputXpathAbstractClassNameInner",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.abstractclassname.SuppressionXpathRegressionAbstractClassNameNoModifier renamed to org.checkstyle.suppressionxpathfilter.abstractclassname.InputXpathAbstractClassNameNoModifier",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationlocation.SuppressionXpathRegressionAnnotationLocationCTOR renamed to org.checkstyle.suppressionxpathfilter.annotationlocation.InputXpathAnnotationLocationCTOR",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationlocation.SuppressionXpathRegressionAnnotationLocationEnum renamed to org.checkstyle.suppressionxpathfilter.annotationlocation.InputXpathAnnotationLocationEnum",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationlocation.SuppressionXpathRegressionAnnotationLocationInterface renamed to org.checkstyle.suppressionxpathfilter.annotationlocation.InputXpathAnnotationLocationInterface",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationlocation.SuppressionXpathRegressionAnnotationLocationMethod renamed to org.checkstyle.suppressionxpathfilter.annotationlocation.InputXpathAnnotationLocationMethod",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationlocation.SuppressionXpathRegressionAnnotationLocationVariable renamed to org.checkstyle.suppressionxpathfilter.annotationlocation.InputXpathAnnotationLocationVariable",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationonsameline.SuppressionXpathRegressionAnnotationOnSameLineOne renamed to org.checkstyle.suppressionxpathfilter.annotationonsameline.InputXpathAnnotationOnSameLineMethod",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationonsameline.SuppressionXpathRegressionAnnotationOnSameLineThree renamed to org.checkstyle.suppressionxpathfilter.annotationonsameline.InputXpathAnnotationOnSameLineInterface",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationonsameline.SuppressionXpathRegressionAnnotationOnSameLineTwo renamed to org.checkstyle.suppressionxpathfilter.annotationonsameline.InputXpathAnnotationOnSameLineField",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationusestyle.SuppressionXpathRegressionAnnotationUseStyleThree renamed to org.checkstyle.suppressionxpathfilter.annotationusestyle.InputXpathAnnotationUseStyleThree",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.anoninnerlength.SuppressionXpathRegressionAnonInnerLength renamed to org.checkstyle.suppressionxpathfilter.anoninnerlength.InputXpathAnonInnerLength",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.anoninnerlength.SuppressionXpathRegressionAnonInnerLengthDefault renamed to org.checkstyle.suppressionxpathfilter.anoninnerlength.InputXpathAnonInnerLengthDefault",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.arraytrailingcomma.SuppressionXpathRegressionArrayTrailingCommaOne renamed to org.checkstyle.suppressionxpathfilter.arraytrailingcomma.InputXpathArrayTrailingCommaLinear",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.arraytrailingcomma.SuppressionXpathRegressionArrayTrailingCommaTwo renamed to org.checkstyle.suppressionxpathfilter.arraytrailingcomma.InputXpathArrayTrailingCommaMatrix",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.arraytypestyle.SuppressionXpathRegressionArrayTypeStyleMethodDef renamed to org.checkstyle.suppressionxpathfilter.arraytypestyle.InputXpathArrayTypeStyleMethodDef",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.arraytypestyle.SuppressionXpathRegressionArrayTypeStyleVariable renamed to org.checkstyle.suppressionxpathfilter.arraytypestyle.InputXpathArrayTypeStyleVariable",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationlocation.SuppressionXpathRegressionAnnotationLocationAnnotation renamed to org.checkstyle.suppressionxpathfilter.annotationlocation.InputXpathAnnotationLocationAnnotation",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationlocation.SuppressionXpathRegressionAnnotationLocationClass renamed to org.checkstyle.suppressionxpathfilter.annotationlocation.InputXpathAnnotationLocationClass",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationusestyle.SuppressionXpathRegressionAnnotationUseStyleEight renamed to org.checkstyle.suppressionxpathfilter.annotationusestyle.InputXpathAnnotationUseStyleEight",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationusestyle.SuppressionXpathRegressionAnnotationUseStyleFive renamed to org.checkstyle.suppressionxpathfilter.annotationusestyle.InputXpathAnnotationUseStyleFive",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationusestyle.SuppressionXpathRegressionAnnotationUseStyleFour renamed to org.checkstyle.suppressionxpathfilter.annotationusestyle.InputXpathAnnotationUseStyleFour",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationusestyle.SuppressionXpathRegressionAnnotationUseStyleOne renamed to org.checkstyle.suppressionxpathfilter.annotationusestyle.InputXpathAnnotationUseStyleOne",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationusestyle.SuppressionXpathRegressionAnnotationUseStyleSeven renamed to org.checkstyle.suppressionxpathfilter.annotationusestyle.InputXpathAnnotationUseStyleSeven",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationusestyle.SuppressionXpathRegressionAnnotationUseStyleSix renamed to org.checkstyle.suppressionxpathfilter.annotationusestyle.InputXpathAnnotationUseStyleSix",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.abstractclassname.SuppressionXpathRegressionAbstractClassNameTop renamed to org.checkstyle.suppressionxpathfilter.abstractclassname.InputXpathAbstractClassNameTop",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.annotationusestyle.SuppressionXpathRegressionAnnotationUseStyleTwo renamed to org.checkstyle.suppressionxpathfilter.annotationusestyle.InputXpathAnnotationUseStyleTwo",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "7c50484527b8e5afb2a490568c92cc2b1e6effef",
+      "url": "https://github.com/checkstyle/checkstyle/commit/7c50484527b8e5afb2a490568c92cc2b1e6effef",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tstartExpression : Optional<DetailAstImpl> to expression : Optional<DetailAstImpl> in method public visitStringTemplate(ctx JavaLanguageParser.StringTemplateContext) : DetailAstImpl from class com.puppycrawl.tools.checkstyle.JavaAstVisitor",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\timaginaryExpr : DetailAstImpl to imaginaryExpression : DetailAstImpl in method public visitStringTemplate(ctx JavaLanguageParser.StringTemplateContext) : DetailAstImpl from class com.puppycrawl.tools.checkstyle.JavaAstVisitor",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tembeddedExpression : Optional<DetailAstImpl> to expression : Optional<DetailAstImpl> in method private buildStringTemplateMiddle(ctx JavaLanguageParser.StringTemplateMiddleContext) : DetailAstImpl from class com.puppycrawl.tools.checkstyle.JavaAstVisitor",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\timaginaryExpr : DetailAstImpl to imaginaryExpression : DetailAstImpl in method private buildStringTemplateMiddle(ctx JavaLanguageParser.StringTemplateMiddleContext) : DetailAstImpl from class com.puppycrawl.tools.checkstyle.JavaAstVisitor",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate pushToModeStackWithMore(mode int) : void inlined to public updateRightCurlyBraceContext() : void in class com.puppycrawl.tools.checkstyle.grammar.CompositeLexerContextCache",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tbegin : DetailAstImpl to stringTemplateBegin : DetailAstImpl in method public visitStringTemplate(ctx JavaLanguageParser.StringTemplateContext) : DetailAstImpl from class com.puppycrawl.tools.checkstyle.JavaAstVisitor",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tend : DetailAstImpl to stringTemplateEnd : DetailAstImpl in method public visitStringTemplate(ctx JavaLanguageParser.StringTemplateContext) : DetailAstImpl from class com.puppycrawl.tools.checkstyle.JavaAstVisitor",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tembeddedExpressionEnd : DetailAstImpl to stringTemplateMiddle : DetailAstImpl in method private buildStringTemplateMiddle(ctx JavaLanguageParser.StringTemplateMiddleContext) : DetailAstImpl from class com.puppycrawl.tools.checkstyle.JavaAstVisitor",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "1bb3d569c975eea323094aed9e3fea4edb5a2e08",
+      "url": "https://github.com/checkstyle/checkstyle/commit/1bb3d569c975eea323094aed9e3fea4edb5a2e08",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tdefaultJavadocTokens : int[] in method private validateDefaultJavadocTokens() : void from class com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheck",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "19f4b5f6e2521821496087d481016ae972d4a75a",
+      "url": "https://github.com/checkstyle/checkstyle/commit/19f4b5f6e2521821496087d481016ae972d4a75a",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\ttemporaryFolder : Path to temporaryFolder : File in class org.checkstyle.suppressionxpathfilter.AbstractXpathTestSupport",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tsuppressionsXpathConfigPath : Path to suppressionsXpathConfigPath : File in method private createSuppressionsXpathConfigFile(checkName String, xpathQueries List<String>) : String from class org.checkstyle.suppressionxpathfilter.AbstractXpathTestSupport",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfilePath : String to filePath : File in method public testInCache() : void from class com.puppycrawl.tools.checkstyle.PropertyCacheFileTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfilePath : String to filePath : File in method public testConfigHashOnReset() : void from class com.puppycrawl.tools.checkstyle.PropertyCacheFileTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfilePath : String to filePath : File in method public testConfigHashRemainsOnResetExternalResources() : void from class com.puppycrawl.tools.checkstyle.PropertyCacheFileTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texternalResourcePath : String to externalResourcePath : File in method public testCacheRemainsWhenExternalResourceTheSame() : void from class com.puppycrawl.tools.checkstyle.PropertyCacheFileTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfilePath : String to filePath : File in method public testCacheRemainsWhenExternalResourceTheSame() : void from class com.puppycrawl.tools.checkstyle.PropertyCacheFileTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfilePath : String to filePath : File in method public testExternalResourceIsSavedInCache() : void from class com.puppycrawl.tools.checkstyle.PropertyCacheFileTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttempFile : Path to tempFile : File in method public testSymbolicLinkToNonDirectory() : void from class com.puppycrawl.tools.checkstyle.PropertyCacheFileTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfilePath : String to filePath : File in method public testNonExistentResource() : void from class com.puppycrawl.tools.checkstyle.PropertyCacheFileTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfilePath : String to filePath : File in method public testExceptionNoSuchAlgorithmException() : void from class com.puppycrawl.tools.checkstyle.PropertyCacheFileTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpathToEmptyFile : String to pathToEmptyFile : File in method public testForInvalidCheckImplementation() : void from class com.puppycrawl.tools.checkstyle.TreeWalkerTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfilePath : String to filePath : File in method public testCacheWhenFileExternalResourceContentDoesNotChange() : void from class com.puppycrawl.tools.checkstyle.TreeWalkerTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfilePath : String to filePath : File in method public testExternalResourceFiltersWithNoExternalResource() : void from class com.puppycrawl.tools.checkstyle.TreeWalkerTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfilePath : String to filePath : File in method public testCacheWhenFileExternalResourceContentDoesNotChange() : void from class com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpathToEmptyFile : String to pathToEmptyFile : File in method public testRequiredTokenIsNotInDefaultTokens() : void from class com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfilePath : String to filePath : File in method public testUseCacheLocalFileExternalResourceContentDoesNotChange() : void from class com.puppycrawl.tools.checkstyle.filters.SuppressionFilterTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpathToEmptyFile : String to pathToEmptyFile : File in method public testUseCacheRemoteFileExternalResourceContentDoesNotChange() : void from class com.puppycrawl.tools.checkstyle.filters.SuppressionFilterTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tfilePath : File in method public testWithCheckNotHavingTreeWalkerAsParent() : void from class com.puppycrawl.tools.checkstyle.TreeWalkerTest",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "0e6d9bc600339bfcebf555229cc65198e6c5576a",
+      "url": "https://github.com/checkstyle/checkstyle/commit/0e6d9bc600339bfcebf555229cc65198e6c5576a",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.design.throwscount.InputThrowsCount renamed to com.puppycrawl.tools.checkstyle.checks.design.throwscount.InputThrowsCountDefault",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testDefault() : void renamed to public testThrowsCountDefault() : void in class com.puppycrawl.tools.checkstyle.checks.design.ThrowsCountCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testMax() : void renamed to public testThrowsCountCustomMaxCount() : void in class com.puppycrawl.tools.checkstyle.checks.design.ThrowsCountCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testNotIgnorePrivateMethod() : void renamed to public testThrowsCountNotIgnorePrivateMethods() : void in class com.puppycrawl.tools.checkstyle.checks.design.ThrowsCountCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testMethodWithAnnotation() : void renamed to public testThrowsCountMethodWithAnnotation() : void in class com.puppycrawl.tools.checkstyle.checks.design.ThrowsCountCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testOverriding() : void renamed to public testThrowsCountMaxAllowZero() : void in class com.puppycrawl.tools.checkstyle.checks.design.ThrowsCountCheckTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.design.throwscount.InputThrowsCount2 renamed to com.puppycrawl.tools.checkstyle.checks.design.throwscount.InputThrowsCountCustomMaxCount",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.design.throwscount.InputThrowsCount4 renamed to com.puppycrawl.tools.checkstyle.checks.design.throwscount.InputThrowsCountMaxAllowZero",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.design.throwscount.InputThrowsCount3 renamed to com.puppycrawl.tools.checkstyle.checks.design.throwscount.InputThrowsCountNotIgnorePrivateMethods",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.design.throwscount.InputThrowsCount2 renamed to com.puppycrawl.tools.checkstyle.checks.design.throwscount.InputThrowsCountMaxAllowZero",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.design.throwscount.InputThrowsCount3 renamed to com.puppycrawl.tools.checkstyle.checks.design.throwscount.InputThrowsCountCustomMaxCount",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.design.throwscount.InputThrowsCount4 renamed to com.puppycrawl.tools.checkstyle.checks.design.throwscount.InputThrowsCountNotIgnorePrivateMethods",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "8faa81a2c7d4cb8e0695940a0c04876228141fc0",
+      "url": "https://github.com/checkstyle/checkstyle/commit/8faa81a2c7d4cb8e0695940a0c04876228141fc0",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextTokens2 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextCheckCaseInSensitive",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testCaseSensitive() : void renamed to public testIllegalTokenTextCheckDefaultCaseSensitive() : void in class com.puppycrawl.tools.checkstyle.checks.coding.IllegalTokenTextCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testCaseInSensitive() : void renamed to public testIllegalTokenTextCheckCaseInSensitive() : void in class com.puppycrawl.tools.checkstyle.checks.coding.IllegalTokenTextCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testCustomMessage() : void renamed to public testIllegalTokenTextCheckCustomMessageInStringLiteral() : void in class com.puppycrawl.tools.checkstyle.checks.coding.IllegalTokenTextCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testNullCustomMessage() : void renamed to public testIllegalTokenTextCheckNullMessageInStringLiteral() : void in class com.puppycrawl.tools.checkstyle.checks.coding.IllegalTokenTextCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testCommentToken() : void renamed to public testIllegalTokenTextCheckCommentToken() : void in class com.puppycrawl.tools.checkstyle.checks.coding.IllegalTokenTextCheckTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextTokens5 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextCheckCommentToken",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextTokens3 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextCheckCustomMessageInStringLiteral",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextTokens renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextCheckDefaultCaseSensitive",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextTokens4 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextCheckNullMessageInStringLiteral",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextTokens renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextCheckCommentToken",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextTokens3 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextCheckDefaultCaseSensitive",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextTokens4 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextCheckCustomMessageInStringLiteral",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextTokens5 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltokentext.InputIllegalTokenTextCheckNullMessageInStringLiteral",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "7ddc532f01361e832f6ebd32c399f20918f5a388",
+      "url": "https://github.com/checkstyle/checkstyle/commit/7ddc532f01361e832f6ebd32c399f20918f5a388",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidnestedblocks.SuppressionXpathRegressionAvoidNestedBlocksSwitch2 renamed to org.checkstyle.suppressionxpathfilter.avoidnestedblocks.SuppressionXpathRegressionAvoidNestedBlocksAllowedInSwitchCase",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidnestedblocks.SuppressionXpathRegressionAvoidNestedBlocksSwitch1 renamed to org.checkstyle.suppressionxpathfilter.avoidnestedblocks.SuppressionXpathRegressionAvoidNestedBlocksNotAllowedInSwitchCase",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.checkstyle.suppressionxpathfilter.avoidnestedblocks.SuppressionXpathRegressionAvoidNestedBlocksSwitch1 renamed to org.checkstyle.suppressionxpathfilter.avoidnestedblocks.SuppressionXpathRegressionAvoidNestedBlocksBreakOutside",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "d43ccb86e7b3dd82aee759851b184aa4f899317a",
+      "url": "https://github.com/checkstyle/checkstyle/commit/d43ccb86e7b3dd82aee759851b184aa4f899317a",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic unmodifiableSet(collection Set<T>) : Set<T> moved from class com.puppycrawl.tools.checkstyle.utils.UnmodifiableCollectionUtil to class com.puppycrawl.tools.checkstyle.checks.TranslationCheck.ResourceBundle & inlined to public getFiles() : Set<File>",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic unmodifiableSet(collection Set<T>) : Set<T> moved from class com.puppycrawl.tools.checkstyle.utils.UnmodifiableCollectionUtil to class com.puppycrawl.tools.checkstyle.checks.coding.EqualsAvoidNullCheck.FieldFrame & inlined to public getChildren() : Set<FieldFrame>",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic unmodifiableSet(collection Set<T>) : Set<T> moved from class com.puppycrawl.tools.checkstyle.utils.UnmodifiableCollectionUtil to class com.puppycrawl.tools.checkstyle.checks.coding.EqualsAvoidNullCheck.FieldFrame & inlined to public getMethodCalls() : Set<DetailAST>",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic unmodifiableSet(collection Set<T>) : Set<T> moved from class com.puppycrawl.tools.checkstyle.utils.UnmodifiableCollectionUtil to class com.puppycrawl.tools.checkstyle.filters.CsvFilterElement & inlined to protected getFilters() : Set<IntFilterElement>",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "a4411aa08c3a9744139067dc38ced282adbf9fcc",
+      "url": "https://github.com/checkstyle/checkstyle/commit/a4411aa08c3a9744139067dc38ced282adbf9fcc",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testCheckWithDefaultSettings() : void renamed to public testIllegalTokensCheckDefaultTokenLabel() : void in class com.puppycrawl.tools.checkstyle.checks.coding.IllegalTokenCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testPreviouslyIllegalTokens() : void renamed to public testIllegalTokensCheckSwitchAndPostIncDec() : void in class com.puppycrawl.tools.checkstyle.checks.coding.IllegalTokenCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testNative() : void renamed to public testIllegalTokensCheckTokenNative() : void in class com.puppycrawl.tools.checkstyle.checks.coding.IllegalTokenCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testCommentContentToken() : void renamed to public testIllegalTokensCheckCommentsContent() : void in class com.puppycrawl.tools.checkstyle.checks.coding.IllegalTokenCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testBlockCommentBeginToken() : void renamed to public testIllegalTokensCheckBlockCommentBegin() : void in class com.puppycrawl.tools.checkstyle.checks.coding.IllegalTokenCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testBlockCommentEndToken() : void renamed to public testIllegalTokensCheckBlockCommentEnd() : void in class com.puppycrawl.tools.checkstyle.checks.coding.IllegalTokenCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testSingleLineCommentToken() : void renamed to public testIllegalTokensCheckSingleLineComment() : void in class com.puppycrawl.tools.checkstyle.checks.coding.IllegalTokenCheckTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokens5 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokensCheckBlockCommentBegin",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokens6 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokensCheckBlockCommentEnd",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokens4 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokensCheckCommentsContent",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokens renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokensCheckDefaultTokenLabel",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokens7 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokensCheckSingleLineComment",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokens2 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokensCheckSwitchAndPostIncDec",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokens3 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokensCheckTokenNative",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokens renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokensCheckTokenNative",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokens2 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokensCheckBlockCommentEnd",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokens3 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokensCheckCommentsContent",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokens4 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokensCheckBlockCommentBegin",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokens5 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokensCheckDefaultTokenLabel",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokens6 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokensCheckSingleLineComment",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokens7 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegaltoken.InputIllegalTokensCheckSwitchAndPostIncDec",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "b08ea45624d10cd6a3eac7da8c902de3dbb98f8c",
+      "url": "https://github.com/checkstyle/checkstyle/commit/b08ea45624d10cd6a3eac7da8c902de3dbb98f8c",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegalcatch.InputIllegalCatch renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegalcatch.InputIllegalCatchCheckDefaultTokens",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegalcatch.InputIllegalCatch2 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegalcatch.InputIllegalCatchCheckMultipleExceptions",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testDefault() : void renamed to public testIllegalCatchCheckDefaultTokens() : void in class com.puppycrawl.tools.checkstyle.checks.coding.IllegalCatchCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testIllegalClassNames() : void renamed to public testIllegalCatchCheckSuperclassThrowable() : void in class com.puppycrawl.tools.checkstyle.checks.coding.IllegalCatchCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testIllegalClassNamesBad() : void renamed to public testIllegalCatchCheckSuperclassException() : void in class com.puppycrawl.tools.checkstyle.checks.coding.IllegalCatchCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testMultipleTypes() : void renamed to public testIllegalCatchCheckMultipleExceptions() : void in class com.puppycrawl.tools.checkstyle.checks.coding.IllegalCatchCheckTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegalcatch.InputIllegalCatch4 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegalcatch.InputIllegalCatchCheckSuperclassException",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegalcatch.InputIllegalCatch3 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegalcatch.InputIllegalCatchCheckSuperclassThrowable",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegalcatch.InputIllegalCatch3 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegalcatch.InputIllegalCatchCheckSuperclassException",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.illegalcatch.InputIllegalCatch4 renamed to com.puppycrawl.tools.checkstyle.checks.coding.illegalcatch.InputIllegalCatchCheckSuperclassThrowable",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "6d4fe4f19264b5e4f47fe3cbdc3015f61c7a8c58",
+      "url": "https://github.com/checkstyle/checkstyle/commit/6d4fe4f19264b5e4f47fe3cbdc3015f61c7a8c58",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.annotation.annotationonsameline.InputAnnotationOnSameLineCheck2 renamed to com.puppycrawl.tools.checkstyle.checks.annotation.annotationonsameline.InputAnnotationOnSameLineCheckPrivateAndDeprecatedVar",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.annotation.annotationonsameline.InputAnnotationOnSameLineCheckOnDifferentTokens renamed to com.puppycrawl.tools.checkstyle.checks.annotation.annotationonsameline.InputAnnotationOnSameLineCheckInterfaceAndEnum",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testCheck() : void renamed to public testAnnotationOnSameLineCheckPublicMethodAndVariable() : void in class com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationOnSameLineCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testCheckAcceptableTokens() : void renamed to public testAnnotationOnSameLineCheckTokensOnMethodAndVar() : void in class com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationOnSameLineCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testCheck2() : void renamed to public testAnnotationOnSameLineCheckPrivateAndDeprecatedVar() : void in class com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationOnSameLineCheckTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testCheckOnDifferentTokens() : void renamed to public testAnnotationOnSameLineCheckInterfaceAndEnum() : void in class com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationOnSameLineCheckTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.annotation.annotationonsameline.InputAnnotationOnSameLineCheck renamed to com.puppycrawl.tools.checkstyle.checks.annotation.annotationonsameline.InputAnnotationOnSameLineCheckPublicMethodAndVariable",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.annotation.annotationonsameline.InputAnnotationOnSameLineCheck3 renamed to com.puppycrawl.tools.checkstyle.checks.annotation.annotationonsameline.InputAnnotationOnSameLineCheckTokensOnMethodAndVar",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.annotation.annotationonsameline.InputAnnotationOnSameLineCheck renamed to com.puppycrawl.tools.checkstyle.checks.annotation.annotationonsameline.InputAnnotationOnSameLineCheckTokensOnMethodAndVar",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.annotation.annotationonsameline.InputAnnotationOnSameLineCheck3 renamed to com.puppycrawl.tools.checkstyle.checks.annotation.annotationonsameline.InputAnnotationOnSameLineCheckPublicMethodAndVariable",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "00769882831961af98ce009d82b435b118b7ca61",
+      "url": "https://github.com/checkstyle/checkstyle/commit/00769882831961af98ce009d82b435b118b7ca61",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testWithMultilineStatements() : void renamed to public testDeclarationsWithMultilineStatements() : void in class com.puppycrawl.tools.checkstyle.checks.coding.OneStatementPerLineCheckTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate foo3() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to private foo3() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineInLoopsAndTryWithResources",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate foo4() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to private foo4() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineInLoopsAndTryWithResources",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate foo5() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to private foo5() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineInLoopsAndTryWithResources",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate issue2211pass() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to private issue2211pass() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineInLoopsAndTryWithResources",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate issue2211pass2() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to private issue2211pass2() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineInLoopsAndTryWithResources",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate issue2211fail() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to private issue2211fail() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineInLoopsAndTryWithResources",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate issue2211fail2() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to private issue2211fail2() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineInLoopsAndTryWithResources",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline renamed to com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\tcom.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineInLoopsAndTryWithResources from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate foo() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to private foo() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate foo2() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to private foo2() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/checkstyle/checkstyle.git",
+      "sha1": "101d1736d382047ea755d6cc8f54bda49e0e2624",
+      "url": "https://github.com/checkstyle/checkstyle/commit/101d1736d382047ea755d6cc8f54bda49e0e2624",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tpath : String in method public testWithCacheWithNoViolation() : void from class com.puppycrawl.tools.checkstyle.TreeWalkerTest",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    }
+  ]
+}

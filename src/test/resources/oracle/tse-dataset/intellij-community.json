@@ -1,0 +1,609 @@
+{
+  "results": [
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "b686093c55f9df84d036ea528170bc5b39d4d14e",
+      "url": "https://github.com/JetBrains/intellij-community/commit/b686093c55f9df84d036ea528170bc5b39d4d14e",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfile : def to file : GroovyFile in method private doTest(expected String) : void from class org.jetbrains.plugins.groovy.lang.StringValueTest",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "fab3cba2c3c87026117d2d0f086c271ad9e45079",
+      "url": "https://github.com/JetBrains/intellij-community/commit/fab3cba2c3c87026117d2d0f086c271ad9e45079",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tactions : List in method public readExternal(macro Element) : void from class com.intellij.ide.actionMacro.ActionMacro",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "d5def5048e0ebac39a822db57bf34d85989fb656",
+      "url": "https://github.com/JetBrains/intellij-community/commit/d5def5048e0ebac39a822db57bf34d85989fb656",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic changePathInActionsTree(tree JTree, url ActionUrl) : void from class com.intellij.ide.ui.customization.ActionUrl to private changePathInActionsTree(tree JTree, url ActionUrl) : void from class com.intellij.ide.ui.customization.CustomizableActionsPanel",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic addPathToActionsTree(tree JTree, url ActionUrl) : DefaultMutableTreeNode from class com.intellij.ide.ui.customization.ActionUrl to private addPathToActionsTree(tree JTree, url ActionUrl) : DefaultMutableTreeNode from class com.intellij.ide.ui.customization.CustomizableActionsPanel",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcomponent : Object in method private removePathFromActionsTree(tree JTree, url ActionUrl) : void from class com.intellij.ide.ui.customization.CustomizableActionsPanel",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate removePathFromActionsTree(tree JTree, url ActionUrl) : void from class com.intellij.ide.ui.customization.ActionUrl to private removePathFromActionsTree(tree JTree, url ActionUrl) : void from class com.intellij.ide.ui.customization.CustomizableActionsPanel",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate movePathInActionsTree(tree JTree, url ActionUrl) : void from class com.intellij.ide.ui.customization.ActionUrl to private movePathInActionsTree(tree JTree, url ActionUrl) : void from class com.intellij.ide.ui.customization.CustomizableActionsPanel",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic getGroupPath(treePath TreePath, includeSelf boolean) : ArrayList<String> from class com.intellij.ide.ui.customization.ActionUrl to private getGroupPath(treePath TreePath, includeSelf boolean) : ArrayList<String> from class com.intellij.ide.ui.customization.CustomizableActionsPanel",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcomponent : Object in method private movePathInActionsTree(tree JTree, url ActionUrl) : void from class com.intellij.ide.ui.customization.CustomizableActionsPanel",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tactionType : int in method private changePathInActionsTree(tree JTree, url ActionUrl) : void from class com.intellij.ide.ui.customization.CustomizableActionsPanel",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tattributeValue : String in method public readExternal(element Element) : void from class com.intellij.ide.ui.customization.ActionUrl",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tresult : int in method public hashCode() : int from class com.intellij.ide.ui.customization.ActionUrl",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\to : Group in method private addPathToActionsTree(tree JTree, url ActionUrl) : DefaultMutableTreeNode from class com.intellij.ide.ui.customization.CustomizableActionsPanel",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tgroup : Group to TYPE_POPUP_GROUP : int in method public readExternal(element Element) : void from class com.intellij.ide.ui.customization.ActionUrl",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "f080ad913d01bea79eddc5435e5169aec2bea8ce",
+      "url": "https://github.com/JetBrains/intellij-community/commit/f080ad913d01bea79eddc5435e5169aec2bea8ce",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tindicator : CheckCancelOnlyProgressIndicator to indicator : CheckPauseOnlyProgressIndicator in class com.intellij.util.indexing.SingleProviderIterator",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tservice : var in method private flushPerProjectIndexingQueue(indexingReason String, indicator IndexingProgressReporter.CheckCancelOnlyProgressIndicator) : void from class com.intellij.util.indexing.UnindexedFilesScanner",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "4d6a1d13e2783aeded216619f2d366a9aa70c7e0",
+      "url": "https://github.com/JetBrains/intellij-community/commit/4d6a1d13e2783aeded216619f2d366a9aa70c7e0",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate isSerializableClass(configuration Configuration, currentClass Class<?>) : boolean extracted from public doCollect(aClass Class<?>, configuration Configuration, classToOwnFields ClassValue<List<MutableAccessor>>) : List<MutableAccessor> in class com.intellij.serialization.PropertyCollector",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcurrentClass : Class<?> in method private collectPropertyAccessors(aClass Class<?>, accessors List<? super MutableAccessor>, configuration Configuration) : Map<String,Pair<Method,Method>> from class com.intellij.serialization.PropertyCollector",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "84834a76926e93b64919858ce69b9451b1b868b1",
+      "url": "https://github.com/JetBrains/intellij-community/commit/84834a76926e93b64919858ce69b9451b1b868b1",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tmyDirtyFileIds : IntSet to myOrphanDirtyFilesQueue : OrphanDirtyFilesQueue in class com.intellij.util.indexing.FileBasedIndexDataInitialization",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tmyDirtyFileIds : IntSet to myOrphanDirtyFilesQueue : OrphanDirtyFilesQueue in class com.intellij.util.indexing.FileBasedIndexDataInitialization",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tmyOrphanDirtyFileIds : IntSet to myOrphanDirtyFileIds : OrphanDirtyFilesQueue in class com.intellij.util.indexing.FileBasedIndexImpl",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tallOrphanDirtyFiles : IntSet to orphanDirtyFilesFromThisSession : IntSet in method package performShutdown(keepConnection boolean, reason String) : void from class com.intellij.util.indexing.FileBasedIndexImpl",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tIntList to OrphanDirtyFilesQueue in method package getOrphanDirtyFileIds() : OrphanDirtyFilesQueue from class com.intellij.util.indexing.FileBasedIndexImpl",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\torphanDirtyFileIds : OrphanDirtyFilesQueue in method package performShutdown(keepConnection boolean, reason String) : void from class com.intellij.util.indexing.FileBasedIndexImpl",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "de6bf4b926e5854724a5d626293d79cd9da1e516",
+      "url": "https://github.com/JetBrains/intellij-community/commit/de6bf4b926e5854724a5d626293d79cd9da1e516",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tIntList to void in method package ensureDirtyFileIndexesDeleted(dirtyFiles Collection<Integer>) : void from class com.intellij.util.indexing.FileBasedIndexImpl",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage ensureDirtyFileIndexesDeleted() : IntList renamed to package getOrphanDirtyFileIds() : IntList in class com.intellij.util.indexing.FileBasedIndexImpl",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "d83a9eef42e12e49b1cfc7a01a1e776b7f026362",
+      "url": "https://github.com/JetBrains/intellij-community/commit/d83a9eef42e12e49b1cfc7a01a1e776b7f026362",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tlaunchName : String in method private runReadWrites(test Method, readIterations int, writeIterations int) : void from class com.intellij.openapi.application.impl.ApplicationImplTest",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "9690b9b6a1b064e2e57d59144fdbc338b9f8fe54",
+      "url": "https://github.com/JetBrains/intellij-community/commit/9690b9b6a1b064e2e57d59144fdbc338b9f8fe54",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tcom.intellij.openapi.fileChooser.FileChooserUsageCollector moved to com.intellij.openapi.fileChooser.impl.FileChooserUsageCollector",
+          "validation": true
+        },
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\tcom.intellij.ui.mac.MacPathChooserDialog moved and renamed to com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\tcom.intellij.ui.mac.MacFileSaverDialog moved and renamed to com.intellij.openapi.fileChooser.impl.NativeFileSaverDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpackage withFileFilter(filter Condition<? super VirtualFile>, type String) : FileChooserDescriptor extracted from public withFileFilter(filter Condition<? super VirtualFile>) : FileChooserDescriptor in class com.intellij.openapi.fileChooser.FileChooserDescriptor",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tdialog : MyDialog to dialog : var in method private createDialog(headless boolean, owner Window, wrapper DialogWrapper, project Project, ideModalityType DialogWrapper.IdeModalityType) : AbstractDialog from class com.intellij.openapi.ui.impl.DialogWrapperPeerImpl",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic fromComponent(parentComponent Component) : OwnerOptional renamed to public findOwner(parent Component) : Window in class com.intellij.util.ui.OwnerOptional",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate findOwnerByComponent(component Component) : Window inlined to public findOwner(parent Component) : Window in class com.intellij.util.ui.OwnerOptional",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tmanager : IdePopupManager in method public fromComponent(parentComponent Component) : OwnerOptional from class com.intellij.util.ui.OwnerOptional",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tOwnerOptional to Window in method public findOwner(parent Component) : Window from class com.intellij.util.ui.OwnerOptional",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tmyParent : WeakReference<Component> to myParent : Component in class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tmyHelper : PathChooserDialogHelper to myHelper : FileChooserDialogHelper in class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tjbrDialog : JBRFileDialog to jbrDialog : var in method package NativeFileChooserDialogImpl(descriptor FileChooserDescriptor, parent Component, project Project) from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tmyFileChooserDescriptor : FileChooserDescriptor to myDescriptor : FileChooserDescriptor in class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfile : String to file : var in method private doSave(baseDir String, filename String) : VirtualFileWrapper from class com.intellij.openapi.fileChooser.impl.NativeFileSaverDialogImpl",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate useNativeMacChooser(descriptor FileChooserDescriptor) : boolean renamed to private canUseNativeDialog(descriptor FileChooserDescriptor) : boolean in class com.intellij.openapi.fileChooser.impl.LocalFileChooserFactory",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate getChooserTitle(descriptor FileChooserDescriptor) : String inlined to package NativeFileSaverDialogImpl(descriptor FileSaverDescriptor, parent Component) in class com.intellij.openapi.fileChooser.impl.NativeFileSaverDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate getChooserTitle(descriptor FileChooserDescriptor) : String inlined to package NativeFileChooserDialogImpl(descriptor FileChooserDescriptor, parent Component, project Project) in class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tvirtualFileList : List<VirtualFile> to selectedFiles : var in method public choose(toSelect VirtualFile, callback Consumer<? super List<VirtualFile>>) : void from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tvirtualFileList : List<VirtualFile> to selectedFiles : var in method public choose(toSelect VirtualFile, callback Consumer<? super List<VirtualFile>>) : void from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tchosenFiles : var to myChosenFiles : VirtualFile[] in method public choose(project Project, toSelect VirtualFile...) : VirtualFile @NotNull [] from class com.intellij.openapi.fileChooser.impl.NewFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\towner : Window to owner : var in method public findOwner(parent Component) : Window from class com.intellij.util.ui.OwnerOptional",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tselectedFiles : var in method public choose(toSelect VirtualFile, callback Consumer<? super List<VirtualFile>>) : void from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttitle : String to title : var in method package NativeFileSaverDialogImpl(descriptor FileSaverDescriptor, parent Component) from class com.intellij.openapi.fileChooser.impl.NativeFileSaverDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\towner : null to dialog : null in method package NativeFileSaverDialogImpl(descriptor FileSaverDescriptor, parent Component) from class com.intellij.openapi.fileChooser.impl.NativeFileSaverDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\towner : null to dialog : null in method package NativeFileSaverDialogImpl(descriptor FileSaverDescriptor, parent Component) from class com.intellij.openapi.fileChooser.impl.NativeFileSaverDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\towner : null to frame : null in method package NativeFileSaverDialogImpl(descriptor FileSaverDescriptor, parent Component) from class com.intellij.openapi.fileChooser.impl.NativeFileSaverDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\towner : null to frame : null in method package NativeFileSaverDialogImpl(descriptor FileSaverDescriptor, parent Component) from class com.intellij.openapi.fileChooser.impl.NativeFileSaverDialogImpl",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "c4043846d038c5f95ee5a1b1f992b72737d3c265",
+      "url": "https://github.com/JetBrains/intellij-community/commit/c4043846d038c5f95ee5a1b1f992b72737d3c265",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertTokensAre(input String, expected String...) : void extracted from public test() : void in class com.intellij.openapi.diff.LineTokenizerTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertTokensAre(input String, expected String...) : void extracted from public test() : void in class com.intellij.openapi.diff.LineTokenizerTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertTokensAre(input String, expected String...) : void extracted from public test() : void in class com.intellij.openapi.diff.LineTokenizerTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tactual : String[] in method private assertTokensAre(input String, expected String...) : void from class com.intellij.openapi.diff.LineTokenizerTest",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "fb44642705a6c7c7d9539889ab6b5f65e532539b",
+      "url": "https://github.com/JetBrains/intellij-community/commit/fb44642705a6c7c7d9539889ab6b5f65e532539b",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "58c48934323a1eb376c3fb4b30e77d57d00c9f22",
+      "url": "https://github.com/JetBrains/intellij-community/commit/58c48934323a1eb376c3fb4b30e77d57d00c9f22",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tc2 : char to codePoint : int in method public scanWords(processor ScanWordProcessor, chars CharSequence, charArray char @Nullable [], startOffset int, endOffset int, mayHaveEscapes boolean, isWordCodePoint IntPredicate) : void from class com.intellij.psi.impl.cache.impl.id.IdTableBuilding",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tc2 : char to codePoint : int in method public scanWords(processor ScanWordProcessor, chars CharSequence, charArray char @Nullable [], startOffset int, endOffset int, mayHaveEscapes boolean, isWordCodePoint IntPredicate) : void from class com.intellij.psi.impl.cache.impl.id.IdTableBuilding",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tc2 : char to codePoint : int in method public scanWords(processor ScanWordProcessor, chars CharSequence, charArray char @Nullable [], startOffset int, endOffset int, mayHaveEscapes boolean, isWordCodePoint IntPredicate) : void from class com.intellij.psi.impl.cache.impl.id.IdTableBuilding",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tc2 : char to codePoint : int in method public scanWords(processor ScanWordProcessor, chars CharSequence, charArray char @Nullable [], startOffset int, endOffset int, mayHaveEscapes boolean, isWordCodePoint IntPredicate) : void from class com.intellij.psi.impl.cache.impl.id.IdTableBuilding",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "f8819a2580a0cc6c2f6a456a6a5fa83bf2e3cf7e",
+      "url": "https://github.com/JetBrains/intellij-community/commit/f8819a2580a0cc6c2f6a456a6a5fa83bf2e3cf7e",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getRemoteDebugPort() : int extracted from package loadSettings(config JCefAppConfig) : CefSettings in class com.intellij.ui.jcef.SettingsHelper",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tport : int to result : int in method private getRemoteDebugPort() : int from class com.intellij.ui.jcef.SettingsHelper",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tport : int to debuggingPort : int in method package loadSettings(config JCefAppConfig) : CefSettings from class com.intellij.ui.jcef.SettingsHelper",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "50f9f4a51bfffab4050bcc9c8685e9a3ed524e12",
+      "url": "https://github.com/JetBrains/intellij-community/commit/50f9f4a51bfffab4050bcc9c8685e9a3ed524e12",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tsetter : KmPropertyAccessorAttributes in method private getSetterVisibility(prop KmProperty) : Visibility from class org.jetbrains.jps.dependency.java.KotlinMeta.KmPropertiesDiff",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "1eb4b060f741c4575e56c3435bf1da716477fd26",
+      "url": "https://github.com/JetBrains/intellij-community/commit/1eb4b060f741c4575e56c3435bf1da716477fd26",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic getMethodName() : String renamed to protected computeMethodName() : String in class com.intellij.debugger.ui.breakpoints.LineBreakpoint",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "00351758c52d6868495c6ddd70df822248b16ec3",
+      "url": "https://github.com/JetBrains/intellij-community/commit/00351758c52d6868495c6ddd70df822248b16ec3",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tinspection : PatternVariableCanBeUsedInspection in method protected configureLocalInspectionTools() : LocalInspectionTool @NotNull [] from class com.intellij.java.codeInspection.PatternVariableCanBeUsedInspectionTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprivate generateTextForInstanceOf(variable PsiLocalVariable, ct CommentTracker, instanceOf PsiInstanceOfExpression, typeElement PsiTypeElement) : StringBuilder extracted from protected applyFix(project Project, element PsiElement, updater ModPsiUpdater) : void in class com.intellij.codeInspection.PatternVariableCanBeUsedInspection.PatternVariableCanBeUsedFix & moved to class com.intellij.codeInspection.PatternVariableCanBeUsedInspection",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "59def660764ebecd5c1e6f9acffdda74472ff714",
+      "url": "https://github.com/JetBrains/intellij-community/commit/59def660764ebecd5c1e6f9acffdda74472ff714",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testRenameToIgnored() : void renamed to public testRenameToIgnoredSwitchRule() : void in class com.intellij.java.codeInsight.daemon.RenameToIgnoredFixTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tanchor : PsiElement in method public findCollisions(element PsiElement, newName String, result List<? super UsageInfo>) : void from class com.intellij.refactoring.rename.JavaUnresolvableLocalCollisionDetector",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tanchor : PsiElement to variable : PsiVariable in method public findCollisions(element PsiElement, newName String, result List<? super UsageInfo>) : void from class com.intellij.refactoring.rename.JavaUnresolvableLocalCollisionDetector",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tanchor : PsiElement to variable : PsiVariable in method public findCollisions(element PsiElement, newName String, result List<? super UsageInfo>) : void from class com.intellij.refactoring.rename.JavaUnresolvableLocalCollisionDetector",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "23f17b761ba0b7265cc5a7883a990df7119af645",
+      "url": "https://github.com/JetBrains/intellij-community/commit/23f17b761ba0b7265cc5a7883a990df7119af645",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate canBeMutated(expr PsiExpression) : boolean extracted from private isConstantArray(array PsiVariable) : boolean in class com.siyeh.ig.psiutils.ExpressionUtils",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "537ba908c107483e410e46e9093081ad0ebb04b4",
+      "url": "https://github.com/JetBrains/intellij-community/commit/537ba908c107483e410e46e9093081ad0ebb04b4",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tvFile : VirtualFile to file : VirtualFile in method protected getElementIcon(flags int) : Icon from class com.intellij.psi.impl.ElementBase",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tpsiFile : PsiFile in method protected getElementIcon(flags int) : Icon from class com.intellij.psi.impl.ElementBase",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcomposite : CompositeIcon to o : CompositeIcon in method private is(icon Icon, expected Icon) : boolean from class com.intellij.ide.scopeView.ScopeViewTreeModel",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tretrievable : RetrievableIcon to o : RetrievableIcon in method private is(icon Icon, expected Icon) : boolean from class com.intellij.ide.scopeView.ScopeViewTreeModel",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/JetBrains/intellij-community.git",
+      "sha1": "a97bd7613ea081db0d8141c0f91228181fbac271",
+      "url": "https://github.com/JetBrains/intellij-community/commit/a97bd7613ea081db0d8141c0f91228181fbac271",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic reportStubInconsistency(project Project, reason SourceOfCheck, type InconsistencyType) : void renamed to public reportStubInconsistencyBetweenPsiAndText(project Project, reason SourceOfCheck, type InconsistencyType) : void in class com.intellij.util.indexing.diagnostic.StubInconsistencyReporterImpl",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic reportStubInconsistency(project Project, reason StubInconsistencyReporter.SourceOfCheck, type InconsistencyType) : void renamed to public reportStubInconsistencyBetweenPsiAndText(project Project, reason StubInconsistencyReporter.SourceOfCheck, type InconsistencyType) : void in class com.intellij.psi.stubs.StubInconsistencyReporter",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic reportStubInconsistency(project Project, reason StubInconsistencyReporter.SourceOfCheck, type InconsistencyType, enforcedInconsistencyType EnforcedInconsistencyType) : void renamed to public reportStubInconsistencyBetweenPsiAndText(project Project, reason StubInconsistencyReporter.SourceOfCheck, type InconsistencyType, enforcedInconsistencyType EnforcedInconsistencyType) : void in class com.intellij.psi.stubs.StubInconsistencyReporter",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic reportStubInconsistency(project Project, reason StubInconsistencyReporter.SourceOfCheck, type InconsistencyType, enforcedInconsistencyType EnforcedInconsistencyType) : void renamed to public reportStubInconsistencyBetweenPsiAndText(project Project, reason StubInconsistencyReporter.SourceOfCheck, type InconsistencyType, enforcedInconsistencyType EnforcedInconsistencyType) : void in class com.intellij.util.indexing.diagnostic.StubInconsistencyReporterImpl",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    }
+  ]
+}

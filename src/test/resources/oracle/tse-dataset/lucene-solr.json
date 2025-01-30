@@ -1,0 +1,1309 @@
+{
+  "results": [
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "408b3775ddc204f9e8e27f7fc591e95d584308d4",
+      "url": "https://github.com/apache/lucene-solr/commit/408b3775ddc204f9e8e27f7fc591e95d584308d4",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tnames : List<String> in method public testOldIndexes() : void from class org.apache.solr.backcompat.TestLuceneIndexBackCompat",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "fe33a436a084a43b3fdceb7beea662730c535337",
+      "url": "https://github.com/apache/lucene-solr/commit/fe33a436a084a43b3fdceb7beea662730c535337",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tclient : Http2SolrClient in method public build() : Http2SolrClient from class org.apache.solr.client.solrj.impl.Http2SolrClient.Builder",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate basicAuthCredentialsToAuthorizationString(user String, pass String) : String extracted from private setBasicAuthHeader(solrRequest SolrRequest, req Request) : void in class org.apache.solr.client.solrj.impl.Http2SolrClient",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic setup(client Http2SolrClient, basicAuthUser String, basicAuthPass String) : void extracted from public setup(client Http2SolrClient) : void in class org.apache.solr.client.solrj.impl.PreemptiveBasicAuthClientBuilderFactory",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate defaultParams : SolrParams from class org.apache.solr.client.solrj.impl.PreemptiveBasicAuthClientBuilderFactory to public defaultParams : SolrParams from class org.apache.solr.client.solrj.impl.PreemptiveBasicAuthClientBuilderFactory.CredentialsResolver",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.apache.solr.client.solrj.impl.PreemptiveBasicAuthClientBuilderFactory.CredentialsResolver from class org.apache.solr.client.solrj.impl.PreemptiveBasicAuthClientBuilderFactory",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "f36a867bd07270421b8295f1698adf45c4905149",
+      "url": "https://github.com/apache/lucene-solr/commit/f36a867bd07270421b8295f1698adf45c4905149",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate getRandomInts(length int, missingVals boolean, bound int) : List<Integer> renamed to private getRandomLongs(length int, missingVals boolean, boundPosNeg long) : List<Long> in class org.apache.solr.schema.TestPointFields",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tList<Integer> to List<Long> in method private getRandomLongs(length int, missingVals boolean, boundPosNeg long) : List<Long> from class org.apache.solr.schema.TestPointFields",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "99a4bbf3a0ab937cc66a9f256223f7b7bfaf9427",
+      "url": "https://github.com/apache/lucene-solr/commit/99a4bbf3a0ab937cc66a9f256223f7b7bfaf9427",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate ngram(n int, s1 String, s2 String, opt EnumSet<NGramOptions>) : int renamed to private anyMismatchNgram(n int, s1 String, s2 String, weighted boolean) : int in class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpackage ngramScore(n int, s1 String, s2 String, weighted boolean) : int extracted from private ngram(n int, s1 String, s2 String, opt EnumSet<NGramOptions>) : int in class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate ngram(n int, s1 String, s2 String, opt EnumSet<NGramOptions>) : int renamed to package ngramScore(n int, s1 String, s2 String, weighted boolean) : int in class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "ddbd3b88ec8a9c3acc55e351f94f370a11f514b5",
+      "url": "https://github.com/apache/lucene-solr/commit/ddbd3b88ec8a9c3acc55e351f94f370a11f514b5",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic hashCode() : int from class org.apache.solr.search.HashQParserPlugin.HashQuery.BitsFilter to public hashCode() : int from class org.apache.solr.search.HashQParserPlugin.HashCodeValuesSource",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "4f6469b17387fb1ee05a8304c80ff607cdce7bc1",
+      "url": "https://github.com/apache/lucene-solr/commit/4f6469b17387fb1ee05a8304c80ff607cdce7bc1",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate processAffixIds(affixLength int, affixIds IntsRef, processor AffixProcessor) : void extracted from private processAffixes(prefixes boolean, word String, processor AffixProcessor) : void in class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tstripLength : int in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tstripLength : int in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tstripLength : int in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcrossProducts : List<String> to crossProducts : List<char[]> in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tsuffixed : String to suffixed : char[] in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\twordChars : char[] in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tstripLength : int in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tstripLength : int in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tstemLength : int in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tstemLength : int in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "a5d84631196f9e70316726ee114adbc2b62dfe64",
+      "url": "https://github.com/apache/lucene-solr/commit/a5d84631196f9e70316726ee114adbc2b62dfe64",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate processFST(fst FST<IntsRef>, keyValueConsumer BiConsumer<IntsRef,IntsRef>) : void renamed to private nextKey(fstEnum IntsRefFSTEnum<IntsRef>, maxLen int) : InputOutput<IntsRef> in class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to InputOutput<IntsRef> in method private nextKey(fstEnum IntsRefFSTEnum<IntsRef>, maxLen int) : InputOutput<IntsRef> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tnext : InputOutput<IntsRef> in method private nextKey(fstEnum IntsRefFSTEnum<IntsRef>, maxLen int) : InputOutput<IntsRef> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate processFST(fst FST<IntsRef>, keyValueConsumer BiConsumer<IntsRef,IntsRef>) : void inlined to private findSimilarDictionaryEntries(word String, originalCase WordCase) : List<Weighted<Root<String>>> in class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tmapping : IntsRefFSTEnum.InputOutput<IntsRef> to mapping : InputOutput<IntsRef> in method private findSimilarDictionaryEntries(word String, originalCase WordCase) : List<Weighted<Root<String>>> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "3a99e2aa82d860b6a319cea39607ab3c8ef590b5",
+      "url": "https://github.com/apache/lucene-solr/commit/3a99e2aa82d860b6a319cea39607ab3c8ef590b5",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tpatterns : ArrayList<CharacterRunAutomaton> to patterns : ArrayList<AffixCondition> in class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tregex : String to key : String in method private parseAffix(affixes TreeMap<String,List<Integer>>, secondStageFlags Set<Character>, header String, reader LineNumberReader, kind AffixKind, seenPatterns Map<String,Integer>, seenStrips Map<String,Integer>, flags FlagEnumerator) : void from class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tprivate conditionRegexp(regex String) : RegExp from class org.apache.lucene.analysis.hunspell.Dictionary to public compile(kind AffixKind, strip String, condition String, line String) : AffixCondition from class org.apache.lucene.analysis.hunspell.AffixCondition",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tRegExp to AffixCondition in method public compile(kind AffixKind, strip String, condition String, line String) : AffixCondition from class org.apache.lucene.analysis.hunspell.AffixCondition",
+          "validation": false
+        },
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpackage escapeDash(re String) : String from class org.apache.lucene.analysis.hunspell.Dictionary to public uniqueKey(kind AffixKind, strip String, condition String) : String from class org.apache.lucene.analysis.hunspell.AffixCondition",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.apache.lucene.analysis.hunspell.AffixCondition from class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcondition : boolean to deAffixedOffset : int in method private stripAffix(word char[], offset int, length int, affixLen int, affix int, isPrefix boolean) : char[] from class org.apache.lucene.analysis.hunspell.Stemmer",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcondition : boolean to deAffixedOffset : int in method private stripAffix(word char[], offset int, length int, affixLen int, affix int, isPrefix boolean) : char[] from class org.apache.lucene.analysis.hunspell.Stemmer",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\te : IllegalArgumentException to e : Throwable in method public compile(kind AffixKind, strip String, condition String, line String) : AffixCondition from class org.apache.lucene.analysis.hunspell.AffixCondition",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate checkCondition(affix int, c1 char[], c1off int, c1len int, c2 char[], c2off int, c2len int) : boolean inlined to private stripAffix(word char[], offset int, length int, affixLen int, affix int, isPrefix boolean) : char[] in class org.apache.lucene.analysis.hunspell.Stemmer",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcondition : boolean to condition : int in method private stripAffix(word char[], offset int, length int, affixLen int, affix int, isPrefix boolean) : char[] from class org.apache.lucene.analysis.hunspell.Stemmer",
+          "validation": false
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage escapeDash(re String) : String from class org.apache.lucene.analysis.hunspell.Dictionary to private escapeDash(re String) : String from class org.apache.lucene.analysis.hunspell.AffixCondition",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "e1ff4c13541f279799d03d65cf90a50ec5cea8ea",
+      "url": "https://github.com/apache/lucene-solr/commit/e1ff4c13541f279799d03d65cf90a50ec5cea8ea",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to boolean in method package suggest(word String, wordCase WordCase) : boolean from class org.apache.lucene.analysis.hunspell.ModifyingSuggester",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to boolean in method private tryVariationsOf(word String) : boolean from class org.apache.lucene.analysis.hunspell.ModifyingSuggester",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\thasGoodSuggestions : boolean in method package suggest(word String, wordCase WordCase) : boolean from class org.apache.lucene.analysis.hunspell.ModifyingSuggester",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\ts : null to candidate : String in method package suggest(word String, wordCase WordCase) : boolean from class org.apache.lucene.analysis.hunspell.ModifyingSuggester",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "f8be421ae1f4d9d021b71c7ec4e060413b951363",
+      "url": "https://github.com/apache/lucene-solr/commit/f8be421ae1f4d9d021b71c7ec4e060413b951363",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene50.Lucene50TermVectorsFormat moved to org.apache.lucene.backward_codecs.lucene50.Lucene50TermVectorsFormat",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.apache.lucene.codecs.compressing.CompressingTermVectorsFormat renamed to org.apache.lucene.codecs.compressing.Lucene90CompressingTermVectorsFormat",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.apache.lucene.codecs.compressing.CompressingTermVectorsWriter renamed to org.apache.lucene.codecs.compressing.Lucene90CompressingTermVectorsWriter",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\ttermVectorsFormat : CompressingTermVectorsFormat to termVectorsFormat : Lucene90CompressingTermVectorsFormat in class org.apache.lucene.codecs.compressing.CompressingCodec",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\treader : CompressingTermVectorsReader to reader : Lucene90CompressingTermVectorsReader in method public testChunkCleanup() : void from class org.apache.lucene.codecs.compressing.TestCompressingTermVectorsFormat",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\treader : CompressingTermVectorsReader to reader : Lucene90CompressingTermVectorsReader in method public testChunkCleanup() : void from class org.apache.lucene.codecs.compressing.TestCompressingTermVectorsFormat",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tmatchingVectorsReader : CompressingTermVectorsReader to matchingVectorsReader : Lucene90CompressingTermVectorsReader in method public merge(mergeState MergeState) : int from class org.apache.lucene.codecs.compressing.Lucene90CompressingTermVectorsWriter",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage VERSION_OFFHEAP_INDEX : int from class org.apache.lucene.codecs.compressing.CompressingTermVectorsWriter to package VERSION_OFFHEAP_INDEX : int from class org.apache.lucene.backward_codecs.lucene50.compressing.Lucene50CompressingTermVectorsReader",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage VERSION_META : int from class org.apache.lucene.codecs.compressing.CompressingTermVectorsWriter to package VERSION_META : int from class org.apache.lucene.backward_codecs.lucene50.compressing.Lucene50CompressingTermVectorsReader",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage VECTORS_INDEX_CODEC_NAME : String from class org.apache.lucene.codecs.compressing.CompressingTermVectorsWriter to package VECTORS_INDEX_CODEC_NAME : String from class org.apache.lucene.backward_codecs.lucene50.compressing.Lucene50CompressingTermVectorsReader",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage VERSION_CURRENT : int from class org.apache.lucene.codecs.compressing.CompressingTermVectorsWriter to package VERSION_CURRENT : int from class org.apache.lucene.backward_codecs.lucene50.compressing.Lucene50CompressingTermVectorsReader",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage VERSION_START : int from class org.apache.lucene.codecs.compressing.CompressingTermVectorsWriter to package VERSION_START : int from class org.apache.lucene.backward_codecs.lucene50.compressing.Lucene50CompressingTermVectorsReader",
+          "validation": true
+        },
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\torg.apache.lucene.codecs.lucene50.TestLucene50TermVectorsFormat moved and renamed to org.apache.lucene.codecs.lucene90.TestLucene90TermVectorsFormat",
+          "validation": false
+        },
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\torg.apache.lucene.codecs.compressing.CompressingTermVectorsReader moved and renamed to org.apache.lucene.backward_codecs.lucene50.compressing.Lucene50CompressingTermVectorsReader",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\treader : CompressingTermVectorsReader to reader : Lucene90CompressingTermVectorsReader in method public testChunkCleanup() : void from class org.apache.lucene.codecs.compressing.TestCompressingTermVectorsFormat",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene50.TestLucene50TermVectorsFormat moved to org.apache.lucene.backward_codecs.lucene50.TestLucene50TermVectorsFormat",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.apache.lucene.codecs.compressing.CompressingTermVectorsReader renamed to org.apache.lucene.codecs.compressing.Lucene90CompressingTermVectorsReader",
+          "validation": false
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tindexReader : FieldsIndex in method public CompressingTermVectorsReader(d Directory, si SegmentInfo, segmentSuffix String, fn FieldInfos, context IOContext, formatName String, compressionMode CompressionMode) from class org.apache.lucene.codecs.compressing.CompressingTermVectorsReader",
+          "validation": false
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tmaxPointer : long in method public CompressingTermVectorsReader(d Directory, si SegmentInfo, segmentSuffix String, fn FieldInfos, context IOContext, formatName String, compressionMode CompressionMode) from class org.apache.lucene.codecs.compressing.CompressingTermVectorsReader",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_SUPERCLASS",
+          "description": "Extract Superclass\torg.apache.lucene.backward_codecs.lucene50.compressing.Lucene50CompressingTermVectorsFormat from classes [org.apache.lucene.codecs.lucene50.Lucene50TermVectorsFormat]",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.apache.lucene.backward_codecs.lucene50.compressing.Lucene50CompressingTermVectorsReader from class org.apache.lucene.codecs.compressing.CompressingTermVectorsWriter",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "342ea856d38edccb9d845c64caf4af8d7a38d23d",
+      "url": "https://github.com/apache/lucene-solr/commit/342ea856d38edccb9d845c64caf4af8d7a38d23d",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage isSecondStageAffix(flag char) : boolean renamed to package isSecondStageSuffix(flag char) : boolean in class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": false
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tsecondStageAffixFlags : char[] to secondStageSuffixFlags : char[] in class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": false
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tstage2Flags : Set<Character> to suffixContFlags : Set<Character> in method private readAffixFile(affixStream InputStream, decoder CharsetDecoder, flags FlagEnumerator) : void from class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "34993c22ddbac702bfad321a04bbd753e9ade1c4",
+      "url": "https://github.com/apache/lucene-solr/commit/34993c22ddbac702bfad321a04bbd753e9ade1c4",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpackage nextArc(fst FST<IntsRef>, arc FST.Arc<IntsRef>, reader FST.BytesReader, output IntsRef, ch int) : IntsRef extracted from package lookup(fst FST<IntsRef>, word char[], offset int, length int) : IntsRef in class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tNO_OUTPUT : IntsRef in method private stem(word char[], offset int, length int, context WordContext, previous int, prevFlag char, prefixId int, recursionDepth int, doPrefix boolean, previousWasPrefix boolean, processor RootProcessor) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tNO_OUTPUT : IntsRef in method private stem(word char[], offset int, length int, context WordContext, previous int, prevFlag char, prefixId int, recursionDepth int, doPrefix boolean, previousWasPrefix boolean, processor RootProcessor) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tlength : int in method private processAffixes(prefixes boolean, word String, processor AffixProcessor) : void from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tNO_OUTPUT : IntsRef to output : IntsRef in method private stem(word char[], offset int, length int, context WordContext, previous int, prevFlag char, prefixId int, recursionDepth int, doPrefix boolean, previousWasPrefix boolean, processor RootProcessor) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tNO_OUTPUT : IntsRef to output : IntsRef in method private stem(word char[], offset int, length int, context WordContext, previous int, prevFlag char, prefixId int, recursionDepth int, doPrefix boolean, previousWasPrefix boolean, processor RootProcessor) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "4d7b2aebfe01e2a8d0407c179238bb5e092b8d2a",
+      "url": "https://github.com/apache/lucene-solr/commit/4d7b2aebfe01e2a8d0407c179238bb5e092b8d2a",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.IndexedDISI moved to org.apache.lucene.codecs.lucene90.IndexedDISI",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesConsumer moved to org.apache.lucene.backward_codecs.lucene80.Lucene80DocValuesConsumer",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesFormat moved to org.apache.lucene.backward_codecs.lucene80.Lucene80DocValuesFormat",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesProducer moved to org.apache.lucene.backward_codecs.lucene80.Lucene80DocValuesProducer",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80NormsConsumer moved to org.apache.lucene.backward_codecs.lucene80.Lucene80NormsConsumer",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80NormsFormat moved to org.apache.lucene.backward_codecs.lucene80.Lucene80NormsFormat",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80NormsProducer moved to org.apache.lucene.backward_codecs.lucene80.Lucene80NormsProducer",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.BaseLucene80DocValuesFormatTestCase moved to org.apache.lucene.backward_codecs.lucene80.BaseLucene80DocValuesFormatTestCase",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.TestBestCompressionLucene80DocValuesFormat moved to org.apache.lucene.backward_codecs.lucene80.TestBestCompressionLucene80DocValuesFormat",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.TestBestSpeedLucene80DocValuesFormat moved to org.apache.lucene.backward_codecs.lucene80.TestBestSpeedLucene80DocValuesFormat",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.TestLucene80NormsFormatMergeInstance moved to org.apache.lucene.backward_codecs.lucene80.TestLucene80NormsFormatMergeInstance",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.backward_codecs.Lucene87.Lucene87RWCodec moved to org.apache.lucene.backward_codecs.lucene87.Lucene87RWCodec",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tdvMode : Lucene80DocValuesFormat.Mode to dvMode : Lucene90DocValuesFormat.Mode in class org.apache.lucene.codecs.lucene90.Lucene90Codec.Mode",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tht : LZ4.FastCompressionHashTable to ht : FastCompressionHashTable in method private addTermsDict(values SortedSetDocValues) : void from class org.apache.lucene.backward_codecs.lucene80.Lucene80DocValuesConsumer",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.TestIndexedDISI moved to org.apache.lucene.backward_codecs.lucene80.TestIndexedDISI",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.apache.lucene.codecs.lucene80.TestLucene80NormsFormat renamed to org.apache.lucene.codecs.lucene80.TestLucene90NormsFormat",
+          "validation": false
+        },
+        {
+          "type": "PUSH_DOWN_OPERATION",
+          "description": "Push Down Method\tpublic normsConsumer(state SegmentWriteState) : NormsConsumer from class org.apache.lucene.codecs.lucene80.Lucene80NormsFormat to public normsConsumer(state SegmentWriteState) : NormsConsumer from class org.apache.lucene.backward_codecs.lucene80.Lucene80RWNormsFormat",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.TestDocValuesCompression moved to org.apache.lucene.backward_codecs.lucene80.TestDocValuesCompression",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_SUBCLASS",
+          "description": "Extract Subclass\torg.apache.lucene.backward_codecs.lucene80.Lucene80RWNormsFormat from class org.apache.lucene.codecs.lucene80.Lucene80NormsFormat",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesConsumer.MinMaxTracker moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesConsumer.MinMaxTracker",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesConsumer.CompressedBinaryBlockWriter moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesConsumer.CompressedBinaryBlockWriter",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesFormat.Mode moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesFormat.Mode",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesProducer.NumericEntry moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesProducer.NumericEntry",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesProducer.BinaryEntry moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesProducer.BinaryEntry",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesProducer.TermsDictEntry moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesProducer.TermsDictEntry",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesProducer.SortedEntry moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesProducer.SortedEntry",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesProducer.SortedSetEntry moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesProducer.SortedSetEntry",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesProducer.SortedNumericEntry moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesProducer.SortedNumericEntry",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesProducer.DenseNumericDocValues moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesProducer.DenseNumericDocValues",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesProducer.SparseNumericDocValues moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesProducer.SparseNumericDocValues",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesProducer.DenseBinaryDocValues moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesProducer.DenseBinaryDocValues",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesProducer.SparseBinaryDocValues moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesProducer.SparseBinaryDocValues",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesProducer.BinaryDecoder moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesProducer.BinaryDecoder",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesProducer.BaseSortedDocValues moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesProducer.BaseSortedDocValues",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesProducer.BaseSortedSetDocValues moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesProducer.BaseSortedSetDocValues",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesProducer.TermsDict moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesProducer.TermsDict",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80DocValuesProducer.VaryingBPVReader moved to org.apache.lucene.codecs.lucene90.Lucene90DocValuesProducer.VaryingBPVReader",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80NormsProducer.NormsEntry moved to org.apache.lucene.codecs.lucene90.Lucene90NormsProducer.NormsEntry",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80NormsProducer.DenseNormsIterator moved to org.apache.lucene.codecs.lucene90.Lucene90NormsProducer.DenseNormsIterator",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.Lucene80NormsProducer.SparseNormsIterator moved to org.apache.lucene.codecs.lucene90.Lucene90NormsProducer.SparseNormsIterator",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.TestDocValuesCompression moved to org.apache.lucene.codecs.lucene90.TestDocValuesCompression",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.TestIndexedDISI moved to org.apache.lucene.codecs.lucene90.TestIndexedDISI",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.TestLucene80NormsFormat moved to org.apache.lucene.backward_codecs.lucene80.TestLucene80NormsFormat",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "42da2b45e6f38ecbb746e571692cc907b79ca426",
+      "url": "https://github.com/apache/lucene-solr/commit/42da2b45e6f38ecbb746e571692cc907b79ca426",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tdictionary : Dictionary in method public testStemmingApi() : void from class org.apache.lucene.analysis.hunspell.TestHunspell",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpublic testHunspellStemmingApi() : void from class org.apache.lucene.analysis.hunspell.TestStemmer to public testStemmingApi() : void from class org.apache.lucene.analysis.hunspell.TestHunspell",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.apache.lucene.analysis.hunspell.HunspellTest renamed to org.apache.lucene.analysis.hunspell.TestHunspell",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage suggest(word String, wordCase WordCase) : LinkedHashSet<String> from class org.apache.lucene.analysis.hunspell.ModifyingSuggester to package suggest(word String, timeLimitMs long) : List<String> from class org.apache.lucene.analysis.hunspell.Hunspell",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tLinkedHashSet<String> to List<String> in method package suggest(word String, timeLimitMs long) : List<String> from class org.apache.lucene.analysis.hunspell.Hunspell",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tdictionary : Dictionary in method public testCheckCanceled() : void from class org.apache.lucene.analysis.hunspell.TestHunspell",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate doSuggest(word String, wordCase WordCase, suggestions LinkedHashSet<String>, checkCanceled Runnable) : void extracted from public suggest(word String) : List<String> in class org.apache.lucene.analysis.hunspell.Hunspell",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate postprocess(word String, wordCase WordCase, suggestions Collection<String>) : List<String> extracted from public suggest(word String) : List<String> in class org.apache.lucene.analysis.hunspell.Hunspell",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpackage suggest(word String, timeLimitMs long) : List<String> extracted from public suggest(word String) : List<String> in class org.apache.lucene.analysis.hunspell.Hunspell",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tsuggestions : Set<String> to suggestions : LinkedHashSet<String> in method package suggest(word String, timeLimitMs long) : List<String> from class org.apache.lucene.analysis.hunspell.Hunspell",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tLinkedHashSet<String> to void in method package suggest(word String, wordCase WordCase) : void from class org.apache.lucene.analysis.hunspell.ModifyingSuggester",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate hasQuickSuggestions(speller Hunspell, word String) : boolean extracted from private checkSuggestionPerformance(code String, wordCount int) : void in class org.apache.lucene.analysis.hunspell.TestPerformance",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "f43fe7642e9f1eb48b7438e2b132d9efc641edb6",
+      "url": "https://github.com/apache/lucene-solr/commit/f43fe7642e9f1eb48b7438e2b132d9efc641edb6",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.blocktree.CompressionAlgorithm moved to org.apache.lucene.codecs.lucene90.blocktree.CompressionAlgorithm",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.blocktree.IntersectTermsEnum moved to org.apache.lucene.codecs.lucene90.blocktree.IntersectTermsEnum",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.blocktree.SegmentTermsEnum moved to org.apache.lucene.codecs.lucene90.blocktree.SegmentTermsEnum",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.blocktree.Stats moved to org.apache.lucene.codecs.lucene90.blocktree.Stats",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.MockTermStateFactory moved to org.apache.lucene.codecs.lucene90.MockTermStateFactory",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.ForDeltaUtil moved to org.apache.lucene.codecs.lucene90.ForDeltaUtil",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.PForUtil moved to org.apache.lucene.codecs.lucene90.PForUtil",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.TestForUtil moved to org.apache.lucene.codecs.lucene90.TestForUtil",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.TestPForUtil moved to org.apache.lucene.codecs.lucene90.TestPForUtil",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.Lucene84PostingsReader moved to org.apache.lucene.backward_codecs.lucene84.Lucene84PostingsReader",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.Lucene84PostingsWriter moved to org.apache.lucene.backward_codecs.lucene84.Lucene84PostingsWriter",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.Lucene84ScoreSkipReader moved to org.apache.lucene.backward_codecs.lucene84.Lucene84ScoreSkipReader",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.Lucene84SkipReader moved to org.apache.lucene.backward_codecs.lucene84.Lucene84SkipReader",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.Lucene84SkipWriter moved to org.apache.lucene.backward_codecs.lucene84.Lucene84SkipWriter",
+          "validation": true
+        },
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\torg.apache.lucene.codecs.blocktree.BlockTreeTermsReader moved and renamed to org.apache.lucene.backward_codecs.lucene40.blocktree.Lucene40BlockTreeTermsReader",
+          "validation": true
+        },
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\torg.apache.lucene.codecs.blocktree.BlockTreeTermsWriter moved and renamed to org.apache.lucene.codecs.lucene90.blocktree.Lucene90BlockTreeTermsWriter",
+          "validation": true
+        },
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\torg.apache.lucene.codecs.lucene84.TestLucene84PostingsFormat moved and renamed to org.apache.lucene.codecs.lucene90.TestLucene90PostingsFormat",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tLucene84PostingsFormat.IntBlockTermState to Lucene90PostingsFormat.IntBlockTermState in method public create() : Lucene90PostingsFormat.IntBlockTermState from class org.apache.lucene.codecs.lucene90.MockTermStateFactory",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tparent : BlockTreeTermsReader to parent : Lucene90BlockTreeTermsReader in class org.apache.lucene.codecs.lucene90.blocktree.FieldReader",
+          "validation": false
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.ForUtil moved to org.apache.lucene.backward_codecs.lucene84.ForUtil",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.TestForDeltaUtil moved to org.apache.lucene.backward_codecs.lucene84.TestForDeltaUtil",
+          "validation": false
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic init(termsIn IndexInput, state SegmentReadState) : void from class org.apache.lucene.codecs.lucene84.Lucene84PostingsReader to public init(termsIn IndexInput, state SegmentReadState) : void from class org.apache.lucene.codecs.lucene90.Lucene90PostingsReader",
+          "validation": false
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic decodeMetaData() : void from class org.apache.lucene.codecs.blocktree.SegmentTermsEnumFrame to public decodeMetaData() : void from class org.apache.lucene.codecs.lucene90.blocktree.SegmentTermsEnumFrame",
+          "validation": false
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic decodeMetaData() : void from class org.apache.lucene.codecs.blocktree.IntersectTermsEnumFrame to public decodeMetaData() : void from class org.apache.lucene.codecs.lucene90.blocktree.IntersectTermsEnumFrame",
+          "validation": false
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate minTermBlockSize : int from class org.apache.lucene.codecs.lucene84.Lucene84PostingsFormat to private minTermBlockSize : int from class org.apache.lucene.codecs.lucene90.Lucene90PostingsFormat",
+          "validation": false
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage load(frameIndexData BytesRef) : void from class org.apache.lucene.codecs.blocktree.IntersectTermsEnumFrame to package load(frameIndexData BytesRef) : void from class org.apache.lucene.codecs.lucene90.blocktree.IntersectTermsEnumFrame",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.Lucene84PostingsFormat moved to org.apache.lucene.backward_codecs.lucene84.Lucene84PostingsFormat",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate maxTermBlockSize : int from class org.apache.lucene.codecs.lucene84.Lucene84PostingsFormat to private maxTermBlockSize : int from class org.apache.lucene.codecs.lucene90.Lucene90PostingsFormat",
+          "validation": false
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage parent : BlockTreeTermsReader from class org.apache.lucene.codecs.blocktree.FieldReader to package parent : Lucene90BlockTreeTermsReader from class org.apache.lucene.codecs.lucene90.blocktree.FieldReader",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.blocktree.IntersectTermsEnumFrame moved to org.apache.lucene.backward_codecs.lucene40.blocktree.IntersectTermsEnumFrame",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage loadBlock() : void from class org.apache.lucene.codecs.blocktree.SegmentTermsEnumFrame to package loadBlock() : void from class org.apache.lucene.codecs.lucene90.blocktree.SegmentTermsEnumFrame",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.blocktree.FieldReader moved to org.apache.lucene.backward_codecs.lucene40.blocktree.FieldReader",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.blocktree.SegmentTermsEnumFrame moved to org.apache.lucene.backward_codecs.lucene40.blocktree.SegmentTermsEnumFrame",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.apache.lucene.codecs.lucene90.Lucene90PostingsFormat from class org.apache.lucene.codecs.lucene84.Lucene84PostingsFormat",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.apache.lucene.codecs.lucene90.Lucene90PostingsReader from class org.apache.lucene.codecs.lucene84.Lucene84PostingsReader",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.apache.lucene.codecs.lucene90.blocktree.FieldReader from class org.apache.lucene.codecs.blocktree.FieldReader",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.apache.lucene.codecs.lucene90.blocktree.SegmentTermsEnumFrame from class org.apache.lucene.codecs.blocktree.SegmentTermsEnumFrame",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.apache.lucene.codecs.lucene90.blocktree.IntersectTermsEnumFrame from class org.apache.lucene.codecs.blocktree.IntersectTermsEnumFrame",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.blocktree.FieldReader moved to org.apache.lucene.codecs.lucene90.blocktree.FieldReader",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.blocktree.IntersectTermsEnumFrame moved to org.apache.lucene.codecs.lucene90.blocktree.IntersectTermsEnumFrame",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.blocktree.SegmentTermsEnumFrame moved to org.apache.lucene.codecs.lucene90.blocktree.SegmentTermsEnumFrame",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.Lucene84PostingsReader.BlockDocsEnum moved to org.apache.lucene.codecs.lucene90.Lucene90PostingsReader.BlockDocsEnum",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.Lucene84PostingsReader.EverythingEnum moved to org.apache.lucene.codecs.lucene90.Lucene90PostingsReader.EverythingEnum",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.Lucene84PostingsReader.BlockImpactsDocsEnum moved to org.apache.lucene.codecs.lucene90.Lucene90PostingsReader.BlockImpactsDocsEnum",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.Lucene84PostingsReader.BlockImpactsPostingsEnum moved to org.apache.lucene.codecs.lucene90.Lucene90PostingsReader.BlockImpactsPostingsEnum",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.Lucene84PostingsReader.BlockImpactsEverythingEnum moved to org.apache.lucene.codecs.lucene90.Lucene90PostingsReader.BlockImpactsEverythingEnum",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.Lucene84ScoreSkipReader.MutableImpactList moved to org.apache.lucene.codecs.lucene90.Lucene90ScoreSkipReader.MutableImpactList",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.ForUtil moved to org.apache.lucene.codecs.lucene90.ForUtil",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene84.TestForDeltaUtil moved to org.apache.lucene.codecs.lucene90.TestForDeltaUtil",
+          "validation": true
+        },
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\torg.apache.lucene.codecs.lucene84.Lucene84PostingsFormat moved and renamed to org.apache.lucene.codecs.lucene90.Lucene90PostingsFormat",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tskipper : Lucene84SkipReader to skipper : Lucene90SkipReader in class org.apache.lucene.codecs.lucene90.Lucene90PostingsReader.BlockDocsEnum",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tskipper : Lucene84SkipReader to skipper : Lucene90SkipReader in class org.apache.lucene.codecs.lucene90.Lucene90PostingsReader.EverythingEnum",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tskipper : Lucene84ScoreSkipReader to skipper : Lucene90ScoreSkipReader in class org.apache.lucene.codecs.lucene90.Lucene90PostingsReader.BlockImpactsDocsEnum",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tskipper : Lucene84ScoreSkipReader to skipper : Lucene90ScoreSkipReader in class org.apache.lucene.codecs.lucene90.Lucene90PostingsReader.BlockImpactsPostingsEnum",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tskipper : Lucene84ScoreSkipReader to skipper : Lucene90ScoreSkipReader in class org.apache.lucene.codecs.lucene90.Lucene90PostingsReader.BlockImpactsEverythingEnum",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tparent : BlockTreeTermsReader to parent : Lucene40BlockTreeTermsReader in class org.apache.lucene.backward_codecs.lucene40.blocktree.FieldReader",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "c51fee9c1a59030bda61b600cca8923410f1e090",
+      "url": "https://github.com/apache/lucene-solr/commit/c51fee9c1a59030bda61b600cca8923410f1e090",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "PUSH_DOWN_OPERATION",
+          "description": "Push Down Method\tpublic skipBytes(numBytes long) : void from class org.apache.lucene.store.DataInput to public skipBytes(numBytes long) : void from class org.apache.lucene.util.PagedBytes.PagedBytesDataInput",
+          "validation": true
+        },
+        {
+          "type": "PUSH_DOWN_OPERATION",
+          "description": "Push Down Method\tpublic skipBytes(numBytes long) : void from class org.apache.lucene.store.DataInput to public skipBytes(numBytes long) : void from class org.apache.lucene.store.ByteBuffersDataInput",
+          "validation": true
+        },
+        {
+          "type": "PUSH_DOWN_OPERATION",
+          "description": "Push Down Method\tpublic skipBytes(numBytes long) : void from class org.apache.lucene.store.DataInput to public skipBytes(numBytes long) : void from class org.apache.lucene.store.InputStreamDataInput",
+          "validation": true
+        },
+        {
+          "type": "PUSH_DOWN_OPERATION",
+          "description": "Push Down Method\tpublic skipBytes(numBytes long) : void from class org.apache.lucene.store.DataInput to public skipBytes(numBytes long) : void from class org.apache.lucene.store.IndexInput",
+          "validation": true
+        },
+        {
+          "type": "PUSH_DOWN_OPERATION",
+          "description": "Push Down Method\tpublic skipBytes(numBytes long) : void from class org.apache.lucene.store.DataInput to public skipBytes(numBytes long) : void from class org.apache.lucene.index.ByteSliceReader",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprotected skipBytesSlowly(numBytes long) : void extracted from public skipBytes(numBytes long) : void in class org.apache.lucene.util.PagedBytes.PagedBytesDataInput",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprotected skipBytesSlowly(numBytes long) : void extracted from public skipBytes(numBytes long) : void in class org.apache.lucene.store.ByteBuffersDataInput",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprotected skipBytesSlowly(numBytes long) : void extracted from public skipBytes(numBytes long) : void in class org.apache.lucene.store.InputStreamDataInput",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprotected skipBytesSlowly(numBytes long) : void extracted from public skipBytes(numBytes long) : void in class org.apache.lucene.index.ByteSliceReader",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic skipBytes(numBytes long) : void renamed to protected skipBytesSlowly(numBytes long) : void in class org.apache.lucene.store.DataInput",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "58e3b7a8542fa8d94a77215fdf13d575a5657546",
+      "url": "https://github.com/apache/lucene-solr/commit/58e3b7a8542fa8d94a77215fdf13d575a5657546",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to int in method private writeNormalizedWordEntry(reuse StringBuilder, writer ByteSequencesWriter, line String) : int from class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tIndexOutput to int in method private mergeDictionaries(dictionaries List<InputStream>, decoder CharsetDecoder, output IndexOutput) : int from class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic stringHashCode(chars char[], offset int, length int) : int extracted from public hashCode() : int in class org.apache.lucene.util.CharsRef",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic stringHashCode(chars char[], offset int, length int) : int extracted from private getHashCode(text char[], offset int, len int) : int in class org.apache.lucene.analysis.CharArrayMap & moved to class org.apache.lucene.util.CharsRef",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tprime : int in method public hashCode() : int from class org.apache.lucene.util.CharsRef",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "4b3fb1e06590c786e1c6ca78543b55872b8da12b",
+      "url": "https://github.com/apache/lucene-solr/commit/4b3fb1e06590c786e1c6ca78543b55872b8da12b",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tforms : IntsRef to ref : IntsRef in method private checkLastCompoundPart(wordChars char[], start int, length int, words List<IntsRef>) : boolean from class org.apache.lucene.analysis.hunspell.Hunspell",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate isRootCompatibleWithContext(context WordContext, lastAffix int, entryId int) : boolean extracted from package doStem(word char[], offset int, length int, context WordContext, processor RootProcessor) : boolean in class org.apache.lucene.analysis.hunspell.Stemmer",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate isRootCompatibleWithContext(context WordContext, lastAffix int, entryId int) : boolean extracted from private applyAffix(strippedWord char[], offset int, length int, context WordContext, affix int, previousAffix int, prefixId int, recursionDepth int, prefix boolean, processor RootProcessor) : boolean in class org.apache.lucene.analysis.hunspell.Stemmer",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpackage isAffixAllowedWithoutSpecialPermit(isPrefix boolean) : boolean extracted from private isAffixCompatible(affix int, prevFlag char, recursionDepth int, isPrefix boolean, previousWasPrefix boolean, context WordContext) : boolean in class org.apache.lucene.analysis.hunspell.Stemmer & moved to class org.apache.lucene.analysis.hunspell.WordContext",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tresult : boolean to found : boolean in method private checkLastCompoundPart(wordChars char[], start int, length int, words List<IntsRef>) : boolean from class org.apache.lucene.analysis.hunspell.Hunspell",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "5e834b39eb23bdc4c2b6b80a782efb6ff9d397dd",
+      "url": "https://github.com/apache/lucene-solr/commit/5e834b39eb23bdc4c2b6b80a782efb6ff9d397dd",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate containsSharpS(word char[], offset int, length int) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer to private containsSharpS(word char[], offset int, length int) : boolean from class org.apache.lucene.analysis.hunspell.Hunspell",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate acceptCase(originalCase WordCase, entryId int, word char[], offset int, length int) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer to private acceptCase(originalCase WordCase, entryId int, root CharsRef) : boolean from class org.apache.lucene.analysis.hunspell.Hunspell",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/lucene-solr.git",
+      "sha1": "2ae45cc9859f5ef1154a50ff704743b0305ea311",
+      "url": "https://github.com/apache/lucene-solr/commit/2ae45cc9859f5ef1154a50ff704743b0305ea311",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\ticonv : FST<CharsRef> to iconv : ConvTable in class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\toconv : FST<CharsRef> to oconv : ConvTable in class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tres : FST<CharsRef> to res : ConvTable in method private readAffixFile(affixStream InputStream, decoder CharsetDecoder, flags FlagEnumerator) : void from class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tcleaned : CharSequence in method private parseAffix(affixes TreeMap<String,List<Integer>>, header String, reader LineNumberReader, conditionPattern String, seenPatterns Map<String,Integer>, seenStrips Map<String,Integer>, flags FlagEnumerator) : void from class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tmappings : Map<String,String> to mappings : TreeMap<String,String> in method private parseConversions(reader LineNumberReader, num int) : ConvTable from class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tFST<CharsRef> to ConvTable in method private parseConversions(reader LineNumberReader, num int) : ConvTable from class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage applyMappings(fst FST<CharsRef>, sb StringBuilder) : void from class org.apache.lucene.analysis.hunspell.Dictionary to package applyMappings(sb StringBuilder) : void from class org.apache.lucene.analysis.hunspell.ConvTable",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate cleanInput(input CharSequence, prefixLength int, reuse StringBuilder) : CharSequence inlined to package cleanInput(input CharSequence, reuse StringBuilder) : CharSequence in class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.apache.lucene.analysis.hunspell.ConvTable from class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tNO_OUTPUT : CharsRef in method package applyMappings(fst FST<CharsRef>, sb StringBuilder) : void from class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate cleanInput(input CharSequence, prefixLength int, reuse StringBuilder) : CharSequence renamed to package needsInputCleaning(input CharSequence) : boolean in class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpackage mayNeedInputCleaning() : boolean extracted from private cleanInput(input CharSequence, prefixLength int, reuse StringBuilder) : CharSequence in class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tCharSequence to boolean in method package needsInputCleaning(input CharSequence) : boolean from class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": false
+        }
+      ]
+    }
+  ]
+}

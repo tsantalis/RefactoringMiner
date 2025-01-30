@@ -1,0 +1,564 @@
+{
+  "results": [
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "37f42462dec876276ca3c7da672906825da77fd0",
+      "url": "https://github.com/javaparser/javaparser/commit/37f42462dec876276ca3c7da672906825da77fd0",
+      "commonRefactoring": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\terasedParameters : List<ResolvedType> in method private erasureOfParamaters(typeParametersMap ResolvedTypeParametersMap) : List<ResolvedType> from class com.github.javaparser.resolution.types.ResolvedReferenceType",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "b3c51ccbd030fbaac1c76ea69e2947c26a80c5a1",
+      "url": "https://github.com/javaparser/javaparser/commit/b3c51ccbd030fbaac1c76ea69e2947c26a80c5a1",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate asResolvedReferenceType(o Object) : ResolvedReferenceType inlined to public equals(o Object) : boolean in class com.github.javaparser.resolution.types.ResolvedReferenceType",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate isLazyType(type Object) : boolean inlined to public equals(o Object) : boolean in class com.github.javaparser.resolution.types.ResolvedReferenceType",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate isLazyType(type Object) : boolean inlined to public equals(o Object) : boolean in class com.github.javaparser.resolution.types.ResolvedReferenceType",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "6a26527b8a0745c53be0523f009a01aa0540cfb3",
+      "url": "https://github.com/javaparser/javaparser/commit/6a26527b8a0745c53be0523f009a01aa0540cfb3",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate isEqualRange(range1 Optional<Range>, range2 Optional<Range>) : boolean inlined to private findChildTextElementForComment(oldValue Comment, nodeText NodeText) : List<ChildTextElement> in class com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter.Observer",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate isEqualRange(range1 Optional<Range>, range2 Optional<Range>) : boolean inlined to private findTokenTextElementForComment(oldValue Comment, nodeText NodeText) : List<TokenTextElement> in class com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter.Observer",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "dfd8dfb8e8df6f88d869098fcf8884b7f2a8b85d",
+      "url": "https://github.com/javaparser/javaparser/commit/dfd8dfb8e8df6f88d869098fcf8884b7f2a8b85d",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\toType : Optional<Class<N>> in method public findAncestor(predicate Predicate<N>, types Class<N>...) : Optional<N> from class com.github.javaparser.HasParentNode",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "4603287b0f5174ca76f2d3674cf5d292ec815228",
+      "url": "https://github.com/javaparser/javaparser/commit/4603287b0f5174ca76f2d3674cf5d292ec815228",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tfinalRes : Optional<ResolvedType> in method public getType(node Node, solveLambdas boolean) : ResolvedType from class com.github.javaparser.symbolsolver.javaparsermodel.JavaParserFacade",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "b73b81a7725c9e2f607886ee8edce7dee8758a4d",
+      "url": "https://github.com/javaparser/javaparser/commit/b73b81a7725c9e2f607886ee8edce7dee8758a4d",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate resolveParameterDeclaration(resolvedMethodLikeDeclaration ResolvedMethodLikeDeclaration, parameter Parameter) : Optional<ResolvedParameterDeclaration> extracted from public resolveDeclaration(node Node, resultClass Class<T>) : T in class com.github.javaparser.symbolsolver.JavaSymbolSolver",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate resolveParameterDeclaration(parameter Parameter) : Optional<ResolvedParameterDeclaration> extracted from public resolveDeclaration(node Node, resultClass Class<T>) : T in class com.github.javaparser.symbolsolver.JavaSymbolSolver",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcallableDeclaration : CallableDeclaration to parentNode : Optional<Node> in method public resolveDeclaration(node Node, resultClass Class<T>) : T from class com.github.javaparser.symbolsolver.JavaSymbolSolver",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcallableDeclaration : CallableDeclaration to parentNode : Optional<Node> in method public resolveDeclaration(node Node, resultClass Class<T>) : T from class com.github.javaparser.symbolsolver.JavaSymbolSolver",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "2f5b010e5b1421f75c5b86fade578386c257cb59",
+      "url": "https://github.com/javaparser/javaparser/commit/2f5b010e5b1421f75c5b86fade578386c257cb59",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tjapa.bdd.samples.JavaConcepts.Teste moved to japa.bdd.samples.JavaConceptsEnums.Teste",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tjapa.bdd.samples.JavaConcepts.Sexo moved to japa.bdd.samples.JavaConceptsEnums.Sexo",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tjapa.bdd.samples.JavaConcepts.Enum moved to japa.bdd.samples.JavaConceptsEnums.Enum",
+          "validation": true
+        },
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\tjapa.bdd.samples.JavaConcepts.Ugly moved and renamed to japa.bdd.samples.JavaConceptsUgly",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcu : CompilationUnit to base : CompilationUnit in method package printingExampleJavaConcepts() : void from class com.github.javaparser.printer.ConcreteSyntaxModelAcceptanceTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tjapa.bdd.samples.JavaConcepts.QWE moved to japa.bdd.samples.JavaConceptsInnerClasses.QWE",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tint to int[] in method private doSomething() : int[] from class japa.bdd.samples.JavaConceptsInnerClasses.QWE",
+          "validation": false
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate createInputStream() : InputStream from class japa.bdd.samples.JavaConcepts to private createInputStream() : InputStream from class japa.bdd.samples.JavaConceptsMethods",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic JavaConcepts(x int) from class japa.bdd.samples.JavaConcepts to public JavaConceptsInnerClasses(x int) from class japa.bdd.samples.JavaConceptsInnerClasses",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic JavaConcepts(str String) from class japa.bdd.samples.JavaConcepts to public JavaConceptsInnerClasses(str String) from class japa.bdd.samples.JavaConceptsInnerClasses",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tjapa.bdd.samples.JavaConcepts.A moved to japa.bdd.samples.JavaConceptsMethods.A",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic main(args String[]) : void from class japa.bdd.samples.JavaConcepts to public main(args String[]) : void from class japa.bdd.samples.JavaConceptsMethods",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate x(x Map<? extends X,? super T>) : void from class japa.bdd.samples.JavaConcepts to private x(x Map<? extends X,? super T>) : void from class japa.bdd.samples.JavaConceptsMethods",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic parse(file File) : CompilationUnit from class japa.bdd.samples.JavaConcepts to public parse(file File) : CompilationUnit from class japa.bdd.samples.JavaConceptsMethods",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage ddd() : double from class japa.bdd.samples.JavaConcepts to package ddd() : double from class japa.bdd.samples.JavaConceptsMethods",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tbyebye : byte to byebye : byte[] in class japa.bdd.samples.JavaConceptsBase",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tjapa.bdd.samples.JavaConcepts renamed to japa.bdd.samples.JavaConceptsBase",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tarr4 : int[] to arr4 : int[][] in class japa.bdd.samples.JavaConceptsBase",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\tjapa.bdd.samples.JavaConceptsMethods from class japa.bdd.samples.JavaConcepts",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tjapa.bdd.samples.JavaConcepts.JavaConcepts.X moved to japa.bdd.samples.JavaConceptsInnerClasses.JavaConceptsInnerClasses.X",
+          "validation": false
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tjapa.bdd.samples.JavaConcepts.JavaConcepts.Y moved to japa.bdd.samples.JavaConceptsInnerClasses.JavaConceptsInnerClasses.Y",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tt : JavaConcepts to t : JavaConceptsBase in class japa.bdd.samples.JavaConceptsBase",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "e71c55e3c576c66921ea2c27185117445f580c65",
+      "url": "https://github.com/javaparser/javaparser/commit/e71c55e3c576c66921ea2c27185117445f580c65",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate close(name String) : String renamed to public outputDocument(node Node, name String, writer Writer) : void in class com.github.javaparser.printer.XmlPrinter",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tString to void in method public outputDocument(node Node, name String, writer Writer) : void from class com.github.javaparser.printer.XmlPrinter",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate attribute(name String, value String) : String renamed to public stringWriterOutput(node Node, name String) : StringWriter in class com.github.javaparser.printer.XmlPrinter",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic outputNode(node Node, name String, xmlWriter XMLStreamWriter) : void extracted from public output(node Node, name String, level int, builder StringBuilder) : void in class com.github.javaparser.printer.XmlPrinter",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tString to StringWriter in method public stringWriterOutput(node Node, name String) : StringWriter from class com.github.javaparser.printer.XmlPrinter",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "0d909d718d7b11e3081e14aecf28d32976700760",
+      "url": "https://github.com/javaparser/javaparser/commit/0d909d718d7b11e3081e14aecf28d32976700760",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tresult : String in method public toString(configuration PrinterConfiguration) : String from class com.github.javaparser.ast.Node",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "570f1d070e1d5f717530a02178793b507d41a3bf",
+      "url": "https://github.com/javaparser/javaparser/commit/570f1d070e1d5f717530a02178793b507d41a3bf",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tvalue : Node to subNode : Node in method public output(node Node, name String, level int, builder StringBuilder) : void from class com.github.javaparser.printer.XmlPrinter",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tsubListNode : Node to subNode : Node in method public output(node Node, name String, level int, builder StringBuilder) : void from class com.github.javaparser.printer.XmlPrinter",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tsubList : NodeList<? extends Node> to nodeList : NodeList<? extends Node> in method public output(node Node, name String, level int, builder StringBuilder) : void from class com.github.javaparser.printer.XmlPrinter",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tattributeValue : String in method public output(node Node, name String, level int, builder StringBuilder) : void from class com.github.javaparser.printer.XmlPrinter",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tattributeName : String in method public output(node Node, name String, level int, builder StringBuilder) : void from class com.github.javaparser.printer.XmlPrinter",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tsubNodeName : String in method public output(node Node, name String, level int, builder StringBuilder) : void from class com.github.javaparser.printer.XmlPrinter",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "24627a59e1f1e39f132cc94900869acaeb4e177c",
+      "url": "https://github.com/javaparser/javaparser/commit/24627a59e1f1e39f132cc94900869acaeb4e177c",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "PULL_UP_ATTRIBUTE",
+          "description": "Pull Up Attribute\tprivate JAVA_LANG_COMPARABLE : String from class com.github.javaparser.symbolsolver.javaparsermodel.declarations.JavaParserEnumDeclaration to public JAVA_LANG_COMPARABLE : String from class com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_ATTRIBUTE",
+          "description": "Pull Up Attribute\tprivate JAVA_IO_SERIALIZABLE : String from class com.github.javaparser.symbolsolver.javaparsermodel.declarations.JavaParserEnumDeclaration to public JAVA_IO_SERIALIZABLE : String from class com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate JAVA_LANG_COMPARABLE : String from class com.github.javaparser.symbolsolver.javaparsermodel.declarations.JavaParserEnumDeclaration to public JAVA_LANG_COMPARABLE : String from class com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration",
+          "validation": false
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate JAVA_IO_SERIALIZABLE : String from class com.github.javaparser.symbolsolver.javaparsermodel.declarations.JavaParserEnumDeclaration to public JAVA_IO_SERIALIZABLE : String from class com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "3296e4ad4e1866a8413fff96bf48734485ea8b1b",
+      "url": "https://github.com/javaparser/javaparser/commit/3296e4ad4e1866a8413fff96bf48734485ea8b1b",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tsymbolRef : SymbolReference<ResolvedTypeDeclaration> in method public solveType(name String, typeArguments List<ResolvedType>) : SymbolReference<ResolvedTypeDeclaration> from class com.github.javaparser.symbolsolver.javaparsermodel.contexts.JavaParserTypeDeclarationAdapter",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "dcfd52b307ad2f561e1b9eab668b3f11078352d6",
+      "url": "https://github.com/javaparser/javaparser/commit/dcfd52b307ad2f561e1b9eab668b3f11078352d6",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcsmElementListIterator : ListIterator<CsmElement> to csmElementListIterator : PeekingIterator<CsmElement> in method private findIndexOfCorrespondingNodeTextElement(elements List<CsmElement>, nodeText NodeText) : List<Integer> from class com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tnextCsmElementIndex : int in method private findIndexOfCorrespondingNodeTextElement(elements List<CsmElement>, nodeText NodeText) : List<Integer> from class com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tnodeTextIndexOfPreviousElementsIterator : PeekingIterator<Integer> in method public extract(diffElements List<DifferenceElement>) : void from class com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\ti : int to currentTextElementIndex : int in method private findIndexOfCorrespondingNodeTextElement(elements List<CsmElement>, nodeText NodeText) : List<Integer> from class com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "2c0bdef25f0de2330d3efe67450a3787afe705e7",
+      "url": "https://github.com/javaparser/javaparser/commit/2c0bdef25f0de2330d3efe67450a3787afe705e7",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate isCorrespondingElement(textElement TextElement, csmElement CsmElement) : boolean from class com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor to public isCorrespondingElement(textElement TextElement) : boolean from class com.github.javaparser.printer.concretesyntaxmodel.CsmElement",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcsmElementListIterator : ListIterator<CsmElement> in method private findIndexOfCorrespondingNodeTextElement(elements List<CsmElement>, nodeText NodeText) : List<Integer> from class com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "4b30c8b12a8300eb894d8e99c94a509a6fd9c20f",
+      "url": "https://github.com/javaparser/javaparser/commit/4b30c8b12a8300eb894d8e99c94a509a6fd9c20f",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\toriginalIndex : int in method public extract(diffElements List<DifferenceElement>) : void from class com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "9eaa832126711aed86a083d319f31d782001d462",
+      "url": "https://github.com/javaparser/javaparser/commit/9eaa832126711aed86a083d319f31d782001d462",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tcom.github.javaparser.printer.lexicalpreservation.Difference.MatchClassification moved to com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor.MatchClassification",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate getCorrespondanceBetweenNextOrderAndPreviousOrder(elementsFromPreviousOrder CsmMix, elementsFromNextOrder CsmMix) : Map<Integer,Integer> from class com.github.javaparser.printer.lexicalpreservation.Difference to private getCorrespondanceBetweenNextOrderAndPreviousOrder(elementsFromPreviousOrder CsmMix, elementsFromNextOrder CsmMix) : Map<Integer,Integer> from class com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate findIndexOfCorrespondingNodeTextElement(elements List<CsmElement>, nodeText NodeText, startIndex int, node Node) : List<Integer> from class com.github.javaparser.printer.lexicalpreservation.Difference to private findIndexOfCorrespondingNodeTextElement(elements List<CsmElement>, nodeText NodeText, startIndex int, node Node) : List<Integer> from class com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate isCorrespondingElement(textElement TextElement, csmElement CsmElement, node Node) : boolean from class com.github.javaparser.printer.lexicalpreservation.Difference to private isCorrespondingElement(textElement TextElement, csmElement CsmElement, node Node) : boolean from class com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate isAlmostCorrespondingElement(textElement TextElement, csmElement CsmElement, node Node) : boolean from class com.github.javaparser.printer.lexicalpreservation.Difference to private isAlmostCorrespondingElement(textElement TextElement, csmElement CsmElement, node Node) : boolean from class com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\tcom.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor from class com.github.javaparser.printer.lexicalpreservation.Difference",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tprivate extractReshuffledDiffElements(diffElements List<DifferenceElement>) : void from class com.github.javaparser.printer.lexicalpreservation.Difference to public extract(diffElements List<DifferenceElement>) : void from class com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\titerator : ArrayIterator<DifferenceElement> in method public extract(diffElements List<DifferenceElement>) : void from class com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "f96288a74cde0d0ba4f616619f690ed957481198",
+      "url": "https://github.com/javaparser/javaparser/commit/f96288a74cde0d0ba4f616619f690ed957481198",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\talreadyBoundException : ResolvedType to fileNotFoundException : ResolvedType in method public lub_approximation_with_complexe_inheritance() : void from class com.github.javaparser.symbolsolver.resolution.typeinference.LeastUpperBoundTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tunknownGroupException : ResolvedType to uriSyntaxException : ResolvedType in method public lub_approximation_with_complexe_inheritance() : void from class com.github.javaparser.symbolsolver.resolution.typeinference.LeastUpperBoundTest",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "0e003e5e2eefed540d4dd51320ce9687f064f07a",
+      "url": "https://github.com/javaparser/javaparser/commit/0e003e5e2eefed540d4dd51320ce9687f064f07a",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tprivate message(cause String, level ParserConfiguration.LanguageLevel) : String from class com.github.javaparser.ast.validator.language_level_validations.Java1_0Validator to public report(node NodeWithTokenRange<?>, message UpgradeJavaMessage, args Object...) : void from class com.github.javaparser.ast.validator.ProblemReporter",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tString to void in method public report(node NodeWithTokenRange<?>, message UpgradeJavaMessage, args Object...) : void from class com.github.javaparser.ast.validator.ProblemReporter",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic toString() : String extracted from private message(cause String, level ParserConfiguration.LanguageLevel) : String in class com.github.javaparser.ast.validator.language_level_validations.Java1_0Validator & moved to class com.github.javaparser.ast.validator.language_level_validations.UpgradeJavaMessage",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "c0edc2244158c70800108bb369fff763bce96d65",
+      "url": "https://github.com/javaparser/javaparser/commit/c0edc2244158c70800108bb369fff763bce96d65",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic isAssignableBy(type ResolvedType) : boolean extracted from public isAssignableBy(type ResolvedType) : boolean in class com.github.javaparser.symbolsolver.javassistmodel.JavassistClassDeclaration & moved to class com.github.javaparser.symbolsolver.javassistmodel.JavassistTypeDeclarationAdapter",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/javaparser/javaparser.git",
+      "sha1": "7fcf05b12e24ac852d56378ef1a141a0f4f53d9b",
+      "url": "https://github.com/javaparser/javaparser/commit/7fcf05b12e24ac852d56378ef1a141a0f4f53d9b",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate fixIndentOfMovedNode(nodeText NodeText, index int) : void renamed to private fixIndentOfAddedNode(nodeText NodeText, index int) : void in class com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter.Observer",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tnumberOfIndentationCharacters : int in method private fixIndentOfAddedNode(nodeText NodeText, index int) : void from class com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter.Observer",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    }
+  ]
+}

@@ -1,0 +1,1851 @@
+{
+  "results": [
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "05964ad07ac0e6cbf6945b2b34cd7b2f342cf70c",
+      "url": "https://github.com/apache/hadoop/commit/05964ad07ac0e6cbf6945b2b34cd7b2f342cf70c",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tstorageInfo : DatanodeStorageInfo to storageInfo1 : DatanodeStorageInfo in method public testQueues() : void from class org.apache.hadoop.hdfs.server.blockmanagement.TestPendingDataNodeMessages",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tfakeDN : DatanodeDescriptor to fakeDN1 : DatanodeDescriptor in method public testQueues() : void from class org.apache.hadoop.hdfs.server.blockmanagement.TestPendingDataNodeMessages",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tstorage : DatanodeStorage to storage1 : DatanodeStorage in method public testQueues() : void from class org.apache.hadoop.hdfs.server.blockmanagement.TestPendingDataNodeMessages",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tqueue : Queue<ReportedBlockInfo> in method package enqueueReportedBlock(storageInfo DatanodeStorageInfo, block Block, reportedState ReplicaState) : void from class org.apache.hadoop.hdfs.server.blockmanagement.PendingDataNodeMessages",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "dbe2d612586d7b78d61ef64c706eccf7fbf6f35c",
+      "url": "https://github.com/apache/hadoop/commit/dbe2d612586d7b78d61ef64c706eccf7fbf6f35c",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\twasIOExceptionThrown : boolean to wasKnownExceptionThrown : boolean in method private executeHttpOperation(retryCount int, tracingContext TracingContext) : boolean from class org.apache.hadoop.fs.azurebfs.services.AbfsRestOperation",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tOPERATION_LIMIT_BREACH_ABBREVIATION : String to TPS_LIMIT_BREACH_ABBREVIATION : String in class org.apache.hadoop.fs.azurebfs.services.RetryReasonConstants",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testClientRequestIdFor503egrRetry() : void renamed to public testClientRequestIdFor503EGRRetry() : void in class org.apache.hadoop.fs.azurebfs.services.TestAbfsRestOperationMockFailures",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tOPERATION_BREACH_MESSAGE : String to OTHER_SERVER_THROTTLING_ABBREVIATION : String in class org.apache.hadoop.fs.azurebfs.services.RetryReasonConstants",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate shouldUpdateCSTMetrics(statusCode int) : boolean extracted from private executeHttpOperation(retryCount int, tracingContext TracingContext) : boolean in class org.apache.hadoop.fs.azurebfs.services.AbfsRestOperation",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tstatus : int to statusCode : int in method private executeHttpOperation(retryCount int, tracingContext TracingContext) : boolean from class org.apache.hadoop.fs.azurebfs.services.AbfsRestOperation",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "6ed73896f6e8b4b7c720eff64193cb30b3e77fb2",
+      "url": "https://github.com/apache/hadoop/commit/6ed73896f6e8b4b7c720eff64193cb30b3e77fb2",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\txMsVersion : String to xMsVersion : ApiVersion in class org.apache.hadoop.fs.azurebfs.services.AbfsClient",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createDefaultHeaders(xMsVersion ApiVersion) : List<AbfsHttpHeader> extracted from package createDefaultHeaders() : List<AbfsHttpHeader> in class org.apache.hadoop.fs.azurebfs.services.AbfsClient",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tString to ApiVersion in method public getxMsVersion() : ApiVersion from class org.apache.hadoop.fs.azurebfs.services.AbfsClient",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.apache.hadoop.fs.azurebfs.constants.AbfsHttpConstants.ApiVersion from class org.apache.hadoop.fs.azurebfs.services.AbfsClient",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttestTC : TracingContext in method private callOperation(fs AzureBlobFileSystem, testPath Path, ecp EncryptionContextProvider) : AbfsRestOperation from class org.apache.hadoop.fs.azurebfs.ITestAbfsCustomEncryption",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "87fb97777745b2cefed6bef57490b84676d2343d",
+      "url": "https://github.com/apache/hadoop/commit/87fb97777745b2cefed6bef57490b84676d2343d",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.hadoop.fs.TestVectoredReadUtils moved to org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tsortedRanges : FileRange[] to l : List<? extends FileRange> in method public sortRanges(input List<? extends FileRange>) : List<? extends FileRange> from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tsortedRanges : FileRange[] to l : List<? extends FileRange> in method public sortRanges(input List<? extends FileRange>) : List<? extends FileRange> from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tFileRange[] to List<? extends FileRange> in method public sortRanges(input List<? extends FileRange>) : List<? extends FileRange> from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to T in method public validateRangeRequest(range T) : T from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tposition : int to position : long in method public readInDirectBuffer(range FileRange, buffer ByteBuffer, operation Function4RaisingIOE<Long,byte[],Integer,Integer,Void>) : void from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate append(range FileRange) : void extracted from public CombinedFileRange(offset long, end long, original FileRange) in class org.apache.hadoop.fs.impl.CombinedFileRange",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tpool : WeakReferencedElasticByteBufferPool to pool : ElasticByteBufferPool in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate expectEOFinRead(fileRanges List<FileRange>) : void extracted from public testEOFRanges() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tlen : int in method public testNormalReadAfterVectoredRead() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tlen : int in method public testVectoredReadAfterNormalRead() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tWeakReferencedElasticByteBufferPool to ElasticByteBufferPool in method protected getPool() : ElasticByteBufferPool from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcurrent : byte in method public assertDatasetEquals(readOffset int, operation String, data ByteBuffer, length int, originalData byte[]) : void from class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate maybeSwitchToRandomIO() : void extracted from private seekInStream(targetPos long, length long) : void in class org.apache.hadoop.fs.s3a.S3AInputStream",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tsequentialIOStats : IOStatistics to readIOStats : IOStatistics in method public test_045_vectoredIOHugeFile() : void from class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testMaxSizeZeroDisablesMering() : void renamed to public testMaxSizeZeroDisablesMerging() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testReadRangeFromByteBufferPositionedReadable() : void renamed to public testReadSingleRange() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertRangeListSize(ranges List<ELEMENT>, size int) : ListAssert<ELEMENT> extracted from public testSortAndMerge() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertUnderlyingSize(combinedFileRange CombinedFileRange, description String, expected int) : ListAssert<FileRange> extracted from public testSortAndMerge() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertUnderlyingSize(combinedFileRange CombinedFileRange, description String, expected int) : ListAssert<FileRange> extracted from public testSortAndMergeMoreCases() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertRangeListSize(ranges List<ELEMENT>, size int) : ListAssert<ELEMENT> extracted from public testSortAndMergeMoreCases() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertRangeListSize(ranges List<ELEMENT>, size int) : ListAssert<ELEMENT> extracted from private assertEqualRangeCountsAfterMerging(inputRanges List<FileRange>, chunkSize int, minimumSeek int, maxSize int) : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate mockStreamWithReadFully() : Stream extracted from private runAndValidateVectoredRead(input List<FileRange>) : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate mockStreamWithReadFully() : Stream extracted from public testReadRangeFromByteBufferPositionedReadable() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testVectoredReadAndReadFully() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testDisjointRanges() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testAllRangesMergedIntoOne() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testSomeRangesMergedSomeUnmerged() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testSomeRandomNonOverlappingRanges() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testConsecutiveRanges() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testVectoredIOEndToEnd() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from protected createSampleNonOverlappingRanges() : List<FileRange> in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from protected getSampleSameRanges() : List<FileRange> in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from protected getSampleOverlappingRanges() : List<FileRange> in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from protected getConsecutiveRanges() : List<FileRange> in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testNormalReadVsVectoredReadStatsCollection() : void in class org.apache.hadoop.fs.contract.s3a.ITestS3AContractVectoredRead & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public test_045_vectoredIOHugeFile() : void in class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate append(range FileRange) : void extracted from public merge(otherOffset long, otherEnd long, other FileRange, minSeek int, maxSize int) : boolean in class org.apache.hadoop.fs.impl.CombinedFileRange",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(offset long, length int) : List<FileRange> extracted from public testEOFRanges() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(offset long, length int) : List<FileRange> extracted from public testNegativeLengthRange() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(offset long, length int) : List<FileRange> extracted from public testNegativeOffsetRange() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(offset long, length int) : List<FileRange> extracted from public testEOFRanges416Handling() : void in class org.apache.hadoop.fs.contract.s3a.ITestS3AContractVectoredRead & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(offset long, length int) : List<FileRange> extracted from public test_045_vectoredIOHugeFile() : void in class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertOrderedDisjoint(input List<? extends FileRange>, chunkSize int, minimumSeek int) : void extracted from public testSortAndMerge() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertOrderedDisjoint(input List<? extends FileRange>, chunkSize int, minimumSeek int) : void extracted from public testSortAndMergeMoreCases() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertIsNotOrderedDisjoint(input List<ELEMENT>, chunkSize int, minimumSeek int) : void extracted from public testSortAndMerge() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertIsNotOrderedDisjoint(input List<ELEMENT>, chunkSize int, minimumSeek int) : void extracted from public testSortAndMergeMoreCases() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tvalue : null to size : null in method public AbstractContractVectoredReadTest(bufferType String) from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tlength : int in method public testAllRangesMergedIntoOne() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\toffset : int in method public testConsecutiveRanges() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tlength : int in method public testConsecutiveRanges() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\torig : byte in method public assertDatasetEquals(readOffset int, operation String, data ByteBuffer, length int, originalData byte[]) : void from class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tposition : long in method private populateChildBuffers(combinedFileRange CombinedFileRange, objectContent InputStream, allocate IntFunction<ByteBuffer>) : void from class org.apache.hadoop.fs.s3a.S3AInputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tunderlying : List<FileRange> in method public testSortAndMerge() : void from class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tremaining : long in method private drainUnnecessaryData(objectContent InputStream, position long, drainQuantity long) : void from class org.apache.hadoop.fs.s3a.S3AInputStream",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\trangeLength : int in method public test_045_vectoredIOHugeFile() : void from class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tbase : long in method public test_045_vectoredIOHugeFile() : void from class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprotected openVectorFile() : FSDataInputStream extracted from public testEOFRanges() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tfileRanges : List<FileRange> in method public testOverlappingRanges() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tfileRanges : List<FileRange> in method public testSameRanges() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\toutputList : List<CombinedFileRange> to ranges : List<ELEMENT> in method private assertRangeListSize(ranges List<ELEMENT>, size int) : ListAssert<ELEMENT> from class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcombinedFileRanges : List<CombinedFileRange> to ranges : List<ELEMENT> in method private assertRangeListSize(ranges List<ELEMENT>, size int) : ListAssert<ELEMENT> from class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprotected openVectorFile() : FSDataInputStream extracted from public testStopVectoredIoOperationsCloseStream() : void in class org.apache.hadoop.fs.contract.s3a.ITestS3AContractVectoredRead & moved to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprotected openVectorFile() : FSDataInputStream extracted from public testStopVectoredIoOperationsUnbuffer() : void in class org.apache.hadoop.fs.contract.s3a.ITestS3AContractVectoredRead & moved to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tsortedRanges : List<? extends FileRange> in method public validateAndSortRanges(input List<? extends FileRange>, fileLength Optional<Long>) : List<? extends FileRange> from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tsortedRanges : FileRange[] to sortedRanges : List<? extends FileRange> in method public validateAndSortRanges(input List<? extends FileRange>, fileLength Optional<Long>) : List<? extends FileRange> from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic validateNonOverlappingAndReturnSortedRanges(input List<? extends FileRange>) : List<? extends FileRange> renamed to public validateAndSortRanges(input List<? extends FileRange>, fileLength Optional<Long>) : List<? extends FileRange> in class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tsize : int in method private drainUnnecessaryData(objectContent InputStream, position long, drainQuantity long) : void from class org.apache.hadoop.fs.s3a.S3AInputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testEOFRanges() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testNegativeLengthRange() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testNegativeOffsetRange() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testEOFRanges416Handling() : void in class org.apache.hadoop.fs.contract.s3a.ITestS3AContractVectoredRead & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\trangeList : List<FileRange> in method public test_045_vectoredIOHugeFile() : void from class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\trange0 : CombinedFileRange in method public testSortAndMerge() : void from class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\toutputList : List<CombinedFileRange> to input : List<? extends FileRange> in method private assertOrderedDisjoint(input List<? extends FileRange>, chunkSize int, minimumSeek int) : void from class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "b4f9d8e6fa47ee422a31765240504e70d3ed2781",
+      "url": "https://github.com/apache/hadoop/commit/b4f9d8e6fa47ee422a31765240504e70d3ed2781",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.hadoop.fs.impl.TestVectoredReadUtils moved to org.apache.hadoop.fs.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tl : List<? extends FileRange> to sortedRanges : FileRange[] in method public sortRanges(input List<? extends FileRange>) : FileRange[] from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tl : List<? extends FileRange> to sortedRanges : FileRange[] in method public sortRanges(input List<? extends FileRange>) : FileRange[] from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tList<? extends FileRange> to FileRange[] in method public sortRanges(input List<? extends FileRange>) : FileRange[] from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tT to void in method public validateRangeRequest(range FileRange) : void from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tposition : long to position : int in method public readInDirectBuffer(length int, buffer ByteBuffer, operation Function4RaisingIOE<Integer,byte[],Integer,Integer,Void>) : void from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate append(range FileRange) : void inlined to public CombinedFileRange(offset long, end long, original FileRange) in class org.apache.hadoop.fs.impl.CombinedFileRange",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tpool : ElasticByteBufferPool to pool : WeakReferencedElasticByteBufferPool in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate expectEOFinRead(fileRanges List<FileRange>) : void inlined to public testEOFRanges() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tfileRanges : List<FileRange> in method public testOverlappingRanges() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tfileRanges : List<FileRange> in method public testSameRanges() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tElasticByteBufferPool to WeakReferencedElasticByteBufferPool in method public getPool() : WeakReferencedElasticByteBufferPool from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tcurrent : byte in method public assertDatasetEquals(readOffset int, operation String, data ByteBuffer, length int, originalData byte[]) : void from class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate maybeSwitchToRandomIO() : void inlined to private seekInStream(targetPos long, length long) : void in class org.apache.hadoop.fs.s3a.S3AInputStream",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\treadIOStats : IOStatistics to sequentialIOStats : IOStatistics in method public test_045_vectoredIOHugeFile() : void from class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testMaxSizeZeroDisablesMerging() : void renamed to public testMaxSizeZeroDisablesMering() : void in class org.apache.hadoop.fs.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testReadSingleRange() : void renamed to public testReadRangeFromByteBufferPositionedReadable() : void in class org.apache.hadoop.fs.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate assertRangeListSize(ranges List<ELEMENT>, size int) : ListAssert<ELEMENT> inlined to public testSortAndMerge() : void in class org.apache.hadoop.fs.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate assertUnderlyingSize(combinedFileRange CombinedFileRange, description String, expected int) : ListAssert<FileRange> inlined to public testSortAndMerge() : void in class org.apache.hadoop.fs.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate assertUnderlyingSize(combinedFileRange CombinedFileRange, description String, expected int) : ListAssert<FileRange> inlined to public testSortAndMergeMoreCases() : void in class org.apache.hadoop.fs.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate assertRangeListSize(ranges List<ELEMENT>, size int) : ListAssert<ELEMENT> inlined to public testSortAndMergeMoreCases() : void in class org.apache.hadoop.fs.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate assertRangeListSize(ranges List<ELEMENT>, size int) : ListAssert<ELEMENT> inlined to private assertEqualRangeCountsAfterMerging(inputRanges List<FileRange>, chunkSize int, minimumSeek int, maxSize int) : void in class org.apache.hadoop.fs.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate mockStreamWithReadFully() : Stream inlined to private runAndValidateVectoredRead(input List<FileRange>) : void in class org.apache.hadoop.fs.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate mockStreamWithReadFully() : Stream inlined to public testReadRangeFromByteBufferPositionedReadable() : void in class org.apache.hadoop.fs.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tunderlying : List<FileRange> in method public testSortAndMerge() : void from class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testVectoredReadAndReadFully() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testDisjointRanges() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testDisjointRanges() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testDisjointRanges() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testAllRangesMergedIntoOne() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testAllRangesMergedIntoOne() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testAllRangesMergedIntoOne() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testSomeRangesMergedSomeUnmerged() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testSomeRangesMergedSomeUnmerged() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testSomeRangesMergedSomeUnmerged() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testSomeRangesMergedSomeUnmerged() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testSomeRangesMergedSomeUnmerged() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testSomeRandomNonOverlappingRanges() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testSomeRandomNonOverlappingRanges() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testSomeRandomNonOverlappingRanges() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testSomeRandomNonOverlappingRanges() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testConsecutiveRanges() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testConsecutiveRanges() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testConsecutiveRanges() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testVectoredIOEndToEnd() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testVectoredIOEndToEnd() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testVectoredIOEndToEnd() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testVectoredIOEndToEnd() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testVectoredIOEndToEnd() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to protected createSampleNonOverlappingRanges() : List<FileRange>",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to protected createSampleNonOverlappingRanges() : List<FileRange>",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to protected getSampleSameRanges() : List<FileRange>",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to protected getSampleSameRanges() : List<FileRange>",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to protected getSampleSameRanges() : List<FileRange>",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to protected getSampleOverlappingRanges() : List<FileRange>",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to protected getSampleOverlappingRanges() : List<FileRange>",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to protected getConsecutiveRanges() : List<FileRange>",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to protected getConsecutiveRanges() : List<FileRange>",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.s3a.ITestS3AContractVectoredRead & inlined to public testNormalReadVsVectoredReadStatsCollection() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.s3a.ITestS3AContractVectoredRead & inlined to public testNormalReadVsVectoredReadStatsCollection() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.s3a.ITestS3AContractVectoredRead & inlined to public testNormalReadVsVectoredReadStatsCollection() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.s3a.ITestS3AContractVectoredRead & inlined to public testNormalReadVsVectoredReadStatsCollection() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.s3a.ITestS3AContractVectoredRead & inlined to public testNormalReadVsVectoredReadStatsCollection() : void",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate append(range FileRange) : void inlined to public merge(otherOffset long, otherEnd long, other FileRange, minSeek int, maxSize int) : boolean in class org.apache.hadoop.fs.impl.CombinedFileRange",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testEOFRanges() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testNegativeLengthRange() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & inlined to public testNegativeOffsetRange() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.contract.s3a.ITestS3AContractVectoredRead & inlined to public testEOFRanges416Handling() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles & inlined to public test_045_vectoredIOHugeFile() : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> moved from class org.apache.hadoop.fs.contract.ContractTestUtils to class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles & inlined to public test_045_vectoredIOHugeFile() : void",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate assertOrderedDisjoint(input List<? extends FileRange>, chunkSize int, minimumSeek int) : void inlined to public testSortAndMergeMoreCases() : void in class org.apache.hadoop.fs.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate assertOrderedDisjoint(input List<? extends FileRange>, chunkSize int, minimumSeek int) : void inlined to public testSortAndMerge() : void in class org.apache.hadoop.fs.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate assertIsNotOrderedDisjoint(input List<ELEMENT>, chunkSize int, minimumSeek int) : void inlined to public testSortAndMergeMoreCases() : void in class org.apache.hadoop.fs.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate assertIsNotOrderedDisjoint(input List<ELEMENT>, chunkSize int, minimumSeek int) : void inlined to public testSortAndMerge() : void in class org.apache.hadoop.fs.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tsize : null to value : null in method public AbstractContractVectoredReadTest(bufferType String) from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tlength : int in method public testAllRangesMergedIntoOne() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\toffset : int in method public testConsecutiveRanges() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tlength : int in method public testConsecutiveRanges() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tlen : int in method public testNormalReadAfterVectoredRead() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tlen : int in method public testVectoredReadAfterNormalRead() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\torig : byte in method public assertDatasetEquals(readOffset int, operation String, data ByteBuffer, length int, originalData byte[]) : void from class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tposition : long in method private populateChildBuffers(combinedFileRange CombinedFileRange, objectContent InputStream, allocate IntFunction<ByteBuffer>) : void from class org.apache.hadoop.fs.s3a.S3AInputStream",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tremaining : long in method private drainUnnecessaryData(objectContent InputStream, position long, drainQuantity long) : void from class org.apache.hadoop.fs.s3a.S3AInputStream",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tb : byte in method package runReadRangeFromPositionedReadable(allocate IntFunction<ByteBuffer>) : void from class org.apache.hadoop.fs.TestVectoredReadUtils",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tsize : int in method private drainUnnecessaryData(objectContent InputStream, position long, drainQuantity long) : void from class org.apache.hadoop.fs.s3a.S3AInputStream",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic validateAndSortRanges(input List<? extends FileRange>, fileLength Optional<Long>) : List<? extends FileRange> renamed to public validateNonOverlappingAndReturnSortedRanges(input List<? extends FileRange>) : List<? extends FileRange> in class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tsortedRanges : List<? extends FileRange> in method public validateAndSortRanges(input List<? extends FileRange>, fileLength Optional<Long>) : List<? extends FileRange> from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\trangeLength : int in method public test_045_vectoredIOHugeFile() : void from class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tbase : long in method public test_045_vectoredIOHugeFile() : void from class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "ba7faf90c80476c79e6bfc7c02749dfc031337eb",
+      "url": "https://github.com/apache/hadoop/commit/ba7faf90c80476c79e6bfc7c02749dfc031337eb",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.apache.hadoop.fs.TestVectoredReadUtils moved to org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tsortedRanges : FileRange[] to l : List<? extends FileRange> in method public sortRanges(input List<? extends FileRange>) : List<? extends FileRange> from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tsortedRanges : FileRange[] to l : List<? extends FileRange> in method public sortRanges(input List<? extends FileRange>) : List<? extends FileRange> from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tFileRange[] to List<? extends FileRange> in method public sortRanges(input List<? extends FileRange>) : List<? extends FileRange> from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to T in method public validateRangeRequest(range T) : T from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tposition : int to position : long in method public readInDirectBuffer(range FileRange, buffer ByteBuffer, operation Function4RaisingIOE<Long,byte[],Integer,Integer,Void>) : void from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate append(range FileRange) : void extracted from public CombinedFileRange(offset long, end long, original FileRange) in class org.apache.hadoop.fs.impl.CombinedFileRange",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tpool : WeakReferencedElasticByteBufferPool to pool : ElasticByteBufferPool in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate expectEOFinRead(fileRanges List<FileRange>) : void extracted from public testEOFRanges() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tlen : int in method public testNormalReadAfterVectoredRead() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tlen : int in method public testVectoredReadAfterNormalRead() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tWeakReferencedElasticByteBufferPool to ElasticByteBufferPool in method protected getPool() : ElasticByteBufferPool from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcurrent : byte in method public assertDatasetEquals(readOffset int, operation String, data ByteBuffer, length int, originalData byte[]) : void from class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate maybeSwitchToRandomIO() : void extracted from private seekInStream(targetPos long, length long) : void in class org.apache.hadoop.fs.s3a.S3AInputStream",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tsequentialIOStats : IOStatistics to readIOStats : IOStatistics in method public test_045_vectoredIOHugeFile() : void from class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testMaxSizeZeroDisablesMering() : void renamed to public testMaxSizeZeroDisablesMerging() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testReadRangeFromByteBufferPositionedReadable() : void renamed to public testReadSingleRange() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertRangeListSize(ranges List<ELEMENT>, size int) : ListAssert<ELEMENT> extracted from public testSortAndMerge() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertUnderlyingSize(combinedFileRange CombinedFileRange, description String, expected int) : ListAssert<FileRange> extracted from public testSortAndMerge() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertUnderlyingSize(combinedFileRange CombinedFileRange, description String, expected int) : ListAssert<FileRange> extracted from public testSortAndMergeMoreCases() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertRangeListSize(ranges List<ELEMENT>, size int) : ListAssert<ELEMENT> extracted from public testSortAndMergeMoreCases() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertRangeListSize(ranges List<ELEMENT>, size int) : ListAssert<ELEMENT> extracted from private assertEqualRangeCountsAfterMerging(inputRanges List<FileRange>, chunkSize int, minimumSeek int, maxSize int) : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate mockStreamWithReadFully() : Stream extracted from private runAndValidateVectoredRead(input List<FileRange>) : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate mockStreamWithReadFully() : Stream extracted from public testReadRangeFromByteBufferPositionedReadable() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testVectoredReadAndReadFully() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testDisjointRanges() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testAllRangesMergedIntoOne() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testSomeRangesMergedSomeUnmerged() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testSomeRandomNonOverlappingRanges() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testConsecutiveRanges() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testVectoredIOEndToEnd() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from protected createSampleNonOverlappingRanges() : List<FileRange> in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from protected getSampleSameRanges() : List<FileRange> in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from protected getSampleOverlappingRanges() : List<FileRange> in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from protected getConsecutiveRanges() : List<FileRange> in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testNormalReadVsVectoredReadStatsCollection() : void in class org.apache.hadoop.fs.contract.s3a.ITestS3AContractVectoredRead & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public test_045_vectoredIOHugeFile() : void in class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate append(range FileRange) : void extracted from public merge(otherOffset long, otherEnd long, other FileRange, minSeek int, maxSize int) : boolean in class org.apache.hadoop.fs.impl.CombinedFileRange",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(offset long, length int) : List<FileRange> extracted from public testEOFRanges() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(offset long, length int) : List<FileRange> extracted from public testNegativeLengthRange() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(offset long, length int) : List<FileRange> extracted from public testNegativeOffsetRange() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(offset long, length int) : List<FileRange> extracted from public testEOFRanges416Handling() : void in class org.apache.hadoop.fs.contract.s3a.ITestS3AContractVectoredRead & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(offset long, length int) : List<FileRange> extracted from public test_045_vectoredIOHugeFile() : void in class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertOrderedDisjoint(input List<? extends FileRange>, chunkSize int, minimumSeek int) : void extracted from public testSortAndMergeMoreCases() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertOrderedDisjoint(input List<? extends FileRange>, chunkSize int, minimumSeek int) : void extracted from public testSortAndMerge() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertIsNotOrderedDisjoint(input List<ELEMENT>, chunkSize int, minimumSeek int) : void extracted from public testSortAndMergeMoreCases() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertIsNotOrderedDisjoint(input List<ELEMENT>, chunkSize int, minimumSeek int) : void extracted from public testSortAndMerge() : void in class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tvalue : null to size : null in method public AbstractContractVectoredReadTest(bufferType String) from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tlength : int in method public testAllRangesMergedIntoOne() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\toffset : int in method public testConsecutiveRanges() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tlength : int in method public testConsecutiveRanges() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\torig : byte in method public assertDatasetEquals(readOffset int, operation String, data ByteBuffer, length int, originalData byte[]) : void from class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tposition : long in method private populateChildBuffers(combinedFileRange CombinedFileRange, objectContent InputStream, allocate IntFunction<ByteBuffer>) : void from class org.apache.hadoop.fs.s3a.S3AInputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tunderlying : List<FileRange> in method public testSortAndMerge() : void from class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tremaining : long in method private drainUnnecessaryData(objectContent InputStream, position long, drainQuantity long) : void from class org.apache.hadoop.fs.s3a.S3AInputStream",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\trangeLength : int in method public test_045_vectoredIOHugeFile() : void from class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tbase : long in method public test_045_vectoredIOHugeFile() : void from class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprotected openVectorFile() : FSDataInputStream extracted from public testEOFRanges() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tfileRanges : List<FileRange> in method public testOverlappingRanges() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tfileRanges : List<FileRange> in method public testSameRanges() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\toutputList : List<CombinedFileRange> to ranges : List<ELEMENT> in method private assertRangeListSize(ranges List<ELEMENT>, size int) : ListAssert<ELEMENT> from class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcombinedFileRanges : List<CombinedFileRange> to ranges : List<ELEMENT> in method private assertRangeListSize(ranges List<ELEMENT>, size int) : ListAssert<ELEMENT> from class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprotected openVectorFile() : FSDataInputStream extracted from public testStopVectoredIoOperationsCloseStream() : void in class org.apache.hadoop.fs.contract.s3a.ITestS3AContractVectoredRead & moved to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprotected openVectorFile() : FSDataInputStream extracted from public testStopVectoredIoOperationsUnbuffer() : void in class org.apache.hadoop.fs.contract.s3a.ITestS3AContractVectoredRead & moved to class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tsortedRanges : List<? extends FileRange> in method public validateAndSortRanges(input List<? extends FileRange>, fileLength Optional<Long>) : List<? extends FileRange> from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tsortedRanges : FileRange[] to sortedRanges : List<? extends FileRange> in method public validateAndSortRanges(input List<? extends FileRange>, fileLength Optional<Long>) : List<? extends FileRange> from class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic validateNonOverlappingAndReturnSortedRanges(input List<? extends FileRange>) : List<? extends FileRange> renamed to public validateAndSortRanges(input List<? extends FileRange>, fileLength Optional<Long>) : List<? extends FileRange> in class org.apache.hadoop.fs.VectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tsize : int in method private drainUnnecessaryData(objectContent InputStream, position long, drainQuantity long) : void from class org.apache.hadoop.fs.s3a.S3AInputStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testEOFRanges() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testNegativeLengthRange() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testNegativeOffsetRange() : void in class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic range(fileRanges List<FileRange>, offset long, length int) : List<FileRange> extracted from public testEOFRanges416Handling() : void in class org.apache.hadoop.fs.contract.s3a.ITestS3AContractVectoredRead & moved to class org.apache.hadoop.fs.contract.ContractTestUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\trangeList : List<FileRange> in method public test_045_vectoredIOHugeFile() : void from class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\toutputList : List<CombinedFileRange> to input : List<? extends FileRange> in method private assertOrderedDisjoint(input List<? extends FileRange>, chunkSize int, minimumSeek int) : void from class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "5f3eb446f76803ed654597bdf88c70268d8d9623",
+      "url": "https://github.com/apache/hadoop/commit/5f3eb446f76803ed654597bdf88c70268d8d9623",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tcache : Cache<String,CacheRequest<String,?>> to cache : Cache<String,CacheRequest> in class org.apache.hadoop.yarn.server.federation.cache.FederationJCache",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tCache<String,CacheRequest<String,?>> to Cache<String,CacheRequest> in method public getCache() : Cache<String,CacheRequest> from class org.apache.hadoop.yarn.server.federation.cache.FederationJCache",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcache : Cache<String,CacheRequest<String,?>> to cache : Cache<String,CacheRequest> in method public testGetApplicationHomeSubClusterCache() : void from class org.apache.hadoop.yarn.server.federation.utils.TestFederationStateStoreFacade",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tjcacheManager : CacheManager to cacheManager : CacheManager in method public initCache(pConf Configuration, pStateStore FederationStateStore) : void from class org.apache.hadoop.yarn.server.federation.cache.FederationJCache",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "032796a0fb21b432b8d873902fe00b44afa2496c",
+      "url": "https://github.com/apache/hadoop/commit/032796a0fb21b432b8d873902fe00b44afa2496c",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprotected loadPendingCommits(context TaskAttemptContext) : PendingSet extracted from private innerCommitTask(context TaskAttemptContext) : PendingSet in class org.apache.hadoop.fs.s3a.commit.magic.MagicS3GuardCommitter",
+          "validation": true
+        },
+        {
+          "type": "PUSH_DOWN_OPERATION",
+          "description": "Push Down Method\tpublic aboutToComplete(uploadId String, parts List<CompletedPart>, bytesWritten long, iostatistics IOStatistics) : boolean from class org.apache.hadoop.fs.s3a.commit.magic.MagicCommitTracker to public aboutToComplete(uploadId String, parts List<CompletedPart>, bytesWritten long, iostatistics IOStatistics) : boolean from class org.apache.hadoop.fs.s3a.commit.magic.S3MagicCommitTracker",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_SUBCLASS",
+          "description": "Extract Subclass\torg.apache.hadoop.fs.s3a.commit.magic.S3MagicCommitTracker from class org.apache.hadoop.fs.s3a.commit.magic.MagicCommitTracker",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "PUSH_DOWN_OPERATION",
+          "description": "Push Down Method\tpublic aboutToComplete(uploadId String, parts List<CompletedPart>, bytesWritten long, iostatistics IOStatistics) : boolean from class org.apache.hadoop.fs.s3a.commit.magic.MagicCommitTracker to public aboutToComplete(uploadId String, parts List<CompletedPart>, bytesWritten long, iostatistics IOStatistics) : boolean from class org.apache.hadoop.fs.s3a.commit.magic.InMemoryMagicCommitTracker",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_SUBCLASS",
+          "description": "Extract Subclass\torg.apache.hadoop.fs.s3a.commit.magic.InMemoryMagicCommitTracker from class org.apache.hadoop.fs.s3a.commit.magic.MagicCommitTracker",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "PUSH_DOWN_OPERATION",
+          "description": "Push Down Method\tprivate upload(request PutObjectRequest, inputStream InputStream) : void from class org.apache.hadoop.fs.s3a.commit.magic.MagicCommitTracker to private upload(request PutObjectRequest, inputStream InputStream) : void from class org.apache.hadoop.fs.s3a.commit.magic.S3MagicCommitTracker",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "a375ef8cfa620b50c68c98d6c443d0f965e981f6",
+      "url": "https://github.com/apache/hadoop/commit/a375ef8cfa620b50c68c98d6c443d0f965e981f6",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic safeDeleteAndCheckNode(path String, fencingACL List<ACL>, fencingPath String) : void extracted from private handleApplicationAttemptStateOp(appAttemptId ApplicationAttemptId, attemptStateDataPB ApplicationAttemptStateData, operation AppAttemptOp) : void in class org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic safeDeleteAndCheckNode(path String, fencingACL List<ACL>, fencingPath String) : void extracted from private removeApp(removeAppId String, safeRemove boolean, attempts Set<ApplicationAttemptId>) : void in class org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic safeDeleteAndCheckNode(path String, fencingACL List<ACL>, fencingPath String) : void extracted from private removeApp(removeAppId String, safeRemove boolean, attempts Set<ApplicationAttemptId>) : void in class org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic safeDeleteAndCheckNode(path String, fencingACL List<ACL>, fencingPath String) : void extracted from protected removeRMDelegationTokenState(rmDTIdentifier RMDelegationTokenIdentifier) : void in class org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic safeDeleteAndCheckNode(path String, fencingACL List<ACL>, fencingPath String) : void extracted from protected removeRMDTMasterKeyState(delegationKey DelegationKey) : void in class org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic safeDeleteAndCheckNode(path String, fencingACL List<ACL>, fencingPath String) : void extracted from protected removeReservationState(planName String, reservationIdName String) : void in class org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic safeDeleteAndCheckNode(path String, fencingACL List<ACL>, fencingPath String) : void extracted from protected removeReservationState(planName String, reservationIdName String) : void in class org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "705fb8323b4a3e988a88093a2e4bc19f07ed5cfe",
+      "url": "https://github.com/apache/hadoop/commit/705fb8323b4a3e988a88093a2e4bc19f07ed5cfe",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tlinkedQueue : LinkedBlockingQueue<E> in method public getSize(keyName String) : int from class org.apache.hadoop.crypto.key.kms.ValueQueue",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "b25b28e5bbda19eb24fcfbd8fb5e61acfb343ff4",
+      "url": "https://github.com/apache/hadoop/commit/b25b28e5bbda19eb24fcfbd8fb5e61acfb343ff4",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tname : String in method package run(fsdir FSDirectory, errorCount AtomicInteger) : boolean from class org.apache.hadoop.hdfs.server.namenode.FsImageValidation.INodeMapValidation",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to boolean in method package run(fsdir FSDirectory, errorCount AtomicInteger) : boolean from class org.apache.hadoop.hdfs.server.namenode.FsImageValidation.INodeMapValidation",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tpackage iterate(map INodeMap) : Iterable<INodeWithAdditionalFields> inlined to package run(fsdir FSDirectory, errorCount AtomicInteger) : boolean in class org.apache.hadoop.hdfs.server.namenode.FsImageValidation.INodeMapValidation",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmap : INodeMap in method package run(fsdir FSDirectory, errorCount AtomicInteger) : boolean from class org.apache.hadoop.hdfs.server.namenode.FsImageValidation.INodeMapValidation",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "e211f6f83d1a9868a273112176054fd05e6821e7",
+      "url": "https://github.com/apache/hadoop/commit/e211f6f83d1a9868a273112176054fd05e6821e7",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tbufSize : int in method private copyFileToStream(out OutputStream, localfile File, infile FileInputStream, throttler DataTransferThrottler, canceler Canceler, bufferSize int) : void from class org.apache.hadoop.hdfs.server.namenode.TransferFsImage",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tbuf : byte to buf : byte[] in method private copyFileToStream(out OutputStream, localfile File, infile FileInputStream, throttler DataTransferThrottler, canceler Canceler, bufferSize int) : void from class org.apache.hadoop.hdfs.server.namenode.TransferFsImage",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "dbf08c872acfc7883d70a38cde8eaec6ceed2da6",
+      "url": "https://github.com/apache/hadoop/commit/dbf08c872acfc7883d70a38cde8eaec6ceed2da6",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tfinishedReconfCount : int in method public testDecommissionDataNodesReconfig() : void from class org.apache.hadoop.hdfs.tools.TestDFSAdmin",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "bb32aec88ecfa9f7df32d683c08b07138669791f",
+      "url": "https://github.com/apache/hadoop/commit/bb32aec88ecfa9f7df32d683c08b07138669791f",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\twrapped : InputStream in method private assertS3StreamClosed(in FSDataInputStream) : void from class org.apache.hadoop.fs.s3a.performance.ITestS3AOpenCost",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\twrapped : InputStream in method private assertS3StreamOpen(in FSDataInputStream) : void from class org.apache.hadoop.fs.s3a.performance.ITestS3AOpenCost",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assumeNoPrefetching() : void extracted from public testStreamIsNotChecksummed() : void in class org.apache.hadoop.fs.s3a.performance.ITestS3AOpenCost",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "58afe43769330155f60e1c2af31d772f3a07f75e",
+      "url": "https://github.com/apache/hadoop/commit/58afe43769330155f60e1c2af31d772f3a07f75e",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprotected nextBlockOutputStream() : LocatedBlock renamed to protected setupPipelineForCreate() : void in class org.apache.hadoop.hdfs.DataStreamer",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to boolean in method private setupPipelineForAppendOrRecovery() : boolean from class org.apache.hadoop.hdfs.DataStreamer",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to boolean in method protected setupPipelineInternal(datanodes DatanodeInfo[], nodeStorageTypes StorageType[], nodeStorageIDs String[]) : boolean from class org.apache.hadoop.hdfs.DataStreamer",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tLocatedBlock to void in method protected setupPipelineForCreate() : void from class org.apache.hadoop.hdfs.DataStreamer",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprotected nextBlockOutputStream() : LocatedBlock renamed to protected setupPipelineForCreate() : void in class org.apache.hadoop.hdfs.StripedDataStreamer",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to boolean in method protected setupPipelineInternal(nodes DatanodeInfo[], nodeStorageTypes StorageType[], nodeStorageIDs String[]) : boolean from class org.apache.hadoop.hdfs.StripedDataStreamer",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tLocatedBlock to void in method protected setupPipelineForCreate() : void from class org.apache.hadoop.hdfs.StripedDataStreamer",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic createRbw(storageType StorageType, storageId String, b ExtendedBlock, allowLazyPersist boolean, newGS long) : ReplicaHandler extracted from public createRbw(storageType StorageType, storageId String, b ExtendedBlock, allowLazyPersist boolean) : ReplicaHandler in class org.apache.hadoop.hdfs.server.datanode.fsdataset.impl.FsDatasetImpl",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\te : ReplicaAlreadyExistsException|ReplicaNotFoundException|DiskOutOfSpaceException to e : IOException in method public createRbw(storageType StorageType, storageId String, b ExtendedBlock, allowLazyPersist boolean, newGS long) : ReplicaHandler from class org.apache.hadoop.hdfs.server.datanode.fsdataset.impl.FsDatasetImpl",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic createRbw(storageType StorageType, storageId String, b ExtendedBlock, allowLazyPersist boolean, newGS long) : ReplicaHandler extracted from package BlockReceiver(block ExtendedBlock, storageType StorageType, in DataInputStream, inAddr String, myAddr String, stage BlockConstructionStage, newGs long, minBytesRcvd long, maxBytesRcvd long, clientname String, srcDataNode DatanodeInfo, datanode DataNode, requestedChecksum DataChecksum, cachingStrategy CachingStrategy, allowLazyPersist boolean, pinning boolean, storageId String) in class org.apache.hadoop.hdfs.server.datanode.BlockReceiver & moved to class org.apache.hadoop.hdfs.server.datanode.SimulatedFSDataset",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic createRbw(storageType StorageType, storageId String, b ExtendedBlock, allowLazyPersist boolean, newGS long) : ReplicaHandler extracted from package BlockReceiver(block ExtendedBlock, storageType StorageType, in DataInputStream, inAddr String, myAddr String, stage BlockConstructionStage, newGs long, minBytesRcvd long, maxBytesRcvd long, clientname String, srcDataNode DatanodeInfo, datanode DataNode, requestedChecksum DataChecksum, cachingStrategy CachingStrategy, allowLazyPersist boolean, pinning boolean, storageId String) in class org.apache.hadoop.hdfs.server.datanode.BlockReceiver & moved to class org.apache.hadoop.hdfs.server.datanode.extdataset.ExternalDatasetImpl",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "1336c362e5b685c020b667e308f97f7bdb5b6fd8",
+      "url": "https://github.com/apache/hadoop/commit/1336c362e5b685c020b667e308f97f7bdb5b6fd8",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.apache.hadoop.fs.azurebfs.services.TestExponentialRetryPolicy renamed to org.apache.hadoop.fs.azurebfs.services.ITestExponentialRetryPolicy",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tretryPolicy : ExponentialRetryPolicy to exponentialRetryPolicy : ExponentialRetryPolicy in class org.apache.hadoop.fs.azurebfs.services.AbfsClient",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tretryInterval : long in method package completeExecute(tracingContext TracingContext) : void from class org.apache.hadoop.fs.azurebfs.services.AbfsRestOperation",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tretryPolicy : ExponentialRetryPolicy to exponentialRetryPolicy : ExponentialRetryPolicy in method public setMockAbfsRestOperationForListPathOperation(spiedClient AbfsClient, functionRaisingIOE FunctionRaisingIOE<AbfsHttpOperation,AbfsHttpOperation>) : void from class org.apache.hadoop.fs.azurebfs.services.AbfsClientTestUtil",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tretryPolicy : ExponentialRetryPolicy to exponentialRetryPolicy : ExponentialRetryPolicy in method private testClientRequestIdForStatusRetry(status int, serverErrorMessage String, keyExpected String) : void from class org.apache.hadoop.fs.azurebfs.services.TestAbfsRestOperationMockFailures",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tretryPolicy : ExponentialRetryPolicy to exponentialRetryPolicy : ExponentialRetryPolicy in method private testClientRequestIdForTimeoutRetry(exceptions Exception[], abbreviationsExpected String[], len int, numOfCTExceptions int) : void from class org.apache.hadoop.fs.azurebfs.services.TestAbfsRestOperationMockFailures",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpublic shouldRetry(retryCount int, statusCode int) : boolean from class org.apache.hadoop.fs.azurebfs.services.ExponentialRetryPolicy to public shouldRetry(retryCount int, statusCode int) : boolean from class org.apache.hadoop.fs.azurebfs.services.AbfsRetryPolicy",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_SUPERCLASS",
+          "description": "Extract Superclass\torg.apache.hadoop.fs.azurebfs.services.AbfsRetryPolicy from classes [org.apache.hadoop.fs.azurebfs.services.ExponentialRetryPolicy]",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tExponentialRetryPolicy to AbfsRetryPolicy in method public getRetryPolicy(failureReason String) : AbfsRetryPolicy from class org.apache.hadoop.fs.azurebfs.services.AbfsClient",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tintercept : AbfsThrottlingIntercept to configurations : AbfsConfiguration in method public addGeneralMockBehaviourToAbfsClient(abfsClient AbfsClient, exponentialRetryPolicy ExponentialRetryPolicy, staticRetryPolicy StaticRetryPolicy, intercept AbfsThrottlingIntercept) : void from class org.apache.hadoop.fs.azurebfs.services.AbfsClientTestUtil",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tintercept : AbfsThrottlingIntercept to configurations : AbfsConfiguration in method public addGeneralMockBehaviourToAbfsClient(abfsClient AbfsClient, exponentialRetryPolicy ExponentialRetryPolicy, staticRetryPolicy StaticRetryPolicy, intercept AbfsThrottlingIntercept) : void from class org.apache.hadoop.fs.azurebfs.services.AbfsClientTestUtil",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage getRetryPolicy() : ExponentialRetryPolicy renamed to package getExponentialRetryPolicy() : ExponentialRetryPolicy in class org.apache.hadoop.fs.azurebfs.services.AbfsClient",
+          "validation": false
+        },
+        {
+          "type": "MOVE_RENAME_ATTRIBUTE",
+          "description": "Move And Rename Attribute\tprivate retryCount : int renamed to private maxRetryCount : int and moved from class org.apache.hadoop.fs.azurebfs.services.ExponentialRetryPolicy to class org.apache.hadoop.fs.azurebfs.services.AbfsRetryPolicy",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "7651afd3dba981cf15f2ea32f138de2393d22db6",
+      "url": "https://github.com/apache/hadoop/commit/7651afd3dba981cf15f2ea32f138de2393d22db6",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tjobResource : URI to jobResourceUri : URI in class org.apache.hadoop.fs.s3a.auth.delegation.ITestDelegatedMRJob",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tEXTRA_JOB_RESOURCE_PATH : Path to extraJobResourcePath : Path in class org.apache.hadoop.fs.s3a.auth.delegation.ITestDelegatedMRJob",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprotected readLandsatMetadata(delegatedFS S3AFileSystem) : HeadBucketResponse renamed to protected readExternalDatasetMetadata(delegatedFS S3AFileSystem) : HeadBucketResponse in class org.apache.hadoop.fs.s3a.auth.delegation.ITestSessionDelegationInFilesystem",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tlandsat : URI to external : URI in method protected readExternalDatasetMetadata(delegatedFS S3AFileSystem) : HeadBucketResponse from class org.apache.hadoop.fs.s3a.auth.delegation.ITestSessionDelegationInFilesystem",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tlandsatUri : URI to externalUri : URI in class org.apache.hadoop.fs.s3a.auth.delegation.TestS3ADelegationTokenSupport",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testLandsatBucketRequireUnencrypted() : void renamed to public testExternalBucketRequireUnencrypted() : void in class org.apache.hadoop.fs.s3a.s3guard.ITestS3GuardTool",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testLandsatBucketRequireEncrypted() : void renamed to public testExternalBucketRequireEncrypted() : void in class org.apache.hadoop.fs.s3a.s3guard.ITestS3GuardTool",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tposition : int to position : long in method private executeRandomIO(policy S3AInputPolicy, expectedOpenCount long) : ContractTestUtils.NanoTimer from class org.apache.hadoop.fs.s3a.scale.ITestS3AInputStreamPerformance",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic getExternalData(conf Configuration) : Path extracted from public getCSVTestPath(conf Configuration) : Path in class org.apache.hadoop.fs.s3a.S3ATestUtils & moved to class org.apache.hadoop.fs.s3a.test.PublicDatasetTestUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic getExternalData(conf Configuration) : Path extracted from public getLandsatCSVPath(conf Configuration) : Path in class org.apache.hadoop.fs.s3a.S3ATestUtils & moved to class org.apache.hadoop.fs.s3a.test.PublicDatasetTestUtils",
+          "validation": false
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic requireAnonymousDataPath(conf Configuration) : Path extracted from public testJobSubmissionCollectsTokens() : void in class org.apache.hadoop.fs.s3a.auth.delegation.ITestDelegatedMRJob & moved to class org.apache.hadoop.fs.s3a.test.PublicDatasetTestUtils",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcsvPath : Path to path : Path in method public testMultiObjectDeleteNoPermissions() : void from class org.apache.hadoop.fs.s3a.ITestS3AFailureHandling",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcsvPath : Path to path : Path in method public testSingleObjectDeleteNoPermissionsTranslated() : void from class org.apache.hadoop.fs.s3a.ITestS3AFailureHandling",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tlocalFs : FileSystem to localFs : LocalFileSystem in method public testCacheFileExistence() : void from class org.apache.hadoop.fs.s3a.ITestS3APrefetchingCacheFiles",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate externalBucket() : String extracted from public testLandsatBucketRequireUnencrypted() : void in class org.apache.hadoop.fs.s3a.s3guard.ITestS3GuardTool",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic getExternalData(conf Configuration) : Path extracted from public setUp() : void in class org.apache.hadoop.fs.s3a.ITestS3APrefetchingCacheFiles & moved to class org.apache.hadoop.fs.s3a.test.PublicDatasetTestUtils",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic requireDefaultExternalDataFile(conf Configuration) : String extracted from public getLandsatCSVFile(conf Configuration) : String in class org.apache.hadoop.fs.s3a.S3ATestUtils & moved to class org.apache.hadoop.fs.s3a.test.PublicDatasetTestUtils",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "5cbe52f4e8d84961bdc5a21b77bcb10bf31e335d",
+      "url": "https://github.com/apache/hadoop/commit/5cbe52f4e8d84961bdc5a21b77bcb10bf31e335d",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tconfigKeySuffix : String in method public testAutoMsyncEqualsZero(configSetting ConfigSetting) : void from class org.apache.hadoop.hdfs.server.federation.router.TestObserverWithRouter",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tconfigKeySuffix : String in method public testAutoMsyncNonZero(configSetting ConfigSetting) : void from class org.apache.hadoop.hdfs.server.federation.router.TestObserverWithRouter",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tconfigKeySuffix : String in method public testThatWriteDoesntBypassNeedForMsync(configSetting ConfigSetting) : void from class org.apache.hadoop.hdfs.server.federation.router.TestObserverWithRouter",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_ATTRIBUTE",
+          "description": "Extract Attribute\tprivate AUTO_MSYNC_PERIOD_KEY_PREFIX : String in class org.apache.hadoop.hdfs.server.federation.router.TestObserverWithRouter",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "20d8596af2f3ee77beaec766c514c95e41bd2672",
+      "url": "https://github.com/apache/hadoop/commit/20d8596af2f3ee77beaec766c514c95e41bd2672",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate checkCallerContextContainsClientIp(clientIpInfos Set<String>, callerContext String) : void extracted from public testCallerContextWithMultiDestinations() : void in class org.apache.hadoop.hdfs.server.federation.router.TestRouterRpcMultiDestination",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/apache/hadoop.git",
+      "sha1": "d278b349f63996ea5f6ab44847007fe69e62a177",
+      "url": "https://github.com/apache/hadoop/commit/d278b349f63996ea5f6ab44847007fe69e62a177",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tendpointStr : String in method private configureEndpointAndRegion(builder BuilderT, parameters S3ClientCreationParameters, conf Configuration) : void from class org.apache.hadoop.fs.s3a.DefaultS3ClientFactory",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tendpointEndsWithCentral : boolean in method private configureEndpointAndRegion(builder BuilderT, parameters S3ClientCreationParameters, conf Configuration) : void from class org.apache.hadoop.fs.s3a.DefaultS3ClientFactory",
+          "validation": true
+        }
+      ]
+    }
+  ]
+}

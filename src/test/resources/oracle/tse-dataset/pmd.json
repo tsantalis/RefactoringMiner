@@ -1,0 +1,857 @@
+{
+  "results": [
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "6e0aafbf44ad4070101b103405cda0b33cd9001e",
+      "url": "https://github.com/pmd/pmd/commit/6e0aafbf44ad4070101b103405cda0b33cd9001e",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void extracted from package ppMethodCallArgsTooBig() : void in class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void extracted from package ppMethodRefWithTyArgs() : void in class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tm : ASTMethodCall to node : T in method private testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void from class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tm : ASTMethodCall to node : T in method private testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void from class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tm : ASTMethodCall to node : T in method private testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void from class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tm : ASTMethodCall to node : T in method private testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void from class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tm : ASTMethodReference to node : T in method private testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void from class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tm : ASTMethodReference to node : T in method private testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void from class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tm : ASTMethodReference to node : T in method private testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void from class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tm : ASTMethodReference to node : T in method private testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void from class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tm : ASTConstructorCall to node : T in method private testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void from class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tm : ASTConstructorCall to node : T in method private testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void from class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate testPrettyPrintIdentity(expr String, nodeTy Class<T>) : void extracted from package ppMethodCallOnCast() : void in class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate testPrettyPrintIdentity(expr String, nodeTy Class<T>) : void extracted from package ppMethodRef() : void in class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate testPrettyPrintIdentity(expr String, nodeTy Class<T>) : void extracted from package ppCtorCall() : void in class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tm : ASTMethodCall to node : T in method private testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void from class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tm : ASTMethodCall to node : T in method private testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void from class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tm : ASTMethodReference to node : T in method private testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void from class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tm : ASTMethodReference to node : T in method private testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void from class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void extracted from package ppMethodCallOnCast() : void in class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void extracted from package ppMethodRef() : void in class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate testPrettyPrint(expr String, nodeTy Class<T>, expected String) : void extracted from package ppCtorCall() : void in class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "100e5c7ba26ae8e76f0b0abb30f6187b57f2588d",
+      "url": "https://github.com/pmd/pmd/commit/100e5c7ba26ae8e76f0b0abb30f6187b57f2588d",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpackage newContextFor(tvars List<JTypeVar>, addPrimaryBound boolean) : InferenceContext extracted from package newContextFor(tvars List<JTypeVar>) : InferenceContext in class net.sourceforge.pmd.lang.java.types.internal.infer.Infer",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpackage InferenceContext(ts TypeSystem, supertypeCheckCache SupertypeCheckCache, tvars List<JTypeVar>, logger TypeInferenceLogger, addPrimaryBound boolean) extracted from package InferenceContext(ts TypeSystem, supertypeCheckCache SupertypeCheckCache, tvars List<JTypeVar>, logger TypeInferenceLogger) in class net.sourceforge.pmd.lang.java.types.internal.infer.InferenceContext",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpackage addPrimaryBounds() : void extracted from package InferenceContext(ts TypeSystem, supertypeCheckCache SupertypeCheckCache, tvars List<JTypeVar>, logger TypeInferenceLogger) in class net.sourceforge.pmd.lang.java.types.internal.infer.InferenceContext",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "ac21a1a8c5f6281ee51eff3cbc87a53e51023106",
+      "url": "https://github.com/pmd/pmd/commit/ac21a1a8c5f6281ee51eff3cbc87a53e51023106",
+      "commonRefactoring": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tfirstArg : ASTExpression in method public visit(node ASTConstructorCall, data Object) : Object from class net.sourceforge.pmd.lang.java.rule.performance.BigIntegerInstantiationRule",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tjdk15 : boolean to java5 : boolean in method public visit(node ASTConstructorCall, data Object) : Object from class net.sourceforge.pmd.lang.java.rule.performance.BigIntegerInstantiationRule",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tjdk9 : boolean to java9 : boolean in method public visit(node ASTConstructorCall, data Object) : Object from class net.sourceforge.pmd.lang.java.rule.performance.BigIntegerInstantiationRule",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tCONSTANTS : Set<String> to BIGDECIMAL_CONSTANTS : Set<String> in class net.sourceforge.pmd.lang.java.rule.performance.BigIntegerInstantiationRule",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "cd5ce3255f348f5807bce470db8b6376301f0c79",
+      "url": "https://github.com/pmd/pmd/commit/cd5ce3255f348f5807bce470db8b6376301f0c79",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tresult : MutableInt to size : MutableOptionalInt in method private calculateExpression(expression ASTExpression) : int from class net.sourceforge.pmd.lang.java.rule.performance.InsufficientStringBufferDeclarationRule",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tresult : MutableInt to size : MutableOptionalInt in method private calculateExpression(expression ASTExpression) : int from class net.sourceforge.pmd.lang.java.rule.performance.InsufficientStringBufferDeclarationRule",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "03407db09e1a198ec34cdae522f76b87ef47622b",
+      "url": "https://github.com/pmd/pmd/commit/03407db09e1a198ec34cdae522f76b87ef47622b",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tEXTRA_ASSERT_METHOD_NAMES : PropertyDescriptor<List<String>> to EXTRA_ASSERT_METHOD_NAMES : PropertyDescriptor<Set<String>> in class net.sourceforge.pmd.lang.java.rule.bestpractices.JUnitTestContainsTooManyAssertsRule",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tEXTRA_ASSERT_METHOD_NAMES : PropertyDescriptor<List<String>> to EXTRA_ASSERT_METHOD_NAMES : PropertyDescriptor<Set<String>> in class net.sourceforge.pmd.lang.java.rule.bestpractices.JUnitTestsShouldIncludeAssertRule",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\textraAsserts : Set<String> in method public visit(method ASTMethodDeclaration, data Object) : Object from class net.sourceforge.pmd.lang.java.rule.bestpractices.JUnitTestContainsTooManyAssertsRule",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\textraAsserts : Set<String> in method public visit(method ASTMethodDeclaration, data Object) : Object from class net.sourceforge.pmd.lang.java.rule.bestpractices.JUnitTestsShouldIncludeAssertRule",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "274497bbf49db1351cbf1cc2b062535a0d7fe93a",
+      "url": "https://github.com/pmd/pmd/commit/274497bbf49db1351cbf1cc2b062535a0d7fe93a",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\turlResponseCache : Map<String,CompletableFuture<Integer>> to urlResponseCache : Map<String,CompletableFuture<String>> in class net.sourceforge.pmd.doc.internal.DeadLinksChecker",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcachedFuture : CompletableFuture<String> in method private getCachedFutureResponse(url String) : CompletableFuture<String> from class net.sourceforge.pmd.doc.internal.DeadLinksChecker",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfutureResponse : CompletableFuture<Integer> to futureResponse : CompletableFuture<String> in method private getCachedFutureResponse(url String) : CompletableFuture<String> from class net.sourceforge.pmd.doc.internal.DeadLinksChecker",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tCompletableFuture<Integer> to CompletableFuture<String> in method private getCachedFutureResponse(url String) : CompletableFuture<String> from class net.sourceforge.pmd.doc.internal.DeadLinksChecker",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tex : IOException to ex : IOException|InterruptedException in method private computeHttpResponse(url String) : String from class net.sourceforge.pmd.doc.internal.DeadLinksChecker",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\thttpURLConnection : HttpURLConnection to httpUrlConnection : HttpURLConnection in method private computeHttpResponse(url String) : String from class net.sourceforge.pmd.doc.internal.DeadLinksChecker",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tint to String in method private computeHttpResponse(url String) : String from class net.sourceforge.pmd.doc.internal.DeadLinksChecker",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tdead : null to errorMessage : null in method public checkDeadLinks(rootDirectory Path) : void from class net.sourceforge.pmd.doc.internal.DeadLinksChecker",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "fa60d0e8a7c5d5e0de2d735d22b56fa590d6d340",
+      "url": "https://github.com/pmd/pmd/commit/fa60d0e8a7c5d5e0de2d735d22b56fa590d6d340",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpublic isStatic() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration to public isStatic() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTExecutableDeclaration",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpublic isFinal() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration to public isFinal() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTExecutableDeclaration",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic isFinal() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration to public isFinal() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTExecutableDeclaration",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "9d5e229704f35eb82994f4672f81409fc52346d9",
+      "url": "https://github.com/pmd/pmd/commit/9d5e229704f35eb82994f4672f81409fc52346d9",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tnet.sourceforge.pmd.processor.PmdRunnableTest moved to net.sourceforge.pmd.lang.impl.PmdRunnableTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tnet.sourceforge.pmd.cpd.CpdAnalysisTest.NoFileAssertListener renamed to net.sourceforge.pmd.cpd.CpdAnalysisTest.FileCountAssertListener",
+          "validation": true
+        },
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\tnet.sourceforge.pmd.cli.ZipFileTest moved and renamed to net.sourceforge.pmd.lang.document.FileCollectorZipTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tlistener : NoFileAssertListener to listener : FileCountAssertListener in method package testFileSectionWithBrokenSymlinks() : void from class net.sourceforge.pmd.cpd.CpdAnalysisTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tlistener : NoFileAssertListener to listener : FileCountAssertListener in method package testFileAddedAsSymlinkAndReal() : void from class net.sourceforge.pmd.cpd.CpdAnalysisTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tlistener : NoFileAssertListener to listener : FileCountAssertListener in method package testFileAddedWithRelativePath() : void from class net.sourceforge.pmd.cpd.CpdAnalysisTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage testGetApplicableFiles() : void from class net.sourceforge.pmd.cli.PMDFilelistTest to package testGetApplicableFiles() : void from class net.sourceforge.pmd.lang.document.FileCollectorTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage testGetApplicableFilesMultipleLines() : void from class net.sourceforge.pmd.cli.PMDFilelistTest to package testGetApplicableFilesMultipleLines() : void from class net.sourceforge.pmd.lang.document.FileCollectorTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage testGetApplicableFilesWithIgnores() : void from class net.sourceforge.pmd.cli.PMDFilelistTest to package testGetApplicableFilesWithIgnores() : void from class net.sourceforge.pmd.lang.document.FileCollectorTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage testRelativizeWith() : void from class net.sourceforge.pmd.cli.PMDFilelistTest to package testRelativizeWith() : void from class net.sourceforge.pmd.lang.document.FileCollectorTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage testRelativizeWithOtherDir() : void from class net.sourceforge.pmd.cli.PMDFilelistTest to package testRelativizeWithOtherDir() : void from class net.sourceforge.pmd.lang.document.FileCollectorTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage testRelativizeWithSeveralDirs() : void from class net.sourceforge.pmd.cli.PMDFilelistTest to package testRelativizeWithSeveralDirs() : void from class net.sourceforge.pmd.lang.document.FileCollectorTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage testUseAbsolutePaths() : void from class net.sourceforge.pmd.cli.PMDFilelistTest to package testUseAbsolutePaths() : void from class net.sourceforge.pmd.lang.document.FileCollectorTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage testGetApplicableFilesWithDirAndIgnores() : void from class net.sourceforge.pmd.cli.PMDFilelistTest to package testGetApplicableFilesWithDirAndIgnores() : void from class net.sourceforge.pmd.lang.document.FileCollectorTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic assertHasName(textFile TextFile, expected String, pmd PmdAnalysis) : void from class net.sourceforge.pmd.cli.PMDFilelistTest to public assertHasName(textFile TextFile, expected String, pmd PmdAnalysis) : void from class net.sourceforge.pmd.lang.document.FileCollectorTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate assertFilenameIs(textFile TextFile, suffix String) : void from class net.sourceforge.pmd.cli.PMDFilelistTest to private assertFilenameIs(textFile TextFile, suffix String) : void from class net.sourceforge.pmd.lang.document.FileCollectorTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate RESOURCES : Path from class net.sourceforge.pmd.cli.PMDFilelistTest to private RESOURCES : Path from class net.sourceforge.pmd.lang.document.FileCollectorTest",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tdup2 : Path in method package testFileOrderRelevance() : void from class net.sourceforge.pmd.cpd.CpdAnalysisTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tdup1 : Path in method package testFileOrderRelevance() : void from class net.sourceforge.pmd.cpd.CpdAnalysisTest",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "845154716cd019cac5df45c1c71d15c337f5b7a3",
+      "url": "https://github.com/pmd/pmd/commit/845154716cd019cac5df45c1c71d15c337f5b7a3",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tnet.sourceforge.pmd.AbstractLanguageVersionTest moved to net.sourceforge.pmd.test.AbstractLanguageVersionTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tnet.sourceforge.pmd.lang.rule.AbstractRuleSetFactoryTest moved to net.sourceforge.pmd.test.lang.rule.AbstractRuleSetFactoryTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tnet.sourceforge.pmd.ant.AbstractAntTestHelper moved to net.sourceforge.pmd.test.AbstractAntTestHelper",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tnet.sourceforge.pmd.testframework.PmdRuleTst moved to net.sourceforge.pmd.test.PmdRuleTst",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tnet.sourceforge.pmd.testframework.RuleTst moved to net.sourceforge.pmd.test.RuleTst",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tnet.sourceforge.pmd.testframework.SimpleAggregatorTst moved to net.sourceforge.pmd.test.SimpleAggregatorTst",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tnet.sourceforge.pmd.testframework.RuleTstTest moved to net.sourceforge.pmd.test.RuleTstTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic withReporter(ruleSetLoader RuleSetLoader, reporter PmdReporter) : RuleSetLoader extracted from private loadRuleSetByFileName(ruleSetFileName String) : RuleSet in class net.sourceforge.pmd.lang.rule.AbstractRuleSetFactoryTest & moved to class net.sourceforge.pmd.lang.rule.InternalApiBridge",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tnet.sourceforge.pmd.lang.rule.AbstractRuleSetFactoryTest.loadRuleSetByFileName.Reporter moved to net.sourceforge.pmd.test.lang.rule.AbstractRuleSetFactoryTest.loadRuleSetByFileName.Reporter",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "ccebca525c4768fe9271eb86d12a6dfa4b2826e6",
+      "url": "https://github.com/pmd/pmd/commit/ccebca525c4768fe9271eb86d12a6dfa4b2826e6",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\te : InvocationTargetException|NoSuchMethodException|IllegalAccessException to ignored : InvocationTargetException|NoSuchMethodException|IllegalAccessException in method private getConsoleEncoding() : String from class net.sourceforge.pmd.ant.Formatter",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "4e01a3dafb4aea3d78b7e40293e898221ef9c78c",
+      "url": "https://github.com/pmd/pmd/commit/4e01a3dafb4aea3d78b7e40293e898221ef9c78c",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tJep443_UnamedPatternsAndVariables renamed to Jep456_UnamedPatternsAndVariables",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tUNNAMED_PATTERNS_AND_VARIABLES : PreviewFeature to UNNAMED_VARIABLES_AND_PATTERNS : PreviewFeature in class net.sourceforge.pmd.lang.java.ast.internal.LanguageLevelChecker.PreviewFeature",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "cb3ceef17ab9c265c6da030f1ca9f1efec9607ff",
+      "url": "https://github.com/pmd/pmd/commit/cb3ceef17ab9c265c6da030f1ca9f1efec9607ff",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage unnamedClasses1() : void renamed to package jep463UnnamedClasses1() : void in class net.sourceforge.pmd.lang.java.ast.Java22PreviewTreeDumpTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage unnamedClassesBeforeJava22Preview() : void renamed to package jep463UnnamedClassesBeforeJava22Preview() : void in class net.sourceforge.pmd.lang.java.ast.Java22PreviewTreeDumpTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage testOrdinaryCompilationUnit() : void renamed to package jep463TestOrdinaryCompilationUnit() : void in class net.sourceforge.pmd.lang.java.ast.Java22PreviewTreeDumpTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage testModularCompilationUnit() : void renamed to package jep463TestModularCompilationUnit() : void in class net.sourceforge.pmd.lang.java.ast.Java22PreviewTreeDumpTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage unnamedClasses2() : void renamed to package jep463UnnamedClasses2() : void in class net.sourceforge.pmd.lang.java.ast.Java22PreviewTreeDumpTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage unnamedClasses3() : void renamed to package jep463UnnamedClasses3() : void in class net.sourceforge.pmd.lang.java.ast.Java22PreviewTreeDumpTest",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "96bc9ef6c6b9758993332e375409034fe081a1d9",
+      "url": "https://github.com/pmd/pmd/commit/96bc9ef6c6b9758993332e375409034fe081a1d9",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tPATTERNS_IN_SWITCH_STATEMENTS : PreviewFeature from class net.sourceforge.pmd.lang.java.ast.internal.LanguageLevelChecker.PreviewFeature to PATTERNS_IN_SWITCH_STATEMENTS : RegularLanguageFeature from class net.sourceforge.pmd.lang.java.ast.internal.LanguageLevelChecker.RegularLanguageFeature",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tNULL_IN_SWITCH_CASES : PreviewFeature from class net.sourceforge.pmd.lang.java.ast.internal.LanguageLevelChecker.PreviewFeature to NULL_IN_SWITCH_CASES : RegularLanguageFeature from class net.sourceforge.pmd.lang.java.ast.internal.LanguageLevelChecker.RegularLanguageFeature",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tRECORD_PATTERNS : PreviewFeature from class net.sourceforge.pmd.lang.java.ast.internal.LanguageLevelChecker.PreviewFeature to RECORD_PATTERNS : RegularLanguageFeature from class net.sourceforge.pmd.lang.java.ast.internal.LanguageLevelChecker.RegularLanguageFeature",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tCASE_REFINEMENT : PreviewFeature from class net.sourceforge.pmd.lang.java.ast.internal.LanguageLevelChecker.PreviewFeature to CASE_REFINEMENT : RegularLanguageFeature from class net.sourceforge.pmd.lang.java.ast.internal.LanguageLevelChecker.RegularLanguageFeature",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "f5979b5bfb5fea0cfe1c001cffbdeab39ff4c579",
+      "url": "https://github.com/pmd/pmd/commit/f5979b5bfb5fea0cfe1c001cffbdeab39ff4c579",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage testQuery() : void renamed to package testQuery1() : void in class net.sourceforge.pmd.lang.apex.ast.ASTSoqlExpressionTest",
+          "validation": false
+        }
+      ],
+      "ourApproach": [],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "5705847594f5b24579b30ce161ece5bddab3ff0d",
+      "url": "https://github.com/pmd/pmd/commit/5705847594f5b24579b30ce161ece5bddab3ff0d",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tnet.sourceforge.pmd.properties.PropertyParsingUtil moved to net.sourceforge.pmd.properties.internal.PropertyParsingUtil",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tnet.sourceforge.pmd.properties.PropertyTypeId moved to net.sourceforge.pmd.properties.internal.PropertyTypeId",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\tnet.sourceforge.pmd.properties.ValueSyntax moved to net.sourceforge.pmd.properties.internal.ValueSyntax",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic getTypeId(propertyDescriptor PropertyDescriptor<?>) : PropertyTypeId extracted from private createPropertiesElement(propertySource PropertySource) : Element in class net.sourceforge.pmd.lang.rule.RuleSetWriter & moved to class net.sourceforge.pmd.properties.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tbuilder : PropertyBuilder<?,?> in method public getBuilderUtils() : BuilderAndMapper<?> from class net.sourceforge.pmd.properties.internal.PropertyTypeId",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_SUPERCLASS",
+          "description": "Extract Superclass\tnet.sourceforge.pmd.properties.InternalApiBridge.InternalPropertySerializer from classes [net.sourceforge.pmd.properties.ValueSyntax]",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tbuilder : PropertyBuilder<?,?> in method public newBuilder(name String) : PropertyBuilder<?,?> from class net.sourceforge.pmd.properties.internal.PropertyTypeId.getBuilderUtils.new BuilderAndMapper",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "68d4561544053b2ce4125025f5722c07a64a0bb7",
+      "url": "https://github.com/pmd/pmd/commit/68d4561544053b2ce4125025f5722c07a64a0bb7",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic replacementIfDeprecated(attribute Attribute) : String extracted from public recordUsageOf(attribute Attribute) : void in class net.sourceforge.pmd.lang.rule.xpath.internal.DeprecatedAttrLogger.AttrLoggerImpl & moved to class net.sourceforge.pmd.lang.rule.xpath.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic replacementIfDeprecated(attribute Attribute) : String extracted from public recordUsageOf(attribute Attribute) : void in class net.sourceforge.pmd.lang.rule.xpath.internal.DeprecatedAttrLogger.AdhocLoggerImpl & moved to class net.sourceforge.pmd.lang.rule.xpath.InternalApiBridge",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "5e92b5907e82c553f3d5a1ef05f96305dc15c8a5",
+      "url": "https://github.com/pmd/pmd/commit/5e92b5907e82c553f3d5a1ef05f96305dc15c8a5",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic newCollector(discoverer LanguageVersionDiscoverer, reporter PmdReporter) : FileCollector extracted from private PmdAnalysis(config PMDConfiguration) in class net.sourceforge.pmd.PmdAnalysis & moved to class net.sourceforge.pmd.lang.document.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic newCollector(discoverer LanguageVersionDiscoverer, reporter PmdReporter) : FileCollector extracted from private PmdAnalysis(config PMDConfiguration) in class net.sourceforge.pmd.PmdAnalysis & moved to class net.sourceforge.pmd.lang.document.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic newCollector(discoverer LanguageVersionDiscoverer, reporter PmdReporter) : FileCollector extracted from private CpdAnalysis(config CPDConfiguration) in class net.sourceforge.pmd.cpd.CpdAnalysis & moved to class net.sourceforge.pmd.lang.document.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic newCollector(discoverer LanguageVersionDiscoverer, reporter PmdReporter) : FileCollector extracted from private prepareNewSourceManager(config CPDConfiguration, dirPath Path, recurse boolean) : void in class net.sourceforge.pmd.cpd.GUI & moved to class net.sourceforge.pmd.lang.document.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic newCollector(discoverer LanguageVersionDiscoverer, reporter PmdReporter) : FileCollector extracted from private newCollector() : FileCollector in class net.sourceforge.pmd.cli.PMDFilelistTest & moved to class net.sourceforge.pmd.lang.document.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic newCollector(collector FileCollector, reporter PmdReporter) : FileCollector extracted from public collectFiles(configuration AbstractConfiguration, collector FileCollector) : void in class net.sourceforge.pmd.internal.util.FileCollectionUtil & moved to class net.sourceforge.pmd.lang.document.InternalApiBridge",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "7c5bf74402a827e3bb9449bcb88a01f14105876e",
+      "url": "https://github.com/pmd/pmd/commit/7c5bf74402a827e3bb9449bcb88a01f14105876e",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfile : TextFile to fileId : FileId in method package testIncludeExcludeApplies() : void from class net.sourceforge.pmd.lang.rule.RuleSetTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tfile : TextFile to fileId : FileId in method package testIncludeExcludeApplies() : void from class net.sourceforge.pmd.lang.rule.RuleSetTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic ruleSetApplies(rule Rule, languageVersion LanguageVersion) : boolean extracted from private getApplicableLanguages(quiet boolean) : Set<Language> in class net.sourceforge.pmd.PmdAnalysis & moved to class net.sourceforge.pmd.lang.rule.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic ruleSetApplies(rule Rule, languageVersion LanguageVersion) : boolean extracted from private getApplicableLanguages(quiet boolean) : Set<Language> in class net.sourceforge.pmd.PmdAnalysis & moved to class net.sourceforge.pmd.lang.rule.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic ruleSetApplies(rule Rule, languageVersion LanguageVersion) : boolean extracted from private applyOnIndex(idx TreeIndex, rules Collection<? extends Rule>, listener FileAnalysisListener) : void in class net.sourceforge.pmd.lang.rule.internal.RuleApplicator & moved to class net.sourceforge.pmd.lang.rule.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic ruleSetApplies(ruleSet RuleSet, fileId FileId) : boolean extracted from public apply(root RootNode, listener FileAnalysisListener) : void in class net.sourceforge.pmd.RuleSets & moved to class net.sourceforge.pmd.lang.rule.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic ruleSetApplies(ruleSet RuleSet, fileId FileId) : boolean extracted from public apply(root RootNode, listener FileAnalysisListener) : void in class net.sourceforge.pmd.lang.rule.internal.RuleSets & moved to class net.sourceforge.pmd.lang.rule.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic loadRuleSetsWithoutException(ruleSetLoader RuleSetLoader, rulesetPaths List<String>) : List<RuleSet> extracted from private doTask() : void in class net.sourceforge.pmd.ant.internal.PMDTaskImpl & moved to class net.sourceforge.pmd.lang.rule.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic loadRuleSetsWithoutException(ruleSetLoader RuleSetLoader, rulesetPaths List<String>) : List<RuleSet> extracted from public create(config PMDConfiguration) : PmdAnalysis in class net.sourceforge.pmd.PmdAnalysis & moved to class net.sourceforge.pmd.lang.rule.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic loadRuleSetsWithoutException(ruleSetLoader RuleSetLoader, rulesetPaths List<String>) : List<RuleSet> extracted from public create(config PMDConfiguration) : PmdAnalysis in class net.sourceforge.pmd.PmdAnalysis & moved to class net.sourceforge.pmd.lang.rule.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic applies(file TextFile) : boolean moved from class net.sourceforge.pmd.lang.rule.RuleSet to class net.sourceforge.pmd.RuleSets & inlined to public applies(file TextFile) : boolean",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tpublic applies(file TextFile) : boolean moved from class net.sourceforge.pmd.lang.rule.RuleSet to class net.sourceforge.pmd.lang.rule.internal.RuleSets & inlined to public applies(file TextFile) : boolean",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic ruleSetApplies(ruleSet RuleSet, fileId FileId) : boolean extracted from public applies(file TextFile) : boolean in class net.sourceforge.pmd.RuleSets & moved to class net.sourceforge.pmd.lang.rule.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic ruleSetApplies(ruleSet RuleSet, fileId FileId) : boolean extracted from public applies(file TextFile) : boolean in class net.sourceforge.pmd.lang.rule.internal.RuleSets & moved to class net.sourceforge.pmd.lang.rule.InternalApiBridge",
+          "validation": true
+        }]
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "72edaee08a9be64aa6ae2a881d909dafe6ca2a97",
+      "url": "https://github.com/pmd/pmd/commit/72edaee08a9be64aa6ae2a881d909dafe6ca2a97",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic createRuleViolation(theRule Rule, location FileLocation, message String, additionalInfo Map<String,String>) : ParametricRuleViolation extracted from private newRuleViolation(beginLine int, beginColumn int, endLine int, endColumn int, packageNameArg String, classNameArg String) : RuleViolation in class net.sourceforge.pmd.renderers.YAHTMLRendererTest & moved to class net.sourceforge.pmd.reporting.InternalApiBridge",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic createRuleViolation(theRule Rule, location FileLocation, message String, additionalInfo Map<String,String>) : ParametricRuleViolation extracted from package testDisplayNameIsRespected() : void in class net.sourceforge.pmd.cache.internal.FileAnalysisCacheTest & moved to class net.sourceforge.pmd.reporting.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprotected newRuleViolation(rule Rule, location FileLocation, message String) : RuleViolation extracted from protected newRuleViolation(beginLine int, beginColumn int, endLine int, endColumn int, rule Rule) : RuleViolation in class net.sourceforge.pmd.renderers.AbstractRendererTest",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprotected newRuleViolation(rule Rule, location FileLocation, message String) : RuleViolation extracted from package testXPathRule() : void in class net.sourceforge.pmd.renderers.CodeClimateRendererTest & moved to class net.sourceforge.pmd.renderers.AbstractRendererTest",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprotected newRuleViolation(rule Rule, location FileLocation, message String) : RuleViolation extracted from private createRuleViolation(description String) : RuleViolation in class net.sourceforge.pmd.renderers.XMLRendererTest & moved to class net.sourceforge.pmd.renderers.AbstractRendererTest",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprotected newRuleViolation(rule Rule, location FileLocation, message String) : RuleViolation extracted from package testDefaultStylesheet() : void in class net.sourceforge.pmd.renderers.XSLTRendererTest & moved to class net.sourceforge.pmd.renderers.AbstractRendererTest",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic createRuleViolation(theRule Rule, location FileLocation, message String, additionalInfo Map<String,String>) : ParametricRuleViolation extracted from package testXPathRule() : void in class net.sourceforge.pmd.renderers.CodeClimateRendererTest & moved to class net.sourceforge.pmd.reporting.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic createRuleViolation(theRule Rule, location FileLocation, message String, additionalInfo Map<String,String>) : ParametricRuleViolation extracted from private createRuleViolation(description String) : RuleViolation in class net.sourceforge.pmd.renderers.XMLRendererTest & moved to class net.sourceforge.pmd.reporting.InternalApiBridge",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic createRuleViolation(theRule Rule, location FileLocation, message String, additionalInfo Map<String,String>) : ParametricRuleViolation extracted from package testDefaultStylesheet() : void in class net.sourceforge.pmd.renderers.XSLTRendererTest & moved to class net.sourceforge.pmd.reporting.InternalApiBridge",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/pmd/pmd.git",
+      "sha1": "7698b6a9947aedcbe091509ac35952b32f0f916a",
+      "url": "https://github.com/pmd/pmd/commit/7698b6a9947aedcbe091509ac35952b32f0f916a",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\truleSetLoader : RuleSetLoader to ruleSetLoader : net.sourceforge.pmd.lang.rule.RuleSetLoader in method public create(config PMDConfiguration) : PmdAnalysis from class net.sourceforge.pmd.PmdAnalysis",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\trulesets : RuleSets to rulesets : net.sourceforge.pmd.lang.rule.internal.RuleSets in method package performAnalysisImpl(extraListeners List<? extends Report.GlobalReportBuilderListener>, textFiles List<TextFile>) : void from class net.sourceforge.pmd.PmdAnalysis",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tSet<Rule> to Set<net.sourceforge.pmd.lang.rule.Rule> in method private removeBrokenRules(ruleSets RuleSets) : Set<net.sourceforge.pmd.lang.rule.Rule> from class net.sourceforge.pmd.PmdAnalysis",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tRuleSetLoader to net.sourceforge.pmd.lang.rule.RuleSetLoader in method public newRuleSetLoader() : net.sourceforge.pmd.lang.rule.RuleSetLoader from class net.sourceforge.pmd.PmdAnalysis",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tbrokenRules : Set<Rule> to brokenRules : Set<net.sourceforge.pmd.lang.rule.Rule> in method private removeBrokenRules(ruleSets RuleSets) : Set<net.sourceforge.pmd.lang.rule.Rule> from class net.sourceforge.pmd.PmdAnalysis",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    }
+  ]
+}

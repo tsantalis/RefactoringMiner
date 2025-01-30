@@ -1,0 +1,886 @@
+{
+  "results": [
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "a55e0090c999d155e4e588a34d9792a510ad8c68",
+      "url": "https://github.com/square/okhttp/commit/a55e0090c999d155e4e588a34d9792a510ad8c68",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmockStreamHandler : MockStreamHandler to body : MockStreamHandler in method public trueDuplexClientWritesFirst() : void from class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmockStreamHandler : MockStreamHandler to body : MockStreamHandler in method public trueDuplexServerWritesFirst() : void from class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmockStreamHandler : MockStreamHandler to body : MockStreamHandler in method public clientReadsHeadersDataTrailers() : void from class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmockStreamHandler : MockStreamHandler to body : MockStreamHandler in method public serverReadsHeadersData() : void from class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmockStreamHandler : MockStreamHandler to body : MockStreamHandler in method public requestBodyEndsAfterResponseBody() : void from class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmockStreamHandler : MockStreamHandler to body : MockStreamHandler in method public duplexWith100Continue() : void from class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmockStreamHandler : MockStreamHandler to body : MockStreamHandler in method public duplexWithRedirect() : void from class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmockResponseBody1 : MockStreamHandler to body1 : MockStreamHandler in method public duplexWithAuthChallenge() : void from class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmockResponseBody2 : MockStreamHandler to body : MockStreamHandler in method public duplexWithAuthChallenge() : void from class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmockStreamHandler : MockStreamHandler to body : MockStreamHandler in method public fullCallTimeoutDoesNotApplyOnceConnected() : void from class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmockStreamHandler : MockStreamHandler to body : MockStreamHandler in method public duplexWithRewriteInterceptors() : void from class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmockStreamHandler : MockStreamHandler to body : MockStreamHandler in method public serverCancelsRequestBodyAndSendsResponseBody() : void from class okhttp3.DuplexTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate enqueueResponseWithBody(builder MockResponse.Builder, body MockStreamHandler) : MockStreamHandler inlined to public trueDuplexClientWritesFirst() : void in class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate enqueueResponseWithBody(builder MockResponse.Builder, body MockStreamHandler) : MockStreamHandler inlined to public trueDuplexServerWritesFirst() : void in class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate enqueueResponseWithBody(builder MockResponse.Builder, body MockStreamHandler) : MockStreamHandler inlined to public clientReadsHeadersDataTrailers() : void in class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate enqueueResponseWithBody(builder MockResponse.Builder, body MockStreamHandler) : MockStreamHandler inlined to public serverReadsHeadersData() : void in class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate enqueueResponseWithBody(builder MockResponse.Builder, body MockStreamHandler) : MockStreamHandler inlined to public requestBodyEndsAfterResponseBody() : void in class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate enqueueResponseWithBody(builder MockResponse.Builder, body MockStreamHandler) : MockStreamHandler inlined to public duplexWith100Continue() : void in class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate enqueueResponseWithBody(builder MockResponse.Builder, body MockStreamHandler) : MockStreamHandler inlined to public duplexWithRedirect() : void in class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate enqueueResponseWithBody(builder MockResponse.Builder, body MockStreamHandler) : MockStreamHandler inlined to public duplexWithAuthChallenge() : void in class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate enqueueResponseWithBody(builder MockResponse.Builder, body MockStreamHandler) : MockStreamHandler inlined to public fullCallTimeoutDoesNotApplyOnceConnected() : void in class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate enqueueResponseWithBody(builder MockResponse.Builder, body MockStreamHandler) : MockStreamHandler inlined to public duplexWithRewriteInterceptors() : void in class okhttp3.DuplexTest",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate enqueueResponseWithBody(builder MockResponse.Builder, body MockStreamHandler) : MockStreamHandler inlined to public serverCancelsRequestBodyAndSendsResponseBody() : void in class okhttp3.DuplexTest",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "00fe12fee5dc39de9e8dba3f6af6c4e55e6eb0d1",
+      "url": "https://github.com/square/okhttp/commit/00fe12fee5dc39de9e8dba3f6af6c4e55e6eb0d1",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tlocalhost : InetAddress to startNanos : long in method public connectTimeout() : void from class okhttp3.InterceptorTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tlocalhost : InetAddress to startNanos : long in method public connectTimeout() : void from class okhttp3.InterceptorTest",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "fe15ccda5b2be87e6850e0e5002b9268e46c37aa",
+      "url": "https://github.com/square/okhttp/commit/fe15ccda5b2be87e6850e0e5002b9268e46c37aa",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tresponse : MockResponse to builder : MockResponse.Builder in method public defaultMockResponse() : void from class mockwebserver3.MockWebServerTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tresponse : MockResponse to builder : MockResponse.Builder in method public defaultMockResponse() : void from class mockwebserver3.MockWebServerTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tresponse : MockResponse to builder : MockResponse.Builder in method public setResponseMockReason() : void from class mockwebserver3.MockWebServerTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tresponse : MockResponse to builder : MockResponse.Builder in method public setResponseMockReason() : void from class mockwebserver3.MockWebServerTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tresponse : MockResponse to builder : MockResponse.Builder in method public setStatusControlsWholeStatusLine() : void from class mockwebserver3.MockWebServerTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tresponse : MockResponse to builder : MockResponse.Builder in method public setStatusControlsWholeStatusLine() : void from class mockwebserver3.MockWebServerTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tresponse : MockResponse to builder : MockResponse.Builder in method public mockResponseAddHeader() : void from class mockwebserver3.MockWebServerTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tresponse : MockResponse to builder : MockResponse.Builder in method public mockResponseAddHeader() : void from class mockwebserver3.MockWebServerTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tresponse : MockResponse to builder : MockResponse.Builder in method public mockResponseSetHeader() : void from class mockwebserver3.MockWebServerTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tresponse : MockResponse to builder : MockResponse.Builder in method public mockResponseSetHeader() : void from class mockwebserver3.MockWebServerTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tresponse : MockResponse to builder : MockResponse.Builder in method public mockResponseSetHeaders() : void from class mockwebserver3.MockWebServerTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tresponse : MockResponse to builder : MockResponse.Builder in method public mockResponseSetHeaders() : void from class mockwebserver3.MockWebServerTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tmockResponse : MockResponse to builder : MockResponse.Builder in method private assertCached(shouldPut boolean, responseCode int) : void from class okhttp3.CacheTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmockResponse : MockResponse to builder : MockResponse.Builder in method private assertCached(shouldPut boolean, responseCode int) : void from class okhttp3.CacheTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tmockResponse : MockResponse to mockResponse : MockResponse.Builder in method private testResponseCaching(transferKind TransferKind) : void from class okhttp3.CacheTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tmockResponse : MockResponse to mockResponse : MockResponse.Builder in method private testServerPrematureDisconnect(transferKind TransferKind) : void from class okhttp3.CacheTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tmockResponse : MockResponse to builder : MockResponse.Builder in method private testClientPrematureDisconnect(transferKind TransferKind) : void from class okhttp3.CacheTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmockResponse : MockResponse to builder : MockResponse.Builder in method private testClientPrematureDisconnect(transferKind TransferKind) : void from class okhttp3.CacheTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tMockResponse to MockResponse.Builder in method private upgradeResponse(request RecordedRequest) : MockResponse.Builder from class okhttp3.internal.ws.WebSocketHttpTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tMockResponse to MockResponse.Builder in method private truncateViolently(builder MockResponse.Builder, numBytesToKeep int) : MockResponse.Builder from class okhttp3.CacheTest",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tresponse : MockResponse to builder : MockResponse.Builder in method public setBodyAdjustsHeaders() : void from class mockwebserver3.MockWebServerTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tresponse : MockResponse to builder : MockResponse.Builder in method public setBodyAdjustsHeaders() : void from class mockwebserver3.MockWebServerTest",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "fc14f6fd2a97ccaa8aeb449a0bfc1b4e92978a40",
+      "url": "https://github.com/square/okhttp/commit/fc14f6fd2a97ccaa8aeb449a0bfc1b4e92978a40",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testLocalhostIpv6() : void renamed to public testHostname() : void in class mockwebserver3.RecordedRequestTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic ipv6HostHasSquareBraces() : void renamed to public ipv6HostHasSquareBracesHttp2() : void in class okhttp3.CallTest",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate configureClientAndServerProxies(http2 boolean) : void extracted from public ipv6HostHasSquareBraces() : void in class okhttp3.CallTest",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "8e8c2a6037d94fe39246b95268ec67045b1390f0",
+      "url": "https://github.com/square/okhttp/commit/8e8c2a6037d94fe39246b95268ec67045b1390f0",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpectedClass : Class to expectedClass : Class<?> in method public assertFailure(allowedExceptionTypes Class<?>...) : RecordedResponse from class okhttp3.RecordedResponse",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tresult : List<Object> in method public arguments() : List<Object> from class okhttp3.WebPlatformUrlTest.TestDataParamProvider",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "2b5c294c4959f689990ddb9748d3524a8fa433bb",
+      "url": "https://github.com/square/okhttp/commit/2b5c294c4959f689990ddb9748d3524a8fa433bb",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tlocalClient : OkHttpClient in method public connectionNotReusedAfterShutdown(protocol Protocol, mockWebServer MockWebServer) : void from class okhttp3.internal.http2.HttpOverHttp2Test",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "2f361c245f6387e5f59713632cf3d2f7fef1de8b",
+      "url": "https://github.com/square/okhttp/commit/2f361c245f6387e5f59713632cf3d2f7fef1de8b",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tsuppressedExceptions : Throwable[] in method public getConnectionIOException_multiple() : void from class okhttp3.internal.connection.RouteExceptionTest",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "4036fa55b72faaad3a14f806094184ade157917d",
+      "url": "https://github.com/square/okhttp/commit/4036fa55b72faaad3a14f806094184ade157917d",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tresult : List<Story[]> to result : List<Object> in method protected createStories(interopTests String[]) : List<Object> from class okhttp3.internal.http2.HpackDecodeTestBase",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tCollection<Story[]> to List<Object> in method protected createStories(interopTests String[]) : List<Object> from class okhttp3.internal.http2.HpackDecodeTestBase",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpublic createStories() : Collection<Story[]> from class okhttp3.internal.http2.HpackDecodeInteropTest to public arguments() : List<Object> from class okhttp3.internal.http2.HpackDecodeInteropTest.StoriesTestProvider",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tCollection<Story[]> to List<Object> in method public arguments() : List<Object> from class okhttp3.internal.http2.HpackDecodeInteropTest.StoriesTestProvider",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpublic getStories() : Collection<Story[]> from class okhttp3.internal.http2.HpackRoundTripTest to public arguments() : List<Object> from class okhttp3.internal.http2.HpackRoundTripTest.StoriesTestProvider",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tCollection<Story[]> to List<Object> in method public arguments() : List<Object> from class okhttp3.internal.http2.HpackRoundTripTest.StoriesTestProvider",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\tokhttp3.internal.http2.HpackDecodeInteropTest.StoriesTestProvider from class okhttp3.internal.http2.HpackDecodeInteropTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\tokhttp3.internal.http2.HpackRoundTripTest.StoriesTestProvider from class okhttp3.internal.http2.HpackRoundTripTest",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_INLINE_OPERATION",
+          "description": "Move And Inline Method\tprotected testDecoder() : void moved from class okhttp3.internal.http2.HpackDecodeTestBase to class okhttp3.internal.http2.HpackDecodeInteropTest & inlined to public testGoodDecoderInterop(story Story) : void",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tstory : Story to story2 : Story in method public testRoundTrip(story Story) : void from class okhttp3.internal.http2.HpackRoundTripTest",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "PUSH_DOWN_OPERATION",
+          "description": "Push Down Method\tprotected testDecoder() : void from class okhttp3.internal.http2.HpackDecodeTestBase to public testGoodDecoderInterop(story Story) : void from class okhttp3.internal.http2.HpackDecodeInteropTest",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "0d5a9cecb32408675a62186bec43b176e63b2fa5",
+      "url": "https://github.com/square/okhttp/commit/0d5a9cecb32408675a62186bec43b176e63b2fa5",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpublic data() : Collection<Protocol> from class okhttp3.internal.http2.HttpOverHttp2Test to public arguments() : List<Object> from class okhttp3.internal.http2.HttpOverHttp2Test.ProtocolParamProvider",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tCollection<Protocol> to List<Object> in method public arguments() : List<Object> from class okhttp3.internal.http2.HttpOverHttp2Test.ProtocolParamProvider",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\tokhttp3.internal.http2.HttpOverHttp2Test.ProtocolParamProvider from class okhttp3.internal.http2.HttpOverHttp2Test",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "59ae0c138d6468aac5d92781b19cddc26e04e862",
+      "url": "https://github.com/square/okhttp/commit/59ae0c138d6468aac5d92781b19cddc26e04e862",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\ttempDir : TemporaryFolder to tempDir : File in class okhttp3.internal.cache2.FileOperatorTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\ttempDir : TemporaryFolder to tempDir : File in class okhttp3.internal.cache2.RelayTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tnoDataLeftBehind : TestRule to noDataLeftBehind : AfterEachCallback in class okhttp3.internal.ws.WebSocketWriterTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic setUp() : void from class mockwebserver3.MockWebServerTest to public setUp() : void from class okhttp3.mockwebserver.MockWebServerTest",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic checkPlatforms() : void renamed to public setUp() : void in class okhttp3.mockwebserver.MockWebServerTest",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "a76c40a9356191fc2aa589dbd2612c0260592776",
+      "url": "https://github.com/square/okhttp/commit/a76c40a9356191fc2aa589dbd2612c0260592776",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public setLevelShouldPreventNullValue() : void from class okhttp3.logging.HttpLoggingInterceptorTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public nullCipherName() : void from class okhttp3.CipherSuiteTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public builderNameValidation() : void from class okhttp3.CookieTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public builderValueValidation() : void from class okhttp3.CookieTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public builderDomainValidation() : void from class okhttp3.CookieTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public builderPathValidation() : void from class okhttp3.CookieTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : TypeCastException to expected : NullPointerException in method public ofMapThrowsOnNull() : void from class okhttp3.HeadersTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public addDateNull() : void from class okhttp3.HeadersTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public addInstantNull() : void from class okhttp3.HeadersTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public setDateNull() : void from class okhttp3.HeadersTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public setInstantNull() : void from class okhttp3.HeadersTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public nullInterceptor() : void from class okhttp3.OkHttpClientTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public nullNetworkInterceptor() : void from class okhttp3.OkHttpClientTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public headerForbidsNullArguments() : void from class okhttp3.RequestTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public headerForbidsNullArguments() : void from class okhttp3.RequestTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public headerForbidsNullArguments() : void from class okhttp3.RequestTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public headerForbidsNullArguments() : void from class okhttp3.RequestTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public requestHeaders() : void from class okhttp3.URLConnectionTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public requestHeaders() : void from class okhttp3.URLConnectionTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public requestHeaders() : void from class okhttp3.URLConnectionTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public requestHeaders() : void from class okhttp3.URLConnectionTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public responseHeaders() : void from class okhttp3.URLConnectionTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method private checkPublicSuffix(domain String, registrablePart String) : void from class okhttp3.internal.publicsuffix.PublicSuffixDatabaseTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public nullStringThrows() : void from class okhttp3.internal.ws.WebSocketHttpTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public nullByteStringThrows() : void from class okhttp3.internal.ws.WebSocketHttpTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public headerForbidsNullArguments() : void from class okhttp3.RequestTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public headerForbidsNullArguments() : void from class okhttp3.RequestTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public headerForbidsNullArguments() : void from class okhttp3.RequestTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public requestHeaders() : void from class okhttp3.URLConnectionTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public requestHeaders() : void from class okhttp3.URLConnectionTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public requestHeaders() : void from class okhttp3.URLConnectionTest",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpected : IllegalArgumentException to expected : NullPointerException in method public nullSSLSocketFactory_throws() : void from class okhttp3.URLConnectionTest",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "0920ddf0db0921ae0258ce1b38f5b55f9761270f",
+      "url": "https://github.com/square/okhttp/commit/0920ddf0db0921ae0258ce1b38f5b55f9761270f",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\tokhttp3.URLConnectionTest.RevertInterceptor renamed to okhttp3.URLConnectionTest.LegacyRedirectInterceptor",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate remapResponse(response Response) : Response inlined to public intercept(chain Chain) : Response in class okhttp3.URLConnectionTest.LegacyRedirectInterceptor",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "bc3c787ea2df854ac399603d5c67111716137d31",
+      "url": "https://github.com/square/okhttp/commit/bc3c787ea2df854ac399603d5c67111716137d31",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tapplicationProtocolUnsupported : DelegatingSSLSocket in method public selectedProtocolIsNullWhenSslSocketThrowsExceptionForApplicationProtocol() : void from class okhttp3.internal.platform.Jdk9PlatformTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "f5a320da7a422076bf7a401be700f36d7c2f9ec7",
+      "url": "https://github.com/square/okhttp/commit/f5a320da7a422076bf7a401be700f36d7c2f9ec7",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tdata : ByteString to payload : ByteString in method public serverBinaryMessage() : void from class okhttp3.internal.ws.WebSocketWriterTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tdata : ByteString to payload : ByteString in method public clientBinary() : void from class okhttp3.internal.ws.WebSocketWriterTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tbytes : byte[] to payload : ByteString in method public serverSmallBufferedPayloadWrittenAsOneFrame() : void from class okhttp3.internal.ws.WebSocketWriterTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tbytes : byte[] to payload : ByteString in method public serverSmallBufferedPayloadWrittenAsOneFrame() : void from class okhttp3.internal.ws.WebSocketWriterTest",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tbytes : byte[] to payload : ByteString in method public serverLargeBufferedPayloadWrittenAsOneFrame() : void from class okhttp3.internal.ws.WebSocketWriterTest",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tbytes : byte[] to payload : ByteString in method public serverLargeBufferedPayloadWrittenAsOneFrame() : void from class okhttp3.internal.ws.WebSocketWriterTest",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "3d3b0f64005f7d2dd7cde80a9eaf665f8df86fb6",
+      "url": "https://github.com/square/okhttp/commit/3d3b0f64005f7d2dd7cde80a9eaf665f8df86fb6",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcall : Call to call : RealCall in method public inUseConnectionsNotEvicted() : void from class okhttp3.internal.connection.ConnectionPoolTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcall : Call to call : RealCall in method private allocateAndLeakAllocation(pool ConnectionPool, connection RealConnection) : void from class okhttp3.internal.connection.ConnectionPoolTest",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\ttransmitter : Transmitter in method public inUseConnectionsNotEvicted() : void from class okhttp3.internal.connection.ConnectionPoolTest",
+          "validation": false
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\ttransmitter : Transmitter in method private allocateAndLeakAllocation(pool ConnectionPool, connection RealConnection) : void from class okhttp3.internal.connection.ConnectionPoolTest",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "acf11df49679a8c2e07c0c2b85e847ff0baa1da2",
+      "url": "https://github.com/square/okhttp/commit/acf11df49679a8c2e07c0c2b85e847ff0baa1da2",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tacceptedIssuers : X509Certificate[] in method public platformTrustedCertificates() : void from class okhttp3.tls.HandshakeCertificatesTest",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "283418b2bc079108cbe3599f06a4ebfa7211e319",
+      "url": "https://github.com/square/okhttp/commit/283418b2bc079108cbe3599f06a4ebfa7211e319",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic skipForUri(codePoints int...) : UrlComponentEncodingTester renamed to public escapeForUri(codePoints int...) : UrlComponentEncodingTester in class okhttp3.UrlComponentEncodingTester",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tactual : String in method private testParseAlreadyEncoded(codePoint int, encoding Encoding, component Component) : void from class okhttp3.UrlComponentEncodingTester",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tencoded : String to expected : String in method private testParseAlreadyEncoded(codePoint int, encoding Encoding, component Component) : void from class okhttp3.UrlComponentEncodingTester",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tencoded : String to expected : String in method private testParseOriginal(codePoint int, codePointString String, encoding Encoding, component Component) : void from class okhttp3.UrlComponentEncodingTester",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\ts : String to actual : String in method private testParseOriginal(codePoint int, codePointString String, encoding Encoding, component Component) : void from class okhttp3.UrlComponentEncodingTester",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic identityForNonAscii() : UrlComponentEncodingTester renamed to private allAscii(encoding Encoding) : UrlComponentEncodingTester in class okhttp3.UrlComponentEncodingTester",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\turiEscaped : boolean to codePointString : String in method public test(component Component) : UrlComponentEncodingTester from class okhttp3.UrlComponentEncodingTester",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\turiEscaped : boolean to codePointString : String in method public test(component Component) : UrlComponentEncodingTester from class okhttp3.UrlComponentEncodingTester",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic identityForNonAscii() : UrlComponentEncodingTester renamed to public nonAscii(encoding Encoding) : UrlComponentEncodingTester in class okhttp3.UrlComponentEncodingTester",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcodePointString : String in method public test(component Component) : UrlComponentEncodingTester from class okhttp3.UrlComponentEncodingTester",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcodePoint : int to s : String in method public canonicalize(s String) : String from class okhttp3.UrlComponentEncodingTester.Component",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "584e8503a84d508bde58b49137ed920281b3d9bf",
+      "url": "https://github.com/square/okhttp/commit/584e8503a84d508bde58b49137ed920281b3d9bf",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tlogHandler : TestLogHandler to testLogHandler : TestLogHandler in class okhttp3.CallTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\thttp2Handler : TestLogHandler to testLogHandler : TestLogHandler in class okhttp3.internal.http2.HttpOverHttp2Test",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate logger : Logger from class okhttp3.CallTest to private logger : Logger from class okhttp3.TestLogHandler",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "7624d99eafcd3dd847f36335d4c99560c55ab6bd",
+      "url": "https://github.com/square/okhttp/commit/7624d99eafcd3dd847f36335d4c99560c55ab6bd",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\texecutor : TestExecutor to taskRunner : TaskRunner in class okhttp3.internal.cache.DiskLruCacheTest",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\texecutor : TestExecutor to taskRunner : TaskRunner in class okhttp3.internal.cache.DiskLruCacheTest",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/square/okhttp.git",
+      "sha1": "bc3ad111ad01100a77846f7dc433b0c0f5b58dba",
+      "url": "https://github.com/square/okhttp/commit/bc3ad111ad01100a77846f7dc433b0c0f5b58dba",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tpool : RealConnectionPool in method public inUseConnectionsNotEvicted() : void from class okhttp3.internal.connection.ConnectionPoolTest",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tpool : RealConnectionPool in method public leakedAllocation() : void from class okhttp3.internal.connection.ConnectionPoolTest",
+          "validation": false
+        }
+      ]
+    }
+  ]
+}

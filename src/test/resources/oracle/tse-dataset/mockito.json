@@ -68,10 +68,16 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic shouldStackTraceGetFilteredOnUserExceptionsReflection() : void renamed to public shouldStackTraceGetFilteredOnUserExceptionsReflectionForJavaOfVersionLessThan21() : void in class org.mockitousage.spies.PartialMockingWithSpiesTest",
-          "validation": true
+          "validation": false
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "SPLIT_METHOD",
+          "description": "Split Method\tpublic shouldStackTraceGetFilteredOnUserExceptionsReflection() : void to [public shouldStackTraceGetFilteredOnUserExceptionsReflectionForJava21AndHigher() : void, public shouldStackTraceGetFilteredOnUserExceptionsReflectionForJavaOfVersionLessThan21() : void] in class org.mockitousage.spies.PartialMockingWithSpiesTest",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/mockito/mockito.git",

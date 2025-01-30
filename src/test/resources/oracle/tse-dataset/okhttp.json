@@ -288,7 +288,13 @@
           "validation": false
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "SPLIT_METHOD",
+          "description": "Split Method\tpublic ipv6HostHasSquareBraces() : void to [public ipv6HostHasSquareBracesHttp1() : void, private configureClientAndServerProxies(http2 boolean) : void, public ipv6HostHasSquareBracesHttp2() : void] in class okhttp3.CallTest",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/square/okhttp.git",

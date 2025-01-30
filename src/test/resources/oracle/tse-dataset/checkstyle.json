@@ -1547,12 +1547,12 @@
         {
           "type": "RENAME_CLASS",
           "description": "Rename Class\tcom.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline renamed to com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_CLASS",
           "description": "Extract Class\tcom.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineInLoopsAndTryWithResources from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
@@ -1564,6 +1564,151 @@
         {
           "type": "MOVE_OPERATION",
           "description": "Move Method\tprivate foo2() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to private foo2() : void from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "SPLIT_CLASS",
+          "description": "Split Class\tcom.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline split to [com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations, com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineInLoopsAndTryWithResources]",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage e : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package e : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage f : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package f : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage g : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package g : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage h : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package h : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage i : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package i : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage j : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package j : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage k : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package k : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage l : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package l : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage m : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package m : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage o : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package o : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage p : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package p : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage r : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package r : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage t : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package t : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage one : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package one : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage three : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package three : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage two : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package two : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage var1 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package var1 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage var4 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package var4 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage var2 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package var2 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage var3 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package var3 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage var6 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package var6 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage var7 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package var7 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage var8 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package var8 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage var9 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package var9 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage var10 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package var10 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage var11 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package var11 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineForDeclarations",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage var1 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package var1 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineInLoopsAndTryWithResources",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage var2 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultiline to package var2 : int from class com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline.InputOneStatementPerLineMultilineInLoopsAndTryWithResources",
           "validation": true
         }
       ]

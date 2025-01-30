@@ -139,7 +139,7 @@ public class TestBuilder {
 				m.printResults();
 			}
 		}
-		//System.out.println(buildMarkup());
+		System.out.println(buildMarkup());
 		Assertions.assertTrue(success, mainResultMessage);
 	}
 
@@ -334,7 +334,7 @@ public class TestBuilder {
 						count(TP, expectedRefactoring);
 						matcher.truePositive.add(expectedRefactoring);
 					}
-					else {
+					else if(countAsFN(expectedRefactoring)) {
 						this.falseNegativeCount++;
 						count(FN, expectedRefactoring);
 					}
@@ -374,6 +374,15 @@ public class TestBuilder {
 				//	count(FN, expectedButNotFound);
 				//}
 			}
+		}
+
+		private boolean countAsFN(String expectedRefactoring) {
+			RefactoringType refType = RefactoringType.extractFromDescription(expectedRefactoring);
+			BigInteger value = Enum.valueOf(Refactorings.class, refType.getDisplayName().replace(" ", "")).getValue();
+			if (value.and(refactoringFilter).compareTo(BigInteger.ZERO) == 1) {
+				return true;
+			}
+			return false;
 		}
 
 		private List<Refactoring> filterRefactoring(List<Refactoring> refactorings) {

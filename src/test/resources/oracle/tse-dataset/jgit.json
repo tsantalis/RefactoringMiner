@@ -74,10 +74,16 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tprivate createChunks(stats Stats) : List<ChunkHeader> renamed to private createCoreChunks(hashsz int, graphCommits GraphCommits) : List<ChunkHeader> in class org.eclipse.jgit.internal.storage.commitgraph.CommitGraphWriter",
-          "validation": true
+          "validation": false
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "SPLIT_METHOD",
+          "description": "Split Method\tprivate createChunks(stats Stats) : List<ChunkHeader> to [private createBloomFilterChunkHeaders(bloomFilterChunks BloomFilterChunks) : List<ChunkHeader>, private createCoreChunks(hashsz int, graphCommits GraphCommits) : List<ChunkHeader>] in class org.eclipse.jgit.internal.storage.commitgraph.CommitGraphWriter",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/eclipse-jgit/jgit.git",

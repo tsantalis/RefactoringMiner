@@ -1463,10 +1463,28 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
 							}
 						}
+						//group split based on original method
+						Map<VariableDeclarationContainer, List<CandidateSplitMethodRefactoring>> map = new HashMap<>();
 						for(CandidateSplitMethodRefactoring candidate : candidateMethodSplits) {
-							addedOperationsToBeRemoved.addAll(candidate.getSplitMethods());
-							removedOperationsToBeRemoved.add(candidate.getOriginalMethodBeforeSplit());
-							SplitOperationRefactoring split = new SplitOperationRefactoring(candidate.getOriginalMethodBeforeSplit(), candidate.getSplitMethods(), getOriginalClassName(), getNextClassName(), candidate.getMappers());
+							if(map.containsKey(candidate.getOriginalMethodBeforeSplit())) {
+								map.get(candidate.getOriginalMethodBeforeSplit()).add(candidate);
+							}
+							else {
+								List<CandidateSplitMethodRefactoring> list = new ArrayList<>();
+								list.add(candidate);
+								map.put(candidate.getOriginalMethodBeforeSplit(), list);
+							}
+						}
+						for(VariableDeclarationContainer key : map.keySet()) {
+							Set<VariableDeclarationContainer> splitMethods = new LinkedHashSet<>();
+							Set<UMLOperationBodyMapper> splitMappers = new LinkedHashSet<>();
+							for(CandidateSplitMethodRefactoring candidate : map.get(key)) {
+								addedOperationsToBeRemoved.addAll(candidate.getSplitMethods());
+								removedOperationsToBeRemoved.add(candidate.getOriginalMethodBeforeSplit());
+								splitMethods.addAll(candidate.getSplitMethods());
+								splitMappers.addAll(candidate.getMappers());
+							}
+							SplitOperationRefactoring split = new SplitOperationRefactoring(key, splitMethods, getOriginalClassName(), getNextClassName(), splitMappers);
 							refactorings.add(split);
 							for(UMLOperationBodyMapper mapper : split.getMappers()) {
 								mapper.computeRefactoringsWithinBody();

@@ -206,7 +206,7 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic testExtendedAndBuiltInFormats() : void renamed to public testExtendedAndBuiltInFormatsWithAvailableLocales() : void in class org.apache.commons.lang3.text.ExtendedMessageFormatTest",
-          "validation": true
+          "validation": false
         },
         {
           "type": "INLINE_VARIABLE",
@@ -224,7 +224,13 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "SPLIT_METHOD",
+          "description": "Split Method\tpublic testExtendedAndBuiltInFormats() : void to [public testExtendedAndBuiltInFormatsWithAvailableLocales() : void, public testExtendedAndBuiltInFormatsWithDefaultLocale() : void] in class org.apache.commons.lang3.text.ExtendedMessageFormatTest",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/apache/commons-lang.git",

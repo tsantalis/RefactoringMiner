@@ -320,8 +320,12 @@ Currently, it supports the detection of the following refactorings:
 ## Benchmark 1
 **Source**: Nikolaos Tsantalis, Ameya Ketkar, and Danny Dig, "RefactoringMiner 2.0," IEEE Transactions on Software Engineering, vol. 48, no. 3, pp. 930-950, March 2022.
 
+**Properties**: 547 commits from 188 open-source projects
+
+**Commit dates**: between June 8th and August 7th, 2015
+
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **January 30, 2025** the precision and recall of the tool on an oracle consisting of **547 commits** from **188 open-source projects** is:
+As of **January 30, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
@@ -431,7 +435,12 @@ As of **January 30, 2025** the precision and recall of the tool on an oracle con
 ## Benchmark 2
 **Source**: Bo Liu, Hui Liu, Nan Niu, Yuxia Zhang, Guangjie Li, He Jiang, and Yanjie Jiang, "An Automated Approach to Discovering Software Refactorings by Comparing Successive Versions," IEEE Transactions on Software Engineering, 2025.
 
-The original benchmark has been re-validated and corrected by Nikolaos Tsantalis
+**Properties**: 400 commits from 20 open-source projects (20 commits per project)
+
+**Commit dates**: March 28, 2024
+
+The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
+As of **January 30, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|

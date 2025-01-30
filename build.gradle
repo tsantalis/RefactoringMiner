@@ -51,7 +51,31 @@ test {
         print 'Skipping tests that require a GitHub token'
     }
 }
+// Improve testResourceProcessing time by ~10 seconds
+// Solution found in https://github.com/gradle/gradle/issues/1643#issuecomment-589864718
+tasks.processTestResources {
+    // Solution to slow testResourceProcessing (optimization)
+    eachFile { details ->
+        def targetFile = new File(destinationDir, details.path)
+        if (details.file.lastModified() == targetFile.lastModified()
+                && details.file.length() == targetFile.length()) {
+            exclude()
+        }
+    }
 
+    // Retain timestamps from source files
+    def copyDetails = []
+    eachFile { copyDetails << it }  // Collect copy details
+
+    doLast {
+        copyDetails.forEach { details ->
+            def target = new File(destinationDir, details.path)
+            if (target.exists()) {
+                target.setLastModified(details.lastModified)
+            }
+        }
+    }
+}
 dependencies {
     implementation 'org.eclipse.jgit:org.eclipse.jgit:6.10.0.202406032230-r'
     implementation 'org.slf4j:slf4j-api:2.0.16'

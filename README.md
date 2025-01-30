@@ -13,6 +13,8 @@ Table of Contents
    * [Supported Refactoring Types](#supported-refactoring-types)
    * [Contributors](#contributors)
    * [Current precision and recall](#current-precision-and-recall)
+      * [Benchmark 1](#benchmark-1)
+      * [Benchmark 2](#benchmark-2) 
    * [How to build RefactoringMiner](#how-to-build-refactoringminer)
    * [How to test RefactoringMiner](#how-to-test-refactoringminer)
    * [How to use RefactoringMiner as a maven dependency](#how-to-use-refactoringminer-as-a-maven-dependency)
@@ -314,12 +316,17 @@ Currently, it supports the detection of the following refactorings:
 * Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # Current precision and recall
-As of **January 19, 2025** the precision and recall of the tool on an oracle consisting of **547 commits** from **188 open-source projects** is:
+
+## Benchmark 1
+**Source**: Nikolaos Tsantalis, Ameya Ketkar, and Danny Dig, "RefactoringMiner 2.0," IEEE Transactions on Software Engineering, vol. 48, no. 3, pp. 930-950, March 2022.
+
+The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
+As of **January 30, 2025** the precision and recall of the tool on an oracle consisting of **547 commits** from **188 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12402  | 16  | 226  | 0.999  | 0.982|
-|Extract Method|1007  |  1  | 22  | 0.999  | 0.979|
+|**Total**|12409  | 16  | 226  | 0.999  | 0.982|
+|Extract Method|1006  |  1  | 22  | 0.999  | 0.979|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|256  |  0  |  8  | 1.000  | 0.970|
 |Move And Rename Attribute|16  |  0  |  0  | 1.000  | 1.000|
@@ -339,14 +346,14 @@ As of **January 19, 2025** the precision and recall of the tool on an oracle con
 |Extract Superclass|74  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|106  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|119  |  0  | 61  | 1.000  | 0.661|
+|Extract And Move Method|120  |  0  | 61  | 1.000  | 0.663|
 |Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|304  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|305  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|23  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|110  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|116  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|333  |  3  | 11  | 0.991  | 0.968|
 |Rename Parameter|493  |  2  | 24  | 0.996  | 0.954|
@@ -420,6 +427,45 @@ As of **January 19, 2025** the precision and recall of the tool on an oracle con
 |Try With Resources| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Generic With Diamond|77  |  0  |  0  | 1.000  | 1.000|
 |Replace Conditional With Ternary| 8  |  0  |  0  | 1.000  | 1.000|
+
+## Benchmark 2
+**Source**: Bo Liu, Hui Liu, Nan Niu, Yuxia Zhang, Guangjie Li, He Jiang, and Yanjie Jiang, "An Automated Approach to Discovering Software Refactorings by Comparing Successive Versions," IEEE Transactions on Software Engineering, 2025.
+
+The original benchmark has been re-validated and corrected by Nikolaos Tsantalis
+
+| Refactoring Type | TP | FP | FN | Precision | Recall |
+|:-----------------------|-----------:|--------:|--------:|--------:|--------:|
+|**Total**|2965  | 279  | 412  | 0.914  | 0.878|
+|Extract Method|328  | 25  | 37  | 0.929  | 0.899|
+|Rename Class|223  |  3  |  9  | 0.987  | 0.961|
+|Move Attribute|69  |  3  | 11  | 0.958  | 0.863|
+|Move And Rename Attribute| 2  |  0  |  6  | 1.000  | 0.250|
+|Rename Method|271  | 28  | 25  | 0.906  | 0.916|
+|Inline Method|63  |  9  |  6  | 0.875  | 0.913|
+|Move Method|258  |  7  | 10  | 0.974  | 0.963|
+|Move And Rename Method|17  |  7  | 11  | 0.708  | 0.607|
+|Pull Up Method|40  |  3  |  9  | 0.930  | 0.816|
+|Move Class|138  | 15  |  4  | 0.902  | 0.972|
+|Move And Rename Class|28  | 12  |  2  | 0.700  | 0.933|
+|Pull Up Attribute|11  |  0  |  3  | 1.000  | 0.786|
+|Push Down Attribute| 5  |  0  |  1  | 1.000  | 0.833|
+|Push Down Method|13  |  0  | 11  | 1.000  | 0.542|
+|Extract Interface|16  |  2  |  0  | 0.889  | 1.000|
+|Extract Superclass| 7  |  2  |  0  | 0.778  | 1.000|
+|Extract Subclass| 3  |  0  |  6  | 1.000  | 0.333|
+|Extract Class|34  |  2  | 20  | 0.944  | 0.630|
+|Extract And Move Method|97  | 31  | 23  | 0.758  | 0.808|
+|Move And Inline Method|17  |  7  | 13  | 0.708  | 0.567|
+|Extract Variable|227  | 21  | 54  | 0.915  | 0.808|
+|Inline Variable|75  | 12  | 47  | 0.862  | 0.615|
+|Rename Variable|254  | 33  | 32  | 0.885  | 0.888|
+|Rename Attribute|101  |  6  | 15  | 0.944  | 0.871|
+|Change Return Type|150  |  9  | 30  | 0.943  | 0.833|
+|Change Variable Type|350  | 39  | 18  | 0.900  | 0.951|
+|Change Attribute Type|158  |  3  |  9  | 0.981  | 0.946|
+|Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
+|Split Method| 6  |  0  |  0  | 1.000  | 1.000|
+
 
 # How to build RefactoringMiner
 Since release 3.0.0, RefactoringMiner requires **Java 17** or newer and **Gradle 7.4** or newer.

@@ -1073,11 +1073,31 @@ public class VariableReplacementAnalysis {
 			Set<AbstractCodeMapping> mappingsToBeRemoved = new LinkedHashSet<>();
 			for(AbstractCodeMapping mapping : mappings) {
 				for(Replacement replacement : mapping.getReplacements()) {
-					if(replacement.involvesVariable()) {
+					String argumentBefore = null;
+					String argumentAfter = null;
+					if(replacement instanceof MethodInvocationReplacement) {
+						MethodInvocationReplacement r = (MethodInvocationReplacement)replacement;
+						AbstractCall beforeCall = r.getInvokedOperationBefore();
+						AbstractCall afterCall = r.getInvokedOperationAfter();
+						if(beforeCall.identicalName(afterCall) && beforeCall.arguments().size() == afterCall.arguments().size()) {
+							for(int i=0; i<beforeCall.arguments().size(); i++) {
+								String arg1 = beforeCall.arguments().get(i);
+								String arg2 = afterCall.arguments().get(i);
+								if(!arg1.equals(arg2)) {
+									argumentBefore = arg1;
+									argumentAfter = arg2;
+									break;
+								}
+							}
+						}
+					}
+					if(replacement.involvesVariable() || argumentBefore != null) {
+						String after = argumentAfter != null ? argumentAfter : replacement.getAfter();
+						String before = argumentBefore != null ? argumentBefore : replacement.getBefore();
 						for(UMLAttribute addedAttribute : addedAttributes) {
 							VariableDeclaration declaration2 = addedAttribute.getVariableDeclaration();
-							if(addedAttribute.getName().equals(replacement.getAfter())) {
-								LeafExpression leafExpression = extractInlineCondition(declaration2, replacement, replacement.getBefore());
+							if(addedAttribute.getName().equals(after)) {
+								LeafExpression leafExpression = extractInlineCondition(declaration2, replacement, before);
 								if(leafExpression != null) {
 									ExtractAttributeRefactoring refactoring = new ExtractAttributeRefactoring(addedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);
 									if(refactorings.contains(refactoring)) {
@@ -1087,7 +1107,7 @@ public class VariableReplacementAnalysis {
 											if(ref.equals(refactoring)) {
 												List<Refactoring> anonymousClassDiffRefactorings = ((ExtractAttributeRefactoring)ref).addReference(mapping, classDiff, modelDiff);
 												refactorings.addAll(anonymousClassDiffRefactorings);
-												List<LeafExpression> subExpressions = mapping.getFragment1().findExpression(replacement.getBefore());
+												List<LeafExpression> subExpressions = mapping.getFragment1().findExpression(before);
 												for(LeafExpression subExpression : subExpressions) {
 													LeafMapping leafMapping = new LeafMapping(subExpression, leafExpression, operation1, operation2);
 													((ExtractAttributeRefactoring)ref).addSubExpressionMapping(leafMapping);
@@ -1100,7 +1120,7 @@ public class VariableReplacementAnalysis {
 										List<Refactoring> anonymousClassDiffRefactorings = refactoring.addReference(mapping, classDiff, modelDiff);
 										refactorings.add(refactoring);
 										refactorings.addAll(anonymousClassDiffRefactorings);
-										List<LeafExpression> subExpressions = mapping.getFragment1().findExpression(replacement.getBefore());
+										List<LeafExpression> subExpressions = mapping.getFragment1().findExpression(before);
 										for(LeafExpression subExpression : subExpressions) {
 											LeafMapping leafMapping = new LeafMapping(subExpression, leafExpression, operation1, operation2);
 											refactoring.addSubExpressionMapping(leafMapping);
@@ -1124,8 +1144,8 @@ public class VariableReplacementAnalysis {
 						}
 						for(UMLAttribute removedAttribute : removedAttributes) {
 							VariableDeclaration declaration1 = removedAttribute.getVariableDeclaration();
-							if(removedAttribute.getName().equals(replacement.getBefore())) {
-								LeafExpression leafExpression = extractInlineCondition(declaration1, replacement, replacement.getAfter());
+							if(removedAttribute.getName().equals(before)) {
+								LeafExpression leafExpression = extractInlineCondition(declaration1, replacement, after);
 								if(leafExpression != null) {
 									InlineAttributeRefactoring refactoring = new InlineAttributeRefactoring(removedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);
 									if(refactorings.contains(refactoring)) {
@@ -1134,7 +1154,7 @@ public class VariableReplacementAnalysis {
 											Refactoring ref = it.next();
 											if(ref.equals(refactoring)) {
 												((InlineAttributeRefactoring)ref).addReference(mapping);
-												List<LeafExpression> subExpressions = mapping.getFragment2().findExpression(replacement.getAfter());
+												List<LeafExpression> subExpressions = mapping.getFragment2().findExpression(after);
 												for(LeafExpression subExpression : subExpressions) {
 													LeafMapping leafMapping = new LeafMapping(leafExpression, subExpression, operation1, operation2);
 													((InlineAttributeRefactoring)ref).addSubExpressionMapping(leafMapping);
@@ -1145,7 +1165,7 @@ public class VariableReplacementAnalysis {
 									}
 									else {
 										refactoring.addReference(mapping);
-										List<LeafExpression> subExpressions = mapping.getFragment2().findExpression(replacement.getAfter());
+										List<LeafExpression> subExpressions = mapping.getFragment2().findExpression(after);
 										for(LeafExpression subExpression : subExpressions) {
 											LeafMapping leafMapping = new LeafMapping(leafExpression, subExpression, operation1, operation2);
 											refactoring.addSubExpressionMapping(leafMapping);

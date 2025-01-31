@@ -1,10 +1,19 @@
 package org.refactoringminer.test;
 
+import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
+import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.diff.AddClassAnnotationRefactoring;
+import gr.uom.java.xmi.diff.AddMethodAnnotationRefactoring;
 import gr.uom.java.xmi.diff.AssertThrowsRefactoring;
-import gr.uom.java.xmi.diff.AssertTimeoutRefactoring;
 
+import gr.uom.java.xmi.diff.MoveCodeRefactoring;
+import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
+import gr.uom.java.xmi.diff.RemoveClassAnnotationRefactoring;
+import gr.uom.java.xmi.diff.RemoveMethodAnnotationRefactoring;
+import gr.uom.java.xmi.diff.RenameClassRefactoring;
+import gr.uom.java.xmi.diff.RenameOperationRefactoring;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,12 +26,14 @@ import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.refactoringminer.utils.Assertions.assertHasSameElementsAs;
 
 public class TestRelatedStatementMappingsTest {
@@ -58,6 +69,7 @@ public class TestRelatedStatementMappingsTest {
             //"https://github.com/OpenGamma/Strata.git, e007f826c49075500def8638de8367960c054c19, Strata-e007f826c49075500def8638de8367960c054c19.txt", // FIXME: TestNG to AssertJ expected exception not supported
             //"https://github.com/rapidoid/rapidoid.git, 8596c1d82e9f0a36f40cd7ec393c6829e697836d, rapidoid-8596c1d82e9f0a36f40cd7ec393c6829e697836d.txt", // FIXME: TestNG to JUnit 4 expected exception not supported
             //"https://github.com/zanata/zanata-platform.git, 0297e0513ac1f487f1570b1cc38979a73ac97da8, zanata-platform-0297e0513ac1f487f1570b1cc38979a73ac97da8.txt", // FIXME: TestNG to JUnit 4 expected exception not supported
+            // "https://github.com/apache/commons-math.git, 5fbeb731b9d26a6f340fd3772e86cd23ba61c65a, commons-math-5fbeb731b9d26a6f340fd3772e86cd23ba61c65a.txt", // FIXME: try-fail-catch to JUnit 4 expected exception not supported
     })
     public void testAssertThrowsMappings(String url, String commit, String testResultFileName) throws Exception {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
@@ -66,10 +78,394 @@ public class TestRelatedStatementMappingsTest {
                 Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
                 mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
             }
-            else if (ref instanceof AssertTimeoutRefactoring) {
-            	AssertTimeoutRefactoring assertTimeoutRefactoring = (AssertTimeoutRefactoring) ref;
-                Set<AbstractCodeMapping> mapper = assertTimeoutRefactoring.getAssertTimeoutMappings();
-                mapperInfo(mapper, assertTimeoutRefactoring.getOperationBefore(), assertTimeoutRefactoring.getOperationAfter());
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Custom Runner
+            //"https://github.com/apache/iceberg.git, fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b, iceberg-fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b.txt",
+            //"https://github.com/apache/hadoop.git, 5c61ad24887f76dfc5a5935b2c5dceb6bfd99417, hadoop-5c61ad24887f76dfc5a5935b2c5dceb6bfd99417.txt",
+            //"https://github.com/mapstruct/mapstruct.git, 293a12d7ffa22c29ad3f2d433b6e420514e29a8b, mapstruct-293a12d7ffa22c29ad3f2d433b6e420514e29a8b.txt",
+    })
+    public void testCustomRunnerMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
+                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
+                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
+                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            }
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Consolidate Multiple Assertions into a Fluent Assertion
+            //"https://github.com/atlanmod/NeoEMF.git, 0188e9aa280b800710848d68a93af4cb28b050da, NeoEMF-0188e9aa280b800710848d68a93af4cb28b050da.txt",
+            //"https://github.com/cbeust/testng.git, 706dcf52c5df3591e7d9d49f0fb980f041fae385, testng-706dcf52c5df3591e7d9d49f0fb980f041fae385.txt",
+            //"https://github.com/dCache/dcache.git, 4a6e55f40f1c, dcache-4a6e55f40f1c.txt",
+            //Replace assertTrue(Double.isInfinite(x)) with assertEqual(Double.POSITIVE_INFINITY, x)
+            // https://github.com/apache/commons-math/commit/9b08855c247eb7522fc4b25b8aaece2a0d58d990#diff-bbb50b2ecbb2476d2ea3356c41c967825732b0e037e1a50884c8d50b2b8b362aL1025-R1029
+            // "https://github.com/apache/commons-math.git, 9b08855c247eb7522fc4b25b8aaece2a0d58d990, commons-math-9b08855c247eb7522fc4b25b8aaece2a0d58d990.txt",
+    })
+    public void testReplaceAssertionMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
+                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
+                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
+                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            }
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Reuse code with Fixture/Extract Fixture // TODO: Check if it's extract or reuse, and remove reuses
+            //"https://github.com/apache/camel.git, ee55a3bc6e04fea, camel-ee55a3bc6e04fea.txt",
+            //"https://github.com/apache/struts.git, 0a71e2c3b92d2d58fda40f252a6a5a4392fa58b7, struts-0a71e2c3b92d2d58fda40f252a6a5a4392fa58b7.txt",
+            //"https://github.com/orientechnologies/orientdb.git, 1b371c7cecbc7ec14b81a3f8a08c2ab71d12577f, orientdb-1b371c7cecbc7ec14b81a3f8a08c2ab71d12577f.txt",
+    })
+    public void testExtractFixtureMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
+                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
+                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
+                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            }
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Inline Fixture
+            //"https://github.com/apache/hbase.git, 587f5bc11f9d5d37557baf36c7df110af860a95c, hbase-587f5bc11f9d5d37557baf36c7df110af860a95c.txt",
+    })
+    public void testInlineFixtureMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
+                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
+                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
+                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            }
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Introduce Equality Method
+            // https://github.com/JodaOrg/joda-time/commit/119f68ba20f38f7b4b9d676d4a7b787e5e005b89#diff-5e14db06a1f25c19b382fe8b5939c7e3378f81a60a0f21a76b156059fabfbdd6R323-L341
+            // "https://github.com/JodaOrg/joda-time.git, 119f68ba20f38f7b4b9d676d4a7b787e5e005b89, joda-time-119f68ba20f38f7b4b9d676d4a7b787e5e005b89.txt",
+    })
+    public void testIntroduceEqualityMethodMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
+                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
+                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
+                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            }
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Split Test
+            // https://github.com/apache/commons-math/commit/5fbeb731b9d26a6f340fd3772e86cd23ba61c65a
+            // "https://github.com/apache/commons-math.git, 5fbeb731b9d26a6f340fd3772e86cd23ba61c65a, commons-math-5fbeb731b9d26a6f340fd3772e86cd23ba61c65a.txt",
+            // https://github.com/apache/commons-math/commit/09c8b57924bc90dfcf93aa35eb79a6bd752add1d
+            // "https://github.com/apache/commons-math.git, 09c8b57924bc90dfcf93aa35eb79a6bd752add1d, commons-math-09c8b57924bc90dfcf93aa35eb79a6bd752add1d.txt",
+            // https://github.com/apache/commons-math/commit/5ca553511dea61641f248f71be203b91f1682e95
+            // "https://github.com/apache/commons-math.git, 5ca553511dea61641f248f71be203b91f1682e95, commons-math-5ca553511dea61641f248f71be203b91f1682e95.txt",
+            // https://github.com/apache/commons-math/commit/9b08855c247eb7522fc4b25b8aaece2a0d58d990 // TODO: Verify if it's a split test because test is being copied to cover floats as doubles already are
+            // "https://github.com/apache/commons-math.git, 9b08855c247eb7522fc4b25b8aaece2a0d58d990, commons-math-9b08855c247eb7522fc4b25b8aaece2a0d58d990.txt",
+    })
+    public void testSplitTestMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
+                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
+                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
+                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            }
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Specialize Expected Exception
+            // https://github.com/apache/commons-math/commit/c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65#diff-444112d11fbe4928db65f1d6e3ba3b71e8a6b38e4b483776c36d4e499df26626L100-R86
+            // "https://github.com/apache/commons-math.git, c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65, commons-math-c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65.txt",
+            // https://github.com/apache/commons-math/commit/de001e7bcf9acb761047bdcf40f48244f8b63642#diff-00bc0608c15e7526fefd4ae1691b997d37212cd2972f3e1c0419625c7477ae5eL132-R140
+            // "https://github.com/apache/commons-math.git, de001e7bcf9acb761047bdcf40f48244f8b63642, commons-math-de001e7bcf9acb761047bdcf40f48244f8b63642.txt",
+    })
+    public void testSpecializeExpectedExceptionMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
+                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
+                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
+                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            }
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Merge Test
+            // https://github.com/apache/commons-math/commit/c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65
+            // "https://github.com/apache/commons-math.git, c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65, commons-math-c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65.txt",
+    })
+    public void testMergeTestMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
+                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
+                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
+                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            }
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Split Fixture
+            //"https://github.com/apache/druid.git, da32e1ae534a99c29ff60c5535f2d4cb0e344a73, druid-da32e1ae534a99c29ff60c5535f2d4cb0e344a73.txt",
+            //"https://github.com/spring-projects/spring-integration.git, d5d954def737038a5982ca34ecc8f14610061090, spring-integration-d5d954def737038a5982ca34ecc8f14610061090.txt",
+    })
+    public void testSplitFixturesMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
+                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
+                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
+                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            }
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Merge Fixture
+            //"https://github.com/apache/hadoop.git, 973987089090b428ae34a86926c8ef8ebca45aa5, hadoop-973987089090b428ae34a86926c8ef8ebca45aa5.txt",
+            //"https://github.com/apache/hbase.git, 587f5bc11f9d5d37557baf36c7df110af860a95c, hbase-587f5bc11f9d5d37557baf36c7df110af860a95c.txt",
+    })
+    public void testMergeFixtureMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
+                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
+                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
+                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            }
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Reuse code with Fixture/Extract Fixture // TODO: Check if it's extract or reuse, and remove extracts
+            //"https://github.com/apache/camel.git, ee55a3bc6e04fea, camel-ee55a3bc6e04fea.txt",
+            //"https://github.com/apache/struts.git, 0a71e2c3b92d2d58fda40f252a6a5a4392fa58b7, struts-0a71e2c3b92d2d58fda40f252a6a5a4392fa58b7.txt",
+            //"https://github.com/orientechnologies/orientdb.git, 1b371c7cecbc7ec14b81a3f8a08c2ab71d12577f, orientdb-1b371c7cecbc7ec14b81a3f8a08c2ab71d12577f.txt",
+            //Minimize Fixture
+            //"https://github.com/apache/hbase.git, 587f5bc11f9d5d37557baf36c7df110af860a95c, hbase-587f5bc11f9d5d37557baf36c7df110af860a95c.txt",
+            //"https://github.com/spring-projects/spring-integration.git, 7edc55f5bf0fce164dabc26f005cc8cb2d008100, spring-integration-7edc55f5bf0fce164dabc26f005cc8cb2d008100.txt",
+    })
+    public void testMoveCodeMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof MoveCodeRefactoring) {
+                MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) ref;
+                Set<AbstractCodeMapping> mapper = moveCodeRefactoring.getMappings();
+                mapperInfo(mapper, moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+            }
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Replace Class Fixture with Method Fixture
+            //"https://github.com/apache/druid.git, 76cb06a8d8161d29d985ef048b89e6a82b489058, druid-76cb06a8d8161d29d985ef048b89e6a82b489058.txt",
+            //"https://github.com/apache/hadoop.git, 2f6bc250443c8d6fa6f18aab256c2ac8e585983b, hadoop-2f6bc250443c8d6fa6f18aab256c2ac8e585983b.txt",
+            //"https://github.com/apache/hadoop.git, 4334976187100afe3be499d63ead8f17f09f8a14, hadoop-4334976187100afe3be499d63ead8f17f09f8a14.txt",
+            //"https://github.com/apache/hadoop.git, 699d4204977cff31ac689457b4b99317e3bdc0d3, hadoop-699d4204977cff31ac689457b4b99317e3bdc0d3.txt",
+            //"https://github.com/apache/hbase.git, 484ccb7af4d614429f77f0c14d9b14c6fe8c9e17, hbase-484ccb7af4d614429f77f0c14d9b14c6fe8c9e17.txt",
+            //"https://github.com/orientechnologies/orientdb.git, 04242466a2d96209105515f915cb673f4e98f83a, orientdb-04242466a2d96209105515f915cb673f4e98f83a.txt",
+            //"https://github.com/orientechnologies/orientdb.git, 279dd2c2120883ee157b924faa0af2fa1981f6a9, orientdb-279dd2c2120883ee157b924faa0af2fa1981f6a9.txt",
+            //"https://github.com/orientechnologies/orientdb.git, 2949af2283c5e43403c99221ab2ab971925e47c6, orientdb-2949af2283c5e43403c99221ab2ab971925e47c6.txt",
+            //Replace Method Fixture with Class Fixture
+            //"https://github.com/apache/druid.git, 76cb06a8d8161d29d985ef048b89e6a82b489058, druid-76cb06a8d8161d29d985ef048b89e6a82b489058.txt",
+            //"https://github.com/spring-projects/spring-integration.git, 0ead69529ea1fec992483c96f78c94e303eb6818, spring-integration-0ead69529ea1fec992483c96f78c94e303eb6818.txt",
+            //Categorize Test Method
+            //"https://github.com/debezium/debezium.git, 66bb7958604527aa975e72aa23be45163de39246, debezium-66bb7958604527aa975e72aa23be45163de39246.txt",
+            //"https://github.com/strimzi/strimzi-kafka-operator.git, 9ab848e76f4c0b0399fb556c9d853fcbdf1c55f1, strimzi-kafka-operator-9ab848e76f4c0b0399fb556c9d853fcbdf1c55f1.txt",
+    })
+    public void testAddAndRemoveMethodAnnotationMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof AddMethodAnnotationRefactoring) {
+                AddMethodAnnotationRefactoring addMethodAnnotationRefactoring = (AddMethodAnnotationRefactoring) ref;
+                mapperInfo(Collections.emptySet(), addMethodAnnotationRefactoring.getOperationBefore(), addMethodAnnotationRefactoring.getOperationAfter());
+            }
+            else if (ref instanceof RemoveMethodAnnotationRefactoring) {
+                RemoveMethodAnnotationRefactoring removeMethodAnnotationRefactoring = (RemoveMethodAnnotationRefactoring) ref;
+                mapperInfo(Collections.emptySet(), removeMethodAnnotationRefactoring.getOperationBefore(), removeMethodAnnotationRefactoring.getOperationAfter());
+            }
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Replace Test Annotation between Class and Method
+            "https://github.com/FamilySearch/gedcomx-java.git, e6727ae0d1bc2ade6782c8d00398884644e00af, gedcomx-java-e6727ae0d1bc2ade6782c8d00398884644e00af.txt",
+            //"https://github.com/OpenGamma/Strata.git, 1dd64e965041a1e3fb81adf8ce9156c451d8252b, Strata-1dd64e965041a1e3fb81adf8ce9156c451d8252b.txt",
+            //"https://github.com/OpenGamma/Strata.git, 3ebc739351b45ac12712ad80852e49555e02929f, Strata-3ebc739351b45ac12712ad80852e49555e02929f.txt",
+            //"https://github.com/OpenGamma/Strata.git, 956bbd57300d1001bcbf3144b8dd36a6dc3f6e50, Strata-956bbd57300d1001bcbf3144b8dd36a6dc3f6e50.txt",
+            //"https://github.com/orientechnologies/orientdb.git, a8ac595e36c8b4c2c3069c365dcbed220726424d, orientdb-a8ac595e36c8b4c2c3069c365dcbed220726424d.txt",
+            "https://github.com/zanata/zanata-platform.git, 0297e0513ac1f487f1570b1cc38979a73ac97da8, zanata-platform-0297e0513ac1f487f1570b1cc38979a73ac97da8.txt",
+    })
+    public void testChangeTestAnnotationGranularityMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            UMLAnnotation annotation = null;
+            Object before = null;
+            Object after = null;
+            if (ref instanceof AddMethodAnnotationRefactoring) {
+                AddMethodAnnotationRefactoring addMethodAnnotationRefactoring = (AddMethodAnnotationRefactoring) ref;
+                annotation = addMethodAnnotationRefactoring.getAnnotation();
+                before = addMethodAnnotationRefactoring.getOperationBefore();
+                after = addMethodAnnotationRefactoring.getOperationAfter();
+            }
+            else if (ref instanceof RemoveMethodAnnotationRefactoring) {
+                RemoveMethodAnnotationRefactoring removeMethodAnnotationRefactoring = (RemoveMethodAnnotationRefactoring) ref;
+                annotation = removeMethodAnnotationRefactoring.getAnnotation();
+                before = removeMethodAnnotationRefactoring.getOperationBefore();
+                after = removeMethodAnnotationRefactoring.getOperationAfter();
+            }
+            else if (ref instanceof AddClassAnnotationRefactoring) {
+                AddClassAnnotationRefactoring addClassAnnotationRefactoring = (AddClassAnnotationRefactoring) ref;
+                annotation = addClassAnnotationRefactoring.getAnnotation();
+                before = addClassAnnotationRefactoring.getClassBefore();
+                after = addClassAnnotationRefactoring.getClassAfter();
+            }
+            else if (ref instanceof RemoveClassAnnotationRefactoring) {
+                RemoveClassAnnotationRefactoring removeClassAnnotationRefactoring = (RemoveClassAnnotationRefactoring) ref;
+                annotation = removeClassAnnotationRefactoring.getAnnotation();
+                before = removeClassAnnotationRefactoring.getClassBefore();
+                after = removeClassAnnotationRefactoring.getClassAfter();
+            }
+            if (annotation != null && annotation.getTypeName().equals("Test")) {
+                mapperInfo(Collections.emptySet(), before, after);
+            }
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Rename Test
+            "https://github.com/cloudfoundry/uaa.git, 69e3c6d3ce2b263b3fd3da61cabb8ca6d8bd563c, uaa-69e3c6d3ce2b263b3fd3da61cabb8ca6d8bd563c.txt",
+            "https://github.com/cqframework/clinical_quality_language.git, 06b42c0bf811df6934138e39cffffa92fa617893, clinical_quality_language-06b42c0bf811df6934138e39cffffa92fa617893.txt",
+    })
+    public void testRenameTestMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof RenameOperationRefactoring) {
+                RenameOperationRefactoring renameTestRefactoring = (RenameOperationRefactoring) ref;
+                UMLOperationBodyMapper mapper = renameTestRefactoring.getBodyMapper();
+                mapperInfo(mapper.getMappings(), renameTestRefactoring.getOriginalOperation(), renameTestRefactoring.getRenamedOperation());
+            }
+            else if (ref instanceof RenameClassRefactoring) {
+                RenameClassRefactoring renameTestRefactoring = (RenameClassRefactoring) ref;
+                mapperInfo(Collections.emptySet(), renameTestRefactoring.getOriginalClass(), renameTestRefactoring.getRenamedClass());
+            }
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Migrate Parameterize Test
+            ////JUnit 4 to JUnit 5
+            //https://github.com/apache/flink/commit/9b61b137bdc7eff773847b84e5cde116e6280c1d\#diff-fee3864af45941babef4b4203cc7a3ab63d8169525294fe312ada685ecfe7536R44-R45
+            //"https://github.com/apache/flink.git, 9b61b137bdc7eff773847b84e5cde116e6280c1d, flink-9b61b137bdc7eff773847b84e5cde116e6280c1d.txt",
+            //https://github.com/iluwatar/java-design-patterns/commit/6694d742a370e0f181530734481284de8d5dd8ef\#diff-fc06a96ae3f8c74a33fd73f010b2b4a8fed2a28d8bafbca68d46a238d7e803b9L43-R72
+            //"https://github.com/iluwatar/java-design-patterns.git, 6694d742a370e0f181530734481284de8d5dd8ef, java-design-patterns-6694d742a370e0f181530734481284de8d5dd8ef.txt",
+            //https://github.com/pbauerochse/youtrack-worklog-viewer/commit/40cc4a7a11aa40e08ec710c18e9fadb566685133\#diff-de8432ee70e733ab13b79d5a62c3e56b28589c384b8640b01efdca406ee7915aL14-R17
+            //"https://github.com/pbauerochse/youtrack-worklog-viewer.git, 40cc4a7a11aa40e08ec710c18e9fadb566685133, youtrack-worklog-viewer-40cc4a7a11aa40e08ec710c18e9fadb566685133.txt",
+            ////JUnit's Parameterize Test to JUnit 5 Test Template
+            //https://github.com/apache/iceberg/commit/fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b\#diff-a3068616e907309d18b95a88aae4b9db4fe16b7584e692a8273f14a32e34caf6L64-R78
+            //"https://github.com/apache/iceberg.git, fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b, iceberg-fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b.txt",
+            ////TestNG to JUnit 5
+            //https://github.com/OpenGamma/Strata/commit/1dd64e965041a1e3fb81adf8ce9156c451d8252b\#diff-ef557375fb5658a618d5002aec0cfd529203c1b32ab3954a14b7e5d9520ba071L34-R45
+            //"https://github.com/OpenGamma/Strata.git, 1dd64e965041a1e3fb81adf8ce9156c451d8252b, Strata-1dd64e965041a1e3fb81adf8ce9156c451d8252b.txt",
+            //https://github.com/OpenGamma/Strata/commit/b2b9b629685ebc7e89e9a1667de88f2e878d5fc4\#diff-3cae15311f7a6ea527ec4f9480e313536f9247c6600d68681b252df2941c2291L223-R269
+            //"https://github.com/OpenGamma/Strata.git, b2b9b629685ebc7e89e9a1667de88f2e878d5fc4, Strata-b2b9b629685ebc7e89e9a1667de88f2e878d5fc4.txt",
+            //https://github.com/OpenGamma/Strata/commit/e007f826c49075500def8638de8367960c054c19\#diff-f09a23b88428f071822c7abad439ceee0f2a6f0002c787ecf09bc8bb37e7e260L24-R34
+            //"https://github.com/OpenGamma/Strata.git, e007f826c49075500def8638de8367960c054c19, Strata-e007f826c49075500def8638de8367960c054c19.txt",
+            //https://github.com/zanata/zanata-platform/commit/0297e0513ac1f487f1570b1cc38979a73ac97da8\#diff-92efe147ed87db2f7e02ffb8d358f2b0745c0552eff4f5d260d4295fedc6ee06L47-R52
+            //"https://github.com/zanata/zanata-platform.git, 0297e0513ac1f487f1570b1cc38979a73ac97da8, zanata-platform-0297e0513ac1f487f1570b1cc38979a73ac97da8.txt",
+    })
+    public void testParameterizedTestMigrationMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+//            if (ref instanceof ParameterizeTestMigrationRefactoring) {
+//                ParameterizeTestMigrationRefactoring parameterizedTestMigrationRefactoring = (ParameterizeTestMigrationRefactoring) ref;
+//                UMLOperationBodyMapper mapper = parameterizedTestMigrationRefactoring.getBodyMapper();
+//                mapperInfo(mapper.getMappings(), parameterizedTestMigrationRefactoring.getOperationBefore(), parameterizedTestMigrationRefactoring.getOperationAfter());
+//            }
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Dependency-free test Parameterization
+            //https://github.com/neo4j-contrib/neo4j-apoc-procedures/commit/1bdf82988624ac5d1690ebab72769e540d4f8a01\#diff-f0e4b11273d5932e531d91cfddc79bb77d6c2df6f1ffd33338ab2adef2a32ed0L479-L484 //FIXME: Extract method para
+//            "https://github.com/neo4j-contrib/neo4j-apoc-procedures.git, 1bdf82988624ac5d1690ebab72769e540d4f8a01, neo4j-apoc-procedures-1bdf82988624ac5d1690ebab72769e540d4f8a01.txt",
+    })
+    public void testExtractMethodParameterizationMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+//            if (ref instanceof ExtractMethodParameterizationRefactoring) {
+//                ExtractMethodParameterizationRefactoring extractMethodParameterizationRefactoring = (ExtractMethodParameterizationRefactoring) ref;
+//                UMLOperationBodyMapper mapper = extractMethodParameterizationRefactoring.getBodyMapper();
+//                mapperInfo(mapper.getMappings(), extractMethodParameterizationRefactoring.getRemovedOperation(), extractMethodParameterizationRefactoring.getParameterizedTestOperation());
+//            }
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            //Parameterize Test with Framework support
+            ////Extract Common Logic from Multiple Test Methods
+            //https://github.com/aws/aws-sdk-java-v2/commit/4236a962dc0ca45149845317caa144a1ba768c5f\#diff-dbf383f80fe3a0846f7f86ce408bf00833d2bcadcfc3ab9c5c7e9748ef651195R142-R152 //FIXME: JUnit 4 parameterization not supported
+//            "https://github.com/aws/aws-sdk-java-v2.git, 4236a962dc0ca45149845317caa144a1ba768c5f, aws-sdk-java-v2-4236a962dc0ca45149845317caa144a1ba768c5f.txt",
+            //https://github.com/Atrox/haikunatorjava/commit/42679988419b68dd51f0a7b3c045536b3c5ef37b\#diff-161ef28ad57970549bad30f620c3b35345ebb70a91089625355ab28cb7fd396dR38-R39 //FIXME: MethodSource not supported
+//            "https://github.com/Atrox/haikunatorjava.git, 42679988419b68dd51f0a7b3c045536b3c5ef37b, haikunatorjava-42679988419b68dd51f0a7b3c045536b3c5ef37b.txt",
+            //https://github.com/opentripplanner/OpenTripPlanner/commit/1abed1191c2df7a747ef21cd3b669c14d54c3011\#diff-0a253c285c48079d86cdeb9f1474dc5a893c7645d6a025cf079ebb8cf7e552dbR70 //FIXME: MethodSource not supported
+//            "https://github.com/opentripplanner/OpenTripPlanner.git, 1abed1191c2df7a747ef21cd3b669c14d54c3011, OpenTripPlanner-1abed1191c2df7a747ef21cd3b669c14d54c3011.txt",
+            //https://github.com/samtools/htsjdk/pull/890/commits/1734eb99e5dcf16d92febead5e1b62323e0b6199\#diff-172d0db48f6f958c0f8478d1170deca1af3468771e774df13b7f0dd2cdee3b62R52 //FIXME: TestNG not supported
+//            "https://github.com/samtools/htsjdk.git, 1734eb99e5dcf16d92febead5e1b62323e0b6199, htsjdk-1734eb99e5dcf16d92febead5e1b62323e0b6199.txt",
+            //https://github.com/apache/hbase/commit/2306820df8b41d9af5227465ee2cf9e18b8f0b5c\#diff-6fc776d37c5d92493b53b2c038b7941831d9bc7bab6b88e8b24086e6b4f664e8R42-R45 //FIXME: JUnit 4 parameterization not supported
+//            "https://github.com/apache/hbase.git, 2306820df8b41d9af5227465ee2cf9e18b8f0b5c, hbase-2306820df8b41d9af5227465ee2cf9e18b8f0b5c.txt",
+            ////Add Parameterized Test
+            //https://github.com/hapifhir/hapi-fhir/pull/5764/commits/ad470cff726d800cbf9baa49abd6a9a536781ec0\#diff-456de205adcfb6b3e03a55547215aa669d40704fec0c5c3a8aba7ac2930e718cR182-R209 //TODO: Should test addition of parameterized test be supported?
+//            "https://github.com/hapifhir/hapi-fhir/pull/5764.git, ad470cff726d800cbf9baa49abd6a9a536781ec0, hapi-fhir-pull-5764-ad470cff726d800cbf9baa49abd6a9a536781ec0.txt",
+            ////Merge Data Provider
+            //https://github.com/samtools/htsjdk/commit/17c4b9d29dc0ee7573d32e7364d36fc92e4b2493\#diff-56da12f258cc73f82e743f9b999c877ace1f479532ccc257251fe1e2c6d2a6abL136 //FIXME: Merge Data Provider not supported
+//            "https://github.com/samtools/htsjdk.git, 17c4b9d29dc0ee7573d32e7364d36fc92e4b2493, htsjdk-17c4b9d29dc0ee7573d32e7364d36fc92e4b2493.txt",
+            ////Multiple data and multiple algorithms become parameterized test with inheritance and fixture overrides
+            //https://github.com/apache/hadoop/commit/4d01dbda508691beb07a4c8bfe113ec568166ddc\#diff-74395b300d29565d1365fa8cf17a79893811ed63ae3546a3d29d76c9fe311381L50-R51 //FIXME: JUnit 4 parameterization not supported
+//            "https://github.com/apache/hadoop.git, 4d01dbda508691beb07a4c8bfe113ec568166ddc, hadoop-4d01dbda508691beb07a4c8bfe113ec568166ddc.txt",
+    })
+    public void testParameterizedTestMappings(String url, String commit, String testResultFileName) throws Exception {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof ParameterizeTestRefactoring) {
+                ParameterizeTestRefactoring parameterizedTestRefactoring = (ParameterizeTestRefactoring) ref;
+                UMLOperationBodyMapper mapper = parameterizedTestRefactoring.getBodyMapper();
+                mapperInfo(mapper.getMappings(), parameterizedTestRefactoring.getRemovedOperation(), parameterizedTestRefactoring.getParameterizedTestOperation());
             }
         });
     }

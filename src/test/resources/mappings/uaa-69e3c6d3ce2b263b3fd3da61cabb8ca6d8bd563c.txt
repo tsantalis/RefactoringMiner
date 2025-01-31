@@ -1,0 +1,53 @@
+package shouldReject_ExistingAlias_AliasIdNotSetInPayload_UaaToCustomZone() : void -> package shouldReject_AliasIdNotSetInPayload_UaaToCustomZone() : void
+line range:569-569==line range:569-569
+package shouldReject_ExistingAlias_AliasIdNotSetInPayload_CustomToUaaZone() : void -> package shouldReject_AliasIdNotSetInPayload_CustomToUaaZone() : void
+line range:574-574==line range:574-574
+private shouldReject_ExistingAlias_AliasIdNotSetInPayload(zone1 IdentityZone, zone2 IdentityZone) : void -> private shouldReject_AliasIdNotSetInPayload(zone1 IdentityZone, zone2 IdentityZone) : void
+line range:581-581==line range:581-581
+line range:583-583==line range:583-583
+line range:584-584==line range:584-584
+line range:585-585==line range:585-585
+package shouldAccept_ExistingAlias_ShouldFixDanglingRefByCreatingNewAlias_UaaToCustomZone() : void -> package shouldAccept_ShouldFixDanglingRefByCreatingNewAlias_UaaToCustomZone() : void
+line range:590-590==line range:590-590
+package shouldAccept_ExistingAlias_ShouldFixDanglingRefByCreatingNewAlias_CustomToUaaZone() : void -> package shouldAccept_ShouldFixDanglingRefByCreatingNewAlias_CustomToUaaZone() : void
+line range:595-595==line range:595-595
+private shouldAccept_ExistingAlias_ShouldFixDanglingRefByCreatingNewAlias(zone1 IdentityZone, zone2 IdentityZone) : void -> private shouldAccept_ShouldFixDanglingRefByCreatingNewAlias(zone1 IdentityZone, zone2 IdentityZone) : void
+line range:599-599==line range:599-599
+line range:602-602==line range:602-602
+line range:605-605==line range:605-605
+line range:606-606==line range:606-606
+line range:607-607==line range:607-607
+line range:608-608==line range:608-608
+line range:611-611==line range:611-611
+line range:612-612==line range:612-612
+line range:613-613==line range:613-613
+line range:614-614==line range:614-614
+line range:615-615==line range:615-615
+line range:618-618==line range:618-618
+line range:621-621==line range:621-621
+package shouldReject_ExistingAlias_CannotFixDanglingRefAsAliasZoneIsNotExisting_UaaToCustomZone() : void -> package shouldReject_CannotFixDanglingRefAsAliasZoneIsNotExisting_UaaToCustomZone() : void
+line range:666-666==line range:666-666
+line range:667-667==line range:667-667
+line range:669-672==line range:669-672
+line range:671-671==line range:671-671
+line range:675-675==line range:675-675
+line range:679-679==line range:679-679
+line range:680-680==line range:680-680
+line range:681-681==line range:681-681
+line range:683-683==line range:683-683
+line range:684-684==line range:684-684
+package shouldReject_ReferencedAliasNotExistingAndOriginAlreadyExistsInOtherZone_UaaToCustomZone() : void -> package shouldReject_DanglingRefCannotBeFixedAsOriginAlreadyExistsInAliasZone_UaaToCustomZone() : void
+line range:690-690==line range:690-690
+package shouldReject_ReferencedAliasNotExistingAndOriginAlreadyExistsInOtherZone_CustomToUaaZone() : void -> package shouldReject_DanglingRefCannotBeFixedAsOriginAlreadyExistsInAliasZone_CustomToUaaZone() : void
+line range:695-695==line range:695-695
+private shouldReject_ExistingAlias_DanglingRefCannotBeFixedAsOriginAlreadyExistsInAliasZone(zone1 IdentityZone, zone2 IdentityZone) : void -> private shouldReject_DanglingRefCannotBeFixedAsOriginAlreadyExistsInAliasZone(zone1 IdentityZone, zone2 IdentityZone) : void
+line range:702-705==line range:702-705
+line range:704-704==line range:704-704
+line range:708-708==line range:708-708
+line range:709-713==line range:709-713
+line range:714-714==line range:714-714
+line range:715-715==line range:715-715
+line range:717-717==line range:717-717
+line range:718-718==line range:718-718
+line range:719-719==line range:719-719
+line range:720-720==line range:720-720

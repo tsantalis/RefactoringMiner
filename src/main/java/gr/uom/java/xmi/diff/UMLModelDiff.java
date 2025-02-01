@@ -4991,6 +4991,12 @@ public class UMLModelDiff {
 				}
 			}
 			if(fragment1.startsWith(JAVA.RETURN_SPACE) && fragment2.startsWith(JAVA.RETURN_SPACE)) {
+				for(UMLAnonymousClass anonymousClass : operationBodyMapper.getContainer1().getAnonymousClassList()) {
+					if(anonymousClass.getLocationInfo().subsumes(mappingList.get(0).getFragment1().getLocationInfo()) &&
+							parentMapper.getContainer2().getAnonymousClassList().isEmpty()) {
+						return false;
+					}
+				}
 				UMLOperation extractedOperation = operationBodyMapper.getOperation2();
 				if(extractedOperation != null) {
 					UMLType returnType = extractedOperation.getReturnParameter().getType();

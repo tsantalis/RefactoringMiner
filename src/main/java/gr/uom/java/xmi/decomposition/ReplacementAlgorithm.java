@@ -2519,7 +2519,7 @@ public class ReplacementAlgorithm {
 										Replacement replacement = new MethodInvocationReplacement(
 												invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
 												invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
-										replacementInfo.addReplacement(replacement);
+										//replacementInfo.addReplacement(replacement);
 										return replacementInfo.getReplacements();
 									}
 									else if(arg.contains(".")) {
@@ -2528,7 +2528,7 @@ public class ReplacementAlgorithm {
 												Replacement replacement = new MethodInvocationReplacement(
 														invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
 														invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
-												replacementInfo.addReplacement(replacement);
+												//replacementInfo.addReplacement(replacement);
 												return replacementInfo.getReplacements();
 											}
 										}
@@ -2552,7 +2552,7 @@ public class ReplacementAlgorithm {
 										Replacement replacement = new MethodInvocationReplacement(
 												invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
 												invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
-										replacementInfo.addReplacement(replacement);
+										//replacementInfo.addReplacement(replacement);
 										return replacementInfo.getReplacements();
 									}
 									else if(arg.contains(".")) {
@@ -2561,7 +2561,7 @@ public class ReplacementAlgorithm {
 												Replacement replacement = new MethodInvocationReplacement(
 														invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
 														invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
-												replacementInfo.addReplacement(replacement);
+												//replacementInfo.addReplacement(replacement);
 												return replacementInfo.getReplacements();
 											}
 										}

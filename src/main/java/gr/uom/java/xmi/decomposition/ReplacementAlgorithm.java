@@ -2505,8 +2505,8 @@ public class ReplacementAlgorithm {
 				}
 			}
 		}
-		//assertTrue() to fluid assertThat().isTrue() conversion
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
+			//assertTrue() to fluid assertThat().isTrue() conversion
 			if((invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isTrue")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertFalse") && invocationCoveringTheEntireStatement2.getName().equals("isFalse"))) {
 				for(String key2 : methodInvocationMap2.keySet()) {
@@ -2516,11 +2516,19 @@ public class ReplacementAlgorithm {
 							if(arguments.size() == 1) {
 								for(String arg : invocationCoveringTheEntireStatement1.arguments()) {
 									if(statement2.getArgumentizedString().contains(arg)) {
+										Replacement replacement = new MethodInvocationReplacement(
+												invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
+												invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
+										replacementInfo.addReplacement(replacement);
 										return replacementInfo.getReplacements();
 									}
 									else if(arg.contains(".")) {
 										String trim = arg.substring(arg.indexOf(".") + 1, arg.length()); {
 											if(statement2.getArgumentizedString().contains(trim)) {
+												Replacement replacement = new MethodInvocationReplacement(
+														invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
+														invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
+												replacementInfo.addReplacement(replacement);
 												return replacementInfo.getReplacements();
 											}
 										}
@@ -2531,6 +2539,7 @@ public class ReplacementAlgorithm {
 					}
 				}
 			}
+			//fluid assertThat().isTrue() to assertTrue() conversion
 			else if((invocationCoveringTheEntireStatement1.getName().equals("isTrue") && invocationCoveringTheEntireStatement2.getName().equals("assertTrue")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("isFalse") && invocationCoveringTheEntireStatement2.getName().equals("assertFalse"))) {
 				for(String key1 : methodInvocationMap1.keySet()) {
@@ -2540,14 +2549,50 @@ public class ReplacementAlgorithm {
 							if(arguments.size() == 1) {
 								for(String arg : invocationCoveringTheEntireStatement2.arguments()) {
 									if(statement1.getArgumentizedString().contains(arg)) {
+										Replacement replacement = new MethodInvocationReplacement(
+												invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
+												invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
+										replacementInfo.addReplacement(replacement);
 										return replacementInfo.getReplacements();
 									}
 									else if(arg.contains(".")) {
 										String trim = arg.substring(arg.indexOf(".") + 1, arg.length()); {
 											if(statement1.getArgumentizedString().contains(trim)) {
+												Replacement replacement = new MethodInvocationReplacement(
+														invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
+														invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
+												replacementInfo.addReplacement(replacement);
 												return replacementInfo.getReplacements();
 											}
 										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			//assertTrue() to assertEquals() conversion
+			if(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("assertEquals")) {
+				for(String key1 : methodInvocationMap1.keySet()) {
+					for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
+						if(invocation1.getName().startsWith("is")) {
+							List<String> arguments = invocation1.arguments();
+							if(arguments.size() == 1) {
+								for(String arg : invocationCoveringTheEntireStatement2.arguments()) {
+									if(arg.equals(arguments.get(0))) {
+										Replacement replacement = new MethodInvocationReplacement(
+												invocationCoveringTheEntireStatement1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
+												invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
+										replacementInfo.addReplacement(replacement);
+										return replacementInfo.getReplacements();
+									}
+									else if(StringDistance.editDistance(arg, arguments.get(0)) == 1) {
+										Replacement replacement = new MethodInvocationReplacement(
+												invocationCoveringTheEntireStatement1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
+												invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
+										replacementInfo.addReplacement(replacement);
+										return replacementInfo.getReplacements();
 									}
 								}
 							}

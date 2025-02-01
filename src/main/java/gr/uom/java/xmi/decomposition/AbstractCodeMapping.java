@@ -163,6 +163,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	private boolean argumentizedStringExactAfterTypeReplacement() {
 		String s1 = fragment1.getArgumentizedString();
 		String s2 = fragment2.getArgumentizedString();
+		int numberLiteralExactMatches = 0;
 		for(Replacement r : replacements) {
 			if(r.getType().equals(ReplacementType.TYPE)) {
 				if(s1.startsWith(r.getBefore()) && s2.startsWith(r.getAfter())) {
@@ -179,6 +180,14 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					}
 				}
 			}
+			else if(r.getType().equals(ReplacementType.NUMBER_LITERAL)) {
+				if(r.getBefore().startsWith(r.getAfter()) || r.getAfter().startsWith(r.getBefore())) {
+					numberLiteralExactMatches++;
+				}
+			}
+		}
+		if(numberLiteralExactMatches > 0) {
+			return numberLiteralExactMatches == replacements.size();
 		}
 		return false;
 	}

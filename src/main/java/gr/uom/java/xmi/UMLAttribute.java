@@ -402,6 +402,13 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return false;
 	}
 
+	public boolean renamedWithIdenticalType(UMLAttribute attribute) {
+		if(!this.name.equals(attribute.name)) {
+			return this.type.equals(attribute.type) && this.type.equalsQualified(attribute.type);
+		}
+		return false;
+	}
+
 	public boolean equalsIgnoringChangedType(UMLAttribute attribute) {
 		if(this.name.equals(attribute.name) && this.type.equals(attribute.type) && this.type.equalsQualified(attribute.type))
 			return true;

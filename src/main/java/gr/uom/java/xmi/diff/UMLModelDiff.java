@@ -6042,6 +6042,9 @@ public class UMLModelDiff {
 					return false;
 				}
 			}
+			if(removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation()) {
+				return false;
+			}
 		}
 		if(addedOperation.isAbstract() == removedOperation.isAbstract() &&
 				addedOperation.getTypeParameters().equals(removedOperation.getTypeParameters())) {

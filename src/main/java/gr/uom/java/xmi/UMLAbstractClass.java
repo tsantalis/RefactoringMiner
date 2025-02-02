@@ -507,6 +507,14 @@ public abstract class UMLAbstractClass {
 		return false;
 	}
 
+	public boolean containsRenamedAttributeWithIdenticalType(UMLAttribute attribute) {
+		for(UMLAttribute originalAttribute : attributes) {
+			if(originalAttribute.renamedWithIdenticalType(attribute))
+				return true;
+		}
+		return false;
+	}
+
 	public boolean containsAttributeWithTheSameName(UMLAttribute attribute) {
 		for(UMLAttribute originalAttribute : attributes) {
 			if(originalAttribute.getName().equals(attribute.getName()))
@@ -771,6 +779,7 @@ public abstract class UMLAbstractClass {
 		}
 		List<UMLAttribute> commonAttributes = new ArrayList<UMLAttribute>();
 		List<UMLAttribute> identicalAttributes = new ArrayList<UMLAttribute>();
+		List<UMLAttribute> commonTypeAttributes = new ArrayList<UMLAttribute>();
 		int totalAttributes = 0;
 		for(UMLAttribute attribute : attributes) {
 			totalAttributes++;
@@ -782,6 +791,9 @@ public abstract class UMLAbstractClass {
 					identicalAttributes.add(attribute);
 				}
 			}
+			if(umlClass.containsRenamedAttributeWithIdenticalType(attribute)) {
+				commonTypeAttributes.add(attribute);
+			}
 		}
 		for(UMLAttribute attribute : umlClass.attributes) {
 			totalAttributes++;
@@ -792,6 +804,9 @@ public abstract class UMLAbstractClass {
 				if(this.containsIdenticalAttributeIncludingAnnotation(attribute)) {
 					identicalAttributes.add(attribute);
 				}
+			}
+			if(this.containsRenamedAttributeWithIdenticalType(attribute)) {
+				commonTypeAttributes.add(attribute);
 			}
 		}
 		for(UMLAttribute attribute : enumConstants) {
@@ -814,6 +829,11 @@ public abstract class UMLAbstractClass {
 				if(this.containsIdenticalAttributeIncludingAnnotation(attribute)) {
 					identicalAttributes.add(attribute);
 				}
+			}
+		}
+		if(this.getNonQualifiedName().equals(umlClass.getNonQualifiedName()) && this.getSourceFile().equals(umlClass.getSourceFile())) {
+			if(commonAttributes.size() > 0 || commonOperations.size() > 0 || commonTypeAttributes.size() > 0) {
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
 			}
 		}
 		if(this.isTestClass() && umlClass.isTestClass()) {

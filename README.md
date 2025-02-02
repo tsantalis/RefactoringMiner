@@ -440,22 +440,22 @@ As of **January 30, 2025** the precision and recall of RefactoringMiner on this 
 **Commit dates**: March 28, 2024
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **January 30, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **February 2, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|2971  | 274  | 406  | 0.916  | 0.880|
+|**Total**|2972  | 259  | 406  | 0.920  | 0.880|
 |Extract Method|328  | 25  | 37  | 0.929  | 0.899|
 |Rename Class|228  |  2  |  4  | 0.991  | 0.983|
 |Move Attribute|69  |  3  | 11  | 0.958  | 0.863|
 |Move And Rename Attribute| 2  |  0  |  6  | 1.000  | 0.250|
-|Rename Method|271  | 28  | 25  | 0.906  | 0.916|
+|Rename Method|272  | 23  | 25  | 0.922  | 0.916|
 |Inline Method|63  |  9  |  6  | 0.875  | 0.913|
 |Move Method|258  |  7  | 10  | 0.974  | 0.963|
-|Move And Rename Method|17  |  7  | 11  | 0.708  | 0.607|
+|Move And Rename Method|17  |  6  | 11  | 0.739  | 0.607|
 |Pull Up Method|40  |  3  |  9  | 0.930  | 0.816|
 |Move Class|138  | 15  |  4  | 0.902  | 0.972|
-|Move And Rename Class|28  | 12  |  2  | 0.700  | 0.933|
+|Move And Rename Class|28  |  3  |  2  | 0.903  | 0.933|
 |Pull Up Attribute|11  |  0  |  3  | 1.000  | 0.786|
 |Push Down Attribute| 5  |  0  |  1  | 1.000  | 0.833|
 |Push Down Method|13  |  0  | 11  | 1.000  | 0.542|
@@ -474,7 +474,6 @@ As of **January 30, 2025** the precision and recall of RefactoringMiner on this 
 |Change Attribute Type|158  |  3  |  9  | 0.981  | 0.946|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 6  |  0  |  0  | 1.000  | 1.000|
-
 
 # How to build RefactoringMiner
 Since release 3.0.0, RefactoringMiner requires **Java 17** or newer and **Gradle 7.4** or newer.

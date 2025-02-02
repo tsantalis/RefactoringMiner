@@ -642,7 +642,7 @@
         {
           "type": "RENAME_CLASS",
           "description": "Rename Class\torg.junit.rules.ErrorCollectorTest.UsesErrorCollectorCheckThat renamed to org.junit.rules.ErrorCollectorTest.CheckTwoMatchersThatFail",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_CLASS",
@@ -695,7 +695,13 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.junit.rules.ErrorCollectorTest.UsesErrorCollectorCheckThat renamed to org.junit.rules.ErrorCollectorTest.CheckMatcherThatFailsWithoutProvidedReason",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/junit-team/junit4.git",

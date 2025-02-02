@@ -24,6 +24,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
+import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObjectMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
@@ -1134,6 +1135,7 @@ public class UMLModelDiff {
 	private TreeSet<UMLClassRenameDiff> optimize(TreeSet<UMLClassRenameDiff> diffSet) {
 		if(diffSet.size() > 1) {
 			TreeSet<UMLClassRenameDiff> identicalBodyDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
+			TreeSet<UMLClassRenameDiff> identicalAnonymousDeclarationDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 			TreeSet<UMLClassRenameDiff> identicalStatementDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 			TreeSet<UMLClassRenameDiff> identicalSignatureDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 			TreeSet<UMLClassRenameDiff> identicalPackageDeclarationDocDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
@@ -1157,6 +1159,7 @@ public class UMLModelDiff {
 				int identicalStatementSignatures = 0;
 				int totalStatements = 0;
 				int matchingStatements = 0;
+				int operationsWithIdenticalAnonymousDeclarations = 0;
 				if(operations1.size() == operations2.size()) {
 					for(int i=0; i<operations1.size(); i++) {
 						UMLOperation op1 = operations1.get(i);
@@ -1185,6 +1188,21 @@ public class UMLModelDiff {
 							List<String> rep2 = op2.getBody().stringRepresentation();
 							if(rep1.containsAll(rep2) || rep2.containsAll(rep1)) {
 								matchingStatements += Math.min(rep1.size(), rep2.size());
+							}
+							List<AnonymousClassDeclarationObject> anonymousList1 =  op1.getBody().getAllAnonymousClassDeclarations();
+							List<AnonymousClassDeclarationObject> anonymousList2 =  op2.getBody().getAllAnonymousClassDeclarations();
+							int identicalAnonymousDeclarations = 0;
+							if(anonymousList1.size() == anonymousList2.size() && anonymousList1.size() > 0) {
+								for(int j=0; j<anonymousList1.size(); j++) {
+									AnonymousClassDeclarationObject anonymous1 = anonymousList1.get(j);
+									AnonymousClassDeclarationObject anonymous2 = anonymousList2.get(j);
+									if(anonymous1.toString().equals(anonymous2.toString())) {
+										identicalAnonymousDeclarations++;
+									}
+								}
+							}
+							if(identicalAnonymousDeclarations == anonymousList1.size() && anonymousList1.size() > 0) {
+								operationsWithIdenticalAnonymousDeclarations++;
 							}
 						}
 						String actualSignature1 = op1.getActualSignature();
@@ -1222,6 +1240,9 @@ public class UMLModelDiff {
 				if(identicalSignatures == operations1.size()) {
 					identicalSignatureDiffSet.add(diff);
 				}
+				if(operationsWithIdenticalAnonymousDeclarations == operations1.size()) {
+					identicalAnonymousDeclarationDiffSet.add(diff);
+				}
 			}
 			if(identicalBodyDiffSet.size() == 1) {
 				return identicalBodyDiffSet;
@@ -1234,6 +1255,9 @@ public class UMLModelDiff {
 			}
 			if(identicalPackageDeclarationDocDiffSet.size() == 1) {
 				return identicalPackageDeclarationDocDiffSet;
+			}
+			if(identicalAnonymousDeclarationDiffSet.size() == 1) {
+				return identicalAnonymousDeclarationDiffSet;
 			}
 			Map.Entry<Integer, TreeSet<UMLClassRenameDiff>> entry = matchingStatementMap.lastEntry();
 			if(entry != null && entry.getKey() > 0 && entry.getValue().size() == 1) {

@@ -22,6 +22,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean isAnnotation;
 	private boolean isRecord;
 	private boolean topLevel;
+	private boolean isLocal;
     private List<UMLTypeParameter> typeParameters;
     private UMLJavadoc javadoc;
     private Optional<UMLPackage> packageDeclaration;
@@ -124,6 +125,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void setTopLevel(boolean topLevel) {
 		this.topLevel = topLevel;
+	}
+
+	public boolean isLocal() {
+		return isLocal;
+	}
+
+	public void setLocal(boolean isLocal) {
+		this.isLocal = isLocal;
 	}
 
 	public Visibility getVisibility() {

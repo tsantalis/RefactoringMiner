@@ -370,6 +370,9 @@ public class UMLModelASTReader {
 		String recordName = recordDeclaration.getName().getFullyQualifiedName();
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, recordDeclaration, CodeElementType.RECORD_DECLARATION);
 		UMLClass umlClass = new UMLClass(packageName, recordName, locationInfo, recordDeclaration.isPackageMemberTypeDeclaration(), importedTypes);
+		if(recordDeclaration.getParent() instanceof TypeDeclarationStatement) {
+			umlClass.setLocal(true);
+		}
 		umlClass.setJavadoc(javadoc);
 		if(recordDeclaration.isPackageMemberTypeDeclaration()) {
 			umlClass.setPackageDeclaration(umlPackage);
@@ -470,6 +473,9 @@ public class UMLModelASTReader {
 		String className = annotationDeclaration.getName().getFullyQualifiedName();
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, annotationDeclaration, CodeElementType.ANNOTATION_TYPE_DECLARATION);
 		UMLClass umlClass = new UMLClass(packageName, className, locationInfo, annotationDeclaration.isPackageMemberTypeDeclaration(), importedTypes);
+		if(annotationDeclaration.getParent() instanceof TypeDeclarationStatement) {
+			umlClass.setLocal(true);
+		}
 		umlClass.setJavadoc(javadoc);
 		if(annotationDeclaration.isPackageMemberTypeDeclaration()) {
 			umlClass.setPackageDeclaration(umlPackage);
@@ -527,6 +533,9 @@ public class UMLModelASTReader {
 		String className = enumDeclaration.getName().getFullyQualifiedName();
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, enumDeclaration, CodeElementType.ENUM_DECLARATION);
 		UMLClass umlClass = new UMLClass(packageName, className, locationInfo, enumDeclaration.isPackageMemberTypeDeclaration(), importedTypes);
+		if(enumDeclaration.getParent() instanceof TypeDeclarationStatement) {
+			umlClass.setLocal(true);
+		}
 		umlClass.setJavadoc(javadoc);
 		if(enumDeclaration.isPackageMemberTypeDeclaration()) {
 			umlClass.setPackageDeclaration(umlPackage);
@@ -655,6 +664,9 @@ public class UMLModelASTReader {
 		}
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, typeDeclaration, CodeElementType.TYPE_DECLARATION);
 		UMLClass umlClass = new UMLClass(packageName, className, locationInfo, typeDeclaration.isPackageMemberTypeDeclaration(), importedTypes);
+		if(typeDeclaration.getParent() instanceof TypeDeclarationStatement) {
+			umlClass.setLocal(true);
+		}
 		umlClass.setJavadoc(javadoc);
 		if(typeDeclaration.isPackageMemberTypeDeclaration()) {
 			umlClass.setPackageDeclaration(umlPackage);

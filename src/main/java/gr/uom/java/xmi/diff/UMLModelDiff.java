@@ -2850,8 +2850,22 @@ public class UMLModelDiff {
 			if(movedPath.contains("/")) {
 				movedPathPrefix = movedPath.substring(0, movedPath.lastIndexOf('/'));
 			}
-
-			if (!originalName.equals(movedName)) {
+			boolean localClassInRenamedMethod = false;
+			if(originalClass.isLocal() && movedClass.isLocal()) {
+				String parentClass = originalClass.getPackageName().substring(0, originalClass.getPackageName().lastIndexOf("."));
+				//String parentClass2 = movedClass.getPackageName().substring(0, movedClass.getPackageName().lastIndexOf("."));
+				UMLClassBaseDiff classDiff = getUMLClassDiff(parentClass);
+				if(classDiff != null) {
+					for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+						if(originalClass.getPackageName().endsWith("." + mapper.getContainer1().getName()) &&
+								movedClass.getPackageName().endsWith("." + mapper.getContainer2().getName())) {
+							localClassInRenamedMethod = true;
+							break;
+						}
+					}
+				}
+			}
+			if (!originalName.equals(movedName) && !localClassInRenamedMethod) {
 				MoveClassRefactoring refactoring = new MoveClassRefactoring(originalClass, movedClass);
 				RenamePattern renamePattern = refactoring.getRenamePattern();
 				//check if the the original path is a substring of the moved path and vice versa

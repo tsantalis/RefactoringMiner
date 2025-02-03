@@ -1,0 +1,1 @@
+{"nodes":[{"id":"commit","content":"","nodeType":"AGGREGATOR"},{"id":"cluster-0","content":"","nodeType":"BASE","aggregatorId":"commit"},{"id":"cluster-1","content":"","nodeType":"BASE","aggregatorId":"commit"}],"edges":[{"sourceId":"commit","targetId":"cluster-0","type":"EXPANSION","weight":1.0},{"sourceId":"commit","targetId":"cluster-1","type":"EXPANSION","weight":1.0}]}

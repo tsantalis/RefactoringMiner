@@ -3,9 +3,10 @@ package narrator.graph.cluster.traverse;
 import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.Node;
+import narrator.graph.NodeType;
 import narrator.graph.cluster.Cluster;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.jgrapht.Graph;
-import org.jgrapht.graph.builder.GraphTypeBuilder;
 import org.refactoringminer.astDiff.utils.Constants;
 
 import java.util.*;
@@ -30,7 +31,8 @@ public class TraversalEngine {
     private void process() {
         // add patterns
         addUsageComponents();
-        addCommentComponents();
+        addDeclarationComponents();
+        addSuccessiveComponents();
         addSingularComponents();
 
         // find pattern MST
@@ -39,48 +41,48 @@ public class TraversalEngine {
         // same non-context node (e.g. requirement)
         mergeCommonNodes((node) -> !node.isContext());
         // 100% similar nodes
+        mergeSimilarNodes();
         // successive nodes
         // same context
+//        mergeCommonNodes(Node::isContext);
     }
 
-
-    // TODO: support sub changes to javadoc
-    private List<String> commentTypes = new ArrayList<>() {{
-        add(Constants.LINE_COMMENT);
-        add(Constants.BLOCK_COMMENT);
+    private final List<String> unacceptedSuccessiveNodes = new ArrayList<>() {{
+        add(Constants.TYPE_DECLARATION);
+        add(Constants.METHOD_DECLARATION);
     }};
 
-    private void addCommentComponents() {
-        List<Node> commentNodes = graph.vertexSet().stream().filter(node -> {
-            String type = node.getTree().getType().name;
-            return commentTypes.contains(type);
-        }).toList();
+    private void addSuccessiveComponents() {
+        List<Node> acceptedNodes = graph.vertexSet().stream()
+                .filter(node -> !unacceptedSuccessiveNodes.contains(node.getTree().getType().name)).toList();
 
-        HashMap<Node, CommentPattern> commentPatterns = new HashMap<>();
-        for (Node commentNode : commentNodes) {
-            List<Edge> edges = graph.edgesOf(commentNode).stream()
-                    .filter(edge -> edge.getType().equals(EdgeType.SUCCESSION)).toList();
+        HashMap<Node, SuccessivePattern> successivePatterns = new HashMap<>();
+        for (Node acceptedNode : acceptedNodes) {
+            List<Edge> edges = graph.edgesOf(acceptedNode).stream()
+                    .filter(edge -> edge.getType().equals(EdgeType.SUCCESSION))
+                    // TODO: should we support succession for non-changes?
+                    .filter(edge -> graph.getEdgeTarget(edge).isBase() && graph.getEdgeSource(edge).isBase()).toList();
             for (Edge edge : edges) {
-                CommentPattern commentPattern = new CommentPattern();
+                SuccessivePattern successivePattern = new SuccessivePattern();
 
                 Node source = graph.getEdgeSource(edge);
-                mergeCommentComponent(commentPatterns, source, commentPattern);
+                mergeCommentComponent(successivePatterns, source, successivePattern);
 
                 Node target = graph.getEdgeTarget(edge);
-                mergeCommentComponent(commentPatterns, target, commentPattern);
+                mergeCommentComponent(successivePatterns, target, successivePattern);
 
-                commentPattern.addEdge(source, target, edge);
-                addContext(source, commentPattern);
-                addContext(target, commentPattern);
+                successivePattern.addEdge(source, target, edge);
+                addContext(source, successivePattern);
+                addContext(target, successivePattern);
 
-                commentPatterns.put(commentNode, commentPattern);
-                components.add(commentPattern);
+                successivePatterns.put(acceptedNode, successivePattern);
+                components.add(successivePattern);
             }
         }
     }
 
-    private void mergeCommentComponent(HashMap<Node, CommentPattern> commentPatterns, Node sourceNode, CommentPattern targetPattern) {
-        CommentPattern sourceComponent = commentPatterns.get(sourceNode);
+    private void mergeCommentComponent(HashMap<Node, SuccessivePattern> commentPatterns, Node sourceNode, SuccessivePattern targetPattern) {
+        SuccessivePattern sourceComponent = commentPatterns.get(sourceNode);
 
         if (sourceComponent != null) {
             targetPattern.merge(sourceComponent);
@@ -97,7 +99,8 @@ public class TraversalEngine {
     }
 
     private void addUsageComponents() {
-        List<Node> useNodes = Centrality.usedDeclarations(graph);
+        List<Node> useNodes = Centrality.usedDeclarations(graph).stream()
+                .filter(node -> node.getNodeType().equals(NodeType.BASE)).toList();
         HashMap<Node, UsagePattern> usagePatterns = new HashMap<>();
         for (Node useNode : useNodes) {
             addUsageComponent(useNode, new ArrayList<>(), usagePatterns);
@@ -152,6 +155,27 @@ public class TraversalEngine {
 
         components.add(usageComponent);
         usagePatterns.put(node, usageComponent);
+    }
+
+    private void addDeclarationComponents() {
+        List<Node> useNodes = Centrality.usedDeclarations(graph).stream()
+                .filter(node -> node.getNodeType().equals(NodeType.EXTENSION)).toList();
+        for (Node useNode : useNodes) {
+            addDeclarationComponent(useNode);
+        }
+    }
+
+    private void addDeclarationComponent(Node node) {
+        DeclarationPattern declarationComponent = new DeclarationPattern(node);
+        addContext(node, declarationComponent);
+
+        Set<Node> usedNodes = util.getUsedNodes(node);
+        for (Node usedNode : usedNodes) {
+            declarationComponent.addEdge(usedNode, node, new Edge(EdgeType.DEF_USE, 1));
+            addContext(usedNode, declarationComponent);
+        }
+
+        components.add(declarationComponent);
     }
 
     private void addContext(Node node, TraversalPattern traversalPattern) {
@@ -233,18 +257,7 @@ public class TraversalEngine {
                 .map(requirement -> usageComponentParent.getOrDefault(requirement, requirement)).toList();
         List<TraversalPattern> overallComponents = Stream.concat(requirementComponents.stream(), Stream.of(usageComponent)).toList();
 
-        Graph<Node, Edge> reason = GraphTypeBuilder
-                .<Node, Edge>directed()
-                .allowingMultipleEdges(true)
-                .allowingSelfLoops(true)
-                .edgeClass(Edge.class)
-                .weighted(true)
-                .buildGraph();
-        for (Node requirement : requirements.keySet()) {
-            reason.addVertex(requirement);
-        }
-
-        TraversalComponent parentComponent = new TraversalComponent(overallComponents, reason);
+        TraversalComponent parentComponent = new TraversalComponent(overallComponents, requirements.keySet(), ReasonType.REQUIREMENT);
         for (TraversalPattern component : overallComponents) {
             components.remove(component);
             usageComponentParent.put(component, parentComponent);
@@ -281,40 +294,124 @@ public class TraversalEngine {
                 break;
             }
 
-            HashMap<Node, List<TraversalPattern>> commonNodesComponents = new HashMap<>();
-            for (Node node : mostCommonNodes) {
-                List<TraversalPattern> nodeComponents = new ArrayList<>();
-                for (TraversalPattern component : components) {
-                    if (component.containsNode(node)) {
-                        nodeComponents.add(component);
-                    }
-                }
-                commonNodesComponents.put(node, nodeComponents);
-            }
+            HashMap<Node, List<TraversalPattern>> commonNodesComponents = getNodesComponents(mostCommonNodes);
+            Set<TraversalPattern> commonComponents = getCommonComponents(commonNodesComponents.values());
 
-            // at least two components will be common between nodes
-            Iterator<List<TraversalPattern>> componetsIterator = commonNodesComponents.values().iterator();
-            Set<TraversalPattern> commonComponents = new HashSet<>(componetsIterator.next());
-            while (componetsIterator.hasNext()) {
-                commonComponents.retainAll(componetsIterator.next());
-            }
-
-            Graph<Node, Edge> reason = GraphTypeBuilder
-                    .<Node, Edge>directed()
-                    .allowingMultipleEdges(true)
-                    .allowingSelfLoops(true)
-                    .edgeClass(Edge.class)
-                    .weighted(true)
-                    .buildGraph();
-            for (Node node : mostCommonNodes) {
-                reason.addVertex(node);
-            }
-
-            TraversalComponent parentComponent = new TraversalComponent(commonComponents.stream().toList(), reason);
+            TraversalComponent parentComponent = new TraversalComponent(commonComponents.stream().toList(), mostCommonNodes, ReasonType.COMMON);
             for (TraversalPattern component : commonComponents) {
                 components.remove(component);
             }
             components.add(parentComponent);
         }
+    }
+
+    private void mergeSimilarNodes() {
+        List<Edge> similarityEdges = graph.edgeSet().stream()
+                .filter(edge -> edge.getType().equals(EdgeType.SIMILARITY)).toList();
+        List<ImmutablePair<Node, Node>> similarityPairs = similarityEdges.stream()
+                .map(edge -> new ImmutablePair<>(graph.getEdgeSource(edge), graph.getEdgeTarget(edge))).toList();
+
+        Set<Node> nodes = new HashSet<>();
+        for (ImmutablePair<Node, Node> pair : similarityPairs) {
+            nodes.add(pair.getLeft());
+            nodes.add(pair.getRight());
+        }
+
+        while (true) {
+            HashMap<Node, List<TraversalPattern>> nodesComponents = getNodesComponents(nodes);
+
+            HashMap<TraversalPattern, HashMap<TraversalPattern, List<Node>>> componentsSimilaritySources = new HashMap<>();
+            for (ImmutablePair<Node, Node> pair : similarityPairs) {
+                List<TraversalPattern> leftComponents = nodesComponents.get(pair.getLeft());
+                List<TraversalPattern> rightComponents = nodesComponents.get(pair.getRight());
+
+                for (TraversalPattern leftComponent : leftComponents) {
+                    for (TraversalPattern rightComponent : rightComponents) {
+                        if (leftComponent.equals(rightComponent)) {
+                            continue;
+                        }
+
+                        if (!componentsSimilaritySources.containsKey(leftComponent)) {
+                            componentsSimilaritySources.put(leftComponent, new HashMap<>());
+                        }
+
+                        HashMap<TraversalPattern, List<Node>> leftComponentSimilaritySources = componentsSimilaritySources.get(leftComponent);
+                        if (!leftComponentSimilaritySources.containsKey(rightComponent)) {
+                            leftComponentSimilaritySources.put(rightComponent, new ArrayList<>());
+                        }
+
+                        leftComponentSimilaritySources.get(rightComponent).add(pair.getLeft());
+                    }
+                }
+            }
+
+            List<Node> mostSimilaritySources = null;
+            TraversalPattern similaritySourceComponent = null;
+            for (Map.Entry<TraversalPattern, HashMap<TraversalPattern, List<Node>>> leftComponentSimilaritySources : componentsSimilaritySources.entrySet()) {
+                for (Map.Entry<TraversalPattern, List<Node>> rightComponentSimilaritySources : leftComponentSimilaritySources.getValue().entrySet()) {
+                    List<Node> similaritySources = rightComponentSimilaritySources.getValue();
+                    if (mostSimilaritySources != null && similaritySources.size() <= mostSimilaritySources.size()) {
+                        continue;
+                    }
+
+                    mostSimilaritySources = similaritySources;
+                    similaritySourceComponent = leftComponentSimilaritySources.getKey();
+                }
+            }
+
+            if (mostSimilaritySources == null) {
+                break;
+            }
+
+            List<Set<TraversalPattern>> sourcesTargetComponents = new ArrayList<>();
+            for (Node similaritySource : mostSimilaritySources) {
+                List<Node> similarityTargets = graph.outgoingEdgesOf(similaritySource).stream()
+                        .filter(edge -> edge.getType().equals(EdgeType.SIMILARITY))
+                        .map(edge -> graph.getEdgeTarget(edge)).toList();
+                HashMap<Node, List<TraversalPattern>> similarityTargetComponents = getNodesComponents(new HashSet<>(similarityTargets));
+
+                Set<TraversalPattern> accumulatedTargetComponents = new HashSet<>();
+                for (List<TraversalPattern> components : similarityTargetComponents.values()) {
+                    accumulatedTargetComponents.addAll(components);
+                }
+                sourcesTargetComponents.add(accumulatedTargetComponents);
+            }
+
+            Set<TraversalPattern> commonComponents = getCommonComponents(sourcesTargetComponents.stream()
+                    .map(components -> components.stream().toList()).toList());
+            List<TraversalPattern> overallComponents = Stream.concat(commonComponents.stream(), Stream.of(similaritySourceComponent)).toList();
+
+            TraversalComponent parentComponent = new TraversalComponent(overallComponents, new HashSet<>(mostSimilaritySources), ReasonType.SIMILAR);
+            for (TraversalPattern component : overallComponents) {
+                components.remove(component);
+            }
+            components.add(parentComponent);
+        }
+    }
+
+    private Set<TraversalPattern> getCommonComponents(Collection<List<TraversalPattern>> componentsList) {
+        Iterator<List<TraversalPattern>> componetsIterator = componentsList.iterator();
+        Set<TraversalPattern> commonComponents = new HashSet<>(componetsIterator.next());
+        while (componetsIterator.hasNext()) {
+            commonComponents.retainAll(componetsIterator.next());
+        }
+
+        return commonComponents;
+    }
+
+    private HashMap<Node, List<TraversalPattern>> getNodesComponents(Set<Node> nodes) {
+        HashMap<Node, List<TraversalPattern>> nodesComponents = new HashMap<>();
+
+        for (Node node : nodes) {
+            List<TraversalPattern> nodeComponents = new ArrayList<>();
+            for (TraversalPattern component : components) {
+                if (component.containsNode(node)) {
+                    nodeComponents.add(component);
+                }
+            }
+            nodesComponents.put(node, nodeComponents);
+        }
+
+        return nodesComponents;
     }
 }

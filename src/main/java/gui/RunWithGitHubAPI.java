@@ -11,8 +11,7 @@ import java.io.IOException;
 /* Created by pourya on 2022-12-26 9:30 p.m. */
 public class RunWithGitHubAPI {
     public static void main(String[] args) throws RefactoringMinerTimedOutException, IOException {
-        String url = "https://github.com/spring-projects/spring-boot/commit" +
-                "/499672184c7bcb4e7932663985d3f4ae928ed59e";
+        String url = "https://github.com/termux/termux-app/commit/f80b46487df539c7e9214550002f461e5c66131c";
 
         String repo = URLHelper.getRepo(url);
         String commit = URLHelper.getCommit(url);

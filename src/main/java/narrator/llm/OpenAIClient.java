@@ -1,4 +1,4 @@
-package narrator.openai;
+package narrator.llm;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,26 +11,13 @@ import java.util.Properties;
 public class OpenAIClient {
     private static final String API_ENDPOINT = "https://api.openai.com/v1/chat/completions";
 
-    private static final String API_KEY;
-
-    static {
-        try {
-            Properties prop = new Properties();
-            InputStream input = new FileInputStream("openai-key.properties");
-            prop.load(input);
-            API_KEY = prop.getProperty("OpenAIKey");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private static final String MODEL = "gpt-4o";
 
     private static String chat(JSONArray messages) throws Exception {
         URL obj = new URL(API_ENDPOINT);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("POST");
-        con.setRequestProperty("Authorization", "Bearer " + API_KEY);
+        con.setRequestProperty("Authorization", "Bearer " + ModelsKey.getOpenAIKey());
         con.setRequestProperty("Content-Type", "application/json");
 
         JSONObject data = new JSONObject();

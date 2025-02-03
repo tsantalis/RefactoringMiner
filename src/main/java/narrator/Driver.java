@@ -1,5 +1,6 @@
 package narrator;
 
+import narrator.graph.NodeType;
 import narrator.graph.cluster.Cluster;
 import narrator.graph.cluster.Clusterer;
 import narrator.excel.ExcelOperator;
@@ -7,8 +8,11 @@ import narrator.graph.CommitGraph;
 import narrator.graph.Edge;
 import narrator.graph.Node;
 import narrator.graph.cluster.traverse.TraversalEngine;
+import narrator.graph.cluster.traverse.TraversalPattern;
 import narrator.json.Stringifier;
-import narrator.openai.OpenAIClient;
+import narrator.llm.GroqClient;
+import narrator.llm.OpenAIClient;
+import narrator.llm.Prompts;
 import org.jgrapht.Graph;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GitHub;
@@ -27,7 +31,7 @@ public class Driver {
     private static final int BATCH_SIZE = 10;
 
     public static void main(String[] args) throws Exception {
-        String url = "https://github.com/spring-projects/spring-framework/commit/bbbb7c396ee5d259c0eb45c7a9480b2bf669e59d";
+        String url = "https://github.com/termux/termux-app/commit/f80b46487df539c7e9214550002f461e5c66131c";
         stringifyClusters(url);
     }
 
@@ -67,16 +71,30 @@ public class Driver {
             directory.mkdirs();
         }
 
+        List<String> clustersDescription = new ArrayList<>();
         for (int i = 0; i < clusters.size(); i++) {
             FileWriter writer = new FileWriter(String.format("./json/cluster-%s.json", i));
             writer.write(Stringifier.stringifyGraph(clusters.get(i).getGraph()));
             writer.close();
 
             TraversalEngine traversalEngine = new TraversalEngine(clusters.get(i));
+            List<TraversalPattern> components = traversalEngine.getComponents();
             writer = new FileWriter(String.format("./json/traversal-%s.json", i));
-            writer.write(Stringifier.stringifyTraversalComponents(traversalEngine.getComponents()));
+            writer.write(Stringifier.stringifyTraversalComponents(components));
             writer.close();
+
+            List<String> componentsDescription = new ArrayList<>();
+            for (TraversalPattern component : components) {
+                componentsDescription.add(component.description());
+            }
+            clustersDescription.add(components.size() == 1 ?
+                    components.get(0).description()
+                    : GroqClient.generate(Prompts.getComponentPatternPrompt(componentsDescription)));
         }
+
+        FileWriter writer = new FileWriter("./json/commit.json");
+        writer.write(Stringifier.stringifyCommit(clustersDescription));
+        writer.close();
     }
 
     private static void stringifyContextGraph(String url) throws Exception {

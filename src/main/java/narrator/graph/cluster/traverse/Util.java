@@ -62,15 +62,15 @@ public class Util {
         return contexts;
     }
 
-    public HashMap<Node, List<Node>> getContextNodes(List<Node> nodes) {
-        HashMap<Node, List<Node>> contextNodes = new HashMap<>();
+    public HashMap<Node, Set<Node>> getContextNodes(List<Node> nodes) {
+        HashMap<Node, Set<Node>> contextNodes = new HashMap<>();
 
         for (Node node : nodes) {
             List<Node> contexts = getContexts(node);
             Node currentNode = node;
             for (Node context : contexts) {
                 if (!contextNodes.containsKey(context)) {
-                    contextNodes.put(context, new ArrayList<>());
+                    contextNodes.put(context, new HashSet<>());
                 }
 
                 contextNodes.get(context).add(currentNode);

@@ -1,20 +1,24 @@
 package narrator.graph.cluster.traverse;
 
-import narrator.graph.Edge;
 import narrator.graph.Node;
-import org.jgrapht.Graph;
+import narrator.llm.GroqClient;
+import narrator.llm.Prompts;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class TraversalComponent extends TraversalPattern {
     private List<TraversalPattern> components;
-    private Graph<Node, Edge> reason;
+    private Set<Node> reasons;
+    private ReasonType reasonType;
 
-    TraversalComponent(List<TraversalPattern> components, Graph<Node, Edge> reason) {
+    TraversalComponent(List<TraversalPattern> components, Set<Node> reasons, ReasonType reasonType) {
         this.components = components;
-        this.reason = reason;
+        this.reasons = reasons;
+        this.reasonType = reasonType;
     }
 
     @Override
@@ -40,11 +44,6 @@ public class TraversalComponent extends TraversalPattern {
     }
 
     @Override
-    public Graph<Node, Edge> getGraph() {
-        return reason;
-    }
-
-    @Override
     public Node getLead() {
         Set<Node> nodes = getGraph().vertexSet();
         if (!nodes.isEmpty()) {
@@ -61,5 +60,23 @@ public class TraversalComponent extends TraversalPattern {
             result.addAll(component.vertexSet());
         }
         return result;
+    }
+
+    @Override
+    public String description() throws IOException {
+        String descriptionCache = super.description();
+        if (descriptionCache != null) {
+            return descriptionCache;
+        }
+
+        List<String> componentsDescription = new ArrayList<>();
+        for (TraversalPattern component : components) {
+            componentsDescription.add(component.description());
+        }
+        String generatedDescription = GroqClient.generate(Prompts.getComponentPatternPrompt(componentsDescription, reasons, reasonType));
+
+        setDescriptionCache(generatedDescription);
+
+        return generatedDescription;
     }
 }

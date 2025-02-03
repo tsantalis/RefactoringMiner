@@ -3,11 +3,14 @@ package narrator.graph.cluster.traverse;
 import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.Node;
+import narrator.llm.GroqClient;
+import narrator.llm.Prompts;
 import org.jgrapht.Graph;
 
+import java.io.IOException;
 import java.util.*;
 
-public class CommentPattern extends TraversalPattern {
+public class SuccessivePattern extends TraversalPattern {
     private Node getHead() {
         Graph<Node, Edge> graph = getGraph();
 
@@ -56,6 +59,20 @@ public class CommentPattern extends TraversalPattern {
         return successiveString
                 + "\nIN\n"
                 + String.join("\nIN\n", contexts.stream().map(Node::textualRepresentation).toList());
+    }
+
+    @Override
+    public String description() throws IOException {
+        String descriptionCache = super.description();
+        if (descriptionCache != null) {
+            return descriptionCache;
+        }
+
+        String generatedDescription = GroqClient.generate(Prompts.getSuccessivePatternPrompt(textualRepresentation()));
+
+        setDescriptionCache(generatedDescription);
+
+        return generatedDescription;
     }
 
     @Override

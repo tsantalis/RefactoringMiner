@@ -14,32 +14,49 @@ public class Node {
     private String path;
     private String fileContent;
     private Tree tree;
-    private boolean isContext;
+    private NodeType nodeType;
 
     private boolean active = true;
 
-    public Node(String fileContent, String path, Tree tree, boolean isContext) {
+    public Node(String fileContent, String path, Tree tree) {
         this.id = String.format("%s-%s-%s-%s", path, tree.getPos(), tree.getEndPos(), tree.getType().name);
         this.path = path;
         this.fileContent = fileContent;
         this.tree = tree;
-        this.isContext = isContext;
+        this.nodeType = NodeType.BASE;
+    }
+
+    public Node(String fileContent, String path, Tree tree, NodeType nodeType) {
+        this(fileContent, path, tree);
+        this.nodeType = nodeType;
     }
 
     public String getId() {
         return id;
     }
 
+    public boolean isBase() {
+        return nodeType.equals(NodeType.BASE);
+    }
+
     public boolean isContext() {
-        return isContext;
+        return nodeType.equals(NodeType.CONTEXT);
+    }
+
+    public boolean isExtension() {
+        return nodeType.equals(NodeType.EXTENSION);
     }
 
     public Tree getTree() {
         return tree;
     }
 
+    public NodeType getNodeType() {
+        return nodeType;
+    }
+
     public String getContent() {
-        if (isContext) {
+        if (isContext()) {
             String type = tree.getType().name;
             if (type.equals(Constants.TYPE_DECLARATION) || type.equals(Constants.METHOD_DECLARATION)) {
                 Tree name = TreeUtilFunctions.findChildByType(tree, Constants.SIMPLE_NAME);
@@ -77,7 +94,7 @@ public class Node {
             return null;
         }
 
-        return new Node(this.fileContent, this.path, parentTree, true);
+        return new Node(this.fileContent, this.path, parentTree, NodeType.CONTEXT);
     }
 
     public Node getParentUntilType(String type) {
@@ -85,7 +102,7 @@ public class Node {
         if (parent == null) {
             return null;
         }
-        return new Node(this.fileContent, this.path, parent, true);
+        return new Node(this.fileContent, this.path, parent, NodeType.CONTEXT);
     }
 
     public Pair<Node, Node> getSiblings() {
@@ -106,17 +123,18 @@ public class Node {
 
         Node left = null, right = null;
         if (nodeIndex > 0) {
-            left = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex - 1), true);
+            left = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex - 1), NodeType.CONTEXT);
         }
         if (nodeIndex < parentChildren.size() - 1) {
-            right = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex + 1), true);
+            right = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex + 1), NodeType.CONTEXT);
         }
 
         return new ImmutablePair<>(left, right);
     }
 
     public List<Node> getContexts() {
-        return Context.get(tree).stream().map(context -> new Node(fileContent, path, context, true)).toList();
+        return Context.get(tree).stream()
+                .map(context -> new Node(fileContent, path, context, NodeType.CONTEXT)).toList();
     }
 
     private HashMap<String, String> typeTextualRepresentation = new HashMap<>() {{
@@ -127,7 +145,7 @@ public class Node {
     }};
 
     public String textualRepresentation() {
-        if (isContext) {
+        if (isContext()) {
             String type = tree.getType().name;
             return typeTextualRepresentation.containsKey(type) ? typeTextualRepresentation.get(type) + " \"" + getContent() + "\"" : "\"" + getContent() + "\"";
         }

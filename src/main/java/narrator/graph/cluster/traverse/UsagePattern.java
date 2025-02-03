@@ -45,14 +45,14 @@ public class UsagePattern extends TraversalPattern {
 
         for (Node useNode : useNodes) {
             Set<Node> usedNodes = util.getUsedNodes(useNode);
-            HashMap<Node, List<Node>> contextNodes = util.getContextNodes(usedNodes.stream().toList());
+            HashMap<Node, Set<Node>> contextNodes = util.getContextNodes(usedNodes.stream().toList());
 
             HashMap<Node, String> contextString = new HashMap<>();
             while (!contextNodes.isEmpty()) {
                 HashMap<Node, String> iterationContextString = new HashMap<>();
 
                 for (Node context : contextNodes.keySet()) {
-                    List<Node> nodes = contextNodes.get(context);
+                    Set<Node> nodes = contextNodes.get(context);
                     List<Node> unprocessedNodes = nodes.stream().filter(contextNodes::containsKey).toList();
                     if (!unprocessedNodes.isEmpty()) {
                         continue;

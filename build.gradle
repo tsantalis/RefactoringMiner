@@ -70,6 +70,7 @@ dependencies {
     implementation 'org.json:json:20171018'
     implementation 'com.google.code.gson:gson:2.11.0'
     implementation 'com.perforce:p4java:2024.1.2674354'
+    implementation 'dev.langchain4j:langchain4j-open-ai:1.0.0-alpha1'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.0'

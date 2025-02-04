@@ -412,6 +412,16 @@ public abstract class UMLAbstractClass {
 		return false;
 	}
 
+	public UMLOperation operationWithIdenticalBody(UMLOperation operation) {
+		if(operation.getBody() != null) {
+			for(UMLOperation originalOperation : operations) {
+				if(originalOperation.getBody() != null && originalOperation.getBodyHashCode() == operation.getBodyHashCode())
+					return originalOperation;
+			}
+		}
+		return null;
+	}
+
 	public boolean containsOperationWithIdenticalBodyAndActualSignature(UMLOperation operation) {
 		if(operation.getBody() != null) {
 			for(UMLOperation originalOperation : operations) {

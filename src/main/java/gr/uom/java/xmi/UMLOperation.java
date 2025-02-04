@@ -265,6 +265,15 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return false;
 	}
 
+	public boolean hasParametersAnnotation() {
+		for(UMLAnnotation annotation : annotations) {
+			if(annotation.getTypeName().equals("Parameters")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public UMLJavadoc getJavadoc() {
 		return javadoc;
 	}

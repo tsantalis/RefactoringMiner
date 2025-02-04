@@ -6131,11 +6131,13 @@ public class UMLModelDiff {
 				return false;
 			}
 		}
+		boolean equalReturnTypeAndTypeParameter = addedOperation.equalReturnParameter(removedOperation) &&
+						addedOperation.getTypeParameters().equals(removedOperation.getTypeParameters());
+		boolean allMappingsAreIdentical = mapper.allMappingsAreIdentical() && !removedOperation.isGetter() && !addedOperation.isGetter();
 		if(addedOperation.getName().equals(removedOperation.getName()) &&
-				addedOperation.equalReturnParameter(removedOperation) &&
 				addedOperation.isAbstract() == removedOperation.isAbstract() &&
-				addedOperation.getTypeParameters().equals(removedOperation.getTypeParameters())) {
-			if(addedOperation.getParameters().equals(removedOperation.getParameters())) {
+				(equalReturnTypeAndTypeParameter || allMappingsAreIdentical)) {
+			if(addedOperation.getParameters().equals(removedOperation.getParameters()) || allMappingsAreIdentical) {
 				UMLClass addedClass = getAddedClass(addedOperation.getClassName());
 				UMLClass removedClass = getRemovedClass(removedOperation.getClassName());
 				if(removedClass != null && addedClass != null) {

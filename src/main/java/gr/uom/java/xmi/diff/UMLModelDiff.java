@@ -2405,6 +2405,12 @@ public class UMLModelDiff {
 						operation.getSynchronizedStatements().size() == matchedOperation.getSynchronizedStatements().size()) {
 					commonOperations.put(operation, matchedOperation);
 				}
+				if(matchedOperation == null && !operation.hasEmptyBody()) {
+					matchedOperation = umlClass.operationWithIdenticalBody(operation);
+					if(matchedOperation != null) {
+						commonOperations.put(operation, matchedOperation);
+					}
+				}
 			}
 		}
 		for(UMLOperation operation : classDiff.getRemovedOperations()) {
@@ -6109,9 +6115,10 @@ public class UMLModelDiff {
 				intersection.retainAll(newParameterNames);
 				boolean parameterMatch = oldParameters.equals(newParameters) || oldParameters.containsAll(newParameters) || newParameters.containsAll(oldParameters) || intersection.size() > 0 ||
 						removedOperation.isStatic() || addedOperation.isStatic();
+				boolean parametersAnnotation = removedOperation.hasParametersAnnotation() || addedOperation.hasParametersAnnotation();
 				return (parameterMatch && oldParameters.size() > 0 && newParameters.size() > 0) ||
 						(parameterMatch && addedOperation.equalReturnParameter(removedOperation) && (oldParameters.size() == 0 || newParameters.size() == 0)) ||
-						 exactLeafMappings > 1;
+						 exactLeafMappings > 1 || parametersAnnotation;
 			}
 		}
 		return false;

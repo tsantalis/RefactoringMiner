@@ -325,11 +325,11 @@ Currently, it supports the detection of the following refactorings:
 **Commit dates**: between June 8th and August 7th, 2015
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **January 30, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **February 4, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12409  | 16  | 226  | 0.999  | 0.982|
+|**Total**|12413  | 16  | 226  | 0.999  | 0.982|
 |Extract Method|1006  |  1  | 22  | 0.999  | 0.979|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|256  |  0  |  8  | 1.000  | 0.970|
@@ -349,14 +349,14 @@ As of **January 30, 2025** the precision and recall of RefactoringMiner on this 
 |Extract Interface|22  |  0  |  0  | 1.000  | 1.000|
 |Extract Superclass|74  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
-|Extract Class|106  |  0  |  0  | 1.000  | 1.000|
+|Extract Class|108  |  0  |  0  | 1.000  | 1.000|
 |Extract And Move Method|120  |  0  | 61  | 1.000  | 0.663|
 |Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|305  |  0  |  0  | 1.000  | 1.000|
-|Extract Attribute|23  |  0  |  0  | 1.000  | 1.000|
+|Extract Attribute|25  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|116  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|333  |  3  | 11  | 0.991  | 0.968|
@@ -440,19 +440,19 @@ As of **January 30, 2025** the precision and recall of RefactoringMiner on this 
 **Commit dates**: March 28, 2024
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **February 2, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **February 4, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|2971  | 255  | 406  | 0.921  | 0.880|
+|**Total**|2979  | 255  | 396  | 0.921  | 0.883|
 |Extract Method|328  | 25  | 37  | 0.929  | 0.899|
 |Rename Class|228  |  2  |  4  | 0.991  | 0.983|
 |Move Attribute|69  |  3  | 11  | 0.958  | 0.863|
 |Move And Rename Attribute| 2  |  0  |  6  | 1.000  | 0.250|
 |Rename Method|272  | 23  | 25  | 0.922  | 0.916|
 |Inline Method|63  |  9  |  6  | 0.875  | 0.913|
-|Move Method|258  |  7  | 10  | 0.974  | 0.963|
-|Move And Rename Method|17  |  6  | 11  | 0.739  | 0.607|
+|Move Method|259  |  7  |  9  | 0.974  | 0.966|
+|Move And Rename Method|18  |  6  | 10  | 0.750  | 0.643|
 |Pull Up Method|40  |  3  |  9  | 0.930  | 0.816|
 |Move Class|137  | 11  |  4  | 0.926  | 0.972|
 |Move And Rename Class|28  |  3  |  2  | 0.903  | 0.933|
@@ -462,14 +462,14 @@ As of **February 2, 2025** the precision and recall of RefactoringMiner on this 
 |Extract Interface|16  |  2  |  0  | 0.889  | 1.000|
 |Extract Superclass| 7  |  2  |  0  | 0.778  | 1.000|
 |Extract Subclass| 3  |  0  |  6  | 1.000  | 0.333|
-|Extract Class|34  |  2  | 20  | 0.944  | 0.630|
+|Extract Class|38  |  2  | 14  | 0.950  | 0.731|
 |Extract And Move Method|97  | 27  | 23  | 0.782  | 0.808|
 |Move And Inline Method|17  |  7  | 13  | 0.708  | 0.567|
 |Extract Variable|228  | 21  | 53  | 0.916  | 0.811|
 |Inline Variable|75  | 12  | 47  | 0.862  | 0.615|
 |Rename Variable|254  | 33  | 32  | 0.885  | 0.888|
 |Rename Attribute|101  |  6  | 15  | 0.944  | 0.871|
-|Change Return Type|150  |  9  | 30  | 0.943  | 0.833|
+|Change Return Type|152  |  9  | 28  | 0.944  | 0.844|
 |Change Variable Type|350  | 39  | 18  | 0.900  | 0.951|
 |Change Attribute Type|158  |  3  |  9  | 0.981  | 0.946|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|

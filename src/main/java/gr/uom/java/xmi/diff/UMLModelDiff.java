@@ -1560,6 +1560,19 @@ public class UMLModelDiff {
 			for(UMLAttribute addedAttribute : addedAttributes) {
 				List<MoveAttributeRefactoring> candidates = new ArrayList<MoveAttributeRefactoring>();
 				for(UMLAttribute removedAttribute : removedAttributes) {
+					//if they don't belong to the same source folder, check if there is another removed attribute from the same source folder
+					boolean skip = false;
+					if(!removedAttribute.getLocationInfo().getSourceFolder().equals(addedAttribute.getLocationInfo().getSourceFolder())) {
+						for(UMLAttribute attr : removedAttributes) {
+							if(removedAttribute.equals(attr) && attr.getLocationInfo().getSourceFolder().equals(addedAttribute.getLocationInfo().getSourceFolder())) {
+								skip = true;
+								break;
+							}
+						}
+					}
+					if(skip) {
+						continue;
+					}
 					MoveAttributeRefactoring candidate = processPairOfAttributes(addedAttribute, removedAttribute, renameMap, pastRefactorings);
 					if(candidate != null) {
 						candidates.add(candidate);
@@ -1572,6 +1585,19 @@ public class UMLModelDiff {
 			for(UMLAttribute removedAttribute : removedAttributes) {
 				List<MoveAttributeRefactoring> candidates = new ArrayList<MoveAttributeRefactoring>();
 				for(UMLAttribute addedAttribute : addedAttributes) {
+					//if they don't belong to the same source folder, check if there is another added attribute from the same source folder
+					boolean skip = false;
+					if(!removedAttribute.getLocationInfo().getSourceFolder().equals(addedAttribute.getLocationInfo().getSourceFolder())) {
+						for(UMLAttribute attr : addedAttributes) {
+							if(addedAttribute.equals(attr) && removedAttribute.getLocationInfo().getSourceFolder().equals(attr.getLocationInfo().getSourceFolder())) {
+								skip = true;
+								break;
+							}
+						}
+					}
+					if(skip) {
+						continue;
+					}
 					MoveAttributeRefactoring candidate = processPairOfAttributes(addedAttribute, removedAttribute, renameMap, pastRefactorings);
 					if(candidate != null) {
 						candidates.add(candidate);
@@ -4624,6 +4650,19 @@ public class UMLModelDiff {
 				for(UMLOperationBodyMapper mapper : mappers) {
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(mapper.getContainer1(), addedOperation);
 					String className = mapper.getContainer2().getClassName();
+					//if they don't belong to the same source folder, check if there is another added method from the same source folder
+					boolean skip = false;
+					if(!mapper.getContainer2().getLocationInfo().getSourceFolder().equals(addedOperation.getLocationInfo().getSourceFolder())) {
+						for(UMLOperation op : addedOperations) {
+							if(addedOperation.equalSignature(op) && mapper.getContainer2().getLocationInfo().getSourceFolder().equals(op.getLocationInfo().getSourceFolder())) {
+								skip = true;
+								break;
+							}
+						}
+					}
+					if(skip) {
+						continue;
+					}
 					if(!className.equals(addedOperation.getClassName()) && (mapper.nonMappedElementsT1() > 0 || includesReplacementInvolvingAddedMethod(mapper.getReplacementsInvolvingMethodInvocation(), addedOperation, mapper.getContainer2(), mapper.getClassDiff())) && !mapper.containsExtractOperationRefactoring(addedOperation) && !processedOperationPairs.contains(pair)) {
 						processedOperationPairs.add(pair);
 						List<AbstractCall> operationInvocations = mapper.getInvocationsInSourceOperationAfterExtraction();
@@ -5005,7 +5044,7 @@ public class UMLModelDiff {
 			for(UMLOperation operation : addedOperations) {
 				UMLClassBaseDiff classDiff = getUMLClassDiff(operation.getClassName());
 				boolean isInterface = classDiff != null ? classDiff.nextClass.isInterface() : false;
-				if(!operation.equals(addedOperation) && addedOperation.equalSignature(operation) && !operation.isAbstract() && !isInterface) {
+				if(!operation.equals(addedOperation) && !operation.getNonQualifiedClassName().equals(addedOperation.getNonQualifiedClassName()) && addedOperation.equalSignature(operation) && !operation.isAbstract() && !isInterface) {
 					if(expression.equals(operation.getNonQualifiedClassName())) {
 						return true;
 					}

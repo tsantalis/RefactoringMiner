@@ -29,7 +29,8 @@ public class Centrality {
         HashMap<Node, Integer> nodesUsedDeclarations = new HashMap<>();
         for (Node node : hunkNodes) {
             List<Edge> usedDeclarations = graph.incomingEdgesOf(node).stream()
-                    .filter(edge -> edge.getType().equals(EdgeType.DEF_USE)).toList();
+                    .filter(edge -> edge.getType().equals(EdgeType.DEF_USE))
+                    .filter(edge -> graph.getEdgeSource(edge).isBase()).toList();
             if (usedDeclarations.isEmpty()) {
                 continue;
             }

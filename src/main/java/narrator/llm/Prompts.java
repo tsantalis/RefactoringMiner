@@ -16,17 +16,9 @@ public class Prompts {
             ```
             
             As a review assistant, your task is to help the reviewer understand the purpose of this added code by describing all evident intentions behind it.
-            """;
-
-    private static final String declarationPatternTemplate = """
-            As part of a commit, changes have been made to variable or field declarations in a Java project.
-            Below are the modified declarations along with an instance of their usage for context:
-            ```
-            %s
-            ```
             
-            As a review assistant, your task is to help the reviewer understand the purpose of these declaration changes by describing all evident intentions behind them.
-            Use the usage instance only to understand the motivations behind the declaration changes.
+            Strictly adhere to the following guideline:
+            - Identify concrete purposes behind the changes instead of summarizing them vaguely or discussing general goals.
             """;
 
     private static final String componentTemplate = """
@@ -34,15 +26,57 @@ public class Prompts {
             
             %s
             
-            As a review assistant, analyze these descriptions to determine their collective intent. Then, construct a description that captures the overall purpose of these groups within the commit, helping the reviewer understand how these changes fit together.
+            As a review assistant, your task is to help the reviewer understand the collective intent behind these groups by providing a summary.
+            
+            Strictly adhere to the following guidelines:
+            - Identify concrete purposes behind the changes instead of summarizing them vaguely or discussing general goals.
             """;
 
     public static String getSuccessivePatternPrompt(String textualRepresentation) {
         return String.format(successivePatternTemplate, textualRepresentation);
     }
 
-    public static String getDeclarationPatternPrompt(String textualRepresentation) {
-        return String.format(declarationPatternTemplate, textualRepresentation);
+    public static String getDeclarationPatternPrompt(String declarationsRepresentation, String useRepresentation, String extensionsRepresentation) {
+        StringBuilder result = new StringBuilder();
+
+        result.append(String.format("""
+                As part of a commit, the following changes, along with their location details, have been made to variable or field declarations in a Java project:
+                ```
+                %s
+                ```
+                """, declarationsRepresentation));
+
+        if (extensionsRepresentation != null && !extensionsRepresentation.isEmpty()) {
+            result.append(String.format("""
+                    
+                    These modified declarations involve calling the following methods:
+                    ```
+                    %s
+                    ```
+                    These methods are not part of the commit; they are provided only to help understand the changes.
+                    """, extensionsRepresentation));
+        }
+
+        result.append(String.format("""
+                
+                The modified variables and fields were already in use before these changes. The updated versions now replace their previous counterparts in the same locations.
+                For reference, here is an instance of how they are used in the code:
+                ```
+                %s
+                ```
+                This usage is not part of the commit and is included solely to assist in understanding the changes.
+                """, useRepresentation));
+
+        result.append("""
+                
+                As a review assistant, your task is to help the reviewer understand the specific purposes of these declaration changes by identifying and describing all evident intentions behind them.
+                
+                Strictly adhere to the following guideline:
+                - Identify concrete purposes behind the changes instead of summarizing them vaguely or discussing general goals.
+                """);
+
+        System.out.println(result);
+        return result.toString();
     }
 
     public static String getComponentPatternPrompt(List<String> componentsDescription) throws IOException {
@@ -68,7 +102,7 @@ public class Prompts {
         int componentIndex = 0;
         for (String componentDescription : componentsDescription) {
             componentsStrings.add(String.format("""
-                    Component %s:
+                    Group %s:
                     ```
                     %s
                     ```

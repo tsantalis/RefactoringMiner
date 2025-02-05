@@ -251,6 +251,21 @@ public class GraphProcessor {
                 for (Node useNode : useNodes) {
                     addEdge(node, useNode, EdgeType.DEF_USE, 1);
                 }
+
+                List<AbstractCall> methodInvocations = operationVariable.getInitializer().getMethodInvocations();
+                for (AbstractCall methodInvocation : methodInvocations) {
+                    UMLOperation declaration = modelDiff.findDeclarationsInChildModel(umlOperation, methodInvocation);
+                    if (declaration == null) {
+                        continue;
+                    }
+
+                    LocationInfo locationInfo = declaration.getLocationInfo();
+                    String path = locationInfo.getFilePath();
+                    Tree tree = TreeUtilFunctions.findByLocationInfo(childContexts.get(path).getRoot(), locationInfo);
+
+                    Node declarationNode = addHunkNode(path, tree, NodeType.EXTENSION);
+                    addEdge(declarationNode, node, EdgeType.DEF_USE, 1);
+                }
             }
         }
     }
@@ -282,8 +297,8 @@ public class GraphProcessor {
             }
         }
 
+        // declaration change without any usage change
         if (result.isEmpty()) {
-
             List<LocationInfo> changedFilesUseStatementsLocation = useStatements.stream()
                     .map(LocationInfoProvider::getLocationInfo)
                     .filter(locationInfo -> childContexts.containsKey(locationInfo.getFilePath())).toList();

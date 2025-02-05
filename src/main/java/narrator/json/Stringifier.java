@@ -3,12 +3,15 @@ package narrator.json;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import narrator.graph.*;
+import narrator.graph.cluster.Cluster;
 import narrator.graph.cluster.traverse.TraversalComponent;
+import narrator.graph.cluster.traverse.TraversalEngine;
 import narrator.graph.cluster.traverse.TraversalPattern;
 import narrator.llm.GroqClient;
 import narrator.llm.Prompts;
 import org.jgrapht.Graph;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
@@ -21,19 +24,19 @@ public class Stringifier {
         return graphObj.toString();
     }
 
-    public static String stringifyTraversalComponents(List<TraversalPattern> traversalComponents) throws IOException {
+    private static JsonObject stringifyTraversalComponents(List<TraversalPattern> traversalComponents, String aggregatorId) throws IOException {
         JsonArray nodesArray = new JsonArray();
         JsonArray edgesArray = new JsonArray();
 
         for (TraversalPattern traversalComponent : traversalComponents) {
-            stringifyTraversalComponent(traversalComponent, "", nodesArray, edgesArray);
+            stringifyTraversalComponent(traversalComponent, aggregatorId, nodesArray, edgesArray);
         }
 
         JsonObject graphObj = new JsonObject();
         graphObj.add("nodes", nodesArray);
         graphObj.add("edges", edgesArray);
 
-        return graphObj.toString();
+        return graphObj;
     }
 
     private static void stringifyTraversalComponent(TraversalPattern traversalComponent, String aggregatorId, JsonArray nodes, JsonArray edges) throws IOException {
@@ -69,23 +72,37 @@ public class Stringifier {
         }
     }
 
-    public static String stringifyCommit(List<String> clustersDescription) throws IOException {
+    public static String stringifyCommit(List<Cluster> clusters) throws IOException {
         JsonArray nodesArray = new JsonArray();
         JsonArray edgesArray = new JsonArray();
 
-        String rootId = "commit";
+        String commitNodeId = "commit";
 
+        List<String> clustersDescription = new ArrayList<>();
+        for (int i = 0; i < clusters.size(); i++) {
+            String clusterNodeId = String.format("cluster-%d", i);
+
+            TraversalEngine traversalEngine = new TraversalEngine(clusters.get(i));
+            List<TraversalPattern> components = traversalEngine.getComponents();
+            JsonObject stringifiedClusterTraversal = stringifyTraversalComponents(components, clusterNodeId);
+            nodesArray.addAll(stringifiedClusterTraversal.getAsJsonArray("nodes"));
+            edgesArray.addAll(stringifiedClusterTraversal.getAsJsonArray("edges"));
+
+            List<String> componentsDescription = new ArrayList<>();
+            for (TraversalPattern component : components) {
+                componentsDescription.add(component.description());
+            }
+            String clusterDescription = components.size() == 1 ?
+                    components.get(0).description()
+                    : GroqClient.generate(Prompts.getComponentPatternPrompt(componentsDescription));
+            nodesArray.add(getNode(clusterNodeId, commitNodeId, clusterDescription, NodeType.AGGREGATOR));
+            edgesArray.add(getEdge(commitNodeId, clusterNodeId, EdgeType.EXPANSION.name(), 1));
+
+            clustersDescription.add(clusterDescription);
+        }
 
         String commitDescription = GroqClient.generate(Prompts.getComponentPatternPrompt(clustersDescription));
-        System.out.println(commitDescription);
-        nodesArray.add(getNode(rootId, "", commitDescription, NodeType.AGGREGATOR));
-
-        int clusterIndex = 0;
-        for (String clusterDescription : clustersDescription) {
-            String nodeId = String.format("cluster-%d", clusterIndex++);
-            nodesArray.add(getNode(nodeId, rootId, clusterDescription, NodeType.BASE));
-            edgesArray.add(getEdge(rootId, nodeId, EdgeType.EXPANSION.name(), 1));
-        }
+        nodesArray.add(getNode(commitNodeId, "", commitDescription, NodeType.AGGREGATOR));
 
         JsonObject graphObj = new JsonObject();
         graphObj.add("nodes", nodesArray);

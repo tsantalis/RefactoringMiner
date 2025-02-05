@@ -1,6 +1,6 @@
 package narrator;
 
-import narrator.graph.NodeType;
+import com.google.gson.JsonObject;
 import narrator.graph.cluster.Cluster;
 import narrator.graph.cluster.Clusterer;
 import narrator.excel.ExcelOperator;
@@ -32,7 +32,7 @@ public class Driver {
 
     public static void main(String[] args) throws Exception {
         String url = "https://github.com/termux/termux-app/commit/f80b46487df539c7e9214550002f461e5c66131c";
-        stringifyClusters(url);
+        stringifyCommit(url);
     }
 
     private static void writeClusters(String url) throws Exception {
@@ -57,7 +57,7 @@ public class Driver {
         writer.close();
     }
 
-    private static void stringifyClusters(String url) throws Exception {
+    private static void stringifyCommit(String url) throws Exception {
         Graph<Node, Edge> graph = CommitGraph.get(url);
         Clusterer clusterer = new Clusterer(graph);
         List<Cluster> clusters = clusterer.getClusters();
@@ -71,29 +71,14 @@ public class Driver {
             directory.mkdirs();
         }
 
-        List<String> clustersDescription = new ArrayList<>();
         for (int i = 0; i < clusters.size(); i++) {
             FileWriter writer = new FileWriter(String.format("./json/cluster-%s.json", i));
             writer.write(Stringifier.stringifyGraph(clusters.get(i).getGraph()));
             writer.close();
-
-            TraversalEngine traversalEngine = new TraversalEngine(clusters.get(i));
-            List<TraversalPattern> components = traversalEngine.getComponents();
-            writer = new FileWriter(String.format("./json/traversal-%s.json", i));
-            writer.write(Stringifier.stringifyTraversalComponents(components));
-            writer.close();
-
-            List<String> componentsDescription = new ArrayList<>();
-            for (TraversalPattern component : components) {
-                componentsDescription.add(component.description());
-            }
-            clustersDescription.add(components.size() == 1 ?
-                    components.get(0).description()
-                    : GroqClient.generate(Prompts.getComponentPatternPrompt(componentsDescription)));
         }
 
         FileWriter writer = new FileWriter("./json/commit.json");
-        writer.write(Stringifier.stringifyCommit(clustersDescription));
+        writer.write(Stringifier.stringifyCommit(clusters));
         writer.close();
     }
 

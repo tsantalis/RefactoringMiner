@@ -173,6 +173,15 @@ public class TraversalEngine {
         for (Node usedNode : usedNodes) {
             declarationComponent.addEdge(usedNode, node, new Edge(EdgeType.DEF_USE, 1));
             addContext(usedNode, declarationComponent);
+
+            List<Node> usedNodeExtensions = graph.incomingEdgesOf(usedNode).stream()
+                    .filter(edge -> edge.getType().equals(EdgeType.DEF_USE))
+                    .map(edge -> graph.getEdgeSource(edge))
+                    .filter(n -> n.getNodeType().equals(NodeType.EXTENSION)).toList();
+            for (Node usedNodeExtension : usedNodeExtensions) {
+                declarationComponent.addDeclarationExtension(usedNode, usedNodeExtension);
+                addContext(usedNodeExtension, declarationComponent);
+            }
         }
 
         components.add(declarationComponent);

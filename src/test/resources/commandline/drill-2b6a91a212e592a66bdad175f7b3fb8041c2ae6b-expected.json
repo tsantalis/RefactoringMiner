@@ -1011,6 +1011,48 @@
 },
 {
 	"type": "Change Return Type",
+	"description": "Change Return Type NodeResource to NodeResources in method public create() : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
+		"startLine": 62,
+		"endLine": 62,
+		"startColumn": 17,
+		"endColumn": 29,
+		"codeElementType": "TYPE",
+		"description": "original return type",
+		"codeElement": "NodeResource"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
+		"startLine": 62,
+		"endLine": 64,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public create() : NodeResource"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 139,
+		"endLine": 139,
+		"startColumn": 17,
+		"endColumn": 30,
+		"codeElementType": "TYPE",
+		"description": "changed return type",
+		"codeElement": "NodeResources"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 139,
+		"endLine": 141,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed return type",
+		"codeElement": "public create() : NodeResources"
+}]
+},
+{
+	"type": "Change Return Type",
 	"description": "Change Return Type NodeResource to NodeResources in method public create(cpu long) : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
@@ -1910,6 +1952,30 @@
 		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
 		"description": "statement with the name of the extracted variable",
 		"codeElement": null
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public create() : NodeResource from class org.apache.drill.exec.planner.cost.NodeResource to public create() : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
+		"startLine": 62,
+		"endLine": 64,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public create() : NodeResource"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 139,
+		"endLine": 141,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public create() : NodeResources"
 }]
 },
 {

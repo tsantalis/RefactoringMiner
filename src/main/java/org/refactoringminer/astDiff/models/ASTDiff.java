@@ -70,8 +70,15 @@ public class ASTDiff extends Diff {
 	public void computeVanillaEditScript() {
 		finalizeEditScript(new SimplifiedChawatheScriptGenerator().computeActions(this.getAllMappings().getMonoMappingStore()));
 	}
+
+	//This is the most complete edit script generator. It can handle inter-file mappings.
 	public void computeEditScript(Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap, ExtendedEditScriptGenerator extendedEditScriptGenerator) {
 		finalizeEditScript(extendedEditScriptGenerator.computeActions(mappings,parentContextMap,childContextMap));
+	}
+
+	//Use this method when you don't want to deal with inter-file mappings.
+	public void computeEditScript(ExtendedEditScriptGenerator extendedEditScriptGenerator) {
+		finalizeEditScript(extendedEditScriptGenerator.computeActions(mappings,null, null));
 	}
 
 	private void finalizeEditScript(EditScript newEditScript) {

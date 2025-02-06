@@ -18,7 +18,7 @@ import org.refactoringminer.astDiff.moved.MovedASTDiffGenerator;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.matchers.wrappers.*;
-import org.refactoringminer.astDiff.matchers.vanilla.MissingIdenticalSubtree;
+import org.refactoringminer.astDiff.matchers.vanilla.MissingIdenticalNonAmbiguousSubtrees;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,7 +75,7 @@ public class ProjectASTDiffer
 		UnifiedModelDiffRefactoringsMatcher unifiedModelDiffRefactoringsMatcher = new UnifiedModelDiffRefactoringsMatcher(projectASTDiff.getDiffSet(), optimizationDataMap, modelDiff, modelDiffRefactorings);
 		processAllOptimizations(unifiedModelDiffRefactoringsMatcher.getNewlyGeneratedDiffsOptimizationMap());
 		for (ASTDiff diff : projectASTDiff.getDiffSet()) {
-			new MissingIdenticalSubtree().match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
+			new MissingIdenticalNonAmbiguousSubtrees().match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
 		}
 		long diff_execution_finished =  System.currentTimeMillis();
 		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");

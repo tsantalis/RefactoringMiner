@@ -4905,18 +4905,23 @@ public class UMLModelDiff {
 		ExtractOperationRefactoring extractOperationRefactoring =
 				new ExtractOperationRefactoring(operationBodyMapper, mapper.getContainer2(), addedOperationInvocations);
 		refactorings.add(extractOperationRefactoring);
-		refactorings.addAll(operationBodyMapper.getRefactorings());
+		//compute refactorings
+		operationBodyMapper.getRefactorings();
 		deleteAddedOperation(addedOperation);
 		mapper.addChildMapper(operationBodyMapper);
 		if(!nested) {
 			MappingOptimizer optimizer = new MappingOptimizer(mapper.getClassDiff());
 			optimizer.optimizeDuplicateMappingsForExtract(mapper, refactorings);
+			refactorings.addAll(operationBodyMapper.getRefactoringsAfterPostProcessing());
 			
 			Set<UMLOperationBodyMapper> mappers = findMappersWithTheSameFragment1(operationBodyMapper.getMappings());
 			if(mappers.size() > 0) {
 				mappers.add(operationBodyMapper);
 				optimizer.optimizeDuplicateMappingsForMoveCode(new ArrayList<>(mappers), refactorings);
 			}
+		}
+		else {
+			refactorings.addAll(operationBodyMapper.getRefactoringsAfterPostProcessing());
 		}
 	}
 

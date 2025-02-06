@@ -12,13 +12,23 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /* Created by pourya on 2023-06-14 2:10 p.m. */
-public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements TreeMatcher {
+public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher implements TreeMatcher {
 
     private final static boolean ONLY_JAVA_DOCS = false;
     private static final int DEFAULT_MIN_PRIORITY = 1;
     protected int minPriority = DEFAULT_MIN_PRIORITY;
+    protected final Predicate<Mapping> acceptance;
+
+    public MissingIdenticalNonAmbiguousSubtrees(Predicate<Mapping> acceptance) {
+        this.acceptance = acceptance;
+    }
+
+    public MissingIdenticalNonAmbiguousSubtrees() {
+        this.acceptance = (m) -> isAcceptable(m.first, m.second);
+    }
 
     private static final String DEFAULT_PRIORITY_CALCULATOR = "height";
     protected Function<Tree, Integer> priorityCalculator = PriorityTreeQueue
@@ -77,7 +87,7 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
             if (multiMappings.isSrcUnique(src)) {
                 var dst = multiMappings.getDsts(src).stream().findAny().get();
                 if (multiMappings.isDstUnique(dst)) {
-                    if (isAcceptable(src,dst))
+                    if (acceptance.test(new Mapping(src,dst)))
                         mappings.addMappingRecursively(src,dst);
                     isMappingUnique = true;
                 }
@@ -156,7 +166,7 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
         for (Tree child : methodDecl.getChildren()) {
             if (child.getType().name.equals(Constants.MARKER_ANNOTATION))
             {
-                if (child.getChildren().size() > 0 &&
+                if (!child.getChildren().isEmpty() &&
                         child.getChild(0).getType().name.equals(Constants.SIMPLE_NAME) &&
                         child.getChild(0).getLabel().equals("Test"))
                 {
@@ -189,7 +199,7 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
             if (isAcceptable(mapping.first, mapping.second))
                 verifiedList.add(mapping);
         }
-        while (verifiedList.size() > 0) {
+        while (!verifiedList.isEmpty()) {
             var mapping = verifiedList.remove(0);
             if (!(srcIgnored.contains(mapping.first) || dstIgnored.contains(mapping.second)))
             {

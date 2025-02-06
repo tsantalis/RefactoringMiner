@@ -440,18 +440,18 @@ As of **February 4, 2025** the precision and recall of RefactoringMiner on this 
 **Commit dates**: March 28, 2024
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **February 4, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **February 6, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|2979  | 255  | 396  | 0.921  | 0.883|
+|**Total**|2987  | 253  | 387  | 0.922  | 0.885|
 |Extract Method|328  | 25  | 37  | 0.929  | 0.899|
 |Rename Class|228  |  2  |  4  | 0.991  | 0.983|
 |Move Attribute|69  |  3  | 11  | 0.958  | 0.863|
-|Move And Rename Attribute| 2  |  0  |  6  | 1.000  | 0.250|
+|Move And Rename Attribute| 4  |  0  |  4  | 1.000  | 0.500|
 |Rename Method|272  | 23  | 25  | 0.922  | 0.916|
 |Inline Method|63  |  9  |  6  | 0.875  | 0.913|
-|Move Method|259  |  7  |  9  | 0.974  | 0.966|
+|Move Method|260  |  7  |  8  | 0.974  | 0.970|
 |Move And Rename Method|18  |  6  | 10  | 0.750  | 0.643|
 |Pull Up Method|40  |  3  |  9  | 0.930  | 0.816|
 |Move Class|137  | 11  |  4  | 0.926  | 0.972|
@@ -462,14 +462,14 @@ As of **February 4, 2025** the precision and recall of RefactoringMiner on this 
 |Extract Interface|16  |  2  |  0  | 0.889  | 1.000|
 |Extract Superclass| 7  |  2  |  0  | 0.778  | 1.000|
 |Extract Subclass| 3  |  0  |  6  | 1.000  | 0.333|
-|Extract Class|38  |  2  | 14  | 0.950  | 0.731|
-|Extract And Move Method|97  | 27  | 23  | 0.782  | 0.808|
+|Extract Class|40  |  2  | 11  | 0.952  | 0.784|
+|Extract And Move Method|99  | 25  | 21  | 0.798  | 0.825|
 |Move And Inline Method|17  |  7  | 13  | 0.708  | 0.567|
 |Extract Variable|228  | 21  | 53  | 0.916  | 0.811|
 |Inline Variable|75  | 12  | 47  | 0.862  | 0.615|
 |Rename Variable|254  | 33  | 32  | 0.885  | 0.888|
 |Rename Attribute|101  |  6  | 15  | 0.944  | 0.871|
-|Change Return Type|152  |  9  | 28  | 0.944  | 0.844|
+|Change Return Type|153  |  9  | 27  | 0.944  | 0.850|
 |Change Variable Type|350  | 39  | 18  | 0.900  | 0.951|
 |Change Attribute Type|158  |  3  |  9  | 0.981  | 0.946|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|

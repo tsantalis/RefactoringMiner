@@ -3480,6 +3480,8 @@ public class UMLModelDiff {
 			detectInterfaceChanges(classDiff, packageRefactorings);
 		}
 		Map<Pair<UMLAbstractClass, UMLAbstractClass>, List<MoveOperationRefactoring>> classPairsBasedOnMovedMethods = new LinkedHashMap<>();
+		Map<Pair<UMLAbstractClass, UMLAbstractClass>, List<ExtractOperationRefactoring>> extractedClassPairsBasedOnMovedMethods = new LinkedHashMap<>();
+		Map<Pair<UMLAbstractClass, UMLAbstractClass>, List<MoveAttributeRefactoring>> extractedClassPairsBasedOnMovedAttributes = new LinkedHashMap<>();
 		for(Refactoring r : refactorings) {
 			UMLOperationBodyMapper bodyMapper = null;
 			if(r.getRefactoringType().equals(RefactoringType.MOVE_AND_RENAME_OPERATION) || r.getRefactoringType().equals(RefactoringType.MOVE_OPERATION)) {
@@ -3499,9 +3501,38 @@ public class UMLModelDiff {
 					}
 				}
 			}
+			else if(r instanceof MoveAttributeRefactoring) {
+				MoveAttributeRefactoring move = (MoveAttributeRefactoring)r;
+				UMLAbstractClass parentClass = findClassInParentModel(move.getOriginalAttribute().getClassName());
+				UMLAbstractClass childClass = findClassInChildModel(move.getMovedAttribute().getClassName());
+				if(!removedClasses.contains(parentClass) && addedClasses.contains(childClass)) {
+					Pair<UMLAbstractClass, UMLAbstractClass> pair = Pair.of(parentClass, childClass);
+					if(extractedClassPairsBasedOnMovedAttributes.containsKey(pair)) {
+						extractedClassPairsBasedOnMovedAttributes.get(pair).add(move);
+					}
+					else {
+						List<MoveAttributeRefactoring> list = new ArrayList<>();
+						list.add(move);
+						extractedClassPairsBasedOnMovedAttributes.put(pair, list);
+					}
+				}
+			}
 			else if(r.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
 				ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
 				bodyMapper = extract.getBodyMapper();
+				UMLAbstractClass parentClass = findClassInParentModel(extract.getSourceOperationBeforeExtraction().getClassName());
+				UMLAbstractClass childClass = findClassInChildModel(extract.getExtractedOperation().getClassName());
+				if(!removedClasses.contains(parentClass) && addedClasses.contains(childClass)) {
+					Pair<UMLAbstractClass, UMLAbstractClass> pair = Pair.of(parentClass, childClass);
+					if(extractedClassPairsBasedOnMovedMethods.containsKey(pair)) {
+						extractedClassPairsBasedOnMovedMethods.get(pair).add(extract);
+					}
+					else {
+						List<ExtractOperationRefactoring> list = new ArrayList<>();
+						list.add(extract);
+						extractedClassPairsBasedOnMovedMethods.put(pair, list);
+					}
+				}
 			}
 			if(bodyMapper != null && bodyMapper.getNonMappedLeavesT1().size() > 0 && bodyMapper.getNonMappedLeavesT2().size() > 0) {
 				for(AbstractCodeFragment fragment1 : bodyMapper.getNonMappedLeavesT1()) {
@@ -3531,6 +3562,17 @@ public class UMLModelDiff {
 			}
 		}
 		if(!partialModel()) {
+			for(Pair<UMLAbstractClass, UMLAbstractClass> pair : extractedClassPairsBasedOnMovedMethods.keySet()) {
+				UMLAbstractClass parentClass = pair.getLeft();
+				UMLAbstractClass childClass = pair.getRight();
+				UMLClassBaseDiff classDiff = getUMLClassDiff(parentClass.getName());
+				if(classDiff != null && extractedClassPairsBasedOnMovedAttributes.containsKey(pair)) {
+					ExtractClassRefactoring extractClassRefactoring = new ExtractClassRefactoring((UMLClass)childClass, classDiff, Collections.emptyMap(), Collections.emptyMap(), null);
+					if(!refactorings.contains(extractClassRefactoring)) {
+						refactorings.add(extractClassRefactoring);
+					}
+				}
+			}
 			for(Pair<UMLAbstractClass, UMLAbstractClass> pair : classPairsBasedOnMovedMethods.keySet()) {
 				List<MoveOperationRefactoring> refs = classPairsBasedOnMovedMethods.get(pair);
 				UMLAbstractClass parentClass = pair.getLeft();

@@ -319,30 +319,29 @@ public class TestRelatedStatementMappingsTest {
     @ParameterizedTest
     @CsvSource({
             //Replace Class Fixture with Method Fixture
-            //"https://github.com/apache/druid.git, 76cb06a8d8161d29d985ef048b89e6a82b489058, druid-76cb06a8d8161d29d985ef048b89e6a82b489058.txt",
-            //"https://github.com/apache/hadoop.git, 2f6bc250443c8d6fa6f18aab256c2ac8e585983b, hadoop-2f6bc250443c8d6fa6f18aab256c2ac8e585983b.txt",
-            //"https://github.com/apache/hadoop.git, 4334976187100afe3be499d63ead8f17f09f8a14, hadoop-4334976187100afe3be499d63ead8f17f09f8a14.txt",
-            //"https://github.com/apache/hadoop.git, 699d4204977cff31ac689457b4b99317e3bdc0d3, hadoop-699d4204977cff31ac689457b4b99317e3bdc0d3.txt",
-            //"https://github.com/apache/hbase.git, 484ccb7af4d614429f77f0c14d9b14c6fe8c9e17, hbase-484ccb7af4d614429f77f0c14d9b14c6fe8c9e17.txt",
-            //"https://github.com/orientechnologies/orientdb.git, 04242466a2d96209105515f915cb673f4e98f83a, orientdb-04242466a2d96209105515f915cb673f4e98f83a.txt",
-            //"https://github.com/orientechnologies/orientdb.git, 279dd2c2120883ee157b924faa0af2fa1981f6a9, orientdb-279dd2c2120883ee157b924faa0af2fa1981f6a9.txt",
-            //"https://github.com/orientechnologies/orientdb.git, 2949af2283c5e43403c99221ab2ab971925e47c6, orientdb-2949af2283c5e43403c99221ab2ab971925e47c6.txt",
+            "https://github.com/apache/druid.git, 76cb06a8d8161d29d985ef048b89e6a82b489058, druid-76cb06a8d8161d29d985ef048b89e6a82b489058.txt", // FIXME: Duplicate of first "Replace Method Fixture with Class Fixture" example // FIXME: Takes ~3 min but passes
+            "https://github.com/apache/hadoop.git, 2f6bc250443c8d6fa6f18aab256c2ac8e585983b, hadoop-2f6bc250443c8d6fa6f18aab256c2ac8e585983b.txt",
+            "https://github.com/apache/hadoop.git, 4334976187100afe3be499d63ead8f17f09f8a14, hadoop-4334976187100afe3be499d63ead8f17f09f8a14.txt",
+            "https://github.com/apache/hadoop.git, 699d4204977cff31ac689457b4b99317e3bdc0d3, hadoop-699d4204977cff31ac689457b4b99317e3bdc0d3.txt",
+            "https://github.com/apache/hbase.git, 484ccb7af4d614429f77f0c14d9b14c6fe8c9e17, hbase-484ccb7af4d614429f77f0c14d9b14c6fe8c9e17.txt",
+            "https://github.com/orientechnologies/orientdb.git, 04242466a2d96209105515f915cb673f4e98f83a, orientdb-04242466a2d96209105515f915cb673f4e98f83a.txt",
+            "https://github.com/orientechnologies/orientdb.git, 279dd2c2120883ee157b924faa0af2fa1981f6a9, orientdb-279dd2c2120883ee157b924faa0af2fa1981f6a9.txt",
+            "https://github.com/orientechnologies/orientdb.git, 2949af2283c5e43403c99221ab2ab971925e47c6, orientdb-2949af2283c5e43403c99221ab2ab971925e47c6.txt",
             //Replace Method Fixture with Class Fixture
-            //"https://github.com/apache/druid.git, 76cb06a8d8161d29d985ef048b89e6a82b489058, druid-76cb06a8d8161d29d985ef048b89e6a82b489058.txt",
-            //"https://github.com/spring-projects/spring-integration.git, 0ead69529ea1fec992483c96f78c94e303eb6818, spring-integration-0ead69529ea1fec992483c96f78c94e303eb6818.txt",
+            //"https://github.com/apache/druid.git, 76cb06a8d8161d29d985ef048b89e6a82b489058, druid-76cb06a8d8161d29d985ef048b89e6a82b489058.txt", // FIXME: Duplicate of first "Replace Class Fixture with Method Fixture" example // FIXME: Takes ~3 min but passes
+            "https://github.com/spring-projects/spring-integration.git, 0ead69529ea1fec992483c96f78c94e303eb6818, spring-integration-0ead69529ea1fec992483c96f78c94e303eb6818.txt",
             //Categorize Test Method
-            //"https://github.com/debezium/debezium.git, 66bb7958604527aa975e72aa23be45163de39246, debezium-66bb7958604527aa975e72aa23be45163de39246.txt",
-            //"https://github.com/strimzi/strimzi-kafka-operator.git, 9ab848e76f4c0b0399fb556c9d853fcbdf1c55f1, strimzi-kafka-operator-9ab848e76f4c0b0399fb556c9d853fcbdf1c55f1.txt",
+            //"https://github.com/debezium/debezium.git, 66bb7958604527aa975e72aa23be45163de39246, debezium-66bb7958604527aa975e72aa23be45163de39246.txt", // FIXME: Categorize not detected
+            "https://github.com/strimzi/strimzi-kafka-operator.git, 9ab848e76f4c0b0399fb556c9d853fcbdf1c55f1, strimzi-kafka-operator-9ab848e76f4c0b0399fb556c9d853fcbdf1c55f1.txt",
     })
     public void testAddAndRemoveMethodAnnotationMappings(String url, String commit, String testResultFileName) throws Exception {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
             if (ref instanceof AddMethodAnnotationRefactoring) {
                 AddMethodAnnotationRefactoring addMethodAnnotationRefactoring = (AddMethodAnnotationRefactoring) ref;
-                mapperInfo(Collections.emptySet(), addMethodAnnotationRefactoring.getOperationBefore(), addMethodAnnotationRefactoring.getOperationAfter());
-            }
-            else if (ref instanceof RemoveMethodAnnotationRefactoring) {
+                mapperInfo(Set.of(Pair.of(null, addMethodAnnotationRefactoring.getAnnotation())), addMethodAnnotationRefactoring.getOperationBefore(), addMethodAnnotationRefactoring.getOperationAfter());
+            } else if (ref instanceof RemoveMethodAnnotationRefactoring) {
                 RemoveMethodAnnotationRefactoring removeMethodAnnotationRefactoring = (RemoveMethodAnnotationRefactoring) ref;
-                mapperInfo(Collections.emptySet(), removeMethodAnnotationRefactoring.getOperationBefore(), removeMethodAnnotationRefactoring.getOperationAfter());
+                mapperInfo(Set.of(Pair.of(removeMethodAnnotationRefactoring.getAnnotation(), null)), removeMethodAnnotationRefactoring.getOperationBefore(), removeMethodAnnotationRefactoring.getOperationAfter());
             }
         });
     }

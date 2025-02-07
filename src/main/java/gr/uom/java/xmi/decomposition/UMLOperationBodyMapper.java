@@ -6088,6 +6088,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 					AbstractCodeFragment leaf1 = leafIterator1.next();
 					if(!alreadyMatched1(leaf1)) {
+						List<AbstractCodeFragment> matchingLeaves1 = new ArrayList<>();
+						Set<AbstractCodeFragment> parents1 = new HashSet<>();
+						for(AbstractCodeFragment l1 : leaves1) {
+							if(l1.getString().equals(leaf1.getString())) {
+								matchingLeaves1.add(l1);
+								parents1.add(l1.getParent());
+							}
+						}
+						List<AbstractCodeFragment> matchingLeaves2 = new ArrayList<>();
+						Set<AbstractCodeFragment> parents2 = new HashSet<>();
+						for(AbstractCodeFragment l2 : leaves2) {
+							if(l2.getString().equals(leaf1.getString())) {
+								matchingLeaves2.add(l2);
+								parents2.add(l2.getParent());
+							}
+						}
+						boolean allMatchingLeaves1InMethodScope = parents1.size() == 1 && parents1.iterator().next() != null && parents1.iterator().next().getParent() == null;
+						boolean allMatchingLeaves2InMethodScope = parents2.size() == 1 && parents2.iterator().next() != null && parents2.iterator().next().getParent() == null;
+						if(matchingLeaves1.size() > matchingLeaves2.size() && matchingLeaves2.size() > 0 && !allMatchingLeaves1InMethodScope && !allMatchingLeaves2InMethodScope) {
+							processLeaves(matchingLeaves1, matchingLeaves2, parameterToArgumentMap, isomorphic);
+							continue;
+						}
 						TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
 						int matchCount = 0;
 						for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
@@ -6552,6 +6574,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 					AbstractCodeFragment leaf2 = leafIterator2.next();
 					if(!alreadyMatched2(leaf2)) {
+						List<AbstractCodeFragment> matchingLeaves1 = new ArrayList<>();
+						Set<AbstractCodeFragment> parents1 = new HashSet<>();
+						for(AbstractCodeFragment l1 : leaves1) {
+							if(l1.getString().equals(leaf2.getString())) {
+								matchingLeaves1.add(l1);
+								parents1.add(l1.getParent());
+							}
+						}
+						List<AbstractCodeFragment> matchingLeaves2 = new ArrayList<>();
+						Set<AbstractCodeFragment> parents2 = new HashSet<>();
+						for(AbstractCodeFragment l2 : leaves2) {
+							if(l2.getString().equals(leaf2.getString())) {
+								matchingLeaves2.add(l2);
+								parents2.add(l2.getParent());
+							}
+						}
+						boolean allMatchingLeaves1InMethodScope = parents1.size() == 1 && parents1.iterator().next() != null && parents1.iterator().next().getParent() == null;
+						boolean allMatchingLeaves2InMethodScope = parents2.size() == 1 && parents2.iterator().next() != null && parents2.iterator().next().getParent() == null;
+						if(matchingLeaves2.size() > matchingLeaves1.size() && matchingLeaves1.size() > 0 && !allMatchingLeaves1InMethodScope && !allMatchingLeaves2InMethodScope) {
+							processLeaves(matchingLeaves1, matchingLeaves2, parameterToArgumentMap, isomorphic);
+							continue;
+						}
 						TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
 						int matchCount = 0;
 						for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {

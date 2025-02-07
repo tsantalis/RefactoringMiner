@@ -52,7 +52,7 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/eclipse/eclipse-collections.git, f26addbce8e843f208805aa22f45dcfb6f8177f7, eclipse-collections-f26addbce8e843f208805aa22f45dcfb6f8177f7.txt",
             "https://github.com/EnMasseProject/enmasse.git, 5e0e683531b756ac62a497cca15ddb7211a34e24, enmasse-5e0e683531b756ac62a497cca15ddb7211a34e24.txt",
             "https://github.com/apache/clerezza.git, d77dbe2085ffa89b2a933637c5432d113b7432b8, clerezza-d77dbe2085ffa89b2a933637c5432d113b7432b8.txt",
-            "https://github.com/iluwatar/java-design-patterns.git, 6694d742a370e0f181530734481284de8d5dd8ef, java-design-patterns-6694d742a370e0f181530734481284de8d5dd8ef.txt",
+            "https://github.com/iluwatar/java-design-patterns.git, 6694d742a370e0f181530734481284de8d5dd8ef, java-design-patterns-6694d742a370e0f181530734481284de8d5dd8ef-assertThrows.txt",
             "https://github.com/LMAX-Exchange/disruptor.git, 340f23ef88a32ceb8341820c15bfd9537303219c, disruptor-340f23ef88a32ceb8341820c15bfd9537303219c.txt",
             "https://github.com/neo4j/neo4j.git, b44c62bcdd6f7218bc97dae183ea0f6587bacd29, neo4j-b44c62bcdd6f7218bc97dae183ea0f6587bacd29.txt",
             "https://github.com/RohanNagar/thunder.git, 48776d511a0152f7b9cbe4460c8967bdd5ec3dc4, thunder-48776d511a0152f7b9cbe4460c8967bdd5ec3dc4.txt",

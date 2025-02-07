@@ -239,15 +239,21 @@ public class TestRelatedStatementMappingsTest {
     @ParameterizedTest
     @CsvSource({
             //Split Fixture
-            //"https://github.com/apache/druid.git, da32e1ae534a99c29ff60c5535f2d4cb0e344a73, druid-da32e1ae534a99c29ff60c5535f2d4cb0e344a73.txt",
-            //"https://github.com/spring-projects/spring-integration.git, d5d954def737038a5982ca34ecc8f14610061090, spring-integration-d5d954def737038a5982ca34ecc8f14610061090.txt",
+            "https://github.com/apache/druid.git, da32e1ae534a99c29ff60c5535f2d4cb0e344a73, druid-da32e1ae534a99c29ff60c5535f2d4cb0e344a73.txt",
+            "https://github.com/spring-projects/spring-integration.git, d5d954def737038a5982ca34ecc8f14610061090, spring-integration-d5d954def737038a5982ca34ecc8f14610061090.txt",
     })
     public void testSplitFixturesMappings(String url, String commit, String testResultFileName) throws Exception {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
-                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
-                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
-                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            if (ref instanceof SplitOperationRefactoring) {
+                SplitOperationRefactoring splitOperationRefactoring = (SplitOperationRefactoring) ref;
+                for (UMLOperationBodyMapper methodMapping : splitOperationRefactoring.getMappers()) {
+                    mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
+                }
+            }
+            else if (ref instanceof MoveCodeRefactoring) {
+                MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) ref;
+                Set<AbstractCodeMapping> mapper = moveCodeRefactoring.getMappings();
+                mapperInfo(mapper, moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
             }
         });
     }

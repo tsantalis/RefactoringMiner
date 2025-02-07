@@ -150,31 +150,28 @@ public class TestRelatedStatementMappingsTest {
     @ParameterizedTest
     @CsvSource({
             //Inline Fixture
-            //"https://github.com/apache/hbase.git, 587f5bc11f9d5d37557baf36c7df110af860a95c, hbase-587f5bc11f9d5d37557baf36c7df110af860a95c.txt",
+            // This is actually two refactorings: one more complex (Replace before fixture with fixture utility method that is invoked in the test methods) and inline after fixture
+            "https://github.com/apache/hbase.git, 587f5bc11f9d5d37557baf36c7df110af860a95c, hbase-587f5bc11f9d5d37557baf36c7df110af860a95c-inline.txt",
     })
     public void testInlineFixtureMappings(String url, String commit, String testResultFileName) throws Exception {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
-                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
-                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
-                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            if (ref instanceof MoveCodeRefactoring) {
+                MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) ref;
+                Set<AbstractCodeMapping> mapper = moveCodeRefactoring.getMappings();
+                mapperInfo(mapper, moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
             }
-        });
-    }
-
-
-    @ParameterizedTest
-    @CsvSource({
-            //Introduce Equality Method
-            // https://github.com/JodaOrg/joda-time/commit/119f68ba20f38f7b4b9d676d4a7b787e5e005b89#diff-5e14db06a1f25c19b382fe8b5939c7e3378f81a60a0f21a76b156059fabfbdd6R323-L341
-            // "https://github.com/JodaOrg/joda-time.git, 119f68ba20f38f7b4b9d676d4a7b787e5e005b89, joda-time-119f68ba20f38f7b4b9d676d4a7b787e5e005b89.txt",
-    })
-    public void testIntroduceEqualityMethodMappings(String url, String commit, String testResultFileName) throws Exception {
-        testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
-                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
-                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
-                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            else if (ref instanceof RemoveMethodAnnotationRefactoring) {
+                RemoveMethodAnnotationRefactoring removeMethodAnnotationRefactoring = (RemoveMethodAnnotationRefactoring) ref;
+                UMLAnnotation annotation = removeMethodAnnotationRefactoring.getAnnotation();
+                if (Set.of("Before", "BeforeEach", "BeforeAll", "BeforeClass","After", "AfterEach", "AfterAll", "AfterClass").contains(annotation.getTypeName())) {
+                    mapperInfo(Set.of(Pair.of(annotation, null)), removeMethodAnnotationRefactoring.getOperationBefore(), removeMethodAnnotationRefactoring.getOperationAfter());
+                }
+            }
+            else if (ref instanceof InlineOperationRefactoring) { // FIXME: Expected Inline of "@After tearDown()" not detected (probably because fixture is not invoked through a method call)
+                InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) ref;
+                UMLOperationBodyMapper bodyMapper = inlineOperationRefactoring.getBodyMapper();
+                Set<AbstractCodeMapping> mapper = bodyMapper.getMappings();
+                mapperInfo(mapper, inlineOperationRefactoring.getInlinedOperation(), inlineOperationRefactoring.getTargetOperationAfterInline());
             }
         });
     }

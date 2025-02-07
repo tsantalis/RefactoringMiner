@@ -1,20 +1,17 @@
 package org.refactoringminer.test;
 
+import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
-import gr.uom.java.xmi.diff.AddClassAnnotationRefactoring;
-import gr.uom.java.xmi.diff.AddMethodAnnotationRefactoring;
-import gr.uom.java.xmi.diff.AssertThrowsRefactoring;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
+import gr.uom.java.xmi.diff.*;
 
-import gr.uom.java.xmi.diff.MoveCodeRefactoring;
-import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
-import gr.uom.java.xmi.diff.RemoveClassAnnotationRefactoring;
-import gr.uom.java.xmi.diff.RemoveMethodAnnotationRefactoring;
-import gr.uom.java.xmi.diff.RenameClassRefactoring;
-import gr.uom.java.xmi.diff.RenameOperationRefactoring;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,6 +24,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -85,16 +83,26 @@ public class TestRelatedStatementMappingsTest {
     @ParameterizedTest
     @CsvSource({
             //Custom Runner
-            //"https://github.com/apache/iceberg.git, fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b, iceberg-fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b.txt",
-            //"https://github.com/apache/hadoop.git, 5c61ad24887f76dfc5a5935b2c5dceb6bfd99417, hadoop-5c61ad24887f76dfc5a5935b2c5dceb6bfd99417.txt",
-            //"https://github.com/mapstruct/mapstruct.git, 293a12d7ffa22c29ad3f2d433b6e420514e29a8b, mapstruct-293a12d7ffa22c29ad3f2d433b6e420514e29a8b.txt",
+            "https://github.com/apache/iceberg.git, fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b, iceberg-fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b-runner.txt",
+            "https://github.com/apache/hadoop.git, 5c61ad24887f76dfc5a5935b2c5dceb6bfd99417, hadoop-5c61ad24887f76dfc5a5935b2c5dceb6bfd99417.txt", // TODO: Takes ~10 min but passes
+            "https://github.com/mapstruct/mapstruct.git, 293a12d7ffa22c29ad3f2d433b6e420514e29a8b, mapstruct-293a12d7ffa22c29ad3f2d433b6e420514e29a8b.txt",
     })
     public void testCustomRunnerMappings(String url, String commit, String testResultFileName) throws Exception {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
-                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
-                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
-                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            if (ref instanceof AddClassAnnotationRefactoring) {
+                AddClassAnnotationRefactoring addClassAnnotationRefactoring = (AddClassAnnotationRefactoring) ref;
+                UMLAnnotation annotation = addClassAnnotationRefactoring.getAnnotation();
+                if (Set.of("RunWith", "ExtendWith").contains(annotation.getTypeName())) {
+                    mapperInfo(Set.of(Pair.of(null,annotation)), addClassAnnotationRefactoring.getClassBefore(), addClassAnnotationRefactoring.getClassAfter());
+                }
+            }
+            else if (ref instanceof ModifyClassAnnotationRefactoring) {
+                ModifyClassAnnotationRefactoring modifyClassAnnotationRefactoring = (ModifyClassAnnotationRefactoring) ref;
+                UMLAnnotation annotationAfter = modifyClassAnnotationRefactoring.getAnnotationAfter();
+                if (Set.of("RunWith", "ExtendWith").contains(annotationAfter.getTypeName())) {
+                    UMLAnnotation annotationBefore = modifyClassAnnotationRefactoring.getAnnotationBefore();
+                    mapperInfo(Set.of(Pair.of(annotationBefore,annotationAfter)), modifyClassAnnotationRefactoring.getClassBefore(), modifyClassAnnotationRefactoring.getClassAfter());
+                }
             }
         });
     }
@@ -493,13 +501,54 @@ public class TestRelatedStatementMappingsTest {
         assertHasSameElementsAs(expected, actual, lazyErrorMessage);
     }
 
-    private <T> void mapperInfo(Set<AbstractCodeMapping> mappings, T operationBefore, T operationAfter) {
-        actual.add(operationBefore + " -> " + operationAfter);
-        for(AbstractCodeMapping mapping : mappings) {
-            if(mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression)
-                continue;
-            String line = mapping.getFragment1().getLocationInfo() + "==" + mapping.getFragment2().getLocationInfo();
-            actual.add(line);
+    private <T, Y> void mapperInfo(Set<Y> mappings, T before, T after) {
+        actual.add(before + " -> " + after);
+        for (var mapping : mappings) {
+            if (mapping instanceof AbstractCodeMapping) {
+                if (!mapperInfo((AbstractCodeMapping) mapping)) {
+                    continue;
+                }
+            } else if (mapping instanceof Pair) {
+                if (!mapperInfo((Pair) mapping)) {
+                    continue;
+                }
+            } else if (mapping instanceof AbstractCodeFragment) {
+                if (!mapperInfo((AbstractCodeFragment) mapping)) {
+                    continue;
+                }
+            }
+            else {
+                throw new IllegalArgumentException("Invalid mapping type: " + mapping.getClass());
+            }
         }
+    }
+
+    private boolean mapperInfo(Pair mapping) {
+        String line;
+        if (mapping.getLeft() instanceof LeafExpression && mapping.getRight() instanceof LeafExpression)
+            return false;
+        if (mapping.getLeft() instanceof LocationInfoProvider && mapping.getRight() instanceof LocationInfoProvider) {
+            line = ((LocationInfoProvider) mapping.getLeft()).getLocationInfo() + "==" + ((LocationInfoProvider) mapping.getRight()).getLocationInfo();
+        } else {
+            line = mapping.getLeft() + "==" + mapping.getRight();
+        }
+        actual.add(line);
+        return true;
+    }
+
+    private boolean mapperInfo(AbstractCodeMapping mapping) {
+        if (mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression)
+            return false;
+        String line = mapping.getFragment1().getLocationInfo() + "==" + mapping.getFragment2().getLocationInfo();
+        actual.add(line);
+        return true;
+    }
+
+    private boolean mapperInfo(AbstractCodeFragment component) {
+        if (component instanceof LeafExpression)
+            return false;
+        String line = component.getLocationInfo().toString();
+        actual.add(line);
+        return true;
     }
 }

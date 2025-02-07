@@ -262,15 +262,25 @@ public class TestRelatedStatementMappingsTest {
     @ParameterizedTest
     @CsvSource({
             //Merge Fixture
-            //"https://github.com/apache/hadoop.git, 973987089090b428ae34a86926c8ef8ebca45aa5, hadoop-973987089090b428ae34a86926c8ef8ebca45aa5.txt",
-            //"https://github.com/apache/hbase.git, 587f5bc11f9d5d37557baf36c7df110af860a95c, hbase-587f5bc11f9d5d37557baf36c7df110af860a95c.txt",
+            "https://github.com/apache/hadoop.git, 973987089090b428ae34a86926c8ef8ebca45aa5, hadoop-973987089090b428ae34a86926c8ef8ebca45aa5.txt",
+            "https://github.com/apache/hbase.git, 587f5bc11f9d5d37557baf36c7df110af860a95c, hbase-587f5bc11f9d5d37557baf36c7df110af860a95c-merge.txt",
     })
     public void testMergeFixtureMappings(String url, String commit, String testResultFileName) throws Exception {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
-                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
-                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
-                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            if (ref instanceof MergeOperationRefactoring) {
+                MergeOperationRefactoring mergeOperationRefactoring = (MergeOperationRefactoring) ref;
+                for (UMLOperationBodyMapper methodMapping : mergeOperationRefactoring.getMappers()) {
+                    mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
+                }
+            }
+            else if (ref instanceof MoveCodeRefactoring) {
+                MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) ref;
+                Set<AbstractCodeMapping> mapper = moveCodeRefactoring.getMappings();
+                mapperInfo(mapper, moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+            }
+        });
+    }
+
             }
         });
     }

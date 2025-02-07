@@ -108,8 +108,12 @@ public class UMLCommentListDiff {
 		}
 		groupsBefore.removeAll(groupsBeforeToBeRemoved);
 		groupsAfter.removeAll(groupsAfterToBeRemoved);
-		if(!(allRemainingCommentsBelongToGroups(deletedComments, groupsBefore) && allRemainingCommentsBelongToGroups(addedComments, groupsAfter)) ||
+		boolean allRemainingCommentsBelongToGroups = allRemainingCommentsBelongToGroups(deletedComments, groupsBefore) && allRemainingCommentsBelongToGroups(addedComments, groupsAfter);
+		if(!allRemainingCommentsBelongToGroups ||
 				(groupsBeforeSize <= 1 && groupsAfterSize <= 1)) {
+			processRemainingComments(deletedComments, addedComments);
+		}
+		else if(allRemainingCommentsBelongToGroups && groupsBeforeSize != groupsAfterSize && (groupsBeforeSize <= 1 || groupsAfterSize <= 1)) {
 			processRemainingComments(deletedComments, addedComments);
 		}
 		else {

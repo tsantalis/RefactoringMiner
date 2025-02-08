@@ -59,16 +59,16 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/RohanNagar/thunder.git, 48776d511a0152f7b9cbe4460c8967bdd5ec3dc4, thunder-48776d511a0152f7b9cbe4460c8967bdd5ec3dc4.txt",
             "https://github.com/SAP/olingo-jpa-processor-v4.git, 5e77141293d32b015a92e48d099195840f2b2e87, olingo-jpa-processor-v4-5e77141293d32b015a92e48d099195840f2b2e87.txt",
             "https://github.com/zalando/problem.git, 1b987b88ecb5cc2c8df58ac8eda188fb2d6f5998, problem-1b987b88ecb5cc2c8df58ac8eda188fb2d6f5998.txt",
-            //"https://github.com/apache/plc4x.git, 86da20c173ad291e5f3d5fe4c56f37d7f3c2c538, plc4x-86da20c173ad291e5f3d5fe4c56f37d7f3c2c538.txt", // FIXME: JUnit 5 to AssertJ expected exception not supported
-            //"https://github.com/assertj/assertj-swing.git, 033bdd7832ca9a9647c8f7b7ecaa985d3115b206, assertj-swing-033bdd7832ca9a9647c8f7b7ecaa985d3115b206.txt", // FIXME: TestNG to JUnit 4 expected exception not supported
-            //"https://github.com/alexruiz/fest-swing-1.x.git, 033bdd7832ca9a9647c8f7b7ecaa985d3115b206, fest-swing-1.x-033bdd7832ca9a9647c8f7b7ecaa985d3115b206.txt", // FIXME: TestNG to JUnit 4 expected exception not supported
-            //"https://github.com/apache/flink.git, 2c5bc580e6c10fb3a2724a945847b5cc6b28df27, flink-2c5bc580e6c10fb3a2724a945847b5cc6b28df27.txt", // FIXME: JUnit 4 to AssertJ expected exception not supported
-            //"https://github.com/apache/flink.git, 95c3499ea80d07c448c297e36fa5a1b5b4caea2b, flink-95c3499ea80d07c448c297e36fa5a1b5b4caea2b.txt", // FIXME: JUnit 4 to AssertJ expected exception not supported
-            //"https://github.com/apache/cassandra-java-driver.git, 7d962af9291f69f0da6115375efd5bd5224a2353, cassandra-java-driver-7d962af9291f69f0da6115375efd5bd5224a2353.txt", // FIXME: TestNG to JUnit 4 expected exception not supported
-            //"https://github.com/OpenGamma/Strata.git, e007f826c49075500def8638de8367960c054c19, Strata-e007f826c49075500def8638de8367960c054c19.txt", // FIXME: TestNG to AssertJ expected exception not supported
-            //"https://github.com/rapidoid/rapidoid.git, 8596c1d82e9f0a36f40cd7ec393c6829e697836d, rapidoid-8596c1d82e9f0a36f40cd7ec393c6829e697836d.txt", // FIXME: TestNG to JUnit 4 expected exception not supported
-            //"https://github.com/zanata/zanata-platform.git, 0297e0513ac1f487f1570b1cc38979a73ac97da8, zanata-platform-0297e0513ac1f487f1570b1cc38979a73ac97da8.txt", // FIXME: TestNG to JUnit 4 expected exception not supported
-            // "https://github.com/apache/commons-math.git, 5fbeb731b9d26a6f340fd3772e86cd23ba61c65a, commons-math-5fbeb731b9d26a6f340fd3772e86cd23ba61c65a.txt", // FIXME: try-fail-catch to JUnit 4 expected exception not supported
+            "https://github.com/apache/plc4x.git, 86da20c173ad291e5f3d5fe4c56f37d7f3c2c538, plc4x-86da20c173ad291e5f3d5fe4c56f37d7f3c2c538.txt", // FIXME: JUnit 5 to AssertJ expected exception not supported
+            "https://github.com/assertj/assertj-swing.git, 033bdd7832ca9a9647c8f7b7ecaa985d3115b206, assertj-swing-033bdd7832ca9a9647c8f7b7ecaa985d3115b206.txt", // FIXME: TestNG to JUnit 4 expected exception not supported
+            "https://github.com/alexruiz/fest-swing-1.x.git, 033bdd7832ca9a9647c8f7b7ecaa985d3115b206, fest-swing-1.x-033bdd7832ca9a9647c8f7b7ecaa985d3115b206.txt", // FIXME: TestNG to JUnit 4 expected exception not supported
+            "https://github.com/apache/flink.git, 2c5bc580e6c10fb3a2724a945847b5cc6b28df27, flink-2c5bc580e6c10fb3a2724a945847b5cc6b28df27.txt", // FIXME: JUnit 4 to AssertJ expected exception not supported
+            "https://github.com/apache/flink.git, 95c3499ea80d07c448c297e36fa5a1b5b4caea2b, flink-95c3499ea80d07c448c297e36fa5a1b5b4caea2b.txt", // FIXME: JUnit 4 to AssertJ expected exception not supported
+            "https://github.com/apache/cassandra-java-driver.git, 7d962af9291f69f0da6115375efd5bd5224a2353, cassandra-java-driver-7d962af9291f69f0da6115375efd5bd5224a2353.txt", // FIXME: TestNG to JUnit 4 expected exception not supported
+            "https://github.com/OpenGamma/Strata.git, e007f826c49075500def8638de8367960c054c19, Strata-e007f826c49075500def8638de8367960c054c19-assertthrows.txt", // FIXME: TestNG to AssertJ expected exception not supported
+            "https://github.com/rapidoid/rapidoid.git, 8596c1d82e9f0a36f40cd7ec393c6829e697836d, rapidoid-8596c1d82e9f0a36f40cd7ec393c6829e697836d.txt", // FIXME: TestNG to JUnit 4 expected exception not supported
+            "https://github.com/zanata/zanata-platform.git, 0297e0513ac1f487f1570b1cc38979a73ac97da8, zanata-platform-0297e0513ac1f487f1570b1cc38979a73ac97da8-assertthrows.txt", // FIXME: TestNG to JUnit 4 expected exception not supported
+            "https://github.com/apache/commons-math.git, 5fbeb731b9d26a6f340fd3772e86cd23ba61c65a, commons-math-5fbeb731b9d26a6f340fd3772e86cd23ba61c65a.txt", // FIXME: try-fail-catch to JUnit 4 expected exception not supported
     })
     public void testAssertThrowsMappings(String url, String commit, String testResultFileName) throws Exception {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {

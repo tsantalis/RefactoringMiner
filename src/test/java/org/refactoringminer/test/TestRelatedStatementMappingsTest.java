@@ -14,6 +14,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.refactoringminer.api.Refactoring;
@@ -484,47 +485,22 @@ public class TestRelatedStatementMappingsTest {
         });
     }
 
-
-    @ParameterizedTest
-    @CsvSource({
-            //Dependency-free test Parameterization
-            //https://github.com/neo4j-contrib/neo4j-apoc-procedures/commit/1bdf82988624ac5d1690ebab72769e540d4f8a01\#diff-f0e4b11273d5932e531d91cfddc79bb77d6c2df6f1ffd33338ab2adef2a32ed0L479-L484 //FIXME: Extract method para
-//            "https://github.com/neo4j-contrib/neo4j-apoc-procedures.git, 1bdf82988624ac5d1690ebab72769e540d4f8a01, neo4j-apoc-procedures-1bdf82988624ac5d1690ebab72769e540d4f8a01.txt",
-    })
-    public void testExtractMethodParameterizationMappings(String url, String commit, String testResultFileName) throws Exception {
-        testRefactoringMappings(url, commit, testResultFileName, ref -> {
-//            if (ref instanceof ExtractMethodParameterizationRefactoring) {
-//                ExtractMethodParameterizationRefactoring extractMethodParameterizationRefactoring = (ExtractMethodParameterizationRefactoring) ref;
-//                UMLOperationBodyMapper mapper = extractMethodParameterizationRefactoring.getBodyMapper();
-//                mapperInfo(mapper.getMappings(), extractMethodParameterizationRefactoring.getRemovedOperation(), extractMethodParameterizationRefactoring.getParameterizedTestOperation());
-//            }
-        });
-    }
-
-
+    @Disabled("All collected cases are edge cases that are not detected by the current implementation")
     @ParameterizedTest
     @CsvSource({
             //Parameterize Test with Framework support
             ////Extract Common Logic from Multiple Test Methods
-            //https://github.com/aws/aws-sdk-java-v2/commit/4236a962dc0ca45149845317caa144a1ba768c5f\#diff-dbf383f80fe3a0846f7f86ce408bf00833d2bcadcfc3ab9c5c7e9748ef651195R142-R152 //FIXME: JUnit 4 parameterization not supported
-//            "https://github.com/aws/aws-sdk-java-v2.git, 4236a962dc0ca45149845317caa144a1ba768c5f, aws-sdk-java-v2-4236a962dc0ca45149845317caa144a1ba768c5f.txt",
-            //https://github.com/Atrox/haikunatorjava/commit/42679988419b68dd51f0a7b3c045536b3c5ef37b\#diff-161ef28ad57970549bad30f620c3b35345ebb70a91089625355ab28cb7fd396dR38-R39 //FIXME: MethodSource not supported
-//            "https://github.com/Atrox/haikunatorjava.git, 42679988419b68dd51f0a7b3c045536b3c5ef37b, haikunatorjava-42679988419b68dd51f0a7b3c045536b3c5ef37b.txt",
-            //https://github.com/opentripplanner/OpenTripPlanner/commit/1abed1191c2df7a747ef21cd3b669c14d54c3011\#diff-0a253c285c48079d86cdeb9f1474dc5a893c7645d6a025cf079ebb8cf7e552dbR70 //FIXME: MethodSource not supported
-//            "https://github.com/opentripplanner/OpenTripPlanner.git, 1abed1191c2df7a747ef21cd3b669c14d54c3011, OpenTripPlanner-1abed1191c2df7a747ef21cd3b669c14d54c3011.txt",
-            //https://github.com/samtools/htsjdk/pull/890/commits/1734eb99e5dcf16d92febead5e1b62323e0b6199\#diff-172d0db48f6f958c0f8478d1170deca1af3468771e774df13b7f0dd2cdee3b62R52 //FIXME: TestNG not supported
-//            "https://github.com/samtools/htsjdk.git, 1734eb99e5dcf16d92febead5e1b62323e0b6199, htsjdk-1734eb99e5dcf16d92febead5e1b62323e0b6199.txt",
-            //https://github.com/apache/hbase/commit/2306820df8b41d9af5227465ee2cf9e18b8f0b5c\#diff-6fc776d37c5d92493b53b2c038b7941831d9bc7bab6b88e8b24086e6b4f664e8R42-R45 //FIXME: JUnit 4 parameterization not supported
-//            "https://github.com/apache/hbase.git, 2306820df8b41d9af5227465ee2cf9e18b8f0b5c, hbase-2306820df8b41d9af5227465ee2cf9e18b8f0b5c.txt",
+            "https://github.com/aws/aws-sdk-java-v2.git, 4236a962dc0ca45149845317caa144a1ba768c5f, aws-sdk-java-v2-4236a962dc0ca45149845317caa144a1ba768c5f.txt", //FIXME: JUnit 4 parameterization not supported
+            "https://github.com/Atrox/haikunatorjava.git, 42679988419b68dd51f0a7b3c045536b3c5ef37b, haikunatorjava-42679988419b68dd51f0a7b3c045536b3c5ef37b.txt", //FIXME: MethodSource not supported
+            "https://github.com/opentripplanner/OpenTripPlanner.git, 1abed1191c2df7a747ef21cd3b669c14d54c3011, OpenTripPlanner-1abed1191c2df7a747ef21cd3b669c14d54c3011.txt", //FIXME: MethodSource not supported
+            "https://github.com/samtools/htsjdk.git, 1734eb99e5dcf16d92febead5e1b62323e0b6199, htsjdk-1734eb99e5dcf16d92febead5e1b62323e0b6199.txt", //FIXME: TestNG not supported
+            "https://github.com/apache/hbase.git, 2306820df8b41d9af5227465ee2cf9e18b8f0b5c, hbase-2306820df8b41d9af5227465ee2cf9e18b8f0b5c.txt", //FIXME: JUnit 4 parameterization not supported
             ////Add Parameterized Test
-            //https://github.com/hapifhir/hapi-fhir/pull/5764/commits/ad470cff726d800cbf9baa49abd6a9a536781ec0\#diff-456de205adcfb6b3e03a55547215aa669d40704fec0c5c3a8aba7ac2930e718cR182-R209 //TODO: Should test addition of parameterized test be supported?
-//            "https://github.com/hapifhir/hapi-fhir/pull/5764.git, ad470cff726d800cbf9baa49abd6a9a536781ec0, hapi-fhir-pull-5764-ad470cff726d800cbf9baa49abd6a9a536781ec0.txt",
+            "https://github.com/hapifhir/hapi-fhir/pull/5764.git, ad470cff726d800cbf9baa49abd6a9a536781ec0, hapi-fhir-pull-5764-ad470cff726d800cbf9baa49abd6a9a536781ec0.txt", //TODO: Should test addition of parameterized test be supported?
             ////Merge Data Provider
-            //https://github.com/samtools/htsjdk/commit/17c4b9d29dc0ee7573d32e7364d36fc92e4b2493\#diff-56da12f258cc73f82e743f9b999c877ace1f479532ccc257251fe1e2c6d2a6abL136 //FIXME: Merge Data Provider not supported
-//            "https://github.com/samtools/htsjdk.git, 17c4b9d29dc0ee7573d32e7364d36fc92e4b2493, htsjdk-17c4b9d29dc0ee7573d32e7364d36fc92e4b2493.txt",
+            "https://github.com/samtools/htsjdk.git, 17c4b9d29dc0ee7573d32e7364d36fc92e4b2493, htsjdk-17c4b9d29dc0ee7573d32e7364d36fc92e4b2493.txt", //FIXME: Merge Data Provider not supported
             ////Multiple data and multiple algorithms become parameterized test with inheritance and fixture overrides
-            //https://github.com/apache/hadoop/commit/4d01dbda508691beb07a4c8bfe113ec568166ddc\#diff-74395b300d29565d1365fa8cf17a79893811ed63ae3546a3d29d76c9fe311381L50-R51 //FIXME: JUnit 4 parameterization not supported
-//            "https://github.com/apache/hadoop.git, 4d01dbda508691beb07a4c8bfe113ec568166ddc, hadoop-4d01dbda508691beb07a4c8bfe113ec568166ddc.txt",
+            "https://github.com/apache/hadoop.git, 4d01dbda508691beb07a4c8bfe113ec568166ddc, hadoop-4d01dbda508691beb07a4c8bfe113ec568166ddc.txt", //FIXME: JUnit 4 parameterization not supported
     })
     public void testParameterizedTestMappings(String url, String commit, String testResultFileName) throws Exception {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {

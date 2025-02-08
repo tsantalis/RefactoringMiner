@@ -180,21 +180,23 @@ public class TestRelatedStatementMappingsTest {
     @ParameterizedTest
     @CsvSource({
             //Split Test
-            // https://github.com/apache/commons-math/commit/5fbeb731b9d26a6f340fd3772e86cd23ba61c65a
-            // "https://github.com/apache/commons-math.git, 5fbeb731b9d26a6f340fd3772e86cd23ba61c65a, commons-math-5fbeb731b9d26a6f340fd3772e86cd23ba61c65a.txt",
-            // https://github.com/apache/commons-math/commit/09c8b57924bc90dfcf93aa35eb79a6bd752add1d
-            // "https://github.com/apache/commons-math.git, 09c8b57924bc90dfcf93aa35eb79a6bd752add1d, commons-math-09c8b57924bc90dfcf93aa35eb79a6bd752add1d.txt",
-            // https://github.com/apache/commons-math/commit/5ca553511dea61641f248f71be203b91f1682e95
-            // "https://github.com/apache/commons-math.git, 5ca553511dea61641f248f71be203b91f1682e95, commons-math-5ca553511dea61641f248f71be203b91f1682e95.txt",
-            // https://github.com/apache/commons-math/commit/9b08855c247eb7522fc4b25b8aaece2a0d58d990 // TODO: Verify if it's a split test because test is being copied to cover floats as doubles already are
-            // "https://github.com/apache/commons-math.git, 9b08855c247eb7522fc4b25b8aaece2a0d58d990, commons-math-9b08855c247eb7522fc4b25b8aaece2a0d58d990.txt",
+            "https://github.com/apache/commons-math.git, 5fbeb731b9d26a6f340fd3772e86cd23ba61c65a, commons-math-5fbeb731b9d26a6f340fd3772e86cd23ba61c65a.txt", // FIXME: Split not detected
+            "https://github.com/apache/commons-math.git, 09c8b57924bc90dfcf93aa35eb79a6bd752add1d, commons-math-09c8b57924bc90dfcf93aa35eb79a6bd752add1d.txt", // FIXME: Split not detected
+            "https://github.com/apache/commons-math.git, 5ca553511dea61641f248f71be203b91f1682e95, commons-math-5ca553511dea61641f248f71be203b91f1682e95.txt", // FIXME: Split not detected
+            "https://github.com/apache/commons-math.git, 9b08855c247eb7522fc4b25b8aaece2a0d58d990, commons-math-9b08855c247eb7522fc4b25b8aaece2a0d58d990-split.txt", // Empty as it should be: it's a copy-paste rather than a split
+            "https://github.com/apache/commons-math.git, de001e7bcf9acb761047bdcf40f48244f8b63642, commons-math-de001e7bcf9acb761047bdcf40f48244f8b63642-split.txt"
     })
     public void testSplitTestMappings(String url, String commit, String testResultFileName) throws Exception {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
-                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
-                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
-                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            if (ref instanceof SplitOperationRefactoring) {
+                SplitOperationRefactoring splitOperationRefactoring = (SplitOperationRefactoring) ref;
+                for (UMLOperationBodyMapper methodMapping : splitOperationRefactoring.getMappers()) {
+                    mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
+                }
+            } else if (ref instanceof MoveCodeRefactoring) {
+                MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) ref;
+                Set<AbstractCodeMapping> mapper = moveCodeRefactoring.getMappings();
+                mapperInfo(mapper, moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
             }
         });
     }

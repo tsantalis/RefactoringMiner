@@ -309,6 +309,7 @@ public class TestRelatedStatementMappingsTest {
     @CsvSource({
             //Minimize Fixture
             "https://github.com/apache/hbase.git, 587f5bc11f9d5d37557baf36c7df110af860a95c, hbase-587f5bc11f9d5d37557baf36c7df110af860a95c-minimize.txt",
+            "https://github.com/spring-projects/spring-integration.git, 7edc55f5bf0fce164dabc26f005cc8cb2d008100, spring-integration-7edc55f5bf0fce164dabc26f005cc8cb2d008100.txt", // FIXME: Impure refactoring too different from old code
     })
     public void testMinimizeFixture(String url, String commit, String testResultFileName) throws Exception {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
@@ -324,7 +325,7 @@ public class TestRelatedStatementMappingsTest {
     @ParameterizedTest
     @CsvSource({
             //Replace Class Fixture with Method Fixture
-            "https://github.com/apache/druid.git, 76cb06a8d8161d29d985ef048b89e6a82b489058, druid-76cb06a8d8161d29d985ef048b89e6a82b489058.txt", // FIXME: Duplicate of first "Replace Method Fixture with Class Fixture" example // FIXME: Takes ~3 min but passes
+            "https://github.com/apache/druid.git, 76cb06a8d8161d29d985ef048b89e6a82b489058, druid-76cb06a8d8161d29d985ef048b89e6a82b489058.txt", // It also has Replace Method Fixture with Class Fixture
             "https://github.com/apache/hadoop.git, 2f6bc250443c8d6fa6f18aab256c2ac8e585983b, hadoop-2f6bc250443c8d6fa6f18aab256c2ac8e585983b.txt",
             "https://github.com/apache/hadoop.git, 4334976187100afe3be499d63ead8f17f09f8a14, hadoop-4334976187100afe3be499d63ead8f17f09f8a14.txt",
             "https://github.com/apache/hadoop.git, 699d4204977cff31ac689457b4b99317e3bdc0d3, hadoop-699d4204977cff31ac689457b4b99317e3bdc0d3.txt",
@@ -333,10 +334,9 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/orientechnologies/orientdb.git, 279dd2c2120883ee157b924faa0af2fa1981f6a9, orientdb-279dd2c2120883ee157b924faa0af2fa1981f6a9.txt",
             "https://github.com/orientechnologies/orientdb.git, 2949af2283c5e43403c99221ab2ab971925e47c6, orientdb-2949af2283c5e43403c99221ab2ab971925e47c6.txt",
             //Replace Method Fixture with Class Fixture
-            //"https://github.com/apache/druid.git, 76cb06a8d8161d29d985ef048b89e6a82b489058, druid-76cb06a8d8161d29d985ef048b89e6a82b489058.txt", // FIXME: Duplicate of first "Replace Class Fixture with Method Fixture" example // FIXME: Takes ~3 min but passes
             "https://github.com/spring-projects/spring-integration.git, 0ead69529ea1fec992483c96f78c94e303eb6818, spring-integration-0ead69529ea1fec992483c96f78c94e303eb6818.txt",
             //Categorize Test Method
-            //"https://github.com/debezium/debezium.git, 66bb7958604527aa975e72aa23be45163de39246, debezium-66bb7958604527aa975e72aa23be45163de39246.txt", // FIXME: Categorize not detected
+            "https://github.com/debezium/debezium.git, 66bb7958604527aa975e72aa23be45163de39246, debezium-66bb7958604527aa975e72aa23be45163de39246.txt", // FIXME: Categorize not detected
             "https://github.com/strimzi/strimzi-kafka-operator.git, 9ab848e76f4c0b0399fb556c9d853fcbdf1c55f1, strimzi-kafka-operator-9ab848e76f4c0b0399fb556c9d853fcbdf1c55f1.txt",
     })
     public void testAddAndRemoveMethodAnnotationMappings(String url, String commit, String testResultFileName) throws Exception {
@@ -355,12 +355,12 @@ public class TestRelatedStatementMappingsTest {
     @ParameterizedTest
     @CsvSource({
             //Replace Test Annotation between Class and Method
-            //"https://github.com/FamilySearch/gedcomx-java.git, e6727ae0d1bc2ade6782c8d00398884644e00af, gedcomx-java-e6727ae0d1bc2ade6782c8d00398884644e00af.txt", // FIXME: Annotation replacement not detected (neither addition nor removal)
-            "https://github.com/OpenGamma/Strata.git, 1dd64e965041a1e3fb81adf8ce9156c451d8252b, Strata-1dd64e965041a1e3fb81adf8ce9156c451d8252b.txt",
+            "https://github.com/FamilySearch/gedcomx-java.git, e6727ae0d1bc2ade6782c8d00398884644e00af, gedcomx-java-e6727ae0d1bc2ade6782c8d00398884644e00af.txt", // FIXME: Annotation replacement not detected (neither addition nor removal)
+            "https://github.com/OpenGamma/Strata.git, 1dd64e965041a1e3fb81adf8ce9156c451d8252b, Strata-1dd64e965041a1e3fb81adf8ce9156c451d8252b-annotation.txt",
             "https://github.com/OpenGamma/Strata.git, 3ebc739351b45ac12712ad80852e49555e02929f, Strata-3ebc739351b45ac12712ad80852e49555e02929f.txt",
             "https://github.com/OpenGamma/Strata.git, 956bbd57300d1001bcbf3144b8dd36a6dc3f6e50, Strata-956bbd57300d1001bcbf3144b8dd36a6dc3f6e50.txt",
             "https://github.com/orientechnologies/orientdb.git, a8ac595e36c8b4c2c3069c365dcbed220726424d, orientdb-a8ac595e36c8b4c2c3069c365dcbed220726424d.txt",
-            "https://github.com/zanata/zanata-platform.git, 0297e0513ac1f487f1570b1cc38979a73ac97da8, zanata-platform-0297e0513ac1f487f1570b1cc38979a73ac97da8.txt",
+            "https://github.com/zanata/zanata-platform.git, 0297e0513ac1f487f1570b1cc38979a73ac97da8, zanata-platform-0297e0513ac1f487f1570b1cc38979a73ac97da8-annotation.txt",
     })
     public void testChangeTestAnnotationGranularityMappings(String url, String commit, String testResultFileName) throws Exception {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {

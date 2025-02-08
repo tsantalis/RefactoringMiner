@@ -205,17 +205,15 @@ public class TestRelatedStatementMappingsTest {
     @ParameterizedTest
     @CsvSource({
             //Specialize Expected Exception
-            // https://github.com/apache/commons-math/commit/c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65#diff-444112d11fbe4928db65f1d6e3ba3b71e8a6b38e4b483776c36d4e499df26626L100-R86
-            // "https://github.com/apache/commons-math.git, c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65, commons-math-c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65.txt",
-            // https://github.com/apache/commons-math/commit/de001e7bcf9acb761047bdcf40f48244f8b63642#diff-00bc0608c15e7526fefd4ae1691b997d37212cd2972f3e1c0419625c7477ae5eL132-R140
-            // "https://github.com/apache/commons-math.git, de001e7bcf9acb761047bdcf40f48244f8b63642, commons-math-de001e7bcf9acb761047bdcf40f48244f8b63642.txt",
+            "https://github.com/apache/commons-math.git, c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65, commons-math-c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65-specialize-exception.txt", // Misses refactoring when try block does not match
+            "https://github.com/apache/commons-math.git, de001e7bcf9acb761047bdcf40f48244f8b63642, commons-math-de001e7bcf9acb761047bdcf40f48244f8b63642-specialize-exception.txt", // FIXME: Misses all refactoring since try blocks do not match (Also a split test)
     })
     public void testSpecializeExpectedExceptionMappings(String url, String commit, String testResultFileName) throws Exception {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
-                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
-                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
-                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            if (ref instanceof ChangeVariableTypeRefactoring) {
+                ChangeVariableTypeRefactoring changeVariableTypeRefactoring = (ChangeVariableTypeRefactoring) ref;
+                Set<AbstractCodeMapping> mapper = changeVariableTypeRefactoring.getReferences();
+                mapperInfo(mapper, changeVariableTypeRefactoring.getOperationBefore(), changeVariableTypeRefactoring.getOperationAfter());
             }
         });
     }

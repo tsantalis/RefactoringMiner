@@ -1,0 +1,228 @@
+com.iluwatar.dao.DbCustomerDaoTest -> com.iluwatar.dao.DbCustomerDaoTest
+@RunWith(HierarchicalContextRunner.class)==null
+com.iluwatar.dao.InMemoryCustomerDaoTest -> com.iluwatar.dao.InMemoryCustomerDaoTest
+@RunWith(HierarchicalContextRunner.class)==null
+com.iluwatar.eip.aggregator.routes.AggregatorRouteTest -> com.iluwatar.eip.aggregator.routes.AggregatorRouteTest
+null==@ExtendWith(SpringExtension.class)
+com.iluwatar.eip.aggregator.routes.AggregatorRouteTest -> com.iluwatar.eip.aggregator.routes.AggregatorRouteTest
+@RunWith(SpringJUnit4ClassRunner.class)==null
+com.iluwatar.eip.splitter.routes.SplitterRouteTest -> com.iluwatar.eip.splitter.routes.SplitterRouteTest
+null==@ExtendWith(SpringExtension.class)
+com.iluwatar.eip.splitter.routes.SplitterRouteTest -> com.iluwatar.eip.splitter.routes.SplitterRouteTest
+@RunWith(SpringJUnit4ClassRunner.class)==null
+com.iluwatar.eip.wiretap.routes.WireTapRouteTest -> com.iluwatar.eip.wiretap.routes.WireTapRouteTest
+null==@ExtendWith(SpringExtension.class)
+com.iluwatar.eip.wiretap.routes.WireTapRouteTest -> com.iluwatar.eip.wiretap.routes.WireTapRouteTest
+@RunWith(SpringJUnit4ClassRunner.class)==null
+com.iluwatar.front.controller.CommandTest -> com.iluwatar.front.controller.CommandTest
+@RunWith(Parameterized.class)==null
+public data() : List<Object[]> -> package dataProvider() : List<Object[]>
+@Parameters==null
+public testDisplay() : void -> public testDisplay(request String, displayMessage String) : void
+null==@ParameterizedTest
+public testDisplay() : void -> public testDisplay(request String, displayMessage String) : void
+null==@MethodSource("dataProvider")
+public testDisplay() : void -> public testDisplay(request String, displayMessage String) : void
+@Test==null
+com.iluwatar.front.controller.FrontControllerTest -> com.iluwatar.front.controller.FrontControllerTest
+@RunWith(Parameterized.class)==null
+public data() : List<Object[]> -> package dataProvider() : List<Object[]>
+@Parameters==null
+public testDisplay() : void -> public testDisplay(command Command, displayMessage String) : void
+null==@ParameterizedTest
+public testDisplay() : void -> public testDisplay(command Command, displayMessage String) : void
+null==@MethodSource("dataProvider")
+public testDisplay() : void -> public testDisplay(command Command, displayMessage String) : void
+@Test==null
+com.iluwatar.front.controller.ViewTest -> com.iluwatar.front.controller.ViewTest
+@RunWith(Parameterized.class)==null
+public data() : List<Object[]> -> package dataProvider() : List<Object[]>
+@Parameters==null
+public testDisplay() : void -> public testDisplay(view View, displayMessage String) : void
+null==@ParameterizedTest
+public testDisplay() : void -> public testDisplay(view View, displayMessage String) : void
+null==@MethodSource("dataProvider")
+public testDisplay() : void -> public testDisplay(view View, displayMessage String) : void
+@Test==null
+com.iluwatar.intercepting.filter.FilterTest -> com.iluwatar.intercepting.filter.FilterTest
+@RunWith(Parameterized.class)==null
+public getTestData() : List<Object[]> -> package getTestData() : List<Object[]>
+@Parameters==null
+public testExecute() : void -> public testExecute(filter Filter, order Order, expectedResult String) : void
+null==@ParameterizedTest
+public testExecute() : void -> public testExecute(filter Filter, order Order, expectedResult String) : void
+null==@MethodSource("getTestData")
+public testExecute() : void -> public testExecute(filter Filter, order Order, expectedResult String) : void
+@Test==null
+public testNext() : void -> public testNext(filter Filter) : void
+null==@ParameterizedTest
+public testNext() : void -> public testNext(filter Filter) : void
+null==@MethodSource("getTestData")
+public testNext() : void -> public testNext(filter Filter) : void
+@Test==null
+public testInterpret() : void -> public testInterpret(first NumberExpression, second NumberExpression, result int) : void
+null==@ParameterizedTest
+public testInterpret() : void -> public testInterpret(first NumberExpression, second NumberExpression, result int) : void
+null==@MethodSource("expressionProvider")
+public testInterpret() : void -> public testInterpret(first NumberExpression, second NumberExpression, result int) : void
+@Test==null
+public testToString() : void -> public testToString(first NumberExpression, second NumberExpression) : void
+null==@ParameterizedTest
+public testToString() : void -> public testToString(first NumberExpression, second NumberExpression) : void
+null==@MethodSource("expressionProvider")
+public testToString() : void -> public testToString(first NumberExpression, second NumberExpression) : void
+@Test==null
+com.iluwatar.interpreter.MinusExpressionTest -> com.iluwatar.interpreter.MinusExpressionTest
+@RunWith(Parameterized.class)==null
+public data() : List<Object[]> -> public expressionProvider() : Stream<Arguments>
+@Parameters==null
+com.iluwatar.interpreter.MultiplyExpressionTest -> com.iluwatar.interpreter.MultiplyExpressionTest
+@RunWith(Parameterized.class)==null
+public data() : List<Object[]> -> public expressionProvider() : Stream<Arguments>
+@Parameters==null
+com.iluwatar.interpreter.NumberExpressionTest -> com.iluwatar.interpreter.NumberExpressionTest
+@RunWith(Parameterized.class)==null
+public data() : List<Object[]> -> public expressionProvider() : Stream<Arguments>
+@Parameters==null
+public testFromString() : void -> public testFromString(first NumberExpression) : void
+null==@ParameterizedTest
+public testFromString() : void -> public testFromString(first NumberExpression) : void
+null==@MethodSource("expressionProvider")
+public testFromString() : void -> public testFromString(first NumberExpression) : void
+@Test==null
+com.iluwatar.interpreter.PlusExpressionTest -> com.iluwatar.interpreter.PlusExpressionTest
+@RunWith(Parameterized.class)==null
+public data() : List<Object[]> -> public expressionProvider() : Stream<Arguments>
+@Parameters==null
+com.iluwatar.iterator.TreasureChestTest -> com.iluwatar.iterator.TreasureChestTest
+@RunWith(Parameterized.class)==null
+public data() : List<Object[]> -> public dataProvider() : List<Object[]>
+@Parameterized.Parameters==null
+public testIterator() : void -> public testIterator(expectedItem Item) : void
+null==@ParameterizedTest
+public testIterator() : void -> public testIterator(expectedItem Item) : void
+null==@MethodSource("dataProvider")
+public testIterator() : void -> public testIterator(expectedItem Item) : void
+@Test==null
+public testGetItems() : void -> public testGetItems(expectedItem Item) : void
+null==@ParameterizedTest
+public testGetItems() : void -> public testGetItems(expectedItem Item) : void
+null==@MethodSource("dataProvider")
+public testGetItems() : void -> public testGetItems(expectedItem Item) : void
+@Test==null
+com.iluwatar.mediator.PartyMemberTest -> com.iluwatar.mediator.PartyMemberTest
+@RunWith(Parameterized.class)==null
+public data() : Collection<Supplier<PartyMember>[]> -> package dataProvider() : Collection<Supplier<PartyMember>[]>
+@Parameterized.Parameters==null
+public testPartyAction() : void -> public testPartyAction(memberSupplier Supplier<PartyMember>) : void
+null==@ParameterizedTest
+public testPartyAction() : void -> public testPartyAction(memberSupplier Supplier<PartyMember>) : void
+null==@MethodSource("dataProvider")
+public testPartyAction() : void -> public testPartyAction(memberSupplier Supplier<PartyMember>) : void
+@Test==null
+public testAct() : void -> public testAct(memberSupplier Supplier<PartyMember>) : void
+null==@ParameterizedTest
+public testAct() : void -> public testAct(memberSupplier Supplier<PartyMember>) : void
+null==@MethodSource("dataProvider")
+public testAct() : void -> public testAct(memberSupplier Supplier<PartyMember>) : void
+@Test==null
+public testToString() : void -> public testToString(memberSupplier Supplier<PartyMember>) : void
+null==@ParameterizedTest
+public testToString() : void -> public testToString(memberSupplier Supplier<PartyMember>) : void
+null==@MethodSource("dataProvider")
+public testToString() : void -> public testToString(memberSupplier Supplier<PartyMember>) : void
+@Test==null
+com.iluwatar.observer.HobbitsTest -> com.iluwatar.observer.HobbitsTest
+@RunWith(Parameterized.class)==null
+public data() : Collection<Object[]> -> package dataProvider() : Collection<Object[]>
+@Parameterized.Parameters==null
+com.iluwatar.observer.OrcsTest -> com.iluwatar.observer.OrcsTest
+@RunWith(Parameterized.class)==null
+public data() : Collection<Object[]> -> package dataProvider() : Collection<Object[]>
+@Parameterized.Parameters==null
+public testObserver() : void -> public testObserver(weather WeatherType, response String) : void
+null==@ParameterizedTest
+public testObserver() : void -> public testObserver(weather WeatherType, response String) : void
+null==@MethodSource("dataProvider")
+public testObserver() : void -> public testObserver(weather WeatherType, response String) : void
+@Test==null
+com.iluwatar.observer.generic.GHobbitsTest -> com.iluwatar.observer.generic.GHobbitsTest
+@RunWith(Parameterized.class)==null
+public data() : Collection<Object[]> -> package dataProvider() : Collection<Object[]>
+@Parameterized.Parameters==null
+public testObserver() : void -> public testObserver(weather WeatherType, response String) : void
+null==@ParameterizedTest
+public testObserver() : void -> public testObserver(weather WeatherType, response String) : void
+null==@MethodSource("dataProvider")
+public testObserver() : void -> public testObserver(weather WeatherType, response String) : void
+@Test==null
+com.iluwatar.observer.generic.OrcsTest -> com.iluwatar.observer.generic.OrcsTest
+@RunWith(Parameterized.class)==null
+public data() : Collection<Object[]> -> package dataProvider() : Collection<Object[]>
+@Parameterized.Parameters==null
+com.iluwatar.prototype.PrototypeTest -> com.iluwatar.prototype.PrototypeTest
+@RunWith(Parameterized.class)==null
+public data() : Collection<Object[]> -> package dataProvider() : Collection<Object[]>
+@Parameterized.Parameters==null
+public testPrototype() : void -> public testPrototype(testedPrototype P, expectedToString String) : void
+null==@ParameterizedTest
+public testPrototype() : void -> public testPrototype(testedPrototype P, expectedToString String) : void
+null==@MethodSource("dataProvider")
+public testPrototype() : void -> public testPrototype(testedPrototype P, expectedToString String) : void
+@Test==null
+com.iluwatar.repository.AnnotationBasedRepositoryTest -> com.iluwatar.repository.AnnotationBasedRepositoryTest
+null==@ExtendWith(SpringExtension.class)
+com.iluwatar.repository.AnnotationBasedRepositoryTest -> com.iluwatar.repository.AnnotationBasedRepositoryTest
+@RunWith(SpringJUnit4ClassRunner.class)==null
+com.iluwatar.repository.AppConfigTest -> com.iluwatar.repository.AppConfigTest
+null==@ExtendWith(SpringExtension.class)
+com.iluwatar.repository.AppConfigTest -> com.iluwatar.repository.AppConfigTest
+@RunWith(SpringJUnit4ClassRunner.class)==null
+com.iluwatar.repository.RepositoryTest -> com.iluwatar.repository.RepositoryTest
+null==@ExtendWith(SpringExtension.class)
+com.iluwatar.repository.RepositoryTest -> com.iluwatar.repository.RepositoryTest
+@RunWith(SpringJUnit4ClassRunner.class)==null
+com.iluwatar.specification.creature.CreatureTest -> com.iluwatar.specification.creature.CreatureTest
+@RunWith(Parameterized.class)==null
+public data() : Collection<Object[]> -> public dataProvider() : Collection<Object[]>
+@Parameterized.Parameters==null
+public testGetName() : void -> public testGetName(testedCreature Creature, name String) : void
+null==@ParameterizedTest
+public testGetName() : void -> public testGetName(testedCreature Creature, name String) : void
+null==@MethodSource("dataProvider")
+public testGetName() : void -> public testGetName(testedCreature Creature, name String) : void
+@Test==null
+public testGetSize() : void -> public testGetSize(testedCreature Creature, name String, size Size) : void
+null==@ParameterizedTest
+public testGetSize() : void -> public testGetSize(testedCreature Creature, name String, size Size) : void
+null==@MethodSource("dataProvider")
+public testGetSize() : void -> public testGetSize(testedCreature Creature, name String, size Size) : void
+@Test==null
+public testGetMovement() : void -> public testGetMovement(testedCreature Creature, name String, size Size, movement Movement) : void
+null==@ParameterizedTest
+public testGetMovement() : void -> public testGetMovement(testedCreature Creature, name String, size Size, movement Movement) : void
+null==@MethodSource("dataProvider")
+public testGetMovement() : void -> public testGetMovement(testedCreature Creature, name String, size Size, movement Movement) : void
+@Test==null
+public testGetColor() : void -> public testGetColor(testedCreature Creature, name String, size Size, movement Movement, color Color) : void
+null==@ParameterizedTest
+public testGetColor() : void -> public testGetColor(testedCreature Creature, name String, size Size, movement Movement, color Color) : void
+null==@MethodSource("dataProvider")
+public testGetColor() : void -> public testGetColor(testedCreature Creature, name String, size Size, movement Movement, color Color) : void
+@Test==null
+public testToString() : void -> public testToString(testedCreature Creature, name String, size Size, movement Movement, color Color) : void
+null==@ParameterizedTest
+public testToString() : void -> public testToString(testedCreature Creature, name String, size Size, movement Movement, color Color) : void
+null==@MethodSource("dataProvider")
+public testToString() : void -> public testToString(testedCreature Creature, name String, size Size, movement Movement, color Color) : void
+@Test==null
+com.iluwatar.strategy.DragonSlayingStrategyTest -> com.iluwatar.strategy.DragonSlayingStrategyTest
+@RunWith(Parameterized.class)==null
+public data() : Collection<Object[]> -> package dataProvider() : Collection<Object[]>
+@Parameterized.Parameters==null
+public testExecute() : void -> public testExecute(strategy DragonSlayingStrategy, expectedResult String) : void
+null==@ParameterizedTest
+public testExecute() : void -> public testExecute(strategy DragonSlayingStrategy, expectedResult String) : void
+null==@MethodSource("dataProvider")
+public testExecute() : void -> public testExecute(strategy DragonSlayingStrategy, expectedResult String) : void
+@Test==null

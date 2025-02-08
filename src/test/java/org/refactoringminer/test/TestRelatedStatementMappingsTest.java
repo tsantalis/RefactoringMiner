@@ -424,32 +424,63 @@ public class TestRelatedStatementMappingsTest {
     @CsvSource({
             //Migrate Parameterize Test
             ////JUnit 4 to JUnit 5
-            //https://github.com/apache/flink/commit/9b61b137bdc7eff773847b84e5cde116e6280c1d\#diff-fee3864af45941babef4b4203cc7a3ab63d8169525294fe312ada685ecfe7536R44-R45
-            //"https://github.com/apache/flink.git, 9b61b137bdc7eff773847b84e5cde116e6280c1d, flink-9b61b137bdc7eff773847b84e5cde116e6280c1d.txt",
-            //https://github.com/iluwatar/java-design-patterns/commit/6694d742a370e0f181530734481284de8d5dd8ef\#diff-fc06a96ae3f8c74a33fd73f010b2b4a8fed2a28d8bafbca68d46a238d7e803b9L43-R72
-            //"https://github.com/iluwatar/java-design-patterns.git, 6694d742a370e0f181530734481284de8d5dd8ef, java-design-patterns-6694d742a370e0f181530734481284de8d5dd8ef.txt",
-            //https://github.com/pbauerochse/youtrack-worklog-viewer/commit/40cc4a7a11aa40e08ec710c18e9fadb566685133\#diff-de8432ee70e733ab13b79d5a62c3e56b28589c384b8640b01efdca406ee7915aL14-R17
-            //"https://github.com/pbauerochse/youtrack-worklog-viewer.git, 40cc4a7a11aa40e08ec710c18e9fadb566685133, youtrack-worklog-viewer-40cc4a7a11aa40e08ec710c18e9fadb566685133.txt",
+            "https://github.com/apache/flink.git, 9b61b137bdc7eff773847b84e5cde116e6280c1d, flink-9b61b137bdc7eff773847b84e5cde116e6280c1d.txt",
+            "https://github.com/iluwatar/java-design-patterns.git, 6694d742a370e0f181530734481284de8d5dd8ef, java-design-patterns-6694d742a370e0f181530734481284de8d5dd8ef-migrate-param.txt",
+            "https://github.com/pbauerochse/youtrack-worklog-viewer.git, 40cc4a7a11aa40e08ec710c18e9fadb566685133, youtrack-worklog-viewer-40cc4a7a11aa40e08ec710c18e9fadb566685133.txt",
             ////JUnit's Parameterize Test to JUnit 5 Test Template
-            //https://github.com/apache/iceberg/commit/fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b\#diff-a3068616e907309d18b95a88aae4b9db4fe16b7584e692a8273f14a32e34caf6L64-R78
-            //"https://github.com/apache/iceberg.git, fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b, iceberg-fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b.txt",
+            "https://github.com/apache/iceberg.git, fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b, iceberg-fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b-migrate-param.txt",
             ////TestNG to JUnit 5
-            //https://github.com/OpenGamma/Strata/commit/1dd64e965041a1e3fb81adf8ce9156c451d8252b\#diff-ef557375fb5658a618d5002aec0cfd529203c1b32ab3954a14b7e5d9520ba071L34-R45
-            //"https://github.com/OpenGamma/Strata.git, 1dd64e965041a1e3fb81adf8ce9156c451d8252b, Strata-1dd64e965041a1e3fb81adf8ce9156c451d8252b.txt",
-            //https://github.com/OpenGamma/Strata/commit/b2b9b629685ebc7e89e9a1667de88f2e878d5fc4\#diff-3cae15311f7a6ea527ec4f9480e313536f9247c6600d68681b252df2941c2291L223-R269
-            //"https://github.com/OpenGamma/Strata.git, b2b9b629685ebc7e89e9a1667de88f2e878d5fc4, Strata-b2b9b629685ebc7e89e9a1667de88f2e878d5fc4.txt",
-            //https://github.com/OpenGamma/Strata/commit/e007f826c49075500def8638de8367960c054c19\#diff-f09a23b88428f071822c7abad439ceee0f2a6f0002c787ecf09bc8bb37e7e260L24-R34
-            //"https://github.com/OpenGamma/Strata.git, e007f826c49075500def8638de8367960c054c19, Strata-e007f826c49075500def8638de8367960c054c19.txt",
-            //https://github.com/zanata/zanata-platform/commit/0297e0513ac1f487f1570b1cc38979a73ac97da8\#diff-92efe147ed87db2f7e02ffb8d358f2b0745c0552eff4f5d260d4295fedc6ee06L47-R52
-            //"https://github.com/zanata/zanata-platform.git, 0297e0513ac1f487f1570b1cc38979a73ac97da8, zanata-platform-0297e0513ac1f487f1570b1cc38979a73ac97da8.txt",
+            "https://github.com/OpenGamma/Strata.git, 1dd64e965041a1e3fb81adf8ce9156c451d8252b, Strata-1dd64e965041a1e3fb81adf8ce9156c451d8252b-migrate-param.txt",
+            "https://github.com/OpenGamma/Strata.git, b2b9b629685ebc7e89e9a1667de88f2e878d5fc4, Strata-b2b9b629685ebc7e89e9a1667de88f2e878d5fc4.txt", //TODO: Too slow
+            "https://github.com/OpenGamma/Strata.git, e007f826c49075500def8638de8367960c054c19, Strata-e007f826c49075500def8638de8367960c054c19-migrate-param.txt",
+            "https://github.com/zanata/zanata-platform.git, 0297e0513ac1f487f1570b1cc38979a73ac97da8, zanata-platform-0297e0513ac1f487f1570b1cc38979a73ac97da8-migrate-param.txt",
     })
     public void testParameterizedTestMigrationMappings(String url, String commit, String testResultFileName) throws Exception {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-//            if (ref instanceof ParameterizeTestMigrationRefactoring) {
-//                ParameterizeTestMigrationRefactoring parameterizedTestMigrationRefactoring = (ParameterizeTestMigrationRefactoring) ref;
-//                UMLOperationBodyMapper mapper = parameterizedTestMigrationRefactoring.getBodyMapper();
-//                mapperInfo(mapper.getMappings(), parameterizedTestMigrationRefactoring.getOperationBefore(), parameterizedTestMigrationRefactoring.getOperationAfter());
-//            }
+            UMLAnnotation annotation = null;
+            Object before = null;
+            Object after = null;
+            Set<Pair<UMLAnnotation, UMLAnnotation>> annotations = new HashSet<>();
+            if (ref instanceof AddMethodAnnotationRefactoring) {
+                AddMethodAnnotationRefactoring addMethodAnnotationRefactoring = (AddMethodAnnotationRefactoring) ref;
+                annotation = addMethodAnnotationRefactoring.getAnnotation();
+                annotations.add(Pair.of(null, annotation));
+                before = addMethodAnnotationRefactoring.getOperationBefore();
+                after = addMethodAnnotationRefactoring.getOperationAfter();
+            } else if (ref instanceof RemoveMethodAnnotationRefactoring) {
+                RemoveMethodAnnotationRefactoring removeMethodAnnotationRefactoring = (RemoveMethodAnnotationRefactoring) ref;
+                annotation = removeMethodAnnotationRefactoring.getAnnotation();
+                annotations.add(Pair.of(annotation, null));
+                before = removeMethodAnnotationRefactoring.getOperationBefore();
+                after = removeMethodAnnotationRefactoring.getOperationAfter();
+            } else if (ref instanceof AddClassAnnotationRefactoring) {
+                AddClassAnnotationRefactoring addClassAnnotationRefactoring = (AddClassAnnotationRefactoring) ref;
+                annotation = addClassAnnotationRefactoring.getAnnotation();
+                annotations.add(Pair.of(null, annotation));
+                before = addClassAnnotationRefactoring.getClassBefore();
+                after = addClassAnnotationRefactoring.getClassAfter();
+            } else if (ref instanceof RemoveClassAnnotationRefactoring) {
+                RemoveClassAnnotationRefactoring removeClassAnnotationRefactoring = (RemoveClassAnnotationRefactoring) ref;
+                annotation = removeClassAnnotationRefactoring.getAnnotation();
+                annotations.add(Pair.of(annotation, null));
+                before = removeClassAnnotationRefactoring.getClassBefore();
+                after = removeClassAnnotationRefactoring.getClassAfter();
+            } else if (ref instanceof AddAttributeAnnotationRefactoring) {
+                AddAttributeAnnotationRefactoring addAttributeAnnotationRefactoring = (AddAttributeAnnotationRefactoring) ref;
+                annotation = addAttributeAnnotationRefactoring.getAnnotation();
+                annotations.add(Pair.of(null, annotation));
+                before = addAttributeAnnotationRefactoring.getAttributeBefore();
+                after = addAttributeAnnotationRefactoring.getAttributeAfter();
+            } else if (ref instanceof RemoveAttributeAnnotationRefactoring) {
+                RemoveAttributeAnnotationRefactoring removeAttributeAnnotationRefactoring = (RemoveAttributeAnnotationRefactoring) ref;
+                annotation = removeAttributeAnnotationRefactoring.getAnnotation();
+                annotations.add(Pair.of(annotation, null));
+                before = removeAttributeAnnotationRefactoring.getAttributeBefore();
+                after = removeAttributeAnnotationRefactoring.getAttributeAfter();
+            }
+            if (annotation != null && Set.of("RunWith", "Parameterized.Parameters", "ParameterizedTest", "Test", "Parameters", "Parameter", "DataProvider", "ExtendWith", "ValueSource", "NullSource", "EmptySource", "NullAndEmptySource", "EnumSource", "MethodSource", "FieldSource", "CsvSource", "CsvFileSource", "ArgumentsSource").contains(annotation.getTypeName())) {
+                mapperInfo(annotations, before, after);
+            }
         });
     }
 

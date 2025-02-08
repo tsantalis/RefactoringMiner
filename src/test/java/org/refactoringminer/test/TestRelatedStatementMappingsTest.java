@@ -111,36 +111,59 @@ public class TestRelatedStatementMappingsTest {
 
     @ParameterizedTest
     @CsvSource({
+            //Introduce Equality Method  // TODO: Completely new refactoring needed! Replace multiple property checks with a single assertEqual of the entire object
+             "https://github.com/JodaOrg/joda-time.git, 119f68ba20f38f7b4b9d676d4a7b787e5e005b89, joda-time-119f68ba20f38f7b4b9d676d4a7b787e5e005b89.txt", // FIXME: Replacements are one-to-one, not one-to-many. Thus, it might be hard to detect this refactoring
             //Consolidate Multiple Assertions into a Fluent Assertion
-            //"https://github.com/atlanmod/NeoEMF.git, 0188e9aa280b800710848d68a93af4cb28b050da, NeoEMF-0188e9aa280b800710848d68a93af4cb28b050da.txt",
-            //"https://github.com/cbeust/testng.git, 706dcf52c5df3591e7d9d49f0fb980f041fae385, testng-706dcf52c5df3591e7d9d49f0fb980f041fae385.txt",
-            //"https://github.com/dCache/dcache.git, 4a6e55f40f1c, dcache-4a6e55f40f1c.txt",
+             "https://github.com/cbeust/testng.git, 706dcf52c5df3591e7d9d49f0fb980f041fae385, testng-706dcf52c5df3591e7d9d49f0fb980f041fae385.txt", // FIXME: Missing fluent assertion replacements/mappings (InjectBeforeAndAfterMethodsWithTestResultSampleTest.java:46)
+             "https://github.com/dCache/dcache.git, 4a6e55f40f1c, dcache-4a6e55f40f1c.txt", // FIXME: Hamcrest assertion syntax not supported yet
+             "https://github.com/atlanmod/NeoEMF.git, 0188e9aa280b800710848d68a93af4cb28b050da, NeoEMF-0188e9aa280b800710848d68a93af4cb28b050da.txt", // FIXME: Hamcrest assertion syntax not supported yet
             //Replace assertTrue(Double.isInfinite(x)) with assertEqual(Double.POSITIVE_INFINITY, x)
-            // https://github.com/apache/commons-math/commit/9b08855c247eb7522fc4b25b8aaece2a0d58d990#diff-bbb50b2ecbb2476d2ea3356c41c967825732b0e037e1a50884c8d50b2b8b362aL1025-R1029
-            // "https://github.com/apache/commons-math.git, 9b08855c247eb7522fc4b25b8aaece2a0d58d990, commons-math-9b08855c247eb7522fc4b25b8aaece2a0d58d990.txt",
+            "https://github.com/apache/commons-math.git, 9b08855c247eb7522fc4b25b8aaece2a0d58d990, commons-math-9b08855c247eb7522fc4b25b8aaece2a0d58d990.txt",
     })
     public void testReplaceAssertionMappings(String url, String commit, String testResultFileName) throws Exception {
-        testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
-                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
-                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
-                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+        miner.detectAtCommitWithGitHubAPI(url, commit, new File(REPOS), new RefactoringHandler() {
+            @Override
+            public void handleModelDiff(String commitId, List<Refactoring> refactoringsAtRevision, UMLModelDiff modelDiff) {
+                super.handleModelDiff(commitId, refactoringsAtRevision, modelDiff);
+                for (UMLClassDiff umlClassDiff : modelDiff.getCommonClassDiffList()) {
+                    for (UMLOperationBodyMapper umlOperationBodyMapper : umlClassDiff.getOperationBodyMapperList()) {
+                        Set<Pair<LocationInfoProvider, LocationInfoProvider>> replacementMappings = new HashSet<>();
+                        boolean hasAssertionReplacement = false;
+                        for (Replacement replacement : umlOperationBodyMapper.getReplacements()) {
+                            switch (replacement.getType()) {
+                                case ASSERTION_CONVERSION:
+                                case METHOD_INVOCATION:
+                                case METHOD_INVOCATION_EXPRESSION:
+                                case METHOD_INVOCATION_NAME:
+                                case METHOD_INVOCATION_NAME_AND_ARGUMENT:
+                                case METHOD_INVOCATION_NAME_AND_EXPRESSION:
+                                    System.out.println(replacement.getType().toString());
+                            }
+                            if (replacement instanceof MethodInvocationReplacement) {
+                                MethodInvocationReplacement methodInvocationReplacement = (MethodInvocationReplacement) replacement;
+                                System.out.println(methodInvocationReplacement.getInvokedOperationBefore().getContainer().toQualifiedString());
+                                System.out.println(methodInvocationReplacement.getInvokedOperationAfter().getContainer().toQualifiedString());
+                                if (methodInvocationReplacement.getInvokedOperationAfter().getName().contains("assert") ||
+                                        methodInvocationReplacement.getInvokedOperationAfter().getName().contains("is") ||
+                                        methodInvocationReplacement.getInvokedOperationBefore().getName().contains("assert") ||
+                                        methodInvocationReplacement.getInvokedOperationBefore().getName().contains("is")) {
+                                    replacementMappings.add(Pair.of(methodInvocationReplacement.getInvokedOperationBefore().asLeafExpression(), methodInvocationReplacement.getInvokedOperationAfter().asLeafExpression()));
+                                    hasAssertionReplacement = true;
+                                }
+                            }
+                        }
+                        if (hasAssertionReplacement) {
+                            Set<AbstractCodeMapping> mapper = umlOperationBodyMapper.getMappings();
+                            mapperInfo(replacementMappings, umlOperationBodyMapper.getOperation1(), umlOperationBodyMapper.getOperation2());
+                        }
+
+                    }
+                }
             }
         });
-    }
-
-
-    @ParameterizedTest
-    @CsvSource({
-            //Reuse code with Fixture/Extract Fixture // TODO: Check if it's extract or reuse, and remove reuses
-            //"https://github.com/apache/camel.git, ee55a3bc6e04fea, camel-ee55a3bc6e04fea.txt",
-            //"https://github.com/apache/struts.git, 0a71e2c3b92d2d58fda40f252a6a5a4392fa58b7, struts-0a71e2c3b92d2d58fda40f252a6a5a4392fa58b7.txt",
-            //"https://github.com/orientechnologies/orientdb.git, 1b371c7cecbc7ec14b81a3f8a08c2ab71d12577f, orientdb-1b371c7cecbc7ec14b81a3f8a08c2ab71d12577f.txt",
-    })
-    public void testExtractFixtureMappings(String url, String commit, String testResultFileName) throws Exception {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
-                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
+            if (ref instanceof AssertThrowsRefactoring) {
+                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref;
                 Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
                 mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
             }

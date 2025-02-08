@@ -1,0 +1,18 @@
+public testAllInstancesPersistentMapDB() : void -> public testAllInstancesPersistentMapDB() : void
+public testAllInstancesPersistentNeo4j() : void -> public testAllInstancesPersistentNeo4j() : void
+public testAllInstancesPersistentTinker() : void -> public testAllInstancesPersistentTinker() : void
+public testAllInstancesStricPersistentMapDB() : void -> public testAllInstancesStricPersistentMapDB() : void
+public testAllInstancesStrictPersistentNeo4j() : void -> public testAllInstancesStrictPersistentNeo4j() : void
+public testAllInstancesStrictPersistentTinker() : void -> public testAllInstancesStrictPersistentTinker() : void
+public testAllInstancesPersistentLoadedMapDB() : void -> public testAllInstancesPersistentLoadedMapDB() : void
+public testAllInstancesPersistentLoadedNeo4j() : void -> public testAllInstancesPersistentLoadedNeo4j() : void
+public testAllInstancesPersistentLoadedTinker() : void -> public testAllInstancesPersistentLoadedTinker() : void
+public testAllInstancesStrictPersistentLoadedMapDB() : void -> public testAllInstancesStrictPersistentLoadedMapDB() : void
+public testAllInstancesStrictPersistentLoadedNeo4j() : void -> public testAllInstancesStrictPersistentLoadedNeo4j() : void
+public testAllInstancesStrictPersistentLoadedTinker() : void -> public testAllInstancesStrictPersistentLoadedTinker() : void
+private testAllInstancesPersistentLoaded(persistentResource PersistentResource) : void -> private allInstancesPersistentLoaded(persistentResource PersistentResource) : void
+private testAllInstancesStrictPersistentLoaded(persistentResource PersistentResource) : void -> private allInstancesStrictPersistentLoaded(persistentResource PersistentResource) : void
+private testAllInstancesPersistent(persistentResource PersistentResource) : void -> private allInstancesPersistent(persistentResource PersistentResource) : void
+private testAllInstancesStrictPersistent(persistentResource PersistentResource) : void -> private allInstancesStrictPersistent(persistentResource PersistentResource) : void
+private testAllInstancesTransient(persistentResource PersistentResource) : void -> private allInstancesTransient(persistentResource PersistentResource) : void
+private testAllInstancesStrictTransient(persistentResource PersistentResource) : void -> private allInstancesStrictTransient(persistentResource PersistentResource) : void

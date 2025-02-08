@@ -222,15 +222,19 @@ public class TestRelatedStatementMappingsTest {
     @ParameterizedTest
     @CsvSource({
             //Merge Test
-            // https://github.com/apache/commons-math/commit/c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65
-            // "https://github.com/apache/commons-math.git, c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65, commons-math-c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65.txt",
+            "https://github.com/apache/commons-math.git, c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65, commons-math-c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65-merge.txt",
     })
     public void testMergeTestMappings(String url, String commit, String testResultFileName) throws Exception {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof AssertThrowsRefactoring) { // TODO: Replace with correct Refactoring Type (probably need to create it)
-                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref; // TODO: Replace with correct Refactoring Type (probably need to create it)
-                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
-                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            if (ref instanceof MergeOperationRefactoring) {
+                MergeOperationRefactoring mergeOperationRefactoring = (MergeOperationRefactoring) ref;
+                for (UMLOperationBodyMapper methodMapping : mergeOperationRefactoring.getMappers()) {
+                    mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
+                }
+            } else if (ref instanceof MoveCodeRefactoring) {
+                MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) ref;
+                Set<AbstractCodeMapping> mapper = moveCodeRefactoring.getMappings();
+                mapperInfo(mapper, moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
             }
         });
     }

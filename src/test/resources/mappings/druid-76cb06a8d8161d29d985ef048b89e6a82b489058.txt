@@ -1,0 +1,18 @@
+public populateCache(id String, namespace JDBCExtractionNamespace, lastVersion String, cache Map<String,String>) : String -> public populateCache(namespace JDBCExtractionNamespace, entryId CacheScheduler.EntryImpl<JDBCExtractionNamespace>, lastVersion String, scheduler CacheScheduler) : CacheScheduler.VersionedCache
+null==@Nullable
+public populateCache(id String, extractionNamespace StaticMapExtractionNamespace, lastVersion String, swap Map<String,String>) : String -> public populateCache(namespace StaticMapExtractionNamespace, id CacheScheduler.EntryImpl<StaticMapExtractionNamespace>, lastVersion String, scheduler CacheScheduler) : CacheScheduler.VersionedCache
+null==@Nullable
+public populateCache(id String, extractionNamespace URIExtractionNamespace, lastVersion String, cache Map<String,String>) : String -> public populateCache(extractionNamespace URIExtractionNamespace, entryId CacheScheduler.EntryImpl<URIExtractionNamespace>, lastVersion String, scheduler CacheScheduler) : CacheScheduler.VersionedCache
+null==@Nullable
+protected waitForServiceToEnd(time long, unit TimeUnit) : boolean -> package waitForServiceToEnd(time long, unit TimeUnit) : boolean
+null==@VisibleForTesting
+public setUpStatic() : void -> public setUp() : void
+null==@Before
+public setUpStatic() : void -> public setUp() : void
+@BeforeClass==null
+public tearDownStatic() : void -> public tearDown() : void
+null==@After
+public tearDownStatic() : void -> public tearDown() : void
+@AfterClass==null
+public populateCache(id String, extractionNamespace T, lastVersion String, swap Map<String,String>) : String -> public populateCache(namespace T, id CacheScheduler.EntryImpl<T>, lastVersion String, scheduler CacheScheduler) : CacheScheduler.VersionedCache
+null==@Nullable

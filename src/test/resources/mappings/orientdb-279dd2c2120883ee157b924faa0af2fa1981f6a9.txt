@@ -1,0 +1,10 @@
+public beforeClass() : void -> public beforeClass() : void
+null==@Before
+public beforeClass() : void -> public beforeClass() : void
+@BeforeClass==null
+public afterClass() : void -> public afterClass() : void
+null==@After
+public afterClass() : void -> public afterClass() : void
+@AfterClass==null
+public setUp() : void -> public beforeClass() : void
+@BeforeClass==null

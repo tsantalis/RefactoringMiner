@@ -1,0 +1,414 @@
+com.opengamma.strata.calc.CalculationRulesTest -> com.opengamma.strata.calc.CalculationRulesTest
+@Test==null
+public test_of_FunctionsParametersArray() : void -> public test_of_FunctionsParametersArray() : void
+null==@Test
+public test_of_FunctionsParametersObject() : void -> public test_of_FunctionsParametersObject() : void
+null==@Test
+public test_of_FunctionsCurrencyParametersArray() : void -> public test_of_FunctionsCurrencyParametersArray() : void
+null==@Test
+public test_of_All() : void -> public test_of_All() : void
+null==@Test
+public coverage() : void -> public coverage() : void
+null==@Test
+com.opengamma.strata.calc.ColumnHeaderTest -> com.opengamma.strata.calc.ColumnHeaderTest
+@Test==null
+public test_of_NameMeasure() : void -> public test_of_NameMeasure() : void
+null==@Test
+public test_of_NameMeasureCurrency() : void -> public test_of_NameMeasureCurrency() : void
+null==@Test
+public coverage() : void -> public coverage() : void
+null==@Test
+com.opengamma.strata.calc.ColumnNameTest -> com.opengamma.strata.calc.ColumnNameTest
+@Test==null
+public test_builder_columnNameFromMeasure() : void -> public test_builder_columnNameFromMeasure() : void
+null==@Test
+public test_serialization() : void -> public test_serialization() : void
+null==@Test
+com.opengamma.strata.calc.ColumnTest -> com.opengamma.strata.calc.ColumnTest
+@Test==null
+public test_builder_columnNameFromMeasure() : void -> public test_builder_columnNameFromMeasure() : void
+null==@Test
+public test_builder_columnNameSpecified() : void -> public test_builder_columnNameSpecified() : void
+null==@Test
+public test_builder_missingData() : void -> public test_builder_missingData() : void
+null==@Test
+public test_of_Measure() : void -> public test_of_Measure() : void
+null==@Test
+public test_of_MeasureCurrency() : void -> public test_of_MeasureCurrency() : void
+null==@Test
+public test_of_MeasureCalculationParameters() : void -> public test_of_MeasureCalculationParameters() : void
+null==@Test
+public test_of_MeasureCurrencyCalculationParameters() : void -> public test_of_MeasureCurrencyCalculationParameters() : void
+null==@Test
+public test_of_MeasureString() : void -> public test_of_MeasureString() : void
+null==@Test
+public test_of_MeasureStringCurrency() : void -> public test_of_MeasureStringCurrency() : void
+null==@Test
+public test_of_MeasureStringCalculationParameters() : void -> public test_of_MeasureStringCalculationParameters() : void
+null==@Test
+public test_of_MeasureStringCurrencyCalculationParameters() : void -> public test_of_MeasureStringCurrencyCalculationParameters() : void
+null==@Test
+public test_toHeader_withCurrency() : void -> public test_toHeader_withCurrency() : void
+null==@Test
+public test_toHeader_withoutCurrency() : void -> public test_toHeader_withoutCurrency() : void
+null==@Test
+public test_toHeader_withNonConvertibleMeasure() : void -> public test_toHeader_withNonConvertibleMeasure() : void
+null==@Test
+public coverage() : void -> public coverage() : void
+null==@Test
+com.opengamma.strata.calc.DefaultCalculationRunnerTest -> com.opengamma.strata.calc.DefaultCalculationRunnerTest
+@Test==null
+public test_of() : void -> public test_of() : void
+null==@Test
+public calculate() : void -> public calculate() : void
+null==@Test
+com.opengamma.strata.calc.ImmutableMeasureTest -> com.opengamma.strata.calc.ImmutableMeasureTest
+@Test==null
+public namePattern() : void -> public namePattern() : void
+null==@Test
+com.opengamma.strata.calc.MeasureTest -> com.opengamma.strata.calc.MeasureTest
+@Test==null
+public test_extendedEnum() : void -> public test_extendedEnum() : void
+null==@Test
+public test_of_lookup_notFound() : void -> public test_of_lookup_notFound() : void
+null==@Test
+public test_of_lookup_null() : void -> public test_of_lookup_null() : void
+null==@Test
+public test_isConvertible() : void -> public test_isConvertible() : void
+null==@Test
+public coverage() : void -> public coverage() : void
+null==@Test
+com.opengamma.strata.calc.ReportingCurrencyTest -> com.opengamma.strata.calc.ReportingCurrencyTest
+@Test==null
+public test_NATURAL() : void -> public test_NATURAL() : void
+null==@Test
+public test_NONE() : void -> public test_NONE() : void
+null==@Test
+public test_of_specific() : void -> public test_of_specific() : void
+null==@Test
+public test_type() : void -> public test_type() : void
+null==@Test
+public coverage() : void -> public coverage() : void
+null==@Test
+public test_serialization() : void -> public test_serialization() : void
+null==@Test
+com.opengamma.strata.calc.ResultsTest -> com.opengamma.strata.calc.ResultsTest
+@Test==null
+public test_empty() : void -> public test_empty() : void
+null==@Test
+public nonEmpty() : void -> public nonEmpty() : void
+null==@Test
+public createInvalid() : void -> public createInvalid() : void
+null==@Test
+public coverage() : void -> public coverage() : void
+null==@Test
+com.opengamma.strata.calc.marketdata.BuiltMarketDataTest -> com.opengamma.strata.calc.marketdata.BuiltMarketDataTest
+@Test==null
+public test_withKnownFailure() : void -> public test_withKnownFailure() : void
+null==@Test
+public test_withUnknownFailure() : void -> public test_withUnknownFailure() : void
+null==@Test
+public coverage() : void -> public coverage() : void
+null==@Test
+com.opengamma.strata.calc.marketdata.BuiltScenarioMarketDataTest -> com.opengamma.strata.calc.marketdata.BuiltScenarioMarketDataTest
+@Test==null
+public test_getValue_fxIdentity() : void -> public test_getValue_fxIdentity() : void
+null==@Test
+public test_getValue_withKnownFailure() : void -> public test_getValue_withKnownFailure() : void
+null==@Test
+public test_getValue_withUnknownFailure() : void -> public test_getValue_withUnknownFailure() : void
+null==@Test
+public coverage() : void -> public coverage() : void
+null==@Test
+com.opengamma.strata.calc.marketdata.DefaultMarketDataFactoryTest -> com.opengamma.strata.calc.marketdata.DefaultMarketDataFactoryTest
+@Test==null
+public buildTimeSeries() : void -> public buildTimeSeries() : void
+null==@Test
+public buildSuppliedNonObservableValues() : void -> public buildSuppliedNonObservableValues() : void
+null==@Test
+public buildNonObservableValues() : void -> public buildNonObservableValues() : void
+null==@Test
+public buildObservableValues() : void -> public buildObservableValues() : void
+null==@Test
+public buildSuppliedObservableValues() : void -> public buildSuppliedObservableValues() : void
+null==@Test
+public buildDataFromOtherData() : void -> public buildDataFromOtherData() : void
+null==@Test
+public buildDataFromSuppliedData() : void -> public buildDataFromSuppliedData() : void
+null==@Test
+public noMarketDataBuilderAvailable() : void -> public noMarketDataBuilderAvailable() : void
+null==@Test
+public buildWithIntermediateValues() : void -> public buildWithIntermediateValues() : void
+null==@Test
+public buildObservableScenarioValues() : void -> public buildObservableScenarioValues() : void
+null==@Test
+public buildSuppliedObservableScenarioValues() : void -> public buildSuppliedObservableScenarioValues() : void
+null==@Test
+public buildSuppliedTimeSeries() : void -> public buildSuppliedTimeSeries() : void
+null==@Test
+public perturbObservableValues() : void -> public perturbObservableValues() : void
+null==@Test
+public observableDataOnlyPerturbedOnce() : void -> public observableDataOnlyPerturbedOnce() : void
+null==@Test
+public buildNonObservableScenarioValues() : void -> public buildNonObservableScenarioValues() : void
+null==@Test
+public buildSuppliedNonObservableScenarioValues() : void -> public buildSuppliedNonObservableScenarioValues() : void
+null==@Test
+public buildScenarioValuesFromSuppliedData() : void -> public buildScenarioValuesFromSuppliedData() : void
+null==@Test
+public perturbNonObservableValues() : void -> public perturbNonObservableValues() : void
+null==@Test
+public nonObservableDataOnlyPerturbedOnce() : void -> public nonObservableDataOnlyPerturbedOnce() : void
+null==@Test
+public nonObservableDataBuiltFromPerturbedObservableData() : void -> public nonObservableDataBuiltFromPerturbedObservableData() : void
+null==@Test
+public nonObservableScenarioDataWithMissingBuilder() : void -> public nonObservableScenarioDataWithMissingBuilder() : void
+null==@Test
+public perturbSuppliedNonObservableData() : void -> public perturbSuppliedNonObservableData() : void
+null==@Test
+public perturbSuppliedObservableData() : void -> public perturbSuppliedObservableData() : void
+null==@Test
+public coverage_ObservableDataProvider_none() : void -> public coverage_ObservableDataProvider_none() : void
+null==@Test
+com.opengamma.strata.calc.marketdata.MarketDataFilterTest -> com.opengamma.strata.calc.marketdata.MarketDataFilterTest
+@Test==null
+public test_ofIdType() : void -> public test_ofIdType() : void
+null==@Test
+public test_ofId() : void -> public test_ofId() : void
+null==@Test
+public test_ofName() : void -> public test_ofName() : void
+null==@Test
+public coverage() : void -> public coverage() : void
+null==@Test
+com.opengamma.strata.calc.marketdata.MarketDataNodeTest -> com.opengamma.strata.calc.marketdata.MarketDataNodeTest
+@Test==null
+public withLeavesRemoved() : void -> public withLeavesRemoved() : void
+null==@Test
+public buildDependencyTree() : void -> public buildDependencyTree() : void
+null==@Test
+public noDependenciesForSuppliedData() : void -> public noDependenciesForSuppliedData() : void
+null==@Test
+public noMarketDataBuilder() : void -> public noMarketDataBuilder() : void
+null==@Test
+com.opengamma.strata.calc.marketdata.ScenarioDefinitionTest -> com.opengamma.strata.calc.marketdata.ScenarioDefinitionTest
+@Test==null
+public ofMappings() : void -> public ofMappings() : void
+null==@Test
+public ofMappingsWithNames() : void -> public ofMappingsWithNames() : void
+null==@Test
+public repeatItems() : void -> public repeatItems() : void
+null==@Test
+public nonUniqueNames() : void -> public nonUniqueNames() : void
+null==@Test
+com.opengamma.strata.calc.marketdata.SingleTypeMarketDataConfigTest -> com.opengamma.strata.calc.marketdata.SingleTypeMarketDataConfigTest
+@Test==null
+public getValues() : void -> public getValues() : void
+null==@Test
+public addValue() : void -> public addValue() : void
+null==@Test
+public addValueWrongType() : void -> public addValueWrongType() : void
+null==@Test
+com.opengamma.strata.calc.runner.CalculationFunctionsTest -> com.opengamma.strata.calc.runner.CalculationFunctionsTest
+@Test==null
+public empty() : void -> public empty() : void
+null==@Test
+public of_array() : void -> public of_array() : void
+null==@Test
+public of_list() : void -> public of_list() : void
+null==@Test
+public of_map() : void -> public of_map() : void
+null==@Test
+public coverage() : void -> public coverage() : void
+null==@Test
+com.opengamma.strata.calc.runner.CalculationParametersTest -> com.opengamma.strata.calc.runner.CalculationParametersTest
+@Test==null
+public of() : void -> public of() : void
+null==@Test
+public of_empty() : void -> public of_empty() : void
+null==@Test
+public of_list() : void -> public of_list() : void
+null==@Test
+public of_list_empty() : void -> public of_list_empty() : void
+null==@Test
+public getParameter1() : void -> public getParameter1() : void
+null==@Test
+public getParameter2() : void -> public getParameter2() : void
+null==@Test
+public test_combinedWith() : void -> public test_combinedWith() : void
+null==@Test
+public test_with_add() : void -> public test_with_add() : void
+null==@Test
+public test_with_replace() : void -> public test_with_replace() : void
+null==@Test
+public test_without_typeFound() : void -> public test_without_typeFound() : void
+null==@Test
+public test_without_typeNotFound() : void -> public test_without_typeNotFound() : void
+null==@Test
+public test_filter() : void -> public test_filter() : void
+null==@Test
+public coverage() : void -> public coverage() : void
+null==@Test
+com.opengamma.strata.calc.runner.CalculationResultTest -> com.opengamma.strata.calc.runner.CalculationResultTest
+@Test==null
+public of() : void -> public of() : void
+null==@Test
+public of_failure() : void -> public of_failure() : void
+null==@Test
+public coverage() : void -> public coverage() : void
+null==@Test
+com.opengamma.strata.calc.runner.CalculationResultsTest -> com.opengamma.strata.calc.runner.CalculationResultsTest
+@Test==null
+public of() : void -> public of() : void
+null==@Test
+public coverage() : void -> public coverage() : void
+null==@Test
+com.opengamma.strata.calc.runner.CalculationTaskCellTest -> com.opengamma.strata.calc.runner.CalculationTaskCellTest
+@Test==null
+public of() : void -> public of() : void
+null==@Test
+public coverage() : void -> public coverage() : void
+null==@Test
+com.opengamma.strata.calc.runner.CalculationTaskTest -> com.opengamma.strata.calc.runner.CalculationTaskTest
+@Test==null
+public requirements() : void -> public requirements() : void
+null==@Test
+public convertResultCurrencyUsingReportingCurrency() : void -> public convertResultCurrencyUsingReportingCurrency() : void
+null==@Test
+public currencyConversionHonoursConvertibleFlagOnMeasure() : void -> public currencyConversionHonoursConvertibleFlagOnMeasure() : void
+null==@Test
+public convertResultCurrencyUsingDefaultReportingCurrency() : void -> public convertResultCurrencyUsingDefaultReportingCurrency() : void
+null==@Test
+public convertResultCurrencyFailure() : void -> public convertResultCurrencyFailure() : void
+null==@Test
+public convertResultCurrencyNoConversionRequested() : void -> public convertResultCurrencyNoConversionRequested() : void
+null==@Test
+public convertResultCurrencyNotConvertible() : void -> public convertResultCurrencyNotConvertible() : void
+null==@Test
+public nonConvertibleResultReturnedWhenNoReportingCurrency() : void -> public nonConvertibleResultReturnedWhenNoReportingCurrency() : void
+null==@Test
+public convertResultCurrencyConversionFails() : void -> public convertResultCurrencyConversionFails() : void
+null==@Test
+public execute() : void -> public execute() : void
+null==@Test
+public executeMissingMeasure() : void -> public executeMissingMeasure() : void
+null==@Test
+public executeFilterMeasures() : void -> public executeFilterMeasures() : void
+null==@Test
+public executeException() : void -> public executeException() : void
+null==@Test
+public executeException_marketData() : void -> public executeException_marketData() : void
+null==@Test
+public executeException_marketData_noIdentifier() : void -> public executeException_marketData_noIdentifier() : void
+null==@Test
+public executeException_referenceData() : void -> public executeException_referenceData() : void
+null==@Test
+public executeException_unsupported() : void -> public executeException_unsupported() : void
+null==@Test
+public executeSuccessResultValue() : void -> public executeSuccessResultValue() : void
+null==@Test
+public executeFailureResultValue() : void -> public executeFailureResultValue() : void
+null==@Test
+public fxConversionRequirements() : void -> public fxConversionRequirements() : void
+null==@Test
+public fxConversionRequirements_noConversion() : void -> public fxConversionRequirements_noConversion() : void
+null==@Test
+public testToString() : void -> public testToString() : void
+null==@Test
+public coverage() : void -> public coverage() : void
+null==@Test
+com.opengamma.strata.calc.runner.CalculationTasksTest -> com.opengamma.strata.calc.runner.CalculationTasksTest
+@Test==null
+public test_of() : void -> public test_of() : void
+null==@Test
+public test_requirements() : void -> public test_requirements() : void
+null==@Test
+public testToString() : void -> public testToString() : void
+null==@Test
+com.opengamma.strata.calc.runner.CompositeCalculationFunctionsTest -> com.opengamma.strata.calc.runner.CompositeCalculationFunctionsTest
+@Test==null
+public compose() : void -> public compose() : void
+null==@Test
+com.opengamma.strata.calc.runner.DefaultCalculationFunctionsTest -> com.opengamma.strata.calc.runner.DefaultCalculationFunctionsTest
+@Test==null
+public oneDerivedFunction() : void -> public oneDerivedFunction() : void
+null==@Test
+public multipleDerivedFunctionsForSameTargetType() : void -> public multipleDerivedFunctionsForSameTargetType() : void
+null==@Test
+public multipleDerivedFunctionsForSameTargetTypeWithDependencyBetweenDerivedFunctions() : void -> public multipleDerivedFunctionsForSameTargetTypeWithDependencyBetweenDerivedFunctions() : void
+null==@Test
+com.opengamma.strata.calc.runner.DefaultCalculationTaskRunnerTest -> com.opengamma.strata.calc.runner.DefaultCalculationTaskRunnerTest
+@Test(singleThreaded = true)==null
+public unwrapScenarioResults() : void -> public unwrapScenarioResults() : void
+null==@Test
+public unwrapMultipleScenarioResults() : void -> public unwrapMultipleScenarioResults() : void
+null==@Test
+public unwrapScenarioResultsAsync() : void -> public unwrapScenarioResultsAsync() : void
+null==@Test
+public runWithNoTasks() : void -> public runWithNoTasks() : void
+null==@Test
+com.opengamma.strata.calc.runner.DerivedCalculationFunctionTest -> com.opengamma.strata.calc.runner.DerivedCalculationFunctionTest
+@Test==null
+public calculateMeasure() : void -> public calculateMeasure() : void
+null==@Test
+public calculateMeasuresNestedDerivedClasses() : void -> public calculateMeasuresNestedDerivedClasses() : void
+null==@Test
+public derivedMeasureNotRequested() : void -> public derivedMeasureNotRequested() : void
+null==@Test
+public requiredMeasureNotReturned() : void -> public requiredMeasureNotReturned() : void
+null==@Test
+public requiredMeasuresNotSupported() : void -> public requiredMeasuresNotSupported() : void
+null==@Test
+public requiredMeasureFails() : void -> public requiredMeasureFails() : void
+null==@Test
+public supportedMeasureNotReturned() : void -> public supportedMeasureNotReturned() : void
+null==@Test
+public requirements() : void -> public requirements() : void
+null==@Test
+public getValue() : int -> public getValue() : int
+null==@Test
+public targetType() : Class<TestTarget> -> public targetType() : Class<TestTarget>
+null==@Test
+public supportedMeasures() : Set<Measure> -> public supportedMeasures() : Set<Measure>
+null==@Test
+com.opengamma.strata.calc.runner.DerivedCalculationFunctionsTest -> com.opengamma.strata.calc.runner.DerivedCalculationFunctionsTest
+@Test==null
+public oneDerivedFunction() : void -> public oneDerivedFunction() : void
+null==@Test
+public multipleDerivedFunctionsForSameTargetType() : void -> public multipleDerivedFunctionsForSameTargetType() : void
+null==@Test
+public multipleDerivedFunctionsForSameTargetTypeWithDependencyBetweenDerivedFunctions() : void -> public multipleDerivedFunctionsForSameTargetTypeWithDependencyBetweenDerivedFunctions() : void
+null==@Test
+public oneDerivedFunctionWithAnotherTargetType() : void -> public oneDerivedFunctionWithAnotherTargetType() : void
+null==@Test
+com.opengamma.strata.calc.runner.FunctionUtilsTest -> com.opengamma.strata.calc.runner.FunctionUtilsTest
+@Test==null
+public toScenarioArray() : void -> public toScenarioArray() : void
+null==@Test
+public toScenarioArray2() : void -> public toScenarioArray2() : void
+null==@Test
+public toMultiCurrencyArray() : void -> public toMultiCurrencyArray() : void
+null==@Test
+com.opengamma.strata.calc.runner.FxRateLookupTest -> com.opengamma.strata.calc.runner.FxRateLookupTest
+@Test==null
+public test_ofRates() : void -> public test_ofRates() : void
+null==@Test
+public test_ofRates_source() : void -> public test_ofRates_source() : void
+null==@Test
+public test_ofRates_currency() : void -> public test_ofRates_currency() : void
+null==@Test
+public test_ofRates_currency_source() : void -> public test_ofRates_currency_source() : void
+null==@Test
+public test_ofMatrix() : void -> public test_ofMatrix() : void
+null==@Test
+public test_ofMatrix_source() : void -> public test_ofMatrix_source() : void
+null==@Test
+public coverage_rates() : void -> public coverage_rates() : void
+null==@Test
+public coverage_matrix() : void -> public coverage_matrix() : void
+null==@Test
+public test_serialization() : void -> public test_serialization() : void
+null==@Test
+com.opengamma.strata.calc.runner.ListenerWrapperTest -> com.opengamma.strata.calc.runner.ListenerWrapperTest
+@Test==null
+public concurrentExecution() : void -> public concurrentExecution() : void
+null==@Test

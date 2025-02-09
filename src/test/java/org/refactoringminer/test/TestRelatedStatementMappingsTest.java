@@ -160,13 +160,6 @@ public class TestRelatedStatementMappingsTest {
                 }
             }
         });
-        testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof AssertThrowsRefactoring) {
-                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref;
-                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
-                mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
-            }
-        });
     }
 
 

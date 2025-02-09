@@ -1,0 +1,9 @@
+public testIterator() : void -> public setUp() : void
+line range:33-33==line range:39-39
+line range:38-38==line range:40-40
+public testIteratorWithBegin() : void -> public setUp() : void
+line range:67-67==line range:39-39
+line range:72-72==line range:40-40
+public testIteratorWithNulls() : void -> public setUp() : void
+line range:99-99==line range:39-39
+line range:110-110==line range:40-40

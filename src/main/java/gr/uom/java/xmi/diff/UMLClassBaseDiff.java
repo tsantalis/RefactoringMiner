@@ -36,6 +36,7 @@ import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLJavadoc;
+import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLModelASTReader;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
@@ -1822,7 +1823,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		List<List<String>> parameterValues = new ArrayList<>();
 		for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
 			try {
-				List<List<String>> testParameters = SourceAnnotation.create(annotation, addedOperation, modelDiff.getChildModel()).getTestParameters();
+				UMLModel childModel = modelDiff != null ? modelDiff.getChildModel() : null;
+				List<List<String>> testParameters = SourceAnnotation.create(annotation, addedOperation, childModel).getTestParameters();
 				parameterValues.addAll(testParameters);
 			} catch (IllegalArgumentException ignored) {/* Do nothing */}
 		}

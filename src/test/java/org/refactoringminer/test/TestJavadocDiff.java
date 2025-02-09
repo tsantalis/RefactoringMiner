@@ -162,7 +162,7 @@ public class TestJavadocDiff {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
-	private UMLClassDiff generateClassDiff(String cloneURL, String commitId, File rootFolder, String className) throws Exception {
+	protected static UMLClassDiff generateClassDiff(String cloneURL, String commitId, File rootFolder, String className) throws Exception {
 		Set<String> repositoryDirectoriesBefore = ConcurrentHashMap.newKeySet();
 		Set<String> repositoryDirectoriesCurrent = ConcurrentHashMap.newKeySet();
 		Map<String, String> fileContentsBefore = new ConcurrentHashMap<String, String>();
@@ -197,6 +197,51 @@ public class TestJavadocDiff {
 		UMLClass rightClass = null;
 		for(UMLClass parentClass : currentUMLModel.getClassList()) {
 			if(parentClass.getName().equals(className)) {
+				rightClass = parentClass;
+				break;
+			}
+		}
+		if(rightClass != null && leftClass != null) {
+			return new UMLClassDiff(leftClass, rightClass, null);
+		}
+		return null;
+	}
+
+	protected static UMLClassDiff generateClassDiff(String cloneURL, String commitId, File rootFolder, String leftClassName, String rightClassName) throws Exception {
+		Set<String> repositoryDirectoriesBefore = ConcurrentHashMap.newKeySet();
+		Set<String> repositoryDirectoriesCurrent = ConcurrentHashMap.newKeySet();
+		Map<String, String> fileContentsBefore = new ConcurrentHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new ConcurrentHashMap<String, String>();
+		Map<String, String> renamedFilesHint = new ConcurrentHashMap<String, String>();
+		ChangedFileInfo info = new GitHistoryRefactoringMinerImpl().populateWithGitHubAPIAndSaveFiles(cloneURL, commitId, 
+				fileContentsBefore, fileContentsCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent, rootFolder);
+		Map<String, String> filesBefore = new LinkedHashMap<String, String>();
+		Map<String, String> filesCurrent = new LinkedHashMap<String, String>();
+		for(String fileName : info.getFilesBefore()) {
+			if(fileContentsBefore.containsKey(fileName)) {
+				filesBefore.put(fileName, fileContentsBefore.get(fileName));
+			}
+		}
+		for(String fileName : info.getFilesCurrent()) {
+			if(fileContentsCurrent.containsKey(fileName)) {
+				filesCurrent.put(fileName, fileContentsCurrent.get(fileName));
+			}
+		}
+		fileContentsBefore = filesBefore;
+		fileContentsCurrent = filesCurrent;
+		GitHistoryRefactoringMinerImpl.processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint, false);
+		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
+		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, repositoryDirectoriesBefore);
+		UMLClass leftClass = null;
+		for(UMLClass parentClass : parentUMLModel.getClassList()) {
+			if(parentClass.getName().equals(leftClassName)) {
+				leftClass = parentClass;
+				break;
+			}
+		}
+		UMLClass rightClass = null;
+		for(UMLClass parentClass : currentUMLModel.getClassList()) {
+			if(parentClass.getName().equals(rightClassName)) {
 				rightClass = parentClass;
 				break;
 			}

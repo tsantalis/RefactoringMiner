@@ -33,6 +33,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static org.refactoringminer.utils.Assertions.assertHasSameElementsAs;
+import static org.refactoringminer.test.TestJavadocDiff.generateClassDiff;
 
 public class TestRelatedStatementMappingsTest {
     public static final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits";
@@ -84,7 +85,6 @@ public class TestRelatedStatementMappingsTest {
     @CsvSource({
             //Custom Runner
             "https://github.com/apache/iceberg.git, fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b, iceberg-fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b-runner.txt",
-            //"https://github.com/apache/hadoop.git, 5c61ad24887f76dfc5a5935b2c5dceb6bfd99417, hadoop-5c61ad24887f76dfc5a5935b2c5dceb6bfd99417.txt", // TODO: Takes ~10 min but passes, this should be optimized to process only one pair of files instead of the entire commit
             "https://github.com/mapstruct/mapstruct.git, 293a12d7ffa22c29ad3f2d433b6e420514e29a8b, mapstruct-293a12d7ffa22c29ad3f2d433b6e420514e29a8b.txt",
     })
     public void testCustomRunnerMappings(String url, String commit, String testResultFileName) throws Exception {
@@ -107,6 +107,24 @@ public class TestRelatedStatementMappingsTest {
         });
     }
 
+
+    @ParameterizedTest
+    @CsvSource({
+            //Custom Runner
+            "https://github.com/apache/hadoop.git, 5c61ad24887f76dfc5a5935b2c5dceb6bfd99417, org.apache.hadoop.hdfs.web.TestAdlRead, org.apache.hadoop.fs.adl.TestAdlRead, hadoop-5c61ad24887f76dfc5a5935b2c5dceb6bfd99417.txt"
+    })
+    public void testCustomRunnerMappingsForSlowCommits(String url, String commit, String leftClassName, String rightClassName, String testResultFileName) throws Exception {
+        UMLClassDiff classDiff = generateClassDiff(url, commit, new File(REPOS), leftClassName, rightClassName);
+        if(classDiff != null) {
+            for(UMLAnnotationDiff annotationDiff : classDiff.getAnnotationListDiff().getAnnotationDiffs()) {
+                UMLAnnotation annotationAfter = annotationDiff.getAddedAnnotation();
+                if (Set.of("RunWith", "ExtendWith").contains(annotationAfter.getTypeName())) {
+                    UMLAnnotation annotationBefore = annotationDiff.getRemovedAnnotation();
+                    mapperInfo(Set.of(Pair.of(annotationBefore,annotationAfter)), classDiff.getOriginalClass(), classDiff.getNextClass());
+                }
+            }
+        }
+    }
 
     @ParameterizedTest
     @CsvSource({

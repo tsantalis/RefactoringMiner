@@ -1,4 +1,5 @@
-function monaco(config) {
+function monaco() {
+    const config = CONFIG_STATIC_CONTENT;
     require.config({paths: {'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs'}});
     require(['vs/editor/editor.main'], initializeEditors);
     function initializeEditors() {

@@ -4,18 +4,23 @@ import com.github.gumtreediff.actions.Diff;
 import com.github.gumtreediff.actions.TreeClassifier;
 import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.tree.Tree;
+import org.apache.commons.io.FileUtils;
 import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.rendersnake.HtmlCanvas;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Set;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
 /* Created by pourya on 2024-07-05*/
 public class MonacoCore {
+    private static final Path CONFIG_PATH = Path.of("src/main/resources/web/monaco/min/vs/config.main.js");
     private boolean showFilenames;
     private final Diff diff;
     private final int id;
@@ -61,7 +66,10 @@ public class MonacoCore {
 
         html.div(class_("edc").id(getRightContainerId()).style(heightFormula + "border: 1px solid grey; overflow: auto;"))._div()
                 ._div();
-        String code = "monaco(" + makeDiffConfig() + ");";
+//        String code = "monaco(" + makeDiffConfig() + ");";
+        //We have to create the input
+        FileUtils.write(new File(String.valueOf(CONFIG_PATH)), "CONFIG_STATIC_CONTENT =  " + makeDiffConfig());
+        String code = "monaco();";
         html.macros().script(code); // Pass the config to the main function
 
 

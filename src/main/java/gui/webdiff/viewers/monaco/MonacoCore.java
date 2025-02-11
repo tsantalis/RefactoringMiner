@@ -20,7 +20,7 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 
 /* Created by pourya on 2024-07-05*/
 public class MonacoCore {
-    private static final Path CONFIG_PATH = Path.of("src/main/resources/web/monaco/min/vs/config.main.js");
+    private static final Path CONFIG_PATH = Path.of("src/main/resources/web/diff/config.js");
     private boolean showFilenames;
     private final Diff diff;
     private final int id;
@@ -28,7 +28,12 @@ public class MonacoCore {
     private String srcFileName;
     private String dstFileName;
 
-    public MonacoCore(Diff diff, int id, boolean isMovedDiff) {
+    private final String srcFileContent;
+    private final String dstFileContent;
+
+    public MonacoCore(Diff diff, int id, boolean isMovedDiff, String srcFileContent, String dstFileContent) {
+        this.srcFileContent = srcFileContent;
+        this.dstFileContent = dstFileContent;
         this.showFilenames = true;
         this.diff = diff;
         this.id = id;
@@ -69,7 +74,8 @@ public class MonacoCore {
 //        String code = "monaco(" + makeDiffConfig() + ");";
         //We have to create the input
         FileUtils.write(new File(String.valueOf(CONFIG_PATH)), "CONFIG_STATIC_CONTENT =  " + makeDiffConfig());
-        String code = "monaco();";
+//        String code = "window.onload = function() { mymonaco(); };";
+        String code = "window.onload = function() { mymonaco(); };";
         html.macros().script(code); // Pass the config to the main function
 
 
@@ -105,6 +111,7 @@ public class MonacoCore {
             StringBuilder b = new StringBuilder();
             b.append("{");
             b.append("url:").append("\"/left/" + id + "\"").append(",");
+            b.append("content:").append("\"" + srcFileContent.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n") + "\"").append(",");
             b.append("ranges: [");
             for (Tree t : diff.src.getRoot().preOrder()) {
                 if (c.getMovedSrcs().contains(t))
@@ -154,6 +161,7 @@ public class MonacoCore {
             StringBuilder b = new StringBuilder();
             b.append("{");
             b.append("url:").append("\"/right/" + id + "\"").append(",");
+            b.append("content:").append("\"" + dstFileContent.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n") + "\"").append(",");
             b.append("ranges: [");
             for (Tree t : diff.dst.getRoot().preOrder()) {
                 if (c.getMovedDsts().contains(t))

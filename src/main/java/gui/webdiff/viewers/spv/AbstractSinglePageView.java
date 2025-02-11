@@ -1,5 +1,6 @@
 package gui.webdiff.viewers.spv;
 
+import com.github.gumtreediff.utils.Pair;
 import gui.webdiff.viewers.monaco.MonacoCore;
 import gui.webdiff.dir.DirComparator;
 import gui.webdiff.dir.DirectoryDiffView;
@@ -41,7 +42,9 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
 
             // Generate panels for /monaco-0 to /monaco-n
             for (int i = 0; i < n; i++) {
-                MonacoCore core = new MonacoCore(comparator.getASTDiff(i), i, comparator.isMoveDiff(i));
+                Pair<String, String> fileContentsPair = comparator.getFileContentsPair(i);
+                MonacoCore core = new MonacoCore(comparator.getASTDiff(i), i, comparator.isMoveDiff(i), fileContentsPair.first, fileContentsPair.second
+                );
                 core.setShowFilenames(false);
                 html.div(class_("card"))
                         .div(class_("card-header").id("heading-" + i).style("padding-right: 0;"))

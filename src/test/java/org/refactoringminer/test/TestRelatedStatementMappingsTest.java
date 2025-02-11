@@ -124,6 +124,11 @@ public class TestRelatedStatementMappingsTest {
                 }
             }
         }
+        Supplier<String> lazyErrorMessage = () -> actual.stream().collect(Collectors.joining(System.lineSeparator()));
+        Assertions.assertDoesNotThrow(() -> {
+            expected.addAll(IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName)));
+        }, lazyErrorMessage);
+        assertHasSameElementsAs(expected, actual, lazyErrorMessage);
     }
 
     @ParameterizedTest
@@ -178,6 +183,11 @@ public class TestRelatedStatementMappingsTest {
                 }
             }
         });
+        Supplier<String> lazyErrorMessage = () -> actual.stream().collect(Collectors.joining(System.lineSeparator()));
+        Assertions.assertDoesNotThrow(() -> {
+            expected.addAll(IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName)));
+        }, lazyErrorMessage);
+        assertHasSameElementsAs(expected, actual, lazyErrorMessage);
     }
 
 

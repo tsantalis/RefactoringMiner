@@ -1,4 +1,4 @@
-function monaco() {
+function mymonaco() {
     const config = CONFIG_STATIC_CONTENT;
     require.config({paths: {'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs'}});
     require(['vs/editor/editor.main'], initializeEditors);
@@ -7,16 +7,10 @@ function monaco() {
         const right_container_id = config.rcid;/*'right-container';*/
         const leftContainer = document.getElementById(left_container_id);
         const rightContainer = document.getElementById(right_container_id);
-        Promise.all(
-            [
-                fetch(config.left.url)
-                    .then(result => result.text())
-                    .then(text => monaco.editor.create(leftContainer, getEditorOptions(config, text))),
-                fetch(config.right.url)
-                    .then(result => result.text())
-                    .then(text => monaco.editor.create(rightContainer, getEditorOptions(config, text)))
-            ]
-        ).then(([leftEditor, rightEditor]) => {
+        Promise.all([
+            Promise.resolve(monaco.editor.create(leftContainer, getEditorOptions(config, config.left.content))),
+            Promise.resolve(monaco.editor.create(rightContainer, getEditorOptions(config, config.right.content)))
+        ]).then(([leftEditor, rightEditor]) => {
             config.mappings = config.mappings.map(mapping =>
                 [
                     monaco.Range.fromPositions(leftEditor.getModel().getPositionAt(mapping[0]), leftEditor.getModel().getPositionAt(mapping[1])),

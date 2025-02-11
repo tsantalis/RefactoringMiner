@@ -98,7 +98,9 @@ public class WebDiff  {
             Renderable view = new MonacoView(
                     toolName, astDiff.getSrcPath(),  astDiff.getDstPath(),
                     astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
-                    comparator.isMoveDiff(id)
+                    comparator.isMoveDiff(id),
+                    projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
+                    projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath())
             );
             return render(view);
         });
@@ -108,7 +110,9 @@ public class WebDiff  {
             MonacoView view = new MonacoView(
                     toolName, astDiff.getSrcPath(),  astDiff.getDstPath(),
                     astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
-                    comparator.isMoveDiff(id)
+                    comparator.isMoveDiff(id),
+                    projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
+                    projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath())
             );
             view.setDecorate(false);
             return render(view);

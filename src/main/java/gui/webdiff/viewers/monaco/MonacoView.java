@@ -17,9 +17,9 @@ public class MonacoView extends AbstractDiffView implements Renderable {
     boolean decorate = true;
 
 
-    public MonacoView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff) {
+    public MonacoView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff, String srcFileContent, String dstFileContent) {
         super(toolName, srcFileName, dstFileName, diff, id, numOfDiffs, routePath, isMovedDiff);
-        core = new MonacoCore(diff, id, isMovedDiff);
+        core = new MonacoCore(diff, id, isMovedDiff, srcFileContent, dstFileContent);
     }
 
     public void setDecorate(boolean decorate) {
@@ -77,7 +77,7 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                     .macros().javascript("https://code.jquery.com/ui/1.12.1/jquery-ui.min.js")
 //                    .macros().stylesheet(JQ_UI_CSS)
                     .macros().javascript(WebDiff.BOOTSTRAP_JS_URL)
-                    .macros().javascript("/monaco/min/vs/config.main.js")
+                    .macros().javascript("/diff/config.js")
                     .macros().javascript("/monaco/min/vs/loader.js")
                     .macros().javascript("/dist/utils.js")
                     .macros().javascript("/dist/folding.js")

@@ -124,11 +124,7 @@ public class TestRelatedStatementMappingsTest {
                 }
             }
         }
-        Supplier<String> lazyErrorMessage = () -> actual.stream().collect(Collectors.joining(System.lineSeparator()));
-        Assertions.assertDoesNotThrow(() -> {
-            expected.addAll(IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName)));
-        }, lazyErrorMessage);
-        assertHasSameElementsAs(expected, actual, lazyErrorMessage);
+        assertion(testResultFileName);
     }
 
     @ParameterizedTest
@@ -183,11 +179,7 @@ public class TestRelatedStatementMappingsTest {
                 }
             }
         });
-        Supplier<String> lazyErrorMessage = () -> actual.stream().collect(Collectors.joining(System.lineSeparator()));
-        Assertions.assertDoesNotThrow(() -> {
-            expected.addAll(IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName)));
-        }, lazyErrorMessage);
-        assertHasSameElementsAs(expected, actual, lazyErrorMessage);
+        assertion(testResultFileName);
     }
 
 
@@ -571,12 +563,17 @@ public class TestRelatedStatementMappingsTest {
                 }
             }
         });
-        Supplier<String> lazyErrorMessage = () -> actual.stream().collect(Collectors.joining(System.lineSeparator()));
+        assertion(testResultFileName);
+    }
+
+
+	private void assertion(String testResultFileName) {
+		Supplier<String> lazyErrorMessage = () -> actual.stream().collect(Collectors.joining(System.lineSeparator()));
         Assertions.assertDoesNotThrow(() -> {
             expected.addAll(IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName)));
         }, lazyErrorMessage);
         assertHasSameElementsAs(expected, actual, lazyErrorMessage);
-    }
+	}
 
     private <T, Y> void mapperInfo(Set<Y> mappings, T before, T after) {
         actual.add(before + " -> " + after);

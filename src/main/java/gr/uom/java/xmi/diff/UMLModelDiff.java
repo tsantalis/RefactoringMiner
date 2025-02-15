@@ -6284,14 +6284,24 @@ public class UMLModelDiff {
 	}
 
 	private boolean refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(UMLOperation removedOperation, UMLOperation addedOperation) {
+		boolean pullUp = isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName());
+		boolean pushDown = isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName());
+		List<Refactoring> toBeRemoved = new ArrayList<>();
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof MoveOperationRefactoring) {
 				MoveOperationRefactoring moveRefactoring = (MoveOperationRefactoring)refactoring;
 				if(moveRefactoring.getOriginalOperation().equals(removedOperation) && !addedOperation.getClassName().startsWith(removedOperation.getClassName() + ".")) {
-					return true;
+					//promote pull-up push-down over move
+					if(!pullUp && !pushDown) {
+						return true;
+					}
+					else {
+						toBeRemoved.add(refactoring);
+					}
 				}
 			}
 		}
+		refactorings.removeAll(toBeRemoved);
 		return false;
 	}
 

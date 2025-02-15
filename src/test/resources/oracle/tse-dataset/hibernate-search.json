@@ -1963,7 +1963,7 @@
         {
           "type": "MOVE_OPERATION",
           "description": "Move Method\tpublic mappedTypeContext(mappedTypeName String) : ProjectionMappedTypeContext from class org.hibernate.search.mapper.pojo.standalone.mapping.impl.StandalonePojoMapping to public mappedTypeContext(name String) : ProjectionMappedTypeContext from class org.hibernate.search.mapper.pojo.mapping.impl.PojoMappingDelegateImpl",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_VARIABLE",
@@ -2267,6 +2267,11 @@
         {
           "type": "MOVE_RENAME_CLASS",
           "description": "Move And Rename Class\torg.hibernate.search.mapper.pojo.standalone.massindexing.impl.StandalonePojoMassIndexingLoadingStrategy moved and renamed to org.hibernate.search.mapper.pojo.standalone.loading.impl.StandalonePojoMassLoadingStrategy",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpublic mappedTypeContext(mappedTypeName String) : ProjectionMappedTypeContext from class org.hibernate.search.mapper.pojo.standalone.mapping.impl.StandalonePojoMapping to public mappedTypeContext(mappedTypeName String) : ProjectionMappedTypeContext from class org.hibernate.search.mapper.pojo.mapping.spi.AbstractPojoMappingImplementor",
           "validation": true
         }
       ]

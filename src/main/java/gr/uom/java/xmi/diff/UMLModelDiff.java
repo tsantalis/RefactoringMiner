@@ -6287,6 +6287,7 @@ public class UMLModelDiff {
 		boolean pullUp = isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName());
 		boolean pushDown = isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName());
 		List<Refactoring> toBeRemoved = new ArrayList<>();
+		boolean competingPullUp = false;
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof MoveOperationRefactoring) {
 				MoveOperationRefactoring moveRefactoring = (MoveOperationRefactoring)refactoring;
@@ -6297,11 +6298,18 @@ public class UMLModelDiff {
 					}
 					else {
 						toBeRemoved.add(refactoring);
+						if(refactoring.getRefactoringType().equals(RefactoringType.PULL_UP_OPERATION) ||
+								refactoring.getRefactoringType().equals(RefactoringType.PUSH_DOWN_OPERATION)) {
+							competingPullUp = true;
+						}
 					}
 				}
 			}
 		}
 		refactorings.removeAll(toBeRemoved);
+		if(competingPullUp) {
+			return true;
+		}
 		return false;
 	}
 

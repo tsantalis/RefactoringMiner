@@ -40,6 +40,8 @@ public class WebDiffRunnerCli {
     String perforceUserName = null;
     @Parameter(names = {"-pup", "--perforce-password"}, description = "Perforce password")
     String perforcePassword = null;
+    @Parameter(names = {"--no-browser", "-nb"}, description = "Not open the diff in the browser")
+    boolean no_browser = false;
 
     private static final String HELP_MSG = """
 You can run the diff with the following options:
@@ -75,8 +77,14 @@ To export the mappings/actions, add --export to the end of the command.
             if (export){
                 export(projectASTDiff, exportPath);
             }
-            else
-                new WebDiff(projectASTDiff).openInBrowser();
+            else {
+                WebDiff webDiff = new WebDiff(projectASTDiff);
+                if (no_browser) {
+                    webDiff.run();
+                }
+                else
+                    webDiff.openInBrowser();
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

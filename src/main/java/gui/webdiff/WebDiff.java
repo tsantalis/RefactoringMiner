@@ -68,7 +68,13 @@ public class WebDiff  {
             BufferedReader pidReader = new BufferedReader(new InputStreamReader(findPidProcess.getInputStream()));
             String pid = pidReader.readLine();
             pidReader.close();
-            if (pid != null && !pid.isEmpty()) {
+            try {
+                Integer.parseInt(pid);
+            }
+            catch (NumberFormatException e){
+                return;
+            }
+            if (!pid.isEmpty()) {
                 Process killProcess = Runtime.getRuntime().exec(String.format("kill -9 %s", pid));
                 killProcess.waitFor();
             }

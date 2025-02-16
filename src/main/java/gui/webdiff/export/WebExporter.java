@@ -8,6 +8,8 @@ import java.net.URL;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /* Created by pourya on 2025-02-12*/
@@ -25,14 +27,15 @@ public class WebExporter {
             "list"
     );
 
-    final String baseFolder = "webdiff";
+    final String baseFolder = "web";
+    final String resourceFolderNameInFinalExport = "resources";
 
 
     public WebExporter(WebDiff webDiff) {
         Set<String> folders;
         this.webDiff = webDiff;
         try {
-            folders = Files.list(Paths.get(resourcePath))
+            folders = Files.list(Paths.get(resourcePath + webDiff.getResources()))
                     .filter(Files::isDirectory)
                     .map(path -> path.getFileName().toString())
                     .collect(Collectors.toSet());
@@ -48,7 +51,7 @@ public class WebExporter {
         exportPath = exportPath + baseFolder + File.separator;
         exportViewers(exportPath);
         exportOthersPages(exportPath);
-        exportResources(exportPath, resourcePath + webDiff.getResources());
+        exportResources(exportPath + File.separator, resourcePath + webDiff.getResources());
     }
 
     private void exportOthersPages(String exportPath) {
@@ -63,14 +66,13 @@ public class WebExporter {
         for (int i = 0; i < webDiff.projectASTDiff.getDiffSet().size(); i++) {
             for (String viewer_path : viewers_path) {
                 url = String.format("%s:%d/%s/%d", baseURL, webDiff.port, viewer_path, i);
-                export(exportPath, viewer_path + "/" + i, url);
+                export(exportPath, viewer_path + File.separator + i, url);
             }
         }
     }
 
     private void export(String exportPath, String folderPath, String url) {
-        int nestingLevel = folderPath.length() - folderPath.replace("/", "").length() + 1;
-        String baseAddon = "../".repeat(nestingLevel);
+        int nestingLevel = folderPath.length() - folderPath.replace(File.separator, "").length() + 1;
         String content = getPage(url);
         String filePath = exportPath + folderPath;
         Path path = Path.of(filePath);
@@ -80,18 +82,41 @@ public class WebExporter {
             e.printStackTrace();
         }
         try (FileWriter writer = new FileWriter(filePath + "/index.html")) {
-            for (String resourceFolder : resourceFolders) {
-                content = content.replace("=\"/"+resourceFolder+"/", "=\""+baseAddon+resourceFolder+"/");
-            }
-            writer.write(content);
+            String modifiedContent = doProperReplacement(content, nestingLevel);
+            writer.write(modifiedContent);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    private String doProperReplacement(String content, int nestingLevel) {
+        String baseAddon = (".." + File.separator).repeat(nestingLevel);
+        String baseAddonWithResources = baseAddon + resourceFolderNameInFinalExport + File.separator;
+        Pattern pattern = Pattern.compile("(?<=\\b(href|src)=['\"])(/?)(?!https:)([^'\"]+)(?=['\"])");
+
+
+        Matcher matcher = pattern.matcher(content);
+        StringBuffer result = new StringBuffer();
+
+        while (matcher.find()) {
+            String filePath = matcher.group(3); // Extract the actual path
+            String addon;
+            if (filePath.endsWith(".css") || filePath.endsWith(".scss") || filePath.endsWith(".js")) {
+                addon = baseAddonWithResources;
+            } else {
+                addon = baseAddon;
+            }
+            matcher.appendReplacement(result, addon + filePath);
+        }
+        matcher.appendTail(result);
+        content = result.toString();
+        return content;
     }
 
     private void exportResources(String destDir, String resourcesPath) {
         Path sourcePath = Paths.get(resourcesPath);
-        Path destPath = Paths.get(destDir);
+        Path destPath = Paths.get(destDir + resourceFolderNameInFinalExport);
         try {
             Files.createDirectories(destPath);
 

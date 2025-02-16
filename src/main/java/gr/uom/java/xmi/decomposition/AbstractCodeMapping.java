@@ -1299,10 +1299,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 				else if(initializer != null && initializer.getLambdas().size() > 0) {
 					boolean methodReference = false;
-					for(LambdaExpressionObject lambda : initializer.getLambdas()) {
-						if(lambda.getString().contains(JAVA.METHOD_REFERENCE)) {
-							methodReference = true;
-						}
+					if(initializer.getLambdas().size() == 1 && initializer.getLambdas().get(0).getString().contains(JAVA.METHOD_REFERENCE)) {
+						methodReference = true;
 					}
 					if(!methodReference) {
 						return true;

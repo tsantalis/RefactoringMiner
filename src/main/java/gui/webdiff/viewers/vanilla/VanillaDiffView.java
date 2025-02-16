@@ -42,7 +42,8 @@ public class VanillaDiffView extends AbstractDiffView implements Renderable {
                                 return "<span class=&quot;del&quot;>&nbsp;&nbsp;</span> deleted<br>"
                                         + "<span class=&quot;add&quot;>&nbsp;&nbsp;</span> added<br>"
                                         + "<span class=&quot;mv&quot;>&nbsp;&nbsp;</span> moved<br>"
-                                        + "<span class=&quot;upd&quot;>&nbsp;&nbsp;</span> updated<br>";
+                                        + "<span class=&quot;upd&quot;>&nbsp;&nbsp;</span> updated<br>"
+                                        + "<span class=&quot;mm&quot;>&nbsp;&nbsp;</span> multi-mapped<br>";
                             }
                         })
                     ._div()

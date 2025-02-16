@@ -29,6 +29,12 @@ public class WebDiff  {
     private final String toolName = "RefactoringMiner";
 
     public ProjectASTDiff projectASTDiff;
+    private final String resourcesPath = "/web/";
+
+    public String getResources() {
+        return resourcesPath;
+    }
+
     public WebDiff(ProjectASTDiff projectASTDiff) {
         this.projectASTDiff = projectASTDiff;
     }
@@ -39,6 +45,9 @@ public class WebDiff  {
         configureSpark(comparator, this.port);
         Spark.awaitInitialization();
         System.out.println(String.format("Starting server: %s:%d.", "http://127.0.0.1", this.port));
+    }
+    public void terminate(){
+        Spark.stop();
     }
 
     public void openInBrowser() {
@@ -68,7 +77,7 @@ public class WebDiff  {
 
     public void configureSpark(final DirComparator comparator, int port) {
         port(port);
-        staticFiles.location("/web/");
+        staticFiles.location(getResources());
         get("/", (request, response) -> {
 //            if (comparator.isDirMode())
                 response.redirect("/list");

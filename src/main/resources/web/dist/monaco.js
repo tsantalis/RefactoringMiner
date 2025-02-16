@@ -6,6 +6,8 @@ function mymonaco(config) {
         const right_container_id = config.rcid;/*'right-container';*/
         const leftContainer = document.getElementById(left_container_id);
         const rightContainer = document.getElementById(right_container_id);
+        let isLayoutUpdating = false;
+        let isInitialLayout = true; // Flag to track the initial layout
         Promise.all([
             Promise.resolve(monaco.editor.create(leftContainer, getEditorOptions(config, config.left.content))),
             Promise.resolve(monaco.editor.create(rightContainer, getEditorOptions(config, config.right.content)))
@@ -40,17 +42,32 @@ function mymonaco(config) {
 
             if (config.spv === true) {
                 const updateEditorsLayout = () => {
+                    if (isLayoutUpdating) return; // Prevent recursion during layout updates
+
+                    isLayoutUpdating = true;
+
                     const leftHeight = leftEditor.getContentHeight();
                     const rightHeight = rightEditor.getContentHeight();
                     const editorHeight = Math.max(leftHeight, rightHeight);
 
-                    leftContainer.style.overflow = 'auto';
-                    rightContainer.style.overflow = 'auto';
+                    // Initially set the height to 500px, then update dynamically
+                    if (isInitialLayout) {
+                        leftContainer.style.height = '500px';
+                        rightContainer.style.height = '500px';
+                        isInitialLayout = false; // Disable the initial layout update flag
+                    } else {
+                        // Update the height only if it has changed
+                        if (leftContainer.style.height !== `${editorHeight}px` || rightContainer.style.height !== `${editorHeight}px`) {
+                            leftContainer.style.height = `${editorHeight}px`;
+                            rightContainer.style.height = `${editorHeight}px`;
+                        }
+                    }
 
-                    leftContainer.style.height = `${editorHeight}px`;
-                    rightContainer.style.height = `${editorHeight}px`;
+                    // Update editor layout
                     leftEditor.layout();
                     rightEditor.layout();
+
+                    isLayoutUpdating = false;
                 };
 
                 leftEditor.onDidContentSizeChange(updateEditorsLayout);

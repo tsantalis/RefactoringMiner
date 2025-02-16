@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 public class WebExporter {
     final WebDiff webDiff;
     final String baseURL = "http://127.0.0.1";
-    final Set<String> resourceFolders;
     final String resourcePath = "src/main/resources/";
     final Set<String> viewers_path = Set.of(
             "monaco-page",
@@ -32,17 +31,7 @@ public class WebExporter {
 
 
     public WebExporter(WebDiff webDiff) {
-        Set<String> folders;
         this.webDiff = webDiff;
-        try {
-            folders = Files.list(Paths.get(resourcePath + webDiff.getResources()))
-                    .filter(Files::isDirectory)
-                    .map(path -> path.getFileName().toString())
-                    .collect(Collectors.toSet());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        resourceFolders = folders;
     }
 
     public void export(String exportPath){
@@ -116,6 +105,7 @@ public class WebExporter {
 
     private void exportResources(String destDir, String resourcesPath) {
         Path sourcePath = Paths.get(resourcesPath);
+        if (!new File(String.valueOf(sourcePath)).exists()) return;
         Path destPath = Paths.get(destDir + resourceFolderNameInFinalExport);
         try {
             Files.createDirectories(destPath);

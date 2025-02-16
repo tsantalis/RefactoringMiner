@@ -1297,6 +1297,17 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						return true;
 					}
 				}
+				else if(initializer != null && initializer.getLambdas().size() > 0) {
+					boolean methodReference = false;
+					for(LambdaExpressionObject lambda : initializer.getLambdas()) {
+						if(lambda.getString().contains(JAVA.METHOD_REFERENCE)) {
+							methodReference = true;
+						}
+					}
+					if(!methodReference) {
+						return true;
+					}
+				}
 			}
 		}
 		if(getReplacements().size() == 2 && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size()) {

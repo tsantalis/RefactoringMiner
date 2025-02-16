@@ -25,6 +25,8 @@ public class WebExporter {
             "list"
     );
 
+    final String baseFolder = "webdiff";
+
 
     public WebExporter(WebDiff webDiff) {
         Set<String> folders;
@@ -41,6 +43,9 @@ public class WebExporter {
     }
 
     public void export(String exportPath){
+        if (!exportPath.endsWith(File.separator))
+            exportPath += File.separator;
+        exportPath = exportPath + baseFolder + File.separator;
         exportViewers(exportPath);
         exportOthersPages(exportPath);
         exportResources(exportPath, resourcePath + webDiff.getResources());
@@ -111,7 +116,6 @@ public class WebExporter {
             URL pageUrl = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) pageUrl.openConnection();
             connection.setRequestMethod("GET");
-
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(connection.getInputStream()));
             int inputChar;

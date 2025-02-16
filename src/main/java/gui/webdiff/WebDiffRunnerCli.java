@@ -2,6 +2,7 @@ package gui.webdiff;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import gui.webdiff.export.WebExporter;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.MappingExportModel;
@@ -31,8 +32,10 @@ public class WebDiffRunnerCli {
     String commit;
     @Parameter(names = {"-h", "--help"}, description = "Help", help = true)
     boolean help;
-    @Parameter(names = {"-e", "--export"}, description = "Export Mappings/Actions into files")
+    @Parameter(names = {"-e", "--export"}, description = "Export WebDiff/Mappings/Actions into files")
     boolean export = false;
+    @Parameter(names = {"--out", "-o"}, description = "Output dir for the exported files")
+    String exportPath = "exported";
     @Parameter(names = {"-pun", "--perforce-user-name"}, description = "Perforce user name")
     String perforceUserName = null;
     @Parameter(names = {"-pup", "--perforce-password"}, description = "Perforce password")
@@ -70,7 +73,7 @@ To export the mappings/actions, add --export to the end of the command.
         try {
             ProjectASTDiff projectASTDiff = runMode.getProjectASTDIFF(this);
             if (export){
-                export(projectASTDiff);
+                export(projectASTDiff, exportPath);
             }
             else
                 new WebDiff(projectASTDiff).openInBrowser();
@@ -79,16 +82,38 @@ To export the mappings/actions, add --export to the end of the command.
         }
     }
 
-    public static void export(ProjectASTDiff projectASTDiff) throws IOException {
+    public static void export(ProjectASTDiff projectASTDiff, String exportDestination) throws IOException {
+        //if export dir doesn't end with a slash, add it
+        if (!exportDestination.endsWith(File.separator)) {
+            exportDestination += File.separator;
+        }
+        //Export the webdiff
+        WebDiff webDiff = new WebDiff(projectASTDiff);
+        webDiff.run();
+        WebExporter webExporter = new WebExporter(webDiff);
+        webExporter.export(exportDestination);
+        webDiff.terminate();
+
+        //Export JSON files containing mappings/actions (unnecessary for now)
+
+        //Make JSON directory
+        String jsonPaths = exportDestination + File.separator + "jsons"; //TODO must be variable
+        File jsonPathsDir = new File(jsonPaths);
+        if (!jsonPathsDir.exists()) {
+            jsonPathsDir.mkdirs();
+        }
+
+        //Export mappings/actions
         for (ASTDiff astDiff : projectASTDiff.getDiffSet()) {
             String fileNameFromSrcDiff = getFileNameFromSrcDiff(astDiff.getSrcPath());
             int lastIndex = fileNameFromSrcDiff.lastIndexOf(".json");
             if (lastIndex != -1) {
                 fileNameFromSrcDiff = fileNameFromSrcDiff.substring(0, lastIndex) + fileNameFromSrcDiff.substring(lastIndex + 5);
             }
-            MappingExportModel.exportToFile(new File(fileNameFromSrcDiff + "_mappings.json"), astDiff.getAllMappings());
-            MappingExportModel.exportActions(new File(fileNameFromSrcDiff + "_actions.txt"), astDiff);
+            MappingExportModel.exportToFile(new File(jsonPaths, fileNameFromSrcDiff + "_mappings.json"), astDiff.getAllMappings());
+            MappingExportModel.exportActions(new File(jsonPaths,fileNameFromSrcDiff + "_actions.txt"), astDiff);
         }
+
     }
 
     enum RunMode{

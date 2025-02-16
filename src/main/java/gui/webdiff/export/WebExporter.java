@@ -102,7 +102,7 @@ public class WebExporter {
         while (matcher.find()) {
             String filePath = matcher.group(3); // Extract the actual path
             String addon;
-            if (filePath.endsWith(".css") || filePath.endsWith(".scss") || filePath.endsWith(".js")) {
+            if (filePath.endsWith(".css") || filePath.endsWith(".scss") || filePath.endsWith(".js") || filePath.endsWith(".svg")) {
                 addon = baseAddonWithResources;
             } else {
                 addon = baseAddon;

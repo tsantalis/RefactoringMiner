@@ -20,7 +20,6 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 
 /* Created by pourya on 2024-07-05*/
 public class MonacoCore {
-    private static final Path CONFIG_PATH = Path.of("src/main/resources/web/diff/config.js");
     private boolean showFilenames;
     private final Diff diff;
     private final int id;

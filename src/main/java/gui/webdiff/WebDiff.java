@@ -72,7 +72,9 @@ public class WebDiff  {
                 Process killProcess = Runtime.getRuntime().exec(String.format("kill -9 %s", pid));
                 killProcess.waitFor();
             }
-        } catch (IOException | InterruptedException ignored) { }
+        } catch (IOException | InterruptedException ignored) {
+            System.out.println(ignored.getMessage());
+        }
     }
 
     public void configureSpark(final DirComparator comparator, int port) {

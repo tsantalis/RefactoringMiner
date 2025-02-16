@@ -70,8 +70,7 @@ public class MonacoCore {
 
         html.div(class_("edc").id(getRightContainerId()).style(heightFormula + "border: 1px solid grey; overflow: auto;"))._div()
                 ._div();
-        String monacoInvocation = "mymonaco(" + makeDiffConfig() + ");";
-        String code = "window.onload = function() { " + monacoInvocation + "};";
+        String code = "mymonaco(" + makeDiffConfig() + ");";
         html.macros().script(code); // Pass the config to the main function
 
 

@@ -1364,7 +1364,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						subExpressionIsCallToSameMethod = true;
 					}
 				}
-				if(!subExpressionIsCallToSameMethod) {
+				if(!subExpressionIsCallToSameMethod && !ReplacementUtil.contains(expression, replacedExpression + "()")) {
 					return true;
 				}
 			}

@@ -1359,6 +1359,11 @@
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic builder() : TestingBufferPool.Builder extracted from package testRequestBuffer() : void in class org.apache.flink.runtime.io.network.partition.consumer.RemoteInputChannelTest & moved to class org.apache.flink.runtime.io.network.buffer.TestingBufferPool",
           "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tisMemoryDecouplingEnabled : boolean in method public getMinMaxNetworkBuffersPerResultPartition(configuredNetworkBuffersPerChannel int, numFloatingBuffersPerGate int, sortShuffleMinParallelism int, sortShuffleMinBuffers int, numSubpartitions int, enableTieredStorage boolean, enableMemoryDecoupling boolean, tieredStoreExclusiveBuffers int, tieredStorageMinBuffersPerResultPartition int, type ResultPartitionType) : Tuple3<Integer,Integer,Integer> from class org.apache.flink.runtime.shuffle.NettyShuffleUtils",
+          "validation": true
         }
       ]
     },

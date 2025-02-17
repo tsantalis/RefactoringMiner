@@ -225,6 +225,26 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 			}
+			if(mapper.getLambdaMappers().size() > 0 && mapper.nonMappedElementsT2() > 0) {
+				for(UMLOperationBodyMapper lambdaMapper : mapper.getLambdaMappers()) {
+					if(lambdaMapper.nonMappedElementsT1() > 0) {
+						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(lambdaMapper, mapper, this);
+						int invalidMappings = 0;
+						for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
+							if(mapper.alreadyMatched2(mapping.getFragment2()) || lambdaMapper.getNonMappedLeavesT2().contains(mapping.getFragment2()) ||
+									lambdaMapper.getNonMappedInnerNodesT2().contains(mapping.getFragment2())) {
+								invalidMappings++;
+							}
+						}
+						if(moveCodeMapper.getMappings().size() > invalidMappings) {
+							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);
+							if(!moveCodeMappers.contains(moveCodeMapper))
+								moveCodeMappers.add(moveCodeMapper);
+							refactorings.add(ref);
+						}
+					}
+				}
+			}
 		}
 		for(UMLOperationBodyMapper setUpMapper : setUpMappers) {
 			if(setUpMapper.nonMappedElementsT2() > 0 || setUpMapper.nonMappedElementsT1() > 0) {

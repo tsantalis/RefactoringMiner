@@ -2549,6 +2549,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return Optional.ofNullable(parameterToArgumentMap2);
 	}
 
+	public Set<UMLOperationBodyMapper> getLambdaMappers() {
+		Set<UMLOperationBodyMapper> lambdaMappers = new LinkedHashSet<>();
+		for(AbstractCodeMapping mapping : mappings) {
+			lambdaMappers.addAll(mapping.getLambdaMappers());
+		}
+		return lambdaMappers;
+	}
+
 	public Set<UMLOperationBodyMapper> getChildMappers() {
 		return childMappers;
 	}

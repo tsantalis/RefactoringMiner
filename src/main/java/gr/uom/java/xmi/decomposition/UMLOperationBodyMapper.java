@@ -7525,7 +7525,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
-				else if(parent1 == null && (parent2 == null || parent2.getParent() == null) && (possibleExtractVariable || possibleInlineVariable)) {
+				else if(parent1 == null && (parent2 == null || parent2.getParent() == null) && (possibleExtractVariable || possibleInlineVariable ||
+						(leaf1.getVariableDeclarations().toString().equals(leaf.getVariableDeclarations().toString()) && leaf1.getVariableDeclarations().size() > 0))) {
 					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf, leaves1, leaves2);
 					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 					if (replacements != null) {

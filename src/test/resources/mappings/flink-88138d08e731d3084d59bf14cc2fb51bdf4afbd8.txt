@@ -1,0 +1,11 @@
+public getMinMaxNetworkBuffersPerResultPartition(configuredNetworkBuffersPerChannel int, numFloatingBuffersPerGate int, sortShuffleMinParallelism int, sortShuffleMinBuffers int, numSubpartitions int, enableTieredStorage boolean, tieredStoreExclusiveBuffers int, type ResultPartitionType) : Tuple3<Integer,Integer,Integer> -> public getMinMaxNetworkBuffersPerResultPartition(configuredNetworkBuffersPerChannel int, numFloatingBuffersPerGate int, sortShuffleMinParallelism int, sortShuffleMinBuffers int, numSubpartitions int, enableTieredStorage boolean, enableMemoryDecoupling boolean, tieredStoreExclusiveBuffers int, tieredStorageMinBuffersPerResultPartition int, type ResultPartitionType) : Tuple3<Integer,Integer,Integer>
+line range:78-80==line range:76-78
+line range:103-103==line range:99-99
+line range:109-109==line range:105-105
+line range:96-102==line range:92-98
+line range:85-88==line range:82-87
+line range:83-83==line range:82-87
+line range:81-81==line range:82-87
+line range:93-93==line range:89-89
+line range:91-91==line range:89-89
+line range:92-92==line range:79-80

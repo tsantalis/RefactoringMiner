@@ -1400,6 +1400,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			if(r instanceof MergeConditionalRefactoring) {
+				MergeConditionalRefactoring merge = (MergeConditionalRefactoring)r;
+				for(AbstractCodeFragment fragment : merge.getMergedConditionals()) {
+					if(fragment instanceof CompositeStatementObject) {
+						CompositeStatementObject comp = (CompositeStatementObject)fragment;
+						if(comp.getExpressions().contains(mapping.getFragment1())) {
+							return true;
+						}
+					}
+				}
+			}
 		}
 		for(AbstractCodeMapping previousMapping : this.mappings) {
 			for(Refactoring r : previousMapping.getRefactorings()) {
@@ -8675,7 +8686,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(mappingSet.size() == 1) {
 			return Set.of(mappingSet.first());
 		}
-		if(container1.equals(container2) || (parentMapper != null && !nested)) {
+		Set<String> commonParameters = container1.commonParameters(container2);
+		boolean compatibleSignature = container1.getName().equals(container2.getName()) &&
+				commonParameters.size() == Math.min(container1.getParametersWithoutReturnType().size(), container2.getParametersWithoutReturnType().size()) &&
+				container1.equalReturnParameter(container2);
+		if(container1.equals(container2) || compatibleSignature || (parentMapper != null && !nested)) {
 			Map<CompositeStatementObject, AbstractCodeMapping> parentMap = new LinkedHashMap<>();
 			Map<CompositeStatementObject, AbstractCodeMapping> grandParentMap = new LinkedHashMap<>();
 			Map<AbstractCodeFragment, CompositeStatementObject> ifStatementConditionalExpressions = new LinkedHashMap<>();
@@ -8805,7 +8820,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			if(ifFound && (elseIfFound || (elseFound && parentMap.size() == grandParentMap.size()) || grandParentIfElseIfChain) && (parentIfElseIfChain || grandParentIfElseIfChain)) {
+			boolean nestedTernary = mappingSet.first().getFragment2().getTernaryOperatorExpressions().size() > 1;
+			if(ifFound && (elseIfFound || (elseFound && parentMap.size() == grandParentMap.size()) || grandParentIfElseIfChain || nestedTernary) && (parentIfElseIfChain || grandParentIfElseIfChain)) {
 				Set<String> variableDeclarationNames1 = new LinkedHashSet<>();
 				Set<String> variableDeclarationNames2 = new LinkedHashSet<>();
 				for(AbstractCodeMapping mapping : parentMap.values()) {
@@ -8817,13 +8833,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(VariableDeclaration variable : fragment2.getVariableDeclarations()) {
 						variableDeclarationNames2.add(variable.getVariableName());
 					}
-					if(fragment1.assignmentInvocationCoveringEntireStatement() != null || fragment1.assignmentCreationCoveringEntireStatement() != null) {
+					if(fragment1.assignmentInvocationCoveringEntireStatement() != null || fragment1.assignmentCreationCoveringEntireStatement() != null ||
+							fragment1.assignmentTernaryOperatorCoveringEntireStatement() != null) {
 						if(fragment1.getString().contains(JAVA.ASSIGNMENT)) {
 							String assignedVariable = fragment1.getString().substring(0, fragment1.getString().indexOf(JAVA.ASSIGNMENT));
 							variableDeclarationNames1.add(assignedVariable);
 						}
 					}
-					if(fragment2.assignmentInvocationCoveringEntireStatement() != null || fragment2.assignmentCreationCoveringEntireStatement() != null) {
+					if(fragment2.assignmentInvocationCoveringEntireStatement() != null || fragment2.assignmentCreationCoveringEntireStatement() != null ||
+							fragment2.assignmentTernaryOperatorCoveringEntireStatement() != null) {
 						if(fragment2.getString().contains(JAVA.ASSIGNMENT)) {
 							String assignedVariable = fragment2.getString().substring(0, fragment2.getString().indexOf(JAVA.ASSIGNMENT));
 							variableDeclarationNames2.add(assignedVariable);
@@ -9411,7 +9429,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		if(mappingToBeRemoved != null) {
+		if(mappingToBeRemoved != null && !mappingToBeRemoved.containsReplacement(ReplacementType.COMPOSITE)) {
 			removeMapping(mappingToBeRemoved);
 		}
 		else if(conflictingMappingFound) {

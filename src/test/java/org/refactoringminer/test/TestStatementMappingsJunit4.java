@@ -2719,6 +2719,24 @@ public class TestStatementMappingsJunit4 {
 	}
 
 	@Test
+	public void testMergedStatementMappingsToTernary() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/apache/flink.git", "88138d08e731d3084d59bf14cc2fb51bdf4afbd8", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("getMinMaxNetworkBuffersPerResultPartition") && mapper.getContainer2().getName().equals("getMinMaxNetworkBuffersPerResultPartition")) {
+					mapperInfo(mapper, actual);
+					break;
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "flink-88138d08e731d3084d59bf14cc2fb51bdf4afbd8.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testMergedStatementMappingsMovedOutOfIfElseIfBranch() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();

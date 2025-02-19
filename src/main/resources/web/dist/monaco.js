@@ -86,6 +86,7 @@ function mymonaco(config) {
                     parent_container.scrollTop += e.deltaY;
                     parent_container.scrollLeft += e.deltaX;
                 });
+                window.addEventListener("resize", updateEditorsLayout.bind(this));
             }
             window.leftEditor = leftEditor;
             window.rightEditor = rightEditor;

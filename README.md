@@ -440,11 +440,11 @@ As of **February 4, 2025** the precision and recall of RefactoringMiner on this 
 **Commit dates**: March 28, 2024
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **February 18, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **February 19, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|2993  | 248  | 381  | 0.923  | 0.887|
+|**Total**|3001  | 247  | 375  | 0.924  | 0.889|
 |Extract Method|328  | 25  | 37  | 0.929  | 0.899|
 |Rename Class|228  |  2  |  4  | 0.991  | 0.983|
 |Move Attribute|69  |  3  | 11  | 0.958  | 0.863|
@@ -454,7 +454,7 @@ As of **February 18, 2025** the precision and recall of RefactoringMiner on this
 |Move Method|259  |  6  |  8  | 0.977  | 0.970|
 |Move And Rename Method|18  |  6  | 10  | 0.750  | 0.643|
 |Pull Up Method|42  |  3  |  8  | 0.933  | 0.840|
-|Move Class|137  | 11  |  4  | 0.926  | 0.972|
+|Move Class|138  | 10  |  4  | 0.932  | 0.972|
 |Move And Rename Class|28  |  3  |  2  | 0.903  | 0.933|
 |Pull Up Attribute|11  |  0  |  3  | 1.000  | 0.786|
 |Push Down Attribute| 5  |  0  |  1  | 1.000  | 0.833|
@@ -465,9 +465,9 @@ As of **February 18, 2025** the precision and recall of RefactoringMiner on this
 |Extract Class|40  |  2  | 11  | 0.952  | 0.784|
 |Extract And Move Method|99  | 25  | 21  | 0.798  | 0.825|
 |Move And Inline Method|17  |  7  | 13  | 0.708  | 0.567|
-|Extract Variable|233  | 18  | 48  | 0.928  | 0.829|
+|Extract Variable|236  | 18  | 45  | 0.929  | 0.840|
 |Inline Variable|75  | 12  | 47  | 0.862  | 0.615|
-|Rename Variable|254  | 33  | 32  | 0.885  | 0.888|
+|Rename Variable|258  | 33  | 29  | 0.887  | 0.899|
 |Rename Attribute|101  |  6  | 15  | 0.944  | 0.871|
 |Change Return Type|153  |  9  | 27  | 0.944  | 0.850|
 |Change Variable Type|350  | 38  | 18  | 0.902  | 0.951|

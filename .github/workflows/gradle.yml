@@ -70,6 +70,7 @@ jobs:
 #        token: ${{ secrets.GIST_TOKEN }}
 
   dispatch_deploy_event:
+    if: github.repository == 'tsantalis/RefactoringMiner' && github.ref == 'refs/heads/master'
     permissions:
       contents: write
     needs: [build]

@@ -79,7 +79,7 @@ public class WebDiff  {
                 killProcess.waitFor();
             }
         } catch (IOException | InterruptedException ignored) {
-            System.out.println(ignored.getMessage());
+//            System.out.println(ignored.getMessage());
         }
     }
 

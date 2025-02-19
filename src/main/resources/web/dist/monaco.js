@@ -7,6 +7,7 @@ function mymonaco(config) {
         const leftContainer = document.getElementById(left_container_id);
         const rightContainer = document.getElementById(right_container_id);
         let isLayoutUpdating = false;
+        let lastUpdateDebounce = Date.now();
         let isInitialLayout = true; // Flag to track the initial layout
         Promise.all([
             Promise.resolve(monaco.editor.create(leftContainer, getEditorOptions(config, config.left.content))),
@@ -37,13 +38,13 @@ function mymonaco(config) {
 
             setAllFoldings(config, leftEditor, rightEditor);
 
-            leftEditor.getAction('editor.foldAll').run();
-            rightEditor.getAction('editor.foldAll').run();
 
             if (config.spv === true) {
                 const updateEditorsLayout = () => {
                     if (isLayoutUpdating) return; // Prevent recursion during layout updates
 
+                    if (Date.now() - lastUpdateDebounce < 2000) return; // Debounce layout updates
+                    lastUpdateDebounce = Date.now();
                     isLayoutUpdating = true;
 
                     const leftHeight = leftEditor.getContentHeight();
@@ -70,6 +71,11 @@ function mymonaco(config) {
                     isLayoutUpdating = false;
                 };
 
+                Promise.all([
+                    leftEditor.getAction('editor.foldAll').run(),
+                    rightEditor.getAction('editor.foldAll').run()]
+                ).then(updateEditorsLayout);
+
                 leftEditor.onDidContentSizeChange(updateEditorsLayout);
                 rightEditor.onDidContentSizeChange(updateEditorsLayout);
 
@@ -87,6 +93,10 @@ function mymonaco(config) {
                     parent_container.scrollLeft += e.deltaX;
                 });
                 window.addEventListener("resize", updateEditorsLayout.bind(this));
+            }
+            else {
+                leftEditor.getAction('editor.foldAll').run();
+                rightEditor.getAction('editor.foldAll').run();
             }
             window.leftEditor = leftEditor;
             window.rightEditor = rightEditor;

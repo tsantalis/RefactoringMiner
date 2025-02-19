@@ -43,7 +43,7 @@ function mymonaco(config) {
                 const updateEditorsLayout = () => {
                     if (isLayoutUpdating) return; // Prevent recursion during layout updates
 
-                    if (Date.now() - lastUpdateDebounce < 2000) return; // Debounce layout updates
+                    if (Date.now() - lastUpdateDebounce < 2000 && !isInitialLayout) return; // Debounce layout updates
                     lastUpdateDebounce = Date.now();
                     isLayoutUpdating = true;
 

@@ -44,6 +44,6 @@ public class TestNewDatasetRefactorings {
 				.or(Refactorings.SplitMethod.getValue());
 		TestBuilder test = new TestBuilder(detector, REPOS, types);
 		RefactoringPopulator.feedTSERefactoringInstances(test);
-		test.assertExpectationsWithGitHubAPI(2993, 248, 381);
+		test.assertExpectationsWithGitHubAPI(3001, 247, 375);
 	}
 }

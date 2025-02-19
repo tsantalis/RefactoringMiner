@@ -323,7 +323,13 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tsubListMetaModel : PropertyMetaModel to listMetaModel : null in method public output(node Node, name String, level int, builder StringBuilder) : void from class com.github.javaparser.printer.XmlPrinter",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/javaparser/javaparser.git",

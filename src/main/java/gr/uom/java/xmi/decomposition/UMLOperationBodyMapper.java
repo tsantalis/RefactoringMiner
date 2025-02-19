@@ -747,6 +747,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			else if(streamAPIStatements1.size() > 0 && streamAPIStatements2.size() == 0) {
 				processStreamAPIStatements(leaves1, leaves2, streamAPIStatements1, innerNodes2);
 			}
+			else if(streamAPIStatements1.size() > 0 && streamAPIStatements2.size() > 0) {
+				processStreamAPIStatements(leaves1, leaves2, innerNodes1, streamAPIStatements2);
+			}
 			
 			for(Refactoring r : this.refactorings) {
 				if(r instanceof ReplaceLoopWithPipelineRefactoring) {
@@ -2030,17 +2033,49 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(AbstractCodeMapping mapping : mappings) {
 					AbstractCodeFragment fragment1 = mapping.getFragment1();
 					AbstractCodeFragment fragment2 = mapping.getFragment2();
+					List<VariableDeclaration> declarations1 = fragment1.getVariableDeclarations();
+					boolean matchingDeclaration = false;
+					if(declarations1.size() > 0 && composite.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+						for(AbstractExpression expression1 : composite.getExpressions()) {
+							if(expression1.getString().equals(declarations1.get(0).getVariableName())) {
+								matchingDeclaration = true;
+								break;
+							}
+						}
+					}
 					if((composite.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
 							composite.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
 							composite.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
 							composite.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT)) &&
-							(compositeLeaves.contains(fragment1) || containLambdaExpression(compositeLeaves, fragment1) != null)) {
+							(compositeLeaves.contains(fragment1) || containLambdaExpression(compositeLeaves, fragment1) != null) || matchingDeclaration) {
 						AbstractCodeFragment streamAPICallStatement = null;
 						List<AbstractCall> streamAPICalls = null;
 						for(AbstractCodeFragment leaf2 : streamAPIStatements2) {
 							if(leaves2.contains(leaf2)) {
 								boolean matchingLambda = nestedLambdaExpressionMatch(leaf2.getLambdas(), fragment2);
 								if(matchingLambda) {
+									streamAPICallStatement = leaf2;
+									streamAPICalls = streamAPICalls(leaf2);
+									break;
+								}
+							}
+							List<AbstractCall> tmpStreamAPICalls = streamAPICalls(leaf2);
+							if(matchingDeclaration) {
+								boolean matchFound = false;
+								for(AbstractCall call : tmpStreamAPICalls) {
+									if(call.arguments().size() > 0 && call.arguments().get(0).startsWith(composite.getExpressions().get(0).getString() + JAVA.LAMBDA_ARROW)) {
+										matchFound = true;
+										break;
+									}
+									else if(call.arguments().size() > 0 && call.arguments().get(0).contains(JAVA.LAMBDA_ARROW)) {
+										String name = call.arguments().get(0).substring(0, call.arguments().get(0).indexOf(JAVA.LAMBDA_ARROW));
+										if(composite.getExpressions().get(0).getString().toLowerCase().contains(name.toLowerCase())) {
+											matchFound = true;
+											break;
+										}
+									}
+								}
+								if(matchFound) {
 									streamAPICallStatement = leaf2;
 									streamAPICalls = streamAPICalls(leaf2);
 									break;
@@ -2085,6 +2120,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 												}
 												additionallyMatchedStatements1.add(composite);
 												break;
+											}
+										}
+									}
+									if(matchingDeclaration) {
+										List<LambdaExpressionObject> lambdas = streamAPICallStatement.getLambdas();
+										for(LambdaExpressionObject lambda : lambdas) {
+											if(lambda.getBody() != null) {
+												CompositeStatementObject composite2 = lambda.getBody().getCompositeStatement();
+												processCompositeStatements(composite.getLeaves(), composite2.getLeaves(), composite.getInnerNodes(), composite2.getInnerNodes());
 											}
 										}
 									}

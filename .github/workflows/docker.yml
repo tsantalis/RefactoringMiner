@@ -6,6 +6,9 @@ on:
   workflow_dispatch:
     branches:
       - master
+  repository_dispatch:
+    types: [deploy]
+
 
 jobs:
   push_to_docker_hub:

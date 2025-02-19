@@ -68,3 +68,16 @@ jobs:
 #      with:
 #        gist-id: 19fb416d06d1b4d40820e0209540f6c0
 #        token: ${{ secrets.GIST_TOKEN }}
+
+  dispatch_deploy_event:
+    permissions:
+      contents: write
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: dispatch docker build
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          event-type: deploy
+
+

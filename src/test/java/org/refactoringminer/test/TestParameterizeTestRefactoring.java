@@ -2,6 +2,7 @@ package org.refactoringminer.test;
 
 import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.diff.*;
 import org.apache.commons.lang3.builder.Builder;
@@ -491,11 +492,11 @@ class TestParameterizeTestRefactoring {
             Object[] replacements = mapper.getReplacements().toArray();
             assertEquals(((Replacement) replacements[0]).getType(), Replacement.ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL);
             assertEquals(param1, ((Replacement) replacements[0]).getBefore());
-            List<UMLParameter> addedParameters = mapper.getOperationSignatureDiff().get().getAddedParameters();
-            assertEquals(((Replacement) replacements[0]).getAfter(), addedParameters.get(0).getName());
+            List<VariableDeclaration> addedParameters = mapper.getOperationSignatureDiff().get().getAddedParameters();
+            assertEquals(((Replacement) replacements[0]).getAfter(), addedParameters.get(0).getVariableName());
             assertEquals(((Replacement) replacements[1]).getType(), Replacement.ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL);
             assertEquals(param2, ((Replacement) replacements[1]).getBefore());
-            assertEquals(((Replacement) replacements[1]).getAfter(), addedParameters.get(1).getName());
+            assertEquals(((Replacement) replacements[1]).getAfter(), addedParameters.get(1).getVariableName());
         }
 
     }

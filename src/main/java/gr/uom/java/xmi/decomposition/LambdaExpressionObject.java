@@ -451,6 +451,11 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	}
 
 	@Override
+	public boolean isStatic() {
+		return false;
+	}
+
+	@Override
 	public UMLJavadoc getJavadoc() {
 		return null;
 	}

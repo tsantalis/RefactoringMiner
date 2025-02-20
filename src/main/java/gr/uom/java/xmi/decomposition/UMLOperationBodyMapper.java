@@ -603,33 +603,33 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
 			Map<String, String> parameterToArgumentMap2 = new LinkedHashMap<String, String>();
-			List<UMLParameter> addedParameters = operationSignatureDiff.getAddedParameters();
+			List<VariableDeclaration> addedParameters = operationSignatureDiff.getAddedParameters();
 			if(addedParameters.size() == 1) {
-				UMLParameter addedParameter = addedParameters.get(0);
+				VariableDeclaration addedParameter = addedParameters.get(0);
 				if(!operation1.isDeclaredInAnonymousClass() && UMLModelDiff.looksLikeSameType(addedParameter.getType().getClassType(), operation1.getClassName())) {
 					parameterToArgumentMap1.put(JAVA.THIS_DOT, "");
 					//replace "parameterName." with ""
-					parameterToArgumentMap2.put(addedParameter.getName() + ".", "");
+					parameterToArgumentMap2.put(addedParameter.getVariableName() + ".", "");
 				}
 			}
-			List<UMLParameter> removedParameters = operationSignatureDiff.getRemovedParameters();
+			List<VariableDeclaration> removedParameters = operationSignatureDiff.getRemovedParameters();
 			if(removedParameters.size() == 1) {
-				UMLParameter removedParameter = removedParameters.get(0);
+				VariableDeclaration removedParameter = removedParameters.get(0);
 				if(!operation2.isDeclaredInAnonymousClass() && UMLModelDiff.looksLikeSameType(removedParameter.getType().getClassType(), operation2.getClassName())) {
-					parameterToArgumentMap1.put(removedParameter.getName() + ".", "");
+					parameterToArgumentMap1.put(removedParameter.getVariableName() + ".", "");
 					parameterToArgumentMap2.put(JAVA.THIS_DOT, "");
 				}
 			}
 			List<UMLParameterDiff> parameterDiffList = operationSignatureDiff.getParameterDiffList();
 			for(UMLParameterDiff parameterDiff : parameterDiffList) {
-				UMLParameter addedParameter = parameterDiff.getAddedParameter();
-				UMLParameter removedParameter = parameterDiff.getRemovedParameter();
+				VariableDeclaration addedParameter = parameterDiff.getAddedParameter();
+				VariableDeclaration removedParameter = parameterDiff.getRemovedParameter();
 				if(!operation1.isDeclaredInAnonymousClass() && !operation2.isDeclaredInAnonymousClass() &&
 						UMLModelDiff.looksLikeSameType(addedParameter.getType().getClassType(), operation1.getClassName()) &&
 						UMLModelDiff.looksLikeSameType(removedParameter.getType().getClassType(), operation2.getClassName())) {
 					parameterToArgumentMap1.put(JAVA.THIS_DOT, "");
-					parameterToArgumentMap2.put(addedParameter.getName() + ".", "");
-					parameterToArgumentMap1.put(removedParameter.getName() + ".", "");
+					parameterToArgumentMap2.put(addedParameter.getVariableName() + ".", "");
+					parameterToArgumentMap1.put(removedParameter.getVariableName() + ".", "");
 					parameterToArgumentMap2.put(JAVA.THIS_DOT, "");
 				}
 			}
@@ -1522,6 +1522,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.nonMappedLeavesT2 = new ArrayList<AbstractCodeFragment>();
 		this.nonMappedInnerNodesT1 = new ArrayList<CompositeStatementObject>();
 		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
+		//TODO support lambda parameter changes
+		//this.operationSignatureDiff =  new UMLOperationDiff(lambda1, lambda2, classDiff);
 		
 		if(lambda1.getExpression() != null && lambda2.getExpression() != null) {
 			List<AbstractExpression> leaves1 = new ArrayList<AbstractExpression>();

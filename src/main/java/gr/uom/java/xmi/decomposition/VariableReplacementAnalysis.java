@@ -1958,8 +1958,8 @@ public class VariableReplacementAnalysis {
 				String value1 = fragment1.substring(fragment1.indexOf(JAVA.ASSIGNMENT)+1, fragment1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 				String value2 = fragment2.substring(fragment2.indexOf(JAVA.ASSIGNMENT)+1, fragment2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 				if(operation1.getParameterNameList().contains(value1) && operation2.getParameterNameList().contains(value1) && operationDiff != null) {
-					for(UMLParameter addedParameter : operationDiff.getAddedParameters()) {
-						if(addedParameter.getName().equals(value2)) {
+					for(VariableDeclaration addedParameter : operationDiff.getAddedParameters()) {
+						if(addedParameter.getVariableName().equals(value2)) {
 							return true;
 						}
 					}

@@ -1990,7 +1990,7 @@ public class UMLModelDiff {
 			}
 			else if(r instanceof AddParameterRefactoring) {
 				AddParameterRefactoring add = (AddParameterRefactoring)r;
-				if(add.getParameter().getType().equals(addedAttribute.getType()) && add.getParameter().getName().equals(addedAttribute.getName()) &&
+				if(add.getParameter().getType().equals(addedAttribute.getType()) && add.getParameter().getVariableName().equals(addedAttribute.getName()) &&
 						add.getOperationAfter().getClassName().equals(addedAttribute.getClassName())) {
 					return true;
 				}
@@ -2090,7 +2090,7 @@ public class UMLModelDiff {
 				if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor()) {
 					if(mapper.getOperationSignatureDiff().isPresent()) {
 						UMLOperationDiff signatureDiff = mapper.getOperationSignatureDiff().get();
-						for(UMLParameter parameter : signatureDiff.getRemovedParameters()) {
+						for(VariableDeclaration parameter : signatureDiff.getRemovedParameters()) {
 							if(parameter.getVariableDeclaration().toString().equals(candidate.getOriginalAttribute().getVariableDeclaration().toString())) {
 								parameterDeletedFromConstructor = true;
 								break;
@@ -2104,7 +2104,7 @@ public class UMLModelDiff {
 				if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor()) {
 					if(mapper.getOperationSignatureDiff().isPresent()) {
 						UMLOperationDiff signatureDiff = mapper.getOperationSignatureDiff().get();
-						for(UMLParameter parameter : signatureDiff.getAddedParameters()) {
+						for(VariableDeclaration parameter : signatureDiff.getAddedParameters()) {
 							if(parameter.getVariableDeclaration().toString().equals(candidate.getMovedAttribute().getVariableDeclaration().toString())) {
 								parameterAddedToConstructor = true;
 								break;
@@ -3985,17 +3985,17 @@ public class UMLModelDiff {
 				if(refactoring instanceof RenameVariableRefactoring) {
 					RenameVariableRefactoring rename = (RenameVariableRefactoring)refactoring;
 					if(mapper.getContainer1().equals(rename.getOperationBefore()) && mapper.getContainer2().equals(rename.getOperationAfter())) {
-						UMLParameter matchingRemovedParameter = null;
-						for(UMLParameter parameter : operationSignatureDiff.getRemovedParameters()) {
-							if(parameter.getName().equals(rename.getOriginalVariable().getVariableName()) &&
+						VariableDeclaration matchingRemovedParameter = null;
+						for(VariableDeclaration parameter : operationSignatureDiff.getRemovedParameters()) {
+							if(parameter.getVariableName().equals(rename.getOriginalVariable().getVariableName()) &&
 									parameter.getVariableDeclaration().equalType(rename.getOriginalVariable())) {
 								matchingRemovedParameter = parameter;
 								break;
 							}
 						}
-						UMLParameter matchingAddedParameter = null;
-						for(UMLParameter parameter : operationSignatureDiff.getAddedParameters()) {
-							if(parameter.getName().equals(rename.getRenamedVariable().getVariableName()) &&
+						VariableDeclaration matchingAddedParameter = null;
+						for(VariableDeclaration parameter : operationSignatureDiff.getAddedParameters()) {
+							if(parameter.getVariableName().equals(rename.getRenamedVariable().getVariableName()) &&
 									parameter.getVariableDeclaration().equalType(rename.getRenamedVariable())) {
 								matchingAddedParameter = parameter;
 								break;
@@ -4011,17 +4011,17 @@ public class UMLModelDiff {
 				else if(refactoring instanceof ChangeVariableTypeRefactoring) {
 					ChangeVariableTypeRefactoring changeType = (ChangeVariableTypeRefactoring)refactoring;
 					if(mapper.getContainer1().equals(changeType.getOperationBefore()) && mapper.getContainer2().equals(changeType.getOperationAfter())) {
-						UMLParameter matchingRemovedParameter = null;
-						for(UMLParameter parameter : operationSignatureDiff.getRemovedParameters()) {
-							if(parameter.getName().equals(changeType.getOriginalVariable().getVariableName()) &&
+						VariableDeclaration matchingRemovedParameter = null;
+						for(VariableDeclaration parameter : operationSignatureDiff.getRemovedParameters()) {
+							if(parameter.getVariableName().equals(changeType.getOriginalVariable().getVariableName()) &&
 									parameter.getVariableDeclaration().equalType(changeType.getOriginalVariable())) {
 								matchingRemovedParameter = parameter;
 								break;
 							}
 						}
-						UMLParameter matchingAddedParameter = null;
-						for(UMLParameter parameter : operationSignatureDiff.getAddedParameters()) {
-							if(parameter.getName().equals(changeType.getChangedTypeVariable().getVariableName()) &&
+						VariableDeclaration matchingAddedParameter = null;
+						for(VariableDeclaration parameter : operationSignatureDiff.getAddedParameters()) {
+							if(parameter.getVariableName().equals(changeType.getChangedTypeVariable().getVariableName()) &&
 									parameter.getVariableDeclaration().equalType(changeType.getChangedTypeVariable())) {
 								matchingAddedParameter = parameter;
 								break;
@@ -4037,16 +4037,16 @@ public class UMLModelDiff {
 				else if(refactoring instanceof AddParameterRefactoring) {
 					AddParameterRefactoring addParameter = (AddParameterRefactoring)refactoring;
 					if(mapper.getContainer1().equals(addParameter.getOperationBefore()) && mapper.getContainer2().equals(addParameter.getOperationAfter())) {
-						UMLParameter matchingAddedParameter = null;
-						for(UMLParameter parameter : operationSignatureDiff.getAddedParameters()) {
-							if(parameter.getName().equals(addParameter.getParameter().getName()) &&
+						VariableDeclaration matchingAddedParameter = null;
+						for(VariableDeclaration parameter : operationSignatureDiff.getAddedParameters()) {
+							if(parameter.getVariableName().equals(addParameter.getParameter().getVariableName()) &&
 									parameter.getType().equals(addParameter.getParameter().getType())) {
 								matchingAddedParameter = parameter;
 								break;
 							}
 						}
 						if(matchingAddedParameter != null) {
-							AddParameterRefactoring newAddParameter = new AddParameterRefactoring(matchingAddedParameter,
+							AddParameterRefactoring newAddParameter = new AddParameterRefactoring(matchingAddedParameter.getVariableDeclaration(),
 									operationSignatureDiff.getRemovedOperation(), operationSignatureDiff.getAddedOperation());
 							refactoringsToBeAdded.add(newAddParameter);
 						}
@@ -4055,16 +4055,16 @@ public class UMLModelDiff {
 				else if(refactoring instanceof RemoveParameterRefactoring) {
 					RemoveParameterRefactoring removeParameter = (RemoveParameterRefactoring)refactoring;
 					if(mapper.getContainer1().equals(removeParameter.getOperationBefore()) && mapper.getContainer2().equals(removeParameter.getOperationAfter())) {
-						UMLParameter matchingRemovedParameter = null;
-						for(UMLParameter parameter : operationSignatureDiff.getRemovedParameters()) {
-							if(parameter.getName().equals(removeParameter.getParameter().getName()) &&
+						VariableDeclaration matchingRemovedParameter = null;
+						for(VariableDeclaration parameter : operationSignatureDiff.getRemovedParameters()) {
+							if(parameter.getVariableName().equals(removeParameter.getParameter().getVariableName()) &&
 									parameter.getType().equals(removeParameter.getParameter().getType())) {
 								matchingRemovedParameter = parameter;
 								break;
 							}
 						}
 						if(matchingRemovedParameter != null) {
-							RemoveParameterRefactoring newRemovedParameter = new RemoveParameterRefactoring(matchingRemovedParameter,
+							RemoveParameterRefactoring newRemovedParameter = new RemoveParameterRefactoring(matchingRemovedParameter.getVariableDeclaration(),
 									operationSignatureDiff.getRemovedOperation(), operationSignatureDiff.getAddedOperation());
 							refactoringsToBeAdded.add(newRemovedParameter);
 						}

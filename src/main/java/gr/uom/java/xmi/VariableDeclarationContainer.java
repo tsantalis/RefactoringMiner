@@ -105,6 +105,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	AbstractCall isDelegate();
 	boolean isRecursive();
 	boolean isMain();
+	boolean isStatic();
 
 	default boolean hasEmptyBody() {
 		OperationBody operationBody = getBody();

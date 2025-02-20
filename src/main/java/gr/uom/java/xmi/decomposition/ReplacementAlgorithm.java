@@ -137,6 +137,17 @@ public class ReplacementAlgorithm {
 				return replacementInfo.getReplacements();
 			}
 		}
+		Set<String> lambdaParameterNames1 = new LinkedHashSet<>();
+		for(LambdaExpressionObject lambda : lambdas1) {
+			lambdaParameterNames1.addAll(lambda.getParameterNameList());
+		}
+		Set<String> lambdaParameterNames2 = new LinkedHashSet<>();
+		for(LambdaExpressionObject lambda : lambdas2) {
+			lambdaParameterNames2.addAll(lambda.getParameterNameList());
+		}
+		//TODO match statements with changes only in lambda parameter names
+		//removeCommonElements(lambdaParameterNames1, lambdaParameterNames2);
+		//findReplacements(lambdaParameterNames1, lambdaParameterNames2, replacementInfo, ReplacementType.VARIABLE_DECLARATION, container1, container2, classDiff);
 		Set<String> variables1 = convertToStringSet(statement1.getVariables());
 		Set<String> variables2 = convertToStringSet(statement2.getVariables());
 		Set<String> variableIntersection = new LinkedHashSet<String>(variables1);
@@ -4968,6 +4979,9 @@ public class ReplacementAlgorithm {
 				replacementInfo.addLambdaMapper(mapper);
 			}
 		}
+		//TODO handle parameter changes for lambdas with empty body
+		//if(mappings == 0 && lambda1.hasEmptyBody() && lambda2.hasEmptyBody()) {
+		//}
 	}
 
 	private static boolean isPartOfLambdaMovedToParentMapper(UMLOperationBodyMapper lambdaMapper) {

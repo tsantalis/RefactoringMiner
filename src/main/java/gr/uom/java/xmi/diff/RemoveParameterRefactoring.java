@@ -9,30 +9,30 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-import gr.uom.java.xmi.UMLOperation;
-import gr.uom.java.xmi.UMLParameter;
+import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class RemoveParameterRefactoring implements Refactoring {
-	private UMLParameter parameter;
-	private UMLOperation operationBefore;
-	private UMLOperation operationAfter;
+	private VariableDeclaration parameter;
+	private VariableDeclarationContainer operationBefore;
+	private VariableDeclarationContainer operationAfter;
 	
-	public RemoveParameterRefactoring(UMLParameter parameter, UMLOperation operationBefore,
-			UMLOperation operationAfter) {
+	public RemoveParameterRefactoring(VariableDeclaration parameter, VariableDeclarationContainer operationBefore,
+			VariableDeclarationContainer operationAfter) {
 		this.parameter = parameter;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 	}
 
-	public UMLParameter getParameter() {
+	public VariableDeclaration getParameter() {
 		return parameter;
 	}
 
-	public UMLOperation getOperationBefore() {
+	public VariableDeclarationContainer getOperationBefore() {
 		return operationBefore;
 	}
 
-	public UMLOperation getOperationAfter() {
+	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
 	}
 

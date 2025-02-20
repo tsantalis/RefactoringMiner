@@ -879,10 +879,10 @@ public class StringBasedHeuristics {
 			if(diff1.isEmpty() ||
 					(container1.getParameterNameList().contains(diff1) && !container2.getParameterNameList().contains(diff1) && !containsMethodSignatureOfAnonymousClass(diff2)) ||
 					(classDiff != null && classDiff.getOriginalClass().containsAttributeWithName(diff1) && !classDiff.getNextClass().containsAttributeWithName(diff1) && !containsMethodSignatureOfAnonymousClass(diff2))) {
-				List<UMLParameter> matchingAddedParameters = new ArrayList<UMLParameter>();
-				List<UMLParameter> addedParameters = operationSignatureDiff.isPresent() ? operationSignatureDiff.get().getAddedParameters() : Collections.emptyList();
-				for(UMLParameter addedParameter : addedParameters) {
-					if(diff2.contains(addedParameter.getName())) {
+				List<VariableDeclaration> matchingAddedParameters = new ArrayList<VariableDeclaration>();
+				List<VariableDeclaration> addedParameters = operationSignatureDiff.isPresent() ? operationSignatureDiff.get().getAddedParameters() : Collections.emptyList();
+				for(VariableDeclaration addedParameter : addedParameters) {
+					if(diff2.contains(addedParameter.getVariableName())) {
 						matchingAddedParameters.add(addedParameter);
 					}
 				}
@@ -893,8 +893,8 @@ public class StringBasedHeuristics {
 							List<UMLParameterDiff> parameterDiffList = operationSignatureDiff.isPresent() ? operationSignatureDiff.get().getParameterDiffList() : Collections.emptyList();
 							for(UMLParameterDiff parameterDiff : parameterDiffList) {
 								if(parameterDiff.isNameChanged() &&
-										replacement.getBefore().equals(parameterDiff.getRemovedParameter().getName()) &&
-										replacement.getAfter().equals(parameterDiff.getAddedParameter().getName())) {
+										replacement.getBefore().equals(parameterDiff.getRemovedParameter().getVariableName()) &&
+										replacement.getAfter().equals(parameterDiff.getAddedParameter().getVariableName())) {
 									matchingReplacement = replacement;
 									break;
 								}
@@ -909,9 +909,9 @@ public class StringBasedHeuristics {
 						splitVariables.add(matchingReplacement.getAfter());
 						StringBuilder concat = new StringBuilder();
 						int counter = 0;
-						for(UMLParameter addedParameter : matchingAddedParameters) {
-							splitVariables.add(addedParameter.getName());
-							concat.append(addedParameter.getName());
+						for(VariableDeclaration addedParameter : matchingAddedParameters) {
+							splitVariables.add(addedParameter.getVariableName());
+							concat.append(addedParameter.getVariableName());
 							if(counter < matchingAddedParameters.size()-1) {
 								concat.append(",");
 							}
@@ -928,9 +928,9 @@ public class StringBasedHeuristics {
 						Set<String> addedVariables = new LinkedHashSet<String>();
 						StringBuilder concat = new StringBuilder();
 						int counter = 0;
-						for(UMLParameter addedParameter : matchingAddedParameters) {
-							addedVariables.add(addedParameter.getName());
-							concat.append(addedParameter.getName());
+						for(VariableDeclaration addedParameter : matchingAddedParameters) {
+							addedVariables.add(addedParameter.getVariableName());
+							concat.append(addedParameter.getVariableName());
 							if(counter < matchingAddedParameters.size()-1) {
 								concat.append(",");
 							}
@@ -946,9 +946,9 @@ public class StringBasedHeuristics {
 						Set<String> splitVariables = new LinkedHashSet<String>();
 						StringBuilder concat = new StringBuilder();
 						int counter = 0;
-						for(UMLParameter addedParameter : matchingAddedParameters) {
-							splitVariables.add(addedParameter.getName());
-							concat.append(addedParameter.getName());
+						for(VariableDeclaration addedParameter : matchingAddedParameters) {
+							splitVariables.add(addedParameter.getVariableName());
+							concat.append(addedParameter.getVariableName());
 							if(counter < matchingAddedParameters.size()-1) {
 								concat.append(",");
 							}

@@ -1,0 +1,52 @@
+name: AST diff Bot
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  diff:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      # Step 0: Check for @diff trigger and get the URL command
+      - name: Check for @diff trigger
+        id: trigger
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const commentBody = context.payload.comment.body;
+            const regex = /@diff\s+(\S+)/;  // Match the next non-whitespace string after @diff
+            const match = commentBody.match(regex);
+            if (match) {
+              core.setOutput('triggered', 'true');
+              core.setOutput('url', match[1].trim()); 
+            } else {
+              core.setOutput('triggered', 'false');
+            }
+
+      # Step 1: Run the exporter
+      - name: Running the RM action exporter
+        uses: pouryafard75/refactoringminer-astdiff-exporter@v0.5.6
+        id: run_rm_exporter 
+        with:
+          OAuthToken: ${{ secrets.OAUTHTOKEN }}
+          URL: "${{ steps.trigger.outputs.url }}"
+
+      # Step 2: Reply to the user with artifact url
+      - name: Reply 
+        if: ${{ steps.trigger.outputs.triggered == 'true' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = '${{ steps.trigger.outputs.url }}';
+            const artifact_url = '${{ steps.run_rm_exporter.outputs.artifact_url }}'; // Add artifact_url output
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `👋 You triggered the bot with the URL: \`${url}\`. You can download it here: [Download Artifact](${artifact_url}).`
+              
+            })

@@ -2554,6 +2554,58 @@ public class TestStatementMappingsJunit4 {
 	}
 
 	@Test
+	public void testMoveCodeInParentMethodStatementMappings() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommitWithGitHubAPI("https://github.com/hibernate/hibernate-search.git", "fee1c5f90c639ec7fe30699873788b892b84e4c7", new File(REPOS), new RefactoringHandler() {
+			@Override
+			public void handleModelDiff(String commitId, List<Refactoring> refactorings, UMLModelDiff modelDiff) {
+				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+					else if(ref instanceof InlineOperationRefactoring) {
+						InlineOperationRefactoring in = (InlineOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = in.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+					else if(ref instanceof MoveCodeRefactoring) {
+						MoveCodeRefactoring in = (MoveCodeRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = in.getBodyMapper();
+						mapperInfo(bodyMapper, actual);
+					}
+				}
+				for(UMLOperationBodyMapper parentMapper : parentMappers) {
+					mapperInfo(parentMapper, actual);
+				}
+				//add main mapper
+				UMLClassBaseDiff classDiff = modelDiff.getUMLClassDiff("org.hibernate.search.integrationtest.mapper.orm.outboxpolling.automaticindexing.OutboxPollingAutomaticIndexingLifecycleIT");
+				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+					if(mapper.getContainer1().getName().equals("stopWhileOutboxEventsIsBeingProcessed") && mapper.getContainer2().getName().equals("stopWhileOutboxEventsIsBeingProcessed")) {
+						mapperInfo(mapper, actual);
+						break;
+					}
+				}
+			}
+		});
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "hibernate-search-fee1c5f90c639ec7fe30699873788b892b84e4c7.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testMoveCodeStatementMappings() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();

@@ -547,6 +547,9 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
 			String variableName = declaration.getVariableName();
 			AbstractExpression initializer = declaration.getInitializer();
+			if(!insideExtractedOrInlinedMethod && !declaration.getScope().subsumes(this.getFragment2().getLocationInfo())) {
+				continue;
+			}
 			for(Replacement replacement : getReplacements()) {
 				String after = replacement.getAfter();
 				String before = replacement.getBefore();

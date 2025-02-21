@@ -4909,11 +4909,13 @@ public class ReplacementAlgorithm {
 				Set<AbstractCodeMapping> identical = new LinkedHashSet<>();
 				for(int i = numberOfMappings; i < mappings.size(); i++) {
 					AbstractCodeMapping mapping = mappings.get(i);
-					if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
-						identical.add(mapping);
-					}
-					else {
-						nonIdentical.add(mapping);
+					if(mapping.getFragment1() instanceof AbstractExpression && mapping.getFragment2() instanceof AbstractExpression) {
+						if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+							identical.add(mapping);
+						}
+						else {
+							nonIdentical.add(mapping);
+						}
 					}
 				}
 				if(identical.size() == 1 && nonIdentical.size() > 0) {

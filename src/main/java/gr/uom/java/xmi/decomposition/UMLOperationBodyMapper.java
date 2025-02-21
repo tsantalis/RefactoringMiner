@@ -2505,7 +2505,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeFragment statement : getNonMappedLeavesT2()) {
 			for(AbstractCodeMapping mapping : mapper.getMappings()) {
 				int refactoringCount = mapping.getRefactorings().size();
-				mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff, parentMapper != null, mappings);
+				mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff, true, mappings);
 				if(refactoringCount < mapping.getRefactorings().size()) {
 					for(Refactoring newRefactoring : mapping.getRefactorings()) {
 						if(!this.refactorings.contains(newRefactoring)) {
@@ -2546,7 +2546,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeFragment statement : getNonMappedLeavesT1()) {
 			for(AbstractCodeMapping mapping : mapper.getMappings()) {
 				int refactoringCount = mapping.getRefactorings().size();
-				mapping.inlinedVariableAssignment(statement, nonMappedLeavesT1, classDiff, parentMapper != null);
+				mapping.inlinedVariableAssignment(statement, nonMappedLeavesT1, classDiff, true);
 				if(refactoringCount < mapping.getRefactorings().size()) {
 					for(Refactoring newRefactoring : mapping.getRefactorings()) {
 						if(!this.refactorings.contains(newRefactoring)) {

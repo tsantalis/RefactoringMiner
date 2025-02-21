@@ -4896,12 +4896,28 @@ public class ReplacementAlgorithm {
 				}
 			}
 			else {
+				int numberOfMappings = operationBodyMapper.getMappings().size();
 				for(int i=0; i<lambdas1.size(); i++) {
 					for(int j=0; j<lambdas2.size(); j++) {
 						LambdaExpressionObject lambda1 = lambdas1.get(i);
 						LambdaExpressionObject lambda2 = lambdas2.get(j);
 						processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper);
 					}
+				}
+				List<AbstractCodeMapping> mappings = new ArrayList<>(operationBodyMapper.getMappings());
+				Set<AbstractCodeMapping> nonIdentical = new LinkedHashSet<>();
+				Set<AbstractCodeMapping> identical = new LinkedHashSet<>();
+				for(int i = numberOfMappings; i < mappings.size(); i++) {
+					AbstractCodeMapping mapping = mappings.get(i);
+					if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+						identical.add(mapping);
+					}
+					else {
+						nonIdentical.add(mapping);
+					}
+				}
+				if(identical.size() == 1 && nonIdentical.size() > 0) {
+					operationBodyMapper.getMappings().removeAll(nonIdentical);
 				}
 			}
 		}

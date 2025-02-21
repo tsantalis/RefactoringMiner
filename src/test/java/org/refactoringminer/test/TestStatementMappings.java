@@ -1204,11 +1204,15 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
-	@Test
-	public void testMoveCodeStatementMappings() throws Exception {
+	@ParameterizedTest
+	@CsvSource({
+		"https://github.com/checkstyle/checkstyle.git, 1a2c318e22a0b2b22ccc76019217c0892fe2d59b, com.puppycrawl.tools.checkstyle.Main, main, checkstyle-1a2c318e22a0b2b22ccc76019217c0892fe2d59b.txt",
+		"https://github.com/hibernate/hibernate-search.git, fee1c5f90c639ec7fe30699873788b892b84e4c7, org.hibernate.search.integrationtest.mapper.orm.outboxpolling.automaticindexing.OutboxPollingAutomaticIndexingLifecycleIT, stopWhileOutboxEventsIsBeingProcessed, hibernate-search-fee1c5f90c639ec7fe30699873788b892b84e4c7.txt"
+	})
+	public void testMoveCodeStatementMappings(String url, String commitId, String className, String methodName, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommitWithGitHubAPI("https://github.com/checkstyle/checkstyle.git", "1a2c318e22a0b2b22ccc76019217c0892fe2d59b", new File(REPOS), new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI(url, commitId, new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handleModelDiff(String commitId, List<Refactoring> refactorings, UMLModelDiff modelDiff) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -1243,16 +1247,16 @@ public class TestStatementMappings {
 					mapperInfo(parentMapper, actual);
 				}
 				//add main mapper
-				UMLClassBaseDiff classDiff = modelDiff.getUMLClassDiff("com.puppycrawl.tools.checkstyle.Main");
+				UMLClassBaseDiff classDiff = modelDiff.getUMLClassDiff(className);
 				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-					if(mapper.getContainer1().getName().equals("main") && mapper.getContainer2().getName().equals("main")) {
+					if(mapper.getContainer1().getName().equals(methodName) && mapper.getContainer2().getName().equals(methodName)) {
 						mapperInfo(mapper, actual);
 						break;
 					}
 				}
 			}
 		});
-		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "checkstyle-1a2c318e22a0b2b22ccc76019217c0892fe2d59b.txt"));
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

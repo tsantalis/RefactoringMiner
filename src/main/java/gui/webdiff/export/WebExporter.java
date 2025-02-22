@@ -1,12 +1,18 @@
 package gui.webdiff.export;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import gui.webdiff.WebDiff;
+import org.refactoringminer.astDiff.models.ASTDiff;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,6 +47,29 @@ public class WebExporter {
         exportViewers(exportPath);
         exportOthersPages(exportPath);
         exportResources(exportPath + File.separator, resourcePath + webDiff.getResources());
+        exportInfo(exportPath);
+    }
+
+    private void exportInfo(String exportPath) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        ArrayNode jsonArray = objectMapper.createArrayNode();
+        List<ASTDiff> diffs = webDiff.getComparator().getDiffs();
+        int id = 0;
+        for (ASTDiff diff : diffs) {
+            ObjectNode jsonNode = objectMapper.createObjectNode();
+            jsonNode.put("srcPath", diff.getSrcPath());
+            jsonNode.put("dstPath", diff.getDstPath());
+            jsonNode.put("id", id++);
+            jsonArray.add(jsonNode);
+        }
+        try {
+            ObjectNode jsonNode = objectMapper.createObjectNode();
+            jsonNode.put("diffInfos", jsonArray);
+            objectMapper.writeValue(new File(exportPath + File.separator + "info.json"), jsonNode);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void exportOthersPages(String exportPath) {
@@ -52,7 +81,7 @@ public class WebExporter {
 
     private void exportViewers(String exportPath) {
         String url;
-        for (int i = 0; i < webDiff.projectASTDiff.getDiffSet().size(); i++) {
+        for (int i = 0; i < webDiff.getComparator().getNumOfDiffs(); i++) {
             for (String viewer_path : viewers_path) {
                 url = String.format("%s:%d/%s/%d", baseURL, webDiff.port, viewer_path, i);
                 export(exportPath, viewer_path + File.separator + i, url);

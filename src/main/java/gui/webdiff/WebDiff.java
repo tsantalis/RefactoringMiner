@@ -28,19 +28,28 @@ public class WebDiff  {
 
     private final String toolName = "RefactoringMiner";
 
-    public ProjectASTDiff projectASTDiff;
+    private final ProjectASTDiff projectASTDiff;
     private final String resourcesPath = "/web/";
+    private final DirComparator comparator;
 
     public String getResources() {
         return resourcesPath;
     }
 
+    public DirComparator getComparator() {
+        return comparator;
+    }
+
+    public ProjectASTDiff getProjectASTDiff() {
+        return projectASTDiff;
+    }
+
     public WebDiff(ProjectASTDiff projectASTDiff) {
         this.projectASTDiff = projectASTDiff;
+        this.comparator = new DirComparator(projectASTDiff);
     }
 
     public void run() {
-        DirComparator comparator = new DirComparator(projectASTDiff);
         killProcessOnPort(this.port);
         configureSpark(comparator, this.port);
         Spark.awaitInitialization();

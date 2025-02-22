@@ -399,7 +399,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							}
 						}
 					}
-					if(leafExpressions1.size() > 0 && isVariableReferenced(parentRefactoring, variableDeclaration)) {
+					if(leafExpressions1.size() > 0 && isVariableReferenced(parentRefactoring, variableDeclaration) && variableDeclaration.getScope().subsumes(getFragment2().getLocationInfo())) {
 						ExtractVariableRefactoring ref2 = new ExtractVariableRefactoring(variableDeclaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						if(!ref2.equals(parentRefactoring)) {
 							for(LeafExpression subExpression : leafExpressions1) {
@@ -902,7 +902,11 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 									break;
 								}
 							}
-							if(!declarationMappingFound) {
+							boolean skip = false;
+							if(statement.getVariableDeclarations().size() > 0 && !statement.getVariableDeclarations().get(0).getScope().subsumes(getFragment2().getLocationInfo())) {
+								skip = true;
+							}
+							if(!declarationMappingFound && !skip) {
 								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 								List<LeafExpression> subExpressions = getFragment1().findExpression(replacement.getBefore());
 								for(LeafExpression subExpression : subExpressions) {

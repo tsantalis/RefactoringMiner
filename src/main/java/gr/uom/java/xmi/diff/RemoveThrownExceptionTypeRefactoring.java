@@ -9,15 +9,15 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 
 public class RemoveThrownExceptionTypeRefactoring implements Refactoring {
 	private UMLType exceptionType;
-	private UMLOperation operationBefore;
-	private UMLOperation operationAfter;
+	private VariableDeclarationContainer operationBefore;
+	private VariableDeclarationContainer operationAfter;
 
-	public RemoveThrownExceptionTypeRefactoring(UMLType exceptionType, UMLOperation operationBefore, UMLOperation operationAfter) {
+	public RemoveThrownExceptionTypeRefactoring(UMLType exceptionType, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
 		this.exceptionType = exceptionType;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
@@ -27,11 +27,11 @@ public class RemoveThrownExceptionTypeRefactoring implements Refactoring {
 		return exceptionType;
 	}
 
-	public UMLOperation getOperationBefore() {
+	public VariableDeclarationContainer getOperationBefore() {
 		return operationBefore;
 	}
 
-	public UMLOperation getOperationAfter() {
+	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
 	}
 

@@ -11,22 +11,25 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 
 public class RemoveMethodModifierRefactoring implements Refactoring {
 	private String modifier;
-	private UMLOperation operationBefore;
-	private UMLOperation operationAfter;
+	private VariableDeclarationContainer operationBefore;
+	private VariableDeclarationContainer operationAfter;
 
-	public RemoveMethodModifierRefactoring(String modifier, UMLOperation operationBefore, UMLOperation operationAfter) {
+	public RemoveMethodModifierRefactoring(String modifier, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
 		this.modifier = modifier;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 	}
 
 	public UMLModifier getRemovedModifier() {
-		for(UMLModifier m : operationBefore.getModifiers()) {
-			if(m.getKeyword().equals(modifier)) {
-				return m;
+		if(operationBefore instanceof UMLOperation) {
+			for(UMLModifier m : ((UMLOperation)operationBefore).getModifiers()) {
+				if(m.getKeyword().equals(modifier)) {
+					return m;
+				}
 			}
 		}
 		return null;
@@ -36,11 +39,11 @@ public class RemoveMethodModifierRefactoring implements Refactoring {
 		return modifier;
 	}
 
-	public UMLOperation getOperationBefore() {
+	public VariableDeclarationContainer getOperationBefore() {
 		return operationBefore;
 	}
 
-	public UMLOperation getOperationAfter() {
+	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
 	}
 

@@ -9,17 +9,17 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class ReorderParameterRefactoring implements Refactoring {
 	private List<VariableDeclaration> parametersBefore;
 	private List<VariableDeclaration> parametersAfter;
-	private UMLOperation operationBefore;
-	private UMLOperation operationAfter;
+	private VariableDeclarationContainer operationBefore;
+	private VariableDeclarationContainer operationAfter;
 
-	public ReorderParameterRefactoring(UMLOperation operationBefore, UMLOperation operationAfter) {
+	public ReorderParameterRefactoring(VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.parametersBefore = new ArrayList<VariableDeclaration>();
@@ -40,11 +40,11 @@ public class ReorderParameterRefactoring implements Refactoring {
 		return parametersAfter;
 	}
 
-	public UMLOperation getOperationBefore() {
+	public VariableDeclarationContainer getOperationBefore() {
 		return operationBefore;
 	}
 
-	public UMLOperation getOperationAfter() {
+	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
 	}
 

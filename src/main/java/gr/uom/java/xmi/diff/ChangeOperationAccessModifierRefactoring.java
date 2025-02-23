@@ -11,16 +11,17 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.Visibility;
 
 public class ChangeOperationAccessModifierRefactoring implements Refactoring {
 	private Visibility originalAccessModifier;
 	private Visibility changedAccessModifier;
-	private UMLOperation operationBefore;
-	private UMLOperation operationAfter;
+	private VariableDeclarationContainer operationBefore;
+	private VariableDeclarationContainer operationAfter;
 
 	public ChangeOperationAccessModifierRefactoring(Visibility originalAccessModifier, Visibility changedAccessModifier,
-			UMLOperation operationBefore, UMLOperation operationAfter) {
+			VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
 		this.originalAccessModifier = originalAccessModifier;
 		this.changedAccessModifier = changedAccessModifier;
 		this.operationBefore = operationBefore;
@@ -28,18 +29,22 @@ public class ChangeOperationAccessModifierRefactoring implements Refactoring {
 	}
 
 	public UMLModifier getOldModifier() {
-		for(UMLModifier m : operationBefore.getModifiers()) {
-			if(m.getKeyword().equals(originalAccessModifier.toString())) {
-				return m;
+		if(operationBefore instanceof UMLOperation) {
+			for(UMLModifier m : ((UMLOperation)operationBefore).getModifiers()) {
+				if(m.getKeyword().equals(originalAccessModifier.toString())) {
+					return m;
+				}
 			}
 		}
 		return null;
 	}
 
 	public UMLModifier getNewModifier() {
-		for(UMLModifier m : operationAfter.getModifiers()) {
-			if(m.getKeyword().equals(changedAccessModifier.toString())) {
-				return m;
+		if(operationAfter instanceof UMLOperation) {
+			for(UMLModifier m : ((UMLOperation)operationAfter).getModifiers()) {
+				if(m.getKeyword().equals(changedAccessModifier.toString())) {
+					return m;
+				}
 			}
 		}
 		return null;
@@ -53,11 +58,11 @@ public class ChangeOperationAccessModifierRefactoring implements Refactoring {
 		return changedAccessModifier;
 	}
 
-	public UMLOperation getOperationBefore() {
+	public VariableDeclarationContainer getOperationBefore() {
 		return operationBefore;
 	}
 
-	public UMLOperation getOperationAfter() {
+	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
 	}
 

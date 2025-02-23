@@ -4996,9 +4996,11 @@ public class ReplacementAlgorithm {
 				replacementInfo.addLambdaMapper(mapper);
 			}
 		}
-		//TODO handle parameter changes for lambdas with empty body
-		//if(mappings == 0 && lambda1.hasEmptyBody() && lambda2.hasEmptyBody()) {
-		//}
+		if(mappings == 0 && lambda1.hasEmptyBody() && lambda2.hasEmptyBody()) {
+			if(mapper.getOperationSignatureDiff().isPresent()) {
+				operationBodyMapper.getRefactoringsAfterPostProcessing().addAll(mapper.getOperationSignatureDiff().get().getRefactorings());
+			}
+		}
 	}
 
 	private static boolean isPartOfLambdaMovedToParentMapper(UMLOperationBodyMapper lambdaMapper) {

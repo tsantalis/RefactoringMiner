@@ -440,18 +440,18 @@ As of **February 4, 2025** the precision and recall of RefactoringMiner on this 
 **Commit dates**: March 28, 2024
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **February 19, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **February 23, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3001  | 247  | 375  | 0.924  | 0.889|
+|**Total**|3002  | 245  | 374  | 0.925  | 0.889|
 |Extract Method|328  | 25  | 37  | 0.929  | 0.899|
-|Rename Class|228  |  2  |  4  | 0.991  | 0.983|
+|Rename Class|229  |  2  |  3  | 0.991  | 0.987|
 |Move Attribute|69  |  3  | 11  | 0.958  | 0.863|
 |Move And Rename Attribute| 4  |  0  |  4  | 1.000  | 0.500|
 |Rename Method|272  | 23  | 25  | 0.922  | 0.916|
 |Inline Method|63  |  9  |  6  | 0.875  | 0.913|
-|Move Method|259  |  6  |  8  | 0.977  | 0.970|
+|Move Method|259  |  5  |  8  | 0.981  | 0.970|
 |Move And Rename Method|18  |  6  | 10  | 0.750  | 0.643|
 |Pull Up Method|42  |  3  |  8  | 0.933  | 0.840|
 |Move Class|138  | 10  |  4  | 0.932  | 0.972|
@@ -465,7 +465,7 @@ As of **February 19, 2025** the precision and recall of RefactoringMiner on this
 |Extract Class|40  |  2  | 11  | 0.952  | 0.784|
 |Extract And Move Method|99  | 25  | 21  | 0.798  | 0.825|
 |Move And Inline Method|17  |  7  | 13  | 0.708  | 0.567|
-|Extract Variable|236  | 18  | 45  | 0.929  | 0.840|
+|Extract Variable|236  | 17  | 45  | 0.933  | 0.840|
 |Inline Variable|75  | 12  | 47  | 0.862  | 0.615|
 |Rename Variable|258  | 33  | 29  | 0.887  | 0.899|
 |Rename Attribute|101  |  6  | 15  | 0.944  | 0.871|

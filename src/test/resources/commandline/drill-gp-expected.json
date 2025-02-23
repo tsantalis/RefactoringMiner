@@ -1701,6 +1701,48 @@
 },
 {
 	"type": "Change Return Type",
+	"description": "Change Return Type void to QueryAdmitResponse in method public admit() : QueryAdmitResponse from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 111,
+		"endLine": 111,
+		"startColumn": 12,
+		"endColumn": 16,
+		"codeElementType": "TYPE",
+		"description": "original return type",
+		"codeElement": "void"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 110,
+		"endLine": 112,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public admit() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 223,
+		"endLine": 223,
+		"startColumn": 12,
+		"endColumn": 30,
+		"codeElementType": "TYPE",
+		"description": "changed return type",
+		"codeElement": "QueryAdmitResponse"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 222,
+		"endLine": 229,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed return type",
+		"codeElement": "public admit() : QueryAdmitResponse"
+}]
+},
+{
+	"type": "Change Return Type",
 	"description": "Change Return Type void to QueryAdmitResponse in method public admit() : QueryAdmitResponse from class org.apache.drill.exec.work.foreman.rm.QueryResourceManager",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/QueryResourceManager.java",
@@ -1823,6 +1865,66 @@
 		"codeElementType": "METHOD_DECLARATION",
 		"description": "method declaration with changed return type",
 		"codeElement": "private enqueue() : boolean"
+}]
+},
+{
+	"type": "Change Thrown Exception Type",
+	"description": "Change Thrown Exception Type [QueryQueue.QueueTimeoutException, QueryQueue.QueryQueueException] to [QueueTimeoutException, QueryQueueException] in method public admit() : QueryAdmitResponse from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 111,
+		"endLine": 111,
+		"startColumn": 32,
+		"endColumn": 64,
+		"codeElementType": "TYPE",
+		"description": "original exception type",
+		"codeElement": "QueryQueue.QueueTimeoutException"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 111,
+		"endLine": 111,
+		"startColumn": 66,
+		"endColumn": 96,
+		"codeElementType": "TYPE",
+		"description": "original exception type",
+		"codeElement": "QueryQueue.QueryQueueException"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 110,
+		"endLine": 112,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public admit() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 223,
+		"endLine": 223,
+		"startColumn": 46,
+		"endColumn": 67,
+		"codeElementType": "TYPE",
+		"description": "changed exception type",
+		"codeElement": "QueueTimeoutException"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 223,
+		"endLine": 223,
+		"startColumn": 69,
+		"endColumn": 88,
+		"codeElementType": "TYPE",
+		"description": "changed exception type",
+		"codeElement": "QueryQueueException"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 222,
+		"endLine": 229,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed thrown exception type",
+		"codeElement": "public admit() : QueryAdmitResponse"
 }]
 },
 {
@@ -2738,102 +2840,6 @@
 }]
 },
 {
-	"type": "Move Method",
-	"description": "Move Method public getParallelizer(planHasMemory boolean) : QueryParallelizer from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager to public getParallelizer(planHasMemory boolean) : QueryParallelizer from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
-		"startLine": 104,
-		"endLine": 108,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public getParallelizer(planHasMemory boolean) : QueryParallelizer"
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
-		"startLine": 216,
-		"endLine": 220,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "moved method declaration",
-		"codeElement": "public getParallelizer(planHasMemory boolean) : QueryParallelizer"
-}]
-},
-{
-	"type": "Move Method",
-	"description": "Move Method public minimumOperatorMemory() : long from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager to public minimumOperatorMemory() : long from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
-		"startLine": 118,
-		"endLine": 121,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public minimumOperatorMemory() : long"
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
-		"startLine": 211,
-		"endLine": 214,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "moved method declaration",
-		"codeElement": "public minimumOperatorMemory() : long"
-}]
-},
-{
-	"type": "Move Method",
-	"description": "Move Method public queryMemoryPerNode() : long from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager to public queryMemoryPerNode() : long from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
-		"startLine": 114,
-		"endLine": 116,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public queryMemoryPerNode() : long"
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
-		"startLine": 207,
-		"endLine": 209,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "moved method declaration",
-		"codeElement": "public queryMemoryPerNode() : long"
-}]
-},
-{
-	"type": "Move Method",
-	"description": "Move Method public queueName() : String from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager to public queueName() : String from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
-		"startLine": 130,
-		"endLine": 133,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public queueName() : String"
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
-		"startLine": 231,
-		"endLine": 234,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "moved method declaration",
-		"codeElement": "public queueName() : String"
-}]
-},
-{
 	"type": "Remove Attribute Modifier",
 	"description": "Remove Attribute Modifier final in attribute private memoryInBytes : long from class org.apache.drill.exec.resourcemgr.NodeResources",
 	"leftSideLocations": [{
@@ -2879,6 +2885,30 @@
 		"codeElementType": "FIELD_DECLARATION",
 		"description": "attribute declaration with removed modifier",
 		"codeElement": "private numVirtualCpu : int"
+}]
+},
+{
+	"type": "Remove Class Modifier",
+	"description": "Remove Class Modifier static in class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 77,
+		"endLine": 134,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original class declaration",
+		"codeElement": "org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 169,
+		"endLine": 309,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "class declaration with removed modifier",
+		"codeElement": "org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM"
 }]
 },
 {
@@ -2945,6 +2975,54 @@
 		"codeElementType": "METHOD_DECLARATION",
 		"description": "method declaration with removed annotation",
 		"codeElement": "public admit() : QueryAdmitResponse"
+}]
+},
+{
+	"type": "Rename Attribute",
+	"description": "Rename Attribute queryContext : QueryContext to context : QueryContext in class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 88,
+		"endLine": 88,
+		"startColumn": 32,
+		"endColumn": 44,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "queryContext : QueryContext"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 173,
+		"endLine": 173,
+		"startColumn": 32,
+		"endColumn": 39,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed attribute declaration",
+		"codeElement": "context : QueryContext"
+}]
+},
+{
+	"type": "Rename Class",
+	"description": "Rename Class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager renamed to org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 77,
+		"endLine": 134,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 169,
+		"endLine": 309,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "renamed type declaration",
+		"codeElement": "org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM"
 }]
 },
 {

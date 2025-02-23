@@ -31,8 +31,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 
 public class UMLOperationDiff {
-	private UMLOperation removedOperation;
-	private UMLOperation addedOperation;
+	private VariableDeclarationContainer removedOperation;
+	private VariableDeclarationContainer addedOperation;
 	private List<VariableDeclaration> addedParameters = new ArrayList<VariableDeclaration>();
 	private List<VariableDeclaration> removedParameters = new ArrayList<VariableDeclaration>();
 	private List<UMLParameterDiff> parameterDiffList = new ArrayList<UMLParameterDiff>();
@@ -70,6 +70,8 @@ public class UMLOperationDiff {
 	}
 
 	private void process(LambdaExpressionObject removedLambda, LambdaExpressionObject addedLambda) {
+		this.removedOperation = removedLambda;
+		this.addedOperation = addedLambda;
 		processParameters(removedLambda, addedLambda);
 	}
 
@@ -220,7 +222,12 @@ public class UMLOperationDiff {
 		this.refactorings = mapper.getRefactoringsAfterPostProcessing();
 		this.classDiff = mapper.getClassDiff();
 		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
-		process(mapper.getOperation1(), mapper.getOperation2());
+		if(mapper.getContainer1() instanceof UMLOperation && mapper.getContainer2() instanceof UMLOperation) {
+			process(mapper.getOperation1(), mapper.getOperation2());
+		}
+		else if(mapper.getContainer1() instanceof LambdaExpressionObject && mapper.getContainer2() instanceof LambdaExpressionObject) {
+			process((LambdaExpressionObject)mapper.getContainer1(), (LambdaExpressionObject)mapper.getContainer2());
+		}
 	}
 
 	private void processThrownExceptionTypes(List<UMLType> exceptionTypes1, List<UMLType> exceptionTypes2) {
@@ -341,11 +348,11 @@ public class UMLOperationDiff {
 		return parameterDiffList;
 	}
 
-	public UMLOperation getRemovedOperation() {
+	public VariableDeclarationContainer getRemovedOperation() {
 		return removedOperation;
 	}
 
-	public UMLOperation getAddedOperation() {
+	public VariableDeclarationContainer getAddedOperation() {
 		return addedOperation;
 	}
 
@@ -432,13 +439,17 @@ public class UMLOperationDiff {
 			sb.append("\t").append(removedOperation).append("\n");
 		if(operationRenamed)
 			sb.append("\t").append("renamed from " + removedOperation.getName() + " to " + addedOperation.getName()).append("\n");
-		if(visibilityChanged)
-			sb.append("\t").append("visibility changed from " + removedOperation.getVisibility() + " to " + addedOperation.getVisibility()).append("\n");
-		if(abstractionChanged)
-			sb.append("\t").append("abstraction changed from " + (removedOperation.isAbstract() ? "abstract" : "concrete") + " to " +
-					(addedOperation.isAbstract() ? "abstract" : "concrete")).append("\n");
-		if(returnTypeChanged || qualifiedReturnTypeChanged)
-			sb.append("\t").append("return type changed from " + removedOperation.getReturnParameter() + " to " + addedOperation.getReturnParameter()).append("\n");
+		if(removedOperation instanceof UMLOperation && addedOperation instanceof UMLOperation) {
+			UMLOperation removed = (UMLOperation)removedOperation;
+			UMLOperation added = (UMLOperation)addedOperation;
+			if(visibilityChanged)
+				sb.append("\t").append("visibility changed from " + removed.getVisibility() + " to " + added.getVisibility()).append("\n");
+			if(abstractionChanged)
+				sb.append("\t").append("abstraction changed from " + (removed.isAbstract() ? "abstract" : "concrete") + " to " +
+						(added.isAbstract() ? "abstract" : "concrete")).append("\n");
+			if(returnTypeChanged || qualifiedReturnTypeChanged)
+				sb.append("\t").append("return type changed from " + removed.getReturnParameter() + " to " + added.getReturnParameter()).append("\n");
+		}
 		for(VariableDeclaration umlParameter : removedParameters) {
 			sb.append("\t").append("parameter " + umlParameter + " removed").append("\n");
 		}
@@ -462,9 +473,11 @@ public class UMLOperationDiff {
 
 	public Set<Refactoring> getRefactorings() {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
-		if(returnTypeChanged || qualifiedReturnTypeChanged) {
-			UMLParameter removedOperationReturnParameter = removedOperation.getReturnParameter();
-			UMLParameter addedOperationReturnParameter = addedOperation.getReturnParameter();
+		if(returnTypeChanged || qualifiedReturnTypeChanged && removedOperation instanceof UMLOperation && addedOperation instanceof UMLOperation) {
+			UMLOperation removed = (UMLOperation)removedOperation;
+			UMLOperation added = (UMLOperation)addedOperation;
+			UMLParameter removedOperationReturnParameter = removed.getReturnParameter();
+			UMLParameter addedOperationReturnParameter = added.getReturnParameter();
 			if(removedOperationReturnParameter != null && addedOperationReturnParameter != null) {
 				Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReturnReferences(mappings);
 				ChangeReturnTypeRefactoring refactoring = new ChangeReturnTypeRefactoring(removedOperationReturnParameter.getType(), addedOperationReturnParameter.getType(),
@@ -617,60 +630,64 @@ public class UMLOperationDiff {
 			ModifyMethodAnnotationRefactoring refactoring = new ModifyMethodAnnotationRefactoring(annotationDiff.getRemovedAnnotation(), annotationDiff.getAddedAnnotation(), removedOperation, addedOperation);
 			refactorings.add(refactoring);
 		}
-		for(UMLType exceptionType : addedExceptionTypes) {
-			AddThrownExceptionTypeRefactoring refactoring = new AddThrownExceptionTypeRefactoring(exceptionType, removedOperation, addedOperation);
-			refactorings.add(refactoring);
-		}
-		for(UMLType exceptionType : removedExceptionTypes) {
-			RemoveThrownExceptionTypeRefactoring refactoring = new RemoveThrownExceptionTypeRefactoring(exceptionType, removedOperation, addedOperation);
-			refactorings.add(refactoring);
-		}
-		if(changedExceptionTypes != null) {
-			ChangeThrownExceptionTypeRefactoring refactoring = new ChangeThrownExceptionTypeRefactoring(changedExceptionTypes.getKey(), changedExceptionTypes.getValue(), removedOperation, addedOperation);
-			refactorings.add(refactoring);
-		}
-		if(visibilityChanged) {
-			ChangeOperationAccessModifierRefactoring refactoring = new ChangeOperationAccessModifierRefactoring(removedOperation.getVisibility(), addedOperation.getVisibility(), removedOperation, addedOperation);
-			refactorings.add(refactoring);
-		}
-		if(finalChanged) {
-			if(addedOperation.isFinal()) {
-				AddMethodModifierRefactoring refactoring = new AddMethodModifierRefactoring("final", removedOperation, addedOperation);
+		if(removedOperation instanceof UMLOperation && addedOperation instanceof UMLOperation) {
+			UMLOperation removed = (UMLOperation)removedOperation;
+			UMLOperation added = (UMLOperation)addedOperation;
+			for(UMLType exceptionType : addedExceptionTypes) {
+				AddThrownExceptionTypeRefactoring refactoring = new AddThrownExceptionTypeRefactoring(exceptionType, removedOperation, addedOperation);
 				refactorings.add(refactoring);
 			}
-			else if(removedOperation.isFinal()) {
-				RemoveMethodModifierRefactoring refactoring = new RemoveMethodModifierRefactoring("final", removedOperation, addedOperation);
+			for(UMLType exceptionType : removedExceptionTypes) {
+				RemoveThrownExceptionTypeRefactoring refactoring = new RemoveThrownExceptionTypeRefactoring(exceptionType, removedOperation, addedOperation);
 				refactorings.add(refactoring);
 			}
-		}
-		if(abstractionChanged) {
-			if(addedOperation.isAbstract()) {
-				AddMethodModifierRefactoring refactoring = new AddMethodModifierRefactoring("abstract", removedOperation, addedOperation);
+			if(changedExceptionTypes != null) {
+				ChangeThrownExceptionTypeRefactoring refactoring = new ChangeThrownExceptionTypeRefactoring(changedExceptionTypes.getKey(), changedExceptionTypes.getValue(), removedOperation, addedOperation);
 				refactorings.add(refactoring);
 			}
-			else if(removedOperation.isAbstract()) {
-				RemoveMethodModifierRefactoring refactoring = new RemoveMethodModifierRefactoring("abstract", removedOperation, addedOperation);
+			if(visibilityChanged) {
+				ChangeOperationAccessModifierRefactoring refactoring = new ChangeOperationAccessModifierRefactoring(removed.getVisibility(), added.getVisibility(), removedOperation, addedOperation);
 				refactorings.add(refactoring);
 			}
-		}
-		if(staticChanged) {
-			if(addedOperation.isStatic()) {
-				AddMethodModifierRefactoring refactoring = new AddMethodModifierRefactoring("static", removedOperation, addedOperation);
-				refactorings.add(refactoring);
+			if(finalChanged) {
+				if(added.isFinal()) {
+					AddMethodModifierRefactoring refactoring = new AddMethodModifierRefactoring("final", removedOperation, addedOperation);
+					refactorings.add(refactoring);
+				}
+				else if(removed.isFinal()) {
+					RemoveMethodModifierRefactoring refactoring = new RemoveMethodModifierRefactoring("final", removedOperation, addedOperation);
+					refactorings.add(refactoring);
+				}
 			}
-			else if(removedOperation.isStatic()) {
-				RemoveMethodModifierRefactoring refactoring = new RemoveMethodModifierRefactoring("static", removedOperation, addedOperation);
-				refactorings.add(refactoring);
+			if(abstractionChanged) {
+				if(added.isAbstract()) {
+					AddMethodModifierRefactoring refactoring = new AddMethodModifierRefactoring("abstract", removedOperation, addedOperation);
+					refactorings.add(refactoring);
+				}
+				else if(removed.isAbstract()) {
+					RemoveMethodModifierRefactoring refactoring = new RemoveMethodModifierRefactoring("abstract", removedOperation, addedOperation);
+					refactorings.add(refactoring);
+				}
 			}
-		}
-		if(synchronizedChanged) {
-			if(addedOperation.isSynchronized()) {
-				AddMethodModifierRefactoring refactoring = new AddMethodModifierRefactoring("synchronized", removedOperation, addedOperation);
-				refactorings.add(refactoring);
+			if(staticChanged) {
+				if(addedOperation.isStatic()) {
+					AddMethodModifierRefactoring refactoring = new AddMethodModifierRefactoring("static", removedOperation, addedOperation);
+					refactorings.add(refactoring);
+				}
+				else if(removedOperation.isStatic()) {
+					RemoveMethodModifierRefactoring refactoring = new RemoveMethodModifierRefactoring("static", removedOperation, addedOperation);
+					refactorings.add(refactoring);
+				}
 			}
-			else if(removedOperation.isSynchronized()) {
-				RemoveMethodModifierRefactoring refactoring = new RemoveMethodModifierRefactoring("synchronized", removedOperation, addedOperation);
-				refactorings.add(refactoring);
+			if(synchronizedChanged) {
+				if(added.isSynchronized()) {
+					AddMethodModifierRefactoring refactoring = new AddMethodModifierRefactoring("synchronized", removedOperation, addedOperation);
+					refactorings.add(refactoring);
+				}
+				else if(removed.isSynchronized()) {
+					RemoveMethodModifierRefactoring refactoring = new RemoveMethodModifierRefactoring("synchronized", removedOperation, addedOperation);
+					refactorings.add(refactoring);
+				}
 			}
 		}
 		return refactorings;

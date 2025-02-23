@@ -1414,7 +1414,19 @@ public class UMLModelDiff {
 				UMLClass removedClass = removedClassNameMap.get(pair.getLeft());
 				UMLClass addedClass = addedClassNameMap.get(pair.getRight());
 				MatchResult matchResult = matcher.match(removedClass, addedClass);
-				boolean skip = removedClass.getAttributes().size() > 0 && addedClass.getAttributes().size() > 0 && matchResult.getMatchedAttributes() == 0;
+				int removedClassConstants = 0;
+				for(UMLAttribute attribute : removedClass.getAttributes()) {
+					if(attribute.isFinal() && attribute.isStatic()) {
+						removedClassConstants++;
+					}
+				}
+				int addedClassConstants = 0;
+				for(UMLAttribute attribute : addedClass.getAttributes()) {
+					if(attribute.isFinal() && attribute.isStatic()) {
+						addedClassConstants++;
+					}
+				}
+				boolean skip = removedClass.getAttributes().size() - removedClassConstants > 0 && addedClass.getAttributes().size() - addedClassConstants > 0 && matchResult.getMatchedAttributes() == 0;
 				if(!skip) {
 					UMLClassRenameDiff newClassRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
 					newClassRenameDiff.process();
@@ -1481,6 +1493,11 @@ public class UMLModelDiff {
 					}
 					if(!skip)
 						matches.add(className);
+				}
+			}
+			for(AbstractCall call : fragment.getCreations()) {
+				if(call.getName().equals(s) && s.contains(className)) {
+					matches.add(className);
 				}
 			}
 		}

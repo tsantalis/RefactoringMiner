@@ -1,3 +1,5 @@
+const maxAllowedHeight = 600;
+
 function mymonaco(config) {
     require.config({paths: {'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs'}});
     require(['vs/editor/editor.main'], initializeEditors);
@@ -6,9 +8,7 @@ function mymonaco(config) {
         const right_container_id = config.rcid;/*'right-container';*/
         const leftContainer = document.getElementById(left_container_id);
         const rightContainer = document.getElementById(right_container_id);
-        let isLayoutUpdating = false;
-        let lastUpdateDebounce = Date.now();
-        let isInitialLayout = true; // Flag to track the initial layout
+
         Promise.all([
             Promise.resolve(monaco.editor.create(leftContainer, getEditorOptions(config, config.left.content))),
             Promise.resolve(monaco.editor.create(rightContainer, getEditorOptions(config, config.right.content)))
@@ -41,23 +41,13 @@ function mymonaco(config) {
 
             if (config.spv === true) {
                 const updateEditorsLayout = () => {
-                    isInitialLayout = false; // Disable the initial layout update flag
-                    if (Date.now()   - lastUpdateDebounce > 2000 && !isLayoutUpdating)
-                        return; // Debounce layout updates
-                    lastUpdateDebounce = Date.now();
-                    isLayoutUpdating = true;
                     const leftHeight = leftEditor.getContentHeight();
                     const rightHeight = rightEditor.getContentHeight();
-                    const editorHeight = Math.max(leftHeight, rightHeight);
-
-                    if (isInitialLayout){
-                        leftContainer.style.height = 500 + 'px';
-                        rightContainer.style.height = 500 + 'px';
-                    }
-                    else {
-                        leftContainer.style.height = leftHeight + 'px';
-                        rightContainer.style.height = rightHeight + 'px';
-                    }
+                    let maxHeight = Math.max(leftHeight, rightHeight);
+                    const editorHeight = maxHeight > maxAllowedHeight ? maxAllowedHeight : maxHeight;
+                    console.log(editorHeight);
+                    leftContainer.style.height = editorHeight + 'px';
+                    rightContainer.style.height = editorHeight + 'px';
                     leftEditor.layout();
                     rightEditor.layout();
                 };

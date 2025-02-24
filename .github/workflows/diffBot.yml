@@ -90,7 +90,6 @@ jobs:
         uses: actions/github-script@v7
         if: ${{ steps.trigger.outputs.screenshot != null }}
         with:
-          github-token: ${{ secrets.OAUTHTOKEN }}
           script: |
             let commentBody = 'Image(s):\n';
             console.log('Initializing comment body...');

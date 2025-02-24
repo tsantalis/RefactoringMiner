@@ -86,6 +86,10 @@ public class ExtractVariableRefactoring implements Refactoring, ReferenceBasedRe
 		return operationAfter;
 	}
 
+	public void updateOperationAfter(VariableDeclarationContainer after) {
+		this.operationAfter = after;
+	}
+
 	public Set<AbstractCodeMapping> getReferences() {
 		return references;
 	}

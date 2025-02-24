@@ -2506,6 +2506,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff, true, mappings);
 				if(refactoringCount < mapping.getRefactorings().size()) {
 					for(Refactoring newRefactoring : mapping.getRefactorings()) {
+						if(newRefactoring instanceof ExtractVariableRefactoring) {
+							ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
+							newExtractVariableRefactoring.updateOperationAfter(mapper.getParentMapper().getContainer2());
+						}
 						if(!this.refactorings.contains(newRefactoring)) {
 							this.refactorings.add(newRefactoring);
 						}

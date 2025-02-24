@@ -885,7 +885,7 @@
         },
         {
           "type": "EXTRACT_VARIABLE",
-          "description": "Extract Variable\tgenerator : Generator in method public testInvalidResponseHPack() : void from class org.eclipse.jetty.http2.client.http.HttpClientTransportOverHTTP2Test",
+          "description": "Extract Variable\tgenerator : Generator in method public onNewStream(stream Stream, frame HeadersFrame) : Stream.Listener from class org.eclipse.jetty.http2.client.http.HttpClientTransportOverHTTP2Test.testInvalidResponseHPack.start.new ServerSessionListener.Adapter",
           "validation": true
         }
       ],
@@ -913,7 +913,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tsettings : Map<Integer,Integer> in method private configure(settings Map<Integer,Integer>, local boolean) : void from class org.eclipse.jetty.http2.HTTP2Session",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",

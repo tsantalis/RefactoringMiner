@@ -1,5 +1,7 @@
 package gui.webdiff.viewers.monaco;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.gumtreediff.actions.Diff;
 import com.github.gumtreediff.actions.TreeClassifier;
 import com.github.gumtreediff.matchers.MappingStore;
@@ -101,12 +103,19 @@ public class MonacoCore {
     }
 
     String getLeftJsConfig() {
+        ObjectMapper mapper = new ObjectMapper();
         if (diff instanceof ASTDiff) {
             ExtendedTreeClassifier c = (ExtendedTreeClassifier) diff.createRootNodesClassifier();
             StringBuilder b = new StringBuilder();
             b.append("{");
             b.append("url:").append("\"/left/" + id + "\"").append(",");
-            b.append("content:").append("\"" + srcFileContent.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n") + "\"").append(",");
+            String escapedContent = "";
+            try {
+                escapedContent = mapper.writeValueAsString(srcFileContent);
+            } catch (JsonProcessingException e) {
+//                throw new RuntimeException(e);
+            }
+            b.append("content:").append(escapedContent).append(",");
             b.append("ranges: [");
             for (Tree t : diff.src.getRoot().preOrder()) {
                 if (c.getMovedSrcs().contains(t))
@@ -151,12 +160,19 @@ public class MonacoCore {
     }
 
     String getRightJsConfig() {
+        ObjectMapper mapper = new ObjectMapper();
         if (diff instanceof ASTDiff) {
             ExtendedTreeClassifier c = (ExtendedTreeClassifier) diff.createRootNodesClassifier();
             StringBuilder b = new StringBuilder();
             b.append("{");
             b.append("url:").append("\"/right/" + id + "\"").append(",");
-            b.append("content:").append("\"" + dstFileContent.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n") + "\"").append(",");
+            String escapedContent = "";
+            try {
+                escapedContent = mapper.writeValueAsString(dstFileContent);
+            } catch (JsonProcessingException e) {
+//                throw new RuntimeException(e);
+            }
+            b.append("content:").append(escapedContent).append(",");
             b.append("ranges: [");
             for (Tree t : diff.dst.getRoot().preOrder()) {
                 if (c.getMovedDsts().contains(t))

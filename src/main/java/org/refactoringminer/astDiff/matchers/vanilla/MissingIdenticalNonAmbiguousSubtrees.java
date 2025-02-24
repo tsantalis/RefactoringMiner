@@ -21,6 +21,7 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
     private static final int DEFAULT_MIN_PRIORITY = 1;
     protected int minPriority = DEFAULT_MIN_PRIORITY;
     protected final Predicate<Mapping> acceptance;
+    public final int tooAmbiguousThreshold = 5;
 
     public MissingIdenticalNonAmbiguousSubtrees(Predicate<Mapping> acceptance) {
         this.acceptance = acceptance;
@@ -91,7 +92,18 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
                         mappings.addMappingRecursively(src,dst);
                     isMappingUnique = true;
                 }
-
+            }
+            if (!isMappingUnique){
+                Set<Tree> dsts = multiMappings.getDsts(src);
+                boolean tooAmbiguous = false;
+                if (dsts.size() > 5) {
+                    Tree anyDst = dsts.stream().findAny().get();
+                    Set<Tree> srcs = multiMappings.getSrcs(anyDst);
+                    if (srcs.size() > tooAmbiguousThreshold) {
+                        tooAmbiguous = true;
+                    }
+                }
+                if (tooAmbiguous) continue;
             }
             if (!tinyTrees(src,multiMappings,minPriority) && !(ignored.contains(src) || isMappingUnique))
             {

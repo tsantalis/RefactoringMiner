@@ -1962,8 +1962,18 @@ public class ReplacementAlgorithm {
 			boolean additionalCaller = invocationCoveringTheEntireStatement1.actualString().endsWith("." + invocationCoveringTheEntireStatement2.actualString()) ||
 					invocationCoveringTheEntireStatement2.actualString().endsWith("." + invocationCoveringTheEntireStatement1.actualString()) ||
 					s2.endsWith("." + s1) || s1.endsWith("." + s2);
+			boolean overlappingExtractVariable = false;
+			for(AbstractCodeFragment fragment2 : replacementInfo.getStatements2()) {
+				if(fragment2.getVariableDeclarations().size() > 0) {
+					VariableDeclaration variableDeclaration = fragment2.getVariableDeclarations().get(0);
+					AbstractExpression initializer = variableDeclaration.getInitializer();
+					if(initializer != null && statement1.getString().startsWith(initializer.getString()) && statement2.getString().startsWith(variableDeclaration.getVariableName())) {
+						overlappingExtractVariable = true;
+					}
+				}
+			}
 			if((invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2) || invocationCoveringTheEntireStatement1.compatibleName(invocationCoveringTheEntireStatement2)) &&
-					(staticVSNonStatic || additionalCaller) && invocationCoveringTheEntireStatement1.identicalOrReplacedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), replacementInfo.getLambdaMappers())) {
+					(staticVSNonStatic || additionalCaller || overlappingExtractVariable) && invocationCoveringTheEntireStatement1.identicalOrReplacedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), replacementInfo.getLambdaMappers())) {
 				Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(), invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
 				replacementInfo.addReplacement(replacement);
 				return replacementInfo.getReplacements();

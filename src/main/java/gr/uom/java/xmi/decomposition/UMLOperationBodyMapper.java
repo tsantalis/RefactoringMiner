@@ -2551,6 +2551,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				mapping.inlinedVariableAssignment(statement, nonMappedLeavesT1, classDiff, true);
 				if(refactoringCount < mapping.getRefactorings().size()) {
 					for(Refactoring newRefactoring : mapping.getRefactorings()) {
+						if(newRefactoring instanceof ExtractVariableRefactoring) {
+							ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
+							newExtractVariableRefactoring.updateOperationAfter(mapper.getParentMapper().getContainer2());
+						}
 						if(!this.refactorings.contains(newRefactoring)) {
 							this.refactorings.add(newRefactoring);
 						}
@@ -11105,5 +11109,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public Set<Pair<VariableDeclaration, VariableDeclaration>> getMovedVariables() {
 		return movedVariables;
+	}
+
+	public boolean hasAnonymousClassDiffNestedUnderLambda() {
+		for(UMLAnonymousClassDiff diff : anonymousClassDiffs) {
+			UMLAnonymousClass anonymous1 = (UMLAnonymousClass) diff.getOriginalClass();
+			UMLAnonymousClass anonymous2 = (UMLAnonymousClass) diff.getNextClass();
+			if(anonymous1.getParentContainers().size() > 0 && anonymous2.getParentContainers().size() > 0) {
+				VariableDeclarationContainer container1 = anonymous1.getParentContainers().iterator().next();
+				VariableDeclarationContainer container2 = anonymous2.getParentContainers().iterator().next();
+				boolean nestedUnderLambda1 = false;
+				for(LambdaExpressionObject lambda1 : container1.getAllLambdas()) {
+					if(lambda1.getAnonymousClassList().contains(anonymous1)) {
+						nestedUnderLambda1 = true;
+					}
+				}
+				boolean nestedUnderLambda2 = false;
+				for(LambdaExpressionObject lambda2 : container2.getAllLambdas()) {
+					if(lambda2.getAnonymousClassList().contains(anonymous2)) {
+						nestedUnderLambda2 = true;
+					}
+				}
+				return nestedUnderLambda1 && nestedUnderLambda2;
+			}
+		}
+		return false;
 	}
 }

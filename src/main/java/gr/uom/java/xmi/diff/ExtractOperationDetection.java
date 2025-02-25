@@ -270,8 +270,9 @@ public class ExtractOperationDetection {
 			callTreeMap.put(root, callTree);
 		}
 		UMLOperationBodyMapper operationBodyMapper = createMapperForExtractedMethod(mapper, mapper.getContainer1(), addedOperation, addedOperationInvocation, false);
-		if(operationBodyMapper != null && (!containsRefactoringWithIdenticalMappings(refactorings, operationBodyMapper) || parentMapperContainsOperationInvocation(mapper, operationBodyMapper, addedOperationInvocation)) &&
-				!operationBodyMapper.hasAnonymousClassDiffNestedUnderLambda()) {
+		boolean skip = operationBodyMapper != null && operationBodyMapper.hasAnonymousClassDiffNestedUnderLambda() && mapper.hasAnonymousClassDiffNestedUnderLambda() &&
+				operationBodyMapper.getAnonymousClassDiffs().iterator().next().getOriginalClass().equals(mapper.getAnonymousClassDiffs().iterator().next().getOriginalClass());
+		if(operationBodyMapper != null && (!containsRefactoringWithIdenticalMappings(refactorings, operationBodyMapper) || parentMapperContainsOperationInvocation(mapper, operationBodyMapper, addedOperationInvocation)) && !skip) {
 			List<AbstractCodeMapping> additionalExactMatches = new ArrayList<AbstractCodeMapping>();
 			List<CallTreeNode> nodesInBreadthFirstOrder = callTree.getNodesInBreadthFirstOrder();
 			for(int i=1; i<nodesInBreadthFirstOrder.size(); i++) {

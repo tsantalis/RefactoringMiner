@@ -1157,17 +1157,17 @@ public class ReplacementAlgorithm {
 			findReplacements(castExpressions1, castExpressions2, replacementInfo, ReplacementType.CAST_EXPRESSION, container1, container2, classDiff);
 		}
 		if(!argumentsWithIdenticalMethodCalls(arguments1, arguments2, methodInvocations1, methodInvocations2)) {
-			findReplacements(arguments1, methodInvocations2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_METHOD_INVOCATION, container1, container2, classDiff);
-			findReplacements(methodInvocations1, arguments2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_METHOD_INVOCATION, container1, container2, classDiff);
 			boolean anonymousArgument1 = false;
-			if(arguments1.size() == 1 && containsMethodSignatureOfAnonymousClass(arguments1.iterator().next())) {
+			if(arguments1.size() == 1 && (containsMethodSignatureOfAnonymousClass(arguments1.iterator().next()) || arguments1.iterator().next().contains(JAVA.LAMBDA_ARROW))) {
 				anonymousArgument1 = true;
 			}
 			boolean anonymousArgument2 = false;
-			if(arguments2.size() == 1 && containsMethodSignatureOfAnonymousClass(arguments2.iterator().next())) {
+			if(arguments2.size() == 1 && (containsMethodSignatureOfAnonymousClass(arguments2.iterator().next()) || arguments2.iterator().next().contains(JAVA.LAMBDA_ARROW))) {
 				anonymousArgument2 = true;
 			}
 			if(!anonymousArgument1 && !anonymousArgument2) {
+				findReplacements(arguments1, methodInvocations2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_METHOD_INVOCATION, container1, container2, classDiff);
+				findReplacements(methodInvocations1, arguments2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_METHOD_INVOCATION, container1, container2, classDiff);
 				findReplacements(arguments1, arguments2, replacementInfo, ReplacementType.ARGUMENT, container1, container2, classDiff);
 			}
 		}

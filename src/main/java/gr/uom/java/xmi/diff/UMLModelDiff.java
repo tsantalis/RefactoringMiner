@@ -181,6 +181,40 @@ public class UMLModelDiff {
 		return null;
 	}
 
+	public Set<AbstractCodeFragment> findFieldAccessesInChildModel(UMLAttribute attribute) {
+		Set<AbstractCodeFragment> set = new LinkedHashSet<>();
+		//references within the same class
+		set.addAll(attribute.getVariableDeclaration().getStatementsInScopeUsingVariable());
+		//find references in other classes, through direct field accesses
+		for(UMLClass umlClass : childModel.getClassList()) {
+			for(UMLOperation operation : umlClass.getOperations()) {
+				if(operation.getBody() != null) {
+					for(AbstractStatement statement : operation.getBody().getCompositeStatement().getAllStatements()) {
+						for(LeafExpression expr : statement.getVariables()) {
+							if(expr.getString().contains("." + attribute.getName())) {
+								String prefix = expr.getString().substring(0, expr.getString().lastIndexOf("." + attribute.getName()));
+								boolean objectVerified = false;
+								if(operation.variableDeclarationMap().containsKey(prefix)) {
+									Set<VariableDeclaration> declarations = operation.variableDeclarationMap().get(prefix);
+									for(VariableDeclaration declaration : declarations) {
+										if(attribute.getClassName().endsWith(declaration.getType().getClassType())) {
+											objectVerified = true;
+											break;
+										}
+									}
+								}
+								if(objectVerified) {
+									set.add(statement);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return set;
+	}
+
 	public List<AbstractCall> findInvocationsInChildModel(UMLOperation operation) {
 		List<AbstractCall> invocations = new ArrayList<AbstractCall>();
 		for(UMLClass umlClass : childModel.getClassList()) {

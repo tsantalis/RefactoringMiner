@@ -1140,7 +1140,8 @@ public class TestStatementMappings {
 		"https://github.com/hibernate/hibernate-orm.git, 8577a68e69d30d9e671024bf3330616000a3ec54, processElementAnnotations, true, hibernate-orm-8577a68e69d30d9e671024bf3330616000a3ec54.txt",
 		"https://github.com/checkstyle/checkstyle.git, bf69cf167c9432daabc7b6e4a426fff33650a057, visitToken, true, checkstyle-bf69cf167c9432daabc7b6e4a426fff33650a057.txt",
 		"https://github.com/hibernate/hibernate-orm.git, 016a02ff506b715e8217b8577594ac62b3f318ce, processElementAnnotations, true, hibernate-orm-016a02ff506b715e8217b8577594ac62b3f318ce.txt",
-		"https://github.com/javaparser/javaparser.git, acdac6790f4424f8097b3aa6c888e825cac485f9, inferTypes, true, javaparser-acdac6790f4424f8097b3aa6c888e825cac485f9.txt"
+		"https://github.com/javaparser/javaparser.git, acdac6790f4424f8097b3aa6c888e825cac485f9, inferTypes, true, javaparser-acdac6790f4424f8097b3aa6c888e825cac485f9.txt",
+		"https://github.com/apache/lucene-solr.git, 4f6469b17387fb1ee05a8304c80ff607cdce7bc1, expandRoot, true, lucene-solr-4f6469b17387fb1ee05a8304c80ff607cdce7bc1.txt"
 	})
 	public void testRestructuredStatementMappings(String url, String commitId, String containerName, boolean breakOnFirstMatch, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
@@ -1204,11 +1205,15 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
-	@Test
-	public void testMoveCodeStatementMappings() throws Exception {
+	@ParameterizedTest
+	@CsvSource({
+		"https://github.com/checkstyle/checkstyle.git, 1a2c318e22a0b2b22ccc76019217c0892fe2d59b, com.puppycrawl.tools.checkstyle.Main, main, checkstyle-1a2c318e22a0b2b22ccc76019217c0892fe2d59b.txt",
+		"https://github.com/hibernate/hibernate-search.git, fee1c5f90c639ec7fe30699873788b892b84e4c7, org.hibernate.search.integrationtest.mapper.orm.outboxpolling.automaticindexing.OutboxPollingAutomaticIndexingLifecycleIT, stopWhileOutboxEventsIsBeingProcessed, hibernate-search-fee1c5f90c639ec7fe30699873788b892b84e4c7.txt"
+	})
+	public void testMoveCodeStatementMappings(String url, String commitId, String className, String methodName, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommitWithGitHubAPI("https://github.com/checkstyle/checkstyle.git", "1a2c318e22a0b2b22ccc76019217c0892fe2d59b", new File(REPOS), new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI(url, commitId, new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handleModelDiff(String commitId, List<Refactoring> refactorings, UMLModelDiff modelDiff) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -1243,16 +1248,16 @@ public class TestStatementMappings {
 					mapperInfo(parentMapper, actual);
 				}
 				//add main mapper
-				UMLClassBaseDiff classDiff = modelDiff.getUMLClassDiff("com.puppycrawl.tools.checkstyle.Main");
+				UMLClassBaseDiff classDiff = modelDiff.getUMLClassDiff(className);
 				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-					if(mapper.getContainer1().getName().equals("main") && mapper.getContainer2().getName().equals("main")) {
+					if(mapper.getContainer1().getName().equals(methodName) && mapper.getContainer2().getName().equals(methodName)) {
 						mapperInfo(mapper, actual);
 						break;
 					}
 				}
 			}
 		});
-		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "checkstyle-1a2c318e22a0b2b22ccc76019217c0892fe2d59b.txt"));
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
@@ -1366,6 +1371,24 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "spring-framework-981aefc2c0d2a6fbf9c08d4d54d17923a75a2e01.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testMergedStatementMappingsToTernary() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/apache/flink.git", "88138d08e731d3084d59bf14cc2fb51bdf4afbd8", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("getMinMaxNetworkBuffersPerResultPartition") && mapper.getContainer2().getName().equals("getMinMaxNetworkBuffersPerResultPartition")) {
+					mapperInfo(mapper, actual);
+					break;
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "flink-88138d08e731d3084d59bf14cc2fb51bdf4afbd8.txt"));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
@@ -1614,6 +1637,27 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "javaparser-d017fb8caf6ccb3343da0062eb2c85262712772c.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+		"https://github.com/hibernate/hibernate-search.git, 9a25c9dd3e4af54c43878d224c27106384302d25, PojoTypeManagerContainer, hibernate-search-9a25c9dd3e4af54c43878d224c27106384302d25.txt",
+		"https://github.com/hibernate/hibernate-search.git, 6133c600d0fc15ce3482aaf9c3a29b4a222c98e8, HibernateOrmTypeContextContainer, hibernate-search-6133c600d0fc15ce3482aaf9c3a29b4a222c98e8.txt"
+	})
+	public void testConsecutiveForLoops(String url, String commitId, String containerName, String testResultFileName) throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI(url, commitId, new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals(containerName) && mapper.getContainer2().getName().equals(containerName)) {
+					mapperInfo(mapper, actual);
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

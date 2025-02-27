@@ -29410,16 +29410,6 @@
       "validationComment" : ""
     }
   }, {
-    "type" : "Pull Up Method",
-    "description" : "Pull Up Method\tpublic getDirectionality() : URI from class org.sbolstandard.core2.Port to public getIdentity() : URI from class org.sbolstandard.core2.abstract_classes.Identified",
-    "purity" : {
-      "purityValue" : "1",
-      "purityValidation" : "-",
-      "purityComment" : "",
-      "mappingState" : "",
-      "validationComment" : "Rename Variable on top"
-    }
-  }, {
     "type" : "Rename Parameter",
     "description" : "Rename Parameter\tdirectionality : URI to identity : URI in method public setIdentity(identity URI) : void from class org.sbolstandard.core2.abstract_classes.Identified",
     "purity" : {
@@ -29428,26 +29418,6 @@
       "purityComment" : "",
       "mappingState" : "",
       "validationComment" : ""
-    }
-  }, {
-    "type" : "Pull Up Method",
-    "description" : "Pull Up Method\tpublic setDirectionality(directionality URI) : void from class org.sbolstandard.core2.Port to public setIdentity(identity URI) : void from class org.sbolstandard.core2.abstract_classes.Identified",
-    "purity" : {
-      "purityValue" : "1",
-      "purityValidation" : "-",
-      "purityComment" : "",
-      "mappingState" : "",
-      "validationComment" : "Two Rename Variables on top"
-    }
-  }, {
-    "type" : "Pull Up Method",
-    "description" : "Pull Up Method\tpublic getType() : URI from class org.sbolstandard.core2.Context to public getIdentity() : URI from class org.sbolstandard.core2.abstract_classes.Identified",
-    "purity" : {
-      "purityValue" : "0",
-      "purityValidation" : "-",
-      "purityComment" : "",
-      "mappingState" : "",
-      "validationComment" : "There is no relation between type and identity varibales (parameters)"
     }
   }, {
     "type" : "Pull Up Method",

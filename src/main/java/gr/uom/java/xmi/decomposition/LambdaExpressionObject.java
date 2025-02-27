@@ -336,7 +336,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 
 	@Override
 	public String getElementType() {
-		return "lambda";
+		return "method";
 	}
 
 	@Override
@@ -359,7 +359,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	@Override
 	public String toQualifiedString() {
 		if(owner != null) {
-			return owner.toQualifiedString() + " -> @" + locationInfo;
+			return owner.toQualifiedString()/* + " -> @" + locationInfo*/;
 		}
 		return null;
 	}
@@ -447,6 +447,11 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 
 	@Override
 	public boolean isMain() {
+		return false;
+	}
+
+	@Override
+	public boolean isStatic() {
 		return false;
 	}
 

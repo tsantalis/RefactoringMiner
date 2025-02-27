@@ -1,0 +1,82 @@
+org.mapstruct.itest.cdi.CdiBasedMapperTest -> org.mapstruct.itest.cdi.CdiBasedMapperTest
+null==@RunWith(Arquillian.class)
+org.mapstruct.itest.jsr330.Jsr330BasedMapperTest -> org.mapstruct.itest.jsr330.Jsr330BasedMapperTest
+null==@RunWith(SpringJUnit4ClassRunner.class)
+org.mapstruct.itest.spring.SpringBasedMapperTest -> org.mapstruct.itest.spring.SpringBasedMapperTest
+null==@RunWith(SpringJUnit4ClassRunner.class)
+org.mapstruct.ap.test.abstractclass.AbstractClassTest -> org.mapstruct.ap.test.abstractclass.AbstractClassTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.accessibility.AccessibilityTest -> org.mapstruct.ap.test.accessibility.AccessibilityTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.builtin.BuiltInTest -> org.mapstruct.ap.test.builtin.BuiltInTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.collection.CollectionMappingTest -> org.mapstruct.ap.test.collection.CollectionMappingTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.collection.defaultimplementation.DefaultCollectionImplementationTest -> org.mapstruct.ap.test.collection.defaultimplementation.DefaultCollectionImplementationTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.collection.erroneous.ErroneousCollectionMappingTest -> org.mapstruct.ap.test.collection.erroneous.ErroneousCollectionMappingTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.collection.iterabletononiterable.IterableToNonIterableMappingTest -> org.mapstruct.ap.test.collection.iterabletononiterable.IterableToNonIterableMappingTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.collection.map.MapMappingTest -> org.mapstruct.ap.test.collection.map.MapMappingTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.complex.CarMapperTest -> org.mapstruct.ap.test.complex.CarMapperTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.conversion.ConversionTest -> org.mapstruct.ap.test.conversion.ConversionTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.conversion.bignumbers.BigNumbersConversionTest -> org.mapstruct.ap.test.conversion.bignumbers.BigNumbersConversionTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.conversion.date.DateConversionTest -> org.mapstruct.ap.test.conversion.date.DateConversionTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.conversion.generics.ConversionTest -> org.mapstruct.ap.test.conversion.generics.ConversionTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.conversion.nativetypes.BooleanConversionTest -> org.mapstruct.ap.test.conversion.nativetypes.BooleanConversionTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.conversion.nativetypes.CharConversionTest -> org.mapstruct.ap.test.conversion.nativetypes.CharConversionTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.conversion.nativetypes.NumberConversionTest -> org.mapstruct.ap.test.conversion.nativetypes.NumberConversionTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.conversion.precedence.ConversionTest -> org.mapstruct.ap.test.conversion.precedence.ConversionTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.conversion.string.StringConversionTest -> org.mapstruct.ap.test.conversion.string.StringConversionTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.decorator.DecoratorTest -> org.mapstruct.ap.test.decorator.DecoratorTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.enums.EnumMappingTest -> org.mapstruct.ap.test.enums.EnumMappingTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.erroneous.ambiguousfactorymethod.FactoryTest -> org.mapstruct.ap.test.erroneous.ambiguousfactorymethod.FactoryTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.erroneous.attributereference.ErroneousMappingsTest -> org.mapstruct.ap.test.erroneous.attributereference.ErroneousMappingsTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.erroneous.typemismatch.ErroneousMappingsTest -> org.mapstruct.ap.test.erroneous.typemismatch.ErroneousMappingsTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.factories.FactoryTest -> org.mapstruct.ap.test.factories.FactoryTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.imports.ConflictingTypesNamesTest -> org.mapstruct.ap.test.imports.ConflictingTypesNamesTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.inheritance.InheritanceTest -> org.mapstruct.ap.test.inheritance.InheritanceTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.inheritance.attribute.AttributeInheritanceTest -> org.mapstruct.ap.test.inheritance.attribute.AttributeInheritanceTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.inheritance.complex.ComplexInheritanceTest -> org.mapstruct.ap.test.inheritance.complex.ComplexInheritanceTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.jaxb.selection.JaxbFactoryMethodSelectionTest -> org.mapstruct.ap.test.jaxb.selection.JaxbFactoryMethodSelectionTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.mapperconfig.ConfigTest -> org.mapstruct.ap.test.mapperconfig.ConfigTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.naming.VariableNamingTest -> org.mapstruct.ap.test.naming.VariableNamingTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.nestedmethodcall.NestedMappingMethodInvocationTest -> org.mapstruct.ap.test.nestedmethodcall.NestedMappingMethodInvocationTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.oneway.OnewayTest -> org.mapstruct.ap.test.oneway.OnewayTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.references.ReferencedMapperTest -> org.mapstruct.ap.test.references.ReferencedMapperTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.references.samename.SeveralReferencedMappersWithSameSimpleNameTest -> org.mapstruct.ap.test.references.samename.SeveralReferencedMappersWithSameSimpleNameTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.severalsources.SeveralSourceParametersTest -> org.mapstruct.ap.test.severalsources.SeveralSourceParametersTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.severaltargets.SourcePropertyMapSeveralTimesTest -> org.mapstruct.ap.test.severaltargets.SourcePropertyMapSeveralTimesTest
+null==@RunWith(AnnotationProcessorTestRunner.class)
+org.mapstruct.ap.test.unmappedtarget.UnmappedTargetTest -> org.mapstruct.ap.test.unmappedtarget.UnmappedTargetTest
+null==@RunWith(AnnotationProcessorTestRunner.class)

@@ -1,15 +1,21 @@
 package gui.webdiff.viewers.monaco;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.gumtreediff.actions.Diff;
 import com.github.gumtreediff.actions.TreeClassifier;
 import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.tree.Tree;
+import org.apache.commons.io.FileUtils;
 import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.rendersnake.HtmlCanvas;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Set;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
@@ -23,7 +29,12 @@ public class MonacoCore {
     private String srcFileName;
     private String dstFileName;
 
-    public MonacoCore(Diff diff, int id, boolean isMovedDiff) {
+    private final String srcFileContent;
+    private final String dstFileContent;
+
+    public MonacoCore(Diff diff, int id, boolean isMovedDiff, String srcFileContent, String dstFileContent) {
+        this.srcFileContent = srcFileContent;
+        this.dstFileContent = dstFileContent;
         this.showFilenames = true;
         this.diff = diff;
         this.id = id;
@@ -61,7 +72,7 @@ public class MonacoCore {
 
         html.div(class_("edc").id(getRightContainerId()).style(heightFormula + "border: 1px solid grey; overflow: auto;"))._div()
                 ._div();
-        String code = "monaco(" + makeDiffConfig() + ");";
+        String code = "mymonaco(" + makeDiffConfig() + ");";
         html.macros().script(code); // Pass the config to the main function
 
 
@@ -92,11 +103,19 @@ public class MonacoCore {
     }
 
     String getLeftJsConfig() {
+        ObjectMapper mapper = new ObjectMapper();
         if (diff instanceof ASTDiff) {
             ExtendedTreeClassifier c = (ExtendedTreeClassifier) diff.createRootNodesClassifier();
             StringBuilder b = new StringBuilder();
             b.append("{");
             b.append("url:").append("\"/left/" + id + "\"").append(",");
+            String escapedContent = "";
+            try {
+                escapedContent = mapper.writeValueAsString(srcFileContent);
+            } catch (JsonProcessingException e) {
+//                throw new RuntimeException(e);
+            }
+            b.append("content:").append(escapedContent).append(",");
             b.append("ranges: [");
             for (Tree t : diff.src.getRoot().preOrder()) {
                 if (c.getMovedSrcs().contains(t))
@@ -141,11 +160,19 @@ public class MonacoCore {
     }
 
     String getRightJsConfig() {
+        ObjectMapper mapper = new ObjectMapper();
         if (diff instanceof ASTDiff) {
             ExtendedTreeClassifier c = (ExtendedTreeClassifier) diff.createRootNodesClassifier();
             StringBuilder b = new StringBuilder();
             b.append("{");
             b.append("url:").append("\"/right/" + id + "\"").append(",");
+            String escapedContent = "";
+            try {
+                escapedContent = mapper.writeValueAsString(dstFileContent);
+            } catch (JsonProcessingException e) {
+//                throw new RuntimeException(e);
+            }
+            b.append("content:").append(escapedContent).append(",");
             b.append("ranges: [");
             for (Tree t : diff.dst.getRoot().preOrder()) {
                 if (c.getMovedDsts().contains(t))

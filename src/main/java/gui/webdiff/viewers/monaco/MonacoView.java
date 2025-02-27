@@ -17,9 +17,9 @@ public class MonacoView extends AbstractDiffView implements Renderable {
     boolean decorate = true;
 
 
-    public MonacoView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff) {
+    public MonacoView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff, String srcFileContent, String dstFileContent) {
         super(toolName, srcFileName, dstFileName, diff, id, numOfDiffs, routePath, isMovedDiff);
-        core = new MonacoCore(diff, id, isMovedDiff);
+        core = new MonacoCore(diff, id, isMovedDiff, srcFileContent, dstFileContent);
     }
 
     public void setDecorate(boolean decorate) {
@@ -48,7 +48,8 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                             return "<span class=&quot;deleted&quot;>&nbsp;&nbsp;</span> deleted<br>"
                                     + "<span class=&quot;inserted&quot;>&nbsp;&nbsp;</span> inserted<br>"
                                     + "<span class=&quot;moved&quot;>&nbsp;&nbsp;</span> moved<br>"
-                                    + "<span class=&quot;updated&quot;>&nbsp;&nbsp;</span> updated<br>";
+                                    + "<span class=&quot;updated&quot;>&nbsp;&nbsp;</span> updated<br>"
+                                    + "<span class=&quot;mm&quot;>&nbsp;&nbsp;</span> multi-mapped<br>";
                         }
                     })
                     ._div()._if();

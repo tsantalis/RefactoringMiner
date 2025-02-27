@@ -28,17 +28,35 @@ public class WebDiff  {
 
     private final String toolName = "RefactoringMiner";
 
-    public ProjectASTDiff projectASTDiff;
+    private final ProjectASTDiff projectASTDiff;
+    private final String resourcesPath = "/web/";
+    private final DirComparator comparator;
+
+    public String getResources() {
+        return resourcesPath;
+    }
+
+    public DirComparator getComparator() {
+        return comparator;
+    }
+
+    public ProjectASTDiff getProjectASTDiff() {
+        return projectASTDiff;
+    }
+
     public WebDiff(ProjectASTDiff projectASTDiff) {
         this.projectASTDiff = projectASTDiff;
+        this.comparator = new DirComparator(projectASTDiff);
     }
 
     public void run() {
-        DirComparator comparator = new DirComparator(projectASTDiff);
         killProcessOnPort(this.port);
         configureSpark(comparator, this.port);
         Spark.awaitInitialization();
         System.out.println(String.format("Starting server: %s:%d.", "http://127.0.0.1", this.port));
+    }
+    public void terminate(){
+        Spark.stop();
     }
 
     public void openInBrowser() {
@@ -59,16 +77,24 @@ public class WebDiff  {
             BufferedReader pidReader = new BufferedReader(new InputStreamReader(findPidProcess.getInputStream()));
             String pid = pidReader.readLine();
             pidReader.close();
-            if (pid != null && !pid.isEmpty()) {
+            try {
+                Integer.parseInt(pid);
+            }
+            catch (NumberFormatException e){
+                return;
+            }
+            if (!pid.isEmpty()) {
                 Process killProcess = Runtime.getRuntime().exec(String.format("kill -9 %s", pid));
                 killProcess.waitFor();
             }
-        } catch (IOException | InterruptedException ignored) { }
+        } catch (IOException | InterruptedException ignored) {
+//            System.out.println(ignored.getMessage());
+        }
     }
 
     public void configureSpark(final DirComparator comparator, int port) {
         port(port);
-        staticFiles.location("/web/");
+        staticFiles.location(getResources());
         get("/", (request, response) -> {
 //            if (comparator.isDirMode())
                 response.redirect("/list");
@@ -98,7 +124,9 @@ public class WebDiff  {
             Renderable view = new MonacoView(
                     toolName, astDiff.getSrcPath(),  astDiff.getDstPath(),
                     astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
-                    comparator.isMoveDiff(id)
+                    comparator.isMoveDiff(id),
+                    projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
+                    projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath())
             );
             return render(view);
         });
@@ -108,7 +136,9 @@ public class WebDiff  {
             MonacoView view = new MonacoView(
                     toolName, astDiff.getSrcPath(),  astDiff.getDstPath(),
                     astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
-                    comparator.isMoveDiff(id)
+                    comparator.isMoveDiff(id),
+                    projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
+                    projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath())
             );
             view.setDecorate(false);
             return render(view);

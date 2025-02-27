@@ -265,6 +265,15 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return false;
 	}
 
+	public boolean hasParametersAnnotation() {
+		for(UMLAnnotation annotation : annotations) {
+			if(annotation.getTypeName().equals("Parameters")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public UMLJavadoc getJavadoc() {
 		return javadoc;
 	}
@@ -1146,16 +1155,6 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public boolean compatibleSignature(UMLOperation removedOperation, Map<UMLTypeParameter, UMLType> typeParameterToTypeArgumentMap) {
 		return ((this.equalReturnParameter(removedOperation) || typeParameterToTypeArgumentMatch(removedOperation, typeParameterToTypeArgumentMap)) && (equalParameterTypes(removedOperation) || overloadedParameterTypes(removedOperation) || equalParameterNames(removedOperation))) || replacedParameterTypes(removedOperation);
-	}
-
-	public boolean hasTwoParametersWithTheSameType() {
-		List<UMLType> parameterTypes = getParameterTypeList();
-		if(parameterTypes.size() == 2) {
-			if(parameterTypes.get(0).equals(parameterTypes.get(1))) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public List<String> getSignatureIdentifiers() {

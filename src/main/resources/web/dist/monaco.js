@@ -1,4 +1,6 @@
-function monaco(config) {
+const maxAllowedHeight = 600;
+
+function mymonaco(config) {
     require.config({paths: {'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs'}});
     require(['vs/editor/editor.main'], initializeEditors);
     function initializeEditors() {
@@ -6,16 +8,11 @@ function monaco(config) {
         const right_container_id = config.rcid;/*'right-container';*/
         const leftContainer = document.getElementById(left_container_id);
         const rightContainer = document.getElementById(right_container_id);
-        Promise.all(
-            [
-                fetch(config.left.url)
-                    .then(result => result.text())
-                    .then(text => monaco.editor.create(leftContainer, getEditorOptions(config, text))),
-                fetch(config.right.url)
-                    .then(result => result.text())
-                    .then(text => monaco.editor.create(rightContainer, getEditorOptions(config, text)))
-            ]
-        ).then(([leftEditor, rightEditor]) => {
+
+        Promise.all([
+            Promise.resolve(monaco.editor.create(leftContainer, getEditorOptions(config, config.left.content))),
+            Promise.resolve(monaco.editor.create(rightContainer, getEditorOptions(config, config.right.content)))
+        ]).then(([leftEditor, rightEditor]) => {
             config.mappings = config.mappings.map(mapping =>
                 [
                     monaco.Range.fromPositions(leftEditor.getModel().getPositionAt(mapping[0]), leftEditor.getModel().getPositionAt(mapping[1])),
@@ -41,23 +38,24 @@ function monaco(config) {
 
             setAllFoldings(config, leftEditor, rightEditor);
 
-            leftEditor.getAction('editor.foldAll').run();
-            rightEditor.getAction('editor.foldAll').run();
 
             if (config.spv === true) {
                 const updateEditorsLayout = () => {
                     const leftHeight = leftEditor.getContentHeight();
                     const rightHeight = rightEditor.getContentHeight();
-                    const editorHeight = Math.max(leftHeight, rightHeight);
-
-                    leftContainer.style.overflow = 'auto';
-                    rightContainer.style.overflow = 'auto';
-
-                    leftContainer.style.height = `${editorHeight}px`;
-                    rightContainer.style.height = `${editorHeight}px`;
+                    let maxHeight = Math.max(leftHeight, rightHeight);
+                    const editorHeight = maxHeight > maxAllowedHeight ? maxAllowedHeight : maxHeight;
+                    console.log(editorHeight);
+                    leftContainer.style.height = editorHeight + 'px';
+                    rightContainer.style.height = editorHeight + 'px';
                     leftEditor.layout();
                     rightEditor.layout();
                 };
+
+                Promise.all([
+                    leftEditor.getAction('editor.foldAll').run(),
+                    rightEditor.getAction('editor.foldAll').run()]
+                ).then(updateEditorsLayout);
 
                 leftEditor.onDidContentSizeChange(updateEditorsLayout);
                 rightEditor.onDidContentSizeChange(updateEditorsLayout);
@@ -75,6 +73,11 @@ function monaco(config) {
                     parent_container.scrollTop += e.deltaY;
                     parent_container.scrollLeft += e.deltaX;
                 });
+                window.addEventListener("resize", updateEditorsLayout.bind(this));
+            }
+            else {
+                leftEditor.getAction('editor.foldAll').run();
+                rightEditor.getAction('editor.foldAll').run();
             }
             window.leftEditor = leftEditor;
             window.rightEditor = rightEditor;

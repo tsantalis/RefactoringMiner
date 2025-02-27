@@ -879,10 +879,10 @@ public class StringBasedHeuristics {
 			if(diff1.isEmpty() ||
 					(container1.getParameterNameList().contains(diff1) && !container2.getParameterNameList().contains(diff1) && !containsMethodSignatureOfAnonymousClass(diff2)) ||
 					(classDiff != null && classDiff.getOriginalClass().containsAttributeWithName(diff1) && !classDiff.getNextClass().containsAttributeWithName(diff1) && !containsMethodSignatureOfAnonymousClass(diff2))) {
-				List<UMLParameter> matchingAddedParameters = new ArrayList<UMLParameter>();
-				List<UMLParameter> addedParameters = operationSignatureDiff.isPresent() ? operationSignatureDiff.get().getAddedParameters() : Collections.emptyList();
-				for(UMLParameter addedParameter : addedParameters) {
-					if(diff2.contains(addedParameter.getName())) {
+				List<VariableDeclaration> matchingAddedParameters = new ArrayList<VariableDeclaration>();
+				List<VariableDeclaration> addedParameters = operationSignatureDiff.isPresent() ? operationSignatureDiff.get().getAddedParameters() : Collections.emptyList();
+				for(VariableDeclaration addedParameter : addedParameters) {
+					if(diff2.contains(addedParameter.getVariableName())) {
 						matchingAddedParameters.add(addedParameter);
 					}
 				}
@@ -893,8 +893,8 @@ public class StringBasedHeuristics {
 							List<UMLParameterDiff> parameterDiffList = operationSignatureDiff.isPresent() ? operationSignatureDiff.get().getParameterDiffList() : Collections.emptyList();
 							for(UMLParameterDiff parameterDiff : parameterDiffList) {
 								if(parameterDiff.isNameChanged() &&
-										replacement.getBefore().equals(parameterDiff.getRemovedParameter().getName()) &&
-										replacement.getAfter().equals(parameterDiff.getAddedParameter().getName())) {
+										replacement.getBefore().equals(parameterDiff.getRemovedParameter().getVariableName()) &&
+										replacement.getAfter().equals(parameterDiff.getAddedParameter().getVariableName())) {
 									matchingReplacement = replacement;
 									break;
 								}
@@ -909,9 +909,9 @@ public class StringBasedHeuristics {
 						splitVariables.add(matchingReplacement.getAfter());
 						StringBuilder concat = new StringBuilder();
 						int counter = 0;
-						for(UMLParameter addedParameter : matchingAddedParameters) {
-							splitVariables.add(addedParameter.getName());
-							concat.append(addedParameter.getName());
+						for(VariableDeclaration addedParameter : matchingAddedParameters) {
+							splitVariables.add(addedParameter.getVariableName());
+							concat.append(addedParameter.getVariableName());
 							if(counter < matchingAddedParameters.size()-1) {
 								concat.append(",");
 							}
@@ -928,9 +928,9 @@ public class StringBasedHeuristics {
 						Set<String> addedVariables = new LinkedHashSet<String>();
 						StringBuilder concat = new StringBuilder();
 						int counter = 0;
-						for(UMLParameter addedParameter : matchingAddedParameters) {
-							addedVariables.add(addedParameter.getName());
-							concat.append(addedParameter.getName());
+						for(VariableDeclaration addedParameter : matchingAddedParameters) {
+							addedVariables.add(addedParameter.getVariableName());
+							concat.append(addedParameter.getVariableName());
 							if(counter < matchingAddedParameters.size()-1) {
 								concat.append(",");
 							}
@@ -946,9 +946,9 @@ public class StringBasedHeuristics {
 						Set<String> splitVariables = new LinkedHashSet<String>();
 						StringBuilder concat = new StringBuilder();
 						int counter = 0;
-						for(UMLParameter addedParameter : matchingAddedParameters) {
-							splitVariables.add(addedParameter.getName());
-							concat.append(addedParameter.getName());
+						for(VariableDeclaration addedParameter : matchingAddedParameters) {
+							splitVariables.add(addedParameter.getVariableName());
+							concat.append(addedParameter.getVariableName());
 							if(counter < matchingAddedParameters.size()-1) {
 								concat.append(",");
 							}
@@ -1351,7 +1351,7 @@ public class StringBasedHeuristics {
 				}
 				int size = filteredIntersection.size();
 				int threshold = Math.max(tokens1.size(), tokens2.size()) - size;
-				if((size > 0 && size > threshold) || (size > 1 && size >= threshold) || (size > 1 && subExpressionMappings.size() == size)) {
+				if((size > 0 && size > threshold) || (size > 1 && size >= threshold) || (size > 1 && subExpressionMappings.size() == size) || (size > 1 && intersection.size() == Math.min(tokens1.size(), tokens2.size()))) {
 					List<String> tokens1AsList = new ArrayList<>(tokens1);
 					List<String> tokens2AsList = new ArrayList<>(tokens2);
 					int counter = 0;
@@ -2473,6 +2473,9 @@ public class StringBasedHeuristics {
 			if(typeReplacement && !type1.compatibleTypes(type2) && variableRename && (initializerReplacement || nullInitializer || zeroArgumentClassInstantiation || classInstantiationArgumentReplacement)) {
 				return true;
 			}
+			if(type1.equals(type2) && type1.getClassType().equals("int") && variableRename && initializerReplacement) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -2922,6 +2925,27 @@ public class StringBasedHeuristics {
 			}
 			boolean ternaryConditions = !containsTernaryOperatorReplacement && ternaryConditionals1.isEmpty() != ternaryConditionals2.isEmpty() &&
 					(statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType()) || statement1 instanceof AbstractExpression);
+			if(!ternaryConditions) {
+				List<VariableDeclaration> v1 = statement1.getVariableDeclarations();
+				List<VariableDeclaration> v2 = statement2.getVariableDeclarations();
+				boolean compatibleVariableDeclarations = false;
+				if(v1.size() > 0 && v2.size() == 0) {
+					if(statement2.getString().startsWith(v1.get(0).getVariableName() + JAVA.ASSIGNMENT)) {
+						compatibleVariableDeclarations = true;
+					}
+				}
+				else if(v1.size() == 0 && v2.size() > 0) {
+					if(statement1.getString().startsWith(v2.get(0).getVariableName() + JAVA.ASSIGNMENT)) {
+						compatibleVariableDeclarations = true;
+					}
+				}
+				else if(v1.size() > 0 && v2.size() > 0) {
+					if(v1.toString().equals(v2.toString())) {
+						compatibleVariableDeclarations = true;
+					}
+				}
+				ternaryConditions = statement1.getTernaryOperatorExpressions().size() != statement2.getTernaryOperatorExpressions().size() && compatibleVariableDeclarations;
+			}
 			boolean containLogicalOperator = s1.contains("||") || s1.contains("&&") || s2.contains("||") || s2.contains("&&");
 			boolean containsNotOperator = s1.contains("!") != s2.contains("!");
 			if(containLogicalOperator || ternaryConditions || containsNotOperator) {
@@ -2931,8 +2955,15 @@ public class StringBasedHeuristics {
 				Map<String, List<LeafExpression>> subConditionMap2 = new LinkedHashMap<>();
 				Map<String, List<LeafExpression>> subConditionMap = null;
 				if(ternaryConditions && (!containLogicalOperator || statement1 instanceof AbstractExpression)) {
-					if(ternaryConditionals1.isEmpty() && ternaryConditionals2.size() > 0) {
+					if((ternaryConditionals1.isEmpty() && ternaryConditionals2.size() > 0) || statement1.getTernaryOperatorExpressions().size() < statement2.getTernaryOperatorExpressions().size()) {
 						String conditional1 = prepareConditional(s1);
+						if(statement1.getTernaryOperatorExpressions().size() > 0) {
+							List<LeafExpression> leafExpressions = statement1.findExpression(conditional1);
+							if(leafExpressions.size() > 0) {
+								subConditionMap1.put(conditional1, leafExpressions);
+								subConditionsAsList1.add(conditional1);
+							}
+						}
 						String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
 						for(String s : subConditions1) {
 							String trimmed = s.trim();
@@ -2940,6 +2971,16 @@ public class StringBasedHeuristics {
 							List<LeafExpression> leafExpressions = statement1.findExpression(trimmed);
 							if(leafExpressions.size() > 0) {
 								subConditionMap1.put(trimmed, leafExpressions);
+							}
+						}
+						if(statement1.getTernaryOperatorExpressions().size() > 0) {
+							for(TernaryOperatorExpression expr2 : statement2.getTernaryOperatorExpressions()) {
+								String conditional2 = prepareConditional(expr2.getString());
+								List<LeafExpression> leafExpressions = statement2.findExpression(conditional2);
+								if(leafExpressions.size() > 0) {
+									subConditionMap2.put(conditional2, leafExpressions);
+									subConditionsAsList2.add(conditional2);
+								}
 							}
 						}
 						for(String ternaryConditional : ternaryConditionals2) {
@@ -2978,7 +3019,17 @@ public class StringBasedHeuristics {
 							}
 						}
 					}
-					else if(ternaryConditionals2.isEmpty() && ternaryConditionals1.size() > 0) {
+					else if((ternaryConditionals2.isEmpty() && ternaryConditionals1.size() > 0) || statement1.getTernaryOperatorExpressions().size() > statement2.getTernaryOperatorExpressions().size()) {
+						if(statement2.getTernaryOperatorExpressions().size() > 0) {
+							for(TernaryOperatorExpression expr1 : statement1.getTernaryOperatorExpressions()) {
+								String conditional1 = prepareConditional(expr1.getString());
+								List<LeafExpression> leafExpressions = statement1.findExpression(conditional1);
+								if(leafExpressions.size() > 0) {
+									subConditionMap1.put(conditional1, leafExpressions);
+									subConditionsAsList1.add(conditional1);
+								}
+							}
+						}
 						for(String ternaryConditional : ternaryConditionals1) {
 							String conditional1 = prepareConditional(ternaryConditional);
 							String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
@@ -3015,6 +3066,13 @@ public class StringBasedHeuristics {
 							}
 						}
 						String conditional2 = prepareConditional(s2);
+						if(statement2.getTernaryOperatorExpressions().size() > 0) {
+							List<LeafExpression> leafExpressions = statement2.findExpression(conditional2);
+							if(leafExpressions.size() > 0) {
+								subConditionMap2.put(conditional2, leafExpressions);
+								subConditionsAsList2.add(conditional2);
+							}
+						}
 						String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
 						for(String s : subConditions2) {
 							String trimmed = s.trim();

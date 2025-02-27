@@ -22,6 +22,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean isAnnotation;
 	private boolean isRecord;
 	private boolean topLevel;
+	private boolean isLocal;
     private List<UMLTypeParameter> typeParameters;
     private UMLJavadoc javadoc;
     private Optional<UMLPackage> packageDeclaration;
@@ -124,6 +125,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void setTopLevel(boolean topLevel) {
 		this.topLevel = topLevel;
+	}
+
+	public boolean isLocal() {
+		return isLocal;
+	}
+
+	public void setLocal(boolean isLocal) {
+		this.isLocal = isLocal;
 	}
 
 	public Visibility getVisibility() {
@@ -366,6 +375,9 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	public double normalizedSourceFolderDistance(UMLClass c) {
 		String s1 = sourceFolder.toLowerCase();
 		String s2 = c.sourceFolder.toLowerCase();
+		if(s1.isEmpty() && s2.isEmpty()) {
+			return 0;
+		}
 		int distance = StringDistance.editDistance(s1, s2);
 		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
 		return normalized;

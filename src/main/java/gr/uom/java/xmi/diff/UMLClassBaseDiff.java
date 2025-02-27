@@ -36,6 +36,7 @@ import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLJavadoc;
+import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLModelASTReader;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
@@ -220,6 +221,26 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 									moveCodeMappers.add(moveCodeMapper);
 								refactorings.add(ref);
 							}
+						}
+					}
+				}
+			}
+			if(mapper.getLambdaMappers().size() > 0 && mapper.nonMappedElementsT2() > 0) {
+				for(UMLOperationBodyMapper lambdaMapper : mapper.getLambdaMappers()) {
+					if(lambdaMapper.nonMappedElementsT1() > 0) {
+						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(lambdaMapper, mapper, this);
+						int invalidMappings = 0;
+						for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
+							if(mapper.alreadyMatched2(mapping.getFragment2()) || lambdaMapper.getNonMappedLeavesT2().contains(mapping.getFragment2()) ||
+									lambdaMapper.getNonMappedInnerNodesT2().contains(mapping.getFragment2())) {
+								invalidMappings++;
+							}
+						}
+						if(moveCodeMapper.getMappings().size() > invalidMappings) {
+							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);
+							if(!moveCodeMappers.contains(moveCodeMapper))
+								moveCodeMappers.add(moveCodeMapper);
+							refactorings.add(ref);
 						}
 					}
 				}
@@ -1332,6 +1353,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
 				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 					UMLOperation addedOperation = addedOperationIterator.next();
+					if((removedOperation.hasTestAnnotation() && addedOperation.getAnnotations().isEmpty()) ||
+							(addedOperation.hasTestAnnotation() && removedOperation.getAnnotations().isEmpty())) {
+						continue;
+					}
 					if(!containsMapperForOperation1(removedOperation) && !containsMapperForOperation2(addedOperation) && !existingMapperDelegatesToAddedOperation(addedOperation) &&
 							removedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD) {
 						int maxDifferenceInPosition;
@@ -1463,10 +1488,28 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
 							}
 						}
+						//group split based on original method
+						Map<VariableDeclarationContainer, List<CandidateSplitMethodRefactoring>> map = new HashMap<>();
 						for(CandidateSplitMethodRefactoring candidate : candidateMethodSplits) {
-							addedOperationsToBeRemoved.addAll(candidate.getSplitMethods());
-							removedOperationsToBeRemoved.add(candidate.getOriginalMethodBeforeSplit());
-							SplitOperationRefactoring split = new SplitOperationRefactoring(candidate.getOriginalMethodBeforeSplit(), candidate.getSplitMethods(), getOriginalClassName(), getNextClassName(), candidate.getMappers());
+							if(map.containsKey(candidate.getOriginalMethodBeforeSplit())) {
+								map.get(candidate.getOriginalMethodBeforeSplit()).add(candidate);
+							}
+							else {
+								List<CandidateSplitMethodRefactoring> list = new ArrayList<>();
+								list.add(candidate);
+								map.put(candidate.getOriginalMethodBeforeSplit(), list);
+							}
+						}
+						for(VariableDeclarationContainer key : map.keySet()) {
+							Set<VariableDeclarationContainer> splitMethods = new LinkedHashSet<>();
+							Set<UMLOperationBodyMapper> splitMappers = new LinkedHashSet<>();
+							for(CandidateSplitMethodRefactoring candidate : map.get(key)) {
+								addedOperationsToBeRemoved.addAll(candidate.getSplitMethods());
+								removedOperationsToBeRemoved.add(candidate.getOriginalMethodBeforeSplit());
+								splitMethods.addAll(candidate.getSplitMethods());
+								splitMappers.addAll(candidate.getMappers());
+							}
+							SplitOperationRefactoring split = new SplitOperationRefactoring(key, splitMethods, getOriginalClassName(), getNextClassName(), splitMappers);
 							refactorings.add(split);
 							for(UMLOperationBodyMapper mapper : split.getMappers()) {
 								mapper.computeRefactoringsWithinBody();
@@ -1490,6 +1533,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
 				for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 					UMLOperation removedOperation = removedOperationIterator.next();
+					if((removedOperation.hasTestAnnotation() && addedOperation.getAnnotations().isEmpty()) ||
+							(addedOperation.hasTestAnnotation() && removedOperation.getAnnotations().isEmpty())) {
+						continue;
+					}
 					if(!containsMapperForOperation1(removedOperation) && !containsMapperForOperation2(addedOperation) &&
 							removedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD) {
 						int maxDifferenceInPosition;
@@ -1796,7 +1843,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		List<List<String>> parameterValues = new ArrayList<>();
 		for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
 			try {
-				List<List<String>> testParameters = SourceAnnotation.create(annotation, addedOperation, modelDiff.getChildModel()).getTestParameters();
+				UMLModel childModel = modelDiff != null ? modelDiff.getChildModel() : null;
+				List<List<String>> testParameters = SourceAnnotation.create(annotation, addedOperation, childModel).getTestParameters();
 				parameterValues.addAll(testParameters);
 			} catch (IllegalArgumentException ignored) {/* Do nothing */}
 		}
@@ -2064,12 +2112,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			boolean zeroNonMapped = operationBodyMapper.getNonMappedLeavesT1().size() == 0 && operationBodyMapper.getNonMappedLeavesT2().size() == 0 &&
 					operationBodyMapper.getNonMappedInnerNodesT1().size() == 0 && operationBodyMapper.getNonMappedInnerNodesT2().size() == 0 &&
 					removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation();
+			boolean containsAnonymousClassDiff = operationBodyMapper.getAnonymousClassDiffs().size() > 0 &&
+					!removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation();
 			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
 			if(exactMappings(operationBodyMapper) || (operationBodyMapper.allMappingsHaveSameDepthAndIndex() && !removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation())) {
 				mapperSet.add(operationBodyMapper);
 			}
 			else if(mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper) &&
-					(absoluteDifferenceInPosition <= differenceInPosition || zeroNonMapped) &&
+					(absoluteDifferenceInPosition <= differenceInPosition || zeroNonMapped || containsAnonymousClassDiff) &&
 					compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition) &&
 					removedOperation.testMethodCheck(addedOperation)) {
 				isPartOfMethodMovedFromDeletedMethod(removedOperation, addedOperation, operationBodyMapper, mapperSet);

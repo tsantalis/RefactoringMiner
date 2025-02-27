@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
 import static gr.uom.java.xmi.Constants.JAVA;
+import static gr.uom.java.xmi.decomposition.ReplacementUtil.isDefaultValue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -162,6 +163,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	private boolean argumentizedStringExactAfterTypeReplacement() {
 		String s1 = fragment1.getArgumentizedString();
 		String s2 = fragment2.getArgumentizedString();
+		int numberLiteralExactMatches = 0;
 		for(Replacement r : replacements) {
 			if(r.getType().equals(ReplacementType.TYPE)) {
 				if(s1.startsWith(r.getBefore()) && s2.startsWith(r.getAfter())) {
@@ -178,6 +180,14 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					}
 				}
 			}
+			else if(r.getType().equals(ReplacementType.NUMBER_LITERAL)) {
+				if(r.getBefore().startsWith(r.getAfter()) || r.getAfter().startsWith(r.getBefore())) {
+					numberLiteralExactMatches++;
+				}
+			}
+		}
+		if(numberLiteralExactMatches > 0) {
+			return numberLiteralExactMatches == replacements.size();
 		}
 		return false;
 	}
@@ -389,7 +399,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							}
 						}
 					}
-					if(leafExpressions1.size() > 0 && isVariableReferenced(parentRefactoring, variableDeclaration)) {
+					if(leafExpressions1.size() > 0 && isVariableReferenced(parentRefactoring, variableDeclaration) && variableDeclaration.getScope().subsumes(getFragment2().getLocationInfo())) {
 						ExtractVariableRefactoring ref2 = new ExtractVariableRefactoring(variableDeclaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						if(!ref2.equals(parentRefactoring)) {
 							for(LeafExpression subExpression : leafExpressions1) {
@@ -537,6 +547,9 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
 			String variableName = declaration.getVariableName();
 			AbstractExpression initializer = declaration.getInitializer();
+			if(!insideExtractedOrInlinedMethod && !declaration.getScope().subsumes(this.getFragment2().getLocationInfo())) {
+				continue;
+			}
 			for(Replacement replacement : getReplacements()) {
 				String after = replacement.getAfter();
 				String before = replacement.getBefore();
@@ -664,6 +677,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							infixOperandMatch(initializer, before) ||
 							wrappedAsArgument(initializer, before) ||
 							stringConcatMatch(initializer, before) ||
+							diamondClassInstanceCreationMatch(initializer, before) ||
 							reservedTokenMatch(initializer, replacement, before) ||
 							anonymousWithMethodSignatureChange(initializer, before, classDiff)) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
@@ -717,8 +731,9 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							}
 						}
 						processExtractVariableRefactoring(ref, refactorings);
+						int size = refactorings.size();
 						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-						if(identical()) {
+						if(identical() || refactorings.size() > size) {
 							identicalWithExtractedVariable = true;
 						}
 						return;
@@ -887,7 +902,11 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 									break;
 								}
 							}
-							if(!declarationMappingFound) {
+							boolean skip = false;
+							if(statement.getVariableDeclarations().size() > 0 && !statement.getVariableDeclarations().get(0).getScope().subsumes(getFragment2().getLocationInfo())) {
+								skip = true;
+							}
+							if(!declarationMappingFound && !skip) {
 								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 								List<LeafExpression> subExpressions = getFragment1().findExpression(replacement.getBefore());
 								for(LeafExpression subExpression : subExpressions) {
@@ -954,10 +973,6 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			}
 		}
 		return false;
-	}
-
-	private boolean isDefaultValue(String argument) {
-		return argument.equals("null") || argument.equals("0") || argument.equals("1") || argument.equals("false") || argument.equals("true");
 	}
 
 	public void inlinedVariableAssignment(AbstractCodeFragment statement,
@@ -1072,6 +1087,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							infixOperandMatch(initializer, after) ||
 							wrappedAsArgument(initializer, after) ||
 							stringConcatMatch(initializer, after) ||
+							diamondClassInstanceCreationMatch(initializer, after) ||
 							reservedTokenMatch(initializer, replacement, after) ||
 							anonymousWithMethodSignatureChange(initializer, after, classDiff)) {
 						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
@@ -1274,6 +1290,31 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				return true;
 			}
 		}
+		if(refactorings.size() == 1) {
+			Refactoring ref = refactorings.iterator().next();
+			if(ref instanceof ExtractVariableRefactoring) {
+				ExtractVariableRefactoring extract = (ExtractVariableRefactoring)ref;
+				AbstractExpression initializer = extract.getVariableDeclaration().getInitializer();
+				if(initializer != null && initializer.getTernaryOperatorExpressions().size() > 0) {
+					TernaryOperatorExpression ternary = initializer.getTernaryOperatorExpressions().get(0);
+					AbstractExpression thenExpression = ternary.getThenExpression();
+					AbstractCodeFragment elseExpression = ternary.getElseExpression();
+					if(fragment1.findExpression(thenExpression.getString()).size() > 0 ||
+							fragment1.findExpression(elseExpression.getString()).size() > 0) {
+						return true;
+					}
+				}
+				else if(initializer != null && initializer.getLambdas().size() > 0) {
+					boolean methodReference = false;
+					if(initializer.getLambdas().size() == 1 && initializer.getLambdas().get(0).getString().contains(JAVA.METHOD_REFERENCE)) {
+						methodReference = true;
+					}
+					if(!methodReference) {
+						return true;
+					}
+				}
+			}
+		}
 		if(getReplacements().size() == 2 && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size()) {
 			boolean listToArrayConversion = false;
 			boolean identicalCallWithExtraArguments = false;
@@ -1330,7 +1371,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						subExpressionIsCallToSameMethod = true;
 					}
 				}
-				if(!subExpressionIsCallToSameMethod) {
+				if(!subExpressionIsCallToSameMethod && !ReplacementUtil.contains(expression, replacedExpression + "()")) {
 					return true;
 				}
 			}
@@ -1397,6 +1438,31 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		List<TernaryOperatorExpression> ternaryList = initializer.getTernaryOperatorExpressions();
 		for(TernaryOperatorExpression ternary : ternaryList) {
 			if(ternary.getThenExpression().toString().equals(replacedExpression) || ternary.getElseExpression().toString().equals(replacedExpression)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean diamondClassInstanceCreationMatch(AbstractExpression initializer, String replacedExpression) {
+		if(initializer.getString().startsWith("new ") && replacedExpression.startsWith("new ")) {
+			if(initializer.getString().contains("<") && replacedExpression.contains("<")) {
+				String type1 = initializer.getString().substring(0, initializer.getString().indexOf("<"));
+				String type2 = replacedExpression.substring(0, replacedExpression.indexOf("<"));
+				if(type1.equals(type2)) {
+					return true;
+				}
+			}
+		}
+		if(initializer.getString().contains("Map.of(") && replacedExpression.contains("Collections.singletonMap(")) {
+			String tmp = initializer.getString().replace("Map.of(", "Collections.singletonMap(");
+			if(tmp.equals(replacedExpression)) {
+				return true;
+			}
+		}
+		else if(initializer.getString().contains("Collections.singletonMap(") && replacedExpression.contains("Map.of(")) {
+			String tmp = initializer.getString().replace("Collections.singletonMap(", "Map.of(");
+			if(tmp.equals(replacedExpression)) {
 				return true;
 			}
 		}

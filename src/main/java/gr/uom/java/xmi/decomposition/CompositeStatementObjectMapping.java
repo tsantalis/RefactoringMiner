@@ -81,7 +81,7 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 			else if(identicalCompositeChildren1 < identicalCompositeChildren2) {
 				return 1;
 			}
-			if(this.compositeChildMatchingScore != o.compositeChildMatchingScore) {
+			if(this.compositeChildMatchingScore != o.compositeChildMatchingScore && this.compositeChildMatchingScore != 0.99) {
 				return -Double.compare(this.compositeChildMatchingScore, o.compositeChildMatchingScore);
 			}
 			else {

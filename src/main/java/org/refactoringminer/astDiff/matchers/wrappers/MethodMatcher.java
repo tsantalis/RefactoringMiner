@@ -146,9 +146,12 @@ public class MethodMatcher extends BodyMapperMatcher{
                 mappingStore.addMappingRecursively(srcExceptionNode,dstExceptionNode);
             }
         }
-        if (umlOperationDiff.getRemovedOperation().getReturnParameter() != null && umlOperationDiff.getAddedOperation().getReturnParameter() != null ) {
-            LocationInfo srcLocationInfo = umlOperationDiff.getRemovedOperation().getReturnParameter().getType().getLocationInfo();
-            LocationInfo dstLocationInfo = umlOperationDiff.getAddedOperation().getReturnParameter().getType().getLocationInfo();
+        VariableDeclarationContainer removedOperation = umlOperationDiff.getRemovedOperation();
+		VariableDeclarationContainer addedOperation = umlOperationDiff.getAddedOperation();
+		if (removedOperation instanceof UMLOperation && ((UMLOperation)removedOperation).getReturnParameter() != null &&
+				addedOperation instanceof UMLOperation && ((UMLOperation)addedOperation).getReturnParameter() != null ) {
+            LocationInfo srcLocationInfo = ((UMLOperation)removedOperation).getReturnParameter().getType().getLocationInfo();
+            LocationInfo dstLocationInfo = ((UMLOperation)addedOperation).getReturnParameter().getType().getLocationInfo();
             Tree srcNode =TreeUtilFunctions.findByLocationInfo(srcTree, srcLocationInfo);
             Tree dstNode =TreeUtilFunctions.findByLocationInfo(dstTree, dstLocationInfo);
             if (srcNode == null || dstNode == null) return;

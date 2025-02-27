@@ -21,6 +21,7 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.diff.StringDistance;
 
 public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafMapping> {
@@ -433,10 +434,18 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					else if(nLevelParentEditDistance2 == 0 && nLevelParentEditDistance1 > 0) { 
 						return 1; 
 					}
+					double commonCommentRatio1 = this.commonCommentRatioInVariableScope();
+					double commonCommentRatio2 = o.commonCommentRatioInVariableScope();
 					if(headZeros1 > headZeros2) {
+						if(commonCommentRatio2 > commonCommentRatio1) {
+							return 1;
+						}
 						return -1;
 					}
 					else if(headZeros2 > headZeros1) {
+						if(commonCommentRatio1 > commonCommentRatio2) {
+							return -1;
+						}
 						return 1;
 					}
 					if(levelParentEditDistance1.size() == 2 && levelParentEditDistance1.get(1).equals(0.0) &&
@@ -502,6 +511,14 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 							return -1;
 						}
 						else if(!this.identicalPreviousAndNextStatement && o.identicalPreviousAndNextStatement) {
+							return 1;
+						}
+						boolean sameEnhancedForCollectionInParent1 = this.sameEnhancedForCollectionInParent();
+						boolean sameEnhancedForCollectionInParent2 = o.sameEnhancedForCollectionInParent();
+						if(sameEnhancedForCollectionInParent1 && !sameEnhancedForCollectionInParent2) {
+							return -1;
+						}
+						else if(!sameEnhancedForCollectionInParent1 && sameEnhancedForCollectionInParent2) {
 							return 1;
 						}
 						return Integer.valueOf(indexDiff1).compareTo(Integer.valueOf(indexDiff2));
@@ -600,6 +617,18 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 			}
 		}
+	}
+
+	public List<UMLOperationBodyMapper> nestedLambdaMappers() {
+		List<UMLOperationBodyMapper> nestedLambdaMappers = new ArrayList<UMLOperationBodyMapper>();
+		for(UMLOperationBodyMapper lambdaMapper : this.getLambdaMappers()) {
+			for(AbstractCodeMapping mapping : lambdaMapper.getMappings()) {
+				if(mapping.getLambdaMappers().size() > 0) {
+					nestedLambdaMappers.addAll(mapping.getLambdaMappers());
+				}
+			}
+		}
+		return nestedLambdaMappers;
 	}
 
 	private boolean streamAPIMigration() {
@@ -1042,6 +1071,28 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		return false;
 	}
 
+	private boolean sameEnhancedForCollectionInParent() {
+		CompositeStatementObject parent1 = getFragment1().getParent();
+		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent1 = parent1.getParent();
+		}
+		CompositeStatementObject parent2 = getFragment2().getParent();
+		while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent2 = parent2.getParent();
+		}
+		if(parent1 != null && parent2 != null &&
+				parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
+				parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
+				parent1.getExpressions().size() > 0 && parent2.getExpressions().size() > 0) {
+			AbstractExpression expr1 = parent1.getExpressions().get(parent1.getExpressions().size()-1);
+			AbstractExpression expr2 = parent2.getExpressions().get(parent2.getExpressions().size()-1);
+			if(expr1.getString().contains(expr2.getString()) || expr2.getString().contains(expr1.getString())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private boolean directParentHaveExpressionOverlap() {
 		CompositeStatementObject parent1 = getFragment1().getParent();
 		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
@@ -1314,5 +1365,31 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			}
 		}
 		return false;
+	}
+	
+	private double commonCommentRatioInVariableScope() {
+		if(getFragment1().getVariableDeclarations().size() > 0 && getFragment2().getVariableDeclarations().size() > 0) {
+			VariableDeclaration v1 = getFragment1().getVariableDeclarations().get(0);
+			VariableDeclaration v2 = getFragment2().getVariableDeclarations().get(0);
+			List<String> commentsInScope1 = new ArrayList<>();
+			for(UMLComment comment : getOperation1().getComments()) {
+				if(v1.getScope().subsumes(comment.getLocationInfo())) {
+					commentsInScope1.add(comment.getText());
+				}
+			}
+			List<String> commentsInScope2 = new ArrayList<>();
+			for(UMLComment comment : getOperation2().getComments()) {
+				if(v2.getScope().subsumes(comment.getLocationInfo())) {
+					commentsInScope2.add(comment.getText());
+				}
+			}
+			Set<String> union = new LinkedHashSet<>(commentsInScope1);
+			union.addAll(commentsInScope2);
+			Set<String> intersection = new LinkedHashSet<>(commentsInScope1);
+			intersection.retainAll(commentsInScope2);
+			if(union.size() > 0)
+				return (double)intersection.size()/(double)union.size();
+		}
+		return 0;
 	}
 }

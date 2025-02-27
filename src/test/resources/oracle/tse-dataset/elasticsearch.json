@@ -1,0 +1,1075 @@
+{
+  "results": [
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "801b013d39cae57f10818a1d02c9da1cdb424c5e",
+      "url": "https://github.com/elastic/elasticsearch/commit/801b013d39cae57f10818a1d02c9da1cdb424c5e",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\ttmp : long[] to scratch : ThreadLocal<long[]> in class org.elasticsearch.index.codec.ForUtil",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\ttmp : long[] to scratch : ThreadLocal<long[]> in class org.elasticsearch.index.codec.ForUtil",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "07aa9cd99876a923cfc3b2ca0f002adc6870e48c",
+      "url": "https://github.com/elastic/elasticsearch/commit/07aa9cd99876a923cfc3b2ca0f002adc6870e48c",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tconnectorId : String in method protected prepareRequest(restRequest RestRequest, client NodeClient) : RestChannelConsumer from class org.elasticsearch.xpack.application.connector.action.RestDeleteConnectorAction",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "54fbaffffdd113fd77bd2989eda0ec68304fe4a2",
+      "url": "https://github.com/elastic/elasticsearch/commit/54fbaffffdd113fd77bd2989eda0ec68304fe4a2",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprivate warningRegexToPattern(regex String) : Pattern extracted from public parse(line String) : Object in class org.elasticsearch.xpack.ql.CsvSpecReader.CsvSpecParser & moved to class org.elasticsearch.xpack.ql.CsvSpecReader",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tregex : String in method public parse(line String) : Object from class org.elasticsearch.xpack.ql.CsvSpecReader.CsvSpecParser",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "42935c6fc912a7224b6a2824460a6b650f6a0269",
+      "url": "https://github.com/elastic/elasticsearch/commit/42935c6fc912a7224b6a2824460a6b650f6a0269",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate ensureNoAliasesOnIndex(clusterMetadata Metadata, index Index) : void extracted from public addBackingIndex(clusterMetadata Metadata, index Index) : DataStream in class org.elasticsearch.cluster.metadata.DataStream",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttargetIndices : List<Index> in method private removeBackingIndex(metadata Metadata, builder Metadata.Builder, dataStreamName String, indexName String, failureStore boolean) : void from class org.elasticsearch.cluster.metadata.MetadataDataStreamsService",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpackage prepareBackingIndex(b Metadata.Builder, im IndexMetadata, dataStreamName String, mapperSupplier Function<IndexMetadata,MapperService>, removeAlias boolean, failureStore boolean, nodeSettings Settings) : void extracted from package prepareBackingIndex(b Metadata.Builder, im IndexMetadata, dataStreamName String, mapperSupplier Function<IndexMetadata,MapperService>, removeAlias boolean) : void in class org.elasticsearch.cluster.metadata.MetadataMigrateToDataStreamService",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createRandomDataStream() : DataStream extracted from public testRemoveBackingIndex() : void in class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createRandomDataStream() : DataStream extracted from public testRemoveBackingIndexThatDoesNotExist() : void in class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createRandomDataStream() : DataStream extracted from public testRemoveBackingWriteIndex() : void in class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createRandomDataStream() : DataStream extracted from public testAddBackingIndex() : void in class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createMetadataForIndices(builder Metadata.Builder, indices List<Index>) : void extracted from public testAddBackingIndex() : void in class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createMetadataForIndices(builder Metadata.Builder, indices List<Index>) : void extracted from public testAddBackingIndexThatIsPartOfAnotherDataStream() : void in class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createRandomDataStream() : DataStream extracted from public testAddBackingIndexThatIsPartOfAnotherDataStream() : void in class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createRandomDataStream() : DataStream extracted from public testAddExistingBackingIndex() : void in class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createMetadataForIndices(builder Metadata.Builder, indices List<Index>) : void extracted from public testAddExistingBackingIndex() : void in class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createRandomDataStream() : DataStream extracted from public testAddBackingIndexWithAliases() : void in class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createMetadataForIndices(builder Metadata.Builder, indices List<Index>) : void extracted from public testAddBackingIndexWithAliases() : void in class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createRandomDataStream() : DataStream extracted from public testReplaceBackingIndex() : void in class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createRandomDataStream() : DataStream extracted from public testReplaceBackingIndexThrowsExceptionIfIndexNotPartOfDataStream() : void in class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tepochMillis : long to currentTimeMillis : long in method private createRandomDataStream() : DataStream from class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tepochMillis : long to currentTimeMillis : long in method private createRandomDataStream() : DataStream from class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tepochMillis : long to currentTimeMillis : long in method private createRandomDataStream() : DataStream from class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tepochMillis : long to currentTimeMillis : long in method private createRandomDataStream() : DataStream from class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tdsName2 : String to dataStreamName : String in method private createRandomDataStream() : DataStream from class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tindices1 : List<Index> to indices : List<Index> in method private createRandomDataStream() : DataStream from class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tindices2 : List<Index> to failureIndices : List<Index> in method private createRandomDataStream() : DataStream from class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\ti : int to k : int in method private createRandomDataStream() : DataStream from class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\ti : int to k : int in method private createRandomDataStream() : DataStream from class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate validateDataStreamAlreadyContainsIndex(index Index, parentDataStream DataStream, targetFailureStore boolean) : void extracted from public addBackingIndex(clusterMetadata Metadata, index Index) : DataStream in class org.elasticsearch.cluster.metadata.DataStream",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tepochMillis : long to currentTimeMillis : long in method private createRandomDataStream() : DataStream from class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tepochMillis : long to currentTimeMillis : long in method private createRandomDataStream() : DataStream from class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tepochMillis : long to currentTimeMillis : long in method private createRandomDataStream() : DataStream from class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\ti : int to k : int in method private createRandomDataStream() : DataStream from class org.elasticsearch.cluster.metadata.DataStreamTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tsettingsUpdate : Settings.Builder in method package prepareBackingIndex(b Metadata.Builder, im IndexMetadata, dataStreamName String, mapperSupplier Function<IndexMetadata,MapperService>, removeAlias boolean, failureStore boolean, nodeSettings Settings) : void from class org.elasticsearch.cluster.metadata.MetadataMigrateToDataStreamService",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "ccbb5badce3106f82fc4ec26570799d28943ca2c",
+      "url": "https://github.com/elastic/elasticsearch/commit/ccbb5badce3106f82fc4ec26570799d28943ca2c",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\twaitForActiveShardsTimeout : var in method public executeTask(currentState ClusterState, results List<MetadataRolloverService.RolloverResult>, rolloverTaskContext TaskContext<RolloverTask>, allocationActionMultiListener AllocationActionMultiListener<RolloverResponse>) : ClusterState from class org.elasticsearch.action.admin.indices.rollover.TransportRolloverAction.RolloverExecutor",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tdeleterTimeout : var in method private updateDocMappingAndPutConfig(config DataFrameAnalyticsConfig, headers Map<String,String>, masterNodeTimeout TimeValue, listener ActionListener<DataFrameAnalyticsConfig>) : void from class org.elasticsearch.xpack.ml.action.TransportPutDataFrameAnalyticsAction",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttimeout : TimeValue in method private retry(currentStateVersion long, failure Throwable, statePredicate Predicate<ClusterState>) : void from class org.elasticsearch.action.support.master.TransportMasterNodeAction.AsyncSingleAction",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "c9e84558b7f269f0fbaf10c2be2a2d262b6ed3fb",
+      "url": "https://github.com/elastic/elasticsearch/commit/c9e84558b7f269f0fbaf10c2be2a2d262b6ed3fb",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tRequest to Builder in method public parseRequest(inferenceEntityId String, taskType TaskType, parser XContentParser) : Builder from class org.elasticsearch.xpack.core.inference.action.InferenceAction.Request",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trequest : var to requestBuilder : InferenceAction.Request.Builder in method protected prepareRequest(restRequest RestRequest, client NodeClient) : RestChannelConsumer from class org.elasticsearch.xpack.inference.rest.RestInferenceAction",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\trequest : var to requestBuilder : InferenceAction.Request.Builder in method protected prepareRequest(restRequest RestRequest, client NodeClient) : RestChannelConsumer from class org.elasticsearch.xpack.inference.rest.RestInferenceAction",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "a9cab350e0263a6a5f59ea4dd7974c3b8eb6b51d",
+      "url": "https://github.com/elastic/elasticsearch/commit/a9cab350e0263a6a5f59ea4dd7974c3b8eb6b51d",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tnodeEligibility : var in method private startElection() : void from class org.elasticsearch.cluster.coordination.Coordinator",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tnodeEligibility : var in method public setInitialConfiguration(votingConfiguration VotingConfiguration) : boolean from class org.elasticsearch.cluster.coordination.Coordinator",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tboolean to NodeEligibility in method private localNodeMayWinElection(lastAcceptedState ClusterState, electionStrategy ElectionStrategy) : NodeEligibility from class org.elasticsearch.cluster.coordination.Coordinator",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tboolean to NodeEligibility in method public nodeMayWinElection(lastAcceptedState ClusterState, node DiscoveryNode) : NodeEligibility from class org.elasticsearch.cluster.coordination.ElectionStrategy",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tnodeEligibility : var in method public run() : void from class org.elasticsearch.cluster.coordination.Coordinator.startElectionScheduler.startElectionScheduler.new Runnable",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "48a88c575cca0579b3eeca46bcdeb1242b12b3db",
+      "url": "https://github.com/elastic/elasticsearch/commit/48a88c575cca0579b3eeca46bcdeb1242b12b3db",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.elasticsearch.ingest.geoip.stats.GeoIpDownloaderStatsAction renamed to org.elasticsearch.ingest.geoip.stats.GeoIpStatsAction",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.elasticsearch.ingest.geoip.stats.GeoIpDownloaderStatsTransportAction renamed to org.elasticsearch.ingest.geoip.stats.GeoIpStatsTransportAction",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.elasticsearch.ingest.geoip.stats.RestGeoIpDownloaderStatsAction renamed to org.elasticsearch.ingest.geoip.stats.RestGeoIpStatsAction",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.elasticsearch.ingest.geoip.stats.GeoIpDownloaderStatsActionNodeResponseSerializingTests renamed to org.elasticsearch.ingest.geoip.stats.GeoIpStatsActionNodeResponseSerializingTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.elasticsearch.ingest.geoip.stats.GeoIpDownloaderStatsActionNodeResponseTests renamed to org.elasticsearch.ingest.geoip.stats.GeoIpStatsActionNodeResponseTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.elasticsearch.ingest.geoip.stats.GeoIpDownloaderStatsActionResponseSerializingTests renamed to org.elasticsearch.ingest.geoip.stats.GeoIpStatsActionResponseSerializingTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tresponse : GeoIpDownloaderStatsAction.Response to response : GeoIpStatsAction.Response in method public cleanUp() : void from class org.elasticsearch.ingest.geoip.GeoIpDownloaderIT",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tnodeResponse : GeoIpDownloaderStatsAction.NodeResponse to nodeResponse : GeoIpStatsAction.NodeResponse in method public cleanUp() : void from class org.elasticsearch.ingest.geoip.GeoIpDownloaderIT",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tresponse : GeoIpDownloaderStatsAction.Response to response : GeoIpStatsAction.Response in method private setupDatabasesInConfigDirectory() : void from class org.elasticsearch.ingest.geoip.GeoIpDownloaderIT",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tnodeResponse : GeoIpDownloaderStatsAction.NodeResponse to nodeResponse : GeoIpStatsAction.NodeResponse in method private setupDatabasesInConfigDirectory() : void from class org.elasticsearch.ingest.geoip.GeoIpDownloaderIT",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tresponse : GeoIpDownloaderStatsAction.Response to response : GeoIpStatsAction.Response in method private deleteDatabasesInConfigDirectory() : void from class org.elasticsearch.ingest.geoip.GeoIpDownloaderIT",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tnodeResponse : GeoIpDownloaderStatsAction.NodeResponse to nodeResponse : GeoIpStatsAction.NodeResponse in method private deleteDatabasesInConfigDirectory() : void from class org.elasticsearch.ingest.geoip.GeoIpDownloaderIT",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tres : GeoIpDownloaderStatsAction.Response to res : GeoIpStatsAction.Response in method public testStats() : void from class org.elasticsearch.ingest.geoip.GeoIpDownloaderStatsIT",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\treq : GeoIpDownloaderStatsAction.Request to req : GeoIpStatsAction.Request in method public testStats() : void from class org.elasticsearch.ingest.geoip.GeoIpDownloaderStatsIT",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tresponse : GeoIpDownloaderStatsAction.Response to response : GeoIpStatsAction.Response in method public testStats() : void from class org.elasticsearch.ingest.geoip.GeoIpDownloaderStatsIT",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tstats : GeoIpDownloaderStats to downloaderStats : GeoIpDownloaderStats in class org.elasticsearch.ingest.geoip.stats.GeoIpStatsAction.NodeResponse",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic getStats() : GeoIpDownloaderStats renamed to public getDownloaderStats() : GeoIpDownloaderStats in class org.elasticsearch.ingest.geoip.stats.GeoIpStatsAction.Response",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tstats : GeoIpDownloaderStats to downloaderStats : GeoIpDownloaderStats in method protected nodeOperation(request NodeRequest, task Task) : NodeResponse from class org.elasticsearch.ingest.geoip.stats.GeoIpStatsTransportAction",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tWriteable.Reader<GeoIpDownloaderStatsAction.NodeResponse> to Writeable.Reader<GeoIpStatsAction.NodeResponse> in method protected instanceReader() : Writeable.Reader<GeoIpStatsAction.NodeResponse> from class org.elasticsearch.ingest.geoip.stats.GeoIpStatsActionNodeResponseSerializingTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tGeoIpDownloaderStatsAction.NodeResponse to GeoIpStatsAction.NodeResponse in method protected createTestInstance() : GeoIpStatsAction.NodeResponse from class org.elasticsearch.ingest.geoip.stats.GeoIpStatsActionNodeResponseSerializingTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tGeoIpDownloaderStatsAction.NodeResponse to GeoIpStatsAction.NodeResponse in method protected mutateInstance(instance GeoIpStatsAction.NodeResponse) : GeoIpStatsAction.NodeResponse from class org.elasticsearch.ingest.geoip.stats.GeoIpStatsActionNodeResponseSerializingTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tGeoIpDownloaderStatsAction.NodeResponse to GeoIpStatsAction.NodeResponse in method package createRandomInstance() : GeoIpStatsAction.NodeResponse from class org.elasticsearch.ingest.geoip.stats.GeoIpStatsActionNodeResponseSerializingTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tnodeResponse : GeoIpDownloaderStatsAction.NodeResponse to nodeResponse : GeoIpStatsAction.NodeResponse in method public testInputsAreDefensivelyCopied() : void from class org.elasticsearch.ingest.geoip.stats.GeoIpStatsActionNodeResponseTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tWriteable.Reader<GeoIpDownloaderStatsAction.Response> to Writeable.Reader<GeoIpStatsAction.Response> in method protected instanceReader() : Writeable.Reader<GeoIpStatsAction.Response> from class org.elasticsearch.ingest.geoip.stats.GeoIpStatsActionResponseSerializingTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tnodeResponses : List<GeoIpDownloaderStatsAction.NodeResponse> to nodeResponses : List<GeoIpStatsAction.NodeResponse> in method protected createTestInstance() : GeoIpStatsAction.Response from class org.elasticsearch.ingest.geoip.stats.GeoIpStatsActionResponseSerializingTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tGeoIpDownloaderStatsAction.Response to GeoIpStatsAction.Response in method protected createTestInstance() : GeoIpStatsAction.Response from class org.elasticsearch.ingest.geoip.stats.GeoIpStatsActionResponseSerializingTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tGeoIpDownloaderStatsAction.Response to GeoIpStatsAction.Response in method protected mutateInstance(instance GeoIpStatsAction.Response) : GeoIpStatsAction.Response from class org.elasticsearch.ingest.geoip.stats.GeoIpStatsActionResponseSerializingTests",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic getStats() : GeoIpDownloaderStats renamed to public getDownloaderStats() : GeoIpDownloaderStats in class org.elasticsearch.ingest.geoip.stats.GeoIpStatsAction.NodeResponse",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "19e9fc32f2d449e77e905aba6ca03c6351b3bbdc",
+      "url": "https://github.com/elastic/elasticsearch/commit/19e9fc32f2d449e77e905aba6ca03c6351b3bbdc",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "b3bcc81ca6fafd505ac7b9a168017f59c0a3477b",
+      "url": "https://github.com/elastic/elasticsearch/commit/b3bcc81ca6fafd505ac7b9a168017f59c0a3477b",
+      "commonRefactoring": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tresponse : Response in method protected getBasicTransformStats(id String) : Map<String,Object> from class org.elasticsearch.xpack.transform.integration.TransformRestTestCase",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tstats : List<Map<String,Object>> to stats : var in method protected getBasicTransformStats(id String) : Map<String,Object> from class org.elasticsearch.xpack.transform.integration.TransformRestTestCase",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tresponse : Response in method protected getTransform(id String) : Map<String,Object> from class org.elasticsearch.xpack.transform.integration.TransformRestTestCase",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\trequest : Request to request : var in method protected getTransform(id String) : Map<String,Object> from class org.elasticsearch.xpack.transform.integration.TransformRestTestCase",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttransformConfigs : List<Map<String,Object>> to transformConfigs : var in method protected getTransform(id String) : Map<String,Object> from class org.elasticsearch.xpack.transform.integration.TransformRestTestCase",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tResponse to void in method protected putTransform(id String, config String, options RequestOptions) : void from class org.elasticsearch.xpack.transform.integration.TransformRestTestCase",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tResponse to void in method protected putTransform(id String, config String, deferValidation boolean, options RequestOptions) : void from class org.elasticsearch.xpack.transform.integration.TransformRestTestCase",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic assertOKAndConsume(response Response) : void extracted from protected refreshIndex(index String) : void in class org.elasticsearch.xpack.transform.integration.common.TransformCommonRestTestCase & moved to class org.elasticsearch.test.rest.ESRestTestCase",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic assertOKAndConsume(response Response) : void extracted from protected updateConfig(id String, update String, deferValidation boolean, options RequestOptions) : void in class org.elasticsearch.xpack.transform.integration.TransformRestTestCase & moved to class org.elasticsearch.test.rest.ESRestTestCase",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "c4a11de0046aa8b4b13bd1081e6120ff574d02ee",
+      "url": "https://github.com/elastic/elasticsearch/commit/c4a11de0046aa8b4b13bd1081e6120ff574d02ee",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic randomCrossClusterApiKeyAccessField() : String from class org.elasticsearch.xpack.core.security.action.apikey.CreateCrossClusterApiKeyRequestTests to public randomCrossClusterApiKeyAccessField() : String from class org.elasticsearch.xpack.security.authc.ApiKeyServiceTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate ACCESS_CANDIDATES : List<String> from class org.elasticsearch.xpack.core.security.action.apikey.CreateCrossClusterApiKeyRequestTests to private ACCESS_CANDIDATES : List<String> from class org.elasticsearch.xpack.security.authc.ApiKeyServiceTests",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic writeTo(out StreamOutput) : void from class org.elasticsearch.xpack.core.security.action.profile.ActivateProfileRequest to public writeTo(out StreamOutput) : void from class org.elasticsearch.xpack.core.security.action.apikey.AbstractCreateApiKeyRequest",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "e21f2e30fb9c92b8df6c951b8b4afeb6cd4581bf",
+      "url": "https://github.com/elastic/elasticsearch/commit/e21f2e30fb9c92b8df6c951b8b4afeb6cd4581bf",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic testCreateAndDeleteTransformInALoop() : void renamed to public testBatchTransformLifecycltInALoop() : void in class org.elasticsearch.xpack.transform.integration.TransformRobustnessIT",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate cancelTransformTasksWithNoAssignment(finalListener ActionListener<Response>, transformNodeAssignments TransformNodeAssignments) : ActionListener<Response> renamed to private cancelTransformTasksListener(transformTasks Set<String>, finalListener ActionListener<Response>) : ActionListener<Response> in class org.elasticsearch.xpack.transform.action.TransportStopTransformAction",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tunassignedTaskId : String to taskId : String in method private cancelTransformTasksListener(transformTasks Set<String>, finalListener ActionListener<Response>) : ActionListener<Response> from class org.elasticsearch.xpack.transform.action.TransportStopTransformAction",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tunassignedTaskId : String to taskId : String in method private cancelTransformTasksListener(transformTasks Set<String>, finalListener ActionListener<Response>) : ActionListener<Response> from class org.elasticsearch.xpack.transform.action.TransportStopTransformAction",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tunassignedTaskId : String to taskId : String in method private cancelTransformTasksListener(transformTasks Set<String>, finalListener ActionListener<Response>) : ActionListener<Response> from class org.elasticsearch.xpack.transform.action.TransportStopTransformAction",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tunassignedTaskId : String to taskId : String in method private cancelTransformTasksListener(transformTasks Set<String>, finalListener ActionListener<Response>) : ActionListener<Response> from class org.elasticsearch.xpack.transform.action.TransportStopTransformAction",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "de171b8f88bc1084a00df54f4e9d4fc37a2d41c1",
+      "url": "https://github.com/elastic/elasticsearch/commit/de171b8f88bc1084a00df54f4e9d4fc37a2d41c1",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate reduceBuckets(pq PriorityQueue<IteratorAndCurrent<Bucket>>, reduceRoundingIdx int, min long, max long, reduceContext AggregationReduceContext) : BucketReduceResult extracted from protected getLeaderReducer(reduceContext AggregationReduceContext, size int) : AggregatorReducer in class org.elasticsearch.aggregations.bucket.histogram.InternalAutoDateHistogram",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tbucket : InternalVariableWidthHistogram.Bucket to bucket : Bucket in method private reduceBucket(buckets List<Bucket>, context AggregationReduceContext) : Bucket from class org.elasticsearch.search.aggregations.bucket.histogram.InternalVariableWidthHistogram",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcurrentReducer : BucketReducer<Bucket> to currentBuckets : List<Bucket> in method private reduceBuckets(pq PriorityQueue<IteratorAndCurrent<Bucket>>, reduceRoundingIdx int, min long, max long, reduceContext AggregationReduceContext) : BucketReduceResult from class org.elasticsearch.aggregations.bucket.histogram.InternalAutoDateHistogram",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcurrentReducer : BucketReducer<Bucket> to currentBuckets : List<Bucket> in method private reduceBuckets(pq PriorityQueue<IteratorAndCurrent<Bucket>>, reduceRoundingIdx int, min long, max long, reduceContext AggregationReduceContext) : BucketReduceResult from class org.elasticsearch.aggregations.bucket.histogram.InternalAutoDateHistogram",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tdateHistogram : InternalDateHistogram to histogram : InternalDateHistogram in method protected getLeaderReducer(reduceContext AggregationReduceContext, size int) : AggregatorReducer from class org.elasticsearch.search.aggregations.bucket.histogram.InternalDateHistogram",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic reduceBuckets(pq PriorityQueue<IteratorAndCurrent<Bucket>>, reduceContext AggregationReduceContext) : List<Bucket> extracted from protected getLeaderReducer(reduceContext AggregationReduceContext, size int) : AggregatorReducer in class org.elasticsearch.search.aggregations.bucket.histogram.InternalVariableWidthHistogram",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\treducedBuckets : List<Bucket> to reducedBuckets : List<InternalIpPrefix.Bucket> in method public get() : InternalAggregation from class org.elasticsearch.search.aggregations.bucket.prefix.InternalIpPrefix.getLeaderReducer.new AggregatorReducer",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "885256648983b5cef143f6a57f43acb4872229ce",
+      "url": "https://github.com/elastic/elasticsearch/commit/885256648983b5cef143f6a57f43acb4872229ce",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate types(firstType DataType, secondType DataType, hasStart boolean) : List<DataType> extracted from private supplier(name String, firstType DataType, secondType DataType, strValueSupplier Supplier<String>, substrValueSupplier Supplier<String>, startSupplier Supplier<Integer>) : TestCaseSupplier in class org.elasticsearch.xpack.esql.expression.function.scalar.string.LocateTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate testCase(strType DataType, substrType DataType, str String, substr String, start Integer, expectedValue Integer) : TestCaseSupplier.TestCase extracted from private supplier(name String, firstType DataType, secondType DataType, strValueSupplier Supplier<String>, substrValueSupplier Supplier<String>, startSupplier Supplier<Integer>) : TestCaseSupplier in class org.elasticsearch.xpack.esql.expression.function.scalar.string.LocateTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tvalue : String to str : String in method private supplier(name String, strType DataType, substrType DataType, strValueSupplier Supplier<String>, substrValueSupplier Function<String,String>, startSupplier Supplier<Integer>, expectedValue ExpectedValue) : TestCaseSupplier from class org.elasticsearch.xpack.esql.expression.function.scalar.string.LocateTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tstartValue : Integer to start : Integer in method private supplier(name String, strType DataType, substrType DataType, strValueSupplier Supplier<String>, substrValueSupplier Function<String,String>, startSupplier Supplier<Integer>, expectedValue ExpectedValue) : TestCaseSupplier from class org.elasticsearch.xpack.esql.expression.function.scalar.string.LocateTests",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "24aed5c7feaf59474ebb52ffad9db5f51c01fa60",
+      "url": "https://github.com/elastic/elasticsearch/commit/24aed5c7feaf59474ebb52ffad9db5f51c01fa60",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\toutputBuilders : Block.Builder[] to builders : EnrichResultBuilder[] in class org.elasticsearch.xpack.esql.enrich.MergePositionsOperator",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\toutputBuilders : Block.Builder[] to builders : EnrichResultBuilder[] in class org.elasticsearch.xpack.esql.enrich.MergePositionsOperator",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate blockFactory : BlockFactory from class org.elasticsearch.xpack.esql.enrich.MergePositionsOperator to protected blockFactory : BlockFactory from class org.elasticsearch.xpack.esql.enrich.EnrichResultBuilder",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.elasticsearch.xpack.esql.enrich.EnrichResultBuilder from class org.elasticsearch.xpack.esql.enrich.MergePositionsOperator",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic close() : void from class org.elasticsearch.xpack.esql.enrich.MergePositionsOperator.PositionBuilder to public close() : void from class org.elasticsearch.xpack.esql.enrich.EnrichResultBuilderForDouble",
+          "validation": false
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate fillNullUpToPosition(position int) : void inlined to public addInput(page Page) : void in class org.elasticsearch.xpack.esql.enrich.MergePositionsOperator",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tbuilder : Block.Builder to builder : EnrichResultBuilder in method public addInput(page Page) : void from class org.elasticsearch.xpack.esql.enrich.MergePositionsOperator",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcurrentPosition : int to positionsVector : IntVector in method public addInput(page Page) : void from class org.elasticsearch.xpack.esql.enrich.MergePositionsOperator",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcurrentPosition : int to positionsVector : IntVector in method public addInput(page Page) : void from class org.elasticsearch.xpack.esql.enrich.MergePositionsOperator",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate flushPositionBuilder() : void inlined to public finish() : void in class org.elasticsearch.xpack.esql.enrich.MergePositionsOperator",
+          "validation": false
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic close() : void from class org.elasticsearch.xpack.esql.enrich.MergePositionsOperator.PositionBuilder to public close() : void from class org.elasticsearch.xpack.esql.enrich.EnrichResultBuilderForBoolean",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "aba75664090a808e90148d19fc2def97560ef2d4",
+      "url": "https://github.com/elastic/elasticsearch/commit/aba75664090a808e90148d19fc2def97560ef2d4",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprotected anyNullIsNull(testCaseSuppliers List<TestCaseSupplier>, expectedType ExpectedType, evaluatorToString ExpectedEvaluatorToString) : List<TestCaseSupplier> extracted from protected anyNullIsNull(entirelyNullPreservesType boolean, testCaseSuppliers List<TestCaseSupplier>) : List<TestCaseSupplier> in class org.elasticsearch.xpack.esql.expression.function.AbstractFunctionTestCase",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate dateCases(suppliers List<TestCaseSupplier>, name String, date LongSupplier) : void extracted from public parameters() : Iterable<Object[]> in class org.elasticsearch.xpack.esql.expression.function.scalar.math.AutoBucketTests",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate numberCases(suppliers List<TestCaseSupplier>, name String, numberType DataType, number Supplier<Number>) : void extracted from public parameters() : Iterable<Object[]> in class org.elasticsearch.xpack.esql.expression.function.scalar.math.AutoBucketTests",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate numericResultsMatcher(typedData List<TestCaseSupplier.TypedData>, value Object) : Matcher<Object> inlined to public parameters() : Iterable<Object[]> in class org.elasticsearch.xpack.esql.expression.function.scalar.math.AutoBucketTests",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tfinalNullPosition : int in method protected anyNullIsNull(testCaseSuppliers List<TestCaseSupplier>, expectedType ExpectedType, evaluatorToString ExpectedEvaluatorToString) : List<TestCaseSupplier> from class org.elasticsearch.xpack.esql.expression.function.AbstractFunctionTestCase",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "31c05e9528772731aa64c8558c25ab8ef1165d51",
+      "url": "https://github.com/elastic/elasticsearch/commit/31c05e9528772731aa64c8558c25ab8ef1165d51",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tneg : var to salary_desc : var in method public testPushdownWithOverwrittenName() : void from class org.elasticsearch.xpack.esql.optimizer.LogicalPlanOptimizerTests",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmul : var to emp_no : var in method public testPushdownWithOverwrittenName() : void from class org.elasticsearch.xpack.esql.optimizer.LogicalPlanOptimizerTests",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trenamed_salary2 : var to renamed_emp_no2 : var in method public testPushdownWithOverwrittenName() : void from class org.elasticsearch.xpack.esql.optimizer.LogicalPlanOptimizerTests",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tfirstOrderExpr : var to firstOrder : var in method public testPushdownWithOverwrittenName() : void from class org.elasticsearch.xpack.esql.optimizer.LogicalPlanOptimizerTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tsecondOrderExpr : var to secondOrder : var in method public testPushdownWithOverwrittenName() : void from class org.elasticsearch.xpack.esql.optimizer.LogicalPlanOptimizerTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tadd : var to thirdOrder : var in method public testPushdownWithOverwrittenName() : void from class org.elasticsearch.xpack.esql.optimizer.LogicalPlanOptimizerTests",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "36049730fde3bd672c1904497bd44f237ed8ca80",
+      "url": "https://github.com/elastic/elasticsearch/commit/36049730fde3bd672c1904497bd44f237ed8ca80",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\texecutorName : String to executor : Executor in class org.elasticsearch.action.bulk.BulkOperation",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\texecutorName : String to executor : Executor in class org.elasticsearch.action.bulk.BulkOperation",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texecutorName : String to executor : Executor in method protected doExecute(task Task, bulkRequest BulkRequest, listener ActionListener<BulkResponse>) : void from class org.elasticsearch.action.bulk.TransportBulkAction",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\texecutorName : String to executor : Executor in method protected doExecute(task Task, bulkRequest BulkRequest, listener ActionListener<BulkResponse>) : void from class org.elasticsearch.action.bulk.TransportBulkAction",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpublic startForcingRejections() : void from class org.elasticsearch.threadpool.TestThreadPool to private blockWriteThreadPool(blockingLatch CountDownLatch) : void from class org.elasticsearch.action.bulk.TransportBulkActionTests",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic shutdown() : void from class org.elasticsearch.threadpool.TestThreadPool to public shutdown() : void from class org.elasticsearch.action.bulk.TransportBulkActionIngestTests.NamedDirectExecutorService",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.elasticsearch.action.bulk.TransportBulkActionIngestTests.NamedDirectExecutorService from class org.elasticsearch.threadpool.TestThreadPool",
+          "validation": false
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "49ffa045a694192884d274194fa14100b963e0c2",
+      "url": "https://github.com/elastic/elasticsearch/commit/49ffa045a694192884d274194fa14100b963e0c2",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate createCodec(timestampField boolean, timeSeries boolean, disableBloomFilter boolean) : PerFieldMapperCodec renamed to private createFormatSupplier(timestampField boolean, timeSeries boolean, disableBloomFilter boolean) : PerFieldFormatSupplier in class org.elasticsearch.index.codec.PerFieldMapperCodecTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate createCodec(enableES87TSDBCodec boolean, timeSeries boolean, mapping String) : PerFieldMapperCodec renamed to private createFormatSupplier(enableES87TSDBCodec boolean, timeSeries boolean, mapping String) : PerFieldFormatSupplier in class org.elasticsearch.index.codec.PerFieldMapperCodecTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tperFieldMapperCodec : PerFieldMapperCodec to perFieldMapperCodec : PerFieldFormatSupplier in method public testUseBloomFilter() : void from class org.elasticsearch.index.codec.PerFieldMapperCodecTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tperFieldMapperCodec : PerFieldMapperCodec to perFieldMapperCodec : PerFieldFormatSupplier in method public testUseBloomFilterWithTimestampFieldEnabled() : void from class org.elasticsearch.index.codec.PerFieldMapperCodecTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tperFieldMapperCodec : PerFieldMapperCodec to perFieldMapperCodec : PerFieldFormatSupplier in method public testUseBloomFilterWithTimestampFieldEnabled_noTimeSeriesMode() : void from class org.elasticsearch.index.codec.PerFieldMapperCodecTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tperFieldMapperCodec : PerFieldMapperCodec to perFieldMapperCodec : PerFieldFormatSupplier in method public testUseBloomFilterWithTimestampFieldEnabled_disableBloomFilter() : void from class org.elasticsearch.index.codec.PerFieldMapperCodecTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tperFieldMapperCodec : PerFieldMapperCodec to perFieldMapperCodec : PerFieldFormatSupplier in method public testUseES87TSDBEncodingForTimestampField() : void from class org.elasticsearch.index.codec.PerFieldMapperCodecTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tperFieldMapperCodec : PerFieldMapperCodec to perFieldMapperCodec : PerFieldFormatSupplier in method public testDoNotUseES87TSDBEncodingForTimestampFieldNonTimeSeriesIndex() : void from class org.elasticsearch.index.codec.PerFieldMapperCodecTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tperFieldMapperCodec : PerFieldMapperCodec to perFieldMapperCodec : PerFieldFormatSupplier in method public testEnableES87TSDBCodec() : void from class org.elasticsearch.index.codec.PerFieldMapperCodecTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tperFieldMapperCodec : PerFieldMapperCodec to perFieldMapperCodec : PerFieldFormatSupplier in method public testDisableES87TSDBCodec() : void from class org.elasticsearch.index.codec.PerFieldMapperCodecTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tperFieldMapperCodec : PerFieldMapperCodec to perFieldMapperCodec : PerFieldFormatSupplier in method public testUseES87TSDBEncodingSettingDisabled() : void from class org.elasticsearch.index.codec.PerFieldMapperCodecTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tperFieldMapperCodec : PerFieldMapperCodec to perFieldMapperCodec : PerFieldFormatSupplier in method public testUseTimeSeriesModeDisabledCodecDisabled() : void from class org.elasticsearch.index.codec.PerFieldMapperCodecTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tperFieldMapperCodec : PerFieldMapperCodec to perFieldMapperCodec : PerFieldFormatSupplier in method public testUseTimeSeriesModeAndCodecEnabled() : void from class org.elasticsearch.index.codec.PerFieldMapperCodecTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tPerFieldMapperCodec to PerFieldFormatSupplier in method private createFormatSupplier(timestampField boolean, timeSeries boolean, disableBloomFilter boolean) : PerFieldFormatSupplier from class org.elasticsearch.index.codec.PerFieldMapperCodecTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tPerFieldMapperCodec to PerFieldFormatSupplier in method private createFormatSupplier(enableES87TSDBCodec boolean, timeSeries boolean, mapping String) : PerFieldFormatSupplier from class org.elasticsearch.index.codec.PerFieldMapperCodecTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_SUPERCLASS",
+          "description": "Extract Superclass\torg.elasticsearch.index.codec.Elasticsearch814Codec from classes [org.elasticsearch.index.codec.PerFieldMapperCodec]",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate internalGetPostingsFormatForField(field String) : PostingsFormat from class org.elasticsearch.index.codec.PerFieldMapperCodec to private internalGetPostingsFormatForField(field String) : PostingsFormat from class org.elasticsearch.index.codec.PerFieldFormatSupplier",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage useBloomFilter(field String) : boolean from class org.elasticsearch.index.codec.PerFieldMapperCodec to package useBloomFilter(field String) : boolean from class org.elasticsearch.index.codec.PerFieldFormatSupplier",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage useTSDBDocValuesFormat(field String) : boolean from class org.elasticsearch.index.codec.PerFieldMapperCodec to package useTSDBDocValuesFormat(field String) : boolean from class org.elasticsearch.index.codec.PerFieldFormatSupplier",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate excludeFields(fieldName String) : boolean from class org.elasticsearch.index.codec.PerFieldMapperCodec to private excludeFields(fieldName String) : boolean from class org.elasticsearch.index.codec.PerFieldFormatSupplier",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate isTimeSeriesModeIndex() : boolean from class org.elasticsearch.index.codec.PerFieldMapperCodec to private isTimeSeriesModeIndex() : boolean from class org.elasticsearch.index.codec.PerFieldFormatSupplier",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate mapperService : MapperService from class org.elasticsearch.index.codec.PerFieldMapperCodec to private mapperService : MapperService from class org.elasticsearch.index.codec.PerFieldFormatSupplier",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate bloomFilterPostingsFormat : ES87BloomFilterPostingsFormat from class org.elasticsearch.index.codec.PerFieldMapperCodec to private bloomFilterPostingsFormat : ES87BloomFilterPostingsFormat from class org.elasticsearch.index.codec.PerFieldFormatSupplier",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate tsdbDocValuesFormat : ES87TSDBDocValuesFormat from class org.elasticsearch.index.codec.PerFieldMapperCodec to private tsdbDocValuesFormat : ES87TSDBDocValuesFormat from class org.elasticsearch.index.codec.PerFieldFormatSupplier",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate es812PostingsFormat : ES812PostingsFormat from class org.elasticsearch.index.codec.PerFieldMapperCodec to private es812PostingsFormat : ES812PostingsFormat from class org.elasticsearch.index.codec.PerFieldFormatSupplier",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.elasticsearch.index.codec.PerFieldFormatSupplier from class org.elasticsearch.index.codec.PerFieldMapperCodec",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate docValuesFormat : DocValuesFormat from class org.elasticsearch.index.codec.PerFieldMapperCodec to private docValuesFormat : DocValuesFormat from class org.elasticsearch.index.codec.PerFieldFormatSupplier",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic getPostingsFormatForField(field String) : PostingsFormat extracted from public getPostingsFormatForField(field String) : PostingsFormat in class org.elasticsearch.index.codec.PerFieldMapperCodec & moved to class org.elasticsearch.index.codec.PerFieldFormatSupplier",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic getKnnVectorsFormatForField(field String) : KnnVectorsFormat extracted from public getKnnVectorsFormatForField(field String) : KnnVectorsFormat in class org.elasticsearch.index.codec.PerFieldMapperCodec & moved to class org.elasticsearch.index.codec.PerFieldFormatSupplier",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic getDocValuesFormatForField(field String) : DocValuesFormat extracted from public getDocValuesFormatForField(field String) : DocValuesFormat in class org.elasticsearch.index.codec.PerFieldMapperCodec & moved to class org.elasticsearch.index.codec.PerFieldFormatSupplier",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tlegacyBestSpeedCodec : Codec in method public CodecService(mapperService MapperService, bigArrays BigArrays) from class org.elasticsearch.index.codec.CodecService",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "PULL_UP_ATTRIBUTE",
+          "description": "Pull Up Attribute\tprivate docValuesFormat : DocValuesFormat from class org.elasticsearch.index.codec.PerFieldMapperCodec to private docValuesFormat : DocValuesFormat from class org.elasticsearch.index.codec.Elasticsearch814Codec",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/elastic/elasticsearch.git",
+      "sha1": "ab52ef1f06af1b08f5808ad165f062dc0dbdff7e",
+      "url": "https://github.com/elastic/elasticsearch/commit/ab52ef1f06af1b08f5808ad165f062dc0dbdff7e",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\treason : MergeReason in method private applyRequest(currentState ClusterState, request PutMappingClusterStateUpdateRequest, indexMapperServices Map<Index,MapperService>) : ClusterState from class org.elasticsearch.cluster.metadata.MetadataMappingService.PutMappingExecutor",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic root(isSourceSynthetic boolean, isDataStream boolean, mergeReason MergeReason) : MapperBuilderContext extracted from public root(isSourceSynthetic boolean, isDataStream boolean) : MapperBuilderContext in class org.elasticsearch.index.mapper.MapperBuilderContext",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic root(isSourceSynthetic boolean, isDataStream boolean, mergeReason MergeReason, newFieldsBudget long) : MapperMergeContext extracted from public root(isSourceSynthetic boolean, isDataStream boolean, newFieldsBudget long) : MapperMergeContext in class org.elasticsearch.index.mapper.MapperMergeContext",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpackage parse(type String, reason MergeReason, source CompressedXContent) : Mapping extracted from package parse(type String, source CompressedXContent) : Mapping in class org.elasticsearch.index.mapper.MappingParser",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tpublic merge(mergeWith Mapper, reason MergeReason, parentMergeContext MapperMergeContext) : ObjectMapper inlined to public merge(mergeWith Mapper, parentMergeContext MapperMergeContext) : ObjectMapper in class org.elasticsearch.index.mapper.ObjectMapper",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tpackage merge(mergeWithObject NestedObjectMapper, reason MapperService.MergeReason, parentMergeContext MapperMergeContext) : ObjectMapper inlined to public merge(mergeWith Mapper, parentMergeContext MapperMergeContext) : ObjectMapper in class org.elasticsearch.index.mapper.NestedObjectMapper",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tpackage merge(mergeWith ObjectMapper, reason MergeReason, parentMergeContext MapperMergeContext) : ObjectMapper inlined to public merge(mergeWith Mapper, parentMergeContext MapperMergeContext) : ObjectMapper in class org.elasticsearch.index.mapper.ObjectMapper",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tpackage merge(mergeWith ObjectMapper, reason MergeReason, parentMergeContext MapperMergeContext) : ObjectMapper inlined to public merge(mergeWith Mapper, parentMergeContext MapperMergeContext) : ObjectMapper in class org.elasticsearch.index.mapper.ObjectMapper",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tpackage merge(mergeWithObject RootObjectMapper, reason MergeReason, parentMergeContext MapperMergeContext) : RootObjectMapper inlined to public merge(mergeWith Mapper, parentMergeContext MapperMergeContext) : RootObjectMapper in class org.elasticsearch.index.mapper.RootObjectMapper",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmergeWithObject : RootObjectMapper in method public merge(mergeWith Mapper, parentMergeContext MapperMergeContext) : RootObjectMapper from class org.elasticsearch.index.mapper.RootObjectMapper",
+          "validation": true
+        }
+      ]
+    }
+  ]
+}

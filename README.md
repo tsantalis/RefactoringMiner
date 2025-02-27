@@ -13,6 +13,8 @@ Table of Contents
    * [Supported Refactoring Types](#supported-refactoring-types)
    * [Contributors](#contributors)
    * [Current precision and recall](#current-precision-and-recall)
+      * [Benchmark 1](#benchmark-1)
+      * [Benchmark 2](#benchmark-2) 
    * [How to build RefactoringMiner](#how-to-build-refactoringminer)
    * [How to test RefactoringMiner](#how-to-test-refactoringminer)
    * [How to use RefactoringMiner as a maven dependency](#how-to-use-refactoringminer-as-a-maven-dependency)
@@ -171,6 +173,7 @@ Currently, it supports the detection of the following refactorings:
 100. Replace Generic With Diamond
 101. Try With Resources
 102. Replace Conditional With Ternary
+103. Assert Timeout
 
 # Supported Refactoring Types
 
@@ -290,10 +293,11 @@ Currently, it supports the detection of the following refactorings:
 </details>
 
 <details>
-<summary>Test-specific (2)</summary>
+<summary>Test-specific (3)</summary>
 
 	1. Parameterize Test (JUnit 5 @ParameterizedTest with @ValueSource)
 	2. Assert Throws
+	3. Assert Timeout
 </details>
 
 # Contributors
@@ -312,17 +316,26 @@ Currently, it supports the detection of the following refactorings:
 * Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # Current precision and recall
-As of **January 4, 2025** the precision and recall of the tool on an oracle consisting of **547 commits** from **188 open-source projects** is:
+
+## Benchmark 1
+**Source**: Nikolaos Tsantalis, Ameya Ketkar, and Danny Dig, "RefactoringMiner 2.0," IEEE Transactions on Software Engineering, vol. 48, no. 3, pp. 930-950, March 2022.
+
+**Properties**: 547 commits from 188 open-source projects
+
+**Commit dates**: between June 8th and August 7th, 2015
+
+The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
+As of **February 4, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12401  | 20  | 226  | 0.998  | 0.982|
-|Extract Method|1007  |  1  | 22  | 0.999  | 0.979|
+|**Total**|12413  | 16  | 226  | 0.999  | 0.982|
+|Extract Method|1006  |  1  | 22  | 0.999  | 0.979|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
-|Move Attribute|255  |  2  |  8  | 0.992  | 0.970|
+|Move Attribute|256  |  0  |  8  | 1.000  | 0.970|
 |Move And Rename Attribute|16  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|388  |  4  | 21  | 0.990  | 0.949|
+|Rename Method|388  |  3  | 21  | 0.992  | 0.949|
 |Inline Method|118  |  0  |  1  | 1.000  | 0.992|
 |Move Method|386  |  3  |  6  | 0.992  | 0.985|
 |Move And Rename Method|128  |  0  |  4  | 1.000  | 0.970|
@@ -336,15 +349,15 @@ As of **January 4, 2025** the precision and recall of the tool on an oracle cons
 |Extract Interface|22  |  0  |  0  | 1.000  | 1.000|
 |Extract Superclass|74  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
-|Extract Class|106  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|119  |  0  | 61  | 1.000  | 0.661|
+|Extract Class|108  |  0  |  0  | 1.000  | 1.000|
+|Extract And Move Method|120  |  0  | 61  | 1.000  | 0.663|
 |Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|304  |  0  |  0  | 1.000  | 1.000|
-|Extract Attribute|23  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|110  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|305  |  0  |  0  | 1.000  | 1.000|
+|Extract Attribute|25  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|116  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|333  |  3  | 11  | 0.991  | 0.968|
 |Rename Parameter|493  |  2  | 24  | 0.996  | 0.954|
@@ -376,7 +389,7 @@ As of **January 4, 2025** the precision and recall of the tool on an oracle cons
 |Add Parameter Annotation|34  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|849  |  2  |  1  | 0.998  | 0.999|
+|Add Parameter|849  |  1  |  1  | 0.999  | 0.999|
 |Remove Parameter|311  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
@@ -418,6 +431,49 @@ As of **January 4, 2025** the precision and recall of the tool on an oracle cons
 |Try With Resources| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Generic With Diamond|77  |  0  |  0  | 1.000  | 1.000|
 |Replace Conditional With Ternary| 8  |  0  |  0  | 1.000  | 1.000|
+
+## Benchmark 2
+**Source**: Bo Liu, Hui Liu, Nan Niu, Yuxia Zhang, Guangjie Li, He Jiang, and Yanjie Jiang, "An Automated Approach to Discovering Software Refactorings by Comparing Successive Versions," IEEE Transactions on Software Engineering, 2025.
+
+**Properties**: 400 commits from 20 open-source projects (20 commits per project)
+
+**Commit dates**: March 28, 2024
+
+The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
+As of **February 24, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+
+| Refactoring Type | TP | FP | FN | Precision | Recall |
+|:-----------------------|-----------:|--------:|--------:|--------:|--------:|
+|**Total**|3005  | 237  | 370  | 0.927  | 0.890|
+|Extract Method|328  | 24  | 37  | 0.932  | 0.899|
+|Rename Class|229  |  2  |  3  | 0.991  | 0.987|
+|Move Attribute|69  |  3  | 11  | 0.958  | 0.863|
+|Move And Rename Attribute| 4  |  0  |  4  | 1.000  | 0.500|
+|Rename Method|272  | 23  | 25  | 0.922  | 0.916|
+|Inline Method|63  |  9  |  6  | 0.875  | 0.913|
+|Move Method|259  |  5  |  8  | 0.981  | 0.970|
+|Move And Rename Method|18  |  6  | 10  | 0.750  | 0.643|
+|Pull Up Method|42  |  3  |  8  | 0.933  | 0.840|
+|Move Class|138  |  7  |  4  | 0.952  | 0.972|
+|Move And Rename Class|28  |  1  |  2  | 0.966  | 0.933|
+|Pull Up Attribute|11  |  0  |  3  | 1.000  | 0.786|
+|Push Down Attribute| 5  |  0  |  1  | 1.000  | 0.833|
+|Push Down Method|13  |  0  | 11  | 1.000  | 0.542|
+|Extract Interface|16  |  2  |  0  | 0.889  | 1.000|
+|Extract Superclass| 7  |  2  |  0  | 0.778  | 1.000|
+|Extract Subclass| 3  |  0  |  6  | 1.000  | 0.333|
+|Extract Class|40  |  2  | 11  | 0.952  | 0.784|
+|Extract And Move Method|99  | 25  | 21  | 0.798  | 0.825|
+|Move And Inline Method|17  |  7  | 13  | 0.708  | 0.567|
+|Extract Variable|238  | 15  | 42  | 0.941  | 0.850|
+|Inline Variable|75  | 12  | 47  | 0.862  | 0.615|
+|Rename Variable|259  | 33  | 28  | 0.887  | 0.902|
+|Rename Attribute|101  |  6  | 15  | 0.944  | 0.871|
+|Change Return Type|153  |  9  | 27  | 0.944  | 0.850|
+|Change Variable Type|350  | 38  | 18  | 0.902  | 0.951|
+|Change Attribute Type|158  |  3  |  9  | 0.981  | 0.946|
+|Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
+|Split Method| 6  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 Since release 3.0.0, RefactoringMiner requires **Java 17** or newer and **Gradle 7.4** or newer.

@@ -75,6 +75,16 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 		return false;
 	}
 
+	default boolean hasTwoParametersWithTheSameType() {
+		List<UMLType> parameterTypes = getParameterTypeList();
+		if(parameterTypes.size() == 2) {
+			if(parameterTypes.get(0).equals(parameterTypes.get(1))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	int getNumberOfNonVarargsParameters();
 	boolean hasVarargsParameter();
 	OperationBody getBody();
@@ -105,6 +115,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	AbstractCall isDelegate();
 	boolean isRecursive();
 	boolean isMain();
+	boolean isStatic();
 
 	default boolean hasEmptyBody() {
 		OperationBody operationBody = getBody();

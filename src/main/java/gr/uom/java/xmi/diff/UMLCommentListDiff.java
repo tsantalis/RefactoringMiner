@@ -108,8 +108,12 @@ public class UMLCommentListDiff {
 		}
 		groupsBefore.removeAll(groupsBeforeToBeRemoved);
 		groupsAfter.removeAll(groupsAfterToBeRemoved);
-		if(!(allRemainingCommentsBelongToGroups(deletedComments, groupsBefore) && allRemainingCommentsBelongToGroups(addedComments, groupsAfter)) ||
+		boolean allRemainingCommentsBelongToGroups = allRemainingCommentsBelongToGroups(deletedComments, groupsBefore) && allRemainingCommentsBelongToGroups(addedComments, groupsAfter);
+		if(!allRemainingCommentsBelongToGroups ||
 				(groupsBeforeSize <= 1 && groupsAfterSize <= 1)) {
+			processRemainingComments(deletedComments, addedComments);
+		}
+		else if(allRemainingCommentsBelongToGroups && groupsBeforeSize != groupsAfterSize && (groupsBeforeSize <= 1 || groupsAfterSize <= 1)) {
 			processRemainingComments(deletedComments, addedComments);
 		}
 		else {
@@ -287,7 +291,7 @@ public class UMLCommentListDiff {
 		return groups;
 	}
 
-	private List<Integer> findAllMatchingIndices(List<UMLComment> fragments, UMLComment comment) {
+	public static List<Integer> findAllMatchingIndices(List<UMLComment> fragments, UMLComment comment) {
 		List<Integer> matchingIndices = new ArrayList<>();
 		for(int i=0; i<fragments.size(); i++) {
 			UMLComment element = fragments.get(i);

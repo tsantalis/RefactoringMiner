@@ -3,7 +3,7 @@ package org.refactoringminer.test;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLModelASTReader;
-import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
@@ -196,7 +196,7 @@ public class ExpectedAnnotationToAssertThrowsTest {
             ModifyMethodAnnotationRefactoring modifyAnnotationRefactoring = detectModifyMethodAnnotationRefactoring();
             String expectedException = detectExpectedExceptionTypeLiteral(modifyAnnotationRefactoring.getAnnotationBefore());
 
-            UMLOperation after = modifyAnnotationRefactoring.getOperationAfter();
+            VariableDeclarationContainer after = modifyAnnotationRefactoring.getOperationAfter();
             List<AbstractCall> assertThrows = getAssertThrows(after);
             Assert.assertEquals("Number of assertThrows call is not 1", 1, assertThrows.size());
             List<String> args = assertThrows.get(0).arguments();
@@ -223,7 +223,7 @@ public class ExpectedAnnotationToAssertThrowsTest {
             return expectedException.getExpression();
         }
 
-        private void verifyAssertThrowsLambdaHasPreviousTestBodyStatements(UMLOperation after, String lambdaExpression) {
+        private void verifyAssertThrowsLambdaHasPreviousTestBodyStatements(VariableDeclarationContainer after, String lambdaExpression) {
         	List<LambdaExpressionObject> allLambdas = after.getBody().getAllLambdas();
             Assert.assertEquals(1, allLambdas.size());
             LambdaExpressionObject lambda = allLambdas.get(0);
@@ -246,7 +246,7 @@ public class ExpectedAnnotationToAssertThrowsTest {
             return before.isNormalAnnotation() && before.getTypeName().equals("Test") && before.getMemberValuePairs().containsKey("expected");
         }
 
-        private List<AbstractCall> getAssertThrows(UMLOperation operation) {
+        private List<AbstractCall> getAssertThrows(VariableDeclarationContainer operation) {
             return operation.getAllOperationInvocations().stream()
                     .filter((op) -> op.getName().equals("assertThrows") &&
                             (op.getExpression().equals("Assert") || op.getExpression().equals("Assertions")))

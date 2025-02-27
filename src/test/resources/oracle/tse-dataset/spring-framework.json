@@ -1,0 +1,1593 @@
+{
+  "results": [
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "2d33aac35038ef9f6773ff60f542975a051e7e42",
+      "url": "https://github.com/spring-projects/spring-framework/commit/2d33aac35038ef9f6773ff60f542975a051e7e42",
+      "commonRefactoring": [
+        {
+          "type": "MOVE_CLASS",
+          "description": "Move Class\torg.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor.WrapEarlyBeanPostProcessor moved to org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessor.WrapEarlyBeanPostProcessor",
+          "validation": false
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.springframework.test.context.bean.override.mockito.SpyDefinition renamed to org.springframework.test.context.bean.override.mockito.MockitoSpyBeanMetadata",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.springframework.test.context.bean.override.BeanOverrideBeanPostProcessorTests renamed to org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessorTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.springframework.test.context.bean.override.mockito.Definition renamed to org.springframework.test.context.bean.override.mockito.MockitoMetadata",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.springframework.test.context.bean.override.mockito.MockDefinition renamed to org.springframework.test.context.bean.override.mockito.MockitoBeanMetadata",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.springframework.test.context.bean.override.BeanOverrideParserTests renamed to org.springframework.test.context.bean.override.BeanOverrideParsingUtilsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tmetadata : Set<OverrideMetadata> to detectedClasses : Set<Class<?>> in class org.springframework.test.context.bean.override.BeanOverrideContextCustomizerFactory.BeanOverrideContextCustomizer",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tmetadata : Set<OverrideMetadata> to detectedClasses : Set<Class<?>> in class org.springframework.test.context.bean.override.BeanOverrideContextCustomizerFactory.BeanOverrideContextCustomizer",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tpostProcessor : BeanOverrideBeanPostProcessor to registrar : BeanOverrideRegistrar in method private postProcessFields(testContext TestContext, consumer BiConsumer<TestContextOverrideMetadata,BeanOverrideRegistrar>) : void from class org.springframework.test.context.bean.override.BeanOverrideTestExecutionListener",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tpostProcessor : BeanOverrideBeanPostProcessor to registrar : BeanOverrideRegistrar in method private postProcessFields(testContext TestContext, consumer BiConsumer<TestContextOverrideMetadata,BeanOverrideRegistrar>) : void from class org.springframework.test.context.bean.override.BeanOverrideTestExecutionListener",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprotected getExpectedBeanName() : String renamed to protected getBeanName() : String in class org.springframework.test.context.bean.override.OverrideMetadata",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic field() : Field renamed to public getField() : Field in class org.springframework.test.context.bean.override.OverrideMetadata",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic getBeanOverrideStrategy() : BeanOverrideStrategy renamed to public getStrategy() : BeanOverrideStrategy in class org.springframework.test.context.bean.override.OverrideMetadata",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmethodCount : int in method package findTestBeanFactoryMethod(clazz Class<?>, methodReturnType Class<?>, methodNames String...) : Method from class org.springframework.test.context.bean.override.convention.TestBeanOverrideProcessor",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tOverrideMetadata to MockitoMetadata in method public createMetadata(overrideAnnotation Annotation, testClass Class<?>, field Field) : MockitoMetadata from class org.springframework.test.context.bean.override.mockito.MockitoBeanOverrideProcessor",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage createMetaDataWithDeferredCheckForExistenceOfConventionBasedFactoryMethod() : void renamed to package createMetaDataForConventionBasedFactoryMethod() : void in class org.springframework.test.context.bean.override.convention.TestBeanOverrideProcessorTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\treturnType : Class<?> to clazz : Class<?> in method package createMetaDataForKnownExplicitMethod() : void from class org.springframework.test.context.bean.override.convention.TestBeanOverrideProcessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tclazz : Class<?> in method package createMetaDataForConventionBasedFactoryMethod() : void from class org.springframework.test.context.bean.override.convention.TestBeanOverrideProcessorTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprotected getExpectedBeanName() : String renamed to protected getBeanName() : String in class org.springframework.test.context.bean.override.example.TestOverrideMetadata",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tthat : SpyDefinition to that : MockitoSpyBeanMetadata in method public equals(obj Object) : boolean from class org.springframework.test.context.bean.override.mockito.MockitoSpyBeanMetadata",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprotected getExpectedBeanName() : String renamed to protected getBeanName() : String in class org.springframework.test.context.bean.override.mockito.MockitoMetadata",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tother : Definition to other : MockitoMetadata in method public equals(obj Object) : boolean from class org.springframework.test.context.bean.override.mockito.MockitoMetadata",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tother : MockDefinition to other : MockitoBeanMetadata in method public equals(obj Object) : boolean from class org.springframework.test.context.bean.override.mockito.MockitoBeanMetadata",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tmethodToInvoke : Method in method protected createOverride(beanName String, existingBeanDefinition BeanDefinition, existingBeanInstance Object) : Object from class org.springframework.test.context.bean.override.convention.TestBeanOverrideProcessor.MethodConventionOverrideMetadata",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor renamed to org.springframework.test.context.bean.override.BeanOverrideRegistrar",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tbeanFactory : ConfigurableListableBeanFactory to beanFactory : ConfigurableBeanFactory in class org.springframework.test.context.bean.override.BeanOverrideRegistrar",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprotected copyBeanDefinitionDetails(from BeanDefinition, to RootBeanDefinition) : void from class org.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor to protected copyBeanDefinitionDetails(from BeanDefinition, to RootBeanDefinition) : void from class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessor",
+          "validation": false
+        },
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpackage parse(testClass Class<?>) : void from class org.springframework.test.context.bean.override.BeanOverrideParser to private createContext(classes Class<?>...) : AnnotationConfigApplicationContext from class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessorTests",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to AnnotationConfigApplicationContext in method private createContext(classes Class<?>...) : AnnotationConfigApplicationContext from class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessorTests",
+          "validation": false
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tWRAP_EARLY_BEAN : BeanOverrideStrategy to WRAP_BEAN : BeanOverrideStrategy in class org.springframework.test.context.bean.override.BeanOverrideStrategy",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprotected getExpectedBeanName() : String renamed to protected getBeanName() : String in class org.springframework.test.context.bean.override.convention.TestBeanOverrideProcessor.TestBeanOverrideMetadata",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate parseMetadata(testClass Class<?>, parser BeanOverrideParser) : void renamed to private findClassesWithBeanOverride(testClass Class<?>, detectedClasses Set<Class<?>>) : void in class org.springframework.test.context.bean.override.BeanOverrideContextCustomizerFactory",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.springframework.test.context.bean.override.convention.TestBeanOverrideProcessor.MethodConventionOverrideMetadata renamed to org.springframework.test.context.bean.override.convention.TestBeanOverrideProcessor.TestBeanOverrideMetadata",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic getOrder() : int from class org.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor to public getOrder() : int from class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessor",
+          "validation": false
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage DUPLICATE_TRIGGER : String from class org.springframework.test.context.bean.override.example.ExampleBeanOverrideProcessor to package DUPLICATE_TRIGGER : String from class org.springframework.test.context.bean.override.example.ExampleBeanOverrideAnnotation",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate parseField(field Field, source Class<?>) : void from class org.springframework.test.context.bean.override.BeanOverrideParser to private parseField(field Field, testClass Class<?>, metadataSet Set<OverrideMetadata>) : void from class org.springframework.test.context.bean.override.BeanOverrideParsingUtils",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage hasBeanOverride(testClass Class<?>) : boolean from class org.springframework.test.context.bean.override.BeanOverrideParser to package hasBeanOverride(clazz Class<?>) : boolean from class org.springframework.test.context.bean.override.BeanOverrideParsingUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\ttypeToOverride : ResolvableType to beanType : ResolvableType in class org.springframework.test.context.bean.override.OverrideMetadata",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate getOrAddInfrastructureBeanDefinition(registry BeanDefinitionRegistry, clazz Class<?>, beanName String, constructorArgumentsConsumer Consumer<ConstructorArgumentValues>) : BeanDefinition renamed to public register(registry BeanDefinitionRegistry, detectedTestClasses Set<Class<?>>) : void in class org.springframework.test.context.bean.override.BeanOverrideRegistrar",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tBeanDefinition to void in method public register(registry BeanDefinitionRegistry, detectedTestClasses Set<Class<?>>) : void from class org.springframework.test.context.bean.override.BeanOverrideRegistrar",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tOverrideMetadata to TestBeanOverrideMetadata in method public createMetadata(overrideAnnotation Annotation, testClass Class<?>, field Field) : TestBeanOverrideMetadata from class org.springframework.test.context.bean.override.convention.TestBeanOverrideProcessor",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessor from class org.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tpostProcessor : null to overrideRegistrar : null in method protected injectFields(testContext TestContext) : void from class org.springframework.test.context.bean.override.BeanOverrideTestExecutionListener",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\toverrideMethod : Method to explicitOverrideMethod : Method in method public createMetadata(overrideAnnotation Annotation, testClass Class<?>, field Field) : TestBeanOverrideMetadata from class org.springframework.test.context.bean.override.convention.TestBeanOverrideProcessor",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tmainProcessor : BeanOverrideBeanPostProcessor to overrideRegistrar : BeanOverrideRegistrar in class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessor.WrapEarlyBeanPostProcessor",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tmainProcessor : BeanOverrideBeanPostProcessor to overrideRegistrar : BeanOverrideRegistrar in class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessor.WrapEarlyBeanPostProcessor",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tresult : int in method public hashCode() : int from class org.springframework.test.context.bean.override.mockito.SpyDefinition",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createContext(classes Class<?>...) : AnnotationConfigApplicationContext extracted from package canReplaceExistingBeanDefinitions() : void in class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createContext(classes Class<?>...) : AnnotationConfigApplicationContext extracted from package cannotReplaceIfNoBeanMatching() : void in class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createContext(classes Class<?>...) : AnnotationConfigApplicationContext extracted from package canReplaceExistingBeanDefinitionsWithCreateReplaceStrategy() : void in class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createContext(classes Class<?>...) : AnnotationConfigApplicationContext extracted from package canCreateIfOriginalMissingWithCreateReplaceStrategy() : void in class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createContext(classes Class<?>...) : AnnotationConfigApplicationContext extracted from package canOverrideBeanProducedByFactoryBeanWithClassObjectTypeAttribute() : void in class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createContext(classes Class<?>...) : AnnotationConfigApplicationContext extracted from package canOverrideBeanProducedByFactoryBeanWithResolvableTypeObjectTypeAttribute() : void in class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createContext(classes Class<?>...) : AnnotationConfigApplicationContext extracted from package postProcessorShouldNotTriggerEarlyInitialization() : void in class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createContext(classes Class<?>...) : AnnotationConfigApplicationContext extracted from package allowReplaceDefinitionWhenSingletonDefinitionPresent() : void in class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createContext(classes Class<?>...) : AnnotationConfigApplicationContext extracted from package copyDefinitionPrimaryAndScope() : void in class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessorTests",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tresult : int in method public hashCode() : int from class org.springframework.test.context.bean.override.mockito.MockDefinition",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttypeToOverride : ResolvableType to testClass : Class<?> in method private parseField(field Field, testClass Class<?>, metadataSet Set<OverrideMetadata>) : void from class org.springframework.test.context.bean.override.BeanOverrideParsingUtils",
+          "validation": false
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprotected createOverride(beanName String, existingBeanDefinition BeanDefinition, existingBeanInstance Object) : Object from class org.springframework.test.context.bean.override.convention.TestBeanOverrideProcessor.MethodConventionOverrideMetadata to protected createOverride(beanName String, existingBeanDefinition BeanDefinition, existingBeanInstance Object) : Object from class org.springframework.test.context.bean.override.convention.TestBeanOverrideProcessor.TestBeanOverrideMetadata",
+          "validation": false
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic typeToOverride() : ResolvableType renamed to public getBeanType() : ResolvableType in class org.springframework.test.context.bean.override.OverrideMetadata",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tpackage DUPLICATE_TRIGGER : String from class org.springframework.test.context.bean.override.example.ExampleBeanOverrideProcessor to public DUPLICATE_TRIGGER : String from class org.springframework.test.context.bean.override.example.ExampleBeanOverrideAnnotation",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate DUPLICATE_TRIGGER : String from class org.springframework.test.context.bean.override.BeanOverrideParserTests to public DUPLICATE_TRIGGER : String from class org.springframework.test.context.bean.override.example.ExampleBeanOverrideAnnotation",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to Set<OverrideMetadata> in method package parse(clazz Class<?>) : Set<OverrideMetadata> from class org.springframework.test.context.bean.override.BeanOverrideParsingUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.springframework.test.context.bean.override.BeanOverrideParser renamed to org.springframework.test.context.bean.override.BeanOverrideParsingUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor renamed to org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessor",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.springframework.test.context.bean.override.BeanOverrideRegistrar from class org.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprotected getOverrideMetadata() : Set<OverrideMetadata> from class org.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor to package getOverrideMetadata() : Set<OverrideMetadata> from class org.springframework.test.context.bean.override.BeanOverrideRegistrar",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic setBeanFactory(beanFactory BeanFactory) : void from class org.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor to public setBeanFactory(beanFactory BeanFactory) : void from class org.springframework.test.context.bean.override.BeanOverrideRegistrar",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprotected wrapIfNecessary(bean Object, beanName String) : Object from class org.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor to package wrapIfNecessary(bean Object, beanName String) : Object from class org.springframework.test.context.bean.override.BeanOverrideRegistrar",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tprivate inject(field Field, target Object, beanName String) : void from class org.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor to private inject(field Field, target Object, beanName String) : void from class org.springframework.test.context.bean.override.BeanOverrideRegistrar",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpackage inject(field Field, target Object, overrideMetadata OverrideMetadata) : void from class org.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor to package inject(target Object, overrideMetadata OverrideMetadata) : void from class org.springframework.test.context.bean.override.BeanOverrideRegistrar",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate beanNameRegistry : Map<OverrideMetadata,String> from class org.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor to private beanNameRegistry : Map<OverrideMetadata,String> from class org.springframework.test.context.bean.override.BeanOverrideRegistrar",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate earlyOverrideMetadata : Map<String,OverrideMetadata> from class org.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor to private earlyOverrideMetadata : Map<String,OverrideMetadata> from class org.springframework.test.context.bean.override.BeanOverrideRegistrar",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate overrideMetadata : Set<OverrideMetadata> from class org.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor to private overrideMetadata : Set<OverrideMetadata> from class org.springframework.test.context.bean.override.BeanOverrideRegistrar",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate beanFactory : ConfigurableListableBeanFactory from class org.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor to private beanFactory : ConfigurableBeanFactory from class org.springframework.test.context.bean.override.BeanOverrideRegistrar",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate registerWrapEarly(metadata OverrideMetadata) : void renamed to private registerWrapBean(beanFactory DefaultListableBeanFactory, metadata OverrideMetadata) : void in class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessor",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate getOrAddInfrastructureBeanDefinition(registry BeanDefinitionRegistry, clazz Class<?>, beanName String, constructorArgumentsConsumer Consumer<ConstructorArgumentValues>) : BeanDefinition renamed to private addInfrastructureBeanDefinition(registry BeanDefinitionRegistry, clazz Class<?>, beanName String, constructorArgumentsConsumer Consumer<ConstructorArgumentValues>) : void in class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessor",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tBeanDefinition to void in method private addInfrastructureBeanDefinition(registry BeanDefinitionRegistry, clazz Class<?>, beanName String, constructorArgumentsConsumer Consumer<ConstructorArgumentValues>) : void from class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessor",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "39cd31613b60ba5759808f0774e6fa0261cccf87",
+      "url": "https://github.com/spring-projects/spring-framework/commit/39cd31613b60ba5759808f0774e6fa0261cccf87",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tcondition : boolean in method package resolveMultipartFileArray() : void from class org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tcondition : boolean in method package resolvePartArray() : void from class org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tcondition : boolean in method package resolveOptionalMultipartFile() : void from class org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "1c9cff668c4765f4dd676958a6386de90af8fd7e",
+      "url": "https://github.com/spring-projects/spring-framework/commit/1c9cff668c4765f4dd676958a6386de90af8fd7e",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.springframework.expression.spel.ast.Indexer.PropertyIndexingValueRef renamed to org.springframework.expression.spel.ast.Indexer.PropertyAccessorValueRef",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getValueRef(state ExpressionState, accessMode AccessMode) : ValueRef extracted from protected getValueRef(state ExpressionState) : ValueRef in class org.springframework.expression.spel.ast.Indexer",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tcachedReadAccessor : PropertyAccessor to cachedPropertyReadAccessor : PropertyAccessor in class org.springframework.expression.spel.ast.Indexer",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcachedPropertyReadName : String in method public getValue() : TypedValue from class org.springframework.expression.spel.ast.Indexer.PropertyAccessorValueRef",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcachedPropertyReadTargetType : Class<?> in method public getValue() : TypedValue from class org.springframework.expression.spel.ast.Indexer.PropertyAccessorValueRef",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\ttargetObjectRuntimeClass : Class<?> to targetType : Class<?> in method public getValue() : TypedValue from class org.springframework.expression.spel.ast.Indexer.PropertyAccessorValueRef",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcachedPropertyWriteName : String in method public setValue(newValue Object) : void from class org.springframework.expression.spel.ast.Indexer.PropertyAccessorValueRef",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcachedPropertyWriteTargetType : Class<?> in method public setValue(newValue Object) : void from class org.springframework.expression.spel.ast.Indexer.PropertyAccessorValueRef",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcontextObjectClass : Class<?> to targetType : Class<?> in method public setValue(newValue Object) : void from class org.springframework.expression.spel.ast.Indexer.PropertyAccessorValueRef",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tcachedWriteAccessor : PropertyAccessor to cachedPropertyWriteAccessor : PropertyAccessor in class org.springframework.expression.spel.ast.Indexer",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tcachedReadTargetType : Class<?> to cachedPropertyReadTargetType : Class<?> in class org.springframework.expression.spel.ast.Indexer",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tcachedWriteTargetType : Class<?> to cachedPropertyWriteTargetType : Class<?> in class org.springframework.expression.spel.ast.Indexer",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tcachedReadName : String to cachedPropertyReadName : String in class org.springframework.expression.spel.ast.Indexer",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tcachedWriteName : String to cachedPropertyWriteName : String in class org.springframework.expression.spel.ast.Indexer",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\texception : Exception in method public getValue() : TypedValue from class org.springframework.expression.spel.ast.Indexer.IndexAccessorValueRef",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\texception : Exception in method public setValue(newValue Object) : void from class org.springframework.expression.spel.ast.Indexer.IndexAccessorValueRef",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcompilablePropertyAccessor : CompilablePropertyAccessor to cpa : CompilablePropertyAccessor in method public isCompilable() : boolean from class org.springframework.expression.spel.ast.Indexer",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprivate updatePropertyReadState(propertyAccessor PropertyAccessor, name String, targetType Class<?>) : void extracted from public getValue() : TypedValue in class org.springframework.expression.spel.ast.Indexer.PropertyIndexingValueRef & moved to class org.springframework.expression.spel.ast.Indexer",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprivate updatePropertyWriteState(propertyAccessor PropertyAccessor, name String, targetType Class<?>) : void extracted from public setValue(newValue Object) : void in class org.springframework.expression.spel.ast.Indexer.PropertyIndexingValueRef & moved to class org.springframework.expression.spel.ast.Indexer",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "5c6b82a9479522546161df3921368da812b2746c",
+      "url": "https://github.com/spring-projects/spring-framework/commit/5c6b82a9479522546161df3921368da812b2746c",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tValueRef to TypedValue in method public read(context EvaluationContext, target Object, index Object) : TypedValue from class org.springframework.expression.IndexAccessor",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tValueRef to TypedValue in method public read(context EvaluationContext, target Object, index Object) : TypedValue from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests.JacksonArrayNodeIndexAccessor",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic isWritable() : boolean from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests.JacksonArrayNodeIndexAccessor to public isWritable() : boolean from class org.springframework.expression.spel.ast.Indexer.IndexAccessorValueRef",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tarrayNode : ArrayNode in method public read(context EvaluationContext, target Object, index Object) : TypedValue from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests.JacksonArrayNodeIndexAccessor",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tintIndex : Integer in method public read(context EvaluationContext, target Object, index Object) : TypedValue from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests.JacksonArrayNodeIndexAccessor",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\torg.springframework.expression.spel.IndexingTests.IndexAccessorTests.JacksonArrayNodeIndexAccessor.ArrayNodeValueRef moved and renamed to org.springframework.expression.spel.ast.Indexer.IndexAccessorValueRef",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tindex : int to index : Object in class org.springframework.expression.spel.ast.Indexer.IndexAccessorValueRef",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_TYPE_DECLARATION_KIND",
+          "description": "Change Type Declaration Kind\trecord to class in type org.springframework.expression.spel.ast.Indexer.IndexAccessorValueRef",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "d91277095a3eee690f3e6766257cec6e1c2510f8",
+      "url": "https://github.com/spring-projects/spring-framework/commit/d91277095a3eee690f3e6766257cec6e1c2510f8",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> extracted from public getPropertyAccessorsToTry(targetType Class<?>, propertyAccessors List<PropertyAccessor>) : List<PropertyAccessor> in class org.springframework.expression.spel.ast.AstUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\taccessor : PropertyAccessor to accessor : T in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate tryIndexAccessor(state ExpressionState, index Object) : Optional<ValueRef> inlined to protected getValueRef(state ExpressionState) : ValueRef in class org.springframework.expression.spel.ast.Indexer",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcontext : EvaluationContext to evalContext : EvaluationContext in method protected getValueRef(state ExpressionState) : ValueRef from class org.springframework.expression.spel.ast.Indexer",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tavailableAccessors : List<IndexAccessor> to accessorsToTry : List<IndexAccessor> in method protected getValueRef(state ExpressionState) : ValueRef from class org.springframework.expression.spel.ast.Indexer",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_INTERFACE",
+          "description": "Extract Interface\torg.springframework.expression.TargetedAccessor from classes [org.springframework.expression.IndexAccessor, org.springframework.expression.PropertyAccessor]",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> extracted from private getIndexAccessorsToTry(contextObject Object, propertyAccessors List<IndexAccessor>) : List<IndexAccessor> in class org.springframework.expression.spel.ast.Indexer & moved to class org.springframework.expression.spel.ast.AstUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tspecificAccessors : List<IndexAccessor> to exactMatches : List<T> in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tgeneralAccessors : List<IndexAccessor> to genericMatches : List<T> in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tresolver : IndexAccessor to accessor : T in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tspecificAccessors : List<IndexAccessor> to exactMatches : List<T> in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tgeneralAccessors : List<IndexAccessor> to genericMatches : List<T> in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tresolver : IndexAccessor to accessor : T in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic getValue() : TypedValue from class org.springframework.expression.spel.PropertyAccessTests.JsonIndexAccessor.ArrayValueRef to public getValue() : TypedValue from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests.JacksonArrayNodeIndexAccessor.ArrayNodeValueRef",
+          "validation": false
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic canRead(context EvaluationContext, target Object, index Object) : boolean from class org.springframework.expression.spel.PropertyAccessTests.JsonIndexAccessor to public canRead(context EvaluationContext, target Object, index Object) : boolean from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests.JacksonArrayNodeIndexAccessor",
+          "validation": false
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic setValue(newValue Object) : void from class org.springframework.expression.spel.PropertyAccessTests.JsonIndexAccessor.ArrayValueRef to public setValue(newValue Object) : void from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests.JacksonArrayNodeIndexAccessor.ArrayNodeValueRef",
+          "validation": false
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic getSpecificTargetClasses() : Class<?>[] from class org.springframework.expression.spel.PropertyAccessTests.JsonIndexAccessor to public getSpecificTargetClasses() : Class<?>[] from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests.JacksonArrayNodeIndexAccessor",
+          "validation": false
+        },
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpublic canWrite(context EvaluationContext, target Object, index Object) : boolean from class org.springframework.expression.spel.PropertyAccessTests.JsonIndexAccessor to public isWritable() : boolean from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests.JacksonArrayNodeIndexAccessor.ArrayNodeValueRef",
+          "validation": false
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic indexReadWrite() : void from class org.springframework.expression.spel.PropertyAccessTests to package indexReadWrite() : void from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests",
+          "validation": false
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpublic getIndexAccessors() : List<IndexAccessor> from class org.springframework.expression.spel.support.SimpleEvaluationContext to public getIndexAccessors() : List<IndexAccessor> from class org.springframework.expression.EvaluationContext",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_CLASS",
+          "description": "Extract Class\torg.springframework.expression.spel.IndexingTests.IndexAccessorTests from class org.springframework.expression.spel.PropertyAccessTests",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tgeneralAccessors : List<PropertyAccessor> to genericMatches : List<T> in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tgeneralAccessors : List<PropertyAccessor> to genericMatches : List<T> in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tspecificAccessors : List<PropertyAccessor> to exactMatches : List<T> in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tspecificAccessors : List<PropertyAccessor> to exactMatches : List<T> in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tresolvers : List<IndexAccessor> to inexactMatches : List<T> in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tresolvers : List<IndexAccessor> to inexactMatches : List<T> in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": false
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tlist : List<IndexAccessor> in method private tryIndexAccessor(state ExpressionState, index Object) : Optional<ValueRef> from class org.springframework.expression.spel.ast.Indexer",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tnode0 : TextNode in method package indexReadWrite() : void from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tnode1 : TextNode in method package indexReadWrite() : void from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests",
+          "validation": false
+        }
+      ],
+      "baseline": [
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\torg.springframework.expression.spel.PropertyAccessTests.JsonIndexAccessor.ArrayValueRef moved and renamed to org.springframework.expression.spel.IndexingTests.IndexAccessorTests.JacksonArrayNodeIndexAccessor.ArrayNodeValueRef",
+          "validation": true
+        },
+        {
+          "type": "MOVE_RENAME_CLASS",
+          "description": "Move And Rename Class\torg.springframework.expression.spel.PropertyAccessTests.JsonIndexAccessor moved and renamed to org.springframework.expression.spel.IndexingTests.IndexAccessorTests.JacksonArrayNodeIndexAccessor",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tspecificAccessors : List<PropertyAccessor> to genericMatches : List<T> in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tgeneralAccessors : List<PropertyAccessor> to exactMatches : List<T> in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\taccessors : List<PropertyAccessor> to result : List<T> in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tspecificAccessors : List<PropertyAccessor> to genericMatches : List<T> in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tgeneralAccessors : List<PropertyAccessor> to exactMatches : List<T> in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": false
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\taccessors : List<PropertyAccessor> to result : List<T> in method public getAccessorsToTry(targetType Class<?>, accessors List<T>) : List<T> from class org.springframework.expression.spel.ast.AstUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tindex : Integer to index : int in class org.springframework.expression.spel.IndexingTests.IndexAccessorTests.JacksonArrayNodeIndexAccessor.ArrayNodeValueRef",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_TYPE_DECLARATION_KIND",
+          "description": "Change Type Declaration Kind\tclass to record in type org.springframework.expression.spel.IndexingTests.IndexAccessorTests.JacksonArrayNodeIndexAccessor.ArrayNodeValueRef",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tjsonIndexAccessor : JsonIndexAccessor to accessor1 : IndexAccessor in method package addingAndRemovingIndexAccessors() : void from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tjsonIndexAccessor1 : JsonIndexAccessor to accessor2 : IndexAccessor in method package addingAndRemovingIndexAccessors() : void from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tcopy : List to copy : List<IndexAccessor> in method package addingAndRemovingIndexAccessors() : void from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tctx : StandardEvaluationContext to context : StandardEvaluationContext in method package addingAndRemovingIndexAccessors() : void from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tjsonIndexAccessor : JsonIndexAccessor to accessor1 : IndexAccessor in method package addingAndRemovingIndexAccessors() : void from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tjsonIndexAccessor1 : JsonIndexAccessor to accessor2 : IndexAccessor in method package addingAndRemovingIndexAccessors() : void from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpublic testAddingRemovingIndexAccessors() : void from class org.springframework.expression.spel.PropertyAccessTests to package addingAndRemovingIndexAccessors() : void from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "f6089afd0e55d87489f4c9f5ddc09064c1a33a39",
+      "url": "https://github.com/spring-projects/spring-framework/commit/f6089afd0e55d87489f4c9f5ddc09064c1a33a39",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\te : Exception to ex : Exception in method private captureThrowable() : MethodInterceptor from class org.springframework.aop.framework.ProxyExceptionHandlingTests.WhenThereIsOneInterceptor",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage beforeEach() : void renamed to package clear() : void in class org.springframework.aop.framework.ProxyExceptionHandlingTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage beforeEach() : void renamed to package setup() : void in class org.springframework.aop.framework.ProxyExceptionHandlingTests.CglibAopProxyTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.springframework.aop.framework.ProxyExceptionHandlingTests.ObjenesisCglibAopProxyTests renamed to org.springframework.aop.framework.ProxyExceptionHandlingTests.CglibAopProxyTests",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tcalToSuperWasSeen : boolean to callToSuperSeen : boolean in class org.springframework.cglib.transform.impl.UndeclaredThrowableTransformer.begin_method.new CodeEmitter",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "bed36890019a1764f1ed846ec1c94325a2ac5c72",
+      "url": "https://github.com/spring-projects/spring-framework/commit/bed36890019a1764f1ed846ec1c94325a2ac5c72",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tparts : MultipartFile[] in method package resolveMultipartFileArray() : void from class org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tparts : Part[] in method package resolvePartArray() : void from class org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tcondition : boolean in method package resolveNameFromSystemPropertyThroughPlaceholder() : void from class org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "f2889b1b43c264ed49d81e831c3959ca49ad7435",
+      "url": "https://github.com/spring-projects/spring-framework/commit/f2889b1b43c264ed49d81e831c3959ca49ad7435",
+      "commonRefactoring": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tresolvedClass : Class<?> to targetClass : Class<?> in method protected checkGenericTypeMatch(bdHolder BeanDefinitionHolder, descriptor DependencyDescriptor) : boolean from class org.springframework.beans.factory.support.GenericTypeAwareAutowireCandidateResolver",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\ttypeToBeMatched : Class<?> to classToMatch : Class<?> in method protected checkGenericTypeMatch(bdHolder BeanDefinitionHolder, descriptor DependencyDescriptor) : boolean from class org.springframework.beans.factory.support.GenericTypeAwareAutowireCandidateResolver",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericSetProperty() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericListProperty() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericListPropertyWithAutowiring() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericListPropertyWithInvalidElementType() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericListPropertyWithOptionalAutowiring() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericMapProperty() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericSetConstructor() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericSetConstructorWithAutowiring() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericSetConstructorWithOptionalAutowiring() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericSetListConstructor() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericSetListConstructorWithAutowiring() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericSetListConstructorWithOptionalAutowiring() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericSetMapConstructor() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericMapResourceConstructor() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericMapMapConstructor() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericMapMapConstructorWithSameRefAndConversion() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericMapMapConstructorWithSameRefAndNoConversion() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericMapWithKeyTypeConstructor() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericMapWithCollectionValueConstructor() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericSetFactoryMethod() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericSetListFactoryMethod() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericSetMapFactoryMethod() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericMapResourceFactoryMethod() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericMapMapFactoryMethod() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericMapWithKeyTypeFactoryMethod() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package genericMapWithCollectionValueFactoryMethod() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package parameterizedStaticFactoryMethod() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd : RootBeanDefinition in method package parameterizedStaticFactoryMethodWithWrappedClassName() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd1 : RootBeanDefinition in method package parameterizedInstanceFactoryMethod() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd1 : RootBeanDefinition in method package parameterizedInstanceFactoryMethodWithNonResolvedClassName() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd1 : RootBeanDefinition in method package parameterizedInstanceFactoryMethodWithInvalidClassName() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd1 : RootBeanDefinition in method package parameterizedInstanceFactoryMethodWithIndexedArgument() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\trbd : RootBeanDefinition to bd1 : RootBeanDefinition in method package parameterizedInstanceFactoryMethodWithTempClassLoader() : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tbd3 : RootBeanDefinition in method package individualBeanWithFactoryBeanTypeAsTargetType() : void from class org.springframework.context.annotation.AnnotationConfigApplicationContextTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tbd3 : RootBeanDefinition in method package individualBeanWithFactoryBeanObjectTypeAsTargetType() : void from class org.springframework.context.annotation.AnnotationConfigApplicationContextTests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage resolveFactoryBeanWithMatchingGeneric() : void renamed to package provideFactoryBeanWithMatchingGenerics() : void in class org.springframework.context.annotation.Gh32489Tests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage resolveFactoryBeanWithFirstNonMatchingGeneric() : void renamed to package provideFactoryBeanWithFirstNonMatchingGenerics() : void in class org.springframework.context.annotation.Gh32489Tests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage resolveFactoryBeanWithSecondNonMatchingGeneric() : void renamed to package provideFactoryBeanWithSecondNonMatchingGenerics() : void in class org.springframework.context.annotation.Gh32489Tests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage resolveFactoryBeanTargetTypeWithMatchingGeneric() : void renamed to package provideFactoryBeanTargetTypeWithMatchingGenerics() : void in class org.springframework.context.annotation.Gh32489Tests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage resolveFactoryBeanTargetTypeWithFirstNonMatchingGeneric() : void renamed to package provideFactoryBeanTargetTypeWithFirstNonMatchingGenerics() : void in class org.springframework.context.annotation.Gh32489Tests",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage resolveFactoryBeanTargetTypeWithSecondNonMatchingGeneric() : void renamed to package provideFactoryBeanTargetTypeWithSecondNonMatchingGenerics() : void in class org.springframework.context.annotation.Gh32489Tests",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tbd3 : RootBeanDefinition in method package individualBeanWithUnresolvedFactoryBeanTypeAsTargetType() : void from class org.springframework.context.annotation.AnnotationConfigApplicationContextTests",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "b68f76c86e356044b6f88884172d7f025061c3a6",
+      "url": "https://github.com/spring-projects/spring-framework/commit/b68f76c86e356044b6f88884172d7f025061c3a6",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\thandlerResult : HandlerResult in method private handle(adapter RequestMappingHandlerAdapter, controller Object, exchange ServerWebExchange, timeout Duration, methodName String, parameterTypes Class<?>...) : HandlerResult from class org.springframework.web.reactive.result.method.annotation.ControllerAdviceTests",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "521cda009b851f0f46985953f6f9e98599db776d",
+      "url": "https://github.com/spring-projects/spring-framework/commit/521cda009b851f0f46985953f6f9e98599db776d",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate assertHandlerResultValue(mono Mono<HandlerResult>, expected String, strict boolean) : void extracted from private assertHandlerResultValue(mono Mono<HandlerResult>, expected String) : void in class org.springframework.web.reactive.result.method.InvocableHandlerMethodTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic getSchedulerFor(handlerMethod HandlerMethod) : Scheduler extracted from public handle(exchange ServerWebExchange, handler Object) : Mono<HandlerResult> in class org.springframework.web.reactive.result.method.annotation.RequestMappingHandlerAdapter & moved to class org.springframework.web.reactive.result.method.annotation.ControllerMethodResolver",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate handle(adapter RequestMappingHandlerAdapter, controller Object, exchange ServerWebExchange, timeout Duration, methodName String, parameterTypes Class<?>...) : HandlerResult extracted from private handle(adapter RequestMappingHandlerAdapter, controller Object, methodName String) : HandlerResult in class org.springframework.web.reactive.result.method.annotation.ControllerAdviceTests",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getMethodArgumentValuesOnScheduler(exchange ServerWebExchange, bindingContext BindingContext, providedArgs Object...) : Mono<Object[]> extracted from public invoke(exchange ServerWebExchange, bindingContext BindingContext, providedArgs Object...) : Mono<HandlerResult> in class org.springframework.web.reactive.result.method.InvocableHandlerMethod",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "7a74e459464deae786e79aa9a977068a37bc5b49",
+      "url": "https://github.com/spring-projects/spring-framework/commit/7a74e459464deae786e79aa9a977068a37bc5b49",
+      "commonRefactoring": [
+        {
+          "type": "CHANGE_ATTRIBUTE_TYPE",
+          "description": "Change Attribute Type\tallowBeanDefinitionOverriding : boolean to allowBeanDefinitionOverriding : Boolean in class org.springframework.beans.factory.support.DefaultListableBeanFactory",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate logBeanDefinitionOverriding(beanName String, beanDefinition BeanDefinition, existingDefinition BeanDefinition) : void extracted from public registerBeanDefinition(beanName String, beanDefinition BeanDefinition) : void in class org.springframework.beans.factory.support.DefaultListableBeanFactory",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcontext : AnnotationConfigApplicationContext in method package setup() : void from class org.springframework.cache.jcache.config.JCacheCustomInterceptorTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcontext : AnnotationConfigApplicationContext in method package setup() : void from class org.springframework.cache.config.CustomInterceptorTests",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate configureBeanFactory(tbd RootBeanDefinition) : DefaultListableBeanFactory extracted from public testWithNullBean() : void in class org.springframework.beans.factory.annotation.LookupAnnotationTests",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "996e66abdbaad866f0eab40bcf5628cdea92e046",
+      "url": "https://github.com/spring-projects/spring-framework/commit/996e66abdbaad866f0eab40bcf5628cdea92e046",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmetaSource : MergedAnnotation<?> in method private parseField(field Field, source Class<?>) : void from class org.springframework.test.context.bean.override.BeanOverrideParser",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tseries : HttpStatus.Series in method private getHttpStatusSeries(result MvcResult) : HttpStatus.Series from class org.springframework.test.web.servlet.result.StatusResultMatchers",
+          "validation": true
+        }
+      ],
+      "ourApproach": [],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "8b51b36729af4653450114a238b1b22d2a5383a4",
+      "url": "https://github.com/spring-projects/spring-framework/commit/8b51b36729af4653450114a238b1b22d2a5383a4",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmessage : String in method protected configureScanner(parserContext ParserContext, element Element) : ClassPathBeanDefinitionScanner from class org.springframework.context.annotation.ComponentScanBeanDefinitionParser",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmessage : String in method protected configureScanner(parserContext ParserContext, element Element) : ClassPathBeanDefinitionScanner from class org.springframework.context.annotation.ComponentScanBeanDefinitionParser",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmessage : String in method protected parseTypeFilters(element Element, scanner ClassPathBeanDefinitionScanner, parserContext ParserContext) : void from class org.springframework.context.annotation.ComponentScanBeanDefinitionParser",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcause : Throwable in method public toString() : String from class org.springframework.transaction.interceptor.TransactionAspectSupport.ThrowableHolderException",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcause : Throwable in method protected invokeWithinTransaction(method Method, targetClass Class<?>, invocation InvocationCallback) : Object from class org.springframework.transaction.interceptor.TransactionAspectSupport",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tentityBody : Flux<?> in method private initResponseEntityFunction(client ReactorHttpExchangeAdapter, methodParam MethodParameter, reactiveAdapter ReactiveAdapter, isSuspending boolean) : Function<HttpRequestValues,Publisher<?>> from class org.springframework.web.service.invoker.HttpServiceMethod.ReactorExchangeResponseFunction",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmessage : String in method protected configureScanner(parserContext ParserContext, element Element) : ClassPathBeanDefinitionScanner from class org.springframework.context.annotation.ComponentScanBeanDefinitionParser",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\totherError : FieldError in method public equals(other Object) : boolean from class org.springframework.validation.FieldError",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\totherResult : ParameterValidationResult in method public equals(other Object) : boolean from class org.springframework.validation.method.ParameterValidationResult",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\totherEntity : RequestEntity<?> in method public equals(other Object) : boolean from class org.springframework.http.RequestEntity",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\totherEntity : UriTemplateRequestEntity<?> in method public equals(other Object) : boolean from class org.springframework.http.RequestEntity.UriTemplateRequestEntity",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\totherEntity : ResponseEntity<?> in method public equals(other Object) : boolean from class org.springframework.http.ResponseEntity",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "5b660da52dab7dc28d77d4194524c68fa3e10a92",
+      "url": "https://github.com/spring-projects/spring-framework/commit/5b660da52dab7dc28d77d4194524c68fa3e10a92",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\totherDesc : DependencyDescriptor in method public equals(other Object) : boolean from class org.springframework.beans.factory.config.DependencyDescriptor",
+          "validation": true
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "52b8c71dcde583185915875e7aa56fc206672a2e",
+      "url": "https://github.com/spring-projects/spring-framework/commit/52b8c71dcde583185915875e7aa56fc206672a2e",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage selectionFirst() : void renamed to package selectFirst() : void in class org.springframework.expression.spel.ParsingTests.Miscellaneous",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpackage selectionLast() : void renamed to package selectLast() : void in class org.springframework.expression.spel.ParsingTests.Miscellaneous",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "f941754db668be5621b18c62e9a20aa9486c6d06",
+      "url": "https://github.com/spring-projects/spring-framework/commit/f941754db668be5621b18c62e9a20aa9486c6d06",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tnextChild : SpelNode to nextChild : SpelNodeImpl in method public toStringAST() : String from class org.springframework.expression.spel.ast.CompoundExpression",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "c531a8a7058d24a110b312cd9a7a8bcf306845af",
+      "url": "https://github.com/spring-projects/spring-framework/commit/c531a8a7058d24a110b312cd9a7a8bcf306845af",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tnestedAccessors : Map<String,AbstractNestablePropertyAccessor> in method private getNestedPropertyAccessor(nestedProperty String) : AbstractNestablePropertyAccessor from class org.springframework.beans.AbstractNestablePropertyAccessor",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcurrent : BeanDefinitionParserDelegate in method protected doRegisterBeanDefinitions(root Element) : void from class org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tREACTOR_PRESENT : boolean to reactorPresent : boolean in class org.springframework.validation.beanvalidation.MethodValidationInterceptor",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate isSameDeclaringClass(declaringClass ClassName) : boolean inlined to public toInvokeCodeBlock(argumentCodeGenerator ArgumentCodeGenerator, targetClassName ClassName) : CodeBlock in class org.springframework.aot.generate.DefaultMethodReference",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\thint : TypeHint in method public withAnyMemberCategory(memberCategories MemberCategory...) : Predicate<RuntimeHints> from class org.springframework.aot.hint.predicate.ReflectionHintsPredicates.TypeHintPredicate",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\thint : TypeHint in method package exactMatch() : Predicate<RuntimeHints> from class org.springframework.aot.hint.predicate.ReflectionHintsPredicates.ConstructorHintPredicate",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\thint : TypeHint in method package exactMatch() : Predicate<RuntimeHints> from class org.springframework.aot.hint.predicate.ReflectionHintsPredicates.MethodHintPredicate",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\terror : Throwable in method private invokeHandler() : void from class org.springframework.core.io.buffer.OutputStreamPublisher.OutputStreamSubscription",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\terror : Throwable in method private invokeHandler() : void from class org.springframework.core.io.buffer.OutputStreamPublisher.OutputStreamSubscription",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tresult : Object in method public clone(object T) : T from class org.springframework.util.SerializationUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\texitTypeDescriptor : String in method public generateCode(mv MethodVisitor, cf CodeFlow) : void from class org.springframework.expression.spel.ast.Indexer",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcleaner : DatabasePopulator in method public destroy() : void from class org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactoryBean",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\terror : Throwable in method private emitCachedSignals() : boolean from class org.springframework.messaging.handler.invocation.reactive.ChannelSendOperator.WriteBarrier",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tconnectionHolder : ConnectionHolder in method protected doResume(transaction Object, suspendedResources Object) : void from class org.springframework.orm.hibernate5.HibernateTransactionManager",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tconnectionHolder : ConnectionHolder in method protected doResume(transaction Object, suspendedResources Object) : void from class org.springframework.orm.jpa.JpaTransactionManager",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\trequest : ClientHttpRequest in method public getContextualName(context ClientRequestObservationContext) : String from class org.springframework.http.client.observation.DefaultClientRequestObservationConvention",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\terror : Throwable in method private emitCachedSignals() : boolean from class org.springframework.http.server.reactive.ChannelSendOperator.WriteBarrier",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate eTagStrongMatch(first String, second String) : boolean renamed to private etagStrongMatch(first String, second String) : boolean in class org.springframework.web.context.request.ServletWebRequest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate eTagWeakMatch(first String, second String) : boolean renamed to private etagWeakMatch(first String, second String) : boolean in class org.springframework.web.context.request.ServletWebRequest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\teTagMatcher : Matcher to etagMatcher : Matcher in method private matchRequestedETags(requestedETags Enumeration<String>, etag String, weakCompare boolean) : boolean from class org.springframework.web.context.request.ServletWebRequest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tctor : Constructor<?> in method private convertIfNecessary(parameter MethodParameter, webRequest NativeWebRequest, binderFactory WebDataBinderFactory, namedValueInfo NamedValueInfo, arg Object) : Object from class org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\trequest : ClientRequest in method public getContextualName(context ClientRequestObservationContext) : String from class org.springframework.web.reactive.function.client.DefaultClientRequestObservationConvention",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tctor : Constructor<?> in method private applyConversion(value Object, namedValueInfo NamedValueInfo, parameter MethodParameter, bindingContext BindingContext, exchange ServerWebExchange) : Object from class org.springframework.web.reactive.result.method.annotation.AbstractNamedValueArgumentResolver",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmerged : MergedAnnotation<?> in method public findAnnotationDeclaringClassForTypes(annotationTypes List<Class<? extends Annotation>>, clazz Class<?>) : Class<?> from class org.springframework.core.annotation.AnnotationUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\terror : Throwable in method private invokeHandler() : void from class org.springframework.core.io.buffer.OutputStreamPublisher.OutputStreamSubscription",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\telementDesc : TypeDescriptor in method package convertArguments(converter TypeConverter, arguments Object[], executable Executable, varargsPosition Integer) : boolean from class org.springframework.expression.spel.support.ReflectionHelper",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\telementDesc : TypeDescriptor in method public convertAllMethodHandleArguments(converter TypeConverter, arguments Object[], methodHandle MethodHandle, varargsPosition Integer) : boolean from class org.springframework.expression.spel.support.ReflectionHelper",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmono : Mono<?> in method public executeSynchronized(invoker CacheOperationInvoker, method Method, cache Cache, key Object) : Object from class org.springframework.cache.interceptor.CacheAspectSupport.ReactiveCachingHandler",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tinterfaceToUse : Class<?> in method public afterPropertiesSet() : void from class org.springframework.jmx.access.MBeanProxyFactoryBean",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\thint : TypeHint in method public withMemberCategory(memberCategory MemberCategory) : Predicate<RuntimeHints> from class org.springframework.aot.hint.predicate.ReflectionHintsPredicates.TypeHintPredicate",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\thint : TypeHint in method public withMemberCategories(memberCategories MemberCategory...) : Predicate<RuntimeHints> from class org.springframework.aot.hint.predicate.ReflectionHintsPredicates.TypeHintPredicate",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "2ca10e20ca3b177669e8857920c94daaaef4a104",
+      "url": "https://github.com/spring-projects/spring-framework/commit/2ca10e20ca3b177669e8857920c94daaaef4a104",
+      "commonRefactoring": [],
+      "ourApproach": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tmetaSource : MergedAnnotation<?> to composedAnnotation : Annotation in method private parseField(field Field, source Class<?>) : void from class org.springframework.test.context.bean.override.BeanOverrideParser",
+          "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tmetaSource : MergedAnnotation<?> to composedAnnotation : Annotation in method private parseField(field Field, source Class<?>) : void from class org.springframework.test.context.bean.override.BeanOverrideParser",
+          "validation": false
+        }
+      ],
+      "baseline": []
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "5dc6a16c0b7ad2431a01c33885c1bf21442ff318",
+      "url": "https://github.com/spring-projects/spring-framework/commit/5dc6a16c0b7ad2431a01c33885c1bf21442ff318",
+      "commonRefactoring": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\temptyValue : Object in method public getEmptyValue() : Object from class org.springframework.core.ReactiveTypeDescriptor",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tsyntheticType : ParameterizedType in method public forClassWithGenerics(clazz Class<?>, generics ResolvableType...) : ResolvableType from class org.springframework.core.ResolvableType",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate assertNotException(attributeName String, attributeValue Object) : void inlined to private getRequiredAttribute(attributeName String, expectedType Class<T>) : T in class org.springframework.core.annotation.AnnotationAttributes",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate assertAttributeType(attributeName String, attributeValue Object, expectedType Class<?>) : void inlined to private getRequiredAttribute(attributeName String, expectedType Class<T>) : T in class org.springframework.core.annotation.AnnotationAttributes",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tdeclaredAnnotations : Annotation[] to declaredAnns : Annotation[] in method private processClassInheritedAnnotations(context C, source Class<?>, searchStrategy SearchStrategy, processor AnnotationsProcessor<C,R>) : R from class org.springframework.core.annotation.AnnotationsScanner",
+          "validation": true
+        }
+      ],
+      "ourApproach": [
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate assertAttributePresence(attributeName String, attributeValue Object) : void inlined to private getRequiredAttribute(attributeName String, expectedType Class<T>) : T in class org.springframework.core.annotation.AnnotationAttributes",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmeta : Annotation in method protected createSynthesizedAnnotation() : A from class org.springframework.core.annotation.TypeMappedAnnotation",
+          "validation": true
+        }
+      ],
+      "baseline": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tfailure : Throwable to cause : Throwable in method public decode(buffer DataBuffer, targetType ResolvableType, mimeType MimeType, hints Map<String,Object>) : T from class org.springframework.core.codec.Decoder",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tann : Annotation in method protected createSynthesizedAnnotation() : A from class org.springframework.core.annotation.TypeMappedAnnotation",
+          "validation": true
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "sha1": "c23fd784a0d91f5de1e6b5cab82e86b1746fc3b4",
+      "url": "https://github.com/spring-projects/spring-framework/commit/c23fd784a0d91f5de1e6b5cab82e86b1746fc3b4",
+      "commonRefactoring": [],
+      "ourApproach": [],
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tadapter : TaskExecutorAdapter in method private getAdaptedExecutor(originalExecutor Executor) : TaskExecutorAdapter from class org.springframework.scheduling.concurrent.ConcurrentTaskExecutor",
+          "validation": false
+        }
+      ]
+    }
+  ]
+}

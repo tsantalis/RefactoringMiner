@@ -16,6 +16,10 @@ public class DirComparator {
     private Set<String> removedFilesName;
     private Set<String> addedFilesName;
 
+    public List<ASTDiff> getDiffs() {
+        return diffs;
+    }
+
     public int getNumOfDiffs(){
         return diffs.size();
     }

@@ -4671,7 +4671,7 @@ Mapping state for Move Method refactoring purity:
                 for (Refactoring ref : removeParameterRefactoringList) {
                     if (ref.getRefactoringType().equals(RefactoringType.REMOVE_PARAMETER)) {
                         if (((RemoveParameterRefactoring) ref).getOperationBefore().getName().equals(methodName)) {
-                            int ind = ((RemoveParameterRefactoring) ref).getOperationBefore().getParameterNameList().indexOf(((RemoveParameterRefactoring) ref).getParameter().getName());
+                            int ind = ((RemoveParameterRefactoring) ref).getOperationBefore().getParameterNameList().indexOf(((RemoveParameterRefactoring) ref).getParameter().getVariableName());
                             removedArgumentLocationInRefactoring.add(ind);
                         }
                     }
@@ -4730,7 +4730,7 @@ Mapping state for Move Method refactoring purity:
                     for (Refactoring ref : removeParameterRefactoringList) {
                         if (ref.getRefactoringType().equals(RefactoringType.REMOVE_PARAMETER)) {
                             if (((RemoveParameterRefactoring) ref).getOperationBefore().getName().equals(methodName)) {
-                                int ind = ((RemoveParameterRefactoring) ref).getOperationBefore().getParameterNameList().indexOf(((RemoveParameterRefactoring) ref).getParameter().getName());
+                                int ind = ((RemoveParameterRefactoring) ref).getOperationBefore().getParameterNameList().indexOf(((RemoveParameterRefactoring) ref).getParameter().getVariableName());
                                 removedArgumentLocationInRefactoring.add(ind);
                             }
                         }
@@ -4821,7 +4821,7 @@ Mapping state for Move Method refactoring purity:
                 for (Refactoring ref : removeParameterRefactoringList) {
                     if (ref.getRefactoringType().equals(RefactoringType.REMOVE_PARAMETER)) {
                         if (((RemoveParameterRefactoring) ref).getOperationBefore().getName().equals(methodName)) {
-                            int ind = ((RemoveParameterRefactoring) ref).getOperationBefore().getParameterNameList().indexOf(((RemoveParameterRefactoring) ref).getParameter().getName());
+                            int ind = ((RemoveParameterRefactoring) ref).getOperationBefore().getParameterNameList().indexOf(((RemoveParameterRefactoring) ref).getParameter().getVariableName());
                             removedArgumentLocationInRefactoring.add(ind);
                         }
                     }
@@ -4877,7 +4877,7 @@ Mapping state for Move Method refactoring purity:
                         for (Refactoring ref : removeParameterRefactoringList) {
                             if (ref.getRefactoringType().equals(RefactoringType.REMOVE_PARAMETER)) {
                                 if (((RemoveParameterRefactoring)ref).getOperationBefore().getName().equals(methodName)) {
-                                    int ind = ((RemoveParameterRefactoring)ref).getOperationBefore().getParameterNameList().indexOf(((RemoveParameterRefactoring)ref).getParameter().getName());
+                                    int ind = ((RemoveParameterRefactoring)ref).getOperationBefore().getParameterNameList().indexOf(((RemoveParameterRefactoring)ref).getParameter().getVariableName());
                                     removedArgumentLocationInRefactoring.add(ind);
                                 }
                             }
@@ -5592,7 +5592,7 @@ Mapping state for Move Method refactoring purity:
                         }
                     } else {
                         if (((AddParameterRefactoring) ref).getOperationBefore().getName().equals(methodName)) {
-                            int ind = ((AddParameterRefactoring) ref).getOperationAfter().getParameterNameList().indexOf(((AddParameterRefactoring) ref).getParameter().getName());
+                            int ind = ((AddParameterRefactoring) ref).getOperationAfter().getParameterNameList().indexOf(((AddParameterRefactoring) ref).getParameter().getVariableName());
                             if (!parameterizedAndAddedLocation.contains(ind))
                                 parameterizedAndAddedLocation.add(ind);
                         }
@@ -5645,7 +5645,7 @@ Mapping state for Move Method refactoring purity:
                         for (Refactoring ref : addParameterRefactoringList) {
                             if (ref.getRefactoringType().equals(RefactoringType.ADD_PARAMETER)) {
                                 if (((AddParameterRefactoring)ref).getOperationBefore().getName().equals(methodName)) {
-                                    int ind = ((AddParameterRefactoring)ref).getOperationAfter().getParameterNameList().indexOf(((AddParameterRefactoring)ref).getParameter().getName());
+                                    int ind = ((AddParameterRefactoring)ref).getOperationAfter().getParameterNameList().indexOf(((AddParameterRefactoring)ref).getParameter().getVariableName());
                                     addedArgumentLocationInRefactoring.add(ind);
                                 }
                             }
@@ -5742,7 +5742,7 @@ Mapping state for Move Method refactoring purity:
                             }
                         } else {
                             if (((AddParameterRefactoring) ref).getOperationBefore().getName().equals(methodName)) {
-                                int ind = ((AddParameterRefactoring) ref).getOperationAfter().getParameterNameList().indexOf(((AddParameterRefactoring) ref).getParameter().getName());
+                                int ind = ((AddParameterRefactoring) ref).getOperationAfter().getParameterNameList().indexOf(((AddParameterRefactoring) ref).getParameter().getVariableName());
                                 if (!parameterizedAndAddedLocation.contains(ind))
                                     parameterizedAndAddedLocation.add(ind);
                             }
@@ -5798,7 +5798,7 @@ Mapping state for Move Method refactoring purity:
                         for (Refactoring ref : addParameterRefactoringList) {
                             if (ref.getRefactoringType().equals(RefactoringType.ADD_PARAMETER)) {
                                 if (((AddParameterRefactoring)ref).getOperationBefore().getName().equals(methodName)) {
-                                    int ind = ((AddParameterRefactoring)ref).getOperationAfter().getParameterNameList().indexOf(((AddParameterRefactoring)ref).getParameter().getName());
+                                    int ind = ((AddParameterRefactoring)ref).getOperationAfter().getParameterNameList().indexOf(((AddParameterRefactoring)ref).getParameter().getVariableName());
                                     addedArgumentLocationInRefactoring.add(ind);
                                 }
                             }

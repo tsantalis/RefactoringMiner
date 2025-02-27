@@ -482,6 +482,15 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return null;
 	}
 
+	public TernaryOperatorExpression assignmentTernaryOperatorCoveringEntireStatement() {
+		for(TernaryOperatorExpression invocation : getTernaryOperatorExpressions()) {
+			if(expressionIsTheRightHandSideOfAssignment(invocation.getString())) {
+				return invocation;
+			}
+		}
+		return null;
+	}
+
 	public AbstractCall fieldAssignmentInvocationCoveringEntireStatement(UMLAbstractClassDiff classDiff) {
 		for(AbstractCall invocation : getMethodInvocations()) {
 			if(expressionIsTheRightHandSideOfAssignmentAndLeftHandSideIsField(invocation.getString(), classDiff)) {

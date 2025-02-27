@@ -131,8 +131,8 @@ public class UMLJavadocDiff {
 					else if(signatureDiff != null) {
 						boolean matchFound = false;
 						for(UMLParameterDiff diff : signatureDiff.getParameterDiffList()) {
-							if(diff.getRemovedParameter().getName().equals(paramNameBefore) &&
-									diff.getAddedParameter().getName().equals(paramNameAfter)) {
+							if(diff.getRemovedParameter().getVariableName().equals(paramNameBefore) &&
+									diff.getAddedParameter().getVariableName().equals(paramNameAfter)) {
 								//match name
 								matchFound = true;
 								UMLDocElement docElementBefore = tagBefore.getFragments().get(0);

@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class RefactoringPopulator {
 	private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src/test/resources/oracle/";
+	private static final String TSE_EXPECTED_PATH = System.getProperty("user.dir") + "/src/test/resources/oracle/tse-dataset/";
 
 	public enum Systems {
 		FSE(1), All(2);
@@ -134,7 +135,8 @@ public class RefactoringPopulator {
 		ReplaceGenericWithDiamond(new BigInteger("1267650600228229401496703205376")),
 		TryWithResources(new BigInteger("2535301200456458802993406410752")),
 		ReplaceConditionalWithTernary(new BigInteger("5070602400912917605986812821504")),
-		All(new BigInteger("10141204801825835211973625643007"));
+		AssertTimeout(new BigInteger("10141204801825835211973625643008")),
+		All(new BigInteger("20282409603651670423947251286015"));
 
 		private BigInteger value;
 
@@ -163,6 +165,35 @@ public class RefactoringPopulator {
 			test.project(root.repository, "master").atCommit(root.sha1)
 					.containsOnly(extractRefactorings(root.refactorings));
 		}
+	}
+
+	public static void feedTSERefactoringInstances(TestBuilder test) throws IOException {
+		List<NewRoot> roots = getTSERefactorings();
+		for(NewRoot root : roots) {
+			test.project(root.repository, "master").atCommit(root.sha1)
+					.containsOnly(extractRefactorings(root));
+		}
+	}
+
+	public static String[] extractRefactorings(NewRoot root) {
+		List<String> refactorings = new ArrayList<>();
+		for(NewRefactoring ref : root.commonRefactoring) {
+			if(ref.validation) {
+				refactorings.add(ref.description);
+			}
+		}
+		for(NewRefactoring ref : root.ourApproach) {
+			if(ref.validation) {
+				refactorings.add(ref.description);
+			}
+		}
+		for(NewRefactoring ref : root.baseline) {
+			if(ref.validation) {
+				refactorings.add(ref.description);
+			}
+		}
+		String[] array = new String[refactorings.size()];
+		return refactorings.toArray(array);
 	}
 
 	public static String[] extractRefactorings(List<Refactoring> refactoring) {
@@ -198,6 +229,20 @@ public class RefactoringPopulator {
 		}
 		
 		return deletedCommits;
+	}
+
+	public static List<NewRoot> getTSERefactorings() throws IOException {
+		List<NewRoot> filtered = new ArrayList<>();
+		ObjectMapper mapper = new ObjectMapper();
+		File dir = new File(TSE_EXPECTED_PATH);
+		if(dir.exists()) {
+			File[] files = dir.listFiles();
+			for(File file : files) {
+				Results r = mapper.readValue(file, Results.class);
+				filtered.addAll(r.results);
+			}
+		}
+		return filtered;
 	}
 
 	public static List<Root> getFSERefactorings(BigInteger flag) throws IOException {
@@ -318,6 +363,23 @@ public class RefactoringPopulator {
 		public int falseNegatives;
 		public int unknown;
 		public int refDiffFalsePositives;
+	}
+
+	public static class Results {
+		public List<NewRoot> results;
+	}
+	public static class NewRoot {
+		public String repository;
+		public String sha1;
+		public String url;
+		public List<NewRefactoring> commonRefactoring;
+		public List<NewRefactoring> ourApproach;
+		public List<NewRefactoring> baseline;
+	}
+	public static class NewRefactoring {
+		public String type;
+		public String description;
+		public boolean validation;
 	}
 
 	public static class Root {

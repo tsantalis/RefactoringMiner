@@ -100,7 +100,7 @@ public class ContentGenerator {
             (extensionSteps) -> (context, node) -> {
                 Node right = node;
                 for (int i = 0; i < extensionSteps; i++) {
-                    Node next = right.getSiblings().getRight();
+                    Node next = right.getSiblings().second;
                     if (next == null) {
                         break;
                     }
@@ -109,7 +109,7 @@ public class ContentGenerator {
 
                 Node left = node;
                 for (int i = 0; i < extensionSteps; i++) {
-                    Node next = left.getSiblings().getLeft();
+                    Node next = left.getSiblings().first;
                     if (next != null) {
                         left = next;
                     }

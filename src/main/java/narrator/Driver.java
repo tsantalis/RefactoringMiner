@@ -1,18 +1,13 @@
 package narrator;
 
-import com.google.gson.JsonObject;
 import narrator.graph.cluster.Cluster;
 import narrator.graph.cluster.Clusterer;
 import narrator.excel.ExcelOperator;
 import narrator.graph.CommitGraph;
 import narrator.graph.Edge;
 import narrator.graph.Node;
-import narrator.graph.cluster.traverse.TraversalEngine;
-import narrator.graph.cluster.traverse.TraversalPattern;
 import narrator.json.Stringifier;
-import narrator.llm.GroqClient;
 import narrator.llm.OpenAIClient;
-import narrator.llm.Prompts;
 import org.jgrapht.Graph;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GitHub;
@@ -31,7 +26,7 @@ public class Driver {
     private static final int BATCH_SIZE = 10;
 
     public static void main(String[] args) throws Exception {
-        String url = "https://github.com/termux/termux-app/commit/f80b46487df539c7e9214550002f461e5c66131c";
+        String url = "https://github.com/JetBrains/intellij-community/commit/7ed3f273ab0caf0337c22f0b721d51829bb0c877";
         stringifyCommit(url);
     }
 
@@ -78,7 +73,7 @@ public class Driver {
         }
 
         FileWriter writer = new FileWriter("./json/commit.json");
-        writer.write(Stringifier.stringifyCommit(clusters));
+        writer.write(Stringifier.stringifyCommit(url, clusters));
         writer.close();
     }
 

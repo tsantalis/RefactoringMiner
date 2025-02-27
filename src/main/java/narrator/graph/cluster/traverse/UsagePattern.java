@@ -4,6 +4,7 @@ import narrator.graph.Node;
 
 import java.util.*;
 
+// TODO: add extensions
 public class UsagePattern extends TraversalPattern {
     Set<Node> useNodes = new HashSet<>();
     private HashMap<Node, UsagePattern> requirements = new HashMap<>();

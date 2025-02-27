@@ -39,7 +39,7 @@ public class Cluster extends GraphWrapper {
                 if (i != nodes.size() - 1) {
                     Tree clusterRightSiblingTree = nodes.get(i + 1).getTree();
 
-                    Node rightSibling = node.getSiblings().getRight();
+                    Node rightSibling = node.getSiblings().second;
                     if (rightSibling != null) {
                         Tree rightSiblingTree = rightSibling.getTree();
                         if (clusterRightSiblingTree.equals(rightSiblingTree)) {

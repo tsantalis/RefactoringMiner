@@ -10,6 +10,7 @@ import narrator.graph.cluster.traverse.TraversalPattern;
 import narrator.llm.GroqClient;
 import narrator.llm.Prompts;
 import org.jgrapht.Graph;
+import org.json.JSONString;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -52,17 +53,14 @@ public class Stringifier {
             edges.addAll(getEdgesArray(graph, id));
         }
 
-        String textualRepresentation = traversalComponent.textualRepresentation();
-        String description = traversalComponent.description();
-        List<String> contents = new ArrayList<>();
-        if (textualRepresentation != null) {
-            contents.add(textualRepresentation);
-        }
-        if (description != null) {
-            contents.add(description);
-        }
-
-        nodes.add(getNode(id, aggregatorId, String.join("\n\n ----- \n\n", contents), NodeType.AGGREGATOR));
+        nodes.add(getNode(
+                id,
+                aggregatorId,
+                "",
+                traversalComponent.textualRepresentation(),
+                traversalComponent.description(),
+                NodeType.AGGREGATOR)
+        );
 
         Node lead = traversalComponent.getLead();
         edges.add(getEdge(id, getNodeId(lead.getId(), id), EdgeType.EXPANSION.name(), 1));
@@ -72,7 +70,7 @@ public class Stringifier {
         }
     }
 
-    public static String stringifyCommit(List<Cluster> clusters) throws IOException {
+    public static String stringifyCommit(String url, List<Cluster> clusters) throws IOException {
         JsonArray nodesArray = new JsonArray();
         JsonArray edgesArray = new JsonArray();
 
@@ -95,18 +93,33 @@ public class Stringifier {
             String clusterDescription = components.size() == 1 ?
                     components.get(0).description()
                     : GroqClient.generate(Prompts.getComponentPatternPrompt(componentsDescription));
-            nodesArray.add(getNode(clusterNodeId, commitNodeId, clusterDescription, NodeType.AGGREGATOR));
+            nodesArray.add(getNode(
+                    clusterNodeId,
+                    commitNodeId,
+                    "",
+                    null,
+                    clusterDescription,
+                    NodeType.AGGREGATOR)
+            );
             edgesArray.add(getEdge(commitNodeId, clusterNodeId, EdgeType.EXPANSION.name(), 1));
 
             clustersDescription.add(clusterDescription);
         }
 
         String commitDescription = GroqClient.generate(Prompts.getComponentPatternPrompt(clustersDescription));
-        nodesArray.add(getNode(commitNodeId, "", commitDescription, NodeType.AGGREGATOR));
+        nodesArray.add(getNode(
+                commitNodeId,
+                "",
+                "",
+                null,
+                commitDescription,
+                NodeType.AGGREGATOR)
+        );
 
         JsonObject graphObj = new JsonObject();
         graphObj.add("nodes", nodesArray);
         graphObj.add("edges", edgesArray);
+        graphObj.addProperty("url", url);
 
         return graphObj.toString();
     }
@@ -121,7 +134,17 @@ public class Stringifier {
             }
 
             // nodes can be repeated between components
-            nodesArray.add(getNode(getNodeId(node.getId(), aggregatorId), aggregatorId, node.getContent(), node.getNodeType()));
+            nodesArray.add(getNode(
+                    getNodeId(node.getId(), aggregatorId),
+                    node.getId(),
+                    aggregatorId,
+                    node.getPath(),
+                    node.getContent(),
+                    null,
+                    node.getStartLine(),
+                    node.getEndLine(),
+                    node.getNodeType())
+            );
         }
 
         return nodesArray;
@@ -147,17 +170,50 @@ public class Stringifier {
         return edgesArray;
     }
 
-    private static JsonObject getNode(String id, String aggregatorId, String content, NodeType nodeType) {
+    private static JsonObject getNode(
+            String id,
+            String hunkId,
+            String aggregatorId,
+            String file,
+            String textualRepresentation,
+            String description,
+            Integer startLine,
+            Integer endLine,
+            NodeType nodeType) {
         JsonObject nodeObj = new JsonObject();
 
         nodeObj.addProperty("id", id);
-        nodeObj.addProperty("content", content);
+        nodeObj.addProperty("hunkId", hunkId);
+        nodeObj.addProperty("file", file);
+        nodeObj.addProperty("textualRepresentation", textualRepresentation);
+        nodeObj.addProperty("description", description);
+        nodeObj.addProperty("startLine", startLine);
+        nodeObj.addProperty("endLine", endLine);
         nodeObj.addProperty("nodeType", nodeType.name());
         if (!aggregatorId.isEmpty()) {
             nodeObj.addProperty("aggregatorId", aggregatorId);
         }
 
         return nodeObj;
+    }
+
+    private static JsonObject getNode(
+            String id,
+            String aggregatorId,
+            String file,
+            String textualRepresentation,
+            String description,
+            NodeType nodeType) {
+        return getNode(
+                id,
+                id,
+                aggregatorId,
+                file,
+                textualRepresentation,
+                description,
+                null,
+                null,
+                nodeType);
     }
 
     private static JsonObject getEdge(String sourceId, String targetId, String type, float weight) {

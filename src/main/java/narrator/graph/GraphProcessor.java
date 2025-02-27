@@ -36,31 +36,37 @@ public class GraphProcessor {
         this.childContexts = childContexts;
     }
 
+    private boolean doesHunkNodeExist(String path, Tree tree) {
+        return nodeMap.containsKey(Node.formatId(path, tree));
+    }
+
     private Node addHunkNode(String path, Tree tree, NodeType nodeType) {
+        String potentialNodeId = Node.formatId(path, tree);
+        if (nodeMap.containsKey(potentialNodeId)) {
+            return nodeMap.get(potentialNodeId);
+        }
+
         String fileContent = dstContents.get(path);
 
         Node node = new Node(fileContent, path, tree, nodeType);
-
-        if (!nodeMap.containsKey(node.getId())) {
-            graph.addVertex(node);
-            nodeMap.put(node.getId(), node);
-        } else {
-            node = nodeMap.get(node.getId());
-        }
+        graph.addVertex(node);
+        nodeMap.put(node.getId(), node);
 
         Node lastNode = node;
         List<Tree> contexts = Context.get(tree);
         for (Tree context : contexts) {
-            Node contextNode = new Node(fileContent, path, context, NodeType.CONTEXT);
-            if (!nodeMap.containsKey(contextNode.getId())) {
+            String potentialContextId = Node.formatId(path, context);
+            if (!nodeMap.containsKey(potentialContextId)) {
+                Node contextNode = new Node(fileContent, path, context, NodeType.CONTEXT);
                 graph.addVertex(contextNode);
                 nodeMap.put(contextNode.getId(), contextNode);
             }
 
-            contextNode = nodeMap.get(contextNode.getId());
-            if (graph.getEdge(lastNode, contextNode) == null) {
-                graph.addEdge(lastNode, contextNode, new Edge(EdgeType.CONTEXT, 1));
+            Node contextNode = nodeMap.get(potentialContextId);
+            if (graph.getEdge(lastNode, contextNode) != null) {
+                break;
             }
+            graph.addEdge(lastNode, contextNode, new Edge(EdgeType.CONTEXT, 1));
 
             lastNode = contextNode;
         }
@@ -96,6 +102,9 @@ public class GraphProcessor {
     private void processDefUse() {
         List<Node> nodes = new ArrayList<>(graph.vertexSet());
         for (Node node : nodes) {
+            if (node.getId().equals("python/educational/src/com/jetbrains/edu/stepic/EduStepicConnector.java-13285-13301-FieldDeclaration")) {
+                System.out.println("Hi");
+            }
             if (node.isContext()) {
                 continue;
             }
@@ -121,7 +130,8 @@ public class GraphProcessor {
                     case Constants.METHOD_DECLARATION -> methodDeclarations.add(subTree);
                     case Constants.FIELD_DECLARATION -> fieldDeclarations.add(subTree);
                     case Constants.RECORD_COMPONENT -> parameterDeclarations.add(subTree);
-                    case Constants.VARIABLE_DECLARATION_STATEMENT -> variableDeclarations.add(subTree);
+                    case Constants.VARIABLE_DECLARATION_STATEMENT ->
+                            variableDeclarations.add(subTree);
                 }
             }
             if (methodDeclarations.isEmpty() && fieldDeclarations.isEmpty() && parameterDeclarations.isEmpty() && variableDeclarations.isEmpty()) {
@@ -132,9 +142,8 @@ public class GraphProcessor {
             for (Tree methodDeclaration : methodDeclarations) {
                 List<Tree> methodDescendants = methodDeclaration.getDescendants();
                 for (Tree methodDescendant : methodDescendants) {
-                    if (methodDescendant.getType().name.equals(Constants.RECORD_COMPONENT)) {
-                        parameterDeclarations.remove(methodDescendant);
-                    }
+                    parameterDeclarations.remove(methodDescendant);
+                    variableDeclarations.remove(methodDescendant);
                 }
             }
 
@@ -262,6 +271,9 @@ public class GraphProcessor {
                     LocationInfo locationInfo = declaration.getLocationInfo();
                     String path = locationInfo.getFilePath();
                     Tree tree = TreeUtilFunctions.findByLocationInfo(childContexts.get(path).getRoot(), locationInfo);
+                    if (doesHunkNodeExist(path, tree)) {
+                        continue;
+                    }
 
                     Node declarationNode = addHunkNode(path, tree, NodeType.EXTENSION);
                     addEdge(declarationNode, node, EdgeType.DEF_USE, 1);
@@ -449,7 +461,7 @@ public class GraphProcessor {
 
     private void processSuccession() {
         for (Node subject : graph.vertexSet()) {
-            Node rightSibling = subject.getSiblings().getRight();
+            Node rightSibling = subject.getSiblings().second;
             if (rightSibling == null) {
                 continue;
             }

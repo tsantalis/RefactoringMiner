@@ -1,8 +1,7 @@
 package narrator.graph;
 
 import com.github.gumtreediff.tree.Tree;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
+import com.github.gumtreediff.utils.Pair;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
@@ -14,16 +13,26 @@ public class Node {
     private String path;
     private String fileContent;
     private Tree tree;
+    private int startLine;
+    private int endLine;
     private NodeType nodeType;
 
     private boolean active = true;
 
+    public static String formatId(String path, Tree tree) {
+        return String.format("%s-%s-%s-%s", path, tree.getPos(), tree.getEndPos(), tree.getType().name);
+    }
+
     public Node(String fileContent, String path, Tree tree) {
-        this.id = String.format("%s-%s-%s-%s", path, tree.getPos(), tree.getEndPos(), tree.getType().name);
+        this.id = formatId(path, tree);
         this.path = path;
         this.fileContent = fileContent;
         this.tree = tree;
         this.nodeType = NodeType.BASE;
+
+        Pair<Integer, Integer> lineRange = TreeUtilFunctions.getLineRange(tree, fileContent);
+        this.startLine = lineRange.first;
+        this.endLine = lineRange.second;
     }
 
     public Node(String fileContent, String path, Tree tree, NodeType nodeType) {
@@ -53,6 +62,14 @@ public class Node {
 
     public NodeType getNodeType() {
         return nodeType;
+    }
+
+    public int getStartLine() {
+        return startLine;
+    }
+
+    public int getEndLine() {
+        return endLine;
     }
 
     public String getContent() {
@@ -108,7 +125,7 @@ public class Node {
     public Pair<Node, Node> getSiblings() {
         Tree parent = tree.getParent();
         if (parent == null) {
-            return new ImmutablePair<>(null, null);
+            return new Pair<>(null, null);
         }
 
         List<Tree> parentChildren = tree.getParent().getChildren();
@@ -129,7 +146,7 @@ public class Node {
             right = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex + 1), NodeType.CONTEXT);
         }
 
-        return new ImmutablePair<>(left, right);
+        return new Pair<>(left, right);
     }
 
     public List<Node> getContexts() {

@@ -75,7 +75,6 @@ public class Prompts {
                 - Identify concrete purposes behind the changes instead of summarizing them vaguely or discussing general goals.
                 """);
 
-        System.out.println(result);
         return result.toString();
     }
 

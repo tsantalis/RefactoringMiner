@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class GroqClient {
     static ChatLanguageModel model;
-    static ClientMode mode = ClientMode.ONLINE;
+    static ClientMode mode = ClientMode.OFFLINE;
 
     static {
         try {
@@ -23,11 +23,10 @@ public class GroqClient {
 
     public static String generate(String message) {
         if (mode == ClientMode.OFFLINE) {
-            return "";
+            return null;
         }
 
         String response = null;
-
         while (response == null) {
             try {
                 response = model.generate(message);

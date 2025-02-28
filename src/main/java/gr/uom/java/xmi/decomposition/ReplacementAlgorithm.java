@@ -125,6 +125,65 @@ public class ReplacementAlgorithm {
 					return replacementInfo.getReplacements();
 				}
 			}
+			else if(inv1.numberOfSubExpressions() == inv2.numberOfSubExpressions() && inv1.numberOfSubExpressions() >= 3) {
+				Set<String> callChainIntersection = inv1.callChainIntersection(inv2);
+				double ratio = (double)callChainIntersection.size()/(double)inv1.numberOfSubExpressions();
+				if(ratio == 1) {
+					List<LeafExpression> leafExpressions1 = statement1.findExpression(inv1.getExpression());
+					List<LeafExpression> leafExpressions2 = statement2.findExpression(inv2.getExpression());
+					if(leafExpressions1.size() == leafExpressions2.size()) {
+						for(int i=0; i<leafExpressions1.size(); i++) {
+							LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), leafExpressions2.get(i), container1, container2);
+							replacementInfo.addSubExpressionMapping(leafMapping);
+						}
+					}
+					if(inv1.getName().equals("forEach") && inv2.getName().equals("collect")) {
+						List<LambdaExpressionObject> nestedLambdas1 = new ArrayList<>();
+						for(LambdaExpressionObject lambda : lambdas1) {
+							if(inv1.arguments().size() > 0 && inv1.arguments().get(0).contains(lambda.getString())) {
+								nestedLambdas1.add(lambda);
+							}
+						}
+						List<LambdaExpressionObject> nestedLambdas2 = new ArrayList<>();
+						for(LambdaExpressionObject lambda : lambdas2) {
+							if(inv2.arguments().size() > 0 && inv2.arguments().get(0).contains(lambda.getString())) {
+								nestedLambdas2.add(lambda);
+							}
+						}
+						for(LambdaExpressionObject lambda1 : nestedLambdas1) {
+							List<AbstractCall> calls = lambda1.getAllOperationInvocations();
+							for(AbstractCall call : calls) {
+								if(call.getName().equals("put")) {
+									for(String arg : call.arguments()) {
+										for(LambdaExpressionObject lambda2 : nestedLambdas2) {
+											if(lambda2.getExpression() != null && lambda2.getParameters().size() > 0) {
+												String s = lambda2.getExpression().getString();
+												String lambdaParameterName = lambda2.getParameters().get(0).getVariableName();
+												if(s.contains(lambdaParameterName)) {
+													s = s.replace(lambdaParameterName, "");
+												}
+												if(arg.contains(s)) {
+													List<LeafExpression> expr1 = statement1.findExpression(arg);
+													if(expr1.size() == 1) {
+														LeafMapping leafMapping = new LeafMapping(expr1.get(0), lambda2.getExpression(), container1, container2);
+														replacementInfo.addSubExpressionMapping(leafMapping);
+														break;
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					processAnonymousAndLambdas(statement1, statement2, parameterToArgumentMap, replacementInfo,
+							assignmentInvocationCoveringTheEntireStatement1 != null ? assignmentInvocationCoveringTheEntireStatement1 : assignmentCreationCoveringTheEntireStatement1,
+							assignmentInvocationCoveringTheEntireStatement2 != null ? assignmentInvocationCoveringTheEntireStatement2 : assignmentCreationCoveringTheEntireStatement2,
+							methodInvocationMap1, methodInvocationMap2,	anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, operationBodyMapper);
+					return replacementInfo.getReplacements();
+				}
+			}
 		}
 		else if(assignmentCreationCoveringTheEntireStatement1 != null && assignmentInvocationCoveringTheEntireStatement2 != null &&
 				assignmentCreationCoveringTheEntireStatement1.arguments().size() > 20 && assignmentInvocationCoveringTheEntireStatement2.arguments().size() > 20) {

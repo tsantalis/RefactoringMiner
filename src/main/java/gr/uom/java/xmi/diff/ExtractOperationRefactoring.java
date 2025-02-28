@@ -242,7 +242,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 			for(AbstractCodeFragment leaf : leaves) {
 				if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 					List<LeafExpression> expressions2 = leaf.findExpression(argument);
-					if(expressions2.size() == 1) {
+					if(expressions2.size() >= 1) {
 						int occurrence = 0;
 						for(LeafExpression expression1 : expressions1) {
 							boolean equalArgument = false;

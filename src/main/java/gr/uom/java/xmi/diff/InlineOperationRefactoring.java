@@ -238,7 +238,7 @@ public class InlineOperationRefactoring implements Refactoring {
 			for(AbstractCodeFragment leaf : leaves) {
 				if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 					List<LeafExpression> expressions1 = leaf.findExpression(argument);
-					if(expressions1.size() == 1) {
+					if(expressions1.size() >= 1) {
 						int occurrence = 0;
 						for(LeafExpression expression2 : expressions2) {
 							boolean equalArgument = false;

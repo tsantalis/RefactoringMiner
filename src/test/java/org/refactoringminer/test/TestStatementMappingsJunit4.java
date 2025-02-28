@@ -17,6 +17,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
+import static org.refactoringminer.test.TestJavadocDiff.generateClassDiff;
 
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -2974,6 +2975,20 @@ public class TestStatementMappingsJunit4 {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "javaparser-f70eef166e4afd92471079a75ba5828049fca500.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testStreamToStreamAPIMigration() throws Exception {
+		final List<String> actual = new ArrayList<>();
+		UMLClassDiff classDiff = generateClassDiff("https://github.com/apache/drill.git", "1517a87eb1effb2aac0c75b5f5ea6abc25407ab0", new File(REPOS), "org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer");
+		classDiff.process();
+		for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+			if(mapper.getContainer1().getName().equals("ensureOperatorMemoryWithinLimits") && mapper.getContainer2().getName().equals("ensureOperatorMemoryWithinLimits")) {
+				mapperInfo(mapper, actual);
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "drill-1517a87eb1effb2aac0c75b5f5ea6abc25407ab0.txt"));
 		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

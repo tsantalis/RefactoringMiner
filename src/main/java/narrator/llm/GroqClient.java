@@ -11,11 +11,7 @@ public class GroqClient {
 
     static {
         try {
-            model = OpenAiChatModel.builder()
-                    .baseUrl("https://api.groq.com/openai/v1")
-                    .apiKey(ModelsKey.getGroqKey())
-                    .modelName("llama-3.3-70b-versatile")
-                    .build();
+            model = OpenAiChatModel.builder().baseUrl("https://api.groq.com/openai/v1").apiKey(ModelsKey.getGroqKey()).modelName("llama-3.3-70b-versatile").build();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -42,10 +38,10 @@ public class GroqClient {
         return response;
     }
 
-//    public static String generateWithTools(List<ChatMessage> messages, List<ToolSpecification> tools) {
-//        AiMessage result = model.generate(messages, tools).content();
-//        result.content().
-//    }
+    //    public static String generateWithTools(List<ChatMessage> messages, List<ToolSpecification> tools) {
+    //        AiMessage result = model.generate(messages, tools).content();
+    //        result.content().
+    //    }
 
     public static ChatLanguageModel getModel() {
         return model;

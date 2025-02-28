@@ -47,54 +47,58 @@ public class UsagePattern extends TraversalPattern {
         for (Node useNode : useNodes) {
             Set<Node> usedNodes = util.getUsedNodes(useNode);
             HashMap<Node, Set<Node>> contextNodes = util.getContextNodes(usedNodes.stream().toList());
+            String contextString = getContextString(contextNodes);
 
-            HashMap<Node, String> contextString = new HashMap<>();
-            while (!contextNodes.isEmpty()) {
-                HashMap<Node, String> iterationContextString = new HashMap<>();
-
-                for (Node context : contextNodes.keySet()) {
-                    Set<Node> nodes = contextNodes.get(context);
-                    List<Node> unprocessedNodes = nodes.stream().filter(contextNodes::containsKey).toList();
-                    if (!unprocessedNodes.isEmpty()) {
-                        continue;
-                    }
-
-                    List<String> nodesString = nodes.stream().map(node -> {
-                        if (requirements.containsKey(node)) {
-                            return requirements.get(node).textualRepresentation();
-                        }
-
-                        if (contextString.containsKey(node)) {
-                            // TODO: group sub-context nodes
-                            return contextString.remove(node);
-                        }
-
-                        return node.textualRepresentation();
-                    }).toList();
-                    iterationContextString.put(context, String.join("\nAND\n", nodesString) + "\nIN\n" + context.textualRepresentation());
-                }
-
-                for (Node node : iterationContextString.keySet()) {
-                    contextNodes.remove(node);
-                    contextString.put(node, iterationContextString.get(node));
-                }
-            }
-
-            List<Node> useContexts = util.getContexts(useNode);
-            String useContextString = "";
-            if (!useContexts.isEmpty()) {
-                useContextString += "\nIN\n";
-                useContextString += String.join("\nIN\n", useContexts.stream().map(Node::textualRepresentation).toList());
-            }
-
-            nodeResult.put(useNode, useNode.textualRepresentation()
-                    + useContextString
-                    + "\n\n---\n\n"
-                    + "DECLARATIONS:\n\n"
-                    + String.join("\nAND\n", contextString.values()));
+            nodeResult.put(useNode, useRepresentation(useNode) + "\n\n---\n\n" + "DECLARATIONS:\n\n" + contextString);
         }
 
         return String.join("\n\n", nodeResult.values());
+    }
+
+    public String useRepresentation(Node useNode) {
+        List<Node> useContexts = util.getContexts(useNode);
+        String useContextString = "";
+        if (!useContexts.isEmpty()) {
+            useContextString += "\nIN\n";
+            useContextString += String.join("\nIN\n", useContexts.stream().map(Node::textualRepresentation).toList());
+        }
+
+        return useNode.textualRepresentation() + useContextString;
+    }
+
+    private String getContextString(HashMap<Node, Set<Node>> contextNodes) {
+        HashMap<Node, String> contextString = new HashMap<>();
+
+        while (!contextNodes.isEmpty()) {
+            HashMap<Node, String> iterationContextString = new HashMap<>();
+
+            for (Node context : contextNodes.keySet()) {
+                Set<Node> nodes = contextNodes.get(context);
+
+                List<Node> unprocessedNodes = nodes.stream().filter(contextNodes::containsKey).toList();
+                if (!unprocessedNodes.isEmpty()) {
+                    continue;
+                }
+
+                List<String> nodesString = nodes.stream().map(node -> {
+                    if (contextString.containsKey(node)) {
+                        // TODO: group sub-context nodes
+                        return contextString.remove(node);
+                    }
+
+                    return node.textualRepresentation();
+                }).toList();
+                iterationContextString.put(context,
+                        String.join("\nAND\n", nodesString) + "\nIN\n" + context.textualRepresentation());
+            }
+
+            for (Node node : iterationContextString.keySet()) {
+                contextNodes.remove(node);
+                contextString.put(node, iterationContextString.get(node));
+            }
+        }
+
+        return String.join("\nAND\n", contextString.values());
     }
 
     @Override

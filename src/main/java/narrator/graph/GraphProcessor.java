@@ -5,7 +5,6 @@ import com.github.gumtreediff.tree.TreeContext;
 import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
-import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import narrator.apted.costmodel.StringUnitCostModel;
@@ -27,7 +26,8 @@ public class GraphProcessor {
     private Map<String, String> dstContents;
     Map<String, TreeContext> childContexts;
 
-    public GraphProcessor(UMLModelDiff modelDiff, Map<String, String> dstContents, Map<String, TreeContext> childContexts) {
+    public GraphProcessor(UMLModelDiff modelDiff, Map<String, String> dstContents,
+                          Map<String, TreeContext> childContexts) {
         graph = GraphTypeBuilder.<Node, Edge>directed().allowingMultipleEdges(true).allowingSelfLoops(true).edgeClass(Edge.class).weighted(true).buildGraph();
         nodeMap = new HashMap<>();
         this.modelDiff = modelDiff;
@@ -74,8 +74,8 @@ public class GraphProcessor {
         return node;
     }
 
-    public Node addHunkNode(String path, Tree tree) {
-        return addHunkNode(path, tree, NodeType.BASE);
+    public void addHunkNode(String path, Tree tree) {
+        addHunkNode(path, tree, NodeType.BASE);
     }
 
     private void addEdge(Node node1, Node node2, EdgeType edgeType, float weight) {
@@ -102,9 +102,6 @@ public class GraphProcessor {
     private void processDefUse() {
         List<Node> nodes = new ArrayList<>(graph.vertexSet());
         for (Node node : nodes) {
-            if (node.getId().equals("python/educational/src/com/jetbrains/edu/stepic/EduStepicConnector.java-13285-13301-FieldDeclaration")) {
-                System.out.println("Hi");
-            }
             if (node.isContext()) {
                 continue;
             }
@@ -130,8 +127,7 @@ public class GraphProcessor {
                     case Constants.METHOD_DECLARATION -> methodDeclarations.add(subTree);
                     case Constants.FIELD_DECLARATION -> fieldDeclarations.add(subTree);
                     case Constants.RECORD_COMPONENT -> parameterDeclarations.add(subTree);
-                    case Constants.VARIABLE_DECLARATION_STATEMENT ->
-                            variableDeclarations.add(subTree);
+                    case Constants.VARIABLE_DECLARATION_STATEMENT -> variableDeclarations.add(subTree);
                 }
             }
             if (methodDeclarations.isEmpty() && fieldDeclarations.isEmpty() && parameterDeclarations.isEmpty() && variableDeclarations.isEmpty()) {
@@ -162,7 +158,8 @@ public class GraphProcessor {
                     continue;
                 }
 
-                List<Node> useNodes = findUseNodes(umlAttribute.getVariableDeclaration());
+                List<Node> useNodes = findAccessNodes(umlAttribute.getVariableDeclaration().getVariableName(),
+                        umlAttribute.getLocationInfo(), modelDiff.findFieldAccessesInChildModel(umlAttribute));
                 for (Node useNode : useNodes) {
                     addEdge(node, useNode, EdgeType.DEF_USE, 1);
                 }
@@ -241,8 +238,8 @@ public class GraphProcessor {
         return getUMLClass(node.getPath(), parentTypeName.getLabel());
     }
 
-    private void addVariableDeclarationEdges(UMLClass umlClass, Node node, Tree variableDeclaration) {
-        Tree methodRoot = TreeUtilFunctions.getParentUntilType(variableDeclaration, Constants.METHOD_DECLARATION);
+    private void addVariableDeclarationEdges(UMLClass umlClass, Node node, Tree variableDeclarationTree) {
+        Tree methodRoot = TreeUtilFunctions.getParentUntilType(variableDeclarationTree, Constants.METHOD_DECLARATION);
         if (methodRoot == null) { // https://github.com/elastic/elasticsearch/commit/e0a458441cff9a4242cd93f4c02f06d72f2d63c4#diff-9b7bef16de393901cd8c75e73d2fb03afb90a10f1de191b7174275bbd8e71bd8L38
             return;
         }
@@ -254,9 +251,13 @@ public class GraphProcessor {
 
         for (VariableDeclaration operationVariable : umlOperation.getAllVariableDeclarations()) {
             LocationInfo operationVariableLoc = operationVariable.getLocationInfo();
-            if (operationVariableLoc.getStartOffset() == variableDeclaration.getPos()
-                    && variableDeclaration.getEndPos() == operationVariableLoc.getEndOffset()) {
-                List<Node> useNodes = findUseNodes(operationVariable.getVariableDeclaration());
+            if (operationVariableLoc.getStartOffset() == variableDeclarationTree.getPos() && variableDeclarationTree.getEndPos() == operationVariableLoc.getEndOffset()) {
+                VariableDeclaration variableDeclaration = operationVariable.getVariableDeclaration();
+
+
+                List<Node> useNodes = findAccessNodes(variableDeclaration.getVariableName(),
+                        variableDeclaration.getLocationInfo(),
+                        variableDeclaration.getScope().getStatementsInScopeUsingVariable());
                 for (Node useNode : useNodes) {
                     addEdge(node, useNode, EdgeType.DEF_USE, 1);
                 }
@@ -294,31 +295,32 @@ public class GraphProcessor {
         }
     }
 
-    private List<Node> findUseNodes(VariableDeclaration declaration) {
-        Set<AbstractCodeFragment> useStatements = declaration.getScope().getStatementsInScopeUsingVariable();
-
+    private List<Node> findAccessNodes(String variableName, LocationInfo declarationLocation,
+                                       Set<AbstractCodeFragment> accessFragments) {
         ArrayList<Node> result = new ArrayList<>();
-        for (AbstractCodeFragment useStatement : useStatements) {
-            List<LeafExpression> useVariables = useStatement.getVariables().stream().filter(variable -> variable.getString().equals(declaration.getVariableName())).toList();
-            for (LeafExpression useVariable : useVariables) {
-                LocationInfo useLoc = useVariable.getLocationInfo();
-                List<Node> overlappingNodes = findOverlappingNodes(useLoc.getFilePath(), useLoc.getStartOffset(),
-                        useLoc.getEndOffset());
-                List<Node> actualOverlappingNodes = overlappingNodes.stream().filter(node -> !node.isContext()).toList();
-                result.addAll(actualOverlappingNodes);
-            }
+
+        for (AbstractCodeFragment accessFragment : accessFragments) {
+            // TODO: only the variable itself or fragment entirely?
+            // List<LeafExpression> useVariables =
+            //         accessFragment.getVariables().stream().filter(variable -> variable.getString()
+            //         .equals(variableName)).toList();
+            LocationInfo useLoc = accessFragment.getLocationInfo();
+            List<Node> overlappingNodes = findOverlappingNodes(useLoc.getFilePath(), useLoc.getStartOffset(),
+                    useLoc.getEndOffset());
+            List<Node> actualOverlappingNodes = overlappingNodes.stream().filter(node -> !node.isContext()).toList();
+            result.addAll(actualOverlappingNodes);
         }
 
         // declaration change without any usage change
         if (result.isEmpty()) {
-            List<LocationInfo> changedFilesUseStatementsLocation = useStatements.stream()
-                    .map(LocationInfoProvider::getLocationInfo)
-                    .filter(locationInfo -> childContexts.containsKey(locationInfo.getFilePath())).toList();
+            List<LocationInfo> changedFilesUseStatementsLocation =
+                    accessFragments.stream().map(LocationInfoProvider::getLocationInfo).filter(locationInfo -> childContexts.containsKey(locationInfo.getFilePath())).toList();
             if (changedFilesUseStatementsLocation.isEmpty()) {
                 return result;
             }
 
-            LocationInfo closestLocationInfo = findClosestLocationInfo(declaration.getLocationInfo(), changedFilesUseStatementsLocation);
+            LocationInfo closestLocationInfo = findClosestLocationInfo(declarationLocation,
+                    changedFilesUseStatementsLocation);
             String path = closestLocationInfo.getFilePath();
             Tree tree = TreeUtilFunctions.findByLocationInfo(childContexts.get(path).getRoot(), closestLocationInfo);
             Node node = addHunkNode(path, tree, NodeType.EXTENSION);
@@ -333,8 +335,8 @@ public class GraphProcessor {
         int pos = subject.getStartOffset();
         int endPos = subject.getEndOffset();
 
-        List<LocationInfo> sameFileCandidates = candidates.stream()
-                .filter(candidate -> subject.getFilePath().equals(candidate.getFilePath())).toList();
+        List<LocationInfo> sameFileCandidates =
+                candidates.stream().filter(candidate -> subject.getFilePath().equals(candidate.getFilePath())).toList();
         if (!sameFileCandidates.isEmpty()) {
             LocationInfo closestLocationInfo = null;
 
@@ -344,8 +346,8 @@ public class GraphProcessor {
                     return candidate;
                 }
 
-                int distance = endPos < candidate.getStartOffset() ?
-                        candidate.getStartOffset() - endPos : pos - candidate.getEndOffset();
+                int distance = endPos < candidate.getStartOffset() ? candidate.getStartOffset() - endPos :
+                        pos - candidate.getEndOffset();
                 if (distance < shortestDistance) {
                     shortestDistance = distance;
                     closestLocationInfo = candidate;

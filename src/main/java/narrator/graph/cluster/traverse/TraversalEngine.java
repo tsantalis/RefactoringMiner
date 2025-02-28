@@ -44,7 +44,7 @@ public class TraversalEngine {
         mergeSimilarNodes();
         // successive nodes
         // same context
-//        mergeCommonNodes(Node::isContext);
+        // mergeCommonNodes(Node::isContext);
     }
 
     private final List<String> unacceptedSuccessiveNodes = new ArrayList<>() {{
@@ -53,13 +53,13 @@ public class TraversalEngine {
     }};
 
     private void addSuccessiveComponents() {
-        List<Node> acceptedNodes = graph.vertexSet().stream()
-                .filter(node -> !unacceptedSuccessiveNodes.contains(node.getTree().getType().name)).toList();
+        List<Node> acceptedNodes =
+                graph.vertexSet().stream().filter(node -> !unacceptedSuccessiveNodes.contains(node.getTree().getType().name)).toList();
 
         HashMap<Node, SuccessivePattern> successivePatterns = new HashMap<>();
         for (Node acceptedNode : acceptedNodes) {
-            List<Edge> edges = graph.edgesOf(acceptedNode).stream()
-                    .filter(edge -> edge.getType().equals(EdgeType.SUCCESSION))
+            List<Edge> edges =
+                    graph.edgesOf(acceptedNode).stream().filter(edge -> edge.getType().equals(EdgeType.SUCCESSION))
                     // TODO: should we support succession for non-changes?
                     .filter(edge -> graph.getEdgeTarget(edge).isBase() && graph.getEdgeSource(edge).isBase()).toList();
             for (Edge edge : edges) {
@@ -81,7 +81,8 @@ public class TraversalEngine {
         }
     }
 
-    private void mergeCommentComponent(HashMap<Node, SuccessivePattern> commentPatterns, Node sourceNode, SuccessivePattern targetPattern) {
+    private void mergeCommentComponent(HashMap<Node, SuccessivePattern> commentPatterns, Node sourceNode,
+                                       SuccessivePattern targetPattern) {
         SuccessivePattern sourceComponent = commentPatterns.get(sourceNode);
 
         if (sourceComponent != null) {
@@ -89,9 +90,8 @@ public class TraversalEngine {
 
             components.remove(sourceComponent);
 
-            List<Node> sourceComponentNodes = commentPatterns.entrySet().stream()
-                    .filter(entry -> entry.getValue().equals(sourceComponent))
-                    .map(Map.Entry::getKey).toList();
+            List<Node> sourceComponentNodes =
+                    commentPatterns.entrySet().stream().filter(entry -> entry.getValue().equals(sourceComponent)).map(Map.Entry::getKey).toList();
             for (Node node : sourceComponentNodes) {
                 commentPatterns.put(node, targetPattern);
             }
@@ -99,8 +99,8 @@ public class TraversalEngine {
     }
 
     private void addUsageComponents() {
-        List<Node> useNodes = Centrality.usedDeclarations(graph).stream()
-                .filter(node -> node.getNodeType().equals(NodeType.BASE)).toList();
+        List<Node> useNodes =
+                Centrality.usedDeclarations(graph).stream().filter(node -> node.getNodeType().equals(NodeType.BASE)).toList();
         HashMap<Node, UsagePattern> usagePatterns = new HashMap<>();
         for (Node useNode : useNodes) {
             addUsageComponent(useNode, new ArrayList<>(), usagePatterns);
@@ -140,10 +140,8 @@ public class TraversalEngine {
 
                     usageComponent.merge(usedComponent);
 
-                    List<Node> usedComponentNodes = usagePatterns.entrySet().stream()
-                            .filter(entry -> entry.getValue().equals(usedComponent))
-                            .map(Map.Entry::getKey)
-                            .toList();
+                    List<Node> usedComponentNodes =
+                            usagePatterns.entrySet().stream().filter(entry -> entry.getValue().equals(usedComponent)).map(Map.Entry::getKey).toList();
                     for (Node usedComponentNode : usedComponentNodes) {
                         usagePatterns.put(usedComponentNode, usageComponent);
                     }
@@ -158,8 +156,8 @@ public class TraversalEngine {
     }
 
     private void addDeclarationComponents() {
-        List<Node> useNodes = Centrality.usedDeclarations(graph).stream()
-                .filter(node -> node.getNodeType().equals(NodeType.EXTENSION)).toList();
+        List<Node> useNodes =
+                Centrality.usedDeclarations(graph).stream().filter(node -> node.getNodeType().equals(NodeType.EXTENSION)).toList();
         for (Node useNode : useNodes) {
             addDeclarationComponent(useNode);
         }
@@ -174,10 +172,8 @@ public class TraversalEngine {
             declarationComponent.addEdge(usedNode, node, new Edge(EdgeType.DEF_USE, 1));
             addContext(usedNode, declarationComponent);
 
-            List<Node> usedNodeExtensions = graph.incomingEdgesOf(usedNode).stream()
-                    .filter(edge -> edge.getType().equals(EdgeType.DEF_USE))
-                    .map(edge -> graph.getEdgeSource(edge))
-                    .filter(n -> n.getNodeType().equals(NodeType.EXTENSION)).toList();
+            List<Node> usedNodeExtensions =
+                    graph.incomingEdgesOf(usedNode).stream().filter(edge -> edge.getType().equals(EdgeType.DEF_USE)).map(edge -> graph.getEdgeSource(edge)).filter(n -> n.getNodeType().equals(NodeType.EXTENSION)).toList();
             for (Node usedNodeExtension : usedNodeExtensions) {
                 declarationComponent.addDeclarationExtension(usedNode, usedNodeExtension);
                 addContext(usedNodeExtension, declarationComponent);
@@ -192,8 +188,8 @@ public class TraversalEngine {
         Node currentNode = node;
         for (Node context : contexts) {
             traversalPattern.addEdge(currentNode, context, new Edge(EdgeType.CONTEXT, 1), (edges) -> {
-                List<Edge> duplicateEdges = edges.stream()
-                        .filter(edge -> edge.getType().equals(EdgeType.CONTEXT)).toList();
+                List<Edge> duplicateEdges =
+                        edges.stream().filter(edge -> edge.getType().equals(EdgeType.CONTEXT)).toList();
                 return duplicateEdges.isEmpty();
             });
 
@@ -207,21 +203,19 @@ public class TraversalEngine {
 
     // for chunks of code which are using already existing declarations, or their uses are not regular
     private void addSingularComponents() {
-        List<Node> singularNodes = graph.vertexSet().stream()
-                .filter(node -> !node.isContext())
-                .filter(node -> singularTypes.contains(node.getTree().getType().name))
-                .filter(node -> {
-                    boolean result = true;
+        List<Node> singularNodes =
+                graph.vertexSet().stream().filter(node -> !node.isContext()).filter(node -> singularTypes.contains(node.getTree().getType().name)).filter(node -> {
+            boolean result = true;
 
-                    for (TraversalPattern traversalComponent : components) {
-                        boolean contains = traversalComponent.containsNode(node);
-                        if (contains) {
-                            return false;
-                        }
-                    }
+            for (TraversalPattern traversalComponent : components) {
+                boolean contains = traversalComponent.containsNode(node);
+                if (contains) {
+                    return false;
+                }
+            }
 
-                    return result;
-                }).toList();
+            return result;
+        }).toList();
 
         for (Node node : singularNodes) {
             SingularPattern singularComponent = new SingularPattern(node);
@@ -239,39 +233,47 @@ public class TraversalEngine {
             }
         }
 
-        HashMap<TraversalPattern, TraversalPattern> usageComponentParent = new HashMap<>();
+        Map<UsagePattern, TraversalPattern> usageComponentsRepresentative = new HashMap<>();
         for (UsagePattern usageComponent : usageComponents) {
-            mergeUsageRequirements(usageComponentParent, usageComponent);
+            usageComponentsRepresentative.put(usageComponent, usageComponent);
         }
-    }
-
-    private void mergeUsageRequirements(
-            HashMap<TraversalPattern, TraversalPattern> usageComponentParent,
-            UsagePattern usageComponent) {
-        HashMap<Node, UsagePattern> requirements = usageComponent.getRequirements();
-        if (requirements.keySet().isEmpty()) {
-            usageComponentParent.put(usageComponent, usageComponent);
-            return;
+        Map<UsagePattern, Integer> usageComponentsRequirements = new HashMap<>();
+        for (UsagePattern usageComponent : usageComponents) {
+            usageComponentsRequirements.put(usageComponent, usageComponent.getRequirements().keySet().size());
         }
 
-        for (UsagePattern requirement : requirements.values()) {
-            if (requirement.getRequirements().isEmpty() || usageComponentParent.containsKey(requirement)) {
+        while (!usageComponents.isEmpty()) {
+            Optional<UsagePattern> optionalSubject = usageComponents.stream().filter(usageComponent -> {
+                Collection<UsagePattern> requirements = usageComponent.getRequirements().values();
+                return requirements.stream().allMatch(requirement -> usageComponentsRequirements.get(requirement) == 0);
+            }).findFirst();
+            if (optionalSubject.isEmpty()) {
+                break;
+            }
+            UsagePattern subject = optionalSubject.get();
+
+            HashMap<Node, UsagePattern> requirements = subject.getRequirements();
+            if (requirements.keySet().isEmpty()) {
+                usageComponents.remove(subject);
                 continue;
             }
 
-            mergeUsageRequirements(usageComponentParent, requirement);
-        }
+            List<TraversalPattern> requirementComponents =
+                    requirements.values().stream().map(usageComponentsRepresentative::get).toList();
+            List<TraversalPattern> overallComponents = Stream.concat(requirementComponents.stream(),
+                    Stream.of(subject)).toList();
+            TraversalComponent parentComponent = new TraversalComponent(overallComponents, requirements.keySet(),
+                    ReasonType.REQUIREMENT);
 
-        List<TraversalPattern> requirementComponents = requirements.values().stream()
-                .map(requirement -> usageComponentParent.getOrDefault(requirement, requirement)).toList();
-        List<TraversalPattern> overallComponents = Stream.concat(requirementComponents.stream(), Stream.of(usageComponent)).toList();
+            for (TraversalPattern component : overallComponents) {
+                components.remove(component);
+            }
+            components.add(parentComponent);
 
-        TraversalComponent parentComponent = new TraversalComponent(overallComponents, requirements.keySet(), ReasonType.REQUIREMENT);
-        for (TraversalPattern component : overallComponents) {
-            components.remove(component);
-            usageComponentParent.put(component, parentComponent);
+            usageComponents.remove(subject);
+            usageComponentsRepresentative.put(subject, parentComponent);
+            usageComponentsRequirements.put(subject, 0);
         }
-        components.add(parentComponent);
     }
 
     private void mergeCommonNodes(Function<Node, Boolean> nodeCondition) {
@@ -284,14 +286,12 @@ public class TraversalEngine {
 
                     Set<Node> commonNodes = new HashSet<>();
                     for (Node subjectNode : subjectNodes) {
-                        if (objectNodes.contains(subjectNode)
-                                && (nodeCondition == null || nodeCondition.apply(subjectNode))) {
+                        if (objectNodes.contains(subjectNode) && (nodeCondition == null || nodeCondition.apply(subjectNode))) {
                             commonNodes.add(subjectNode);
                         }
                     }
 
-                    if (commonNodes.isEmpty()
-                            || (mostCommonNodes != null && mostCommonNodes.size() >= commonNodes.size())) {
+                    if (commonNodes.isEmpty() || (mostCommonNodes != null && mostCommonNodes.size() >= commonNodes.size())) {
                         continue;
                     }
 
@@ -306,7 +306,8 @@ public class TraversalEngine {
             HashMap<Node, List<TraversalPattern>> commonNodesComponents = getNodesComponents(mostCommonNodes);
             Set<TraversalPattern> commonComponents = getCommonComponents(commonNodesComponents.values());
 
-            TraversalComponent parentComponent = new TraversalComponent(commonComponents.stream().toList(), mostCommonNodes, ReasonType.COMMON);
+            TraversalComponent parentComponent = new TraversalComponent(commonComponents.stream().toList(),
+                    mostCommonNodes, ReasonType.COMMON);
             for (TraversalPattern component : commonComponents) {
                 components.remove(component);
             }
@@ -315,10 +316,11 @@ public class TraversalEngine {
     }
 
     private void mergeSimilarNodes() {
-        List<Edge> similarityEdges = graph.edgeSet().stream()
-                .filter(edge -> edge.getType().equals(EdgeType.SIMILARITY)).toList();
-        List<ImmutablePair<Node, Node>> similarityPairs = similarityEdges.stream()
-                .map(edge -> new ImmutablePair<>(graph.getEdgeSource(edge), graph.getEdgeTarget(edge))).toList();
+        List<Edge> similarityEdges =
+                graph.edgeSet().stream().filter(edge -> edge.getType().equals(EdgeType.SIMILARITY)).toList();
+        List<ImmutablePair<Node, Node>> similarityPairs =
+                similarityEdges.stream().map(edge -> new ImmutablePair<>(graph.getEdgeSource(edge),
+                        graph.getEdgeTarget(edge))).toList();
 
         Set<Node> nodes = new HashSet<>();
         for (ImmutablePair<Node, Node> pair : similarityPairs) {
@@ -329,7 +331,8 @@ public class TraversalEngine {
         while (true) {
             HashMap<Node, List<TraversalPattern>> nodesComponents = getNodesComponents(nodes);
 
-            HashMap<TraversalPattern, HashMap<TraversalPattern, List<Node>>> componentsSimilaritySources = new HashMap<>();
+            HashMap<TraversalPattern, HashMap<TraversalPattern, List<Node>>> componentsSimilaritySources =
+                    new HashMap<>();
             for (ImmutablePair<Node, Node> pair : similarityPairs) {
                 List<TraversalPattern> leftComponents = nodesComponents.get(pair.getLeft());
                 List<TraversalPattern> rightComponents = nodesComponents.get(pair.getRight());
@@ -344,7 +347,8 @@ public class TraversalEngine {
                             componentsSimilaritySources.put(leftComponent, new HashMap<>());
                         }
 
-                        HashMap<TraversalPattern, List<Node>> leftComponentSimilaritySources = componentsSimilaritySources.get(leftComponent);
+                        HashMap<TraversalPattern, List<Node>> leftComponentSimilaritySources =
+                                componentsSimilaritySources.get(leftComponent);
                         if (!leftComponentSimilaritySources.containsKey(rightComponent)) {
                             leftComponentSimilaritySources.put(rightComponent, new ArrayList<>());
                         }
@@ -356,8 +360,10 @@ public class TraversalEngine {
 
             List<Node> mostSimilaritySources = null;
             TraversalPattern similaritySourceComponent = null;
-            for (Map.Entry<TraversalPattern, HashMap<TraversalPattern, List<Node>>> leftComponentSimilaritySources : componentsSimilaritySources.entrySet()) {
-                for (Map.Entry<TraversalPattern, List<Node>> rightComponentSimilaritySources : leftComponentSimilaritySources.getValue().entrySet()) {
+            for (Map.Entry<TraversalPattern, HashMap<TraversalPattern, List<Node>>> leftComponentSimilaritySources :
+                    componentsSimilaritySources.entrySet()) {
+                for (Map.Entry<TraversalPattern, List<Node>> rightComponentSimilaritySources :
+                        leftComponentSimilaritySources.getValue().entrySet()) {
                     List<Node> similaritySources = rightComponentSimilaritySources.getValue();
                     if (mostSimilaritySources != null && similaritySources.size() <= mostSimilaritySources.size()) {
                         continue;
@@ -374,10 +380,10 @@ public class TraversalEngine {
 
             List<Set<TraversalPattern>> sourcesTargetComponents = new ArrayList<>();
             for (Node similaritySource : mostSimilaritySources) {
-                List<Node> similarityTargets = graph.outgoingEdgesOf(similaritySource).stream()
-                        .filter(edge -> edge.getType().equals(EdgeType.SIMILARITY))
-                        .map(edge -> graph.getEdgeTarget(edge)).toList();
-                HashMap<Node, List<TraversalPattern>> similarityTargetComponents = getNodesComponents(new HashSet<>(similarityTargets));
+                List<Node> similarityTargets =
+                        graph.outgoingEdgesOf(similaritySource).stream().filter(edge -> edge.getType().equals(EdgeType.SIMILARITY)).map(edge -> graph.getEdgeTarget(edge)).toList();
+                HashMap<Node, List<TraversalPattern>> similarityTargetComponents =
+                        getNodesComponents(new HashSet<>(similarityTargets));
 
                 Set<TraversalPattern> accumulatedTargetComponents = new HashSet<>();
                 for (List<TraversalPattern> components : similarityTargetComponents.values()) {
@@ -386,11 +392,13 @@ public class TraversalEngine {
                 sourcesTargetComponents.add(accumulatedTargetComponents);
             }
 
-            Set<TraversalPattern> commonComponents = getCommonComponents(sourcesTargetComponents.stream()
-                    .map(components -> components.stream().toList()).toList());
-            List<TraversalPattern> overallComponents = Stream.concat(commonComponents.stream(), Stream.of(similaritySourceComponent)).toList();
+            Set<TraversalPattern> commonComponents =
+                    getCommonComponents(sourcesTargetComponents.stream().map(components -> components.stream().toList()).toList());
+            List<TraversalPattern> overallComponents = Stream.concat(commonComponents.stream(),
+                    Stream.of(similaritySourceComponent)).toList();
 
-            TraversalComponent parentComponent = new TraversalComponent(overallComponents, new HashSet<>(mostSimilaritySources), ReasonType.SIMILAR);
+            TraversalComponent parentComponent = new TraversalComponent(overallComponents,
+                    new HashSet<>(mostSimilaritySources), ReasonType.SIMILAR);
             for (TraversalPattern component : overallComponents) {
                 components.remove(component);
             }

@@ -41,8 +41,7 @@ public class DeclarationPattern extends TraversalPattern {
             useContextString += String.join("\nIN\n", useContexts.stream().map(Node::textualRepresentation).toList());
         }
 
-        return useNode.textualRepresentation()
-                + useContextString;
+        return useNode.textualRepresentation() + useContextString;
     }
 
     public String extensionsRepresentation() {
@@ -56,10 +55,7 @@ public class DeclarationPattern extends TraversalPattern {
 
     @Override
     public String textualRepresentation() {
-        String result = declarationsRepresentation()
-                + "\n\n---\n\n"
-                + "USED IN:\n\n"
-                + useRepresentation();
+        String result = declarationsRepresentation() + "\n\n---\n\n" + "USED IN:\n\n" + useRepresentation();
 
         String extensionRepresentation = extensionsRepresentation();
         if (!extensionRepresentation.isEmpty()) {
@@ -91,7 +87,8 @@ public class DeclarationPattern extends TraversalPattern {
 
                     return node.textualRepresentation();
                 }).toList();
-                iterationContextString.put(context, String.join("\nAND\n", nodesString) + "\nIN\n" + context.textualRepresentation());
+                iterationContextString.put(context,
+                        String.join("\nAND\n", nodesString) + "\nIN\n" + context.textualRepresentation());
             }
 
             for (Node node : iterationContextString.keySet()) {
@@ -110,8 +107,9 @@ public class DeclarationPattern extends TraversalPattern {
             return descriptionCache;
         }
 
-        String generatedDescription = GroqClient.generate(Prompts.getDeclarationPatternPrompt(declarationsRepresentation(),
-                useRepresentation(), extensionsRepresentation()));
+        String generatedDescription =
+                GroqClient.generate(Prompts.getDeclarationPatternPrompt(declarationsRepresentation(),
+                        useRepresentation(), extensionsRepresentation()));
 
         setDescriptionCache(generatedDescription);
 

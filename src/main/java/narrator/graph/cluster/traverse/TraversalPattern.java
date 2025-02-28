@@ -41,7 +41,7 @@ public class TraversalPattern extends GraphWrapper {
     public String getId() {
         Node lead = getLead();
         Tree tree = lead.getTree();
-        return getClass().getSimpleName() + "-" + tree.getPos() + '-' + tree.getEndPos() + "-" + tree.getType().name;
+        return getClass().getSimpleName() + "-" + tree.getPos() + '-' + tree.getEndPos() + '-' + System.identityHashCode(this);
     }
 
     public Set<Node> vertexSet() {

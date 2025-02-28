@@ -235,6 +235,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 									lambdaMapper.getNonMappedInnerNodesT2().contains(mapping.getFragment2())) {
 								invalidMappings++;
 							}
+							else if(mapping.getFragment1() instanceof LeafExpression || mapping.getFragment1() instanceof AbstractExpression ||
+									mapping.getFragment2() instanceof LeafExpression || mapping.getFragment2() instanceof AbstractExpression) {
+								invalidMappings++;
+							}
 						}
 						if(moveCodeMapper.getMappings().size() > invalidMappings) {
 							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);

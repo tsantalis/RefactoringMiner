@@ -129,6 +129,7 @@ public class ReplacementAlgorithm {
 				Set<String> callChainIntersection = inv1.callChainIntersection(inv2);
 				double ratio = (double)callChainIntersection.size()/(double)inv1.numberOfSubExpressions();
 				if(ratio == 1) {
+					boolean streamToStreamMigrationFound = false;
 					List<LeafExpression> leafExpressions1 = statement1.findExpression(inv1.getExpression());
 					List<LeafExpression> leafExpressions2 = statement2.findExpression(inv2.getExpression());
 					if(leafExpressions1.size() == leafExpressions2.size()) {
@@ -167,6 +168,7 @@ public class ReplacementAlgorithm {
 													if(expr1.size() == 1) {
 														LeafMapping leafMapping = new LeafMapping(expr1.get(0), lambda2.getExpression(), container1, container2);
 														replacementInfo.addSubExpressionMapping(leafMapping);
+														streamToStreamMigrationFound = true;
 														break;
 													}
 												}
@@ -177,11 +179,13 @@ public class ReplacementAlgorithm {
 							}
 						}
 					}
-					processAnonymousAndLambdas(statement1, statement2, parameterToArgumentMap, replacementInfo,
-							assignmentInvocationCoveringTheEntireStatement1 != null ? assignmentInvocationCoveringTheEntireStatement1 : assignmentCreationCoveringTheEntireStatement1,
-							assignmentInvocationCoveringTheEntireStatement2 != null ? assignmentInvocationCoveringTheEntireStatement2 : assignmentCreationCoveringTheEntireStatement2,
-							methodInvocationMap1, methodInvocationMap2,	anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, operationBodyMapper);
-					return replacementInfo.getReplacements();
+					if(streamToStreamMigrationFound) {
+						processAnonymousAndLambdas(statement1, statement2, parameterToArgumentMap, replacementInfo,
+								assignmentInvocationCoveringTheEntireStatement1 != null ? assignmentInvocationCoveringTheEntireStatement1 : assignmentCreationCoveringTheEntireStatement1,
+								assignmentInvocationCoveringTheEntireStatement2 != null ? assignmentInvocationCoveringTheEntireStatement2 : assignmentCreationCoveringTheEntireStatement2,
+								methodInvocationMap1, methodInvocationMap2,	anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, operationBodyMapper);
+						return replacementInfo.getReplacements();
+					}
 				}
 			}
 		}

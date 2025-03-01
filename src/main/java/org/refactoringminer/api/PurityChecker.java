@@ -5022,7 +5022,7 @@ Mapping state for Move Method refactoring purity:
                     patterns.put(((ExtractClassRefactoring) refactoring).getOriginalClass().getNonQualifiedName(), ((ExtractClassRefactoring) refactoring).getExtractedClass().getNonQualifiedName());
                     // TODO: 8/3/2022 Think about more possible patterns
                 }
-            } else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS)) {
+            } else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS) && refactoring instanceof ExtractSuperclassRefactoring) {
 
                 String extractedClassName = ((ExtractSuperclassRefactoring) refactoring).getExtractedClass().getNonQualifiedName();
                 for (UMLClass subClassBefore : ((ExtractSuperclassRefactoring) refactoring).getUMLSubclassSetBefore()) {

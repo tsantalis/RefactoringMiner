@@ -1,4 +1,4 @@
-name: Gist Test Stats
+name: Update Test Stats
 
 on:
   workflow_dispatch:
@@ -6,6 +6,55 @@ on:
       - master
 
 jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      actions: write
+
+    env:
+      OAuthToken: ${{ secrets.OAUTHTOKEN }} 
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    # Configure Gradle for optimal use in GiHub Actions, including caching of downloaded dependencies.
+    # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@ec92e829475ac0c2315ea8f9eced72db85bb337a # v3.0.0
+
+    - name: Build with Gradle Wrapper
+      run: |
+        if [ "${{ github.event_name }}" == 'pull_request' ]; then
+          ./gradlew build -x javadoc -Pnotoken
+        else
+          ./gradlew build -x javadoc
+        fi
+
+    - name: Archive Test Results
+      uses: actions/upload-artifact@v4
+      if: always()  # Ensures that this step runs even if the build fails
+      with:
+        name: test-results
+        path: build/reports/tests/test
+
+    - name: Publish Test Report
+      uses: dorny/test-reporter@v1
+      if: github.event_name != 'pull_request' && always()
+      with:
+        name: 'Unit Test Results'
+        path: 'build/test-results/test/TEST-*.xml'
+        reporter: 'java-junit'
+        list-tests: failed
+        fail-on-error: false
+        
     - name: Test Report to Gist
       uses: gaelgirodon/ci-badges-action@v1
       with:

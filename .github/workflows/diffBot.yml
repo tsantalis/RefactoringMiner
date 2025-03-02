@@ -18,17 +18,26 @@ jobs:
         with:
           script: |
             const commentBody = context.payload.comment.body;
-            const regex = /@diff\s+(\S+)\s+(\S+)/;  // Match the URL and the next word
-            const match = commentBody.match(regex);
+            const regexScreenshot = /@diff\s+(\S+)\s+(\S+)/;  // Match URL + screenshot flag
+            const regexArtifact = /@diff\s+(\S+)/;  // Match only URL
+    
+            let match = commentBody.match(regexScreenshot);
             if (match) {
               core.setOutput('triggered', 'true');
-              core.setOutput('url', match[1].trim());
-              core.setOutput('screenshot', match[2] ? match[2].trim() : '');
+              core.setOutput('url', match[1].trim()); 
+              core.setOutput('screenshot', match[2].trim());
+              core.setOutput('mode', 'screenshot');
             } else {
-              core.setOutput('triggered', 'false');
+              match = commentBody.match(regexArtifact);
+              if (match) {
+                core.setOutput('triggered', 'true');
+                core.setOutput('url', match[1].trim()); 
+                core.setOutput('screenshot', '');
+                core.setOutput('mode', 'artifact');
+              } else {
+                core.setOutput('triggered', 'false');
+              }
             }
-
-
 
       # Step 1: Run the exporter
       - name: Running the RM action exporter

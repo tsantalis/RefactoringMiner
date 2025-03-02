@@ -1284,8 +1284,10 @@ public class StringBasedHeuristics {
 	protected static boolean commonConcat(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo info, AbstractCodeFragment statement1, AbstractCodeFragment statement2, UMLOperationBodyMapper mapper) {
 		VariableDeclarationContainer container1 = mapper.getContainer1();
 		VariableDeclarationContainer container2 = mapper.getContainer2();
-		ObjectCreation creationCoveringTheEntireStatement1 = statement1.creationCoveringEntireFragment();
-		ObjectCreation creationCoveringTheEntireStatement2 = statement2.creationCoveringEntireFragment();
+		AbstractCall call1 = statement1.creationCoveringEntireFragment();
+		ObjectCreation creationCoveringTheEntireStatement1 = call1 instanceof ObjectCreation ? (ObjectCreation)call1 : null;
+		AbstractCall call2 = statement2.creationCoveringEntireFragment();
+		ObjectCreation creationCoveringTheEntireStatement2 = call2 instanceof ObjectCreation ? (ObjectCreation)call2 : null;
 		boolean arrayCreation1 = creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.isArray();
 		boolean arrayCreation2 = creationCoveringTheEntireStatement2 != null && creationCoveringTheEntireStatement2.isArray();
 		if(!arrayCreation1 && !arrayCreation2 && !containsMethodSignatureOfAnonymousClass(s1) && !containsMethodSignatureOfAnonymousClass(s2)) {
@@ -1944,14 +1946,14 @@ public class StringBasedHeuristics {
 			Map<String, String> argumentToParameterMap = new LinkedHashMap<String, String>();
 			List<AbstractCall> creations1 = statement1.getCreations();
 			for(AbstractCall creation1 : creations1) {
-				if(creation1.getString().equals(assignment1)) {
+				if(creation1.getString().equals(assignment1) && creation1 instanceof ObjectCreation) {
 					objectCreation1 = (ObjectCreation)creation1;
 					type1 = objectCreation1.getType();
 				}
 			}
 			List<AbstractCall> creations2 = statement2.getCreations();
 			for(AbstractCall creation2 : creations2) {
-				if(creation2.getString().equals(assignment2)) {
+				if(creation2.getString().equals(assignment2) && creation2 instanceof ObjectCreation) {
 					objectCreation2 = (ObjectCreation)creation2;
 					type2 = objectCreation2.getType();
 					for(String argument : objectCreation2.arguments()) {
@@ -1996,14 +1998,14 @@ public class StringBasedHeuristics {
 			Map<String, String> argumentToParameterMap = new LinkedHashMap<String, String>();
 			List<AbstractCall> creations1 = statement1.getCreations();
 			for(AbstractCall creation1 : creations1) {
-				if(creation1.getString().equals(assignment1)) {
+				if(creation1.getString().equals(assignment1) && creation1 instanceof ObjectCreation) {
 					objectCreation1 = (ObjectCreation)creation1;
 					type1 = objectCreation1.getType();
 				}
 			}
 			List<AbstractCall> creations2 = statement2.getCreations();
 			for(AbstractCall creation2 : creations2) {
-				if(creation2.getString().equals(assignment2)) {
+				if(creation2.getString().equals(assignment2) && creation2 instanceof ObjectCreation) {
 					objectCreation2 = (ObjectCreation)creation2;
 					type2 = objectCreation2.getType();
 					for(String argument : objectCreation2.arguments()) {
@@ -2094,7 +2096,7 @@ public class StringBasedHeuristics {
 			AbstractCall inv1 = null, inv2 = null;
 			List<AbstractCall> creations1 = statement1.getCreations();
 			for(AbstractCall creation1 : creations1) {
-				if(creation1.getString().equals(assignment1)) {
+				if(creation1.getString().equals(assignment1) && creation1 instanceof ObjectCreation) {
 					ObjectCreation objectCreation = (ObjectCreation)creation1;
 					type1 = objectCreation.getType();
 					inv1 = objectCreation;
@@ -2102,7 +2104,7 @@ public class StringBasedHeuristics {
 			}
 			List<AbstractCall> creations2 = statement2.getCreations();
 			for(AbstractCall creation2 : creations2) {
-				if(creation2.getString().equals(assignment2)) {
+				if(creation2.getString().equals(assignment2) && creation2 instanceof ObjectCreation) {
 					ObjectCreation objectCreation = (ObjectCreation)creation2;
 					type2 = objectCreation.getType();
 					inv2 = objectCreation;
@@ -2434,8 +2436,8 @@ public class StringBasedHeuristics {
 			else if(initializer1 != null && initializer2 != null) {
 				nullInitializer = initializer1.getExpression().equals("null") || initializer2.getExpression().equals("null");
 				if(initializer1.getCreations().size() == 1 && initializer2.getCreations().size() == 1) {
-					ObjectCreation creation1 = (ObjectCreation) initializer1.getCreations().get(0);
-					ObjectCreation creation2 = (ObjectCreation) initializer2.getCreations().get(0);
+					AbstractCall creation1 = initializer1.getCreations().get(0);
+					AbstractCall creation2 = initializer2.getCreations().get(0);
 					if(creation1.arguments().size() == 0 && creation2.arguments().size() == 0) {
 						zeroArgumentClassInstantiation = true;
 					}
@@ -2885,8 +2887,10 @@ public class StringBasedHeuristics {
 		VariableDeclarationContainer container2 = mapper.getContainer2();
 		Set<AbstractCodeMapping> mappings = mapper.getMappings();
 		UMLOperationBodyMapper parentMapper = mapper.getParentMapper();
-		ObjectCreation creationCoveringTheEntireStatement1 = statement1.creationCoveringEntireFragment();
-		ObjectCreation creationCoveringTheEntireStatement2 = statement2.creationCoveringEntireFragment();
+		AbstractCall call1 = statement1.creationCoveringEntireFragment();
+		ObjectCreation creationCoveringTheEntireStatement1 = call1 instanceof ObjectCreation ? (ObjectCreation)call1 : null;
+		AbstractCall call2 = statement2.creationCoveringEntireFragment();
+		ObjectCreation creationCoveringTheEntireStatement2 = call2 instanceof ObjectCreation ? (ObjectCreation)call2 : null;
 		boolean arrayCreation1 = creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.isArray();
 		boolean arrayCreation2 = creationCoveringTheEntireStatement2 != null && creationCoveringTheEntireStatement2.isArray();
 		if(!arrayCreation1 && !arrayCreation2 && !containsMethodSignatureOfAnonymousClass(s1) && !containsMethodSignatureOfAnonymousClass(s2)) {

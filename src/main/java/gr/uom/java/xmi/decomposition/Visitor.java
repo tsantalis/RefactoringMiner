@@ -26,6 +26,7 @@ import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
 import org.eclipse.jdt.core.dom.ConstructorInvocation;
+import org.eclipse.jdt.core.dom.CreationReference;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ExpressionMethodReference;
 import org.eclipse.jdt.core.dom.FieldAccess;
@@ -579,6 +580,16 @@ public class Visitor extends ASTVisitor {
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 			anonymous.getMethodInvocations().add(invocation);
+		}
+		return super.visit(node);
+	}
+
+	public boolean visit(CreationReference node) {
+		gr.uom.java.xmi.decomposition.CreationReference reference = new gr.uom.java.xmi.decomposition.CreationReference(cu, sourceFolder, filePath, node, container, javaFileContent);
+		creations.add(reference);
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getCreations().add(reference);
 		}
 		return super.visit(node);
 	}

@@ -941,7 +941,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			List<AbstractCall> creations2 = this.getFragment2().getCreations();
 			for(VariableDeclaration declaration2 : variableDeclarations2) {
 				for(AbstractCall creation : creations2) {
-					if(((ObjectCreation)creation).getAnonymousClassDeclaration() != null) {
+					if(creation instanceof ObjectCreation && ((ObjectCreation)creation).getAnonymousClassDeclaration() != null) {
 						return false;
 					}
 					List<String> arguments = creation.arguments();

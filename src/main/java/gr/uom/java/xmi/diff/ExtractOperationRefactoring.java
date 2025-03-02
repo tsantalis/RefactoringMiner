@@ -224,11 +224,11 @@ public class ExtractOperationRefactoring implements Refactoring {
 		if(invocation2 == null) {
 			invocation2 = mapping.getFragment2().assignmentInvocationCoveringEntireStatement();
 		}
-		ObjectCreation creation1 = mapping.getFragment1().creationCoveringEntireFragment();
+		AbstractCall creation1 = mapping.getFragment1().creationCoveringEntireFragment();
 		if(creation1 == null) {
 			creation1 = mapping.getFragment1().assignmentCreationCoveringEntireStatement();
 		}
-		ObjectCreation creation2 = mapping.getFragment2().creationCoveringEntireFragment();
+		AbstractCall creation2 = mapping.getFragment2().creationCoveringEntireFragment();
 		if(creation2 == null) {
 			creation2 = mapping.getFragment2().assignmentCreationCoveringEntireStatement();
 		}

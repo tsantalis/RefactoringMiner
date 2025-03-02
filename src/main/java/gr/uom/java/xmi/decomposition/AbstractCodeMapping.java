@@ -198,8 +198,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		if(invocation1 != null && invocation2 != null) {
 			return invocation1.actualString().equals(invocation2.actualString());
 		}
-		ObjectCreation creation1 = fragment1.creationCoveringEntireFragment();
-		ObjectCreation creation2 = fragment2.creationCoveringEntireFragment();
+		AbstractCall creation1 = fragment1.creationCoveringEntireFragment();
+		AbstractCall creation2 = fragment2.creationCoveringEntireFragment();
 		if(creation1 != null && creation2 != null) {
 			return creation1.actualString().equals(creation2.actualString());
 		}
@@ -1089,6 +1089,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							stringConcatMatch(initializer, after) ||
 							diamondClassInstanceCreationMatch(initializer, after) ||
 							reservedTokenMatch(initializer, replacement, after) ||
+							classInstanceCreationToCreationReference(initializer, after) ||
 							anonymousWithMethodSignatureChange(initializer, after, classDiff)) {
 						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						List<LeafExpression> subExpressions = getFragment2().findExpression(after);
@@ -1376,7 +1377,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 			}
 		}
-		ObjectCreation creation = initializer.creationCoveringEntireFragment();
+		AbstractCall creation = initializer.creationCoveringEntireFragment();
 		if(creation != null) {
 			if(creation.arguments().contains(replacedExpression)) {
 				return true;
@@ -1428,6 +1429,17 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 			}
 			if(matchingTokens == tokens1.length) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean classInstanceCreationToCreationReference(AbstractExpression initializer, String replacedExpression) {
+		AbstractCall creation = initializer.creationCoveringEntireFragment();
+		if(creation instanceof ObjectCreation) {
+			UMLType type = ((ObjectCreation)creation).getType();
+			if(replacedExpression.startsWith(type + JAVA.METHOD_REFERENCE + "new")) {
 				return true;
 			}
 		}

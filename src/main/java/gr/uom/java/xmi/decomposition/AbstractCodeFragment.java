@@ -417,25 +417,25 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return null;
 	}
 
-	public ObjectCreation creationCoveringEntireFragment() {
+	public AbstractCall creationCoveringEntireFragment() {
 		String statement = getString();
 		for(AbstractCall creation : getCreations()) {
 			String objectCreation = creation.getString();
 			if((objectCreation + JAVA.STATEMENT_TERMINATION).equals(statement) || objectCreation.equals(statement)) {
 				creation.coverage = StatementCoverageType.ONLY_CALL;
-				return (ObjectCreation) creation;
+				return creation;
 			}
 			else if((JAVA.RETURN_SPACE + objectCreation + JAVA.STATEMENT_TERMINATION).equals(statement)) {
 				creation.coverage = StatementCoverageType.RETURN_CALL;
-				return (ObjectCreation) creation;
+				return creation;
 			}
 			else if((JAVA.THROW_SPACE + objectCreation + JAVA.STATEMENT_TERMINATION).equals(statement)) {
 				creation.coverage = StatementCoverageType.THROW_CALL;
-				return (ObjectCreation) creation;
+				return creation;
 			}
 			else if(expressionIsTheInitializerOfVariableDeclaration(objectCreation)) {
 				creation.coverage = StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL;
-				return (ObjectCreation) creation;
+				return creation;
 			}
 		}
 		return null;
@@ -470,10 +470,10 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return null;
 	}
 
-	public ObjectCreation assignmentCreationCoveringEntireStatement() {
+	public AbstractCall assignmentCreationCoveringEntireStatement() {
 		for(AbstractCall creation : getCreations()) {
 			if(expressionIsTheRightHandSideOfAssignment(creation.getString())) {
-				return (ObjectCreation) creation;
+				return creation;
 			}
 		}
 		return null;

@@ -4540,7 +4540,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									AbstractCall call2 = methodInvocations2.get(i);
 									if(!methodInvocations1.contains(call2)) {
 										ClassInstanceCreationWithMethodInvocationReplacement r = new ClassInstanceCreationWithMethodInvocationReplacement(
-												creations1.get(0).actualString(), call2.actualString(), (ObjectCreation)creations1.get(0), call2, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION);
+												creations1.get(0).actualString(), call2.actualString(), creations1.get(0), call2, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION);
 										replacements.add(r);
 									}
 								}
@@ -9749,19 +9749,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		mapping.setMatchingArgumentsWithOperationInvocation(matchingArguments);
-		if(leaf1.getCreations().size() > 0 && leaf2.getCreations().size() > 0) {
+		if(leaf1.getCreations().size() > 0 && leaf2.getCreations().size() > 0 &&
+				leaf1.getCreations().get(0) instanceof ObjectCreation &&
+				leaf2.getCreations().get(0) instanceof ObjectCreation) {
 			ObjectCreation creation1 = (ObjectCreation) leaf1.getCreations().get(0);
 			ObjectCreation creation2 = (ObjectCreation) leaf2.getCreations().get(0);
 			if(creation1.isArray() && creation2.isArray() && creation1.getAnonymousClassDeclaration() != null && creation2.getAnonymousClassDeclaration() != null) {
 				List<ObjectCreation> nestedCreations1 = new ArrayList<ObjectCreation>();
 				for(int i=1; i<leaf1.getCreations().size(); i++) {
-					if(creation1.getLocationInfo().subsumes(leaf1.getCreations().get(i).getLocationInfo())) {
+					if(creation1.getLocationInfo().subsumes(leaf1.getCreations().get(i).getLocationInfo()) && leaf1.getCreations().get(i) instanceof ObjectCreation) {
 						nestedCreations1.add((ObjectCreation) leaf1.getCreations().get(i));
 					}
 				}
 				List<ObjectCreation> nestedCreations2 = new ArrayList<ObjectCreation>();
 				for(int i=1; i<leaf2.getCreations().size(); i++) {
-					if(creation2.getLocationInfo().subsumes(leaf2.getCreations().get(i).getLocationInfo())) {
+					if(creation2.getLocationInfo().subsumes(leaf2.getCreations().get(i).getLocationInfo()) && leaf2.getCreations().get(i) instanceof ObjectCreation) {
 						nestedCreations2.add((ObjectCreation) leaf2.getCreations().get(i));
 					}
 				}

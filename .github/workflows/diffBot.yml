@@ -19,18 +19,25 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const commentBody = context.payload.comment.body;
+            let body = "";
+            if (context.payload.issue && context.eventName === "issues") {
+            body = context.payload.issue.body || "";
+            console.log("Checking issue body...");
+            } else if (context.payload.comment && context.eventName === "issue_comment") {
+            body = context.payload.comment.body || "";
+            console.log("Checking comment body...");
+            }
             const regexScreenshot = /@diff\s+(\S+)\s+(\S+)/;  // Match URL + screenshot flag
             const regexArtifact = /@diff\s+(\S+)/;  // Match only URL
     
-            let match = commentBody.match(regexScreenshot);
+            let match = body.match(regexScreenshot);
             if (match) {
               core.setOutput('triggered', 'true');
               core.setOutput('url', match[1].trim()); 
               core.setOutput('screenshot', match[2].trim());
               core.setOutput('mode', 'screenshot');
             } else {
-              match = commentBody.match(regexArtifact);
+              match = body.match(regexArtifact);
               if (match) {
                 core.setOutput('triggered', 'true');
                 core.setOutput('url', match[1].trim()); 

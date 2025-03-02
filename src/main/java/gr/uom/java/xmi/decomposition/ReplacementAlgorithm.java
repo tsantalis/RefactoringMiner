@@ -101,8 +101,10 @@ public class ReplacementAlgorithm {
 		AbstractCall invocationCoveringTheEntireStatement2 = statement2.invocationCoveringEntireFragment();
 		AbstractCall assignmentInvocationCoveringTheEntireStatement1 = invocationCoveringTheEntireStatement1 == null ? statement1.assignmentInvocationCoveringEntireStatement() : invocationCoveringTheEntireStatement1;
 		AbstractCall assignmentInvocationCoveringTheEntireStatement2 = invocationCoveringTheEntireStatement2 == null ? statement2.assignmentInvocationCoveringEntireStatement() : invocationCoveringTheEntireStatement2;
-		ObjectCreation creationCoveringTheEntireStatement1 = statement1.creationCoveringEntireFragment();
-		ObjectCreation creationCoveringTheEntireStatement2 = statement2.creationCoveringEntireFragment();
+		AbstractCall temp1 = statement1.creationCoveringEntireFragment();
+		ObjectCreation creationCoveringTheEntireStatement1 = temp1 instanceof ObjectCreation ? (ObjectCreation)temp1 : null;
+		AbstractCall temp2 = statement2.creationCoveringEntireFragment();
+		ObjectCreation creationCoveringTheEntireStatement2 = temp2 instanceof ObjectCreation ? (ObjectCreation)temp2 : null;
 		AbstractCall assignmentCreationCoveringTheEntireStatement1 = creationCoveringTheEntireStatement1 == null ? statement1.assignmentCreationCoveringEntireStatement() : creationCoveringTheEntireStatement1;
 		AbstractCall assignmentCreationCoveringTheEntireStatement2 = creationCoveringTheEntireStatement2 == null ? statement2.assignmentCreationCoveringEntireStatement() : creationCoveringTheEntireStatement2;
 		Map<String, List<AbstractCall>> methodInvocationMap1 = convertToMap(statement1.getMethodInvocations());
@@ -578,7 +580,7 @@ public class ReplacementAlgorithm {
 							creationCoveringTheEntireStatement1.getLocationInfo().equals(creation1.getLocationInfo())) {
 						creations1.remove(objectCreation1);
 					}
-					if(((ObjectCreation)creation1).getAnonymousClassDeclaration() != null) {
+					if(creation1 instanceof ObjectCreation && ((ObjectCreation)creation1).getAnonymousClassDeclaration() != null) {
 						creations1.remove(objectCreation1);
 					}
 				}
@@ -612,7 +614,7 @@ public class ReplacementAlgorithm {
 							creationCoveringTheEntireStatement2.getLocationInfo().equals(creation2.getLocationInfo())) {
 						creations2.remove(objectCreation2);
 					}
-					if(((ObjectCreation)creation2).getAnonymousClassDeclaration() != null) {
+					if(creation2 instanceof ObjectCreation && ((ObjectCreation)creation2).getAnonymousClassDeclaration() != null) {
 						creations2.remove(objectCreation2);
 					}
 				}
@@ -2737,7 +2739,7 @@ public class ReplacementAlgorithm {
 							}
 						}
 						Replacement replacement = new ObjectCreationReplacement(creation1.actualString(),
-								creationCoveringTheEntireStatement2.actualString(), (ObjectCreation)creation1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);
+								creationCoveringTheEntireStatement2.actualString(), creation1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);
 						replacementInfo.addReplacement(replacement);
 						return replacementInfo.getReplacements();
 					}
@@ -3042,38 +3044,38 @@ public class ReplacementAlgorithm {
 					}
 					else if(objectCreation1.reorderedArguments(creationCoveringTheEntireStatement2)) {
 						Replacement replacement = new ObjectCreationReplacement(objectCreation1.actualString(),
-								creationCoveringTheEntireStatement2.actualString(), (ObjectCreation)objectCreation1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);
+								creationCoveringTheEntireStatement2.actualString(), objectCreation1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);
 						replacementInfo.addReplacement(replacement);
 						return replacementInfo.getReplacements();
 					}
 					else if(objectCreation1.identicalWithDifferentNumberOfArguments(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, varArgsParameter)) {
 						Replacement replacement = new ObjectCreationReplacement(objectCreation1.actualString(),
-								creationCoveringTheEntireStatement2.actualString(), (ObjectCreation)objectCreation1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);
+								creationCoveringTheEntireStatement2.actualString(), objectCreation1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);
 						replacementInfo.addReplacement(replacement);
 						return replacementInfo.getReplacements();
 					}
 					else if(objectCreation1.inlinedStatementBecomesAdditionalArgument(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), replacementInfo.getStatements1())) {
 						Replacement replacement = new ObjectCreationReplacement(objectCreation1.actualString(),
-								creationCoveringTheEntireStatement2.actualString(), (ObjectCreation)objectCreation1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);
+								creationCoveringTheEntireStatement2.actualString(), objectCreation1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);
 						replacementInfo.addReplacement(replacement);
 						return replacementInfo.getReplacements();
 					}
 					else if(objectCreation1.compatibleName(creationCoveringTheEntireStatement2) && objectCreation1.equalArguments(creationCoveringTheEntireStatement2) && objectCreation1.identicalExpression(creationCoveringTheEntireStatement2) &&
 							variableDeclarations1.size() == variableDeclarations2.size()) {
 						Replacement replacement = new ObjectCreationReplacement(objectCreation1.actualString(),
-								creationCoveringTheEntireStatement2.actualString(), (ObjectCreation)objectCreation1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION);
+								creationCoveringTheEntireStatement2.actualString(), objectCreation1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION);
 						replacementInfo.addReplacement(replacement);
 						return replacementInfo.getReplacements();
 					}
 					//check if the argument lists are identical after replacements
 					if(objectCreation1.identicalName(creationCoveringTheEntireStatement2) &&
 							objectCreation1.identicalExpression(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
-						if(((ObjectCreation)objectCreation1).isArray() && creationCoveringTheEntireStatement2.isArray() && s1.contains("[") && s2.contains("[") &&
+						if(objectCreation1 instanceof ObjectCreation && ((ObjectCreation)objectCreation1).isArray() && creationCoveringTheEntireStatement2.isArray() && s1.contains("[") && s2.contains("[") &&
 								s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).equals(s2.substring(s2.indexOf("[")+1, s2.lastIndexOf("]"))) &&
 								s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).length() > 0) {
 							return replacementInfo.getReplacements();
 						}
-						if(!((ObjectCreation)objectCreation1).isArray() && !creationCoveringTheEntireStatement2.isArray() && s1.contains("(") && s2.contains("(") &&
+						if(objectCreation1 instanceof ObjectCreation && !((ObjectCreation)objectCreation1).isArray() && !creationCoveringTheEntireStatement2.isArray() && s1.contains("(") && s2.contains("(") &&
 								s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).equals(s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"))) &&
 								s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).length() > 0) {
 							return replacementInfo.getReplacements();
@@ -3147,7 +3149,7 @@ public class ReplacementAlgorithm {
 					for(AbstractCall c2 : creationMap2.get(creation2)) {
 						for(String creation1 : creations1) {
 							for(AbstractCall c1 : creationMap1.get(creation1)) {
-								if(((ObjectCreation)c1).getType().compatibleTypes(((ObjectCreation)c2).getType()) && c1.equalArguments(c2)) {
+								if(c1 instanceof ObjectCreation && c2 instanceof ObjectCreation && ((ObjectCreation)c1).getType().compatibleTypes(((ObjectCreation)c2).getType()) && c1.equalArguments(c2)) {
 									replacementInfo.addReplacement(r);
 									addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
 									return replacementInfo.getReplacements();
@@ -3189,7 +3191,7 @@ public class ReplacementAlgorithm {
 					for(AbstractCall c1 : creationMap1.get(creation1)) {
 						for(String creation2 : creations2) {
 							for(AbstractCall c2 : creationMap2.get(creation2)) {
-								if(((ObjectCreation)c1).getType().compatibleTypes(((ObjectCreation)c2).getType()) && c1.equalArguments(c2)) {
+								if(c1 instanceof ObjectCreation && c2 instanceof ObjectCreation && ((ObjectCreation)c1).getType().compatibleTypes(((ObjectCreation)c2).getType()) && c1.equalArguments(c2)) {
 									replacementInfo.addReplacement(r);
 									addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
 									return replacementInfo.getReplacements();
@@ -3300,13 +3302,13 @@ public class ReplacementAlgorithm {
 									}
 									if(creation1.equalArguments(invocation2) && creation1.arguments().size() > 0) {
 										Replacement replacement = new ClassInstanceCreationWithMethodInvocationReplacement(creation1.getName(),
-												invocation2.getName(), (ObjectCreation)creation1, invocation2, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION);
+												invocation2.getName(), creation1, invocation2, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION);
 										replacementInfo.addReplacement(replacement);
 										return replacementInfo.getReplacements();
 									}
 									else if(invocation2.arguments().size() == 1 && invocation2.arguments().contains(creation1.actualString())) {
 										Replacement replacement = new ClassInstanceCreationWithMethodInvocationReplacement(creation1.getName(),
-												invocation2.getName(), (ObjectCreation)creation1, invocation2, ReplacementType.CLASS_INSTANCE_CREATION_WRAPPED_IN_METHOD_INVOCATION);
+												invocation2.getName(), creation1, invocation2, ReplacementType.CLASS_INSTANCE_CREATION_WRAPPED_IN_METHOD_INVOCATION);
 										replacementInfo.addReplacement(replacement);
 										return replacementInfo.getReplacements();
 									}
@@ -3341,13 +3343,13 @@ public class ReplacementAlgorithm {
 								if(statement2.getString().endsWith(key2 + JAVA.STATEMENT_TERMINATION)) {
 									if(invocation1.equalArguments(creation2) && invocation1.arguments().size() > 0) {
 										Replacement replacement = new MethodInvocationWithClassInstanceCreationReplacement(invocation1.getName(),
-												creation2.getName(), invocation1, (ObjectCreation)creation2, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_CLASS_INSTANCE_CREATION);
+												creation2.getName(), invocation1, creation2, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_CLASS_INSTANCE_CREATION);
 										replacementInfo.addReplacement(replacement);
 										return replacementInfo.getReplacements();
 									}
 									else if(creation2.arguments().size() == 1 && creation2.arguments().contains(invocation1.actualString())) {
 										Replacement replacement = new MethodInvocationWithClassInstanceCreationReplacement(invocation1.getName(),
-												creation2.getName(), invocation1, (ObjectCreation)creation2, ReplacementType.METHOD_INVOCATION_WRAPPED_IN_CLASS_INSTANCE_CREATION);
+												creation2.getName(), invocation1, creation2, ReplacementType.METHOD_INVOCATION_WRAPPED_IN_CLASS_INSTANCE_CREATION);
 										replacementInfo.addReplacement(replacement);
 										return replacementInfo.getReplacements();
 									}
@@ -3419,7 +3421,7 @@ public class ReplacementAlgorithm {
 									MethodInvocationReplacement methodInvocationReplacement = (MethodInvocationReplacement)replacement;
 									AbstractCall invokedOperationAfter = methodInvocationReplacement.getInvokedOperationAfter();
 									r = new ClassInstanceCreationWithMethodInvocationReplacement(creation1.actualString(), invokedOperationAfter.actualString(),
-											(ObjectCreation)creation1, invokedOperationAfter, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION);
+											creation1, invokedOperationAfter, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION);
 									replacementInfo.addReplacement(r);
 									return replacementInfo.getReplacements();
 								}
@@ -3428,7 +3430,7 @@ public class ReplacementAlgorithm {
 									if(methodInvocationReplacement.getDirection().equals(Direction.VARIABLE_TO_INVOCATION)) {
 										AbstractCall invokedOperationAfter = methodInvocationReplacement.getInvokedOperation();
 										r = new ClassInstanceCreationWithMethodInvocationReplacement(creation1.actualString(), invokedOperationAfter.actualString(),
-												(ObjectCreation)creation1, invokedOperationAfter, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION);
+												creation1, invokedOperationAfter, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION);
 										replacementInfo.addReplacement(r);
 										return replacementInfo.getReplacements();
 									}

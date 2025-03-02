@@ -2648,7 +2648,7 @@ public class VariableReplacementAnalysis {
 					return true;
 				}
 			}
-			ObjectCreation creation = initializer.creationCoveringEntireFragment();
+			AbstractCall creation = initializer.creationCoveringEntireFragment();
 			if(creation != null) {
 				if(creation.arguments().contains(variableDeclaration.getVariableName())) {
 					return true;

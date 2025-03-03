@@ -30,6 +30,7 @@ Table of Contents
    * [Support for other programming languages](#support-for-other-programming-languages)
       * [Kotlin](#kotlin)
       * [Python](#python)
+      * [C++](#cpp)
    * [Refactoring detection API usage guidelines](#refactoring-detection-api-usage-guidelines)
       * [With a locally cloned git repository](#with-a-locally-cloned-git-repository)
       * [With two directories containing Java source code](#with-two-directories-containing-java-source-code)
@@ -832,6 +833,9 @@ The project is led and maintained by [Zarina Kurbatova](https://github.com/onewh
 ## Python
 * [PyRef](https://github.com/PyRef/PyRef) has been developed by Hassan Atwi and [Bin Lin](https://binlin.info/) from the Software Institute at USI - Università della Svizzera Italiana, Switzerland.
 * [Py-RefactoringMiner](https://github.com/maldil/RefactoringMiner) has been developed by [Malinda Dilhara](https://maldil.github.io/), a Ph.D. student in the department of Computer Science at University of Colorado Boulder under the suprevision of [Danny Dig](https://dig.cs.illinois.edu/).
+
+## Cpp
+* [RefactoringMiner++](https://github.com/benzoinoo/RefactoringMinerPP) has been developed by [Benjamin Ritz](https://github.com/benzoinoo) from Graz University of Technology, Austria.
 
 # Refactoring detection API usage guidelines
 ## With a locally cloned git repository

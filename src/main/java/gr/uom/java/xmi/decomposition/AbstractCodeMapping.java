@@ -679,6 +679,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							stringConcatMatch(initializer, before) ||
 							diamondClassInstanceCreationMatch(initializer, before) ||
 							reservedTokenMatch(initializer, replacement, before) ||
+							classInstanceCreationToCreationReference(initializer, before) ||
 							anonymousWithMethodSignatureChange(initializer, before, classDiff)) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						List<LeafExpression> subExpressions = getFragment1().findExpression(before);

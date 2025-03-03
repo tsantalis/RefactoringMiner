@@ -86,6 +86,36 @@
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic arraycopy(source T, sourcePos int, dest T, destPos int, length int) : T extracted from public toCharArray() : char[] in class org.apache.commons.lang3.text.StrBuilder & moved to class org.apache.commons.lang3.ArrayUtils",
           "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tsubarray : long[] to dest : T in method public arraycopy(source T, sourcePos int, dest T, destPos int, length int) : T from class org.apache.commons.lang3.ArrayUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tsubarray : short[] to dest : T in method public arraycopy(source T, sourcePos int, dest T, destPos int, length int) : T from class org.apache.commons.lang3.ArrayUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tsubarray : T[] to dest : T in method public arraycopy(source T, sourcePos int, dest T, destPos int, length int) : T from class org.apache.commons.lang3.ArrayUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tsubarray : int[] to dest : T in method public arraycopy(source T, sourcePos int, dest T, destPos int, length int) : T from class org.apache.commons.lang3.ArrayUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tchars : char[] to dest : T in method public arraycopy(source T, sourcePos int, dest T, destPos int, length int) : T from class org.apache.commons.lang3.ArrayUtils",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tnewArray : CharSequenceTranslator[] to dest : T in method public arraycopy(source T, sourcePos int, dest T, destPos int, length int) : T from class org.apache.commons.lang3.ArrayUtils",
+          "validation": true
         }
       ]
     },

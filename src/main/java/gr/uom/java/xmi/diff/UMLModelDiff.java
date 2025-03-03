@@ -3470,6 +3470,7 @@ public class UMLModelDiff {
 		refactorings.addAll(identifyExtractClassRefactorings(classMoveDiffList));
 		refactorings.addAll(identifyExtractClassRefactorings(innerClassMoveDiffList));
 		refactorings.addAll(identifyExtractClassRefactorings(classRenameDiffList));
+		inferPushDownRefactorings();
 		checkForOperationMovesBetweenCommonClasses();
 		checkForOperationMovesIncludingRemovedAndAddedClasses();
 		List<UMLOperation> addedAndExtractedOperationsInCommonClasses = getAddedAndExtractedOperationsInCommonClasses();
@@ -5318,6 +5319,23 @@ public class UMLModelDiff {
 		}
 		if(condition(addedOperations.size(), removedOperations.size())) {
 			checkForOperationMoves(addedOperations, removedOperations);
+		}
+	}
+
+	private void inferPushDownRefactorings() throws RefactoringMinerTimedOutException {
+		List<UMLOperation> addedOperations = getAddedOperationsInCommonClasses();
+		for(UMLClassDiff diff : commonClassDiffList) {
+			for(UMLOperationBodyMapper mapper : diff.getOperationBodyMapperList()) {
+				if(mapper.getOperationSignatureDiff().isPresent() && mapper.getOperationSignatureDiff().get().isAbstractionChanged() && mapper.getOperation2().isAbstract()) {
+					for(UMLOperation addedOperation : addedOperations) {
+						if(addedOperation.equalSignature(mapper.getOperation1())) {
+							UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper.getOperation1(), addedOperation, diff);
+							createRefactoring(mapper.getOperation1(), addedOperation, operationBodyMapper, false);
+							deleteAddedOperation(addedOperation);
+						}
+					}
+				}
+			}
 		}
 	}
 

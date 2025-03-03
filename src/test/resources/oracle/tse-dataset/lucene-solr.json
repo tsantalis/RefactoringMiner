@@ -1112,28 +1112,33 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprotected skipBytesSlowly(numBytes long) : void extracted from public skipBytes(numBytes long) : void in class org.apache.lucene.util.PagedBytes.PagedBytesDataInput",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprotected skipBytesSlowly(numBytes long) : void extracted from public skipBytes(numBytes long) : void in class org.apache.lucene.store.ByteBuffersDataInput",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprotected skipBytesSlowly(numBytes long) : void extracted from public skipBytes(numBytes long) : void in class org.apache.lucene.store.InputStreamDataInput",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprotected skipBytesSlowly(numBytes long) : void extracted from public skipBytes(numBytes long) : void in class org.apache.lucene.index.ByteSliceReader",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic skipBytes(numBytes long) : void renamed to protected skipBytesSlowly(numBytes long) : void in class org.apache.lucene.store.DataInput",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprotected skipBytesSlowly(numBytes long) : void extracted from public skipBytes(numBytes long) : void in class org.apache.lucene.store.DataInput",
           "validation": true
         }
       ]

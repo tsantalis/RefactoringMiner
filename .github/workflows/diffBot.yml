@@ -51,7 +51,7 @@ jobs:
       # Step 1: Run the exporter
       - name: Running the RM action exporter
         if : ${{ steps.trigger.outputs.triggered == 'true'}}
-        uses: pouryafard75/refactoringminer-astdiff-exporter@v1.1
+        uses: pouryafard75/refactoringminer-astdiff-exporter@v1.1.2
         id: run_rm_exporter
         with:
           OAuthToken: ${{ secrets.OAUTHTOKEN }}

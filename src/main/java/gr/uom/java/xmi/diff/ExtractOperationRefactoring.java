@@ -17,10 +17,12 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
@@ -273,6 +275,36 @@ public class ExtractOperationRefactoring implements Refactoring {
 						return true;
 					}
 				}
+			}
+		}
+		else {
+			for(Refactoring r : mapping.getRefactorings()) {
+				if(r instanceof InlineVariableRefactoring) {
+					InlineVariableRefactoring inline = (InlineVariableRefactoring)r;
+					if(inline.getReferences().contains(mapping) && bodyMapper.getParentMapper() != null) {
+						for(AbstractCodeMapping parentMapping : bodyMapper.getParentMapper().getMappings()) {
+							if(bodyMapper.containsExtractedOperationInvocation(parentMapping)) {
+								List<LeafExpression> leafExpressions2 = parentMapping.getFragment2().findExpression(argument);
+								AbstractExpression initializer = inline.getVariableDeclaration().getInitializer();
+								if(leafExpressions2.size() >= 1 && initializer != null && classInstanceCreationToCreationReference(initializer, argument)) {
+									LeafMapping expressionMapping = new LeafMapping(initializer, leafExpressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
+									argumentMappings.add(expressionMapping);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean classInstanceCreationToCreationReference(AbstractExpression initializer, String replacedExpression) {
+		AbstractCall creation = initializer.creationCoveringEntireFragment();
+		if(creation instanceof ObjectCreation) {
+			UMLType type = ((ObjectCreation)creation).getType();
+			if(replacedExpression.startsWith(type + JAVA.METHOD_REFERENCE + "new")) {
+				return true;
 			}
 		}
 		return false;

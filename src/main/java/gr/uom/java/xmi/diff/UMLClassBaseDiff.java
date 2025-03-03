@@ -1275,6 +1275,38 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return false;
 	}
 
+	private boolean conflictingPairs(List<Pair<UMLOperation, UMLOperation>> pairs) {
+		Map<UMLOperation, Integer> removedOperationCountMap = new LinkedHashMap<>();
+		Map<UMLOperation, Integer> addedOperationCountMap = new LinkedHashMap<>();
+		for(Pair<UMLOperation, UMLOperation> p : pairs) {
+			UMLOperation removedOperation = p.getLeft();
+			if(removedOperationCountMap.containsKey(removedOperation)) {
+				removedOperationCountMap.put(removedOperation, removedOperationCountMap.get(removedOperation) + 1);
+			}
+			else {
+				removedOperationCountMap.put(removedOperation, 1);
+			}
+			UMLOperation addedOperation = p.getRight();
+			if(addedOperationCountMap.containsKey(addedOperation)) {
+				addedOperationCountMap.put(addedOperation, addedOperationCountMap.get(addedOperation) + 1);
+			}
+			else {
+				addedOperationCountMap.put(addedOperation, 1);
+			}
+		}
+		for(Integer count : removedOperationCountMap.values()) {
+			if(count > 1) {
+				return true;
+			}
+		}
+		for(Integer count : addedOperationCountMap.values()) {
+			if(count > 1) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void checkForOperationSignatureChanges() throws RefactoringMinerTimedOutException {
 		if(parameterTypeChanges(removedOperations, addedOperations)) {
 			this.consistentMethodInvocationRenames = new HashMap<MethodInvocationReplacement, UMLOperationBodyMapper>();
@@ -1303,7 +1335,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			return;
 		}
 		List<Pair<UMLOperation, UMLOperation>> pairs = operationAlignment(removedOperations, addedOperations);
-		if(pairs.size() == Math.min(removedOperations.size(), addedOperations.size())) {
+		if(pairs.size() == Math.min(removedOperations.size(), addedOperations.size()) && !conflictingPairs(pairs)) {
 			consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
 			Set<VariableDeclarationContainer> removedOperationsToBeRemoved = new LinkedHashSet<>();
 			Set<VariableDeclarationContainer> addedOperationsToBeRemoved = new LinkedHashSet<>();

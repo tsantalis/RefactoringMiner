@@ -1279,6 +1279,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		Map<UMLOperation, Integer> removedOperationCountMap = new LinkedHashMap<>();
 		Map<UMLOperation, Integer> addedOperationCountMap = new LinkedHashMap<>();
 		for(Pair<UMLOperation, UMLOperation> p : pairs) {
+			if(p.getLeft().getName().equals(p.getRight().getName())) {
+				continue;
+			}
 			UMLOperation removedOperation = p.getLeft();
 			if(removedOperationCountMap.containsKey(removedOperation)) {
 				removedOperationCountMap.put(removedOperation, removedOperationCountMap.get(removedOperation) + 1);

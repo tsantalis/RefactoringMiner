@@ -1321,22 +1321,30 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				updateMapperSet(mapperSet, removedOperation, addedOperation, maxDifferenceInPosition);
 				if(!mapperSet.isEmpty()) {
 					UMLOperationBodyMapper bestMapper = mapperSet.first();
-					removedOperationsToBeRemoved.add(removedOperation);
-					addedOperationsToBeRemoved.add(addedOperation);
-					if(!removedOperation.getName().equals(addedOperation.getName()) &&
-							!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
-						Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);
-						RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper, callReferences);
-						refactorings.add(rename);
-					}
-					for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-						if(containCallToOperation(bestMapper.getContainer1(), mapper.getContainer1()) && containCallToOperation(bestMapper.getContainer2(), mapper.getContainer2())) {
-							Pair<UMLOperationBodyMapper, UMLOperationBodyMapper> pair = Pair.of(bestMapper, mapper);
-							calledBy.add(pair);
+					if(bestMapper.getOperation1().equalSignature(bestMapper.getOperation2()) || (!containsMapperForOperation1(bestMapper.getOperation1()) && !containsMapperForOperation2(bestMapper.getOperation2()))) {
+						removedOperationsToBeRemoved.add(removedOperation);
+						addedOperationsToBeRemoved.add(addedOperation);
+						if(!removedOperation.getName().equals(addedOperation.getName()) &&
+								!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
+							Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);
+							RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper, callReferences);
+							refactorings.add(rename);
 						}
+						for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+							if(containCallToOperation(bestMapper.getContainer1(), mapper.getContainer1()) && containCallToOperation(bestMapper.getContainer2(), mapper.getContainer2())) {
+								Pair<UMLOperationBodyMapper, UMLOperationBodyMapper> pair = Pair.of(bestMapper, mapper);
+								calledBy.add(pair);
+							}
+						}
+						this.addOperationBodyMapper(bestMapper);
+						consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
 					}
-					this.addOperationBodyMapper(bestMapper);
-					consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
+					else {
+						removedOperationsToBeRemoved.add(removedOperation);
+						addedOperationsToBeRemoved.add(addedOperation);
+						ExtractOperationRefactoring extract = new ExtractOperationRefactoring(bestMapper, bestMapper.getContainer2(), Collections.emptyList());
+						this.refactorings.add(extract);
+					}
 				}
 			}
 			removedOperations.removeAll(removedOperationsToBeRemoved);

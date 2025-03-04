@@ -79,6 +79,28 @@ public class UMLParameterDiff {
 			typeChanged = true;
 		else if(removedParameter.getType() != null && addedParameter.getType() != null && !removedParameter.getType().equalsQualified(addedParameter.getType()))
 			qualifiedTypeChanged = true;
+		if(!typeChanged && !qualifiedTypeChanged) {
+			UMLParameter removedUMLParameter = null;
+			for(UMLParameter parameter : removedOperation.getParametersWithoutReturnType()) {
+				if(parameter.getVariableDeclaration().equals(removedParameter)) {
+					removedUMLParameter = parameter;
+					break;
+				}
+			}
+			UMLParameter addedUMLParameter = null;
+			for(UMLParameter parameter : addedOperation.getParametersWithoutReturnType()) {
+				if(parameter.getVariableDeclaration().equals(addedParameter)) {
+					addedUMLParameter = parameter;
+					break;
+				}
+			}
+			if(removedUMLParameter != null && addedUMLParameter != null && removedUMLParameter.isVarargs() && !addedUMLParameter.isVarargs()) {
+				varArgsChanged = true;
+			}
+			if(removedUMLParameter != null && addedUMLParameter != null && !removedUMLParameter.isVarargs() && addedUMLParameter.isVarargs()) {
+				varArgsChanged = true;
+			}
+		}
 		if(removedParameter.getType() != null && addedParameter.getType() != null && !removedParameter.getType().toString().equals(addedParameter.getType().toString()))
 			typeChanged = true;
 		if(!removedParameter.getVariableName().equals(addedParameter.getVariableName()))

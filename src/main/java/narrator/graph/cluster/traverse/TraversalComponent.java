@@ -5,14 +5,11 @@ import narrator.llm.GroqClient;
 import narrator.llm.Prompts;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TraversalComponent extends TraversalPattern {
     private List<TraversalPattern> components;
-    private Set<Node> reasons;
+    protected Set<Node> reasons;
     private ReasonType reasonType;
 
     TraversalComponent(List<TraversalPattern> components, Set<Node> reasons, ReasonType reasonType) {
@@ -23,9 +20,8 @@ public class TraversalComponent extends TraversalPattern {
 
     @Override
     public boolean containsNode(Node node) {
-        Node foundNode = getGraph().vertexSet().stream()
-                .filter(reasonNode -> reasonNode.equals(node))
-                .findFirst().orElse(null);
+        Node foundNode =
+                getGraph().vertexSet().stream().filter(reasonNode -> reasonNode.equals(node)).findFirst().orElse(null);
         if (foundNode != null) {
             return true;
         }
@@ -63,6 +59,11 @@ public class TraversalComponent extends TraversalPattern {
     }
 
     @Override
+    public String textualRepresentation() {
+        return String.join("\n\n", reasons.stream().map(Node::textualRepresentation).toList());
+    }
+
+    @Override
     public String description() throws IOException {
         String descriptionCache = super.description();
         if (descriptionCache != null) {
@@ -73,7 +74,8 @@ public class TraversalComponent extends TraversalPattern {
         for (TraversalPattern component : components) {
             componentsDescription.add(component.description());
         }
-        String generatedDescription = GroqClient.generate(Prompts.getComponentPatternPrompt(componentsDescription, reasons, reasonType));
+        String generatedDescription = GroqClient.generate(Prompts.getComponentPrompt(componentsDescription, reasons,
+                reasonType));
 
         setDescriptionCache(generatedDescription);
 

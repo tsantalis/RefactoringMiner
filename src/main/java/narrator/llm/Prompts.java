@@ -1,11 +1,14 @@
 package narrator.llm;
 
+import com.github.gumtreediff.utils.Pair;
 import narrator.graph.Node;
 import narrator.graph.cluster.traverse.ReasonType;
+import narrator.graph.cluster.traverse.UsagePattern;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Prompts {
@@ -36,7 +39,8 @@ public class Prompts {
         return String.format(successivePatternTemplate, textualRepresentation);
     }
 
-    public static String getDeclarationPatternPrompt(String declarationsRepresentation, String useRepresentation, String extensionsRepresentation) {
+    public static String getDeclarationPatternPrompt(String declarationsRepresentation, String useRepresentation,
+                                                     String extensionsRepresentation) {
         StringBuilder result = new StringBuilder();
 
         result.append(String.format("""
@@ -78,11 +82,54 @@ public class Prompts {
         return result.toString();
     }
 
-    public static String getComponentPatternPrompt(List<String> componentsDescription) throws IOException {
-        return getComponentPatternPrompt(componentsDescription, null, null);
+    private static String getUsagePrompt(UsagePattern usagePattern, String extension) {
+        List<Pair<String, String>> useDecRepresentations = usagePattern.useDecRepresentations();
+
+        StringBuilder result = new StringBuilder();
+
+        result.append("""
+                The following code snippets have been added to a Java project in a commit:
+                """);
+
+        for (Pair<String, String> useDecRepresentation : useDecRepresentations) {
+            String useRepresentation = useDecRepresentation.first;
+            String decRepresentation = useDecRepresentation.second;
+
+            result.append(String.format("""
+                    
+                    ```
+                    %s
+                    
+                    ---
+                    
+                    %s
+                    ```
+                    """, useRepresentation, decRepresentation));
+
+        }
+
+        result.append("""
+                
+                As a review assistant, your task is to help the reviewer understand the purpose of these added code snippets by describing all evident intentions behind them.
+                """);
+
+        if (extension != null) {
+            result.append(extension);
+        }
+
+        return result.toString();
     }
 
-    public static String getComponentPatternPrompt(List<String> componentsDescription, Set<Node> reasons, ReasonType reasonType) throws IOException {
+    public static String getUsagePatternPrompt(UsagePattern usagePattern) {
+        return getUsagePrompt(usagePattern, null);
+    }
+
+    public static String getComponentPrompt(List<String> componentsDescription) {
+        return getComponentPrompt(componentsDescription, null, null);
+    }
+
+    public static String getComponentPrompt(List<String> componentsDescription, Set<Node> reasons,
+                                            ReasonType reasonType) {
         String templateInput = "";
 
         templateInput += getComponentsString(componentsDescription);
@@ -93,6 +140,30 @@ public class Prompts {
         }
 
         return String.format(componentTemplate, templateInput);
+    }
+
+    public static String getRequirementPrompt(UsagePattern head, Map<Node, String> requirementsDescription) {
+        StringBuilder extension = new StringBuilder();
+
+        extension.append("""
+                
+                To assist you in your task, here are the description of specific parts of the code snippets:
+                """);
+
+        for (Map.Entry<Node, String> requirementDescription : requirementsDescription.entrySet()) {
+            extension.append(String.format("""
+                    
+                    ```
+                    %s
+                    
+                    ---
+                    
+                    %s
+                    ```
+                    """, requirementDescription.getKey().textualRepresentation(), requirementDescription.getValue()));
+        }
+
+        return getUsagePrompt(head, extension.toString());
     }
 
     private static String getComponentsString(List<String> componentsDescription) {

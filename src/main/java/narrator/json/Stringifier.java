@@ -10,9 +10,7 @@ import narrator.graph.cluster.traverse.TraversalPattern;
 import narrator.llm.GroqClient;
 import narrator.llm.Prompts;
 import org.jgrapht.Graph;
-import org.json.JSONString;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
@@ -25,7 +23,8 @@ public class Stringifier {
         return graphObj.toString();
     }
 
-    private static JsonObject stringifyTraversalComponents(List<TraversalPattern> traversalComponents, String aggregatorId) throws IOException {
+    private static JsonObject stringifyTraversalComponents(List<TraversalPattern> traversalComponents,
+                                                           String aggregatorId) throws IOException {
         JsonArray nodesArray = new JsonArray();
         JsonArray edgesArray = new JsonArray();
 
@@ -40,7 +39,8 @@ public class Stringifier {
         return graphObj;
     }
 
-    private static void stringifyTraversalComponent(TraversalPattern traversalComponent, String aggregatorId, JsonArray nodes, JsonArray edges) throws IOException {
+    private static void stringifyTraversalComponent(TraversalPattern traversalComponent, String aggregatorId,
+                                                    JsonArray nodes, JsonArray edges) throws IOException {
         String id = traversalComponent.getId();
 
         if (traversalComponent instanceof TraversalComponent) {
@@ -53,14 +53,8 @@ public class Stringifier {
             edges.addAll(getEdgesArray(graph, id));
         }
 
-        nodes.add(getNode(
-                id,
-                aggregatorId,
-                "",
-                traversalComponent.textualRepresentation(),
-                traversalComponent.description(),
-                NodeType.AGGREGATOR)
-        );
+        nodes.add(getNode(id, aggregatorId, "", traversalComponent.textualRepresentation(),
+                traversalComponent.description(), NodeType.AGGREGATOR));
 
         Node lead = traversalComponent.getLead();
         edges.add(getEdge(id, getNodeId(lead.getId(), id), EdgeType.EXPANSION.name(), 1));
@@ -90,31 +84,17 @@ public class Stringifier {
             for (TraversalPattern component : components) {
                 componentsDescription.add(component.description());
             }
-            String clusterDescription = components.size() == 1 ?
-                    components.get(0).description()
-                    : GroqClient.generate(Prompts.getComponentPatternPrompt(componentsDescription));
-            nodesArray.add(getNode(
-                    clusterNodeId,
-                    commitNodeId,
-                    "",
-                    null,
-                    clusterDescription,
-                    NodeType.AGGREGATOR)
-            );
+            String clusterDescription = components.size() == 1 ? components.get(0).description() :
+                    GroqClient.generate(Prompts.getComponentPrompt(componentsDescription));
+            nodesArray.add(getNode(clusterNodeId, commitNodeId, "", null, clusterDescription, NodeType.AGGREGATOR));
             edgesArray.add(getEdge(commitNodeId, clusterNodeId, EdgeType.EXPANSION.name(), 1));
 
             clustersDescription.add(clusterDescription);
         }
 
-        String commitDescription = GroqClient.generate(Prompts.getComponentPatternPrompt(clustersDescription));
-        nodesArray.add(getNode(
-                commitNodeId,
-                "",
-                "",
-                null,
-                commitDescription,
-                NodeType.AGGREGATOR)
-        );
+        String commitDescription = clustersDescription.size() == 1 ? clustersDescription.get(0) :
+                GroqClient.generate(Prompts.getComponentPrompt(clustersDescription));
+        nodesArray.add(getNode(commitNodeId, "", "", null, commitDescription, NodeType.AGGREGATOR));
 
         JsonObject graphObj = new JsonObject();
         graphObj.add("nodes", nodesArray);
@@ -134,17 +114,8 @@ public class Stringifier {
             }
 
             // nodes can be repeated between components
-            nodesArray.add(getNode(
-                    getNodeId(node.getId(), aggregatorId),
-                    node.getId(),
-                    aggregatorId,
-                    node.getPath(),
-                    node.getContent(),
-                    null,
-                    node.getStartLine(),
-                    node.getEndLine(),
-                    node.getNodeType())
-            );
+            nodesArray.add(getNode(getNodeId(node.getId(), aggregatorId), node.getId(), aggregatorId, node.getPath(),
+                    node.getContent(), null, node.getStartLine(), node.getEndLine(), node.getNodeType()));
         }
 
         return nodesArray;
@@ -162,7 +133,8 @@ public class Stringifier {
 
                 Set<Edge> edges = graph.getAllEdges(source, target);
                 for (Edge edge : edges) {
-                    edgesArray.add(getEdge(getNodeId(source.getId(), aggregatorId), getNodeId(target.getId(), aggregatorId), edge.getType().name(), edge.getWeight()));
+                    edgesArray.add(getEdge(getNodeId(source.getId(), aggregatorId), getNodeId(target.getId(),
+                            aggregatorId), edge.getType().name(), edge.getWeight()));
                 }
             }
         }
@@ -170,16 +142,9 @@ public class Stringifier {
         return edgesArray;
     }
 
-    private static JsonObject getNode(
-            String id,
-            String hunkId,
-            String aggregatorId,
-            String file,
-            String textualRepresentation,
-            String description,
-            Integer startLine,
-            Integer endLine,
-            NodeType nodeType) {
+    private static JsonObject getNode(String id, String hunkId, String aggregatorId, String file,
+                                      String textualRepresentation, String description, Integer startLine,
+                                      Integer endLine, NodeType nodeType) {
         JsonObject nodeObj = new JsonObject();
 
         nodeObj.addProperty("id", id);
@@ -197,23 +162,9 @@ public class Stringifier {
         return nodeObj;
     }
 
-    private static JsonObject getNode(
-            String id,
-            String aggregatorId,
-            String file,
-            String textualRepresentation,
-            String description,
-            NodeType nodeType) {
-        return getNode(
-                id,
-                id,
-                aggregatorId,
-                file,
-                textualRepresentation,
-                description,
-                null,
-                null,
-                nodeType);
+    private static JsonObject getNode(String id, String aggregatorId, String file, String textualRepresentation,
+                                      String description, NodeType nodeType) {
+        return getNode(id, id, aggregatorId, file, textualRepresentation, description, null, null, nodeType);
     }
 
     private static JsonObject getEdge(String sourceId, String targetId, String type, float weight) {

@@ -258,16 +258,16 @@ public class TraversalEngine {
                 continue;
             }
 
-            List<TraversalPattern> requirementComponents =
-                    requirements.values().stream().map(usageComponentsRepresentative::get).toList();
-            List<TraversalPattern> overallComponents = Stream.concat(requirementComponents.stream(),
-                    Stream.of(subject)).toList();
-            TraversalComponent parentComponent = new TraversalComponent(overallComponents, requirements.keySet(),
-                    ReasonType.REQUIREMENT);
-
-            for (TraversalPattern component : overallComponents) {
-                components.remove(component);
+            Map<Node, TraversalPattern> requirementsMap = new HashMap<>();
+            for (Map.Entry<Node, UsagePattern> requirement : requirements.entrySet()) {
+                requirementsMap.put(requirement.getKey(), usageComponentsRepresentative.get(requirement.getValue()));
             }
+            TraversalComponent parentComponent = new RequirementComponent(subject, requirementsMap);
+
+            for (TraversalPattern requirement : requirementsMap.values()) {
+                components.remove(requirement);
+            }
+            components.remove(subject);
             components.add(parentComponent);
 
             usageComponents.remove(subject);

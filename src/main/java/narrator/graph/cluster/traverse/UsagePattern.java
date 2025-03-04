@@ -1,7 +1,11 @@
 package narrator.graph.cluster.traverse;
 
+import com.github.gumtreediff.utils.Pair;
 import narrator.graph.Node;
+import narrator.llm.GroqClient;
+import narrator.llm.Prompts;
 
+import java.io.IOException;
 import java.util.*;
 
 // TODO: add extensions
@@ -45,14 +49,31 @@ public class UsagePattern extends TraversalPattern {
         HashMap<Node, String> nodeResult = new HashMap<>();
 
         for (Node useNode : useNodes) {
-            Set<Node> usedNodes = util.getUsedNodes(useNode);
-            HashMap<Node, Set<Node>> contextNodes = util.getContextNodes(usedNodes.stream().toList());
-            String contextString = getContextString(contextNodes);
+            Pair<String, String> useDecStrings = useDecRepresentation(useNode);
+            String useString = useDecStrings.first;
+            String decString = useDecStrings.second;
 
-            nodeResult.put(useNode, useRepresentation(useNode) + "\n\n---\n\n" + "DECLARATIONS:\n\n" + contextString);
+            nodeResult.put(useNode, useString + "\n\n---\n\n" + "DECLARATIONS:\n\n" + decString);
         }
 
         return String.join("\n\n", nodeResult.values());
+    }
+
+    private Pair<String, String> useDecRepresentation(Node useNode) {
+        Set<Node> usedNodes = util.getUsedNodes(useNode);
+        HashMap<Node, Set<Node>> contextUsedNodes = util.getContextNodes(usedNodes.stream().toList());
+
+        return new Pair<>(useRepresentation(useNode), getContextString(contextUsedNodes));
+    }
+
+    public List<Pair<String, String>> useDecRepresentations() {
+        List<Pair<String, String>> result = new ArrayList<>();
+
+        for (Node useNode : useNodes) {
+            result.add(useDecRepresentation(useNode));
+        }
+
+        return result;
     }
 
     public String useRepresentation(Node useNode) {
@@ -109,5 +130,26 @@ public class UsagePattern extends TraversalPattern {
         int randomIndex = random.nextInt(nodes.size());
 
         return nodes.get(randomIndex);
+    }
+
+    @Override
+    public String description() throws IOException {
+        String descriptionCache = super.description();
+        if (descriptionCache != null) {
+            return descriptionCache;
+        }
+
+        // A UsagePattern with requirements can only get description within RequirementComponent
+        if (!requirements.isEmpty()) {
+            System.out.println("Something went wrong");
+            System.out.println(textualRepresentation());
+            return null;
+        }
+
+        String generatedDescription = GroqClient.generate(Prompts.getUsagePatternPrompt(this));
+
+        setDescriptionCache(generatedDescription);
+
+        return generatedDescription;
     }
 }

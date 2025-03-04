@@ -22,11 +22,11 @@ public class TraversalPattern extends GraphWrapper {
     }
 
     public String description() throws IOException {
-        if (descriptionCache != null) {
-            return descriptionCache;
-        }
+        return descriptionCache;
+    }
 
-        return null;
+    public String getDescriptionCache() {
+        return descriptionCache;
     }
 
     public Node getLead() {

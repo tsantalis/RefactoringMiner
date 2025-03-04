@@ -1018,6 +1018,12 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						after = callAfter.arguments().get(indexOfArgument1);
 					}
 				}
+				if(replacement instanceof CompositeReplacement) {
+					CompositeReplacement r = (CompositeReplacement)replacement;
+					if(r.getAdditionallyMatchedStatements1().contains(statement)) {
+						before = variableName;
+					}
+				}
 				if(before.startsWith(variableName + ".")) {
 					String suffixBefore = before.substring(variableName.length(), before.length());
 					if(after.endsWith(suffixBefore) || after.contains(suffixBefore)) {

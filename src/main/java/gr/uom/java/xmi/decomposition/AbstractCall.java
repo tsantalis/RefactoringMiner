@@ -818,9 +818,12 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public boolean inlinedStatementBecomesAdditionalArgument(AbstractCall call, Set<Replacement> replacements, List<? extends AbstractCodeFragment> statements) {
-		if(identicalName(call) && this.arguments.size() < call.arguments.size() && this.argumentIntersection(call).size() > 0) {
+		boolean argumentCondition = this.arguments.size() < call.arguments.size() ||
+				(this.arguments.size() <= call.arguments.size() && this.getCoverage().equals(call.getCoverage()));
+		if(identicalName(call) && argumentCondition && this.argumentIntersection(call).size() > 0) {
 			int matchedArguments = 0;
 			Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
+			Replacement initializerReplacement = null;
 			for(String arg : call.arguments) {
 				if(this.arguments.contains(arg)) {
 					matchedArguments++;
@@ -830,9 +833,11 @@ public abstract class AbstractCall extends LeafExpression {
 						if(statement.getVariableDeclarations().size() > 0) {
 							VariableDeclaration variableDeclaration = statement.getVariableDeclarations().get(0);
 							if(variableDeclaration.getInitializer() != null) {
-								if(arg.equals(variableDeclaration.getInitializer().getExpression())) {
+								if(arg.equals(variableDeclaration.getInitializer().getExpression()) || arg.endsWith(JAVA.LAMBDA_ARROW + variableDeclaration.getInitializer().getExpression()) ||
+										classInstanceCreationToCreationReference(variableDeclaration.getInitializer(), arg)) {
 									matchedArguments++;
 									additionallyMatchedStatements1.add(statement);
+									initializerReplacement = new CompositeReplacement(variableDeclaration.getInitializer().getExpression(), arg, additionallyMatchedStatements1, Collections.emptySet());
 									break;
 								}
 							}
@@ -842,9 +847,25 @@ public abstract class AbstractCall extends LeafExpression {
 			}
 			if(matchedArguments == call.arguments.size()) {
 				if(additionallyMatchedStatements1.size() > 0) {
-					CompositeReplacement r = new CompositeReplacement(this.actualString(), call.actualString(), additionallyMatchedStatements1, Collections.emptySet());
-					replacements.add(r);
+					if(initializerReplacement != null) {
+						replacements.add(initializerReplacement);
+					}
+					else {
+						CompositeReplacement r = new CompositeReplacement(this.actualString(), call.actualString(), additionallyMatchedStatements1, Collections.emptySet());
+						replacements.add(r);
+					}
 				}
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean classInstanceCreationToCreationReference(AbstractExpression initializer, String replacedExpression) {
+		AbstractCall creation = initializer.creationCoveringEntireFragment();
+		if(creation instanceof ObjectCreation) {
+			UMLType type = ((ObjectCreation)creation).getType();
+			if(replacedExpression.startsWith(type + JAVA.METHOD_REFERENCE + "new")) {
 				return true;
 			}
 		}

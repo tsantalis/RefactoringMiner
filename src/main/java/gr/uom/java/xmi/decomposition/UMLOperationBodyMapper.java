@@ -6506,6 +6506,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						AbstractCodeFragment leaf2 = leafIterator2.next();
 						if(!alreadyMatched2(leaf2)) {
 							int mappingsBefore = mappings.size();
+							int refactoringsBefore = refactorings.size();
 							ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf2, leaves1, leaves2);
 							Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 							if (replacements != null) {
@@ -6531,6 +6532,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									else {
 										break;
 									}
+								}
+								List<Refactoring> orderedRefactorings = new ArrayList<>(refactorings);
+								for(int i=orderedRefactorings.size()-1; i>=0 && i>=refactoringsBefore; i--) {
+									Refactoring r = orderedRefactorings.get(i);
+									refactorings.remove(r);
 								}
 							}
 						}
@@ -6998,6 +7004,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						AbstractCodeFragment leaf1 = leafIterator1.next();
 						if(!alreadyMatched1(leaf1)) {
 							int mappingsBefore = mappings.size();
+							int refactoringsBefore = refactorings.size();
 							ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf2, leaves1, leaves2);
 							Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 							if (replacements != null) {
@@ -7020,6 +7027,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									else {
 										break;
 									}
+								}
+								List<Refactoring> orderedRefactorings = new ArrayList<>(refactorings);
+								for(int i=orderedRefactorings.size()-1; i>=0 && i>=refactoringsBefore; i--) {
+									Refactoring r = orderedRefactorings.get(i);
+									refactorings.remove(r);
 								}
 							}
 						}
@@ -7976,7 +7988,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			if(matchingVariableDeclarations1.size() == 1 && !streamCollector) {
+			if(matchingVariableDeclarations1.size() == 1 && !streamCollector && mapping.containsCompositeReplacement() == null) {
 				return false;
 			}
 		}

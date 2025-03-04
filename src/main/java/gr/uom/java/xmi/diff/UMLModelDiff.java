@@ -1389,6 +1389,9 @@ public class UMLModelDiff {
 	}
 
 	public void inferClassRenameBasedOnReferencesInStringLiterals() throws RefactoringMinerTimedOutException {
+		if(partialModel()) {
+			return;
+		}
 		Map<String, UMLClass> removedClassNameMap = new LinkedHashMap<>();
 		for(UMLClass removedClass : removedClasses) {
 			removedClassNameMap.put(removedClass.getNonQualifiedName(), removedClass);

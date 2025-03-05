@@ -1020,7 +1020,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 				if(replacement instanceof CompositeReplacement) {
 					CompositeReplacement r = (CompositeReplacement)replacement;
-					if(r.getAdditionallyMatchedStatements1().contains(statement)) {
+					if(r.getAdditionallyMatchedStatements1().contains(statement) &&
+							declaration.getScope().subsumes(getFragment1().getLocationInfo())) {
 						before = variableName;
 					}
 				}

@@ -540,48 +540,6 @@
 },
 {
 	"type": "Rename Variable",
-	"description": "Rename Variable operatorMemory : null to entry : null in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 206,
-		"endLine": 206,
-		"startColumn": 7,
-		"endColumn": 21,
-		"codeElementType": "LAMBDA_EXPRESSION_PARAMETER",
-		"description": "original variable declaration",
-		"codeElement": "operatorMemory : null"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 207,
-		"endLine": 207,
-		"startColumn": 9,
-		"endColumn": 78,
-		"codeElementType": "EXPRESSION_STATEMENT",
-		"description": "statement referencing the original variable",
-		"codeElement": null
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 208,
-		"endLine": 208,
-		"startColumn": 47,
-		"endColumn": 52,
-		"codeElementType": "LAMBDA_EXPRESSION_PARAMETER",
-		"description": "renamed variable declaration",
-		"codeElement": "entry : null"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 224,
-		"endLine": 224,
-		"startColumn": 9,
-		"endColumn": 69,
-		"codeElementType": "EXPRESSION_STATEMENT",
-		"description": "statement referencing the renamed variable",
-		"codeElement": null
-}]
-},
-{
-	"type": "Rename Variable",
 	"description": "Rename Variable operatorMemory : null to operatorAndMemory : null in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",

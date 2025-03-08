@@ -267,8 +267,10 @@ public class ExtractOperationRefactoring implements Refactoring {
 								}
 							}
 							if(!equalArgument) {
-								LeafMapping expressionMapping = new LeafMapping(expression1, expressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
-								argumentMappings.add(expressionMapping);
+								for(LeafExpression expression2 : expressions2) {
+									LeafMapping expressionMapping = new LeafMapping(expression1, expression2, sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
+									argumentMappings.add(expressionMapping);
+								}
 							}
 							occurrence++;
 						}

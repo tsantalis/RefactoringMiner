@@ -261,8 +261,10 @@ public class InlineOperationRefactoring implements Refactoring {
 								}
 							}
 							if(!equalArgument) {
-								LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expression2, targetOperationBeforeInline, targetOperationAfterInline);
-								argumentMappings.add(expressionMapping);
+								for(LeafExpression expression1 : expressions1) {
+									LeafMapping expressionMapping = new LeafMapping(expression1, expression2, targetOperationBeforeInline, targetOperationAfterInline);
+									argumentMappings.add(expressionMapping);
+								}
 							}
 							occurrence++;
 						}

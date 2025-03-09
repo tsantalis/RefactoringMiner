@@ -789,6 +789,39 @@
 },
 {
 	"type": "Encapsulate Attribute",
+	"description": "Encapsulate Attribute private mode : PersistentStoreMode from class org.apache.drill.exec.store.sys.PersistentStoreConfig.StoreConfigBuilder",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 93,
+		"endLine": 93,
+		"startColumn": 33,
+		"endColumn": 70,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private mode : PersistentStoreMode"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 93,
+		"endLine": 93,
+		"startColumn": 33,
+		"endColumn": 70,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "encapsulated attribute declaration",
+		"codeElement": "private mode : PersistentStoreMode"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 106,
+		"endLine": 109,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "added setter method",
+		"codeElement": "public mode(mode PersistentStoreMode) : StoreConfigBuilder<V>"
+}]
+},
+{
+	"type": "Encapsulate Attribute",
 	"description": "Encapsulate Attribute private numVirtualCpu : int from class org.apache.drill.exec.resourcemgr.NodeResources",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",

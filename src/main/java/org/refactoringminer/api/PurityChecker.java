@@ -2726,12 +2726,13 @@ Mapping state for Move Method refactoring purity:
                 originalOperation = ((UMLOperation) ((InlineOperationRefactoring) (refactoring)).getTargetOperationBeforeInline());
                 refactoredOperation = ((InlineOperationRefactoring) (refactoring)).getInlinedOperation();
 
-                if (modelDiff.findClassInChildModel(classAfterString).getSuperclass() != null) {
-                    classAfter.add(modelDiff.findClassInChildModel(classAfterString).getSuperclass().toString().replaceAll("<[^>]*>", ""));
+                UMLAbstractClass classInChildModel = modelDiff.findClassInChildModel(classAfterString);
+				if (classInChildModel != null && classInChildModel.getSuperclass() != null) {
+                    classAfter.add(classInChildModel.getSuperclass().toString().replaceAll("<[^>]*>", ""));
                 }
 
-                if (modelDiff.findClassInChildModel(classAfterString).getImplementedInterfaces() != null) {
-                    for (UMLType implementedInterface : modelDiff.findClassInChildModel(classAfterString).getImplementedInterfaces()) {
+                if (classInChildModel != null && classInChildModel.getImplementedInterfaces() != null) {
+                    for (UMLType implementedInterface : classInChildModel.getImplementedInterfaces()) {
                         classAfter.add(implementedInterface.toString().replaceAll("<[^>]*>", ""));
                     }
                 }

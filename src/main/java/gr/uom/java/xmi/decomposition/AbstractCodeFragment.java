@@ -488,6 +488,30 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return null;
 	}
 
+	public TernaryOperatorExpression ternaryOperatorCoveringEntireFragment() {
+		String statement = getString();
+		for(TernaryOperatorExpression ternary : getTernaryOperatorExpressions()) {
+			String methodInvocation = ternary.getString();
+			if((methodInvocation + JAVA.STATEMENT_TERMINATION).equals(statement) || methodInvocation.equals(statement) || ("!" + methodInvocation).equals(statement)) {
+				return ternary;
+			}
+			else if((JAVA.RETURN_SPACE + methodInvocation + JAVA.STATEMENT_TERMINATION).equals(statement)) {
+				return ternary;
+			}
+			else if(isCastExpressionCoveringEntireFragment(methodInvocation)) {
+				return ternary;
+			}
+			else if(expressionIsTheInitializerOfVariableDeclaration(methodInvocation)) {
+				return ternary;
+			}
+			else if(ternary.getLocationInfo().getCodeElementType().equals(CodeElementType.SUPER_CONSTRUCTOR_INVOCATION) ||
+					ternary.getLocationInfo().getCodeElementType().equals(CodeElementType.CONSTRUCTOR_INVOCATION)) {
+				return ternary;
+			}
+		}
+		return null;
+	}
+
 	public TernaryOperatorExpression assignmentTernaryOperatorCoveringEntireStatement() {
 		for(TernaryOperatorExpression invocation : getTernaryOperatorExpressions()) {
 			if(expressionIsTheRightHandSideOfAssignment(invocation.getString())) {

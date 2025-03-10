@@ -1137,6 +1137,40 @@ public class ReplacementAlgorithm {
 				findReplacements(ternaryExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CONDITIONAL_EXPRESSION, container1, container2, classDiff);
 			}
 		}
+		else if(!statement1.getTernaryOperatorExpressions().isEmpty() && !statement2.getTernaryOperatorExpressions().isEmpty() &&
+				statement1.getTernaryOperatorExpressions().size() == statement2.getTernaryOperatorExpressions().size()) {
+			TernaryOperatorExpression ternary1 = statement1.getTernaryOperatorExpressions().get(0);
+			TernaryOperatorExpression ternary2 = statement2.getTernaryOperatorExpressions().get(0);
+			int matches = 0;
+			if(ternary1.getCondition().getString().equals(ternary2.getCondition().getString())) {
+				matches++;
+			}
+			if(ternary1.getThenExpression().getString().equals(ternary2.getThenExpression().getString())) {
+				matches++;
+			}
+			else {
+				for(Replacement r : replacementInfo.getReplacements()) {
+					if(r.getBefore().equals(ternary1.getThenExpression().getString()) || r.getAfter().equals(ternary2.getThenExpression().getString())) {
+						matches++;
+						break;
+					}
+				}
+			}
+			if(ternary1.getElseExpression().getString().equals(ternary2.getElseExpression().getString())) {
+				matches++;
+			}
+			else {
+				for(Replacement r : replacementInfo.getReplacements()) {
+					if(r.getBefore().equals(ternary1.getElseExpression().getString()) || r.getAfter().equals(ternary2.getElseExpression().getString())) {
+						matches++;
+						break;
+					}
+				}
+			}
+			if(matches == 3 && statement1.ternaryOperatorCoveringEntireFragment() != null && statement2.ternaryOperatorCoveringEntireFragment() != null) {
+				return replacementInfo.getReplacements();
+			}
+		}
 		if(!statement1.getString().endsWith("=true;\n") && !statement1.getString().endsWith("=false;\n")) {
 			findReplacements(booleanLiterals1, arguments2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_ARGUMENT, container1, container2, classDiff);
 			findReplacements(booleanLiterals1, variables2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_VARIABLE, container1, container2, classDiff);

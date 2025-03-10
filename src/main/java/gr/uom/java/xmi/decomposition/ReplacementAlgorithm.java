@@ -1138,7 +1138,9 @@ public class ReplacementAlgorithm {
 			}
 		}
 		else if(!statement1.getTernaryOperatorExpressions().isEmpty() && !statement2.getTernaryOperatorExpressions().isEmpty() &&
-				statement1.getTernaryOperatorExpressions().size() == statement2.getTernaryOperatorExpressions().size()) {
+				statement1.getTernaryOperatorExpressions().size() == statement2.getTernaryOperatorExpressions().size() &&
+				statement1.ternaryOperatorCoveringEntireFragment() != null && statement2.ternaryOperatorCoveringEntireFragment() != null &&
+				statement1.getAnonymousClassDeclarations().isEmpty() && statement2.getAnonymousClassDeclarations().isEmpty()) {
 			TernaryOperatorExpression ternary1 = statement1.getTernaryOperatorExpressions().get(0);
 			TernaryOperatorExpression ternary2 = statement2.getTernaryOperatorExpressions().get(0);
 			int matches = 0;
@@ -1167,7 +1169,7 @@ public class ReplacementAlgorithm {
 					}
 				}
 			}
-			if(matches == 3 && statement1.ternaryOperatorCoveringEntireFragment() != null && statement2.ternaryOperatorCoveringEntireFragment() != null) {
+			if(matches == 3) {
 				return replacementInfo.getReplacements();
 			}
 		}

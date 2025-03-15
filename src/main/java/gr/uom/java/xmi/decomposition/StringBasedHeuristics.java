@@ -143,6 +143,28 @@ public class StringBasedHeuristics {
 			else if(diff2.isEmpty() && diff1.equals(JAVA.THIS_DOT)) {
 				return true;
 			}
+			List<String> parameterNameList1 = container1.getParameterNameList();
+			List<String> parameterNameList2 = container2.getParameterNameList();
+			if(diff1.isEmpty() && parameterNameList2.contains(diff2)) {
+				boolean skip = false;
+				for(Replacement r : info.getReplacements()) {
+					if(parameterNameList1.contains(r.getBefore())) {
+						skip = true;
+					}
+				}
+				if(!skip)
+					return true;
+			}
+			else if(diff2.isEmpty() && parameterNameList1.contains(diff1)) {
+				boolean skip = false;
+				for(Replacement r : info.getReplacements()) {
+					if(parameterNameList2.contains(r.getAfter())) {
+						skip = true;
+					}
+				}
+				if(!skip)
+					return true;
+			}
 			if(diff1.isEmpty() && (diff2.equals("+") || diff2.equals("-")) && commonSuffix.startsWith(JAVA.ASSIGNMENT)) {
 				return true;
 			}

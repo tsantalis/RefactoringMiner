@@ -817,9 +817,18 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
-	public boolean inlinedStatementBecomesAdditionalArgument(AbstractCall call, Set<Replacement> replacements, List<? extends AbstractCodeFragment> statements) {
-		boolean argumentCondition = this.arguments.size() < call.arguments.size() ||
-				(this.arguments.size() <= call.arguments.size() && this.getCoverage().equals(call.getCoverage()));
+	public boolean inlinedStatementBecomesAdditionalArgument(AbstractCall call, Set<Replacement> replacements, AbstractCodeFragment statement1, List<? extends AbstractCodeFragment> statements) {
+		boolean argumentCondition = false;
+		if(this.arguments.size() < call.arguments.size()) {
+			argumentCondition = true;
+		}
+		else if(this.arguments.size() <= call.arguments.size() && this.getCoverage().equals(call.getCoverage())) {
+			argumentCondition = true;
+		}
+		else if(this.arguments.size() <= call.arguments.size() && statement1.expressionIsWrappedInTheInitializerOfVariableDeclaration(this.getString()) &&
+				call.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL)) {
+			argumentCondition = true;
+		}
 		if(identicalName(call) && argumentCondition && this.argumentIntersection(call).size() > 0) {
 			int matchedArguments = 0;
 			Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();

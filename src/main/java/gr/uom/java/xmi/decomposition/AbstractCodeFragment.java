@@ -598,6 +598,26 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return false;
 	}
 
+	public boolean expressionIsWrappedInTheInitializerOfVariableDeclaration(String expression) {
+		List<VariableDeclaration> variableDeclarations = getVariableDeclarations();
+		if(variableDeclarations.size() > 0 && variableDeclarations.get(0).getInitializer() != null) {
+			String initializer = variableDeclarations.get(0).getInitializer().toString();
+			if(initializer.startsWith("new ")) {
+				return false;
+			}
+			if(initializer.contains(JAVA.TERNARY_CONDITION) && initializer.contains(JAVA.TERNARY_ELSE)) {
+				return false;
+			}
+			if(initializer.contains("(" + expression + ")") ||
+					initializer.contains("," + expression + ")") ||
+					initializer.contains("," + expression + ",") ||
+					initializer.contains("(" + expression + ",")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private boolean expressionIsTheRightHandSideOfAssignment(String expression) {
 		String statement = getString();
 		if(statement.contains(JAVA.ASSIGNMENT)) {

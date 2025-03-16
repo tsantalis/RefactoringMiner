@@ -1153,7 +1153,7 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	private boolean indexCondition(String statement, int index) {
-		return (arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows") || "Assert".equals(this.getExpression()))) || (statement.contains(" ? ") && statement.contains(" : "));
+		return (arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows") || "Assert".equals(this.getExpression()))) || (statement.contains(JAVA.TERNARY_CONDITION) && statement.contains(JAVA.TERNARY_ELSE));
 	}
 
 	public Replacement makeReplacementForReturnedArgument(String statement) {
@@ -1210,7 +1210,7 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public Replacement makeReplacementForWrappedLambda(String statement) {
-		if(argumentIsLambdaStatement(statement) && (arguments().size() == 1 || (statement.contains(" ? ") && statement.contains(" : ")))) {
+		if(argumentIsLambdaStatement(statement) && (arguments().size() == 1 || (statement.contains(JAVA.TERNARY_CONDITION) && statement.contains(JAVA.TERNARY_ELSE)))) {
 			return new Replacement(statement.substring(0, statement.length()-JAVA.STATEMENT_TERMINATION.length()), arguments().get(0),
 					ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION);
 		}
@@ -1252,7 +1252,7 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public Replacement makeReplacementForAssignedArgument(String statement) {
 		int index = argumentIsAssigned(statement);
-		if(index >= 0 && (arguments().size() == 1 || (statement.contains(" ? ") && statement.contains(" : ")))) {
+		if(index >= 0 && (arguments().size() == 1 || (statement.contains(JAVA.TERNARY_CONDITION) && statement.contains(JAVA.TERNARY_ELSE)))) {
 			return new Replacement(statement.substring(statement.indexOf(JAVA.ASSIGNMENT)+1, statement.length()-JAVA.STATEMENT_TERMINATION.length()),
 					arguments().get(index), ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION);
 		}

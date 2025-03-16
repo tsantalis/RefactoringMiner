@@ -373,7 +373,7 @@ public class StringBasedHeuristics {
 			for(String key1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
 					if(invocation1.actualString().equals(diff1) && invocation1.arguments().contains(diff2) &&
-							(invocation1.arguments().size() == 1 || (diff2.contains(" ? ") && diff2.contains(" : ")))) {
+							(invocation1.arguments().size() == 1 || (diff2.contains(JAVA.TERNARY_CONDITION) && diff2.contains(JAVA.TERNARY_ELSE)))) {
 						if(!variableDeclarationNameReplaced(variableDeclarations1, variableDeclarations2, info.getReplacements()) && !returnExpressionReplaced(s1, s2, info.getReplacements())) {
 							Replacement r = new VariableReplacementWithMethodInvocation(diff1, diff2, invocation1, Direction.INVOCATION_TO_VARIABLE);
 							info.addReplacement(r);
@@ -385,7 +385,7 @@ public class StringBasedHeuristics {
 			for(String key2 : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
 					if(invocation2.actualString().equals(diff2) && invocation2.arguments().contains(diff1) &&
-							(invocation2.arguments().size() == 1 || (diff1.contains(" ? ") && diff1.contains(" : ")))) {
+							(invocation2.arguments().size() == 1 || (diff1.contains(JAVA.TERNARY_CONDITION) && diff1.contains(JAVA.TERNARY_ELSE)))) {
 						if(!variableDeclarationNameReplaced(variableDeclarations1, variableDeclarations2, info.getReplacements()) && !returnExpressionReplaced(s1, s2, info.getReplacements())) {
 							Replacement r = new VariableReplacementWithMethodInvocation(diff1, diff2, invocation2, Direction.VARIABLE_TO_INVOCATION);
 							info.addReplacement(r);
@@ -2945,7 +2945,7 @@ public class StringBasedHeuristics {
 			}
 			boolean containsTernaryOperatorReplacement = false;
 			for(Replacement replacement : info.getReplacements()) {
-				if(replacement.getAfter().contains(" ? ") && replacement.getAfter().contains(" : ")) {
+				if(replacement.getAfter().contains(JAVA.TERNARY_CONDITION) && replacement.getAfter().contains(JAVA.TERNARY_ELSE)) {
 					containsTernaryOperatorReplacement = true;
 				}
 			}

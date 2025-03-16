@@ -3,7 +3,7 @@ function getEditorOptions(config, text) {
         value: text,
         readOnly: true,
         language: getLanguage(config),
-        automaticLayout: false,
+        automaticLayout: config.spv !== true,
         scrollBeyondLastLine: false,
         lineDecorationsWidth: 0,
         glyphMargin: false,

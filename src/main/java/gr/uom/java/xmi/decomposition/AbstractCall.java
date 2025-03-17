@@ -827,7 +827,25 @@ public abstract class AbstractCall extends LeafExpression {
 		}
 		else if(this.arguments.size() <= call.arguments.size() && statement1.expressionIsWrappedInTheInitializerOfVariableDeclaration(this.getString()) &&
 				call.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL)) {
-			argumentCondition = true;
+			boolean matchFound = false;
+			for(AbstractCodeFragment statement : statements) {
+				AbstractCall parentCall = statement.invocationCoveringEntireFragment();
+				AbstractCall parentCall1 = statement1.invocationCoveringEntireFragment();
+				if(parentCall != null && parentCall1 != null && statement.getVariableDeclarations().size() > 0 && statement1.getVariableDeclarations().size() > 0) {
+					VariableDeclaration v = statement.getVariableDeclarations().get(0);
+					VariableDeclaration v1 = statement1.getVariableDeclarations().get(0);
+					if(v.getVariableName().equals(v1.getVariableName())) {
+						break;
+					}
+					if(parentCall.identicalName(parentCall1) && parentCall.identicalExpression(parentCall1) && v.getScope().overlaps(v1.getScope())) {
+						matchFound = true;
+						break;
+					}
+				}
+			}
+			if(!matchFound) {
+				argumentCondition = true;
+			}
 		}
 		if(identicalName(call) && argumentCondition && this.argumentIntersection(call).size() > 0) {
 			int matchedArguments = 0;

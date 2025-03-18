@@ -4327,7 +4327,7 @@ public class UMLModelDiff {
 					}
 					if(removedOperationInvocations.size() > 0) {
 						for(AbstractCall removedOperationInvocation : removedOperationInvocations) {
-							if(!invocationMatchesWithAddedOperation(removedOperationInvocation, mapper.getContainer1(), mapper.getClassDiff(), mapper.getContainer2().getAllOperationInvocations())) {
+							if(!invocationMatchesWithAddedOperation(removedOperationInvocation, mapper.getContainer1(), mapper.getClassDiff(), mapper.getContainer2().getAllOperationInvocations()) && !setterInBuildChain(removedOperation, removedOperationInvocation, mapper.getContainer1())) {
 								List<String> arguments = removedOperationInvocation.arguments();
 								List<String> parameters = removedOperation.getParameterNameList();
 								Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
@@ -4448,6 +4448,23 @@ public class UMLModelDiff {
 				}
 			}
 		}
+	}
+
+	private boolean setterInBuildChain(UMLOperation removedOperation, AbstractCall removedOperationInvocation, VariableDeclarationContainer container1) {
+		if(container1.getBody() != null && removedOperation.isSetter()) {
+			for(AbstractCodeFragment leaf1 : container1.getBody().getCompositeStatement().getLeaves()) {
+				if(leaf1.getLocationInfo().subsumes(removedOperationInvocation.getLocationInfo())) {
+					AbstractCall invocation = leaf1.invocationCoveringEntireFragment();
+					if(invocation == null) {
+						invocation = leaf1.assignmentInvocationCoveringEntireStatement();
+					}
+					if(invocation != null && invocation.getName().equals("build")) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean alreadyMatchedRemovedOperation(UMLOperation removedOperation, UMLClassBaseDiff removedOperationClassDiff) {

@@ -6600,7 +6600,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								Set<AbstractCodeMapping> movedInIfElseBranch = movedInIfElseIfBranch(mappingSet);
 								Set<AbstractCodeMapping> movedOutOfIfElseBranch = movedOutOfIfElseIfBranch(mappingSet);
 								Set<AbstractCodeMapping> splitToMultipleAssignments = splitToMultipleAssignments(mappingSet);
-								if(movedInIfElseBranch.size() > 1) {
+								if(movedInIfElseBranch.size() > 1 && !mappingSet.first().hasIdenticalPreviousAndNextStatement()) {
 									for(AbstractCodeMapping mapping : movedInIfElseBranch) {
 										addToMappings((LeafMapping) mapping, mappingSet);
 										leaves2.remove(mapping.getFragment2());

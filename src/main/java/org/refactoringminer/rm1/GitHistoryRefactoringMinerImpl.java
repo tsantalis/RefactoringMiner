@@ -137,6 +137,29 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		logger.info(String.format("Analyzed %s [Commits: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, errorCommitsCount, refactoringsCount));
 	}
 
+	public List<Refactoring> detectRefactoringsForCommitRange(Repository repository, String startCommit, String endCommit) throws Exception {
+		Iterable<RevCommit> commits = new GitServiceImpl().createRevsWalkBetweenCommits(repository, startCommit, endCommit);
+		return detectRefactoringsForCommitRange(repository, commits);
+	}
+
+	protected List<Refactoring> detectRefactoringsForCommitRange(Repository repository, Iterable<RevCommit> commits) throws Exception {
+		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		
+		populateFileContentsForCommitRange(repository, commits, fileContentsBefore, repositoryDirectoriesBefore, fileContentsCurrent, repositoryDirectoriesCurrent);
+		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), false);
+		UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
+		UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
+		
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		List<Refactoring> refactoringsAtRevision = modelDiff.getRefactorings();
+		refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
+		refactoringsAtRevision = filter(refactoringsAtRevision);
+		return refactoringsAtRevision;
+	}
+
 	protected List<Refactoring> detectRefactorings(GitService gitService, Repository repository, final RefactoringHandler handler, RevCommit currentCommit) throws Exception {
 		List<Refactoring> refactoringsAtRevision;
 		UMLModelDiff modelDiff;
@@ -302,6 +325,75 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			return fileBefore.equals(fileAfter);
 		}
 		return fileBefore.equals(fileAfter) || StringDistance.trivialCommentChange(fileBefore, fileAfter);
+	}
+
+	public static void populateFileContentsForCommitRange(Repository repository, Iterable<RevCommit> commits,
+			Map<String, String> fileContentsBefore, Set<String> repositoryDirectoriesBefore,
+			Map<String, String> fileContentsCurrent, Set<String> repositoryDirectoriesCurrent) throws Exception {
+		GitService gitService = new GitServiceImpl();
+		for(RevCommit commit : commits) {
+			logger.info("Processing {} {} ...", repository.getDirectory().getParent().toString(), commit.getName());
+			Set<String> filePathsBef = new LinkedHashSet<String>();
+			Set<String> filePathsCur = new LinkedHashSet<String>();
+			Map<String, String> renamedFilesHint = new HashMap<String, String>();
+			gitService.fileTreeDiff(repository, commit, filePathsBef, filePathsCur, renamedFilesHint);
+			
+			if(commit.getParents().length > 0) {
+				RevCommit parentCommit = commit.getParent(0);
+				try (TreeWalk treeWalk = new TreeWalk(repository)) {
+					treeWalk.addTree(parentCommit.getTree());
+					treeWalk.setRecursive(true);
+					while (treeWalk.next()) {
+						String pathString = treeWalk.getPathString();
+						if(filePathsBef.contains(pathString)) {
+							//keep only the first version of the file
+							if(!fileContentsBefore.containsKey(pathString)) {
+								ObjectId objectId = treeWalk.getObjectId(0);
+								ObjectLoader loader = repository.open(objectId);
+								StringWriter writer = new StringWriter();
+								IOUtils.copy(loader.openStream(), writer);
+								fileContentsBefore.put(pathString, writer.toString());
+							}
+						}
+						if(pathString.endsWith(".java") && pathString.contains("/")) {
+							String directory = pathString.substring(0, pathString.lastIndexOf("/"));
+							repositoryDirectoriesBefore.add(directory);
+							//include sub-directories
+							String subDirectory = new String(directory);
+							while(subDirectory.contains("/")) {
+								subDirectory = subDirectory.substring(0, subDirectory.lastIndexOf("/"));
+								repositoryDirectoriesBefore.add(subDirectory);
+							}
+						}
+					}
+				}
+			}
+			try (TreeWalk treeWalk = new TreeWalk(repository)) {
+				treeWalk.addTree(commit.getTree());
+				treeWalk.setRecursive(true);
+				while (treeWalk.next()) {
+					String pathString = treeWalk.getPathString();
+					if(filePathsCur.contains(pathString)) {
+						//always update with the latest version of the file
+						ObjectId objectId = treeWalk.getObjectId(0);
+						ObjectLoader loader = repository.open(objectId);
+						StringWriter writer = new StringWriter();
+						IOUtils.copy(loader.openStream(), writer);
+						fileContentsCurrent.put(pathString, writer.toString());
+					}
+					if(pathString.endsWith(".java") && pathString.contains("/")) {
+						String directory = pathString.substring(0, pathString.lastIndexOf("/"));
+						repositoryDirectoriesCurrent.add(directory);
+						//include sub-directories
+						String subDirectory = new String(directory);
+						while(subDirectory.contains("/")) {
+							subDirectory = subDirectory.substring(0, subDirectory.lastIndexOf("/"));
+							repositoryDirectoriesCurrent.add(subDirectory);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public static void populateFileContents(Repository repository, RevCommit commit,

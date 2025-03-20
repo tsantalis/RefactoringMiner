@@ -85,6 +85,19 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 		return false;
 	}
 
+	default boolean identicalTextFixture(VariableDeclarationContainer operation) {
+		if(this.getAnnotations().equals(operation.getAnnotations()) && this.getAnnotations().size() > 0) {
+			UMLAnnotation annotation = this.getAnnotations().get(0);
+			if(annotation.getTypeName().equals("Before") || annotation.getTypeName().equals("After") ||
+					annotation.getTypeName().equals("BeforeClass") || annotation.getTypeName().equals("AfterClass") ||
+					annotation.getTypeName().equals("BeforeEach") || annotation.getTypeName().equals("AfterEach") ||
+					annotation.getTypeName().equals("BeforeAll") || annotation.getTypeName().equals("AfterAll")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	int getNumberOfNonVarargsParameters();
 	boolean hasVarargsParameter();
 	OperationBody getBody();

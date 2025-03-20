@@ -327,21 +327,21 @@ Currently, it supports the detection of the following refactorings:
 **Commit dates**: between June 8th and August 7th, 2015
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **March 15, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **March 20, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12433  | 16  | 224  | 0.999  | 0.982|
-|Extract Method|1006  |  1  | 22  | 0.999  | 0.979|
+|**Total**|12427  | 16  | 223  | 0.999  | 0.982|
+|Extract Method|1008  |  1  | 21  | 0.999  | 0.980|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
 |Move And Rename Attribute|17  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|389  |  3  | 21  | 0.992  | 0.949|
+|Rename Method|392  |  3  | 21  | 0.992  | 0.949|
 |Inline Method|118  |  0  |  1  | 1.000  | 0.992|
 |Move Method|388  |  3  |  5  | 0.992  | 0.987|
 |Move And Rename Method|128  |  0  |  4  | 1.000  | 0.970|
-|Pull Up Method|288  |  0  |  5  | 1.000  | 0.983|
+|Pull Up Method|285  |  0  |  5  | 1.000  | 0.983|
 |Move Class|1095  |  0  |  4  | 1.000  | 0.996|
 |Move And Rename Class|38  |  0  |  1  | 1.000  | 0.974|
 |Move Source Folder| 3  |  0  |  0  | 1.000  | 1.000|
@@ -352,12 +352,12 @@ As of **March 15, 2025** the precision and recall of RefactoringMiner on this be
 |Extract Superclass|74  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|108  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|120  |  0  | 61  | 1.000  | 0.663|
+|Extract And Move Method|123  |  0  | 61  | 1.000  | 0.668|
 |Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|306  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|304  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|25  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|118  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
@@ -372,7 +372,7 @@ As of **March 15, 2025** the precision and recall of RefactoringMiner on this be
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute|123  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|28  |  0  |  1  | 1.000  | 0.966|
-|Parameterize Variable|111  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Variable|110  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|26  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|23  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|434  |  0  | 12  | 1.000  | 0.973|
@@ -380,7 +380,7 @@ As of **March 15, 2025** the precision and recall of RefactoringMiner on this be
 |Change Parameter Type|654  |  1  | 10  | 0.998  | 0.985|
 |Change Attribute Type|244  |  0  |  8  | 1.000  | 0.968|
 |Add Method Annotation|333  |  0  |  1  | 1.000  | 0.997|
-|Remove Method Annotation|100  |  0  |  0  | 1.000  | 1.000|
+|Remove Method Annotation|97  |  0  |  0  | 1.000  | 1.000|
 |Modify Method Annotation|29  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Annotation|62  |  0  |  1  | 1.000  | 0.984|
 |Remove Attribute Annotation|18  |  0  |  0  | 1.000  | 1.000|
@@ -399,7 +399,7 @@ As of **March 15, 2025** the precision and recall of RefactoringMiner on this be
 |Add Thrown Exception Type|41  |  0  |  0  | 1.000  | 1.000|
 |Remove Thrown Exception Type|270  |  0  |  0  | 1.000  | 1.000|
 |Change Thrown Exception Type| 9  |  0  |  0  | 1.000  | 1.000|
-|Change Method Access Modifier|334  |  0  |  0  | 1.000  | 1.000|
+|Change Method Access Modifier|333  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Access Modifier|232  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute|52  |  0  |  0  | 1.000  | 1.000|
 |Add Method Modifier|90  |  0  |  0  | 1.000  | 1.000|
@@ -407,7 +407,7 @@ As of **March 15, 2025** the precision and recall of RefactoringMiner on this be
 |Add Attribute Modifier|142  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Modifier|143  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Modifier|135  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter Modifier|133  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter Modifier|132  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Modifier|62  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Modifier|39  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier|78  |  0  |  0  | 1.000  | 1.000|
@@ -428,7 +428,7 @@ As of **March 15, 2025** the precision and recall of RefactoringMiner on this be
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 5  |  0  |  0  | 1.000  | 1.000|
-|Move Code|19  |  0  |  0  | 1.000  | 1.000|
+|Move Code|16  |  0  |  0  | 1.000  | 1.000|
 |Assert Throws|14  |  0  |  0  | 1.000  | 1.000|
 |Try With Resources| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Generic With Diamond|77  |  0  |  0  | 1.000  | 1.000|

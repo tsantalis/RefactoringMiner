@@ -137,7 +137,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		logger.info(String.format("Analyzed %s [Commits: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, errorCommitsCount, refactoringsCount));
 	}
 
-	public ProjectASTDiff diffForCommitRange(Repository repository, String startCommit, String endCommit) throws Exception {
+	public ProjectASTDiff diffAtCommitRange(Repository repository, String startCommit, String endCommit) throws Exception {
 		Iterable<RevCommit> commits = new GitServiceImpl().createRevsWalkBetweenCommits(repository, startCommit, endCommit);
 		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
 		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
@@ -154,7 +154,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return differ.getProjectASTDiff();
 	}
 
-	public List<Refactoring> detectRefactoringsForCommitRange(Repository repository, String startCommit, String endCommit) throws Exception {
+	public List<Refactoring> detectAtCommitRange(Repository repository, String startCommit, String endCommit) throws Exception {
 		Iterable<RevCommit> commits = new GitServiceImpl().createRevsWalkBetweenCommits(repository, startCommit, endCommit);
 		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
 		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
@@ -2057,7 +2057,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return null;
 	}
 
-	public ProjectASTDiff diffForCommitRange(String cloneURL, String startCommit, String endCommit) throws Exception {
+	public ProjectASTDiff diffAtCommitRange(String cloneURL, String startCommit, String endCommit) throws Exception {
 		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
 		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
@@ -2073,7 +2073,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return differ.getProjectASTDiff();
 	}
 
-	public List<Refactoring> detectRefactoringsForCommitRange(String cloneURL, String startCommit, String endCommit) throws Exception {
+	public List<Refactoring> detectAtCommitRange(String cloneURL, String startCommit, String endCommit) throws Exception {
 		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
 		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();

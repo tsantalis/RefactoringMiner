@@ -38,6 +38,7 @@ Table of Contents
       * [With file contents as strings](#with-file-contents-as-strings)
       * [With all information fetched directly from GitHub](#with-all-information-fetched-directly-from-github)
       * [With each commit in a GitHub Pull request](#with-each-commit-in-a-github-pull-request)
+      * [With a commit range](#with-a-commit-range)
    * [AST Diff API usage guidelines](#ast-diff-api-usage-guidelines)
       * [With commit of a locally cloned git repository](#with-commit-of-a-locally-cloned-git-repository)
       * [With commit fetched directly from GitHub](#with-commit-fetched-directly-from-github)
@@ -1019,6 +1020,22 @@ miner.detectAtPullRequest(repo, 1807, new RefactoringHandler() {
     }
   }
 }, 100);
+```
+
+## With a commit range
+
+This is a special API that aggregates the changes between two commits, and detects refactorings between the initial state of the files
+and the last-modified state of the files within the specified commit range.
+
+This API is inspired by the work of Lei Chen and Shinpei Hayashi, "Impact of Change Granularity in Refactoring Detection," Proceedings of the 30th IEEE/ACM International Conference on Program Comprehension, 565-569, 2022.
+
+`repo` can be either a JGit Repository object (i.e., locally cloned repository), or the Git URL of a repository (i.e., information fetched directly from GitHub).
+To use the latter API, please provide a valid OAuth token in the `github-oauth.properties` file.
+You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
+
+```java
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+List<Refactoring> refactorings = miner.detectAtCommitRange(repo, startCommit, endCommit);
 ```
 
 # AST Diff API usage guidelines

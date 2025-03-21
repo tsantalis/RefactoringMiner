@@ -2,6 +2,7 @@ package org.refactoringminer.api;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jgit.lib.Repository;
@@ -136,6 +137,26 @@ public interface GitHistoryRefactoringMiner {
 	void detectAtFileContents(Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter, RefactoringHandler handler);
 
 	/**
+	 * Detect refactorings for a commit range. 
+	 * 
+	 * @param repository A git repository (from JGit library).
+	 * @param startCommit The SHA key that identifies the start commit.
+	 * @param endCommit The SHA key that identifies the end commit.
+	 * @return A list of Refactoring objects.
+	 */
+	List<Refactoring> detectAtCommitRange(Repository repository, String startCommit, String endCommit) throws Exception;
+
+	/**
+	 * Detect refactorings for a commit range. 
+	 * 
+	 * @param gitURL The git URL of the repository.
+	 * @param startCommit The SHA key that identifies the start commit.
+	 * @param endCommit The SHA key that identifies the end commit.
+	 * @return A list of Refactoring objects.
+	 */
+	List<Refactoring> detectAtCommitRange(String gitURL, String startCommit, String endCommit) throws Exception;
+
+	/**
 	 * @return An ID that represents the current configuration for the Refactoring Miner algorithm in use.
 	 */
 	String getConfigId();
@@ -187,4 +208,24 @@ public interface GitHistoryRefactoringMiner {
 	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
 	 */
 	ProjectASTDiff diffAtDirectories(File previousFile, File nextFile);
+
+	/**
+	 * Generate the AST diff for a commit range. 
+	 * 
+	 * @param repository A git repository (from JGit library).
+	 * @param startCommit The SHA key that identifies the start commit.
+	 * @param endCommit The SHA key that identifies the end commit.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 */
+	ProjectASTDiff diffAtCommitRange(Repository repository, String startCommit, String endCommit) throws Exception;
+
+	/**
+	 * Generate the AST diff for a commit range. 
+	 * 
+	 * @param gitURL The git URL of the repository.
+	 * @param startCommit The SHA key that identifies the start commit.
+	 * @param endCommit The SHA key that identifies the end commit.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 */
+	ProjectASTDiff diffAtCommitRange(String gitURL, String startCommit, String endCommit) throws Exception;
 }

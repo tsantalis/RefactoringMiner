@@ -44,7 +44,7 @@ Table of Contents
       * [With commit fetched directly from GitHub](#with-commit-fetched-directly-from-github)
       * [With the files changed in a GitHub Pull Request](#with-the-files-changed-in-a-github-pull-request)
       * [With two directories](#with-two-directories)
-      * [With a start and end commit](#with-a-start-and-end-commit)
+      * [With commit range](#with-commit-range)
    * [Purity Checker](#purity-checker)
    * [Location information for the detected refactorings](#location-information-for-the-detected-refactorings)
    * [Statement matching information for the detected refactorings](#statement-matching-information-for-the-detected-refactorings)
@@ -1121,7 +1121,7 @@ Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
 new WebDiff(projectASTDiff).run();
 ```
 
-## With a start and end commit
+## With commit range
 
 This is a special API that aggregates the changes between two commits, and generates AST diff between the initial state of the files
 and the last-modified state of the files within the specified commit range.

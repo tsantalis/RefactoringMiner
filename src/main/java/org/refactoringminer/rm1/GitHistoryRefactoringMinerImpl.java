@@ -137,12 +137,25 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		logger.info(String.format("Analyzed %s [Commits: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, errorCommitsCount, refactoringsCount));
 	}
 
-	public List<Refactoring> detectRefactoringsForCommitRange(Repository repository, String startCommit, String endCommit) throws Exception {
+	public ProjectASTDiff diffForCommitRange(Repository repository, String startCommit, String endCommit) throws Exception {
 		Iterable<RevCommit> commits = new GitServiceImpl().createRevsWalkBetweenCommits(repository, startCommit, endCommit);
-		return detectRefactoringsForCommitRange(repository, commits);
+		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		
+		populateFileContentsForCommitRange(repository, commits, fileContentsBefore, repositoryDirectoriesBefore, fileContentsCurrent, repositoryDirectoriesCurrent);
+		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), false);
+		UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+		UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+		
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
+		return differ.getProjectASTDiff();
 	}
 
-	protected List<Refactoring> detectRefactoringsForCommitRange(Repository repository, Iterable<RevCommit> commits) throws Exception {
+	public List<Refactoring> detectRefactoringsForCommitRange(Repository repository, String startCommit, String endCommit) throws Exception {
+		Iterable<RevCommit> commits = new GitServiceImpl().createRevsWalkBetweenCommits(repository, startCommit, endCommit);
 		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
 		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
@@ -878,8 +891,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						populateFileContents(nextFile.getParentFile(), List.of(nextFileName), fileContentsCurrent, repositoryDirectoriesCurrent);
 						populateFileContents(previousFile.getParentFile(), List.of(previousFileName), fileContentsBefore, repositoryDirectoriesBefore);
 						List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), false); 
-						UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
-						UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+						UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
+						UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
 						UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 						refactorings = modelDiff.getRefactorings();
 						refactorings.addAll(moveSourceFolderRefactorings);
@@ -2042,6 +2055,22 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			}
 		}
 		return null;
+	}
+
+	public ProjectASTDiff diffForCommitRange(String cloneURL, String startCommit, String endCommit) throws Exception {
+		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		
+		populateWithGitHubAPIForCommitRange(cloneURL, startCommit, endCommit, fileContentsBefore, fileContentsCurrent, repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
+		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), false);
+		UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+		UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+		
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
+		return differ.getProjectASTDiff();
 	}
 
 	public List<Refactoring> detectRefactoringsForCommitRange(String cloneURL, String startCommit, String endCommit) throws Exception {

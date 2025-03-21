@@ -44,6 +44,7 @@ Table of Contents
       * [With commit fetched directly from GitHub](#with-commit-fetched-directly-from-github)
       * [With the files changed in a GitHub Pull Request](#with-the-files-changed-in-a-github-pull-request)
       * [With two directories](#with-two-directories)
+      * [With a start and end commit](#with-a-start-and-end-commit)
    * [Purity Checker](#purity-checker)
    * [Location information for the detected refactorings](#location-information-for-the-detected-refactorings)
    * [Statement matching information for the detected refactorings](#statement-matching-information-for-the-detected-refactorings)
@@ -1030,6 +1031,8 @@ and the last-modified state of the files within the specified commit range.
 This API is inspired by the work of Lei Chen and Shinpei Hayashi, "Impact of Change Granularity in Refactoring Detection," Proceedings of the 30th IEEE/ACM International Conference on Program Comprehension, 565-569, 2022.
 
 `repo` can be either a JGit Repository object (i.e., locally cloned repository), or the Git URL of a repository (i.e., information fetched directly from GitHub).
+`startCommit` and `endCommit` are the SHA-1 of the start and end commits, respectively.
+
 To use the latter API, please provide a valid OAuth token in the `github-oauth.properties` file.
 You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
 
@@ -1117,6 +1120,27 @@ Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
 // To visualize the diff add the following line
 new WebDiff(projectASTDiff).run();
 ```
+
+## With a start and end commit
+
+This is a special API that aggregates the changes between two commits, and generates AST diff between the initial state of the files
+and the last-modified state of the files within the specified commit range.
+
+This API is inspired by the work of Lei Chen and Shinpei Hayashi, "Impact of Change Granularity in Refactoring Detection," Proceedings of the 30th IEEE/ACM International Conference on Program Comprehension, 565-569, 2022.
+
+`repo` can be either a JGit Repository object (i.e., locally cloned repository), or the Git URL of a repository (i.e., information fetched directly from GitHub).
+`startCommit` and `endCommit` are the SHA-1 of the start and end commits, respectively.
+
+To use the latter API, please provide a valid OAuth token in the `github-oauth.properties` file.
+You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
+
+```java
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+ProjectASTDiff projectASTDiff = miner.diffAtCommitRange(repo, startCommit, endCommit);
+// To visualize the diff add the following line
+new WebDiff(projectASTDiff).openInBrowser();
+```
+
 # Purity Checker
 To check whether a refactoring detected in a commit is pure (i.e., it does not include overlapping behavior-changing edits) or impure, you can use the following APIs:
 

@@ -6336,7 +6336,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(!leaf1.isKeyword()) {
 							codeUnderIfMovedUnderElse = codeUnderIfMovedUnderElse(mappingSet);
 						}
-						boolean identicalPreviousAndNextStatement = parentMapper == null && mappingSet.first().hasIdenticalPreviousAndNextStatement();
+						boolean identicalPreviousAndNextStatement = mappingSet.first().hasIdenticalPreviousAndNextStatement();
 						if(mappingSet.size() > 1 && (parentMapper != null || codeUnderIfMovedUnderElse) && mappings.size() > 1 && !identicalPreviousAndNextStatement) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 							TreeMap<Double, LeafMapping> levelParentEditDistanceSum = new TreeMap<>();

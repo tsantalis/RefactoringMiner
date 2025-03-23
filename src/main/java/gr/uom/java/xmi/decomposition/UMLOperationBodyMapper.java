@@ -709,6 +709,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(!matchFound) {
+						for(CodeBlockBetweenComments block2 : blocks2) {
+							if(block1.identicalCode(block2)) {
+								matchFound = true;
+								List<AbstractCodeFragment> l1 = new ArrayList<AbstractCodeFragment>(block1.getLeaves());
+								List<AbstractCodeFragment> l2 = new ArrayList<AbstractCodeFragment>(block2.getLeaves());
+								int mappingCount = mappings.size();
+								processLeaves(l1, l2, new LinkedHashMap<String, String>(), isomorphic);
+								if(mappings.size() > mappingCount) {
+									for(AbstractCodeFragment leaf1 : block1.getLeaves()) {
+										if(alreadyMatched1(leaf1)) {
+											leaves1.remove(leaf1);
+										}
+									}
+									for(AbstractCodeFragment leaf2 : block2.getLeaves()) {
+										if(alreadyMatched2(leaf2)) {
+											leaves2.remove(leaf2);
+										}
+									}
+								}
+								break;
+							}
+						}
+					}
+					if(!matchFound) {
 						nonMatchedBlocks1.add(block1);
 					}
 				}

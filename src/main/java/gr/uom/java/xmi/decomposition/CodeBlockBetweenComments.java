@@ -85,8 +85,23 @@ public class CodeBlockBetweenComments {
 		return false;
 	}
 
-	public boolean identicalCode(CodeBlockBetweenComments other) {
+	public boolean identicalStartCommentAndCode(CodeBlockBetweenComments other) {
 		if(this.startComment.getText().equals(other.startComment.getText())) {
+			if(this.leaves.size() == other.leaves.size()) {
+				int matches = 0;
+				for(int i=0; i<this.leaves.size(); i++) {
+					if(this.leaves.get(i).getString().equals(other.leaves.get(i).getString())) {
+						matches++;
+					}
+				}
+				return matches >= this.leaves.size()-1 && matches > 0;
+			}
+		}
+		return false;
+	}
+
+	public boolean identicalEndCommentAndCode(CodeBlockBetweenComments other) {
+		if(this.afterEndComment != null && other.endComment != null && this.endComment.getText().equals(other.endComment.getText())) {
 			if(this.leaves.size() == other.leaves.size()) {
 				int matches = 0;
 				for(int i=0; i<this.leaves.size(); i++) {

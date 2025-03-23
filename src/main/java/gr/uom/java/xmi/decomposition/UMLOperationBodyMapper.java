@@ -665,22 +665,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(CodeBlockBetweenComments block2 : blocks2) {
 						if(block1.compatible(block2)) {
 							matchFound = true;
-							List<AbstractCodeFragment> l1 = new ArrayList<AbstractCodeFragment>(block1.getLeaves());
-							List<AbstractCodeFragment> l2 = new ArrayList<AbstractCodeFragment>(block2.getLeaves());
-							int mappingCount = mappings.size();
-							processLeaves(l1, l2, new LinkedHashMap<String, String>(), isomorphic);
-							if(mappings.size() > mappingCount) {
-								for(AbstractCodeFragment leaf1 : block1.getLeaves()) {
-									if(alreadyMatched1(leaf1)) {
-										leaves1.remove(leaf1);
-									}
-								}
-								for(AbstractCodeFragment leaf2 : block2.getLeaves()) {
-									if(alreadyMatched2(leaf2)) {
-										leaves2.remove(leaf2);
-									}
-								}
-							}
+							processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
 							break;
 						}
 					}
@@ -688,46 +673,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						for(CodeBlockBetweenComments block2 : blocks2) {
 							if(block1.compatibleWithAfterEnd(block2)) {
 								matchFound = true;
-								List<AbstractCodeFragment> l1 = new ArrayList<AbstractCodeFragment>(block1.getLeaves());
-								List<AbstractCodeFragment> l2 = new ArrayList<AbstractCodeFragment>(block2.getLeaves());
-								int mappingCount = mappings.size();
-								processLeaves(l1, l2, new LinkedHashMap<String, String>(), isomorphic);
-								if(mappings.size() > mappingCount) {
-									for(AbstractCodeFragment leaf1 : block1.getLeaves()) {
-										if(alreadyMatched1(leaf1)) {
-											leaves1.remove(leaf1);
-										}
-									}
-									for(AbstractCodeFragment leaf2 : block2.getLeaves()) {
-										if(alreadyMatched2(leaf2)) {
-											leaves2.remove(leaf2);
-										}
-									}
-								}
+								processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
 								break;
 							}
 						}
 					}
 					if(!matchFound) {
 						for(CodeBlockBetweenComments block2 : blocks2) {
-							if(block1.identicalCode(block2)) {
+							if(block1.identicalStartCommentAndCode(block2)) {
 								matchFound = true;
-								List<AbstractCodeFragment> l1 = new ArrayList<AbstractCodeFragment>(block1.getLeaves());
-								List<AbstractCodeFragment> l2 = new ArrayList<AbstractCodeFragment>(block2.getLeaves());
-								int mappingCount = mappings.size();
-								processLeaves(l1, l2, new LinkedHashMap<String, String>(), isomorphic);
-								if(mappings.size() > mappingCount) {
-									for(AbstractCodeFragment leaf1 : block1.getLeaves()) {
-										if(alreadyMatched1(leaf1)) {
-											leaves1.remove(leaf1);
-										}
-									}
-									for(AbstractCodeFragment leaf2 : block2.getLeaves()) {
-										if(alreadyMatched2(leaf2)) {
-											leaves2.remove(leaf2);
-										}
-									}
-								}
+								processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
+								break;
+							}
+						}
+					}
+					if(!matchFound) {
+						for(CodeBlockBetweenComments block2 : blocks2) {
+							if(block1.identicalEndCommentAndCode(block2)) {
+								matchFound = true;
+								processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
 								break;
 							}
 						}
@@ -1211,6 +1175,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this.mappings);
 		checkUnmatchedStatementsBeingCommented();
+	}
+
+	private void processCodeBlocksBetweenComments(List<AbstractCodeFragment> leaves1,
+			List<AbstractCodeFragment> leaves2, boolean isomorphic, CodeBlockBetweenComments block1,
+			CodeBlockBetweenComments block2) throws RefactoringMinerTimedOutException {
+		List<AbstractCodeFragment> l1 = new ArrayList<AbstractCodeFragment>(block1.getLeaves());
+		List<AbstractCodeFragment> l2 = new ArrayList<AbstractCodeFragment>(block2.getLeaves());
+		int mappingCount = mappings.size();
+		processLeaves(l1, l2, new LinkedHashMap<String, String>(), isomorphic);
+		if(mappings.size() > mappingCount) {
+			for(AbstractCodeFragment leaf1 : block1.getLeaves()) {
+				if(alreadyMatched1(leaf1)) {
+					leaves1.remove(leaf1);
+				}
+			}
+			for(AbstractCodeFragment leaf2 : block2.getLeaves()) {
+				if(alreadyMatched2(leaf2)) {
+					leaves2.remove(leaf2);
+				}
+			}
+		}
 	}
 
 	private boolean ifToSwitch(AbstractCodeFragment parent1, AbstractCodeFragment parent2) {

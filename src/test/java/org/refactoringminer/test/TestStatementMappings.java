@@ -359,11 +359,15 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
-	@Test
-	public void testDuplicatedExtractMethodStatementMappings2() throws Exception {
+	@ParameterizedTest
+	@CsvSource({
+			"https://github.com/tsantalis/RefactoringMiner.git, 68319df7c453a52778d7853b59d5a2bfe5ec5065, miner-68319df7c453a52778d7853b59d5a2bfe5ec5065.txt",
+			"https://github.com/tsantalis/RefactoringMiner.git, acf37d016bfff710ce5de4f608299385cfb586c6, miner-acf37d016bfff710ce5de4f608299385cfb586c6.txt"
+	})
+	public void testDuplicatedExtractMethodStatementMappings2(String url, String commitId, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommitWithGitHubAPI("https://github.com/tsantalis/RefactoringMiner.git", "68319df7c453a52778d7853b59d5a2bfe5ec5065", new File(REPOS), new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI(url, commitId, new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -385,7 +389,7 @@ public class TestStatementMappings {
 			}
 		});
 		
-		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "miner-68319df7c453a52778d7853b59d5a2bfe5ec5065.txt"));
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

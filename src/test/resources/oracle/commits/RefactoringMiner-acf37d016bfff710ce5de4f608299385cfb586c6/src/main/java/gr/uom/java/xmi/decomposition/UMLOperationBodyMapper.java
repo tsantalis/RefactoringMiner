@@ -9752,9 +9752,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		VariableDeclarationContainer container2 = codeFragmentOperationMap2.containsKey(leaf2) ? codeFragmentOperationMap2.get(leaf2) : this.container2;
 		LeafMapping mapping = new LeafMapping(leaf1, leaf2, container1, container2);
 		mapping.setEqualNumberOfAssertions(equalNumberOfAssertions);
-		if(extractedStatements.size() > 0) {
-			mapping.setExtractedStatements(extractedStatements);
-		}
 		int matchingArguments = 0;
 		for(String key : parameterToArgumentMap.keySet()) {
 			String value = parameterToArgumentMap.get(key);

@@ -143,6 +143,10 @@ public class StringBasedHeuristics {
 			else if(diff2.isEmpty() && diff1.equals(JAVA.THIS_DOT)) {
 				return true;
 			}
+			if(!diff1.isEmpty() && StringDistance.isNumeric(diff1) && !diff2.isEmpty() && StringDistance.isNumeric(diff2) &&
+					!commonSuffix.startsWith("=")) {
+				return true;
+			}
 			List<String> parameterNameList1 = container1.getParameterNameList();
 			List<String> parameterNameList2 = container2.getParameterNameList();
 			if(diff1.isEmpty() && parameterNameList2.contains(diff2)) {

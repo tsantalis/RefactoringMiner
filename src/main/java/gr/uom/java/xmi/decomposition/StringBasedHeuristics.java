@@ -145,7 +145,15 @@ public class StringBasedHeuristics {
 			}
 			if(!diff1.isEmpty() && StringDistance.isNumeric(diff1) && !diff2.isEmpty() && StringDistance.isNumeric(diff2) &&
 					!commonSuffix.startsWith("=")) {
-				return true;
+				boolean skip = false;
+				List<LeafExpression> variables1 = fragment1.getVariables();
+				List<LeafExpression> variables2 = fragment2.getVariables();
+				if(variables1.size() > 0 && variables1.get(0).getString().startsWith(commonPrefix) && variables2.size() > 0 && variables2.get(0).getString().startsWith(commonPrefix)) {
+					skip = true;
+				}
+				if(!skip) {
+					return true;
+				}
 			}
 			List<String> parameterNameList1 = container1.getParameterNameList();
 			List<String> parameterNameList2 = container2.getParameterNameList();

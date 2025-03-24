@@ -185,12 +185,12 @@
         {
           "type": "MOVE_OPERATION",
           "description": "Move Method\tprivate parseField(field Field, source Class<?>) : void from class org.springframework.test.context.bean.override.BeanOverrideParser to private parseField(field Field, testClass Class<?>, metadataSet Set<OverrideMetadata>) : void from class org.springframework.test.context.bean.override.BeanOverrideParsingUtils",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_OPERATION",
           "description": "Move Method\tpackage hasBeanOverride(testClass Class<?>) : boolean from class org.springframework.test.context.bean.override.BeanOverrideParser to package hasBeanOverride(clazz Class<?>) : boolean from class org.springframework.test.context.bean.override.BeanOverrideParsingUtils",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_ATTRIBUTE",

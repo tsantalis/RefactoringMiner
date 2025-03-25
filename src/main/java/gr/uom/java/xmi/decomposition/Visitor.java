@@ -826,7 +826,7 @@ public class Visitor extends ASTVisitor {
 				}
 			}
 		}
-		return false;
+		return super.visit(node);
 	}
 
 	public boolean visit(ParenthesizedExpression node) {

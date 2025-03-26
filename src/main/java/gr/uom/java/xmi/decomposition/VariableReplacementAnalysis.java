@@ -1661,15 +1661,30 @@ public class VariableReplacementAnalysis {
 		for(MergeVariableReplacement merge : mergeMap.keySet()) {
 			Set<VariableDeclaration> mergedVariables = new LinkedHashSet<VariableDeclaration>();
 			Set<VariableDeclarationContainer> mergedVariableOperations = new LinkedHashSet<VariableDeclarationContainer>();
+			Set<VariableDeclaration> singleVariableDeclarations = new LinkedHashSet<>();
 			for(String variableName : merge.getMergedVariables()) {
 				SimpleEntry<VariableDeclaration,VariableDeclarationContainer> declaration = getVariableDeclaration1(merge, variableName);
 				if(declaration != null) {
+					if(declaration.getKey().getLocationInfo().getCodeElementType().equals(CodeElementType.SINGLE_VARIABLE_DECLARATION) && !declaration.getKey().isParameter()) {
+						//variable is either enhanced for loop formal parameter or exception in catch
+						singleVariableDeclarations.add(declaration.getKey());
+					}
 					mergedVariables.add(declaration.getKey());
 					mergedVariableOperations.add(declaration.getValue());
 				}
 			}
+			int nestedVariablesUnderSingleVariableDeclaration = 0;
+			if(singleVariableDeclarations.size() == 1) {
+				VariableDeclaration single = singleVariableDeclarations.iterator().next();
+				for(VariableDeclaration mergedVariable : mergedVariables) {
+					if(!single.equals(mergedVariable) && single.getScope().subsumes(mergedVariable.getLocationInfo())) {
+						nestedVariablesUnderSingleVariableDeclaration++;
+					}
+				}
+			}
+			boolean singleVariableDeclarationPass = singleVariableDeclarations.isEmpty() || singleVariableDeclarations.size() + nestedVariablesUnderSingleVariableDeclaration == mergedVariables.size();
 			SimpleEntry<VariableDeclaration,VariableDeclarationContainer> newVariable = getVariableDeclaration2(merge);
-			if(mergedVariables.size() > 1 && mergedVariables.size() == merge.getMergedVariables().size() && newVariable != null) {
+			if(mergedVariables.size() > 1 && mergedVariables.size() == merge.getMergedVariables().size() && newVariable != null && singleVariableDeclarationPass) {
 				VariableDeclarationContainer operationBefore = mergedVariableOperations.iterator().next();
 				MergeVariableRefactoring refactoring = new MergeVariableRefactoring(mergedVariables, newVariable.getKey(), operationBefore, newVariable.getValue(), mergeMap.get(merge), insideExtractedOrInlinedMethod);
 				if(!existsConflictingInlineVariableRefactoring(refactoring) && !existsConflictingParameterRenameInOperationDiff(refactoring, variableInvocationExpressionMap)) {

@@ -444,18 +444,18 @@ As of **March 20, 2025** the precision and recall of RefactoringMiner on this be
 **Commit dates**: March 28, 2024
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **March 15, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **March 26, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3043  | 209  | 355  | 0.936  | 0.896|
+|**Total**|3044  | 209  | 350  | 0.936  | 0.897|
 |Extract Method|329  | 21  | 33  | 0.940  | 0.909|
 |Rename Class|229  |  2  |  3  | 0.991  | 0.987|
-|Move Attribute|69  |  3  | 11  | 0.958  | 0.863|
+|Move Attribute|69  |  3  | 10  | 0.958  | 0.873|
 |Move And Rename Attribute| 4  |  0  |  4  | 1.000  | 0.500|
 |Rename Method|271  | 23  | 25  | 0.922  | 0.916|
 |Inline Method|63  |  9  |  6  | 0.875  | 0.913|
-|Move Method|260  |  5  |  7  | 0.981  | 0.974|
+|Move Method|260  |  5  |  5  | 0.981  | 0.981|
 |Move And Rename Method|18  |  6  | 10  | 0.750  | 0.643|
 |Pull Up Method|42  |  3  |  8  | 0.933  | 0.840|
 |Move Class|138  |  7  |  4  | 0.952  | 0.972|
@@ -466,11 +466,11 @@ As of **March 15, 2025** the precision and recall of RefactoringMiner on this be
 |Extract Interface|16  |  2  |  0  | 0.889  | 1.000|
 |Extract Superclass| 7  |  2  |  0  | 0.778  | 1.000|
 |Extract Subclass| 3  |  0  |  6  | 1.000  | 0.333|
-|Extract Class|40  |  2  | 11  | 0.952  | 0.784|
+|Extract Class|40  |  2  | 10  | 0.952  | 0.800|
 |Extract And Move Method|99  | 21  | 21  | 0.825  | 0.825|
 |Move And Inline Method|25  |  7  | 12  | 0.781  | 0.676|
 |Extract Variable|238  | 15  | 42  | 0.941  | 0.850|
-|Inline Variable|81  | 12  | 41  | 0.871  | 0.664|
+|Inline Variable|82  | 12  | 40  | 0.872  | 0.672|
 |Rename Variable|264  | 26  | 30  | 0.910  | 0.898|
 |Rename Attribute|101  |  6  | 15  | 0.944  | 0.871|
 |Change Return Type|153  |  9  | 27  | 0.944  | 0.850|

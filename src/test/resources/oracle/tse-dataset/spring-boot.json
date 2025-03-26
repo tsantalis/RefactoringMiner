@@ -769,7 +769,7 @@
         {
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tpackage DESTINATION_OPTION : Option from class org.springframework.boot.jarmode.layertools.ExtractCommand to package DESTINATION_OPTION : Option from class org.springframework.boot.jarmode.tools.ExtractLayersCommand",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",
@@ -789,7 +789,7 @@
         {
           "type": "EXTRACT_CLASS",
           "description": "Extract Class\torg.springframework.boot.jarmode.tools.ExtractLayersCommand from class org.springframework.boot.jarmode.layertools.ExtractCommand",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",

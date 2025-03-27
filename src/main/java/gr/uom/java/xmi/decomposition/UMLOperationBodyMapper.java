@@ -3011,6 +3011,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			else if(streamAPIStatements1.size() > 0 && streamAPIStatements2.size() == 0) {
 				processStreamAPIStatements(leaves1, leaves2, streamAPIStatements1, innerNodes2);
 			}
+			else if(streamAPIStatements1.size() > 1 || streamAPIStatements2.size() > 1) {
+				processStreamAPIStatements(leaves1, leaves2, innerNodes1, streamAPIStatements2);
+			}
 			
 			//match expressions in inner nodes from T1 with leaves from T2
 			List<AbstractExpression> expressionsT1 = new ArrayList<AbstractExpression>();

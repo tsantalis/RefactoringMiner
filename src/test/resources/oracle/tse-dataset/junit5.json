@@ -2284,7 +2284,7 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tprivate convertToTargetType(source Object, targetType Class<?>) : Object renamed to public convert(source Object, targetType Class<?>, context ParameterContext) : Object in class org.junit.jupiter.params.converter.DefaultArgumentConverter",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",
@@ -2359,9 +2359,24 @@
       ],
       "baseline": [
         {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate convertToTargetType(source Object, targetType Class<?>) : Object renamed to public convert(source Object, context ParameterContext) : Object in class org.junit.jupiter.params.converter.DefaultArgumentConverter",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic convert(source Object, targetType Class<?>, context ParameterContext) : Object extracted from private convertToTargetType(source Object, targetType Class<?>) : Object in class org.junit.jupiter.params.converter.DefaultArgumentConverter",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tpublic convert(source Object, targetType Class<?>) : Object inlined to public convert(source Object, targetType Class<?>, context ParameterContext) : Object in class org.junit.jupiter.params.converter.DefaultArgumentConverter",
+          "validation": true
+        },
+        {
           "type": "EXTRACT_CLASS",
           "description": "Extract Class\torg.junit.jupiter.params.converter.DefaultArgumentConverter.StringToClassConverter from class org.junit.jupiter.params.converter.DefaultArgumentConverter",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",

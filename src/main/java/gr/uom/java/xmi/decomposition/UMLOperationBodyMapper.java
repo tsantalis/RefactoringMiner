@@ -4092,6 +4092,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return nonMappedLeafCount + nonMappedInnerNodeCount;
 	}
 
+	public int mappedElementsT2CallingAddedOperation(List<? extends VariableDeclarationContainer> addedOperations) {
+		int mappedNodeCount = 0;
+		for(AbstractCodeMapping mapping : mappings) {
+			if(mapping.getFragment2().countableStatement()) {
+				for(AbstractCall invocation : mapping.getFragment2().getMethodInvocations()) {
+					for(VariableDeclarationContainer operation : addedOperations) {
+						if(invocation.matchesOperation(operation, container2, classDiff, modelDiff)) {
+							mappedNodeCount++;
+							break;
+						}
+					}
+				}
+			}
+		}
+		return mappedNodeCount;
+	}
+
 	public int nonMappedElementsT1CallingRemovedOperation(List<? extends VariableDeclarationContainer> removedOperations) {
 		int nonMappedInnerNodeCount = 0;
 		for(CompositeStatementObject composite : getNonMappedInnerNodesT1()) {

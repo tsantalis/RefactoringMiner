@@ -100,21 +100,21 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, ExpressionMethodReference reference, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
 		this.owner = owner;
 		this.asString = reference.toString();
-		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION);
+		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, reference, CodeElementType.METHOD_REFERENCE);
 		this.expression = new AbstractExpression(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, javaFileContent);
 	}
 
 	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, SuperMethodReference reference, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
 		this.owner = owner;
 		this.asString = reference.toString();
-		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION);
+		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, reference, CodeElementType.METHOD_REFERENCE);
 		this.expression = new AbstractExpression(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, javaFileContent);
 	}
 
 	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, TypeMethodReference reference, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
 		this.owner = owner;
 		this.asString = reference.toString();
-		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION);
+		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, reference, CodeElementType.METHOD_REFERENCE);
 		this.expression = new AbstractExpression(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, javaFileContent);
 	}
 	

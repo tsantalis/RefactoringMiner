@@ -5106,6 +5106,8 @@ public class ReplacementAlgorithm {
 
 	protected static void processLambdas(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2,
 			ReplacementInfo replacementInfo, UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
+		boolean methodReference1 = lambda1.getLocationInfo().getCodeElementType().equals(CodeElementType.METHOD_REFERENCE);
+		boolean methodReference2 = lambda2.getLocationInfo().getCodeElementType().equals(CodeElementType.METHOD_REFERENCE);
 		UMLAbstractClassDiff classDiff = operationBodyMapper.getClassDiff();
 		UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(lambda1, lambda2, operationBodyMapper);
 		int mappings = mapper.mappingsWithoutBlocks();
@@ -5121,7 +5123,7 @@ public class ReplacementAlgorithm {
 				nonMappedElementsT1 = nonMappedElementsT1 - ignoredNonMappedElements(invocations2, mapper.getNonMappedLeavesT1(), mapper.getNonMappedInnerNodesT1());
 			}
 			if((mappings >= nonMappedElementsT1 && mappings >= nonMappedElementsT2) ||
-					nonMappedElementsT1 == 0 || nonMappedElementsT2 == 0 ||
+					(nonMappedElementsT1 == 0 && !methodReference1) || (nonMappedElementsT2 == 0 && !methodReference2) ||
 					(classDiff != null && (classDiff.isPartOfMethodExtracted(lambda1, lambda2) || classDiff.isPartOfMethodInlined(lambda1, lambda2) || isPartOfLambdaMovedToParentMapper(mapper)))) {
 				operationBodyMapper.addAllMappings(mapper.getMappings());
 				operationBodyMapper.getNonMappedInnerNodesT1().addAll(mapper.getNonMappedInnerNodesT1());

@@ -276,15 +276,19 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
-	@Test
-	public void testNestedExtractMethodStatementMappingsWithStreamsMigration() throws Exception {
+	@ParameterizedTest
+	@CsvSource({
+			"FetchAndMergeEntry, src/main/java/org/jabref/gui/mergeentries/FetchAndMergeEntry.java, jabref-12025.txt",
+			"PdfMergeMetadataImporter, src/main/java/org/jabref/logic/importer/fileformat/PdfMergeMetadataImporter.java, jabref-12310.txt"
+	})
+	public void testNestedExtractMethodStatementMappingsWithStreamsMigration(String fileName, String path, String testResultFileName) throws Exception {
 		final List<String> actual = new ArrayList<>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
 		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
-		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + "FetchAndMergeEntry-v1.txt"));
-		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + "FetchAndMergeEntry-v2.txt"));
-		fileContentsBefore.put("src/main/java/org/jabref/gui/mergeentries/FetchAndMergeEntry.java", contentsV1);
-		fileContentsCurrent.put("src/main/java/org/jabref/gui/mergeentries/FetchAndMergeEntry.java", contentsV2);
+		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + fileName + "-v1.txt"));
+		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + fileName + "-v2.txt"));
+		fileContentsBefore.put(path, contentsV1);
+		fileContentsCurrent.put(path, contentsV2);
 		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
 		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
 		
@@ -306,7 +310,7 @@ public class TestStatementMappings {
 		for(UMLOperationBodyMapper parentMapper : parentMappers) {
 			mapperInfo(parentMapper, actual);
 		}
-		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jabref-12025.txt"));
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

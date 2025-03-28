@@ -7659,6 +7659,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								allowAdd = true;
 								break;
 							}
+							if(mapping.identicalCommentsInParent() && !m.identicalCommentsInParent()) {
+								allowAdd = true;
+								break;
+							}
 						}
 						if(allowAdd || nested) {
 							extractInlineVariableAnalysis(leaves1, leaves2, leaf1, leaf, mapping, replacementInfo);

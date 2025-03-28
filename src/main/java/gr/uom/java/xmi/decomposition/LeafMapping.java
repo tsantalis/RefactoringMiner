@@ -1363,7 +1363,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		return false;
 	}
 
-	private boolean identicalCommentsInParent() {
+	public boolean identicalCommentsInParent() {
 		if(getFragment1().getParent() != null && getFragment2().getParent() != null) {
 			List<String> commentsWithinStatement1 = extractCommentsWithinStatement(getFragment1().getParent(), getOperation1());
 			List<String> commentsWithinStatement2 = extractCommentsWithinStatement(getFragment2().getParent(), getOperation2());

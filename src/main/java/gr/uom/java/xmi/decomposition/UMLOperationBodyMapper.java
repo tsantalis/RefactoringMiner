@@ -2406,10 +2406,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						CompositeReplacement replacement = new CompositeReplacement(composite.getString(), streamAPICallStatement.getString(), additionallyMatchedStatements1, additionallyMatchedStatements2);
 						Set<Replacement> replacements = new LinkedHashSet<>();
 						replacements.add(replacement);
-						LeafMapping newMapping = createLeafMapping(composite, streamAPICallStatement, new LinkedHashMap<String, String>(), false);
-						newMapping.addReplacements(replacements);
-						TreeSet<LeafMapping> mappingSet = new TreeSet<>();
-						mappingSet.add(newMapping);
 						for(VariableDeclaration lambdaParameter : lambdaParameters) {
 							for(VariableDeclaration compositeParameter : composite.getVariableDeclarations()) {
 								if(lambdaParameter.getVariableName().equals(compositeParameter.getVariableName())) {
@@ -2437,6 +2433,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
+						LeafMapping newMapping = createLeafMapping(loop != null ? loop : composite, streamAPICallStatement, new LinkedHashMap<String, String>(), false);
+						newMapping.addReplacements(replacements);
+						TreeSet<LeafMapping> mappingSet = new TreeSet<>();
+						mappingSet.add(newMapping);
+						LeafMapping newMapping2 = null;
 						if(loop != null) {
 							ReplaceLoopWithPipelineRefactoring ref = new ReplaceLoopWithPipelineRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, container1, container2);
 							newMapping.addRefactoring(ref);
@@ -2445,10 +2446,58 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									ref.addNestedStatementMapping(m);
 								}
 							}
+							if(!loop.equals(composite) && (composite.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
+									composite.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
+									composite.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
+									composite.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT))) {
+								for(AbstractCodeFragment streamAPIStatement : streamAPIStatements2) {
+									if(!streamAPIStatement.equals(streamAPICallStatement)) {
+										if(composite.getExpressions().size() > 0 && streamAPIStatement.getString().startsWith(composite.getExpressions().get(0).getString())) {
+											List<VariableDeclaration> lambdaParameters2 = nestedLambdaParameters(streamAPIStatement.getLambdas());
+											for(VariableDeclaration lambdaParameter : lambdaParameters2) {
+												for(VariableDeclaration compositeParameter : composite.getVariableDeclarations()) {
+													if(lambdaParameter.getVariableName().equals(compositeParameter.getVariableName())) {
+														Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(compositeParameter, lambdaParameter);
+														matchedVariables.add(pair);
+													}
+													else {
+														for(Replacement r : mapping.getReplacements()) {
+															if(r.getBefore().equals(compositeParameter.getVariableName()) && r.getAfter().equals(lambdaParameter.getVariableName())) {
+																Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(compositeParameter, lambdaParameter);
+																matchedVariables.add(pair);
+																break;
+															}
+														}
+													}
+												}
+											}
+											newMapping2 = createLeafMapping(composite, streamAPIStatement, new LinkedHashMap<String, String>(), false);
+											Set<AbstractCodeFragment> a1 = new LinkedHashSet<>(additionallyMatchedStatements1);
+											a1.remove(loop);
+											a1.add(composite);
+											Set<AbstractCodeFragment> a2 = new LinkedHashSet<>(additionallyMatchedStatements2);
+											a2.remove(streamAPICallStatement);
+											a2.add(streamAPIStatement);
+											ReplaceLoopWithPipelineRefactoring ref2 = new ReplaceLoopWithPipelineRefactoring(a1, a2, container1, container2);
+											newMapping2.addRefactoring(ref2);
+											for(AbstractCodeMapping m : this.mappings) {
+												if(composite.getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) && streamAPIStatement.getLocationInfo().subsumes(m.getFragment2().getLocationInfo())) {
+													ref2.addNestedStatementMapping(m);
+												}
+											}
+										}
+									}
+								}
+							}
 						}
 						addToMappings(newMapping, mappingSet);
 						leaves2.remove(newMapping.getFragment2());
 						innerNodeIterator1.remove();
+						if(newMapping2 != null) {
+							mappingSet.add(newMapping2);
+							addToMappings(newMapping2, mappingSet);
+							leaves2.remove(newMapping2.getFragment2());
+						}
 					}
 				}
 			}

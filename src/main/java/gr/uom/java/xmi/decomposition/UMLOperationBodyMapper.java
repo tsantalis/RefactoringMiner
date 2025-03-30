@@ -6015,6 +6015,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				commentsWithinStatement1.add(comment1.getFullText());
 			}
 		}
+		if(statement.getTryContainer() != null && statement.getTryContainer().isPresent() && commentsWithinStatement1.isEmpty()) {
+			TryStatementObject tryStatement = statement.getTryContainer().get();
+			for(UMLComment comment1 : comments1) {
+				if(tryStatement.getLocationInfo().subsumes(comment1.getLocationInfo())) {
+					commentsWithinStatement1.add(comment1.getFullText());
+				}
+			}
+		}
 		return commentsWithinStatement1;
 	}
 
@@ -9715,15 +9723,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private Map<LeafMapping, Pair<CompositeStatementObject, CompositeStatementObject>> allMappingsNestedUnderCatchBlocks(Set<LeafMapping> mappingSet) {
-		Map<LeafMapping, Pair<CompositeStatementObject, CompositeStatementObject>> map = new LinkedHashMap<>();
-		for(LeafMapping mapping : mappingSet) {
-			Pair<CompositeStatementObject, CompositeStatementObject> pair = mapping.nestedUnderCatchBlock();
-			if(pair != null) {
-				map.put(mapping, pair);
+		if(mappingSet.size() > 1) {
+			Map<LeafMapping, Pair<CompositeStatementObject, CompositeStatementObject>> map = new LinkedHashMap<>();
+			for(LeafMapping mapping : mappingSet) {
+				Pair<CompositeStatementObject, CompositeStatementObject> pair = mapping.nestedUnderCatchBlock();
+				if(pair != null) {
+					map.put(mapping, pair);
+				}
 			}
-		}
-		if(map.size() == mappingSet.size()) {
-			return map;
+			if(map.size() == mappingSet.size()) {
+				return map;
+			}
 		}
 		return null;
 	}

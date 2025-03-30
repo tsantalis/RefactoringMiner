@@ -2934,8 +2934,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(UMLOperationBodyMapper childMapper : operationBodyMapper.childMappers) {
 					if(childMapper.container1.getClassName().equals(addedOperation.getClassName()) || classDiff instanceof UMLClassMoveDiff) {
 						for(AbstractCodeMapping mapping : childMapper.getMappings()) {
+							AbstractCodeFragment fragment = mapping.getFragment1();
 							if(!returnWithVariableReplacement(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
-								AbstractCodeFragment fragment = mapping.getFragment1();
+								expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, childMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
+								if(fragment instanceof CompositeStatementObject) {
+									CompositeStatementObject comp = (CompositeStatementObject)fragment;
+									if(!innerNodes1.contains(comp)) {
+										innerNodes1.add(comp);
+										addedInnerNodes1.add(comp);
+									}
+									handleBlocks(comp, innerNodes1, addedInnerNodes1);
+								}
+							}
+							else if(fragment instanceof TryStatementObject && ((TryStatementObject)fragment).identicalCatchOrFinallyBlocks((TryStatementObject)mapping.getFragment2())) {
+								expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, childMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
+								if(fragment instanceof CompositeStatementObject) {
+									CompositeStatementObject comp = (CompositeStatementObject)fragment;
+									if(!innerNodes1.contains(comp)) {
+										innerNodes1.add(comp);
+										addedInnerNodes1.add(comp);
+									}
+									handleBlocks(comp, innerNodes1, addedInnerNodes1);
+								}
+							}
+							else if(fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
+									!((CompositeStatementObject)fragment).stringRepresentation().equals(((CompositeStatementObject)mapping.getFragment2()).stringRepresentation())) {
 								expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, childMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
 								if(fragment instanceof CompositeStatementObject) {
 									CompositeStatementObject comp = (CompositeStatementObject)fragment;

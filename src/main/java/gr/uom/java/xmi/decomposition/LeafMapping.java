@@ -331,6 +331,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				else if(typeIntersection2 > 0 && typeIntersection1 == 0 && this.getFragment1().getTypes().size() > 0 && this.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 == 0 && identicalTypeIntersection2 == 0) {
 					return 1;
 				}
+				//if(this.getFragment1().getVariableDeclarations().size() == this.getFragment2().getVariableDeclarations().size() && typeIntersection1 > 0 && typeIntersection2 == 0 && o.getFragment1().getTypes().size() > 0 && o.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 >= 0 && identicalTypeIntersection2 == 0) {
+				//	return -1;
+				//}
+				if(o.getFragment1().getVariableDeclarations().size() == o.getFragment2().getVariableDeclarations().size() && typeIntersection2 > 0 && typeIntersection1 == 0 && this.getFragment1().getTypes().size() > 0 && this.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 == 0 && identicalTypeIntersection2 >= 0) {
+					return 1;
+				}
 				boolean nestedUnderCatchBlockOfSameType1 = this.nestedUnderCatchBlockOfSameExceptionType();
 				boolean nestedUnderCatchBlockOfSameType2 = o.nestedUnderCatchBlockOfSameExceptionType();
 				if(nestedUnderCatchBlockOfSameType1 && !nestedUnderCatchBlockOfSameType2) {

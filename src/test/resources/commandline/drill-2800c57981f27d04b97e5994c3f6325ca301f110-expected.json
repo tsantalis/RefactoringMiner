@@ -6960,6 +6960,57 @@
 		"description": "statement referencing the renamed variable",
 		"codeElement": null
 }]
+},
+{
+	"type": "Split Conditional",
+	"description": "Split Conditional if(currentQueueLeader == null || !currentQueueLeader.equals(leaderId)) to [if(!currentQueueLeader.equals(leaderId)), if(currentQueueLeader == null)] in method private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
+		"startLine": 226,
+		"endLine": 229,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "IF_STATEMENT",
+		"description": "original conditional",
+		"codeElement": "if(currentQueueLeader == null || !currentQueueLeader.equals(leaderId))"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
+		"startLine": 199,
+		"endLine": 295,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanNode String) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
+		"startLine": 322,
+		"endLine": 330,
+		"startColumn": 12,
+		"endColumn": 6,
+		"codeElementType": "IF_STATEMENT",
+		"description": "split conditional",
+		"codeElement": "if(!currentQueueLeader.equals(leaderId))"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
+		"startLine": 311,
+		"endLine": 330,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "IF_STATEMENT",
+		"description": "split conditional",
+		"codeElement": "if(currentQueueLeader == null)"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
+		"startLine": 278,
+		"endLine": 413,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with split conditional",
+		"codeElement": "private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String"
+}]
 }
 ]
 }]

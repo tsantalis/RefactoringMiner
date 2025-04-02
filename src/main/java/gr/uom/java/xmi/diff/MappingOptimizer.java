@@ -774,7 +774,7 @@ public class MappingOptimizer {
 					if(!allReplacementsCoverEntireStatement) {
 						int minimum = replacementTypeCount.get(0);
 						for(int i=1; i<replacementTypeCount.size(); i++) {
-							if(replacementTypeCount.get(i) < minimum) {
+							if(replacementTypeCount.get(i) < minimum && replacementCoversEntireStatement.get(i) == false) {
 								minimum = replacementTypeCount.get(i);
 							}
 						}

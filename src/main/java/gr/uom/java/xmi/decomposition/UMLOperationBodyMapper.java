@@ -9496,6 +9496,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		mappingHashcodesT2.remove(mapping.getFragment2().hashCode());
 	}
 
+	private boolean nestedUnderExistingMapping(AbstractExpression e1, AbstractExpression e2) {
+		for(AbstractCodeMapping m : this.mappings) {
+			if(m.getFragment1() instanceof AbstractStatement || m.getFragment2() instanceof AbstractStatement) {
+				boolean subsumes1 = m.getFragment1().getLocationInfo().subsumes(e1.getLocationInfo());
+				boolean subsumes2 = m.getFragment2().getLocationInfo().subsumes(e2.getLocationInfo());
+				if(subsumes1 && subsumes2) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private void addToMappings(LeafMapping mapping, TreeSet<LeafMapping> mappingSet) {
 		addMapping(mapping);
 		CompositeReplacement compositeReplacement = mapping.containsCompositeReplacement();
@@ -9512,15 +9525,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				//remove from this.mappings nested mappings (inside anonymous or lambdas) corresponding to loser mappings
 				Set<AbstractCodeMapping> mappingsToBeRemoved = new LinkedHashSet<AbstractCodeMapping>();
+				int counter = 0;
 				for(AbstractCodeMapping m : this.mappings) {
-					if(leafMapping.getFragment1().getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) &&
+					boolean subsumes1 = leafMapping.getFragment1().getLocationInfo().subsumes(m.getFragment1().getLocationInfo());
+					boolean subsumes2 = leafMapping.getFragment2().getLocationInfo().subsumes(m.getFragment2().getLocationInfo());
+					boolean isLast = counter == this.mappings.size() - 1;		
+					if(subsumes1 &&
 							!leafMapping.getFragment1().equals(m.getFragment1()) &&
-							leafMapping.getFragment2().getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) &&
+							subsumes2 &&
 							!leafMapping.getFragment2().equals(m.getFragment2())) {
 						mappingsToBeRemoved.add(m);
 					}
+					else if(!isLast && m.getFragment1() instanceof AbstractExpression && m.getFragment2() instanceof AbstractExpression &&
+							!nestedUnderExistingMapping((AbstractExpression)m.getFragment1(), (AbstractExpression)m.getFragment2())) {
+						mappingsToBeRemoved.add(m);
+					}
+					counter++;
 				}
-				if(mapping.getFragment1().getString().contains(JAVA.LAMBDA_ARROW) || mapping.getFragment2().getString().contains(JAVA.LAMBDA_ARROW)) {
+				if(mapping.getFragment1().getString().contains(JAVA.LAMBDA_ARROW) || mapping.getFragment2().getString().contains(JAVA.LAMBDA_ARROW) ||
+						mapping.getFragment1().getString().contains(JAVA.METHOD_REFERENCE) || mapping.getFragment2().getString().contains(JAVA.METHOD_REFERENCE)) {
 					removeAllMappings(mappingsToBeRemoved);
 				}
 				//remove from this.refactorings nested refactorings (inside anonymous or lambdas) corresponding to loser mappings

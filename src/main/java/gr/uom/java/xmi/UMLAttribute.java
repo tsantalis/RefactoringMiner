@@ -92,6 +92,11 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return null;
 	}
 
+	@Override
+	public AbstractCall singleStatementCallingMethod() {
+		return null;
+	}
+
 	public boolean isRecursive() {
 		return false;
 	}

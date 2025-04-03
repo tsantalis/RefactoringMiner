@@ -441,6 +441,11 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	}
 
 	@Override
+	public AbstractCall singleStatementCallingMethod() {
+		return null;
+	}
+
+	@Override
 	public boolean isRecursive() {
 		return false;
 	}

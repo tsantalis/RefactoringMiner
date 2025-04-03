@@ -10307,9 +10307,33 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						return Integer.compare(thisEditDistance, otherEditDistance);
 					}
 					else {
+						AbstractCall thisDelegate = this.getContainer2().singleStatementCallingMethod();
+						AbstractCall otherDelegate = operationBodyMapper.getContainer2().singleStatementCallingMethod();
+						boolean delegateArgumentInMethodName = false;
+						if(thisDelegate != null && otherDelegate != null) {
+							boolean thisMatch = false;
+							for(String arg : thisDelegate.arguments()) {
+								if(arg.startsWith("\"") && arg.endsWith("\""))
+									arg = arg.substring(1, arg.length()-1);
+								if(this.getContainer2().getName().toLowerCase().contains(arg)) {
+									thisMatch = true;
+									break;
+								}
+							}
+							boolean otherMatch = false;
+							for(String arg : otherDelegate.arguments()) {
+								if(arg.startsWith("\"") && arg.endsWith("\""))
+									arg = arg.substring(1, arg.length()-1);
+								if(operationBodyMapper.getContainer2().getName().toLowerCase().contains(arg)) {
+									otherMatch = true;
+									break;
+								}
+							}
+							delegateArgumentInMethodName = thisMatch && otherMatch;
+						}
 						int thisOperationNameEditDistance = this.operationNameEditDistance();
 						int otherOperationNameEditDistance = operationBodyMapper.operationNameEditDistance();
-						if(thisOperationNameEditDistance != otherOperationNameEditDistance) {
+						if(thisOperationNameEditDistance != otherOperationNameEditDistance && !delegateArgumentInMethodName) {
 							return Integer.compare(thisOperationNameEditDistance, otherOperationNameEditDistance);
 						}
 						if(this.container1.getClassName().equals(this.container2.getClassName()) && operationBodyMapper.container1.getClassName().equals(operationBodyMapper.container2.getClassName())) {

@@ -126,6 +126,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	boolean isSetter();
 	boolean isConstructor();
 	AbstractCall isDelegate();
+	AbstractCall singleStatementCallingMethod();
 	boolean isRecursive();
 	boolean isMain();
 	boolean isStatic();

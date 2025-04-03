@@ -1,0 +1,39 @@
+public copyFile(cfDir File, file File) : void -> public copyFile(cfDir File, file File, target File) : void
+line range:695-695==line range:806-806
+line range:699-699==line range:809-809
+line range:703-703==line range:814-814
+line range:702-703==line range:813-814
+line range:700-704==line range:810-815
+line range:696-705==line range:807-816
+line range:697-705==line range:808-816
+line range:698-698==line range:801-801
+public testVerifyOldSSTables() : void -> private verifyOldSSTables(tableSuffix String) : void
+line range:349-349==line range:414-414
+line range:351-351==line range:416-416
+line range:361-361==line range:426-426
+line range:365-365==line range:430-430
+line range:342-342==line range:407-407
+line range:343-343==line range:408-408
+line range:350-351==line range:415-416
+line range:347-354==line range:412-419
+line range:353-354==line range:418-419
+line range:345-355==line range:410-420
+line range:359-366==line range:424-431
+line range:363-366==line range:428-431
+line range:357-367==line range:422-432
+line range:340-368==line range:405-433
+line range:346-355==line range:411-420
+line range:358-367==line range:423-432
+line range:341-368==line range:406-433
+public copySstablesFromTestData(table String, ksDir File, ks String) : void -> public copySstablesFromTestData(legacyVersion Version, tablePattern String, ksDir File, ks String) : void
+line range:666-666==line range:771-771
+line range:667-667==line range:772-772
+line range:673-673==line range:781-781
+line range:671-674==line range:776-782
+line range:669-675==line range:774-783
+line range:672-674==line range:777-782
+line range:670-675==line range:775-783
+public copyFile(cfDir File, file File) : void -> public copyFile(cfDir File, file File) : void
+line range:698-698==line range:801-801
+public testVerifyOldSSTables() : void -> public testVerifyOldSimpleSSTables() : void
+public copySstablesFromTestData(table String, ksDir File, ks String) : void -> public copySstablesFromTestData(legacyVersion Version, tablePattern String, ksDir File) : void

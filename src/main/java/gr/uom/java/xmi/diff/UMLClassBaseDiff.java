@@ -2267,6 +2267,15 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				mapperSet.add(operationBodyMapper);
 			}
 		}
+		if (mappings == 0 && isPartOfMethodExtracted(removedOperation, addedOperation) && removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation()) {
+			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
+			if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
+					mappedElementsMoreThanNonMappedT2(mappings, operationBodyMapper) &&
+					absoluteDifferenceInPosition <= differenceInPosition &&
+					removedOperation.testMethodCheck(addedOperation)) {
+				mapperSet.add(operationBodyMapper);
+			}
+		}
 	}
 
 	private void updateMapperSet(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperation removedOperation, UMLOperation operationInsideAnonymousClass, UMLOperation addedOperation, int differenceInPosition) throws RefactoringMinerTimedOutException {

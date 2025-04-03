@@ -620,6 +620,17 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return false;
 	}
 
+	public AbstractCall singleStatementCallingMethod() {
+		if(getBody() != null) {
+			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
+			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
+				StatementObject statement = (StatementObject)statements.get(0);
+				return statement.invocationCoveringEntireFragment();
+			}
+		}
+		return null;
+	}
+
 	public AbstractCall isDelegate() {
 		if(getBody() != null) {
 			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();

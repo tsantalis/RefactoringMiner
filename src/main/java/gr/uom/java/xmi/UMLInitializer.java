@@ -134,6 +134,11 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 		return null;
 	}
 
+	@Override
+	public AbstractCall singleStatementCallingMethod() {
+		return null;
+	}
+
 	public Optional<UMLAnonymousClass> getAnonymousClassContainer() {
 		return anonymousClassContainer;
 	}

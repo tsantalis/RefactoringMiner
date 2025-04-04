@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.diff;
 
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -13,6 +15,7 @@ import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
 public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
@@ -210,6 +213,15 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 						UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation1, operation2, classDiff);
 						int mappings = mapper.mappingsWithoutBlocks();
 						if(mappings > 0) {
+							if(!operation1.getName().equals(operation2.getName()) && mappings == 1) {
+								for(AbstractCodeMapping mapping : mapper.getMappings()) {
+									String statement = mapping.getFragment1().getString();
+									if(statement.equals(JAVA.RETURN_TRUE) || statement.equals(JAVA.RETURN_FALSE) || 
+											statement.equals(JAVA.RETURN_THIS) || statement.equals(JAVA.RETURN_NULL) || statement.equals(JAVA.RETURN_STATEMENT)) {
+										mappings--;
+									}
+								}
+							}
 							int nonMappedElementsT1 = mapper.nonMappedElementsT1();
 							int nonMappedElementsT2 = mapper.nonMappedElementsT2();
 							if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||

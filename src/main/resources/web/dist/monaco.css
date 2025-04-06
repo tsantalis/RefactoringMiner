@@ -85,6 +85,7 @@ div {
 }
 .monaco-editor, .monaco-diff-editor, .monaco-component  {
 	--vscode-editor-foldBackground: #c0ebf8 !important;
+	position: absolute !important; 
 }
 .disabled {
 	pointer-events: none;

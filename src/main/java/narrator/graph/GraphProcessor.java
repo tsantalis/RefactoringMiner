@@ -1,10 +1,12 @@
 package narrator.graph;
 
+import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import narrator.apted.costmodel.StringUnitCostModel;
@@ -23,15 +25,17 @@ public class GraphProcessor {
     private final UMLModel model;
     private final APTED editDistance = new APTED(new StringUnitCostModel());
     private final float distanceThreshold = 0;
+    private Map<String, String> srcContents;
     private Map<String, String> dstContents;
     Map<String, TreeContext> childContexts;
 
-    public GraphProcessor(UMLModelDiff modelDiff, Map<String, String> dstContents,
+    public GraphProcessor(UMLModelDiff modelDiff, Map<String, String> srcContents, Map<String, String> dstContents,
                           Map<String, TreeContext> childContexts) {
         graph = GraphTypeBuilder.<Node, Edge>directed().allowingMultipleEdges(true).allowingSelfLoops(true).edgeClass(Edge.class).weighted(true).buildGraph();
         nodeMap = new HashMap<>();
         this.modelDiff = modelDiff;
         this.model = modelDiff.getChildModel();
+        this.srcContents = srcContents;
         this.dstContents = dstContents;
         this.childContexts = childContexts;
     }
@@ -40,24 +44,140 @@ public class GraphProcessor {
         return nodeMap.containsKey(Node.formatId(path, tree));
     }
 
-    private Node addHunkNode(String path, Tree tree, NodeType nodeType) {
+    public void importHunks(String path, String srcPath, Set<Tree> additions, Set<Tree> moves, MappingStore mappings) {
+        Map<Tree, Set<Tree>> parentAdditions = new HashMap<>();
+        for (Tree subject : additions) {
+            if (!parentAdditions.containsKey(subject)) {
+                parentAdditions.put(subject, new HashSet<>());
+            }
+
+            Tree smallestParent = null;
+            for (Tree object : additions) {
+                if (object.getPos() <= subject.getPos() && subject.getEndPos() <= object.getEndPos() && !subject.equals(object)) {
+                    if (smallestParent == null || smallestParent.getLength() > object.getLength()) {
+                        smallestParent = object;
+                    }
+                }
+            }
+
+            if (smallestParent != null) {
+                if (!parentAdditions.containsKey(smallestParent)) {
+                    parentAdditions.put(smallestParent, new HashSet<>());
+                }
+                parentAdditions.get(smallestParent).add(subject);
+            }
+        }
+
+        Map<Tree, Set<Tree>> parentMoves = new HashMap<>();
+        for (Tree move : moves) {
+            Tree smallestParent = null;
+            for (Tree parent : parentAdditions.keySet()) {
+                if (parent.getPos() <= move.getPos() && move.getEndPos() <= parent.getEndPos()) {
+                    if (smallestParent == null || smallestParent.getLength() > parent.getLength()) {
+                        smallestParent = parent;
+                    }
+                }
+            }
+
+            if (smallestParent != null) {
+                if (!parentMoves.containsKey(smallestParent)) {
+                    parentMoves.put(smallestParent, new HashSet<>());
+                }
+                parentMoves.get(smallestParent).add(move);
+            }
+        }
+
+        String fileContent = dstContents.get(path);
+        String srcContent = srcContents.get(srcPath);
+        Map<Tree, Node> treeNodeMap = new HashMap<>();
+        while (!parentAdditions.isEmpty()) {
+            Set<Tree> parents = parentAdditions.keySet();
+            Tree parent = null;
+            for (Map.Entry<Tree, Set<Tree>> parentTrees : parentAdditions.entrySet()) {
+                Optional<Tree> invalidChild = parentTrees.getValue().stream().filter(parents::contains).findFirst();
+                if (invalidChild.isPresent()) {
+                    continue;
+                }
+
+                parent = parentTrees.getKey();
+                break;
+            }
+
+            if (parent == null) {
+                break;
+            }
+
+            Set<Tree> children = parentAdditions.get(parent);
+            Set<Node> subNodes = new HashSet<>();
+            for (Tree child : children) {
+                subNodes.add(treeNodeMap.containsKey(child) ? treeNodeMap.remove(child) : new Node(fileContent, path,
+                        child));
+            }
+
+            treeNodeMap.put(parent, new Node(fileContent, path, parent, subNodes, parentMoves.get(parent)));
+            parentAdditions.remove(parent);
+        }
+
+        for (Node node : treeNodeMap.values()) {
+            List<Tree> nodeTrees = new ArrayList<>(node.getTree().getDescendants());
+            nodeTrees.add(node.getTree());
+            List<Tree> srcs = nodeTrees.stream().map(mappings::getSrcForDst).filter(Objects::nonNull).toList();
+
+            List<Tree> uniqueSrcs = new ArrayList<>();
+            for (Tree subject : srcs) {
+                boolean isUnique = true;
+                for (Tree object : srcs) {
+                    if (object.getPos() <= subject.getPos() && subject.getEndPos() <= object.getEndPos() && !subject.equals(object)) {
+                        isUnique = false;
+                        break;
+                    }
+                }
+
+                if (isUnique) {
+                    uniqueSrcs.add(subject);
+                }
+            }
+
+            if (!uniqueSrcs.isEmpty()) {
+                uniqueSrcs.sort(Comparator.comparingInt(Tree::getPos));
+                node.setSrcs(uniqueSrcs.stream().map(src -> srcContent.substring(src.getPos(), src.getEndPos())).toList());
+            }
+            addNode(node);
+        }
+    }
+
+    private Node addTreeNode(String path, Tree tree, NodeType nodeType) {
         String potentialNodeId = Node.formatId(path, tree);
         if (nodeMap.containsKey(potentialNodeId)) {
             return nodeMap.get(potentialNodeId);
         }
 
-        String fileContent = dstContents.get(path);
+        Node node = new Node(dstContents.get(path), path, tree, nodeType);
+        return addNode(node);
+    }
 
-        Node node = new Node(fileContent, path, tree, nodeType);
+    private Node addNode(Node node) {
+        if (nodeMap.containsKey(node.getId())) {
+            return nodeMap.get(node.getId());
+        }
+
         graph.addVertex(node);
         nodeMap.put(node.getId(), node);
 
+        addNodeContext(node);
+
+        return node;
+    }
+
+    private void addNodeContext(Node node) {
+        String path = node.getPath();
+
         Node lastNode = node;
-        List<Tree> contexts = Context.get(tree);
+        List<Tree> contexts = Context.get(node.getTree());
         for (Tree context : contexts) {
             String potentialContextId = Node.formatId(path, context);
             if (!nodeMap.containsKey(potentialContextId)) {
-                Node contextNode = new Node(fileContent, path, context, NodeType.CONTEXT);
+                Node contextNode = new Node(node.getFileContent(), path, context, NodeType.CONTEXT);
                 graph.addVertex(contextNode);
                 nodeMap.put(contextNode.getId(), contextNode);
             }
@@ -70,12 +190,6 @@ public class GraphProcessor {
 
             lastNode = contextNode;
         }
-
-        return node;
-    }
-
-    public void addHunkNode(String path, Tree tree) {
-        addHunkNode(path, tree, NodeType.BASE);
     }
 
     private void addEdge(Node node1, Node node2, EdgeType edgeType, float weight) {
@@ -96,7 +210,10 @@ public class GraphProcessor {
         processOutOfClasses();
         processSimilarity();
         processSuccession();
-        processContextMethodInvocations();
+        // if a change within a context method is using another added method introduction, it will be connected itself
+        // why should we separately connect its surrounding method to that method introduction again?
+        // bringing this back breaks usage-requirement pattern
+        //        processContextMethodInvocations();
     }
 
     private void processDefUse() {
@@ -262,8 +379,13 @@ public class GraphProcessor {
                     addEdge(node, useNode, EdgeType.DEF_USE, 1);
                 }
 
-                List<AbstractCall> methodInvocations = operationVariable.getInitializer().getMethodInvocations();
-                for (AbstractCall methodInvocation : methodInvocations) {
+                AbstractExpression variableInitStatement = operationVariable.getInitializer();
+                if (variableInitStatement == null) {
+                    continue;
+                }
+
+                List<AbstractCall> variableInitInvocations = variableInitStatement.getMethodInvocations();
+                for (AbstractCall methodInvocation : variableInitInvocations) {
                     UMLOperation declaration = modelDiff.findDeclarationsInChildModel(umlOperation, methodInvocation);
                     if (declaration == null) {
                         continue;
@@ -276,7 +398,7 @@ public class GraphProcessor {
                         continue;
                     }
 
-                    Node declarationNode = addHunkNode(path, tree, NodeType.EXTENSION);
+                    Node declarationNode = addTreeNode(path, tree, NodeType.EXTENSION);
                     addEdge(declarationNode, node, EdgeType.DEF_USE, 1);
                 }
             }
@@ -323,7 +445,7 @@ public class GraphProcessor {
                     changedFilesUseStatementsLocation);
             String path = closestLocationInfo.getFilePath();
             Tree tree = TreeUtilFunctions.findByLocationInfo(childContexts.get(path).getRoot(), closestLocationInfo);
-            Node node = addHunkNode(path, tree, NodeType.EXTENSION);
+            Node node = addTreeNode(path, tree, NodeType.EXTENSION);
 
             result.add(node);
         }

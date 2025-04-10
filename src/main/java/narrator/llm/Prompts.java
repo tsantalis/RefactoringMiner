@@ -12,18 +12,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class Prompts {
-    private static final String successivePatternTemplate = """
-            The following code, along with its location details, has been added to a Java project in a commit:
-            ```
-            %s
-            ```
-            
-            As a review assistant, your task is to help the reviewer understand the purpose of this added code by describing all evident intentions behind it.
-            
-            Strictly adhere to the following guideline:
-            - Identify concrete purposes behind the changes instead of summarizing them vaguely or discussing general goals.
-            """;
-
     private static final String componentTemplate = """
             A commit in a Java project includes multiple groups of changes. Each group has been described independently as follows:
             
@@ -35,6 +23,18 @@ public class Prompts {
             - Identify concrete purposes behind the changes instead of summarizing them vaguely or discussing general goals.
             """;
 
+    private static final String successivePatternTemplate = """
+            The following code, along with its location details, has been added to a Java project in a commit:
+            ```
+            %s
+            ```
+            
+            As a review assistant, your task is to help the reviewer understand the purpose of this added code by describing all evident intentions behind it.
+            
+            Strictly adhere to the following guideline:
+            - Identify concrete purposes behind the changes instead of summarizing them vaguely or discussing general goals.
+            """;
+    
     public static String getSuccessivePatternPrompt(String textualRepresentation) {
         return String.format(successivePatternTemplate, textualRepresentation);
     }

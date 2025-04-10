@@ -139,10 +139,9 @@ public class UsagePattern extends TraversalPattern {
             return descriptionCache;
         }
 
-        // A UsagePattern with requirements can only get description within RequirementComponent
+        // A UsagePattern with requirements will only be described in RequirementComponent and does not have a
+        // description on its own
         if (!requirements.isEmpty()) {
-            System.out.println("Something went wrong");
-            System.out.println(textualRepresentation());
             return null;
         }
 

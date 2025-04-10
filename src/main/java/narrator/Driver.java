@@ -77,12 +77,6 @@ public class Driver {
         writer.close();
     }
 
-    private static void stringifyContextGraph(String url) throws Exception {
-        FileWriter writer = new FileWriter("./context.json");
-        writer.write(Stringifier.stringifyContextGraph());
-        writer.close();
-    }
-
     private static void describeExcel() throws Exception {
         Properties prop = new Properties();
         InputStream input = new FileInputStream("github-oauth.properties");
@@ -122,14 +116,16 @@ public class Driver {
                 int endIndex = Math.min(i + BATCH_SIZE, clusters.size());
                 List<Cluster> batch = clusters.subList(i, endIndex);
 
-                List<CompletableFuture<String>> futures = batch.stream().map(cluster -> CompletableFuture.supplyAsync(() -> {
+                List<CompletableFuture<String>> futures =
+                        batch.stream().map(cluster -> CompletableFuture.supplyAsync(() -> {
                     try {
                         return OpenAIClient.getClusterDescription(cluster.get());
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 })).toList();
-                CompletableFuture<List<String>> batchDescriptionsFuture = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).thenApply(v -> futures.stream().map(CompletableFuture::join).toList());
+                CompletableFuture<List<String>> batchDescriptionsFuture =
+                        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).thenApply(v -> futures.stream().map(CompletableFuture::join).toList());
                 List<String> batchDescriptions = batchDescriptionsFuture.get();
 
                 allDescriptions.addAll(batchDescriptions);

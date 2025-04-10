@@ -15,15 +15,16 @@ public class Context {
         add(Constants.METHOD_DECLARATION);
         add(Constants.VARIABLE_DECLARATION_STATEMENT);
         add(Constants.RETURN_STATEMENT);
+        add(Constants.JAVA_DOC);
     }};
 
     public static List<Tree> get(Tree tree) {
         List<Tree> contexts = new ArrayList<>();
 
-//        String type = tree.getType().name;
-//        if (typeToContextType.containsKey(type)) {
-//            validParentTypes.addAll(typeToContextType.get(type));
-//        }
+        //        String type = tree.getType().name;
+        //        if (typeToContextType.containsKey(type)) {
+        //            validParentTypes.addAll(typeToContextType.get(type));
+        //        }
 
         Tree parent = tree;
         String parentType;

@@ -5,19 +5,25 @@ import com.github.gumtreediff.utils.Pair;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Node {
-    private String id;
-    private String path;
-    private String fileContent;
-    private Tree tree;
-    private int startLine;
-    private int endLine;
-    private NodeType nodeType;
-
+    private final String id;
+    private final String path;
+    private final String fileContent;
     private boolean active = true;
+    private final Tree tree;
+    private Set<Node> subNodes = null;
+    private Set<Tree> subMoves = null;
+    private final int startLine;
+    private final int endLine;
+    private NodeType nodeType;
+    private List<ContentRange> contentRanges = null;
+    private List<String> srcs = null;
+
+    public void setSrcs(List<String> srcs) {
+        this.srcs = srcs;
+    }
 
     public static String formatId(String path, Tree tree) {
         return String.format("%s-%s-%s-%s", path, tree.getPos(), tree.getEndPos(), tree.getType().name);
@@ -38,6 +44,12 @@ public class Node {
     public Node(String fileContent, String path, Tree tree, NodeType nodeType) {
         this(fileContent, path, tree);
         this.nodeType = nodeType;
+    }
+
+    public Node(String fileContent, String path, Tree tree, Set<Node> subNodes, Set<Tree> subMoves) {
+        this(fileContent, path, tree);
+        this.subNodes = subNodes;
+        this.subMoves = subMoves;
     }
 
     public String getId() {
@@ -72,6 +84,106 @@ public class Node {
         return endLine;
     }
 
+    private List<ContentRange> getContentRanges() {
+        if (contentRanges != null) {
+            return contentRanges;
+        }
+
+        List<ContentRange> ranges = new ArrayList<>();
+
+        if (subNodes == null || subNodes.isEmpty()) {
+            ranges.add(new ContentRange(tree.getPos(), tree.getEndPos(), true));
+            return ranges;
+        }
+
+        List<Node> sortedSubNodes = new ArrayList<>(subNodes);
+        sortedSubNodes.sort(Comparator.comparingInt(n -> n.getTree().getPos()));
+
+        int processedPos = getTree().getPos();
+        for (Node subNode : sortedSubNodes) {
+            int pos = subNode.getTree().getPos();
+            int startGap = pos - processedPos;
+            if (startGap > 0) {
+                ranges.addAll(getSubMoveContentRanges(processedPos, pos));
+            }
+
+            ranges.addAll(subNode.getContentRanges());
+
+            processedPos = subNode.getTree().getEndPos();
+        }
+
+        ranges.addAll(getSubMoveContentRanges(processedPos, getTree().getEndPos()));
+
+        List<ContentRange> mergedRanges = new ArrayList<>();
+        ContentRange currentRange = null;
+        for (ContentRange range : ranges) {
+            if (currentRange == null || currentRange.isAddition != range.isAddition) {
+                if (currentRange != null) {
+                    mergedRanges.add(currentRange);
+                }
+
+                currentRange = new ContentRange(range.pos, range.endPos, range.isAddition);
+                continue;
+            }
+
+            currentRange.endPos = range.endPos;
+        }
+
+        if (currentRange != null) {
+            mergedRanges.add(currentRange);
+        }
+
+        contentRanges = mergedRanges;
+
+        return mergedRanges;
+    }
+
+    private boolean getIsCensor() {
+        List<ContentRange> contentRanges = getContentRanges();
+        return contentRanges.stream().anyMatch(cr -> !cr.isAddition);
+    }
+
+    private List<ContentRange> getSubMoveContentRanges(int pos, int endPos) {
+        List<ContentRange> ranges = new ArrayList<>();
+
+        if (subMoves == null || subMoves.isEmpty()) {
+            ranges.add(new ContentRange(pos, endPos, true));
+            return ranges;
+        }
+
+        List<Pair<Integer, Integer>> overlaps = new ArrayList<>();
+        for (Tree subMove : subMoves) {
+            int maxPos = Math.max(pos, subMove.getPos());
+            int minEndPos = Math.min(endPos, subMove.getEndPos());
+
+            if (maxPos <= minEndPos) {
+                overlaps.add(new Pair<>(maxPos, minEndPos));
+            }
+        }
+
+        List<Pair<Integer, Integer>> sortedOverlaps = new ArrayList<>(overlaps);
+        sortedOverlaps.sort(Comparator.comparingInt(n -> n.first));
+
+        int processedPos = pos;
+        for (Pair<Integer, Integer> overlap : sortedOverlaps) {
+            int startGap = overlap.first - processedPos;
+            if (startGap > 0) {
+                ranges.add(new ContentRange(processedPos, overlap.first, true));
+            }
+
+            ranges.add(new ContentRange(overlap.first, overlap.second, false));
+
+            processedPos = overlap.second;
+        }
+
+        int endGap = endPos - processedPos;
+        if (endGap > 0) {
+            ranges.add(new ContentRange(processedPos, endPos, true));
+        }
+
+        return ranges;
+    }
+
     public String getContent() {
         if (isContext()) {
             String type = tree.getType().name;
@@ -86,7 +198,37 @@ public class Node {
                 return path;
             }
         }
-        return fileContent.substring(tree.getPos(), tree.getEndPos());
+
+        StringBuilder result = new StringBuilder(fileContent.substring(tree.getPos(), tree.getEndPos()));
+        if (srcs != null) {
+            result.append("\nThe code above is the result of the change to the code below:\n");
+            result.append(String.join("\n", srcs));
+        }
+
+        return result.toString();
+    }
+
+    private String getCensoredContent() {
+        List<ContentRange> contentRanges = getContentRanges();
+
+        if (contentRanges.size() == 1) {
+            ContentRange contentRange = contentRanges.get(0);
+            return fileContent.substring(contentRange.pos, contentRange.endPos);
+        }
+
+        StringBuilder result = new StringBuilder();
+
+        for (ContentRange contentRange : contentRanges) {
+            String rangeString = fileContent.substring(contentRange.pos, contentRange.endPos);
+
+            if (!contentRange.isAddition) {
+                rangeString = rangeString.replaceAll("[^\\s]", "*");
+            }
+
+            result.append(rangeString);
+        }
+
+        return result.toString();
     }
 
     public String getFileContent() {
@@ -150,11 +292,10 @@ public class Node {
     }
 
     public List<Node> getContexts() {
-        return Context.get(tree).stream()
-                .map(context -> new Node(fileContent, path, context, NodeType.CONTEXT)).toList();
+        return Context.get(tree).stream().map(context -> new Node(fileContent, path, context, NodeType.CONTEXT)).toList();
     }
 
-    private HashMap<String, String> typeTextualRepresentation = new HashMap<>() {{
+    private final HashMap<String, String> typeTextualRepresentation = new HashMap<>() {{
         put(Constants.VARIABLE_DECLARATION_STATEMENT, "VARIABLE");
         put(Constants.METHOD_DECLARATION, "METHOD");
         put(Constants.TYPE_DECLARATION, "TYPE");
@@ -164,9 +305,22 @@ public class Node {
     public String textualRepresentation() {
         if (isContext()) {
             String type = tree.getType().name;
-            return typeTextualRepresentation.containsKey(type) ? typeTextualRepresentation.get(type) + " \"" + getContent() + "\"" : "\"" + getContent() + "\"";
+            return typeTextualRepresentation.containsKey(type) ?
+                    typeTextualRepresentation.get(type) + " \"" + getContent() + "\"" : "\"" + getContent() + "\"";
         }
 
         return getContent();
+    }
+}
+
+class ContentRange {
+    int pos;
+    int endPos;
+    boolean isAddition;
+
+    ContentRange(int pos, int endPos, boolean isAddition) {
+        this.pos = pos;
+        this.endPos = endPos;
+        this.isAddition = isAddition;
     }
 }

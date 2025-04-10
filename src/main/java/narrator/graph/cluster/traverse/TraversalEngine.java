@@ -39,7 +39,8 @@ public class TraversalEngine {
         // requirements
         mergeUsagesRequirements();
         // same non-context node (e.g. requirement)
-        mergeCommonNodes((node) -> !node.isContext());
+        //        mergeByContributingNodes((node) -> !node.isContext());
+        mergeByStrongestCommonNodes((node) -> !node.isContext());
         // 100% similar nodes
         mergeSimilarNodes();
         // successive nodes
@@ -276,7 +277,74 @@ public class TraversalEngine {
         }
     }
 
-    private void mergeCommonNodes(Function<Node, Boolean> nodeCondition) {
+    /*
+     * This method finds the component with the highest number of nodes being common with any other component.
+     * Then it merges the strongest common nodes.
+     * */
+    private void mergeByContributingNodes(Function<Node, Boolean> nodeCondition) {
+        while (true) {
+            TraversalPattern mostContributedComponent = null;
+            Map<Node, List<TraversalPattern>> mostNodesContributions = null;
+            for (TraversalPattern subject : components) {
+                Map<Node, List<TraversalPattern>> nodesContributions = new HashMap<>();
+
+                for (Node node : subject.vertexSet()) {
+                    if (nodeCondition != null && !nodeCondition.apply(node)) {
+                        continue;
+                    }
+
+                    List<TraversalPattern> nodeContributions =
+                            components.stream().filter(object -> !object.equals(subject) && object.containsNode(node)).toList();
+                    if (nodeContributions.isEmpty()) {
+                        continue;
+                    }
+
+                    nodesContributions.put(node, nodeContributions);
+                }
+
+                if (nodesContributions.isEmpty() || (mostNodesContributions != null && mostNodesContributions.size() >= nodesContributions.size())) {
+                    continue;
+                }
+
+                mostContributedComponent = subject;
+                mostNodesContributions = nodesContributions;
+            }
+
+            if (mostContributedComponent == null) {
+                break;
+            }
+
+            Map<Node, List<TraversalPattern>> highestContributionDegreeNodes = new HashMap<>();
+            int highestContributionDegree = 0;
+            for (Map.Entry<Node, List<TraversalPattern>> nodeContributions : mostNodesContributions.entrySet()) {
+                List<TraversalPattern> contributions = nodeContributions.getValue();
+
+                if (contributions.size() > highestContributionDegree) {
+                    highestContributionDegreeNodes = new HashMap<>();
+                    highestContributionDegree = contributions.size();
+                }
+
+                if (contributions.size() == highestContributionDegree) {
+                    highestContributionDegreeNodes.put(nodeContributions.getKey(), contributions);
+                }
+            }
+
+            Set<TraversalPattern> contributedComponents = new HashSet<>();
+            contributedComponents.add(mostContributedComponent);
+            for (List<TraversalPattern> components : highestContributionDegreeNodes.values()) {
+                contributedComponents.addAll(components);
+            }
+
+            TraversalComponent parentComponent = new TraversalComponent(contributedComponents.stream().toList(),
+                    highestContributionDegreeNodes.keySet(), ReasonType.COMMON);
+            for (TraversalPattern component : contributedComponents) {
+                components.remove(component);
+            }
+            components.add(parentComponent);
+        }
+    }
+
+    private void mergeByStrongestCommonNodes(Function<Node, Boolean> nodeCondition) {
         while (true) {
             Set<Node> mostCommonNodes = null;
             for (int i = 0; i < components.size(); i++) {

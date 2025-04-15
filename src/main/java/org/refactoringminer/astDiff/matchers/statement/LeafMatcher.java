@@ -54,7 +54,8 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 		}
 		catch (Exception exception)
 		{
-			System.out.println(exception.getMessage());
+			//TODO: ADD ERR LOGGING
+//			logger.error("Error in LeafMatcher", exception);
 		}
 	}
 	public Pair<Tree,Tree> pruneTrees(Tree src, Tree dst, Map<Tree,Tree> srcCopy, Map<Tree,Tree> dstCopy) {

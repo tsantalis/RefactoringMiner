@@ -2836,6 +2836,7 @@ public class UMLModelDiff {
 
 	private List<Refactoring> identifyConvertAnonymousClassToTypeRefactorings() throws RefactoringMinerTimedOutException {
 		List<Refactoring> refactorings = new ArrayList<Refactoring>();
+		List<UMLClass> addedClassesToBeRemoved = new ArrayList<>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			for(UMLAnonymousClass anonymousClass : classDiff.getRemovedAnonymousClasses()) {
 				List<UMLAnonymousToClassDiff> matchingDiffs = new ArrayList<>();
@@ -2857,6 +2858,7 @@ public class UMLModelDiff {
 						ReplaceAnonymousWithClassRefactoring refactoring = new ReplaceAnonymousWithClassRefactoring(anonymousClass, diff.getNextClass(), diff);
 						refactorings.addAll(anonymousClassDiffRefactorings);
 						refactorings.add(refactoring);
+						addedClassesToBeRemoved.add(diff.getNextClass());
 					}
 				}
 				else if(matchingDiffs.size() > 1) {
@@ -2866,11 +2868,13 @@ public class UMLModelDiff {
 							ReplaceAnonymousWithClassRefactoring refactoring = new ReplaceAnonymousWithClassRefactoring(anonymousClass, diff.getNextClass(), diff);
 							refactorings.addAll(anonymousClassDiffRefactorings);
 							refactorings.add(refactoring);
+							addedClassesToBeRemoved.add(diff.getNextClass());
 						}
 					}
 				}
 			}
 		}
+		addedClasses.removeAll(addedClassesToBeRemoved);
 		return refactorings;
 	}
 
@@ -2940,6 +2944,18 @@ public class UMLModelDiff {
 					if(anonymousToClassDiff.getNextClass().getNonQualifiedName().equals(creationName)) {
 						return true;
 					}
+				}
+			}
+		}
+		for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
+			List<AbstractCall> creations = addedOperation.getAllCreations();
+			for(AbstractCall creation : creations) {
+				String creationName = creation.getName();
+				if(creationName.contains("<") && creationName.contains(">")) {
+					creationName = creationName.substring(0, creationName.indexOf("<"));
+				}
+				if(anonymousToClassDiff.getNextClass().getNonQualifiedName().equals(creationName)) {
+					return true;
 				}
 			}
 		}

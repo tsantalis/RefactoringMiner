@@ -888,7 +888,13 @@
           "validation": false
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "REPLACE_ANONYMOOUS_WITH_CLASS",
+          "description": "Replace Anonymous With Class\torg.junit.rules.MethodRulesTest.ExampleTest.example.new MethodRule with org.junit.rules.MethodRulesTest.TestMethodRule",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/junit-team/junit4.git",

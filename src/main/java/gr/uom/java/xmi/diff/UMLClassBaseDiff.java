@@ -257,7 +257,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 										UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(lambda, lambdaMapper, this);
 										int invalidMappings = 0;
 										for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
-											if(lambdaMapper.alreadyMatched2(mapping.getFragment2())) {
+											if(lambdaMapper.alreadyMatched1(mapping.getFragment1()) || lambdaMapper.alreadyMatched2(mapping.getFragment2())) {
 												invalidMappings++;
 											}
 											else if(mapping.getFragment1() instanceof LeafExpression || mapping.getFragment1() instanceof AbstractExpression ||
@@ -286,7 +286,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 										UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(lambdaMapper, lambda, this);
 										int invalidMappings = 0;
 										for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
-											if(lambdaMapper.alreadyMatched1(mapping.getFragment1())) {
+											if(lambdaMapper.alreadyMatched1(mapping.getFragment1()) || lambdaMapper.alreadyMatched2(mapping.getFragment2())) {
 												invalidMappings++;
 											}
 											else if(mapping.getFragment1() instanceof LeafExpression || mapping.getFragment1() instanceof AbstractExpression ||

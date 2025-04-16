@@ -1016,6 +1016,21 @@
           "type": "RENAME_ATTRIBUTE",
           "description": "Rename Attribute\tZIPKIN_URL : String to url : String in class org.springframework.boot.actuate.autoconfigure.tracing.zipkin.TestHttpEndpointSupplier",
           "validation": false
+        },
+        {
+          "type": "REPLACE_ANONYMOUS_WITH_CLASS",
+          "description": "Replace Anonymous With Class\torg.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinHttpClientSenderTests.sendUsesDynamicEndpoint.createSender.new HttpEndpointSupplier with org.springframework.boot.actuate.autoconfigure.tracing.zipkin.TestHttpEndpointSupplier",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ANONYMOUS_WITH_CLASS",
+          "description": "Replace Anonymous With Class\torg.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinRestTemplateSenderTests.sendUsesDynamicEndpoint.createSender.new HttpEndpointSupplier with org.springframework.boot.actuate.autoconfigure.tracing.zipkin.TestHttpEndpointSupplier",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ANONYMOUS_WITH_CLASS",
+          "description": "Replace Anonymous With Class\torg.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinWebClientSenderTests.sendUsesDynamicEndpoint.createSender.new HttpEndpointSupplier with org.springframework.boot.actuate.autoconfigure.tracing.zipkin.TestHttpEndpointSupplier",
+          "validation": true
         }
       ]
     }

@@ -48,6 +48,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.StatementObject;
@@ -245,6 +246,64 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							if(!moveCodeMappers.contains(moveCodeMapper))
 								moveCodeMappers.add(moveCodeMapper);
 							refactorings.add(ref);
+						}
+					}
+					//support move code from deleted lambda to LambdaMapper
+					if(lambdaMapper.nonMappedElementsT2() > 0) {
+						for(AbstractCodeFragment fragment1 : mapper.getNonMappedLeavesT1()) {
+							if(fragment1.getLambdas().size() > 0) {
+								for(LambdaExpressionObject lambda : fragment1.getLambdas()) {
+									if(lambda.getBody() != null) {
+										UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(lambda, lambdaMapper, this);
+										int invalidMappings = 0;
+										for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
+											if(lambdaMapper.alreadyMatched2(mapping.getFragment2())) {
+												invalidMappings++;
+											}
+											else if(mapping.getFragment1() instanceof LeafExpression || mapping.getFragment1() instanceof AbstractExpression ||
+													mapping.getFragment2() instanceof LeafExpression || mapping.getFragment2() instanceof AbstractExpression) {
+												invalidMappings++;
+											}
+										}
+										if(moveCodeMapper.getMappings().size() > invalidMappings) {
+											MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);
+											if(!moveCodeMappers.contains(moveCodeMapper))
+												moveCodeMappers.add(moveCodeMapper);
+											refactorings.add(ref);
+											refactorings.addAll(moveCodeMapper.getRefactoringsAfterPostProcessing());
+										}
+									}
+								}
+							}
+						}
+					}
+					//support move code from LambdaMapper to added lambda
+					if(lambdaMapper.nonMappedElementsT1() > 0) {
+						for(AbstractCodeFragment fragment2 : mapper.getNonMappedLeavesT2()) {
+							if(fragment2.getLambdas().size() > 0) {
+								for(LambdaExpressionObject lambda : fragment2.getLambdas()) {
+									if(lambda.getBody() != null) {
+										UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(lambdaMapper, lambda, this);
+										int invalidMappings = 0;
+										for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
+											if(lambdaMapper.alreadyMatched1(mapping.getFragment1())) {
+												invalidMappings++;
+											}
+											else if(mapping.getFragment1() instanceof LeafExpression || mapping.getFragment1() instanceof AbstractExpression ||
+													mapping.getFragment2() instanceof LeafExpression || mapping.getFragment2() instanceof AbstractExpression) {
+												invalidMappings++;
+											}
+										}
+										if(moveCodeMapper.getMappings().size() > invalidMappings) {
+											MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);
+											if(!moveCodeMappers.contains(moveCodeMapper))
+												moveCodeMappers.add(moveCodeMapper);
+											refactorings.add(ref);
+											refactorings.addAll(moveCodeMapper.getRefactoringsAfterPostProcessing());
+										}
+									}
+								}
+							}
 						}
 					}
 				}

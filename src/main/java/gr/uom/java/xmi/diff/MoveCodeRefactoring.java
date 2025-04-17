@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -27,6 +28,7 @@ public class MoveCodeRefactoring implements Refactoring {
 	private UMLOperationBodyMapper bodyMapper;
 	private Set<AbstractCodeFragment> movedCodeFragmentsFromSourceOperation;
 	private Set<AbstractCodeFragment> movedCodeFragmentsToTargetOperation;
+	private Optional<UMLOperationBodyMapper> lambdaMapper = Optional.empty();
 	private Type moveType;
 
 	public MoveCodeRefactoring(VariableDeclarationContainer sourceContainer,
@@ -78,6 +80,14 @@ public class MoveCodeRefactoring implements Refactoring {
 
 	public Set<AbstractCodeFragment> getMovedCodeFragmentsToTargetOperation() {
 		return movedCodeFragmentsToTargetOperation;
+	}
+
+	public void setLambdaMapper(UMLOperationBodyMapper lambdaMapper) {
+		this.lambdaMapper = Optional.of(lambdaMapper);
+	}
+
+	public Optional<UMLOperationBodyMapper> getLambdaMapper() {
+		return lambdaMapper;
 	}
 
 	@Override

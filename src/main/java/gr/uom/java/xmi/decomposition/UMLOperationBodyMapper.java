@@ -10227,7 +10227,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public String toString() {
-		return container1.toString() + " -> " + container2.toString();
+		String s1 = container1.toString();
+		if(container1 instanceof LambdaExpressionObject) {
+			s1 = s1.substring(0, s1.indexOf(" -> "));
+		}
+		String s2 = container2.toString();
+		if(container2 instanceof LambdaExpressionObject) {
+			s2 = s2.substring(0, s2.indexOf(" -> "));
+		}
+		return s1 + " -> " + s2;
 	}
 
 	@Override

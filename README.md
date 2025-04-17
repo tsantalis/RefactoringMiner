@@ -51,7 +51,10 @@ Table of Contents
 
 # General info
 RefactoringMiner is a library/API written in Java that can detect refactorings applied in the history of a Java project.
-Since version 3.0, RefactoringMiner can also generate Abstract Syntax Tree (AST) diff at commit and pull request level.
+Since version 3.0, RefactoringMiner can also generate Abstract Syntax Tree (AST) diff at **commit**, **pull request** and **commit range** levels.
+You can also use our tool to visualize the diffs in your browser.
+
+<img width="1875" alt="Image" src="https://github.com/user-attachments/assets/6a5d72e2-e9b1-4606-ac9a-dbd4dba4ef8a" />
 
 Currently, it supports the detection of the following refactorings:
 
@@ -495,7 +498,7 @@ You can run `gradle test` to execute all tests.
 The available test suites are:
 * [src/test/java/org/refactoringminer/test/TestAllRefactorings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestAllRefactorings.java) : Tests the overall precision and recall of RefactoringMiner on the Refactoring Oracle (547 commits)
 * [src/test/java/org/refactoringminer/test/TestAllRefactoringsByCommit](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestAllRefactoringsByCommit.java) : Tests the number of True Positives, False Positives and False Negatives, separately for each commit of the Refactoring Oracle (547 commits)
-* [src/test/java/org/refactoringminer/test/TestStatementMappings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestStatementMappings.java): Tests the statement mapping accuracy of RefactoringMiner (125 commits)
+* [src/test/java/org/refactoringminer/test/TestStatementMappings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestStatementMappings.java): Tests the statement mapping accuracy of RefactoringMiner (142 commits)
 * [src/test/java/org/refactoringminer/test/TestJavadocDiff](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestJavadocDiff.java): Tests the comment and Javadoc mapping accuracy of RefactoringMiner
 * [src/test/java/org/refactoringminer/test/TestCommandLine](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestCommandLine.java): Tests the command-line functionality of RefactoringMiner
 * [src/test/java/org/refactoringminer/test/TestParameterizeTestRefactoring](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestParameterizeTestRefactoring.java): Tests the Parameterize Test Refactoring detection

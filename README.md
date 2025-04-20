@@ -762,7 +762,11 @@ Pouria Alikhanifard and Nikolaos Tsantalis, "[A Novel Refactoring and Semantic A
     }
 
 ## Talks about RefactoringMiner
-**[Keynote at the Fifth International Workshop on Refactoring (IWoR 2021)](https://iwor.github.io/iwor2021/keynote.html)**
+[Keynote at the 32nd IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER 2025)](https://conf.researchr.org/info/saner-2025/keynote#source-code-diff-revolution)
+
+[![SANER_Keynote](https://github.com/user-attachments/assets/4d2bd2bf-9ed1-4f8d-b5a7-d728df4913b0)](https://users.encs.concordia.ca/~nikolaos/talks/SANER_2025_Keynote.pptx)
+
+[Keynote at the Fifth International Workshop on Refactoring (IWoR 2021)](https://iwor.github.io/iwor2021/keynote.html)
 
 [![2021-11-14 22_16_25-Greenshot](https://user-images.githubusercontent.com/1483516/142782871-7f7545d3-3fe7-4d0c-8860-db892757a152.png)](https://www.youtube.com/watch?v=CXO32d1ih3E)
 

@@ -47,6 +47,7 @@ public class BasicTreeMatcher implements TreeMatcher {
 
 	private static void optimizeMappings(MappingStore match) {
 		List<Pair<Tree, Tree>> removeList = new ArrayList<>();
+		List<Pair<Tree, Tree>> incorrectMethodExpressionReferenceSimpleName = new ArrayList<>();
 		for (Mapping mapping : match) {
 			if (mapping.first.getType().name.equals(Constants.METHOD_INVOCATION)) {
 				Tree srcMethodName = TreeUtilFunctions.findChildByType(mapping.first, Constants.SIMPLE_NAME);
@@ -71,10 +72,22 @@ public class BasicTreeMatcher implements TreeMatcher {
 					}
 				}
 			}
+			if (mapping.first.getType().name.equals(Constants.SIMPLE_NAME)){
+				if (mapping.first.getParent().getType().name.equals(Constants.EXPRESSION_METHOD_REFERENCE) && mapping.second.getParent().getType().name.equals(Constants.EXPRESSION_METHOD_REFERENCE)) {
+					if (mapping.first.positionInParent() != mapping.second.positionInParent())
+						incorrectMethodExpressionReferenceSimpleName.add(mapping);
+				}
+			}
+
 		}
 		for (Pair<Tree, Tree> treeTreePair : removeList) {
 			if (match.getDstForSrc(treeTreePair.first) != null && match.getDstForSrc(treeTreePair.first).equals(treeTreePair.second))
 				match.removeMapping(treeTreePair.first, treeTreePair.second);
+		}
+		for (Pair<Tree, Tree> treeTreePair : incorrectMethodExpressionReferenceSimpleName) {
+			match.removeMapping(treeTreePair.first, treeTreePair.second);
+			if (treeTreePair.first.getParent().getChild(1).getType().name.equals(treeTreePair.second.getParent().getChild(1).getType().name))
+				match.addMapping(treeTreePair.first.getParent().getChild(1), treeTreePair.second.getParent().getChild(1));
 		}
 
 		List<Pair<Tree, Tree>> addList = new ArrayList<>();

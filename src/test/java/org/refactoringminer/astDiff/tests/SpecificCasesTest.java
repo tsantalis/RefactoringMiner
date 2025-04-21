@@ -95,7 +95,8 @@ public class SpecificCasesTest {
             "MethodReference" + "," + "https://github.com/pouryafard75/TestCases/commit/562c4447a566170ac28872a88b323669a82db5c9"  + "," + "src/test/resources/astDiff/commits/pouryafard75_TestCases/562c4447a566170ac28872a88b323669a82db5c9/Builder.MethodRef.ByteBufferLogInputStreamTest.json",
             "InfixExpression" + "," + "https://github.com/pouryafard75/TestCases/commit/76ab18eeb36f3bc0a8e6a5655d970657187df276" + "," + "src/test/resources/astDiff/commits/pouryafard75_TestCases/76ab18eeb36f3bc0a8e6a5655d970657187df276/Builder.IfCondition.json",
             "AmbiguousWithinComposite" + "," + "https://github.com/pouryafard75/TestCases/commit/083ec23bc39ad46ebec7c68cb3931ee41891522e" + "," + "src/test/resources/astDiff/commits/pouryafard75_TestCases/083ec23bc39ad46ebec7c68cb3931ee41891522e/Builder.v1.json",
-            "SamePositionInParentAmbiguous" + "," + "https://github.com/pouryafard75/TestCases/commit/ac1ec4f7c775423d3170887d7eefcccd013f2ae0" + "," + "src/test/resources/astDiff/commits/pouryafard75_TestCases/ac1ec4f7c775423d3170887d7eefcccd013f2ae0/Builder.sus.sus.json"
+            "SamePositionInParentAmbiguous" + "," + "https://github.com/pouryafard75/TestCases/commit/ac1ec4f7c775423d3170887d7eefcccd013f2ae0" + "," + "src/test/resources/astDiff/commits/pouryafard75_TestCases/ac1ec4f7c775423d3170887d7eefcccd013f2ae0/Builder.sus.sus.json",
+            "StrangeMethodExpressionReference" + "," + "https://github.com/pouryafard75/TestCases/commit/3bcd218b9c6cb5fb92ab958c545fab3cf57a9f08" + "," + "src/test/resources/astDiff/pouryafard75_TestCases/bug/3bcd218b9c6cb5fb92ab958c545fab3cf57a9f08/bug.rm111.test.json"
     })
     public void testRecreatedCases(String name, String url, String filePath) throws Exception {
         singleFileChecker(url,filePath);

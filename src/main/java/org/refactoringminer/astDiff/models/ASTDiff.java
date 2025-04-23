@@ -51,6 +51,10 @@ public class ASTDiff extends Diff {
 		return mappings;
 	}
 
+	public boolean isEmpty() {
+		return mappings.isEmpty();
+	}
+
 	public String getSrcPath() {
 		return srcPath;
 	}

@@ -43,35 +43,36 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
             // Generate panels for /monaco-0 to /monaco-n
             for (int i = 0; i < n; i++) {
                 Pair<String, String> fileContentsPair = comparator.getFileContentsPair(i);
-                MonacoCore core = new MonacoCore(comparator.getASTDiff(i), i, comparator.isMoveDiff(i), fileContentsPair.first, fileContentsPair.second
-                );
-                core.setShowFilenames(false);
-                html.div(class_("card"))
-                        .div(class_("card-header").id("heading-" + i).style("padding-right: 0;"))
-                        .div(class_("d-flex align-items-center justify-content-between"))
-                        .div(class_("flex-grow-1").style("word-break: break-word; overflow-wrap: anywhere;"))
-                        .h5(class_("mb-0"))
-                        .a(class_("")
-                                .add("data-bs-toggle", "collapse")
-                                .add("data-bs-target", "#collapse-" + i)
-                                .add("aria-expanded", "true")
-                                .add("aria-controls", "collapse-" + i)).content(core.getDiffName())
-                        ._h5()
-                        ._div()
-                        .div(class_("text-end"))
-                        .a(href("monaco-page/" + i).class_("btn btn-primary btn sm")).content("Details")
-                        ._div()
-                        ._div()
-                        ._div()
-                        .div(id("collapse-" + i).class_("collapse show").add("aria-labelledby", "heading-" + i))
-                        .div(class_("card-body").style("overflow: hidden; padding: 0;"));
-                makeEachDiff(html, i, core);
-                html
-                        ._div()
-                        ._div()
-                        ._div()
-                        ._div();
-
+                boolean empty = comparator.getASTDiff(i).isEmpty();
+                if(!empty) {
+                    MonacoCore core = new MonacoCore(comparator.getASTDiff(i), i, comparator.isMoveDiff(i), fileContentsPair.first, fileContentsPair.second);
+                    core.setShowFilenames(false);
+                    html.div(class_("card"))
+                            .div(class_("card-header").id("heading-" + i).style("padding-right: 0;"))
+                            .div(class_("d-flex align-items-center justify-content-between"))
+                            .div(class_("flex-grow-1").style("word-break: break-word; overflow-wrap: anywhere;"))
+                            .h5(class_("mb-0"))
+                            .a(class_("")
+                                    .add("data-bs-toggle", "collapse")
+                                    .add("data-bs-target", "#collapse-" + i)
+                                    .add("aria-expanded", "true")
+                                    .add("aria-controls", "collapse-" + i)).content(core.getDiffName())
+                            ._h5()
+                            ._div()
+                            .div(class_("text-end"))
+                            .a(href("monaco-page/" + i).class_("btn btn-primary btn sm")).content("Details")
+                            ._div()
+                            ._div()
+                            ._div()
+                            .div(id("collapse-" + i).class_("collapse show").add("aria-labelledby", "heading-" + i))
+                            .div(class_("card-body").style("overflow: hidden; padding: 0;"));
+                    makeEachDiff(html, i, core);
+                    html
+                            ._div()
+                            ._div()
+                            ._div()
+                            ._div();
+                }
             }
 
             html._div() // Close accordion div

@@ -166,7 +166,9 @@ public class DirectoryDiffView implements Renderable {
                     		}
                     	}
                 	}
-                    ul.tr()
+                	boolean empty = comparator.getASTDiff(nodeInfo.getId()).isEmpty();
+                	if(!empty) {
+                        ul.tr()
                             .td(style("white-space: normal; word-wrap: break-word; word-break: break-all;"))
                             .a(id("diff_row_" + nodeInfo.getId()).href("/monaco-page/" + nodeInfo.getId()))
                             .img(src(iconPath).width(iconWidth).height(iconHeight).title(title))
@@ -184,6 +186,7 @@ public class DirectoryDiffView implements Renderable {
                             ._td()
                             ._if()
                             ._tr();
+                	}
                 }
                 else {
                     li.summary().content(nodeInfo.getName());

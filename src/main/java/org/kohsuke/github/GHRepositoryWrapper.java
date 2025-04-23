@@ -1,6 +1,7 @@
 package org.kohsuke.github;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GHRepositoryWrapper {
@@ -38,6 +39,53 @@ public class GHRepositoryWrapper {
         }
         return ghCommit;
     }
+
+    public List<GHPullRequestFileDetail> listPullRequestFiles(int pullRequestId) throws IOException {
+    	GHPullRequest pullRequest = ghRepository.getPullRequest(pullRequestId);
+    	return listPullRequestFiles(pullRequest);
+    }
+
+	public List<GHPullRequestFileDetail> listPullRequestFiles(GHPullRequest pullRequest) throws IOException {
+		List<GHPullRequestFileDetail> files = new ArrayList<>();
+		Requester requester = ghRepository.root().createRequest()
+        .withUrlPath(String.format("%s/files", pullRequest.getApiRoute()))
+        .with("per_page", 100);
+		GitHubResponse<GHPullRequestFileDetail[]> gitHubResponse = requester.client.sendRequest(requester, (responseInfo) -> GitHubResponse.parseBody(responseInfo, GHPullRequestFileDetail[].class));
+		for(GHPullRequestFileDetail file : gitHubResponse.body()) {
+			files.add(file);
+		}
+		if (gitHubResponse.headers().containsKey("Link")) {
+            String linkHeaderField = gitHubResponse.headerField("Link");
+            if (linkHeaderField != null) {
+                String[] links = linkHeaderField.split(",");
+                if (links.length == 2) {
+                    String[] link = links[1].split(";");
+                    if (link.length == 2) {
+                        String url = link[0];
+                        url = url.replaceFirst("<", "").replaceFirst(">", "");
+                        int index = url.lastIndexOf("=");
+                        if (index != -1) {
+                            String trimmedUrl = url.substring(0, index);
+                            trimmedUrl = trimmedUrl.trim();
+                            int lastPage = Integer.valueOf(url.substring(index+1));
+                            for (int page = 2; page <= lastPage; page++) {
+                            	pullRequestGitHubResponse(trimmedUrl + page, files);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+		return files;
+	}
+
+	private void pullRequestGitHubResponse(String url, List<GHPullRequestFileDetail> files) throws IOException {
+		Requester requester = ghRepository.root().createRequest().withUrlPath(url);
+		GitHubResponse<GHPullRequestFileDetail[]> gitHubResponse = requester.client.sendRequest(requester, (responseInfo) -> GitHubResponse.parseBody(responseInfo, GHPullRequestFileDetail[].class));
+		for(GHPullRequestFileDetail file : gitHubResponse.body()) {
+			files.add(file);
+		}
+	}
 
     private GitHubResponse<GHCommit> getGhCommitGitHubResponse(String url) throws IOException {
         Requester requester = ghRepository.root().createRequest().withUrlPath(url);

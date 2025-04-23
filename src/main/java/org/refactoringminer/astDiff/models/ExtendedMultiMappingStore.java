@@ -23,6 +23,10 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 		this.dst = dstTree;
 	}
 
+	public boolean isEmpty() {
+		return src.isIsomorphicTo(dst);
+	}
+
 	public boolean isDstMultiMapped(Tree dstTree) {
 		if (!hasDst(dstTree))
 			return false;

@@ -1799,7 +1799,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				logger.info(String.format("Processing file: " + fileName));
 				//sleep every 100 files to avoid HTTP 403 error
 				if (count % 100 == 0) {
-					Thread.sleep(1000);
+					Thread.sleep(500);
 				}
 				multiThreadedFetch(filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore,
 						repositoryDirectoriesCurrent, deletedAndRenamedFileParentDirectories, commitFileNames, pool,

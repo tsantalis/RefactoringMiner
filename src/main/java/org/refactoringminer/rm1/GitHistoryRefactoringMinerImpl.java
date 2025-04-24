@@ -1791,21 +1791,20 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();
 		List<String> commitFileNames = new ArrayList<>();
 		ExecutorService pool = Executors.newFixedThreadPool(changedFiles);
+		int count = 1;
 		for(GHPullRequestFileDetail commitFile : files) {
 			String fileName = commitFile.getFilename();
 			if (commitFile.getFilename().endsWith(".java")) {
 				commitFileNames.add(fileName);
-				if(changedFiles > 500) {
-					logger.info(String.format("Processing file: " + fileName));
-					singleThreadedFetch(filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore,
-						repositoryDirectoriesCurrent, deletedAndRenamedFileParentDirectories, commitFileNames,
-						commitFile, fileName);
+				logger.info(String.format("Processing file: " + fileName));
+				//sleep every 100 files to avoid HTTP 403 error
+				if (count % 100 == 0) {
+					Thread.sleep(1000);
 				}
-				else {
-					multiThreadedFetch(filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore,
+				multiThreadedFetch(filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore,
 						repositoryDirectoriesCurrent, deletedAndRenamedFileParentDirectories, commitFileNames, pool,
 						commitFile, fileName);
-				}
+				count++;
 			}
 		}
 		pool.shutdown();
@@ -1853,91 +1852,6 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			service.shutdown();
 		}
 		return diffs.iterator().next();
-	}
-
-	private void singleThreadedFetch(Map<String, String> filesBefore, Map<String, String> filesCurrent,
-			Map<String, String> renamedFilesHint, Set<String> repositoryDirectoriesBefore,
-			Set<String> repositoryDirectoriesCurrent, Set<String> deletedAndRenamedFileParentDirectories,
-			List<String> commitFileNames, GHPullRequestFileDetail commitFile, String fileName) {
-		if (commitFile.getStatus().equals("modified")) {
-			try {
-				URL currentRawURL = commitFile.getRawUrl();
-				InputStream currentRawFileInputStream = currentRawURL.openStream();
-				String currentRawFile = IOUtils.toString(currentRawFileInputStream);
-				List<String> patchLineList = createPatchLines(commitFile);
-				com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
-				List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
-				String parentRawFile = String.join("\n", parentRawFileLines);
-				filesBefore.put(fileName, parentRawFile);
-				filesCurrent.put(fileName, currentRawFile);
-				String directory = new String(fileName);
-				while(directory.contains("/")) {
-					directory = directory.substring(0, directory.lastIndexOf("/"));
-					repositoryDirectoriesBefore.add(directory);
-					repositoryDirectoriesCurrent.add(directory);
-				}
-			}
-			catch(IOException e) {
-				e.printStackTrace();
-			}
-		}
-		else if (commitFile.getStatus().equals("added")) {
-			try {
-				URL currentRawURL = commitFile.getRawUrl();
-				InputStream currentRawFileInputStream = currentRawURL.openStream();
-				String currentRawFile = IOUtils.toString(currentRawFileInputStream);
-				filesCurrent.put(fileName, currentRawFile);
-			}
-			catch(IOException e) {
-				e.printStackTrace();
-			}
-		}
-		else if (commitFile.getStatus().equals("removed")) {
-			try {
-				URL rawURL = commitFile.getRawUrl();
-				InputStream rawFileInputStream = rawURL.openStream();
-				String parentRawFile = IOUtils.toString(rawFileInputStream);
-				filesBefore.put(fileName, parentRawFile);
-				if(fileName.contains("/")) {
-					deletedAndRenamedFileParentDirectories.add(fileName.substring(0, fileName.lastIndexOf("/")));
-				}
-			}
-			catch(IOException e) {
-				e.printStackTrace();
-			}
-		}
-		else if (commitFile.getStatus().equals("renamed")) {
-			commitFileNames.add(commitFile.getPreviousFilename());
-			try {
-				String previousFilename = commitFile.getPreviousFilename();
-				URL currentRawURL = commitFile.getRawUrl();
-				InputStream currentRawFileInputStream = currentRawURL.openStream();
-				String currentRawFile = IOUtils.toString(currentRawFileInputStream);
-				List<String> patchLineList = createPatchLines(commitFile);
-				com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
-				List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
-				String parentRawFile = String.join("\n", parentRawFileLines);
-				filesBefore.put(previousFilename, parentRawFile);
-				filesCurrent.put(fileName, currentRawFile);
-				renamedFilesHint.put(previousFilename, fileName);
-				if(previousFilename.contains("/")) {
-					deletedAndRenamedFileParentDirectories.add(previousFilename.substring(0, previousFilename.lastIndexOf("/")));
-				}
-				String directory = new String(fileName);
-				while(directory.contains("/")) {
-					directory = directory.substring(0, directory.lastIndexOf("/"));
-					repositoryDirectoriesCurrent.add(directory);
-				}
-				directory = new String(previousFilename);
-				while(directory.contains("/")) {
-					directory = directory.substring(0, directory.lastIndexOf("/"));
-					repositoryDirectoriesBefore.add(directory);
-				}
-			}
-			catch(IOException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 	private void multiThreadedFetch(Map<String, String> filesBefore, Map<String, String> filesCurrent,

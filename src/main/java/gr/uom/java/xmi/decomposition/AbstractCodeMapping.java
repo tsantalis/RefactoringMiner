@@ -448,7 +448,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						ref.addSubExpressionMapping(leafMapping);
 						processExtractVariableRefactoring(ref, refactorings);
 						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-						if(identical()) {
+						if(identical(classDiff)) {
 							identicalWithExtractedVariable = true;
 						}
 						break;
@@ -467,7 +467,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 				processExtractVariableRefactoring(ref, refactorings);
 				checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-				if(identical()) {
+				if(identical(classDiff)) {
 					identicalWithExtractedVariable = true;
 				}
 			}
@@ -512,7 +512,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 									ref.addSubExpressionMapping(leafMapping);
 									processExtractVariableRefactoring(ref, refactorings);
 									checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-									if(identical()) {
+									if(identical(classDiff)) {
 										identicalWithExtractedVariable = true;
 									}
 									break;
@@ -531,7 +531,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							}
 							processExtractVariableRefactoring(ref, refactorings);
 							checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-							if(identical()) {
+							if(identical(classDiff)) {
 								identicalWithExtractedVariable = true;
 							}
 						}
@@ -602,7 +602,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 								}
 								processExtractVariableRefactoring(ref, refactorings);
 								checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-								if(identical()) {
+								if(identical(classDiff)) {
 									identicalWithExtractedVariable = true;
 								}
 								return;
@@ -618,7 +618,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						}
 						processExtractVariableRefactoring(ref, refactorings);
 						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-						if(identical()) {
+						if(identical(classDiff)) {
 							identicalWithExtractedVariable = true;
 						}
 						return;
@@ -642,7 +642,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 								}
 								processExtractVariableRefactoring(ref, refactorings);
 								checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-								if(identical()) {
+								if(identical(classDiff)) {
 									identicalWithExtractedVariable = true;
 								}
 								return;
@@ -734,7 +734,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						processExtractVariableRefactoring(ref, refactorings);
 						int size = refactorings.size();
 						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-						if(identical() || refactorings.size() > size) {
+						if(identical(classDiff) || refactorings.size() > size) {
 							identicalWithExtractedVariable = true;
 						}
 						return;
@@ -814,7 +814,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						}
 						processExtractVariableRefactoring(ref, refactorings);
 						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-						if(getReplacements().size() > 0 && identical()) {
+						if(getReplacements().size() > 0 && identical(classDiff)) {
 							identicalWithExtractedVariable = true;
 						}
 						return;
@@ -919,7 +919,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 								}
 								processExtractVariableRefactoring(ref, refactorings);
 								checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-								if(identical()) {
+								if(identical(classDiff)) {
 									identicalWithExtractedVariable = true;
 								}
 								return;
@@ -1039,7 +1039,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 									ref.addSubExpressionMapping(leafMapping);
 								}
 								processInlineVariableRefactoring(ref, refactorings);
-								if(identical()) {
+								if(identical(classDiff)) {
 									identicalWithInlinedVariable = true;
 								}
 								return;
@@ -1054,7 +1054,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							ref.addSubExpressionMapping(leafMapping);
 						}
 						processInlineVariableRefactoring(ref, refactorings);
-						if(identical()) {
+						if(identical(classDiff)) {
 							identicalWithInlinedVariable = true;
 						}
 						return;
@@ -1077,7 +1077,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 									ref.addSubExpressionMapping(leafMapping);
 								}
 								processInlineVariableRefactoring(ref, refactorings);
-								if(identical()) {
+								if(identical(classDiff)) {
 									identicalWithInlinedVariable = true;
 								}
 								return;
@@ -1150,7 +1150,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							}
 						}
 						processInlineVariableRefactoring(ref, refactorings);
-						if(identical()) {
+						if(identical(classDiff)) {
 							identicalWithInlinedVariable = true;
 						}
 						return;
@@ -1229,7 +1229,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 								}
 							}
 							processInlineVariableRefactoring(ref, refactorings);
-							if(identical()) {
+							if(identical(classDiff)) {
 								identicalWithInlinedVariable = true;
 							}
 							return;
@@ -1240,7 +1240,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		}
 	}
 
-	private boolean identical() {
+	private boolean identical(UMLAbstractClassDiff classDiff) {
 		if(getReplacements().size() == 1 && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size()) {
 			return true;
 		}
@@ -1346,6 +1346,12 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					AbstractCall after = replacement.getInvokedOperationAfter();
 					if(before.identicalName(after) && before.argumentIntersection(after).size() == Math.min(before.arguments().size(), after.arguments().size())) {
 						identicalCallWithExtraArguments = true;
+					}
+				}
+				for(UMLAttribute attribute : classDiff.getNextClass().getAttributes()) {
+					if(r.getAfter().equals(attribute.getName()) && attribute.getVariableDeclaration().getInitializer() != null &&
+							attribute.getVariableDeclaration().getInitializer().getString().equals(r.getBefore())) {
+						return true;
 					}
 				}
 			}

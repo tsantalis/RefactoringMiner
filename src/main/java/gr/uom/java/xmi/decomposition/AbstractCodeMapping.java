@@ -1348,10 +1348,12 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						identicalCallWithExtraArguments = true;
 					}
 				}
-				for(UMLAttribute attribute : classDiff.getNextClass().getAttributes()) {
-					if(r.getAfter().equals(attribute.getName()) && attribute.getVariableDeclaration().getInitializer() != null &&
-							attribute.getVariableDeclaration().getInitializer().getString().equals(r.getBefore())) {
-						return true;
+				if(classDiff != null) {
+					for(UMLAttribute attribute : classDiff.getNextClass().getAttributes()) {
+						if(r.getAfter().equals(attribute.getName()) && attribute.getVariableDeclaration().getInitializer() != null &&
+								attribute.getVariableDeclaration().getInitializer().getString().equals(r.getBefore())) {
+							return true;
+						}
 					}
 				}
 			}

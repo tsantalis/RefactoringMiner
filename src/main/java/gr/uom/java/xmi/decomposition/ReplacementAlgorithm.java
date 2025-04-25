@@ -5091,6 +5091,9 @@ public class ReplacementAlgorithm {
 				if(identical.size() == 1 && nonIdentical.size() > 0) {
 					operationBodyMapper.getMappings().removeAll(nonIdentical);
 				}
+				else if((identical.size() == lambdas1.size() || identical.size() == lambdas2.size()) && nonIdentical.size() > 0) {
+					operationBodyMapper.getMappings().removeAll(nonIdentical);
+				}
 			}
 		}
 		if(anonymousClassDeclarations1.size() >= 1 && container1 != null && lambdas2.size() >= 1) {

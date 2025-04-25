@@ -7,6 +7,9 @@
 [![Tests](https://github.com/tsantalis/RefactoringMiner/actions/workflows/gradle.yml/badge.svg?branch=master)](https://github.com/tsantalis/RefactoringMiner/actions/workflows/gradle.yml)
 [![Test Results](https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2Ftsantalis%2F19fb416d06d1b4d40820e0209540f6c0%2Fraw%2FRefactoringMiner-junit-tests.json)](https://github.com/tsantalis/RefactoringMiner/actions/workflows/gradle.yml)
 
+### Open source projects using our diff tool for code reviews:
+[<img src="https://www.jabref.org/_nuxt/jabref.4Rtv1swz.svg" alt="JabRef" width="20"/>](https://github.com/JabRef/jabref)
+
 Table of Contents
 =================
 

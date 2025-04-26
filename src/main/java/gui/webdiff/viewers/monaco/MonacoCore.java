@@ -4,18 +4,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.gumtreediff.actions.Diff;
 import com.github.gumtreediff.actions.TreeClassifier;
-import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.tree.Tree;
-import org.apache.commons.io.FileUtils;
+
+import gr.uom.java.xmi.diff.CodeRange;
+import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
+import gr.uom.java.xmi.diff.InlineOperationRefactoring;
+
+import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.rendersnake.HtmlCanvas;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.List;
 import java.util.Set;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
@@ -31,14 +33,16 @@ public class MonacoCore {
 
     private final String srcFileContent;
     private final String dstFileContent;
+    private final List<Refactoring> refactorings;
 
-    public MonacoCore(Diff diff, int id, boolean isMovedDiff, String srcFileContent, String dstFileContent) {
+    public MonacoCore(Diff diff, int id, boolean isMovedDiff, String srcFileContent, String dstFileContent, List<Refactoring> refactorings) {
         this.srcFileContent = srcFileContent;
         this.dstFileContent = dstFileContent;
         this.showFilenames = true;
         this.diff = diff;
         this.id = id;
         this.isMoved = isMovedDiff;
+        this.refactorings = refactorings;
         if (diff instanceof ASTDiff){
             this.srcFileName = ((ASTDiff) diff).getSrcPath();
             this.dstFileName = ((ASTDiff) diff).getDstPath();
@@ -271,9 +275,46 @@ public class MonacoCore {
                 .append("}").append(",");
     }
 
-    private static String tooltip(Tree t) {
+    private String tooltip(Tree t) {
+    	ExtendedTreeClassifier c = (ExtendedTreeClassifier) diff.createRootNodesClassifier();
+    	for(Refactoring r : refactorings) {
+    		if(r instanceof InlineOperationRefactoring) {
+    			InlineOperationRefactoring inline = (InlineOperationRefactoring)r;
+	    		for(CodeRange range : r.leftSide()) {
+	    			if(subsumes(range,t) && c.getMovedSrcs().contains(t)) {
+	    				return "inlined to " + inline.getTargetOperationAfterInline();
+	    			}
+	    		}
+	    		for(CodeRange range : r.rightSide()) {
+	    			if(subsumes(range,t) && c.getMovedDsts().contains(t)) {
+	    				return "inlined from " + inline.getInlinedOperation();
+	    			}
+	    		}
+    		}
+    		else if(r instanceof ExtractOperationRefactoring) {
+    			ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
+	    		for(CodeRange range : r.leftSide()) {
+	    			if(subsumes(range,t) && c.getMovedSrcs().contains(t)) {
+	    				return "extracted to " + extract.getExtractedOperation();
+	    			}
+	    		}
+	    		for(CodeRange range : r.rightSide()) {
+	    			if(subsumes(range,t) && c.getMovedDsts().contains(t)) {
+	    				return "extracted from " + extract.getSourceOperationBeforeExtraction();
+	    			}
+	    		}
+    		}
+    	}
         return (t.getParent() != null)
                 ? t.getParent().getType() + "/" + t.getType() + "/" + t.getPos() + "/" +  t.getEndPos() : t.getType().toString() + t.getPos() + t.getEndPos();
+    }
+
+    private static boolean subsumes(CodeRange range, Tree t) {
+    	if(range.getStartOffset() <= t.getPos() &&
+				range.getEndOffset() >= t.getEndPos()) {
+    		return true;
+    	}
+    	return false;
     }
 
     public String getDiffName() {

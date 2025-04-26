@@ -4,11 +4,14 @@ import com.github.gumtreediff.actions.Diff;
 import gui.webdiff.WebDiff;
 import gui.webdiff.rest.AbstractMenuBar;
 import gui.webdiff.viewers.AbstractDiffView;
+
+import org.refactoringminer.api.Refactoring;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
@@ -17,9 +20,9 @@ public class MonacoView extends AbstractDiffView implements Renderable {
     boolean decorate = true;
 
 
-    public MonacoView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff, String srcFileContent, String dstFileContent) {
+    public MonacoView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff, String srcFileContent, String dstFileContent, List<Refactoring> refactorings) {
         super(toolName, srcFileName, dstFileName, diff, id, numOfDiffs, routePath, isMovedDiff);
-        core = new MonacoCore(diff, id, isMovedDiff, srcFileContent, dstFileContent);
+        core = new MonacoCore(diff, id, isMovedDiff, srcFileContent, dstFileContent, refactorings);
     }
 
     public void setDecorate(boolean decorate) {

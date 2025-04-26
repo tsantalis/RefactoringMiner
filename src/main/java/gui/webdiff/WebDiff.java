@@ -126,7 +126,8 @@ public class WebDiff  {
                     astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
                     comparator.isMoveDiff(id),
                     projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
-                    projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath())
+                    projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath()),
+                    projectASTDiff.getRefactorings()
             );
             return render(view);
         });
@@ -138,7 +139,8 @@ public class WebDiff  {
                     astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
                     comparator.isMoveDiff(id),
                     projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
-                    projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath())
+                    projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath()),
+                    projectASTDiff.getRefactorings()
             );
             view.setDecorate(false);
             return render(view);

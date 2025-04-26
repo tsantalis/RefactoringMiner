@@ -265,6 +265,15 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return false;
 	}
 
+	public boolean hasDataPointsAnnotation() {
+		for(UMLAnnotation annotation : annotations) {
+			if(annotation.getTypeName().equals("DataPoints")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean hasParametersAnnotation() {
 		for(UMLAnnotation annotation : annotations) {
 			if(annotation.getTypeName().equals("Parameters")) {

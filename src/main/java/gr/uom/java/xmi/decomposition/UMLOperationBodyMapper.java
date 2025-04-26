@@ -656,7 +656,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			boolean isomorphic = isomorphicCompositeStructure(innerNodes1, innerNodes2);
 			//check if it is possible to group statements based on comments, useful for junit tests
-			if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && !operation1.identicalComments(operation2)) {
+			if((operation1.hasTestAnnotation() || operation1.hasDataPointsAnnotation() || operation1.hasDataProviderAnnotation() || operation1.hasParametersAnnotation()) &&
+					(operation2.hasTestAnnotation() || operation2.hasDataPointsAnnotation() || operation2.hasDataProviderAnnotation() || operation2.hasParametersAnnotation())) {
 				List<CodeBlockBetweenComments> blocks1 = CodeBlockBetweenComments.generateCodeBlocks(leaves1, operation1);
 				List<CodeBlockBetweenComments> blocks2 = CodeBlockBetweenComments.generateCodeBlocks(leaves2, operation2);
 				List<CodeBlockBetweenComments> nonMatchedBlocks1 = new ArrayList<CodeBlockBetweenComments>();

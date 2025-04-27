@@ -281,12 +281,12 @@ public class MonacoCore {
     		if(r instanceof InlineOperationRefactoring) {
     			InlineOperationRefactoring inline = (InlineOperationRefactoring)r;
 	    		for(CodeRange range : r.leftSide()) {
-	    			if(subsumes(range,t) && c.getMovedSrcs().contains(t)) {
+	    			if(subsumes(range,t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
 	    				return "inlined to " + inline.getTargetOperationAfterInline();
 	    			}
 	    		}
 	    		for(CodeRange range : r.rightSide()) {
-	    			if(subsumes(range,t) && c.getMovedDsts().contains(t)) {
+	    			if(subsumes(range,t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
 	    				return "inlined from " + inline.getInlinedOperation();
 	    			}
 	    		}
@@ -294,19 +294,20 @@ public class MonacoCore {
     		else if(r instanceof ExtractOperationRefactoring) {
     			ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
 	    		for(CodeRange range : r.leftSide()) {
-	    			if(subsumes(range,t) && c.getMovedSrcs().contains(t)) {
+	    			if(subsumes(range,t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
 	    				return "extracted to " + extract.getExtractedOperation();
 	    			}
 	    		}
 	    		for(CodeRange range : r.rightSide()) {
-	    			if(subsumes(range,t) && c.getMovedDsts().contains(t)) {
+	    			if(subsumes(range,t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
 	    				return "extracted from " + extract.getSourceOperationBeforeExtraction();
 	    			}
 	    		}
     		}
     	}
-        return (t.getParent() != null)
-                ? t.getParent().getType() + "/" + t.getType() + "/" + t.getPos() + "/" +  t.getEndPos() : t.getType().toString() + t.getPos() + t.getEndPos();
+    	return "";
+        //return (t.getParent() != null)
+        //        ? t.getParent().getType() + "/" + t.getType() + "/" + t.getPos() + "/" +  t.getEndPos() : t.getType().toString() + t.getPos() + t.getEndPos();
     }
 
     private static boolean subsumes(CodeRange range, Tree t) {

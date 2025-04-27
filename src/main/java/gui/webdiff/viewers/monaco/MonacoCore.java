@@ -6,10 +6,13 @@ import com.github.gumtreediff.actions.Diff;
 import com.github.gumtreediff.actions.TreeClassifier;
 import com.github.gumtreediff.tree.Tree;
 
+import gr.uom.java.xmi.UMLComment;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
@@ -280,28 +283,44 @@ public class MonacoCore {
     	for(Refactoring r : refactorings) {
     		if(r instanceof InlineOperationRefactoring) {
     			InlineOperationRefactoring inline = (InlineOperationRefactoring)r;
-	    		for(CodeRange range : r.leftSide()) {
-	    			if(subsumes(range,t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
+	    		for(AbstractCodeMapping mapping : inline.getBodyMapper().getMappings()) {
+	    			if(subsumes(mapping.getFragment1().codeRange(),t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
 	    				return "inlined to " + inline.getTargetOperationAfterInline();
 	    			}
-	    		}
-	    		for(CodeRange range : r.rightSide()) {
-	    			if(subsumes(range,t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
+	    			if(subsumes(mapping.getFragment2().codeRange(),t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
 	    				return "inlined from " + inline.getInlinedOperation();
 	    			}
+	    		}
+	    		if(inline.getBodyMapper().getCommentListDiff() != null) {
+		    		for(Pair<UMLComment, UMLComment> pair : inline.getBodyMapper().getCommentListDiff().getCommonComments()) {
+		    			if(subsumes(pair.getLeft().codeRange(),t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
+		    				return "inlined to " + inline.getTargetOperationAfterInline();
+		    			}
+		    			if(subsumes(pair.getRight().codeRange(),t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
+		    				return "inlined from " + inline.getInlinedOperation();
+		    			}
+		    		}
 	    		}
     		}
     		else if(r instanceof ExtractOperationRefactoring) {
     			ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
-	    		for(CodeRange range : r.leftSide()) {
-	    			if(subsumes(range,t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
+    			for(AbstractCodeMapping mapping : extract.getBodyMapper().getMappings()) {
+	    			if(subsumes(mapping.getFragment1().codeRange(),t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
 	    				return "extracted to " + extract.getExtractedOperation();
 	    			}
-	    		}
-	    		for(CodeRange range : r.rightSide()) {
-	    			if(subsumes(range,t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
+	    			if(subsumes(mapping.getFragment2().codeRange(),t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
 	    				return "extracted from " + extract.getSourceOperationBeforeExtraction();
 	    			}
+	    		}
+    			if(extract.getBodyMapper().getCommentListDiff() != null) {
+		    		for(Pair<UMLComment, UMLComment> pair : extract.getBodyMapper().getCommentListDiff().getCommonComments()) {
+		    			if(subsumes(pair.getLeft().codeRange(),t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
+		    				return "extracted to " + extract.getExtractedOperation();
+		    			}
+		    			if(subsumes(pair.getRight().codeRange(),t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
+		    				return "extracted from " + extract.getSourceOperationBeforeExtraction();
+		    			}
+		    		}
 	    		}
     		}
     	}

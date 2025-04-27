@@ -8,6 +8,7 @@ import com.github.gumtreediff.tree.Tree;
 
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
@@ -283,51 +284,50 @@ public class MonacoCore {
     	for(Refactoring r : refactorings) {
     		if(r instanceof InlineOperationRefactoring) {
     			InlineOperationRefactoring inline = (InlineOperationRefactoring)r;
-	    		for(AbstractCodeMapping mapping : inline.getBodyMapper().getMappings()) {
-	    			if(subsumes(mapping.getFragment1().codeRange(),t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
-	    				return "inlined to " + inline.getTargetOperationAfterInline();
-	    			}
-	    			if(subsumes(mapping.getFragment2().codeRange(),t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
-	    				return "inlined from " + inline.getInlinedOperation();
-	    			}
-	    		}
-	    		if(inline.getBodyMapper().getCommentListDiff() != null) {
-		    		for(Pair<UMLComment, UMLComment> pair : inline.getBodyMapper().getCommentListDiff().getCommonComments()) {
-		    			if(subsumes(pair.getLeft().codeRange(),t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
-		    				return "inlined to " + inline.getTargetOperationAfterInline();
-		    			}
-		    			if(subsumes(pair.getRight().codeRange(),t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
-		    				return "inlined from " + inline.getInlinedOperation();
-		    			}
-		    		}
-	    		}
+	    		UMLOperationBodyMapper bodyMapper = inline.getBodyMapper();
+				String tooltipLeft = "inlined to " + inline.getTargetOperationAfterInline();
+				String tooltipRight = "inlined from " + inline.getInlinedOperation();
+				String tooltip = generateTooltip(t, c, bodyMapper, tooltipLeft, tooltipRight);
+				if(tooltip != null)
+					return tooltip;
     		}
     		else if(r instanceof ExtractOperationRefactoring) {
     			ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
-    			for(AbstractCodeMapping mapping : extract.getBodyMapper().getMappings()) {
-	    			if(subsumes(mapping.getFragment1().codeRange(),t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
-	    				return "extracted to " + extract.getExtractedOperation();
-	    			}
-	    			if(subsumes(mapping.getFragment2().codeRange(),t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
-	    				return "extracted from " + extract.getSourceOperationBeforeExtraction();
-	    			}
-	    		}
-    			if(extract.getBodyMapper().getCommentListDiff() != null) {
-		    		for(Pair<UMLComment, UMLComment> pair : extract.getBodyMapper().getCommentListDiff().getCommonComments()) {
-		    			if(subsumes(pair.getLeft().codeRange(),t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
-		    				return "extracted to " + extract.getExtractedOperation();
-		    			}
-		    			if(subsumes(pair.getRight().codeRange(),t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
-		    				return "extracted from " + extract.getSourceOperationBeforeExtraction();
-		    			}
-		    		}
-	    		}
+    			UMLOperationBodyMapper bodyMapper = extract.getBodyMapper();
+				String tooltipLeft = "extracted to " + extract.getExtractedOperation();
+				String tooltipRight = "extracted from " + extract.getSourceOperationBeforeExtraction();
+				String tooltip = generateTooltip(t, c, bodyMapper, tooltipLeft, tooltipRight);
+				if(tooltip != null)
+					return tooltip;
     		}
     	}
     	return "";
         //return (t.getParent() != null)
         //        ? t.getParent().getType() + "/" + t.getType() + "/" + t.getPos() + "/" +  t.getEndPos() : t.getType().toString() + t.getPos() + t.getEndPos();
     }
+
+	private String generateTooltip(Tree tree, ExtendedTreeClassifier classifier, UMLOperationBodyMapper bodyMapper,
+			String tooltipLeft, String tooltipRight) {
+		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
+			if(subsumes(mapping.getFragment1().codeRange(),tree) && (classifier.getMovedSrcs().contains(tree) || classifier.getMultiMapSrc().containsKey(tree))) {
+				return tooltipLeft;
+			}
+			if(subsumes(mapping.getFragment2().codeRange(),tree) && (classifier.getMovedDsts().contains(tree) || classifier.getMultiMapDst().containsKey(tree))) {
+				return tooltipRight;
+			}
+		}
+		if(bodyMapper.getCommentListDiff() != null) {
+			for(Pair<UMLComment, UMLComment> pair : bodyMapper.getCommentListDiff().getCommonComments()) {
+				if(subsumes(pair.getLeft().codeRange(),tree) && (classifier.getMovedSrcs().contains(tree) || classifier.getMultiMapSrc().containsKey(tree))) {
+					return tooltipLeft;
+				}
+				if(subsumes(pair.getRight().codeRange(),tree) && (classifier.getMovedDsts().contains(tree) || classifier.getMultiMapDst().containsKey(tree))) {
+					return tooltipRight;
+				}
+			}
+		}
+		return null;
+	}
 
     private static boolean subsumes(CodeRange range, Tree t) {
     	if(range.getStartOffset() <= t.getPos() &&

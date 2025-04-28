@@ -576,110 +576,112 @@ You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> 
 
 In both cases, you will get the output in JSON format:
 
-    {
-	"commits": [{
-		"repository": "https://github.com/danilofes/refactoring-toy-example.git",
-		"sha1": "36287f7c3b09eff78395267a3ac0d7da067863fd",
-		"url": "https://github.com/danilofes/refactoring-toy-example/commit/36287f7c3b09eff78395267a3ac0d7da067863fd",
-		"refactorings": [{
-				"type": "Pull Up Attribute",
-				"description": "Pull Up Attribute private age : int from class org.animals.Labrador to class org.animals.Dog",
-				"leftSideLocations": [{
-					"filePath": "src/org/animals/Labrador.java",
-					"startLine": 5,
-					"endLine": 5,
-					"startColumn": 14,
-					"endColumn": 21,
-					"codeElementType": "FIELD_DECLARATION",
-					"description": "original attribute declaration",
-					"codeElement": "age : int"
-				}],
-				"rightSideLocations": [{
-					"filePath": "src/org/animals/Dog.java",
-					"startLine": 5,
-					"endLine": 5,
-					"startColumn": 14,
-					"endColumn": 21,
-					"codeElementType": "FIELD_DECLARATION",
-					"description": "pulled up attribute declaration",
-					"codeElement": "age : int"
-				}]
-			},
-			{
-				"type": "Pull Up Attribute",
-				"description": "Pull Up Attribute private age : int from class org.animals.Poodle to class org.animals.Dog",
-				"leftSideLocations": [{
-					"filePath": "src/org/animals/Poodle.java",
-					"startLine": 5,
-					"endLine": 5,
-					"startColumn": 14,
-					"endColumn": 21,
-					"codeElementType": "FIELD_DECLARATION",
-					"description": "original attribute declaration",
-					"codeElement": "age : int"
-				}],
-				"rightSideLocations": [{
-					"filePath": "src/org/animals/Dog.java",
-					"startLine": 5,
-					"endLine": 5,
-					"startColumn": 14,
-					"endColumn": 21,
-					"codeElementType": "FIELD_DECLARATION",
-					"description": "pulled up attribute declaration",
-					"codeElement": "age : int"
-				}]
-			},
-			{
-				"type": "Pull Up Method",
-				"description": "Pull Up Method public getAge() : int from class org.animals.Labrador to public getAge() : int from class org.animals.Dog",
-				"leftSideLocations": [{
-					"filePath": "src/org/animals/Labrador.java",
-					"startLine": 7,
-					"endLine": 9,
-					"startColumn": 2,
-					"endColumn": 3,
-					"codeElementType": "METHOD_DECLARATION",
-					"description": "original method declaration",
-					"codeElement": "public getAge() : int"
-				}],
-				"rightSideLocations": [{
-					"filePath": "src/org/animals/Dog.java",
-					"startLine": 7,
-					"endLine": 9,
-					"startColumn": 2,
-					"endColumn": 3,
-					"codeElementType": "METHOD_DECLARATION",
-					"description": "pulled up method declaration",
-					"codeElement": "public getAge() : int"
-				}]
-			},
-			{
-				"type": "Pull Up Method",
-				"description": "Pull Up Method public getAge() : int from class org.animals.Poodle to public getAge() : int from class org.animals.Dog",
-				"leftSideLocations": [{
-					"filePath": "src/org/animals/Poodle.java",
-					"startLine": 7,
-					"endLine": 9,
-					"startColumn": 2,
-					"endColumn": 3,
-					"codeElementType": "METHOD_DECLARATION",
-					"description": "original method declaration",
-					"codeElement": "public getAge() : int"
-				}],
-				"rightSideLocations": [{
-					"filePath": "src/org/animals/Dog.java",
-					"startLine": 7,
-					"endLine": 9,
-					"startColumn": 2,
-					"endColumn": 3,
-					"codeElementType": "METHOD_DECLARATION",
-					"description": "pulled up method declaration",
-					"codeElement": "public getAge() : int"
-				}]
-			}
-		]
-	}]
-	}
+```json
+{
+  "commits": [{
+    "repository": "https://github.com/danilofes/refactoring-toy-example.git",
+    "sha1": "36287f7c3b09eff78395267a3ac0d7da067863fd",
+    "url": "https://github.com/danilofes/refactoring-toy-example/commit/36287f7c3b09eff78395267a3ac0d7da067863fd",
+    "refactorings": [{
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private age : int from class org.animals.Labrador to class org.animals.Dog",
+        "leftSideLocations": [{
+          "filePath": "src/org/animals/Labrador.java",
+          "startLine": 5,
+          "endLine": 5,
+          "startColumn": 14,
+          "endColumn": 21,
+          "codeElementType": "FIELD_DECLARATION",
+          "description": "original attribute declaration",
+          "codeElement": "age : int"
+        }],
+        "rightSideLocations": [{
+          "filePath": "src/org/animals/Dog.java",
+          "startLine": 5,
+          "endLine": 5,
+          "startColumn": 14,
+          "endColumn": 21,
+          "codeElementType": "FIELD_DECLARATION",
+          "description": "pulled up attribute declaration",
+          "codeElement": "age : int"
+        }]
+      },
+      {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private age : int from class org.animals.Poodle to class org.animals.Dog",
+        "leftSideLocations": [{
+          "filePath": "src/org/animals/Poodle.java",
+          "startLine": 5,
+          "endLine": 5,
+          "startColumn": 14,
+          "endColumn": 21,
+          "codeElementType": "FIELD_DECLARATION",
+          "description": "original attribute declaration",
+          "codeElement": "age : int"
+        }],
+        "rightSideLocations": [{
+          "filePath": "src/org/animals/Dog.java",
+          "startLine": 5,
+          "endLine": 5,
+          "startColumn": 14,
+          "endColumn": 21,
+          "codeElementType": "FIELD_DECLARATION",
+          "description": "pulled up attribute declaration",
+          "codeElement": "age : int"
+        }]
+      },
+      {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getAge() : int from class org.animals.Labrador to public getAge() : int from class org.animals.Dog",
+        "leftSideLocations": [{
+          "filePath": "src/org/animals/Labrador.java",
+          "startLine": 7,
+          "endLine": 9,
+          "startColumn": 2,
+          "endColumn": 3,
+          "codeElementType": "METHOD_DECLARATION",
+          "description": "original method declaration",
+          "codeElement": "public getAge() : int"
+        }],
+        "rightSideLocations": [{
+          "filePath": "src/org/animals/Dog.java",
+          "startLine": 7,
+          "endLine": 9,
+          "startColumn": 2,
+          "endColumn": 3,
+          "codeElementType": "METHOD_DECLARATION",
+          "description": "pulled up method declaration",
+          "codeElement": "public getAge() : int"
+        }]
+      },
+      {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getAge() : int from class org.animals.Poodle to public getAge() : int from class org.animals.Dog",
+        "leftSideLocations": [{
+          "filePath": "src/org/animals/Poodle.java",
+          "startLine": 7,
+          "endLine": 9,
+          "startColumn": 2,
+          "endColumn": 3,
+          "codeElementType": "METHOD_DECLARATION",
+          "description": "original method declaration",
+          "codeElement": "public getAge() : int"
+        }],
+        "rightSideLocations": [{
+          "filePath": "src/org/animals/Dog.java",
+          "startLine": 7,
+          "endLine": 9,
+          "startColumn": 2,
+          "endColumn": 3,
+          "codeElementType": "METHOD_DECLARATION",
+          "description": "pulled up method declaration",
+          "codeElement": "public getAge() : int"
+        }]
+      }
+    ]
+  }]
+}
+```
 
 ## AST diff command line options
 When you build a distributable application with `./gradlew distZip`, you can run Refactoring Miner as a command line application. Extract the file under `build/distribution/RefactoringMiner-version.zip` in the desired location, and cd into the `bin` folder (or include it in your path). Then, run `RefactoringMiner diff -h` to show its usage:

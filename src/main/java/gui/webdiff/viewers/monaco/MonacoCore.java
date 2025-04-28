@@ -12,6 +12,9 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
+import gr.uom.java.xmi.diff.MoveAttributeRefactoring;
+import gr.uom.java.xmi.diff.MoveCodeRefactoring;
+import gr.uom.java.xmi.diff.MoveOperationRefactoring;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
@@ -21,6 +24,7 @@ import org.refactoringminer.astDiff.models.ASTDiff;
 import org.rendersnake.HtmlCanvas;
 
 import java.io.IOException;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -268,19 +272,34 @@ public class MonacoCore {
     }
 
     private void appendRange(StringBuilder b, Tree t, String kind, String tip) {
-        String tooltip = tooltip(t);
-        if (tip != null) tooltip = tip;
-        b.append("{")
-                .append("from: ").append(t.getPos())
-                .append(",").append("to: ").append(t.getEndPos()).append(",")
-                .append("index: ").append(t.getMetrics().depth).append(",")
-                .append("kind: ").append("\"" + kind + "\"").append(",")
-                .append("tooltip: ").append("\"" + tooltip + "\"").append(",")
-                .append("}").append(",");
+        Set<String> tooltips = tooltip(t);
+        if((t.getType().toString().endsWith("Statement") || t.getType().toString().endsWith("Declaration")) &&
+        		(kind.equals("moved") || kind.startsWith("mm") || kind.equals("moveOut") || kind.equals("moveIn")) &&
+        		!tooltips.isEmpty()) {
+        	for(String tooltip : tooltips) {
+    			b.append("{")
+            	.append("from: ").append(t.getPos())
+            	.append(",").append("to: ").append(t.getEndPos()).append(",")
+            	.append("index: ").append(t.getMetrics().depth).append(",")
+            	.append("kind: ").append("\"" + kind + "\"").append(",")
+            	.append("tooltip: ").append("\"" + tooltip + "\"").append(",")
+            	.append("}").append(",");
+        	}
+        }
+        else {
+        	b.append("{")
+        	.append("from: ").append(t.getPos())
+        	.append(",").append("to: ").append(t.getEndPos()).append(",")
+        	.append("index: ").append(t.getMetrics().depth).append(",")
+        	.append("kind: ").append("\"" + kind + "\"").append(",")
+        	.append("tooltip: ").append("\"" + "\"").append(",")
+        	.append("}").append(",");
+        }
     }
 
-    private String tooltip(Tree t) {
+    private Set<String> tooltip(Tree t) {
     	ExtendedTreeClassifier c = (ExtendedTreeClassifier) diff.createRootNodesClassifier();
+    	Set<String> tooltips = new LinkedHashSet<>();
     	for(Refactoring r : refactorings) {
     		if(r instanceof InlineOperationRefactoring) {
     			InlineOperationRefactoring inline = (InlineOperationRefactoring)r;
@@ -289,7 +308,7 @@ public class MonacoCore {
 				String tooltipRight = "inlined from " + inline.getInlinedOperation();
 				String tooltip = generateTooltip(t, c, bodyMapper, tooltipLeft, tooltipRight);
 				if(tooltip != null)
-					return tooltip;
+					tooltips.add(tooltip);
     		}
     		else if(r instanceof ExtractOperationRefactoring) {
     			ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
@@ -298,31 +317,71 @@ public class MonacoCore {
 				String tooltipRight = "extracted from " + extract.getSourceOperationBeforeExtraction();
 				String tooltip = generateTooltip(t, c, bodyMapper, tooltipLeft, tooltipRight);
 				if(tooltip != null)
-					return tooltip;
+					tooltips.add(tooltip);
+    		}
+    		else if(r instanceof MoveCodeRefactoring) {
+    			MoveCodeRefactoring moveCode = (MoveCodeRefactoring)r;
+    			UMLOperationBodyMapper bodyMapper = moveCode.getBodyMapper();
+				String tooltipLeft = "moved to " + moveCode.getTargetContainer();
+				String tooltipRight = "moved from " + moveCode.getSourceContainer();
+				String tooltip = generateTooltip(t, c, bodyMapper, tooltipLeft, tooltipRight);
+				if(tooltip != null)
+					tooltips.add(tooltip);
+    		}
+    		else if(r instanceof MoveOperationRefactoring || r instanceof MoveAttributeRefactoring) {
+    			if(t.getType().toString().contains("Declaration")) {
+    				String tooltipLeft = "moved to " + r.getInvolvedClassesAfterRefactoring().iterator().next().left;
+    				String tooltipRight = "moved from " + r.getInvolvedClassesBeforeRefactoring().iterator().next().left;
+    				String tooltip = generateTooltip(t, c, null, tooltipLeft, tooltipRight);
+					if(tooltip != null)
+						tooltips.add(tooltip);
+    			}
     		}
     	}
-    	return "";
+    	return tooltips;
         //return (t.getParent() != null)
         //        ? t.getParent().getType() + "/" + t.getType() + "/" + t.getPos() + "/" +  t.getEndPos() : t.getType().toString() + t.getPos() + t.getEndPos();
     }
 
 	private String generateTooltip(Tree tree, ExtendedTreeClassifier classifier, UMLOperationBodyMapper bodyMapper,
 			String tooltipLeft, String tooltipRight) {
-		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
-			if(subsumes(mapping.getFragment1().codeRange(),tree) && (classifier.getMovedSrcs().contains(tree) || classifier.getMultiMapSrc().containsKey(tree))) {
+		if(tree.getType().toString().endsWith("Declaration")) {
+			if(classifier.getSrcMoveOutTreeMap().get(tree) != null) {
+				return classifier.getSrcMoveOutTreeMap().get(tree).toString();
+			}
+			else if(classifier.getMultiMapSrc().containsKey(tree)) {
 				return tooltipLeft;
 			}
-			if(subsumes(mapping.getFragment2().codeRange(),tree) && (classifier.getMovedDsts().contains(tree) || classifier.getMultiMapDst().containsKey(tree))) {
+			if(classifier.getDstMoveInTreeMap().get(tree) != null) {
+				return classifier.getDstMoveInTreeMap().get(tree).toString();
+			}
+			else if(classifier.getMultiMapDst().containsKey(tree)) {
 				return tooltipRight;
 			}
 		}
-		if(bodyMapper.getCommentListDiff() != null) {
-			for(Pair<UMLComment, UMLComment> pair : bodyMapper.getCommentListDiff().getCommonComments()) {
-				if(subsumes(pair.getLeft().codeRange(),tree) && (classifier.getMovedSrcs().contains(tree) || classifier.getMultiMapSrc().containsKey(tree))) {
+		if(bodyMapper != null) {
+			for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
+				if(subsumes(mapping.getFragment1().codeRange(),tree) && (classifier.getMovedSrcs().contains(tree) || classifier.getMultiMapSrc().containsKey(tree))) {
 					return tooltipLeft;
 				}
-				if(subsumes(pair.getRight().codeRange(),tree) && (classifier.getMovedDsts().contains(tree) || classifier.getMultiMapDst().containsKey(tree))) {
+				else if(subsumes(mapping.getFragment1().codeRange(),tree) && classifier.getSrcMoveOutTreeMap().get(tree) != null) {
+					return tooltipLeft + " & " + classifier.getSrcMoveOutTreeMap().get(tree);
+				}
+				if(subsumes(mapping.getFragment2().codeRange(),tree) && (classifier.getMovedDsts().contains(tree) || classifier.getMultiMapDst().containsKey(tree))) {
 					return tooltipRight;
+				}
+				else if(subsumes(mapping.getFragment2().codeRange(),tree) && classifier.getDstMoveInTreeMap().get(tree) != null) {
+					return tooltipRight + " & " + classifier.getDstMoveInTreeMap().get(tree);
+				}
+			}
+			if(bodyMapper.getCommentListDiff() != null) {
+				for(Pair<UMLComment, UMLComment> pair : bodyMapper.getCommentListDiff().getCommonComments()) {
+					if(subsumes(pair.getLeft().codeRange(),tree) && (classifier.getMovedSrcs().contains(tree) || classifier.getMultiMapSrc().containsKey(tree))) {
+						return tooltipLeft;
+					}
+					if(subsumes(pair.getRight().codeRange(),tree) && (classifier.getMovedDsts().contains(tree) || classifier.getMultiMapDst().containsKey(tree))) {
+						return tooltipRight;
+					}
 				}
 			}
 		}

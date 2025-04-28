@@ -16,6 +16,7 @@ import gr.uom.java.xmi.diff.MergeOperationRefactoring;
 import gr.uom.java.xmi.diff.MoveAttributeRefactoring;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring;
 import gr.uom.java.xmi.diff.MoveOperationRefactoring;
+import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
 import gr.uom.java.xmi.diff.SplitOperationRefactoring;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -323,6 +324,15 @@ public class MonacoCore {
     			UMLOperationBodyMapper bodyMapper = extract.getBodyMapper();
 				String tooltipLeft = "extracted to " + extract.getExtractedOperation();
 				String tooltipRight = "extracted from " + extract.getSourceOperationBeforeExtraction();
+				String tooltip = generateTooltip(t, c, bodyMapper, tooltipLeft, tooltipRight);
+				if(tooltip != null)
+					tooltips.add(tooltip);
+    		}
+    		else if(r instanceof ParameterizeTestRefactoring) {
+    			ParameterizeTestRefactoring extract = (ParameterizeTestRefactoring)r;
+    			UMLOperationBodyMapper bodyMapper = extract.getBodyMapper();
+				String tooltipLeft = "parameterized to " + extract.getParameterizedTestOperation();
+				String tooltipRight = "parameterized from " + extract.getRemovedOperation();
 				String tooltip = generateTooltip(t, c, bodyMapper, tooltipLeft, tooltipRight);
 				if(tooltip != null)
 					tooltips.add(tooltip);

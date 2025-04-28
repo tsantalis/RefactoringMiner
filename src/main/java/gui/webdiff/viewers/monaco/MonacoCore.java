@@ -273,7 +273,7 @@ public class MonacoCore {
 
     private void appendRange(StringBuilder b, Tree t, String kind, String tip) {
         Set<String> tooltips = tooltip(t);
-        if((t.getType().toString().endsWith("Statement") || t.getType().toString().endsWith("Declaration")) &&
+        if((t.getType().toString().endsWith("Statement") || t.getType().toString().endsWith("Declaration") || t.getType().toString().startsWith("LineComment") || t.getType().toString().startsWith("BlockComment")) &&
         		(kind.equals("moved") || kind.startsWith("mm") || kind.equals("moveOut") || kind.equals("moveIn")) &&
         		!tooltips.isEmpty()) {
         	for(String tooltip : tooltips) {

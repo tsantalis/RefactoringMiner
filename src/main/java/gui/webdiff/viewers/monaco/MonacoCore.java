@@ -12,9 +12,11 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
+import gr.uom.java.xmi.diff.MergeOperationRefactoring;
 import gr.uom.java.xmi.diff.MoveAttributeRefactoring;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring;
 import gr.uom.java.xmi.diff.MoveOperationRefactoring;
+import gr.uom.java.xmi.diff.SplitOperationRefactoring;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
@@ -27,6 +29,7 @@ import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
@@ -301,6 +304,11 @@ public class MonacoCore {
     	ExtendedTreeClassifier c = (ExtendedTreeClassifier) diff.createRootNodesClassifier();
     	Set<String> tooltips = new LinkedHashSet<>();
     	for(Refactoring r : refactorings) {
+    		Set<String> dstPath = r.getInvolvedClassesAfterRefactoring().stream().map(o -> o.left).collect(Collectors.toSet());
+    		Set<String> srcPath = r.getInvolvedClassesBeforeRefactoring().stream().map(o -> o.left).collect(Collectors.toSet());
+    		if(!srcPath.contains(srcFileName) && !dstPath.contains(dstFileName)) {
+    			continue;
+    		}
     		if(r instanceof InlineOperationRefactoring) {
     			InlineOperationRefactoring inline = (InlineOperationRefactoring)r;
 	    		UMLOperationBodyMapper bodyMapper = inline.getBodyMapper();
@@ -319,6 +327,30 @@ public class MonacoCore {
 				if(tooltip != null)
 					tooltips.add(tooltip);
     		}
+    		else if(r instanceof MergeOperationRefactoring) {
+    			MergeOperationRefactoring merge = (MergeOperationRefactoring)r;
+    			if(t.getType().toString().endsWith("Statement") || t.getType().toString().startsWith("LineComment") || t.getType().toString().startsWith("BlockComment")) {
+    				for(UMLOperationBodyMapper bodyMapper : merge.getMappers()) {
+    					String tooltipLeft = "merged to " + bodyMapper.getContainer2();
+        				String tooltipRight = "merged from " + bodyMapper.getContainer1();
+        				String tooltip = generateTooltip(t, c, bodyMapper, tooltipLeft, tooltipRight);
+        				if(tooltip != null)
+        					tooltips.add(tooltip);
+    				}
+    			}
+    		}
+    		else if(r instanceof SplitOperationRefactoring) {
+    			SplitOperationRefactoring split = (SplitOperationRefactoring)r;
+    			if(t.getType().toString().endsWith("Statement") || t.getType().toString().startsWith("LineComment") || t.getType().toString().startsWith("BlockComment")) {
+    				for(UMLOperationBodyMapper bodyMapper : split.getMappers()) {
+    					String tooltipLeft = "split to " + bodyMapper.getContainer2();
+        				String tooltipRight = "split from " + bodyMapper.getContainer1();
+        				String tooltip = generateTooltip(t, c, bodyMapper, tooltipLeft, tooltipRight);
+        				if(tooltip != null)
+        					tooltips.add(tooltip);
+    				}
+    			}
+    		}
     		else if(r instanceof MoveCodeRefactoring) {
     			MoveCodeRefactoring moveCode = (MoveCodeRefactoring)r;
     			UMLOperationBodyMapper bodyMapper = moveCode.getBodyMapper();
@@ -329,7 +361,7 @@ public class MonacoCore {
 					tooltips.add(tooltip);
     		}
     		else if(r instanceof MoveOperationRefactoring || r instanceof MoveAttributeRefactoring) {
-    			if(t.getType().toString().contains("Declaration")) {
+    			if(t.getType().toString().endsWith("Declaration")) {
     				String tooltipLeft = "moved to " + r.getInvolvedClassesAfterRefactoring().iterator().next().left;
     				String tooltipRight = "moved from " + r.getInvolvedClassesBeforeRefactoring().iterator().next().left;
     				String tooltip = generateTooltip(t, c, null, tooltipLeft, tooltipRight);
@@ -374,7 +406,7 @@ public class MonacoCore {
 					return tooltipRight + " & " + classifier.getDstMoveInTreeMap().get(tree);
 				}
 			}
-			if(bodyMapper.getCommentListDiff() != null) {
+			if(bodyMapper.getCommentListDiff() != null && (tree.getType().toString().startsWith("LineComment") || tree.getType().toString().startsWith("BlockComment"))) {
 				for(Pair<UMLComment, UMLComment> pair : bodyMapper.getCommentListDiff().getCommonComments()) {
 					if(subsumes(pair.getLeft().codeRange(),tree) && (classifier.getMovedSrcs().contains(tree) || classifier.getMultiMapSrc().containsKey(tree))) {
 						return tooltipLeft;

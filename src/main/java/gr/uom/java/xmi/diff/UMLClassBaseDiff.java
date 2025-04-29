@@ -1563,7 +1563,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
-						if(bestMapper != null && !modelDiffContainsConflictingMoveOperationRefactoring(bestMapper)) {
+						if(bestMapper != null && !modelDiffContainsConflictingMoveOperationRefactoring(bestMapper) && !potentialExtractFixture(bestMapper)) {
 							removedOperation = bestMapper.getOperation1();
 							UMLOperation addedOperation = bestMapper.getOperation2();
 							addedOperations.remove(addedOperation);
@@ -1824,7 +1824,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							if(mapperSet.size() > mapperSetSize) {
 								bestMapper = findBestMapper(mapperSet);
 							}
-							if(bestMapper != null && !modelDiffContainsConflictingMoveOperationRefactoring(bestMapper)) {
+							if(bestMapper != null && !modelDiffContainsConflictingMoveOperationRefactoring(bestMapper) && !potentialExtractFixture(bestMapper)) {
 								UMLOperation removedOperation = bestMapper.getOperation1();
 								addedOperation = bestMapper.getOperation2();
 								if(mapperSet.size() > mapperSetSize) {
@@ -1906,6 +1906,23 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+	}
+
+	private boolean potentialExtractFixture(UMLOperationBodyMapper mapper) {
+		if(mapper.getContainer2().hasTearDownAnnotation() || mapper.getContainer2().hasSetUpAnnotation()) {
+			if(!mapper.getContainer1().hasTearDownAnnotation() && !mapper.getContainer1().hasSetUpAnnotation()) {
+				for(UMLOperationBodyMapper bodyMapper : operationBodyMapperList) {
+					for(AbstractCall call : bodyMapper.getContainer1().getAllOperationInvocations()) {
+						if(call.matchesOperation(mapper.getContainer1(), bodyMapper.getContainer1(), this, modelDiff)) {
+							if(isPartOfMethodInlined(bodyMapper.getContainer1(), bodyMapper.getContainer2())) {
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean modelDiffContainsConflictingMoveOperationRefactoring(UMLOperationBodyMapper mapper) {

@@ -110,11 +110,15 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
-	@Test
-	public void testNestedInlineMethodStatementMappings2() throws Exception {
+	@ParameterizedTest
+	@CsvSource({
+		"https://github.com/eclipse-vertx/vert.x.git, 32a8c9086040fd6d6fa11a214570ee4f75a4301f, vertx-32a8c9086040fd6d6fa11a214570ee4f75a4301f.txt",
+		"https://github.com/apache/camel.git, ee55a3bc6e04fea54bd30cc1d3926020ea024661, camel-ee55a3bc6e04fea54bd30cc1d3926020ea024661-inline.txt"
+	})
+	public void testNestedInlineMethodStatementMappings2(String url, String commitId, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommitWithGitHubAPI("https://github.com/eclipse-vertx/vert.x.git", "32a8c9086040fd6d6fa11a214570ee4f75a4301f", new File(REPOS), new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI(url, commitId, new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -136,7 +140,7 @@ public class TestStatementMappings {
 			}
 		});
 
-		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "vertx-32a8c9086040fd6d6fa11a214570ee4f75a4301f.txt"));
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

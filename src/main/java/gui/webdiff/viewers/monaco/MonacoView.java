@@ -51,8 +51,7 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                             return "<span class=&quot;deleted&quot;>&nbsp;&nbsp;</span> deleted<br>"
                                     + "<span class=&quot;inserted&quot;>&nbsp;&nbsp;</span> inserted<br>"
                                     + "<span class=&quot;moved&quot;>&nbsp;&nbsp;</span> moved<br>"
-                                    + "<span class=&quot;updated&quot;>&nbsp;&nbsp;</span> updated<br>"
-                                    + "<span class=&quot;mm&quot;>&nbsp;&nbsp;</span> multi-mapped<br>";
+                                    + "<span class=&quot;updated&quot;>&nbsp;&nbsp;</span> updated<br>";
                         }
                     })
                     ._div()._if();

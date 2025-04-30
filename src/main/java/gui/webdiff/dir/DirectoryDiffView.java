@@ -124,13 +124,16 @@ public class DirectoryDiffView implements Renderable {
             if (node.getUserObject() != null) {
                 TreeNodeInfo nodeInfo = (TreeNodeInfo) node.getUserObject();
                 if (node.isLeaf()) {
-                	String iconPath = null, description = nodeInfo.getName(), title = "";
+                	String iconPath = null, description = nodeInfo.getName(), title = "", hoverText = "";
                 	int iconWidth = 0, iconHeight = 0;
                 	if(isModifiedFile(nodeInfo)) {
                 		iconPath = "dist/icons8-file-edit.svg";
                 		iconWidth = 15;
                 		iconHeight = 17;
                 		title = "modified file";
+                        ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
+                        if (astDiff != null)
+                            hoverText = astDiff.getSrcPath();
                 	}
                 	else if(isMovedCode(nodeInfo)) {
                 		iconPath = "dist/file-transfer.svg";
@@ -142,10 +145,12 @@ public class DirectoryDiffView implements Renderable {
                     		String srcName = astDiff.getSrcPath();
                     		if(astDiff.getSrcPath().contains("/")) {
                     			srcName = srcName.substring(srcName.lastIndexOf("/") + 1, srcName.length());
+                                hoverText = astDiff.getSrcPath();
                     		}
                     		if(!srcName.equals(nodeInfo.getName())) {
                     			//file is renamed
                     			description = srcName + " ⇨ " + nodeInfo.getName();
+                                hoverText = astDiff.getSrcPath() + " ⇨ " + astDiff.getDstPath();
                     		}
                     	}
                 	}
@@ -159,10 +164,12 @@ public class DirectoryDiffView implements Renderable {
                     		String srcName = astDiff.getSrcPath();
                     		if(astDiff.getSrcPath().contains("/")) {
                     			srcName = srcName.substring(srcName.lastIndexOf("/") + 1, srcName.length());
+                                hoverText = astDiff.getSrcPath();
                     		}
                     		if(!srcName.equals(nodeInfo.getName())) {
                     			//file is renamed
                     			description = srcName + " → " + nodeInfo.getName();
+                                hoverText = astDiff.getSrcPath() + " → " + astDiff.getDstPath();
                     		}
                     	}
                 	}
@@ -172,7 +179,9 @@ public class DirectoryDiffView implements Renderable {
                             .td(style("white-space: normal; word-wrap: break-word; word-break: break-all;"))
                             .a(id("diff_row_" + nodeInfo.getId()).href("/monaco-page/" + nodeInfo.getId()))
                             .img(src(iconPath).width(iconWidth).height(iconHeight).title(title))
+                            .span(title(hoverText))
                             .write(" " + description)
+                            ._span()
                             ._a()
                             ._td()
                             .if_(!external)
@@ -186,7 +195,7 @@ public class DirectoryDiffView implements Renderable {
                             ._td()
                             ._if()
                             ._tr();
-                	}
+                    }
                 }
                 else {
                     li.summary().content(nodeInfo.getName());

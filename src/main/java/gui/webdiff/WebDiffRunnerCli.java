@@ -19,7 +19,6 @@ import static org.refactoringminer.astDiff.utils.ExportUtils.getFileNameFromSrcD
 
 /* Created by pourya on 2024-02-09*/
 public class WebDiffRunnerCli {
-    private static final int timeout = 1000;
     @Parameter(names = {"-u", "--url"}, description = "URL of the commit/PR, or the Perforce Server" , order = 0)
     String url;
     @Parameter(names = {"-s", "--src"}, description = "Source directory", order = 1)
@@ -123,54 +122,5 @@ To export the mappings/actions, add --export to the end of the command.
         }
 
     }
-
-    enum RunMode{
-        URL,
-        PR,
-        DIR,
-        CLONED,
-        PERFORCE_CL;
-        public static RunMode getRunMode(WebDiffRunnerCli runner) {
-            if (runner.commit != null &&
-                runner.perforceUserName != null &&
-                runner.perforcePassword != null &&
-                runner.url != null
-            ) {
-                return PERFORCE_CL;
-            }
-            if (runner.url != null)
-            {
-                if (URLHelper.isPR(runner.url)) return PR;
-                else return URL;
-            }
-            else if (runner.src != null && runner.dst != null) return DIR;
-            else if (runner.repo != null && runner.commit != null) return CLONED;
-            else {
-                throw new RuntimeException("Invalid mode");
-            }
-        }
-
-        public ProjectASTDiff getProjectASTDIFF(WebDiffRunnerCli runner) throws Exception {
-            return switch (this) {
-                case URL -> new GitHistoryRefactoringMinerImpl().diffAtCommit(
-                        URLHelper.getRepo(runner.url),
-                        URLHelper.getCommit(runner.url),
-                        timeout);
-                case PR -> new GitHistoryRefactoringMinerImpl().diffAtPullRequest(
-                        URLHelper.getRepo(runner.url),
-                        URLHelper.getPullRequestID(runner.url),
-                        timeout);
-                case DIR -> new GitHistoryRefactoringMinerImpl().diffAtDirectories(
-                        runner.src.toAbsolutePath().normalize(),
-                        runner.dst.toAbsolutePath().normalize());
-                case CLONED -> new GitHistoryRefactoringMinerImpl().diffAtCommit(
-                        new GitServiceImpl().openRepository(runner.repo), runner.commit);
-                case PERFORCE_CL -> new PerforceHistoryRefactoringMinerImpl().diffAtChangeList(
-                        runner.url,
-                        runner.perforceUserName,
-                        runner.perforcePassword,
-                        Integer.parseInt(runner.commit));
-            };
-        }
-    }
 }
+

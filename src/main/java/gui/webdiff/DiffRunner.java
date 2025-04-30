@@ -6,10 +6,6 @@ import gui.webdiff.export.WebExporter;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.MappingExportModel;
-import org.refactoringminer.astDiff.utils.URLHelper;
-import org.refactoringminer.perforce.PerforceHistoryRefactoringMinerImpl;
-import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
-import org.refactoringminer.util.GitServiceImpl;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +14,7 @@ import java.nio.file.Path;
 import static org.refactoringminer.astDiff.utils.ExportUtils.getFileNameFromSrcDiff;
 
 /* Created by pourya on 2024-02-09*/
-public class WebDiffRunnerCli {
+public class DiffRunner {
     @Parameter(names = {"-u", "--url"}, description = "URL of the commit/PR, or the Perforce Server" , order = 0)
     String url;
     @Parameter(names = {"-s", "--src"}, description = "Source directory", order = 1)

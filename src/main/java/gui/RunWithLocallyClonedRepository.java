@@ -1,5 +1,6 @@
 package gui;
 
+import gui.webdiff.DiffDriver;
 import gui.webdiff.WebDiff;
 import org.eclipse.jgit.lib.Repository;
 import org.refactoringminer.api.GitService;
@@ -7,6 +8,8 @@ import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.util.GitServiceImpl;
+
+import java.nio.file.Path;
 
 public class RunWithLocallyClonedRepository {
     public static void main(String[] args) throws Exception {

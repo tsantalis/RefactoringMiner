@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import gui.webdiff.DiffRunner;
+import gui.webdiff.DiffDriver;
 import org.eclipse.jgit.lib.Repository;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
@@ -46,7 +46,7 @@ public class RefactoringMiner {
 		} else if (option.equalsIgnoreCase("-gp")) {
 			detectAtGitHubPullRequest(args);
 		} else if (option.equalsIgnoreCase("diff")) {
-			new DiffRunner().execute(Arrays.copyOfRange(args, 1, args.length));
+			new DiffDriver().execute(Arrays.copyOfRange(args, 1, args.length));
 		}
 		else {
 			throw argumentException();

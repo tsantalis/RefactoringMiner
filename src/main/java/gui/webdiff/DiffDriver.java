@@ -14,7 +14,7 @@ import java.nio.file.Path;
 import static org.refactoringminer.astDiff.utils.ExportUtils.getFileNameFromSrcDiff;
 
 /* Created by pourya on 2024-02-09*/
-public class DiffRunner {
+public class DiffDriver {
     @Parameter(names = {"-u", "--url"}, description = "URL of the commit/PR, or the Perforce Server" , order = 0)
     String url;
     @Parameter(names = {"-s", "--src"}, description = "Source directory", order = 1)
@@ -47,7 +47,19 @@ You can run the diff with the following options:
 
 To export the mappings/actions, add --export to the end of the command.
 """;
-    public void execute(String[] args) {
+
+    public ProjectASTDiff getProjectASTDiff() {
+        RunMode runMode = RunMode.getRunMode(this);
+        if (runMode == null) return null;
+        ProjectASTDiff projectASTDiff;
+        try {
+            projectASTDiff = runMode.getProjectASTDIFF(this);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return projectASTDiff;
+    }
+        public void execute(String[] args) {
         JCommander jCommander = JCommander.newBuilder()
                 .addObject(this)
                 .build();
@@ -58,15 +70,8 @@ To export the mappings/actions, add --export to the end of the command.
 //            jCommander.usage();
             return;
         }
-        RunMode runMode;
-        try{
-            runMode = RunMode.getRunMode(this);
-        }
-        catch (Exception e){
-            System.out.println(HELP_MSG);
-//            jCommander.usage();
-            return;
-        }
+        RunMode runMode = RunMode.getRunMode(this);
+        if (runMode == null) return;
         try {
             ProjectASTDiff projectASTDiff = runMode.getProjectASTDIFF(this);
             if (export){
@@ -116,7 +121,50 @@ To export the mappings/actions, add --export to the end of the command.
             MappingExportModel.exportToFile(new File(jsonPaths, fileNameFromSrcDiff + "_mappings.json"), astDiff.getAllMappings());
             MappingExportModel.exportActions(new File(jsonPaths,fileNameFromSrcDiff + "_actions.txt"), astDiff);
         }
+    }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setSrc(Path src) {
+        this.src = src;
+    }
+
+    public void setDst(Path dst) {
+        this.dst = dst;
+    }
+
+    public void setRepo(String repo) {
+        this.repo = repo;
+    }
+
+    public void setCommit(String commit) {
+        this.commit = commit;
+    }
+
+    public void setHelp(boolean help) {
+        this.help = help;
+    }
+
+    public void setExport(boolean export) {
+        this.export = export;
+    }
+
+    public void setExportPath(String exportPath) {
+        this.exportPath = exportPath;
+    }
+
+    public void setPerforceUserName(String perforceUserName) {
+        this.perforceUserName = perforceUserName;
+    }
+
+    public void setPerforcePassword(String perforcePassword) {
+        this.perforcePassword = perforcePassword;
+    }
+
+    public void setNo_browser(boolean no_browser) {
+        this.no_browser = no_browser;
     }
 }
 

@@ -13,7 +13,7 @@ public enum RunMode{
     CLONED,
     PERFORCE_CL;
     private static final int timeout = 1000;
-    public static RunMode getRunMode(DiffRunner runner) {
+    public static RunMode getRunMode(DiffDriver runner) {
         if (runner.commit != null &&
                 runner.perforceUserName != null &&
                 runner.perforcePassword != null &&
@@ -33,7 +33,7 @@ public enum RunMode{
         }
     }
 
-    public ProjectASTDiff getProjectASTDIFF(DiffRunner runner) throws Exception {
+    public ProjectASTDiff getProjectASTDIFF(DiffDriver runner) throws Exception {
         return switch (this) {
             case URL -> new GitHistoryRefactoringMinerImpl().diffAtCommit(
                     URLHelper.getRepo(runner.url),

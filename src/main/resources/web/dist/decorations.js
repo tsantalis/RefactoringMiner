@@ -123,7 +123,82 @@ function onClick(ed, mappings, dstIndex) {
         }, highlightDuration);
     }
 }
+
+function offsetToLineNumber(text, offset) {
+  if (offset < 0 || offset > text.length) {
+    return -1; // Invalid offset
+  }
+  const lines = text.substring(0, offset).split('\n');
+  return lines.length;
+}
+
+function offsetToLineColumn(text, offset) {
+  let line = 1;
+  let column = 1;
+  for (let i = 0; i < offset; i++) {
+    if (text[i] === '\n') {
+      line++;
+      column = 1;
+    } else {
+      column++;
+    }
+  }
+  return { line, column };
+}
+
 function onClickHelper(config, index, activatedRange, ed, dstIndex) {
+	var exit = false;
+	if(index === 0) {
+		config.left.ranges.forEach(range => { 
+			let fromLine = offsetToLineNumber(config.left.content, range.from);
+			let toLine = offsetToLineNumber(config.left.content, range.to);
+			if(fromLine <= activatedRange.startLineNumber && toLine >= activatedRange.startLineNumber) {
+				if(range.kind === "deleted") {
+					if(fromLine === toLine) {
+						// the column matters
+						let fromColumn = offsetToLineColumn(config.left.content, range.from);
+						let toColumn = offsetToLineColumn(config.left.content, range.to);
+						if(fromColumn.column <= activatedRange.startColumn && toColumn.column >= activatedRange.startColumn) {
+							exit = true;
+						}
+					}
+					else {
+						exit = true;
+					}
+				}
+				else if(range.kind === "moved" || range.kind === "updated" || range.kind.startsWith("mm")) {
+					exit = false;
+				}
+			}
+		});
+	}
+	else if(index === 1) {
+		config.right.ranges.forEach(range => { 
+			let fromLine = offsetToLineNumber(config.right.content, range.from);
+			let toLine = offsetToLineNumber(config.right.content, range.to);
+			if(fromLine <= activatedRange.startLineNumber && toLine >= activatedRange.startLineNumber) {
+				if(range.kind === "inserted") {
+					if(fromLine === toLine) {
+						// the column matters
+						let fromColumn = offsetToLineColumn(config.right.content, range.from);
+						let toColumn = offsetToLineColumn(config.right.content, range.to);
+						if(fromColumn.column <= activatedRange.startColumn && toColumn.column >= activatedRange.startColumn) {
+							exit = true;
+						}
+					}
+					else {
+						exit = true;
+					}
+				}
+				else if(range.kind === "moved" || range.kind === "updated" || range.kind.startsWith("mm")) {
+					exit = false;
+				}
+			}
+		});
+	}
+	if(exit) {
+		return;
+	}
     candidates = config.mappings
         .filter(mapping =>
             mapping[index].startColumn <= activatedRange.startColumn

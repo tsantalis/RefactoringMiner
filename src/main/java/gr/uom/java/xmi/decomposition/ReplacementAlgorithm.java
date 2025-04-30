@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
@@ -1399,6 +1400,14 @@ public class ReplacementAlgorithm {
 						}
 					}
 				}
+			}
+		}
+		
+		if(variableDeclarations1.size() > 1 && variableDeclarations2.size() > 1 && variableDeclarations1.size() != variableDeclarations2.size()) {
+			Set<String> declarations1 = variableDeclarations1.stream().map(d -> d.toString()).collect(Collectors.toSet());
+			Set<String> declarations2 = variableDeclarations2.stream().map(d -> d.toString()).collect(Collectors.toSet());
+			if(declarations1.containsAll(declarations2) || declarations2.containsAll(declarations1)) {
+				return replacementInfo.getReplacements();
 			}
 		}
 		

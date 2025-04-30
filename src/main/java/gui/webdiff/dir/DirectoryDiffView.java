@@ -29,14 +29,14 @@ public class DirectoryDiffView implements Renderable {
     }
 
     protected boolean isMovedCode(TreeNodeInfo info) {
-    	return comparator.isMoveDiff(info.getId());
+        return comparator.isMoveDiff(info.getId());
     }
 
     protected boolean isModifiedFile(TreeNodeInfo info) {
-    	ASTDiff astDiff = comparator.getASTDiff(info.getId());
-    	if(astDiff != null && astDiff.getSrcPath() != null)
-    		return astDiff.getSrcPath().equals(astDiff.getDstPath());
-    	return false;
+        ASTDiff astDiff = comparator.getASTDiff(info.getId());
+        if(astDiff != null && astDiff.getSrcPath() != null)
+            return astDiff.getSrcPath().equals(astDiff.getDstPath());
+        return false;
     }
 
     @Override
@@ -124,77 +124,77 @@ public class DirectoryDiffView implements Renderable {
             if (node.getUserObject() != null) {
                 TreeNodeInfo nodeInfo = (TreeNodeInfo) node.getUserObject();
                 if (node.isLeaf()) {
-                	String iconPath = null, description = nodeInfo.getName(), title = "", hoverText = "";
-                	int iconWidth = 0, iconHeight = 0;
-                	if(isModifiedFile(nodeInfo)) {
-                		iconPath = "dist/icons8-file-edit.svg";
-                		iconWidth = 15;
-                		iconHeight = 17;
-                		title = "modified file";
+                    String iconPath = null, description = nodeInfo.getName(), title = "", hoverText = "";
+                    int iconWidth = 0, iconHeight = 0;
+                    if(isModifiedFile(nodeInfo)) {
+                        iconPath = "dist/icons8-file-edit.svg";
+                        iconWidth = 15;
+                        iconHeight = 17;
+                        title = "modified file";
                         ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
                         if (astDiff != null)
                             hoverText = astDiff.getSrcPath();
-                	}
-                	else if(isMovedCode(nodeInfo)) {
-                		iconPath = "dist/file-transfer.svg";
-                		iconWidth = 22;
-                		iconHeight = 28;
-                		title = "moved code between files";
-                		ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
-                    	if(astDiff != null && astDiff.getSrcPath() != null) {
-                    		String srcName = astDiff.getSrcPath();
-                    		if(astDiff.getSrcPath().contains("/")) {
-                    			srcName = srcName.substring(srcName.lastIndexOf("/") + 1, srcName.length());
+                    }
+                    else if(isMovedCode(nodeInfo)) {
+                        iconPath = "dist/file-transfer.svg";
+                        iconWidth = 22;
+                        iconHeight = 28;
+                        title = "moved code between files";
+                        ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
+                        if(astDiff != null && astDiff.getSrcPath() != null) {
+                            String srcName = astDiff.getSrcPath();
+                            if(astDiff.getSrcPath().contains("/")) {
+                                srcName = srcName.substring(srcName.lastIndexOf("/") + 1, srcName.length());
                                 hoverText = astDiff.getSrcPath();
-                    		}
-                    		if(!srcName.equals(nodeInfo.getName())) {
-                    			//file is renamed
-                    			description = srcName + " ⇨ " + nodeInfo.getName();
+                            }
+                            if(!srcName.equals(nodeInfo.getName())) {
+                                //file is renamed
+                                description = srcName + " ⇨ " + nodeInfo.getName();
                                 hoverText = astDiff.getSrcPath() + " ⇨ " + astDiff.getDstPath();
-                    		}
+                            }
                     	}
-                	}
-                	else {
-                		iconPath = "dist/icons8-file-move.svg";
-                		iconWidth = 15;
-                		iconHeight = 17;
-                		title = "moved/renamed file";
-                		ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
-                    	if(astDiff != null && astDiff.getSrcPath() != null) {
-                    		String srcName = astDiff.getSrcPath();
-                    		if(astDiff.getSrcPath().contains("/")) {
-                    			srcName = srcName.substring(srcName.lastIndexOf("/") + 1, srcName.length());
+                    }
+                    else {
+                        iconPath = "dist/icons8-file-move.svg";
+                        iconWidth = 15;
+                        iconHeight = 17;
+                        title = "moved/renamed file";
+                        ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
+                        if(astDiff != null && astDiff.getSrcPath() != null) {
+                            String srcName = astDiff.getSrcPath();
+                            if(astDiff.getSrcPath().contains("/")) {
+                                srcName = srcName.substring(srcName.lastIndexOf("/") + 1, srcName.length());
                                 hoverText = astDiff.getSrcPath();
-                    		}
-                    		if(!srcName.equals(nodeInfo.getName())) {
-                    			//file is renamed
-                    			description = srcName + " → " + nodeInfo.getName();
+                            }
+                            if(!srcName.equals(nodeInfo.getName())) {
+                                //file is renamed
+                                description = srcName + " → " + nodeInfo.getName();
                                 hoverText = astDiff.getSrcPath() + " → " + astDiff.getDstPath();
-                    		}
-                    	}
-                	}
-                	boolean empty = comparator.getASTDiff(nodeInfo.getId()).isEmpty();
-                	if(!empty) {
+                            }
+                        }
+                    }
+                    boolean empty = comparator.getASTDiff(nodeInfo.getId()).isEmpty();
+                    if(!empty) {
                         ul.tr()
-                            .td(style("white-space: normal; word-wrap: break-word; word-break: break-all;"))
-                            .a(id("diff_row_" + nodeInfo.getId()).href("/monaco-page/" + nodeInfo.getId()))
-                            .img(src(iconPath).width(iconWidth).height(iconHeight).title(title))
-                            .span(title(hoverText))
-                            .write(" " + description)
-                            ._span()
-                            ._a()
-                            ._td()
-                            .if_(!external)
-                            .td()
-                            .div(class_("btn-toolbar justify-content-end"))
-                            .div(class_("btn-group"))
-                            .a(class_("btn btn-primary btn-sm").href("/monaco-page/" + nodeInfo.getId())).content("MonacoDiff")
-                            .a(class_("btn btn-primary btn-sm").href("/vanilla-diff/" + nodeInfo.getId())).content("ClassicDiff")
-                            ._div() // Close btn-group
-                            ._div() // Close btn-toolbar
-                            ._td()
-                            ._if()
-                            ._tr();
+                        .td(style("white-space: normal; word-wrap: break-word; word-break: break-all;"))
+                        .a(id("diff_row_" + nodeInfo.getId()).href("/monaco-page/" + nodeInfo.getId()))
+                        .img(src(iconPath).width(iconWidth).height(iconHeight).title(title))
+                        .span(title(hoverText))
+                        .write(" " + description)
+                        ._span()
+                        ._a()
+                        ._td()
+                        .if_(!external)
+                        .td()
+                        .div(class_("btn-toolbar justify-content-end"))
+                        .div(class_("btn-group"))
+                        .a(class_("btn btn-primary btn-sm").href("/monaco-page/" + nodeInfo.getId())).content("MonacoDiff")
+                        .a(class_("btn btn-primary btn-sm").href("/vanilla-diff/" + nodeInfo.getId())).content("ClassicDiff")
+                        ._div() // Close btn-group
+                        ._div() // Close btn-toolbar
+                        ._td()
+                        ._if()
+                        ._tr();
                     }
                 }
                 else {

@@ -1875,7 +1875,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, filesBefore, filesCurrent);
 					ProjectASTDiff diff = differ.getProjectASTDiff();
 					diff.setMetaInfo(new DiffMetaInfo(
-							extractRepositoryName(cloneURL) + " " + pullRequestId,
+							extractRepositoryName(cloneURL) + "#" + pullRequestId,
 							extractPullRequestURL(cloneURL, pullRequestId)));
 					diffs.add(diff);
 				}

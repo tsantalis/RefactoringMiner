@@ -27,7 +27,7 @@ public class DirectoryDiffView implements Renderable {
     public DirectoryDiffView(DirComparator comparator, boolean external, DiffMetaInfo metaInfo) {
         this.comparator = comparator;
         this.external = external;
-		this.metaInfo = metaInfo;
+        this.metaInfo = metaInfo;
     }
 
     protected boolean isMovedCode(TreeNodeInfo info) {
@@ -291,22 +291,24 @@ public class DirectoryDiffView implements Renderable {
 
     private static class MenuBar implements Renderable {
         private final boolean external;
-	    private final DiffMetaInfo metaInfo;
+        private final DiffMetaInfo metaInfo;
 
 
-	    public MenuBar(boolean external, DiffMetaInfo metaInfo) {
+        public MenuBar(boolean external, DiffMetaInfo metaInfo) {
             this.external = external;
-		    this.metaInfo = metaInfo;
-	    }
+            this.metaInfo = metaInfo;
+        }
 
         @Override
         public void renderOn(HtmlCanvas html) throws IOException {
             html
             .div(class_("col"))
-	            .if_(metaInfo != null)
-	            .a(href(metaInfo.getUrl())).content(metaInfo.getInfo())
-	            ._if()
                 .div(class_("btn-toolbar justify-content-end"))
+                    .if_(metaInfo != null)
+                    .div(class_("col"))
+                    .a(href(metaInfo.getUrl()).target("_blank")).content(metaInfo.getInfo())
+                    ._div()
+                    ._if()
                     .div(class_("btn-group").style("padding: 5px;"))
                         .if_(!external)
                         .a(class_("btn btn-default btn-sm btn-danger").href("/quit")).content("Quit")

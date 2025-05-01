@@ -54,7 +54,7 @@ To export the mappings/actions, add --export to the end of the command.
         ProjectASTDiff projectASTDiff;
         try {
             projectASTDiff = runMode.getProjectASTDIFF(this);
-	        projectASTDiff.setMetaInfo(runMode.getDiffMetaInfo(this));
+            projectASTDiff.setMetaInfo(runMode.getDiffMetaInfo(this));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

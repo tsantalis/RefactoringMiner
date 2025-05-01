@@ -3,7 +3,6 @@ package gui;
 import gui.webdiff.DiffDriver;
 import gui.webdiff.WebDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
-import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 public class RunWithPullRequest {
     public static void main(String[] args) throws Exception {

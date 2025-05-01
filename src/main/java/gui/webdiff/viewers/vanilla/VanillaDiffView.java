@@ -4,6 +4,7 @@ import com.github.gumtreediff.actions.Diff;
 import gui.webdiff.WebDiff;
 import gui.webdiff.rest.AbstractMenuBar;
 import gui.webdiff.viewers.AbstractDiffView;
+import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
@@ -20,8 +21,8 @@ public class VanillaDiffView extends AbstractDiffView implements Renderable {
     private final VanillaDiffHtmlBuilder rawHtmlDiff;
     private final boolean dump;
 
-    public VanillaDiffView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff, String srcFileContent, String dstFileContent, boolean dump) throws IOException {
-        super(toolName, srcFileName, dstFileName, diff, id, numOfDiffs, routePath, isMovedDiff);
+    public VanillaDiffView(String toolName, DiffMetaInfo metaInfo, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff, String srcFileContent, String dstFileContent, boolean dump) throws IOException {
+        super(toolName, metaInfo, srcFileName, dstFileName, diff, id, numOfDiffs, routePath, isMovedDiff);
         this.dump =  dump;
         rawHtmlDiff = new VanillaDiffHtmlBuilder(srcFileContent, dstFileContent, diff);
         rawHtmlDiff.produce();
@@ -36,7 +37,7 @@ public class VanillaDiffView extends AbstractDiffView implements Renderable {
             .body()
                 .div(class_("container-fluid"))
                     .div(class_("row"))
-                        .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, isMovedDiff) {
+                        .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, isMovedDiff, metaInfo) {
                             @Override
                             public String getLegendValue() {
                                 return "<span class=&quot;del&quot;>&nbsp;&nbsp;</span> deleted<br>"

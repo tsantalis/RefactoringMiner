@@ -69,4 +69,25 @@ public class URLHelper{
     public static boolean isPR(String url) {
         return url.contains("/pull/") && !url.contains("/commits/");
     }
+
+	public static String getPRID(String url) {
+        int start = nthIndexOf(url,'/',6);
+        int end = nthIndexOf(url,'/',7);
+		if (end == -1) end = url.length();
+        return url.substring(start+1, end);
+    }
+
+	public static String shortenCommit(String commit) {
+        if (commit.length() > 7) {
+            return commit.substring(0, 7);
+        }
+        return commit;
+    }
+
+	public static String getRepoStringOnly(String url) {
+        int start = nthIndexOf(url,'/',4);
+        int end = nthIndexOf(url,'/',5);
+        return url.substring(start+1, end);
+    }
+
 }

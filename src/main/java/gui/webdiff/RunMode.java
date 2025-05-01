@@ -68,7 +68,7 @@ public enum RunMode{
 					URLHelper.getRepoStringOnly(runner.url) + " " + URLHelper.getPRID(runner.url),
 					runner.url);
 			case DIR -> new DiffMetaInfo(runner.src + " -> " + runner.dst, "");
-			case CLONED ->  new DiffMetaInfo("ClonedRepos", "");
+			case CLONED ->  new DiffMetaInfo(runner.repo + " " + URLHelper.shortenCommit(runner.commit), "");
 			case PERFORCE_CL -> new DiffMetaInfo(runner.url + " #" + runner.commit, "");
 		};
 	}

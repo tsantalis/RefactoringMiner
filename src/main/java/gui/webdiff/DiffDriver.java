@@ -54,7 +54,6 @@ To export the mappings/actions, add --export to the end of the command.
         ProjectASTDiff projectASTDiff;
         try {
             projectASTDiff = runMode.getProjectASTDIFF(this);
-            //projectASTDiff.setMetaInfo(runMode.getDiffMetaInfo(this));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -121,50 +120,6 @@ To export the mappings/actions, add --export to the end of the command.
             MappingExportModel.exportToFile(new File(jsonPaths, fileNameFromSrcDiff + "_mappings.json"), astDiff.getAllMappings());
             MappingExportModel.exportActions(new File(jsonPaths,fileNameFromSrcDiff + "_actions.txt"), astDiff);
         }
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public void setSrc(Path src) {
-        this.src = src;
-    }
-
-    public void setDst(Path dst) {
-        this.dst = dst;
-    }
-
-    public void setRepo(String repo) {
-        this.repo = repo;
-    }
-
-    public void setCommit(String commit) {
-        this.commit = commit;
-    }
-
-    public void setHelp(boolean help) {
-        this.help = help;
-    }
-
-    public void setExport(boolean export) {
-        this.export = export;
-    }
-
-    public void setExportPath(String exportPath) {
-        this.exportPath = exportPath;
-    }
-
-    public void setPerforceUserName(String perforceUserName) {
-        this.perforceUserName = perforceUserName;
-    }
-
-    public void setPerforcePassword(String perforcePassword) {
-        this.perforcePassword = perforcePassword;
-    }
-
-    public void setNo_browser(boolean no_browser) {
-        this.no_browser = no_browser;
     }
 }
 

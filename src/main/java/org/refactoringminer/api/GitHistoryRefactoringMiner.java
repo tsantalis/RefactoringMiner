@@ -228,4 +228,15 @@ public interface GitHistoryRefactoringMiner {
 	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
 	 */
 	ProjectASTDiff diffAtCommitRange(String gitURL, String startCommit, String endCommit) throws Exception;
+
+	/**
+	 * Generate the AST diff for the specified file contents. 
+	 * 
+	 * @param fileContentsBefore A map where the keys are file paths, and the values are the corresponding file contents.
+	 * @param fileContentsAfter A map where the keys are file paths, and the values are the corresponding file contents.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 * The keys should correspond to the file path starting from the root of the repository.
+	 * For example, {@code src/main/java/org/refactoringminer/api/GitHistoryRefactoringMiner.java}
+	 */
+	ProjectASTDiff diffAtFileContents(Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter) throws Exception;
 }

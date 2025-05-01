@@ -2170,6 +2170,20 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return refactoringsAtRevision;
 	}
 
+	@Override
+	public ProjectASTDiff diffAtFileContents(Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter) throws Exception {
+		Set<String> repositoryDirectoriesBefore = populateDirectories(fileContentsBefore);
+		Set<String> repositoryDirectoriesCurrent = populateDirectories(fileContentsAfter);
+		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsAfter, Collections.emptyMap(), true); 
+		UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+		UMLModel currentUMLModel = createModelForASTDiff(fileContentsAfter, repositoryDirectoriesCurrent);
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsAfter);
+		ProjectASTDiff diff = differ.getProjectASTDiff();
+		diff.setMetaInfo(new DiffMetaInfo("", ""));
+		return diff;
+	}
+
 	public void populateWithGitHubAPIForCommitRange(String cloneURL, String startCommit, String endCommit,
 			Map<String, String> filesBefore, Map<String, String> filesCurrent,
 			Set<String> repositoryDirectoriesBefore, Set<String> repositoryDirectoriesCurrent) throws IOException, InterruptedException {

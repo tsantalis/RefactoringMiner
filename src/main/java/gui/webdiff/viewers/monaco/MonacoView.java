@@ -6,6 +6,7 @@ import gui.webdiff.rest.AbstractMenuBar;
 import gui.webdiff.viewers.AbstractDiffView;
 
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
@@ -20,8 +21,8 @@ public class MonacoView extends AbstractDiffView implements Renderable {
     boolean decorate = true;
 
 
-    public MonacoView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff, String srcFileContent, String dstFileContent, List<Refactoring> refactorings) {
-        super(toolName, srcFileName, dstFileName, diff, id, numOfDiffs, routePath, isMovedDiff);
+    public MonacoView(String toolName, DiffMetaInfo metaInfo, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff, String srcFileContent, String dstFileContent, List<Refactoring> refactorings) {
+        super(toolName, metaInfo, srcFileName, dstFileName, diff, id, numOfDiffs, routePath, isMovedDiff);
         core = new MonacoCore(diff, id, isMovedDiff, srcFileContent, dstFileContent, refactorings);
     }
 
@@ -41,7 +42,7 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                 .div(class_("container-fluid h-100"))
                 .if_(decorate)
                     .div(class_("row"))
-                    .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, isMovedDiff){
+                    .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, isMovedDiff, metaInfo){
                         @Override
                         public String getShortcutDescriptions() {
                             return super.getShortcutDescriptions() + "<b>Alt + w</b> toggle word wrap";

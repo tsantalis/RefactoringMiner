@@ -1,6 +1,7 @@
 package gui.webdiff.viewers;
 
 import com.github.gumtreediff.actions.Diff;
+import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.rendersnake.Renderable;
 
 /* Created by pourya on 2024-06-03*/
@@ -12,8 +13,9 @@ public abstract class AbstractDiffView implements Renderable {
     protected final int id;
     protected final int numOfDiffs;
     protected final String routePath;
+    protected final DiffMetaInfo metaInfo;
     protected boolean isMovedDiff;
-    public AbstractDiffView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff) {
+    public AbstractDiffView(String toolName, DiffMetaInfo metaInfo, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff) {
         this.toolName = toolName;
         this.srcFileName = srcFileName;
         this.dstFileName = dstFileName;
@@ -22,5 +24,6 @@ public abstract class AbstractDiffView implements Renderable {
         this.id = id;
         this.routePath = routePath;
         this.isMovedDiff = isMovedDiff;
+        this.metaInfo = metaInfo;
     }
 }

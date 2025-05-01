@@ -54,6 +54,7 @@ To export the mappings/actions, add --export to the end of the command.
         ProjectASTDiff projectASTDiff;
         try {
             projectASTDiff = runMode.getProjectASTDIFF(this);
+	        projectASTDiff.setMetaInfo(runMode.getDiffMetaInfo(this));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -70,10 +71,8 @@ To export the mappings/actions, add --export to the end of the command.
 //            jCommander.usage();
             return;
         }
-        RunMode runMode = RunMode.getRunMode(this);
-        if (runMode == null) return;
         try {
-            ProjectASTDiff projectASTDiff = runMode.getProjectASTDIFF(this);
+            ProjectASTDiff projectASTDiff = getProjectASTDiff();
             if (export){
                 export(projectASTDiff, exportPath);
             }
@@ -86,6 +85,7 @@ To export the mappings/actions, add --export to the end of the command.
                     webDiff.openInBrowser();
             }
         } catch (Exception e) {
+	        System.out.println(HELP_MSG);
             throw new RuntimeException(e);
         }
     }

@@ -18,6 +18,7 @@ import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.matchers.ProjectASTDiffer;
+import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.slf4j.Logger;
@@ -102,7 +103,9 @@ public class PerforceHistoryRefactoringMinerImpl implements PerforceHistoryRefac
                     astDiffInput.getDirectoriesAfter());
             UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
             ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, astDiffInput.getFileContentsBefore(), astDiffInput.getFileContentsAfter());
-            return differ.getProjectASTDiff();
+            ProjectASTDiff diff = differ.getProjectASTDiff();
+            diff.setMetaInfo(new DiffMetaInfo(serverUrl + " #" + changeListNumber, ""));
+            return diff;
         } catch (RefactoringMinerTimedOutException e) {
             logger.warn(String.format("Ignored changeList %s due to timeout", changeListNumber), e);
         } catch (Exception e) {

@@ -1,8 +1,8 @@
 package gui;
 
-import gui.webdiff.DiffDriver;
 import gui.webdiff.WebDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -13,10 +13,7 @@ public class RunWithTwoDirectories {
         String folder1 = projectRoot + "/tmp/v1/";
         String folder2 = projectRoot + "/tmp/v2/";
 
-        DiffDriver diffDriver = new DiffDriver();
-        diffDriver.setSrc(Path.of(folder1));
-        diffDriver.setDst(Path.of(folder2));
-        ProjectASTDiff projectASTDiff = diffDriver.getProjectASTDiff();
-        new WebDiff(projectASTDiff).run();
+        ProjectASTDiff projectASTDiff = new GitHistoryRefactoringMinerImpl().diffAtDirectories(Path.of(folder1), Path.of(folder2));
+        new WebDiff(projectASTDiff).openInBrowser();
     }
 }

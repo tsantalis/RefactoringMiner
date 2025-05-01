@@ -1,8 +1,8 @@
 package gui.webdiff.viewers.spv;
 
-import gui.webdiff.WebDiff;
 import gui.webdiff.dir.DirComparator;
 import gui.webdiff.viewers.monaco.MonacoCore;
+import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
 
@@ -12,8 +12,8 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 
 /* Created by pourya on 2024-07-22*/
 public class SinglePageView extends AbstractSinglePageView implements Renderable {
-    public SinglePageView(DirComparator comparator) {
-        super(comparator);
+    public SinglePageView(DirComparator comparator, DiffMetaInfo metaInfo) {
+        super(comparator, metaInfo);
     }
 
     protected void makeHead(HtmlCanvas html) throws IOException {

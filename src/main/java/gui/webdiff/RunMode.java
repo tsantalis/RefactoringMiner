@@ -1,5 +1,6 @@
 package gui.webdiff;
 
+import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.perforce.PerforceHistoryRefactoringMinerImpl;
@@ -55,4 +56,20 @@ public enum RunMode{
                     Integer.parseInt(runner.commit));
         };
     }
+
+	public DiffMetaInfo getDiffMetaInfo(DiffDriver runner) {
+		return switch (this) {
+			case URL ->
+					new DiffMetaInfo(
+					URLHelper.getRepoStringOnly(runner.url) + " " + URLHelper.shortenCommit(URLHelper.getCommit(runner.url)),
+							runner.url
+			);
+			case PR -> new DiffMetaInfo(
+					URLHelper.getRepoStringOnly(runner.url) + " " + URLHelper.getPRID(runner.url),
+					runner.url);
+			case DIR -> new DiffMetaInfo("DIR", "");
+			case CLONED ->  new DiffMetaInfo("ClonedRepos", "");
+			case PERFORCE_CL -> new DiffMetaInfo("Perforce", "");
+		};
+	}
 }

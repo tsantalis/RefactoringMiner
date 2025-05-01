@@ -103,14 +103,14 @@ public class WebDiff  {
             return "";
         });
         get("/list", (request, response) -> {
-            Renderable view = new DirectoryDiffView(comparator, false);
+            Renderable view = new DirectoryDiffView(comparator, false, projectASTDiff.getMetaInfo());
             return render(view);
         });
         get("/vanilla-diff/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
             ASTDiff astDiff = comparator.getASTDiff(id);
             Renderable view = new VanillaDiffView(
-                    toolName, astDiff.getSrcPath(),  astDiff.getDstPath(),
+                    toolName, projectASTDiff.getMetaInfo(), astDiff.getSrcPath(),  astDiff.getDstPath(),
                     astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
                     comparator.isMoveDiff(id),
                     projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
@@ -122,7 +122,7 @@ public class WebDiff  {
             int id = Integer.parseInt(request.params(":id"));
             ASTDiff astDiff = comparator.getASTDiff(id);
             Renderable view = new MonacoView(
-                    toolName, astDiff.getSrcPath(),  astDiff.getDstPath(),
+                    toolName, projectASTDiff.getMetaInfo(), astDiff.getSrcPath(),  astDiff.getDstPath(),
                     astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
                     comparator.isMoveDiff(id),
                     projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
@@ -135,7 +135,7 @@ public class WebDiff  {
             int id = Integer.parseInt(request.params(":id"));
             ASTDiff astDiff = comparator.getASTDiff(id);
             MonacoView view = new MonacoView(
-                    toolName, astDiff.getSrcPath(),  astDiff.getDstPath(),
+                    toolName, projectASTDiff.getMetaInfo(), astDiff.getSrcPath(),  astDiff.getDstPath(),
                     astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
                     comparator.isMoveDiff(id),
                     projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
@@ -159,7 +159,7 @@ public class WebDiff  {
             Pair<String, String> pair = comparator.getFileContentsPair(id);
             return pair.second;
         });
-        get("/singleView", (request, response) -> render(new SinglePageView(comparator)));
+        get("/singleView", (request, response) -> render(new SinglePageView(comparator, projectASTDiff.getMetaInfo())));
         get("/quit", (request, response) -> {
             System.exit(0);
             return "";

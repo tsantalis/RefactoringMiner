@@ -3,6 +3,7 @@ package gui.webdiff.dir;
 import gui.webdiff.tree.TreeNodeInfo;
 import gui.webdiff.WebDiff;
 import org.refactoringminer.astDiff.models.ASTDiff;
+import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
@@ -17,15 +18,16 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 public class DirectoryDiffView implements Renderable {
     protected final DirComparator comparator;
     private final boolean external;
+    protected final DiffMetaInfo metaInfo;
 
-    public DirectoryDiffView(DirComparator comparator) {
-        this.comparator = comparator;
-        this.external = false;
+    public DirectoryDiffView(DirComparator comparator, DiffMetaInfo metaInfo) {
+        this(comparator, false, metaInfo);
     }
 
-    public DirectoryDiffView(DirComparator comparator, boolean external) {
+    public DirectoryDiffView(DirComparator comparator, boolean external, DiffMetaInfo metaInfo) {
         this.comparator = comparator;
         this.external = external;
+		this.metaInfo = metaInfo;
     }
 
     protected boolean isMovedCode(TreeNodeInfo info) {
@@ -48,7 +50,7 @@ public class DirectoryDiffView implements Renderable {
             .body()
                 .div(class_("container-fluid").style("padding: 0;"))
                     .div(class_("row"))
-                        .render(new MenuBar(external))
+                        .render(new MenuBar(external, metaInfo))
                     ._div()
                 .if_(!external)
                     .div(class_("row justify-content-center"))
@@ -289,15 +291,21 @@ public class DirectoryDiffView implements Renderable {
 
     private static class MenuBar implements Renderable {
         private final boolean external;
+	    private final DiffMetaInfo metaInfo;
 
-        public MenuBar(boolean external) {
+
+	    public MenuBar(boolean external, DiffMetaInfo metaInfo) {
             this.external = external;
-        }
+		    this.metaInfo = metaInfo;
+	    }
 
         @Override
         public void renderOn(HtmlCanvas html) throws IOException {
             html
             .div(class_("col"))
+	            .if_(metaInfo != null)
+	            .a(href(metaInfo.getUrl())).content(metaInfo.getInfo())
+	            ._if()
                 .div(class_("btn-toolbar justify-content-end"))
                     .div(class_("btn-group").style("padding: 5px;"))
                         .if_(!external)

@@ -4,13 +4,12 @@ import com.github.gumtreediff.utils.Pair;
 import gui.webdiff.viewers.monaco.MonacoCore;
 import gui.webdiff.dir.DirComparator;
 import gui.webdiff.dir.DirectoryDiffView;
+import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
@@ -19,8 +18,8 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
     protected final String JQ_UI_CSS = "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css";
     protected final String JQ_UI_JS = "https://code.jquery.com/ui/1.12.1/jquery-ui.js";
 
-    public AbstractSinglePageView(DirComparator comparator) {
-        super(comparator);
+    public AbstractSinglePageView(DirComparator comparator, DiffMetaInfo metaInfo) {
+        super(comparator, metaInfo);
     }
 
     @Override
@@ -34,7 +33,7 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
                     .div(class_("container-fluid").style("padding-left: 0"))
                     .div(class_("row h-100"))
                     .div(class_("col-2 bg-light dir-diff"))
-                    .render(new DirectoryDiffView(comparator, true))
+                    .render(new DirectoryDiffView(comparator, true, metaInfo))
                     ._div()
                     // Monaco editors 4/5 width
                     .div(class_("col-10 monaco-panel"))

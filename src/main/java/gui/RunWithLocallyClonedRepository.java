@@ -1,11 +1,12 @@
 package gui;
 
-import gui.webdiff.DiffDriver;
 import gui.webdiff.WebDiff;
 
+import org.eclipse.jgit.lib.Repository;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.URLHelper;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.util.GitServiceImpl;
 
 public class RunWithLocallyClonedRepository {
@@ -17,12 +18,9 @@ public class RunWithLocallyClonedRepository {
         GitService gitService = new GitServiceImpl();
         String projectName = repo.substring(repo.lastIndexOf("/") + 1, repo.length() - 4);
         String pathToClonedRepository = System.getProperty("user.dir") + "/tmp/" + projectName;
-        gitService.cloneIfNotExists(pathToClonedRepository, repo);
+        Repository repository = gitService.cloneIfNotExists(pathToClonedRepository, repo);
 
-        DiffDriver diffDriver = new DiffDriver();
-        diffDriver.setRepo(pathToClonedRepository);
-        diffDriver.setCommit(commit);
-        ProjectASTDiff projectASTDiff = diffDriver.getProjectASTDiff();
-        new WebDiff(projectASTDiff).run();
+        ProjectASTDiff projectASTDiff = new GitHistoryRefactoringMinerImpl().diffAtCommit(repository, commit);
+        new WebDiff(projectASTDiff).openInBrowser();
     }
 }

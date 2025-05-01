@@ -76,7 +76,9 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
+import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.astDiff.matchers.ProjectASTDiffer;
 import org.refactoringminer.util.GitServiceImpl;
 import org.slf4j.Logger;
@@ -151,7 +153,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		
 		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 		ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
-		return differ.getProjectASTDiff();
+		ProjectASTDiff diff = differ.getProjectASTDiff();
+		String cloneURL = repository.getConfig().getString("remote", "origin", "url");
+		diff.setMetaInfo(new DiffMetaInfo(
+				extractRepositoryName(cloneURL) + " " + URLHelper.shortenCommit(startCommit) + ".." + URLHelper.shortenCommit(endCommit),
+				extractCommitURL(cloneURL, endCommit)));
+		return diff;
 	}
 
 	public List<Refactoring> detectAtCommitRange(Repository repository, String startCommit, String endCommit) throws Exception {
@@ -1614,6 +1621,25 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return repoName;
 	}
 
+	public static String extractPullRequestURL(String cloneURL, int pullRequestId) {
+		int indexOfDotGit = cloneURL.length();
+		if(cloneURL.endsWith(".git")) {
+			indexOfDotGit = cloneURL.indexOf(".git");
+		}
+		else if(cloneURL.endsWith("/")) {
+			indexOfDotGit = cloneURL.length() - 1;
+		}
+		String commitResource = "/";
+		if(cloneURL.startsWith(GITHUB_URL)) {
+			commitResource = "/pull/";
+		}
+		else if(cloneURL.startsWith(BITBUCKET_URL)) {
+			commitResource = "/pull-requests/";
+		}
+		String commitURL = cloneURL.substring(0, indexOfDotGit) + commitResource + pullRequestId;
+		return commitURL;
+	}
+
 	public static String extractCommitURL(String cloneURL, String commitId) {
 		int indexOfDotGit = cloneURL.length();
 		if(cloneURL.endsWith(".git")) {
@@ -1683,7 +1709,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
-					return differ.getProjectASTDiff();
+					ProjectASTDiff diff = differ.getProjectASTDiff();
+					diff.setMetaInfo(new DiffMetaInfo(
+							extractRepositoryName(cloneURL) + " " + URLHelper.shortenCommit(commitId),
+							extractCommitURL(cloneURL, commitId)));
+					return diff;
 				}
 				else if (currentCommit.getParentCount() == 0) {
 					//initial commit of the repository
@@ -1693,7 +1723,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
-					return differ.getProjectASTDiff();
+					ProjectASTDiff diff = differ.getProjectASTDiff();
+					diff.setMetaInfo(new DiffMetaInfo(
+							extractRepositoryName(cloneURL) + " " + URLHelper.shortenCommit(commitId),
+							extractCommitURL(cloneURL, commitId)));
+					return diff;
 				}
 			}
 			else {
@@ -1726,7 +1760,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
-					return differ.getProjectASTDiff();
+					ProjectASTDiff diff = differ.getProjectASTDiff();
+					diff.setMetaInfo(new DiffMetaInfo(
+							extractRepositoryName(cloneURL) + " " + URLHelper.shortenCommit(commitId),
+							extractCommitURL(cloneURL, commitId)));
+					return diff;
 				}
 			} catch (Exception e) {
 				logger.warn(String.format("Ignored revision %s due to error", commitId), e);
@@ -1770,7 +1808,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 			ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
-			return differ.getProjectASTDiff();
+			ProjectASTDiff diff = differ.getProjectASTDiff();
+			diff.setMetaInfo(new DiffMetaInfo(
+					extractRepositoryName(cloneURL) + " " + URLHelper.shortenCommit(commitId),
+					extractCommitURL(cloneURL, commitId)));
+			return diff;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1831,7 +1873,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					UMLModel parentUMLModel = createModelForASTDiff(filesContentsBefore, repositoryDirectoriesBefore);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, filesBefore, filesCurrent);
-					diffs.add(differ.getProjectASTDiff());
+					ProjectASTDiff diff = differ.getProjectASTDiff();
+					diff.setMetaInfo(new DiffMetaInfo(
+							extractRepositoryName(cloneURL) + " " + pullRequestId,
+							extractPullRequestURL(cloneURL, pullRequestId)));
+					diffs.add(diff);
 				}
 				catch(RefactoringMinerTimedOutException e) {
 					logger.warn(String.format("Ignored PR %s due to timeout", pullRequestId), e);
@@ -2003,7 +2049,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
-					diffs.add(differ.getProjectASTDiff());
+					ProjectASTDiff diff = differ.getProjectASTDiff();
+					diff.setMetaInfo(new DiffMetaInfo(
+							extractRepositoryName(gitURL) + " " + URLHelper.shortenCommit(commitId),
+							extractCommitURL(gitURL, commitId)));
+					diffs.add(diff);
 				}
 				catch(RefactoringMinerTimedOutException e) {
 					logger.warn(String.format("Ignored revision %s due to timeout", commitId), e);
@@ -2050,7 +2100,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
-					return differ.getProjectASTDiff();
+					ProjectASTDiff diff = differ.getProjectASTDiff();
+					diff.setMetaInfo(new DiffMetaInfo(id, ""));
+					return diff;
 				}
 				else if(previousFile.isFile() && nextFile.isFile()) {
 					String previousFileName = previousFile.getName();
@@ -2067,7 +2119,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 						UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 						ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
-						return differ.getProjectASTDiff();
+						ProjectASTDiff diff = differ.getProjectASTDiff();
+						diff.setMetaInfo(new DiffMetaInfo(id, ""));
+						return diff;
 					}
 				}
 			}
@@ -2091,7 +2145,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		
 		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 		ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
-		return differ.getProjectASTDiff();
+		ProjectASTDiff diff = differ.getProjectASTDiff();
+		diff.setMetaInfo(new DiffMetaInfo(
+				extractRepositoryName(cloneURL) + " " + URLHelper.shortenCommit(startCommit) + ".." + URLHelper.shortenCommit(endCommit),
+				extractCommitURL(cloneURL, endCommit)));
+		return diff;
 	}
 
 	public List<Refactoring> detectAtCommitRange(String cloneURL, String startCommit, String endCommit) throws Exception {

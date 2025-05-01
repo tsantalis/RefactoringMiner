@@ -1,8 +1,8 @@
 package gui;
 
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
+import org.refactoringminer.perforce.PerforceHistoryRefactoringMinerImpl;
 
-import gui.webdiff.DiffDriver;
 import gui.webdiff.WebDiff;
 
 public class RunWithPerforceChangeList {
@@ -11,12 +11,8 @@ public class RunWithPerforceChangeList {
 	private static String pass = "123456";
 	
 	public static void main(String[] args) throws Exception {
-		DiffDriver diffDriver = new DiffDriver();
-		diffDriver.setUrl(serverUri);
-		diffDriver.setPerforceUserName(userName);
-		diffDriver.setPerforcePassword(pass);
-		diffDriver.setCommit("2");
-		ProjectASTDiff projectASTDiff = diffDriver.getProjectASTDiff();
-		new WebDiff(projectASTDiff).run();
+		ProjectASTDiff projectASTDiff = new PerforceHistoryRefactoringMinerImpl().diffAtChangeList(
+				serverUri, userName, pass, 2);
+		new WebDiff(projectASTDiff).openInBrowser();
 	}
 }

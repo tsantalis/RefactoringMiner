@@ -133,7 +133,9 @@ public class DirectoryDiffView implements Renderable {
                 if (node.isLeaf()) {
                     String iconPath = null, description = nodeInfo.getName(), title = "", hoverText = "";
                     int iconWidth = 0, iconHeight = 0;
+                    boolean _checkBox = false;
                     if(isModifiedFile(nodeInfo)) {
+                        _checkBox = true;
                         iconPath = "dist/icons8-file-edit.svg";
                         iconWidth = 15;
                         iconHeight = 17;
@@ -185,12 +187,12 @@ public class DirectoryDiffView implements Renderable {
                         ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
                         ul.tr()
                         .td(style("white-space: normal; word-wrap: break-word; word-break: break-all;"))
-                        .if_(external)
-//                        .input(type("checkbox")
-//                                .name("fileSelect").value(nodeInfo.getId())
-//                                .data("id", nodeInfo.getId())
-//                                .data("path", astDiff.getSrcPath())
-//                                .data("type", "modified"))
+                        .if_(!external && _checkBox)
+                        .input(type("checkbox")
+                                .name("fileSelect").value(nodeInfo.getId())
+                                .data("id", nodeInfo.getId())
+                                .data("path", astDiff.getSrcPath())
+                                .data("type", "modified"))
                         ._if()
                         .a(id("diff_row_" + nodeInfo.getId()).href("/monaco-page/" + nodeInfo.getId()))
                         .img(src(iconPath).width(iconWidth).height(iconHeight).title(title))

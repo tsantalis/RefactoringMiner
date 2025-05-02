@@ -1,5 +1,9 @@
 package gui.webdiff;
 
+import com.github.gumtreediff.matchers.CompositeMatchers;
+import com.github.gumtreediff.matchers.Mapping;
+import com.github.gumtreediff.matchers.MappingStore;
+import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
 import gui.webdiff.dir.DirComparator;
 import gui.webdiff.dir.DirectoryDiffView;
@@ -7,16 +11,20 @@ import gui.webdiff.viewers.monaco.MonacoView;
 import gui.webdiff.viewers.spv.SinglePageView;
 import gui.webdiff.viewers.vanilla.VanillaDiffView;
 import org.refactoringminer.astDiff.models.ASTDiff;
+import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
-import spark.Spark;
 
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
 
 import static spark.Spark.*;
 
@@ -52,11 +60,11 @@ public class WebDiff  {
     public void run() {
         killProcessOnPort(this.port);
         configureSpark(comparator, this.port);
-        Spark.awaitInitialization();
+        awaitInitialization();
         System.out.println(String.format("Starting server: %s:%d.", "http://127.0.0.1", this.port));
     }
     public void terminate(){
-        Spark.stop();
+        stop();
     }
 
     public void openInBrowser() {
@@ -163,6 +171,51 @@ public class WebDiff  {
         get("/quit", (request, response) -> {
             System.exit(0);
             return "";
+        });
+        get("/onDemand", (request, response) -> {
+            String rawFile1 = request.queryParams("file1");
+            String rawFile2 = request.queryParams("file2");
+            String srcPath = URLDecoder.decode(rawFile1, StandardCharsets.UTF_8);
+            String dstPath = URLDecoder.decode(rawFile2, StandardCharsets.UTF_8);
+            String srcContent = this.projectASTDiff.getFileContentsBefore().get(srcPath);
+            String dstContent = this.projectASTDiff.getFileContentsAfter().get(dstPath);
+            ProjectASTDiff customProjectASTDiff = null;
+            try {
+                customProjectASTDiff = new GitHistoryRefactoringMinerImpl().diffAtFileContents(
+                        new LinkedHashMap<>() {{
+                            put(srcPath, srcContent);
+                        }},
+                        new LinkedHashMap<>() {{
+                            put(dstPath, dstContent);
+                        }}
+                );
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
+            ASTDiff astDiff;
+            if (customProjectASTDiff != null && customProjectASTDiff.getDiffSet().iterator().hasNext()){
+                astDiff = customProjectASTDiff.getDiffSet().iterator().next();
+            }
+            else {
+                TreeContext srcContext = projectASTDiff.getParentContextMap().get(srcPath);
+                TreeContext dstContext = projectASTDiff.getChildContextMap().get(dstPath);
+                ExtendedMultiMappingStore extendedMappingStore = new ExtendedMultiMappingStore(srcContext.getRoot(), dstContext.getRoot());
+                MappingStore match = new CompositeMatchers.SimpleGumtree().match(srcContext.getRoot(), dstContext.getRoot());
+                for (Mapping mapping : match) extendedMappingStore.addMapping(mapping.first, mapping.second);
+                astDiff = new ASTDiff(srcPath, dstPath, srcContext, dstContext, extendedMappingStore);
+                astDiff.computeVanillaEditScript();
+            }
+            MonacoView view = new MonacoView(
+                    "GTS", projectASTDiff.getMetaInfo(), srcPath, dstPath,
+                    astDiff, -1, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
+                    false,
+                    projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
+                    projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath()),
+                    projectASTDiff.getRefactorings()
+            );
+            view.setDecorate(true);
+            return render(view);
         });
     }
 

@@ -57,6 +57,11 @@ public class DirectoryDiffView implements Renderable {
                         .div(class_("col-6 text-center"))
                             .button(class_("btn btn-primary").style("height: 50px;").onClick("window.location.href='/singleView'"))
                                 .content("Single Page View (Beta)")
+                                .button(class_("btn btn-success").id("compareBtn")
+                                .style("position: fixed; bottom: 20px; right: 20px; display: none; z-index: 1000;")
+                                .onClick("handleCompareClick()")
+                                    )
+                                .content("Compare Selected Files")
                         ._div()
                     ._div()
                 ._if()
@@ -83,7 +88,7 @@ public class DirectoryDiffView implements Renderable {
                                         .span(class_("badge badge-secondary").style("color:black")).content(comparator.getRemovedFilesName().size())
                                     ._h4()
                                 ._div()
-                                .render_if(new AddedOrDeletedFiles(comparator.getRemovedFilesName()),
+                                .render_if(new AddedOrDeletedFiles(comparator.getRemovedFilesName(), "deleted"),
                                         !comparator.getRemovedFilesName().isEmpty())
                             ._div()
                         ._div()
@@ -95,7 +100,7 @@ public class DirectoryDiffView implements Renderable {
                                         .span(class_("badge badge-secondary").style("color:black")).content(comparator.getAddedFilesName().size())
                                     ._h4()
                                 ._div()
-                                .render_if(new AddedOrDeletedFiles(comparator.getAddedFilesName()),
+                                .render_if(new AddedOrDeletedFiles(comparator.getAddedFilesName(), "added"),
                                         !comparator.getAddedFilesName().isEmpty())
                             ._div()
                         ._div()
@@ -177,8 +182,16 @@ public class DirectoryDiffView implements Renderable {
                     }
                     boolean empty = comparator.getASTDiff(nodeInfo.getId()).isEmpty();
                     if(!empty) {
+                        ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
                         ul.tr()
                         .td(style("white-space: normal; word-wrap: break-word; word-break: break-all;"))
+                        .if_(external)
+//                        .input(type("checkbox")
+//                                .name("fileSelect").value(nodeInfo.getId())
+//                                .data("id", nodeInfo.getId())
+//                                .data("path", astDiff.getSrcPath())
+//                                .data("type", "modified"))
+                        ._if()
                         .a(id("diff_row_" + nodeInfo.getId()).href("/monaco-page/" + nodeInfo.getId()))
                         .img(src(iconPath).width(iconWidth).height(iconHeight).title(title))
                         .span(title(hoverText))
@@ -245,10 +258,12 @@ public class DirectoryDiffView implements Renderable {
     }
 
     private static class AddedOrDeletedFiles implements Renderable {
-        private Set<String> files;
+        private final String tag;
+        private final Set<String> files;
 
-        private AddedOrDeletedFiles(Set<String> files) {
+        private AddedOrDeletedFiles(Set<String> files, String tag) {
             this.files = files;
+            this.tag = tag;
         }
 
         @Override
@@ -261,7 +276,13 @@ public class DirectoryDiffView implements Renderable {
             for (String filename : files) {
                 html
                         .tr()
-                        .td().content(filename)
+                        .td()
+                        .input(type("checkbox").name("fileSelect").value(filename)
+                        .data("path", filename)
+                        .data("type", tag))
+
+                        .write(" " + filename)
+                        ._td()
                         ._tr();
             }
             html
@@ -284,6 +305,7 @@ public class DirectoryDiffView implements Renderable {
                         .macros().javascript(WebDiff.JQUERY_JS_URL)
                         .macros().javascript(WebDiff.BOOTSTRAP_JS_URL)
                         .macros().javascript("/dist/shortcuts.js")
+                        .macros().javascript("/dist/dircompare.js")
                         .macros().stylesheet("/dist/style.css")
                      ._head();
         }

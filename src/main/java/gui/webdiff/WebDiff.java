@@ -194,10 +194,12 @@ public class WebDiff  {
             }
 
             ASTDiff astDiff;
-            if (customProjectASTDiff != null && customProjectASTDiff.getDiffSet().iterator().hasNext()){
+            String toolName = this.toolName;
+            if (customProjectASTDiff != null && customProjectASTDiff.getDiffSet().size() > 0){
                 astDiff = customProjectASTDiff.getDiffSet().iterator().next();
             }
             else {
+            	toolName = "GTS";
                 TreeContext srcContext = projectASTDiff.getParentContextMap().get(srcPath);
                 TreeContext dstContext = projectASTDiff.getChildContextMap().get(dstPath);
                 ExtendedMultiMappingStore extendedMappingStore = new ExtendedMultiMappingStore(srcContext.getRoot(), dstContext.getRoot());
@@ -207,7 +209,7 @@ public class WebDiff  {
                 astDiff.computeVanillaEditScript();
             }
             MonacoView view = new MonacoView(
-                    "GTS", projectASTDiff.getMetaInfo(), srcPath, dstPath,
+                    toolName, projectASTDiff.getMetaInfo(), srcPath, dstPath,
                     astDiff, -1, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
                     false,
                     projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),

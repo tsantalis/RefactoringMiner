@@ -2174,7 +2174,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	public ProjectASTDiff diffAtFileContents(Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter) throws Exception {
 		Set<String> repositoryDirectoriesBefore = populateDirectories(fileContentsBefore);
 		Set<String> repositoryDirectoriesCurrent = populateDirectories(fileContentsAfter);
-		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsAfter, Collections.emptyMap(), true); 
+        // TODO I think this is unncessary in this case. requires @tsantalis verification
+//		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsAfter, Collections.emptyMap(), true);
 		UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 		UMLModel currentUMLModel = createModelForASTDiff(fileContentsAfter, repositoryDirectoriesCurrent);
 		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);

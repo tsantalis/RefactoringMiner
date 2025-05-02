@@ -49,9 +49,14 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.MethodRef;
 import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.ModuleDeclaration;
+import org.eclipse.jdt.core.dom.ModuleDirective;
+import org.eclipse.jdt.core.dom.ModulePackageAccess;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
+import org.eclipse.jdt.core.dom.ProvidesDirective;
 import org.eclipse.jdt.core.dom.RecordDeclaration;
+import org.eclipse.jdt.core.dom.RequiresDirective;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 import org.eclipse.jdt.core.dom.TagElement;
@@ -60,6 +65,7 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclarationStatement;
 import org.eclipse.jdt.core.dom.TypeParameter;
+import org.eclipse.jdt.core.dom.UsesDirective;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
@@ -189,7 +195,56 @@ public class UMLModelASTReader {
 		return this.umlModel;
 	}
 
+	private void processModuleDeclaration(CompilationUnit compilationUnit, String sourceFilePath, ModuleDeclaration moduleDeclaration, String javaFileContent) {
+		String sourceFolder = "";
+		int index = sourceFilePath.indexOf("module-info.java");
+		if(index != -1) {
+			sourceFolder = sourceFilePath.substring(0, index);
+		}
+		LocationInfo locationInfo = generateLocationInfo(compilationUnit, sourceFolder, sourceFilePath, moduleDeclaration, CodeElementType.MODULE_DECLARATION);
+		UMLModule module = new UMLModule(moduleDeclaration.getName().getFullyQualifiedName(), locationInfo);
+		UMLJavadoc javaDoc = generateJavadoc(compilationUnit, sourceFolder, sourceFilePath, moduleDeclaration.getJavadoc(), javaFileContent);
+		module.setJavadoc(javaDoc);
+		
+		List<UMLComment> comments = extractInternalComments(compilationUnit, sourceFolder, sourceFilePath, javaFileContent);
+		this.umlModel.getCommentMap().put(sourceFilePath, comments);
+		
+		List<Annotation> annotations = moduleDeclaration.annotations();
+		for(Annotation annotation : annotations) {
+			module.addAnnotation(new UMLAnnotation(compilationUnit, sourceFolder, sourceFilePath, annotation, javaFileContent));
+		}
+		
+		List<ModuleDirective> directives = moduleDeclaration.moduleStatements();
+		for(ModuleDirective directive : directives) {
+			if(directive instanceof RequiresDirective) {
+				UMLRequiresModuleDirective moduleDirective = new UMLRequiresModuleDirective(compilationUnit, sourceFolder, sourceFilePath, (RequiresDirective)directive);
+				module.addDirective(moduleDirective);
+			}
+			else if(directive instanceof ProvidesDirective) {
+				UMLProvidesModuleDirective moduleDirective = new UMLProvidesModuleDirective(compilationUnit, sourceFolder, sourceFilePath, (ProvidesDirective)directive);
+				module.addDirective(moduleDirective);
+			}
+			else if(directive instanceof UsesDirective) {
+				UMLUsesModuleDirective moduleDirective = new UMLUsesModuleDirective(compilationUnit, sourceFolder, sourceFilePath, (UsesDirective)directive);
+				module.addDirective(moduleDirective);
+			}
+			else if(directive instanceof ModulePackageAccess) {
+				UMLPackageAccessModuleDirective moduleDirective = new UMLPackageAccessModuleDirective(compilationUnit, sourceFolder, sourceFilePath, (ModulePackageAccess)directive);
+				module.addDirective(moduleDirective);
+			}
+		}
+		
+		this.getUmlModel().addModule(module);
+		distributeComments(comments, locationInfo, module.getComments());
+	}
+
 	protected void processCompilationUnit(String sourceFilePath, CompilationUnit compilationUnit, String javaFileContent) {
+		ModuleDeclaration moduleDeclaration = compilationUnit.getModule();
+		if(moduleDeclaration != null) {
+			processModuleDeclaration(compilationUnit, sourceFilePath, moduleDeclaration, javaFileContent);
+			return;
+		}
+				
 		PackageDeclaration packageDeclaration = compilationUnit.getPackage();
 		String packageName = null;
 		UMLJavadoc packageDoc = null;

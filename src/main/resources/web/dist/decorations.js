@@ -101,14 +101,18 @@ function getDecoration(range, pos, endPos) {
     };
 }
 function onClick(ed, mappings, dstIndex) {
-    mapping = mappings[0]
-    ed.revealRangeInCenter(mapping[dstIndex]);
+    const highlightDuration = 1000;
+    const mainMapping = mappings[0][dstIndex];
 
-    highlightDuration = 1000
+    // Force unfold by setting selection and running the unfold action
+    ed.setSelection(mainMapping);
+    ed.revealRangeInCenterIfOutsideViewport(mainMapping);
+
+    // Trigger built-in unfold for the current selection
+    ed.getAction('editor.unfold').run();
 
     for (let i = 0; i < mappings.length; i++) {
-        currentMapping = mappings[i];
-        mappingElement = currentMapping[dstIndex]
+        const mappingElement = mappings[i][dstIndex];
         const decorationId = ed.deltaDecorations([], [
             {
                 range: mappingElement,
@@ -119,10 +123,11 @@ function onClick(ed, mappings, dstIndex) {
             }
         ]);
         setTimeout(() => {
-            ed.deltaDecorations([decorationId], []);  // Remove the decoration
+            ed.deltaDecorations([decorationId], []);
         }, highlightDuration);
     }
 }
+
 
 function offsetToLineNumber(text, offset) {
   if (offset < 0 || offset > text.length) {

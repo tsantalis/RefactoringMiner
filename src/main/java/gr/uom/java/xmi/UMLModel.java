@@ -16,6 +16,7 @@ import com.github.gumtreediff.tree.TreeContext;
 
 public class UMLModel {
 	private Set<String> repositoryDirectories;
+	private List<UMLModule> moduleList;
     private List<UMLClass> classList;
     private List<UMLGeneralization> generalizationList;
     private List<UMLRealization> realizationList;
@@ -26,6 +27,7 @@ public class UMLModel {
     public UMLModel(Set<String> repositoryDirectories) {
     	this.repositoryDirectories = repositoryDirectories;
         classList = new ArrayList<UMLClass>();
+        moduleList = new ArrayList<UMLModule>();
         generalizationList = new ArrayList<UMLGeneralization>();
         realizationList = new ArrayList<UMLRealization>();
     }
@@ -46,8 +48,12 @@ public class UMLModel {
 		this.partial = partial;
 	}
 
-	public void addClass(UMLClass umlClass) {
+    public void addClass(UMLClass umlClass) {
         classList.add(umlClass);
+    }
+
+    public void addModule(UMLModule umlModule) {
+        moduleList.add(umlModule);
     }
 
     public void addGeneralization(UMLGeneralization umlGeneralization) {
@@ -72,13 +78,17 @@ public class UMLModel {
         return this.classList;
     }
 
-    public List<UMLGeneralization> getGeneralizationList() {
+    public List<UMLModule> getModuleList() {
+        return moduleList;
+    }
+
+   public List<UMLGeneralization> getGeneralizationList() {
         return this.generalizationList;
     }
 
     public List<UMLRealization> getRealizationList() {
-		return realizationList;
-	}
+        return realizationList;
+    }
 
 	public UMLGeneralization matchGeneralization(UMLGeneralization otherGeneralization) {
     	ListIterator<UMLGeneralization> generalizationIt = generalizationList.listIterator();

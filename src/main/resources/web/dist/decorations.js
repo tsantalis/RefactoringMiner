@@ -113,6 +113,13 @@ function onClick(ed, mappings, dstIndex) {
 
     for (let i = 0; i < mappings.length; i++) {
         const mappingElement = mappings[i][dstIndex];
+        const totalLines = ed.getModel().getLineCount();
+        const startLine = mappingElement.startLineNumber;
+        const endLine = mappingElement.endLineNumber;
+        const highlightedLines = endLine - startLine + 1;
+        if (highlightedLines === totalLines ) {
+            continue;
+        }
         const decorationId = ed.deltaDecorations([], [
             {
                 range: mappingElement,

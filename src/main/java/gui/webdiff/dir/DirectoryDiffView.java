@@ -164,6 +164,7 @@ public class DirectoryDiffView implements Renderable {
                     	}
                     }
                     else {
+                    	_checkBox = true;
                         iconPath = "dist/icons8-file-move.svg";
                         iconWidth = 15;
                         iconHeight = 17;

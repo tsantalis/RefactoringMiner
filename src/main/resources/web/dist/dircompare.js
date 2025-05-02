@@ -7,12 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (el.checked) {
                 if (selectedDiffs.length >= 2) {
-                    // Remove the oldest selection
                     const removed = selectedDiffs.shift();
                     document.querySelector(`input[value="${removed.value}"]`).checked = false;
                 }
 
-                // Push the full metadata object
                 selectedDiffs.push({
                     value: el.value,
                     id: el.dataset.id,
@@ -20,36 +18,53 @@ document.addEventListener("DOMContentLoaded", () => {
                     type: el.dataset.type
                 });
             } else {
-                // Remove deselected item
                 selectedDiffs = selectedDiffs.filter(item => item.value !== fileId);
             }
 
             const compareBtn = document.getElementById('compareBtn');
 
-            function isValidSelection() {
+            function isValidPair() {
                 if (selectedDiffs.length !== 2) return false;
-                const types = selectedDiffs.map(item => item.type);
-                return types.includes("deleted") && types.includes("added");
+                const types = selectedDiffs.map(f => f.type);
+                const [a, b] = types;
+
+                return (
+                    (a === "added" && b === "deleted") ||
+                    (a === "deleted" && b === "added") ||
+                    (a === "modified" && b === "added") ||
+                    (a === "added" && b === "modified") ||
+                    (a === "deleted" && b === "modified") ||
+                    (a === "modified" && b === "deleted")
+                );
             }
 
             if (compareBtn) {
-                compareBtn.style.display = isValidSelection() ? 'block' : 'none';
+                compareBtn.style.display = isValidPair() ? 'block' : 'none';
             }
         });
     });
 
-    // Expose handler globally
     window.handleCompareClick = () => {
         if (selectedDiffs.length === 2) {
-            let deletedFile = selectedDiffs.find(f => f.type === "deleted");
-            let addedFile = selectedDiffs.find(f => f.type === "added");
+            const a = selectedDiffs[0];
+            const b = selectedDiffs[1];
 
-            if (deletedFile && addedFile) {
-                const url = `/onDemand?file1=${encodeURIComponent(deletedFile.path)}&file2=${encodeURIComponent(addedFile.path)}`;
-                window.location.href = url;
+            let file1, file2;
+
+            if (
+                (a.type === "deleted" && b.type === "added") ||
+                (a.type === "modified" && b.type === "added") ||
+                (a.type === "deleted" && b.type === "modified")
+            ) {
+                file1 = a;
+                file2 = b;
             } else {
-                alert("You must select one 'deleted' and one 'added' file.");
+                file1 = b;
+                file2 = a;
             }
+
+            const url = `/onDemand?file1=${encodeURIComponent(file1.path)}&file2=${encodeURIComponent(file2.path)}`;
+            window.location.href = url;
         }
     };
 });

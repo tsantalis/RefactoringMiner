@@ -245,7 +245,7 @@ function onClickHelper(config, index, activatedRange, ed, dstIndex) {
         candidate[index].endColumn === candidates[0][index].endColumn
     );
     if (mappings) {
-        if (mappings.length >= 1) {
+        if (mappings.length >= 1 && mappings[0][dstIndex].startLineNumber === mappings[0][dstIndex].endLineNumber) {
             onClick(ed, mappings, dstIndex);
         }
     }

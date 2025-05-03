@@ -1,102 +1,96 @@
-
-
-
-.inserted {
-	/*border: 1px solid black;
-	background-color: MediumSeaGreen;
-	background-color: #dafbe1;*/
-	background-color: #aceebb;
+/* === Inline Decorations with Transparent Backgrounds === */
+span.inserted {
+    background-color: rgba(172, 238, 187, 0.6); /* #aceebb */
 }
 
-.deleted {
-	/*border: 1px solid black;
-	background-color: IndianRed;
-	background-color: #ffebe9;*/
-	background-color: #ffcecb;
+span.deleted {
+    background-color: rgba(255, 206, 203, 0.6); /* #ffcecb */
 }
 
-.moved {
-	/*border: 1px solid black;*/
-	background-color: #edeae0;
+span.moved {
+    background-color: rgba(237, 234, 224, 0.6); /* #edeae0 */
 }
 
-.updated {
-	/*border: 1px solid black;*/
-	background-color: #ffddf4;
-	font-weight: bold;
-}
-.mm {
-	/*border: 1px solid black;*/
-	background-color: #edeae0;
-}
-.mm.updOnTop.selected {
-	background-color: Gold;
-	/*border: 1px solid black;*/
-	font-weight: bold;
-}
-.mm.updOnTop
-{
-	background-color: #ffddf4;
-	/*border: 1px solid black;*/
-	font-weight: bold;
+span.updated {
+    background-color: rgba(255, 221, 244, 0.6); /* #ffddf4 */
+    font-weight: bold;
 }
 
-.moveIn {
-	/*border: 1px solid #d2bada;
-	background-color: #dafbe1;
-	background-color: MediumSeaGreen;*/
-	background-color: #aceebb;
-}
-.moveOut {
-	/*border: 1px solid #d2bada;
-	background-color: #ffebe9;
-	background-color: IndianRed;*/
-	background-color: #ffcecb;
+span.mm {
+    background-color: rgba(237, 234, 224, 0.6); /* #edeae0 */
 }
 
-.cupd {
-	font-weight: normal;
-	color: DimGray;
+span.mm.updOnTop.selected {
+    background-color: rgba(255, 215, 0, 0.6); /* gold */
+    font-weight: bold;
 }
 
-.selected {
-	background-color: Gold;
+span.mm.updOnTop {
+    background-color: rgba(255, 221, 244, 0.6); /* #ffddf4 */
+    font-weight: bold;
 }
 
+span.moveIn {
+    background-color: rgba(172, 238, 187, 0.6); /* #aceebb */
+}
+
+span.moveOut {
+    background-color: rgba(255, 206, 203, 0.6); /* #ffcecb */
+}
+
+span.cupd {
+    font-weight: normal;
+    color: DimGray;
+}
+
+span.selected {
+    background-color: rgba(255, 215, 0, 0.6); /* gold */
+}
+
+/* Highlighted mapping range on click */
+span.highlighted-range-inline {
+    background-color: rgba(255, 165, 0, 0.5); /* orange */
+}
+
+/* === Layout, Structure, and Misc === */
 .marker {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 div {
-	margin: 0px;
-	padding: 0px;
+    margin: 0px;
+    padding: 0px;
 }
 
 .pre-scrollable {
-	margin: 0px;
-	padding: 0px;
-	font-size: 10pt;
-	color: black;
-	max-height: 90vh;
-	background-color: white;
-	border: 1px solid black;
-	font-family: "Hack, Inconsolata", "Consolas", "Liberation Sans Regular", "DejaVu Sans Mono", monospace;
+    margin: 0px;
+    padding: 0px;
+    font-size: 10pt;
+    color: black;
+    max-height: 90vh;
+    background-color: white;
+    border: 1px solid black;
+    font-family: "Hack, Inconsolata", "Consolas", "Liberation Sans Regular", "DejaVu Sans Mono", monospace;
 }
 
 .tooltip-inner {
-	max-width: none;
+    max-width: none;
 }
-.monaco-editor, .monaco-diff-editor, .monaco-component  {
-	--vscode-editor-foldBackground: #c0ebf8 !important;
-	position: absolute !important; 
+
+.monaco-editor,
+.monaco-diff-editor,
+.monaco-component {
+    --vscode-editor-foldBackground: #c0ebf8 !important;
+    position: absolute !important;
 }
+
 .disabled {
-	pointer-events: none;
-	opacity: 0.3;
-	background-color: #cccccc !important;
-	color: #666666 !important;
-	border-color: #cccccc !important;
+    pointer-events: none;
+    opacity: 0.3;
+    background-color: #cccccc !important;
+    color: #666666 !important;
+    border-color: #cccccc !important;
 }
 
 .row>* {
@@ -108,27 +102,7 @@ div {
 	height: 100%;
 }
 
+/* Legacy className fallback (optional, safe to keep) */
 .highlighted-range {
-	background-color: orange;
-	opacity: 0.5;
+    background-color: rgba(255, 165, 0, 0.5); /* orange */
 }
-
-.highlighted-range-inline {
-	background-color: orange;
-	opacity: 0.5;
-}
-/*.deleted {*/
-/*	background-color: IndianRed;*/
-/*}*/
-
-/*.inserted {*/
-/*	background-color: MediumSeaGreen;*/
-/*}*/
-
-/*.moved {*/
-/*	background-color: Plum;*/
-/*}*/
-
-/*.updated {*/
-/*	background-color: GoldenRod;*/
-/*}*/

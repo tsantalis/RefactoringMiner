@@ -15,7 +15,8 @@ function getDecorationNoLeadingWhiteSpace(range, pos, endPos, editor) {
         decorations.push({
             range: new monaco.Range(adjustedPos.lineNumber, adjustedPos.column, endPos.lineNumber, endPos.column),
             options: {
-                className: range.kind,
+                // className: range.kind,
+                inlineClassName: range.kind, // Use this instead of className
                 zIndex: range.index,
                 hoverMessage: {
                     value: range.tooltip,
@@ -36,7 +37,8 @@ function getDecorationNoLeadingWhiteSpace(range, pos, endPos, editor) {
         decorations.push({
             range: new monaco.Range(adjustedStartPos.lineNumber, adjustedStartPos.column, pos.lineNumber, editor.getModel().getLineMaxColumn(pos.lineNumber)),
             options: {
-                className: range.kind,
+                // className: range.kind,
+                inlineClassName: range.kind, // Use this instead of className
                 zIndex: range.index,
                 hoverMessage: {
                     value: range.tooltip,
@@ -52,7 +54,8 @@ function getDecorationNoLeadingWhiteSpace(range, pos, endPos, editor) {
             decorations.push({
                 range: new monaco.Range(line, adjustedColumn, line, editor.getModel().getLineMaxColumn(line)),
                 options: {
-                    className: range.kind,
+                    // className: range.kind,
+                    inlineClassName: range.kind, // Use this instead of className
                     zIndex: range.index,
                     hoverMessage: {
                         value: range.tooltip,
@@ -71,7 +74,8 @@ function getDecorationNoLeadingWhiteSpace(range, pos, endPos, editor) {
         decorations.push({
             range: new monaco.Range(endPos.lineNumber, adjustedEndPos.column, endPos.lineNumber, endPos.column),
             options: {
-                className: range.kind,
+                // className: range.kind,
+                inlineClassName: range.kind, // Use this instead of className
                 zIndex: range.index,
                 hoverMessage: {
                     value: range.tooltip,
@@ -89,7 +93,8 @@ function getDecoration(range, pos, endPos) {
     return {
         range: new monaco.Range(pos.lineNumber, pos.column, endPos.lineNumber, endPos.column),
         options: {
-            className: range.kind,
+            // className: range.kind,
+            inlineClassName: range.kind, // Use this instead of className
             zIndex: range.index,
             hoverMessage: {
                 value: range.tooltip,

@@ -105,9 +105,9 @@ function getDecoration(range, pos, endPos) {
         },
     };
 }
-function onClick(ed, mappings, dstIndex) {
+function onClick(ed, mapping, dstIndex) {
     const highlightDuration = 1000;
-    const mainMapping = mappings[0][dstIndex];
+    const mainMapping = mapping[dstIndex];
 
     // Force unfold by setting selection and running the unfold action
     ed.setSelection(mainMapping);
@@ -116,28 +116,18 @@ function onClick(ed, mappings, dstIndex) {
     // Trigger built-in unfold for the current selection
     ed.getAction('editor.unfold').run();
 
-    for (let i = 0; i < mappings.length; i++) {
-        const mappingElement = mappings[i][dstIndex];
-        const totalLines = ed.getModel().getLineCount();
-        const startLine = mappingElement.startLineNumber;
-        const endLine = mappingElement.endLineNumber;
-        const highlightedLines = endLine - startLine + 1;
-        if (highlightedLines === totalLines ) {
-            continue;
-        }
-        const decorationId = ed.deltaDecorations([], [
-            {
-                range: mappingElement,
-                options: {
-                    className: 'highlighted-range',
-                    inlineClassName: 'highlighted-range-inline',
-                }
+    const decorationId = ed.deltaDecorations([], [
+        {
+            range: mainMapping,
+            options: {
+                className: 'highlighted-range',
+                inlineClassName: 'highlighted-range-inline',
             }
-        ]);
-        setTimeout(() => {
-            ed.deltaDecorations([decorationId], []);
-        }, highlightDuration);
-    }
+        }
+    ]);
+    setTimeout(() => {
+        ed.deltaDecorations([decorationId], []);
+    }, highlightDuration);
 }
 
 
@@ -245,8 +235,13 @@ function onClickHelper(config, index, activatedRange, ed, dstIndex) {
         candidate[index].endColumn === candidates[0][index].endColumn
     );
     if (mappings) {
-        if (mappings.length >= 1 && mappings[0][dstIndex].startLineNumber === mappings[0][dstIndex].endLineNumber) {
-            onClick(ed, mappings, dstIndex);
+        if (mappings.length >= 1) {
+            //select the mappings that span one line in both sides
+            for (var i = 0; i < mappings.length; i++) {
+                if(mappings[i][dstIndex].startLineNumber === mappings[i][dstIndex].endLineNumber && mappings[i][index].startLineNumber === mappings[i][index].endLineNumber) {
+                    onClick(ed, mappings[i], dstIndex);
+                }
+            }
         }
     }
 }

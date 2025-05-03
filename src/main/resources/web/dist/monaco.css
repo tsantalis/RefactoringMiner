@@ -12,8 +12,7 @@ span.moved {
 }
 
 span.updated {
-    background-color: rgba(255, 221, 244, 0.6); /* #ffddf4 */
-    font-weight: bold;
+    background-color: rgba(255, 221, 244, 1.0); /* #ffddf4 */
 }
 
 span.mm {
@@ -21,13 +20,11 @@ span.mm {
 }
 
 span.mm.updOnTop.selected {
-    background-color: rgba(255, 215, 0, 0.6); /* gold */
-    font-weight: bold;
+    background-color: rgba(255, 215, 0, 1.0); /* gold */
 }
 
 span.mm.updOnTop {
-    background-color: rgba(255, 221, 244, 0.6); /* #ffddf4 */
-    font-weight: bold;
+    background-color: rgba(255, 221, 244, 1.0); /* #ffddf4 */
 }
 
 span.moveIn {

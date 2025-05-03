@@ -85,7 +85,7 @@ public abstract class AbstractMenuBar implements Renderable {
                 ._div()
                 .div(class_("btn-group"))
                 .a(class_("btn btn-default btn-sm btn-primary").href("/list")).content(BACK_BUTTON_TEXT)
-                .if_(id > 0)
+                .if_(id >= 0)
                 .a(class_("btn btn-default btn-sm btn-primary" + (shouldDisablePrev ? " disabled" : ""))
                         .href(shouldDisablePrev ? "#" : getPrevHRef()))
                 .content(getPrevButtonText())

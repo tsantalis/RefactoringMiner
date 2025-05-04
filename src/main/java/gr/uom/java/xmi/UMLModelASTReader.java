@@ -300,6 +300,14 @@ public class UMLModelASTReader {
         		processRecordDeclaration(compilationUnit, recordDeclaration, umlPackage, packageName, sourceFolder, sourceFilePath, importedTypes, packageDoc, comments, javaFileContent);
         	}
         }
+        if(packageDeclaration != null && topLevelTypeDeclarations.isEmpty() && sourceFilePath.endsWith("package-info.java")) {
+        	List<Annotation> annotations = packageDeclaration.annotations();
+        	UMLPackageInfo packageInfo = new UMLPackageInfo(packageName, packageDoc, umlPackage, comments, importedTypes);
+        	for(Annotation annotation : annotations) {
+        		packageInfo.addAnnotation(new UMLAnnotation(compilationUnit, sourceFolder, sourceFilePath, annotation, javaFileContent));
+        	}
+        	this.umlModel.addPackageInfo(packageInfo);
+        }
 	}
 
 	private List<UMLComment> extractInternalComments(CompilationUnit cu, String sourceFolder, String sourceFile, String javaFileContent) {

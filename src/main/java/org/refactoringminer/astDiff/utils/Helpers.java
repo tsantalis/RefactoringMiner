@@ -5,6 +5,7 @@ import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
+import gr.uom.java.xmi.diff.UMLModuleDiff;
 import gr.uom.java.xmi.diff.UMLPackageInfoDiff;
 
 import org.refactoringminer.astDiff.models.ASTDiff;
@@ -41,6 +42,13 @@ public class Helpers {
                 modelDiff,
                 packageInfoDiff.getOriginalPackageInfo().getLocationInfo().getFilePath(),
                 packageInfoDiff.getNextPackageInfo().getLocationInfo().getFilePath()
+        );
+    }
+    public static Pair<TreeContext, TreeContext> findTreeContexts(UMLModelDiff modelDiff, UMLModuleDiff moduleDiff) {
+        return findTreeContexts(
+                modelDiff,
+                moduleDiff.getOriginalModule().getLocationInfo().getFilePath(),
+                moduleDiff.getNextModule().getLocationInfo().getFilePath()
         );
     }
     public static Pair<Tree, Tree> findPairOfType(Tree srcOperationNode, Tree dstOperationNode, String searchingType) {

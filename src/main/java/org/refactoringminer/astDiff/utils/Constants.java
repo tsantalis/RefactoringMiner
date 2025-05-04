@@ -14,6 +14,7 @@ public class Constants {
 	public static final String FIELD_DECLARATION = "FieldDeclaration";
 	public static final String ACCESS_MODIFIER = "AccessModifier";
 	public static final String PACKAGE_DECLARATION = "PackageDeclaration";
+	public static final String MODULE_DECLARATION = "ModuleDeclaration";
 	public static final String ANONYMOUS_CLASS_DECLARATION = "AnonymousClassDeclaration";
 	public static final String LABELED_STATEMENT = "LabeledStatement";
 	public static final String SIMPLE_NAME = "SimpleName";

@@ -135,10 +135,10 @@ public class UMLModelASTReader {
 			}
 			char[] charArray = javaFileContent.toCharArray();
 			try {
-				CompilationUnit compilationUnit = getCompilationUnit(DEFAULT_JAVA_CORE_VERSION, parser, charArray);
+				CompilationUnit compilationUnit = getCompilationUnit(DEFAULT_JAVA_CORE_VERSION, parser, charArray, filePath);
 				String maxRecommendedVersionFromProblems = getMaxRecommendedVersionFromProblems(compilationUnit);
 				if (maxRecommendedVersionFromProblems != null)
-					compilationUnit = getCompilationUnit(maxRecommendedVersionFromProblems, parser, charArray);
+					compilationUnit = getCompilationUnit(maxRecommendedVersionFromProblems, parser, charArray, filePath);
 				processCompilationUnit(filePath, compilationUnit, javaFileContent);
 				if(astDiff) {
 					IScanner scanner = ToolFactory.createScanner(true, false, false, false);
@@ -157,7 +157,7 @@ public class UMLModelASTReader {
 		}
 	}
 
-	public static CompilationUnit getCompilationUnit(String javaCoreVersion, ASTParser parser, char[] charArray) {
+	public static CompilationUnit getCompilationUnit(String javaCoreVersion, ASTParser parser, char[] charArray, String filePath) {
 		Map<String, String> options = JavaCore.getOptions();
 		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, javaCoreVersion);
 		options.put(JavaCore.COMPILER_SOURCE, javaCoreVersion);
@@ -167,6 +167,9 @@ public class UMLModelASTReader {
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		parser.setStatementsRecovery(true);
 		parser.setSource(charArray);
+		if(filePath.endsWith("module-info.java")) {
+			parser.setUnitName(filePath);
+		}
 		return (CompilationUnit) parser.createAST(null);
 	}
 

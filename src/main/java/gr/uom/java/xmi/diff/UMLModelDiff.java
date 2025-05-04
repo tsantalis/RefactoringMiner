@@ -91,6 +91,7 @@ public class UMLModelDiff {
 	private List<UMLClassSplitDiff> classSplitDiffList;
 	private List<UMLAttributeDiff> movedAttributeDiffList;
 	private List<UMLPackageInfoDiff> packageInfoDiffList;
+	private List<UMLModuleDiff> moduleDiffList;
 	private Set<Refactoring> refactorings;
 	private Set<Refactoring> moveRenameClassRefactorings;
 	private Set<String> deletedFolderPaths;
@@ -127,6 +128,7 @@ public class UMLModelDiff {
 		this.refactorings = new LinkedHashSet<Refactoring>();
 		this.deletedFolderPaths = new LinkedHashSet<String>();
 		this.packageInfoDiffList = new ArrayList<UMLPackageInfoDiff>();
+		this.moduleDiffList = new ArrayList<UMLModuleDiff>();
 	}
 
 	public UMLModel getParentModel() {
@@ -288,6 +290,10 @@ public class UMLModelDiff {
 		this.packageInfoDiffList.add(packageInfoDiff);
 	}
 
+	public void addUMLModuleDiff(UMLModuleDiff moduleDiff) {
+		this.moduleDiffList.add(moduleDiff);
+	}
+
 	public List<UMLClassDiff> getCommonClassDiffList() {
 		return commonClassDiffList;
 	}
@@ -310,6 +316,10 @@ public class UMLModelDiff {
 
 	public List<UMLPackageInfoDiff> getPackageInfoDiffList() {
 		return packageInfoDiffList;
+	}
+
+	public List<UMLModuleDiff> getModuleDiffList() {
+		return moduleDiffList;
 	}
 
 	public List<UMLCommentListDiff> getCommentsMovedBetweenClasses() {

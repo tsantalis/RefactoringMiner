@@ -12,12 +12,12 @@ public class ModuleDeclarationMatcher implements TreeMatcher {
 
     @Override
     public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
-        Tree srcPackageDeclaration = findPackageDeclaration(srcTree);
-        Tree dstPackageDeclaration = findPackageDeclaration(dstTree);
-        if (srcPackageDeclaration != null && dstPackageDeclaration != null)
-            mappingStore.addMappingRecursively(srcPackageDeclaration,dstPackageDeclaration);
+        Tree srcModuleDeclaration = findModuleDeclaration(srcTree);
+        Tree dstModuleDeclaration = findModuleDeclaration(dstTree);
+        if (srcModuleDeclaration != null && dstModuleDeclaration != null)
+            mappingStore.addMappingRecursively(srcModuleDeclaration,dstModuleDeclaration);
     }
-    private Tree findPackageDeclaration(Tree inputTree) {
+    private Tree findModuleDeclaration(Tree inputTree) {
         String searchingType = Constants.MODULE_DECLARATION;
         if (!inputTree.getChildren().isEmpty()) {
             List<Tree> children = inputTree.getChildren();

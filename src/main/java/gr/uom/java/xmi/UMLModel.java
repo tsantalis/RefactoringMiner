@@ -2,6 +2,7 @@ package gr.uom.java.xmi;
 
 import gr.uom.java.xmi.diff.UMLClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
+import gr.uom.java.xmi.diff.UMLModuleDiff;
 import gr.uom.java.xmi.diff.UMLPackageInfoDiff;
 
 import java.util.ArrayList;
@@ -84,6 +85,15 @@ public class UMLModel {
     public UMLPackageInfo getPackageInfo(UMLPackageInfo packageInfoFromOtherModel) {
         for(UMLPackageInfo info : packageInfoList) {
             if(info.equals(packageInfoFromOtherModel)) {
+                return info;
+            }
+        }
+        return null;
+    }
+
+    public UMLModule getModuleInfo(UMLModule moduleInfoFromOtherModel) {
+        for(UMLModule info : moduleList) {
+            if(info.equals(moduleInfoFromOtherModel)) {
                 return info;
             }
         }
@@ -193,6 +203,12 @@ public class UMLModel {
     		if(umlModel.packageInfoList.contains(packageInfo)) {
     			UMLPackageInfoDiff diff = new UMLPackageInfoDiff(packageInfo, umlModel.getPackageInfo(packageInfo));
     			modelDiff.addUMLPackageInfoDiff(diff);
+    		}
+    	}
+    	for(UMLModule moduleInfo : moduleList) {
+    		if(umlModel.moduleList.contains(moduleInfo)) {
+    			UMLModuleDiff diff = new UMLModuleDiff(moduleInfo, umlModel.getModuleInfo(moduleInfo));
+    			modelDiff.addUMLModuleDiff(diff);
     		}
     	}
     	for(UMLClass umlClass : classList) {

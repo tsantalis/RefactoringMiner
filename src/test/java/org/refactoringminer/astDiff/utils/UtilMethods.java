@@ -73,10 +73,13 @@ public class UtilMethods {
         char[] charArray = code.toCharArray();
         IScanner scanner = ToolFactory.createScanner(true, false, false, false);
         ASTParser parser = ASTParser.newParser(AST.getJLSLatest());
-        CompilationUnit compilationUnit = getCompilationUnit(JavaCore.VERSION_14, parser, charArray);
+        // TODO For module-info.java the last argument in getCompilationUnit should be:
+        // source folder + file path
+        // jabgui/src/main/java/module-info.java
+        CompilationUnit compilationUnit = getCompilationUnit(JavaCore.VERSION_14, parser, charArray, "");
         String maxRecommendedVersionFromProblems = getMaxRecommendedVersionFromProblems(compilationUnit);
         if (maxRecommendedVersionFromProblems != null)
-            compilationUnit = getCompilationUnit(maxRecommendedVersionFromProblems, parser, charArray);
+            compilationUnit = getCompilationUnit(maxRecommendedVersionFromProblems, parser, charArray, "");
         scanner.setSource(charArray);
         JdtVisitor visitor = new JdtVisitor(scanner);
         compilationUnit.accept(visitor);

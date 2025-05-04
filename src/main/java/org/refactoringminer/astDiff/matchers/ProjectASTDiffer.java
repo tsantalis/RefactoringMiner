@@ -7,6 +7,8 @@ import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithClassRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
+import gr.uom.java.xmi.diff.UMLPackageInfoDiff;
+
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
@@ -67,6 +69,7 @@ public class ProjectASTDiffer
 		projectASTDiff.setChildContextMap(modelDiff.getChildModel().getTreeContextMap());
 		long diff_execution_started = System.currentTimeMillis();
 		makeASTDiff(modelDiff.getCommonClassDiffList(),false);
+		makeASTDiffForPackageInfos(modelDiff.getPackageInfoDiffList(),false);
 		makeASTDiff(withCorrectOrder(modelDiff.getClassRenameDiffList()),false);
 		makeASTDiff(withCorrectOrder(modelDiff.getClassMoveDiffList()),false);
 		makeASTDiff(modelDiff.getInnerClassMoveDiffList(),true);
@@ -174,6 +177,22 @@ public class ProjectASTDiffer
 		}
 	}
 
+	private void makeASTDiffForPackageInfos(List<UMLPackageInfoDiff> umlPackageInfoDiffList, boolean mergeFlag){
+		for (UMLPackageInfoDiff packageInfoDiff : umlPackageInfoDiffList) {
+			Collection<ASTDiff> appends = findAppends(projectASTDiff.getDiffSet(), packageInfoDiff.getOriginalPackageInfo().getLocationInfo().getFilePath(), packageInfoDiff.getNextPackageInfo().getLocationInfo().getFilePath(), false);
+			boolean decision = (!appends.isEmpty()) || mergeFlag;
+			ASTDiff packageInfoASTDiff = process(packageInfoDiff, findTreeContexts(modelDiff, packageInfoDiff), decision, appends);
+			if (!appends.isEmpty()) {
+				for (ASTDiff append : appends) {
+					append.getAllMappings().mergeMappings(packageInfoASTDiff.getAllMappings());
+				}
+			}
+			else {
+				projectASTDiff.addASTDiff(packageInfoASTDiff);
+			}
+		}
+	}
+
 	private ASTDiff process(UMLAbstractClassDiff classDiff, Pair<TreeContext, TreeContext> treeContextPair, boolean mergeFlag, Collection<ASTDiff> appends){
 		Tree srcTree = treeContextPair.first.getRoot();
 		Tree dstTree = treeContextPair.second.getRoot();
@@ -204,6 +223,39 @@ public class ProjectASTDiffer
 			}
 		}
 		new ClassDiffMatcher(optimizationData, classDiff, mergeFlag, modelDiffRefactorings).match(srcTree, dstTree, mappingStore);
+		return astDiff;
+	}
+
+	private ASTDiff process(UMLPackageInfoDiff packageInfoDiff, Pair<TreeContext, TreeContext> treeContextPair, boolean mergeFlag, Collection<ASTDiff> appends){
+		Tree srcTree = treeContextPair.first.getRoot();
+		Tree dstTree = treeContextPair.second.getRoot();
+		ExtendedMultiMappingStore mappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
+		ASTDiff astDiff = new ASTDiff(packageInfoDiff.getOriginalPackageInfo().getLocationInfo().getFilePath(),
+				packageInfoDiff.getNextPackageInfo().getLocationInfo().getFilePath(),
+				treeContextPair.first,
+				treeContextPair.second,
+				mappingStore);
+
+		OptimizationData optimizationData = optimizationDataMap.get(astDiff);
+		if (optimizationData == null){
+			if (!mergeFlag) {
+				optimizationDataMap.putIfAbsent(astDiff,
+						new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree, dstTree)));
+				optimizationData = optimizationDataMap.get(astDiff);
+			}
+			else {
+				try {
+					optimizationData = optimizationDataMap.get(appends.iterator().next());
+				}
+				catch (Exception e)
+				{
+					optimizationDataMap.putIfAbsent(astDiff,
+							new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree, dstTree)));
+					optimizationData = optimizationDataMap.get(astDiff);
+				}
+			}
+		}
+		new PackageInfoDiffMatcher(optimizationData, packageInfoDiff, mergeFlag).match(srcTree, dstTree, mappingStore);
 		return astDiff;
 	}
 }

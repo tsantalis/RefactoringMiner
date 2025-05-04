@@ -2,6 +2,7 @@ package gr.uom.java.xmi;
 
 import gr.uom.java.xmi.diff.UMLClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
+import gr.uom.java.xmi.diff.UMLPackageInfoDiff;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -17,6 +18,7 @@ import com.github.gumtreediff.tree.TreeContext;
 public class UMLModel {
 	private Set<String> repositoryDirectories;
 	private List<UMLModule> moduleList;
+	private List<UMLPackageInfo> packageInfoList;
     private List<UMLClass> classList;
     private List<UMLGeneralization> generalizationList;
     private List<UMLRealization> realizationList;
@@ -28,6 +30,7 @@ public class UMLModel {
     	this.repositoryDirectories = repositoryDirectories;
         classList = new ArrayList<UMLClass>();
         moduleList = new ArrayList<UMLModule>();
+        packageInfoList = new ArrayList<UMLPackageInfo>();
         generalizationList = new ArrayList<UMLGeneralization>();
         realizationList = new ArrayList<UMLRealization>();
     }
@@ -56,6 +59,10 @@ public class UMLModel {
         moduleList.add(umlModule);
     }
 
+    public void addPackageInfo(UMLPackageInfo umlPackageInfo) {
+        packageInfoList.add(umlPackageInfo);
+    }
+
     public void addGeneralization(UMLGeneralization umlGeneralization) {
         generalizationList.add(umlGeneralization);
     }
@@ -65,11 +72,20 @@ public class UMLModel {
     }
 
     public UMLClass getClass(UMLClass umlClassFromOtherModel) {
-    	ListIterator<UMLClass> it = classList.listIterator();
+        ListIterator<UMLClass> it = classList.listIterator();
         while(it.hasNext()) {
             UMLClass umlClass = it.next();
             if(umlClass.equals(umlClassFromOtherModel))
                 return umlClass;
+        }
+        return null;
+    }
+
+    public UMLPackageInfo getPackageInfo(UMLPackageInfo packageInfoFromOtherModel) {
+        for(UMLPackageInfo info : packageInfoList) {
+            if(info.equals(packageInfoFromOtherModel)) {
+                return info;
+            }
         }
         return null;
     }
@@ -82,7 +98,11 @@ public class UMLModel {
         return moduleList;
     }
 
-   public List<UMLGeneralization> getGeneralizationList() {
+    public List<UMLPackageInfo> getPackageInfoList() {
+        return packageInfoList;
+    }
+
+    public List<UMLGeneralization> getGeneralizationList() {
         return this.generalizationList;
     }
 
@@ -169,6 +189,12 @@ public class UMLModel {
     			modelDiff.reportAddedRealization(umlRealization);
     	}
     	modelDiff.checkForRealizationChanges();
+    	for(UMLPackageInfo packageInfo : packageInfoList) {
+    		if(umlModel.packageInfoList.contains(packageInfo)) {
+    			UMLPackageInfoDiff diff = new UMLPackageInfoDiff(packageInfo, umlModel.getPackageInfo(packageInfo));
+    			modelDiff.addUMLPackageInfoDiff(diff);
+    		}
+    	}
     	for(UMLClass umlClass : classList) {
     		if(umlModel.classList.contains(umlClass)) {
     			UMLClassDiff classDiff = new UMLClassDiff(umlClass, umlModel.getClass(umlClass), modelDiff);

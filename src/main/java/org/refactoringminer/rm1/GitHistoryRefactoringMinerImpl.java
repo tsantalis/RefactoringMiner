@@ -319,7 +319,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			if(movedPath.contains("/")) {
 				movedPathPrefix = movedPath.substring(0, movedPath.lastIndexOf('/'));
 			}
-			if(!originalPathPrefix.equals(movedPathPrefix) && !key.endsWith("package-info.java")) {
+			if(!originalPathPrefix.equals(movedPathPrefix)) {
 				MovedClassToAnotherSourceFolder refactoring = new MovedClassToAnotherSourceFolder(null, null, originalPathPrefix, movedPathPrefix);
 				RenamePattern renamePattern = refactoring.getRenamePattern();
 				boolean foundInMatchingMoveSourceFolderRefactoring = false;

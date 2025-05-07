@@ -2,6 +2,11 @@ package gui.webdiff.dir;
 
 import gui.webdiff.tree.TreeNodeInfo;
 import gui.webdiff.WebDiff;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.rendersnake.DocType;
@@ -9,6 +14,10 @@ import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -106,6 +115,9 @@ public class DirectoryDiffView implements Renderable {
                         ._div()
                     ._div()
                     ._if()
+                    .div(class_("row"))
+                    .render(new RefactoringBar(comparator))
+                    ._div()
                 ._div()
             ._body()
         ._html();
@@ -341,6 +353,80 @@ public class DirectoryDiffView implements Renderable {
                         .if_(external)
                         .a(class_("btn btn-default btn-sm btn-danger").href("/list")).content("Back")
                         ._if()
+                    ._div()
+                ._div()
+            ._div();
+        }
+    }
+
+    private static class RefactoringBar implements Renderable {
+        private final List<Refactoring> refactorings;
+        private final Map<Pair<String, String>, Integer> filePathPairToDiffId = new LinkedHashMap<>();
+        public RefactoringBar(DirComparator comparator) {
+            this.refactorings = comparator.getRefactorings();
+            int counter = 0;
+            for(ASTDiff diff : comparator.getDiffs()) {
+                Pair<String, String> pair = Pair.of(diff.getSrcPath(), diff.getDstPath());
+                filePathPairToDiffId.put(pair, counter);
+                counter++;
+            }
+        }
+
+        @Override
+        public void renderOn(HtmlCanvas html) throws IOException {
+            html
+            .div(class_("col"))
+                .a(class_("btn btn-primary").href("#collapseRefactorings").role("button")
+                    .add("data-bs-toggle", "collapse")
+                    .add("aria-expanded", "false")
+                    .add("aria-controls", "collapseRefactorings")
+                    ).content("Refactorings")
+                .div(class_("row"))
+                    .div(class_("col"))
+                        .div(class_("collapse").id("collapseRefactorings"))
+                        .div(class_("card card-body"))
+                        .ol(class_("list-group list-group-numbered"));
+                        for(Refactoring r : refactorings) {
+                        	Set<ImmutablePair<String, String>> before = r.getInvolvedClassesBeforeRefactoring();
+                        	Set<ImmutablePair<String, String>> after = r.getInvolvedClassesAfterRefactoring();
+                        	Iterator<ImmutablePair<String, String>> beforeIterator = before.iterator();
+                        	ImmutablePair<String, String> beforeIteratorNext = beforeIterator.next();
+                        	String filePathBefore = beforeIteratorNext.left;
+                        	String classNameBefore = beforeIteratorNext.right;
+                        	Iterator<ImmutablePair<String, String>> afterIterator = after.iterator();
+                        	ImmutablePair<String, String> afterIteratorNext = afterIterator.next();
+                        	String filePathAfter = afterIteratorNext.left;
+                        	String classNameAfter = afterIteratorNext.right;
+                        	//for Extract and Move Method take the second
+                        	if(r.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION) && afterIterator.hasNext()) {
+                        		afterIteratorNext = afterIterator.next();
+                        		filePathAfter = afterIteratorNext.left;
+                        		classNameAfter = afterIteratorNext.right;
+                        	}
+                        	Pair<String, String> pair = Pair.of(filePathBefore, filePathAfter);
+                        	int id = -1;
+                        	if(filePathPairToDiffId.containsKey(pair)) {
+                        		id = filePathPairToDiffId.get(pair);
+                        	}
+                        	String description = r.toString();
+                        	String refactoringTypeWithBold = "<b>" + r.getRefactoringType().getDisplayName() + "</b>";
+                        	description = description.replace(r.getRefactoringType().getDisplayName(), refactoringTypeWithBold);
+                        	if(id != -1) {
+                        		if(description.contains(classNameBefore)) {
+                        			String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameBefore + "</a>"; 
+                        			description = description.replace(classNameBefore, classNameWithLink);
+                        		}
+                        		if(description.contains(classNameAfter)) {
+                        			String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameAfter + "</a>"; 
+                        			description = description.replace(classNameAfter, classNameWithLink);
+                        		}
+                        	}
+                            html.li(class_("list-group-item")).write(description, NO_ESCAPE)
+                            ._li();
+                        }
+                    html._ol()
+                        ._div()
+                        ._div()
                     ._div()
                 ._div()
             ._div();

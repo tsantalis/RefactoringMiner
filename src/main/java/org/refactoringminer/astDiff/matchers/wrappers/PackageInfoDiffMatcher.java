@@ -1,5 +1,6 @@
 package org.refactoringminer.astDiff.matchers.wrappers;
 
+import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
@@ -47,7 +48,11 @@ public class PackageInfoDiffMatcher extends OptimizationAwareMatcher {
         Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree, left.getLocationInfo());
         Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, right.getLocationInfo());
         if (srcSubTree == null || dstSubTree == null) return;
-        if (srcSubTree.isIsoStructuralTo(dstSubTree))
+        if (srcSubTree.isIsoStructuralTo(dstSubTree)) {
             mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
+        }
+        else {
+            new LeafMatcher().match(srcSubTree,dstSubTree,mappingStore);
+        }
     }
 }

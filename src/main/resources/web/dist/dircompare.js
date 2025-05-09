@@ -1,4 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
+	document.querySelectorAll('input[id="refactoringType"]').forEach(type => {
+		type.addEventListener('change', () => {
+			const innerText = type.parentNode.childNodes[1].innerText;
+			const refactoringType = innerText.substring(0, innerText.indexOf(" ("));
+			console.log(refactoringType);
+			document.querySelectorAll('li[class="list-group-item"]').forEach(li => {
+				if(li.innerText.startsWith(refactoringType)) {
+					if(type.checked === false) {
+						li.style.display = 'none';
+					}
+					else {
+						li.style.display = 'block';
+					}
+				}
+			});
+		});
+	});
     let selectedDiffs = [];
 
     document.querySelectorAll('input[name="fileSelect"]').forEach(el => {

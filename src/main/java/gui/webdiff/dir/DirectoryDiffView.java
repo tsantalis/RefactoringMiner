@@ -285,7 +285,7 @@ public class DirectoryDiffView implements Renderable {
         @Override
         public void renderOn(HtmlCanvas html) throws IOException {
             html
-                    .div(class_("row"))
+                    .div(class_("row").style("--bs-gutter-x:0"))
                     .div(class_("col-md-12"))
                     .table(class_("table card-table table-striped table-condensed mb-0"))
                     .tbody();

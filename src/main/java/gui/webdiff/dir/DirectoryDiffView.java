@@ -446,7 +446,7 @@ public class DirectoryDiffView implements Renderable {
                         			String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameBefore + "</a>"; 
                         			description = description.replace(classNameBefore, classNameWithLink);
                         		}
-                        		if(description.contains(classNameAfter)) {
+                        		if(description.contains(classNameAfter) && !classNameBefore.equals(classNameAfter)) {
                         			String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameAfter + "</a>"; 
                         			description = description.replace(classNameAfter, classNameWithLink);
                         		}

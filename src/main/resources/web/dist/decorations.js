@@ -154,7 +154,7 @@ function offsetToLineColumn(text, offset) {
 }
 
 function onClickHelper(config, index, activatedRange, ed, dstIndex) {
-	var exit = false;
+	var exit = [];
 	if(index === 0) {
 		config.left.ranges.forEach(range => { 
 			let fromLine = offsetToLineNumber(config.left.content, range.from);
@@ -166,15 +166,15 @@ function onClickHelper(config, index, activatedRange, ed, dstIndex) {
 						let fromColumn = offsetToLineColumn(config.left.content, range.from);
 						let toColumn = offsetToLineColumn(config.left.content, range.to);
 						if(fromColumn.column <= activatedRange.startColumn && toColumn.column >= activatedRange.startColumn) {
-							exit = true;
+							exit.push(true);
 						}
 					}
 					else {
-						exit = true;
+						exit.push(true);
 					}
 				}
 				else if(range.kind === "moved" || range.kind === "updated" || range.kind.startsWith("mm")) {
-					exit = false;
+					exit.push(false);
 				}
 			}
 		});
@@ -190,20 +190,20 @@ function onClickHelper(config, index, activatedRange, ed, dstIndex) {
 						let fromColumn = offsetToLineColumn(config.right.content, range.from);
 						let toColumn = offsetToLineColumn(config.right.content, range.to);
 						if(fromColumn.column <= activatedRange.startColumn && toColumn.column >= activatedRange.startColumn) {
-							exit = true;
+							exit.push(true);
 						}
 					}
 					else {
-						exit = true;
+						exit.push(true);
 					}
 				}
 				else if(range.kind === "moved" || range.kind === "updated" || range.kind.startsWith("mm")) {
-					exit = false;
+					exit.push(false);
 				}
 			}
 		});
 	}
-	if(exit) {
+	if(!exit.includes(false) && exit.length > 0) {
 		return;
 	}
     candidates = config.mappings

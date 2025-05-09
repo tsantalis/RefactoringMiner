@@ -16,6 +16,7 @@ import org.rendersnake.Renderable;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -61,19 +62,22 @@ public class DirectoryDiffView implements Renderable {
                     .div(class_("row"))
                         .render(new MenuBar(external, metaInfo))
                     ._div()
-                .if_(!external)
-                    .div(class_("row justify-content-center"))
-                        .div(class_("col-6 text-center"))
-                            .button(class_("btn btn-primary").style("height: 50px;").onClick("window.location.href='/singleView'"))
-                                .content("Single Page View (Beta)")
-                                .button(class_("btn btn-success").id("compareBtn")
-                                .style("position: fixed; bottom: 20px; right: 20px; display: none; z-index: 1000;")
-                                .onClick("handleCompareClick()")
-                                    )
-                                .content("Compare Selected Files")
-                        ._div()
+                    .div(class_("row"))
+                    .render(new RefactoringBar(comparator))
                     ._div()
-                ._if()
+//                .if_(!external)
+//                    .div(class_("row justify-content-center"))
+//                        .div(class_("col-6 text-center"))
+//                            .button(class_("btn btn-primary").style("height: 50px;").onClick("window.location.href='/singleView'"))
+//                                .content("Single Page View (Beta)")
+//                                .button(class_("btn btn-success").id("compareBtn")
+//                                .style("position: fixed; bottom: 20px; right: 20px; display: none; z-index: 1000;")
+//                                .onClick("handleCompareClick()")
+//                                    )
+//                                .content("Compare Selected Files")
+//                        ._div()
+//                    ._div()
+//                ._if()
                 .div(class_("row mt-3 mb-3"))
                         .div(class_("col"))
                             .div(class_("card").style("padding: 5px"))
@@ -115,9 +119,6 @@ public class DirectoryDiffView implements Renderable {
                         ._div()
                     ._div()
                     ._if()
-                    .div(class_("row"))
-                    .render(new RefactoringBar(comparator))
-                    ._div()
                 ._div()
             ._body()
         ._html();
@@ -348,6 +349,13 @@ public class DirectoryDiffView implements Renderable {
                     ._if()
                     .div(class_("btn-group").style("padding: 5px;"))
                         .if_(!external)
+                        .button(class_("btn btn-primary").onClick("window.location.href='/singleView'"))
+                        .content("Single Page View")
+                        .button(class_("btn btn-success").id("compareBtn")
+                        .style("position: fixed; bottom: 20px; right: 20px; display: none; z-index: 1000;")
+                        .onClick("handleCompareClick()")
+                            )
+                        .content("Compare Selected Files")
                         .a(class_("btn btn-default btn-sm btn-danger").href("/quit")).content("Quit")
                         ._if()
                         .if_(external)
@@ -362,8 +370,20 @@ public class DirectoryDiffView implements Renderable {
     private static class RefactoringBar implements Renderable {
         private final List<Refactoring> refactorings;
         private final Map<Pair<String, String>, Integer> filePathPairToDiffId = new LinkedHashMap<>();
+        private final Map<String, Set<Refactoring>> refactoringTypeMap = new LinkedHashMap<>();
         public RefactoringBar(DirComparator comparator) {
             this.refactorings = comparator.getRefactorings();
+            for(Refactoring r : refactorings) {
+            	String type = r.getRefactoringType().getDisplayName();
+            	if(refactoringTypeMap.containsKey(type)) {
+            		refactoringTypeMap.get(type).add(r);
+            	}
+            	else {
+            		Set<Refactoring> set = new LinkedHashSet<>();
+            		set.add(r);
+            		refactoringTypeMap.put(type, set);
+            	}
+            }
             int counter = 0;
             for(ASTDiff diff : comparator.getDiffs()) {
                 Pair<String, String> pair = Pair.of(diff.getSrcPath(), diff.getDstPath());
@@ -384,8 +404,18 @@ public class DirectoryDiffView implements Renderable {
                 .div(class_("row"))
                     .div(class_("col"))
                         .div(class_("collapse").id("collapseRefactorings"))
-                        .div(class_("card card-body"))
-                        .ol(class_("list-group list-group-numbered"));
+                        .div(class_("card card-body"));
+                        //create checkboxes for refactoring types
+                        for(String refactoringType : refactoringTypeMap.keySet()) {
+                            int instances = refactoringTypeMap.get(refactoringType).size();
+                            html
+                            .div(class_("form-check"))
+                            .input(class_("form-check-input").type("checkbox").id("refactoringType").value("").checked(""))
+                            .label(class_("form-check-label").for_("refactoringType")).write(refactoringType + " (" + instances + ")")
+                            ._label()
+                            ._div();
+                        }
+                    html.ol(class_("list-group list-group-numbered"));
                         for(Refactoring r : refactorings) {
                         	Set<ImmutablePair<String, String>> before = r.getInvolvedClassesBeforeRefactoring();
                         	Set<ImmutablePair<String, String>> after = r.getInvolvedClassesAfterRefactoring();

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-	document.querySelectorAll('pre code').forEach((el) => {
+	document.querySelectorAll('code').forEach((el) => {
 	    hljs.highlightElement(el);
 	  });
 	document.querySelectorAll('input[id="refactoringType"]').forEach(type => {

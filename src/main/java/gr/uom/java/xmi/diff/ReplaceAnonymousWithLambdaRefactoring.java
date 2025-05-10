@@ -15,7 +15,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 
-public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
+public class ReplaceAnonymousWithLambdaRefactoring implements MethodLevelRefactoring {
 	private UMLAnonymousClass anonymousClass;
 	private LambdaExpressionObject lambda;
 	private AbstractCodeFragment anonymousOwner;

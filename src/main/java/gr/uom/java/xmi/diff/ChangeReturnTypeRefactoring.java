@@ -13,7 +13,7 @@ import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 
-public class ChangeReturnTypeRefactoring implements Refactoring, ReferenceBasedRefactoring {
+public class ChangeReturnTypeRefactoring implements MethodLevelRefactoring, ReferenceBasedRefactoring {
 	private UMLType originalType;
 	private UMLType changedType;
 	private VariableDeclarationContainer operationBefore;

@@ -14,7 +14,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class SplitConditionalRefactoring implements Refactoring, LeafMappingProvider {
+public class SplitConditionalRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
 	private AbstractCodeFragment originalConditional;
 	private Set<AbstractCodeFragment> splitConditionals;
 	private VariableDeclarationContainer operationBefore;

@@ -12,7 +12,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
-public class RemoveMethodAnnotationRefactoring implements Refactoring {
+public class RemoveMethodAnnotationRefactoring implements MethodLevelRefactoring {
 	private UMLAnnotation annotation;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;

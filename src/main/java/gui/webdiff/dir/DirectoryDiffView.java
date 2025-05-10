@@ -13,6 +13,9 @@ import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
 
+import gr.uom.java.xmi.diff.CodeRange;
+import gr.uom.java.xmi.diff.MethodLevelRefactoring;
+
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -320,6 +323,9 @@ public class DirectoryDiffView implements Renderable {
                         .macros().stylesheet(WebDiff.BOOTSTRAP_CSS_URL)
                         .macros().javascript(WebDiff.JQUERY_JS_URL)
                         .macros().javascript(WebDiff.BOOTSTRAP_JS_URL)
+                        .macros().javascript(WebDiff.HIGHLIGHT_JS_URL)
+                        //.macros().javascript(WebDiff.HIGHLIGHT_JAVA_URL)
+                        .macros().stylesheet(WebDiff.HIGHLIGHT_CSS_URL)
                         .macros().javascript("/dist/shortcuts.js")
                         .macros().javascript("/dist/dircompare.js")
                         .macros().stylesheet("/dist/style.css")
@@ -449,6 +455,38 @@ public class DirectoryDiffView implements Renderable {
                         		if(description.contains(classNameAfter) && !classNameBefore.equals(classNameAfter)) {
                         			String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameAfter + "</a>"; 
                         			description = description.replace(classNameAfter, classNameWithLink);
+                        		}
+                        	}
+                        	Set<String> processed = new LinkedHashSet<>();
+                        	for(CodeRange range : r.leftSide()) {
+                        		String codeElement = range.getCodeElement();
+								if(codeElement != null && description.contains(codeElement) && !processed.contains(codeElement)) {
+                        			String codeElementTag = "<code>" + codeElement + "</code>";
+                        			description = description.replace(codeElement, codeElementTag);
+                        			processed.add(codeElement);
+                        		}
+                        	}
+                        	for(CodeRange range : r.rightSide()) {
+                        		String codeElement = range.getCodeElement();
+								if(codeElement != null && description.contains(codeElement) && !processed.contains(codeElement)) {
+                        			String codeElementTag = "<code>" + codeElement + "</code>";
+                        			description = description.replace(codeElement, codeElementTag);
+                        			processed.add(codeElement);
+                        		}
+                        	}
+                        	if(r instanceof MethodLevelRefactoring) {
+                        		MethodLevelRefactoring ref = (MethodLevelRefactoring)r;
+                        		String operationBefore = ref.getOperationBefore().toString();
+                        		if(operationBefore != null && description.contains(operationBefore) && !processed.contains(operationBefore)) {
+                        			String codeElementTag = "<code>" + operationBefore + "</code>";
+                        			description = description.replace(operationBefore, codeElementTag);
+                        			processed.add(operationBefore);
+                        		}
+                        		String operationAfter = ref.getOperationAfter().toString();
+                        		if(operationAfter != null && description.contains(operationAfter) && !processed.contains(operationAfter)) {
+                        			String codeElementTag = "<code>" + operationAfter + "</code>";
+                        			description = description.replace(operationAfter, codeElementTag);
+                        			processed.add(operationAfter);
                         		}
                         	}
                             html.li(class_("list-group-item")).write(description, NO_ESCAPE)

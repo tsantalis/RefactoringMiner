@@ -13,7 +13,7 @@ import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
-public class AddMethodModifierRefactoring implements Refactoring {
+public class AddMethodModifierRefactoring implements MethodLevelRefactoring {
 	private String modifier;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;

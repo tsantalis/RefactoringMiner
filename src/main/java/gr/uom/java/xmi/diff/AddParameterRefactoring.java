@@ -12,7 +12,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class AddParameterRefactoring implements Refactoring {
+public class AddParameterRefactoring implements MethodLevelRefactoring {
 	private VariableDeclaration parameter;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;

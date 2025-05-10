@@ -11,11 +11,12 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
-public class RenameOperationRefactoring implements Refactoring {
+public class RenameOperationRefactoring implements MethodLevelRefactoring {
 	private UMLOperation originalOperation;
 	private UMLOperation renamedOperation;
 	private Set<Replacement> replacements;
@@ -76,6 +77,14 @@ public class RenameOperationRefactoring implements Refactoring {
 
 	public UMLOperation getRenamedOperation() {
 		return renamedOperation;
+	}
+
+	public VariableDeclarationContainer getOperationBefore() {
+		return getOriginalOperation();
+	}
+
+	public VariableDeclarationContainer getOperationAfter() {
+		return getRenamedOperation();
 	}
 
 	public Set<Replacement> getReplacements() {

@@ -13,7 +13,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class MergeVariableRefactoring implements Refactoring, ReferenceBasedRefactoring {
+public class MergeVariableRefactoring implements MethodLevelRefactoring, ReferenceBasedRefactoring {
 	private Set<VariableDeclaration> mergedVariables;
 	private VariableDeclaration newVariable;
 	private VariableDeclarationContainer operationBefore;

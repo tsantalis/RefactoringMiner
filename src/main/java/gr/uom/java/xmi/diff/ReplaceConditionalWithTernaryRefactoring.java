@@ -14,7 +14,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class ReplaceConditionalWithTernaryRefactoring implements Refactoring, LeafMappingProvider {
+public class ReplaceConditionalWithTernaryRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
 	private AbstractCodeFragment originalConditional;
 	private AbstractCodeFragment ternaryConditional;
 	private VariableDeclarationContainer operationBefore;

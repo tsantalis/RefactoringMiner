@@ -16,7 +16,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class AssertTimeoutRefactoring implements Refactoring, LeafMappingProvider {
+public class AssertTimeoutRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
 	private Set<AbstractCodeMapping> assertTimeoutMappings;
 	private AbstractCall assertTimeoutCall;
 	private VariableDeclarationContainer operationBefore;

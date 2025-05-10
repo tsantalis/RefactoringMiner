@@ -32,6 +32,9 @@ public class WebDiff  {
     public static final String JQUERY_JS_URL = "https://code.jquery.com/jquery-3.4.1.min.js";
     public static final String BOOTSTRAP_CSS_URL = "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css";
     public static final String BOOTSTRAP_JS_URL = "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js";
+    public static final String HIGHLIGHT_CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css";
+    public static final String HIGHLIGHT_JS_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js";
+    public static final String HIGHLIGHT_JAVA_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js";
     public final int port = 6789;
 
     private final String toolName = "RefactoringMiner";

@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+	document.querySelectorAll('pre code').forEach((el) => {
+	    hljs.highlightElement(el);
+	  });
 	document.querySelectorAll('input[id="refactoringType"]').forEach(type => {
 		type.addEventListener('change', () => {
 			const innerText = type.parentNode.childNodes[1].innerText;

@@ -12,7 +12,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
-public class ChangeThrownExceptionTypeRefactoring implements Refactoring {
+public class ChangeThrownExceptionTypeRefactoring implements MethodLevelRefactoring {
 	private Set<UMLType> originalTypes;
 	private Set<UMLType> changedTypes;
 	private VariableDeclarationContainer operationBefore;

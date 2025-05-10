@@ -16,7 +16,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class AssertThrowsRefactoring implements Refactoring, LeafMappingProvider {
+public class AssertThrowsRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
 	private Set<AbstractCodeMapping> assertThrowsMappings;
 	private AbstractCall assertThrowsCall;
 	private VariableDeclarationContainer operationBefore;

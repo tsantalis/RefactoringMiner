@@ -13,7 +13,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class SplitVariableRefactoring implements Refactoring, ReferenceBasedRefactoring {
+public class SplitVariableRefactoring implements MethodLevelRefactoring, ReferenceBasedRefactoring {
 	private Set<VariableDeclaration> splitVariables;
 	private VariableDeclaration oldVariable;
 	private VariableDeclarationContainer operationBefore;

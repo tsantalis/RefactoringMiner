@@ -14,7 +14,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.Visibility;
 
-public class ChangeOperationAccessModifierRefactoring implements Refactoring {
+public class ChangeOperationAccessModifierRefactoring implements MethodLevelRefactoring {
 	private Visibility originalAccessModifier;
 	private Visibility changedAccessModifier;
 	private VariableDeclarationContainer operationBefore;

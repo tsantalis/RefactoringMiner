@@ -14,7 +14,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.TryStatementObject;
 
-public class TryWithResourcesRefactoring implements Refactoring {
+public class TryWithResourcesRefactoring implements MethodLevelRefactoring {
 	private TryStatementObject tryBefore;
 	private TryStatementObject tryAfter;
 	private VariableDeclarationContainer operationBefore;

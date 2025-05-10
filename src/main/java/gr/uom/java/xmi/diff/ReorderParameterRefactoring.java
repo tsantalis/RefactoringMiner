@@ -13,7 +13,7 @@ import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class ReorderParameterRefactoring implements Refactoring {
+public class ReorderParameterRefactoring implements MethodLevelRefactoring {
 	private List<VariableDeclaration> parametersBefore;
 	private List<VariableDeclaration> parametersAfter;
 	private VariableDeclarationContainer operationBefore;

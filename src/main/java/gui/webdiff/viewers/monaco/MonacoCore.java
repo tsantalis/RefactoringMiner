@@ -8,10 +8,13 @@ import com.github.gumtreediff.tree.Tree;
 
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
+import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
+import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.MergeOperationRefactoring;
 import gr.uom.java.xmi.diff.MoveAttributeRefactoring;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring;
@@ -275,12 +278,47 @@ public class MonacoCore {
         }
     }
 
+    private static boolean isStatement(Tree t) {
+    	String type = t.getType().toString();
+		return type.endsWith("Statement") || type.equals("Block") || type.endsWith("ConstructorInvocation") || type.equals("SwitchCase");
+    }
+
+    private static boolean isExpression(Tree t) {
+    	String type = t.getType().toString();
+    	return type.endsWith("Expression") || type.endsWith("Literal") || type.endsWith("Reference") || type.endsWith("Invocation") ||
+    			type.endsWith("Creation") || type.endsWith("Access") || type.endsWith("Name") || type.endsWith("Annotation") || type.endsWith("Pattern") ||
+    			type.equals("Assignment") || type.equals("ArrayInitializer");
+    }
+
+    //private Map<Tree, Set<String>> appliedTooltips = new HashMap<>();
+
     private void appendRange(StringBuilder b, Tree t, String kind, String tip) {
         Set<String> tooltips = tooltip(t);
-        if((t.getType().toString().endsWith("Statement") || t.getType().toString().endsWith("Declaration") || t.getType().toString().startsWith("LineComment") || t.getType().toString().startsWith("BlockComment")) &&
+        if((isStatement(t) || t.getType().toString().endsWith("Declaration") || isExpression(t) ||
+        		t.getType().toString().startsWith("LineComment") || t.getType().toString().startsWith("BlockComment")) &&
         		(kind.equals("moved") || kind.startsWith("mm") || kind.equals("moveOut") || kind.equals("moveIn")) &&
         		!tooltips.isEmpty()) {
         	for(String tooltip : tooltips) {
+        		//TODO the problem with duplicated tooltips seems to be related with cascading tooltips from parent nodes
+        		//when an AST in nested under a parent with tooltips, it inherits all tooltips from its parent
+        		//the solution below does not fix the problem
+        		/*
+        		boolean tipExists = false;
+        		if(appliedTooltips.containsKey(t)) {
+        			Set<String> tips = appliedTooltips.get(t);
+        			if(tips.contains(tooltip)) {
+        				tipExists = true;
+        			}
+        			else {
+        				tips.add(tooltip);
+        			}
+        		}
+        		else {
+        			Set<String> tips = new HashSet<>();
+        			tips.add(tooltip);
+        			appliedTooltips.put(t, tooltips);
+        		}
+        		*/
     			b.append("{")
             	.append("from: ").append(t.getPos())
             	.append(",").append("to: ").append(t.getEndPos()).append(",")
@@ -374,15 +412,50 @@ public class MonacoCore {
     			if(t.getType().toString().endsWith("Declaration")) {
     				String tooltipLeft = "moved to " + r.getInvolvedClassesAfterRefactoring().iterator().next().left;
     				String tooltipRight = "moved from " + r.getInvolvedClassesBeforeRefactoring().iterator().next().left;
-    				String tooltip = generateTooltip(t, c, null, tooltipLeft, tooltipRight);
+    				String tooltip = generateTooltip(t, c, (UMLOperationBodyMapper)null, tooltipLeft, tooltipRight);
 					if(tooltip != null)
 						tooltips.add(tooltip);
     			}
+    		}
+    		else if(r instanceof ExtractVariableRefactoring) {
+    			ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
+    			String tooltipLeft = "extracted to variable " + extract.getVariableDeclaration().getVariableName();
+    			String tooltipRight = "extracted to variable " + extract.getVariableDeclaration().getVariableName();
+    			String tooltip = generateTooltip(t, c, extract.getSubExpressionMappings(), tooltipLeft, tooltipRight);
+				if(tooltip != null)
+					tooltips.add(tooltip);
+    		}
+    		else if(r instanceof InlineVariableRefactoring) {
+    			InlineVariableRefactoring inline = (InlineVariableRefactoring)r;
+    			String tooltipLeft = "inlined from variable " + inline.getVariableDeclaration().getVariableName();
+    			String tooltipRight = "inlined from variable " + inline.getVariableDeclaration().getVariableName();
+    			String tooltip = generateTooltip(t, c, inline.getSubExpressionMappings(), tooltipLeft, tooltipRight);
+				if(tooltip != null)
+					tooltips.add(tooltip);
     		}
     	}
     	return tooltips;
         //return (t.getParent() != null)
         //        ? t.getParent().getType() + "/" + t.getType() + "/" + t.getPos() + "/" +  t.getEndPos() : t.getType().toString() + t.getPos() + t.getEndPos();
+    }
+
+    private String generateTooltip(Tree tree, ExtendedTreeClassifier classifier, List<LeafMapping> references,
+			String tooltipLeft, String tooltipRight) {
+    	for(LeafMapping mapping : references) {
+			if(subsumes(mapping.getFragment1().codeRange(),tree) && (classifier.getMovedSrcs().contains(tree) || classifier.getMultiMapSrc().containsKey(tree))) {
+				return tooltipLeft;
+			}
+			else if(subsumes(mapping.getFragment1().codeRange(),tree) && classifier.getSrcMoveOutTreeMap().get(tree) != null) {
+				return tooltipLeft + " & " + classifier.getSrcMoveOutTreeMap().get(tree);
+			}
+			if(subsumes(mapping.getFragment2().codeRange(),tree) && (classifier.getMovedDsts().contains(tree) || classifier.getMultiMapDst().containsKey(tree))) {
+				return tooltipRight;
+			}
+			else if(subsumes(mapping.getFragment2().codeRange(),tree) && classifier.getDstMoveInTreeMap().get(tree) != null) {
+				return tooltipRight + " & " + classifier.getDstMoveInTreeMap().get(tree);
+			}
+		}
+    	return null;
     }
 
 	private String generateTooltip(Tree tree, ExtendedTreeClassifier classifier, UMLOperationBodyMapper bodyMapper,

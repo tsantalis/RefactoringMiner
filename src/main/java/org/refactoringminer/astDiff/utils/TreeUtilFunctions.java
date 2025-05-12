@@ -27,6 +27,7 @@ public class TreeUtilFunctions {
 	private static FakeTree _instance;
 
 	public static Tree findByLocationInfo(Tree tree, LocationInfo locationInfo){
+		if (locationInfo == null) return null;
 		int start_offset = locationInfo.getStartOffset();
 		int end_offset = locationInfo.getEndOffset();
 		if (tree.getPos() > start_offset || tree.getEndPos() < end_offset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo) : null;

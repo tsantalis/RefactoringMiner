@@ -434,6 +434,9 @@ public class MonacoCore {
 					tooltips.add(tooltip);
     		}
     	}
+    	if(tooltips.isEmpty() && t.getType().toString().endsWith("Declaration")) {
+    		tooltips.add("reordered in file");
+    	}
     	return tooltips;
         //return (t.getParent() != null)
         //        ? t.getParent().getType() + "/" + t.getType() + "/" + t.getPos() + "/" +  t.getEndPos() : t.getType().toString() + t.getPos() + t.getEndPos();

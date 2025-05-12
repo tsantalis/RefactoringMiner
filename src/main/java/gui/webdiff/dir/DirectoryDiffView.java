@@ -411,6 +411,13 @@ public class DirectoryDiffView implements Renderable {
                     .div(class_("col"))
                         .div(class_("collapse").id("collapseRefactorings"))
                         .div(class_("card card-body"));
+                        //ALL refactorings checkbox
+                        html
+                        .div(class_("form-check"))
+                        .input(class_("form-check-input").type("checkbox").id("refactoringType").value("").checked(""))
+                        .label(class_("form-check-label").for_("refactoringType")).write("ALL (" + refactorings.size() + ")")
+                        ._label()
+                        ._div();
                         //create checkboxes for refactoring types
                         for(String refactoringType : refactoringTypeMap.keySet()) {
                             int instances = refactoringTypeMap.get(refactoringType).size();

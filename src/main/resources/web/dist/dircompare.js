@@ -6,9 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		type.addEventListener('change', () => {
 			const innerText = type.parentNode.childNodes[1].innerText;
 			const refactoringType = innerText.substring(0, innerText.indexOf(" ("));
-			console.log(refactoringType);
 			document.querySelectorAll('li[class="list-group-item"]').forEach(li => {
-				if(li.innerText.startsWith(refactoringType)) {
+				if(li.innerText.startsWith(refactoringType) || refactoringType === "ALL") {
 					if(type.checked === false) {
 						li.style.display = 'none';
 					}
@@ -17,6 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
 					}
 				}
 			});
+			if(refactoringType === "ALL") {
+				document.querySelectorAll('input[id="refactoringType"]').forEach(checkbox => {
+					checkbox.checked = type.checked;
+				});
+			}
 		});
 	});
     let selectedDiffs = [];

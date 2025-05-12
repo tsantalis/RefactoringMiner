@@ -19,6 +19,9 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 	protected void processAttributes() throws RefactoringMinerTimedOutException {
 		for(UMLAttribute attribute : originalClass.getAttributes()) {
 			UMLAttribute matchingAttribute = nextClass.containsAttribute(attribute);
+			if(matchingAttribute == null && originalClass.getTypeDeclarationKind().equals("class") && nextClass.getTypeDeclarationKind().equals("enum")) {
+				matchingAttribute = nextClass.containsEnumConstantWithSameName(attribute);
+			}
     		if(matchingAttribute == null) {
     			this.reportRemovedAttribute(attribute);
     		}
@@ -43,6 +46,9 @@ public class UMLClassDiff extends UMLClassBaseDiff {
     	}
     	for(UMLAttribute attribute : nextClass.getAttributes()) {
     		UMLAttribute matchingAttribute = originalClass.containsAttribute(attribute);
+    		if(matchingAttribute == null && originalClass.getTypeDeclarationKind().equals("enum") && nextClass.getTypeDeclarationKind().equals("class")) {
+				matchingAttribute = originalClass.containsEnumConstantWithSameName(attribute);
+			}
     		if(matchingAttribute == null) {
     			this.reportAddedAttribute(attribute);
     		}

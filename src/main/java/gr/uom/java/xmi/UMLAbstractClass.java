@@ -197,6 +197,17 @@ public abstract class UMLAbstractClass {
     	return null;
     }
 
+	public UMLEnumConstant containsEnumConstantWithSameName(UMLAttribute attribute) {
+    	ListIterator<UMLEnumConstant> enumConstantIt = enumConstants.listIterator();
+    	while(enumConstantIt.hasNext()) {
+    		UMLEnumConstant enumConstant = enumConstantIt.next();
+    		if(enumConstant.getName().equals(attribute.getName())) {
+    			return enumConstant;
+    		}
+    	}
+    	return null;
+    }
+
 	public boolean implementsInterface(Set<UMLType> interfaces) {
 		for(UMLType type : interfaces) {
 			if(implementedInterfaces.contains(type))

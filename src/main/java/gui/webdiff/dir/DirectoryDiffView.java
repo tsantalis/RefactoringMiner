@@ -460,6 +460,21 @@ public class DirectoryDiffView implements Renderable {
                         	Set<String> processed = new LinkedHashSet<>();
                         	String openingTag = "<code>";
 							String closingTag = "</code>";
+							if(r instanceof MethodLevelRefactoring) {
+                        		MethodLevelRefactoring ref = (MethodLevelRefactoring)r;
+                        		String operationBefore = ref.getOperationBefore().toString();
+                        		if(operationBefore != null && description.contains(operationBefore) && !processed.contains(operationBefore)) {
+                        			String codeElementTag = openingTag + operationBefore + closingTag;
+                        			description = description.replace(operationBefore, codeElementTag);
+                        			processed.add(operationBefore);
+                        		}
+                        		String operationAfter = ref.getOperationAfter().toString();
+                        		if(operationAfter != null && description.contains(operationAfter) && !processed.contains(operationAfter)) {
+                        			String codeElementTag = openingTag + operationAfter + closingTag;
+                        			description = description.replace(operationAfter, codeElementTag);
+                        			processed.add(operationAfter);
+                        		}
+                        	}
 							for(CodeRange range : r.leftSide()) {
                         		String codeElement = range.getCodeElement();
 								if(codeElement != null && description.contains(codeElement) && !processed.contains(codeElement)) {
@@ -474,21 +489,6 @@ public class DirectoryDiffView implements Renderable {
                         			String codeElementTag = openingTag + codeElement + closingTag;
                         			description = description.replace(codeElement, codeElementTag);
                         			processed.add(codeElement);
-                        		}
-                        	}
-                        	if(r instanceof MethodLevelRefactoring) {
-                        		MethodLevelRefactoring ref = (MethodLevelRefactoring)r;
-                        		String operationBefore = ref.getOperationBefore().toString();
-                        		if(operationBefore != null && description.contains(operationBefore) && !processed.contains(operationBefore)) {
-                        			String codeElementTag = openingTag + operationBefore + closingTag;
-                        			description = description.replace(operationBefore, codeElementTag);
-                        			processed.add(operationBefore);
-                        		}
-                        		String operationAfter = ref.getOperationAfter().toString();
-                        		if(operationAfter != null && description.contains(operationAfter) && !processed.contains(operationAfter)) {
-                        			String codeElementTag = openingTag + operationAfter + closingTag;
-                        			description = description.replace(operationAfter, codeElementTag);
-                        			processed.add(operationAfter);
                         		}
                         	}
                             html.li(class_("list-group-item")).write(description, NO_ESCAPE)

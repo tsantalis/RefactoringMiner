@@ -5709,6 +5709,9 @@ public class UMLModelDiff {
 					List<UMLOperationBodyMapper> filteredFirstMappers = promoteSameSourceFolderMoves(firstMappers);
 					for(UMLOperationBodyMapper firstMapper : filteredFirstMappers) {
 						UMLOperation removedOperation = firstMapper.getOperation1();
+						//if(sameSourceAndTargetClass) {
+						//	removedOperations.remove(removedOperation);
+						//}
 
 						createRefactoring(removedOperation, addedOperation, firstMapper, firstMappers.size() > 1);
 					}
@@ -5814,6 +5817,9 @@ public class UMLModelDiff {
 					List<UMLOperationBodyMapper> filteredFirstMappers = promoteSameSourceFolderMoves(firstMappers);
 					for(UMLOperationBodyMapper firstMapper : filteredFirstMappers) {
 						UMLOperation addedOperation = firstMapper.getOperation2();
+						if(sameSourceAndTargetClass) {
+							addedOperations.remove(addedOperation);
+						}
 
 						createRefactoring(removedOperation, addedOperation, firstMapper, firstMappers.size() > 1);
 					}

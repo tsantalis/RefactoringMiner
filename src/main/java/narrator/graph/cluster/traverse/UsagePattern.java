@@ -1,14 +1,17 @@
 package narrator.graph.cluster.traverse;
 
-import com.github.gumtreediff.utils.Pair;
+import com.google.gson.JsonObject;
 import narrator.graph.Node;
-import narrator.llm.GroqClient;
-import narrator.llm.Prompts;
+import narrator.graph.NodeType;
 
-import java.io.IOException;
 import java.util.*;
 
-// TODO: add extensions
+/*
+ * EXTENSION:
+ * - variable declaration changes without any usage change: EXTENSION is using
+ * - method invocations within a variable declaration change: EXTENSION is being used
+ * */
+
 public class UsagePattern extends TraversalPattern {
     Set<Node> useNodes = new HashSet<>();
     private HashMap<Node, UsagePattern> requirements = new HashMap<>();
@@ -45,84 +48,6 @@ public class UsagePattern extends TraversalPattern {
     }
 
     @Override
-    public String textualRepresentation() {
-        HashMap<Node, String> nodeResult = new HashMap<>();
-
-        for (Node useNode : useNodes) {
-            Pair<String, String> useDecStrings = useDecRepresentation(useNode);
-            String useString = useDecStrings.first;
-            String decString = useDecStrings.second;
-
-            nodeResult.put(useNode, useString + "\n\n---\n\n" + "DECLARATIONS:\n\n" + decString);
-        }
-
-        return String.join("\n\n", nodeResult.values());
-    }
-
-    private Pair<String, String> useDecRepresentation(Node useNode) {
-        Set<Node> usedNodes = util.getUsedNodes(useNode);
-        HashMap<Node, Set<Node>> contextUsedNodes = util.getContextNodes(usedNodes.stream().toList());
-
-        return new Pair<>(useRepresentation(useNode), getContextString(contextUsedNodes));
-    }
-
-    public List<Pair<String, String>> useDecRepresentations() {
-        List<Pair<String, String>> result = new ArrayList<>();
-
-        for (Node useNode : useNodes) {
-            result.add(useDecRepresentation(useNode));
-        }
-
-        return result;
-    }
-
-    public String useRepresentation(Node useNode) {
-        List<Node> useContexts = util.getContexts(useNode);
-        String useContextString = "";
-        if (!useContexts.isEmpty()) {
-            useContextString += "\nIN\n";
-            useContextString += String.join("\nIN\n", useContexts.stream().map(Node::textualRepresentation).toList());
-        }
-
-        return useNode.textualRepresentation() + useContextString;
-    }
-
-    private String getContextString(HashMap<Node, Set<Node>> contextNodes) {
-        HashMap<Node, String> contextString = new HashMap<>();
-
-        while (!contextNodes.isEmpty()) {
-            HashMap<Node, String> iterationContextString = new HashMap<>();
-
-            for (Node context : contextNodes.keySet()) {
-                Set<Node> nodes = contextNodes.get(context);
-
-                List<Node> unprocessedNodes = nodes.stream().filter(contextNodes::containsKey).toList();
-                if (!unprocessedNodes.isEmpty()) {
-                    continue;
-                }
-
-                List<String> nodesString = nodes.stream().map(node -> {
-                    if (contextString.containsKey(node)) {
-                        // TODO: group sub-context nodes
-                        return contextString.remove(node);
-                    }
-
-                    return node.textualRepresentation();
-                }).toList();
-                iterationContextString.put(context,
-                        String.join("\nAND\n", nodesString) + "\nIN\n" + context.textualRepresentation());
-            }
-
-            for (Node node : iterationContextString.keySet()) {
-                contextNodes.remove(node);
-                contextString.put(node, iterationContextString.get(node));
-            }
-        }
-
-        return String.join("\nAND\n", contextString.values());
-    }
-
-    @Override
     public Node getLead() {
         List<Node> nodes = useNodes.stream().toList();
 
@@ -133,22 +58,36 @@ public class UsagePattern extends TraversalPattern {
     }
 
     @Override
-    public String description() throws IOException {
-        String descriptionCache = super.description();
-        if (descriptionCache != null) {
-            return descriptionCache;
+    public JsonObject stringify() {
+        JsonObject result = super.stringify();
+
+        result.addProperty("nodeType", NodeType.USAGE.name());
+
+        return result;
+    }
+
+    @Override
+    public boolean containsNode(Node node) {
+        boolean isRootNode = getGraph().vertexSet().stream().anyMatch(rootNode -> rootNode.equals(node));
+        if (isRootNode) {
+            return true;
         }
 
-        // A UsagePattern with requirements will only be described in RequirementComponent and does not have a
-        // description on its own
-        if (!requirements.isEmpty()) {
-            return null;
+        for (UsagePattern requirement : requirements.values()) {
+            if (requirement.containsNode(node)) {
+                return true;
+            }
         }
 
-        String generatedDescription = GroqClient.generate(Prompts.getUsagePatternPrompt(this));
+        return false;
+    }
 
-        setDescriptionCache(generatedDescription);
-
-        return generatedDescription;
+    @Override
+    public Set<Node> vertexSet() {
+        Set<Node> result = new HashSet<>(getGraph().vertexSet());
+        for (UsagePattern requirement : requirements.values()) {
+            result.addAll(requirement.vertexSet());
+        }
+        return result;
     }
 }

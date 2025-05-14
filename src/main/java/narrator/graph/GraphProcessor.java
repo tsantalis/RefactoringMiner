@@ -44,84 +44,33 @@ public class GraphProcessor {
         return nodeMap.containsKey(Node.formatId(path, tree));
     }
 
-    public void importHunks(String path, String srcPath, Set<Tree> additions, Set<Tree> moves, MappingStore mappings) {
-        Map<Tree, Set<Tree>> parentAdditions = new HashMap<>();
+    public void importHunks(String path, String srcPath, Set<Tree> additions, MappingStore mappings) {
+        Set<Tree> uniqueAdditions = new HashSet<>();
         for (Tree subject : additions) {
-            if (!parentAdditions.containsKey(subject)) {
-                parentAdditions.put(subject, new HashSet<>());
-            }
+            boolean isUnique = true;
 
-            Tree smallestParent = null;
             for (Tree object : additions) {
+                if (subject.equals(object)) {
+                    continue;
+                }
+
                 if (object.getPos() <= subject.getPos() && subject.getEndPos() <= object.getEndPos() && !subject.equals(object)) {
-                    if (smallestParent == null || smallestParent.getLength() > object.getLength()) {
-                        smallestParent = object;
-                    }
+                    isUnique = false;
+                    break;
                 }
             }
 
-            if (smallestParent != null) {
-                if (!parentAdditions.containsKey(smallestParent)) {
-                    parentAdditions.put(smallestParent, new HashSet<>());
-                }
-                parentAdditions.get(smallestParent).add(subject);
-            }
-        }
-
-        Map<Tree, Set<Tree>> parentMoves = new HashMap<>();
-        for (Tree move : moves) {
-            Tree smallestParent = null;
-            for (Tree parent : parentAdditions.keySet()) {
-                if (parent.getPos() <= move.getPos() && move.getEndPos() <= parent.getEndPos()) {
-                    if (smallestParent == null || smallestParent.getLength() > parent.getLength()) {
-                        smallestParent = parent;
-                    }
-                }
-            }
-
-            if (smallestParent != null) {
-                if (!parentMoves.containsKey(smallestParent)) {
-                    parentMoves.put(smallestParent, new HashSet<>());
-                }
-                parentMoves.get(smallestParent).add(move);
+            if (isUnique) {
+                uniqueAdditions.add(subject);
             }
         }
 
         String fileContent = dstContents.get(path);
         String srcContent = srcContents.get(srcPath);
-        Map<Tree, Node> treeNodeMap = new HashMap<>();
-        while (!parentAdditions.isEmpty()) {
-            Set<Tree> parents = parentAdditions.keySet();
-            Tree parent = null;
-            for (Map.Entry<Tree, Set<Tree>> parentTrees : parentAdditions.entrySet()) {
-                Optional<Tree> invalidChild = parentTrees.getValue().stream().filter(parents::contains).findFirst();
-                if (invalidChild.isPresent()) {
-                    continue;
-                }
-
-                parent = parentTrees.getKey();
-                break;
-            }
-
-            if (parent == null) {
-                break;
-            }
-
-            Set<Tree> children = parentAdditions.get(parent);
-            Set<Node> subNodes = new HashSet<>();
-            for (Tree child : children) {
-                subNodes.add(treeNodeMap.containsKey(child) ? treeNodeMap.remove(child) : new Node(fileContent, path,
-                        child));
-            }
-
-            treeNodeMap.put(parent, new Node(fileContent, path, parent, subNodes, parentMoves.get(parent)));
-            parentAdditions.remove(parent);
-        }
-
-        for (Node node : treeNodeMap.values()) {
-            List<Tree> nodeTrees = new ArrayList<>(node.getTree().getDescendants());
-            nodeTrees.add(node.getTree());
-            List<Tree> srcs = nodeTrees.stream().map(mappings::getSrcForDst).filter(Objects::nonNull).toList();
+        for (Tree addition : uniqueAdditions) {
+            List<Tree> trees = new ArrayList<>(addition.getDescendants());
+            trees.add(addition);
+            List<Tree> srcs = trees.stream().map(mappings::getSrcForDst).filter(Objects::nonNull).toList();
 
             List<Tree> uniqueSrcs = new ArrayList<>();
             for (Tree subject : srcs) {
@@ -138,10 +87,12 @@ public class GraphProcessor {
                 }
             }
 
+            Node node = new Node(fileContent, path, addition);
             if (!uniqueSrcs.isEmpty()) {
                 uniqueSrcs.sort(Comparator.comparingInt(Tree::getPos));
                 node.setSrcs(uniqueSrcs.stream().map(src -> srcContent.substring(src.getPos(), src.getEndPos())).toList());
             }
+
             addNode(node);
         }
     }
@@ -206,6 +157,7 @@ public class GraphProcessor {
 
     public void process() {
         processDefUse();
+        // TODO: how does it contribute to usage pattern if it is connected to a context class?
         processClassInstanceCreations();
         processOutOfClasses();
         processSimilarity();
@@ -337,7 +289,6 @@ public class GraphProcessor {
 
                     addEdge(node, classNode, EdgeType.DEF_USE, 1);
                 }
-
             }
         }
     }
@@ -370,7 +321,6 @@ public class GraphProcessor {
             LocationInfo operationVariableLoc = operationVariable.getLocationInfo();
             if (operationVariableLoc.getStartOffset() == variableDeclarationTree.getPos() && variableDeclarationTree.getEndPos() == operationVariableLoc.getEndOffset()) {
                 VariableDeclaration variableDeclaration = operationVariable.getVariableDeclaration();
-
 
                 List<Node> useNodes = findAccessNodes(variableDeclaration.getVariableName(),
                         variableDeclaration.getLocationInfo(),

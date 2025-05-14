@@ -3,7 +3,6 @@ package narrator.graph.cluster.traverse;
 import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.Node;
-import narrator.graph.NodeType;
 import narrator.graph.cluster.Cluster;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.jgrapht.Graph;
@@ -31,21 +30,18 @@ public class TraversalEngine {
     private void process() {
         // add patterns
         addUsageComponents();
-        addDeclarationComponents();
         addSuccessiveComponents();
         addSingularComponents();
 
         // find pattern MST
         // requirements
-        mergeUsagesRequirements();
-        // same non-context node (e.g. requirement)
-        //        mergeByContributingNodes((node) -> !node.isContext());
+        pruneUsageComponents();
+        // common non-context nodes
         mergeByStrongestCommonNodes((node) -> !node.isContext());
-        // 100% similar nodes
+        // 100% similar nodes (common nodes should have higher priority than similar nodes)
         mergeSimilarNodes();
-        // successive nodes
-        // same context
-        // mergeCommonNodes(Node::isContext);
+        // common context nodes
+        mergeByStrongestCommonNodes(null);
     }
 
     private final List<String> unacceptedSuccessiveNodes = new ArrayList<>() {{
@@ -80,6 +76,32 @@ public class TraversalEngine {
                 components.add(successivePattern);
             }
         }
+
+        // successive pattern is for expanding to immediate neighbors of other patterns
+        // if all nodes are already covered in other patterns, there is no value to have it
+        for (SuccessivePattern successivePattern : successivePatterns.values()) {
+            boolean hasUncoveredNode = false;
+            for (Node node : successivePattern.vertexSet()) {
+                boolean isNodeCovered = false;
+                for (TraversalPattern component : components) {
+                    if (!component.equals(successivePattern) && component.containsNode(node)) {
+                        isNodeCovered = true;
+                        break;
+                    }
+                }
+
+                if (!isNodeCovered) {
+                    hasUncoveredNode = true;
+                    break;
+                }
+            }
+
+            if (hasUncoveredNode) {
+                continue;
+            }
+
+            components.remove(successivePattern);
+        }
     }
 
     private void mergeCommentComponent(HashMap<Node, SuccessivePattern> commentPatterns, Node sourceNode,
@@ -100,8 +122,7 @@ public class TraversalEngine {
     }
 
     private void addUsageComponents() {
-        List<Node> useNodes =
-                Centrality.usedDeclarations(graph).stream().filter(node -> node.getNodeType().equals(NodeType.BASE)).toList();
+        List<Node> useNodes = Centrality.usedDeclarations(graph).stream().toList();
         HashMap<Node, UsagePattern> usagePatterns = new HashMap<>();
         for (Node useNode : useNodes) {
             addUsageComponent(useNode, new ArrayList<>(), usagePatterns);
@@ -156,34 +177,6 @@ public class TraversalEngine {
         usagePatterns.put(node, usageComponent);
     }
 
-    private void addDeclarationComponents() {
-        List<Node> useNodes =
-                Centrality.usedDeclarations(graph).stream().filter(node -> node.getNodeType().equals(NodeType.EXTENSION)).toList();
-        for (Node useNode : useNodes) {
-            addDeclarationComponent(useNode);
-        }
-    }
-
-    private void addDeclarationComponent(Node node) {
-        DeclarationPattern declarationComponent = new DeclarationPattern(node);
-        addContext(node, declarationComponent);
-
-        Set<Node> usedNodes = util.getUsedNodes(node);
-        for (Node usedNode : usedNodes) {
-            declarationComponent.addEdge(usedNode, node, new Edge(EdgeType.DEF_USE, 1));
-            addContext(usedNode, declarationComponent);
-
-            List<Node> usedNodeExtensions =
-                    graph.incomingEdgesOf(usedNode).stream().filter(edge -> edge.getType().equals(EdgeType.DEF_USE)).map(edge -> graph.getEdgeSource(edge)).filter(n -> n.getNodeType().equals(NodeType.EXTENSION)).toList();
-            for (Node usedNodeExtension : usedNodeExtensions) {
-                declarationComponent.addDeclarationExtension(usedNode, usedNodeExtension);
-                addContext(usedNodeExtension, declarationComponent);
-            }
-        }
-
-        components.add(declarationComponent);
-    }
-
     private void addContext(Node node, TraversalPattern traversalPattern) {
         List<Node> contexts = util.getContexts(node);
         Node currentNode = node;
@@ -226,7 +219,7 @@ public class TraversalEngine {
         }
     }
 
-    private void mergeUsagesRequirements() {
+    private void pruneUsageComponents() {
         List<UsagePattern> usageComponents = new ArrayList<>();
         for (TraversalPattern component : components) {
             if (component instanceof UsagePattern) {
@@ -234,47 +227,58 @@ public class TraversalEngine {
             }
         }
 
-        Map<UsagePattern, TraversalPattern> usageComponentsRepresentative = new HashMap<>();
-        for (UsagePattern usageComponent : usageComponents) {
-            usageComponentsRepresentative.put(usageComponent, usageComponent);
+        for (UsagePattern subject : usageComponents) {
+            boolean isSubjectRequirement =
+                    usageComponents.stream().anyMatch(object -> object.getRequirements().containsValue(subject));
+            if (isSubjectRequirement) {
+                components.remove(subject);
+            }
         }
-        Map<UsagePattern, Integer> usageComponentsRequirements = new HashMap<>();
-        for (UsagePattern usageComponent : usageComponents) {
-            usageComponentsRequirements.put(usageComponent, usageComponent.getRequirements().keySet().size());
-        }
 
-        while (!usageComponents.isEmpty()) {
-            Optional<UsagePattern> optionalSubject = usageComponents.stream().filter(usageComponent -> {
-                Collection<UsagePattern> requirements = usageComponent.getRequirements().values();
-                return requirements.stream().allMatch(requirement -> usageComponentsRequirements.get(requirement) == 0);
-            }).findFirst();
-            if (optionalSubject.isEmpty()) {
-                break;
-            }
-            UsagePattern subject = optionalSubject.get();
 
-            HashMap<Node, UsagePattern> requirements = subject.getRequirements();
-            if (requirements.keySet().isEmpty()) {
-                usageComponents.remove(subject);
-                continue;
-            }
-
-            Map<Node, TraversalPattern> requirementsMap = new HashMap<>();
-            for (Map.Entry<Node, UsagePattern> requirement : requirements.entrySet()) {
-                requirementsMap.put(requirement.getKey(), usageComponentsRepresentative.get(requirement.getValue()));
-            }
-            TraversalComponent parentComponent = new RequirementComponent(subject, requirementsMap);
-
-            for (TraversalPattern requirement : requirementsMap.values()) {
-                components.remove(requirement);
-            }
-            components.remove(subject);
-            components.add(parentComponent);
-
-            usageComponents.remove(subject);
-            usageComponentsRepresentative.put(subject, parentComponent);
-            usageComponentsRequirements.put(subject, 0);
-        }
+        //        Map<UsagePattern, TraversalPattern> usageComponentsRepresentative = new HashMap<>();
+        //        for (UsagePattern usageComponent : usageComponents) {
+        //            usageComponentsRepresentative.put(usageComponent, usageComponent);
+        //        }
+        //        Map<UsagePattern, Integer> usageComponentsRequirements = new HashMap<>();
+        //        for (UsagePattern usageComponent : usageComponents) {
+        //            usageComponentsRequirements.put(usageComponent, usageComponent.getRequirements().keySet().size());
+        //        }
+        //
+        //        while (!usageComponents.isEmpty()) {
+        //            Optional<UsagePattern> optionalSubject = usageComponents.stream().filter(usageComponent -> {
+        //                Collection<UsagePattern> requirements = usageComponent.getRequirements().values();
+        //                return requirements.stream().allMatch(requirement -> usageComponentsRequirements.get
+        //                (requirement) == 0);
+        //            }).findFirst();
+        //            if (optionalSubject.isEmpty()) {
+        //                break;
+        //            }
+        //            UsagePattern subject = optionalSubject.get();
+        //
+        //            HashMap<Node, UsagePattern> requirements = subject.getRequirements();
+        //            if (requirements.keySet().isEmpty()) {
+        //                usageComponents.remove(subject);
+        //                continue;
+        //            }
+        //
+        //            Map<Node, TraversalPattern> requirementsMap = new HashMap<>();
+        //            for (Map.Entry<Node, UsagePattern> requirement : requirements.entrySet()) {
+        //                requirementsMap.put(requirement.getKey(), usageComponentsRepresentative.get(requirement
+        //                .getValue()));
+        //            }
+        //            TraversalComponent parentComponent = new RequirementComponent(subject, requirementsMap);
+        //
+        //            for (TraversalPattern requirement : requirementsMap.values()) {
+        //                components.remove(requirement);
+        //            }
+        //            components.remove(subject);
+        //            components.add(parentComponent);
+        //
+        //            usageComponents.remove(subject);
+        //            usageComponentsRepresentative.put(subject, parentComponent);
+        //            usageComponentsRequirements.put(subject, 0);
+        //        }
     }
 
     /*

@@ -2,61 +2,61 @@ package narrator;
 
 import narrator.graph.cluster.Cluster;
 import narrator.graph.cluster.Clusterer;
-import narrator.excel.ExcelOperator;
 import narrator.graph.CommitGraph;
 import narrator.graph.Edge;
 import narrator.graph.Node;
 import narrator.json.Stringifier;
-import narrator.llm.OpenAIClient;
 import org.jgrapht.Graph;
-import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GitHub;
 import org.refactoringminer.astDiff.utils.URLHelper;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.InputStream;
-import java.util.ArrayList;
+import java.io.*;
 import java.util.List;
-import java.util.Properties;
-import java.util.concurrent.CompletableFuture;
 
 public class Driver {
-    private static final int BATCH_SIZE = 10;
-
     public static void main(String[] args) throws Exception {
+        purgeOutputDir();
+
         String url = "https://github.com/JetBrains/intellij-community/commit/7ed3f273ab0caf0337c22f0b721d51829bb0c877";
-        stringifyCommit(url);
+
+        List<Cluster> clusters = getClusters(url);
+
+        List<String> stringifiedClusters = getStringifiedClusters(clusters);
+        for (int i = 0; i < stringifiedClusters.size(); i++) {
+            writeFile(url, "cluster_" + i, stringifiedClusters.get(i));
+        }
+
+        String stringifiedCommit = getStringifiedCommit(url, clusters);
+        writeFile(url, null, stringifiedCommit);
     }
 
-    private static void writeClusters(String url) throws Exception {
+    public static List<Cluster> getClusters(String url) {
         Graph<Node, Edge> graph = CommitGraph.get(url);
         Clusterer clusterer = new Clusterer(graph);
-        List<Cluster> clusters = clusterer.getClusters();
+        return clusterer.getClusters();
+    }
 
+    private static List<String> getStringifiedClusters(List<Cluster> clusters) {
+        return clusters.stream().map(cluster -> Stringifier.stringifyGraph(cluster.getGraph())).toList();
+    }
+
+    private static String getFileName(String url, String metadata) {
         String ownerAndRepo = URLHelper.getOwnerAndRepo(url);
-        String owner = ownerAndRepo.split("/")[0];
-        String repo = ownerAndRepo.split("/")[1];
+        String[] splitOwnerRepo = ownerAndRepo.split("/");
+
+        String owner = splitOwnerRepo[0];
+        String repo = splitOwnerRepo[1];
         String sha = URLHelper.getCommit(url);
 
-        FileWriter writer = new FileWriter(String.format("./clusters/%s_%s_%s.txt", owner, repo, sha));
-        writer.write(String.join("\n\n---\n\n", clusters.stream().map(Cluster::get).toList()));
-        writer.close();
+        StringBuilder result = new StringBuilder(String.format("%s_%s_%s", owner, repo, sha));
+        if (metadata != null) {
+            result.append("-").append(metadata);
+        }
+        result.append(".json");
+
+        return result.toString();
     }
 
-    private static void stringifyCommitGraph(String url) throws Exception {
-        Graph<Node, Edge> graph = CommitGraph.get(url);
-        FileWriter writer = new FileWriter("./graph.json");
-        writer.write(Stringifier.stringifyGraph(graph));
-        writer.close();
-    }
-
-    private static void stringifyCommit(String url) throws Exception {
-        Graph<Node, Edge> graph = CommitGraph.get(url);
-        Clusterer clusterer = new Clusterer(graph);
-        List<Cluster> clusters = clusterer.getClusters();
-
+    private static void purgeOutputDir() {
         File directory = new File("./json");
         if (directory.exists()) {
             for (File file : directory.listFiles()) {
@@ -65,82 +65,15 @@ public class Driver {
         } else {
             directory.mkdirs();
         }
+    }
 
-        for (int i = 0; i < clusters.size(); i++) {
-            FileWriter writer = new FileWriter(String.format("./json/cluster-%s.json", i));
-            writer.write(Stringifier.stringifyGraph(clusters.get(i).getGraph()));
-            writer.close();
-        }
-
-        FileWriter writer = new FileWriter("./json/commit.json");
-        writer.write(Stringifier.stringifyCommit(url, clusters));
+    private static void writeFile(String url, String metadata, String content) throws IOException {
+        FileWriter writer = new FileWriter("./json/" + getFileName(url, metadata));
+        writer.write(content);
         writer.close();
     }
 
-    private static void describeExcel() throws Exception {
-        Properties prop = new Properties();
-        InputStream input = new FileInputStream("github-oauth.properties");
-        prop.load(input);
-        GitHub github = GitHub.connectUsingOAuth(prop.getProperty("OAuthToken"));
-
-        List<String> urls = ExcelOperator.readCommits("commits.xlsx");
-        int index = 0;
-        // 0.000277$ per addition
-        // 0.026s per addition for cluster
-        // 0.147s per addition overall
-        for (String url : urls) {
-            String ownerAndRepo = URLHelper.getOwnerAndRepo(url);
-
-            String owner = ownerAndRepo.split("/")[0];
-            String repo = ownerAndRepo.split("/")[1];
-            String sha = URLHelper.getCommit(url);
-
-            GHCommit commit = github.getRepository(ownerAndRepo).getCommit(sha);
-            int additions = commit.getLinesAdded();
-            int deletions = commit.getLinesDeleted();
-
-            long start = System.nanoTime();
-
-            Graph<Node, Edge> graph = CommitGraph.get(url);
-            Clusterer clusterer = new Clusterer(graph);
-            List<Cluster> clusters = clusterer.getClusters();
-
-            long clusterTiming = System.nanoTime() - start;
-
-            FileWriter writer = new FileWriter(String.format("./clusters/%s_%s_%s.txt", owner, repo, sha));
-            writer.write(String.join("\n\n---\n\n", clusters.stream().map(Cluster::get).toList()));
-            writer.close();
-
-            List<String> allDescriptions = new ArrayList<>();
-            for (int i = 0; i < clusters.size(); i += BATCH_SIZE) {
-                int endIndex = Math.min(i + BATCH_SIZE, clusters.size());
-                List<Cluster> batch = clusters.subList(i, endIndex);
-
-                List<CompletableFuture<String>> futures =
-                        batch.stream().map(cluster -> CompletableFuture.supplyAsync(() -> {
-                    try {
-                        return OpenAIClient.getClusterDescription(cluster.get());
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })).toList();
-                CompletableFuture<List<String>> batchDescriptionsFuture =
-                        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).thenApply(v -> futures.stream().map(CompletableFuture::join).toList());
-                List<String> batchDescriptions = batchDescriptionsFuture.get();
-
-                allDescriptions.addAll(batchDescriptions);
-            }
-
-            writer = new FileWriter(String.format("./descriptions/%s_%s_%s.txt", owner, repo, sha));
-            writer.write(String.join("\n\n---\n\n", allDescriptions));
-            writer.close();
-
-            long overallTiming = System.nanoTime() - start;
-            ExcelOperator.appendTiming(owner, repo, sha, additions, deletions, clusterTiming, overallTiming);
-
-            System.out.printf("%s/%s - %s%n", ++index, urls.size(), clusters.size());
-
-            Thread.sleep(clusters.size() * 500L);
-        }
+    public static String getStringifiedCommit(String url, List<Cluster> clusters) throws IOException {
+        return Stringifier.stringifyCommit(url, clusters);
     }
 }

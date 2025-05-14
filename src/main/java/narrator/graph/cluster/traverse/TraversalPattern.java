@@ -1,33 +1,16 @@
 package narrator.graph.cluster.traverse;
 
 import com.github.gumtreediff.tree.Tree;
+import com.google.gson.JsonObject;
 import narrator.graph.Node;
 import narrator.graph.cluster.GraphWrapper;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
 public class TraversalPattern extends GraphWrapper {
     protected final Util util = new Util(getGraph());
-    private String descriptionCache = null;
-
-    protected void setDescriptionCache(String descriptionCache) {
-        this.descriptionCache = descriptionCache;
-    }
-
-    public String textualRepresentation() {
-        return null;
-    }
-
-    public String description() throws IOException {
-        return descriptionCache;
-    }
-
-    public String getDescriptionCache() {
-        return descriptionCache;
-    }
 
     public Node getLead() {
         List<Node> nodes = getGraph().vertexSet().stream().toList();
@@ -42,6 +25,14 @@ public class TraversalPattern extends GraphWrapper {
         Node lead = getLead();
         Tree tree = lead.getTree();
         return getClass().getSimpleName() + "-" + tree.getPos() + '-' + tree.getEndPos() + '-' + System.identityHashCode(this);
+    }
+
+    public JsonObject stringify() {
+        JsonObject nodeObj = new JsonObject();
+
+        nodeObj.addProperty("id", getId());
+
+        return nodeObj;
     }
 
     public Set<Node> vertexSet() {

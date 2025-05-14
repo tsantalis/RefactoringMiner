@@ -1,7 +1,7 @@
 package narrator.graph.cluster.traverse;
 
 public enum ReasonType {
-    COMMON("common"), SIMILAR("similar"), REQUIREMENT("requirement");
+    COMMON("common"), SIMILAR("similar");
 
     String label;
 

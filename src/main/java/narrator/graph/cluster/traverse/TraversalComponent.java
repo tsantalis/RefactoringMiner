@@ -1,10 +1,10 @@
 package narrator.graph.cluster.traverse;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import narrator.graph.Node;
-import narrator.llm.GroqClient;
-import narrator.llm.Prompts;
+import narrator.graph.NodeType;
 
-import java.io.IOException;
 import java.util.*;
 
 public class TraversalComponent extends TraversalPattern {
@@ -59,26 +59,18 @@ public class TraversalComponent extends TraversalPattern {
     }
 
     @Override
-    public String textualRepresentation() {
-        return String.join("\n\n", reasons.stream().map(Node::textualRepresentation).toList());
-    }
+    public JsonObject stringify() {
+        JsonObject result = super.stringify();
 
-    @Override
-    public String description() throws IOException {
-        String descriptionCache = super.description();
-        if (descriptionCache != null) {
-            return descriptionCache;
+        JsonArray reasonsJson = new JsonArray();
+        for (Node reason : reasons) {
+            reasonsJson.add(reason.getContent());
         }
+        result.add("reasons", reasonsJson);
 
-        List<String> componentsDescription = new ArrayList<>();
-        for (TraversalPattern component : components) {
-            componentsDescription.add(component.description());
-        }
-        String generatedDescription = GroqClient.generate(Prompts.getComponentPrompt(componentsDescription, reasons,
-                reasonType));
+        result.addProperty("reasonType", reasonType.name());
+        result.addProperty("nodeType", NodeType.COMPONENT.name());
 
-        setDescriptionCache(generatedDescription);
-
-        return generatedDescription;
+        return result;
     }
 }

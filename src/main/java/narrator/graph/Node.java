@@ -2,6 +2,8 @@ package narrator.graph;
 
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
@@ -13,13 +15,40 @@ public class Node {
     private final String fileContent;
     private boolean active = true;
     private final Tree tree;
-    private Set<Node> subNodes = null;
-    private Set<Tree> subMoves = null;
     private final int startLine;
     private final int endLine;
     private NodeType nodeType;
-    private List<ContentRange> contentRanges = null;
     private List<String> srcs = null;
+
+    public String getSubAggregatorId(String aggregatorId) {
+        String result = id;
+        if (!aggregatorId.isEmpty()) {
+            result += "-" + aggregatorId;
+        }
+        return result;
+    }
+
+    public JsonObject stringify(String aggregatorId) {
+        JsonObject nodeObj = new JsonObject();
+
+        nodeObj.addProperty("id", getSubAggregatorId(aggregatorId));
+        nodeObj.addProperty("hunkId", id);
+        nodeObj.addProperty("path", path);
+        nodeObj.addProperty("content", getContent());
+        nodeObj.addProperty("startLine", startLine);
+        nodeObj.addProperty("endLine", endLine);
+        nodeObj.addProperty("nodeType", nodeType.name());
+
+        if (srcs != null) {
+            JsonArray srcsArr = new JsonArray();
+            for (String src : srcs) {
+                srcsArr.add(src);
+            }
+            nodeObj.add("srcs", srcsArr);
+        }
+
+        return nodeObj;
+    }
 
     public void setSrcs(List<String> srcs) {
         this.srcs = srcs;
@@ -44,12 +73,6 @@ public class Node {
     public Node(String fileContent, String path, Tree tree, NodeType nodeType) {
         this(fileContent, path, tree);
         this.nodeType = nodeType;
-    }
-
-    public Node(String fileContent, String path, Tree tree, Set<Node> subNodes, Set<Tree> subMoves) {
-        this(fileContent, path, tree);
-        this.subNodes = subNodes;
-        this.subMoves = subMoves;
     }
 
     public String getId() {
@@ -84,106 +107,6 @@ public class Node {
         return endLine;
     }
 
-    private List<ContentRange> getContentRanges() {
-        if (contentRanges != null) {
-            return contentRanges;
-        }
-
-        List<ContentRange> ranges = new ArrayList<>();
-
-        if (subNodes == null || subNodes.isEmpty()) {
-            ranges.add(new ContentRange(tree.getPos(), tree.getEndPos(), true));
-            return ranges;
-        }
-
-        List<Node> sortedSubNodes = new ArrayList<>(subNodes);
-        sortedSubNodes.sort(Comparator.comparingInt(n -> n.getTree().getPos()));
-
-        int processedPos = getTree().getPos();
-        for (Node subNode : sortedSubNodes) {
-            int pos = subNode.getTree().getPos();
-            int startGap = pos - processedPos;
-            if (startGap > 0) {
-                ranges.addAll(getSubMoveContentRanges(processedPos, pos));
-            }
-
-            ranges.addAll(subNode.getContentRanges());
-
-            processedPos = subNode.getTree().getEndPos();
-        }
-
-        ranges.addAll(getSubMoveContentRanges(processedPos, getTree().getEndPos()));
-
-        List<ContentRange> mergedRanges = new ArrayList<>();
-        ContentRange currentRange = null;
-        for (ContentRange range : ranges) {
-            if (currentRange == null || currentRange.isAddition != range.isAddition) {
-                if (currentRange != null) {
-                    mergedRanges.add(currentRange);
-                }
-
-                currentRange = new ContentRange(range.pos, range.endPos, range.isAddition);
-                continue;
-            }
-
-            currentRange.endPos = range.endPos;
-        }
-
-        if (currentRange != null) {
-            mergedRanges.add(currentRange);
-        }
-
-        contentRanges = mergedRanges;
-
-        return mergedRanges;
-    }
-
-    private boolean getIsCensor() {
-        List<ContentRange> contentRanges = getContentRanges();
-        return contentRanges.stream().anyMatch(cr -> !cr.isAddition);
-    }
-
-    private List<ContentRange> getSubMoveContentRanges(int pos, int endPos) {
-        List<ContentRange> ranges = new ArrayList<>();
-
-        if (subMoves == null || subMoves.isEmpty()) {
-            ranges.add(new ContentRange(pos, endPos, true));
-            return ranges;
-        }
-
-        List<Pair<Integer, Integer>> overlaps = new ArrayList<>();
-        for (Tree subMove : subMoves) {
-            int maxPos = Math.max(pos, subMove.getPos());
-            int minEndPos = Math.min(endPos, subMove.getEndPos());
-
-            if (maxPos <= minEndPos) {
-                overlaps.add(new Pair<>(maxPos, minEndPos));
-            }
-        }
-
-        List<Pair<Integer, Integer>> sortedOverlaps = new ArrayList<>(overlaps);
-        sortedOverlaps.sort(Comparator.comparingInt(n -> n.first));
-
-        int processedPos = pos;
-        for (Pair<Integer, Integer> overlap : sortedOverlaps) {
-            int startGap = overlap.first - processedPos;
-            if (startGap > 0) {
-                ranges.add(new ContentRange(processedPos, overlap.first, true));
-            }
-
-            ranges.add(new ContentRange(overlap.first, overlap.second, false));
-
-            processedPos = overlap.second;
-        }
-
-        int endGap = endPos - processedPos;
-        if (endGap > 0) {
-            ranges.add(new ContentRange(processedPos, endPos, true));
-        }
-
-        return ranges;
-    }
-
     public String getContent() {
         if (isContext()) {
             String type = tree.getType().name;
@@ -199,36 +122,7 @@ public class Node {
             }
         }
 
-        StringBuilder result = new StringBuilder(fileContent.substring(tree.getPos(), tree.getEndPos()));
-        if (srcs != null) {
-            result.append("\nThe code above is the result of the change to the code below:\n");
-            result.append(String.join("\n", srcs));
-        }
-
-        return result.toString();
-    }
-
-    private String getCensoredContent() {
-        List<ContentRange> contentRanges = getContentRanges();
-
-        if (contentRanges.size() == 1) {
-            ContentRange contentRange = contentRanges.get(0);
-            return fileContent.substring(contentRange.pos, contentRange.endPos);
-        }
-
-        StringBuilder result = new StringBuilder();
-
-        for (ContentRange contentRange : contentRanges) {
-            String rangeString = fileContent.substring(contentRange.pos, contentRange.endPos);
-
-            if (!contentRange.isAddition) {
-                rangeString = rangeString.replaceAll("[^\\s]", "*");
-            }
-
-            result.append(rangeString);
-        }
-
-        return result.toString();
+        return fileContent.substring(tree.getPos(), tree.getEndPos());
     }
 
     public String getFileContent() {
@@ -254,14 +148,6 @@ public class Node {
         }
 
         return new Node(this.fileContent, this.path, parentTree, NodeType.CONTEXT);
-    }
-
-    public Node getParentUntilType(String type) {
-        Tree parent = TreeUtilFunctions.getParentUntilType(tree, type);
-        if (parent == null) {
-            return null;
-        }
-        return new Node(this.fileContent, this.path, parent, NodeType.CONTEXT);
     }
 
     public Pair<Node, Node> getSiblings() {
@@ -304,23 +190,18 @@ public class Node {
 
     public String textualRepresentation() {
         if (isContext()) {
+            String result = "";
+
             String type = tree.getType().name;
-            return typeTextualRepresentation.containsKey(type) ?
-                    typeTextualRepresentation.get(type) + " \"" + getContent() + "\"" : "\"" + getContent() + "\"";
+            if (typeTextualRepresentation.containsKey(type)) {
+                result += typeTextualRepresentation.get(type) + " ";
+            }
+
+            result += "\"" + getContent() + "\"";
+
+            return result;
         }
 
         return getContent();
-    }
-}
-
-class ContentRange {
-    int pos;
-    int endPos;
-    boolean isAddition;
-
-    ContentRange(int pos, int endPos, boolean isAddition) {
-        this.pos = pos;
-        this.endPos = endPos;
-        this.isAddition = isAddition;
     }
 }

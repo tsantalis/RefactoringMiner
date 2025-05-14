@@ -1,6 +1,8 @@
 package narrator.graph.cluster.traverse;
 
+import com.google.gson.JsonObject;
 import narrator.graph.Node;
+import narrator.graph.NodeType;
 
 import java.util.List;
 
@@ -13,16 +15,16 @@ public class SingularPattern extends TraversalPattern {
     }
 
     @Override
-    public String textualRepresentation() {
-        List<Node> contexts = util.getContexts(node);
-        
-        return node.getContent()
-                + "\nIN\n"
-                + String.join("\nIN\n", contexts.stream().map(Node::textualRepresentation).toList());
+    public Node getLead() {
+        return node;
     }
 
     @Override
-    public Node getLead() {
-        return node;
+    public JsonObject stringify() {
+        JsonObject result = super.stringify();
+
+        result.addProperty("nodeType", NodeType.SINGULAR.name());
+
+        return result;
     }
 }

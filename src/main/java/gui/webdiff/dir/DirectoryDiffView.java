@@ -413,6 +413,7 @@ public class DirectoryDiffView implements Renderable {
                         .div(class_("card card-body"));
                         //ALL refactorings checkbox
                         html
+                        .div(class_("d-flex flex-wrap")) 
                         .div(class_("form-check"))
                         .input(class_("form-check-input").type("checkbox").id("refactoringType").value("").checked(""))
                         .label(class_("form-check-label").for_("refactoringType")).write("ALL (" + refactorings.size() + ")")
@@ -428,6 +429,7 @@ public class DirectoryDiffView implements Renderable {
                             ._label()
                             ._div();
                         }
+                        html._div();
                     html.ol(class_("list-group list-group-numbered"));
                         for(Refactoring r : refactorings) {
                         	Set<ImmutablePair<String, String>> before = r.getInvolvedClassesBeforeRefactoring();

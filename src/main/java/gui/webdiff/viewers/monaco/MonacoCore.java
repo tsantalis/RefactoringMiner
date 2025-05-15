@@ -7,6 +7,7 @@ import com.github.gumtreediff.actions.TreeClassifier;
 import com.github.gumtreediff.tree.Tree;
 
 import gr.uom.java.xmi.UMLComment;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
@@ -17,11 +18,14 @@ import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineAttributeRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
+import gr.uom.java.xmi.diff.MergeConditionalRefactoring;
 import gr.uom.java.xmi.diff.MergeOperationRefactoring;
 import gr.uom.java.xmi.diff.MoveAttributeRefactoring;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring;
 import gr.uom.java.xmi.diff.MoveOperationRefactoring;
 import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
+import gr.uom.java.xmi.diff.ReplaceConditionalWithTernaryRefactoring;
+import gr.uom.java.xmi.diff.SplitConditionalRefactoring;
 import gr.uom.java.xmi.diff.SplitOperationRefactoring;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -450,6 +454,43 @@ public class MonacoCore {
     			String tooltip = generateTooltip(t, c, inline.getSubExpressionMappings(), tooltipLeft, tooltipRight);
 				if(tooltip != null)
 					tooltips.add(tooltip);
+    		}
+    		else if(r instanceof SplitConditionalRefactoring) {
+    			SplitConditionalRefactoring split = (SplitConditionalRefactoring)r;
+    			String tooltipLeft = "split conditional";
+    			String tooltipRight = "split conditional";
+    			if(subsumes(split.getOriginalConditional().codeRange(),t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
+    				tooltips.add(tooltipLeft);
+    			}
+    			for(AbstractCodeFragment fragment : split.getSplitConditionals()) {
+	    			if(subsumes(fragment.codeRange(),t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
+	    				tooltips.add(tooltipRight);
+	    			}
+    			}
+    		}
+    		else if(r instanceof MergeConditionalRefactoring) {
+    			MergeConditionalRefactoring merge = (MergeConditionalRefactoring)r;
+    			String tooltipLeft = "merge conditional";
+    			String tooltipRight = "merge conditional";
+    			for(AbstractCodeFragment fragment : merge.getMergedConditionals()) {
+	    			if(subsumes(fragment.codeRange(),t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
+	    				tooltips.add(tooltipLeft);
+	    			}
+    			}
+    			if(subsumes(merge.getNewConditional().codeRange(),t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
+    				tooltips.add(tooltipRight);
+    			}
+    		}
+    		else if(r instanceof ReplaceConditionalWithTernaryRefactoring) {
+    			ReplaceConditionalWithTernaryRefactoring replace = (ReplaceConditionalWithTernaryRefactoring)r;
+    			String tooltipLeft = "conditional to ternary";
+    			String tooltipRight = "conditional to ternary";
+    			if(subsumes(replace.getOriginalConditional().codeRange(),t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
+    				tooltips.add(tooltipLeft);
+    			}
+    			if(subsumes(replace.getTernaryConditional().codeRange(),t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
+    				tooltips.add(tooltipRight);
+    			}
     		}
     	}
     	if(tooltips.isEmpty() && t.getType().toString().endsWith("Declaration") && srcFileName.equals(dstFileName)) {

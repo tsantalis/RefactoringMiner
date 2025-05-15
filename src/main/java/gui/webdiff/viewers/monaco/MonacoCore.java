@@ -11,8 +11,10 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.CodeRange;
+import gr.uom.java.xmi.diff.ExtractAttributeRefactoring;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
+import gr.uom.java.xmi.diff.InlineAttributeRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.MergeOperationRefactoring;
@@ -429,6 +431,22 @@ public class MonacoCore {
     			InlineVariableRefactoring inline = (InlineVariableRefactoring)r;
     			String tooltipLeft = "inlined from variable " + inline.getVariableDeclaration().getVariableName();
     			String tooltipRight = "inlined from variable " + inline.getVariableDeclaration().getVariableName();
+    			String tooltip = generateTooltip(t, c, inline.getSubExpressionMappings(), tooltipLeft, tooltipRight);
+				if(tooltip != null)
+					tooltips.add(tooltip);
+    		}
+    		else if(r instanceof ExtractAttributeRefactoring) {
+    			ExtractAttributeRefactoring extract = (ExtractAttributeRefactoring)r;
+    			String tooltipLeft = "extracted to attribute " + extract.getVariableDeclaration().getName();
+    			String tooltipRight = "extracted to attribute " + extract.getVariableDeclaration().getName();
+    			String tooltip = generateTooltip(t, c, extract.getSubExpressionMappings(), tooltipLeft, tooltipRight);
+				if(tooltip != null)
+					tooltips.add(tooltip);
+    		}
+    		else if(r instanceof InlineAttributeRefactoring) {
+    			InlineAttributeRefactoring inline = (InlineAttributeRefactoring)r;
+    			String tooltipLeft = "inlined from attribute " + inline.getVariableDeclaration().getName();
+    			String tooltipRight = "inlined from attribute " + inline.getVariableDeclaration().getName();
     			String tooltip = generateTooltip(t, c, inline.getSubExpressionMappings(), tooltipLeft, tooltipRight);
 				if(tooltip != null)
 					tooltips.add(tooltip);

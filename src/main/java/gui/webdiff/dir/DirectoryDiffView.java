@@ -486,6 +486,9 @@ public class DirectoryDiffView implements Renderable {
                         	}
 							for(CodeRange range : r.leftSide()) {
                         		String codeElement = range.getCodeElement();
+                        		if(codeElement != null && codeElement.endsWith("\n")) {
+                        			codeElement = codeElement.substring(0, codeElement.length()-1);
+                        		}
 								if(codeElement != null && description.contains(codeElement) && !processed.contains(codeElement)) {
                         			String codeElementTag = openingTag + codeElement.replace("<", "&lt").replace(">", "&gt") + closingTag;
                         			description = description.replace(codeElement, codeElementTag);
@@ -494,6 +497,9 @@ public class DirectoryDiffView implements Renderable {
                         	}
                         	for(CodeRange range : r.rightSide()) {
                         		String codeElement = range.getCodeElement();
+                        		if(codeElement != null && codeElement.endsWith("\n")) {
+                        			codeElement = codeElement.substring(0, codeElement.length()-1);
+                        		}
 								if(codeElement != null && description.contains(codeElement) && !processed.contains(codeElement)) {
                         			String codeElementTag = openingTag + codeElement.replace("<", "&lt").replace(">", "&gt") + closingTag;
                         			description = description.replace(codeElement, codeElementTag);

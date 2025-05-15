@@ -137,18 +137,18 @@ public class GraphProcessor {
             if (graph.getEdge(lastNode, contextNode) != null) {
                 break;
             }
-            graph.addEdge(lastNode, contextNode, new Edge(EdgeType.CONTEXT, 1));
+            graph.addEdge(lastNode, contextNode, new Edge(EdgeType.CONTEXT));
 
             lastNode = contextNode;
         }
     }
 
-    private void addEdge(Node node1, Node node2, EdgeType edgeType, float weight) {
+    private void addEdge(Node node1, Node node2, EdgeType edgeType) {
         if (node1.equals(node2)) {
             return;
         }
 
-        graph.addEdge(node1, node2, new Edge(edgeType, weight));
+        graph.addEdge(node1, node2, new Edge(edgeType));
     }
 
     public Graph<Node, Edge> getGraph() {
@@ -230,7 +230,7 @@ public class GraphProcessor {
                 List<Node> useNodes = findAccessNodes(umlAttribute.getVariableDeclaration().getVariableName(),
                         umlAttribute.getLocationInfo(), modelDiff.findFieldAccessesInChildModel(umlAttribute));
                 for (Node useNode : useNodes) {
-                    addEdge(node, useNode, EdgeType.DEF_USE, 1);
+                    addEdge(node, useNode, EdgeType.DEF_USE);
                 }
             }
 
@@ -287,7 +287,7 @@ public class GraphProcessor {
                         continue;
                     }
 
-                    addEdge(node, classNode, EdgeType.DEF_USE, 1);
+                    addEdge(node, classNode, EdgeType.DEF_USE);
                 }
             }
         }
@@ -326,7 +326,7 @@ public class GraphProcessor {
                         variableDeclaration.getLocationInfo(),
                         variableDeclaration.getScope().getStatementsInScopeUsingVariable());
                 for (Node useNode : useNodes) {
-                    addEdge(node, useNode, EdgeType.DEF_USE, 1);
+                    addEdge(node, useNode, EdgeType.DEF_USE);
                 }
 
                 AbstractExpression variableInitStatement = operationVariable.getInitializer();
@@ -349,7 +349,7 @@ public class GraphProcessor {
                     }
 
                     Node declarationNode = addTreeNode(path, tree, NodeType.EXTENSION);
-                    addEdge(declarationNode, node, EdgeType.DEF_USE, 1);
+                    addEdge(declarationNode, node, EdgeType.DEF_USE);
                 }
             }
         }
@@ -363,7 +363,7 @@ public class GraphProcessor {
 
         List<Node> invocationNodes = findInvocationNodes(operation);
         for (Node invocationNode : invocationNodes) {
-            addEdge(node, invocationNode, EdgeType.DEF_USE, 1);
+            addEdge(node, invocationNode, EdgeType.DEF_USE);
         }
     }
 
@@ -543,7 +543,7 @@ public class GraphProcessor {
             Tree rightSiblingTree = rightSibling.getTree();
             for (Node object : graph.vertexSet()) {
                 if (object.getTree().equals(rightSiblingTree)) {
-                    addEdge(subject, object, EdgeType.SUCCESSION, 1);
+                    addEdge(subject, object, EdgeType.SUCCESSION);
                 }
             }
         }
@@ -568,7 +568,7 @@ public class GraphProcessor {
 
                 float distance = editDistance.computeEditDistance(subject.getTree(), object.getTree());
                 if (distance <= distanceThreshold) {
-                    addEdge(subject, object, EdgeType.SIMILARITY, 1 / (distance + 1));
+                    addEdge(subject, object, EdgeType.SIMILARITY);
                 }
             }
         }

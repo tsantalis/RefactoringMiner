@@ -37,7 +37,7 @@ public class Stringifier {
                 Set<Edge> edges = graph.getAllEdges(source, target);
                 for (Edge edge : edges) {
                     edgesArray.add(stringifyEdge(source.getSubAggregatorId(aggregatorId),
-                            target.getSubAggregatorId(aggregatorId), edge.getType().name(), edge.getWeight()));
+                            target.getSubAggregatorId(aggregatorId), edge.getType().name()));
                 }
             }
         }
@@ -91,7 +91,7 @@ public class Stringifier {
 
                 Set<Edge> sourceTargetEdges = graph.getAllEdges(source, target);
                 for (Edge edge : sourceTargetEdges) {
-                    edges.add(stringifyEdge(sourceId, targetId, edge.getType().name(), edge.getWeight()));
+                    edges.add(stringifyEdge(sourceId, targetId, edge.getType().name()));
                 }
             }
         }
@@ -124,13 +124,13 @@ public class Stringifier {
         PreprocessedNode preprocessedNode = preprocessedNodes.get(traversalComponentId);
         if (preprocessedNode != null) {
             if (!preprocessedNode.aggregatorIds.contains(aggregatorId)) {
-                edges.add(stringifyEdge(aggregatorId, traversalComponentId, EdgeType.EXPANSION.name(), 1));
+                edges.add(stringifyEdge(aggregatorId, traversalComponentId, EdgeType.EXPANSION.name()));
             }
             preprocessedNode.aggregatorIds.add(aggregatorId);
             return;
         }
 
-        edges.add(stringifyEdge(aggregatorId, traversalComponentId, EdgeType.EXPANSION.name(), 1));
+        edges.add(stringifyEdge(aggregatorId, traversalComponentId, EdgeType.EXPANSION.name()));
         preprocessedNodes.put(traversalComponentId, new PreprocessedNode(traversalComponent.stringify(),
                 new HashSet<>()));
         preprocessedNodes.get(traversalComponentId).aggregatorIds.add(aggregatorId);
@@ -149,7 +149,7 @@ public class Stringifier {
         } else {
             Node lead = traversalComponent.getLead();
             edges.add(stringifyEdge(traversalComponentId, lead.getSubAggregatorId(traversalComponentId),
-                    EdgeType.EXPANSION.name(), 1));
+                    EdgeType.EXPANSION.name()));
 
             stringifyComponentGraph(traversalComponent, traversalComponentId, preprocessedNodes, edges);
         }
@@ -209,7 +209,7 @@ public class Stringifier {
             clusterNode.add("aggregatorIds", aggregatorIdsJson);
             nodesArray.add(clusterNode);
 
-            edgesArray.add(stringifyEdge(commitId, clusterId, EdgeType.EXPANSION.name(), 1));
+            edgesArray.add(stringifyEdge(commitId, clusterId, EdgeType.EXPANSION.name()));
         }
 
         JsonObject commitNode = new JsonObject();
@@ -226,13 +226,12 @@ public class Stringifier {
         return graphObj.toString();
     }
 
-    private static JsonObject stringifyEdge(String sourceId, String targetId, String type, float weight) {
+    private static JsonObject stringifyEdge(String sourceId, String targetId, String type) {
         JsonObject edgeObj = new JsonObject();
 
         edgeObj.addProperty("sourceId", sourceId);
         edgeObj.addProperty("targetId", targetId);
         edgeObj.addProperty("type", type);
-        edgeObj.addProperty("weight", weight);
 
         return edgeObj;
     }

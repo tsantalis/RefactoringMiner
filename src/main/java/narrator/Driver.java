@@ -35,7 +35,7 @@ public class Driver {
         return clusterer.getClusters();
     }
 
-    private static List<String> getStringifiedClusters(List<Cluster> clusters) {
+    public static List<String> getStringifiedClusters(List<Cluster> clusters) {
         return clusters.stream().map(cluster -> Stringifier.stringifyGraph(cluster.getGraph())).toList();
     }
 

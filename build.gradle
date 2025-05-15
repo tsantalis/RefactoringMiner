@@ -7,6 +7,8 @@ plugins {
     id 'idea'
 //    id 'checkstyle'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = "com.github.tsantalis"
@@ -95,6 +97,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.11.0'
     implementation 'com.perforce:p4java:2024.1.2674354'
     implementation 'dev.langchain4j:langchain4j-open-ai:1.0.0-alpha1'
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.0'

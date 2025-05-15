@@ -1,0 +1,27 @@
+package narrator.restapi;
+
+import narrator.graph.CommitGraph;
+import narrator.graph.Edge;
+import narrator.graph.Node;
+import narrator.graph.cluster.Clusterer;
+import narrator.json.Stringifier;
+import org.jgrapht.Graph;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+
+@RestController
+@RequestMapping("/api")
+public class Service {
+    @GetMapping(value = "/hierarchy", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String hierarchy(@RequestParam String url) throws IOException {
+        Graph<Node, Edge> graph = CommitGraph.get(url);
+        Clusterer clusterer = new Clusterer(graph);
+
+        return Stringifier.stringifyCommit(url, clusterer.getClusters());
+    }
+}

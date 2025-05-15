@@ -139,7 +139,7 @@ public class TraversalEngine {
 
         Set<Node> usedNodes = util.getUsedNodes(node);
         for (Node usedNode : usedNodes) {
-            usageComponent.addEdge(usedNode, node, new Edge(EdgeType.DEF_USE, 1));
+            usageComponent.addEdge(usedNode, node, new Edge(EdgeType.DEF_USE));
             addContext(usedNode, usageComponent);
 
             if (usagePath.contains(usedNode)) {
@@ -181,7 +181,7 @@ public class TraversalEngine {
         List<Node> contexts = util.getContexts(node);
         Node currentNode = node;
         for (Node context : contexts) {
-            traversalPattern.addEdge(currentNode, context, new Edge(EdgeType.CONTEXT, 1), (edges) -> {
+            traversalPattern.addEdge(currentNode, context, new Edge(EdgeType.CONTEXT), (edges) -> {
                 List<Edge> duplicateEdges =
                         edges.stream().filter(edge -> edge.getType().equals(EdgeType.CONTEXT)).toList();
                 return duplicateEdges.isEmpty();

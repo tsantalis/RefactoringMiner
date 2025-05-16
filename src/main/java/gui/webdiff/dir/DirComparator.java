@@ -58,6 +58,17 @@ public class DirComparator {
         );
     }
 
+    public int getId(String srcFileName, String dstFileName) {
+        int count = 0;
+        for (ASTDiff diff : diffs) {
+            if(diff.getSrcPath().equals(srcFileName) && diff.getDstPath().equals(dstFileName)) {
+                return count;
+            }
+            count++;
+        }
+        return -1;
+    }
+
     public DirComparator(ProjectASTDiff projectASTDiff)
     {
         this.projectASTDiff = projectASTDiff;

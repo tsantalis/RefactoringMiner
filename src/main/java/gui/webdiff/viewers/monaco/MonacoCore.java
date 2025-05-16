@@ -27,6 +27,7 @@ import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
 import gr.uom.java.xmi.diff.ReplaceConditionalWithTernaryRefactoring;
 import gr.uom.java.xmi.diff.SplitConditionalRefactoring;
 import gr.uom.java.xmi.diff.SplitOperationRefactoring;
+import gui.webdiff.dir.DirComparator;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
@@ -46,6 +47,7 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 /* Created by pourya on 2024-07-05*/
 public class MonacoCore {
     private boolean showFilenames;
+    private final DirComparator comparator;
     private final Diff diff;
     private final int id;
     private final boolean isMoved;
@@ -56,7 +58,8 @@ public class MonacoCore {
     private final String dstFileContent;
     private final List<Refactoring> refactorings;
 
-    public MonacoCore(Diff diff, int id, boolean isMovedDiff, String srcFileContent, String dstFileContent, List<Refactoring> refactorings) {
+    public MonacoCore(DirComparator comparator, Diff diff, int id, boolean isMovedDiff, String srcFileContent, String dstFileContent, List<Refactoring> refactorings) {
+        this.comparator = comparator;
         this.srcFileContent = srcFileContent;
         this.dstFileContent = dstFileContent;
         this.showFilenames = true;
@@ -325,12 +328,32 @@ public class MonacoCore {
         			appliedTooltips.put(t, tooltips);
         		}
         		*/
-    			b.append("{")
+        		String requestPath = "";
+        		if(kind.equals("moveOut") && tooltip.contains("moved to file: ")) {
+        			String prefix = "moved to file: ";
+        			int start = tooltip.indexOf(prefix) + prefix.length();
+        			String filePath = tooltip.substring(start, tooltip.length());
+        			int id = comparator.getId(srcFileName, filePath);
+        			if(id != -1) {
+        				requestPath = "/monaco-page/" + id;
+        			}
+        		}
+        		else if (kind.equals("moveIn") && tooltip.contains("moved from file: ")) {
+        			String prefix = "moved from file: ";
+        			int start = tooltip.indexOf(prefix) + prefix.length();
+        			String filePath = tooltip.substring(start, tooltip.length());
+        			int id = comparator.getId(filePath, dstFileName);
+        			if(id != -1) {
+        				requestPath = "/monaco-page/" + id;
+        			}
+        		}
+            	b.append("{")
             	.append("from: ").append(t.getPos())
             	.append(",").append("to: ").append(t.getEndPos()).append(",")
             	.append("index: ").append(t.getMetrics().depth).append(",")
             	.append("kind: ").append("\"" + kind + "\"").append(",")
             	.append("tooltip: ").append("\"" + tooltip + "\"").append(",")
+            	.append("requestPath: ").append("\"" + requestPath + "\"").append(",")
             	.append("}").append(",");
         	}
         }

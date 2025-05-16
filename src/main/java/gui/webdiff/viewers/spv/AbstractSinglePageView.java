@@ -44,7 +44,7 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
                 Pair<String, String> fileContentsPair = comparator.getFileContentsPair(i);
                 boolean empty = comparator.getASTDiff(i).isEmpty();
                 if(!empty) {
-                    MonacoCore core = new MonacoCore(comparator.getASTDiff(i), i, comparator.isMoveDiff(i), fileContentsPair.first, fileContentsPair.second, comparator.getRefactorings());
+                    MonacoCore core = new MonacoCore(comparator, comparator.getASTDiff(i), i, comparator.isMoveDiff(i), fileContentsPair.first, fileContentsPair.second, comparator.getRefactorings());
                     core.setShowFilenames(false);
                     html.div(class_("card"))
                             .div(class_("card-header").id("heading-" + i).style("padding-right: 0;"))

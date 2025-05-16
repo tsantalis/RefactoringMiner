@@ -134,13 +134,10 @@ public class UnifiedModelDiffRefactoringsMatcher {
 
     private void findDiffsAndApplyMatcher(String srcPath, String dstPath, OptimizationAwareMatcher matcher) {
         Collection<ASTDiff> diffs = findAppends(diffSet, srcPath, dstPath, false);
-        if (diffs.size() <= 1) {
-            //If diffs.size = 0 this means that the there is no astDiff associated with the refactoring,
+        if (diffs.isEmpty()) {
+            //This means that the there is no astDiff associated with the refactoring,
             //It could be a case of move from a deleted file to an added file which neither of them have an equivalent file in the other side.
             //In this case, we should create a new ASTDiff and apply the matcher on it.
-        	
-        	//If diffs.size = 1 then we have a case of move from a deleted file to a remaining file,
-        	//or a case of move from a remaining file to an added file
             Collection<ASTDiff> appends = findAppends(newlyGeneratedDiffsOptimizationMap.keySet(), srcPath, dstPath, true);
             if (appends.isEmpty()) {
                 Pair<TreeContext, TreeContext> treeContextPair = findTreeContexts(modelDiff, srcPath, dstPath);

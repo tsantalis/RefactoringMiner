@@ -17,6 +17,8 @@ import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.MethodLevelRefactoring;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -296,11 +298,17 @@ public class DirectoryDiffView implements Renderable {
                 html
                         .tr()
                         .td()
-                        .input(type("checkbox").name("fileSelect").value(filename)
-                        .data("path", filename)
-                        .data("type", tag))
-
-                        .write(" " + filename)
+                        .input(type("checkbox")
+                            .name("fileSelect")
+                            .value(filename)
+                            .data("path", filename)
+                            .data("type", tag)
+                        )
+                        .write(" ") // space between checkbox and link
+                        .a(href("/content?side=" + tag +"&path=" + URLEncoder.encode(filename, StandardCharsets.UTF_8)))
+                        .write(filename)
+                        ._a()
+//                        .write(" " + filename)
                         ._td()
                         ._tr();
             }

@@ -131,27 +131,15 @@ public class WebDiff  {
         });
         get("/monaco-page/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
-            ASTDiff astDiff = comparator.getASTDiff(id);
             Renderable view = new MonacoView(
-                    toolName, projectASTDiff.getMetaInfo(), astDiff.getSrcPath(),  astDiff.getDstPath(),
-                    astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
-                    comparator.isMoveDiff(id),
-                    projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
-                    projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath()),
-                    projectASTDiff.getRefactorings()
+                    toolName, projectASTDiff, comparator, request.pathInfo().split("/")[0], id
             );
             return render(view);
         });
         get("/monaco-diff/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
-            ASTDiff astDiff = comparator.getASTDiff(id);
             MonacoView view = new MonacoView(
-                    toolName, projectASTDiff.getMetaInfo(), astDiff.getSrcPath(),  astDiff.getDstPath(),
-                    astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
-                    comparator.isMoveDiff(id),
-                    projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
-                    projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath()),
-                    projectASTDiff.getRefactorings()
+                    toolName, projectASTDiff, comparator, request.pathInfo().split("/")[0], id
             );
             view.setDecorate(false);
             return render(view);
@@ -212,12 +200,7 @@ public class WebDiff  {
                 astDiff.computeVanillaEditScript();
             }
             MonacoView view = new MonacoView(
-                    toolName, projectASTDiff.getMetaInfo(), srcPath, dstPath,
-                    astDiff, -1, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
-                    false,
-                    projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
-                    projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath()),
-                    projectASTDiff.getRefactorings()
+                    toolName, projectASTDiff, comparator, request.pathInfo().split("/")[0], -1, astDiff
             );
             view.setDecorate(true);
             return render(view);

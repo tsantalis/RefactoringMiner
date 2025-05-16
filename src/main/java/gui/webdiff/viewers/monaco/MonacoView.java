@@ -1,12 +1,13 @@
 package gui.webdiff.viewers.monaco;
 
-import com.github.gumtreediff.actions.Diff;
 import gui.webdiff.WebDiff;
+import gui.webdiff.dir.DirComparator;
 import gui.webdiff.rest.AbstractMenuBar;
 import gui.webdiff.viewers.AbstractDiffView;
 
 import org.refactoringminer.api.Refactoring;
-import org.refactoringminer.astDiff.models.DiffMetaInfo;
+import org.refactoringminer.astDiff.models.ASTDiff;
+import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
@@ -21,9 +22,39 @@ public class MonacoView extends AbstractDiffView implements Renderable {
     boolean decorate = true;
 
 
-    public MonacoView(String toolName, DiffMetaInfo metaInfo, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff, String srcFileContent, String dstFileContent, List<Refactoring> refactorings) {
-        super(toolName, metaInfo, srcFileName, dstFileName, diff, id, numOfDiffs, routePath, isMovedDiff);
+    public MonacoView(String toolName, ProjectASTDiff projectASTDiff, DirComparator comparator, String routePath, int id) {
+        super(toolName, 
+            projectASTDiff.getMetaInfo(), 
+            comparator.getASTDiff(id).getSrcPath(), 
+            comparator.getASTDiff(id).getDstPath(), 
+            comparator.getASTDiff(id), 
+            id, 
+            comparator.getNumOfDiffs(), 
+            routePath, 
+            comparator.isMoveDiff(id) 
+        );
+        ASTDiff diff = comparator.getASTDiff(id);
+        boolean isMovedDiff = comparator.isMoveDiff(id);
+        String srcFileContent = projectASTDiff.getFileContentsBefore().get(diff.getSrcPath());
+        String dstFileContent = projectASTDiff.getFileContentsAfter().get(diff.getDstPath());
+        List<Refactoring> refactorings = projectASTDiff.getRefactorings();
         core = new MonacoCore(diff, id, isMovedDiff, srcFileContent, dstFileContent, refactorings);
+    }
+    public MonacoView(String toolName, ProjectASTDiff projectASTDiff, DirComparator comparator, String routePath, int id, ASTDiff diff) {
+        super(toolName, 
+                projectASTDiff.getMetaInfo(), 
+                diff.getSrcPath(), 
+                diff.getDstPath(), 
+                diff, 
+                id, 
+                comparator.getNumOfDiffs(), 
+                routePath, 
+                false 
+            );
+            String srcFileContent = projectASTDiff.getFileContentsBefore().get(diff.getSrcPath());
+            String dstFileContent = projectASTDiff.getFileContentsAfter().get(diff.getDstPath());
+            List<Refactoring> refactorings = projectASTDiff.getRefactorings();
+            core = new MonacoCore(diff, id, false, srcFileContent, dstFileContent, refactorings);
     }
 
     public void setDecorate(boolean decorate) {

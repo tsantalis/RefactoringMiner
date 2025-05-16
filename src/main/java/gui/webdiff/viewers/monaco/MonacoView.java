@@ -21,10 +21,9 @@ public class MonacoView extends AbstractDiffView implements Renderable {
     final MonacoCore core;
     boolean decorate = true;
 
-
-    public MonacoView(String toolName, ProjectASTDiff projectASTDiff, DirComparator comparator, String routePath, int id) {
+    public MonacoView(String toolName, DirComparator comparator, String routePath, int id) {
         super(toolName, 
-            projectASTDiff.getMetaInfo(), 
+            comparator.getProjectASTDiff().getMetaInfo(), 
             comparator.getASTDiff(id).getSrcPath(), 
             comparator.getASTDiff(id).getDstPath(), 
             comparator.getASTDiff(id), 
@@ -35,14 +34,15 @@ public class MonacoView extends AbstractDiffView implements Renderable {
         );
         ASTDiff diff = comparator.getASTDiff(id);
         boolean isMovedDiff = comparator.isMoveDiff(id);
-        String srcFileContent = projectASTDiff.getFileContentsBefore().get(diff.getSrcPath());
-        String dstFileContent = projectASTDiff.getFileContentsAfter().get(diff.getDstPath());
-        List<Refactoring> refactorings = projectASTDiff.getRefactorings();
+        String srcFileContent = comparator.getProjectASTDiff().getFileContentsBefore().get(diff.getSrcPath());
+        String dstFileContent = comparator.getProjectASTDiff().getFileContentsAfter().get(diff.getDstPath());
+        List<Refactoring> refactorings = comparator.getRefactorings();
         core = new MonacoCore(diff, id, isMovedDiff, srcFileContent, dstFileContent, refactorings);
     }
-    public MonacoView(String toolName, ProjectASTDiff projectASTDiff, DirComparator comparator, String routePath, int id, ASTDiff diff) {
+
+    public MonacoView(String toolName, DirComparator comparator, String routePath, int id, ASTDiff diff) {
         super(toolName, 
-                projectASTDiff.getMetaInfo(), 
+        		comparator.getProjectASTDiff().getMetaInfo(), 
                 diff.getSrcPath(), 
                 diff.getDstPath(), 
                 diff, 
@@ -51,9 +51,9 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                 routePath, 
                 false 
             );
-            String srcFileContent = projectASTDiff.getFileContentsBefore().get(diff.getSrcPath());
-            String dstFileContent = projectASTDiff.getFileContentsAfter().get(diff.getDstPath());
-            List<Refactoring> refactorings = projectASTDiff.getRefactorings();
+            String srcFileContent = comparator.getProjectASTDiff().getFileContentsBefore().get(diff.getSrcPath());
+            String dstFileContent = comparator.getProjectASTDiff().getFileContentsAfter().get(diff.getDstPath());
+            List<Refactoring> refactorings = comparator.getRefactorings();
             core = new MonacoCore(diff, id, false, srcFileContent, dstFileContent, refactorings);
     }
 

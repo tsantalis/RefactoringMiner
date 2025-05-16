@@ -26,7 +26,11 @@ public class DirComparator {
         return diffs;
     }
 
-    public int getNumOfDiffs(){
+    public ProjectASTDiff getProjectASTDiff() {
+		return projectASTDiff;
+	}
+
+	public int getNumOfDiffs(){
         return diffs.size();
     }
 

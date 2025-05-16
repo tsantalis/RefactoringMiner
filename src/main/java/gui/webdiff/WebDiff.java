@@ -132,14 +132,14 @@ public class WebDiff  {
         get("/monaco-page/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
             Renderable view = new MonacoView(
-                    toolName, projectASTDiff, comparator, request.pathInfo().split("/")[0], id
+                    toolName, comparator, request.pathInfo().split("/")[0], id
             );
             return render(view);
         });
         get("/monaco-diff/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
             MonacoView view = new MonacoView(
-                    toolName, projectASTDiff, comparator, request.pathInfo().split("/")[0], id
+                    toolName, comparator, request.pathInfo().split("/")[0], id
             );
             view.setDecorate(false);
             return render(view);
@@ -200,7 +200,7 @@ public class WebDiff  {
                 astDiff.computeVanillaEditScript();
             }
             MonacoView view = new MonacoView(
-                    toolName, projectASTDiff, comparator, request.pathInfo().split("/")[0], -1, astDiff
+                    toolName, comparator, request.pathInfo().split("/")[0], -1, astDiff
             );
             view.setDecorate(true);
             return render(view);

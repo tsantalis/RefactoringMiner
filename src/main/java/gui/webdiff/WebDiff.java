@@ -10,6 +10,7 @@ import gui.webdiff.dir.DirectoryDiffView;
 import gui.webdiff.viewers.monaco.MonacoView;
 import gui.webdiff.viewers.spv.SinglePageView;
 import gui.webdiff.viewers.vanilla.VanillaDiffView;
+import org.apache.commons.text.StringEscapeUtils;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
@@ -25,6 +26,7 @@ import java.net.URI;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static spark.Spark.*;
 
@@ -162,6 +164,45 @@ public class WebDiff  {
         get("/quit", (request, response) -> {
             System.exit(0);
             return "";
+        });
+        get("/content", (request, response) -> {
+            String rawFilePath = request.queryParams("path");
+            String side = request.queryParams("side");
+            Map<String, String> contentsMap;
+
+            boolean isAdded = "right".equals(side) || "added".equals(side);
+            boolean isDeleted = "left".equals(side) || "deleted".equals(side);
+
+            if (isDeleted) {
+                contentsMap = projectASTDiff.getFileContentsBefore();
+            } else if (isAdded) {
+                contentsMap = projectASTDiff.getFileContentsAfter();
+            } else {
+                contentsMap = new LinkedHashMap<>();
+            }
+
+            String path = URLDecoder.decode(rawFilePath, StandardCharsets.UTF_8);
+            String content = contentsMap.getOrDefault(path, "");
+
+            String escapedContent = StringEscapeUtils.escapeHtml4(content);
+
+            String boxColor = isAdded ? "#d4edda" : "#f8d7da";  // Green or red
+            String textColor = isAdded ? "#155724" : "#721c24"; // Dark green or dark red
+            String borderColor = isAdded ? "#c3e6cb" : "#f5c6cb";
+
+            String headerHtml = "<div style=\"background-color:" + boxColor + ";" +
+                                "color:" + textColor + ";" +
+                                "border: 1px solid " + borderColor + ";" +
+                                "padding: 10px; border-radius: 5px; font-weight: bold;\">" +
+                                path +
+                                "</div>";
+
+            return "<div style=\"padding:10px\">" +
+                   headerHtml +
+                   "<pre style=\"white-space: pre-wrap; background:#f8f8f8; padding:10px; border-radius:5px; margin-top:10px;\">" +
+                   escapedContent +
+                   "</pre>" +
+                   "</div>";
         });
         get("/onDemand", (request, response) -> {
             String rawFile1 = request.queryParams("file1");

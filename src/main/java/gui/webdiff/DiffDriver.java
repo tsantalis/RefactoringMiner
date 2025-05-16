@@ -64,7 +64,7 @@ To export the mappings/actions, add --export to the end of the command.
                 .addObject(this)
                 .build();
         jCommander.parse(args);
-
+        help = RunMode.getRunMode(this) == null;
         if (help) {
             System.out.println(HELP_MSG);
 //            jCommander.usage();

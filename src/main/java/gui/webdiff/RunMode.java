@@ -29,7 +29,8 @@ public enum RunMode{
         else if (runner.src != null && runner.dst != null) return DIR;
         else if (runner.repo != null && runner.commit != null) return CLONED;
         else {
-            throw new RuntimeException("Invalid mode");
+//            throw new RuntimeException("Invalid mode");
+            return null;
         }
     }
 

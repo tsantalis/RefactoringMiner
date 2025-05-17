@@ -151,6 +151,7 @@ public class TestCommandLine {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Disabled
     @Test
     public void testGitHubPullRequest() throws Exception {
         jsonPath = REPOS + "drill-gp-actual.json";

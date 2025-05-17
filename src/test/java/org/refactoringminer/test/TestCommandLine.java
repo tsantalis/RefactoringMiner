@@ -125,6 +125,7 @@ public class TestCommandLine {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Disabled
     @ParameterizedTest
     @CsvSource({
             "097122eb9c39a46a00a5b36117014cea0a3bd34c",

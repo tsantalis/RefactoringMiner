@@ -347,17 +347,21 @@ public class MappingOptimizer {
 			if(callsExtractedInlinedMethod.contains(true) && callsExtractedInlinedMethod.contains(false)) {
 				int getterCount = 0;
 				int setterCount = 0;
+				boolean callerToExtractedMethodHasCompositeReplacement = false;
 				for(int i=0; i<callsExtractedInlinedMethod.size(); i++) {
-					if(callsExtractedInlinedMethod.get(i) == false) { 
+					if(callsExtractedInlinedMethod.get(i) == false) {
 						if(mappers.get(i).getContainer2().isGetter())
 							getterCount++;
 						if(mappers.get(i).getContainer2().isSetter())
 							setterCount++;
 					}
+					else {
+						callerToExtractedMethodHasCompositeReplacement = mappings.get(i).containsCompositeReplacement() != null;
+					}
 				}
 				if(getterCount == 0 && setterCount == 0) {
 					for(int i=0; i<callsExtractedInlinedMethod.size(); i++) {
-						if(callsExtractedInlinedMethod.get(i) == true && !callToExtractedInlinedMethodIsArgument(mappings.get(i), mappers.get(callsExtractedInlinedMethod.indexOf(false)))) {
+						if(callsExtractedInlinedMethod.get(i) == true && !callToExtractedInlinedMethodIsArgument(mappings.get(i), mappers.get(callsExtractedInlinedMethod.indexOf(false))) && mappings.get(i).containsCompositeReplacement() == null) {
 							indicesToBeRemoved.add(i);
 						}
 					}
@@ -371,6 +375,9 @@ public class MappingOptimizer {
 						}
 						determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances);
 					}
+				}
+				else if(callerToExtractedMethodHasCompositeReplacement) {
+					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances);
 				}
 			}
 			else if(parentMappingFound.contains(true)) {
@@ -669,7 +676,7 @@ public class MappingOptimizer {
 				return true;
 			}
 			String expression = invocation.getExpression();
-			if(expression != null && !expression.equals("this")) {
+			if(expression != null && !expression.equals("this") && !Character.isUpperCase(expression.charAt(0))) {
 				return true;
 			}
 		}
@@ -767,7 +774,7 @@ public class MappingOptimizer {
 					if(!allReplacementsCoverEntireStatement) {
 						int minimum = replacementTypeCount.get(0);
 						for(int i=1; i<replacementTypeCount.size(); i++) {
-							if(replacementTypeCount.get(i) < minimum) {
+							if(replacementTypeCount.get(i) < minimum && replacementCoversEntireStatement.get(i) == false) {
 								minimum = replacementTypeCount.get(i);
 							}
 						}

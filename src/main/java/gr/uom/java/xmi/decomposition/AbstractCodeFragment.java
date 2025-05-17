@@ -219,6 +219,12 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			if(expression.getExpression() != null) {
 				matchingExpressions.addAll(expression.getExpression().findExpression(s));
 			}
+			if(expression.getBody() != null) {
+				List<AbstractStatement> statements = expression.getBody().getCompositeStatement().getAllStatements();
+				for(AbstractStatement statement : statements) {
+					matchingExpressions.addAll(statement.findExpression(s));
+				}
+			}
 		}
 		for(LeafExpression expression : getArguments()) {
 			if(expression.getString().equals(s)) {
@@ -411,25 +417,25 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return null;
 	}
 
-	public ObjectCreation creationCoveringEntireFragment() {
+	public AbstractCall creationCoveringEntireFragment() {
 		String statement = getString();
 		for(AbstractCall creation : getCreations()) {
 			String objectCreation = creation.getString();
 			if((objectCreation + JAVA.STATEMENT_TERMINATION).equals(statement) || objectCreation.equals(statement)) {
 				creation.coverage = StatementCoverageType.ONLY_CALL;
-				return (ObjectCreation) creation;
+				return creation;
 			}
 			else if((JAVA.RETURN_SPACE + objectCreation + JAVA.STATEMENT_TERMINATION).equals(statement)) {
 				creation.coverage = StatementCoverageType.RETURN_CALL;
-				return (ObjectCreation) creation;
+				return creation;
 			}
 			else if((JAVA.THROW_SPACE + objectCreation + JAVA.STATEMENT_TERMINATION).equals(statement)) {
 				creation.coverage = StatementCoverageType.THROW_CALL;
-				return (ObjectCreation) creation;
+				return creation;
 			}
 			else if(expressionIsTheInitializerOfVariableDeclaration(objectCreation)) {
 				creation.coverage = StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL;
-				return (ObjectCreation) creation;
+				return creation;
 			}
 		}
 		return null;
@@ -464,10 +470,10 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return null;
 	}
 
-	public ObjectCreation assignmentCreationCoveringEntireStatement() {
+	public AbstractCall assignmentCreationCoveringEntireStatement() {
 		for(AbstractCall creation : getCreations()) {
 			if(expressionIsTheRightHandSideOfAssignment(creation.getString())) {
-				return (ObjectCreation) creation;
+				return creation;
 			}
 		}
 		return null;
@@ -477,6 +483,30 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		for(AbstractCall invocation : getMethodInvocations()) {
 			if(expressionIsTheRightHandSideOfAssignment(invocation.getString())) {
 				return invocation;
+			}
+		}
+		return null;
+	}
+
+	public TernaryOperatorExpression ternaryOperatorCoveringEntireFragment() {
+		String statement = getString();
+		for(TernaryOperatorExpression ternary : getTernaryOperatorExpressions()) {
+			String methodInvocation = ternary.getString();
+			if((methodInvocation + JAVA.STATEMENT_TERMINATION).equals(statement) || methodInvocation.equals(statement) || ("!" + methodInvocation).equals(statement)) {
+				return ternary;
+			}
+			else if((JAVA.RETURN_SPACE + methodInvocation + JAVA.STATEMENT_TERMINATION).equals(statement)) {
+				return ternary;
+			}
+			else if(isCastExpressionCoveringEntireFragment(methodInvocation)) {
+				return ternary;
+			}
+			else if(expressionIsTheInitializerOfVariableDeclaration(methodInvocation)) {
+				return ternary;
+			}
+			else if(ternary.getLocationInfo().getCodeElementType().equals(CodeElementType.SUPER_CONSTRUCTOR_INVOCATION) ||
+					ternary.getLocationInfo().getCodeElementType().equals(CodeElementType.CONSTRUCTOR_INVOCATION)) {
+				return ternary;
 			}
 		}
 		return null;
@@ -563,6 +593,26 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				String initializerWithoutCasting = initializer.substring(initializer.indexOf(")")+1,initializer.length());
 				if(initializerWithoutCasting.equals(expression))
 					return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean expressionIsWrappedInTheInitializerOfVariableDeclaration(String expression) {
+		List<VariableDeclaration> variableDeclarations = getVariableDeclarations();
+		if(variableDeclarations.size() > 0 && variableDeclarations.get(0).getInitializer() != null) {
+			String initializer = variableDeclarations.get(0).getInitializer().toString();
+			if(initializer.startsWith("new ")) {
+				return false;
+			}
+			if(initializer.contains(JAVA.TERNARY_CONDITION) && initializer.contains(JAVA.TERNARY_ELSE)) {
+				return false;
+			}
+			if(initializer.contains("(" + expression + ")") ||
+					initializer.contains("," + expression + ")") ||
+					initializer.contains("," + expression + ",") ||
+					initializer.contains("(" + expression + ",")) {
+				return true;
 			}
 		}
 		return false;

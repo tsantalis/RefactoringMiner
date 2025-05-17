@@ -13,7 +13,7 @@ import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class AddVariableAnnotationRefactoring implements Refactoring {
+public class AddVariableAnnotationRefactoring implements MethodLevelRefactoring {
 	private UMLAnnotation annotation;
 	private VariableDeclaration variableBefore;
 	private VariableDeclaration variableAfter;

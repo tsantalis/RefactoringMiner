@@ -15,7 +15,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class InlineVariableRefactoring implements Refactoring, ReferenceBasedRefactoring, LeafMappingProvider {
+public class InlineVariableRefactoring implements MethodLevelRefactoring, ReferenceBasedRefactoring, LeafMappingProvider {
 	private VariableDeclaration variableDeclaration;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;

@@ -1,22 +1,32 @@
 package gui.webdiff;
 
+import com.github.gumtreediff.matchers.CompositeMatchers;
+import com.github.gumtreediff.matchers.Mapping;
+import com.github.gumtreediff.matchers.MappingStore;
+import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
 import gui.webdiff.dir.DirComparator;
 import gui.webdiff.dir.DirectoryDiffView;
 import gui.webdiff.viewers.monaco.MonacoView;
 import gui.webdiff.viewers.spv.SinglePageView;
 import gui.webdiff.viewers.vanilla.VanillaDiffView;
+import org.apache.commons.text.StringEscapeUtils;
 import org.refactoringminer.astDiff.models.ASTDiff;
+import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
-import spark.Spark;
 
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static spark.Spark.*;
 
@@ -24,6 +34,9 @@ public class WebDiff  {
     public static final String JQUERY_JS_URL = "https://code.jquery.com/jquery-3.4.1.min.js";
     public static final String BOOTSTRAP_CSS_URL = "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css";
     public static final String BOOTSTRAP_JS_URL = "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js";
+    public static final String HIGHLIGHT_CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css";
+    public static final String HIGHLIGHT_JS_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js";
+    public static final String HIGHLIGHT_JAVA_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js";
     public final int port = 6789;
 
     private final String toolName = "RefactoringMiner";
@@ -52,11 +65,11 @@ public class WebDiff  {
     public void run() {
         killProcessOnPort(this.port);
         configureSpark(comparator, this.port);
-        Spark.awaitInitialization();
+        awaitInitialization();
         System.out.println(String.format("Starting server: %s:%d.", "http://127.0.0.1", this.port));
     }
     public void terminate(){
-        Spark.stop();
+        stop();
     }
 
     public void openInBrowser() {
@@ -103,14 +116,14 @@ public class WebDiff  {
             return "";
         });
         get("/list", (request, response) -> {
-            Renderable view = new DirectoryDiffView(comparator, false);
+            Renderable view = new DirectoryDiffView(comparator, false, projectASTDiff.getMetaInfo());
             return render(view);
         });
         get("/vanilla-diff/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
             ASTDiff astDiff = comparator.getASTDiff(id);
             Renderable view = new VanillaDiffView(
-                    toolName, astDiff.getSrcPath(),  astDiff.getDstPath(),
+                    toolName, projectASTDiff.getMetaInfo(), astDiff.getSrcPath(),  astDiff.getDstPath(),
                     astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
                     comparator.isMoveDiff(id),
                     projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
@@ -120,25 +133,15 @@ public class WebDiff  {
         });
         get("/monaco-page/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
-            ASTDiff astDiff = comparator.getASTDiff(id);
             Renderable view = new MonacoView(
-                    toolName, astDiff.getSrcPath(),  astDiff.getDstPath(),
-                    astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
-                    comparator.isMoveDiff(id),
-                    projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
-                    projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath())
+                    toolName, comparator, request.pathInfo().split("/")[0], id
             );
             return render(view);
         });
         get("/monaco-diff/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
-            ASTDiff astDiff = comparator.getASTDiff(id);
             MonacoView view = new MonacoView(
-                    toolName, astDiff.getSrcPath(),  astDiff.getDstPath(),
-                    astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
-                    comparator.isMoveDiff(id),
-                    projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
-                    projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath())
+                    toolName, comparator, request.pathInfo().split("/")[0], id
             );
             view.setDecorate(false);
             return render(view);
@@ -157,10 +160,91 @@ public class WebDiff  {
             Pair<String, String> pair = comparator.getFileContentsPair(id);
             return pair.second;
         });
-        get("/singleView", (request, response) -> render(new SinglePageView(comparator)));
+        get("/singleView", (request, response) -> render(new SinglePageView(comparator, projectASTDiff.getMetaInfo())));
         get("/quit", (request, response) -> {
             System.exit(0);
             return "";
+        });
+        get("/content", (request, response) -> {
+            String rawFilePath = request.queryParams("path");
+            String side = request.queryParams("side");
+            Map<String, String> contentsMap;
+
+            boolean isAdded = "right".equals(side) || "added".equals(side);
+            boolean isDeleted = "left".equals(side) || "deleted".equals(side);
+
+            if (isDeleted) {
+                contentsMap = projectASTDiff.getFileContentsBefore();
+            } else if (isAdded) {
+                contentsMap = projectASTDiff.getFileContentsAfter();
+            } else {
+                contentsMap = new LinkedHashMap<>();
+            }
+
+            String path = URLDecoder.decode(rawFilePath, StandardCharsets.UTF_8);
+            String content = contentsMap.getOrDefault(path, "");
+
+            String escapedContent = StringEscapeUtils.escapeHtml4(content);
+
+            String boxColor = isAdded ? "#d4edda" : "#f8d7da";  // Green or red
+            String textColor = isAdded ? "#155724" : "#721c24"; // Dark green or dark red
+            String borderColor = isAdded ? "#c3e6cb" : "#f5c6cb";
+
+            String headerHtml = "<div style=\"background-color:" + boxColor + ";" +
+                                "color:" + textColor + ";" +
+                                "border: 1px solid " + borderColor + ";" +
+                                "padding: 10px; border-radius: 5px; font-weight: bold;\">" +
+                                path +
+                                "</div>";
+
+            return "<div style=\"padding:10px\">" +
+                   headerHtml +
+                   "<pre style=\"white-space: pre-wrap; background:#f8f8f8; padding:10px; border-radius:5px; margin-top:10px;\">" +
+                   escapedContent +
+                   "</pre>" +
+                   "</div>";
+        });
+        get("/onDemand", (request, response) -> {
+            String rawFile1 = request.queryParams("file1");
+            String rawFile2 = request.queryParams("file2");
+            String srcPath = URLDecoder.decode(rawFile1, StandardCharsets.UTF_8);
+            String dstPath = URLDecoder.decode(rawFile2, StandardCharsets.UTF_8);
+            String srcContent = this.projectASTDiff.getFileContentsBefore().get(srcPath);
+            String dstContent = this.projectASTDiff.getFileContentsAfter().get(dstPath);
+            ProjectASTDiff customProjectASTDiff = null;
+            try {
+                customProjectASTDiff = new GitHistoryRefactoringMinerImpl().diffAtFileContents(
+                        new LinkedHashMap<>() {{
+                            put(srcPath, srcContent);
+                        }},
+                        new LinkedHashMap<>() {{
+                            put(dstPath, dstContent);
+                        }}
+                );
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
+            ASTDiff astDiff;
+            String toolName = this.toolName;
+            if (customProjectASTDiff != null && customProjectASTDiff.getDiffSet().size() > 0){
+                astDiff = customProjectASTDiff.getDiffSet().iterator().next();
+            }
+            else {
+            	toolName = "GTS";
+                TreeContext srcContext = projectASTDiff.getParentContextMap().get(srcPath);
+                TreeContext dstContext = projectASTDiff.getChildContextMap().get(dstPath);
+                ExtendedMultiMappingStore extendedMappingStore = new ExtendedMultiMappingStore(srcContext.getRoot(), dstContext.getRoot());
+                MappingStore match = new CompositeMatchers.SimpleGumtree().match(srcContext.getRoot(), dstContext.getRoot());
+                for (Mapping mapping : match) extendedMappingStore.addMapping(mapping.first, mapping.second);
+                astDiff = new ASTDiff(srcPath, dstPath, srcContext, dstContext, extendedMappingStore);
+                astDiff.computeVanillaEditScript();
+            }
+            MonacoView view = new MonacoView(
+                    toolName, comparator, request.pathInfo().split("/")[0], -1, astDiff
+            );
+            view.setDecorate(true);
+            return render(view);
         });
     }
 

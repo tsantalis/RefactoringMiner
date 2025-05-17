@@ -2154,6 +2154,39 @@
 },
 {
 	"type": "Encapsulate Attribute",
+	"description": "Encapsulate Attribute private mode : PersistentStoreMode from class org.apache.drill.exec.store.sys.PersistentStoreConfig.StoreConfigBuilder",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 93,
+		"endLine": 93,
+		"startColumn": 33,
+		"endColumn": 70,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private mode : PersistentStoreMode"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 93,
+		"endLine": 93,
+		"startColumn": 33,
+		"endColumn": 70,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "encapsulated attribute declaration",
+		"codeElement": "private mode : PersistentStoreMode"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 106,
+		"endLine": 109,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "added setter method",
+		"codeElement": "public mode(mode PersistentStoreMode) : StoreConfigBuilder<V>"
+}]
+},
+{
+	"type": "Encapsulate Attribute",
 	"description": "Encapsulate Attribute private numVirtualCpu : int from class org.apache.drill.exec.resourcemgr.NodeResources",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
@@ -3245,7 +3278,7 @@
 		"endLine": 286,
 		"startColumn": 59,
 		"endColumn": 86,
-		"codeElementType": "LAMBDA_EXPRESSION",
+		"codeElementType": "METHOD_REFERENCE",
 		"description": "lambda expression",
 		"codeElement": "ServiceInstance::getPayload"
 }, {
@@ -11942,7 +11975,7 @@
 		"endLine": 234,
 		"startColumn": 69,
 		"endColumn": 96,
-		"codeElementType": "LAMBDA_EXPRESSION",
+		"codeElementType": "METHOD_REFERENCE",
 		"description": "lambda expression",
 		"codeElement": "ServiceInstance::getPayload"
 }, {
@@ -12825,6 +12858,57 @@
 		"description": "statement referencing the renamed variable",
 		"codeElement": null
 }]
+},
+{
+	"type": "Split Conditional",
+	"description": "Split Conditional if(currentQueueLeader == null || !currentQueueLeader.equals(leaderId)) to [if(!currentQueueLeader.equals(leaderId)), if(currentQueueLeader == null)] in method private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
+		"startLine": 226,
+		"endLine": 229,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "IF_STATEMENT",
+		"description": "original conditional",
+		"codeElement": "if(currentQueueLeader == null || !currentQueueLeader.equals(leaderId))"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
+		"startLine": 199,
+		"endLine": 295,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanNode String) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
+		"startLine": 322,
+		"endLine": 330,
+		"startColumn": 12,
+		"endColumn": 6,
+		"codeElementType": "IF_STATEMENT",
+		"description": "split conditional",
+		"codeElement": "if(!currentQueueLeader.equals(leaderId))"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
+		"startLine": 311,
+		"endLine": 330,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "IF_STATEMENT",
+		"description": "split conditional",
+		"codeElement": "if(currentQueueLeader == null)"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
+		"startLine": 278,
+		"endLine": 413,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with split conditional",
+		"codeElement": "private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String"
+}]
 }
 ]
 },
@@ -13362,48 +13446,6 @@
 		"startColumn": 5,
 		"endColumn": 68,
 		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
-		"description": "statement referencing the renamed variable",
-		"codeElement": null
-}]
-},
-{
-	"type": "Rename Variable",
-	"description": "Rename Variable operatorMemory : null to entry : null in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 206,
-		"endLine": 206,
-		"startColumn": 7,
-		"endColumn": 21,
-		"codeElementType": "LAMBDA_EXPRESSION_PARAMETER",
-		"description": "original variable declaration",
-		"codeElement": "operatorMemory : null"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 207,
-		"endLine": 207,
-		"startColumn": 9,
-		"endColumn": 78,
-		"codeElementType": "EXPRESSION_STATEMENT",
-		"description": "statement referencing the original variable",
-		"codeElement": null
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 208,
-		"endLine": 208,
-		"startColumn": 47,
-		"endColumn": 52,
-		"codeElementType": "LAMBDA_EXPRESSION_PARAMETER",
-		"description": "renamed variable declaration",
-		"codeElement": "entry : null"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 224,
-		"endLine": 224,
-		"startColumn": 9,
-		"endColumn": 69,
-		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement referencing the renamed variable",
 		"codeElement": null
 }]

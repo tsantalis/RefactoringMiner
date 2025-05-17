@@ -1,0 +1,105 @@
+/* === Inline Decorations with Transparent Backgrounds === */
+span.inserted {
+    background-color: rgba(172, 238, 187, 0.6); /* #aceebb */
+}
+
+span.deleted {
+    background-color: rgba(255, 206, 203, 0.6); /* #ffcecb */
+}
+
+span.moved {
+    background-color: rgba(237, 234, 224, 0.6); /* #edeae0 */
+}
+
+span.updated {
+    background-color: rgba(255, 221, 244, 1.0); /* #ffddf4 */
+}
+
+span.mm {
+    background-color: rgba(237, 234, 224, 0.6); /* #edeae0 */
+}
+
+span.mm.updOnTop.selected {
+    background-color: rgba(255, 215, 0, 1.0); /* gold */
+}
+
+span.mm.updOnTop {
+    background-color: rgba(255, 221, 244, 1.0); /* #ffddf4 */
+}
+
+span.moveIn {
+    background-color: rgba(172, 238, 187, 0.6); /* #aceebb */
+}
+
+span.moveOut {
+    background-color: rgba(255, 206, 203, 0.6); /* #ffcecb */
+}
+
+span.cupd {
+    font-weight: normal;
+    color: DimGray;
+}
+
+span.selected {
+    background-color: rgba(255, 215, 0, 0.6); /* gold */
+}
+
+/* Highlighted mapping range on click */
+span.highlighted-range-inline {
+    background-color: rgba(255, 165, 0, 0.5); /* orange */
+}
+
+/* === Layout, Structure, and Misc === */
+.marker {
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    margin: 0px;
+    padding: 0px;
+}
+
+.pre-scrollable {
+    margin: 0px;
+    padding: 0px;
+    font-size: 10pt;
+    color: black;
+    max-height: 90vh;
+    background-color: white;
+    border: 1px solid black;
+    font-family: "Hack, Inconsolata", "Consolas", "Liberation Sans Regular", "DejaVu Sans Mono", monospace;
+}
+
+.tooltip-inner {
+    max-width: none;
+}
+
+.monaco-editor,
+.monaco-diff-editor,
+.monaco-component {
+    --vscode-editor-foldBackground: #c0ebf8 !important;
+    position: absolute !important;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.3;
+    background-color: #cccccc !important;
+    color: #666666 !important;
+    border-color: #cccccc !important;
+}
+
+.row>* {
+	padding-right: 0;
+	padding-left: 0;
+}
+
+#diff_panel {
+	height: 100%;
+}
+
+/* Legacy className fallback (optional, safe to keep) */
+.highlighted-range {
+    background-color: rgba(255, 165, 0, 0.5); /* orange */
+}

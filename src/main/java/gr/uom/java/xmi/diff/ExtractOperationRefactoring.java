@@ -17,10 +17,12 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
@@ -224,11 +226,11 @@ public class ExtractOperationRefactoring implements Refactoring {
 		if(invocation2 == null) {
 			invocation2 = mapping.getFragment2().assignmentInvocationCoveringEntireStatement();
 		}
-		ObjectCreation creation1 = mapping.getFragment1().creationCoveringEntireFragment();
+		AbstractCall creation1 = mapping.getFragment1().creationCoveringEntireFragment();
 		if(creation1 == null) {
 			creation1 = mapping.getFragment1().assignmentCreationCoveringEntireStatement();
 		}
-		ObjectCreation creation2 = mapping.getFragment2().creationCoveringEntireFragment();
+		AbstractCall creation2 = mapping.getFragment2().creationCoveringEntireFragment();
 		if(creation2 == null) {
 			creation2 = mapping.getFragment2().assignmentCreationCoveringEntireStatement();
 		}
@@ -242,7 +244,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 			for(AbstractCodeFragment leaf : leaves) {
 				if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 					List<LeafExpression> expressions2 = leaf.findExpression(argument);
-					if(expressions2.size() == 1) {
+					if(expressions2.size() >= 1) {
 						int occurrence = 0;
 						for(LeafExpression expression1 : expressions1) {
 							boolean equalArgument = false;
@@ -273,6 +275,36 @@ public class ExtractOperationRefactoring implements Refactoring {
 						return true;
 					}
 				}
+			}
+		}
+		else {
+			for(Refactoring r : mapping.getRefactorings()) {
+				if(r instanceof InlineVariableRefactoring) {
+					InlineVariableRefactoring inline = (InlineVariableRefactoring)r;
+					if(inline.getReferences().contains(mapping) && bodyMapper.getParentMapper() != null) {
+						for(AbstractCodeMapping parentMapping : bodyMapper.getParentMapper().getMappings()) {
+							if(bodyMapper.containsExtractedOperationInvocation(parentMapping)) {
+								List<LeafExpression> leafExpressions2 = parentMapping.getFragment2().findExpression(argument);
+								AbstractExpression initializer = inline.getVariableDeclaration().getInitializer();
+								if(leafExpressions2.size() >= 1 && initializer != null && classInstanceCreationToCreationReference(initializer, argument)) {
+									LeafMapping expressionMapping = new LeafMapping(initializer, leafExpressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
+									argumentMappings.add(expressionMapping);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean classInstanceCreationToCreationReference(AbstractExpression initializer, String replacedExpression) {
+		AbstractCall creation = initializer.creationCoveringEntireFragment();
+		if(creation instanceof ObjectCreation) {
+			UMLType type = ((ObjectCreation)creation).getType();
+			if(replacedExpression.startsWith(type + JAVA.METHOD_REFERENCE + "new")) {
+				return true;
 			}
 		}
 		return false;

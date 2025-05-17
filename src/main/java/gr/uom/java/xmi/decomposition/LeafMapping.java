@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,7 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLComment;
+import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.diff.StringDistance;
 
 public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafMapping> {
@@ -33,6 +35,8 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 	private boolean ifParentWithIdenticalElse;
 	private boolean ifParentWithIdenticalThen;
 	private boolean isKeyword;
+	private Map<UMLOperation, Set<AbstractCodeFragment>> extractedStatements;
+	private boolean previousCodeExtracted;
 
 	public LeafMapping(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			VariableDeclarationContainer operation1, VariableDeclarationContainer operation2) {
@@ -78,6 +82,10 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 
 	public void setEqualNumberOfAssertions(boolean equalNumberOfAssertions) {
 		this.equalNumberOfAssertions = equalNumberOfAssertions;
+	}
+
+	public void setExtractedStatements(Map<UMLOperation, Set<AbstractCodeFragment>> extractedStatements) {
+		this.extractedStatements = extractedStatements;
 	}
 
 	@Override
@@ -323,6 +331,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				else if(typeIntersection2 > 0 && typeIntersection1 == 0 && this.getFragment1().getTypes().size() > 0 && this.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 == 0 && identicalTypeIntersection2 == 0) {
 					return 1;
 				}
+				//if(this.getFragment1().getVariableDeclarations().size() == this.getFragment2().getVariableDeclarations().size() && typeIntersection1 > 0 && typeIntersection2 == 0 && o.getFragment1().getTypes().size() > 0 && o.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 >= 0 && identicalTypeIntersection2 == 0) {
+				//	return -1;
+				//}
+				if(o.getFragment1().getVariableDeclarations().size() == o.getFragment2().getVariableDeclarations().size() && typeIntersection2 > 0 && typeIntersection1 == 0 && this.getFragment1().getTypes().size() > 0 && this.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 == 0 && identicalTypeIntersection2 >= 0) {
+					return 1;
+				}
 				boolean nestedUnderCatchBlockOfSameType1 = this.nestedUnderCatchBlockOfSameExceptionType();
 				boolean nestedUnderCatchBlockOfSameType2 = o.nestedUnderCatchBlockOfSameExceptionType();
 				if(nestedUnderCatchBlockOfSameType1 && !nestedUnderCatchBlockOfSameType2) {
@@ -519,6 +533,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 							return -1;
 						}
 						else if(!sameEnhancedForCollectionInParent1 && sameEnhancedForCollectionInParent2) {
+							return 1;
+						}
+						if(this.previousCodeExtracted && !o.previousCodeExtracted) {
+							return -1;
+						}
+						else if(!this.previousCodeExtracted && o.previousCodeExtracted) {
 							return 1;
 						}
 						return Integer.valueOf(indexDiff1).compareTo(Integer.valueOf(indexDiff2));
@@ -798,6 +818,22 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			if(oEqualPrevious) {
 				o.identicalPreviousAndNextStatement = true;
 			}
+			if(this.extractedStatements != null) {
+				for(UMLOperation key : this.extractedStatements.keySet()) {
+					Set<AbstractCodeFragment> set = this.extractedStatements.get(key);
+					if(set.contains(thisPrevious1) && thisPrevious2.getString().contains(key.getName())) {
+						this.previousCodeExtracted = true;
+					}
+				}
+			}
+			if(o.extractedStatements != null) {
+				for(UMLOperation key : o.extractedStatements.keySet()) {
+					Set<AbstractCodeFragment> set = o.extractedStatements.get(key);
+					if(set.contains(oPrevious1) && oPrevious2.getString().contains(key.getName())) {
+						o.previousCodeExtracted = true;
+					}
+				}
+			}
 		}
 		// the second is last statement in block
 		else if(lastStatement2 && !lastStatement1 &&
@@ -941,7 +977,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			List<AbstractCall> creations2 = this.getFragment2().getCreations();
 			for(VariableDeclaration declaration2 : variableDeclarations2) {
 				for(AbstractCall creation : creations2) {
-					if(((ObjectCreation)creation).getAnonymousClassDeclaration() != null) {
+					if(creation instanceof ObjectCreation && ((ObjectCreation)creation).getAnonymousClassDeclaration() != null) {
 						return false;
 					}
 					List<String> arguments = creation.arguments();
@@ -1333,7 +1369,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		return false;
 	}
 
-	private boolean identicalCommentsInParent() {
+	public boolean identicalCommentsInParent() {
 		if(getFragment1().getParent() != null && getFragment2().getParent() != null) {
 			List<String> commentsWithinStatement1 = extractCommentsWithinStatement(getFragment1().getParent(), getOperation1());
 			List<String> commentsWithinStatement2 = extractCommentsWithinStatement(getFragment2().getParent(), getOperation2());

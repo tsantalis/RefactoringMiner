@@ -1,8 +1,10 @@
 name: AST diff Bot
 
 on:
+  issues:
+    types: [opened, edited]
   issue_comment:
-    types: [created]
+    types: [created, edited]
 
 jobs:
   diff:
@@ -17,23 +19,39 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const commentBody = context.payload.comment.body;
-            const regex = /@diff\s+(\S+)\s+(\S+)/;  // Match the URL and the next word
-            const match = commentBody.match(regex);
+            let body = "";
+            if (context.payload.issue && context.eventName === "issues") {
+            body = context.payload.issue.body || "";
+            console.log("Checking issue body...");
+            } else if (context.payload.comment && context.eventName === "issue_comment") {
+            body = context.payload.comment.body || "";
+            console.log("Checking comment body...");
+            }
+            const regexScreenshot = /@diff\s+(\S+)\s+(\S+)/;  // Match URL + screenshot flag
+            const regexArtifact = /@diff\s+(\S+)/;  // Match only URL
+    
+            let match = body.match(regexScreenshot);
             if (match) {
               core.setOutput('triggered', 'true');
-              core.setOutput('url', match[1].trim());
-              core.setOutput('screenshot', match[2] ? match[2].trim() : '');
+              core.setOutput('url', match[1].trim()); 
+              core.setOutput('screenshot', match[2].trim());
+              core.setOutput('mode', 'screenshot');
             } else {
-              core.setOutput('triggered', 'false');
+              match = body.match(regexArtifact);
+              if (match) {
+                core.setOutput('triggered', 'true');
+                core.setOutput('url', match[1].trim()); 
+                core.setOutput('screenshot', '');
+                core.setOutput('mode', 'artifact');
+              } else {
+                core.setOutput('triggered', 'false');
+              }
             }
-
-
 
       # Step 1: Run the exporter
       - name: Running the RM action exporter
         if : ${{ steps.trigger.outputs.triggered == 'true'}}
-        uses: pouryafard75/refactoringminer-astdiff-exporter@v1.0
+        uses: pouryafard75/refactoringminer-astdiff-exporter@v1.1.2
         id: run_rm_exporter
         with:
           OAuthToken: ${{ secrets.OAUTHTOKEN }}
@@ -59,6 +77,7 @@ jobs:
 
       - name: Generate image list
         id: generate-paths
+        if: ${{ steps.trigger.outputs.screenshot != null && steps.run_rm_exporter.outputs.numberOfScreenshots != 0 }}
         run: |
           # Ensure the output from the previous step is evaluated properly
           number_of_screenshots="${{ steps.run_rm_exporter.outputs.numberOfScreenshots }}"
@@ -77,7 +96,7 @@ jobs:
           echo "EOF" >> $GITHUB_ENV
 
       - name: Upload image
-        if: ${{ steps.trigger.outputs.screenshot != null }}
+        if: ${{ steps.trigger.outputs.screenshot != null && steps.run_rm_exporter.outputs.numberOfScreenshots != 0 }}
         id: upload-image-all
         uses: McCzarny/upload-image@v1.5.0
         with:
@@ -88,7 +107,7 @@ jobs:
 
       - name: 'Comment Screenshots'
         uses: actions/github-script@v7
-        if: ${{ steps.trigger.outputs.screenshot != null }}
+        if: ${{ steps.trigger.outputs.screenshot != null && steps.run_rm_exporter.outputs.numberOfScreenshots != 0 }}
         with:
           script: |
             let commentBody = 'Image(s):\n';
@@ -110,9 +129,8 @@ jobs:
               const imageUrl = urls[index]; // Access the specific image URL
 
               // Append the image URL to the comment body
-              commentBody += `![${i}](${imageUrl})\n`;
+              commentBody += `![${i}](${imageUrl}?raw=true)\n`;
             }
-
             console.log('Comment body constructed:\n' + commentBody);
 
             await github.rest.issues.createComment({

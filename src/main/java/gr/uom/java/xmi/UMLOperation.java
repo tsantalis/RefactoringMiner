@@ -265,6 +265,15 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return false;
 	}
 
+	public boolean hasDataPointsAnnotation() {
+		for(UMLAnnotation annotation : annotations) {
+			if(annotation.getTypeName().equals("DataPoints")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean hasParametersAnnotation() {
 		for(UMLAnnotation annotation : annotations) {
 			if(annotation.getTypeName().equals("Parameters")) {
@@ -620,6 +629,17 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return false;
 	}
 
+	public AbstractCall singleStatementCallingMethod() {
+		if(getBody() != null) {
+			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
+			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
+				StatementObject statement = (StatementObject)statements.get(0);
+				return statement.invocationCoveringEntireFragment();
+			}
+		}
+		return null;
+	}
+
 	public AbstractCall isDelegate() {
 		if(getBody() != null) {
 			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
@@ -691,6 +711,9 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 							returnParameter != null && returnParameter.getType().getClassType().equals("boolean")) {
 						return true;
 					}
+					if(parameterUsed && statement.getString().equals(JAVA.RETURN_SPACE + parameters.get(0).getName() + JAVA.STATEMENT_TERMINATION)) {
+						return true;
+					}
 					if(statement.getString().equals(JAVA.RETURN_NULL)) {
 						return true;
 					}
@@ -709,6 +732,22 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				for(LeafExpression variableExpression : statement.getVariables()) {
 					String variable = variableExpression.getString();
 					if(statement.getString().equals(variable + JAVA.ASSIGNMENT + parameterNames.get(0) + JAVA.STATEMENT_TERMINATION)) {
+						return true;
+					}
+				}
+			}
+			else if(statements.size() == 2 && statements.get(0) instanceof StatementObject) {
+				StatementObject statement = (StatementObject)statements.get(0);
+				boolean setterAssignment = false;
+				for(LeafExpression variableExpression : statement.getVariables()) {
+					String variable = variableExpression.getString();
+					if(statement.getString().equals(variable + JAVA.ASSIGNMENT + parameterNames.get(0) + JAVA.STATEMENT_TERMINATION)) {
+						setterAssignment = true;
+					}
+				}
+				if(setterAssignment && statements.get(1) instanceof StatementObject) {
+					StatementObject statement2 = (StatementObject)statements.get(1);
+					if(statement2.getString().equals(JAVA.RETURN_THIS)) {
 						return true;
 					}
 				}

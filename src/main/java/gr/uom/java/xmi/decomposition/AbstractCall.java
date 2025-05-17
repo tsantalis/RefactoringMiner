@@ -817,10 +817,40 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
-	public boolean inlinedStatementBecomesAdditionalArgument(AbstractCall call, Set<Replacement> replacements, List<? extends AbstractCodeFragment> statements) {
-		if(identicalName(call) && this.arguments.size() < call.arguments.size() && this.argumentIntersection(call).size() > 0) {
+	public boolean inlinedStatementBecomesAdditionalArgument(AbstractCall call, Set<Replacement> replacements, AbstractCodeFragment statement1, List<? extends AbstractCodeFragment> statements) {
+		boolean argumentCondition = false;
+		if(this.arguments.size() < call.arguments.size()) {
+			argumentCondition = true;
+		}
+		else if(this.arguments.size() <= call.arguments.size() && this.getCoverage().equals(call.getCoverage())) {
+			argumentCondition = true;
+		}
+		else if(this.arguments.size() <= call.arguments.size() && statement1.expressionIsWrappedInTheInitializerOfVariableDeclaration(this.getString()) &&
+				call.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL)) {
+			boolean matchFound = false;
+			for(AbstractCodeFragment statement : statements) {
+				AbstractCall parentCall = statement.invocationCoveringEntireFragment();
+				AbstractCall parentCall1 = statement1.invocationCoveringEntireFragment();
+				if(parentCall != null && parentCall1 != null && statement.getVariableDeclarations().size() > 0 && statement1.getVariableDeclarations().size() > 0) {
+					VariableDeclaration v = statement.getVariableDeclarations().get(0);
+					VariableDeclaration v1 = statement1.getVariableDeclarations().get(0);
+					if(v.getVariableName().equals(v1.getVariableName())) {
+						break;
+					}
+					if(parentCall.identicalName(parentCall1) && parentCall.identicalExpression(parentCall1) && v.getScope().overlaps(v1.getScope())) {
+						matchFound = true;
+						break;
+					}
+				}
+			}
+			if(!matchFound) {
+				argumentCondition = true;
+			}
+		}
+		if(identicalName(call) && argumentCondition && this.argumentIntersection(call).size() > 0) {
 			int matchedArguments = 0;
 			Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
+			Replacement initializerReplacement = null;
 			for(String arg : call.arguments) {
 				if(this.arguments.contains(arg)) {
 					matchedArguments++;
@@ -830,9 +860,11 @@ public abstract class AbstractCall extends LeafExpression {
 						if(statement.getVariableDeclarations().size() > 0) {
 							VariableDeclaration variableDeclaration = statement.getVariableDeclarations().get(0);
 							if(variableDeclaration.getInitializer() != null) {
-								if(arg.equals(variableDeclaration.getInitializer().getExpression())) {
+								if(arg.equals(variableDeclaration.getInitializer().getExpression()) || arg.endsWith(JAVA.LAMBDA_ARROW + variableDeclaration.getInitializer().getExpression()) ||
+										classInstanceCreationToCreationReference(variableDeclaration.getInitializer(), arg)) {
 									matchedArguments++;
 									additionallyMatchedStatements1.add(statement);
+									initializerReplacement = new CompositeReplacement(variableDeclaration.getInitializer().getExpression(), arg, additionallyMatchedStatements1, Collections.emptySet());
 									break;
 								}
 							}
@@ -842,9 +874,25 @@ public abstract class AbstractCall extends LeafExpression {
 			}
 			if(matchedArguments == call.arguments.size()) {
 				if(additionallyMatchedStatements1.size() > 0) {
-					CompositeReplacement r = new CompositeReplacement(this.actualString(), call.actualString(), additionallyMatchedStatements1, Collections.emptySet());
-					replacements.add(r);
+					if(initializerReplacement != null) {
+						replacements.add(initializerReplacement);
+					}
+					else {
+						CompositeReplacement r = new CompositeReplacement(this.actualString(), call.actualString(), additionallyMatchedStatements1, Collections.emptySet());
+						replacements.add(r);
+					}
 				}
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean classInstanceCreationToCreationReference(AbstractExpression initializer, String replacedExpression) {
+		AbstractCall creation = initializer.creationCoveringEntireFragment();
+		if(creation instanceof ObjectCreation) {
+			UMLType type = ((ObjectCreation)creation).getType();
+			if(replacedExpression.startsWith(type + JAVA.METHOD_REFERENCE + "new")) {
 				return true;
 			}
 		}
@@ -1132,7 +1180,7 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	private boolean indexCondition(String statement, int index) {
-		return (arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows") || "Assert".equals(this.getExpression()))) || (statement.contains(" ? ") && statement.contains(" : "));
+		return (arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows") || "Assert".equals(this.getExpression()))) || (statement.contains(JAVA.TERNARY_CONDITION) && statement.contains(JAVA.TERNARY_ELSE));
 	}
 
 	public Replacement makeReplacementForReturnedArgument(String statement) {
@@ -1189,7 +1237,7 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public Replacement makeReplacementForWrappedLambda(String statement) {
-		if(argumentIsLambdaStatement(statement) && (arguments().size() == 1 || (statement.contains(" ? ") && statement.contains(" : ")))) {
+		if(argumentIsLambdaStatement(statement) && (arguments().size() == 1 || (statement.contains(JAVA.TERNARY_CONDITION) && statement.contains(JAVA.TERNARY_ELSE)))) {
 			return new Replacement(statement.substring(0, statement.length()-JAVA.STATEMENT_TERMINATION.length()), arguments().get(0),
 					ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION);
 		}
@@ -1231,7 +1279,7 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public Replacement makeReplacementForAssignedArgument(String statement) {
 		int index = argumentIsAssigned(statement);
-		if(index >= 0 && (arguments().size() == 1 || (statement.contains(" ? ") && statement.contains(" : ")))) {
+		if(index >= 0 && (arguments().size() == 1 || (statement.contains(JAVA.TERNARY_CONDITION) && statement.contains(JAVA.TERNARY_ELSE)))) {
 			return new Replacement(statement.substring(statement.indexOf(JAVA.ASSIGNMENT)+1, statement.length()-JAVA.STATEMENT_TERMINATION.length()),
 					arguments().get(index), ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION);
 		}

@@ -2,6 +2,8 @@ package gui.webdiff.dir;
 
 import com.github.gumtreediff.utils.Pair;
 import gui.webdiff.tree.TreeViewGenerator;
+
+import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 
@@ -16,11 +18,19 @@ public class DirComparator {
     private Set<String> removedFilesName;
     private Set<String> addedFilesName;
 
+    public List<Refactoring> getRefactorings() {
+        return projectASTDiff.getRefactorings();
+    }
+
     public List<ASTDiff> getDiffs() {
         return diffs;
     }
 
-    public int getNumOfDiffs(){
+    public ProjectASTDiff getProjectASTDiff() {
+		return projectASTDiff;
+	}
+
+	public int getNumOfDiffs(){
         return diffs.size();
     }
 
@@ -46,6 +56,17 @@ public class DirComparator {
                 projectASTDiff.getFileContentsBefore().get(diffs.get(id).getSrcPath()),
                 projectASTDiff.getFileContentsAfter().get(diffs.get(id).getDstPath())
         );
+    }
+
+    public int getId(String srcFileName, String dstFileName) {
+        int count = 0;
+        for (ASTDiff diff : diffs) {
+            if(diff.getSrcPath().equals(srcFileName) && diff.getDstPath().equals(dstFileName)) {
+                return count;
+            }
+            count++;
+        }
+        return -1;
     }
 
     public DirComparator(ProjectASTDiff projectASTDiff)

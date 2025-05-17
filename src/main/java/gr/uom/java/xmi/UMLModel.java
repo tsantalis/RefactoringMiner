@@ -2,6 +2,8 @@ package gr.uom.java.xmi;
 
 import gr.uom.java.xmi.diff.UMLClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
+import gr.uom.java.xmi.diff.UMLModuleDiff;
+import gr.uom.java.xmi.diff.UMLPackageInfoDiff;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -16,6 +18,8 @@ import com.github.gumtreediff.tree.TreeContext;
 
 public class UMLModel {
 	private Set<String> repositoryDirectories;
+	private List<UMLModule> moduleList;
+	private List<UMLPackageInfo> packageInfoList;
     private List<UMLClass> classList;
     private List<UMLGeneralization> generalizationList;
     private List<UMLRealization> realizationList;
@@ -26,6 +30,8 @@ public class UMLModel {
     public UMLModel(Set<String> repositoryDirectories) {
     	this.repositoryDirectories = repositoryDirectories;
         classList = new ArrayList<UMLClass>();
+        moduleList = new ArrayList<UMLModule>();
+        packageInfoList = new ArrayList<UMLPackageInfo>();
         generalizationList = new ArrayList<UMLGeneralization>();
         realizationList = new ArrayList<UMLRealization>();
     }
@@ -46,8 +52,16 @@ public class UMLModel {
 		this.partial = partial;
 	}
 
-	public void addClass(UMLClass umlClass) {
+    public void addClass(UMLClass umlClass) {
         classList.add(umlClass);
+    }
+
+    public void addModule(UMLModule umlModule) {
+        moduleList.add(umlModule);
+    }
+
+    public void addPackageInfo(UMLPackageInfo umlPackageInfo) {
+        packageInfoList.add(umlPackageInfo);
     }
 
     public void addGeneralization(UMLGeneralization umlGeneralization) {
@@ -59,7 +73,7 @@ public class UMLModel {
     }
 
     public UMLClass getClass(UMLClass umlClassFromOtherModel) {
-    	ListIterator<UMLClass> it = classList.listIterator();
+        ListIterator<UMLClass> it = classList.listIterator();
         while(it.hasNext()) {
             UMLClass umlClass = it.next();
             if(umlClass.equals(umlClassFromOtherModel))
@@ -68,8 +82,34 @@ public class UMLModel {
         return null;
     }
 
+    public UMLPackageInfo getPackageInfo(UMLPackageInfo packageInfoFromOtherModel) {
+        for(UMLPackageInfo info : packageInfoList) {
+            if(info.equals(packageInfoFromOtherModel)) {
+                return info;
+            }
+        }
+        return null;
+    }
+
+    public UMLModule getModuleInfo(UMLModule moduleInfoFromOtherModel) {
+        for(UMLModule info : moduleList) {
+            if(info.equals(moduleInfoFromOtherModel)) {
+                return info;
+            }
+        }
+        return null;
+    }
+
     public List<UMLClass> getClassList() {
         return this.classList;
+    }
+
+    public List<UMLModule> getModuleList() {
+        return moduleList;
+    }
+
+    public List<UMLPackageInfo> getPackageInfoList() {
+        return packageInfoList;
     }
 
     public List<UMLGeneralization> getGeneralizationList() {
@@ -77,8 +117,8 @@ public class UMLModel {
     }
 
     public List<UMLRealization> getRealizationList() {
-		return realizationList;
-	}
+        return realizationList;
+    }
 
 	public UMLGeneralization matchGeneralization(UMLGeneralization otherGeneralization) {
     	ListIterator<UMLGeneralization> generalizationIt = generalizationList.listIterator();
@@ -159,6 +199,18 @@ public class UMLModel {
     			modelDiff.reportAddedRealization(umlRealization);
     	}
     	modelDiff.checkForRealizationChanges();
+    	for(UMLPackageInfo packageInfo : packageInfoList) {
+    		if(umlModel.packageInfoList.contains(packageInfo)) {
+    			UMLPackageInfoDiff diff = new UMLPackageInfoDiff(packageInfo, umlModel.getPackageInfo(packageInfo));
+    			modelDiff.addUMLPackageInfoDiff(diff);
+    		}
+    	}
+    	for(UMLModule moduleInfo : moduleList) {
+    		if(umlModel.moduleList.contains(moduleInfo)) {
+    			UMLModuleDiff diff = new UMLModuleDiff(moduleInfo, umlModel.getModuleInfo(moduleInfo));
+    			modelDiff.addUMLModuleDiff(diff);
+    		}
+    	}
     	for(UMLClass umlClass : classList) {
     		if(umlModel.classList.contains(umlClass)) {
     			UMLClassDiff classDiff = new UMLClassDiff(umlClass, umlModel.getClass(umlClass), modelDiff);

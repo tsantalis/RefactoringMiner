@@ -1,10 +1,14 @@
 ![Alt](https://repobeats.axiom.co/api/embed/aaedbff1e1adfcefc54fff9dbdac2f5384cbcf87.svg "Repobeats analytics image")
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner)
-<a href="https://hub.docker.com/r/tsantalis/refactoringminer"><img src="https://img.shields.io/badge/dockerhub-images-important.svg?logo=Docker"></a>
+[![Docker Pulls](https://img.shields.io/docker/pulls/tsantalis/refactoringminer)](https://hub.docker.com/r/tsantalis/refactoringminer)
 [![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/lnloiaibmonmmpnfibfjjlfcddoppmgd)](https://chrome.google.com/webstore/detail/refactoring-aware-commit/lnloiaibmonmmpnfibfjjlfcddoppmgd)
+[![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/lnloiaibmonmmpnfibfjjlfcddoppmgd)](https://chrome.google.com/webstore/detail/refactoring-aware-commit/lnloiaibmonmmpnfibfjjlfcddoppmgd)
 [![Tests](https://github.com/tsantalis/RefactoringMiner/actions/workflows/gradle.yml/badge.svg?branch=master)](https://github.com/tsantalis/RefactoringMiner/actions/workflows/gradle.yml)
 [![Test Results](https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2Ftsantalis%2F19fb416d06d1b4d40820e0209540f6c0%2Fraw%2FRefactoringMiner-junit-tests.json)](https://github.com/tsantalis/RefactoringMiner/actions/workflows/gradle.yml)
+
+### Open source projects using our diff tool for code reviews:
+[<img src="https://www.jabref.org/_nuxt/jabref.4Rtv1swz.svg" alt="JabRef" width="20"/>](https://github.com/JabRef/jabref)
 
 Table of Contents
 =================
@@ -30,24 +34,30 @@ Table of Contents
    * [Support for other programming languages](#support-for-other-programming-languages)
       * [Kotlin](#kotlin)
       * [Python](#python)
+      * [C++](#cpp)
    * [Refactoring detection API usage guidelines](#refactoring-detection-api-usage-guidelines)
       * [With a locally cloned git repository](#with-a-locally-cloned-git-repository)
       * [With two directories containing Java source code](#with-two-directories-containing-java-source-code)
       * [With file contents as strings](#with-file-contents-as-strings)
       * [With all information fetched directly from GitHub](#with-all-information-fetched-directly-from-github)
       * [With each commit in a GitHub Pull request](#with-each-commit-in-a-github-pull-request)
+      * [With a commit range](#with-a-commit-range)
    * [AST Diff API usage guidelines](#ast-diff-api-usage-guidelines)
       * [With commit of a locally cloned git repository](#with-commit-of-a-locally-cloned-git-repository)
       * [With commit fetched directly from GitHub](#with-commit-fetched-directly-from-github)
       * [With the files changed in a GitHub Pull Request](#with-the-files-changed-in-a-github-pull-request)
       * [With two directories](#with-two-directories)
+      * [With commit range](#with-commit-range)
    * [Purity Checker](#purity-checker)
    * [Location information for the detected refactorings](#location-information-for-the-detected-refactorings)
    * [Statement matching information for the detected refactorings](#statement-matching-information-for-the-detected-refactorings)
 
 # General info
 RefactoringMiner is a library/API written in Java that can detect refactorings applied in the history of a Java project.
-Since version 3.0, RefactoringMiner can also generate Abstract Syntax Tree (AST) diff at commit and pull request level.
+Since version 3.0, RefactoringMiner can also generate Abstract Syntax Tree (AST) diff at **commit**, **pull request** and **commit range** levels.
+You can also use our tool to visualize the diffs in your browser.
+
+<img width="1875" alt="Image" src="https://github.com/user-attachments/assets/6a5d72e2-e9b1-4606-ac9a-dbd4dba4ef8a" />
 
 Currently, it supports the detection of the following refactorings:
 
@@ -325,42 +335,42 @@ Currently, it supports the detection of the following refactorings:
 **Commit dates**: between June 8th and August 7th, 2015
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **February 4, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **March 20, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12413  | 16  | 226  | 0.999  | 0.982|
-|Extract Method|1006  |  1  | 22  | 0.999  | 0.979|
+|**Total**|12427  | 16  | 223  | 0.999  | 0.982|
+|Extract Method|1008  |  1  | 21  | 0.999  | 0.980|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
-|Move Attribute|256  |  0  |  8  | 1.000  | 0.970|
-|Move And Rename Attribute|16  |  0  |  0  | 1.000  | 1.000|
+|Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
+|Move And Rename Attribute|17  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|388  |  3  | 21  | 0.992  | 0.949|
+|Rename Method|392  |  3  | 21  | 0.992  | 0.949|
 |Inline Method|118  |  0  |  1  | 1.000  | 0.992|
-|Move Method|386  |  3  |  6  | 0.992  | 0.985|
+|Move Method|388  |  3  |  5  | 0.992  | 0.987|
 |Move And Rename Method|128  |  0  |  4  | 1.000  | 0.970|
-|Pull Up Method|288  |  0  |  5  | 1.000  | 0.983|
+|Pull Up Method|285  |  0  |  5  | 1.000  | 0.983|
 |Move Class|1095  |  0  |  4  | 1.000  | 0.996|
 |Move And Rename Class|38  |  0  |  1  | 1.000  | 0.974|
 |Move Source Folder| 3  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|139  |  0  |  1  | 1.000  | 0.993|
 |Push Down Attribute|35  |  0  |  0  | 1.000  | 1.000|
-|Push Down Method|45  |  0  |  1  | 1.000  | 0.978|
+|Push Down Method|46  |  0  |  0  | 1.000  | 1.000|
 |Extract Interface|22  |  0  |  0  | 1.000  | 1.000|
 |Extract Superclass|74  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|108  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|120  |  0  | 61  | 1.000  | 0.663|
+|Extract And Move Method|123  |  0  | 61  | 1.000  | 0.668|
 |Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|305  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|304  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|25  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|116  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|118  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|333  |  3  | 11  | 0.991  | 0.968|
-|Rename Parameter|493  |  2  | 24  | 0.996  | 0.954|
+|Rename Parameter|492  |  2  | 24  | 0.996  | 0.953|
 |Rename Attribute|146  |  0  |  9  | 1.000  | 0.942|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
@@ -370,15 +380,15 @@ As of **February 4, 2025** the precision and recall of RefactoringMiner on this 
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute|123  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|28  |  0  |  1  | 1.000  | 0.966|
-|Parameterize Variable|111  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Variable|110  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|26  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|23  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|433  |  0  | 12  | 1.000  | 0.973|
+|Change Return Type|434  |  0  | 12  | 1.000  | 0.973|
 |Change Variable Type|807  |  2  |  7  | 0.998  | 0.991|
-|Change Parameter Type|653  |  1  | 10  | 0.998  | 0.985|
+|Change Parameter Type|654  |  1  | 10  | 0.998  | 0.985|
 |Change Attribute Type|244  |  0  |  8  | 1.000  | 0.968|
-|Add Method Annotation|332  |  0  |  1  | 1.000  | 0.997|
-|Remove Method Annotation|100  |  0  |  0  | 1.000  | 1.000|
+|Add Method Annotation|333  |  0  |  1  | 1.000  | 0.997|
+|Remove Method Annotation|97  |  0  |  0  | 1.000  | 1.000|
 |Modify Method Annotation|29  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Annotation|62  |  0  |  1  | 1.000  | 0.984|
 |Remove Attribute Annotation|18  |  0  |  0  | 1.000  | 1.000|
@@ -389,7 +399,7 @@ As of **February 4, 2025** the precision and recall of RefactoringMiner on this 
 |Add Parameter Annotation|34  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|849  |  1  |  1  | 0.999  | 0.999|
+|Add Parameter|851  |  1  |  1  | 0.999  | 0.999|
 |Remove Parameter|311  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
@@ -397,15 +407,15 @@ As of **February 4, 2025** the precision and recall of RefactoringMiner on this 
 |Add Thrown Exception Type|41  |  0  |  0  | 1.000  | 1.000|
 |Remove Thrown Exception Type|270  |  0  |  0  | 1.000  | 1.000|
 |Change Thrown Exception Type| 9  |  0  |  0  | 1.000  | 1.000|
-|Change Method Access Modifier|332  |  0  |  0  | 1.000  | 1.000|
-|Change Attribute Access Modifier|231  |  0  |  0  | 1.000  | 1.000|
-|Encapsulate Attribute|49  |  0  |  0  | 1.000  | 1.000|
-|Add Method Modifier|89  |  0  |  0  | 1.000  | 1.000|
+|Change Method Access Modifier|333  |  0  |  0  | 1.000  | 1.000|
+|Change Attribute Access Modifier|232  |  0  |  0  | 1.000  | 1.000|
+|Encapsulate Attribute|52  |  0  |  0  | 1.000  | 1.000|
+|Add Method Modifier|90  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Modifier|111  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Modifier|142  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Modifier|143  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Modifier|135  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter Modifier|133  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter Modifier|132  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Modifier|62  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Modifier|39  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier|78  |  0  |  0  | 1.000  | 1.000|
@@ -426,7 +436,7 @@ As of **February 4, 2025** the precision and recall of RefactoringMiner on this 
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 5  |  0  |  0  | 1.000  | 1.000|
-|Move Code|19  |  0  |  0  | 1.000  | 1.000|
+|Move Code|16  |  0  |  0  | 1.000  | 1.000|
 |Assert Throws|14  |  0  |  0  | 1.000  | 1.000|
 |Try With Resources| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Generic With Diamond|77  |  0  |  0  | 1.000  | 1.000|
@@ -440,37 +450,38 @@ As of **February 4, 2025** the precision and recall of RefactoringMiner on this 
 **Commit dates**: March 28, 2024
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **February 24, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **April 16, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3005  | 237  | 370  | 0.927  | 0.890|
-|Extract Method|328  | 24  | 37  | 0.932  | 0.899|
+|**Total**|3050  | 209  | 349  | 0.936  | 0.897|
+|Extract Method|330  | 21  | 33  | 0.940  | 0.909|
 |Rename Class|229  |  2  |  3  | 0.991  | 0.987|
-|Move Attribute|69  |  3  | 11  | 0.958  | 0.863|
+|Move Attribute|69  |  3  | 10  | 0.958  | 0.873|
 |Move And Rename Attribute| 4  |  0  |  4  | 1.000  | 0.500|
-|Rename Method|272  | 23  | 25  | 0.922  | 0.916|
-|Inline Method|63  |  9  |  6  | 0.875  | 0.913|
-|Move Method|259  |  5  |  8  | 0.981  | 0.970|
+|Rename Method|272  | 23  | 24  | 0.922  | 0.919|
+|Inline Method|64  |  9  |  6  | 0.877  | 0.914|
+|Move Method|260  |  5  |  5  | 0.981  | 0.981|
 |Move And Rename Method|18  |  6  | 10  | 0.750  | 0.643|
 |Pull Up Method|42  |  3  |  8  | 0.933  | 0.840|
 |Move Class|138  |  7  |  4  | 0.952  | 0.972|
 |Move And Rename Class|28  |  1  |  2  | 0.966  | 0.933|
 |Pull Up Attribute|11  |  0  |  3  | 1.000  | 0.786|
 |Push Down Attribute| 5  |  0  |  1  | 1.000  | 0.833|
-|Push Down Method|13  |  0  | 11  | 1.000  | 0.542|
+|Push Down Method|18  |  0  |  6  | 1.000  | 0.750|
 |Extract Interface|16  |  2  |  0  | 0.889  | 1.000|
 |Extract Superclass| 7  |  2  |  0  | 0.778  | 1.000|
 |Extract Subclass| 3  |  0  |  6  | 1.000  | 0.333|
-|Extract Class|40  |  2  | 11  | 0.952  | 0.784|
-|Extract And Move Method|99  | 25  | 21  | 0.798  | 0.825|
-|Move And Inline Method|17  |  7  | 13  | 0.708  | 0.567|
+|Extract Class|39  |  2  | 10  | 0.951  | 0.796|
+|Extract And Move Method|98  | 21  | 21  | 0.824  | 0.824|
+|Move And Inline Method|25  |  7  | 12  | 0.781  | 0.676|
+|Replace Anonymous With Class| 5  |  0  |  0  | 0.800  | 1.000|
 |Extract Variable|238  | 15  | 42  | 0.941  | 0.850|
-|Inline Variable|75  | 12  | 47  | 0.862  | 0.615|
-|Rename Variable|259  | 33  | 28  | 0.887  | 0.902|
+|Inline Variable|82  | 12  | 40  | 0.872  | 0.672|
+|Rename Variable|264  | 26  | 30  | 0.910  | 0.898|
 |Rename Attribute|101  |  6  | 15  | 0.944  | 0.871|
 |Change Return Type|153  |  9  | 27  | 0.944  | 0.850|
-|Change Variable Type|350  | 38  | 18  | 0.902  | 0.951|
+|Change Variable Type|363  | 24  | 18  | 0.938  | 0.953|
 |Change Attribute Type|158  |  3  |  9  | 0.981  | 0.946|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 6  |  0  |  0  | 1.000  | 1.000|
@@ -490,7 +501,7 @@ You can run `gradle test` to execute all tests.
 The available test suites are:
 * [src/test/java/org/refactoringminer/test/TestAllRefactorings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestAllRefactorings.java) : Tests the overall precision and recall of RefactoringMiner on the Refactoring Oracle (547 commits)
 * [src/test/java/org/refactoringminer/test/TestAllRefactoringsByCommit](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestAllRefactoringsByCommit.java) : Tests the number of True Positives, False Positives and False Negatives, separately for each commit of the Refactoring Oracle (547 commits)
-* [src/test/java/org/refactoringminer/test/TestStatementMappings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestStatementMappings.java): Tests the statement mapping accuracy of RefactoringMiner (125 commits)
+* [src/test/java/org/refactoringminer/test/TestStatementMappings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestStatementMappings.java): Tests the statement mapping accuracy of RefactoringMiner (142 commits)
 * [src/test/java/org/refactoringminer/test/TestJavadocDiff](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestJavadocDiff.java): Tests the comment and Javadoc mapping accuracy of RefactoringMiner
 * [src/test/java/org/refactoringminer/test/TestCommandLine](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestCommandLine.java): Tests the command-line functionality of RefactoringMiner
 * [src/test/java/org/refactoringminer/test/TestParameterizeTestRefactoring](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestParameterizeTestRefactoring.java): Tests the Parameterize Test Refactoring detection
@@ -565,110 +576,112 @@ You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> 
 
 In both cases, you will get the output in JSON format:
 
-    {
-	"commits": [{
-		"repository": "https://github.com/danilofes/refactoring-toy-example.git",
-		"sha1": "36287f7c3b09eff78395267a3ac0d7da067863fd",
-		"url": "https://github.com/danilofes/refactoring-toy-example/commit/36287f7c3b09eff78395267a3ac0d7da067863fd",
-		"refactorings": [{
-				"type": "Pull Up Attribute",
-				"description": "Pull Up Attribute private age : int from class org.animals.Labrador to class org.animals.Dog",
-				"leftSideLocations": [{
-					"filePath": "src/org/animals/Labrador.java",
-					"startLine": 5,
-					"endLine": 5,
-					"startColumn": 14,
-					"endColumn": 21,
-					"codeElementType": "FIELD_DECLARATION",
-					"description": "original attribute declaration",
-					"codeElement": "age : int"
-				}],
-				"rightSideLocations": [{
-					"filePath": "src/org/animals/Dog.java",
-					"startLine": 5,
-					"endLine": 5,
-					"startColumn": 14,
-					"endColumn": 21,
-					"codeElementType": "FIELD_DECLARATION",
-					"description": "pulled up attribute declaration",
-					"codeElement": "age : int"
-				}]
-			},
-			{
-				"type": "Pull Up Attribute",
-				"description": "Pull Up Attribute private age : int from class org.animals.Poodle to class org.animals.Dog",
-				"leftSideLocations": [{
-					"filePath": "src/org/animals/Poodle.java",
-					"startLine": 5,
-					"endLine": 5,
-					"startColumn": 14,
-					"endColumn": 21,
-					"codeElementType": "FIELD_DECLARATION",
-					"description": "original attribute declaration",
-					"codeElement": "age : int"
-				}],
-				"rightSideLocations": [{
-					"filePath": "src/org/animals/Dog.java",
-					"startLine": 5,
-					"endLine": 5,
-					"startColumn": 14,
-					"endColumn": 21,
-					"codeElementType": "FIELD_DECLARATION",
-					"description": "pulled up attribute declaration",
-					"codeElement": "age : int"
-				}]
-			},
-			{
-				"type": "Pull Up Method",
-				"description": "Pull Up Method public getAge() : int from class org.animals.Labrador to public getAge() : int from class org.animals.Dog",
-				"leftSideLocations": [{
-					"filePath": "src/org/animals/Labrador.java",
-					"startLine": 7,
-					"endLine": 9,
-					"startColumn": 2,
-					"endColumn": 3,
-					"codeElementType": "METHOD_DECLARATION",
-					"description": "original method declaration",
-					"codeElement": "public getAge() : int"
-				}],
-				"rightSideLocations": [{
-					"filePath": "src/org/animals/Dog.java",
-					"startLine": 7,
-					"endLine": 9,
-					"startColumn": 2,
-					"endColumn": 3,
-					"codeElementType": "METHOD_DECLARATION",
-					"description": "pulled up method declaration",
-					"codeElement": "public getAge() : int"
-				}]
-			},
-			{
-				"type": "Pull Up Method",
-				"description": "Pull Up Method public getAge() : int from class org.animals.Poodle to public getAge() : int from class org.animals.Dog",
-				"leftSideLocations": [{
-					"filePath": "src/org/animals/Poodle.java",
-					"startLine": 7,
-					"endLine": 9,
-					"startColumn": 2,
-					"endColumn": 3,
-					"codeElementType": "METHOD_DECLARATION",
-					"description": "original method declaration",
-					"codeElement": "public getAge() : int"
-				}],
-				"rightSideLocations": [{
-					"filePath": "src/org/animals/Dog.java",
-					"startLine": 7,
-					"endLine": 9,
-					"startColumn": 2,
-					"endColumn": 3,
-					"codeElementType": "METHOD_DECLARATION",
-					"description": "pulled up method declaration",
-					"codeElement": "public getAge() : int"
-				}]
-			}
-		]
-	}]
-	}
+```json
+{
+  "commits": [{
+    "repository": "https://github.com/danilofes/refactoring-toy-example.git",
+    "sha1": "36287f7c3b09eff78395267a3ac0d7da067863fd",
+    "url": "https://github.com/danilofes/refactoring-toy-example/commit/36287f7c3b09eff78395267a3ac0d7da067863fd",
+    "refactorings": [{
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private age : int from class org.animals.Labrador to class org.animals.Dog",
+        "leftSideLocations": [{
+          "filePath": "src/org/animals/Labrador.java",
+          "startLine": 5,
+          "endLine": 5,
+          "startColumn": 14,
+          "endColumn": 21,
+          "codeElementType": "FIELD_DECLARATION",
+          "description": "original attribute declaration",
+          "codeElement": "age : int"
+        }],
+        "rightSideLocations": [{
+          "filePath": "src/org/animals/Dog.java",
+          "startLine": 5,
+          "endLine": 5,
+          "startColumn": 14,
+          "endColumn": 21,
+          "codeElementType": "FIELD_DECLARATION",
+          "description": "pulled up attribute declaration",
+          "codeElement": "age : int"
+        }]
+      },
+      {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private age : int from class org.animals.Poodle to class org.animals.Dog",
+        "leftSideLocations": [{
+          "filePath": "src/org/animals/Poodle.java",
+          "startLine": 5,
+          "endLine": 5,
+          "startColumn": 14,
+          "endColumn": 21,
+          "codeElementType": "FIELD_DECLARATION",
+          "description": "original attribute declaration",
+          "codeElement": "age : int"
+        }],
+        "rightSideLocations": [{
+          "filePath": "src/org/animals/Dog.java",
+          "startLine": 5,
+          "endLine": 5,
+          "startColumn": 14,
+          "endColumn": 21,
+          "codeElementType": "FIELD_DECLARATION",
+          "description": "pulled up attribute declaration",
+          "codeElement": "age : int"
+        }]
+      },
+      {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getAge() : int from class org.animals.Labrador to public getAge() : int from class org.animals.Dog",
+        "leftSideLocations": [{
+          "filePath": "src/org/animals/Labrador.java",
+          "startLine": 7,
+          "endLine": 9,
+          "startColumn": 2,
+          "endColumn": 3,
+          "codeElementType": "METHOD_DECLARATION",
+          "description": "original method declaration",
+          "codeElement": "public getAge() : int"
+        }],
+        "rightSideLocations": [{
+          "filePath": "src/org/animals/Dog.java",
+          "startLine": 7,
+          "endLine": 9,
+          "startColumn": 2,
+          "endColumn": 3,
+          "codeElementType": "METHOD_DECLARATION",
+          "description": "pulled up method declaration",
+          "codeElement": "public getAge() : int"
+        }]
+      },
+      {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getAge() : int from class org.animals.Poodle to public getAge() : int from class org.animals.Dog",
+        "leftSideLocations": [{
+          "filePath": "src/org/animals/Poodle.java",
+          "startLine": 7,
+          "endLine": 9,
+          "startColumn": 2,
+          "endColumn": 3,
+          "codeElementType": "METHOD_DECLARATION",
+          "description": "original method declaration",
+          "codeElement": "public getAge() : int"
+        }],
+        "rightSideLocations": [{
+          "filePath": "src/org/animals/Dog.java",
+          "startLine": 7,
+          "endLine": 9,
+          "startColumn": 2,
+          "endColumn": 3,
+          "codeElementType": "METHOD_DECLARATION",
+          "description": "pulled up method declaration",
+          "codeElement": "public getAge() : int"
+        }]
+      }
+    ]
+  }]
+}
+```
 
 ## AST diff command line options
 When you build a distributable application with `./gradlew distZip`, you can run Refactoring Miner as a command line application. Extract the file under `build/distribution/RefactoringMiner-version.zip` in the desired location, and cd into the `bin` folder (or include it in your path). Then, run `RefactoringMiner diff -h` to show its usage:
@@ -701,56 +714,70 @@ If you are using RefactoringMiner in your research, please cite the following pa
 
 Nikolaos Tsantalis, Matin Mansouri, Laleh Eshkevari, Davood Mazinanian, and Danny Dig, "[Accurate and Efficient Refactoring Detection in Commit History](https://users.encs.concordia.ca/~nikolaos/publications/ICSE_2018.pdf)," *40th International Conference on Software Engineering* (ICSE 2018), Gothenburg, Sweden, May 27 - June 3, 2018.
 
-    @inproceedings{Tsantalis:ICSE:2018:RefactoringMiner,
-        author = {Tsantalis, Nikolaos and Mansouri, Matin and Eshkevari, Laleh M. and Mazinanian, Davood and Dig, Danny},
-        title = {Accurate and Efficient Refactoring Detection in Commit History},
-        booktitle = {Proceedings of the 40th International Conference on Software Engineering},
-        series = {ICSE '18},
-        year = {2018},
-        isbn = {978-1-4503-5638-1},
-        location = {Gothenburg, Sweden},
-        pages = {483--494},
-        numpages = {12},
-        url = {http://doi.acm.org/10.1145/3180155.3180206},
-        doi = {10.1145/3180155.3180206},
-        acmid = {3180206},
-        publisher = {ACM},
-        address = {New York, NY, USA},
-        keywords = {Git, Oracle, abstract syntax tree, accuracy, commit, refactoring},
-    }
+```bibtex
+@inproceedings{Tsantalis:ICSE:2018:RefactoringMiner,
+    author = {Tsantalis, Nikolaos and Mansouri, Matin and Eshkevari, Laleh M. and Mazinanian, Davood and Dig, Danny},
+    title = {Accurate and Efficient Refactoring Detection in Commit History},
+    booktitle = {Proceedings of the 40th International Conference on Software Engineering},
+    series = {ICSE '18},
+    year = {2018},
+    isbn = {978-1-4503-5638-1},
+    location = {Gothenburg, Sweden},
+    pages = {483--494},
+    numpages = {12},
+    url = {http://doi.acm.org/10.1145/3180155.3180206},
+    doi = {10.1145/3180155.3180206},
+    acmid = {3180206},
+    publisher = {ACM},
+    address = {New York, NY, USA},
+    keywords = {Git, Oracle, abstract syntax tree, accuracy, commit, refactoring},
+}
+```
 
 Nikolaos Tsantalis, Ameya Ketkar, and Danny Dig, "[RefactoringMiner 2.0](https://users.encs.concordia.ca/~nikolaos/publications/TSE_2020.pdf)," *IEEE Transactions on Software Engineering*, vol. 48, no. 3, pp. 930-950, March 2022.
 
-    @article{Tsantalis:TSE:2020:RefactoringMiner2.0,
-        author = {Tsantalis, Nikolaos and Ketkar, Ameya and Dig, Danny},
-        title = {RefactoringMiner 2.0},
-        journal = {IEEE Transactions on Software Engineering},
-        year = {2022},
-        volume = {48},
-        number = {3},
-        pages = {930-950},
-        doi = {10.1109/TSE.2020.3007722}
-    }
+```bibtex
+@article{Tsantalis:TSE:2020:RefactoringMiner2.0,
+    author = {Tsantalis, Nikolaos and Ketkar, Ameya and Dig, Danny},
+    title = {RefactoringMiner 2.0},
+    journal = {IEEE Transactions on Software Engineering},
+    year = {2022},
+    volume = {48},
+    number = {3},
+    pages = {930-950},
+    doi = {10.1109/TSE.2020.3007722}
+}
+```
 
 Pouria Alikhanifard and Nikolaos Tsantalis, "[A Novel Refactoring and Semantic Aware Abstract Syntax Tree Differencing Tool and a Benchmark for Evaluating the Accuracy of Diff Tools](https://users.encs.concordia.ca/~nikolaos/publications/TOSEM_2024.pdf)," *ACM Transactions on Software Engineering and Methodology*, 2024. (accepted)
 
-    @article{Alikhanifard:TOSEM:2024:RefactoringMiner3.0,
-        author = {Alikhanifard, Pouria and Tsantalis, Nikolaos},
-        title = {A Novel Refactoring and Semantic Aware Abstract Syntax Tree Differencing Tool and a Benchmark for Evaluating the Accuracy of Diff Tools},
-        year = {2024},
-        publisher = {Association for Computing Machinery},
-        address = {New York, NY, USA},
-        issn = {1049-331X},
-        url = {https://doi.org/10.1145/3696002},
-        doi = {10.1145/3696002},
-        note = {Just Accepted},
-        journal = {ACM Transactions on Software Engineering and Methodology},
-        month = {sep},
-        keywords = {Source code differencing, Abstract Syntax Trees, Benchmark}
-    }
+```bibtex
+@article{Alikhanifard:TOSEM:2024:RefactoringMiner3.0,
+    author = {Alikhanifard, Pouria and Tsantalis, Nikolaos},
+    title = {A Novel Refactoring and Semantic Aware Abstract Syntax Tree Differencing Tool and a Benchmark for Evaluating the Accuracy of Diff Tools},
+    year = {2025},
+    issue_date = {February 2025},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    volume = {34},
+    number = {2},
+    issn = {1049-331X},
+    url = {https://doi.org/10.1145/3696002},
+    doi = {10.1145/3696002},
+    journal = {ACM Transactions on Software Engineering and Methodology},
+    month = jan,
+    articleno = {40},
+    numpages = {63},
+    keywords = {Source code differencing, Abstract Syntax Trees, Benchmark}
+}
+```
 
 ## Talks about RefactoringMiner
-**[Keynote at the Fifth International Workshop on Refactoring (IWoR 2021)](https://iwor.github.io/iwor2021/keynote.html)**
+[Keynote at the 32nd IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER 2025)](https://conf.researchr.org/info/saner-2025/keynote#source-code-diff-revolution)
+
+[![SANER_Keynote](https://github.com/user-attachments/assets/4d2bd2bf-9ed1-4f8d-b5a7-d728df4913b0)](https://users.encs.concordia.ca/~nikolaos/talks/SANER_2025_Keynote.pptx)
+
+[Keynote at the Fifth International Workshop on Refactoring (IWoR 2021)](https://iwor.github.io/iwor2021/keynote.html)
 
 [![2021-11-14 22_16_25-Greenshot](https://user-images.githubusercontent.com/1483516/142782871-7f7545d3-3fe7-4d0c-8860-db892757a152.png)](https://www.youtube.com/watch?v=CXO32d1ih3E)
 
@@ -832,6 +859,9 @@ The project is led and maintained by [Zarina Kurbatova](https://github.com/onewh
 ## Python
 * [PyRef](https://github.com/PyRef/PyRef) has been developed by Hassan Atwi and [Bin Lin](https://binlin.info/) from the Software Institute at USI - Università della Svizzera Italiana, Switzerland.
 * [Py-RefactoringMiner](https://github.com/maldil/RefactoringMiner) has been developed by [Malinda Dilhara](https://maldil.github.io/), a Ph.D. student in the department of Computer Science at University of Colorado Boulder under the suprevision of [Danny Dig](https://dig.cs.illinois.edu/).
+
+## Cpp
+* [RefactoringMiner++](https://github.com/benzoinoo/RefactoringMinerPP) has been developed by [Benjamin Ritz](https://github.com/benzoinoo) from Graz University of Technology, Austria.
 
 # Refactoring detection API usage guidelines
 ## With a locally cloned git repository
@@ -1012,6 +1042,24 @@ miner.detectAtPullRequest(repo, 1807, new RefactoringHandler() {
 }, 100);
 ```
 
+## With a commit range
+
+This is a special API that aggregates the changes between two commits, and detects refactorings between the initial state of the files
+and the last-modified state of the files within the specified commit range.
+
+This API is inspired by the work of Lei Chen and Shinpei Hayashi, "Impact of Change Granularity in Refactoring Detection," Proceedings of the 30th IEEE/ACM International Conference on Program Comprehension, 565-569, 2022.
+
+`repo` can be either a JGit Repository object (i.e., locally cloned repository), or the Git URL of a repository (i.e., information fetched directly from GitHub).
+`startCommit` and `endCommit` are the SHA-1 of the start and end commits, respectively.
+
+To use the latter API, please provide a valid OAuth token in the `github-oauth.properties` file.
+You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
+
+```java
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+List<Refactoring> refactorings = miner.detectAtCommitRange(repo, startCommit, endCommit);
+```
+
 # AST Diff API usage guidelines
 
 RefactoringMiner is actually the only tool that generates AST diff at commit level, supports multi-mappings (one-to-many, many-to-one, many-to-many mappings), matches AST nodes of different AST types, and supports semantic diff in a fully refactoring-aware fashion.
@@ -1091,6 +1139,27 @@ Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
 // To visualize the diff add the following line
 new WebDiff(projectASTDiff).run();
 ```
+
+## With commit range
+
+This is a special API that aggregates the changes between two commits, and generates AST diff between the initial state of the files
+and the last-modified state of the files within the specified commit range.
+
+This API is inspired by the work of Lei Chen and Shinpei Hayashi, "Impact of Change Granularity in Refactoring Detection," Proceedings of the 30th IEEE/ACM International Conference on Program Comprehension, 565-569, 2022.
+
+`repo` can be either a JGit Repository object (i.e., locally cloned repository), or the Git URL of a repository (i.e., information fetched directly from GitHub).
+`startCommit` and `endCommit` are the SHA-1 of the start and end commits, respectively.
+
+To use the latter API, please provide a valid OAuth token in the `github-oauth.properties` file.
+You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
+
+```java
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+ProjectASTDiff projectASTDiff = miner.diffAtCommitRange(repo, startCommit, endCommit);
+// To visualize the diff add the following line
+new WebDiff(projectASTDiff).openInBrowser();
+```
+
 # Purity Checker
 To check whether a refactoring detected in a commit is pure (i.e., it does not include overlapping behavior-changing edits) or impure, you can use the following APIs:
 

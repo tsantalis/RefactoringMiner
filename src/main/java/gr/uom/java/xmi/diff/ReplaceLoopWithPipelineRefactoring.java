@@ -15,7 +15,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class ReplaceLoopWithPipelineRefactoring implements Refactoring, LeafMappingProvider {
+public class ReplaceLoopWithPipelineRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
 	private Set<AbstractCodeFragment> codeFragmentsBefore;
 	private Set<AbstractCodeFragment> codeFragmentsAfter;
 	private VariableDeclarationContainer operationBefore;

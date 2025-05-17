@@ -220,11 +220,11 @@ public class InlineOperationRefactoring implements Refactoring {
 		if(invocation2 == null) {
 			invocation2 = mapping.getFragment2().assignmentInvocationCoveringEntireStatement();
 		}
-		ObjectCreation creation1 = mapping.getFragment1().creationCoveringEntireFragment();
+		AbstractCall creation1 = mapping.getFragment1().creationCoveringEntireFragment();
 		if(creation1 == null) {
 			creation1 = mapping.getFragment1().assignmentCreationCoveringEntireStatement();
 		}
-		ObjectCreation creation2 = mapping.getFragment2().creationCoveringEntireFragment();
+		AbstractCall creation2 = mapping.getFragment2().creationCoveringEntireFragment();
 		if(creation2 == null) {
 			creation2 = mapping.getFragment2().assignmentCreationCoveringEntireStatement();
 		}
@@ -238,7 +238,7 @@ public class InlineOperationRefactoring implements Refactoring {
 			for(AbstractCodeFragment leaf : leaves) {
 				if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 					List<LeafExpression> expressions1 = leaf.findExpression(argument);
-					if(expressions1.size() == 1) {
+					if(expressions1.size() >= 1) {
 						int occurrence = 0;
 						for(LeafExpression expression2 : expressions2) {
 							boolean equalArgument = false;

@@ -1,14 +1,19 @@
 package gui.webdiff.viewers.monaco;
 
-import com.github.gumtreediff.actions.Diff;
 import gui.webdiff.WebDiff;
+import gui.webdiff.dir.DirComparator;
 import gui.webdiff.rest.AbstractMenuBar;
 import gui.webdiff.viewers.AbstractDiffView;
+
+import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.astDiff.models.ASTDiff;
+import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
@@ -16,10 +21,40 @@ public class MonacoView extends AbstractDiffView implements Renderable {
     final MonacoCore core;
     boolean decorate = true;
 
+    public MonacoView(String toolName, DirComparator comparator, String routePath, int id) {
+        super(toolName, 
+            comparator.getProjectASTDiff().getMetaInfo(), 
+            comparator.getASTDiff(id).getSrcPath(), 
+            comparator.getASTDiff(id).getDstPath(), 
+            comparator.getASTDiff(id), 
+            id, 
+            comparator.getNumOfDiffs(), 
+            routePath, 
+            comparator.isMoveDiff(id) 
+        );
+        ASTDiff diff = comparator.getASTDiff(id);
+        boolean isMovedDiff = comparator.isMoveDiff(id);
+        String srcFileContent = comparator.getProjectASTDiff().getFileContentsBefore().get(diff.getSrcPath());
+        String dstFileContent = comparator.getProjectASTDiff().getFileContentsAfter().get(diff.getDstPath());
+        List<Refactoring> refactorings = comparator.getRefactorings();
+        core = new MonacoCore(comparator, diff, id, isMovedDiff, srcFileContent, dstFileContent, refactorings);
+    }
 
-    public MonacoView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff, String srcFileContent, String dstFileContent) {
-        super(toolName, srcFileName, dstFileName, diff, id, numOfDiffs, routePath, isMovedDiff);
-        core = new MonacoCore(diff, id, isMovedDiff, srcFileContent, dstFileContent);
+    public MonacoView(String toolName, DirComparator comparator, String routePath, int id, ASTDiff diff) {
+        super(toolName, 
+        		comparator.getProjectASTDiff().getMetaInfo(), 
+                diff.getSrcPath(), 
+                diff.getDstPath(), 
+                diff, 
+                id, 
+                comparator.getNumOfDiffs(), 
+                routePath, 
+                false 
+            );
+            String srcFileContent = comparator.getProjectASTDiff().getFileContentsBefore().get(diff.getSrcPath());
+            String dstFileContent = comparator.getProjectASTDiff().getFileContentsAfter().get(diff.getDstPath());
+            List<Refactoring> refactorings = comparator.getRefactorings();
+            core = new MonacoCore(comparator, diff, id, false, srcFileContent, dstFileContent, refactorings);
     }
 
     public void setDecorate(boolean decorate) {
@@ -38,7 +73,7 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                 .div(class_("container-fluid h-100"))
                 .if_(decorate)
                     .div(class_("row"))
-                    .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, isMovedDiff){
+                    .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, isMovedDiff, metaInfo){
                         @Override
                         public String getShortcutDescriptions() {
                             return super.getShortcutDescriptions() + "<b>Alt + w</b> toggle word wrap";
@@ -48,8 +83,7 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                             return "<span class=&quot;deleted&quot;>&nbsp;&nbsp;</span> deleted<br>"
                                     + "<span class=&quot;inserted&quot;>&nbsp;&nbsp;</span> inserted<br>"
                                     + "<span class=&quot;moved&quot;>&nbsp;&nbsp;</span> moved<br>"
-                                    + "<span class=&quot;updated&quot;>&nbsp;&nbsp;</span> updated<br>"
-                                    + "<span class=&quot;mm&quot;>&nbsp;&nbsp;</span> multi-mapped<br>";
+                                    + "<span class=&quot;updated&quot;>&nbsp;&nbsp;</span> updated<br>";
                         }
                     })
                     ._div()._if();

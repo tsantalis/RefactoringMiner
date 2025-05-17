@@ -1,53 +1,56 @@
-
-
-
 .inserted {
-	border: 1px solid black;
+	/*border: 1px solid black;
 	background-color: MediumSeaGreen;
-	/*background-color: #8ceb34;;*/
+	background-color: #dafbe1;*/
+	background-color: #aceebb;
 }
 
 .deleted {
-	border: 1px solid black;
+	/*border: 1px solid black;
 	background-color: IndianRed;
-	/*background-color: #f37998;*/
+	background-color: #ffebe9;*/
+	background-color: #ffcecb;
 }
 
 .moved {
-	border: 1px solid black;
-	background-color: Lavender;
+	/*border: 1px solid black;*/
+	background-color: #edeae0;
 }
 
 .updated {
-	border: 1px solid black;
-	background-color: Plum;
+	/*border: 1px solid black;*/
+	background-color: #ffddf4;
 	font-weight: bold;
 }
 .mm {
-	border: 1px solid black;
-	background-color: #d2bada;
+	/*border: 1px solid black;*/
+	background-color: #edeae0;
 }
 .mm.updOnTop.selected {
 	background-color: Gold;
-	border: 1px solid black;
+	/*border: 1px solid black;*/
 	font-weight: bold;
 }
 .mm.updOnTop
 {
-	background-color: #e57ecc;
-	border: 1px solid black;
+	background-color: #ffddf4;
+	/*border: 1px solid black;*/
 	font-weight: bold;
 }
 
 .moveIn {
-	border: 1px solid #d2bada;
-	/*background-color: #8ceb34;*/
-	background-color: MediumSeaGreen;
+	/*border: 1px solid #d2bada;
+	background-color: #dafbe1;
+	background-color: MediumSeaGreen;*/
+	background-color: #aceebb;
+	box-shadow: 0 2px 1px darkgray;
 }
 .moveOut {
-	border: 1px solid #d2bada;
-	/*background-color: #f37998;*/
-	background-color: IndianRed;
+	/*border: 1px solid #d2bada;
+	background-color: #ffebe9;
+	background-color: IndianRed;*/
+	background-color: #ffcecb;
+	box-shadow: 0 2px 1px darkgray;
 }
 
 .cupd {
@@ -85,6 +88,7 @@ div {
 }
 .monaco-editor, .monaco-diff-editor, .monaco-component  {
 	--vscode-editor-foldBackground: #c0ebf8 !important;
+	position: absolute !important; 
 }
 .disabled {
 	pointer-events: none;
@@ -112,18 +116,3 @@ div {
 	background-color: orange;
 	opacity: 0.5;
 }
-/*.deleted {*/
-/*	background-color: IndianRed;*/
-/*}*/
-
-/*.inserted {*/
-/*	background-color: MediumSeaGreen;*/
-/*}*/
-
-/*.moved {*/
-/*	background-color: Plum;*/
-/*}*/
-
-/*.updated {*/
-/*	background-color: GoldenRod;*/
-/*}*/

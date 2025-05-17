@@ -2726,12 +2726,13 @@ Mapping state for Move Method refactoring purity:
                 originalOperation = ((UMLOperation) ((InlineOperationRefactoring) (refactoring)).getTargetOperationBeforeInline());
                 refactoredOperation = ((InlineOperationRefactoring) (refactoring)).getInlinedOperation();
 
-                if (modelDiff.findClassInChildModel(classAfterString).getSuperclass() != null) {
-                    classAfter.add(modelDiff.findClassInChildModel(classAfterString).getSuperclass().toString().replaceAll("<[^>]*>", ""));
+                UMLAbstractClass classInChildModel = modelDiff.findClassInChildModel(classAfterString);
+				if (classInChildModel != null && classInChildModel.getSuperclass() != null) {
+                    classAfter.add(classInChildModel.getSuperclass().toString().replaceAll("<[^>]*>", ""));
                 }
 
-                if (modelDiff.findClassInChildModel(classAfterString).getImplementedInterfaces() != null) {
-                    for (UMLType implementedInterface : modelDiff.findClassInChildModel(classAfterString).getImplementedInterfaces()) {
+                if (classInChildModel != null && classInChildModel.getImplementedInterfaces() != null) {
+                    for (UMLType implementedInterface : classInChildModel.getImplementedInterfaces()) {
                         classAfter.add(implementedInterface.toString().replaceAll("<[^>]*>", ""));
                     }
                 }
@@ -5022,7 +5023,7 @@ Mapping state for Move Method refactoring purity:
                     patterns.put(((ExtractClassRefactoring) refactoring).getOriginalClass().getNonQualifiedName(), ((ExtractClassRefactoring) refactoring).getExtractedClass().getNonQualifiedName());
                     // TODO: 8/3/2022 Think about more possible patterns
                 }
-            } else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS)) {
+            } else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS) && refactoring instanceof ExtractSuperclassRefactoring) {
 
                 String extractedClassName = ((ExtractSuperclassRefactoring) refactoring).getExtractedClass().getNonQualifiedName();
                 for (UMLClass subClassBefore : ((ExtractSuperclassRefactoring) refactoring).getUMLSubclassSetBefore()) {

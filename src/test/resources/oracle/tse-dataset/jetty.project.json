@@ -591,7 +591,7 @@
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tprotected newHttpClient(clientConnector ClientConnector) : HttpClient extracted from private startProxy(connectHandler ConnectHandler) : void in class org.eclipse.jetty.http.client.ProxyWithDynamicTransportTest & moved to class org.eclipse.jetty.http.client.ProxyWithDynamicTransportTest.ForwardProxyServlet",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
@@ -602,6 +602,11 @@
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpackage requiresTunnel(serverOrigin Origin) : boolean extracted from public newConnection(endPoint EndPoint, context Map<String,Object>) : org.eclipse.jetty.io.Connection in class org.eclipse.jetty.client.HttpProxy.HttpProxyClientConnectionFactory & moved to class org.eclipse.jetty.client.HttpProxy",
           "validation": false
+        },
+        {
+          "type": "REPLACE_ANONYMOUS_WITH_CLASS",
+          "description": "Replace Anonymous With Class\torg.eclipse.jetty.http.client.ProxyWithDynamicTransportTest.startProxy.holder.new ServletHolder.new AsyncProxyServlet with org.eclipse.jetty.http.client.ProxyWithDynamicTransportTest.ForwardProxyServlet",
+          "validation": true
         }
       ]
     },

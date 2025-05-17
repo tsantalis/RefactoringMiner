@@ -107,7 +107,8 @@ public class UnifiedModelDiffRefactoringsMatcher {
                                 Optional.empty(),
                                 new UMLCommentListDiff(moveAttributeRefactoring.getOriginalAttribute().getComments(), moveAttributeRefactoring.getMovedAttribute().getComments())));
             }
-            else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION))
+            else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION) ||
+            		refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION))
             {
                 ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
                 String srcPath = extractOperationRefactoring.getBodyMapper().getContainer1().getLocationInfo().getFilePath();

@@ -198,8 +198,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		if(invocation1 != null && invocation2 != null) {
 			return invocation1.actualString().equals(invocation2.actualString());
 		}
-		ObjectCreation creation1 = fragment1.creationCoveringEntireFragment();
-		ObjectCreation creation2 = fragment2.creationCoveringEntireFragment();
+		AbstractCall creation1 = fragment1.creationCoveringEntireFragment();
+		AbstractCall creation2 = fragment2.creationCoveringEntireFragment();
 		if(creation1 != null && creation2 != null) {
 			return creation1.actualString().equals(creation2.actualString());
 		}
@@ -448,7 +448,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						ref.addSubExpressionMapping(leafMapping);
 						processExtractVariableRefactoring(ref, refactorings);
 						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-						if(identical()) {
+						if(identical(classDiff)) {
 							identicalWithExtractedVariable = true;
 						}
 						break;
@@ -467,7 +467,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 				processExtractVariableRefactoring(ref, refactorings);
 				checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-				if(identical()) {
+				if(identical(classDiff)) {
 					identicalWithExtractedVariable = true;
 				}
 			}
@@ -512,7 +512,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 									ref.addSubExpressionMapping(leafMapping);
 									processExtractVariableRefactoring(ref, refactorings);
 									checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-									if(identical()) {
+									if(identical(classDiff)) {
 										identicalWithExtractedVariable = true;
 									}
 									break;
@@ -531,7 +531,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							}
 							processExtractVariableRefactoring(ref, refactorings);
 							checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-							if(identical()) {
+							if(identical(classDiff)) {
 								identicalWithExtractedVariable = true;
 							}
 						}
@@ -602,7 +602,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 								}
 								processExtractVariableRefactoring(ref, refactorings);
 								checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-								if(identical()) {
+								if(identical(classDiff)) {
 									identicalWithExtractedVariable = true;
 								}
 								return;
@@ -618,7 +618,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						}
 						processExtractVariableRefactoring(ref, refactorings);
 						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-						if(identical()) {
+						if(identical(classDiff)) {
 							identicalWithExtractedVariable = true;
 						}
 						return;
@@ -642,7 +642,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 								}
 								processExtractVariableRefactoring(ref, refactorings);
 								checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-								if(identical()) {
+								if(identical(classDiff)) {
 									identicalWithExtractedVariable = true;
 								}
 								return;
@@ -679,6 +679,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							stringConcatMatch(initializer, before) ||
 							diamondClassInstanceCreationMatch(initializer, before) ||
 							reservedTokenMatch(initializer, replacement, before) ||
+							classInstanceCreationToCreationReference(initializer, before) ||
 							anonymousWithMethodSignatureChange(initializer, before, classDiff)) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						List<LeafExpression> subExpressions = getFragment1().findExpression(before);
@@ -733,7 +734,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						processExtractVariableRefactoring(ref, refactorings);
 						int size = refactorings.size();
 						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-						if(identical() || refactorings.size() > size) {
+						if(identical(classDiff) || refactorings.size() > size) {
 							identicalWithExtractedVariable = true;
 						}
 						return;
@@ -813,7 +814,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						}
 						processExtractVariableRefactoring(ref, refactorings);
 						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-						if(getReplacements().size() > 0 && identical()) {
+						if(getReplacements().size() > 0 && identical(classDiff)) {
 							identicalWithExtractedVariable = true;
 						}
 						return;
@@ -918,7 +919,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 								}
 								processExtractVariableRefactoring(ref, refactorings);
 								checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-								if(identical()) {
+								if(identical(classDiff)) {
 									identicalWithExtractedVariable = true;
 								}
 								return;
@@ -1017,6 +1018,13 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						after = callAfter.arguments().get(indexOfArgument1);
 					}
 				}
+				if(replacement instanceof CompositeReplacement) {
+					CompositeReplacement r = (CompositeReplacement)replacement;
+					if(r.getAdditionallyMatchedStatements1().contains(statement) &&
+							declaration.getScope().subsumes(getFragment1().getLocationInfo())) {
+						before = variableName;
+					}
+				}
 				if(before.startsWith(variableName + ".")) {
 					String suffixBefore = before.substring(variableName.length(), before.length());
 					if(after.endsWith(suffixBefore) || after.contains(suffixBefore)) {
@@ -1031,7 +1039,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 									ref.addSubExpressionMapping(leafMapping);
 								}
 								processInlineVariableRefactoring(ref, refactorings);
-								if(identical()) {
+								if(identical(classDiff)) {
 									identicalWithInlinedVariable = true;
 								}
 								return;
@@ -1046,7 +1054,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							ref.addSubExpressionMapping(leafMapping);
 						}
 						processInlineVariableRefactoring(ref, refactorings);
-						if(identical()) {
+						if(identical(classDiff)) {
 							identicalWithInlinedVariable = true;
 						}
 						return;
@@ -1069,7 +1077,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 									ref.addSubExpressionMapping(leafMapping);
 								}
 								processInlineVariableRefactoring(ref, refactorings);
-								if(identical()) {
+								if(identical(classDiff)) {
 									identicalWithInlinedVariable = true;
 								}
 								return;
@@ -1089,6 +1097,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							stringConcatMatch(initializer, after) ||
 							diamondClassInstanceCreationMatch(initializer, after) ||
 							reservedTokenMatch(initializer, replacement, after) ||
+							classInstanceCreationToCreationReference(initializer, after) ||
 							anonymousWithMethodSignatureChange(initializer, after, classDiff)) {
 						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						List<LeafExpression> subExpressions = getFragment2().findExpression(after);
@@ -1141,7 +1150,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							}
 						}
 						processInlineVariableRefactoring(ref, refactorings);
-						if(identical()) {
+						if(identical(classDiff)) {
 							identicalWithInlinedVariable = true;
 						}
 						return;
@@ -1220,7 +1229,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 								}
 							}
 							processInlineVariableRefactoring(ref, refactorings);
-							if(identical()) {
+							if(identical(classDiff)) {
 								identicalWithInlinedVariable = true;
 							}
 							return;
@@ -1231,7 +1240,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		}
 	}
 
-	private boolean identical() {
+	private boolean identical(UMLAbstractClassDiff classDiff) {
 		if(getReplacements().size() == 1 && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size()) {
 			return true;
 		}
@@ -1306,7 +1315,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 				else if(initializer != null && initializer.getLambdas().size() > 0) {
 					boolean methodReference = false;
-					if(initializer.getLambdas().size() == 1 && initializer.getLambdas().get(0).getString().contains(JAVA.METHOD_REFERENCE)) {
+					if(initializer.getLambdas().size() == 1 && initializer.getLambdas().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.METHOD_REFERENCE)) {
 						methodReference = true;
 					}
 					if(!methodReference) {
@@ -1337,6 +1346,14 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					AbstractCall after = replacement.getInvokedOperationAfter();
 					if(before.identicalName(after) && before.argumentIntersection(after).size() == Math.min(before.arguments().size(), after.arguments().size())) {
 						identicalCallWithExtraArguments = true;
+					}
+				}
+				if(classDiff != null) {
+					for(UMLAttribute attribute : classDiff.getNextClass().getAttributes()) {
+						if(r.getAfter().equals(attribute.getName()) && attribute.getVariableDeclaration().getInitializer() != null &&
+								attribute.getVariableDeclaration().getInitializer().getString().equals(r.getBefore())) {
+							return true;
+						}
 					}
 				}
 			}
@@ -1376,7 +1393,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 			}
 		}
-		ObjectCreation creation = initializer.creationCoveringEntireFragment();
+		AbstractCall creation = initializer.creationCoveringEntireFragment();
 		if(creation != null) {
 			if(creation.arguments().contains(replacedExpression)) {
 				return true;
@@ -1428,6 +1445,17 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 			}
 			if(matchingTokens == tokens1.length) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean classInstanceCreationToCreationReference(AbstractExpression initializer, String replacedExpression) {
+		AbstractCall creation = initializer.creationCoveringEntireFragment();
+		if(creation instanceof ObjectCreation) {
+			UMLType type = ((ObjectCreation)creation).getType();
+			if(replacedExpression.startsWith(type + JAVA.METHOD_REFERENCE + "new")) {
 				return true;
 			}
 		}

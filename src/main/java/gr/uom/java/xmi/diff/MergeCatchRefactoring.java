@@ -14,7 +14,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class MergeCatchRefactoring implements Refactoring {
+public class MergeCatchRefactoring implements MethodLevelRefactoring {
 	private Set<AbstractCodeFragment> mergedCatchBlocks;
 	private AbstractCodeFragment newCatchBlock;
 	private VariableDeclarationContainer operationBefore;

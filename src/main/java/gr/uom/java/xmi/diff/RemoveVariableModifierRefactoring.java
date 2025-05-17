@@ -13,7 +13,7 @@ import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class RemoveVariableModifierRefactoring implements Refactoring {
+public class RemoveVariableModifierRefactoring implements MethodLevelRefactoring {
 	private String modifier;
 	private VariableDeclaration variableBefore;
 	private VariableDeclaration variableAfter;

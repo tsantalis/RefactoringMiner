@@ -13,7 +13,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class RenameVariableRefactoring implements Refactoring, ReferenceBasedRefactoring {
+public class RenameVariableRefactoring implements MethodLevelRefactoring, ReferenceBasedRefactoring {
 	private VariableDeclaration originalVariable;
 	private VariableDeclaration renamedVariable;
 	private VariableDeclarationContainer operationBefore;

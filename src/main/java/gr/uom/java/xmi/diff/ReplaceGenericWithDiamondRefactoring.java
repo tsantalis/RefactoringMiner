@@ -17,7 +17,7 @@ import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.ObjectCreation;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class ReplaceGenericWithDiamondRefactoring implements Refactoring, LeafMappingProvider {
+public class ReplaceGenericWithDiamondRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
 	private AbstractCodeFragment statementBefore;
 	private AbstractCodeFragment statementAfter;
 	private AbstractCall creationBefore;

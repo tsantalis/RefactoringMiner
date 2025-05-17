@@ -18,6 +18,7 @@ public class ProjectASTDiff {
 	private Map<String, TreeContext> parentContextMap;
 	private Map<String, TreeContext> childContextMap;
 	private UMLModelDiff modelDiff;
+	private DiffMetaInfo metaInfo;
 
 	public ProjectASTDiff(Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter) {
 		this.fileContentsBefore = fileContentsBefore;
@@ -77,5 +78,13 @@ public class ProjectASTDiff {
 
 	public Map<String, TreeContext> getChildContextMap() {
 		return childContextMap;
+	}
+
+	public DiffMetaInfo getMetaInfo() {
+		return metaInfo;
+	}
+
+	public void setMetaInfo(DiffMetaInfo metaInfo) {
+		this.metaInfo = metaInfo;
 	}
 }

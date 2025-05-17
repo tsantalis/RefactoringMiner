@@ -2,7 +2,7 @@ package gr.uom.java.xmi;
 
 public enum Constants {
 	JAVA(";\n", "return ", "return;\n", "return true;\n", "return false;\n", "return null;\n", "return this;\n", "=", "break;\n", "continue;\n",
-			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this.");
+			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this.", " ? ", " : ");
 	public final String STATEMENT_TERMINATION;
 	public final String RETURN_SPACE;
 	public final String RETURN_STATEMENT;
@@ -24,6 +24,8 @@ public enum Constants {
 	public final String OPEN_ARRAY_INITIALIZER;
 	public final String CLOSE_ARRAY_INITIALIZER;
 	public final String THIS_DOT;
+	public final String TERNARY_CONDITION;
+	public final String TERNARY_ELSE;
 	
 	Constants(
 			String STATEMENT_TERMINATION,
@@ -46,7 +48,9 @@ public enum Constants {
 			String CLOSE_BLOCK,
 			String OPEN_ARRAY_INITIALIZER,
 			String CLOSE_ARRAY_INITIALIZER,
-			String THIS_DOT) {
+			String THIS_DOT,
+			String TERNARY_CONDITION,
+			String TERNARY_ELSE) {
 		this.STATEMENT_TERMINATION = STATEMENT_TERMINATION;
 		this.RETURN_SPACE = RETURN_SPACE;
 		this.RETURN_STATEMENT = RETURN_STATEMENT;
@@ -68,5 +72,7 @@ public enum Constants {
 		this.OPEN_ARRAY_INITIALIZER = OPEN_ARRAY_INITIALIZER;
 		this.CLOSE_ARRAY_INITIALIZER = CLOSE_ARRAY_INITIALIZER;
 		this.THIS_DOT = THIS_DOT;
+		this.TERNARY_CONDITION = TERNARY_CONDITION;
+		this.TERNARY_ELSE = TERNARY_ELSE;
 	}
 }

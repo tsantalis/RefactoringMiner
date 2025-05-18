@@ -19,6 +19,9 @@ import gr.uom.java.xmi.diff.MethodLevelRefactoring;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -481,25 +484,27 @@ public class DirectoryDiffView implements Renderable {
                         		MethodLevelRefactoring ref = (MethodLevelRefactoring)r;
                         		String operationBefore = ref.getOperationBefore().toString();
                         		if(operationBefore != null && description.contains(operationBefore) && !processed.contains(operationBefore)) {
-                        			String codeElementTag = openingTag + operationBefore.replace("<", "&lt").replace(">", "&gt") + closingTag;
+                        			String codeElementTag = openingTag + escape(operationBefore) + closingTag;
                         			description = description.replace(operationBefore, codeElementTag);
                         			processed.add(operationBefore);
                         		}
                         		String operationAfter = ref.getOperationAfter().toString();
                         		if(operationAfter != null && description.contains(operationAfter) && !processed.contains(operationAfter)) {
-                        			String codeElementTag = openingTag + operationAfter.replace("<", "&lt").replace(">", "&gt") + closingTag;
+                        			String codeElementTag = openingTag + escape(operationAfter) + closingTag;
                         			description = description.replace(operationAfter, codeElementTag);
                         			processed.add(operationAfter);
                         		}
                         	}
+							Map<String, String> toBeReplaced = new LinkedHashMap<>();
 							for(CodeRange range : r.leftSide()) {
                         		String codeElement = range.getCodeElement();
                         		if(codeElement != null && codeElement.endsWith("\n")) {
                         			codeElement = codeElement.substring(0, codeElement.length()-1);
                         		}
 								if(codeElement != null && description.contains(codeElement) && !processed.contains(codeElement) && codeElement.length() > 1) {
-                        			String codeElementTag = openingTag + codeElement.replace("<", "&lt").replace(">", "&gt") + closingTag;
-                        			description = description.replace(codeElement, codeElementTag);
+                        			String codeElementTag = openingTag + escape(codeElement) + closingTag;
+                        			//description = description.replace(codeElement, codeElementTag);
+                        			toBeReplaced.put(codeElement, codeElementTag);
                         			processed.add(codeElement);
                         		}
                         	}
@@ -509,10 +514,16 @@ public class DirectoryDiffView implements Renderable {
                         			codeElement = codeElement.substring(0, codeElement.length()-1);
                         		}
 								if(codeElement != null && description.contains(codeElement) && !processed.contains(codeElement) && codeElement.length() > 1) {
-                        			String codeElementTag = openingTag + codeElement.replace("<", "&lt").replace(">", "&gt") + closingTag;
-                        			description = description.replace(codeElement, codeElementTag);
+                        			String codeElementTag = openingTag + escape(codeElement) + closingTag;
+                        			//description = description.replace(codeElement, codeElementTag);
+                        			toBeReplaced.put(codeElement, codeElementTag);
                         			processed.add(codeElement);
                         		}
+                        	}
+                        	List<String> list = new ArrayList<>(toBeReplaced.keySet());
+                        	Collections.sort(list, Comparator.comparing(String::length).reversed());
+                        	for(String l : list) {
+                        		description = description.replace(l, toBeReplaced.get(l));
                         	}
                             html.li(class_("list-group-item")).write(description, NO_ESCAPE)
                             ._li();
@@ -523,6 +534,10 @@ public class DirectoryDiffView implements Renderable {
                     ._div()
                 ._div()
             ._div();
+        }
+
+        private String escape(String codeElement) {
+            return codeElement.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&apos;");
         }
     }
 }

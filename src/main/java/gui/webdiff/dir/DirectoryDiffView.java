@@ -522,8 +522,8 @@ public class DirectoryDiffView implements Renderable {
                         	}
                         	List<String> list = new ArrayList<>(toBeReplaced.keySet());
                         	Collections.sort(list, Comparator.comparing(String::length).reversed());
-                        	for(String l : list) {
-                        		description = description.replace(l, toBeReplaced.get(l));
+                        	for(String codeElement : list) {
+                        		description = description.replace(codeElement, toBeReplaced.get(codeElement));
                         	}
                             html.li(class_("list-group-item")).write(description, NO_ESCAPE)
                             ._li();

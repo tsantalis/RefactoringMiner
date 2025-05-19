@@ -97,7 +97,7 @@ public class ReplaceGenericWithDiamondRefactoring implements MethodLevelRefactor
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
 		ranges.add(creationBefore.codeRange()
 				.setDescription("original creation")
-				.setCodeElement(creationBefore.toString()));
+				.setCodeElement(extractType(creationBefore)));
 		String elementType = operationBefore.getElementType();
 		ranges.add(operationBefore.codeRange()
 				.setDescription("original " + elementType + " declaration")
@@ -110,7 +110,7 @@ public class ReplaceGenericWithDiamondRefactoring implements MethodLevelRefactor
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
 		ranges.add(creationAfter.codeRange()
 				.setDescription("creation with diamond operator")
-				.setCodeElement(creationAfter.toString()));
+				.setCodeElement(extractType(creationAfter)));
 		String elementType = operationAfter.getElementType();
 		ranges.add(operationAfter.codeRange()
 				.setDescription(elementType + " declaration with diamond operator")

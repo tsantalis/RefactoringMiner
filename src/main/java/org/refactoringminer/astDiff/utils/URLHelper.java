@@ -18,13 +18,6 @@ public class URLHelper {
         return url.substring(0, index) + ".git";
     }
 
-    public static String getOwnerAndRepo(String url) {
-        url = removeAdditionalPart(url);
-        int startIndex = nthIndexOf(url, '/', 3);
-        int endIndex = nthIndexOf(url, '/', 5);
-        return url.substring(startIndex + 1, endIndex);
-    }
-
     public static String getCommit(String url) {
         url = removeAdditionalPart(url);
         if (url.contains("/pull/") && url.contains("/commits/")) {
@@ -66,24 +59,30 @@ public class URLHelper {
         return url.contains("/pull/") && !url.contains("/commits/");
     }
 
-	public static String getPRID(String url) {
-        int start = nthIndexOf(url,'/',6);
-        int end = nthIndexOf(url,'/',7);
-		if (end == -1) end = url.length();
-        return url.substring(start+1, end);
+    public static String getPRID(String url) {
+        int start = nthIndexOf(url, '/', 6);
+        int end = nthIndexOf(url, '/', 7);
+        if (end == -1) {end = url.length();}
+        return url.substring(start + 1, end);
     }
 
-	public static String shortenCommit(String commit) {
+    public static String shortenCommit(String commit) {
         if (commit.length() > 7) {
             return commit.substring(0, 7);
         }
         return commit;
     }
 
-	public static String getRepoStringOnly(String url) {
-        int start = nthIndexOf(url,'/',4);
-        int end = nthIndexOf(url,'/',5);
-        return url.substring(start+1, end);
+    public static String getRepoStringOnly(String url) {
+        int start = nthIndexOf(url, '/', 4);
+        int end = nthIndexOf(url, '/', 5);
+        return url.substring(start + 1, end);
     }
 
+    public static String getOwnerAndRepo(String url) {
+        url = removeAdditionalPart(url);
+        int startIndex = nthIndexOf(url, '/', 3);
+        int endIndex = nthIndexOf(url, '/', 5);
+        return url.substring(startIndex + 1, endIndex);
+    }
 }

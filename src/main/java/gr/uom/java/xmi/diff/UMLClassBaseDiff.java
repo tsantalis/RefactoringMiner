@@ -243,9 +243,29 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 						if(moveCodeMapper.getMappings().size() > invalidMappings) {
 							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);
-							if(!moveCodeMappers.contains(moveCodeMapper))
-								moveCodeMappers.add(moveCodeMapper);
-							refactorings.add(ref);
+							int extractedStatementCount = 0;
+							for(Refactoring r : refactorings) {
+								if(r instanceof ExtractOperationRefactoring) {
+									ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
+									for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
+										for(AbstractCodeMapping m : extract.getBodyMapper().getMappings()) {
+											if(m.getFragment1().equals(mapping.getFragment1())) {
+												extractedStatementCount++;
+												break;
+											}
+										}
+									}
+								}
+							}
+							boolean skip = false;
+							if(extractedStatementCount == moveCodeMapper.getMappings().size() && extractedStatementCount > 0) {
+								skip = true;
+							}
+							if(!skip) {
+								if(!moveCodeMappers.contains(moveCodeMapper))
+									moveCodeMappers.add(moveCodeMapper);
+								refactorings.add(ref);
+							}
 						}
 					}
 					//support move code from deleted lambda to LambdaMapper

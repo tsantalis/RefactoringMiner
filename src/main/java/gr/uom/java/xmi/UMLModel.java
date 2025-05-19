@@ -6,6 +6,7 @@ import gr.uom.java.xmi.diff.UMLModuleDiff;
 import gr.uom.java.xmi.diff.UMLPackageInfoDiff;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -211,6 +212,23 @@ public class UMLModel {
     			modelDiff.addUMLModuleDiff(diff);
     		}
     	}
+    	/*
+    	Graph g = new Graph(classList.size());
+    	for(int i=0; i<classList.size(); i++) {
+    		UMLClass classI = classList.get(i);
+    		for(int j=i+1; j<classList.size(); j++) {
+    			UMLClass classJ = classList.get(j);
+    			if(classI.explicitelyImportsType(classJ.getName())) {
+    				g.addEdge(i, j);
+    			}
+    			if(classJ.explicitelyImportsType(classI.getName())) {
+    				g.addEdge(j, i);
+    			}
+    		}
+    	}
+    	Stack<Integer> s = g.topologicalSort();
+    	*/
+    	Collections.sort(classList, new ClassComparator());
     	for(UMLClass umlClass : classList) {
     		if(umlModel.classList.contains(umlClass)) {
     			UMLClassDiff classDiff = new UMLClassDiff(umlClass, umlModel.getClass(umlClass), modelDiff);

@@ -1938,7 +1938,7 @@
 		"endColumn": 122,
 		"codeElementType": "CLASS_INSTANCE_CREATION",
 		"description": "original creation",
-		"codeElement": "new ConcurrentHashMap<MultiKey,DrillbitEndpoint>()"
+		"codeElement": "ConcurrentHashMap<MultiKey,DrillbitEndpoint>"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 78,
@@ -1957,7 +1957,7 @@
 		"endColumn": 95,
 		"codeElementType": "CLASS_INSTANCE_CREATION",
 		"description": "creation with diamond operator",
-		"codeElement": "new ConcurrentHashMap<>()"
+		"codeElement": "ConcurrentHashMap<>"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 77,

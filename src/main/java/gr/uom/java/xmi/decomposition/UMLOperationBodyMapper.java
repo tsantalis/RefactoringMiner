@@ -3859,6 +3859,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(AbstractCall assertThrowsCall : assertThrowsCalls) {
 				Set<AbstractCodeMapping> set = assertThrowsMappings.get(assertThrowsCall.actualString());
 				if(set != null && set.size() > 0) {
+					AbstractCodeMapping firstMapping = set.iterator().next();
+					AbstractCall call = firstMapping.getFragment2().invocationCoveringEntireFragment();
+					if(call != null && call.equals(assertThrowsCall)) {
+						continue;
+					}
 					AssertThrowsRefactoring ref = new AssertThrowsRefactoring(set, assertThrowsCall, container1, container2);
 					refactorings.add(ref);
 					UMLOperation operation1 = getOperation1();
@@ -3889,7 +3894,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 								}
 								if(nonMappedLeavesT2.isEmpty()) {
-									AbstractCodeMapping firstMapping = set.iterator().next();
 									List<LeafExpression> leafExpressions = firstMapping.getFragment2().findExpression(expectedException.getString());
 									if(leafExpressions.size() == 1) {
 										LeafMapping leafMapping = new LeafMapping(expectedException, leafExpressions.get(0), operation1, operation2);
@@ -3907,6 +3911,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(AbstractCall assertTimeoutCall : assertTimeoutCalls) {
 				Set<AbstractCodeMapping> set = assertTimeoutMappings.get(assertTimeoutCall.actualString());
 				if(set != null && set.size() > 0) {
+					AbstractCodeMapping firstMapping = set.iterator().next();
+					AbstractCall call = firstMapping.getFragment2().invocationCoveringEntireFragment();
+					if(call != null && call.equals(assertTimeoutCall)) {
+						continue;
+					}
 					AssertTimeoutRefactoring ref = new AssertTimeoutRefactoring(set, assertTimeoutCall, container1, container2);
 					refactorings.add(ref);
 				}

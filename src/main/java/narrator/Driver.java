@@ -1,5 +1,6 @@
 package narrator;
 
+import com.google.gson.Gson;
 import narrator.graph.cluster.Cluster;
 import narrator.graph.cluster.Clusterer;
 import narrator.graph.CommitGraph;
@@ -14,10 +15,26 @@ import java.util.List;
 
 public class Driver {
     public static void main(String[] args) throws Exception {
-        purgeOutputDir();
 
-        String url = "https://github.com/JetBrains/intellij-community/commit/7ed3f273ab0caf0337c22f0b721d51829bb0c877";
+    }
 
+    public static void writeJson() throws FileNotFoundException {
+        Gson gson = new Gson();
+        FileReader reader = new FileReader("json/cases.json");
+        Case[] cases = gson.fromJson(reader, Case[].class);
+        for (Case c : cases) {
+            String commitUrl = c.repo.replace(".git", "") + "/commit/" + c.commit;
+            System.out.println(commitUrl);
+
+            try {
+                writeCommit(commitUrl);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public static void writeCommit(String url) throws IOException {
         List<Cluster> clusters = getClusters(url);
 
         List<String> stringifiedClusters = getStringifiedClusters(clusters);
@@ -76,4 +93,9 @@ public class Driver {
     public static String getStringifiedCommit(String url, List<Cluster> clusters) throws IOException {
         return Stringifier.stringifyCommit(url, clusters);
     }
+}
+
+class Case {
+    String repo;
+    String commit;
 }

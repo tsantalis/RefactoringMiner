@@ -1459,7 +1459,7 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpackage requestExclusiveBuffers(numExclusiveBuffers int) : void renamed to package requestExclusiveBuffersFromGlobal(numExclusiveBuffers int) : void in class org.apache.flink.runtime.io.network.partition.consumer.BufferManager",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
@@ -1489,7 +1489,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tpoolSize : int in method package testFairDistributionFloatingBuffers() : void from class org.apache.flink.runtime.io.network.partition.consumer.RemoteInputChannelTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_OPERATION",
@@ -1499,6 +1499,11 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic getInitialCredit() : int renamed to public getNumExclusiveBuffers() : int in class org.apache.flink.runtime.io.network.partition.consumer.RemoteInputChannel",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpackage getNumExclusiveBuffers() : int extracted from public getInitialCredit() : int in class org.apache.flink.runtime.io.network.partition.consumer.RemoteInputChannel & moved to class org.apache.flink.runtime.io.network.partition.consumer.BufferManager",
           "validation": true
         }
       ]

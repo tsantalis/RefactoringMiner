@@ -696,22 +696,22 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tbytes : byte[] to payload : ByteString in method public serverSmallBufferedPayloadWrittenAsOneFrame() : void from class okhttp3.internal.ws.WebSocketWriterTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tbytes : byte[] to payload : ByteString in method public serverSmallBufferedPayloadWrittenAsOneFrame() : void from class okhttp3.internal.ws.WebSocketWriterTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tbytes : byte[] to payload : ByteString in method public serverLargeBufferedPayloadWrittenAsOneFrame() : void from class okhttp3.internal.ws.WebSocketWriterTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tbytes : byte[] to payload : ByteString in method public serverLargeBufferedPayloadWrittenAsOneFrame() : void from class okhttp3.internal.ws.WebSocketWriterTest",
-          "validation": false
+          "validation": true
         }
       ]
     },

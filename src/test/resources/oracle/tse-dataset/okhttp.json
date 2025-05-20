@@ -736,12 +736,12 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\ttransmitter : Transmitter in method public inUseConnectionsNotEvicted() : void from class okhttp3.internal.connection.ConnectionPoolTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\ttransmitter : Transmitter in method private allocateAndLeakAllocation(pool ConnectionPool, connection RealConnection) : void from class okhttp3.internal.connection.ConnectionPoolTest",
-          "validation": false
+          "validation": true
         }
       ]
     },
@@ -879,12 +879,12 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tpool : RealConnectionPool in method public inUseConnectionsNotEvicted() : void from class okhttp3.internal.connection.ConnectionPoolTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tpool : RealConnectionPool in method public leakedAllocation() : void from class okhttp3.internal.connection.ConnectionPoolTest",
-          "validation": false
+          "validation": true
         }
       ]
     }

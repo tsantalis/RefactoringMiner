@@ -2308,12 +2308,25 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		else {
+			boolean found = false;
 			for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
 				UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
 				if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
 						replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
 					mapperSet.add(operationBodyMapper);
+					found = true;
 					break;
+				}
+			}
+			if(!found) {
+				for(MethodInvocationReplacement replacement : consistentMethodInvocationRenamesInModel.keySet()) {
+					UMLOperationBodyMapper mapper = consistentMethodInvocationRenamesInModel.get(replacement);
+					if(mapper.nonMappedElementsT1() == 0 && mapper.nonMappedElementsT2() == 0 &&
+							replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
+							replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
+						mapperSet.add(operationBodyMapper);
+						break;
+					}
 				}
 			}
 			if(matchingGetterSetterWithSameRenamePattern(removedOperation, addedOperation) && computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) <= differenceInPosition) {

@@ -110,7 +110,7 @@ public class Node {
     public String getContent() {
         if (isContext()) {
             String type = tree.getType().name;
-            if (type.equals(Constants.TYPE_DECLARATION) || type.equals(Constants.METHOD_DECLARATION)) {
+            if (type.equals(Constants.TYPE_DECLARATION) || type.equals(Constants.METHOD_DECLARATION) || type.equals(Constants.ENUM_DECLARATION) || type.equals(Constants.RECORD_DECLARATION)) {
                 Tree name = TreeUtilFunctions.findChildByType(tree, Constants.SIMPLE_NAME);
                 if (name != null) {
                     return name.getLabel();

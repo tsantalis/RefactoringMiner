@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Driver {
     public static void main(String[] args) throws Exception {
-
+        writeJson();
     }
 
     public static void writeJson() throws FileNotFoundException {
@@ -24,8 +24,8 @@ public class Driver {
         Case[] cases = gson.fromJson(reader, Case[].class);
         for (Case c : cases) {
             String commitUrl = c.repo.replace(".git", "") + "/commit/" + c.commit;
-            System.out.println(commitUrl);
 
+            System.out.println(commitUrl);
             try {
                 writeCommit(commitUrl);
             } catch (Exception e) {

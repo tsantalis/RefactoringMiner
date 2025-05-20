@@ -773,6 +773,11 @@
           "validation": false
         },
         {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic assertThrows(message String, expectedThrowable Class<T>, runnable ThrowingRunnable) : T extracted from public expectThrows(expectedThrowable Class<T>, runnable ThrowingRunnable) : T in class org.junit.Assert",
+          "validation": true
+        },
+        {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tmessage : String to notThrownMessage : String in method public assertThrows(message String, expectedThrowable Class<T>, runnable ThrowingRunnable) : T from class org.junit.Assert",
           "validation": true

@@ -3352,6 +3352,25 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 				}
+				//check if container2 calls another mapper
+				if(mapper.getMappings().size() == 0) {
+					for(UMLOperationBodyMapper mapper2 : getOperationBodyMapperList()) {
+						if(!mapper.equals(mapper2) && containCallToOperation(mapper2.getContainer2(), mapper.getContainer2())) {
+							ExtractOperationDetection detection2 = new ExtractOperationDetection(mapper, List.of(mapper2.getOperation2()), this, modelDiff, false);
+							List<ExtractOperationRefactoring> refs = detection2.check(mapper2.getOperation2());
+							for(ExtractOperationRefactoring refactoring : refs) {
+								UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
+								if(operationBodyMapper.exactMatches() > 1) {
+									refactorings.add(refactoring);
+									extractedOperationMappers.add(operationBodyMapper);
+									mapper.addChildMapper(operationBodyMapper);
+									parentMappersToBeOptimized.add(mapper);
+									//operationsToBeRemoved.add(addedOperation);
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		MappingOptimizer optimizer = new MappingOptimizer(this);

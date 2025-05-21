@@ -347,12 +347,18 @@ public class MonacoCore {
         				requestPath = "/monaco-page/" + id;
         			}
         		}
-            	b.append("{")
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                    tooltip =  mapper.writeValueAsString(tooltip);
+                } catch (JsonProcessingException e) {
+                    tooltip = "\"\""; // fallback to empty string in quotes
+                }
+                b.append("{")
             	.append("from: ").append(t.getPos())
             	.append(",").append("to: ").append(t.getEndPos()).append(",")
             	.append("index: ").append(t.getMetrics().depth).append(",")
             	.append("kind: ").append("\"" + kind + "\"").append(",")
-            	.append("tooltip: ").append("\"" + tooltip + "\"").append(",")
+                .append("tooltip: ").append(tooltip).append(",")  // no extra quotes!
             	.append("requestPath: ").append("\"" + requestPath + "\"").append(",")
             	.append("}").append(",");
         	}

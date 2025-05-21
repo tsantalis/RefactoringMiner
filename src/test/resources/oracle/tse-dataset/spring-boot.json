@@ -342,6 +342,11 @@
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tproject : Dependency in method public enforcedPlatform(projectPath String) : void from class org.springframework.boot.build.constraints.ExtractVersionConstraints",
           "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tasciidoctorPlugin : null to antoraPlugin : null in method package apply(project Project) : void from class org.springframework.boot.build.AntoraConventions",
+          "validation": true
         }
       ]
     },
@@ -1007,6 +1012,11 @@
         }
       ],
       "baseline": [
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tkey : null to name : null in method package postSpans(endpoint URI, headers HttpHeaders, body byte[]) : void from class org.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinHttpClientSender",
+          "validation": true
+        },
         {
           "type": "RENAME_ATTRIBUTE",
           "description": "Rename Attribute\tZIPKIN_URL : String to url : String in class org.springframework.boot.actuate.autoconfigure.tracing.zipkin.TestHttpEndpointSupplier",

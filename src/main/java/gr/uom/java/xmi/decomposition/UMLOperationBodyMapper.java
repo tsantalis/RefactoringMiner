@@ -7587,7 +7587,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		for(AbstractCodeFragment leaf : leaves1) {
 			if(!leaf.equals(leaf1)) {
-				int numberOfMappings = mappings.size();
+				int mappingsBefore = mappings.size();
+				int refactoringsBefore = refactorings.size();
 				ReplacementInfo replacementInfo = initializeReplacementInfo(leaf, leaf2, leaves1, leaves2);
 				Set<Replacement> replacements = findReplacementsWithExactMatching(leaf, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 				if (replacements != null) {
@@ -7634,7 +7635,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					else {
 						List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
-						for(int i = numberOfMappings; i < mappings.size(); i++) {
+						for(int i = mappingsBefore; i < mappings.size(); i++) {
 							this.mappings.remove(mappings.get(i));
 						}
 					}
@@ -7642,7 +7643,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				else {
 					//removed any nested mappings
 					List<AbstractCodeMapping> orderedMappings = new ArrayList<AbstractCodeMapping>(mappings);
-					for(int i=orderedMappings.size()-1; i>=0; i--) {
+					for(int i=orderedMappings.size()-1; i>=0 && i>=mappingsBefore; i--) {
 						AbstractCodeMapping m = orderedMappings.get(i);
 						if(leaf.getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) && leaf2.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) &&
 								replacementInfo.lambdaMapperContainsMapping(m)) {
@@ -7651,6 +7652,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						else {
 							break;
 						}
+					}
+					List<Refactoring> orderedRefactorings = new ArrayList<>(refactorings);
+					for(int i=orderedRefactorings.size()-1; i>=0 && i>=refactoringsBefore; i--) {
+						Refactoring r = orderedRefactorings.get(i);
+						refactorings.remove(r);
 					}
 				}
 			}
@@ -7693,6 +7699,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
 						parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
 						possibleExtractVariable || possibleInlineVariable)) {
+					int mappingsBefore = mappings.size();
+					int refactoringsBefore = refactorings.size();
 					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf, leaves1, leaves2);
 					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 					if (replacements != null) {
@@ -7719,7 +7727,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					else {
 						//removed any nested mappings
 						List<AbstractCodeMapping> orderedMappings = new ArrayList<AbstractCodeMapping>(mappings);
-						for(int i=orderedMappings.size()-1; i>=0; i--) {
+						for(int i=orderedMappings.size()-1; i>=0 && i>=mappingsBefore; i--) {
 							AbstractCodeMapping m = orderedMappings.get(i);
 							if(leaf1.getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) && leaf.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) &&
 									replacementInfo.lambdaMapperContainsMapping(m)) {
@@ -7729,10 +7737,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
+						List<Refactoring> orderedRefactorings = new ArrayList<>(refactorings);
+						for(int i=orderedRefactorings.size()-1; i>=0 && i>=refactoringsBefore; i--) {
+							Refactoring r = orderedRefactorings.get(i);
+							refactorings.remove(r);
+						}
 					}
 				}
 				else if(parent1 == null && (parent2 == null || parent2.getParent() == null) && (possibleExtractVariable || possibleInlineVariable ||
 						(leaf1.getVariableDeclarations().toString().equals(leaf.getVariableDeclarations().toString()) && leaf1.getVariableDeclarations().size() > 0))) {
+					int mappingsBefore = mappings.size();
+					int refactoringsBefore = refactorings.size();
 					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf, leaves1, leaves2);
 					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 					if (replacements != null) {
@@ -7746,7 +7761,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					else {
 						//removed any nested mappings
 						List<AbstractCodeMapping> orderedMappings = new ArrayList<AbstractCodeMapping>(mappings);
-						for(int i=orderedMappings.size()-1; i>=0; i--) {
+						for(int i=orderedMappings.size()-1; i>=0 && i>=mappingsBefore; i--) {
 							AbstractCodeMapping m = orderedMappings.get(i);
 							if(leaf1.getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) && leaf.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) &&
 									replacementInfo.lambdaMapperContainsMapping(m)) {
@@ -7755,6 +7770,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							else {
 								break;
 							}
+						}
+						List<Refactoring> orderedRefactorings = new ArrayList<>(refactorings);
+						for(int i=orderedRefactorings.size()-1; i>=0 && i>=refactoringsBefore; i--) {
+							Refactoring r = orderedRefactorings.get(i);
+							refactorings.remove(r);
 						}
 					}
 				}

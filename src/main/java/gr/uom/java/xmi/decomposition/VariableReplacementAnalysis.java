@@ -1755,8 +1755,10 @@ public class VariableReplacementAnalysis {
 			VariableDeclaration variableDeclaration2 = vdReplacement.getVariableDeclaration2();
 			VariableDeclarationContainer operation1 = vdReplacement.getOperation1();
 			VariableDeclarationContainer operation2 = vdReplacement.getOperation2();
+			boolean lambdaParameter = variableDeclaration1.getLocationInfo().getCodeElementType().equals(CodeElementType.LAMBDA_EXPRESSION_PARAMETER) &&
+					variableDeclaration2.getLocationInfo().getCodeElementType().equals(CodeElementType.LAMBDA_EXPRESSION_PARAMETER);
 			if((variableReferences.size() > 1 && consistencyCheck(variableDeclaration1, variableDeclaration2, variableReferences)) ||
-					(variableReferences.size() == 1 && replacementInLocalVariableDeclaration(vdReplacement.getVariableNameReplacement(), variableReferences))) {
+					(variableReferences.size() == 1 && (replacementInLocalVariableDeclaration(vdReplacement.getVariableNameReplacement(), variableReferences) || lambdaParameter))) {
 				Set<AbstractCodeMapping> additionalReferences = VariableReferenceExtractor.findReferences(variableDeclaration1, variableDeclaration2, mappings, classDiff, modelDiff);
 				Set<AbstractCodeMapping> allReferences = new LinkedHashSet<AbstractCodeMapping>();
 				allReferences.addAll(variableReferences);
@@ -2162,7 +2164,7 @@ public class VariableReplacementAnalysis {
 		Map<Replacement, Set<AbstractCodeMapping>> map = new LinkedHashMap<Replacement, Set<AbstractCodeMapping>>();
 		for(AbstractCodeMapping mapping : mappings) {
 			for(Replacement replacement : mapping.getReplacements()) {
-				if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && !returnVariableMapping(mapping, replacement) &&
+				if((replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.VARIABLE_DECLARATION)) && !returnVariableMapping(mapping, replacement) &&
 						!containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(mapping.getReplacements()) &&
 						replacementNotInsideMethodSignatureOfAnonymousClass(mapping, replacement)) {
 					String before = new String(replacement.getBefore());

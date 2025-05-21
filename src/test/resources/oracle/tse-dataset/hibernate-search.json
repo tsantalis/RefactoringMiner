@@ -1556,6 +1556,21 @@
           "type": "MOVE_RENAME_CLASS",
           "description": "Move And Rename Class\torg.hibernate.search.integrationtest.mapper.pojo.search.loading.SearchQueryEntityLoadingFallbackToProjectionConstructorIT.multiType.Model moved and renamed to org.hibernate.search.integrationtest.mapper.pojo.search.loading.SearchQueryEntityLoadingFallbackToProjectionConstructorIT.MultiTypeModel",
           "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tbuilder : null to b : null in method package setup() : void from class org.hibernate.search.integrationtest.mapper.pojo.work.PojoIndexingPlanBaseIT",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tc : null to ctx : null in method package binder_inheritance() : void from class org.hibernate.search.integrationtest.mapper.pojo.loading.EntityLoadingBinderInheritanceIT",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tc : null to ctx : null in method package inheritance_explicitName() : void from class org.hibernate.search.integrationtest.mapper.pojo.loading.EntityLoadingBinderInheritanceIT",
+          "validation": true
         }
       ]
     },

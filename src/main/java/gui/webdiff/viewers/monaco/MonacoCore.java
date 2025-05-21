@@ -7,8 +7,10 @@ import com.github.gumtreediff.actions.TreeClassifier;
 import com.github.gumtreediff.tree.Tree;
 
 import gr.uom.java.xmi.UMLComment;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.CodeRange;
@@ -431,8 +433,16 @@ public class MonacoCore {
     		else if(r instanceof MoveCodeRefactoring) {
     			MoveCodeRefactoring moveCode = (MoveCodeRefactoring)r;
     			UMLOperationBodyMapper bodyMapper = moveCode.getBodyMapper();
-				String tooltipLeft = "moved to " + moveCode.getTargetContainer();
-				String tooltipRight = "moved from " + moveCode.getSourceContainer();
+				VariableDeclarationContainer targetContainer = moveCode.getTargetContainer();
+				if(targetContainer instanceof LambdaExpressionObject) {
+					targetContainer = ((LambdaExpressionObject)targetContainer).getOwner();
+				}
+				String tooltipLeft = "moved to " + targetContainer;
+				VariableDeclarationContainer sourceContainer = moveCode.getSourceContainer();
+				if(sourceContainer instanceof LambdaExpressionObject) {
+					sourceContainer = ((LambdaExpressionObject)sourceContainer).getOwner();
+				}
+				String tooltipRight = "moved from " + sourceContainer;
 				String tooltip = generateTooltip(t, c, bodyMapper, tooltipLeft, tooltipRight);
 				if(tooltip != null)
 					tooltips.add(tooltip);

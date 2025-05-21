@@ -2832,16 +2832,30 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
-		int consistentMethodInvocationRenameMismatchesForBestMapper = mismatchesConsistentMethodInvocationRename(bestMapper);
-		if(consistentMethodInvocationRenameMismatchesForBestMapper > 0 && !exactMappings(bestMapper)) {
+		int consistentMethodInvocationRenameMismatchesForBestMapper = mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenames);
+		if(mapperSet.size() > 1 && consistentMethodInvocationRenameMismatchesForBestMapper > 0 && !exactMappings(bestMapper)) {
 			for(int i=1; i<mapperList.size(); i++) {
 				UMLOperationBodyMapper mapper = mapperList.get(i);
-				int consistentMethodInvocationRenameMismatchesForCurrentMapper = mismatchesConsistentMethodInvocationRename(mapper);
-				if(consistentMethodInvocationRenameMismatchesForCurrentMapper < consistentMethodInvocationRenameMismatchesForBestMapper) {
+				int consistentMethodInvocationRenameMismatchesForCurrentMapper = mismatchesConsistentMethodInvocationRename(mapper, consistentMethodInvocationRenames);
+				if(consistentMethodInvocationRenameMismatchesForCurrentMapper < consistentMethodInvocationRenameMismatchesForBestMapper &&
+						mapper.getContainer1().isConstructor() == mapper.getContainer2().isConstructor() &&
+						mapper.getContainer1().isGetter() == mapper.getContainer2().isGetter()) {
 					return mapper;
 				}
 			}
 			return null;
+		}
+		consistentMethodInvocationRenameMismatchesForBestMapper = mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenamesInModel);
+		if(mapperSet.size() > 1 && consistentMethodInvocationRenameMismatchesForBestMapper > 0 && !exactMappings(bestMapper)) {
+			for(int i=1; i<mapperList.size(); i++) {
+				UMLOperationBodyMapper mapper = mapperList.get(i);
+				int consistentMethodInvocationRenameMismatchesForCurrentMapper = mismatchesConsistentMethodInvocationRename(mapper, consistentMethodInvocationRenamesInModel);
+				if(consistentMethodInvocationRenameMismatchesForCurrentMapper < consistentMethodInvocationRenameMismatchesForBestMapper &&
+						mapper.getContainer1().isConstructor() == mapper.getContainer2().isConstructor() &&
+						mapper.getContainer1().isGetter() == mapper.getContainer2().isGetter()) {
+					return mapper;
+				}
+			}
 		}
 		if(identicalBodyWithOperation2OfTheBestMapper || identicalBodyWithOperation1OfTheBestMapper) {
 			return null;
@@ -3034,13 +3048,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return false;
 	}
 
-	private int mismatchesConsistentMethodInvocationRename(UMLOperationBodyMapper mapper) {
+	private int mismatchesConsistentMethodInvocationRename(UMLOperationBodyMapper mapper, Map<MethodInvocationReplacement, UMLOperationBodyMapper> map) {
 		int mismatchCount = 0;
 		List<UMLType> parameterTypeList1 = mapper.getContainer1().getParameterTypeList();
 		List<UMLType> parameterTypeList2 = mapper.getContainer2().getParameterTypeList();
 		boolean equalParameterTypes = parameterTypeList1.equals(parameterTypeList2) && parameterTypeList1.size() > 0;
-		for(MethodInvocationReplacement rename : consistentMethodInvocationRenames.keySet()) {
-			UMLOperationBodyMapper referringMapper = consistentMethodInvocationRenames.get(rename);
+		for(MethodInvocationReplacement rename : map.keySet()) {
+			UMLOperationBodyMapper referringMapper = map.get(rename);
 			AbstractCall callBefore = rename.getInvokedOperationBefore();
 			AbstractCall callAfter = rename.getInvokedOperationAfter();
 			if(equalParameterTypes && callBefore.arguments().size() != callAfter.arguments().size()) {

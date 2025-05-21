@@ -3016,6 +3016,12 @@ public class ReplacementAlgorithm {
 					replacementInfo.addReplacement(replacement);
 					return replacementInfo.getReplacements();
 				}
+				else if(creationCoveringTheEntireStatement1.argumentIntersection(creationCoveringTheEntireStatement2).size() > 0) {
+					Replacement replacement = new ObjectCreationReplacement(creationCoveringTheEntireStatement1.getName(),
+							creationCoveringTheEntireStatement2.getName(), creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION);
+					replacementInfo.addReplacement(replacement);
+					return replacementInfo.getReplacements();
+				}
 			}
 		}
 		//object creation has identical arguments, but different type

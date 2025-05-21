@@ -335,17 +335,17 @@ Currently, it supports the detection of the following refactorings:
 **Commit dates**: between June 8th and August 7th, 2015
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **March 20, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **May 21, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12427  | 16  | 223  | 0.999  | 0.982|
-|Extract Method|1008  |  1  | 21  | 0.999  | 0.980|
+|**Total**|12430  | 16  | 223  | 0.999  | 0.982|
+|Extract Method|1009  |  1  | 21  | 0.999  | 0.980|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
 |Move And Rename Attribute|17  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|392  |  3  | 21  | 0.992  | 0.949|
+|Rename Method|393  |  3  | 21  | 0.992  | 0.949|
 |Inline Method|118  |  0  |  1  | 1.000  | 0.992|
 |Move Method|388  |  3  |  5  | 0.992  | 0.987|
 |Move And Rename Method|128  |  0  |  4  | 1.000  | 0.970|
@@ -383,7 +383,7 @@ As of **March 20, 2025** the precision and recall of RefactoringMiner on this be
 |Parameterize Variable|110  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|26  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|23  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|434  |  0  | 12  | 1.000  | 0.973|
+|Change Return Type|435  |  0  | 12  | 1.000  | 0.973|
 |Change Variable Type|807  |  2  |  7  | 0.998  | 0.991|
 |Change Parameter Type|654  |  1  | 10  | 0.998  | 0.985|
 |Change Attribute Type|244  |  0  |  8  | 1.000  | 0.968|
@@ -450,17 +450,17 @@ As of **March 20, 2025** the precision and recall of RefactoringMiner on this be
 **Commit dates**: March 28, 2024
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **April 16, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **May 21, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3050  | 209  | 349  | 0.936  | 0.897|
-|Extract Method|330  | 21  | 33  | 0.940  | 0.909|
+|**Total**|3074  | 195  | 346  | 0.940  | 0.899|
+|Extract Method|331  | 21  | 33  | 0.940  | 0.909|
 |Rename Class|229  |  2  |  3  | 0.991  | 0.987|
 |Move Attribute|69  |  3  | 10  | 0.958  | 0.873|
 |Move And Rename Attribute| 4  |  0  |  4  | 1.000  | 0.500|
-|Rename Method|272  | 23  | 24  | 0.922  | 0.919|
-|Inline Method|64  |  9  |  6  | 0.877  | 0.914|
+|Rename Method|274  | 22  | 23  | 0.926  | 0.923|
+|Inline Method|64  |  8  |  6  | 0.889  | 0.914|
 |Move Method|260  |  5  |  5  | 0.981  | 0.981|
 |Move And Rename Method|18  |  6  | 10  | 0.750  | 0.643|
 |Pull Up Method|42  |  3  |  8  | 0.933  | 0.840|
@@ -473,15 +473,15 @@ As of **April 16, 2025** the precision and recall of RefactoringMiner on this be
 |Extract Superclass| 7  |  2  |  0  | 0.778  | 1.000|
 |Extract Subclass| 3  |  0  |  6  | 1.000  | 0.333|
 |Extract Class|39  |  2  | 10  | 0.951  | 0.796|
-|Extract And Move Method|98  | 21  | 21  | 0.824  | 0.824|
+|Extract And Move Method|99  | 21  | 21  | 0.825  | 0.825|
 |Move And Inline Method|25  |  7  | 12  | 0.781  | 0.676|
-|Replace Anonymous With Class| 5  |  0  |  0  | 0.800  | 1.000|
-|Extract Variable|238  | 15  | 42  | 0.941  | 0.850|
-|Inline Variable|82  | 12  | 40  | 0.872  | 0.672|
-|Rename Variable|264  | 26  | 30  | 0.910  | 0.898|
-|Rename Attribute|101  |  6  | 15  | 0.944  | 0.871|
+|Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|241  | 12  | 42  | 0.953  | 0.852|
+|Inline Variable|84  | 10  | 40  | 0.894  | 0.677|
+|Rename Variable|275  | 22  | 28  | 0.926  | 0.908|
+|Rename Attribute|103  |  5  | 15  | 0.954  | 0.873|
 |Change Return Type|153  |  9  | 27  | 0.944  | 0.850|
-|Change Variable Type|363  | 24  | 18  | 0.938  | 0.953|
+|Change Variable Type|365  | 22  | 18  | 0.943  | 0.953|
 |Change Attribute Type|158  |  3  |  9  | 0.981  | 0.946|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 6  |  0  |  0  | 1.000  | 1.000|

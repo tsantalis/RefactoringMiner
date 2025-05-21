@@ -2297,12 +2297,31 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				else if(allStatementsMappedOrParameterized(operationBodyMapper)) {
 					movedMethodsInDifferentPositionWithinFile.add(operationBodyMapper);
 				}
+				boolean found = false;
 				for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
 					UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
 					if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
 							replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
 						mapperSet.add(operationBodyMapper);
+						found = true;
 						break;
+					}
+				}
+				if(!found) {
+					for(MethodInvocationReplacement replacement : consistentMethodInvocationRenamesInModel.keySet()) {
+						UMLOperationBodyMapper mapper = consistentMethodInvocationRenamesInModel.get(replacement);
+						if(mapper.nonMappedElementsT1() <= 1 && mapper.nonMappedElementsT2() <= 1 &&
+								replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
+								replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
+							boolean skip = false;
+							if(mapper.getOperation1().equalSignature(operationBodyMapper.getOperation1()) && mapper.getOperation2().equalSignature(operationBodyMapper.getOperation2())) {
+								skip = true;
+							}
+							if(!skip) {
+								mapperSet.add(operationBodyMapper);
+								break;
+							}
+						}
 					}
 				}
 			}

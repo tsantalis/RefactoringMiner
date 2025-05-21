@@ -4686,6 +4686,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						replacement.getType().equals(ReplacementType.METHOD_INVOCATION_ARGUMENT)) {
 					replacements.add((MethodInvocationReplacement) replacement);
 				}
+				if(replacement.getType().equals(ReplacementType.METHOD_INVOCATION)) {
+					MethodInvocationReplacement invocationReplacement = (MethodInvocationReplacement) replacement;
+					AbstractCall callBefore = invocationReplacement.getInvokedOperationBefore();
+					AbstractCall callAfter = invocationReplacement.getInvokedOperationAfter();
+					if(callBefore.getExpression() != null && callAfter.getExpression() != null &&
+							Character.isUpperCase(callBefore.getExpression().charAt(0)) &&
+							Character.isUpperCase(callAfter.getExpression().charAt(0))) {
+						replacements.add(invocationReplacement);
+					}
+				}
 			}
 		}
 		return replacements;

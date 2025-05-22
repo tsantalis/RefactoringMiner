@@ -1,6 +1,7 @@
 package narrator.graph;
 
 import com.github.gumtreediff.tree.Tree;
+import com.github.gumtreediff.utils.Pair;
 import org.refactoringminer.astDiff.utils.Constants;
 
 import java.util.ArrayList;
@@ -78,15 +79,13 @@ public class Context {
         put("ThisExpression", List.of(Constants.METHOD_INVOCATION, Constants.CLASS_INSTANCE_CREATION));
     }};
 
-    public static List<Tree> get(Tree tree) {
-        List<Tree> contexts = new ArrayList<>();
+    public static List<Pair<Tree, NodeType>> get(Tree tree) {
+        List<Pair<Tree, NodeType>> contexts = new ArrayList<>();
 
         String treeType = tree.getType().name;
         List<String> treeSemanticContexts = semanticContext.get(treeType);
 
-
         Tree parent = tree;
-        boolean isSemanticCovered = false;
         while (true) {
             parent = parent.getParent();
 
@@ -95,15 +94,16 @@ public class Context {
             }
 
             String parentType = parent.getType().name;
-            
+
             if (locationContext.contains(parentType)) {
-                contexts.add(parent);
+                contexts.add(new Pair<>(parent, NodeType.LOCATION_CONTEXT));
             }
 
-            if (!isSemanticCovered && treeSemanticContexts != null && treeSemanticContexts.contains(parentType)) {
-                contexts.add(parent);
-                isSemanticCovered = true;
+            if (treeSemanticContexts != null && treeSemanticContexts.contains(parentType)) {
+                contexts.add(new Pair<>(parent, NodeType.SEMANTIC_CONTEXT));
             }
         }
     }
 }
+
+

@@ -3,6 +3,7 @@ package narrator.graph;
 import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
+import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -124,11 +125,11 @@ public class GraphProcessor {
         String path = node.getPath();
 
         Node lastNode = node;
-        List<Tree> contexts = Context.get(node.getTree());
-        for (Tree context : contexts) {
-            String potentialContextId = Node.formatId(path, context);
+        List<Pair<Tree, NodeType>> contexts = Context.get(node.getTree());
+        for (Pair<Tree, NodeType> context : contexts) {
+            String potentialContextId = Node.formatId(path, context.first);
             if (!nodeMap.containsKey(potentialContextId)) {
-                Node contextNode = new Node(node.getFileContent(), path, context, NodeType.CONTEXT);
+                Node contextNode = new Node(node.getFileContent(), path, context.first, context.second);
                 graph.addVertex(contextNode);
                 nodeMap.put(contextNode.getId(), contextNode);
             }

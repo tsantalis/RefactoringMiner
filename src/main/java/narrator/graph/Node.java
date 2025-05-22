@@ -84,7 +84,7 @@ public class Node {
     }
 
     public boolean isContext() {
-        return nodeType.equals(NodeType.CONTEXT);
+        return nodeType.equals(NodeType.LOCATION_CONTEXT) || nodeType.equals(NodeType.SEMANTIC_CONTEXT);
     }
 
     public boolean isExtension() {
@@ -141,15 +141,6 @@ public class Node {
         return path;
     }
 
-    public Node getParent() {
-        Tree parentTree = tree.getParent();
-        if (parentTree == null) {
-            return null;
-        }
-
-        return new Node(this.fileContent, this.path, parentTree, NodeType.CONTEXT);
-    }
-
     public Pair<Node, Node> getSiblings() {
         Tree parent = tree.getParent();
         if (parent == null) {
@@ -168,17 +159,17 @@ public class Node {
 
         Node left = null, right = null;
         if (nodeIndex > 0) {
-            left = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex - 1), NodeType.CONTEXT);
+            left = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex - 1), NodeType.SEMANTIC_CONTEXT);
         }
         if (nodeIndex < parentChildren.size() - 1) {
-            right = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex + 1), NodeType.CONTEXT);
+            right = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex + 1), NodeType.SEMANTIC_CONTEXT);
         }
 
         return new Pair<>(left, right);
     }
 
     public List<Node> getContexts() {
-        return Context.get(tree).stream().map(context -> new Node(fileContent, path, context, NodeType.CONTEXT)).toList();
+        return Context.get(tree).stream().map(context -> new Node(fileContent, path, context.first, context.second)).toList();
     }
 
     private final HashMap<String, String> typeTextualRepresentation = new HashMap<>() {{

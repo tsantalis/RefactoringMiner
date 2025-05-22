@@ -2853,7 +2853,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				if(consistentMethodInvocationRenameMismatchesForCurrentMapper < consistentMethodInvocationRenameMismatchesForBestMapper &&
 						mapper.getContainer1().isConstructor() == mapper.getContainer2().isConstructor() &&
 						mapper.getContainer1().isGetter() == mapper.getContainer2().isGetter() &&
-						bestMapper.exactMatches() < mapper.exactMatches()) {
+						bestMapper.exactMatches() <= mapper.exactMatches()) {
 					return mapper;
 				}
 			}

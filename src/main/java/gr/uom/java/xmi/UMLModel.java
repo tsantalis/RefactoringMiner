@@ -212,24 +212,20 @@ public class UMLModel {
     			modelDiff.addUMLModuleDiff(diff);
     		}
     	}
-    	/*
-    	Graph g = new Graph(classList.size());
+    	List<UMLClass> list = new ArrayList<>(classList);
     	for(int i=0; i<classList.size(); i++) {
     		UMLClass classI = classList.get(i);
     		for(int j=i+1; j<classList.size(); j++) {
     			UMLClass classJ = classList.get(j);
-    			if(classI.explicitelyImportsType(classJ.getName())) {
-    				g.addEdge(i, j);
-    			}
-    			if(classJ.explicitelyImportsType(classI.getName())) {
-    				g.addEdge(j, i);
+    			if(classJ.explicitStaticImportOrCall(classI.getName())) {
+    				int indexOfI = list.indexOf(classList.get(i));
+    				int indexOfJ = list.indexOf(classList.get(j));
+    				if(indexOfI < indexOfJ)
+    					Collections.swap(list, indexOfI, indexOfJ);
     			}
     		}
     	}
-    	Stack<Integer> s = g.topologicalSort();
-    	*/
-    	Collections.sort(classList, new ClassComparator());
-    	for(UMLClass umlClass : classList) {
+    	for(UMLClass umlClass : list) {
     		if(umlModel.classList.contains(umlClass)) {
     			UMLClassDiff classDiff = new UMLClassDiff(umlClass, umlModel.getClass(umlClass), modelDiff);
     			classDiff.process();

@@ -780,7 +780,7 @@
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic tenantAndRoutingFilters() : JsonArray extracted from protected prepareFilter(context PredicateRequestContext) : JsonObject in class org.hibernate.search.backend.elasticsearch.search.predicate.impl.ElasticsearchKnnPredicate & moved to class org.hibernate.search.backend.elasticsearch.search.predicate.impl.PredicateRequestContext",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_VARIABLE",
@@ -893,6 +893,11 @@
         {
           "type": "MOVE_AND_RENAME_OPERATION",
           "description": "Move And Rename Method\tprotected toFieldComparatorSource() : LuceneFieldComparatorSource from class org.hibernate.search.backend.lucene.types.sort.impl.LuceneStandardFieldSort.TextFieldBuilder to protected doCreateFieldComparatorSource(nestedDocumentPath String, multiValueMode MultiValueMode, nestedFilter Query) : LuceneFieldComparatorSource from class org.hibernate.search.backend.lucene.types.sort.impl.LuceneStandardFieldSort.TextFieldSort",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic root() : PredicateRequestContext renamed to public withoutSession() : PredicateRequestContext in class org.hibernate.search.backend.lucene.search.predicate.impl.PredicateRequestContext",
           "validation": true
         }
       ]
@@ -2324,7 +2329,7 @@
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tHibernateOrmEntityLoadingStrategy<?,?> to HibernateOrmNonEntityIdPropertyEntityLoadingStrategy<E,I> in method private create(persistentClass PersistentClass, mappedClass Class<E>, documentIdSourcePropertyClass Class<I>, documentIdSourcePropertyName String, documentIdSourceHandle ValueReadHandle<? extends I>) : HibernateOrmNonEntityIdPropertyEntityLoadingStrategy<E,I> from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmNonEntityIdPropertyEntityLoadingStrategy",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_ATTRIBUTE",
@@ -2394,6 +2399,16 @@
           "type": "CHANGE_ATTRIBUTE_TYPE",
           "description": "Change Attribute Type\tdocumentIdSourcePropertyName : String to documentIdSourceProperty : DocumentIdSourceProperty<?> in class org.hibernate.search.mapper.orm.mapping.impl.AbstractHibernateOrmTypeContext.AbstractBuilder",
           "validation": false
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate create(persistentClass PersistentClass, mappedClass Class<E>, documentIdSourcePropertyClass Class<I>, documentIdSourcePropertyName String, documentIdSourceHandle ValueReadHandle<? extends I>) : HibernateOrmNonEntityIdPropertyEntityLoadingStrategy<E,I> extracted from public create(sessionFactory SessionFactoryImplementor, entityMappingType EntityMappingType, documentIdSourcePropertyName String, documentIdSourceHandle ValueReadHandle<I>) : HibernateOrmEntityLoadingStrategy<?,?> in class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmNonEntityIdPropertyEntityLoadingStrategy",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tHibernateOrmEntityLoadingStrategy<?,?> to HibernateOrmEntityLoadingStrategy<?,? super I> in method public create(persistentClass PersistentClass, documentIdSourceProperty DocumentIdSourceProperty<I>) : HibernateOrmEntityLoadingStrategy<?,? super I> from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmNonEntityIdPropertyEntityLoadingStrategy",
+          "validation": true
         }
       ]
     },

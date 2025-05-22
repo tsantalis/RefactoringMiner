@@ -258,6 +258,28 @@ public abstract class UMLAbstractClass {
 		return false;
 	}
 
+	public boolean explicitStaticImportOrCall(String targetClass) {
+		boolean searchForStaticCall = false;
+		for(UMLImport imported : getImportedTypes()) {
+			if(imported.isStatic() && imported.getName().startsWith(targetClass)) {
+				return true;
+			}
+			if(imported.getName().equals(targetClass)) {
+				searchForStaticCall = true;
+			}
+		}
+		if(searchForStaticCall) {
+			for(UMLOperation operation : operations) {
+				for(AbstractCall call : operation.getAllOperationInvocations()) {
+					if(call.getExpression() != null && targetClass.endsWith("." + call.getExpression())) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	public Map<String, VariableDeclaration> getFieldDeclarationMap() {
 		if(this.fieldDeclarationMap == null) {
 			fieldDeclarationMap = new LinkedHashMap<String, VariableDeclaration>();

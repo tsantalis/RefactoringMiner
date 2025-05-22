@@ -2875,6 +2875,19 @@ public class UMLModelDiff {
 					UMLAnonymousToClassDiff diff = matchingDiffs.get(0);
 					if(diff.containsStatementMappings() && constructorCallFound(classDiff, diff)) {
 						List<Refactoring> anonymousClassDiffRefactorings = diff.getRefactorings();
+						Set<Refactoring> toBeRemoved = new LinkedHashSet<>();
+						for(Refactoring r : anonymousClassDiffRefactorings) {
+							if(r instanceof RenameAttributeRefactoring) {
+								UMLAttribute attribute = ((RenameAttributeRefactoring) r).getOriginalAttribute();
+								for(Pair<UMLAttribute, UMLAttribute> pair: classDiff.getCommonAtrributes()) {
+									if(pair.getLeft().getVariableDeclaration().equals(attribute.getVariableDeclaration())) {
+										toBeRemoved.add(r);
+										break;
+									}
+								}
+							}
+						}
+						anonymousClassDiffRefactorings.removeAll(toBeRemoved);
 						ReplaceAnonymousWithClassRefactoring refactoring = new ReplaceAnonymousWithClassRefactoring(anonymousClass, diff.getNextClass(), diff);
 						refactorings.addAll(anonymousClassDiffRefactorings);
 						refactorings.add(refactoring);

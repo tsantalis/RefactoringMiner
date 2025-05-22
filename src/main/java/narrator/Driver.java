@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Driver {
     public static void main(String[] args) throws Exception {
-        writeJson();
+        writeCommit("https://github.com/Netflix/eureka/commit/f6212a7e474f812f31ddbce6d4f7a7a0d498b751");
     }
 
     public static void writeJson() throws FileNotFoundException {
@@ -37,12 +37,7 @@ public class Driver {
     public static void writeCommit(String url) throws IOException {
         List<Cluster> clusters = getClusters(url);
 
-        List<String> stringifiedClusters = getStringifiedClusters(clusters);
-        for (int i = 0; i < stringifiedClusters.size(); i++) {
-            writeFile(url, "cluster_" + i, stringifiedClusters.get(i));
-        }
-
-        String stringifiedCommit = getStringifiedCommit(url, clusters);
+        String stringifiedCommit = Stringifier.stringifyCommit(url, clusters);
         writeFile(url, null, stringifiedCommit);
     }
 
@@ -50,10 +45,6 @@ public class Driver {
         Graph<Node, Edge> graph = CommitGraph.get(url);
         Clusterer clusterer = new Clusterer(graph);
         return clusterer.getClusters();
-    }
-
-    public static List<String> getStringifiedClusters(List<Cluster> clusters) {
-        return clusters.stream().map(cluster -> Stringifier.stringifyGraph(cluster.getGraph())).toList();
     }
 
     private static String getFileName(String url, String metadata) {
@@ -88,10 +79,6 @@ public class Driver {
         FileWriter writer = new FileWriter("./json/" + getFileName(url, metadata));
         writer.write(content);
         writer.close();
-    }
-
-    public static String getStringifiedCommit(String url, List<Cluster> clusters) throws IOException {
-        return Stringifier.stringifyCommit(url, clusters);
     }
 }
 

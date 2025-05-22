@@ -186,7 +186,7 @@ public class Stringifier {
         return nodes;
     }
 
-    public static String stringifyCommit(String url, List<Cluster> clusters) throws IOException {
+    public static String stringifyCommit(String url, List<Cluster> clusters) {
         JsonArray nodesArray = new JsonArray();
         JsonArray edgesArray = new JsonArray();
 
@@ -222,6 +222,10 @@ public class Stringifier {
         graphObj.add("nodes", nodesArray);
         graphObj.add("edges", edgesArray);
         graphObj.addProperty("url", url);
+
+        JsonArray stringifiedClusters = new JsonArray();
+        clusters.forEach(cluster -> stringifiedClusters.add(stringifyGraph(cluster.getGraph())));
+        graphObj.add("clusters", stringifiedClusters);
 
         return graphObj.toString();
     }

@@ -218,10 +218,34 @@ public class UMLModel {
     		for(int j=i+1; j<classList.size(); j++) {
     			UMLClass classJ = classList.get(j);
     			if(classJ.explicitStaticImportOrCall(classI.getName())) {
+    				boolean cyclic = false;
+    				if(umlModel.classList.contains(classI)) {
+    					UMLClass otherClassI = umlModel.getClass(classI);
+    					if(otherClassI.explicitStaticImportOrCall(classJ.getName())) {
+    						cyclic = true;
+    					}
+    				}
+    				if(!cyclic) {
+	    				int indexOfI = list.indexOf(classList.get(i));
+	    				int indexOfJ = list.indexOf(classList.get(j));
+	    				if(indexOfI < indexOfJ) {
+	    					Collections.swap(list, indexOfI, indexOfJ);
+	    				}
+    				}
+    			}
+    			if(classJ.isInnerClass(classI)) {
     				int indexOfI = list.indexOf(classList.get(i));
     				int indexOfJ = list.indexOf(classList.get(j));
-    				if(indexOfI < indexOfJ)
+    				if(indexOfI < indexOfJ) {
     					Collections.swap(list, indexOfI, indexOfJ);
+    				}
+    			}
+    			if(classJ.isTestClass() && !classI.isTestClass() && classJ.getNonQualifiedName().startsWith(classI.getNonQualifiedName())) {
+    				int indexOfI = list.indexOf(classList.get(i));
+    				int indexOfJ = list.indexOf(classList.get(j));
+    				if(indexOfI < indexOfJ) {
+    					Collections.swap(list, indexOfI, indexOfJ);
+    				}
     			}
     		}
     	}

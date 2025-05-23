@@ -506,6 +506,10 @@ public class OperationInvocation extends AbstractCall {
     		return true;
     	if(type1.equals("Exception") && type2.endsWith("Exception"))
     		return true;
+    	if(type1.equals("CharSequence") && type2.equals("String"))
+    		return true;
+    	else if(type2.equals("CharSequence") && type1.equals("String"))
+    		return true;
     	if(isPrimitiveType(type1) && isPrimitiveType(type2)) {
             if(isWideningPrimitiveConversion(type2, type1))
                 return true;

@@ -376,7 +376,17 @@ public class OperationInvocation extends AbstractCall {
     				inferredArgumentTypes.add(UMLType.extractTypeObject(numberType));
     			}
     			else {
-    				inferredArgumentTypes.add(null);
+    				UMLType returnType = null;
+    				if(classDiff != null) {
+    					for(UMLOperation originalClassOperation : classDiff.getOriginalClass().getOperations()) {
+    						if(arg.startsWith(originalClassOperation.getName() + "(") && originalClassOperation.getReturnParameter() != null &&
+    								!originalClassOperation.getReturnParameter().getType().getClassType().equals("void")) {
+    							returnType = originalClassOperation.getReturnParameter().getType();
+    							break;
+    						}
+    					}
+    				}
+    				inferredArgumentTypes.add(returnType);
     			}
     		}
     	}

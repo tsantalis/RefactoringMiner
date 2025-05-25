@@ -467,6 +467,22 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+		//move from deprecated method to new one
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			if(mapper.nonMappedElementsT1() > 0 && mapper.getContainer2().hasDeprecatedAnnotation() && !mapper.getContainer1().hasDeprecatedAnnotation()) {
+				for(UMLOperation addedOperation : addedOperations) {
+					if(addedOperation.getName().equals(mapper.getContainer2().getName())) {
+						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, addedOperation, this);
+						if(moveCodeMapper.getMappings().size() > 0) {
+							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_TO_ADDED);
+							if(!moveCodeMappers.contains(moveCodeMapper))
+								moveCodeMappers.add(moveCodeMapper);
+							refactorings.add(ref);
+						}
+					}
+				}
+			}
+		}
 		for(UMLOperationBodyMapper moveCodeMapper : potentialCodeMoveBetweenSetUpTearDownMethods) {
 			if(moveCodeMapper.getMappings().size() > 0) {
 				MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);

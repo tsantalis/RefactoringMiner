@@ -254,6 +254,11 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	}
 
 	@Override
+	public boolean hasDeprecatedAnnotation() {
+		return false;
+	}
+
+	@Override
 	public boolean isRecursive() {
 		return false;
 	}

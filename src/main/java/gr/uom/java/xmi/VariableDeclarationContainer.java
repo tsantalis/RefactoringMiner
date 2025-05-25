@@ -120,6 +120,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	boolean hasParameterizedTestAnnotation();
 	boolean hasSetUpAnnotation();
 	boolean hasTearDownAnnotation();
+	boolean hasDeprecatedAnnotation();
 	boolean isDeclaredInAnonymousClass();
 	Optional<UMLAnonymousClass> getAnonymousClassContainer();
 	boolean isGetter();

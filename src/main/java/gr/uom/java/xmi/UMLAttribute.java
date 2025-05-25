@@ -301,6 +301,11 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return false;
 	}
 
+	@Override
+	public boolean hasDeprecatedAnnotation() {
+		return false;
+	}
+
 	public Visibility getVisibility() {
 		return visibility;
 	}

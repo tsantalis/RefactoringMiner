@@ -2850,6 +2850,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		}
 		int consistentMethodInvocationRenameMismatchesForBestMapper = mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenames);
 		if(consistentMethodInvocationRenameMismatchesForBestMapper > 0 && !exactMappings(bestMapper)) {
+			boolean debatable = false;
 			for(int i=1; i<mapperList.size(); i++) {
 				UMLOperationBodyMapper mapper = mapperList.get(i);
 				int consistentMethodInvocationRenameMismatchesForCurrentMapper = mismatchesConsistentMethodInvocationRename(mapper, consistentMethodInvocationRenames);
@@ -2858,8 +2859,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						mapper.getContainer1().isGetter() == mapper.getContainer2().isGetter()) {
 					return mapper;
 				}
+				if(consistentMethodInvocationRenameMismatchesForCurrentMapper == consistentMethodInvocationRenameMismatchesForBestMapper) {
+					debatable = true;
+				}
 			}
-			return null;
+			if(debatable) {
+				return null;
+			}
 		}
 		consistentMethodInvocationRenameMismatchesForBestMapper = mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenamesInModel);
 		if(mapperSet.size() > 1 && consistentMethodInvocationRenameMismatchesForBestMapper > 0 && !exactMappings(bestMapper)) {

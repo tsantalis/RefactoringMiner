@@ -4951,9 +4951,17 @@ public class ReplacementAlgorithm {
 			for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
 				if(call1.matchesOperation(removedOperation, container1, classDiff, modelDiff)) {
 					for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
-						if(removedOperation.getBodyHashCode() == addedOperation.getBodyHashCode()) {
-							if(call2.matchesOperation(addedOperation, container2, classDiff, modelDiff)) {
+						if(call2.matchesOperation(addedOperation, container2, classDiff, modelDiff)) {
+							if(removedOperation.getBodyHashCode() == addedOperation.getBodyHashCode()) {
 								return true;
+							}
+							List<String> removed = removedOperation.stringRepresentation();
+							List<String> added = addedOperation.stringRepresentation();
+							// 3 corresponds to the opening and closing bracket of a method + a single statement
+							if(added.size() > 3 && removed.size() > 3) {
+								if(added.containsAll(removed) || removed.containsAll(added)) {
+									return true;
+								}
 							}
 						}
 					}

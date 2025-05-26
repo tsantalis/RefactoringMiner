@@ -2863,7 +2863,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					debatable = true;
 				}
 			}
-			if(debatable) {
+			if(debatable || mapperSet.size() == 1) {
 				return null;
 			}
 		}

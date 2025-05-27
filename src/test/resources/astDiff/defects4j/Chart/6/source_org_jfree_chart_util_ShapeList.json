@@ -252,6 +252,17 @@
   "firstEndPos" : 1778,
   "secondEndPos" : 1778
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1779,
+  "secondPos" : 1779,
+  "firstEndPos" : 1786,
+  "secondEndPos" : 1786
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "AbstractObjectList",
@@ -1297,6 +1308,17 @@
   "firstEndPos" : 2656,
   "secondEndPos" : 2656
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 2659,
+  "secondPos" : 2659,
+  "firstEndPos" : 2665,
+  "secondEndPos" : 2665
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "CloneNotSupportedException",
@@ -2154,6 +2176,17 @@
   "secondPos" : 3773,
   "firstEndPos" : 3545,
   "secondEndPos" : 3779
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 3547,
+  "secondPos" : 3781,
+  "firstEndPos" : 3553,
+  "secondEndPos" : 3787
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -3232,6 +3265,17 @@
   "secondPos" : 4492,
   "firstEndPos" : 4264,
   "secondEndPos" : 4498
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 4266,
+  "secondPos" : 4500,
+  "firstEndPos" : 4272,
+  "secondEndPos" : 4506
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

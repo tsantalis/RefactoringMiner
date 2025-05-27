@@ -1572,6 +1572,17 @@
   "firstEndPos" : 2349,
   "secondEndPos" : 2349
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "EnumDeclaration",
+  "secondParentType" : "EnumDeclaration",
+  "firstPos" : 2350,
+  "secondPos" : 2350,
+  "firstEndPos" : 2360,
+  "secondEndPos" : 2360
+}, {
   "firstType" : "ParameterizedType",
   "secondType" : "ParameterizedType",
   "firstLabel" : "",
@@ -5839,6 +5850,17 @@
   "secondPos" : 5578,
   "firstEndPos" : 5399,
   "secondEndPos" : 5582
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 5401,
+  "secondPos" : 5584,
+  "firstEndPos" : 5407,
+  "secondEndPos" : 5590
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

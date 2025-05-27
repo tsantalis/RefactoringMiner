@@ -197,6 +197,17 @@
   "firstEndPos" : 276,
   "secondEndPos" : 276
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 277,
+  "secondPos" : 277,
+  "firstEndPos" : 284,
+  "secondEndPos" : 284
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "JsonStreamContext",
@@ -4828,6 +4839,17 @@
   "firstEndPos" : 4287,
   "secondEndPos" : 4287
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 4289,
+  "secondPos" : 4289,
+  "firstEndPos" : 4295,
+  "secondEndPos" : 4295
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "JsonProcessingException",
@@ -5399,6 +5421,17 @@
   "secondPos" : 4656,
   "firstEndPos" : 4660,
   "secondEndPos" : 4660
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 4662,
+  "secondPos" : 4662,
+  "firstEndPos" : 4668,
+  "secondEndPos" : 4668
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

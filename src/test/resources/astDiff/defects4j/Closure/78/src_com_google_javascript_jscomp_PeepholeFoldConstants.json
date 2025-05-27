@@ -285,6 +285,17 @@
   "firstEndPos" : 1101,
   "secondEndPos" : 1101
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1102,
+  "secondPos" : 1102,
+  "firstEndPos" : 1109,
+  "secondEndPos" : 1109
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "AbstractPeepholeOptimization",

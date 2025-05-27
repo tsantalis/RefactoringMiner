@@ -582,6 +582,17 @@
   "firstEndPos" : 1252,
   "secondEndPos" : 1252
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1254,
+  "secondPos" : 1254,
+  "firstEndPos" : 1264,
+  "secondEndPos" : 1264
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "MockitoInvocationHandler",
@@ -1912,6 +1923,17 @@
   "secondPos" : 2194,
   "firstEndPos" : 2204,
   "secondEndPos" : 2204
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 2206,
+  "secondPos" : 2206,
+  "firstEndPos" : 2212,
+  "secondEndPos" : 2212
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

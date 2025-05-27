@@ -380,6 +380,13 @@ public class VariableReplacementAnalysis {
 					}
 				}
 			}
+			if(mapping.getFragment1() instanceof TryStatementObject && mapping.getFragment2() instanceof TryStatementObject) {
+				List<VariableDeclaration> declarations1 = mapping.getFragment1().getVariableDeclarations();
+				List<VariableDeclaration> declarations2 = mapping.getFragment2().getVariableDeclarations();
+				if(declarations1.toString().equals(declarations2.toString())) {
+					processVariableDeclarationsInIdenticalOperations(declarations1, declarations2);
+				}
+			}
 		}
 	}
 

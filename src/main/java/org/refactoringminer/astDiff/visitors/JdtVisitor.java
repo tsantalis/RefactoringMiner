@@ -365,6 +365,8 @@ public class JdtVisitor  extends AbstractJdtVisitor {
         }
         if (!d.superInterfaceTypes().isEmpty()) {
             String keyword = "implements";
+            if (d.isInterface())
+                keyword = "extends"; //For interfaces, the keyword is 'extends' for super interfaces
             Tree keywordSubtree = context.createTree(TYPE_INHERITANCE_KEYWORD, keyword);
             PosAndLength keywordPl = searchKeywordPosition(d, keyword);
             keywordSubtree.setPos(keywordPl.pos);

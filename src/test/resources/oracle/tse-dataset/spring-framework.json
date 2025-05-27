@@ -682,7 +682,7 @@
         {
           "type": "MOVE_OPERATION",
           "description": "Move Method\tpublic indexReadWrite() : void from class org.springframework.expression.spel.PropertyAccessTests to package indexReadWrite() : void from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests",
-          "validation": false
+          "validation": true
         },
         {
           "type": "PULL_UP_OPERATION",
@@ -692,7 +692,7 @@
         {
           "type": "EXTRACT_CLASS",
           "description": "Extract Class\torg.springframework.expression.spel.IndexingTests.IndexAccessorTests from class org.springframework.expression.spel.PropertyAccessTests",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_VARIABLE",
@@ -732,12 +732,12 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tnode0 : TextNode in method package indexReadWrite() : void from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tnode1 : TextNode in method package indexReadWrite() : void from class org.springframework.expression.spel.IndexingTests.IndexAccessorTests",
-          "validation": false
+          "validation": true
         }
       ],
       "baseline": [

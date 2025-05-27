@@ -494,6 +494,17 @@
   "firstEndPos" : 2261,
   "secondEndPos" : 2261
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2262,
+  "secondPos" : 2262,
+  "firstEndPos" : 2272,
+  "secondEndPos" : 2272
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ZipExtraField",
@@ -5488,6 +5499,17 @@
   "firstEndPos" : 7289,
   "secondEndPos" : 7327
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 7296,
+  "secondPos" : 7334,
+  "firstEndPos" : 7302,
+  "secondEndPos" : 7340
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ZipException",
@@ -7050,6 +7072,17 @@
   "firstEndPos" : 8160,
   "secondEndPos" : 8198
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 8167,
+  "secondPos" : 8205,
+  "firstEndPos" : 8173,
+  "secondEndPos" : 8211
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ZipException",
@@ -7632,6 +7665,17 @@
   "secondPos" : 8910,
   "firstEndPos" : 8877,
   "secondEndPos" : 8915
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 8880,
+  "secondPos" : 8918,
+  "firstEndPos" : 8886,
+  "secondEndPos" : 8924
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

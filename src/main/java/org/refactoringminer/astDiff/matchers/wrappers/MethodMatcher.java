@@ -20,6 +20,8 @@ import java.util.*;
 /* Created by pourya on 2024-05-22*/
 public class MethodMatcher extends BodyMapperMatcher{
 
+    private static final String THROWS_KEYWORD_LABEL = "throws";
+
     public MethodMatcher(UMLOperationBodyMapper bodyMapper, boolean isPartOfExtractMethod) {
         super(bodyMapper, isPartOfExtractMethod);
     }
@@ -128,7 +130,7 @@ public class MethodMatcher extends BodyMapperMatcher{
             mappingStore.addMappingRecursively(srcClassAnnotationTree,dstClassAnnotationTree);
         }
         Set<org.apache.commons.lang3.tuple.Pair<UMLType, UMLType>> commonExceptionTypes = umlOperationDiff.getCommonExceptionTypes();
-        matchThrowKeyword(srcTree, dstTree, mappingStore);
+        new KeywordMatcher(Constants.THROWS_KEYWORD, THROWS_KEYWORD_LABEL).match(srcTree, dstTree, mappingStore);
         if (commonExceptionTypes != null) {
             for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> matchedException : commonExceptionTypes) {
                 Tree srcExceptionNode =TreeUtilFunctions.findByLocationInfo(srcTree, matchedException.getLeft().getLocationInfo());

@@ -230,6 +230,17 @@
   "firstEndPos" : 374,
   "secondEndPos" : 374
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 375,
+  "secondPos" : 375,
+  "firstEndPos" : 382,
+  "secondEndPos" : 382
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "BaseTest",
@@ -317,6 +328,17 @@
   "secondPos" : 415,
   "firstEndPos" : 427,
   "secondEndPos" : 427
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 430,
+  "secondPos" : 430,
+  "firstEndPos" : 436,
+  "secondEndPos" : 436
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -889,6 +911,17 @@
   "secondPos" : 759,
   "firstEndPos" : 775,
   "secondEndPos" : 775
+}, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 776,
+  "secondPos" : 776,
+  "firstEndPos" : 783,
+  "secondEndPos" : 783
 }, {
   "firstType" : "ParameterizedType",
   "secondType" : "ParameterizedType",

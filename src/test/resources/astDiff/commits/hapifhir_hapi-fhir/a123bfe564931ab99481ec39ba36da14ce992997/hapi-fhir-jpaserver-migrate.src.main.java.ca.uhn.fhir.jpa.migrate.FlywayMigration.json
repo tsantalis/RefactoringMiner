@@ -230,6 +230,17 @@
   "firstEndPos" : 419,
   "secondEndPos" : 419
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 420,
+  "secondPos" : 420,
+  "firstEndPos" : 430,
+  "secondEndPos" : 430
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "JavaMigration",
@@ -1791,6 +1802,17 @@
   "secondPos" : 1352,
   "firstEndPos" : 1322,
   "secondEndPos" : 1362
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 1324,
+  "secondPos" : 1364,
+  "firstEndPos" : 1330,
+  "secondEndPos" : 1370
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

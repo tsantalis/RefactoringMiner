@@ -593,6 +593,17 @@
   "firstEndPos" : 1741,
   "secondEndPos" : 1855
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1742,
+  "secondPos" : 1856,
+  "firstEndPos" : 1752,
+  "secondEndPos" : 1866
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ImportBeanDefinitionRegistrar",
@@ -3739,6 +3750,17 @@
   "firstEndPos" : 3913,
   "secondEndPos" : 4919
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3914,
+  "secondPos" : 4920,
+  "firstEndPos" : 3924,
+  "secondEndPos" : 4930
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "BeanPostProcessor",
@@ -4311,6 +4333,17 @@
   "firstEndPos" : 4256,
   "secondEndPos" : 5262
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 4262,
+  "secondPos" : 5268,
+  "firstEndPos" : 4268,
+  "secondEndPos" : 5274
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "BeansException",
@@ -4871,6 +4904,17 @@
   "secondPos" : 5649,
   "firstEndPos" : 4651,
   "secondEndPos" : 5657
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 4657,
+  "secondPos" : 5663,
+  "firstEndPos" : 4663,
+  "secondEndPos" : 5669
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

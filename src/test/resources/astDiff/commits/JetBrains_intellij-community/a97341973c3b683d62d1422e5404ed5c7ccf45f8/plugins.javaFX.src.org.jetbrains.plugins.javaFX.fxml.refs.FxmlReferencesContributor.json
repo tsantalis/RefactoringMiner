@@ -527,6 +527,17 @@
   "firstEndPos" : 1666,
   "secondEndPos" : 1708
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1667,
+  "secondPos" : 1709,
+  "firstEndPos" : 1674,
+  "secondEndPos" : 1716
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "PsiReferenceContributor",
@@ -7160,6 +7171,17 @@
   "firstEndPos" : 7543,
   "secondEndPos" : 7585
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7544,
+  "secondPos" : 7586,
+  "firstEndPos" : 7551,
+  "secondEndPos" : 7593
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "JavaClassReferenceProvider",
@@ -9051,6 +9073,17 @@
   "secondPos" : 8790,
   "firstEndPos" : 8773,
   "secondEndPos" : 8815
+}, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 8774,
+  "secondPos" : 8816,
+  "firstEndPos" : 8784,
+  "secondEndPos" : 8826
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -11648,6 +11681,17 @@
   "firstEndPos" : 10612,
   "secondEndPos" : 10654
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 10614,
+  "secondPos" : 10656,
+  "firstEndPos" : 10620,
+  "secondEndPos" : 10662
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IncorrectOperationException",
@@ -12527,6 +12571,17 @@
   "secondPos" : 11042,
   "firstEndPos" : 11043,
   "secondEndPos" : 11049
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 11053,
+  "secondPos" : 11059,
+  "firstEndPos" : 11059,
+  "secondEndPos" : 11065
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

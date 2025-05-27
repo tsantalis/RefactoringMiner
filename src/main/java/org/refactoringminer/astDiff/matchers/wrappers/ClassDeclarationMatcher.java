@@ -122,7 +122,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, commonInterface.getLeft(), commonInterface.getRight());
         for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> changedInterface : classDiff.getInterfaceListDiff().getChangedTypes())
             processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, changedInterface.getLeft(), changedInterface.getRight());
-        new KeywordMatcher(Constants.TYPE_INHERITANCE_KEYWORD, IMPLEMENTS_KEYWORD_LABEL).match(srcTree, dstTree, mappingStore);
+        String keyword = IMPLEMENTS_KEYWORD_LABEL;
+        if (classDiff.getOriginalClass().isInterface())
+            keyword = EXTENDS_KEYWORD_LABEL;
+        new KeywordMatcher(Constants.TYPE_INHERITANCE_KEYWORD, keyword).match(srcTree, dstTree, mappingStore);
 
     }
 

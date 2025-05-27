@@ -128,6 +128,7 @@ public class MethodMatcher extends BodyMapperMatcher{
             mappingStore.addMappingRecursively(srcClassAnnotationTree,dstClassAnnotationTree);
         }
         Set<org.apache.commons.lang3.tuple.Pair<UMLType, UMLType>> commonExceptionTypes = umlOperationDiff.getCommonExceptionTypes();
+        matchThrowKeyword(srcTree, dstTree, mappingStore);
         if (commonExceptionTypes != null) {
             for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> matchedException : commonExceptionTypes) {
                 Tree srcExceptionNode =TreeUtilFunctions.findByLocationInfo(srcTree, matchedException.getLeft().getLocationInfo());
@@ -160,6 +161,14 @@ public class MethodMatcher extends BodyMapperMatcher{
             else {
                 new LeafMatcher().match(srcNode,dstNode,mappingStore);
             }
+        }
+    }
+
+    private void matchThrowKeyword(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
+        Tree srcThrowKeyword = TreeUtilFunctions.findChildByType(srcTree, Constants.THROWS_KEYWORD);
+        Tree dstThrowKeyword = TreeUtilFunctions.findChildByType(dstTree, Constants.THROWS_KEYWORD);
+        if (srcThrowKeyword != null && dstThrowKeyword != null) {
+            mappingStore.addMappingRecursively(srcThrowKeyword, dstThrowKeyword);
         }
     }
 

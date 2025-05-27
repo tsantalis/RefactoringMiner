@@ -329,6 +329,17 @@
   "firstEndPos" : 648,
   "secondEndPos" : 785
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 649,
+  "secondPos" : 786,
+  "firstEndPos" : 656,
+  "secondEndPos" : 793
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "Implementation.Target.AbstractBase",
@@ -3584,6 +3595,17 @@
   "secondPos" : 4809,
   "firstEndPos" : 3899,
   "secondEndPos" : 4816
+}, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3900,
+  "secondPos" : 4817,
+  "firstEndPos" : 3910,
+  "secondEndPos" : 4827
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",

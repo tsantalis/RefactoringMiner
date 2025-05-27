@@ -1869,6 +1869,17 @@
   "firstEndPos" : 2003,
   "secondEndPos" : 1996
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 2006,
+  "secondPos" : 1999,
+  "firstEndPos" : 2012,
+  "secondEndPos" : 2005
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "URISyntaxException",

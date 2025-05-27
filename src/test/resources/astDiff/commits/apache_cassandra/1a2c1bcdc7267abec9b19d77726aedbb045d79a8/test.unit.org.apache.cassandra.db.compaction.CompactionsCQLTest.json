@@ -197,6 +197,17 @@
   "firstEndPos" : 1086,
   "secondEndPos" : 1180
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1087,
+  "secondPos" : 1181,
+  "firstEndPos" : 1094,
+  "secondEndPos" : 1188
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "CQLTester",
@@ -218,6 +229,17 @@
   "secondPos" : 1189,
   "firstEndPos" : 1104,
   "secondEndPos" : 1198
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 1162,
+  "secondPos" : 5754,
+  "firstEndPos" : 1168,
+  "secondEndPos" : 5760
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",

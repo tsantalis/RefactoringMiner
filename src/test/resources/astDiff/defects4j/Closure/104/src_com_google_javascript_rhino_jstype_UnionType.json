@@ -604,6 +604,17 @@
   "firstEndPos" : 2500,
   "secondEndPos" : 2500
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2501,
+  "secondPos" : 2501,
+  "firstEndPos" : 2508,
+  "secondEndPos" : 2508
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "JSType",

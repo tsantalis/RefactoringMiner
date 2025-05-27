@@ -373,6 +373,17 @@
   "firstEndPos" : 2665,
   "secondEndPos" : 2665
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2666,
+  "secondPos" : 2666,
+  "firstEndPos" : 2673,
+  "secondEndPos" : 2673
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "AbstractSeriesDataset",
@@ -394,6 +405,17 @@
   "secondPos" : 2674,
   "firstEndPos" : 2695,
   "secondEndPos" : 2695
+}, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2705,
+  "secondPos" : 2705,
+  "firstEndPos" : 2715,
+  "secondEndPos" : 2715
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -23857,6 +23879,17 @@
   "secondPos" : 25574,
   "firstEndPos" : 25559,
   "secondEndPos" : 25579
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 25562,
+  "secondPos" : 25582,
+  "firstEndPos" : 25568,
+  "secondEndPos" : 25588
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

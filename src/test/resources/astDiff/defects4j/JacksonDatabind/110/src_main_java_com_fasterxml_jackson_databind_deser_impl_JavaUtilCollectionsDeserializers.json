@@ -3321,6 +3321,17 @@
   "firstEndPos" : 2654,
   "secondEndPos" : 2826
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 2664,
+  "secondPos" : 2836,
+  "firstEndPos" : 2670,
+  "secondEndPos" : 2842
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "JsonMappingException",
@@ -4828,6 +4839,17 @@
   "firstEndPos" : 3808,
   "secondEndPos" : 4031
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 3818,
+  "secondPos" : 4041,
+  "firstEndPos" : 3824,
+  "secondEndPos" : 4047
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "JsonMappingException",
@@ -6103,6 +6125,17 @@
   "secondPos" : 5110,
   "firstEndPos" : 4915,
   "secondEndPos" : 5138
+}, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4916,
+  "secondPos" : 5139,
+  "firstEndPos" : 4926,
+  "secondEndPos" : 5149
 }, {
   "firstType" : "ParameterizedType",
   "secondType" : "ParameterizedType",

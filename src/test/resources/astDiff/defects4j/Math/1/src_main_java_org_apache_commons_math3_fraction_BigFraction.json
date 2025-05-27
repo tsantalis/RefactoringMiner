@@ -461,6 +461,17 @@
   "firstEndPos" : 1612,
   "secondEndPos" : 1612
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1617,
+  "secondPos" : 1617,
+  "firstEndPos" : 1624,
+  "secondEndPos" : 1624
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Number",
@@ -482,6 +493,17 @@
   "secondPos" : 1625,
   "firstEndPos" : 1631,
   "secondEndPos" : 1631
+}, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1636,
+  "secondPos" : 1636,
+  "firstEndPos" : 1646,
+  "secondEndPos" : 1646
 }, {
   "firstType" : "ParameterizedType",
   "secondType" : "ParameterizedType",
@@ -6478,6 +6500,17 @@
   "firstEndPos" : 6566,
   "secondEndPos" : 6566
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 6568,
+  "secondPos" : 6568,
+  "firstEndPos" : 6574,
+  "secondEndPos" : 6574
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "MathIllegalArgumentException",
@@ -9151,6 +9184,17 @@
   "firstEndPos" : 8743,
   "secondEndPos" : 8743
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 8753,
+  "secondPos" : 8753,
+  "firstEndPos" : 8759,
+  "secondEndPos" : 8759
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "FractionConversionException",
@@ -9865,6 +9909,17 @@
   "secondPos" : 10455,
   "firstEndPos" : 10468,
   "secondEndPos" : 10468
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 10478,
+  "secondPos" : 10478,
+  "firstEndPos" : 10484,
+  "secondEndPos" : 10484
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -13826,6 +13881,17 @@
   "firstEndPos" : 13191,
   "secondEndPos" : 13311
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 13201,
+  "secondPos" : 13321,
+  "firstEndPos" : 13207,
+  "secondEndPos" : 13327
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "FractionConversionException",
@@ -17037,6 +17103,17 @@
   "secondPos" : 16545,
   "firstEndPos" : 16427,
   "secondEndPos" : 16547
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 16429,
+  "secondPos" : 16549,
+  "firstEndPos" : 16435,
+  "secondEndPos" : 16555
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

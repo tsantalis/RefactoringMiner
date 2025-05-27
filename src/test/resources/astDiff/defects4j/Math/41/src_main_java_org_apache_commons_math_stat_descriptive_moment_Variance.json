@@ -736,6 +736,17 @@
   "firstEndPos" : 3427,
   "secondEndPos" : 3427
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3428,
+  "secondPos" : 3428,
+  "firstEndPos" : 3435,
+  "secondEndPos" : 3435
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "AbstractStorelessUnivariateStatistic",
@@ -757,6 +768,17 @@
   "secondPos" : 3436,
   "firstEndPos" : 3472,
   "secondEndPos" : 3472
+}, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3473,
+  "secondPos" : 3473,
+  "firstEndPos" : 3483,
+  "secondEndPos" : 3483
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -17125,6 +17147,17 @@
   "secondPos" : 24675,
   "firstEndPos" : 24675,
   "secondEndPos" : 24679
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 24685,
+  "secondPos" : 24689,
+  "firstEndPos" : 24691,
+  "secondEndPos" : 24695
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

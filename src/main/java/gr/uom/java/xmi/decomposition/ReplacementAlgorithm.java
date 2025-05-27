@@ -1937,7 +1937,9 @@ public class ReplacementAlgorithm {
 			}
 			else if(try1.isTryWithResources() && try2.isTryWithResources()) {
 				if((creationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) ||
-						(invocationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null)) {
+						(invocationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null) ||
+						(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) ||
+						(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null)) {
 					List<AbstractStatement> tryStatements1 = try1.getStatements();
 					List<AbstractStatement> tryStatements2 = try2.getStatements();
 					List<AbstractCodeFragment> matchedChildStatements1 = new ArrayList<>();

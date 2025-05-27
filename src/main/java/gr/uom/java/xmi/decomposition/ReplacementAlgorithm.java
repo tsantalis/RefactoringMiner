@@ -253,10 +253,32 @@ public class ReplacementAlgorithm {
 		// ignore the variables in the intersection that also appear with "this." prefix in the sets of variables
 		// ignore the variables in the intersection that also appear with "OtherVar." prefix in the sets of variables
 		// ignore the variables in the intersection that are static fields
+		// ignore the variables in the intersection that are array accesses
 		// ignore the variables in the intersection that one of them is a variable declaration and the other is not
 		// ignore the variables in the intersection that one of them is part of a method invocation, but the same method invocation does not appear on the other side
 		Set<String> variablesToBeRemovedFromTheIntersection = new LinkedHashSet<String>();
 		for(String variable : variableIntersection) {
+			List<LeafExpression> arrayAccesses1 = statement1.getArrayAccesses();
+			int index1 = -1;
+			for(int i=0; i<arrayAccesses1.size(); i++) {
+				LeafExpression exp1 = arrayAccesses1.get(i);
+				if(exp1.getString().startsWith(variable)) {
+					index1 = i;
+					break;
+				}
+			}
+			List<LeafExpression> arrayAccesses2 = statement2.getArrayAccesses();
+			int index2 = -1;
+			for(int i=0; i<arrayAccesses2.size(); i++) {
+				LeafExpression exp2 = arrayAccesses2.get(i);
+				if(exp2.getString().startsWith(variable)) {
+					index2 = i;
+					break;
+				}
+			}
+			if(index1 != -1 && index2 != -1 && index1 != index2) {
+				variablesToBeRemovedFromTheIntersection.add(variable);
+			}
 			if(!variable.startsWith(JAVA.THIS_DOT) && !variableIntersection.contains(JAVA.THIS_DOT+variable) &&
 					(variables1.contains(JAVA.THIS_DOT+variable) || variables2.contains(JAVA.THIS_DOT+variable))) {
 				variablesToBeRemovedFromTheIntersection.add(variable);

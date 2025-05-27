@@ -2485,7 +2485,18 @@ public class VariableReplacementAnalysis {
 						}
 					}
 					if(!v2InitializerContainsThisReference) {
-						return true;
+						boolean skip = false;
+						if(operationDiff != null) {
+							for(UMLParameterDiff paramDiff : operationDiff.getParameterDiffList()) {
+								if(paramDiff.getRemovedParameter().getVariableName().equals(v2.getVariableName())) {
+									skip = true;
+									break;
+								}
+							}
+						}
+						if(!skip) {
+							return true;
+						}
 					}
 				}
 			}
@@ -2522,7 +2533,18 @@ public class VariableReplacementAnalysis {
 						}
 					}
 					if(!v1InitializerContainsThisReference) {
-						return true;
+						boolean skip = false;
+						if(operationDiff != null) {
+							for(UMLParameterDiff paramDiff : operationDiff.getParameterDiffList()) {
+								if(paramDiff.getAddedParameter().getVariableName().equals(v1.getVariableName())) {
+									skip = true;
+									break;
+								}
+							}
+						}
+						if(!skip) {
+							return true;
+						}
 					}
 				}
 			}

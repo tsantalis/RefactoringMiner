@@ -1,5 +1,9 @@
 package org.refactoringminer.astDiff.utils;
 
+import com.github.gumtreediff.tree.Type;
+
+import static com.github.gumtreediff.tree.TypeSet.type;
+
 public class Constants {
 
 	// AST node type labels
@@ -95,5 +99,9 @@ public class Constants {
 
 	public static final String LINE_COMMENT = "LineComment";
 	public static final String BLOCK_COMMENT = "BlockComment";
+
+    public static final String TYPE_INHERITANCE_KEYWORD = "TYPE_INHERITANCE_KEYWORD";
+    public static final String PERMITS_KEYWORD = "PERMITS_KEYWORD";
+    public static final String THROWS_KEYWORD = "THROWS_KEYWORD";
 
 }

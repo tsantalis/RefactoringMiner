@@ -934,6 +934,17 @@
   "firstEndPos" : 3398,
   "secondEndPos" : 3398
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3399,
+  "secondPos" : 3399,
+  "firstEndPos" : 3406,
+  "secondEndPos" : 3406
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Workload",
@@ -7314,6 +7325,17 @@
   "firstEndPos" : 10820,
   "secondEndPos" : 10820
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 10822,
+  "secondPos" : 10822,
+  "firstEndPos" : 10828,
+  "secondEndPos" : 10828
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "WorkloadException",
@@ -9150,6 +9172,17 @@
   "secondPos" : 12233,
   "firstEndPos" : 12234,
   "secondEndPos" : 12234
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 12236,
+  "secondPos" : 12236,
+  "firstEndPos" : 12242,
+  "secondEndPos" : 12242
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

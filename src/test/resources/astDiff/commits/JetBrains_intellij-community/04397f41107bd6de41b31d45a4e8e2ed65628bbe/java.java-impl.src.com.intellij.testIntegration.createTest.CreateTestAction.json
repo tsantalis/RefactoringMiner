@@ -549,6 +549,17 @@
   "firstEndPos" : 1645,
   "secondEndPos" : 1645
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1646,
+  "secondPos" : 1646,
+  "firstEndPos" : 1653,
+  "secondEndPos" : 1653
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "PsiElementBaseIntentionAction",
@@ -2946,6 +2957,17 @@
   "secondPos" : 3205,
   "firstEndPos" : 3212,
   "secondEndPos" : 3212
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 3214,
+  "secondPos" : 3214,
+  "firstEndPos" : 3220,
+  "secondEndPos" : 3220
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

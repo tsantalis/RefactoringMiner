@@ -1330,6 +1330,17 @@
   "firstEndPos" : 3440,
   "secondEndPos" : 3440
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3441,
+  "secondPos" : 3441,
+  "firstEndPos" : 3451,
+  "secondEndPos" : 3451
+}, {
   "firstType" : "ParameterizedType",
   "secondType" : "ParameterizedType",
   "firstLabel" : "",
@@ -2748,6 +2759,17 @@
   "secondPos" : 4284,
   "firstEndPos" : 4289,
   "secondEndPos" : 4289
+}, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4290,
+  "secondPos" : 4290,
+  "firstEndPos" : 4297,
+  "secondEndPos" : 4297
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

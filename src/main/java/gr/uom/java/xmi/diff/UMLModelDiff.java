@@ -2552,7 +2552,18 @@ public class UMLModelDiff {
 		int threshold = 1;
 		if(attributeOfExtractedClassType != null || variablesOfExtractedClassType.size() > 0 || classDiff.getNextClass().isInnerClass(umlClass) || addedClassFoundInAddedImport)
 			threshold = 0;
-		if(commonOperations.size() > threshold || commonAttributes.size() > threshold) {
+		boolean innerClassExtracted = false;
+		for(UMLClassRenameDiff diff : classRenameDiffList) {
+			if(classDiff.getOriginalClass().isInnerClass(diff.getOriginalClass()) && umlClass.isInnerClass(diff.getNextClass())) {
+				innerClassExtracted = true;
+			}
+		}
+		for(UMLClassMoveDiff diff : classMoveDiffList) {
+			if(classDiff.getOriginalClass().isInnerClass(diff.getOriginalClass()) && umlClass.isInnerClass(diff.getNextClass())) {
+				innerClassExtracted = true;
+			}
+		}
+		if(commonOperations.size() > threshold || commonAttributes.size() > threshold || (innerClassExtracted && commonOperations.size() + commonAttributes.size() >= 1)) {
 			ExtractClassRefactoring extractClassRefactoring = new ExtractClassRefactoring(umlClass, classDiff, commonOperations, commonAttributes, attributeOfExtractedClassType);
 			Set<UMLAttributeDiff> diffsToBeRemoved = new LinkedHashSet<UMLAttributeDiff>();
 			for(UMLAttributeDiff diff : classDiff.getAttributeDiffList()) {

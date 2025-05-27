@@ -285,6 +285,17 @@
   "firstEndPos" : 1092,
   "secondEndPos" : 1092
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1093,
+  "secondPos" : 1093,
+  "firstEndPos" : 1103,
+  "secondEndPos" : 1103
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "CompilerPass",
@@ -5674,6 +5685,17 @@
   "secondPos" : 5286,
   "firstEndPos" : 5297,
   "secondEndPos" : 5297
+}, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5298,
+  "secondPos" : 5298,
+  "firstEndPos" : 5305,
+  "secondEndPos" : 5305
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

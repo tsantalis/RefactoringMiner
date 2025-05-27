@@ -736,6 +736,17 @@
   "firstEndPos" : 2666,
   "secondEndPos" : 2666
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2667,
+  "secondPos" : 2667,
+  "firstEndPos" : 2674,
+  "secondEndPos" : 2674
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "CurveFitter",
@@ -7820,6 +7831,17 @@
   "firstEndPos" : 8743,
   "secondEndPos" : 8716
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 8757,
+  "secondPos" : 8730,
+  "firstEndPos" : 8763,
+  "secondEndPos" : 8736
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "OutOfRangeException",
@@ -9821,6 +9843,17 @@
   "secondPos" : 10415,
   "firstEndPos" : 10443,
   "secondEndPos" : 10416
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 10457,
+  "secondPos" : 10430,
+  "firstEndPos" : 10463,
+  "secondEndPos" : 10436
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

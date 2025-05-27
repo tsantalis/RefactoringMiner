@@ -1077,6 +1077,17 @@
   "firstEndPos" : 5301,
   "secondEndPos" : 5301
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5302,
+  "secondPos" : 5302,
+  "firstEndPos" : 5309,
+  "secondEndPos" : 5309
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "AbstractLeastSquaresOptimizer",
@@ -5608,6 +5619,17 @@
   "secondPos" : 10707,
   "firstEndPos" : 10717,
   "secondEndPos" : 10717
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 10728,
+  "secondPos" : 10728,
+  "firstEndPos" : 10734,
+  "secondEndPos" : 10734
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -37211,6 +37233,17 @@
   "secondPos" : 32372,
   "firstEndPos" : 31835,
   "secondEndPos" : 32387
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 31838,
+  "secondPos" : 32390,
+  "firstEndPos" : 31844,
+  "secondEndPos" : 32396
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

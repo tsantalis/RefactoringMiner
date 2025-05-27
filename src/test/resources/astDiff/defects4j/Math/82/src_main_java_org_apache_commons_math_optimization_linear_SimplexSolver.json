@@ -252,6 +252,17 @@
   "firstEndPos" : 1179,
   "secondEndPos" : 1179
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1180,
+  "secondPos" : 1180,
+  "firstEndPos" : 1187,
+  "secondEndPos" : 1187
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "AbstractLinearOptimizer",
@@ -3574,6 +3585,17 @@
   "firstEndPos" : 3833,
   "secondEndPos" : 3832
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 3843,
+  "secondPos" : 3842,
+  "firstEndPos" : 3849,
+  "secondEndPos" : 3848
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "OptimizationException",
@@ -6599,6 +6621,17 @@
   "firstEndPos" : 6083,
   "secondEndPos" : 6082
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 6093,
+  "secondPos" : 6092,
+  "firstEndPos" : 6099,
+  "secondEndPos" : 6098
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "OptimizationException",
@@ -7313,6 +7346,17 @@
   "secondPos" : 6627,
   "firstEndPos" : 6638,
   "secondEndPos" : 6637
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 6649,
+  "secondPos" : 6648,
+  "firstEndPos" : 6655,
+  "secondEndPos" : 6654
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

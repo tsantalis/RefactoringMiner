@@ -122,24 +122,17 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, commonInterface.getLeft(), commonInterface.getRight());
         for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> changedInterface : classDiff.getInterfaceListDiff().getChangedTypes())
             processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, changedInterface.getLeft(), changedInterface.getRight());
-        matchKeyword(srcTree, dstTree, Constants.TYPE_INHERITANCE_KEYWORD, IMPLEMENTS_KEYWORD_LABEL, mappingStore);
+        new KeywordMatcher(Constants.TYPE_INHERITANCE_KEYWORD, IMPLEMENTS_KEYWORD_LABEL).match(srcTree, dstTree, mappingStore);
 
     }
 
-    private void matchKeyword(Tree srcTree, Tree dstTree, String type, String label, ExtendedMultiMappingStore mappingStore) {
-        Tree srcKeyword = TreeUtilFunctions.findChildByTypeAndLabel(srcTree, type, label);
-        Tree dstKeyword = TreeUtilFunctions.findChildByTypeAndLabel(dstTree, type, label);
-        if (srcKeyword != null && dstKeyword != null) {
-            mappingStore.addMappingRecursively(srcKeyword, dstKeyword);
-        }
-    }
 
     private void processClassPermittedTypes(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
         for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> commonInterface : classDiff.getPermittedTypeListDiff().getCommonTypes())
             processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, commonInterface.getLeft(), commonInterface.getRight());
         for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> changedInterface : classDiff.getPermittedTypeListDiff().getChangedTypes())
             processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, changedInterface.getLeft(), changedInterface.getRight());
-        matchKeyword(srcTree, dstTree, Constants.PERMITS_KEYWORD, PERMITS_KEYWORD_LABEL, mappingStore);
+        new KeywordMatcher(Constants.PERMITS_KEYWORD, PERMITS_KEYWORD_LABEL).match(srcTree, dstTree, mappingStore);
     }
 
     private static void processLocationInfoProvidersRecursively(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore, LocationInfoProvider left, LocationInfoProvider right) {
@@ -155,7 +148,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (srcParentUML != null && dstParentUML != null) {
             processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, srcParentUML, dstParentUML);
         }
-        matchKeyword(srcTree, dstTree, Constants.TYPE_INHERITANCE_KEYWORD, EXTENDS_KEYWORD_LABEL, mappingStore);
+        new KeywordMatcher(Constants.TYPE_INHERITANCE_KEYWORD, EXTENDS_KEYWORD_LABEL).match(srcTree, dstTree, mappingStore);
     }
     private void processClassAnnotations(Tree srcTree, Tree dstTree, UMLAnnotationListDiff annotationListDiff, ExtendedMultiMappingStore mappingStore) {
         for (org.apache.commons.lang3.tuple.Pair<UMLAnnotation, UMLAnnotation> umlAnnotationUMLAnnotationPair : annotationListDiff.getCommonAnnotations())

@@ -1832,6 +1832,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		Set<String> repositoryDirectoriesCurrent = ConcurrentHashMap.newKeySet();
 		Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();
 		List<String> commitFileNames = new ArrayList<>();
+		if(changedFiles == 0) {
+			changedFiles = 10;
+		}
 		ExecutorService pool = Executors.newFixedThreadPool(changedFiles);
 		int count = 1;
 		for(GHPullRequestFileDetail commitFile : files) {

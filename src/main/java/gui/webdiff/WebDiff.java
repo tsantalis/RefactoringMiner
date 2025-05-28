@@ -37,9 +37,17 @@ public class WebDiff  {
     public static final String HIGHLIGHT_CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css";
     public static final String HIGHLIGHT_JS_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js";
     public static final String HIGHLIGHT_JAVA_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js";
-    public final int port = 6789;
+    public int port = 6789;
 
-    private final String toolName = "RefactoringMiner";
+    private String toolName = "RefactoringMiner";
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public void setToolName(String toolName) {
+        this.toolName = toolName;
+    }
 
     private final ProjectASTDiff projectASTDiff;
     private final String resourcesPath = "/web/";
@@ -63,7 +71,7 @@ public class WebDiff  {
     }
 
     public void run() {
-        killProcessOnPort(this.port);
+//        killProcessOnPort(this.port);
         configureSpark(comparator, this.port);
         awaitInitialization();
         System.out.println(String.format("Starting server: %s:%d.", "http://127.0.0.1", this.port));
@@ -138,6 +146,14 @@ public class WebDiff  {
             );
             return render(view);
         });
+        get("/monaco-minimal/:id", (request, response) -> {
+            int id = Integer.parseInt(request.params(":id"));
+            MonacoView view = new MonacoView(
+                    toolName, comparator, request.pathInfo().split("/")[0], id
+            );
+            view.setButtons(false);
+            return render(view);
+        });
         get("/monaco-diff/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
             MonacoView view = new MonacoView(
@@ -146,6 +162,7 @@ public class WebDiff  {
             view.setDecorate(false);
             return render(view);
         });
+
         get("/left/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
 //            String id = (request.params(":id"));

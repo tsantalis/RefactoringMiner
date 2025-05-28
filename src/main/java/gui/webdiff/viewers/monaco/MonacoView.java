@@ -20,7 +20,7 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 public class MonacoView extends AbstractDiffView implements Renderable {
     final MonacoCore core;
     boolean decorate = true;
-
+    boolean _buttons = true;
     public MonacoView(String toolName, DirComparator comparator, String routePath, int id) {
         super(toolName, 
             comparator.getProjectASTDiff().getMetaInfo(), 
@@ -71,7 +71,7 @@ public class MonacoView extends AbstractDiffView implements Renderable {
             .render(new Header())
             .body(class_("h-100").style("overflow: hidden;"))
                 .div(class_("container-fluid h-100"))
-                .if_(decorate)
+                .if_(decorate && _buttons)
                     .div(class_("row"))
                     .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, isMovedDiff, metaInfo){
                         @Override
@@ -96,6 +96,10 @@ public class MonacoView extends AbstractDiffView implements Renderable {
         ._html();
     }
 
+    public void setButtons(boolean b) {
+        this._buttons = b;
+        core.setMinimal(!b);
+    }
 
 
     private static class Header implements Renderable {
@@ -117,6 +121,7 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                     .macros().javascript("/dist/folding.js")
                     .macros().javascript("/dist/decorations.js")
                     .macros().javascript("/dist/monaco.js")
+                    .macros().javascript("/dist/listeners.js")
                 ._head();
         }
     }

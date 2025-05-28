@@ -3177,6 +3177,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private void processCommentsAndJavadoc(UMLOperation addedOperation) {
+		int totalCallCountFromDifferentMethods = 0;
+		if(classDiff != null) {
+			for(UMLOperation operation : classDiff.getNextClass().getOperations()) {
+				for(AbstractCall call : operation.getAllOperationInvocations()) {
+					if(call.matchesOperation(addedOperation, operation, classDiff, modelDiff)) {
+						totalCallCountFromDifferentMethods++;
+						break;
+					}
+				}
+			}
+		}
+		if(totalCallCountFromDifferentMethods > 2) {
+			this.commentListDiff = new UMLCommentListDiff(new ArrayList<>(), container2.getComments(), this.mappings);
+			return;
+		}
 		if(parentMapper != null && parentMapper.commentListDiff != null) {
 			AbstractCodeMapping parentMapping = findParentMappingContainingOperationInvocation();
 			Set<UMLComment> deletedComments = new LinkedHashSet<UMLComment>();

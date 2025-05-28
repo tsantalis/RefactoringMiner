@@ -386,17 +386,17 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate checkThrowEof(message String) : void extracted from public read() : int in class org.apache.commons.io.input.NullInputStream",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate checkThrowEof(message String) : void extracted from public read(bytes byte[], offset int, length int) : int in class org.apache.commons.io.input.NullInputStream",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate checkThrowEof(message String) : void extracted from public skip(numberOfBytes long) : long in class org.apache.commons.io.input.NullInputStream",
-          "validation": false
+          "validation": true
         }
       ]
     },

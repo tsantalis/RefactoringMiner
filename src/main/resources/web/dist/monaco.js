@@ -45,7 +45,6 @@ function mymonaco(config) {
                     const rightHeight = rightEditor.getContentHeight();
                     let maxHeight = Math.max(leftHeight, rightHeight);
                     const editorHeight = maxHeight > maxAllowedHeight ? maxAllowedHeight : maxHeight;
-                    console.log(editorHeight);
                     leftContainer.style.height = editorHeight + 'px';
                     rightContainer.style.height = editorHeight + 'px';
                     leftEditor.layout();

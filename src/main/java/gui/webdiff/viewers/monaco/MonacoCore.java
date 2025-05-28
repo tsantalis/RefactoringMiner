@@ -62,6 +62,7 @@ public class MonacoCore {
     private final String srcFileContent;
     private final String dstFileContent;
     private final List<Refactoring> refactorings;
+    private boolean minimal = false;
 
     public MonacoCore(DirComparator comparator, Diff diff, int id, boolean isMovedDiff, String srcFileContent, String dstFileContent, List<Refactoring> refactorings) {
         this.comparator = comparator;
@@ -82,7 +83,14 @@ public class MonacoCore {
         this.showFilenames = showFilenames;
     }
 
+    public void setMinimal(boolean minimal)
+    {
+        this.minimal = minimal;
+        this.showFilenames = !minimal;
+    }
+
     public void addDiffContainers(HtmlCanvas html) throws IOException {
+
         int offset = (showFilenames) ? 80 : 0;
         html.div(class_("row h-100"));
 
@@ -91,7 +99,7 @@ public class MonacoCore {
             html.h6(style("word-break: break-all; white-space: normal; overflow-wrap: break-word;"))
                     .content(srcFileName);
         }
-        String heightFormula = "";
+        String heightFormula = "height : 100%;";
         if (showFilenames)
             heightFormula = "height: calc(100% - " + offset + "px);";
         html.div(class_("edc").id(getLeftContainerId()).style(heightFormula + "border: 1px solid grey; overflow: auto;"))._div()
@@ -107,32 +115,6 @@ public class MonacoCore {
                 ._div();
         String code = "mymonaco(" + makeDiffConfig() + ");";
         html.macros().script(code); // Pass the config to the main function
-
-
-//
-//        html.div(class_("row h-100"))
-//                .div(class_("col-6 h-100"));
-//        int offset = (showFilenames) ? 80 : 0;
-//        if (showFilenames) {
-//            html.h6(style("word-break: break-all; white-space: normal; overflow-wrap: break-word;"))
-//                    .content(srcFileName);
-//        }
-//
-//        String heightFormula = "height: calc(100% - " + offset + "px);";
-//        html.div(id(getLeftContainerId()).style(heightFormula + "border:1px solid grey;"))._div()
-//                ._div()
-//                .div(class_("col-6 h-100"));
-//
-//        if (showFilenames) {
-//            html.h6(style("word-break: break-all; white-space: normal; overflow-wrap: break-word;"))
-//                    .content(dstFileName);
-//        }
-//
-//
-//        html.div(id(getRightContainerId()).style(heightFormula + "border:1px solid grey;"))._div()
-//                ._div();
-//        String code = "monaco(" + makeDiffConfig() + ");";
-//        html.macros().script(code); // Pass the config to the main function
     }
 
     String getLeftJsConfig() {
@@ -646,6 +628,7 @@ public class MonacoCore {
 
     public String makeDiffConfig() {
         boolean spv = !showFilenames;
+        if (minimal) spv = false;
         return "{ "
                 + "moved: " + this.isMoved
                 + ", id: " + id

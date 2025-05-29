@@ -478,7 +478,7 @@
         {
           "type": "INLINE_OPERATION",
           "description": "Inline Method\tprivate requireFileCopy(source File, destination File) : void inlined to public copyFile(srcFile File, destFile File, preserveFileDate boolean, copyOptions CopyOption...) : void in class org.apache.commons.io.FileUtils",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_VARIABLE",

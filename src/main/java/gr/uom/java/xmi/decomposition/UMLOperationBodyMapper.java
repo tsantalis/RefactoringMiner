@@ -498,6 +498,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					if(anonymousFragment != null) {
 						expandAnonymousAndLambdas(anonymousFragment, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1, true);
+						if(leaves2.size() == 1 && lambdas2.size() > 0) {
+							expandAnonymousAndLambdas(leaves2.get(0), leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
+						}
 					}
 				}
 				else if(anonymous2.size() == 0 && ((lambdas1.size() == 1 && lambdas2.size() == 0) || (lambdas1.size() == 1 && containsAll(lambdas1.get(0), lambdas2)))) {
@@ -525,6 +528,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					if(anonymousFragment != null) {
 						expandAnonymousAndLambdas(anonymousFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
+						if(leaves1.size() == 1 && lambdas1.size() > 0) {
+							expandAnonymousAndLambdas(leaves1.get(0), leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1, true);
+						}
 					}
 				}
 				else if(anonymous1.size() == 0 && ((lambdas1.size() == 0 && lambdas2.size() == 1) || (lambdas2.size() == 1 && containsAll(lambdas2.get(0), lambdas1)))) {

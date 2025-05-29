@@ -3188,10 +3188,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		if(totalCallCountFromDifferentMethods > 2) {
-			this.commentListDiff = new UMLCommentListDiff(new ArrayList<>(), container2.getComments(), this.mappings);
-			return;
-		}
 		if(parentMapper != null && parentMapper.commentListDiff != null) {
 			AbstractCodeMapping parentMapping = findParentMappingContainingOperationInvocation();
 			Set<UMLComment> deletedComments = new LinkedHashSet<UMLComment>();
@@ -3232,6 +3228,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			this.commentListDiff = new UMLCommentListDiff(new ArrayList<>(deletedComments), container2.getComments(), this.mappings);
 			checkUnmatchedStatementsBeingCommented();
+		}
+		if(totalCallCountFromDifferentMethods > 1) {
+			return;
 		}
 		if(parentMapper != null && parentMapper.javadocDiff.isPresent() && addedOperation.getJavadoc() != null) {
 			if(parentMapper.javadocDiff.get().getDeletedTags().size() > 0 || parentMapper.javadocDiff.get().getDeletedDocElements().size() > 0) {

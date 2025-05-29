@@ -1344,7 +1344,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					MethodInvocationReplacement replacement = (MethodInvocationReplacement)r;
 					AbstractCall before = replacement.getInvokedOperationBefore();
 					AbstractCall after = replacement.getInvokedOperationAfter();
-					if(before.identicalName(after) && before.argumentIntersection(after).size() == Math.min(before.arguments().size(), after.arguments().size())) {
+					if(before.identicalName(after)) {
 						identicalCallWithExtraArguments = true;
 					}
 				}

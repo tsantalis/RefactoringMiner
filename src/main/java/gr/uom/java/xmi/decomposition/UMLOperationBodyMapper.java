@@ -3182,8 +3182,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(UMLOperation operation : classDiff.getNextClass().getOperations()) {
 				for(AbstractCall call : operation.getAllOperationInvocations()) {
 					if(call.matchesOperation(addedOperation, operation, classDiff, modelDiff)) {
-						totalCallCountFromDifferentMethods++;
-						break;
+						if(classDiff.getOriginalClass().containsOperationWithTheSameSignature(operation)) {
+							totalCallCountFromDifferentMethods++;
+							break;
+						}
 					}
 				}
 			}

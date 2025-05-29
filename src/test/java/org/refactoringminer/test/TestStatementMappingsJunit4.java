@@ -2332,6 +2332,31 @@ public class TestStatementMappingsJunit4 {
 	}
 
 	@Test
+	public void testAnonymousLambdaRestructuring() throws Exception {
+		final List<String> actual = new ArrayList<>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + "ConsistencyCheckAction-v1.txt"));
+		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + "ConsistencyCheckAction-v2.txt"));
+		fileContentsBefore.put("jabgui/src/main/java/org/jabref/gui/consistency/ConsistencyCheckAction.java", contentsV1);
+		fileContentsCurrent.put("jabgui/src/main/java/org/jabref/gui/consistency/ConsistencyCheckAction.java", contentsV2);
+		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
+		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
+
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("execute") && mapper.getContainer2().getName().equals("execute")) {
+					mapperInfo(mapper, actual);
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jabRef-ConsistencyCheckAction-13181.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testParameterizedTestMappings2() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();

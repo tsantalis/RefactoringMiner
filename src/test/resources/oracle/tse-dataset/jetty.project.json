@@ -989,6 +989,16 @@
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tpublic setMaxFrameSize(maxFrameSize int) : void extracted from public setMaxFrameLength(maxFrameLength int) : void in class org.eclipse.jetty.http2.server.AbstractHTTP2ServerConnectionFactory",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic getHpackEncoder() : HpackEncoder extracted from public setMaxHeaderListSize(value int) : void in class org.eclipse.jetty.http2.generator.Generator",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic getHpackEncoder() : HpackEncoder extracted from public setValidateHpackEncoding(validateEncoding boolean) : void in class org.eclipse.jetty.http2.generator.Generator",
+          "validation": true
         }
       ]
     },

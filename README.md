@@ -450,18 +450,18 @@ As of **May 26, 2025** the precision and recall of RefactoringMiner on this benc
 **Commit dates**: March 28, 2024
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **May 26, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **May 30, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3082  | 180  | 339  | 0.945  | 0.901|
-|Extract Method|333  | 14  | 32  | 0.960  | 0.912|
+|**Total**|3097  | 177  | 332  | 0.946  | 0.903|
+|Extract Method|342  | 11  | 28  | 0.969  | 0.924|
 |Rename Class|229  |  2  |  3  | 0.991  | 0.987|
 |Move Attribute|69  |  3  | 10  | 0.958  | 0.873|
 |Move And Rename Attribute| 4  |  0  |  4  | 1.000  | 0.500|
 |Rename Method|279  | 20  | 19  | 0.933  | 0.936|
-|Inline Method|64  |  8  |  6  | 0.889  | 0.914|
-|Move Method|260  |  5  |  5  | 0.981  | 0.981|
+|Inline Method|64  |  8  |  5  | 0.889  | 0.928|
+|Move Method|261  |  5  |  5  | 0.981  | 0.981|
 |Move And Rename Method|18  |  6  | 10  | 0.750  | 0.643|
 |Pull Up Method|42  |  3  |  8  | 0.933  | 0.840|
 |Move Class|138  |  7  |  4  | 0.952  | 0.972|
@@ -472,11 +472,11 @@ As of **May 26, 2025** the precision and recall of RefactoringMiner on this benc
 |Extract Interface|16  |  2  |  0  | 0.889  | 1.000|
 |Extract Superclass| 7  |  2  |  0  | 0.778  | 1.000|
 |Extract Subclass| 3  |  0  |  6  | 1.000  | 0.333|
-|Extract Class|39  |  2  | 10  | 0.951  | 0.796|
+|Extract Class|41  |  2  |  9  | 0.953  | 0.820|
 |Extract And Move Method|100  | 19  | 21  | 0.840  | 0.826|
 |Move And Inline Method|25  |  7  | 12  | 0.781  | 0.676|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|241  | 12  | 42  | 0.953  | 0.852|
+|Extract Variable|244  | 12  | 41  | 0.953  | 0.856|
 |Inline Variable|84  | 10  | 40  | 0.894  | 0.677|
 |Rename Variable|277  | 20  | 26  | 0.933  | 0.914|
 |Rename Attribute|101  |  5  | 15  | 0.953  | 0.871|

@@ -3299,6 +3299,83 @@
   "firstEndPos" : 2770,
   "secondEndPos" : 3050
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "ExpressionStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2779,
+  "secondPos" : 3331,
+  "firstEndPos" : 2879,
+  "secondEndPos" : 3368
+}, {
+  "firstType" : "Assignment",
+  "secondType" : "Assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "ExpressionStatement",
+  "firstPos" : 2779,
+  "secondPos" : 3331,
+  "firstEndPos" : 2878,
+  "secondEndPos" : 3367
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "_mapSerializer",
+  "secondLabel" : "_mapSerializer",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "Assignment",
+  "firstPos" : 2779,
+  "secondPos" : 3331,
+  "firstEndPos" : 2793,
+  "secondEndPos" : 3345
+}, {
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "ASSIGNMENT_OPERATOR",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "Assignment",
+  "firstPos" : 2794,
+  "secondPos" : 3346,
+  "firstEndPos" : 2795,
+  "secondEndPos" : 3347
+}, {
+  "firstType" : "CastExpression",
+  "secondType" : "CastExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "Assignment",
+  "firstPos" : 2796,
+  "secondPos" : 3348,
+  "firstEndPos" : 2878,
+  "secondEndPos" : 3367
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MapSerializer",
+  "secondLabel" : "MapSerializer",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 2797,
+  "secondPos" : 3349,
+  "firstEndPos" : 2810,
+  "secondEndPos" : 3362
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "CastExpression",
+  "secondParentType" : "CastExpression",
+  "firstPos" : 2797,
+  "secondPos" : 3349,
+  "firstEndPos" : 2810,
+  "secondEndPos" : 3362
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",

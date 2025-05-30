@@ -351,7 +351,7 @@ public class JdtVisitor  extends AbstractJdtVisitor {
         t.insertChild(s, index);
         index += 2;
         String typeParameter = "TypeParameter";
-        if (t.getChildren().size() > index && t.getChild(index).getType().name.equals(typeParameter))
+        while (t.getChildren().size() > index && t.getChild(index).getType().name.equals(typeParameter))
             index += 1; //Type parameters are always after the type declaration kind
         if (d.getSuperclassType() != null)
         {

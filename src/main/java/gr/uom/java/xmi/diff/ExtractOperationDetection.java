@@ -28,6 +28,7 @@ import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
+import gr.uom.java.xmi.decomposition.ReplacementUtil;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -271,18 +272,40 @@ public class ExtractOperationDetection {
 		}
 		UMLOperationBodyMapper operationBodyMapper = createMapperForExtractedMethod(mapper, mapper.getContainer1(), addedOperation, addedOperationInvocation, false);
 		StatementObject singleReturnStatement = addedOperation.singleReturnStatement();
-		if(operationBodyMapper != null && operationBodyMapper.getMappings().isEmpty() && singleReturnStatement != null) {
+		if(operationBodyMapper != null && (operationBodyMapper.getMappings().isEmpty() || containsRefactoringWithIdenticalMappings(refactorings, operationBodyMapper)) && singleReturnStatement != null) {
 			String s = singleReturnStatement.getString();
 			String expression = s.substring(JAVA.RETURN_SPACE.length(), s.length()-JAVA.STATEMENT_TERMINATION.length());
 			for(AbstractCodeMapping mapping : mapper.getMappings()) {
 				for(Replacement r : mapping.getReplacements()) {
-					if(expression.equals(r.getBefore()) && r.getAfter().contains(addedOperation.getName() + "(")) {
-						List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(r.getBefore());
-						List<LeafExpression> expressions2 = singleReturnStatement.findExpression(expression);
-						if(expressions2.size() == 1) {
-							for(LeafExpression expression1 : expressions1) {
-								LeafMapping newMapping = new LeafMapping(expression1, expressions2.get(0), mapper.getContainer1(), addedOperation);
-								operationBodyMapper.addMapping(newMapping);
+					if(r.getAfter().contains(addedOperation.getName() + "(")) {
+						if(expression.equals(r.getBefore())) {
+							List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(r.getBefore());
+							List<LeafExpression> expressions2 = singleReturnStatement.findExpression(expression);
+							if(expressions2.size() == 1) {
+								for(LeafExpression expression1 : expressions1) {
+									LeafMapping newMapping = new LeafMapping(expression1, expressions2.get(0), mapper.getContainer1(), addedOperation);
+									operationBodyMapper.addMapping(newMapping);
+								}
+							}
+						}
+						else if(operationBodyMapper.getParameterToArgumentMap2().isPresent()) {
+							Map<String, String> parameterToArgumentMap = operationBodyMapper.getParameterToArgumentMap2().get();
+							String before = r.getBefore();
+							for(String key : parameterToArgumentMap.keySet()) {
+								String value = parameterToArgumentMap.get(key);
+								if(!key.equals(value)) {
+									before = ReplacementUtil.performReplacement(before, value, key);
+								}
+							}
+							if(expression.equals(before)) {
+								List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(r.getBefore());
+								List<LeafExpression> expressions2 = singleReturnStatement.findExpression(expression);
+								if(expressions2.size() == 1) {
+									for(LeafExpression expression1 : expressions1) {
+										LeafMapping newMapping = new LeafMapping(expression1, expressions2.get(0), mapper.getContainer1(), addedOperation);
+										operationBodyMapper.addMapping(newMapping);
+									}
+								}
 							}
 						}
 					}

@@ -143,7 +143,7 @@ public class InlineOperationDetection {
 								}
 							}
 						}
-						else if(operationBodyMapper.getParameterToArgumentMap1().isPresent()){
+						else if(operationBodyMapper.getParameterToArgumentMap1().isPresent()) {
 							Map<String, String> parameterToArgumentMap = operationBodyMapper.getParameterToArgumentMap1().get();
 							String after = r.getAfter();
 							for(String key : parameterToArgumentMap.keySet()) {

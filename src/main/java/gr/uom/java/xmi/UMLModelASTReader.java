@@ -141,7 +141,7 @@ public class UMLModelASTReader {
 					compilationUnit = getCompilationUnit(maxRecommendedVersionFromProblems, parser, charArray, filePath);
 				processCompilationUnit(filePath, compilationUnit, javaFileContent);
 				if(astDiff) {
-					IScanner scanner = ToolFactory.createScanner(true, false, false, false);
+					IScanner scanner = ToolFactory.createScanner(true, false, false, (maxRecommendedVersionFromProblems == null) ? DEFAULT_JAVA_CORE_VERSION : maxRecommendedVersionFromProblems );
 					scanner.setSource(charArray);
 					AbstractJdtVisitor visitor = (VISIT_JDT_COMMENTS) ?
 							new JdtWithCommentsVisitor(scanner) :

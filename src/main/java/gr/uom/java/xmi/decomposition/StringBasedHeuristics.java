@@ -1359,6 +1359,18 @@ public class StringBasedHeuristics {
 								intersection.add(commonPrefix);
 							}
 						}
+						else if(token1.endsWith("," + token2)) {
+							intersection.add(token2);
+						}
+						else if(token2.endsWith("," + token1)) {
+							intersection.add(token1);
+						}
+						else if(token1.endsWith(token2 + ")" + JAVA.STATEMENT_TERMINATION)) {
+							intersection.add(token2);
+						}
+						else if(token2.endsWith(token1 + ")" + JAVA.STATEMENT_TERMINATION)) {
+							intersection.add(token1);
+						}
 					}
 				}
 				Set<String> filteredIntersection = new LinkedHashSet<String>();

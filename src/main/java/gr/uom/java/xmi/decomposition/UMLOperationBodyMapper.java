@@ -9298,6 +9298,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(statementContainingOperationInvocation != null) {
 							AbstractCodeMapping newEndMapping = null;
 							for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
+								if(mapping.getFragment2().equals(statementContainingOperationInvocation)) {
+									break;
+								}
 								if(mapping.getFragment2().getLocationInfo().getStartLine() > statementContainingOperationInvocation.getLocationInfo().getStartLine()) {
 									newEndMapping = mapping;
 									break;

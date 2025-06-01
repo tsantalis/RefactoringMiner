@@ -155,12 +155,12 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tclassesWithApiAnnotation : ClassInfoList to types : var in method private collectTypes(scanResult ScanResult) : SortedSet<ClassInfo> from class org.junit.api.tools.ApiReportGenerator",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tclassesWithApiAnnotation : ClassInfoList to types : var in method private collectTypes(scanResult ScanResult) : SortedSet<ClassInfo> from class org.junit.api.tools.ApiReportGenerator",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",

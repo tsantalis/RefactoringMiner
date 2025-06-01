@@ -454,7 +454,7 @@ As of **June 1, 2025** the precision and recall of RefactoringMiner on this benc
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3100  | 176  | 330  | 0.946  | 0.904|
+|**Total**|3101  | 175  | 328  | 0.947  | 0.904|
 |Extract Method|344  | 11  | 26  | 0.969  | 0.930|
 |Rename Class|229  |  2  |  3  | 0.991  | 0.987|
 |Move Attribute|69  |  3  | 10  | 0.958  | 0.873|
@@ -462,7 +462,7 @@ As of **June 1, 2025** the precision and recall of RefactoringMiner on this benc
 |Rename Method|279  | 20  | 19  | 0.933  | 0.936|
 |Inline Method|64  |  8  |  5  | 0.889  | 0.928|
 |Move Method|261  |  5  |  5  | 0.981  | 0.981|
-|Move And Rename Method|18  |  6  | 10  | 0.750  | 0.643|
+|Move And Rename Method|19  |  5  | 10  | 0.792  | 0.655|
 |Pull Up Method|42  |  3  |  8  | 0.933  | 0.840|
 |Move Class|138  |  7  |  4  | 0.952  | 0.972|
 |Move And Rename Class|28  |  1  |  2  | 0.966  | 0.933|
@@ -478,10 +478,10 @@ As of **June 1, 2025** the precision and recall of RefactoringMiner on this benc
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|244  | 12  | 41  | 0.953  | 0.856|
 |Inline Variable|85  |  9  | 40  | 0.904  | 0.680|
-|Rename Variable|277  | 20  | 26  | 0.933  | 0.914|
+|Rename Variable|277  | 20  | 25  | 0.933  | 0.917|
 |Rename Attribute|101  |  5  | 15  | 0.953  | 0.871|
 |Change Return Type|153  |  8  | 27  | 0.950  | 0.850|
-|Change Variable Type|365  | 21  | 18  | 0.946  | 0.953|
+|Change Variable Type|365  | 21  | 17  | 0.946  | 0.955|
 |Change Attribute Type|158  |  3  |  9  | 0.981  | 0.946|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 6  |  0  |  0  | 1.000  | 1.000|

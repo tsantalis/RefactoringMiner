@@ -6601,20 +6601,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Set<VariableDeclaration> referencedVariableDeclarations1 = new LinkedHashSet<>();
 			Set<VariableDeclaration> referencedVariableDeclarations2 = new LinkedHashSet<>();
 			if(parentMapper != null) {
-				for(AbstractCodeMapping mapping : this.mappings) {
-					if(startMapping == null) {
-						startMapping = mapping;
-					}
-					else if(mapping.getFragment1().getLocationInfo().getStartLine() < startMapping.getFragment1().getLocationInfo().getStartLine() &&
-							mapping.getFragment2().getLocationInfo().getStartLine() < startMapping.getFragment2().getLocationInfo().getStartLine()) {
-						startMapping = mapping;
-					}
-					if(endMapping == null) {
-						endMapping = mapping;
-					}
-					else if(mapping.getFragment1().getLocationInfo().getStartLine() > endMapping.getFragment1().getLocationInfo().getStartLine() &&
-							mapping.getFragment2().getLocationInfo().getStartLine() > endMapping.getFragment2().getLocationInfo().getStartLine()) {
-						endMapping = mapping;
+				if(this.mappings.size() > 1) {
+					for(AbstractCodeMapping mapping : this.mappings) {
+						if(startMapping == null) {
+							startMapping = mapping;
+						}
+						else if(mapping.getFragment1().getLocationInfo().getStartLine() < startMapping.getFragment1().getLocationInfo().getStartLine() &&
+								mapping.getFragment2().getLocationInfo().getStartLine() < startMapping.getFragment2().getLocationInfo().getStartLine()) {
+							startMapping = mapping;
+						}
+						if(endMapping == null) {
+							endMapping = mapping;
+						}
+						else if(mapping.getFragment1().getLocationInfo().getStartLine() > endMapping.getFragment1().getLocationInfo().getStartLine() &&
+								mapping.getFragment2().getLocationInfo().getStartLine() > endMapping.getFragment2().getLocationInfo().getStartLine()) {
+							endMapping = mapping;
+						}
 					}
 				}
 				if(startMapping != null && endMapping != null && startMapping.equals(endMapping)) {

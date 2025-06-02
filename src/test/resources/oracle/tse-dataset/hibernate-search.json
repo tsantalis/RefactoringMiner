@@ -2881,6 +2881,11 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tclazz : null to superTypeIdentifier : null in method private registerSuperTypes(bySuperType Map<PojoRawTypeIdentifier<?>,Set<T>>, entityType PojoRawTypeModel<?>, value T) : void from class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer.Builder",
           "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic invalidScopeTarget(nonIndexedTypes Collection<PojoRawTypeIdentifier<?>>, validSuperTypes Collection<PojoRawTypeIdentifier<?>>) : SearchException renamed to public invalidIndexedSuperTypes(nonIndexedTypes Collection<PojoRawTypeIdentifier<?>>, validSuperTypes Collection<PojoRawTypeIdentifier<?>>) : SearchException in class org.hibernate.search.mapper.pojo.logging.impl.Log",
+          "validation": true
         }
       ]
     },

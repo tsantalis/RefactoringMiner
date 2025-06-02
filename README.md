@@ -454,12 +454,12 @@ As of **June 1, 2025** the precision and recall of RefactoringMiner on this benc
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3112  | 174  | 317  | 0.947  | 0.908|
+|**Total**|3115  | 173  | 315  | 0.947  | 0.908|
 |Extract Method|344  | 11  | 26  | 0.969  | 0.930|
 |Rename Class|229  |  2  |  3  | 0.991  | 0.987|
 |Move Attribute|69  |  2  | 10  | 0.972  | 0.873|
 |Move And Rename Attribute| 4  |  0  |  4  | 1.000  | 0.500|
-|Rename Method|279  | 20  | 19  | 0.933  | 0.936|
+|Rename Method|282  | 20  | 17  | 0.934  | 0.943|
 |Inline Method|64  |  8  |  5  | 0.889  | 0.928|
 |Move Method|261  |  5  |  5  | 0.981  | 0.981|
 |Move And Rename Method|19  |  5  | 10  | 0.792  | 0.655|
@@ -473,7 +473,7 @@ As of **June 1, 2025** the precision and recall of RefactoringMiner on this benc
 |Extract Superclass| 7  |  2  |  0  | 0.778  | 1.000|
 |Extract Subclass| 8  |  0  |  1  | 1.000  | 0.889|
 |Extract Class|41  |  2  |  9  | 0.953  | 0.820|
-|Extract And Move Method|100  | 19  | 21  | 0.840  | 0.826|
+|Extract And Move Method|100  | 18  | 21  | 0.847  | 0.826|
 |Move And Inline Method|25  |  7  | 12  | 0.781  | 0.676|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|244  | 12  | 41  | 0.953  | 0.856|

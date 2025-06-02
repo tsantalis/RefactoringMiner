@@ -2,6 +2,7 @@ package gr.uom.java.xmi.diff;
 
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.UMLAbstractClass;
+import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
@@ -4115,6 +4116,42 @@ public class UMLModelDiff {
 								for(Pair<UMLOperation, UMLOperation> pair : conflictingPairs) {
 									map.remove(pair);
 								}
+							}
+						}
+						if(removedOperation.getAnnotations().size() > 0 && addedOperation.getAnnotations().size() > 0 &&
+								removedOperation.getAnnotations().size() == addedOperation.getAnnotations().size()) {
+							AbstractExpression removedValue = null;
+							for(UMLAnnotation annotation : removedOperation.getAnnotations()) {
+								for(String key : annotation.getMemberValuePairs().keySet()) {
+									if(key.equals("id")) {
+										removedValue = annotation.getMemberValuePairs().get(key);
+										break;
+									}
+								}
+							}
+							AbstractExpression addedValue = null;
+							for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
+								for(String key : annotation.getMemberValuePairs().keySet()) {
+									if(key.equals("id")) {
+										addedValue = annotation.getMemberValuePairs().get(key);
+										break;
+									}
+								}
+							}
+							if(removedValue != null && addedValue != null && removedValue.getString().equals(addedValue.getString())) {
+								UMLOperationBodyMapper bodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
+								classDiff.addOperationBodyMapper(bodyMapper);
+								removedOperationsToBeRemoved.add(removedOperation);
+								addedOperationsToBeRemoved.add(addedOperation);
+								bodyMapper.computeRefactoringsWithinBody();
+								refactorings.addAll(bodyMapper.getRefactoringsAfterPostProcessing());
+								UMLOperationDiff operationSignatureDiff = bodyMapper.getOperationSignatureDiff().get();
+								if(operationSignatureDiff.isOperationRenamed()) {
+									RenameOperationRefactoring refactoring = new RenameOperationRefactoring(removedOperation, addedOperation);
+									refactorings.add(refactoring);
+								}
+								Set<Refactoring> signatureRefactorings = operationSignatureDiff.getRefactorings();
+								refactorings.addAll(signatureRefactorings);
 							}
 						}
 					}

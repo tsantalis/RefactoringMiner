@@ -1205,7 +1205,7 @@ public abstract class AbstractCall extends LeafExpression {
 			return new Replacement(arguments().get(index), arg,
 					ReplacementType.ARGUMENT_REPLACED_WITH_STATEMENT);
 		}
-		else if((index = argumentIsExpression(statement)) != -1 && indexCondition(statement, index)) {
+		else if((index = argumentIsExpression(statement)) != -1 && indexCondition(statement, index) && !statement.contains(JAVA.METHOD_REFERENCE)) {
 			return new Replacement(arguments().get(index), statement,
 					ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION);
 		}

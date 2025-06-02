@@ -2563,7 +2563,23 @@ public class UMLModelDiff {
 				innerClassExtracted = true;
 			}
 		}
-		if(commonOperations.size() > threshold || commonAttributes.size() > threshold || (innerClassExtracted && commonOperations.size() + commonAttributes.size() >= 1)) {
+		boolean subclassExtraction = false;
+		if(umlClass.getSuperclass() != null && classDiff.getNextClassName().endsWith(umlClass.getSuperclass().getClassType())) {
+			boolean skip = false;
+			if(commonAttributes.size() == 0 && commonOperations.size() == 1) {
+				Map.Entry<UMLOperation, UMLOperation> entry = commonOperations.entrySet().iterator().next();
+				if(entry.getKey().isGetter() || entry.getValue().isGetter()) {
+					skip = true;
+				}
+				if(entry.getKey().singleReturnStatement() != null ^ entry.getValue().singleReturnStatement() != null) {
+					skip = true;
+				}
+			}
+			if(!skip) {
+				subclassExtraction = true;
+			}
+		}
+		if(commonOperations.size() > threshold || commonAttributes.size() > threshold || ((innerClassExtracted || subclassExtraction) && commonOperations.size() + commonAttributes.size() >= 1)) {
 			ExtractClassRefactoring extractClassRefactoring = new ExtractClassRefactoring(umlClass, classDiff, commonOperations, commonAttributes, attributeOfExtractedClassType);
 			Set<UMLAttributeDiff> diffsToBeRemoved = new LinkedHashSet<UMLAttributeDiff>();
 			for(UMLAttributeDiff diff : classDiff.getAttributeDiffList()) {
@@ -2721,7 +2737,9 @@ public class UMLModelDiff {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
 				int mappings = mapper.mappingsWithoutBlocks();
 				if(removedOperation.equalSignature(addedOperation) || (mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, mapper))) {
-					classDiff.getRemovedOperations().remove(removedOperation);
+					if(!parentType.equals(RefactoringType.EXTRACT_SUBCLASS)) {
+						classDiff.getRemovedOperations().remove(removedOperation);
+					}
 					MoveOperationRefactoring ref = null;
 					if(parentType.equals(RefactoringType.EXTRACT_SUPERCLASS)) {
 						ref = new PullUpOperationRefactoring(mapper);
@@ -2819,6 +2837,14 @@ public class UMLModelDiff {
 	}
 
 	private void checkForExtractedOperationsWithinMovedMethod(UMLOperationBodyMapper movedMethodMapper, List<UMLOperation> potentiallyMovedOperations, UMLClass addedClass, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
+		for(Refactoring r : refactorings) {
+			if(r instanceof PushDownOperationRefactoring) {
+				PushDownOperationRefactoring push = (PushDownOperationRefactoring)r;
+				if(push.getBodyMapper().equals(movedMethodMapper)) {
+					return;
+				}
+			}
+		}
 		VariableDeclarationContainer removedOperation = movedMethodMapper.getContainer1();
 		VariableDeclarationContainer addedOperation = movedMethodMapper.getContainer2();
 		List<AbstractCall> removedInvocations = removedOperation.getAllOperationInvocations();

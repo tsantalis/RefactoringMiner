@@ -157,9 +157,7 @@ public class MonacoCore {
                     appendRange(b, t, "deleted", null);
                 if (c.getSrcMoveOutTreeMap().containsKey(t)) {
                     List<Action> actions = c.getSrcMoveOutTreeMap().get(t);
-                    for (Action action : actions) {
-                        appendRange(b, t, "moveOut", action.toString());
-                    }
+                    appendRange(b, t, "moveOut", actions.toString());
                 }
                 if (c.getMultiMapSrc().containsKey(t)) {
                     String tag = "mm";
@@ -169,8 +167,8 @@ public class MonacoCore {
                         if (_isUpdated) {
                             tag += " updOnTop";
                         }
-                        appendRange(b, t, tag, null);
                     }
+                    appendRange(b, t, tag, null);
                 }
             }
             b.append("]").append(",");
@@ -221,8 +219,7 @@ public class MonacoCore {
                     appendRange(b, t, "inserted", null);
                 if (c.getDstMoveInTreeMap().containsKey(t)) {
                     List<Action> actions = c.getDstMoveInTreeMap().get(t);
-                    for (Action action : actions)
-                        appendRange(b, t, "moveIn", action.toString());
+                    appendRange(b, t, "moveIn", actions.toString());
                 }
                 if (c.getMultiMapDst().containsKey(t)) {
                     String tag = "mm";
@@ -232,8 +229,8 @@ public class MonacoCore {
                         if (_isUpdated) {
                             tag += " updOnTop";
                         }
-                        appendRange(b, t, tag, null);
                     }
+                    appendRange(b, t, tag, null);
                 }
             }
             b.append("]").append(",");

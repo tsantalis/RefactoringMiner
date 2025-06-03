@@ -2,6 +2,7 @@ package gui.webdiff.viewers.vanilla;
 
 import com.github.gumtreediff.actions.Diff;
 import com.github.gumtreediff.actions.TreeClassifier;
+import com.github.gumtreediff.actions.model.Action;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.SequenceAlgorithms;
@@ -88,20 +89,25 @@ public final class VanillaDiffHtmlBuilder {
                 }
                 else if (c.getMultiMapSrc().containsKey(t)) {
                     if (!srcMM.contains(t)) {
-                        int gid = ((MultiMove) (c.getMultiMapSrc().get(t))).getGroupId();
-                        ltags.addStartTag(t.getPos(), String.format(ID_SPAN, uId++));
-                        boolean updated = ((MultiMove) (c.getMultiMapSrc().get(t))).isUpdated();
-                        String htmlClass = "token mm";
-                        if (updated) htmlClass += " updOnTop";
-                        ltags.addTags(t.getPos(), String.format(
-                                MM_SPAN, htmlClass, gid, tooltip(diff.src, t)), t.getEndPos(), END_SPAN);
-                        srcMM.add(t);
+                        List<Action> actions = c.getMultiMapSrc().get(t);
+                        for (Action action : actions) {
+                            int gid = ((MultiMove) action).getGroupId();
+                            ltags.addStartTag(t.getPos(), String.format(ID_SPAN, uId++));
+                            boolean updated = ((MultiMove) action).isUpdated();
+                            String htmlClass = "token mm";
+                            if (updated) htmlClass += " updOnTop";
+                            ltags.addTags(t.getPos(), String.format(
+                                    MM_SPAN, htmlClass, gid, tooltip(diff.src, t)), t.getEndPos(), END_SPAN);
+                            srcMM.add(t);
+                        }
                     }
                 }
                 else if (c.getSrcMoveOutTreeMap().containsKey(t)) {
                     ltags.addStartTag(t.getPos(), String.format(ID_SPAN, uId++));
-                    ltags.addTags(t.getPos(), String.format(
-                            MoveOut_SPAN, "token moveOut", c.getSrcMoveOutTreeMap().get(t).toString()), t.getEndPos(), END_SPAN);
+                    List<Action> actions = c.getSrcMoveOutTreeMap().get(t);
+                    for (Action action : actions)
+                        ltags.addTags(t.getPos(), String.format(
+                                MoveOut_SPAN, "token moveOut", action), t.getEndPos(), END_SPAN);
                 }
                 else {
                     if (diff.getAllMappings().isSrcMapped(t)){
@@ -135,20 +141,25 @@ public final class VanillaDiffHtmlBuilder {
                 }
                 else if (c.getMultiMapDst().containsKey(t)) {
                     if (!dstMM.contains(t)) {
-                        int gid = ((MultiMove) (c.getMultiMapDst().get(t))).getGroupId();
-                        boolean updated = ((MultiMove) (c.getMultiMapDst().get(t))).isUpdated();
-                        rtags.addStartTag(t.getPos(), String.format(ID_SPAN, uId++));
-                        String htmlClass = "token mm";
-                        if (updated) htmlClass += " updOnTop";
-                        rtags.addTags(t.getPos(), String.format(
-                                MM_SPAN, htmlClass, gid, tooltip(diff.dst, t)), t.getEndPos(), END_SPAN);
-                        dstMM.add(t);
+                        List<Action> actions = c.getMultiMapDst().get(t);
+                        for (Action action : actions) {
+                            int gid = ((MultiMove) action).getGroupId();
+                            boolean updated = ((MultiMove) (action)).isUpdated();
+                            rtags.addStartTag(t.getPos(), String.format(ID_SPAN, uId++));
+                            String htmlClass = "token mm";
+                            if (updated) htmlClass += " updOnTop";
+                            rtags.addTags(t.getPos(), String.format(
+                                    MM_SPAN, htmlClass, gid, tooltip(diff.dst, t)), t.getEndPos(), END_SPAN);
+                            dstMM.add(t);
+                            }
                     }
                 }
                 else if (c.getDstMoveInTreeMap().containsKey(t)) {
                     rtags.addStartTag(t.getPos(), String.format(ID_SPAN, uId++));
-                    rtags.addTags(t.getPos(), String.format(
-                            MoveIn_SPAN, "token moveIn", c.getDstMoveInTreeMap().get(t).toString()), t.getEndPos(), END_SPAN);
+                    List<Action> actions = c.getDstMoveInTreeMap().get(t);
+                    for (Action action : actions)
+                        rtags.addTags(t.getPos(), String.format(
+                                MoveIn_SPAN, "token moveIn", action.toString()), t.getEndPos(), END_SPAN);
                 }
                 else {
                     //no action associated with this subtree

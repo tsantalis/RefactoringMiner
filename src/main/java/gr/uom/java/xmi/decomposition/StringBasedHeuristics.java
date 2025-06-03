@@ -1388,6 +1388,9 @@ public class StringBasedHeuristics {
 				}
 				Set<LeafMapping> subExpressionMappings = new LinkedHashSet<LeafMapping>();
 				for(String key : filteredIntersection) {
+					if(key.endsWith(JAVA.STATEMENT_TERMINATION)) {
+						key = key.substring(0, key.length()-JAVA.STATEMENT_TERMINATION.length());
+					}
 					List<LeafExpression> expressions1 = statement1.findExpression(key);
 					List<LeafExpression> expressions2 = statement2.findExpression(key);
 					if(expressions1.size() == expressions2.size()) {
@@ -1398,6 +1401,21 @@ public class StringBasedHeuristics {
 					}
 				}
 				int size = filteredIntersection.size();
+				if(mapper.getClassDiff() != null) {
+					for(AbstractCall call : statement2.getMethodInvocations()) {
+						for(UMLOperation operation : mapper.getClassDiff().getOriginalClass().getOperations()) {
+							StatementObject returnedStatement = null;
+							if((returnedStatement = operation.singleReturnStatement()) != null && call.matchesOperation(operation, mapper.getContainer1(), mapper.getClassDiff(), mapper.getModelDiff())) {
+								String string = returnedStatement.getString();
+								String returnedExpression = string.substring(JAVA.RETURN_SPACE.length(), string.length()-JAVA.STATEMENT_TERMINATION.length());
+								if(statement1.getString().contains(returnedExpression + JAVA.STRING_CONCATENATION) || statement1.getString().contains(JAVA.STRING_CONCATENATION + returnedExpression)) {
+									size++;
+									break;
+								}
+							}
+						}
+					}
+				}
 				int threshold = Math.max(tokens1.size(), tokens2.size()) - size;
 				if((size > 0 && size > threshold) || (size > 1 && size >= threshold) || (size > 1 && subExpressionMappings.size() == size) || (size > 1 && intersection.size() == Math.min(tokens1.size(), tokens2.size()))) {
 					List<String> tokens1AsList = new ArrayList<>(tokens1);

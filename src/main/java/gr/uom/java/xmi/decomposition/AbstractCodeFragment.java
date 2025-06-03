@@ -126,6 +126,13 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				locations.add(expression.getLocationInfo());
 			}
 		}
+		for(LeafExpression expression : getCharLiterals()) {
+			if(expression.getString().equals(s)) {
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
+			}
+		}
 		for(AbstractCall expression : getCreations()) {
 			if(expression.getString().equals(s)) {
 				if(!locations.contains(expression.getLocationInfo()))

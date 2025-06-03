@@ -2724,7 +2724,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private boolean mappedElementsMoreThanNonMappedT2(int mappings, UMLOperationBodyMapper operationBodyMapper) {
 		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
 		int nonMappedElementsT2CallingAddedOperation = operationBodyMapper.nonMappedElementsT2CallingAddedOperation(addedOperations);
-		int mappedElementsT2CallingAddedOperation = operationBodyMapper.mappedElementsT2CallingAddedOperation(addedOperations);
+		List<VariableDeclarationContainer> addedOperationsCalledByMappedElementsT2 = operationBodyMapper.addedOperationsCalledByMappedElementsT2(addedOperations);
+		int mappedElementsT2CallingAddedOperation = addedOperationsCalledByMappedElementsT2.size();
 		int nonMappedElementsT2WithoutThoseCallingAddedOperation = nonMappedElementsT2 - nonMappedElementsT2CallingAddedOperation;
 		boolean matchFound = false;
 		for(AbstractCodeFragment nonMappedLeafT1 : operationBodyMapper.getNonMappedLeavesT1()) {
@@ -2742,10 +2743,27 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+		boolean extractedCodeFound = false;
+		for(VariableDeclarationContainer addedOperation : addedOperationsCalledByMappedElementsT2) {
+			if(addedOperation instanceof UMLOperation) {
+				StatementObject returnedStatement = ((UMLOperation)addedOperation).singleReturnStatement();
+				if(returnedStatement != null) {
+					List<AbstractCall> callsT2 = returnedStatement.getMethodInvocations();
+					for(AbstractCodeFragment nonMappedLeafT1 : operationBodyMapper.getNonMappedLeavesT1()) {
+						List<AbstractCall> callsT1 = nonMappedLeafT1.getMethodInvocations();
+						if(callsT2.size() > 0 && callsT1.containsAll(callsT2)) {
+							extractedCodeFound = true;
+							break;
+						}
+					}
+				}
+			}
+		}
 		return mappings > nonMappedElementsT2 || (mappings >= nonMappedElementsT2WithoutThoseCallingAddedOperation &&
 				nonMappedElementsT2CallingAddedOperation + mappedElementsT2CallingAddedOperation >= nonMappedElementsT2WithoutThoseCallingAddedOperation && !operationBodyMapper.isAnonymousCollapse()) ||
 				(operationBodyMapper.getMappings().size() > nonMappedElementsT2 && nonMappedElementsT2CallingAddedOperation > 0 &&
-						operationBodyMapper.getContainer1().getClassName().equals(operationBodyMapper.getContainer2().getClassName()));
+				operationBodyMapper.getContainer1().getClassName().equals(operationBodyMapper.getContainer2().getClassName())) ||
+				(mappings > 0 && extractedCodeFound);
 	}
 
 	private boolean mappedElementsMoreThanNonMappedT1(int mappings, UMLOperationBodyMapper operationBodyMapper) {

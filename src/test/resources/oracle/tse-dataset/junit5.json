@@ -1548,7 +1548,18 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+		{
+		  "type": "RENAME_VARIABLE",
+		  "description": "Rename Variable\tignoreAnnotation : Ignore to reason : Optional<String> in method private determineReasonForIgnoredTest(testDescriptor TestDescriptor, description Description) : Optional<String> from class org.junit.vintage.engine.execution.RunListenerAdapter",
+		  "validation": true
+		},
+		{
+		  "type": "CHANGE_VARIABLE_TYPE",
+		  "description": "Change Variable Type\tignoreAnnotation : Ignore to reason : Optional<String> in method private determineReasonForIgnoredTest(testDescriptor TestDescriptor, description Description) : Optional<String> from class org.junit.vintage.engine.execution.RunListenerAdapter",
+		  "validation": true
+		}
+	  ]
     },
     {
       "repository": "https://github.com/junit-team/junit5.git",

@@ -19,9 +19,18 @@ import java.io.IOException;
 public class Service {
     @GetMapping(value = "/hierarchy", produces = MediaType.APPLICATION_JSON_VALUE)
     public String hierarchy(@RequestParam String url) throws IOException {
+        if (url == null) {
+            return null;
+        }
+
         Graph<Node, Edge> graph = CommitGraph.get(url);
         Clusterer clusterer = new Clusterer(graph);
 
         return Stringifier.stringifyCommit(url, clusterer.getClusters());
+    }
+
+    @GetMapping("/health")
+    public String health() {
+        return "Service is up and running";
     }
 }

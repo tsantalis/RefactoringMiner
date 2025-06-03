@@ -194,5 +194,5 @@ shadowJar {
 bootJar {
     enabled = true
     archiveFileName = 'ChangeNarrator.jar'
-    mainClass.set('narrator.restapi.RestAPI') // <-- Replace with actual package
+    mainClass.set('narrator.restapi.RestAPI')
 }

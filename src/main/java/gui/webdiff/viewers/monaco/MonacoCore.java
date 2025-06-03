@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.gumtreediff.actions.Diff;
 import com.github.gumtreediff.actions.TreeClassifier;
+import com.github.gumtreediff.actions.model.Action;
 import com.github.gumtreediff.tree.Tree;
 
 import gr.uom.java.xmi.UMLComment;
@@ -154,15 +155,22 @@ public class MonacoCore {
                     appendRange(b, t, "updated", null);
                 if (c.getDeletedSrcs().contains(t))
                     appendRange(b, t, "deleted", null);
-                if (c.getSrcMoveOutTreeMap().containsKey(t))
-                    appendRange(b, t, "moveOut", c.getSrcMoveOutTreeMap().get(t).toString());
+                if (c.getSrcMoveOutTreeMap().containsKey(t)) {
+                    List<Action> actions = c.getSrcMoveOutTreeMap().get(t);
+                    for (Action action : actions) {
+                        appendRange(b, t, "moveOut", action.toString());
+                    }
+                }
                 if (c.getMultiMapSrc().containsKey(t)) {
                     String tag = "mm";
-                    boolean _isUpdated = ((MultiMove) (c.getMultiMapSrc().get(t))).isUpdated();
-                    if (_isUpdated) {
-                        tag += " updOnTop";
+                    List<Action> actions = c.getMultiMapSrc().get(t);
+                    for (Action action : actions) {
+                        boolean _isUpdated = ((MultiMove) action).isUpdated();
+                        if (_isUpdated) {
+                            tag += " updOnTop";
+                        }
+                        appendRange(b, t, tag, null);
                     }
-                    appendRange(b, t, tag, null);
                 }
             }
             b.append("]").append(",");
@@ -211,15 +219,21 @@ public class MonacoCore {
                     appendRange(b, t, "updated", null);
                 if (c.getInsertedDsts().contains(t))
                     appendRange(b, t, "inserted", null);
-                if (c.getDstMoveInTreeMap().containsKey(t))
-                    appendRange(b, t, "moveIn", c.getDstMoveInTreeMap().get(t).toString());
+                if (c.getDstMoveInTreeMap().containsKey(t)) {
+                    List<Action> actions = c.getDstMoveInTreeMap().get(t);
+                    for (Action action : actions)
+                        appendRange(b, t, "moveIn", action.toString());
+                }
                 if (c.getMultiMapDst().containsKey(t)) {
                     String tag = "mm";
-                    boolean _isUpdated = ((MultiMove) (c.getMultiMapDst().get(t))).isUpdated();
-                    if (_isUpdated) {
-                        tag += " updOnTop";
+                    List<Action> actions = c.getMultiMapDst().get(t);
+                    for (Action action : actions) {
+                        boolean _isUpdated = ((MultiMove) action).isUpdated();
+                        if (_isUpdated) {
+                            tag += " updOnTop";
+                        }
+                        appendRange(b, t, tag, null);
                     }
-                    appendRange(b, t, tag, null);
                 }
             }
             b.append("]").append(",");
@@ -575,13 +589,15 @@ public class MonacoCore {
 					return tooltipLeft;
 				}
 				else if(subsumes(mapping.getFragment1().codeRange(),tree) && classifier.getSrcMoveOutTreeMap().get(tree) != null) {
-					return tooltipLeft + " & " + classifier.getSrcMoveOutTreeMap().get(tree);
+                    List<Action> actions = classifier.getSrcMoveOutTreeMap().get(tree);
+                    return tooltipLeft + " & " + actions.stream().map(Action::toString).collect(Collectors.joining(", "));
 				}
 				if(subsumes(mapping.getFragment2().codeRange(),tree) && (classifier.getMovedDsts().contains(tree) || classifier.getMultiMapDst().containsKey(tree))) {
 					return tooltipRight;
 				}
 				else if(subsumes(mapping.getFragment2().codeRange(),tree) && classifier.getDstMoveInTreeMap().get(tree) != null) {
-					return tooltipRight + " & " + classifier.getDstMoveInTreeMap().get(tree);
+                    List<Action> actions = classifier.getDstMoveInTreeMap().get(tree);
+					return tooltipRight + " & " + actions.stream().map(Action::toString).collect(Collectors.joining(", "));
 				}
 			}
 			if(bodyMapper.getCommentListDiff() != null && (tree.getType().toString().startsWith("LineComment") || tree.getType().toString().startsWith("BlockComment"))) {

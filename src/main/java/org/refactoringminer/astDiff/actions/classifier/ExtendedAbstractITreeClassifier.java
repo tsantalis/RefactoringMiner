@@ -1,9 +1,6 @@
 package org.refactoringminer.astDiff.actions.classifier;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import com.github.gumtreediff.actions.Diff;
 import com.github.gumtreediff.actions.model.Action;
@@ -21,10 +18,10 @@ public abstract class ExtendedAbstractITreeClassifier implements ExtendedTreeCla
 	protected final Set<Tree> dstMvTrees = new HashSet<>();
 	protected final Set<Tree> srcDelTrees = new HashSet<>();
 	protected final Set<Tree> dstAddTrees = new HashSet<>();
-	protected final Map<Tree,Action> dstMmTrees = new HashMap<>();
-	protected final Map<Tree, Action> srcMmTrees = new HashMap<>();
-	protected final Map<Tree, Action> dstMoveInTreeMap = new HashMap<>();
-	protected final Map<Tree, Action> srcMoveOutTreeMap = new HashMap<>();
+	protected final Map<Tree, List<Action>> dstMmTrees = new HashMap<>();
+	protected final Map<Tree, List<Action>> srcMmTrees = new HashMap<>();
+	protected final Map<Tree, List<Action>> dstMoveInTreeMap = new HashMap<>();
+	protected final Map<Tree, List<Action>> srcMoveOutTreeMap = new HashMap<>();
 
 	public ExtendedAbstractITreeClassifier(ASTDiff diff) {
 		this.diff = diff;
@@ -56,19 +53,19 @@ public abstract class ExtendedAbstractITreeClassifier implements ExtendedTreeCla
 		return dstAddTrees;
 	}
 
-	public Map<Tree, Action> getMultiMapSrc() {
+	public Map<Tree, List<Action>> getMultiMapSrc() {
 		return srcMmTrees;
 	}
 
-	public Map<Tree, Action> getMultiMapDst() {
+	public Map<Tree, List<Action>> getMultiMapDst() {
 		return dstMmTrees;
 	}
 
-	public Map<Tree, Action> getDstMoveInTreeMap() {
+	public Map<Tree, List<Action>> getDstMoveInTreeMap() {
 		return dstMoveInTreeMap;
 	}
 
-	public Map<Tree, Action> getSrcMoveOutTreeMap() {
+	public Map<Tree, List<Action>> getSrcMoveOutTreeMap() {
 		return srcMoveOutTreeMap;
 	}
 }

@@ -194,7 +194,9 @@ public class MappingExportModel implements Serializable {
         List<MappingExportModel> mappingExportModels = exportModelList(mappings);
         ObjectMapper objectMapper = new ObjectMapper();
         if (!outputFile.exists()) {
-            outputFile.getParentFile().mkdirs();
+            if (outputFile.getParentFile() != null)
+                outputFile.getParentFile().mkdirs();
+
             outputFile.createNewFile();
         }
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(outputFile, mappingExportModels);

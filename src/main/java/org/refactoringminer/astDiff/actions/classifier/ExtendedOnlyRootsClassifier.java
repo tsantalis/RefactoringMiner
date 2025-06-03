@@ -8,7 +8,9 @@ import org.refactoringminer.astDiff.actions.model.MoveOut;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
 import org.refactoringminer.astDiff.models.ASTDiff;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -56,20 +58,23 @@ public class ExtendedOnlyRootsClassifier extends ExtendedAbstractITreeClassifier
 				srcMvTrees.add(a.getNode());
 				dstMvTrees.addAll(astDiff.getAllMappings().getDsts(a.getNode()));
 			}
-			else if (a instanceof MultiMove)
-			{
-				srcMmTrees.put(a.getNode(),a);
-				for (Tree tree : astDiff.getAllMappings().getDsts(a.getNode()))
-					dstMmTrees.put(tree,a);
-			}
-			else if (a instanceof MoveIn)
-			{
-				dstMoveInTreeMap.put(((MoveIn) a).getParent(),a);
-			}
-			else if (a instanceof MoveOut)
-			{
-				srcMoveOutTreeMap.put(((MoveOut) a).getNode(),a);
-			}
+            else if (a instanceof MultiMove)
+            {
+                srcMmTrees.computeIfAbsent(a.getNode(), k -> new ArrayList<>()).add(a);
+                for (Tree tree : astDiff.getAllMappings().getDsts(a.getNode())) {
+                    dstMmTrees.computeIfAbsent(tree, k -> new ArrayList<>()).add(a);
+                }
+            }
+            else if (a instanceof MoveIn)
+            {
+                Tree parent = ((MoveIn) a).getParent();
+                dstMoveInTreeMap.computeIfAbsent(parent, k -> new ArrayList<>()).add(a);
+            }
+            else if (a instanceof MoveOut)
+            {
+                Tree node = a.getNode();
+                srcMoveOutTreeMap.computeIfAbsent(node, k -> new ArrayList<>()).add(a);
+            }
 		}
 	}
 }

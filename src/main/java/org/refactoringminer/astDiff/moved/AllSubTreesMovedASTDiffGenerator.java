@@ -5,6 +5,7 @@ import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.diff.UMLModelDiff;
+import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.actions.classifier.ExtendedOnlyRootsClassifier;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
@@ -28,17 +29,21 @@ public class AllSubTreesMovedASTDiffGenerator extends MovedASTDiffGenerator {
         Map<Pair<String, String>, List<Mapping>> filePairMappings = new LinkedHashMap<>();
         for(ASTDiff diff : projectASTDiff.getDiffSet()) {
             ExtendedOnlyRootsClassifier classifier = (ExtendedOnlyRootsClassifier) diff.createRootNodesClassifier(); // TODO: Switch to AllNodesClassifier
-            for (Map.Entry<Tree, Action> treeActionEntry : classifier.getSrcMoveOutTreeMap().entrySet()) {
-                MoveOut moveOut = (MoveOut) treeActionEntry.getValue();
-                String srcPath = diff.getSrcPath();
-                String dstPath = moveOut.getDstFile();
-                add(filePairMappings, srcPath, dstPath, moveOut.getNode(), moveOut.getParent());
+            for (Map.Entry<Tree, List<Action>> treeListActionEntry : classifier.getSrcMoveOutTreeMap().entrySet()) {
+                for (Action action : treeListActionEntry.getValue()) {
+                    MoveOut moveOut = (MoveOut) action;
+                    String srcPath = diff.getSrcPath();
+                    String dstPath = moveOut.getDstFile();
+                    add(filePairMappings, srcPath, dstPath, moveOut.getNode(), moveOut.getParent());
+                }
             }
-            for (Map.Entry<Tree, Action> treeActionEntry : classifier.getDstMoveInTreeMap().entrySet()) {
-                MoveIn moveIn = (MoveIn) treeActionEntry.getValue();
-                String srcPath = moveIn.getSrcFile();
-                String dstPath = diff.getDstPath();
-                add(filePairMappings, srcPath, dstPath, moveIn.getNode(), moveIn.getParent());
+            for (Map.Entry<Tree, List<Action>> treeListActionEntry : classifier.getDstMoveInTreeMap().entrySet()) {
+                for (Action action : treeListActionEntry.getValue()) {
+                    MoveIn moveIn = (MoveIn) action;
+                    String srcPath = moveIn.getSrcFile();
+                    String dstPath = diff.getDstPath();
+                    add(filePairMappings, srcPath, dstPath, moveIn.getNode(), moveIn.getParent());
+                }
             }
 
         }

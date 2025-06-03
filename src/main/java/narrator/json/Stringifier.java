@@ -7,11 +7,10 @@ import narrator.graph.cluster.Cluster;
 import narrator.graph.cluster.traverse.*;
 import org.jgrapht.Graph;
 
-import java.io.IOException;
 import java.util.*;
 
 public class Stringifier {
-    public static String stringifyGraph(Graph<Node, Edge> graph) {
+    public static JsonObject stringifyGraph(Graph<Node, Edge> graph) {
         String aggregatorId = "";
 
         Set<Node> nodes = graph.vertexSet();
@@ -46,7 +45,7 @@ public class Stringifier {
         graphObj.add("nodes", processNodes(preprocessedNodes));
         graphObj.add("edges", edgesArray);
 
-        return graphObj.toString();
+        return graphObj;
     }
 
     private static void stringifyComponentGraph(TraversalPattern traversalComponent, String aggregatorId, Map<String,
@@ -186,7 +185,7 @@ public class Stringifier {
         return nodes;
     }
 
-    public static String stringifyCommit(String url, List<Cluster> clusters) {
+    public static JsonObject stringifyCommit(String url, List<Cluster> clusters) {
         JsonArray nodesArray = new JsonArray();
         JsonArray edgesArray = new JsonArray();
 
@@ -227,7 +226,7 @@ public class Stringifier {
         clusters.forEach(cluster -> stringifiedClusters.add(stringifyGraph(cluster.getGraph())));
         graphObj.add("clusters", stringifiedClusters);
 
-        return graphObj.toString();
+        return graphObj;
     }
 
     private static JsonObject stringifyEdge(String sourceId, String targetId, String type) {

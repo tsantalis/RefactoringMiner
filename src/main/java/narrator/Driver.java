@@ -1,6 +1,7 @@
 package narrator;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import narrator.graph.cluster.Cluster;
 import narrator.graph.cluster.Clusterer;
 import narrator.graph.CommitGraph;
@@ -37,8 +38,8 @@ public class Driver {
     public static void writeCommit(String url) throws IOException {
         List<Cluster> clusters = getClusters(url);
 
-        String stringifiedCommit = Stringifier.stringifyCommit(url, clusters);
-        writeFile(url, null, stringifiedCommit);
+        JsonObject stringifiedCommit = Stringifier.stringifyCommit(url, clusters);
+        writeFile(url, null, stringifiedCommit.toString());
     }
 
     public static List<Cluster> getClusters(String url) {

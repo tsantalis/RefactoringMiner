@@ -1,5 +1,6 @@
 package narrator.restapi;
 
+import com.google.gson.JsonObject;
 import narrator.graph.CommitGraph;
 import narrator.graph.Edge;
 import narrator.graph.Node;
@@ -26,7 +27,9 @@ public class Service {
         Graph<Node, Edge> graph = CommitGraph.get(url);
         Clusterer clusterer = new Clusterer(graph);
 
-        return Stringifier.stringifyCommit(url, clusterer.getClusters());
+        JsonObject stringifiedCommit = Stringifier.stringifyCommit(url, clusterer.getClusters());
+
+        return stringifiedCommit.toString();
     }
 
     @GetMapping("/health")

@@ -552,13 +552,15 @@ public class MonacoCore {
 				return tooltipLeft;
 			}
 			else if(subsumes(mapping.getFragment1().codeRange(),tree) && classifier.getSrcMoveOutTreeMap().get(tree) != null) {
-				return tooltipLeft + " & " + classifier.getSrcMoveOutTreeMap().get(tree);
+				List<Action> actions = classifier.getSrcMoveOutTreeMap().get(tree);
+				return tooltipLeft + " & " + actions.stream().map(Action::toString).collect(Collectors.joining(", "));
 			}
 			if(subsumes(mapping.getFragment2().codeRange(),tree) && (classifier.getMovedDsts().contains(tree) || classifier.getMultiMapDst().containsKey(tree))) {
 				return tooltipRight;
 			}
 			else if(subsumes(mapping.getFragment2().codeRange(),tree) && classifier.getDstMoveInTreeMap().get(tree) != null) {
-				return tooltipRight + " & " + classifier.getDstMoveInTreeMap().get(tree);
+				List<Action> actions = classifier.getDstMoveInTreeMap().get(tree);
+				return tooltipRight + " & " + actions.stream().map(Action::toString).collect(Collectors.joining(", "));
 			}
 		}
     	return null;
@@ -568,13 +570,29 @@ public class MonacoCore {
 			String tooltipLeft, String tooltipRight) {
 		if(tree.getType().toString().endsWith("Declaration")) {
 			if(classifier.getSrcMoveOutTreeMap().get(tree) != null) {
-				return classifier.getSrcMoveOutTreeMap().get(tree).toString();
+				List<Action> actions = classifier.getSrcMoveOutTreeMap().get(tree);
+				for(Action action : actions) {
+					if(action.toString().startsWith("moved to file: ")) {
+						String file = action.toString().substring("moved to file: ".length());
+						if(tooltipLeft.contains(file)) {
+							return action.toString();
+						}
+					}
+				}
 			}
 			else if(classifier.getMultiMapSrc().containsKey(tree)) {
 				return tooltipLeft;
 			}
 			if(classifier.getDstMoveInTreeMap().get(tree) != null) {
-				return classifier.getDstMoveInTreeMap().get(tree).toString();
+				List<Action> actions = classifier.getDstMoveInTreeMap().get(tree);
+				for(Action action : actions) {
+					if(action.toString().startsWith("moved from file: ")) {
+						String file = action.toString().substring("moved from file: ".length());
+						if(tooltipRight.contains(file)) {
+							return action.toString();
+						}
+					}
+				}
 			}
 			else if(classifier.getMultiMapDst().containsKey(tree)) {
 				return tooltipRight;

@@ -2,6 +2,7 @@ package org.refactoringminer.astDiff.matchers.statement;
 
 import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.matchers.MappingStore;
+import com.github.gumtreediff.tree.FakeTree;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 import org.refactoringminer.astDiff.matchers.*;
@@ -39,13 +40,20 @@ public class BasicTreeMatcher implements TreeMatcher {
 	}
 
 	public MappingStore process(Tree src, Tree dst) {
-		MappingStore match = new CustomTopDownMatcher(minP).match(src, dst);
-		new CustomBottomUpMatcher().match(src, dst, match);
-		optimizeMappings(match);
+        MappingStore match = new MappingStore(src, dst);
+        List<Pair<Tree, Tree>> pairs = LRAUtils.LRAify(src, dst, match);
+        for (Pair<Tree, Tree> pair : pairs) {
+            MappingStore mappings = new CustomTopDownMatcher(minP).match(pair.first, pair.second);
+            new CustomBottomUpMatcher().match(pair.first, pair.second, mappings);
+            optimizeMappings(mappings);
+            for (Mapping mapping : mappings) {
+                match.addMapping(mapping.first, mapping.second);
+            }
+        }
 		return match;
 	}
 
-	private static void optimizeMappings(MappingStore match) {
+    private static void optimizeMappings(MappingStore match) {
 		List<Pair<Tree, Tree>> removeList = new ArrayList<>();
 		List<Pair<Tree, Tree>> incorrectMethodExpressionReferenceSimpleName = new ArrayList<>();
 		for (Mapping mapping : match) {

@@ -3,14 +3,13 @@ package narrator.json;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import narrator.graph.*;
-import narrator.graph.cluster.Cluster;
 import narrator.graph.cluster.traverse.*;
 import org.jgrapht.Graph;
 
 import java.util.*;
 
 public class Stringifier {
-    public static JsonObject stringifyGraph(Graph<Node, Edge> graph) {
+    public static JsonObject graph(Graph<Node, Edge> graph) {
         String aggregatorId = "";
 
         Set<Node> nodes = graph.vertexSet();
@@ -134,13 +133,6 @@ public class Stringifier {
                 new HashSet<>()));
         preprocessedNodes.get(traversalComponentId).aggregatorIds.add(aggregatorId);
 
-        //        if (traversalComponent instanceof RequirementComponent) {
-        //            stringifyRequirementComponent((RequirementComponent) traversalComponent, aggregatorId,
-        //            preprocessedNodes,
-        //                    edges);
-        //            return;
-        //        }
-
         if (traversalComponent instanceof TraversalComponent) {
             for (TraversalPattern component : ((TraversalComponent) traversalComponent).getComponents()) {
                 stringifyTraversalComponent(component, traversalComponentId, preprocessedNodes, edges);
@@ -153,21 +145,6 @@ public class Stringifier {
             stringifyComponentGraph(traversalComponent, traversalComponentId, preprocessedNodes, edges);
         }
     }
-
-    //    private static void stringifyRequirementComponent(RequirementComponent requirementComponent, String
-    //    aggregatorId,
-    //                                                      Map<String, PreprocessedNode> preprocessedNodes,
-    //                                                      JsonArray edges) {
-    //        UsagePattern head = requirementComponent.getHead();
-    //        Map<Node, TraversalPattern> requirementsMap = requirementComponent.getRequirementsMap();
-    //
-    //        stringifyTraversalComponent(head, aggregatorId, preprocessedNodes, edges, requirementsMap);
-    //
-    //        String headId = head.getId();
-    //        for (TraversalPattern requirement : requirementsMap.values()) {
-    //            stringifyTraversalComponent(requirement, headId, preprocessedNodes, edges);
-    //        }
-    //    }
 
     private static JsonArray processNodes(Map<String, PreprocessedNode> preprocessedNodes) {
         JsonArray nodes = new JsonArray();
@@ -185,46 +162,39 @@ public class Stringifier {
         return nodes;
     }
 
-    public static JsonObject stringifyCommit(String url, List<Cluster> clusters) {
+    public static JsonObject hierarchy(List<List<TraversalPattern>> clustersComponents) {
+        String rootId = "root";
+
         JsonArray nodesArray = new JsonArray();
         JsonArray edgesArray = new JsonArray();
 
-        String commitId = "commit";
-
-        for (int i = 0; i < clusters.size(); i++) {
+        for (int i = 1; i < clustersComponents.size() + 1; i++) {
             String clusterId = String.format("cluster-%d", i);
 
-            TraversalEngine traversalEngine = new TraversalEngine(clusters.get(i));
-            List<TraversalPattern> components = traversalEngine.getComponents();
-            JsonObject stringifiedClusterTraversal = stringifyTraversalComponents(components, clusterId);
-            nodesArray.addAll(stringifiedClusterTraversal.getAsJsonArray("nodes"));
-            edgesArray.addAll(stringifiedClusterTraversal.getAsJsonArray("edges"));
+            List<TraversalPattern> clusterComponents = clustersComponents.get(i - 1);
+            JsonObject stringifiedCluster = stringifyTraversalComponents(clusterComponents, clusterId);
+            nodesArray.addAll(stringifiedCluster.getAsJsonArray("nodes"));
+            edgesArray.addAll(stringifiedCluster.getAsJsonArray("edges"));
 
             JsonObject clusterNode = new JsonObject();
             clusterNode.addProperty("id", clusterId);
             clusterNode.addProperty("nodeType", NodeType.CLUSTER.name());
             JsonArray aggregatorIdsJson = new JsonArray();
-            aggregatorIdsJson.add(commitId);
+            aggregatorIdsJson.add(rootId);
             clusterNode.add("aggregatorIds", aggregatorIdsJson);
             nodesArray.add(clusterNode);
-
-            edgesArray.add(stringifyEdge(commitId, clusterId, EdgeType.EXPANSION.name()));
+            edgesArray.add(stringifyEdge(rootId, clusterId, EdgeType.EXPANSION.name()));
         }
 
-        JsonObject commitNode = new JsonObject();
-        commitNode.addProperty("id", commitId);
-        commitNode.addProperty("nodeType", NodeType.COMMIT.name());
-        commitNode.add("aggregatorIds", new JsonArray());
-        nodesArray.add(commitNode);
+        JsonObject rootNode = new JsonObject();
+        rootNode.addProperty("id", rootId);
+        rootNode.addProperty("nodeType", NodeType.COMMIT.name());
+        rootNode.add("aggregatorIds", new JsonArray());
+        nodesArray.add(rootNode);
 
         JsonObject graphObj = new JsonObject();
         graphObj.add("nodes", nodesArray);
         graphObj.add("edges", edgesArray);
-        graphObj.addProperty("url", url);
-
-        JsonArray stringifiedClusters = new JsonArray();
-        clusters.forEach(cluster -> stringifiedClusters.add(stringifyGraph(cluster.getGraph())));
-        graphObj.add("clusters", stringifiedClusters);
 
         return graphObj;
     }

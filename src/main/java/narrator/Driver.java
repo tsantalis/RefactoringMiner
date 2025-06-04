@@ -2,21 +2,57 @@ package narrator;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import narrator.graph.HunkNetwork;
 import narrator.graph.cluster.Cluster;
 import narrator.graph.cluster.Clusterer;
-import narrator.graph.CommitGraph;
 import narrator.graph.Edge;
 import narrator.graph.Node;
+import narrator.graph.cluster.traverse.TraversalEngine;
+import narrator.graph.cluster.traverse.TraversalPattern;
 import narrator.json.Stringifier;
 import org.jgrapht.Graph;
+import org.refactoringminer.astDiff.models.ASTDiff;
+import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.URLHelper;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 import java.io.*;
 import java.util.List;
+import java.util.Map;
 
 public class Driver {
     public static void main(String[] args) throws Exception {
         writeCommit("https://github.com/Netflix/eureka/commit/f6212a7e474f812f31ddbce6d4f7a7a0d498b751");
+    }
+
+    public static Graph<Node, Edge> getPullRequestGraph(String url, int id) throws Exception {
+        ProjectASTDiff projectASTDiff = new GitHistoryRefactoringMinerImpl().diffAtPullRequest(url, id, 1000);
+        return getGraph(projectASTDiff);
+    }
+
+    public static Graph<Node, Edge> getCommitGraph(String url) {
+        String repo = URLHelper.getRepo(url);
+        String commit = URLHelper.getCommit(url);
+        ProjectASTDiff projectASTDiff = new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, commit, 1000);
+
+        return getGraph(projectASTDiff);
+    }
+
+    private static Graph<Node, Edge> getGraph(ProjectASTDiff projectASTDiff) {
+        Map<String, String> dstContentsMap = projectASTDiff.getFileContentsAfter();
+        Map<String, String> srcContentsMap = projectASTDiff.getFileContentsBefore();
+        HunkNetwork network = new HunkNetwork(projectASTDiff.getModelDiff(), srcContentsMap, dstContentsMap,
+                projectASTDiff.getChildContextMap());
+
+        // TODO: support added files (https://github.com/LMAX-Exchange/disruptor/commit/6a93ff9e94a878cd2d7672b2a07b94a2307d41fe)
+        for (ASTDiff astDiff : projectASTDiff.getDiffSet()) {
+            network.importHunks(astDiff.getDstPath(), astDiff.getSrcPath(), astDiff.getAddedDstTrees(),
+                    astDiff.getAllMappings().getMonoMappingStore());
+        }
+
+        network.process();
+
+        return network.getGraph();
     }
 
     public static void writeJson() throws FileNotFoundException {
@@ -37,13 +73,15 @@ public class Driver {
 
     public static void writeCommit(String url) throws IOException {
         List<Cluster> clusters = getClusters(url);
+        List<List<TraversalPattern>> clustersComponents =
+                clusters.stream().map(TraversalEngine::new).map(TraversalEngine::getComponents).toList();
 
-        JsonObject stringifiedCommit = Stringifier.stringifyCommit(url, clusters);
+        JsonObject stringifiedCommit = Stringifier.hierarchy(clustersComponents);
         writeFile(url, null, stringifiedCommit.toString());
     }
 
     public static List<Cluster> getClusters(String url) {
-        Graph<Node, Edge> graph = CommitGraph.get(url);
+        Graph<Node, Edge> graph = getCommitGraph(url);
         Clusterer clusterer = new Clusterer(graph);
         return clusterer.getClusters();
     }

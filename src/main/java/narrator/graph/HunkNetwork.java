@@ -19,7 +19,7 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.*;
 
-public class GraphProcessor {
+public class HunkNetwork {
     private final Graph<Node, Edge> graph;
     private final HashMap<String, Node> nodeMap;
     private final UMLModelDiff modelDiff;
@@ -30,8 +30,8 @@ public class GraphProcessor {
     private Map<String, String> dstContents;
     Map<String, TreeContext> childContexts;
 
-    public GraphProcessor(UMLModelDiff modelDiff, Map<String, String> srcContents, Map<String, String> dstContents,
-                          Map<String, TreeContext> childContexts) {
+    public HunkNetwork(UMLModelDiff modelDiff, Map<String, String> srcContents, Map<String, String> dstContents,
+                       Map<String, TreeContext> childContexts) {
         graph = GraphTypeBuilder.<Node, Edge>directed().allowingMultipleEdges(true).allowingSelfLoops(true).edgeClass(Edge.class).weighted(true).buildGraph();
         nodeMap = new HashMap<>();
         this.modelDiff = modelDiff;

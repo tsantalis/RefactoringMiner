@@ -2089,8 +2089,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	@Override
 	public ProjectASTDiff diffAtDirectories(File previousFile, File nextFile) {
 		if(previousFile.exists() && nextFile.exists()) {
-			String id = previousFile.getName() + " -> " + nextFile.getName();
-			try {
+			String id = makeIdForDirectories(previousFile, nextFile);
+            try {
 				if(previousFile.isDirectory() && nextFile.isDirectory()) {
 					Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
 					Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
@@ -2135,7 +2135,26 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return null;
 	}
 
-	public ProjectASTDiff diffAtCommitRange(String cloneURL, String startCommit, String endCommit) throws Exception {
+    private static String makeIdForDirectories(File previousFile, File nextFile) {
+        String id;
+        Path prev = previousFile.toPath();
+        Path next = nextFile.toPath();
+        // Find common ancestor
+        while (prev.getFileName().equals(next.getFileName())) {
+            prev = prev.getParent();
+            next = next.getParent();
+            if (prev == null || next == null) break;
+        }
+        if (prev != null) prev = prev.getParent();
+        if (next != null) next = next.getParent();
+
+        id = previousFile.toPath().subpath(prev.getNameCount(), previousFile.toPath().getNameCount())
+             + " -> " +
+             nextFile.toPath().subpath(next.getNameCount(), nextFile.toPath().getNameCount());
+        return id;
+    }
+
+    public ProjectASTDiff diffAtCommitRange(String cloneURL, String startCommit, String endCommit) throws Exception {
 		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
 		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();

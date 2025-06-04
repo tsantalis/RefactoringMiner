@@ -3122,6 +3122,7 @@ public class ReplacementAlgorithm {
 				return replacementInfo.getReplacements();
 			}
 			else if(creationCoveringTheEntireStatement1.identicalName(creationCoveringTheEntireStatement2) &&
+					creationCoveringTheEntireStatement1.arguments().size() > 0 && creationCoveringTheEntireStatement2.arguments().size() > 0 &&
 					creationCoveringTheEntireStatement1.identicalOrConcatenatedArguments(creationCoveringTheEntireStatement2, parameterToArgumentMap)) {
 				Replacement replacement = new ObjectCreationReplacement(creationCoveringTheEntireStatement1.actualString(),
 						creationCoveringTheEntireStatement2.actualString(), creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);

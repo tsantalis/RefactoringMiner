@@ -45,11 +45,11 @@ public class BasicTreeMatcher implements TreeMatcher {
         for (Pair<Tree, Tree> pair : pairs) {
             MappingStore mappings = new CustomTopDownMatcher(minP).match(pair.first, pair.second);
             new CustomBottomUpMatcher().match(pair.first, pair.second, mappings);
-            optimizeMappings(mappings);
             for (Mapping mapping : mappings) {
                 match.addMapping(mapping.first, mapping.second);
             }
         }
+        optimizeMappings(match);
 		return match;
 	}
 

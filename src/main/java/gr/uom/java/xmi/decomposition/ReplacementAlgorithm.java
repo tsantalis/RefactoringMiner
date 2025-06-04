@@ -2212,7 +2212,7 @@ public class ReplacementAlgorithm {
 						replacementInfo.addReplacement(replacement);
 						return replacementInfo.getReplacements();
 					}
-					if(invocationCoveringTheEntireStatement1.identicalOrConcatenatedArguments(invocation2)) {
+					if(invocationCoveringTheEntireStatement1.identicalOrConcatenatedArguments(invocation2, parameterToArgumentMap)) {
 						Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 								invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_ARGUMENT_CONCATENATED);
 						replacementInfo.addReplacement(replacement);
@@ -3116,6 +3116,13 @@ public class ReplacementAlgorithm {
 				return replacementInfo.getReplacements();
 			}
 			else if(creationCoveringTheEntireStatement1.inlinedStatementBecomesAdditionalArgument(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), statement1, replacementInfo.getStatements1())) {
+				Replacement replacement = new ObjectCreationReplacement(creationCoveringTheEntireStatement1.actualString(),
+						creationCoveringTheEntireStatement2.actualString(), creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);
+				replacementInfo.addReplacement(replacement);
+				return replacementInfo.getReplacements();
+			}
+			else if(creationCoveringTheEntireStatement1.identicalName(creationCoveringTheEntireStatement2) &&
+					creationCoveringTheEntireStatement1.identicalOrConcatenatedArguments(creationCoveringTheEntireStatement2, parameterToArgumentMap)) {
 				Replacement replacement = new ObjectCreationReplacement(creationCoveringTheEntireStatement1.actualString(),
 						creationCoveringTheEntireStatement2.actualString(), creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);
 				replacementInfo.addReplacement(replacement);

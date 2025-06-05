@@ -186,23 +186,7 @@ public class WebDiff  {
 
             String escapedContent = StringEscapeUtils.escapeHtml4(content);
 
-            String boxColor = isAdded ? "#d4edda" : "#f8d7da";  // Green or red
-            String textColor = isAdded ? "#155724" : "#721c24"; // Dark green or dark red
-            String borderColor = isAdded ? "#c3e6cb" : "#f5c6cb";
-
-            String headerHtml = "<div style=\"background-color:" + boxColor + ";" +
-                                "color:" + textColor + ";" +
-                                "border: 1px solid " + borderColor + ";" +
-                                "padding: 10px; border-radius: 5px; font-weight: bold;\">" +
-                                path +
-                                "</div>";
-
-            return "<div style=\"padding:10px\">" +
-                   headerHtml +
-                   "<pre style=\"white-space: pre-wrap; background:#f8f8f8; padding:10px; border-radius:5px; margin-top:10px;\">" +
-                   escapedContent +
-                   "</pre>" +
-                   "</div>";
+            return singleMonaco(isAdded, path, escapedContent);
         });
         get("/onDemand", (request, response) -> {
             String rawFile1 = request.queryParams("file1");
@@ -248,6 +232,25 @@ public class WebDiff  {
         });
     }
 
+    private static String singleMonaco(boolean isAdded, String path, String escapedContent) {
+        String boxColor = isAdded ? "#d4edda" : "#f8d7da";  // Green or red
+        String textColor = isAdded ? "#155724" : "#721c24"; // Dark green or dark red
+        String borderColor = isAdded ? "#c3e6cb" : "#f5c6cb";
+
+        String headerHtml = "<div style=\"background-color:" + boxColor + ";" +
+                            "color:" + textColor + ";" +
+                            "border: 1px solid " + borderColor + ";" +
+                            "padding: 10px; border-radius: 5px; font-weight: bold;\">" +
+                            path +
+                            "</div>";
+
+        return "<div style=\"padding:10px\">" +
+               headerHtml +
+               "<pre style=\"white-space: pre-wrap; background:#f8f8f8; padding:10px; border-radius:5px; margin-top:10px;\">" +
+               escapedContent +
+               "</pre>" +
+               "</div>";
+    }
 
 
     private static String render(Renderable r) throws IOException {

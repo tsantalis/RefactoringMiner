@@ -2741,6 +2741,7 @@ public class ReplacementAlgorithm {
 			//assertThat(empty()) to fluid assertThat().isEmpty()
 			//assertThat(containsInAnyOrder()) to fluid assertThat().containsExactlyInAnyOrder()
 			//assertThat(contains()) to fluid assertThat().containsExactly()
+			//assertThat(lessThanOrEqualTo()) to fluid assertThat().isLessThanOrEqualTo()
 			if((invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isTrue")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertFalse") && invocationCoveringTheEntireStatement2.getName().equals("isFalse")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertNotNull") && invocationCoveringTheEntireStatement2.getName().equals("isNotNull")) ||
@@ -2750,9 +2751,13 @@ public class ReplacementAlgorithm {
 					(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("isOne") &&
 							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).startsWith("1")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isEmpty") &&
-							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).equals("empty()")) ||
-					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && (invocationCoveringTheEntireStatement2.getName().equals("containsExactlyInAnyOrder") || invocationCoveringTheEntireStatement2.getName().equals("containsExactly")) &&
-							invocationCoveringTheEntireStatement1.arguments().size() > 1 && (invocationCoveringTheEntireStatement1.arguments().get(1).startsWith("containsInAnyOrder(") || invocationCoveringTheEntireStatement1.arguments().get(1).startsWith("contains(")))) {
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("empty()")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("containsExactlyInAnyOrder") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("containsInAnyOrder(")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("containsExactly") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("contains(")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isLessThanOrEqualTo") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("lessThanOrEqualTo("))) {
 				for(String key2 : methodInvocationMap2.keySet()) {
 					for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
 						if(invocation2.getName().equals("assertThat")) {
@@ -2793,9 +2798,13 @@ public class ReplacementAlgorithm {
 					(invocationCoveringTheEntireStatement2.getName().equals("assertEquals") && invocationCoveringTheEntireStatement1.getName().equals("isOne") &&
 							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).startsWith("1")) ||
 					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isEmpty") &&
-							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).equals("empty()")) ||
-					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && (invocationCoveringTheEntireStatement1.getName().equals("containsExactlyInAnyOrder") || invocationCoveringTheEntireStatement1.getName().equals("containsExactly")) &&
-							invocationCoveringTheEntireStatement2.arguments().size() > 1 && (invocationCoveringTheEntireStatement2.arguments().get(1).startsWith("containsInAnyOrder(") || invocationCoveringTheEntireStatement2.arguments().get(1).startsWith("contains(")))) {
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("empty()")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("containsExactlyInAnyOrder") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("containsInAnyOrder(")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("containsExactly") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("contains(")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isLessThanOrEqualTo") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("lessThanOrEqualTo("))) {
 				for(String key1 : methodInvocationMap1.keySet()) {
 					for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
 						if(invocation1.getName().equals("assertThat")) {

@@ -8,6 +8,7 @@ import com.github.gumtreediff.utils.Pair;
 import gui.webdiff.dir.DirComparator;
 import gui.webdiff.dir.DirectoryDiffView;
 import gui.webdiff.viewers.monaco.MonacoView;
+import gui.webdiff.viewers.monaco.SingleMonacoContent;
 import gui.webdiff.viewers.spv.SinglePageView;
 import gui.webdiff.viewers.vanilla.VanillaDiffView;
 import org.apache.commons.text.StringEscapeUtils;
@@ -186,7 +187,7 @@ public class WebDiff  {
 
             String escapedContent = StringEscapeUtils.escapeHtml4(content);
 
-            return singleMonaco(isAdded, path, escapedContent);
+            return render(new SingleMonacoContent(isAdded, path, escapedContent));
         });
         get("/onDemand", (request, response) -> {
             String rawFile1 = request.queryParams("file1");
@@ -231,27 +232,6 @@ public class WebDiff  {
             return render(view);
         });
     }
-
-    private static String singleMonaco(boolean isAdded, String path, String escapedContent) {
-        String boxColor = isAdded ? "#d4edda" : "#f8d7da";  // Green or red
-        String textColor = isAdded ? "#155724" : "#721c24"; // Dark green or dark red
-        String borderColor = isAdded ? "#c3e6cb" : "#f5c6cb";
-
-        String headerHtml = "<div style=\"background-color:" + boxColor + ";" +
-                            "color:" + textColor + ";" +
-                            "border: 1px solid " + borderColor + ";" +
-                            "padding: 10px; border-radius: 5px; font-weight: bold;\">" +
-                            path +
-                            "</div>";
-
-        return "<div style=\"padding:10px\">" +
-               headerHtml +
-               "<pre style=\"white-space: pre-wrap; background:#f8f8f8; padding:10px; border-radius:5px; margin-top:10px;\">" +
-               escapedContent +
-               "</pre>" +
-               "</div>";
-    }
-
 
     private static String render(Renderable r) throws IOException {
         HtmlCanvas c = new HtmlCanvas();

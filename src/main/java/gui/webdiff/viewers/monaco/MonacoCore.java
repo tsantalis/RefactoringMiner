@@ -23,7 +23,9 @@ import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.MergeConditionalRefactoring;
 import gr.uom.java.xmi.diff.MergeOperationRefactoring;
+import gr.uom.java.xmi.diff.MoveAndRenameClassRefactoring;
 import gr.uom.java.xmi.diff.MoveAttributeRefactoring;
+import gr.uom.java.xmi.diff.MoveClassRefactoring;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring;
 import gr.uom.java.xmi.diff.MoveOperationRefactoring;
 import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
@@ -458,7 +460,8 @@ public class MonacoCore {
 				if(tooltip != null)
 					tooltips.add(tooltip);
     		}
-    		else if(r instanceof MoveOperationRefactoring || r instanceof MoveAttributeRefactoring) {
+    		else if(r instanceof MoveOperationRefactoring || r instanceof MoveAttributeRefactoring || r instanceof MoveClassRefactoring ||
+    				r instanceof MoveAndRenameClassRefactoring) {
     			if(t.getType().toString().endsWith("Declaration")) {
     				String tooltipLeft = "moved to " + r.getInvolvedClassesAfterRefactoring().iterator().next().left;
     				String tooltipRight = "moved from " + r.getInvolvedClassesBeforeRefactoring().iterator().next().left;

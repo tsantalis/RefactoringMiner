@@ -2736,6 +2736,8 @@ public class ReplacementAlgorithm {
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
 			//assertTrue() to fluid assertThat().isTrue() conversion
 			//assertEquals() to fluid assertThat().isEqualTo()
+			//assertNotNull() to fluid assertThat().isNotNull()
+			//assertThat(empty()) to fluid assertThat().isEmpty()
 			if((invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isTrue")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertFalse") && invocationCoveringTheEntireStatement2.getName().equals("isFalse")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertNotNull") && invocationCoveringTheEntireStatement2.getName().equals("isNotNull")) ||
@@ -2743,7 +2745,9 @@ public class ReplacementAlgorithm {
 					(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("isZero") &&
 							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).startsWith("0")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("isOne") &&
-							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).startsWith("1"))) {
+							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).startsWith("1")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isEmpty") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).equals("empty()"))) {
 				for(String key2 : methodInvocationMap2.keySet()) {
 					for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
 						if(invocation2.getName().equals("assertThat")) {
@@ -2782,7 +2786,9 @@ public class ReplacementAlgorithm {
 					(invocationCoveringTheEntireStatement2.getName().equals("assertEquals") && invocationCoveringTheEntireStatement1.getName().equals("isZero") &&
 							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).startsWith("0")) ||
 					(invocationCoveringTheEntireStatement2.getName().equals("assertEquals") && invocationCoveringTheEntireStatement1.getName().equals("isOne") &&
-							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).startsWith("1"))) {
+							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).startsWith("1")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isEmpty") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).equals("empty()"))) {
 				for(String key1 : methodInvocationMap1.keySet()) {
 					for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
 						if(invocation1.getName().equals("assertThat")) {

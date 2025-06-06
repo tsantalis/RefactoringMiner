@@ -188,7 +188,7 @@ public class Stringifier {
 
         JsonObject rootNode = new JsonObject();
         rootNode.addProperty("id", rootId);
-        rootNode.addProperty("nodeType", NodeType.COMMIT.name());
+        rootNode.addProperty("nodeType", NodeType.ROOT.name());
         rootNode.add("aggregatorIds", new JsonArray());
         nodesArray.add(rootNode);
 

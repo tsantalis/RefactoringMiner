@@ -727,6 +727,31 @@
           "type": "MOVE_RENAME_CLASS",
           "description": "Move And Rename Class\torg.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest.StringContainsNumberMatcher moved and renamed to org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest.ThrowableMessageContainsOccurrencesCondition",
           "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic shouldGiveExplantionOnStaticMockingWithoutInlineMockMaker() : void renamed to public shouldGiveExplanationOnStaticMockingWithoutInlineMockMaker() : void in class org.mockito.MockitoTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic shouldGiveExplantionOnConstructionMockingWithoutInlineMockMaker() : void renamed to public shouldGiveExplanationOnConstructionMockingWithoutInlineMockMaker() : void in class org.mockito.MockitoTest",
+          "validation": true
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic shouldNotAllowVerifyingInOrderUnfamilarMocks() : void renamed to public shouldNotAllowVerifyingInOrderUnfamiliarMocks() : void in class org.mockitousage.misuse.InvalidUsageTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tstatement : Statement in method public regular_failing_test() : void from class org.mockitoutil.SafeJUnitRuleTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tbaseStatement : Statement in method public regular_failing_test() : void from class org.mockitoutil.SafeJUnitRuleTest",
+          "validation": true
         }
       ]
     }

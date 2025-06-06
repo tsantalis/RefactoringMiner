@@ -467,16 +467,6 @@ public class DirectoryDiffView implements Renderable {
                         	String description = r.toString();
                         	String refactoringTypeWithBold = "<b>" + r.getRefactoringType().getDisplayName() + "</b>";
                         	description = description.replace(r.getRefactoringType().getDisplayName(), refactoringTypeWithBold);
-                        	if(id != -1) {
-                        		if(description.contains(classNameBefore)) {
-                        			String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameBefore + "</a>"; 
-                        			description = description.replace(classNameBefore, classNameWithLink);
-                        		}
-                        		if(description.contains(classNameAfter) && !classNameBefore.equals(classNameAfter)) {
-                        			String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameAfter + "</a>"; 
-                        			description = description.replace(classNameAfter, classNameWithLink);
-                        		}
-                        	}
                         	Set<String> processed = new LinkedHashSet<>();
                         	String openingTag = "<code>";
 							String closingTag = "</code>";
@@ -524,6 +514,16 @@ public class DirectoryDiffView implements Renderable {
                         	Collections.sort(list, Comparator.comparing(String::length).reversed());
                         	for(String codeElement : list) {
                         		description = description.replace(codeElement, toBeReplaced.get(codeElement));
+                        	}
+                        	if(id != -1) {
+                        		if(description.contains(classNameBefore)) {
+                        			String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameBefore + "</a>"; 
+                        			description = description.replace(classNameBefore, classNameWithLink);
+                        		}
+                        		if(description.contains(classNameAfter) && !classNameBefore.equals(classNameAfter)) {
+                        			String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameAfter + "</a>"; 
+                        			description = description.replace(classNameAfter, classNameWithLink);
+                        		}
                         	}
                             html.li(class_("list-group-item")).write(description, NO_ESCAPE)
                             ._li();

@@ -2744,6 +2744,7 @@ public class ReplacementAlgorithm {
 			//assertThat(contains()) to fluid assertThat().containsExactly()
 			//assertThat(lessThanOrEqualTo()) to fluid assertThat().isLessThanOrEqualTo()
 			//assertThat(instanceOf()) to fluid assertThat().isInstanceOf()
+			//assertTrue(instanceof) to fluid assertThat().isInstanceOf()
 			if((invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isTrue")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertFalse") && invocationCoveringTheEntireStatement2.getName().equals("isFalse")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertNull") && invocationCoveringTheEntireStatement2.getName().equals("isNull")) ||
@@ -2762,7 +2763,9 @@ public class ReplacementAlgorithm {
 					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isLessThanOrEqualTo") &&
 							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("lessThanOrEqualTo(")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isInstanceOf") &&
-							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("instanceOf("))) {
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("instanceOf(")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isInstanceOf") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(" instanceof "))) {
 				for(String key2 : methodInvocationMap2.keySet()) {
 					for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
 						if(invocation2.getName().equals("assertThat")) {
@@ -2777,14 +2780,20 @@ public class ReplacementAlgorithm {
 										return replacementInfo.getReplacements();
 									}
 									else if(arg.contains(".")) {
-										String trim = arg.substring(arg.indexOf(".") + 1, arg.length()); {
-											if(statement2.getArgumentizedString().contains(trim)) {
-												Replacement replacement = new MethodInvocationReplacement(
-														invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
-														invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
-												//replacementInfo.addReplacement(replacement);
-												return replacementInfo.getReplacements();
-											}
+										String trim = arg.substring(arg.indexOf(".") + 1, arg.length());
+										if(statement2.getArgumentizedString().contains(trim)) {
+											Replacement replacement = new MethodInvocationReplacement(
+													invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
+													invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
+											//replacementInfo.addReplacement(replacement);
+											return replacementInfo.getReplacements();
+										}
+									}
+									if(arg.contains(" instanceof ")) {
+										String before = arg.substring(0, arg.indexOf(" instanceof "));
+										String after = arg.substring(arg.indexOf(" instanceof ") + " instanceof ".length(), arg.length());
+										if(statement2.getArgumentizedString().contains(before) && statement2.getArgumentizedString().contains(after)) {
+											return replacementInfo.getReplacements();
 										}
 									}
 								}
@@ -2812,7 +2821,9 @@ public class ReplacementAlgorithm {
 					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isLessThanOrEqualTo") &&
 							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("lessThanOrEqualTo(")) ||
 					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isInstanceOf") &&
-							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("instanceOf("))) {
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("instanceOf(")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertTrue") && invocationCoveringTheEntireStatement1.getName().equals("isInstanceOf") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).contains(" instanceof "))) {
 				for(String key1 : methodInvocationMap1.keySet()) {
 					for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
 						if(invocation1.getName().equals("assertThat")) {
@@ -2827,14 +2838,20 @@ public class ReplacementAlgorithm {
 										return replacementInfo.getReplacements();
 									}
 									else if(arg.contains(".")) {
-										String trim = arg.substring(arg.indexOf(".") + 1, arg.length()); {
-											if(statement1.getArgumentizedString().contains(trim)) {
-												Replacement replacement = new MethodInvocationReplacement(
-														invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
-														invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
-												//replacementInfo.addReplacement(replacement);
-												return replacementInfo.getReplacements();
-											}
+										String trim = arg.substring(arg.indexOf(".") + 1, arg.length());
+										if(statement1.getArgumentizedString().contains(trim)) {
+											Replacement replacement = new MethodInvocationReplacement(
+													invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
+													invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
+											//replacementInfo.addReplacement(replacement);
+											return replacementInfo.getReplacements();
+										}
+									}
+									if(arg.contains(" instanceof ")) {
+										String before = arg.substring(0, arg.indexOf(" instanceof "));
+										String after = arg.substring(arg.indexOf(" instanceof ") + " instanceof ".length(), arg.length());
+										if(statement1.getArgumentizedString().contains(before) && statement1.getArgumentizedString().contains(after)) {
+											return replacementInfo.getReplacements();
 										}
 									}
 								}

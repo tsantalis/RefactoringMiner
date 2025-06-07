@@ -13,12 +13,12 @@ public class SingleMonacoContent implements Renderable {
 
     private final boolean isAdded;
     private final String path;
-    private final String escapedContent;
+    private final String content;
 
-    public SingleMonacoContent(boolean isAdded, String path, String escapedContent) {
+    public SingleMonacoContent(boolean isAdded, String path, String content) {
         this.isAdded = isAdded;
         this.path = path;
-        this.escapedContent = escapedContent;
+        this.content = content;
     }
 
     @Override
@@ -27,6 +27,7 @@ public class SingleMonacoContent implements Renderable {
         String textColor = isAdded ? "#155724" : "#721c24";
         String borderColor = isAdded ? "#c3e6cb" : "#f5c6cb";
         String editorId = "monaco-editor-" + Math.abs(path.hashCode());
+        String code = "loadSingleMonacoEditor({ id: '" + editorId + "', value: `" + content + "`, language: 'java' });";
 
         html
                 .render(DocType.HTML5)
@@ -37,12 +38,11 @@ public class SingleMonacoContent implements Renderable {
                 ._div()
                 ._div()
                 .div(style("height: 10px; flex-shrink: 0; background:#eee;"))
-                ._div()
-                .script().content(
-                        "loadSingleMonacoEditor({ id: '" + editorId + "', value: `" + escapedContent + "`, language: 'java' });"
-                )
+                ._div();
+                html.macros().script(code)
                 ._body()
                 ._html();
+
     }
 
     private static class SingleMonacoHeader implements Renderable {

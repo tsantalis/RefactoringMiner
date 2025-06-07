@@ -202,9 +202,7 @@ public class WebDiff  {
             String path = URLDecoder.decode(rawFilePath, StandardCharsets.UTF_8);
             String content = contentsMap.getOrDefault(path, "");
 
-            String escapedContent = StringEscapeUtils.escapeHtml4(content);
-
-            return render(new SingleMonacoContent(isAdded, path, escapedContent));
+            return render(new SingleMonacoContent(isAdded, path, content));
         });
         get("/onDemand", (request, response) -> {
             String rawFile1 = request.queryParams("file1");

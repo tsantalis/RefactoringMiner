@@ -332,7 +332,7 @@ public class MonacoCore {
         			String filePath = tooltip.substring(start, tooltip.length());
         			int id = comparator.getId(srcFileName, filePath);
         			if(id != -1) {
-        				requestPath = "/monaco-page/" + id;
+        				requestPath = "../../monaco-page/" + id;
         			}
         		}
         		else if (kind.equals("moveIn") && tooltip.contains("moved from file: ")) {
@@ -341,7 +341,7 @@ public class MonacoCore {
         			String filePath = tooltip.substring(start, tooltip.length());
         			int id = comparator.getId(filePath, dstFileName);
         			if(id != -1) {
-        				requestPath = "/monaco-page/" + id;
+        				requestPath = "../../monaco-page/" + id;
         			}
         		}
             	b.append("{")

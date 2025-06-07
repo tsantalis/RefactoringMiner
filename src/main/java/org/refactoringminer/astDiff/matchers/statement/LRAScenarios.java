@@ -53,8 +53,8 @@ public enum LRAScenarios {
                 match.addMapping(srcAssignment, dstAssignment);
                 Tree sa2 = srcAssignment.getChild(2);
                 Tree da2 = dstAssignment.getChild(2);
-                if (sa2.getType().name.equals(da2.getType().name))
-                    match.addMapping(sa2,da2);
+//                if (sa2.getType().name.equals(da2.getType().name))
+//                    match.addMapping(sa2,da2);
                 return List.of(
                         new Pair<>(srcAssignment.getChild(0), dstAssignment.getChild(0)), // left-hand side
                         new Pair<>(srcAssignment.getChild(1), dstAssignment.getChild(1)), // =

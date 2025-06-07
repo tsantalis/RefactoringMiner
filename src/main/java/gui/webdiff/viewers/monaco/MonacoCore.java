@@ -331,6 +331,14 @@ public class MonacoCore {
         			int start = tooltip.indexOf(prefix) + prefix.length();
         			String filePath = tooltip.substring(start, tooltip.length());
         			int id = comparator.getId(srcFileName, filePath);
+                    //@tsantalis, this will be pointing to the moved diff, instead of the original diff
+                    //The fallback must be the moved diff which has srcFileName -> filePath.
+                    //The more reasonable option would be filepath -> filepath,
+                    // As following (instead of the current id definition):
+                    /*
+                    int id = comparator.getId(filePath, filePath);
+                    if (id == -1) id = comparator.getId(srcFileName, filePath);
+                    */
         			if(id != -1) {
         				requestPath = "../../monaco-page/" + id;
         			}
@@ -340,6 +348,13 @@ public class MonacoCore {
         			int start = tooltip.indexOf(prefix) + prefix.length();
         			String filePath = tooltip.substring(start, tooltip.length());
         			int id = comparator.getId(filePath, dstFileName);
+                    //@tsantalis, the same happens here, this can be the fallback, but the better option
+                    //in my opinion is the filepath -> filepath
+                    // As following (instead of the current id definition):
+                    /*
+                    int id = comparator.getId(filePath, filePath);
+                    if (id == -1) id = comparator.getId(dstFileName, dstFileName);
+                    */
         			if(id != -1) {
         				requestPath = "../../monaco-page/" + id;
         			}

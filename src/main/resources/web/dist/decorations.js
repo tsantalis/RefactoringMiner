@@ -20,7 +20,7 @@ function getDecorationNoLeadingWhiteSpace(range, pos, endPos, editor) {
                 zIndex: range.index,
                 hoverMessage: {
                     value: range.requestPath
-                        ? `[${range.tooltip}](${range.requestPath})`
+                        ? `[${range.tooltip}](${new URL(range.requestPath, window.location.href).href})`
                         : range.tooltip,
                     isTrusted: true
                 },
@@ -45,7 +45,7 @@ function getDecorationNoLeadingWhiteSpace(range, pos, endPos, editor) {
                 zIndex: range.index,
                 hoverMessage: {
                     value: range.requestPath
-                        ? `[${range.tooltip}](${range.requestPath})`
+                        ? `[${range.tooltip}](${new URL(range.requestPath, window.location.href).href})`
                         : range.tooltip,
                     isTrusted: true
                 },
@@ -65,7 +65,7 @@ function getDecorationNoLeadingWhiteSpace(range, pos, endPos, editor) {
                     zIndex: range.index,
                     hoverMessage: {
                         value: range.requestPath
-                            ? `[${range.tooltip}](${range.requestPath})`
+                            ? `[${range.tooltip}](${new URL(range.requestPath, window.location.href).href})`
                             : range.tooltip,
                         isTrusted: true
                     },
@@ -88,7 +88,7 @@ function getDecorationNoLeadingWhiteSpace(range, pos, endPos, editor) {
                 zIndex: range.index,
                 hoverMessage: {
                     value: range.requestPath
-                        ? `[${range.tooltip}](${range.requestPath})`
+                        ? `[${range.tooltip}](${new URL(range.requestPath, window.location.href).href})`
                         : range.tooltip,
                     isTrusted: true
                 },
@@ -110,7 +110,7 @@ function getDecoration(range, pos, endPos) {
             zIndex: range.index,
             hoverMessage: {
                 value: range.requestPath
-                    ? `[${range.tooltip}](${range.requestPath})`
+                    ? `[${range.tooltip}](${new URL(range.requestPath, window.location.href).href})`
                     : range.tooltip,
                 isTrusted: true
             },

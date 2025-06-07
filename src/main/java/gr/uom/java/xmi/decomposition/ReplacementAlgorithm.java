@@ -2745,6 +2745,7 @@ public class ReplacementAlgorithm {
 			//assertThat(lessThanOrEqualTo()) to fluid assertThat().isLessThanOrEqualTo()
 			//assertThat(instanceOf()) to fluid assertThat().isInstanceOf()
 			//assertTrue(instanceof) to fluid assertThat().isInstanceOf()
+			//assertThat(is()) to fluid assertThat().is()
 			if((invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isTrue")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertFalse") && invocationCoveringTheEntireStatement2.getName().equals("isFalse")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertNull") && invocationCoveringTheEntireStatement2.getName().equals("isNull")) ||
@@ -2764,6 +2765,8 @@ public class ReplacementAlgorithm {
 							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("lessThanOrEqualTo(")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isInstanceOf") &&
 							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("instanceOf(")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("is") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("is(")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isInstanceOf") &&
 							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(" instanceof "))) {
 				for(String key2 : methodInvocationMap2.keySet()) {
@@ -2822,6 +2825,8 @@ public class ReplacementAlgorithm {
 							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("lessThanOrEqualTo(")) ||
 					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isInstanceOf") &&
 							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("instanceOf(")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("is") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("is(")) ||
 					(invocationCoveringTheEntireStatement2.getName().equals("assertTrue") && invocationCoveringTheEntireStatement1.getName().equals("isInstanceOf") &&
 							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).contains(" instanceof "))) {
 				for(String key1 : methodInvocationMap1.keySet()) {

@@ -326,35 +326,20 @@ public class MonacoCore {
         		}
         		*/
         		String requestPath = "";
-        		if(kind.equals("moveOut") && tooltip.contains("moved to file: ")) {
+        		if((kind.equals("moveOut") || kind.equals("mm")) && tooltip.contains("moved to file: ")) {
         			String prefix = "moved to file: ";
         			int start = tooltip.indexOf(prefix) + prefix.length();
         			String filePath = tooltip.substring(start, tooltip.length());
         			int id = comparator.getId(srcFileName, filePath);
-                    //@tsantalis, this will be pointing to the moved diff, instead of the original diff
-                    //The fallback must be the moved diff which has srcFileName -> filePath.
-                    //The more reasonable option would be filepath -> filepath,
-                    // As following (instead of the current id definition):
-                    /*
-                    int id = comparator.getId(filePath, filePath);
-                    if (id == -1) id = comparator.getId(srcFileName, filePath);
-                    */
         			if(id != -1) {
         				requestPath = "../../monaco-page/" + id;
         			}
         		}
-        		else if (kind.equals("moveIn") && tooltip.contains("moved from file: ")) {
+        		else if ((kind.equals("moveIn") || kind.equals("mm")) && tooltip.contains("moved from file: ")) {
         			String prefix = "moved from file: ";
         			int start = tooltip.indexOf(prefix) + prefix.length();
         			String filePath = tooltip.substring(start, tooltip.length());
         			int id = comparator.getId(filePath, dstFileName);
-                    //@tsantalis, the same happens here, this can be the fallback, but the better option
-                    //in my opinion is the filepath -> filepath
-                    // As following (instead of the current id definition):
-                    /*
-                    int id = comparator.getId(filePath, filePath);
-                    if (id == -1) id = comparator.getId(dstFileName, dstFileName);
-                    */
         			if(id != -1) {
         				requestPath = "../../monaco-page/" + id;
         			}
@@ -460,8 +445,8 @@ public class MonacoCore {
     		else if(r instanceof MoveOperationRefactoring || r instanceof MoveAttributeRefactoring || r instanceof MoveClassRefactoring ||
     				r instanceof MoveAndRenameClassRefactoring) {
     			if(t.getType().toString().endsWith("Declaration")) {
-    				String tooltipLeft = "moved to " + r.getInvolvedClassesAfterRefactoring().iterator().next().left;
-    				String tooltipRight = "moved from " + r.getInvolvedClassesBeforeRefactoring().iterator().next().left;
+    				String tooltipLeft = "moved to file: " + r.getInvolvedClassesAfterRefactoring().iterator().next().left;
+    				String tooltipRight = "moved from file: " + r.getInvolvedClassesBeforeRefactoring().iterator().next().left;
     				String tooltip = generateTooltip(t, c, (UMLOperationBodyMapper)null, tooltipLeft, tooltipRight);
 					if(tooltip != null)
 						tooltips.add(tooltip);

@@ -19,7 +19,10 @@ function getDecorationNoLeadingWhiteSpace(range, pos, endPos, editor) {
                 //inlineClassName: range.kind, // Use this instead of className
                 zIndex: range.index,
                 hoverMessage: {
-                    value: range.tooltip,
+                    value: range.requestPath
+                        ? `[${range.tooltip}](${range.requestPath})`
+                        : range.tooltip,
+                    isTrusted: true
                 },
                 overviewRuler: {
                     color: getEditColor(range.kind),
@@ -41,7 +44,10 @@ function getDecorationNoLeadingWhiteSpace(range, pos, endPos, editor) {
                 //inlineClassName: range.kind, // Use this instead of className
                 zIndex: range.index,
                 hoverMessage: {
-                    value: range.tooltip,
+                    value: range.requestPath
+                        ? `[${range.tooltip}](${range.requestPath})`
+                        : range.tooltip,
+                    isTrusted: true
                 },
                 overviewRuler: {
                     color: getEditColor(range.kind),
@@ -58,7 +64,10 @@ function getDecorationNoLeadingWhiteSpace(range, pos, endPos, editor) {
                     //inlineClassName: range.kind, // Use this instead of className
                     zIndex: range.index,
                     hoverMessage: {
-                        value: range.tooltip,
+                        value: range.requestPath
+                            ? `[${range.tooltip}](${range.requestPath})`
+                            : range.tooltip,
+                        isTrusted: true
                     },
                     overviewRuler: {
                         color: getEditColor(range.kind),
@@ -78,7 +87,10 @@ function getDecorationNoLeadingWhiteSpace(range, pos, endPos, editor) {
                 //inlineClassName: range.kind, // Use this instead of className
                 zIndex: range.index,
                 hoverMessage: {
-                    value: range.tooltip,
+                    value: range.requestPath
+                        ? `[${range.tooltip}](${range.requestPath})`
+                        : range.tooltip,
+                    isTrusted: true
                 },
                 overviewRuler: {
                     color: getEditColor(range.kind),
@@ -97,7 +109,10 @@ function getDecoration(range, pos, endPos) {
             //inlineClassName: range.kind, // Use this instead of className
             zIndex: range.index,
             hoverMessage: {
-                value: range.tooltip,
+                value: range.requestPath
+                    ? `[${range.tooltip}](${range.requestPath})`
+                    : range.tooltip,
+                isTrusted: true
             },
             overviewRuler: {
                 color: getEditColor(range.kind),

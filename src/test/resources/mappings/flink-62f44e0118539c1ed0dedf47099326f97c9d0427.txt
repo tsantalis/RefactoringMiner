@@ -595,6 +595,7 @@ line range:493-503==line range:481-491
 line range:505-505==line range:493-493
 line range:506-506==line range:494-494
 line range:508-508==line range:496-497
+line range:517-519==line range:502-503
 line range:520-522==line range:504-504
 public testMissingCancellationBarriers() : void -> package testMissingCancellationBarriers() : void
 line range:531-537==line range:511-517
@@ -880,7 +881,9 @@ line range:1049-1049==line range:1025-1025
 private assertMetrics(target ValidatingCheckpointHandler, checkpointBarrierHandler CheckpointBarrierHandler, latestCheckpointId long, alignmentDurationStartNanos long, alignmentDurationNanosMin long, startDelayNanos long, bytesProcessedDuringAlignment long) : void -> private assertMetrics(target ValidatingCheckpointHandler, checkpointBarrierHandler CheckpointBarrierHandler, latestCheckpointId long, alignmentDurationStartNanos long, alignmentDurationNanosMin long, startDelayNanos long, bytesProcessedDuringAlignment long) : void
 line range:1191-1191==line range:1167-1167
 line range:1192-1193==line range:1168-1169
+line range:1194-1194==line range:1170-1170
 line range:1195-1195==line range:1171-1171
+line range:1196-1198==line range:1172-1173
 private testBarrierHandling(checkpointType SnapshotType) : void -> private testBarrierHandling(checkpointType SnapshotType) : void
 line range:1334-1334==line range:1308-1308
 line range:1335-1335==line range:1309-1309
@@ -9144,6 +9147,7 @@ public testWindowStagger() : void -> package testWindowStagger() : void
 line range:35-35==line range:32-32
 line range:37-37==line range:34-34
 line range:38-38==line range:35-36
+line range:39-41==line range:37-38
 private processElementAndEnsureOutput(operator OneInputStreamOperator<IN,OUT>, keySelector KeySelector<IN,K>, keyType TypeInformation<K>, element IN) : void -> private processElementAndEnsureOutput(operator OneInputStreamOperator<IN,OUT>, keySelector KeySelector<IN,K>, keyType TypeInformation<K>, element IN) : void
 line range:1487-1488==line range:1501-1502
 line range:1493-1494==line range:1507-1508

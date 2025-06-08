@@ -3,11 +3,22 @@ package gui.webdiff.dir;
 import com.github.gumtreediff.utils.Pair;
 import gui.webdiff.tree.TreeViewGenerator;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.kohsuke.github.GHPullRequest;
+import org.kohsuke.github.GHPullRequestReview;
+import org.kohsuke.github.GHPullRequestReviewComment;
+import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.PagedIterable;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.models.ASTDiff;
+import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
+import org.refactoringminer.astDiff.utils.URLHelper;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+
+import java.io.IOException;
 import java.util.*;
 
 public class DirComparator {
@@ -79,6 +90,41 @@ public class DirComparator {
         TreeViewGenerator treeViewGenerator = new TreeViewGenerator(getModifiedFilesName(), diffs);
         compressedTree = treeViewGenerator.getCompressedTree();
         this.diffs = treeViewGenerator.getOrderedDiffs();
+        // it takes some time to fetch all comments
+        //Map<ImmutablePair<String, Integer>, List<PullRequestReviewComment>> commentMap = pullRequestComments();
+    }
+
+    private Map<ImmutablePair<String, Integer>, List<PullRequestReviewComment>> pullRequestComments() {
+    	Map<ImmutablePair<String, Integer>, List<PullRequestReviewComment>> commentMap = new LinkedHashMap<>();
+    	DiffMetaInfo info = projectASTDiff.getMetaInfo();
+		try {
+			String cloneURL = URLHelper.getRepo(info.getUrl());
+	        int pullRequestId = URLHelper.getPullRequestID(info.getUrl());
+			GHRepository repository = new GitHistoryRefactoringMinerImpl().getGitHubRepository(cloneURL);
+			GHPullRequest pullRequest = repository.getPullRequest(pullRequestId);
+	    	PagedIterable<GHPullRequestReview> reviews = pullRequest.listReviews();
+			for(GHPullRequestReview review : reviews) {
+				PagedIterable<GHPullRequestReviewComment> comments = review.listReviewComments();
+				for(GHPullRequestReviewComment comment : comments) {
+					ImmutablePair<String, Integer> pair = ImmutablePair.of(comment.getPath(), comment.getOriginalPosition());
+					if(commentMap.containsKey(pair)) {
+						PullRequestReviewComment prComment = new PullRequestReviewComment(comment.getUser().getLogin(), comment.getBody(), comment.getCreatedAt());
+						commentMap.get(pair).add(prComment);
+					}
+					else {
+						List<PullRequestReviewComment> prComments = new ArrayList<>();
+						PullRequestReviewComment prComment = new PullRequestReviewComment(comment.getUser().getLogin(), comment.getBody(), comment.getCreatedAt());
+						prComments.add(prComment);
+						commentMap.put(pair, prComments);
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch(NumberFormatException e) {
+			
+		}
+		return commentMap;
     }
 
     private void compare() {

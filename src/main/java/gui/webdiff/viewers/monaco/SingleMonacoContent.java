@@ -15,6 +15,8 @@ public class SingleMonacoContent implements Renderable {
     private final String path;
     private final String content;
 
+    //TODO: PRComment support
+
     public SingleMonacoContent(boolean isAdded, String path, String content) {
         this.isAdded = isAdded;
         this.path = path;

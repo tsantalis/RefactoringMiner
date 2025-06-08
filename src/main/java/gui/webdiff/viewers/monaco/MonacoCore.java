@@ -652,7 +652,7 @@ public class MonacoCore {
     private String getComments(String filename) {
         List<PRComment> filteredComments = this.comments.stream().filter(prComment ->
                 prComment.getFilePath().equals(filename)
-        ).toList();
+        ).toList(); //TODO: Must be further improved
         ObjectMapper mapper = new ObjectMapper();
         String commentsAsJson = "";
         try {

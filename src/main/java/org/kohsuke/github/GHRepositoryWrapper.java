@@ -15,8 +15,8 @@ public class GHRepositoryWrapper {
         GitHubResponse<GHCommit> ghCommitGitHubResponse = getGhCommitGitHubResponse(String.format("/repos/%s/%s/commits/%s", ghRepository.getOwnerName(), ghRepository.getName(), sha1));
         GHCommit ghCommit = ghCommitGitHubResponse.body().wrapUp(ghRepository);
         files.addAll(ghCommit.getFiles());
-        if (ghCommitGitHubResponse.headers().containsKey("Link")) {
-            String linkHeaderField = ghCommitGitHubResponse.headerField("Link");
+        if (ghCommitGitHubResponse.header("Link") != null) {
+            String linkHeaderField = ghCommitGitHubResponse.header("Link");
             if (linkHeaderField != null) {
                 String[] links = linkHeaderField.split(",");
                 if (links.length == 2) {
@@ -54,8 +54,8 @@ public class GHRepositoryWrapper {
 		for(GHPullRequestFileDetail file : gitHubResponse.body()) {
 			files.add(file);
 		}
-		if (gitHubResponse.headers().containsKey("Link")) {
-            String linkHeaderField = gitHubResponse.headerField("Link");
+		if (gitHubResponse.header("Link") != null) {
+            String linkHeaderField = gitHubResponse.header("Link");
             if (linkHeaderField != null) {
                 String[] links = linkHeaderField.split(",");
                 if (links.length == 2) {
@@ -91,5 +91,11 @@ public class GHRepositoryWrapper {
         Requester requester = ghRepository.root().createRequest().withUrlPath(url);
         GitHubResponse<GHCommit> ghCommitGitHubResponse = requester.client.sendRequest(requester, (responseInfo) -> GitHubResponse.parseBody(responseInfo, GHCommit.class));
         return ghCommitGitHubResponse;
+    }
+
+    public int getGhPullRequestReviewCommentLine(String url) throws IOException {
+        Requester requester = ghRepository.root().createRequest().withUrlPath(url);
+        GitHubResponse<GHPullRequestReviewComment> ghPullRequestReviewCommentResponse = requester.client.sendRequest(requester, (responseInfo) -> GitHubResponse.parseBody(responseInfo, GHPullRequestReviewComment.class));
+        return ghPullRequestReviewCommentResponse.body().getLine();
     }
 }

@@ -1,9 +1,6 @@
 package org.refactoringminer.astDiff.models;
 
 import gui.webdiff.dir.PullRequestReviewComment;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
-import org.refactoringminer.rm1.PRComment;
 
 import java.util.List;
 import java.util.Map;

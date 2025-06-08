@@ -8,6 +8,7 @@ import org.kohsuke.github.GHPullRequest;
 import org.kohsuke.github.GHPullRequestReview;
 import org.kohsuke.github.GHPullRequestReviewComment;
 import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GHRepositoryWrapper;
 import org.kohsuke.github.PagedIterable;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.models.ASTDiff;
@@ -113,16 +114,16 @@ public class DirComparator {
                 PagedIterable<GHPullRequestReviewComment> comments = review.listReviewComments();
                 for (GHPullRequestReviewComment comment : comments) {
                     String path = comment.getPath();
-                    int lineNumber = comment.getOriginalPosition();
-
-                    PullRequestReviewComment prComment = new PullRequestReviewComment(
-                            comment.getUser().getLogin(),
-                            comment.getBody(),
-                            comment.getCreatedAt(),
-                            lineNumber
-                    );
-
-                    commentMap.computeIfAbsent(path, k -> new ArrayList<>()).add(prComment);
+                    int lineNumber = new GHRepositoryWrapper(repository).getGhPullRequestReviewCommentLine(comment.getUrl().toString());
+                    if (lineNumber != 0) {
+                        PullRequestReviewComment prComment = new PullRequestReviewComment(
+                                comment.getUser().getLogin(),
+                                comment.getBody(),
+                                comment.getCreatedAt(),
+                                lineNumber
+                        );
+                        commentMap.computeIfAbsent(path, k -> new ArrayList<>()).add(prComment);
+                    }
                 }
             }
         } catch (IOException e) {
@@ -130,11 +131,8 @@ public class DirComparator {
         } catch (NumberFormatException e) {
             // the URL is not a PR URL
         }
-
         return commentMap;
     }
-
-
 
     private void compare() {
         Set<String> beforeFiles = projectASTDiff.getFileContentsBefore().keySet();

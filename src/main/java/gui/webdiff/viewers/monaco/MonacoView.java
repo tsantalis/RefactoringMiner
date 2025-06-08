@@ -37,7 +37,7 @@ public class MonacoView extends AbstractDiffView implements Renderable {
         String srcFileContent = comparator.getProjectASTDiff().getFileContentsBefore().get(diff.getSrcPath());
         String dstFileContent = comparator.getProjectASTDiff().getFileContentsAfter().get(diff.getDstPath());
         List<Refactoring> refactorings = comparator.getRefactorings();
-        core = new MonacoCore(comparator, diff, id, isMovedDiff, srcFileContent, dstFileContent, refactorings);
+        core = new MonacoCore(comparator, diff, id, isMovedDiff, srcFileContent, dstFileContent, refactorings, comparator.getProjectASTDiff().getMetaInfo().getComments());
     }
 
     public MonacoView(String toolName, DirComparator comparator, String routePath, int id, ASTDiff diff) {
@@ -54,7 +54,8 @@ public class MonacoView extends AbstractDiffView implements Renderable {
             String srcFileContent = comparator.getProjectASTDiff().getFileContentsBefore().get(diff.getSrcPath());
             String dstFileContent = comparator.getProjectASTDiff().getFileContentsAfter().get(diff.getDstPath());
             List<Refactoring> refactorings = comparator.getRefactorings();
-            core = new MonacoCore(comparator, diff, id, false, srcFileContent, dstFileContent, refactorings);
+            core = new MonacoCore(comparator, diff, id, false, srcFileContent, dstFileContent, refactorings,
+                    comparator.getProjectASTDiff().getMetaInfo().getComments());
     }
 
     public void setDecorate(boolean decorate) {

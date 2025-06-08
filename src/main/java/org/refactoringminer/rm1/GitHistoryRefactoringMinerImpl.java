@@ -60,16 +60,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GHPullRequest;
-import org.kohsuke.github.GHPullRequestCommitDetail;
-import org.kohsuke.github.GHPullRequestFileDetail;
-import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GHRepositoryWrapper;
-import org.kohsuke.github.GHTree;
-import org.kohsuke.github.GHTreeEntry;
-import org.kohsuke.github.GitHub;
-import org.kohsuke.github.PagedIterable;
+import org.kohsuke.github.*;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.api.Refactoring;
@@ -1879,7 +1870,13 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					ProjectASTDiff diff = differ.getProjectASTDiff();
 					diff.setMetaInfo(new DiffMetaInfo(
 							extractRepositoryName(cloneURL) + "#" + pullRequestId,
-							extractPullRequestURL(cloneURL, pullRequestId)));
+							extractPullRequestURL(cloneURL, pullRequestId),
+                            fetchPRComments(
+                                    extractRepositoryName(cloneURL),
+                                    extractOwnerName(cloneURL),
+                                    pullRequestId)
+                            )
+                    );
 					diffs.add(diff);
 				}
 				catch(RefactoringMinerTimedOutException e) {
@@ -1903,7 +1900,38 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return diffs.iterator().next();
 	}
 
-	private void multiThreadedFetch(Map<String, String> filesBefore, Map<String, String> filesCurrent,
+    private static String extractOwnerName(String cloneURL) {
+        if (cloneURL == null || cloneURL.isEmpty()) {
+            return null;
+        }
+
+        // Handle HTTPS format: https://github.com/owner/repo.git
+        if (cloneURL.startsWith("https://")) {
+            // Remove protocol
+            String path = cloneURL.replaceFirst("https://[^/]+/", "");
+            String[] parts = path.split("/");
+            if (parts.length >= 2) {
+                return parts[0];
+            }
+        }
+
+        // Handle SSH format: git@github.com:owner/repo.git
+        if (cloneURL.startsWith("git@")) {
+            int colonIndex = cloneURL.indexOf(':');
+            if (colonIndex != -1 && colonIndex + 1 < cloneURL.length()) {
+                String path = cloneURL.substring(colonIndex + 1);
+                String[] parts = path.split("/");
+                if (parts.length >= 2) {
+                    return parts[0];
+                }
+            }
+        }
+
+        return null; // If format is unrecognized
+    }
+
+
+    private void multiThreadedFetch(Map<String, String> filesBefore, Map<String, String> filesCurrent,
 			Map<String, String> renamedFilesHint, Set<String> repositoryDirectoriesBefore,
 			Set<String> repositoryDirectoriesCurrent, Set<String> deletedAndRenamedFileParentDirectories,
 			List<String> commitFileNames, ExecutorService pool, GHPullRequestFileDetail commitFile, String fileName) {
@@ -2368,4 +2396,24 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			}
 		}
 	}
+
+    public List<PRComment> fetchPRComments(String owner, String repoName, int prNumber) throws IOException {
+        GHRepository repo = gitHub.getRepository(owner + "/" + repoName);
+        GHPullRequest pr = repo.getPullRequest(prNumber);
+
+        List<GHPullRequestReviewComment> reviewComments = pr.listReviewComments().toList();
+
+        List<PRComment> prComments = new ArrayList<>();
+        for (GHPullRequestReviewComment comment : reviewComments) {
+            prComments.add(new PRComment(
+                    comment.getUser().getLogin(),
+                    comment.getPath(),
+                    comment.getPosition(),
+                    comment.getBody()
+                    )
+            );
+        }
+        return prComments;
+    }
 }
+

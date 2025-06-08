@@ -35,7 +35,6 @@ import gr.uom.java.xmi.diff.SplitOperationRefactoring;
 import gui.webdiff.dir.DirComparator;
 
 import gui.webdiff.dir.PullRequestReviewComment;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
@@ -632,21 +631,20 @@ public class MonacoCore {
         boolean spv = !showFilenames;
         if (minimal) spv = false;
         return "{ "
-                + "moved: " + this.isMoved
-                + ", id: " + id
-                + ", spv: " + spv
-                + ", file: \"" + srcFileName + "\""
-                + ", left: " + this.getLeftJsConfig()
-                + ", lcid: \"" + this.getLeftContainerId() + "\""
-                + ", right: " + this.getRightJsConfig()
-                + ", right_comments : " + this.getComments(dstFileName)
-                + ", left_comments : " + this.getComments(srcFileName)
-
-                + ", rcid: \"" + this.getRightContainerId() + "\""
-                + ", mappings: " + this.getMappingsJsConfig() + "}";
+               + "moved: " + this.isMoved
+               + ", id: " + id
+               + ", spv: " + spv
+               + ", file: \"" + srcFileName + "\""
+               + ", left: " + this.getLeftJsConfig()
+               + ", lcid: \"" + this.getLeftContainerId() + "\""
+               + ", right: " + this.getRightJsConfig()
+               + ", right_comments : " + filterComments(comments, dstFileName)
+               + ", left_comments : " + "[]"
+               + ", rcid: \"" + this.getRightContainerId() + "\""
+               + ", mappings: " + this.getMappingsJsConfig() + "}";
     }
 
-    private String getComments(String filename) {
+    public static String filterComments(Map<String, List<PullRequestReviewComment>> comments, String filename) {
         List<PullRequestReviewComment> fileComments = comments.getOrDefault(filename, Collections.emptyList());
         ObjectMapper mapper = new ObjectMapper();
         String commentsAsJson = "";

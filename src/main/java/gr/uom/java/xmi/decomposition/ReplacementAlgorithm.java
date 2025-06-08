@@ -2747,6 +2747,9 @@ public class ReplacementAlgorithm {
 			//assertThat(instanceOf()) to fluid assertThat().isInstanceOf()
 			//assertTrue(instanceof) to fluid assertThat().isInstanceOf()
 			//assertThat(is()) to fluid assertThat().is()
+			//assertTrue(>0) to fluid assertThat().isPositive()
+			//assertTrue(<0) to fluid assertThat().isNegative()
+			//assertTrue(==0) to fluid assertThat().isZero()
 			if((invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isTrue")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertFalse") && invocationCoveringTheEntireStatement2.getName().equals("isFalse")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertNull") && invocationCoveringTheEntireStatement2.getName().equals("isNull")) ||
@@ -2771,7 +2774,13 @@ public class ReplacementAlgorithm {
 					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("is") &&
 							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("is(")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isInstanceOf") &&
-							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(" instanceof "))) {
+							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(" instanceof ")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isPositive") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(" > 0")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isNegative") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(" < 0")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isZero") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(" == 0"))) {
 				for(String key2 : methodInvocationMap2.keySet()) {
 					for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
 						if(invocation2.getName().equals("assertThat")) {
@@ -2799,6 +2808,24 @@ public class ReplacementAlgorithm {
 										String before = arg.substring(0, arg.indexOf(" instanceof "));
 										String after = arg.substring(arg.indexOf(" instanceof ") + " instanceof ".length(), arg.length());
 										if(statement2.getArgumentizedString().contains(before) && statement2.getArgumentizedString().contains(after)) {
+											return replacementInfo.getReplacements();
+										}
+									}
+									else if(arg.contains(" > 0")) {
+										String before = arg.substring(0, arg.indexOf(" > 0"));
+										if(statement2.getArgumentizedString().contains(before)) {
+											return replacementInfo.getReplacements();
+										}
+									}
+									else if(arg.contains(" < 0")) {
+										String before = arg.substring(0, arg.indexOf(" < 0"));
+										if(statement2.getArgumentizedString().contains(before)) {
+											return replacementInfo.getReplacements();
+										}
+									}
+									else if(arg.contains(" == 0")) {
+										String before = arg.substring(0, arg.indexOf(" == 0"));
+										if(statement2.getArgumentizedString().contains(before)) {
 											return replacementInfo.getReplacements();
 										}
 									}
@@ -2833,7 +2860,13 @@ public class ReplacementAlgorithm {
 					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("is") &&
 							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("is(")) ||
 					(invocationCoveringTheEntireStatement2.getName().equals("assertTrue") && invocationCoveringTheEntireStatement1.getName().equals("isInstanceOf") &&
-							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).contains(" instanceof "))) {
+							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).contains(" instanceof ")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertTrue") && invocationCoveringTheEntireStatement1.getName().equals("isPositive") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).contains(" > 0")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertTrue") && invocationCoveringTheEntireStatement1.getName().equals("isNegative") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).contains(" < 0")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertTrue") && invocationCoveringTheEntireStatement1.getName().equals("isZero") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).contains(" == 0"))) {
 				for(String key1 : methodInvocationMap1.keySet()) {
 					for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
 						if(invocation1.getName().equals("assertThat")) {
@@ -2861,6 +2894,24 @@ public class ReplacementAlgorithm {
 										String before = arg.substring(0, arg.indexOf(" instanceof "));
 										String after = arg.substring(arg.indexOf(" instanceof ") + " instanceof ".length(), arg.length());
 										if(statement1.getArgumentizedString().contains(before) && statement1.getArgumentizedString().contains(after)) {
+											return replacementInfo.getReplacements();
+										}
+									}
+									else if(arg.contains(" > 0")) {
+										String before = arg.substring(0, arg.indexOf(" > 0"));
+										if(statement1.getArgumentizedString().contains(before)) {
+											return replacementInfo.getReplacements();
+										}
+									}
+									else if(arg.contains(" < 0")) {
+										String before = arg.substring(0, arg.indexOf(" < 0"));
+										if(statement1.getArgumentizedString().contains(before)) {
+											return replacementInfo.getReplacements();
+										}
+									}
+									else if(arg.contains(" == 0")) {
+										String before = arg.substring(0, arg.indexOf(" == 0"));
+										if(statement1.getArgumentizedString().contains(before)) {
 											return replacementInfo.getReplacements();
 										}
 									}

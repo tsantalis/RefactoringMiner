@@ -1692,6 +1692,7 @@ line range:55-55==line range:53-53
 public triggerCheckpointOnBarrier(checkpointMetaData CheckpointMetaData, checkpointOptions CheckpointOptions, checkpointMetrics CheckpointMetricsBuilder) : void -> public triggerCheckpointOnBarrier(checkpointMetaData CheckpointMetaData, checkpointOptions CheckpointOptions, checkpointMetrics CheckpointMetricsBuilder) : void
 line range:69-69==line range:68-68
 line range:71-71==line range:74-74
+line range:72-72==line range:75-75
 public abortCheckpointOnBarrier(checkpointId long, cause CheckpointException) : void -> public abortCheckpointOnBarrier(checkpointId long, cause CheckpointException) : void
 line range:87-87==line range:84-84
 line range:89-89==line range:90-92
@@ -2278,6 +2279,7 @@ line range:127-127==line range:126-126
 line range:130-130==line range:129-129
 line range:131-131==line range:130-130
 line range:115-115==line range:114-114
+line range:117-117==line range:116-116
 line range:114-116==line range:113-115
 line range:125-128==line range:124-127
 line range:114-116==line range:113-115
@@ -5588,6 +5590,10 @@ line range:180-190==line range:159-169
 public testSizeComparator() : void -> package testSizeComparator() : void
 line range:306-306==line range:280-280
 line range:307-307==line range:281-281
+line range:311-311==line range:285-285
+line range:312-312==line range:286-286
+line range:313-313==line range:287-287
+line range:314-314==line range:288-288
 public testNonEagerMerging() : void -> package testNonEagerMerging() : void
 line range:74-75==line range:64-65
 line range:77-78==line range:67-68

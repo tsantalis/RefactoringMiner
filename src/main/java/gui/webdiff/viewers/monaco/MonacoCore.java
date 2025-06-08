@@ -34,19 +34,17 @@ import gr.uom.java.xmi.diff.SplitConditionalRefactoring;
 import gr.uom.java.xmi.diff.SplitOperationRefactoring;
 import gui.webdiff.dir.DirComparator;
 
+import gui.webdiff.dir.PullRequestReviewComment;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
 import org.refactoringminer.astDiff.models.ASTDiff;
-import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
-import org.refactoringminer.rm1.PRComment;
 import org.rendersnake.HtmlCanvas;
 
 import java.io.IOException;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
@@ -63,11 +61,11 @@ public class MonacoCore {
 
     private final String srcFileContent;
     private final String dstFileContent;
-    private final List<PRComment> comments;
+    private final Map<String, List<PullRequestReviewComment>> comments;
     private final List<Refactoring> refactorings;
     private boolean minimal = false;
 
-    public MonacoCore(DirComparator comparator, Diff diff, int id, boolean isMovedDiff, String srcFileContent, String dstFileContent, List<Refactoring> refactorings, List<PRComment> comments) {
+    public MonacoCore(DirComparator comparator, Diff diff, int id, boolean isMovedDiff, String srcFileContent, String dstFileContent, List<Refactoring> refactorings, Map<String, List<PullRequestReviewComment>> comments) {
         this.comparator = comparator;
         this.srcFileContent = srcFileContent;
         this.dstFileContent = dstFileContent;
@@ -80,8 +78,7 @@ public class MonacoCore {
             this.srcFileName = ((ASTDiff) diff).getSrcPath();
             this.dstFileName = ((ASTDiff) diff).getDstPath();
         }
-        if (comments == null)  this.comments = List.of();
-        else  this.comments = comments;
+        this.comments = Objects.requireNonNullElseGet(comments, Map::of);
     }
 
     public void setShowFilenames(boolean showFilenames) {
@@ -650,13 +647,11 @@ public class MonacoCore {
     }
 
     private String getComments(String filename) {
-        List<PRComment> filteredComments = this.comments.stream().filter(prComment ->
-                prComment.getFilePath().equals(filename)
-        ).toList(); //TODO: Must be further improved
+        List<PullRequestReviewComment> fileComments = comments.getOrDefault(filename, Collections.emptyList());
         ObjectMapper mapper = new ObjectMapper();
         String commentsAsJson = "";
         try {
-            commentsAsJson = mapper.writeValueAsString(filteredComments);
+            commentsAsJson = mapper.writeValueAsString(fileComments);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

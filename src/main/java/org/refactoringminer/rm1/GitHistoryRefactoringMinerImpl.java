@@ -1870,13 +1870,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					ProjectASTDiff diff = differ.getProjectASTDiff();
 					diff.setMetaInfo(new DiffMetaInfo(
 							extractRepositoryName(cloneURL) + "#" + pullRequestId,
-							extractPullRequestURL(cloneURL, pullRequestId),
-                            fetchPRComments(
-                                    extractRepositoryName(cloneURL),
-                                    extractOwnerName(cloneURL),
-                                    pullRequestId)
-                            )
-                    );
+							extractPullRequestURL(cloneURL, pullRequestId)
+                    ));
 					diffs.add(diff);
 				}
 				catch(RefactoringMinerTimedOutException e) {

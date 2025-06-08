@@ -91,44 +91,50 @@ public class DirComparator {
         compressedTree = treeViewGenerator.getCompressedTree();
         this.diffs = treeViewGenerator.getOrderedDiffs();
         // it takes some time to fetch all comments
-        //Map<ImmutablePair<String, Integer>, List<PullRequestReviewComment>> commentMap = pullRequestComments();
+        this.projectASTDiff.getMetaInfo().setComments(pullRequestComments());
     }
 
-    private Map<ImmutablePair<String, Integer>, List<PullRequestReviewComment>> pullRequestComments() {
-    	Map<ImmutablePair<String, Integer>, List<PullRequestReviewComment>> commentMap = new LinkedHashMap<>();
-    	DiffMetaInfo info = projectASTDiff.getMetaInfo();
-    	if(info.getUrl().isEmpty()) {
-    		return commentMap;
-    	}
-		try {
-			String cloneURL = URLHelper.getRepo(info.getUrl());
-	        int pullRequestId = URLHelper.getPullRequestID(info.getUrl());
-			GHRepository repository = new GitHistoryRefactoringMinerImpl().getGitHubRepository(cloneURL);
-			GHPullRequest pullRequest = repository.getPullRequest(pullRequestId);
-	    	PagedIterable<GHPullRequestReview> reviews = pullRequest.listReviews();
-			for(GHPullRequestReview review : reviews) {
-				PagedIterable<GHPullRequestReviewComment> comments = review.listReviewComments();
-				for(GHPullRequestReviewComment comment : comments) {
-					ImmutablePair<String, Integer> pair = ImmutablePair.of(comment.getPath(), comment.getOriginalPosition());
-					if(commentMap.containsKey(pair)) {
-						PullRequestReviewComment prComment = new PullRequestReviewComment(comment.getUser().getLogin(), comment.getBody(), comment.getCreatedAt());
-						commentMap.get(pair).add(prComment);
-					}
-					else {
-						List<PullRequestReviewComment> prComments = new ArrayList<>();
-						PullRequestReviewComment prComment = new PullRequestReviewComment(comment.getUser().getLogin(), comment.getBody(), comment.getCreatedAt());
-						prComments.add(prComment);
-						commentMap.put(pair, prComments);
-					}
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch(NumberFormatException e) {
-			//the URL does not correspond to a PR URL
-		}
-		return commentMap;
+    private Map<String, List<PullRequestReviewComment>> pullRequestComments() {
+        Map<String, List<PullRequestReviewComment>> commentMap = new LinkedHashMap<>();
+        DiffMetaInfo info = projectASTDiff.getMetaInfo();
+
+        if (info.getUrl().isEmpty()) {
+            return commentMap;
+        }
+
+        try {
+            String cloneURL = URLHelper.getRepo(info.getUrl());
+            int pullRequestId = URLHelper.getPullRequestID(info.getUrl());
+            GHRepository repository = new GitHistoryRefactoringMinerImpl().getGitHubRepository(cloneURL);
+            GHPullRequest pullRequest = repository.getPullRequest(pullRequestId);
+            PagedIterable<GHPullRequestReview> reviews = pullRequest.listReviews();
+
+            for (GHPullRequestReview review : reviews) {
+                PagedIterable<GHPullRequestReviewComment> comments = review.listReviewComments();
+                for (GHPullRequestReviewComment comment : comments) {
+                    String path = comment.getPath();
+                    int lineNumber = comment.getOriginalPosition();
+
+                    PullRequestReviewComment prComment = new PullRequestReviewComment(
+                            comment.getUser().getLogin(),
+                            comment.getBody(),
+                            comment.getCreatedAt(),
+                            lineNumber
+                    );
+
+                    commentMap.computeIfAbsent(path, k -> new ArrayList<>()).add(prComment);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            // the URL is not a PR URL
+        }
+
+        return commentMap;
     }
+
+
 
     private void compare() {
         Set<String> beforeFiles = projectASTDiff.getFileContentsBefore().keySet();

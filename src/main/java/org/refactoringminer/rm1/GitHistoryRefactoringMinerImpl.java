@@ -2391,24 +2391,5 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			}
 		}
 	}
-
-    public List<PRComment> fetchPRComments(String owner, String repoName, int prNumber) throws IOException {
-        GHRepository repo = gitHub.getRepository(owner + "/" + repoName);
-        GHPullRequest pr = repo.getPullRequest(prNumber);
-
-        List<GHPullRequestReviewComment> reviewComments = pr.listReviewComments().toList();
-
-        List<PRComment> prComments = new ArrayList<>();
-        for (GHPullRequestReviewComment comment : reviewComments) {
-            prComments.add(new PRComment(
-                    comment.getUser().getLogin(),
-                    comment.getPath(),
-                    comment.getPosition(),
-                    comment.getBody()
-                    )
-            );
-        }
-        return prComments;
-    }
 }
 

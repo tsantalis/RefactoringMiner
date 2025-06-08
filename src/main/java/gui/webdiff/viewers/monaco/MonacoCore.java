@@ -39,6 +39,8 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
 import org.refactoringminer.astDiff.models.ASTDiff;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
+import org.refactoringminer.rm1.PRComment;
 import org.rendersnake.HtmlCanvas;
 
 import java.io.IOException;
@@ -61,10 +63,11 @@ public class MonacoCore {
 
     private final String srcFileContent;
     private final String dstFileContent;
+    private final List<PRComment> comments;
     private final List<Refactoring> refactorings;
     private boolean minimal = false;
 
-    public MonacoCore(DirComparator comparator, Diff diff, int id, boolean isMovedDiff, String srcFileContent, String dstFileContent, List<Refactoring> refactorings) {
+    public MonacoCore(DirComparator comparator, Diff diff, int id, boolean isMovedDiff, String srcFileContent, String dstFileContent, List<Refactoring> refactorings, List<PRComment> comments) {
         this.comparator = comparator;
         this.srcFileContent = srcFileContent;
         this.dstFileContent = dstFileContent;
@@ -77,6 +80,8 @@ public class MonacoCore {
             this.srcFileName = ((ASTDiff) diff).getSrcPath();
             this.dstFileName = ((ASTDiff) diff).getDstPath();
         }
+        if (comments == null)  this.comments = List.of();
+        else  this.comments = comments;
     }
 
     public void setShowFilenames(boolean showFilenames) {
@@ -637,35 +642,21 @@ public class MonacoCore {
                 + ", left: " + this.getLeftJsConfig()
                 + ", lcid: \"" + this.getLeftContainerId() + "\""
                 + ", right: " + this.getRightJsConfig()
-                + ", right_comments : " + this.getComments(
-                        List.of() //@tsantalis, this is the place to add comments on the right side (try uncommenting the line below)
-//                        List.of(new EditorComments("Pourya", "This is a comment on the right side.", 46))
-                        )
-                + ", left_comments : " + this.getComments(
-                        List.of() //@tsantalis, this is the place to add comments on the left side (try uncommenting the line below)
-//                        List.of(new EditorComments("Nikos", "This is a comment on the left side.", 43))
-                        )
+                + ", right_comments : " + this.getComments(dstFileName)
+                + ", left_comments : " + this.getComments(srcFileName)
+
                 + ", rcid: \"" + this.getRightContainerId() + "\""
                 + ", mappings: " + this.getMappingsJsConfig() + "}";
     }
-    static class EditorComments{
-        public String author;
-        public String text;
-        public int line;
 
-        public EditorComments(String author, String text, int line) {
-            this.author = author;
-            this.text = text;
-            this.line = line;
-        }
-        //public String time;
-        //public Status status;
-    }
-    private String getComments(List<EditorComments> comments) {
+    private String getComments(String filename) {
+        List<PRComment> filteredComments = this.comments.stream().filter(prComment ->
+                prComment.getFilePath().equals(filename)
+        ).toList();
         ObjectMapper mapper = new ObjectMapper();
         String commentsAsJson = "";
         try {
-            commentsAsJson = mapper.writeValueAsString(comments);
+            commentsAsJson = mapper.writeValueAsString(filteredComments);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

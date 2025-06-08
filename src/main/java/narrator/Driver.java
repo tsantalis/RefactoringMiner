@@ -1,5 +1,7 @@
 package narrator;
 
+import com.github.gumtreediff.tree.Tree;
+import com.github.gumtreediff.tree.TreeContext;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import narrator.graph.HunkNetwork;
@@ -17,8 +19,7 @@ import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 import java.io.*;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Driver {
     public static void main(String[] args) throws Exception {
@@ -46,17 +47,27 @@ public class Driver {
     }
 
     private static Graph<Node, Edge> getGraph(ProjectASTDiff projectASTDiff) {
+        Map<String, TreeContext> childContextMap = projectASTDiff.getChildContextMap();
+
         Map<String, String> dstContentsMap = projectASTDiff.getFileContentsAfter();
         Map<String, String> srcContentsMap = projectASTDiff.getFileContentsBefore();
         HunkNetwork network = new HunkNetwork(projectASTDiff.getModelDiff(), srcContentsMap, dstContentsMap,
-                projectASTDiff.getChildContextMap());
+                childContextMap);
 
-        // TODO: support added files (https://github.com/LMAX-Exchange/disruptor/commit/6a93ff9e94a878cd2d7672b2a07b94a2307d41fe)
-        //  fileContentsAfter includes the new file but diffSet is empty
-        for (ASTDiff astDiff : projectASTDiff.getDiffSet()) {
-            network.importHunks(astDiff.getDstPath(), astDiff.getSrcPath(), astDiff.getAddedDstTrees(),
-                    astDiff.getAllMappings().getMonoMappingStore());
+        Set<ASTDiff> diffSet = projectASTDiff.getDiffSet();
+
+        for (ASTDiff diff : diffSet) {
+            network.importHunks(diff.getDstPath(), diff.getSrcPath(), diff.getAddedDstTrees(),
+                    diff.getAllMappings().getMonoMappingStore());
         }
+
+        List<String> diffDestinationPaths = diffSet.stream().map(ASTDiff::getDstPath).toList();
+        List<String> addedPaths =
+                childContextMap.keySet().stream().filter(path -> !diffDestinationPaths.contains(path)).toList();
+        addedPaths.forEach(path -> {
+            Tree addedTree = childContextMap.get(path).getRoot();
+            network.importHunk(path, addedTree);
+        });
 
         network.process();
 

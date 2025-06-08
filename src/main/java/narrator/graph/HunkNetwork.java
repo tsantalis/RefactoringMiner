@@ -45,6 +45,13 @@ public class HunkNetwork {
         return nodeMap.containsKey(Node.formatId(path, tree));
     }
 
+    public void importHunk(String path, Tree tree) {
+        HashSet<Tree> additions = new HashSet<>();
+        additions.add(tree);
+
+        importHunks(path, null, additions, null);
+    }
+
     public void importHunks(String path, String srcPath, Set<Tree> additions, MappingStore mappings) {
         Set<Tree> uniqueAdditions = new HashSet<>();
         for (Tree subject : additions) {
@@ -66,32 +73,34 @@ public class HunkNetwork {
             }
         }
 
-        String fileContent = dstContents.get(path);
-        String srcContent = srcContents.get(srcPath);
         for (Tree addition : uniqueAdditions) {
-            List<Tree> trees = new ArrayList<>(addition.getDescendants());
-            trees.add(addition);
-            List<Tree> srcs = trees.stream().map(mappings::getSrcForDst).filter(Objects::nonNull).toList();
+            Node node = new Node(dstContents.get(path), path, addition);
 
-            List<Tree> uniqueSrcs = new ArrayList<>();
-            for (Tree subject : srcs) {
-                boolean isUnique = true;
-                for (Tree object : srcs) {
-                    if (object.getPos() <= subject.getPos() && subject.getEndPos() <= object.getEndPos() && !subject.equals(object)) {
-                        isUnique = false;
-                        break;
+            if (mappings != null && srcPath != null) {
+                List<Tree> trees = new ArrayList<>(addition.getDescendants());
+                trees.add(addition);
+                List<Tree> srcs = trees.stream().map(mappings::getSrcForDst).filter(Objects::nonNull).toList();
+
+                List<Tree> uniqueSrcs = new ArrayList<>();
+                for (Tree subject : srcs) {
+                    boolean isUnique = true;
+                    for (Tree object : srcs) {
+                        if (object.getPos() <= subject.getPos() && subject.getEndPos() <= object.getEndPos() && !subject.equals(object)) {
+                            isUnique = false;
+                            break;
+                        }
+                    }
+
+                    if (isUnique) {
+                        uniqueSrcs.add(subject);
                     }
                 }
 
-                if (isUnique) {
-                    uniqueSrcs.add(subject);
+                if (!uniqueSrcs.isEmpty()) {
+                    uniqueSrcs.sort(Comparator.comparingInt(Tree::getPos));
+                    node.setSrcs(uniqueSrcs.stream().map(src -> srcContents.get(srcPath).substring(src.getPos(),
+                            src.getEndPos())).toList());
                 }
-            }
-
-            Node node = new Node(fileContent, path, addition);
-            if (!uniqueSrcs.isEmpty()) {
-                uniqueSrcs.sort(Comparator.comparingInt(Tree::getPos));
-                node.setSrcs(uniqueSrcs.stream().map(src -> srcContent.substring(src.getPos(), src.getEndPos())).toList());
             }
 
             addNode(node);

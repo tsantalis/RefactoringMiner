@@ -97,6 +97,9 @@ public class DirComparator {
     private Map<ImmutablePair<String, Integer>, List<PullRequestReviewComment>> pullRequestComments() {
     	Map<ImmutablePair<String, Integer>, List<PullRequestReviewComment>> commentMap = new LinkedHashMap<>();
     	DiffMetaInfo info = projectASTDiff.getMetaInfo();
+    	if(info.getUrl().isEmpty()) {
+    		return commentMap;
+    	}
 		try {
 			String cloneURL = URLHelper.getRepo(info.getUrl());
 	        int pullRequestId = URLHelper.getPullRequestID(info.getUrl());
@@ -122,7 +125,7 @@ public class DirComparator {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch(NumberFormatException e) {
-			
+			//the URL does not correspond to a PR URL
 		}
 		return commentMap;
     }

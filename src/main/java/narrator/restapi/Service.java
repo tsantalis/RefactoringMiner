@@ -29,8 +29,8 @@ public class Service {
     }
 
     @GetMapping(value = "/hierarchy/pull-request", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String pullRequestHierarchy(@RequestParam String url, @RequestParam int id) throws Exception {
-        Graph<Node, Edge> graph = Driver.getPullRequestGraph(url, id);
+    public String pullRequestHierarchy(@RequestParam String url) throws Exception {
+        Graph<Node, Edge> graph = Driver.getPullRequestGraph(url);
         return respondHierarchy(graph);
     }
 
@@ -51,8 +51,8 @@ public class Service {
     }
 
     @GetMapping(value = "/clusters/pull-request", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String pullRequestClusters(@RequestParam String url, @RequestParam int id) throws Exception {
-        Graph<Node, Edge> graph = Driver.getPullRequestGraph(url, id);
+    public String pullRequestClusters(@RequestParam String url) throws Exception {
+        Graph<Node, Edge> graph = Driver.getPullRequestGraph(url);
         return respondClusters(graph);
     }
 

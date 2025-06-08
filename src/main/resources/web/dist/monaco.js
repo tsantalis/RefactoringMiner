@@ -112,17 +112,26 @@ function addInlineComments(editor, comments) {
         const comment = comments.find(c => c.line === hoveredLine);
 
         if (
-            target.type === monaco.editor.MouseTargetType.GUTTER_LINE_DECORATIONS &&
+            [monaco.editor.MouseTargetType.GUTTER_LINE_DECORATIONS, monaco.editor.MouseTargetType.GUTTER_GLYPH_MARGIN].includes(target.type) &&
             comment
         ) {
-            const top = editor.getTopForLineNumber(comment.line);
-            popup.className = `inline-comment ${comment.status}`;
-            popup.innerHTML = `<strong>${comment.author}</strong>: ${comment.text}`;
-            popup.style.display = 'block';
+            const formattedDate = new Date(comment.createdAt).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
 
-            const editorRect = editor.getDomNode().getBoundingClientRect();
-            popup.style.top = `${editorRect.top + top + 20}px`;
-            popup.style.left = `${editorRect.left + 60}px`;
+            popup.className = `inline-comment ${comment.status}`;
+            popup.innerHTML = `
+                <div><strong>${comment.author}</strong> <span style="color: #888; font-size: 11px;">
+                (created at ${formattedDate})
+                </span>
+                </div>
+                <div>${comment.text}</div>
+            `;
+            popup.style.display = 'block';
+            popup.style.top = `${e.event.browserEvent.clientY + 10}px`;
+            popup.style.left = `${e.event.browserEvent.clientX + 10}px`;
         } else {
             popup.style.display = 'none';
         }

@@ -1,31 +1,32 @@
 package org.refactoringminer.astDiff.models;
 
+import gui.webdiff.dir.PullRequestReviewComment;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.rm1.PRComment;
 
 import java.util.List;
+import java.util.Map;
 
 public class DiffMetaInfo {
 	final String info;
 	final String url;
-    final List<PRComment> comments;
+    Map<String, List<PullRequestReviewComment>> comments;
 
 	public DiffMetaInfo(String info, String url) {
-		this(info, url, List.of());
-	}
-
-
-    public DiffMetaInfo(String info, String url, List<PRComment> comments) {
         this.info = info;
         this.url = url;
-        this.comments = comments;
 	}
+
+    public void setComments(Map<String, List<PullRequestReviewComment>> comments) {
+        this.comments = comments;
+    }
 
     public String getInfo() {
         return info;
     }
 
-    public List<PRComment> getComments() {
+    public Map<String, List<PullRequestReviewComment>> getComments() {
         return comments;
     }
 

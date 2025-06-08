@@ -1,0 +1,28 @@
+.comment-icon::before {
+    content: '💬';
+    font-size: 14px;
+    margin-left: 2px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.inline-comment {
+    position: absolute;
+    background: #f1f8ff;
+    border-left: 4px solid #2188ff;
+    padding: 8px 12px;
+    font-family: sans-serif;
+    font-size: 13px;
+    white-space: pre-wrap;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: none;
+    max-width: 400px;
+    border-radius: 4px;
+}
+
+.inline-comment.open     { border-left-color: #2188ff; }
+.inline-comment.resolved { border-left-color: #28a745; }
+.inline-comment.info     { border-left-color: #6c757d; }
+.inline-comment strong   { color: #111; }
+

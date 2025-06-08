@@ -78,11 +78,61 @@ function mymonaco(config) {
                 leftEditor.getAction('editor.foldAll').run();
                 rightEditor.getAction('editor.foldAll').run();
             }
+            addInlineComments(leftEditor, config.left_comments || []);
+            addInlineComments(rightEditor, config.right_comments || []);
             window.leftEditor = leftEditor;
             window.rightEditor = rightEditor;
         });
     }
 }
+
+function addInlineComments(editor, comments) {
+    const container = editor.getDomNode().parentElement;
+    let popup = document.getElementById('monaco-comment-popup');
+    if (!popup) {
+        popup = document.createElement('div');
+        popup.id = 'monaco-comment-popup';
+        popup.className = 'inline-comment';
+        document.body.appendChild(popup);
+    }
+
+    const decorations = comments.map(comment => ({
+        range: new monaco.Range(comment.line, 1, comment.line, 1),
+        options: {
+            isWholeLine: true,
+            linesDecorationsClassName: 'comment-icon'
+        }
+    }));
+
+    editor.deltaDecorations([], decorations);
+
+    editor.onMouseMove((e) => {
+        const target = e.target;
+        const hoveredLine = target.position?.lineNumber;
+        const comment = comments.find(c => c.line === hoveredLine);
+
+        if (
+            target.type === monaco.editor.MouseTargetType.GUTTER_LINE_DECORATIONS &&
+            comment
+        ) {
+            const top = editor.getTopForLineNumber(comment.line);
+            popup.className = `inline-comment ${comment.status}`;
+            popup.innerHTML = `<strong>${comment.author}</strong>: ${comment.text}`;
+            popup.style.display = 'block';
+
+            const editorRect = editor.getDomNode().getBoundingClientRect();
+            popup.style.top = `${editorRect.top + top + 20}px`;
+            popup.style.left = `${editorRect.left + 60}px`;
+        } else {
+            popup.style.display = 'none';
+        }
+    });
+
+    editor.onMouseLeave(() => {
+        popup.style.display = 'none';
+    });
+}
+
 
 
 function varInits(config, rightEditor, leftEditor) {

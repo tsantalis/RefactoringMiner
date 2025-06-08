@@ -637,10 +637,40 @@ public class MonacoCore {
                 + ", left: " + this.getLeftJsConfig()
                 + ", lcid: \"" + this.getLeftContainerId() + "\""
                 + ", right: " + this.getRightJsConfig()
+                + ", right_comments : " + this.getComments(
+                        List.of() //@tsantalis, this is the place to add comments on the right side (try uncommenting the line below)
+//                        List.of(new EditorComments("Pourya", "This is a comment on the right side.", 46))
+                        )
+                + ", left_comments : " + this.getComments(
+                        List.of() //@tsantalis, this is the place to add comments on the left side (try uncommenting the line below)
+//                        List.of(new EditorComments("Nikos", "This is a comment on the left side.", 43))
+                        )
                 + ", rcid: \"" + this.getRightContainerId() + "\""
                 + ", mappings: " + this.getMappingsJsConfig() + "}";
     }
+    static class EditorComments{
+        public String author;
+        public String text;
+        public int line;
 
+        public EditorComments(String author, String text, int line) {
+            this.author = author;
+            this.text = text;
+            this.line = line;
+        }
+        //public String time;
+        //public Status status;
+    }
+    private String getComments(List<EditorComments> comments) {
+        ObjectMapper mapper = new ObjectMapper();
+        String commentsAsJson = "";
+        try {
+            commentsAsJson = mapper.writeValueAsString(comments);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return commentsAsJson;
+    }
     private String getLeftContainerId() {
         return "left-container-" + id;
     }

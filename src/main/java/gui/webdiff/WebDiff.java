@@ -7,6 +7,7 @@ import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
 import gui.webdiff.dir.DirComparator;
 import gui.webdiff.dir.DirectoryDiffView;
+import gui.webdiff.dir.PullRequestReviewComment;
 import gui.webdiff.viewers.monaco.MonacoView;
 import gui.webdiff.viewers.monaco.SingleMonacoContent;
 import gui.webdiff.viewers.spv.SinglePageView;
@@ -27,6 +28,7 @@ import java.net.URI;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.*;
@@ -201,8 +203,7 @@ public class WebDiff  {
 
             String path = URLDecoder.decode(rawFilePath, StandardCharsets.UTF_8);
             String content = contentsMap.getOrDefault(path, "");
-
-            return render(new SingleMonacoContent(isAdded, path, content));
+            return render(new SingleMonacoContent(isAdded, path, content, projectASTDiff.getMetaInfo().getComments()));
         });
         get("/onDemand", (request, response) -> {
             String rawFile1 = request.queryParams("file1");

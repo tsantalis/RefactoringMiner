@@ -1,12 +1,16 @@
 package gui.webdiff.viewers.monaco;
 
 import gui.webdiff.WebDiff;
+import gui.webdiff.dir.PullRequestReviewComment;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
+import static gui.webdiff.viewers.monaco.MonacoCore.filterComments;
 import static org.rendersnake.HtmlAttributesFactory.*;
 
 public class SingleMonacoContent implements Renderable {
@@ -14,13 +18,21 @@ public class SingleMonacoContent implements Renderable {
     private final boolean isAdded;
     private final String path;
     private final String content;
+    Map<String, List<PullRequestReviewComment>> comments;
 
-    //TODO: PRComment support
-
-    public SingleMonacoContent(boolean isAdded, String path, String content) {
+    public SingleMonacoContent(boolean isAdded, String path, String content, Map<String, List<PullRequestReviewComment>> comments) {
         this.isAdded = isAdded;
         this.path = path;
         this.content = content;
+        this.comments = comments;
+    }
+
+    public void setComments(Map<String, List<PullRequestReviewComment>> comments) {
+        this.comments = comments;
+    }
+
+    public Map<String, List<PullRequestReviewComment>> getComments() {
+        return comments;
     }
 
     @Override
@@ -29,7 +41,8 @@ public class SingleMonacoContent implements Renderable {
         String textColor = isAdded ? "#155724" : "#721c24";
         String borderColor = isAdded ? "#c3e6cb" : "#f5c6cb";
         String editorId = "monaco-editor-" + Math.abs(path.hashCode());
-        String code = "loadSingleMonacoEditor({ id: '" + editorId + "', value: `" + content + "`, language: 'java' });";
+        String comments = filterComments(this.comments, path);
+        String code = "loadSingleMonacoEditor({ id: '" + editorId + "', value: `" + content + "`, language: 'java', " + "comments: " + comments + ", });";
 
         html
                 .render(DocType.HTML5)
@@ -63,7 +76,10 @@ public class SingleMonacoContent implements Renderable {
             String borderColor = isAdded ? "#c3e6cb" : "#f5c6cb";
 
             html
-                    .head().macros().javascript("/dist/single-monaco.js")
+                    .head()
+                    .macros().stylesheet("/dist/single-monaco.css")
+                    .macros().javascript("/dist/single-monaco.js")
+
                     .meta(charset("utf8"))
                     .meta(name("viewport").content("width=device-width, initial-scale=1.0"))
                     .title().content("RefactoringMiner")

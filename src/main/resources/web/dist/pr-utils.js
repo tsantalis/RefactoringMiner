@@ -44,7 +44,7 @@ function addInlineComments(editor, comments) {
                 <strong>${comment.author}</strong>
                 <span style="color: #888; font-size: 11px;">(created at ${formattedDate})</span>
             </div>
-            <div style="margin-top: 4px;">${comment.text}</div>
+                <div style="margin-top: 4px;">${marked.parse(comment.text)}</div>
         </div>
         <hr style="margin: 6px 0; border: none; border-top: 1px solid #ddd;">
     `;

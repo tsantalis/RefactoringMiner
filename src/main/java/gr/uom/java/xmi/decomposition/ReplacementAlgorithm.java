@@ -2735,6 +2735,7 @@ public class ReplacementAlgorithm {
 		}
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
 			//assertTrue() to fluid assertThat().isTrue() conversion
+			//assertSame() to fluid assertThat().isSameAs()
 			//assertFalse() to fluid assertThat().isFalse() conversion
 			//assertEquals() to fluid assertThat().isEqualTo()
 			//assertEquals() to fluid assertThat().hasValue()
@@ -2752,6 +2753,7 @@ public class ReplacementAlgorithm {
 			//assertTrue(<0) to fluid assertThat().isNegative()
 			//assertTrue(==0) to fluid assertThat().isZero()
 			if((invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isTrue")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertSame") && invocationCoveringTheEntireStatement2.getName().equals("isSameAs")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertFalse") && invocationCoveringTheEntireStatement2.getName().equals("isFalse")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertNull") && invocationCoveringTheEntireStatement2.getName().equals("isNull")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertNotNull") && invocationCoveringTheEntireStatement2.getName().equals("isNotNull")) ||
@@ -2839,6 +2841,7 @@ public class ReplacementAlgorithm {
 			}
 			//fluid assertThat().isTrue() to assertTrue() conversion
 			else if((invocationCoveringTheEntireStatement1.getName().equals("isTrue") && invocationCoveringTheEntireStatement2.getName().equals("assertTrue")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("isSameAs") && invocationCoveringTheEntireStatement2.getName().equals("assertSame")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("isFalse") && invocationCoveringTheEntireStatement2.getName().equals("assertFalse")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("isNull") && invocationCoveringTheEntireStatement2.getName().equals("assertNull")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("isNotNull") && invocationCoveringTheEntireStatement2.getName().equals("assertNotNull")) ||

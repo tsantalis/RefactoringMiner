@@ -8,20 +8,21 @@ public class PullRequestReviewComment {
 	private String createdAt; //Keep it String for easier serialization
     private int line;
     private String avatarUrl;
-    //
+    private Side side;
+    public enum Side {LEFT, RIGHT}
 
-	public PullRequestReviewComment(String author, String text, Date date, int line, String avatarUrl) {
+	public PullRequestReviewComment(String author, String text, Date date, int line, String avatarUrl, org.kohsuke.github.GHPullRequestReviewComment.Side side) {
 		this.author = author;
 		this.text = text;
 		this.createdAt = String.valueOf(date);
         this.line = line;
         this.avatarUrl = avatarUrl;
+        this.side = side.equals(org.kohsuke.github.GHPullRequestReviewComment.Side.RIGHT) ? Side.RIGHT : Side.LEFT;
 	}
 	@Override
 	public String toString() {
 		return author + " @" + createdAt + ": " + text;
 	}
-
 
     public int getLine() {
         return line;
@@ -43,23 +44,7 @@ public class PullRequestReviewComment {
         return avatarUrl;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setLine(int line) {
-        this.line = line;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
+	public Side getSide() {
+		return side;
+	}
 }

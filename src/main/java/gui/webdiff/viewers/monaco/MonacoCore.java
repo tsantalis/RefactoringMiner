@@ -638,18 +638,20 @@ public class MonacoCore {
                + ", left: " + this.getLeftJsConfig()
                + ", lcid: \"" + this.getLeftContainerId() + "\""
                + ", right: " + this.getRightJsConfig()
-               + ", right_comments : " + filterComments(comments, dstFileName)
-               + ", left_comments : " + "[]"
+               + ", right_comments : " + filterComments(comments, dstFileName, PullRequestReviewComment.Side.RIGHT)
+               + ", left_comments : " + filterComments(comments, srcFileName, PullRequestReviewComment.Side.LEFT)
                + ", rcid: \"" + this.getRightContainerId() + "\""
                + ", mappings: " + this.getMappingsJsConfig() + "}";
     }
 
-    public static String filterComments(Map<String, List<PullRequestReviewComment>> comments, String filename) {
+    public static String filterComments(Map<String, List<PullRequestReviewComment>> comments, String filename, PullRequestReviewComment.Side side) {
         List<PullRequestReviewComment> fileComments = comments.getOrDefault(filename, Collections.emptyList());
+        List<PullRequestReviewComment> filtered = fileComments.stream().filter(comment -> comment.getSide().equals(side))
+                .collect(Collectors.toList());
         ObjectMapper mapper = new ObjectMapper();
         String commentsAsJson = "";
         try {
-            commentsAsJson = mapper.writeValueAsString(fileComments);
+            commentsAsJson = mapper.writeValueAsString(filtered);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

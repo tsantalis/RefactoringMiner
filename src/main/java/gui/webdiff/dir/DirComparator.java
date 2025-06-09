@@ -6,6 +6,7 @@ import gui.webdiff.tree.TreeViewGenerator;
 import org.kohsuke.github.GHPullRequest;
 import org.kohsuke.github.GHPullRequestReview;
 import org.kohsuke.github.GHPullRequestReviewComment;
+import org.kohsuke.github.GHPullRequestReviewComment.Side;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHRepositoryWrapper;
 import org.kohsuke.github.PagedIterable;
@@ -122,14 +123,17 @@ public class DirComparator {
                             URL url = comment.getUrl();
                             System.out.println("Processing PR Review Comment: " + url);
                             String path = comment.getPath();
-                            int lineNumber = new GHRepositoryWrapper(repository).getGhPullRequestReviewCommentLine(url.toString());
+                            org.apache.commons.lang3.tuple.Pair<Side, Integer> pair = new GHRepositoryWrapper(repository).getGhPullRequestReviewCommentLine(url.toString());
+                            Side side = pair.getLeft();
+                            int lineNumber = pair.getRight();
                             if (lineNumber != 0) {
                                 PullRequestReviewComment prComment = new PullRequestReviewComment(
                                         comment.getUser().getLogin(),
                                         comment.getBody(),
                                         comment.getCreatedAt(),
                                         lineNumber,
-                                        comment.getUser().getAvatarUrl()
+                                        comment.getUser().getAvatarUrl(),
+                                        side
                                 );
                                 commentMap.computeIfAbsent(path, k -> new ArrayList<>()).add(prComment);
                             }

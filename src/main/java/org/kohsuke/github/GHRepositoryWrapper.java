@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+import org.kohsuke.github.GHPullRequestReviewComment.Side;
+
 public class GHRepositoryWrapper {
     private final GHRepository ghRepository;
 
@@ -93,9 +96,11 @@ public class GHRepositoryWrapper {
         return ghCommitGitHubResponse;
     }
 
-    public int getGhPullRequestReviewCommentLine(String url) throws IOException {
+    public Pair<Side, Integer> getGhPullRequestReviewCommentLine(String url) throws IOException {
         Requester requester = ghRepository.root().createRequest().withUrlPath(url);
         GitHubResponse<GHPullRequestReviewComment> ghPullRequestReviewCommentResponse = requester.client.sendRequest(requester, (responseInfo) -> GitHubResponse.parseBody(responseInfo, GHPullRequestReviewComment.class));
-        return ghPullRequestReviewCommentResponse.body().getLine();
+        int line = ghPullRequestReviewCommentResponse.body().getLine();
+        Side side = ghPullRequestReviewCommentResponse.body().getSide();
+		return Pair.of(side, line);
     }
 }

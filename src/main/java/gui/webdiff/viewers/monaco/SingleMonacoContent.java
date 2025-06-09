@@ -37,11 +37,8 @@ public class SingleMonacoContent implements Renderable {
 
     @Override
     public void renderOn(HtmlCanvas html) throws IOException {
-        String boxColor = isAdded ? "#d4edda" : "#f8d7da";
-        String textColor = isAdded ? "#155724" : "#721c24";
-        String borderColor = isAdded ? "#c3e6cb" : "#f5c6cb";
         String editorId = "monaco-editor-" + Math.abs(path.hashCode());
-        String comments = filterComments(this.comments, path);
+        String comments = filterComments(this.comments, path, isAdded ? PullRequestReviewComment.Side.RIGHT : PullRequestReviewComment.Side.LEFT);
         String code = "loadSingleMonacoEditor({ id: '" + editorId + "', value: `" + content + "`, language: 'java', " + "comments: " + comments + ", });";
 
         html

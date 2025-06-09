@@ -3,7 +3,6 @@ package gui.webdiff.dir;
 import com.github.gumtreediff.utils.Pair;
 import gui.webdiff.tree.TreeViewGenerator;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.kohsuke.github.GHPullRequest;
 import org.kohsuke.github.GHPullRequestReview;
 import org.kohsuke.github.GHPullRequestReviewComment;
@@ -92,10 +91,10 @@ public class DirComparator {
         compressedTree = treeViewGenerator.getCompressedTree();
         this.diffs = treeViewGenerator.getOrderedDiffs();
         // it takes some time to fetch all comments
-        this.projectASTDiff.getMetaInfo().setComments(pullRequestComments());
+        this.projectASTDiff.getMetaInfo().setComments(fetchPullRequestComments());
     }
 
-    private Map<String, List<PullRequestReviewComment>> pullRequestComments() {
+    private Map<String, List<PullRequestReviewComment>> fetchPullRequestComments() {
         Map<String, List<PullRequestReviewComment>> commentMap = new LinkedHashMap<>();
         DiffMetaInfo info = projectASTDiff.getMetaInfo();
 

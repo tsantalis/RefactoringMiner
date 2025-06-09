@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+// TODO: send a version to invalidate browser storage
 @RestController
 @RequestMapping("/api")
 public class Service {

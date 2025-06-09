@@ -64,6 +64,7 @@ public class Driver {
         List<String> diffDestinationPaths = diffSet.stream().map(ASTDiff::getDstPath).toList();
         List<String> addedPaths =
                 childContextMap.keySet().stream().filter(path -> !diffDestinationPaths.contains(path)).toList();
+        // TODO: we may not need the file entirely (with all imports) and only care about classes (and their docs)
         addedPaths.forEach(path -> {
             Tree addedTree = childContextMap.get(path).getRoot();
             network.importHunk(path, addedTree);

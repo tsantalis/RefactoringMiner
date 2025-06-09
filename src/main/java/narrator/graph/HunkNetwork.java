@@ -172,10 +172,6 @@ public class HunkNetwork {
         processOutOfClasses();
         processSimilarity();
         processSuccession();
-        // if a change within a context method is using another added method introduction, it will be connected itself
-        // why should we separately connect its surrounding method to that method introduction again?
-        // bringing this back breaks usage-requirement pattern
-        //        processContextMethodInvocations();
     }
 
     private void processDefUse() {
@@ -192,9 +188,8 @@ public class HunkNetwork {
                 continue;
             }
 
-            List<Tree> subTrees = new ArrayList<>();
+            List<Tree> subTrees = new ArrayList<>(tree.getDescendants());
             subTrees.add(tree);
-            subTrees.addAll(tree.getDescendants());
 
             List<Tree> methodDeclarations = new ArrayList<>();
             List<Tree> fieldDeclarations = new ArrayList<>();
@@ -222,17 +217,13 @@ public class HunkNetwork {
                 }
             }
 
-            UMLClass umlClass = getUMLClass(node);
-            if (umlClass == null) {
-                continue;
-            }
-
             for (Tree methodDeclaration : methodDeclarations) {
-                addMethodInvocationEdges(umlClass, node, methodDeclaration);
+                addMethodInvocationEdges(node, new Node(node.getFileContent(), node.getPath(), methodDeclaration));
             }
 
             for (Tree fieldDeclaration : fieldDeclarations) {
-                UMLAttribute umlAttribute = findUMLAttribute(umlClass, fieldDeclaration);
+                UMLAttribute umlAttribute = findUMLAttribute(new Node(node.getFileContent(), node.getPath(),
+                        fieldDeclaration));
                 if (umlAttribute == null) {
                     continue;
                 }
@@ -245,7 +236,8 @@ public class HunkNetwork {
             }
 
             for (Tree parameterDeclaration : parameterDeclarations) {
-                addVariableDeclarationEdges(umlClass, node, parameterDeclaration);
+                addVariableDeclarationEdges(node, new Node(node.getFileContent(), node.getPath(),
+                        parameterDeclaration));
             }
 
             for (Tree variableDeclaration : variableDeclarations) {
@@ -255,7 +247,8 @@ public class HunkNetwork {
                     continue;
                 }
 
-                addVariableDeclarationEdges(umlClass, node, variableDeclarationFragment);
+                addVariableDeclarationEdges(node, new Node(node.getFileContent(), node.getPath(),
+                        variableDeclarationFragment));
             }
         }
     }
@@ -266,10 +259,9 @@ public class HunkNetwork {
                 continue;
             }
 
-            List<Tree> subTrees = new ArrayList<>();
             Tree tree = node.getTree();
+            List<Tree> subTrees = new ArrayList<>(tree.getDescendants());
             subTrees.add(tree);
-            subTrees.addAll(tree.getDescendants());
 
             List<Tree> classInstanceCreations =
                     subTrees.stream().filter(subTree -> subTree.getType().name.equals(Constants.CLASS_INSTANCE_CREATION)).toList();
@@ -293,11 +285,11 @@ public class HunkNetwork {
                 List<Node> classNodes = findOverlappingNodes(createdClassLocation.getFilePath(),
                         createdClassLocation.getStartOffset(), createdClassLocation.getEndOffset());
                 for (Node classNode : classNodes) {
-                    if (classNode.equals(node) || !classNode.getTree().getType().name.equals(Constants.TYPE_DECLARATION)) {
+                    if (classNode.equals(node)) {
                         continue;
                     }
 
-                    addEdge(node, classNode, EdgeType.DEF_USE);
+                    addEdge(classNode, node, EdgeType.DEF_USE);
                 }
             }
         }
@@ -316,9 +308,32 @@ public class HunkNetwork {
         return getUMLClass(node.getPath(), parentTypeName.getLabel());
     }
 
-    private void addVariableDeclarationEdges(UMLClass umlClass, Node node, Tree variableDeclarationTree) {
+    private UMLClass getUMLClass(String path, String typeName) {
+        if (path == null) {
+            return null;
+        }
+
+        UMLClass UmlClass = null;
+        for (UMLClass uc : model.getClassList()) {
+            if (uc.getSourceFile().equals(path) && uc.getNonQualifiedName().equals(typeName)) {
+                UmlClass = uc;
+                break;
+            }
+        }
+
+        return UmlClass;
+    }
+
+    private void addVariableDeclarationEdges(Node node, Node variableDeclarationNode) {
+        Tree variableDeclarationTree = variableDeclarationNode.getTree();
+
         Tree methodRoot = TreeUtilFunctions.getParentUntilType(variableDeclarationTree, Constants.METHOD_DECLARATION);
         if (methodRoot == null) { // https://github.com/elastic/elasticsearch/commit/e0a458441cff9a4242cd93f4c02f06d72f2d63c4#diff-9b7bef16de393901cd8c75e73d2fb03afb90a10f1de191b7174275bbd8e71bd8L38
+            return;
+        }
+
+        UMLClass umlClass = getUMLClass(variableDeclarationNode);
+        if (umlClass == null) {
             return;
         }
 
@@ -365,8 +380,13 @@ public class HunkNetwork {
         }
     }
 
-    private void addMethodInvocationEdges(UMLClass umlClass, Node node, Tree methodDeclaration) {
-        UMLOperation operation = findUMLOperation(umlClass, methodDeclaration);
+    private void addMethodInvocationEdges(Node node, Node methodDeclarationNode) {
+        UMLClass umlClass = getUMLClass(methodDeclarationNode);
+        if (umlClass == null) {
+            return;
+        }
+
+        UMLOperation operation = findUMLOperation(umlClass, methodDeclarationNode.getTree());
         if (operation == null) {
             return;
         }
@@ -489,38 +509,29 @@ public class HunkNetwork {
         return result;
     }
 
-    private UMLAttribute findUMLAttribute(UMLClass umlClass, Tree fieldDeclaration) {
+    private UMLAttribute findUMLAttribute(Node fieldDeclarationNode) {
+        UMLClass umlClass = getUMLClass(fieldDeclarationNode);
+        if (umlClass == null) {
+            return null;
+        }
+
         List<UMLAttribute> attributes = new ArrayList<>(umlClass.getAttributes());
         for (UMLAnonymousClass anonymousClass : umlClass.getAnonymousClassList()) {
             attributes.addAll(anonymousClass.getAttributes());
         }
 
+        Tree fieldDeclarationTree = fieldDeclarationNode.getTree();
+
         UMLAttribute result = null;
         for (UMLAttribute attribute : attributes) {
             LocationInfo attrLoc = attribute.getFieldDeclarationLocationInfo();
-            if (fieldDeclaration.getPos() == attrLoc.getStartOffset() && fieldDeclaration.getEndPos() == attrLoc.getEndOffset()) {
+            if (fieldDeclarationTree.getPos() == attrLoc.getStartOffset() && fieldDeclarationTree.getEndPos() == attrLoc.getEndOffset()) {
                 result = attribute;
                 break;
             }
         }
 
         return result;
-    }
-
-    private UMLClass getUMLClass(String path, String typeName) {
-        if (path == null) {
-            return null;
-        }
-
-        UMLClass UmlClass = null;
-        for (UMLClass uc : model.getClassList()) {
-            if (uc.getSourceFile().equals(path) && uc.getNonQualifiedName().equals(typeName)) {
-                UmlClass = uc;
-                break;
-            }
-        }
-
-        return UmlClass;
     }
 
     private void processOutOfClasses() {
@@ -581,26 +592,6 @@ public class HunkNetwork {
                     addEdge(subject, object, EdgeType.SIMILARITY);
                 }
             }
-        }
-    }
-
-    private void processContextMethodInvocations() {
-        for (Node node : graph.vertexSet()) {
-            if (!node.isContext()) {
-                continue;
-            }
-
-            Tree tree = node.getTree();
-            if (!tree.getType().name.equals(Constants.METHOD_DECLARATION)) {
-                continue;
-            }
-
-            UMLClass umlClass = getUMLClass(node);
-            if (umlClass == null) {
-                continue;
-            }
-
-            addMethodInvocationEdges(umlClass, node, tree);
         }
     }
 }

@@ -96,8 +96,10 @@ function addInlineComments(editor, comments) {
         document.body.appendChild(popup);
     }
 
-    const decorations = comments.map(comment => ({
-        range: new monaco.Range(comment.line, 1, comment.line, 1),
+    // Create decorations for all lines with comments
+    const decoratedLines = new Set(comments.map(c => c.line));
+    const decorations = Array.from(decoratedLines).map(line => ({
+        range: new monaco.Range(line, 1, line, 1),
         options: {
             isWholeLine: true,
             linesDecorationsClassName: 'comment-icon'
@@ -109,26 +111,31 @@ function addInlineComments(editor, comments) {
     editor.onMouseMove((e) => {
         const target = e.target;
         const hoveredLine = target.position?.lineNumber;
-        const comment = comments.find(c => c.line === hoveredLine);
+        const lineComments = comments
+            .filter(c => c.line === hoveredLine)
+            .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
 
         if (
             [monaco.editor.MouseTargetType.GUTTER_LINE_DECORATIONS, monaco.editor.MouseTargetType.GUTTER_GLYPH_MARGIN].includes(target.type) &&
-            comment
+            lineComments.length > 0
         ) {
-            const formattedDate = new Date(comment.createdAt).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-            });
+            const commentHtml = lineComments.map(comment => {
+                const formattedDate = new Date(comment.createdAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                return `
+                    <div class="${comment.status}">
+                        <strong>${comment.author}</strong>
+                        <span style="color: #888; font-size: 11px;">(created at ${formattedDate})</span>
+                        <div>${comment.text}</div>
+                    </div>
+                    <hr style="margin: 6px 0; border: none; border-top: 1px solid #ddd;">
+                `;
+            }).join('');
 
-            popup.className = `inline-comment ${comment.status}`;
-            popup.innerHTML = `
-                <div><strong>${comment.author}</strong> <span style="color: #888; font-size: 11px;">
-                (created at ${formattedDate})
-                </span>
-                </div>
-                <div>${comment.text}</div>
-            `;
+            popup.innerHTML = commentHtml;
             popup.style.display = 'block';
             popup.style.top = `${e.event.browserEvent.clientY + 10}px`;
             popup.style.left = `${e.event.browserEvent.clientX + 10}px`;

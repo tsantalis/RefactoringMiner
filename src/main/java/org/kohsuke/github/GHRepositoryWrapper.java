@@ -15,7 +15,7 @@ public class GHRepositoryWrapper {
         GitHubResponse<GHCommit> ghCommitGitHubResponse = getGhCommitGitHubResponse(String.format("/repos/%s/%s/commits/%s", ghRepository.getOwnerName(), ghRepository.getName(), sha1));
         GHCommit ghCommit = ghCommitGitHubResponse.body().wrapUp(ghRepository);
         files.addAll(ghCommit.getFiles());
-        if (ghCommitGitHubResponse.header("Link") != null) {
+        /*if (ghCommitGitHubResponse.header("Link") != null) {
             String linkHeaderField = ghCommitGitHubResponse.header("Link");
             if (linkHeaderField != null) {
                 String[] links = linkHeaderField.split(",");
@@ -36,7 +36,7 @@ public class GHRepositoryWrapper {
                     }
                 }
             }
-        }
+        }*/
         return ghCommit;
     }
 

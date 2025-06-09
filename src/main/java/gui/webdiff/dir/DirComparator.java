@@ -19,7 +19,12 @@ import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class DirComparator {
     private List<ASTDiff> diffs;
@@ -95,7 +100,7 @@ public class DirComparator {
     }
 
     private Map<String, List<PullRequestReviewComment>> fetchPullRequestComments() {
-        Map<String, List<PullRequestReviewComment>> commentMap = new LinkedHashMap<>();
+        Map<String, List<PullRequestReviewComment>> commentMap = new ConcurrentHashMap<>();
         DiffMetaInfo info = projectASTDiff.getMetaInfo();
 
         if (info.getUrl().isEmpty()) {
@@ -108,29 +113,43 @@ public class DirComparator {
             GHRepository repository = new GitHistoryRefactoringMinerImpl().getGitHubRepository(cloneURL);
             GHPullRequest pullRequest = repository.getPullRequest(pullRequestId);
             PagedIterable<GHPullRequestReview> reviews = pullRequest.listReviews();
-
+            ExecutorService pool = Executors.newFixedThreadPool(reviews.toList().size());
             for (GHPullRequestReview review : reviews) {
-                PagedIterable<GHPullRequestReviewComment> comments = review.listReviewComments();
-                for (GHPullRequestReviewComment comment : comments) {
-                    String path = comment.getPath();
-                    int lineNumber = new GHRepositoryWrapper(repository).getGhPullRequestReviewCommentLine(comment.getUrl().toString());
-                    if (lineNumber != 0) {
-                        PullRequestReviewComment prComment = new PullRequestReviewComment(
-                                comment.getUser().getLogin(),
-                                comment.getBody(),
-                                comment.getCreatedAt(),
-                                lineNumber,
-                                comment.getUser().getAvatarUrl()
-                        );
-                        commentMap.computeIfAbsent(path, k -> new ArrayList<>()).add(prComment);
+                Runnable r = () -> {
+                    try {
+                        PagedIterable<GHPullRequestReviewComment> comments = review.listReviewComments();
+                        for (GHPullRequestReviewComment comment : comments) {
+                            URL url = comment.getUrl();
+                            System.out.println("Processing PR Review Comment: " + url);
+                            String path = comment.getPath();
+                            int lineNumber = new GHRepositoryWrapper(repository).getGhPullRequestReviewCommentLine(url.toString());
+                            if (lineNumber != 0) {
+                                PullRequestReviewComment prComment = new PullRequestReviewComment(
+                                        comment.getUser().getLogin(),
+                                        comment.getBody(),
+                                        comment.getCreatedAt(),
+                                        lineNumber,
+                                        comment.getUser().getAvatarUrl()
+                                );
+                                commentMap.computeIfAbsent(path, k -> new ArrayList<>()).add(prComment);
+                            }
+                        }
                     }
-                }
+                    catch(IOException e) {
+                        e.printStackTrace();
+                    }
+                };
+                pool.submit(r);
             }
+            pool.shutdown();
+            pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NumberFormatException e) {
             // the URL is not a PR URL
-        }
+        } catch (InterruptedException e) {
+			e.printStackTrace();
+		}
         return commentMap;
     }
 

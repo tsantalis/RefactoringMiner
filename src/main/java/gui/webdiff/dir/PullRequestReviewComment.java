@@ -3,17 +3,19 @@ package gui.webdiff.dir;
 import java.util.Date;
 
 public class PullRequestReviewComment {
-	private String author;
+    private String author;
 	private String text;
 	private String createdAt; //Keep it String for easier serialization
     private int line;
+    private String avatarUrl;
     //
 
-	public PullRequestReviewComment(String author, String text, Date date, int line) {
+	public PullRequestReviewComment(String author, String text, Date date, int line, String avatarUrl) {
 		this.author = author;
 		this.text = text;
 		this.createdAt = String.valueOf(date);
         this.line = line;
+        this.avatarUrl = avatarUrl;
 	}
 	@Override
 	public String toString() {
@@ -37,6 +39,10 @@ public class PullRequestReviewComment {
         return createdAt;
     }
 
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
     public void setAuthor(String author) {
         this.author = author;
     }
@@ -51,5 +57,9 @@ public class PullRequestReviewComment {
 
     public void setLine(int line) {
         this.line = line;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }

@@ -77,12 +77,12 @@ public class SingleMonacoContent implements Renderable {
 
             html
                     .head()
-                    .macros().stylesheet("/dist/single-monaco.css")
-                    .macros().javascript("/dist/single-monaco.js")
-
                     .meta(charset("utf8"))
                     .meta(name("viewport").content("width=device-width, initial-scale=1.0"))
                     .title().content("RefactoringMiner")
+                    .macros().stylesheet("/dist/single-monaco.css")
+                    .macros().javascript("/dist/pr-utils.js")
+                    .macros().javascript("/dist/single-monaco.js")
                     .macros().stylesheet(WebDiff.BOOTSTRAP_CSS_URL)
                     .macros().stylesheet("/dist/monaco.css")
                     .macros().javascript(WebDiff.JQUERY_JS_URL)

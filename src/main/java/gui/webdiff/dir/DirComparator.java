@@ -119,7 +119,8 @@ public class DirComparator {
                                 comment.getUser().getLogin(),
                                 comment.getBody(),
                                 comment.getCreatedAt(),
-                                lineNumber
+                                lineNumber,
+                                comment.getUser().getAvatarUrl()
                         );
                         commentMap.computeIfAbsent(path, k -> new ArrayList<>()).add(prComment);
                     }

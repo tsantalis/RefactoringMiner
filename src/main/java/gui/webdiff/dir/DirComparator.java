@@ -16,6 +16,8 @@ import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -28,6 +30,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class DirComparator {
+    private final static Logger logger = LoggerFactory.getLogger(DirComparator.class);
     private List<ASTDiff> diffs;
     private final ProjectASTDiff projectASTDiff;
     private final DefaultMutableTreeNode compressedTree;
@@ -121,7 +124,7 @@ public class DirComparator {
                         PagedIterable<GHPullRequestReviewComment> comments = review.listReviewComments();
                         for (GHPullRequestReviewComment comment : comments) {
                             URL url = comment.getUrl();
-                            System.out.println("Processing PR Review Comment: " + url);
+                            logger.info("Processing PR Review Comment: " + url);
                             String path = comment.getPath();
                             org.apache.commons.lang3.tuple.Pair<Side, Integer> pair = new GHRepositoryWrapper(repository).getGhPullRequestReviewCommentLine(url.toString());
                             Side side = pair.getLeft();

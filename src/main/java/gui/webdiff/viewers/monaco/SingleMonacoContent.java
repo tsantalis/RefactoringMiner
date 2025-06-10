@@ -2,6 +2,9 @@ package gui.webdiff.viewers.monaco;
 
 import gui.webdiff.WebDiff;
 import gui.webdiff.dir.PullRequestReviewComment;
+import gui.webdiff.rest.AbstractMenuBar;
+
+import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
@@ -14,17 +17,29 @@ import static gui.webdiff.viewers.monaco.MonacoCore.filterComments;
 import static org.rendersnake.HtmlAttributesFactory.*;
 
 public class SingleMonacoContent implements Renderable {
-
+    private final String toolName;
+    private final String routePath;
+    private final int numOfDiffs;
+    private final DiffMetaInfo metaInfo;
+    private final List<String> deletedFilePaths;
+    private final List<String> addedFilePaths;
     private final boolean isAdded;
     private final String path;
     private final String content;
     Map<String, List<PullRequestReviewComment>> comments;
 
-    public SingleMonacoContent(boolean isAdded, String path, String content, Map<String, List<PullRequestReviewComment>> comments) {
+    public SingleMonacoContent(String toolName, String routePath, int numOfDiffs, boolean isAdded, String path, String content, DiffMetaInfo metaInfo,
+            List<String> deletedFilePaths, List<String> addedFilePaths) {
+        this.toolName = toolName;
+        this.routePath = routePath;
+        this.numOfDiffs = numOfDiffs;
+        this.metaInfo = metaInfo;
         this.isAdded = isAdded;
         this.path = path;
         this.content = content;
-        this.comments = comments;
+        this.comments = metaInfo.getComments();
+        this.deletedFilePaths = deletedFilePaths;
+        this.addedFilePaths = addedFilePaths;
     }
 
     public void setComments(Map<String, List<PullRequestReviewComment>> comments) {
@@ -44,6 +59,21 @@ public class SingleMonacoContent implements Renderable {
         html
                 .render(DocType.HTML5)
                 .html(lang("en").class_("h-100"))
+                .div(class_("row"))
+                .render(new AbstractMenuBar(toolName, routePath, path, numOfDiffs, metaInfo, deletedFilePaths, addedFilePaths){
+                    @Override
+                    public String getShortcutDescriptions() {
+                        return super.getShortcutDescriptions() + "<b>Alt + w</b> toggle word wrap";
+                    }
+                    @Override
+                    public String getLegendValue() {
+                        return "<span class=&quot;deleted&quot;>&nbsp;&nbsp;</span> deleted<br>"
+                                + "<span class=&quot;inserted&quot;>&nbsp;&nbsp;</span> inserted<br>"
+                                + "<span class=&quot;moved&quot;>&nbsp;&nbsp;</span> moved<br>"
+                                + "<span class=&quot;updated&quot;>&nbsp;&nbsp;</span> updated<br>";
+                    }
+                })
+                ._div()
                 .render(new SingleMonacoHeader(path, isAdded))
                 .div(style("flex: 1 1 auto; width: 100%;"))
                 .div(id(editorId).style("width:100%; height:100%;"))

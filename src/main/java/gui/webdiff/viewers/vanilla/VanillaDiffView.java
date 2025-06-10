@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.Collections;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
@@ -22,7 +23,7 @@ public class VanillaDiffView extends AbstractDiffView implements Renderable {
     private final boolean dump;
 
     public VanillaDiffView(String toolName, DiffMetaInfo metaInfo, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff, String srcFileContent, String dstFileContent, boolean dump) throws IOException {
-        super(toolName, metaInfo, srcFileName, dstFileName, diff, id, numOfDiffs, routePath, isMovedDiff);
+        super(toolName, metaInfo, srcFileName, dstFileName, diff, id, numOfDiffs, routePath, isMovedDiff, Collections.emptyList(), Collections.emptyList());
         this.dump =  dump;
         rawHtmlDiff = new VanillaDiffHtmlBuilder(srcFileContent, dstFileContent, diff);
         rawHtmlDiff.produce();
@@ -37,7 +38,7 @@ public class VanillaDiffView extends AbstractDiffView implements Renderable {
             .body()
                 .div(class_("container-fluid"))
                     .div(class_("row"))
-                        .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, isMovedDiff, metaInfo) {
+                        .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, metaInfo, deletedFilePaths, addedFilePaths) {
                             @Override
                             public String getLegendValue() {
                                 return "<span class=&quot;del&quot;>&nbsp;&nbsp;</span> deleted<br>"

@@ -893,9 +893,11 @@ line range:1049-1049==line range:1025-1025
 private assertMetrics(target ValidatingCheckpointHandler, checkpointBarrierHandler CheckpointBarrierHandler, latestCheckpointId long, alignmentDurationStartNanos long, alignmentDurationNanosMin long, startDelayNanos long, bytesProcessedDuringAlignment long) : void -> private assertMetrics(target ValidatingCheckpointHandler, checkpointBarrierHandler CheckpointBarrierHandler, latestCheckpointId long, alignmentDurationStartNanos long, alignmentDurationNanosMin long, startDelayNanos long, bytesProcessedDuringAlignment long) : void
 line range:1191-1191==line range:1167-1167
 line range:1192-1193==line range:1168-1169
+line range:1190-1190==line range:1166-1166
 line range:1194-1194==line range:1170-1170
 line range:1195-1195==line range:1171-1171
 line range:1196-1198==line range:1172-1173
+line range:1199-1201==line range:1174-1175
 private testBarrierHandling(checkpointType SnapshotType) : void -> private testBarrierHandling(checkpointType SnapshotType) : void
 line range:1334-1334==line range:1308-1308
 line range:1335-1335==line range:1309-1309
@@ -2559,6 +2561,8 @@ line range:64-64==line range:61-61
 line range:68-68==line range:65-65
 line range:71-74==line range:68-71
 line range:73-73==line range:70-70
+line range:76-76==line range:73-73
+line range:77-77==line range:74-74
 line range:63-65==line range:60-62
 line range:67-69==line range:64-66
 line range:60-78==line range:57-75
@@ -10316,6 +10320,7 @@ line range:129-129==line range:123-123
 line range:130-130==line range:124-124
 line range:131-131==line range:125-125
 line range:133-133==line range:127-127
+line range:138-138==line range:131-131
 line range:116-139==line range:110-132
 public testSourceCheckpointFirstUnaligned() : void -> package testSourceCheckpointFirstUnaligned() : void
 line range:150-150==line range:143-143
@@ -10350,6 +10355,7 @@ line range:202-202==line range:194-194
 line range:203-203==line range:195-195
 line range:204-204==line range:196-196
 line range:206-206==line range:198-198
+line range:211-211==line range:202-202
 line range:184-212==line range:176-203
 public testSourceCheckpointLastUnaligned() : void -> package testSourceCheckpointLastUnaligned() : void
 line range:223-223==line range:214-214
@@ -10404,6 +10410,7 @@ line range:343-346==line range:333-336
 line range:347-347==line range:337-337
 line range:347-347==line range:337-337
 line range:349-349==line range:339-339
+line range:353-353==line range:342-342
 line range:322-354==line range:312-343
 public testTriggerAlignedNoTimeoutCheckpointWithFinishedChannelsAndSourceChain() : void -> package testTriggerAlignedNoTimeoutCheckpointWithFinishedChannelsAndSourceChain() : void
 line range:360-363==line range:349-352

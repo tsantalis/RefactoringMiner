@@ -2743,6 +2743,7 @@ public class ReplacementAlgorithm {
 			//assertNotNull() to fluid assertThat().isNotNull()
 			//assertThat(empty()) to fluid assertThat().isEmpty()
 			//assertThat(equalTo(false)) to assertThat().isFalse()
+			//assertThat(equalTo(x)) to assertThat().isEqualTo(x)
 			//assertThat(containsInAnyOrder()) to fluid assertThat().containsExactlyInAnyOrder()
 			//assertThat(contains()) to fluid assertThat().containsExactly()
 			//assertThat(lessThanOrEqualTo()) to fluid assertThat().isLessThanOrEqualTo()
@@ -2770,6 +2771,8 @@ public class ReplacementAlgorithm {
 							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("equalTo(false)")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isTrue") &&
 							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("equalTo(true)")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isEqualTo") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("equalTo(")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && (invocationCoveringTheEntireStatement2.getName().equals("containsExactlyInAnyOrder") || invocationCoveringTheEntireStatement2.getName().equals("containsExactly")) &&
 							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("containsInAnyOrder(")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("containsExactly") &&
@@ -2862,6 +2865,8 @@ public class ReplacementAlgorithm {
 							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("equalTo(false)")) ||
 					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isTrue") &&
 							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("equalTo(true)")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isEqualTo") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("equalTo(")) ||
 					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && (invocationCoveringTheEntireStatement1.getName().equals("containsExactlyInAnyOrder") || invocationCoveringTheEntireStatement1.getName().equals("containsExactly")) &&
 							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("containsInAnyOrder(")) ||
 					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("containsExactly") &&

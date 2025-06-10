@@ -60,8 +60,8 @@ public class Node {
 
     public Node(String fileContent, String path, Tree tree) {
         this.id = formatId(path, tree);
-        this.path = path;
         this.fileContent = fileContent;
+        this.path = path;
         this.tree = tree;
         this.nodeType = NodeType.BASE;
 
@@ -166,10 +166,6 @@ public class Node {
         }
 
         return new Pair<>(left, right);
-    }
-
-    public List<Node> getContexts() {
-        return Context.get(tree).stream().map(context -> new Node(fileContent, path, context.first, context.second)).toList();
     }
 
     private final HashMap<String, String> typeTextualRepresentation = new HashMap<>() {{

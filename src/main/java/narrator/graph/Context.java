@@ -83,8 +83,8 @@ public class Context {
         List<Pair<Tree, NodeType>> contexts = new ArrayList<>();
 
         String treeType = tree.getType().name;
-        List<String> treeSemanticContexts = semanticContext.get(treeType);
 
+        List<String> treeSemanticContexts = semanticContext.get(treeType);
         Tree parent = tree;
         while (true) {
             parent = parent.getParent();

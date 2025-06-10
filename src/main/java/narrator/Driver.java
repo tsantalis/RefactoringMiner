@@ -2,8 +2,6 @@ package narrator;
 
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import narrator.graph.HunkNetwork;
 import narrator.graph.cluster.Cluster;
 import narrator.graph.cluster.Clusterer;
@@ -11,14 +9,12 @@ import narrator.graph.Edge;
 import narrator.graph.Node;
 import narrator.graph.cluster.traverse.TraversalEngine;
 import narrator.graph.cluster.traverse.TraversalPattern;
-import narrator.json.Stringifier;
 import org.jgrapht.Graph;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
-import java.io.*;
 import java.util.*;
 
 public class Driver {
@@ -64,10 +60,9 @@ public class Driver {
         List<String> diffDestinationPaths = diffSet.stream().map(ASTDiff::getDstPath).toList();
         List<String> addedPaths =
                 childContextMap.keySet().stream().filter(path -> !diffDestinationPaths.contains(path)).toList();
-        // TODO: we may not need the file entirely (with all imports) and only care about classes (and their docs)
         addedPaths.forEach(path -> {
             Tree addedTree = childContextMap.get(path).getRoot();
-            network.importHunk(path, addedTree);
+            network.importHunks(path, null, new HashSet<>(addedTree.getChildren()), null);
         });
 
         network.process();

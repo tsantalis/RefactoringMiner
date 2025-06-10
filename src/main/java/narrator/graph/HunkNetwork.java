@@ -41,17 +41,6 @@ public class HunkNetwork {
         this.childContexts = childContexts;
     }
 
-    private boolean doesHunkNodeExist(String path, Tree tree) {
-        return nodeMap.containsKey(Node.formatId(path, tree));
-    }
-
-    public void importHunk(String path, Tree tree) {
-        HashSet<Tree> additions = new HashSet<>();
-        additions.add(tree);
-
-        importHunks(path, null, additions, null);
-    }
-
     public void importHunks(String path, String srcPath, Set<Tree> additions, MappingStore mappings) {
         Set<Tree> uniqueAdditions = new HashSet<>();
         for (Tree subject : additions) {
@@ -285,7 +274,7 @@ public class HunkNetwork {
                 List<Node> classNodes = findOverlappingNodes(createdClassLocation.getFilePath(),
                         createdClassLocation.getStartOffset(), createdClassLocation.getEndOffset());
                 for (Node classNode : classNodes) {
-                    if (classNode.equals(node)) {
+                    if (classNode.equals(node) || !classNode.getNodeType().equals(NodeType.BASE)) {
                         continue;
                     }
 
@@ -369,7 +358,7 @@ public class HunkNetwork {
                     LocationInfo locationInfo = declaration.getLocationInfo();
                     String path = locationInfo.getFilePath();
                     Tree tree = TreeUtilFunctions.findByLocationInfo(childContexts.get(path).getRoot(), locationInfo);
-                    if (doesHunkNodeExist(path, tree)) {
+                    if (nodeMap.containsKey(Node.formatId(path, tree))) {
                         continue;
                     }
 
@@ -538,10 +527,10 @@ public class HunkNetwork {
         Set<Node> nodes = graph.vertexSet();
 
         for (Node node : nodes) {
-            Tree hunk = node.getTree();
+            String type = node.getTree().getType().name;
 
             //            UmlClass.getImportedTypes();
-            if (hunk.getType().name.equals(Constants.IMPORT_DECLARATION)) {
+            if (type.equals(Constants.IMPORT_DECLARATION) || type.equals(Constants.PACKAGE_DECLARATION)) {
                 node.setActive(false);
             }
         }

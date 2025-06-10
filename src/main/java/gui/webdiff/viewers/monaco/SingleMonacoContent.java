@@ -59,7 +59,7 @@ public class SingleMonacoContent implements Renderable {
         html
                 .render(DocType.HTML5)
                 .html(lang("en").class_("h-100"))
-                .div(class_("row"))
+                .div(class_("row").style("--bs-gutter-x:0"))
                 .render(new AbstractMenuBar(toolName, routePath, path, numOfDiffs, metaInfo, deletedFilePaths, addedFilePaths){
                     @Override
                     public String getShortcutDescriptions() {

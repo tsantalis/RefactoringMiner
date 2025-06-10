@@ -30,6 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static spark.Spark.*;
 
@@ -203,7 +204,10 @@ public class WebDiff  {
 
             String path = URLDecoder.decode(rawFilePath, StandardCharsets.UTF_8);
             String content = contentsMap.getOrDefault(path, "");
-            return render(new SingleMonacoContent(isAdded, path, content, projectASTDiff.getMetaInfo().getComments()));
+            return render(new SingleMonacoContent(toolName, request.pathInfo(), comparator.getNumOfDiffs(), 
+                    isAdded, path, content, projectASTDiff.getMetaInfo(),
+                    comparator.getRemovedFilesName().stream().collect(Collectors.toList()),
+                    comparator.getAddedFilesName().stream().collect(Collectors.toList())));
         });
         get("/onDemand", (request, response) -> {
             String rawFile1 = request.queryParams("file1");

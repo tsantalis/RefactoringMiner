@@ -161,15 +161,15 @@ public class DirComparator {
         Set<String> beforeFiles = projectASTDiff.getFileContentsBefore().keySet();
         Set<String> afterFiles = projectASTDiff.getFileContentsAfter().keySet();
 
-        removedFilesName = new HashSet<>(beforeFiles);
-        addedFilesName = new HashSet<>(afterFiles);
+        removedFilesName = new LinkedHashSet<>(beforeFiles);
+        addedFilesName = new LinkedHashSet<>(afterFiles);
 
         for (ASTDiff diff : diffs) {
             modifiedFilesName.add(new Pair<>(diff.getSrcPath(),diff.getDstPath()));
             removedFilesName.remove(diff.getSrcPath());
             addedFilesName.remove(diff.getDstPath());
         }
-        Set<String> removedBackup = new HashSet<>(removedFilesName);
+        Set<String> removedBackup = new LinkedHashSet<>(removedFilesName);
         removedFilesName.removeAll(addedFilesName);
         addedFilesName.removeAll(removedBackup);
     }

@@ -14,6 +14,7 @@ import org.rendersnake.Renderable;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
@@ -30,7 +31,9 @@ public class MonacoView extends AbstractDiffView implements Renderable {
             id, 
             comparator.getNumOfDiffs(), 
             routePath, 
-            comparator.isMoveDiff(id) 
+            comparator.isMoveDiff(id),
+            comparator.getRemovedFilesName().stream().collect(Collectors.toList()),
+            comparator.getAddedFilesName().stream().collect(Collectors.toList())
         );
         ASTDiff diff = comparator.getASTDiff(id);
         boolean isMovedDiff = comparator.isMoveDiff(id);
@@ -49,7 +52,9 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                 id, 
                 comparator.getNumOfDiffs(), 
                 routePath, 
-                false 
+                false,
+                comparator.getRemovedFilesName().stream().collect(Collectors.toList()),
+                comparator.getAddedFilesName().stream().collect(Collectors.toList())
             );
             String srcFileContent = comparator.getProjectASTDiff().getFileContentsBefore().get(diff.getSrcPath());
             String dstFileContent = comparator.getProjectASTDiff().getFileContentsAfter().get(diff.getDstPath());
@@ -74,7 +79,7 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                 .div(class_("container-fluid h-100"))
                 .if_(decorate && _buttons)
                     .div(class_("row"))
-                    .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, isMovedDiff, metaInfo){
+                    .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, metaInfo, deletedFilePaths, addedFilePaths){
                         @Override
                         public String getShortcutDescriptions() {
                             return super.getShortcutDescriptions() + "<b>Alt + w</b> toggle word wrap";

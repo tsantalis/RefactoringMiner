@@ -341,6 +341,16 @@ public class UMLCommentListDiff {
 		for(UMLCommentGroup group : groupsAfter) {
 			this.addedComments.addAll(group.getGroup());
 		}
+		for(UMLComment deletedComment : deletedComments) {
+			if(deletedComment.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK_COMMENT)) {
+				this.deletedComments.add(deletedComment);
+			}
+		}
+		for(UMLComment addedComment : addedComments) {
+			if(addedComment.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK_COMMENT)) {
+				this.addedComments.add(addedComment);
+			}
+		}
 	}
 
 	private void processModifiedComments(UMLCommentGroup groupBefore, UMLCommentGroup groupAfter) {

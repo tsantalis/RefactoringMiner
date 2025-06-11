@@ -3212,7 +3212,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		int totalCallCountFromDifferentMethods = 0;
 		if(classDiff != null) {
 			for(UMLOperation operation : classDiff.getNextClass().getOperations()) {
+				AbstractCall delegateCall = operation.isDelegate();
 				for(AbstractCall call : operation.getAllOperationInvocations()) {
+					if(delegateCall != null && call.equals(delegateCall) && operation.equals(container1)) {
+						continue;
+					}
 					if(call.matchesOperation(addedOperation, operation, classDiff, modelDiff)) {
 						if(classDiff.getOriginalClass().containsOperationWithTheSameSignature(operation)) {
 							totalCallCountFromDifferentMethods++;

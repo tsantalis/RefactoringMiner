@@ -3737,7 +3737,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					addedOperationsToBeRemoved.add(addedOperation);
 				}
 				else if(removedOperation.equalsIgnoringTypeParameters(addedOperation) && !differentParameterNames(removedOperation, addedOperation) &&
-						removedOperations.size() == addedOperations.size()) {
+						Math.abs(removedOperations.size() - addedOperations.size()) <= 1) {
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
 					this.addOperationBodyMapper(operationBodyMapper);
 					removedOperationsToBeRemoved.add(removedOperation);

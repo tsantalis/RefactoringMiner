@@ -313,6 +313,14 @@ public abstract class UMLAbstractClass {
 		return false;
 	}
 
+	public boolean containsOperationWithTheSameSignatureIgnoringTypeParameters(UMLOperation operation) {
+		for(UMLOperation originalOperation : operations) {
+			if(originalOperation.equalsIgnoringTypeParameters(operation))
+				return true;
+		}
+		return false;
+	}
+
 	public UMLOperation operationWithTheSameSignatureIgnoringChangedTypes(UMLOperation operation) {
 		List<UMLOperation> matchingOperations = new ArrayList<UMLOperation>();
 		for(UMLOperation originalOperation : operations) {

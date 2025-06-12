@@ -2631,7 +2631,7 @@ public class ReplacementAlgorithm {
 									!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
 								return null;
 							}
-							if(variableDeclarations1.size() == variableDeclarations2.size()) {
+							if(statement1.isLogCall() == statement2.isLogCall()) {
 								return replacementInfo.getReplacements();
 							}
 						}

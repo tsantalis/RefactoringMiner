@@ -2740,6 +2740,7 @@ public class ReplacementAlgorithm {
 			//assertSame() to fluid assertThat().isSameAs()
 			//assertFalse() to fluid assertThat().isFalse() conversion
 			//assertEquals() to fluid assertThat().isEqualTo()
+			//assertArrayEquals() to fluid assertThat().isEqualTo()
 			//assertEquals() to fluid assertThat().hasValue()
 			//assertNull() to fluid assertThat().isNull()
 			//assertNotNull() to fluid assertThat().isNotNull()
@@ -2762,6 +2763,7 @@ public class ReplacementAlgorithm {
 					(invocationCoveringTheEntireStatement1.getName().equals("assertNull") && invocationCoveringTheEntireStatement2.getName().equals("isNull")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertNotNull") && invocationCoveringTheEntireStatement2.getName().equals("isNotNull")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("isEqualTo")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertArrayEquals") && invocationCoveringTheEntireStatement2.getName().equals("isEqualTo")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("hasValue")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("isZero") &&
 							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).startsWith("0")) ||
@@ -2856,6 +2858,7 @@ public class ReplacementAlgorithm {
 					(invocationCoveringTheEntireStatement1.getName().equals("isNull") && invocationCoveringTheEntireStatement2.getName().equals("assertNull")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("isNotNull") && invocationCoveringTheEntireStatement2.getName().equals("assertNotNull")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("isEqualTo") && invocationCoveringTheEntireStatement2.getName().equals("assertEquals")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("isEqualTo") && invocationCoveringTheEntireStatement2.getName().equals("assertArrayEquals")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("hasValue") && invocationCoveringTheEntireStatement2.getName().equals("assertEquals")) ||
 					(invocationCoveringTheEntireStatement2.getName().equals("assertEquals") && invocationCoveringTheEntireStatement1.getName().equals("isZero") &&
 							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).startsWith("0")) ||

@@ -2631,7 +2631,9 @@ public class ReplacementAlgorithm {
 									!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
 								return null;
 							}
-							return replacementInfo.getReplacements();
+							if(variableDeclarations1.size() == variableDeclarations2.size()) {
+								return replacementInfo.getReplacements();
+							}
 						}
 						if(invocation1 instanceof OperationInvocation) {
 							Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<AbstractCodeFragment>();

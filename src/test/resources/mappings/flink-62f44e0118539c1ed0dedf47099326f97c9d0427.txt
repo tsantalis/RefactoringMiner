@@ -1298,6 +1298,7 @@ line range:908-908==line range:889-889
 line range:909-909==line range:890-890
 line range:910-921==line range:891-902
 line range:923-923==line range:904-904
+line range:925-930==line range:906-907
 line range:931-931==line range:908-908
 public testTimeoutAlignmentAfterReceivedEndOfPartition() : void -> package testTimeoutAlignmentAfterReceivedEndOfPartition() : void
 line range:964-965==line range:941-942
@@ -1731,6 +1732,7 @@ line range:100-100==line range:97-97
 private barrier(barrierId long) : CheckpointBarrier -> private barrier(barrierId long) : CheckpointBarrier
 line range:271-276==line range:269-274
 private assertAddedInputSize(stateWriter RecordingChannelStateWriter, channelIndex int, size int) : void -> private assertAddedInputSize(stateWriter RecordingChannelStateWriter, channelIndex int, size int) : void
+line range:281-283==line range:279-280
 private enqueueEndOfState(checkpointedInputGate CheckpointedInputGate, channelIndex int) : void -> private enqueueEndOfState(checkpointedInputGate CheckpointedInputGate, channelIndex int) : void
 line range:288-288==line range:285-285
 private enqueueEndOfPartition(checkpointedInputGate CheckpointedInputGate, channelIndex int) : void -> private enqueueEndOfPartition(checkpointedInputGate CheckpointedInputGate, channelIndex int) : void
@@ -2392,6 +2394,7 @@ line range:201-202==line range:192-193
 line range:203-203==line range:194-194
 line range:205-205==line range:196-196
 line range:206-206==line range:197-197
+line range:193-193==line range:184-184
 line range:200-207==line range:191-198
 line range:209-214==line range:200-205
 line range:195-217==line range:186-208
@@ -2736,6 +2739,7 @@ line range:204-204==line range:201-201
 line range:207-207==line range:204-204
 line range:216-216==line range:213-213
 line range:222-222==line range:218-218
+line range:199-199==line range:196-196
 line range:208-208==line range:205-205
 line range:209-209==line range:206-206
 line range:210-210==line range:207-207
@@ -2837,6 +2841,7 @@ line range:65-65==line range:64-64
 line range:66-67==line range:65-66
 line range:69-69==line range:68-68
 line range:70-70==line range:69-69
+line range:72-72==line range:71-71
 line range:73-73==line range:72-72
 public testDisabledProgressiveWatermarksForFiniteSource() : void -> package testDisabledProgressiveWatermarksForFiniteSource() : void
 line range:87-87==line range:86-86
@@ -2878,6 +2883,7 @@ line range:167-167==line range:161-161
 line range:172-172==line range:166-166
 line range:174-174==line range:168-168
 line range:175-175==line range:169-169
+line range:170-170==line range:164-164
 line range:176-176==line range:170-170
 line range:166-168==line range:160-162
 line range:173-177==line range:167-171
@@ -5366,10 +5372,12 @@ line range:34-34==line range:31-31
 line range:36-36==line range:33-33
 line range:39-39==line range:36-36
 line range:40-40==line range:37-37
+line range:48-48==line range:45-45
 line range:49-49==line range:46-46
 line range:50-50==line range:47-47
 line range:53-53==line range:50-50
 line range:57-57==line range:54-54
+line range:60-60==line range:57-57
 line range:61-61==line range:58-58
 line range:62-62==line range:59-59
 line range:38-46==line range:35-43
@@ -5390,6 +5398,7 @@ line range:87-87==line range:79-79
 line range:82-82==line range:74-74
 line range:88-88==line range:80-80
 line range:92-92==line range:84-84
+line range:95-95==line range:87-87
 line range:96-96==line range:88-88
 line range:97-97==line range:89-89
 line range:78-83==line range:70-75
@@ -5410,6 +5419,7 @@ line range:63-63==line range:57-57
 line range:64-64==line range:58-58
 line range:66-66==line range:60-60
 line range:70-70==line range:64-64
+line range:51-51==line range:45-45
 line range:52-52==line range:46-46
 line range:53-53==line range:47-47
 line range:56-56==line range:50-50
@@ -5418,6 +5428,7 @@ line range:68-68==line range:62-62
 line range:69-69==line range:63-63
 line range:77-77==line range:67-67
 line range:73-73==line range:68-68
+line range:76-76==line range:70-70
 line range:74-74==line range:71-71
 line range:78-78==line range:72-72
 line range:42-49==line range:36-43
@@ -5443,6 +5454,7 @@ line range:123-123==line range:111-111
 line range:94-94==line range:83-83
 line range:100-100==line range:88-88
 line range:105-105==line range:93-93
+line range:108-108==line range:96-96
 line range:109-109==line range:97-97
 line range:110-110==line range:98-98
 line range:121-121==line range:109-109
@@ -9744,6 +9756,7 @@ line range:124-124==line range:124-124
 line range:125-125==line range:125-125
 line range:126-126==line range:126-126
 line range:140-140==line range:139-139
+line range:149-149==line range:147-147
 line range:150-150==line range:148-148
 line range:155-155==line range:153-153
 line range:159-160==line range:157-158
@@ -9753,15 +9766,20 @@ line range:172-173==line range:170-171
 line range:184-184==line range:182-182
 line range:185-185==line range:183-183
 line range:157-157==line range:155-155
+line range:158-158==line range:156-156
 line range:161-167==line range:159-165
-line range:177-177==line range:177-177
-line range:179-179==line range:181-181
+line range:177-177==line range:175-175
+line range:179-179==line range:177-177
+line range:182-182==line range:180-180
+line range:183-183==line range:181-181
 line range:189-189==line range:187-187
 line range:195-196==line range:193-194
 line range:198-198==line range:197-197
 line range:200-200==line range:199-199
 line range:191-191==line range:189-189
+line range:192-192==line range:190-190
 line range:197-197==line range:195-196
+line range:204-204==line range:203-203
 line range:82-82==line range:82-82
 line range:84-84==line range:84-84
 line range:134-141==line range:134-140
@@ -10916,6 +10934,7 @@ line range:662-663==line range:654-655
 line range:665-665==line range:657-657
 line range:666-666==line range:658-658
 line range:669-670==line range:661-662
+line range:671-671==line range:663-663
 line range:605-672==line range:597-664
 public testWatermarkAndWatermarkStatusForwarding() : void -> package testWatermarkAndWatermarkStatusForwarding() : void
 line range:684-684==line range:676-676
@@ -11343,6 +11362,7 @@ line range:267-268==line range:261-262
 line range:270-270==line range:264-264
 line range:272-272==line range:266-266
 line range:274-275==line range:268-269
+line range:276-276==line range:270-270
 line range:168-174==line range:162-168
 line range:175-175==line range:169-169
 line range:177-177==line range:171-171
@@ -11405,6 +11425,7 @@ line range:400-401==line range:394-395
 line range:403-403==line range:397-397
 line range:405-405==line range:399-399
 line range:407-408==line range:401-402
+line range:409-409==line range:403-403
 line range:291-297==line range:285-291
 line range:299-300==line range:293-294
 line range:301-301==line range:295-295
@@ -11488,6 +11509,7 @@ line range:648-648==line range:642-642
 line range:651-651==line range:645-645
 line range:624-624==line range:618-618
 line range:628-628==line range:622-622
+line range:649-649==line range:643-643
 line range:654-655==line range:648-649
 line range:656-656==line range:650-650
 line range:657-657==line range:651-651
@@ -11863,16 +11885,19 @@ line range:74-74==line range:68-68
 line range:76-82==line range:70-76
 line range:84-84==line range:78-78
 line range:88-93==line range:82-87
+line range:86-86==line range:80-80
 public testRestoreHeadWithNewId() : void -> package testRestoreHeadWithNewId() : void
 line range:106-106==line range:97-97
 line range:108-114==line range:99-105
 line range:116-116==line range:107-107
 line range:120-125==line range:111-116
+line range:118-118==line range:109-109
 public testRestoreTailWithNewId() : void -> package testRestoreTailWithNewId() : void
 line range:135-135==line range:125-125
 line range:137-143==line range:127-133
 line range:145-145==line range:135-135
 line range:148-153==line range:138-143
+line range:146-146==line range:136-136
 public testRestoreAfterScaleUp() : void -> package testRestoreAfterScaleUp() : void
 line range:180-180==line range:169-169
 line range:182-182==line range:171-171
@@ -11881,12 +11906,14 @@ line range:163-163==line range:152-152
 line range:164-164==line range:153-153
 line range:166-172==line range:155-161
 line range:174-174==line range:163-163
+line range:176-176==line range:165-165
 public testRestoreWithoutState() : void -> package testRestoreWithoutState() : void
 line range:201-201==line range:187-187
 line range:202-202==line range:188-188
 line range:204-210==line range:190-196
 line range:212-212==line range:198-198
 line range:215-220==line range:201-206
+line range:213-213==line range:199-199
 public processElement(element StreamRecord<String>) : void -> public processElement(element StreamRecord<String>) : void
 line range:346-346==line range:328-328
 line range:347-347==line range:329-329
@@ -14582,6 +14609,7 @@ line range:423-423==line range:421-421
 line range:424-430==line range:422-428
 line range:430-430==line range:428-428
 line range:433-433==line range:431-431
+line range:432-432==line range:430-430
 line range:437-437==line range:436-436
 line range:438-438==line range:437-437
 line range:435-435==line range:433-433
@@ -15176,6 +15204,7 @@ line range:264-265==line range:257-258
 line range:267-267==line range:260-260
 line range:269-269==line range:262-262
 line range:271-272==line range:264-265
+line range:273-273==line range:266-266
 line range:158-166==line range:151-159
 line range:167-167==line range:160-160
 line range:169-169==line range:162-162
@@ -15210,6 +15239,7 @@ line range:352-352==line range:345-345
 line range:355-356==line range:348-349
 line range:358-359==line range:351-352
 line range:361-362==line range:354-355
+line range:363-363==line range:356-356
 line range:280-288==line range:273-281
 line range:289-289==line range:282-282
 line range:291-291==line range:284-284
@@ -15707,6 +15737,7 @@ line range:394-400==line range:380-386
 line range:394-400==line range:380-386
 line range:392-401==line range:378-387
 line range:404-404==line range:390-390
+line range:406-406==line range:392-392
 line range:384-384==line range:370-370
 line range:386-386==line range:372-372
 private throwFlinkException() : void -> private throwFlinkException() : void

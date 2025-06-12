@@ -29,6 +29,7 @@ import gr.uom.java.xmi.diff.MoveClassRefactoring;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring;
 import gr.uom.java.xmi.diff.MoveOperationRefactoring;
 import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
+import gr.uom.java.xmi.diff.ReplaceAnonymousWithClassRefactoring;
 import gr.uom.java.xmi.diff.ReplaceConditionalWithTernaryRefactoring;
 import gr.uom.java.xmi.diff.SplitConditionalRefactoring;
 import gr.uom.java.xmi.diff.SplitOperationRefactoring;
@@ -452,6 +453,31 @@ public class MonacoCore {
 					if(tooltip != null)
 						tooltips.add(tooltip);
     			}
+    		}
+    		else if(r instanceof ReplaceAnonymousWithClassRefactoring) {
+				String filePathAfter = r.getInvolvedClassesAfterRefactoring().iterator().next().left;
+				String filePathBefore = r.getInvolvedClassesBeforeRefactoring().iterator().next().left;
+				ReplaceAnonymousWithClassRefactoring replace = (ReplaceAnonymousWithClassRefactoring)r;
+				if(filePathBefore.equals(filePathAfter)) {
+					String tooltipLeft = "anonymous extracted to inner class";
+					if(subsumes(replace.getAnonymousClass().codeRange(),t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
+						tooltips.add(tooltipLeft);
+					}
+					String tooltipRight = "inner class extracted from anonymous";
+					if(subsumes(replace.getAddedClass().codeRange(),t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
+						tooltips.add(tooltipRight);
+					}
+				}
+				else {
+					String tooltipLeft = "anonymous extracted to class";
+					if(subsumes(replace.getAnonymousClass().codeRange(),t) && (c.getMovedSrcs().contains(t) || c.getMultiMapSrc().containsKey(t))) {
+						tooltips.add(tooltipLeft);
+					}
+					String tooltipRight = "class extracted from anonymous";
+					if(subsumes(replace.getAddedClass().codeRange(),t) && (c.getMovedDsts().contains(t) || c.getMultiMapDst().containsKey(t))) {
+						tooltips.add(tooltipRight);
+					}
+				}
     		}
     		else if(r instanceof ExtractVariableRefactoring) {
     			ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;

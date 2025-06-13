@@ -994,6 +994,21 @@ public class TestStatementMappings {
 	}
 
 	@Test
+	public void testAssertStatementMappings4() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/apache/flink.git", "62f44e0118539c1ed0dedf47099326f97c9d0427", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				mapperInfo(mapper, actual);
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "flink-62f44e0118539c1ed0dedf47099326f97c9d0427.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testBreakStatementMappings() throws Exception {
 		final List<String> actual = new ArrayList<>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();

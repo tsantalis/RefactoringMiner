@@ -2804,6 +2804,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				secondBestMapperOperation1.commonParameterTypes(secondBestMapperOperation2).size() : 0;
 		boolean identicalBodyWithOperation1OfTheBestMapper = identicalBodyWithAnotherAddedMethod(bestMapper);
 		boolean identicalBodyWithOperation2OfTheBestMapper = identicalBodyWithAnotherRemovedMethod(bestMapper);
+		boolean secondBestMapperHasIdenticalParameterTypes = secondBestMapperOperation1 != null && secondBestMapperOperation2 != null &&
+				secondBestMapperOperation1.getParameterTypeList().equals(secondBestMapperOperation2.getParameterTypeList()) &&
+				secondBestMapperOperation1.getParameterTypeList().size() > 0 && secondBestMapperOperation1.getName().equals(secondBestMapperOperation2.getName());
+		if(secondBestMapperHasIdenticalParameterTypes) {
+			return mapperList.get(1);
+		}
 		if(equalSignatureWithCommonParameterTypes(bestMapperOperation1, bestMapperOperation2) &&
 				!(secondBestMapperEqualSignatureWithCommonParameterTypes && secondBestCommontParameterTypes > bestCommonParameterTypes) &&
 				!identicalBodyWithOperation1OfTheBestMapper && !identicalBodyWithOperation2OfTheBestMapper) {

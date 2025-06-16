@@ -9800,9 +9800,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		AbstractCodeFragment fragment1 = minStatementMapping.getFragment1();
-		boolean ownedByLambda1 = ownedByLambda(fragment1);
+		boolean ownedByLambda1 = fragment1.ownedByLambda();
 		AbstractCodeFragment fragment2 = minStatementMapping.getFragment2();
-		boolean ownedByLambda2 = ownedByLambda(fragment2);
+		boolean ownedByLambda2 = fragment2.ownedByLambda();
 		for(Refactoring r : refactorings) {
 			if(r instanceof ExtractVariableRefactoring) {
 				ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
@@ -9834,18 +9834,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return false;
 		}
 		return true;
-	}
-
-	private boolean ownedByLambda(AbstractCodeFragment fragment) {
-		boolean ownedByLambda = false;
-		CompositeStatementObject parent1 = fragment.getParent();
-		while(parent1 != null) {
-			if(parent1.getOwner().isPresent() && parent1.getOwner().get() instanceof LambdaExpressionObject) {
-				ownedByLambda = true;
-			}
-			parent1 = parent1.getParent();
-		}
-		return ownedByLambda;
 	}
 
 	private int validReplacements(AbstractCodeMapping mapping, Map<String, String> parameterToArgumentMap) {

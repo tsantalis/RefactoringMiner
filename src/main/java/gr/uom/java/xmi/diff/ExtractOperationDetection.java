@@ -594,7 +594,11 @@ public class ExtractOperationDetection {
 				synchronizedBlockExactMatch = true;
 			}
 		}
+		boolean mappingOwnedByLambda = false;
 		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+			if(mapping.getFragment1().ownedByLambda()) {
+				mappingOwnedByLambda = true;
+			}
 			List<VariableDeclaration> variableDeclarations = mapping.getFragment2().getVariableDeclarations();
 			if(variableDeclarations.size() > 0) {
 				for(VariableDeclaration variableDeclaration : variableDeclarations) {
@@ -670,7 +674,8 @@ public class ExtractOperationDetection {
 				(exactMatches >= mappings && nonMappedElementsT1 == 0) ||
 				(exactMatches == 1 && !throwsNewExceptionExactMatch && !synchronizedBlockExactMatch && nonMappedElementsT2-exactMatches <= 10) ||
 				(!exceptionHandlingExactMatch && exactMatches > 1 && additionalExactMatches.size() <= exactMatches && nonMappedElementsT2-exactMatches < 20) ||
-				(mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2())) ||
+				(mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2()) ||
+				(mappings == 1 && mappingOwnedByLambda && mappings >= operationBodyMapper.nonMappedLeafElementsT2())) ||
 				argumentExtractedWithDefaultReturnAdded(operationBodyMapper);
 	}
 

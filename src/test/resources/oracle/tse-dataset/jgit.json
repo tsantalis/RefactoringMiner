@@ -61,7 +61,7 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate updateConfig(shortNames Set<String>, error Exception) : void extracted from public call() : List<String> in class org.eclipse.jgit.api.DeleteBranchCommand",
-          "validation": false
+          "validation": true
         }
       ]
     },

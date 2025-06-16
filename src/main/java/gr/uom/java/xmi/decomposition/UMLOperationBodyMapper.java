@@ -9799,22 +9799,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		boolean ownedByLambda1 = false;
-		CompositeStatementObject parent1 = minStatementMapping.getFragment1().getParent();
-		while(parent1 != null) {
-			if(parent1.getOwner().isPresent() && parent1.getOwner().get() instanceof LambdaExpressionObject) {
-				ownedByLambda1 = true;
-			}
-			parent1 = parent1.getParent();
-		}
-		boolean ownedByLambda2 = false;
-		CompositeStatementObject parent2 = minStatementMapping.getFragment2().getParent();
-		while(parent2 != null) {
-			if(parent2.getOwner().isPresent() && parent2.getOwner().get() instanceof LambdaExpressionObject) {
-				ownedByLambda2 = true;
-			}
-			parent2 = parent2.getParent();
-		}
+		AbstractCodeFragment fragment1 = minStatementMapping.getFragment1();
+		boolean ownedByLambda1 = ownedByLambda(fragment1);
+		AbstractCodeFragment fragment2 = minStatementMapping.getFragment2();
+		boolean ownedByLambda2 = ownedByLambda(fragment2);
 		for(Refactoring r : refactorings) {
 			if(r instanceof ExtractVariableRefactoring) {
 				ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
@@ -9846,6 +9834,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return false;
 		}
 		return true;
+	}
+
+	private boolean ownedByLambda(AbstractCodeFragment fragment) {
+		boolean ownedByLambda = false;
+		CompositeStatementObject parent1 = fragment.getParent();
+		while(parent1 != null) {
+			if(parent1.getOwner().isPresent() && parent1.getOwner().get() instanceof LambdaExpressionObject) {
+				ownedByLambda = true;
+			}
+			parent1 = parent1.getParent();
+		}
+		return ownedByLambda;
 	}
 
 	private int validReplacements(AbstractCodeMapping mapping, Map<String, String> parameterToArgumentMap) {

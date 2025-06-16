@@ -266,7 +266,7 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate createSslContext() : SSLContext extracted from public customize(builder Undertow.Builder) : void in class org.springframework.boot.web.embedded.undertow.SslBuilderCustomizer",
-          "validation": false
+          "validation": true
         }
       ]
     },

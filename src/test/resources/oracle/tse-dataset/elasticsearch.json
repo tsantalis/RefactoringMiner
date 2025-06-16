@@ -652,7 +652,18 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate expectedToString(hasStart boolean) : String extracted from private supplier(name String, firstType DataType, secondType DataType, strValueSupplier Supplier<String>, substrValueSupplier Supplier<String>, startSupplier Supplier<Integer>) : TestCaseSupplier in class org.elasticsearch.xpack.esql.expression.function.scalar.string.LocateTests",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\texpectedValue : int to expectedValue : ExpectedValue in method private supplier(name String, strType DataType, substrType DataType, strValueSupplier Supplier<String>, substrValueSupplier Function<String,String>, startSupplier Supplier<Integer>, expectedValue ExpectedValue) : TestCaseSupplier from class org.elasticsearch.xpack.esql.expression.function.scalar.string.LocateTests",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/elastic/elasticsearch.git",

@@ -21,7 +21,6 @@ import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
-import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -3185,6 +3184,14 @@ public class StringBasedHeuristics {
 					if(!booleanReturn) {
 						createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, r);
 						info.addReplacement(r);
+					}
+					if(statement1.getVariableDeclarations().size() == 1 && statement2.getVariableDeclarations().size() == 1) {
+						String before = statement1.getVariableDeclarations().get(0).getVariableName();
+						String after = statement2.getVariableDeclarations().get(0).getVariableName();
+						if(!before.equals(after)) {
+							Replacement replacement = new Replacement(before, after, ReplacementType.VARIABLE_NAME);
+							info.addReplacement(replacement);
+						}
 					}
 					CompositeStatementObject root1 = statement1.getParent();
 					CompositeStatementObject root2 = statement2.getParent();

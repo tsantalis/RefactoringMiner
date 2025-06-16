@@ -2437,6 +2437,17 @@ public class VariableReplacementAnalysis {
 							allVariableDeclarations2.addAll(comp2.getAllVariableDeclarations());
 							break;
 						}
+						if(s1 instanceof TryStatementObject && s2 instanceof TryStatementObject) {
+							TryStatementObject try1 = (TryStatementObject)s1;
+							TryStatementObject try2 = (TryStatementObject)s2;
+							if(try1.getFinallyClause() != null && try2.getFinallyClause() != null &&
+									try1.getFinallyClause().getStatements().contains(statement1) && try2.getFinallyClause().getStatements().contains(statement2)) {
+								parentMappingFound = true;
+								allVariableDeclarations1.addAll(try1.getFinallyClause().getAllVariableDeclarations());
+								allVariableDeclarations2.addAll(try2.getFinallyClause().getAllVariableDeclarations());
+								break;
+							}
+						}
 					}
 				}
 				if(!parentMappingFound) {
@@ -2631,7 +2642,16 @@ public class VariableReplacementAnalysis {
 									}
 								}
 								else if(set.size() == 1) {
-									return true;
+									boolean skip = false;
+									if(statement1.getParent() != null && statement2.getParent() != null && 
+											statement1.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) &&
+											statement2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
+										if(!statement1.getParent().contains(mapping.getFragment1()) && !statement2.getParent().contains(mapping.getFragment2())) {
+											skip = true;
+										}
+									}
+									if(!skip)
+										return true;
 								}
 							}
 							if(bothFragmentsUseVariable(v2, mapping)) {
@@ -2644,7 +2664,16 @@ public class VariableReplacementAnalysis {
 									}
 								}
 								else if(set.size() == 1) {
-									return true;
+									boolean skip = false;
+									if(statement1.getParent() != null && statement2.getParent() != null && 
+											statement1.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) &&
+											statement2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
+										if(!statement1.getParent().contains(mapping.getFragment1()) && !statement2.getParent().contains(mapping.getFragment2())) {
+											skip = true;
+										}
+									}
+									if(!skip)
+										return true;
 								}
 							}
 						}

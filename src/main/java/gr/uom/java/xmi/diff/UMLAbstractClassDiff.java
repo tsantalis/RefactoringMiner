@@ -32,6 +32,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LeafMapping;
+import gr.uom.java.xmi.decomposition.ObjectCreation;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -779,7 +780,9 @@ public abstract class UMLAbstractClassDiff {
 
 	public boolean isPartOfMethodExtracted(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation) {
 		List<AbstractCall> removedOperationInvocations = removedOperation.getAllOperationInvocations();
+		removedOperationInvocations.addAll(removedOperation.getAllCreations());
 		List<AbstractCall> addedOperationInvocations = addedOperation.getAllOperationInvocations();
+		addedOperationInvocations.addAll(addedOperation.getAllCreations());
 		Set<AbstractCall> intersection = new LinkedHashSet<AbstractCall>(removedOperationInvocations);
 		intersection.retainAll(addedOperationInvocations);
 		int numberOfInvocationsMissingFromRemovedOperation = new LinkedHashSet<AbstractCall>(removedOperationInvocations).size() - intersection.size();
@@ -800,6 +803,7 @@ public abstract class UMLAbstractClassDiff {
 						if(addedOperationInvocation.matchesOperation(operation, addedOperation, this, modelDiff)) {
 							//addedOperation calls another added method
 							operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllOperationInvocations());
+							operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllCreations());
 							variableDeclarationsInMethodsCalledByAddedOperation.addAll(getVariableDeclarationNamesInMethodBody(operation));
 							matchedOperationInvocations.add(addedOperationInvocation);
 						}
@@ -816,6 +820,7 @@ public abstract class UMLAbstractClassDiff {
 					UMLOperation operation = modelDiff.findOperationInAddedClasses(addedOperationInvocation, addedOperation, this);
 					if(operation != null) {
 						operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllOperationInvocations());
+						operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllCreations());
 						variableDeclarationsInMethodsCalledByAddedOperation.addAll(getVariableDeclarationNamesInMethodBody(operation));
 					}
 				}
@@ -832,7 +837,7 @@ public abstract class UMLAbstractClassDiff {
 		removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.removeAll(newIntersection);
 		for(Iterator<AbstractCall> operationInvocationIterator = removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.iterator(); operationInvocationIterator.hasNext();) {
 			AbstractCall invocation = operationInvocationIterator.next();
-			if(invocation.getName().startsWith("get") || invocation.getName().equals("add") || invocation.getName().equals("contains")) {
+			if(invocation.getName().startsWith("get") || invocation.getName().equals("add") || invocation.getName().equals("contains") || invocation instanceof ObjectCreation) {
 				operationInvocationIterator.remove();
 			}
 		}

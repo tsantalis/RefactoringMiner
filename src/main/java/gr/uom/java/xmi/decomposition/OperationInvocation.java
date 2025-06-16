@@ -506,6 +506,8 @@ public class OperationInvocation extends AbstractCall {
     		return true;
     	if(type1.equals("Exception") && type2.endsWith("Exception"))
     		return true;
+    	if(type1.equals("Statement") && type2.equals("Fail"))
+    		return true;
     	if(type1.equals("CharSequence") && type2.equals("String"))
     		return true;
     	else if(type2.equals("CharSequence") && type1.equals("String"))

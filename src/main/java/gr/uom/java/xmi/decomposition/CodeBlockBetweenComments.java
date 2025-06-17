@@ -45,6 +45,13 @@ public class CodeBlockBetweenComments {
 		return sb.toString();
 	}
 
+	public boolean equalEndComment(CodeBlockBetweenComments other) {
+		if(this.endComment != null && other.endComment != null) {
+			return this.endComment.getText().equals(other.endComment.getText());
+		}
+		return false;
+	}
+
 	public boolean compatible(CodeBlockBetweenComments other) {
 		if(this.startComment.getText().equals(other.startComment.getText())) {
 			if(this.startCommentPosition == other.startCommentPosition && (this.endComment == null || other.endComment == null)) {
@@ -205,5 +212,14 @@ public class CodeBlockBetweenComments {
 			list.add(block);
 		}
 		return list;
+	}
+
+	public static CodeBlockBetweenComments union(CodeBlockBetweenComments b1, CodeBlockBetweenComments b2) {
+		CodeBlockBetweenComments union = new CodeBlockBetweenComments(b1.startComment, b2.endComment);
+		union.leaves.addAll(b1.getLeaves());
+		union.leaves.addAll(b2.getLeaves());
+		union.innerNodes.addAll(b1.getInnerNodes());
+		union.innerNodes.addAll(b2.getInnerNodes());
+		return union;
 	}
 }

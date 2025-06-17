@@ -692,53 +692,112 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					(operation2.hasTestAnnotation() || operation2.hasDataPointsAnnotation() || operation2.hasDataProviderAnnotation() || operation2.hasParametersAnnotation())) {
 				List<CodeBlockBetweenComments> blocks1 = CodeBlockBetweenComments.generateCodeBlocks(leaves1, operation1);
 				List<CodeBlockBetweenComments> blocks2 = CodeBlockBetweenComments.generateCodeBlocks(leaves2, operation2);
-				List<CodeBlockBetweenComments> nonMatchedBlocks1 = new ArrayList<CodeBlockBetweenComments>();
-				for(CodeBlockBetweenComments block1 : blocks1) {
-					boolean matchFound = false;
-					for(CodeBlockBetweenComments block2 : blocks2) {
-						if(block1.compatible(block2)) {
-							matchFound = true;
-							processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
-							break;
-						}
-					}
-					if(!matchFound) {
+				if(blocks1.size() <= blocks2.size()) {
+					List<CodeBlockBetweenComments> nonMatchedBlocks1 = new ArrayList<CodeBlockBetweenComments>();
+					for(CodeBlockBetweenComments block1 : blocks1) {
+						boolean matchFound = false;
 						for(CodeBlockBetweenComments block2 : blocks2) {
-							if(block1.compatibleWithAfterEnd(block2)) {
+							if(block1.compatible(block2)) {
 								matchFound = true;
 								processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
 								break;
 							}
 						}
-					}
-					if(!matchFound) {
-						for(CodeBlockBetweenComments block2 : blocks2) {
-							if(block1.identicalStartCommentAndCode(block2)) {
-								matchFound = true;
-								processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
-								break;
+						if(!matchFound) {
+							for(CodeBlockBetweenComments block2 : blocks2) {
+								if(block1.compatibleWithAfterEnd(block2)) {
+									matchFound = true;
+									processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
+									break;
+								}
 							}
 						}
-					}
-					if(!matchFound) {
-						for(CodeBlockBetweenComments block2 : blocks2) {
-							if(block1.identicalEndCommentAndCode(block2)) {
-								matchFound = true;
-								processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
-								break;
+						if(!matchFound) {
+							for(CodeBlockBetweenComments block2 : blocks2) {
+								if(block1.identicalStartCommentAndCode(block2)) {
+									matchFound = true;
+									processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
+									break;
+								}
 							}
 						}
+						if(!matchFound) {
+							for(CodeBlockBetweenComments block2 : blocks2) {
+								if(block1.identicalEndCommentAndCode(block2)) {
+									matchFound = true;
+									processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
+									break;
+								}
+							}
+						}
+						if(!matchFound) {
+							nonMatchedBlocks1.add(block1);
+						}
 					}
-					if(!matchFound) {
-						nonMatchedBlocks1.add(block1);
+					for(CodeBlockBetweenComments block1 : nonMatchedBlocks1) {
+						int index = blocks1.indexOf(block1);
+						boolean previousMatched = index > 0 && !nonMatchedBlocks1.contains(blocks1.get(index-1));
+						boolean nextMatched = index < blocks1.size()-1 && !nonMatchedBlocks1.contains(blocks1.get(index+1));
+						if(previousMatched && nextMatched) {
+							leaves1.removeAll(block1.getLeaves());
+						}
 					}
 				}
-				for(CodeBlockBetweenComments block1 : nonMatchedBlocks1) {
-					int index = blocks1.indexOf(block1);
-					boolean previousMatched = index > 0 && !nonMatchedBlocks1.contains(blocks1.get(index-1));
-					boolean nextMatched = index < blocks1.size()-1 && !nonMatchedBlocks1.contains(blocks1.get(index+1));
-					if(previousMatched && nextMatched) {
-						leaves1.removeAll(block1.getLeaves());
+				else {
+					List<CodeBlockBetweenComments> nonMatchedBlocks2 = new ArrayList<CodeBlockBetweenComments>();
+					for(CodeBlockBetweenComments block2 : blocks2) {
+						boolean matchFound = false;
+						for(CodeBlockBetweenComments block1 : blocks1) {
+							if(block1.compatible(block2)) {
+								matchFound = true;
+								processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
+								break;
+							}
+						}
+						if(!matchFound) {
+							for(CodeBlockBetweenComments block1 : blocks1) {
+								if(block1.compatibleWithAfterEnd(block2)) {
+									matchFound = true;
+									int index = blocks1.indexOf(block1);
+									CodeBlockBetweenComments nextBlock1 = index < blocks1.size()-1 ? blocks1.get(index+1) : null;
+									CodeBlockBetweenComments union = null;
+									if(nextBlock1 != null && nextBlock1.equalEndComment(block2)) {
+										union = CodeBlockBetweenComments.union(block1, nextBlock1);
+									}
+									processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, union != null ? union : block1, block2);
+									break;
+								}
+							}
+						}
+						if(!matchFound) {
+							for(CodeBlockBetweenComments block1 : blocks1) {
+								if(block1.identicalStartCommentAndCode(block2)) {
+									matchFound = true;
+									processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
+									break;
+								}
+							}
+						}
+						if(!matchFound) {
+							for(CodeBlockBetweenComments block1 : blocks1) {
+								if(block1.identicalEndCommentAndCode(block2)) {
+									matchFound = true;
+									processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
+									break;
+								}
+							}
+						}
+						if(!matchFound) {
+							nonMatchedBlocks2.add(block2);
+						}
+					}
+					for(CodeBlockBetweenComments block2 : nonMatchedBlocks2) {
+						int index = blocks2.indexOf(block2);
+						boolean previousMatched = index > 0 && !nonMatchedBlocks2.contains(blocks2.get(index-1));
+						boolean nextMatched = index < blocks2.size()-1 && !nonMatchedBlocks2.contains(blocks2.get(index+1));
+						if(previousMatched && nextMatched) {
+							leaves2.removeAll(block2.getLeaves());
+						}
 					}
 				}
 			}

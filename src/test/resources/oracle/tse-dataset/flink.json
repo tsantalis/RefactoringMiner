@@ -1252,12 +1252,12 @@
         {
           "type": "INLINE_OPERATION",
           "description": "Inline Method\tprivate writeUnorderedRecords(testHarness OneInputStreamOperatorTestHarness<Row,Object>) : void inlined to private checkWriteAndCommit(override boolean, partitioned boolean, dynamicGrouped boolean, staticPartitions LinkedHashMap<String,String>, inputSupplier Supplier<List<StreamRecord<Row>>>, outputSupplier Supplier<?>) : void in class org.apache.flink.connector.file.table.FileSystemOutputFormatTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "INLINE_OPERATION",
           "description": "Inline Method\tprivate writeUnorderedRecords(testHarness OneInputStreamOperatorTestHarness<Row,Object>) : void inlined to private checkWriteAndCommit(override boolean, partitioned boolean, dynamicGrouped boolean, staticPartitions LinkedHashMap<String,String>, inputSupplier Supplier<List<StreamRecord<Row>>>, outputSupplier Supplier<?>) : void in class org.apache.flink.connector.file.table.FileSystemOutputFormatTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_ATTRIBUTE",

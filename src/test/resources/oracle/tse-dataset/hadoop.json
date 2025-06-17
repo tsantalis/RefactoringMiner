@@ -1542,7 +1542,7 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate assumeNoPrefetching() : void extracted from public testStreamIsNotChecksummed() : void in class org.apache.hadoop.fs.s3a.performance.ITestS3AOpenCost",
-          "validation": false
+          "validation": true
         }
       ]
     },

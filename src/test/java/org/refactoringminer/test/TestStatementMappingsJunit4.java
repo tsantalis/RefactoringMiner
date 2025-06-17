@@ -3524,6 +3524,25 @@ public class TestStatementMappingsJunit4 {
 	}
 
 	@Test
+	public void testAssertMappings3() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/apache/hadoop.git", "87fb97777745b2cefed6bef57490b84676d2343d", new File(REPOS));
+		List<UMLClassMoveDiff> commonClassDiff = modelDiff.getClassMoveDiffList();
+		for(UMLClassMoveDiff classDiff : commonClassDiff) {
+			if(classDiff.getOriginalClassName().equals("org.apache.hadoop.fs.TestVectoredReadUtils")) {
+				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+					if(mapper.getContainer1().getName().equals("testSortAndMerge") && mapper.getContainer2().getName().equals("testSortAndMerge")) {
+						mapperInfo(mapper, actual);
+					}
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "hadoop-87fb97777745b2cefed6bef57490b84676d2343d.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testAvoidMultiMappings() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();

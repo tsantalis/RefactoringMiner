@@ -1031,7 +1031,7 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate getOrCreateFilePool(checkpointId long) : PhysicalFilePool extracted from protected getOrCreatePhysicalFileForCheckpoint(subtaskKey SubtaskKey, checkpointId long, scope CheckpointedStateScope) : PhysicalFile in class org.apache.flink.runtime.checkpoint.filemerging.WithinCheckpointFileMergingSnapshotManager",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_OPERATION",
@@ -1041,12 +1041,12 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tfile : PhysicalFile to filePool : PhysicalFilePool in method private getOrCreateFilePool(checkpointId long) : PhysicalFilePool from class org.apache.flink.runtime.checkpoint.filemerging.WithinCheckpointFileMergingSnapshotManager",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tfile : PhysicalFile to filePool : PhysicalFilePool in method private getOrCreateFilePool(checkpointId long) : PhysicalFilePool from class org.apache.flink.runtime.checkpoint.filemerging.WithinCheckpointFileMergingSnapshotManager",
-          "validation": false
+          "validation": true
         },
         {
           "type": "INLINE_VARIABLE",

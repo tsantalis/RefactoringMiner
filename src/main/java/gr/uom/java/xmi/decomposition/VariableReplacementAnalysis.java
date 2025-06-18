@@ -5,6 +5,7 @@ import java.util.AbstractMap.SimpleEntry;
 import static gr.uom.java.xmi.Constants.JAVA;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -2049,6 +2050,25 @@ public class VariableReplacementAnalysis {
 											list.add(mapping);
 											map.put(variableReplacement, list);
 										}
+									}
+								}
+							}
+							List<String> tokens1 = Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(argument1));
+							List<String> tokens2 = Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(argument2));
+							if(tokens1.size() > 0 && tokens2.size() > 0) {
+								String first1 = tokens1.get(0);
+								String first2 = tokens2.get(0);
+								if(first1.startsWith(JAVA.THIS_DOT) && first2.startsWith(JAVA.THIS_DOT)) {
+									String attribute1 = PrefixSuffixUtils.normalize(first1);
+									String attribute2 = PrefixSuffixUtils.normalize(first2);
+									Replacement variableReplacement = new Replacement(attribute1, attribute2, ReplacementType.VARIABLE_NAME);
+									if(map.containsKey(variableReplacement)) {
+										map.get(variableReplacement).add(mapping);
+									}
+									else {
+										Set<AbstractCodeMapping> list = new LinkedHashSet<AbstractCodeMapping>();
+										list.add(mapping);
+										map.put(variableReplacement, list);
 									}
 								}
 							}

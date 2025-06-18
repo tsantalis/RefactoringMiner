@@ -324,6 +324,9 @@ public class OperationInvocation extends AbstractCall {
     			if(cast.charAt(0) != '(') {
     				inferredArgumentTypes.add(UMLType.extractTypeObject(cast));
     			}
+    			else {
+    				inferredArgumentTypes.add(null);
+    			}
     		}
     		else if(arg.endsWith(".getClassLoader()")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("ClassLoader"));

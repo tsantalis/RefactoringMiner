@@ -6019,7 +6019,12 @@ public class UMLModelDiff {
 				}
 			}
 			else {
-				refactoring = new MoveOperationRefactoring(firstMapper);
+				if(isMovedClass(firstMapper)) {
+					refactoring = new RenameOperationRefactoring(firstMapper.getOperation1(), firstMapper.getOperation2());
+				}
+				else {
+					refactoring = new MoveOperationRefactoring(firstMapper);
+				}
 			}
 		}
 		if(refactoring != null) {
@@ -6110,6 +6115,16 @@ public class UMLModelDiff {
 				}
 			}
 		}
+	}
+
+	private boolean isMovedClass(UMLOperationBodyMapper firstMapper) {
+		for(UMLClassMoveDiff moveDiff : classMoveDiffList) {
+			if(moveDiff.getOriginalClassName().equals(firstMapper.getContainer1().getClassName()) &&
+					moveDiff.getNextClassName().equals(firstMapper.getContainer2().getClassName())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void checkForMovedCodeBetweenTestFixtures() throws RefactoringMinerTimedOutException {

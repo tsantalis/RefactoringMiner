@@ -4163,18 +4163,21 @@ public class UMLModelDiff {
 		for(Pair<UMLOperation, UMLOperation> pair : map.keySet()) {
 			UMLOperation removedOperation = pair.getLeft();
 			UMLOperation addedOperation = pair.getRight();
-			UMLOperationBodyMapper bodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
-			if(!classDiff.getOperationBodyMapperList().contains(bodyMapper)) {
-				classDiff.addOperationBodyMapper(bodyMapper);
-				bodyMapper.computeRefactoringsWithinBody();
-				refactorings.addAll(bodyMapper.getRefactoringsAfterPostProcessing());
-				UMLOperationDiff operationSignatureDiff = bodyMapper.getOperationSignatureDiff().get();
-				if(operationSignatureDiff.isOperationRenamed()) {
-					RenameOperationRefactoring refactoring = new RenameOperationRefactoring(removedOperation, addedOperation);
-					refactorings.add(refactoring);
+			if(classDiff.getOriginalClass().containsOperationWithTheSameSignature(removedOperation) &&
+					classDiff.getNextClass().containsOperationWithTheSameSignature(addedOperation)) {
+				UMLOperationBodyMapper bodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
+				if(!classDiff.getOperationBodyMapperList().contains(bodyMapper)) {
+					classDiff.addOperationBodyMapper(bodyMapper);
+					bodyMapper.computeRefactoringsWithinBody();
+					refactorings.addAll(bodyMapper.getRefactoringsAfterPostProcessing());
+					UMLOperationDiff operationSignatureDiff = bodyMapper.getOperationSignatureDiff().get();
+					if(operationSignatureDiff.isOperationRenamed()) {
+						RenameOperationRefactoring refactoring = new RenameOperationRefactoring(removedOperation, addedOperation);
+						refactorings.add(refactoring);
+					}
+					Set<Refactoring> signatureRefactorings = operationSignatureDiff.getRefactorings();
+					refactorings.addAll(signatureRefactorings);
 				}
-				Set<Refactoring> signatureRefactorings = operationSignatureDiff.getRefactorings();
-				refactorings.addAll(signatureRefactorings);
 			}
 		}
 	}

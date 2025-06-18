@@ -1482,20 +1482,43 @@ public class StringBasedHeuristics {
 					}
 				}
 				if(filteredIntersection.size() > 0) {
-					IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONCATENATION);
-					for(String key : filteredIntersection) {
-						List<LeafExpression> expressions1 = statement1.findExpression(key);
-						List<LeafExpression> expressions2 = statement2.findExpression(key);
-						if(expressions1.size() == expressions2.size()) {
-							for(int i=0; i<expressions1.size(); i++) {
-								LeafMapping leafMapping = new LeafMapping(expressions1.get(i), expressions2.get(i), container1, container2);
-								r.addSubExpressionMapping(leafMapping);
+					boolean singleVariableIntersection = false;
+					if(filteredIntersection.size() == 1) {
+						String next = filteredIntersection.iterator().next();
+						List<LeafExpression> variables1 = statement1.getVariables();
+						for(LeafExpression variable : variables1) {
+							if(variable.getString().equals(next)) {
+								singleVariableIntersection = true;
+								break;
 							}
 						}
 					}
-					processStringLiterals(statement1, statement2, container1, container2, r);
-					info.getReplacements().add(r);
-					return true;
+					if(!singleVariableIntersection) {
+						IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONCATENATION);
+						int notFoundSubExpressionsInBothSides = 0;
+						for(String key : filteredIntersection) {
+							List<LeafExpression> expressions1 = statement1.findExpression(key);
+							List<LeafExpression> expressions2 = statement2.findExpression(key);
+							if(expressions1.size() == expressions2.size()) {
+								for(int i=0; i<expressions1.size(); i++) {
+									LeafMapping leafMapping = new LeafMapping(expressions1.get(i), expressions2.get(i), container1, container2);
+									r.addSubExpressionMapping(leafMapping);
+								}
+							}
+							else if(expressions1.size() == 0 && expressions2.size() > 0) {
+								notFoundSubExpressionsInBothSides++;
+							}
+							else if(expressions1.size() > 0 && expressions2.size() == 0) {
+								notFoundSubExpressionsInBothSides++;
+							}
+						}
+						if(notFoundSubExpressionsInBothSides == filteredIntersection.size()) {
+							return false;
+						}
+						processStringLiterals(statement1, statement2, container1, container2, r);
+						info.getReplacements().add(r);
+						return true;
+					}
 				}
 			}
 			else if((s1.contains(JAVA.STRING_CONCATENATION) ^ s2.contains(JAVA.STRING_CONCATENATION)) && s1.contains(",") && s2.contains(",")) {

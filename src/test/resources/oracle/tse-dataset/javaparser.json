@@ -263,7 +263,7 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tpublic outputNode(node Node, name String, xmlWriter XMLStreamWriter) : void extracted from public output(node Node, name String, level int, builder StringBuilder) : void in class com.github.javaparser.printer.XmlPrinter",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_RETURN_TYPE",

@@ -340,24 +340,24 @@
         {
           "type": "PULL_UP_ATTRIBUTE",
           "description": "Pull Up Attribute\tprivate JAVA_LANG_COMPARABLE : String from class com.github.javaparser.symbolsolver.javaparsermodel.declarations.JavaParserEnumDeclaration to public JAVA_LANG_COMPARABLE : String from class com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration",
-          "validation": true
+          "validation": false
         },
         {
           "type": "PULL_UP_ATTRIBUTE",
           "description": "Pull Up Attribute\tprivate JAVA_IO_SERIALIZABLE : String from class com.github.javaparser.symbolsolver.javaparsermodel.declarations.JavaParserEnumDeclaration to public JAVA_IO_SERIALIZABLE : String from class com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
         {
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tprivate JAVA_LANG_COMPARABLE : String from class com.github.javaparser.symbolsolver.javaparsermodel.declarations.JavaParserEnumDeclaration to public JAVA_LANG_COMPARABLE : String from class com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration",
-          "validation": false
+          "validation": true
         },
         {
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tprivate JAVA_IO_SERIALIZABLE : String from class com.github.javaparser.symbolsolver.javaparsermodel.declarations.JavaParserEnumDeclaration to public JAVA_IO_SERIALIZABLE : String from class com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration",
-          "validation": false
+          "validation": true
         }
       ]
     },

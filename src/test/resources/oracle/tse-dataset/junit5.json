@@ -1604,6 +1604,11 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\te : JUnitException to exception : JUnitException in method package pruneStackTraceOfEverythingPriorToFirstLauncherCall() : void from class org.junit.platform.commons.util.ExceptionUtilsTests",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_ATTRIBUTE",
+          "description": "Extract Attribute\tprivate leaf111 : LeafDescriptor in class org.junit.platform.engine.support.descriptor.AbstractTestDescriptorTests",
+          "validation": true
         }
       ]
     },

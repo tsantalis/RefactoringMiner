@@ -457,7 +457,13 @@
       "url": "https://github.com/elastic/elasticsearch/commit/19e9fc32f2d449e77e905aba6ca03c6351b3bbdc",
       "commonRefactoring": [],
       "ourApproach": [],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "EXTRACT_ATTRIBUTE",
+          "description": "Extract Attribute\tprivate NO_WARNINGS_REGEX : List<Pattern> in class org.elasticsearch.xpack.esql.qa.rest.RestEsqlTestCase",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/elastic/elasticsearch.git",

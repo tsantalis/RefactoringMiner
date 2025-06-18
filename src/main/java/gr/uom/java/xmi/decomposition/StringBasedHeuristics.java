@@ -1483,7 +1483,7 @@ public class StringBasedHeuristics {
 				}
 				if(filteredIntersection.size() > 0) {
 					boolean singleVariableIntersection = false;
-					if(filteredIntersection.size() == 1) {
+					if(filteredIntersection.size() == 1 && !(statement1.isLogCall() && statement2.isLogCall())) {
 						String next = filteredIntersection.iterator().next();
 						List<LeafExpression> variables1 = statement1.getVariables();
 						for(LeafExpression variable : variables1) {

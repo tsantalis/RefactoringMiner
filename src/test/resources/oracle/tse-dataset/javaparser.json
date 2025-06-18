@@ -107,12 +107,12 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tcallableDeclaration : CallableDeclaration to parentNode : Optional<Node> in method public resolveDeclaration(node Node, resultClass Class<T>) : T from class com.github.javaparser.symbolsolver.JavaSymbolSolver",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tcallableDeclaration : CallableDeclaration to parentNode : Optional<Node> in method public resolveDeclaration(node Node, resultClass Class<T>) : T from class com.github.javaparser.symbolsolver.JavaSymbolSolver",
-          "validation": false
+          "validation": true
         }
       ]
     },

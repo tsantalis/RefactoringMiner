@@ -454,8 +454,8 @@ As of **June 16, 2025** the precision and recall of RefactoringMiner on this ben
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3159  | 163  | 286  | 0.951  | 0.917|
-|Extract Method|360  |  7  | 12  | 0.981  | 0.968|
+|**Total**|3162  | 160  | 285  | 0.952  | 0.917|
+|Extract Method|361  |  6  | 11  | 0.984  | 0.970|
 |Rename Class|229  |  2  |  3  | 0.991  | 0.987|
 |Move Attribute|69  |  2  | 10  | 0.972  | 0.873|
 |Move And Rename Attribute| 4  |  0  |  4  | 1.000  | 0.500|
@@ -479,10 +479,10 @@ As of **June 16, 2025** the precision and recall of RefactoringMiner on this ben
 |Extract Variable|250  | 11  | 36  | 0.958  | 0.874|
 |Extract Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|85  |  9  | 40  | 0.904  | 0.680|
-|Rename Variable|282  | 19  | 22  | 0.937  | 0.928|
+|Rename Variable|283  | 18  | 22  | 0.940  | 0.928|
 |Rename Attribute|103  |  5  | 13  | 0.954  | 0.888|
 |Change Return Type|155  |  8  | 25  | 0.951  | 0.861|
-|Change Variable Type|369  | 20  | 16  | 0.949  | 0.958|
+|Change Variable Type|370  | 19  | 16  | 0.951  | 0.959|
 |Change Attribute Type|160  |  3  |  7  | 0.982  | 0.958|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 6  |  0  |  0  | 1.000  | 1.000|

@@ -977,8 +977,8 @@ public class ReplacementAlgorithm {
 		if(!statement1.containsInitializerOfVariableDeclaration(numberLiterals1) && !statement2.containsInitializerOfVariableDeclaration(variables2) &&
 				(!statement1.getString().endsWith("=0;\n") || (statement1.getString().endsWith("=0;\n") && statement2.getString().endsWith(".length;\n")))) {
 			findReplacements(numberLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_NUMBER_LITERAL, container1, container2, classDiff);
-			if(statement1 instanceof CompositeStatementObject && statement2 instanceof CompositeStatementObject &&
-					variables1.size() > 0 && numberLiterals2.size() > 0 && statement1.getString().contains("=" + variables1.iterator().next()) && statement2.getString().contains("=" + numberLiterals2.iterator().next())) {
+			if(variables1.size() > 0 && numberLiterals2.size() > 0 && statement1.getString().contains(JAVA.ASSIGNMENT + variables1.iterator().next()) && statement2.getString().contains(JAVA.ASSIGNMENT + numberLiterals2.iterator().next()) &&
+					!statement2.getString().endsWith(JAVA.ASSIGNMENT + numberLiterals2.iterator().next() + JAVA.STATEMENT_TERMINATION)) {
 				findReplacements(variables1, numberLiterals2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_NUMBER_LITERAL, container1, container2, classDiff);
 			}
 		}

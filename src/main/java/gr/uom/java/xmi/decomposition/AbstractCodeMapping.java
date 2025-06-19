@@ -587,6 +587,11 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						before = callBefore.arguments().get(indexOfArgument2);
 					}
 				}
+				String lambdaArrow = "()" + JAVA.LAMBDA_ARROW;
+				if(before.startsWith(lambdaArrow) && after.startsWith(lambdaArrow)) {
+					before = before.substring(lambdaArrow.length());
+					after = after.substring(lambdaArrow.length());
+				}
 				if(after.startsWith(variableName + ".")) {
 					String suffixAfter = after.substring(variableName.length(), after.length());
 					if(before.endsWith(suffixAfter) || before.contains(suffixAfter)) {
@@ -1017,6 +1022,11 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						before = variableName;
 						after = callAfter.arguments().get(indexOfArgument1);
 					}
+				}
+				String lambdaArrow = "()" + JAVA.LAMBDA_ARROW;
+				if(before.startsWith(lambdaArrow) && after.startsWith(lambdaArrow)) {
+					before = before.substring(lambdaArrow.length());
+					after = after.substring(lambdaArrow.length());
 				}
 				if(replacement instanceof CompositeReplacement) {
 					CompositeReplacement r = (CompositeReplacement)replacement;

@@ -1805,7 +1805,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						for(AbstractCodeFragment leaf1 : streamAPIStatements1) {
 							if(leaves1.contains(leaf1)) {
 								boolean matchingLambda = nestedLambdaExpressionMatch(leaf1.getLambdas(), fragment1);
-								if(matchingLambda) {
+								AbstractCall call = leaf1.invocationCoveringEntireFragment();
+								boolean findCall = call != null && (call.getName().equals("findFirst") || call.getName().equals("findAny"));
+								if(matchingLambda || findCall) {
 									streamAPICallStatement = leaf1;
 									streamAPICalls = streamAPICalls(leaf1);
 									break;

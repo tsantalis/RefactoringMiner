@@ -977,7 +977,10 @@ public class ReplacementAlgorithm {
 		if(!statement1.containsInitializerOfVariableDeclaration(numberLiterals1) && !statement2.containsInitializerOfVariableDeclaration(variables2) &&
 				(!statement1.getString().endsWith("=0;\n") || (statement1.getString().endsWith("=0;\n") && statement2.getString().endsWith(".length;\n")))) {
 			findReplacements(numberLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_NUMBER_LITERAL, container1, container2, classDiff);
-			findReplacements(variables1, numberLiterals2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_NUMBER_LITERAL, container1, container2, classDiff);
+			if(statement1 instanceof CompositeStatementObject && statement2 instanceof CompositeStatementObject &&
+					variables1.size() > 0 && numberLiterals2.size() > 0 && statement1.getString().contains("=" + variables1.iterator().next()) && statement2.getString().contains("=" + numberLiterals2.iterator().next())) {
+				findReplacements(variables1, numberLiterals2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_NUMBER_LITERAL, container1, container2, classDiff);
+			}
 		}
 		findReplacements(variables1, arrayAccesses2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS, container1, container2, classDiff);
 		findReplacements(arrayAccesses1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS, container1, container2, classDiff);

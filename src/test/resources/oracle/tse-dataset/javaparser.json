@@ -67,10 +67,16 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\toType : Optional<Class<N>> in method public findAncestor(predicate Predicate<N>, types Class<N>...) : Optional<N> from class com.github.javaparser.HasParentNode",
-          "validation": true
+          "validation": false
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "REPLACE_PIPELINE_WITH_LOOP",
+          "description": "Replace Pipeline With Loop\tOptional<Class<N>> oType=Arrays.stream(types).filter(type -> type.isAssignableFrom(parent.getClass()) && predicate.test(type.cast(parent))).findFirst(); with for(type: types) in method public findAncestor(predicate Predicate<N>, types Class<N>...) : Optional<N> from class com.github.javaparser.HasParentNode",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/javaparser/javaparser.git",

@@ -49,6 +49,7 @@ public class Constants {
 	public static final String STATIC = "static";
 	public static final String SEALED = "sealed";
 	public static final String DEFAULT = "default";
+	public static final String STRICTFP = "strictfp";
 	public static final String EQUAL_OPERATOR = "=";
 
 	public static final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";

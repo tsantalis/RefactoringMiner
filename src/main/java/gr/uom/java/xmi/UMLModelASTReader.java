@@ -1038,6 +1038,8 @@ public class UMLModelASTReader {
     		umlClass.setFinal(true);
     	if((modifiers & Modifier.SEALED) != 0)
     		umlClass.setSealed(true);
+    	if((modifiers & Modifier.STRICTFP) != 0)
+    		umlClass.setStrictfp(true);
     	
     	if((modifiers & Modifier.PUBLIC) != 0)
     		umlClass.setVisibility(Visibility.PUBLIC);
@@ -1193,6 +1195,9 @@ public class UMLModelASTReader {
 		
 		if((methodModifiers & Modifier.DEFAULT) != 0)
 			umlOperation.setDefault(true);
+		
+		if((methodModifiers & Modifier.STRICTFP) != 0)
+			umlOperation.setStrictfp(true);
 		
 		List<IExtendedModifier> extendedModifiers = methodDeclaration.modifiers();
 		int startSignatureOffset = -1;

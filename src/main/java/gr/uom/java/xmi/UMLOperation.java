@@ -44,6 +44,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private boolean isNative;
 	private boolean isSynchronized;
 	private boolean isDefault;
+	private boolean isStrictfp;
 	private Optional<UMLAnonymousClass> anonymousClassContainer;
 	private OperationBody operationBody;
 	private AbstractExpression defaultExpression;
@@ -183,6 +184,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public void setDefault(boolean isDefault) {
 		this.isDefault = isDefault;
+	}
+
+	public boolean isStrictfp() {
+		return isStrictfp;
+	}
+
+	public void setStrictfp(boolean isStrictfp) {
+		this.isStrictfp = isStrictfp;
 	}
 
 	public boolean isDeclaredInAnonymousClass() {

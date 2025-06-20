@@ -1,5 +1,7 @@
 package gr.uom.java.xmi;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class LeafType extends UMLType implements Cloneable {
@@ -123,12 +125,16 @@ public class LeafType extends UMLType implements Cloneable {
 	}
 
 	private boolean commonTokenInClassType(LeafType type) {
+		Set<String> excludedTokens = new HashSet<>();
+		excludedTokens.add("Psi");
 		String[] tokens1 = CAMEL_CASE_SPLIT_PATTERN.split(this.nonQualifiedClassType);
 		String[] tokens2 = CAMEL_CASE_SPLIT_PATTERN.split(type.nonQualifiedClassType);
 		for(String token1 : tokens1) {
-			for(String token2 : tokens2) {
-				if((token1.equals(token2) && token1.length() > 1) || token1.equals(token2 + "s") || token2.equals(token1 + "s")) {
-					return true;
+			if(!excludedTokens.contains(token1)) {
+				for(String token2 : tokens2) {
+					if((token1.equals(token2) && token1.length() > 1) || token1.equals(token2 + "s") || token2.equals(token1 + "s")) {
+						return true;
+					}
 				}
 			}
 		}

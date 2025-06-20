@@ -5564,6 +5564,7 @@ public class UMLModelDiff {
 		}
 		Set<UMLType> interfaceIntersection = new LinkedHashSet<UMLType>(interfacesImplementedByAddedClasses);
 		interfaceIntersection.retainAll(interfacesImplementedByRemovedClasses);
+		interfaceIntersection.remove(UMLType.extractTypeObject("Serializable"));
 		List<UMLOperation> addedOperations = getAddedAndExtractedOperationsInCommonClasses();
 		addedOperations.addAll(getAddedOperationsInMovedAndRenamedClasses());
 		for(UMLClass addedClass : addedClasses) {

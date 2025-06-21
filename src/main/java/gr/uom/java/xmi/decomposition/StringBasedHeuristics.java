@@ -2229,6 +2229,10 @@ public class StringBasedHeuristics {
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()))
 					rightHandSideReplacement = true;
+				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_CAST_EXPRESSION) &&
+						assignment1.equals(replacement.getBefore()) &&
+						assignment2.equals(replacement.getAfter()))
+					rightHandSideReplacement = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION) &&
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()) &&
@@ -2272,8 +2276,14 @@ public class StringBasedHeuristics {
 						}
 					}
 				}
-				if(commonTokens < Math.max(tokens1.length, tokens2.length)/2.0)
+				if(commonTokens < Math.max(tokens1.length, tokens2.length)/2.0) {
 					return true;
+				}
+				for(AbstractCodeFragment fragment : replacementInfo.getStatements2()) {
+					if(fragment.getString().startsWith(variableName1 + "=")) {
+						return true;
+					}
+				}
 			}
 			if(variableRename && inv1 != null && inv2 != null && inv1.differentExpressionNameAndArguments(inv2)) {
 				if(inv1.arguments().size() > inv2.arguments().size()) {

@@ -1002,9 +1002,11 @@ public class ReplacementAlgorithm {
 		if(statement1.getThisExpressions().size() > 0 && !statement1.getString().equals(JAVA.RETURN_THIS)) {
 			findReplacements(Set.of("this"), variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION, container1, container2, classDiff);
 		}
-		if(!container1.isGetter() && !container2.isGetter()) {
+		if(!container1.isGetter() && !container2.isGetter() && !container1.isSetter() && !container2.isSetter()) {
 			findReplacements(stringLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
 			findReplacements(variables1, stringLiterals2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
+			findReplacements(castExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CAST_EXPRESSION, container1, container2, classDiff);
+			findReplacements(variables1, castExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CAST_EXPRESSION, container1, container2, classDiff);
 		}
 		findReplacements(parenthesizedExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION, container1, container2, classDiff);
 		findReplacements(variables1, parenthesizedExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION, container1, container2, classDiff);

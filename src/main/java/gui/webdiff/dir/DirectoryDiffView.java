@@ -455,7 +455,8 @@ public class DirectoryDiffView implements Renderable {
                         	String classNameAfter = afterIteratorNext.right;
                         	//for Extract and Move Method and Extract Class take the second
                         	if((r.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION) ||
-                        			r.getRefactoringType().equals(RefactoringType.EXTRACT_CLASS)) && afterIterator.hasNext()) {
+                        			r.getRefactoringType().equals(RefactoringType.EXTRACT_CLASS) ||
+                        			r.getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS)) && afterIterator.hasNext()) {
                         		afterIteratorNext = afterIterator.next();
                         		filePathAfter = afterIteratorNext.left;
                         		classNameAfter = afterIteratorNext.right;
@@ -538,7 +539,8 @@ public class DirectoryDiffView implements Renderable {
                         		description = processClassNameAfter(classNameAfter, id, description, openingTag, closingTag);
                         		if(displayName.contains("Class") || displayName.contains("Move") || displayName.contains("Pull Up") || displayName.contains("Push Down") || displayName.contains("Remove")) {
                         			boolean skip = false;
-                        			if(displayName.equals("Extract Class") && classNameAfter.contains(classNameBefore)) {
+                        			if((r.getRefactoringType().equals(RefactoringType.EXTRACT_CLASS) ||
+                                			r.getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS)) && classNameAfter.contains(classNameBefore)) {
                         				skip = true;
                         			}
                         			if(!skip) {

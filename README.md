@@ -454,7 +454,7 @@ As of **June 23, 2025** the precision and recall of RefactoringMiner on this ben
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3178  | 149  | 270  | 0.955  | 0.922|
+|**Total**|3179  | 149  | 269  | 0.955  | 0.922|
 |Extract Method|362  |  4  | 11  | 0.989  | 0.971|
 |Rename Class|229  |  2  |  3  | 0.991  | 0.987|
 |Move Attribute|71  |  0  | 10  | 1.000  | 0.877|
@@ -476,7 +476,7 @@ As of **June 23, 2025** the precision and recall of RefactoringMiner on this ben
 |Extract And Move Method|100  | 18  | 21  | 0.847  | 0.826|
 |Move And Inline Method|25  |  7  | 12  | 0.781  | 0.676|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|252  | 11  | 33  | 0.958  | 0.884|
+|Extract Variable|253  | 11  | 32  | 0.958  | 0.888|
 |Extract Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|91  |  9  | 33  | 0.910  | 0.734|
 |Rename Variable|283  | 17  | 22  | 0.943  | 0.928|

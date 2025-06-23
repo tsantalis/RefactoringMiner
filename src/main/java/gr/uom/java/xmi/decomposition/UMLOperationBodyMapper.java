@@ -2087,11 +2087,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 						}
-						ReplacePipelineWithLoopRefactoring ref = new ReplacePipelineWithLoopRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, container1, container2);
-						newMapping.addRefactoring(ref);
-						for(AbstractCodeMapping m : this.mappings) {
-							if(composite.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) && streamAPICallStatement.getLocationInfo().subsumes(m.getFragment1().getLocationInfo())) {
-								ref.addNestedStatementMapping(m);
+						int count = 0;
+						if(parentMapper != null) {
+							for(AbstractCodeFragment fragment : additionallyMatchedStatements1) {
+								if(parentMapper.alreadyMatched1(fragment)) {
+									count++;
+								}
+							}
+						}
+						boolean allAdditionalMatchedStatementsInParentMapper = count == additionallyMatchedStatements1.size();
+						if(!allAdditionalMatchedStatementsInParentMapper) {
+							ReplacePipelineWithLoopRefactoring ref = new ReplacePipelineWithLoopRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, container1, container2);
+							newMapping.addRefactoring(ref);
+							for(AbstractCodeMapping m : this.mappings) {
+								if(composite.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) && streamAPICallStatement.getLocationInfo().subsumes(m.getFragment1().getLocationInfo())) {
+									ref.addNestedStatementMapping(m);
+								}
 							}
 						}
 						addToMappings(newMapping, mappingSet);

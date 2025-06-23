@@ -305,6 +305,11 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\ts : null to candidate : String in method package suggest(word String, wordCase WordCase) : boolean from class org.apache.lucene.analysis.hunspell.ModifyingSuggester",
           "validation": true
+        },
+        {
+          "type": "REPLACE_PIPELINE_WITH_LOOP",
+          "description": "Replace Pipeline With Loop\tList<String> adjusted=result.stream().map(s -> capitalizeAfterSpace(word,s)).collect(Collectors.toList()); with for(candidate: result) in method package suggest(word String, wordCase WordCase) : boolean from class org.apache.lucene.analysis.hunspell.ModifyingSuggester",
+          "validation": true
         }
       ]
     },

@@ -454,7 +454,7 @@ As of **June 23, 2025** the precision and recall of RefactoringMiner on this ben
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3176  | 149  | 270  | 0.955  | 0.922|
+|**Total**|3178  | 149  | 270  | 0.955  | 0.922|
 |Extract Method|362  |  4  | 11  | 0.989  | 0.971|
 |Rename Class|229  |  2  |  3  | 0.991  | 0.987|
 |Move Attribute|71  |  0  | 10  | 1.000  | 0.877|
@@ -485,6 +485,7 @@ As of **June 23, 2025** the precision and recall of RefactoringMiner on this ben
 |Change Variable Type|370  | 18  | 16  | 0.954  | 0.959|
 |Change Attribute Type|160  |  3  |  7  | 0.982  | 0.958|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
+|Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 6  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner

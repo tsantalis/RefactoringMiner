@@ -1419,6 +1419,16 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			if(infix.startsWith(replacedExpression) || infix.endsWith(replacedExpression)) {
 				return true;
 			}
+			String[] tokens = infix.split("\s");
+			int count = 0;
+			for(String token : tokens) {
+				if(replacedExpression.contains(token)) {
+					count++;
+				}
+			}
+			if(tokens.length == count) {
+				return true;
+			}
 		}
 		return false;
 	}

@@ -732,6 +732,9 @@ public abstract class UMLAbstractClassDiff {
 
 	protected boolean isPartOfMethodMovedToExistingMethod(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation) {
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			if(mapper.getMappings().isEmpty()) {
+				continue;
+			}
 			List<AbstractCall> invocationsCalledInOperation1 = mapper.getContainer1().getAllOperationInvocations();
 			List<AbstractCall> invocationsCalledInOperation2 = mapper.getContainer2().getAllOperationInvocations();
 			Set<AbstractCall> invocationsCalledOnlyInOperation1 = new LinkedHashSet<AbstractCall>(invocationsCalledInOperation1);
@@ -740,6 +743,23 @@ public abstract class UMLAbstractClassDiff {
 			invocationsCalledOnlyInOperation2.removeAll(invocationsCalledInOperation1);
 			for(AbstractCall invocation : invocationsCalledOnlyInOperation1) {
 				if(invocation.matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff)) {
+					boolean sameCallInFragment2 = false;
+					for(AbstractCodeMapping mapping : mapper.getMappings()) {
+						if(mapping.getFragment1().getLocationInfo().subsumes(invocation.getLocationInfo())) {
+							for(AbstractCall call : mapping.getFragment2().getMethodInvocations()) {
+								if(call.identicalName(invocation) && call.identicalExpression(invocation)) {
+									sameCallInFragment2 = true;
+									break;
+								}
+							}
+							if(sameCallInFragment2) {
+								break;
+							}
+						}
+					}
+					if(sameCallInFragment2) {
+						continue;
+					}
 					List<AbstractCall> removedOperationInvocations = removedOperation.getAllOperationInvocations();
 					List<AbstractCall> addedOperationInvocations = addedOperation.getAllOperationInvocations();
 					Set<AbstractCall> movedInvocations = new LinkedHashSet<AbstractCall>(removedOperationInvocations);

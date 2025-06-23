@@ -6333,6 +6333,10 @@ public class UMLModelDiff {
 		Set<AbstractCodeMapping> mappingsToBeRemoved = new HashSet<>();
 		Set<AbstractCodeMapping> mappingsToBeAdded = new HashSet<>();
 		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+			if(operationBodyMapper.getContainer1().getName().equals(operationBodyMapper.getContainer2().getName()) &&
+					(mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable())) {
+				mappings++;
+			}
 			AbstractCodeFragment s1 = mapping.getFragment1();
 			if(addedClass != null && s1.getVariableDeclarations().size() == 1) {
 				VariableDeclaration v1 = s1.getVariableDeclarations().get(0);

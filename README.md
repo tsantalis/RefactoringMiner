@@ -454,7 +454,7 @@ As of **June 23, 2025** the precision and recall of RefactoringMiner on this ben
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3179  | 149  | 269  | 0.955  | 0.922|
+|**Total**|3182  | 146  | 265  | 0.956  | 0.923|
 |Extract Method|362  |  4  | 11  | 0.989  | 0.971|
 |Rename Class|229  |  2  |  3  | 0.991  | 0.987|
 |Move Attribute|71  |  0  | 10  | 1.000  | 0.877|
@@ -464,14 +464,14 @@ As of **June 23, 2025** the precision and recall of RefactoringMiner on this ben
 |Move Method|261  |  5  |  3  | 0.981  | 0.989|
 |Move And Rename Method|20  |  4  | 11  | 0.833  | 0.645|
 |Pull Up Method|43  |  3  |  7  | 0.935  | 0.860|
-|Move Class|138  |  7  |  4  | 0.952  | 0.972|
+|Move Class|141  |  4  |  2  | 0.972  | 0.986|
 |Move And Rename Class|28  |  1  |  2  | 0.966  | 0.933|
 |Pull Up Attribute|11  |  0  |  1  | 1.000  | 0.917|
 |Push Down Attribute| 6  |  0  |  0  | 1.000  | 1.000|
-|Push Down Method|22  |  0  |  2  | 1.000  | 0.917|
+|Push Down Method|22  |  0  |  1  | 1.000  | 0.957|
 |Extract Interface|16  |  2  |  0  | 0.889  | 1.000|
 |Extract Superclass| 7  |  2  |  0  | 0.778  | 1.000|
-|Extract Subclass| 8  |  0  |  1  | 1.000  | 0.889|
+|Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|41  |  2  |  9  | 0.953  | 0.820|
 |Extract And Move Method|100  | 18  | 21  | 0.847  | 0.826|
 |Move And Inline Method|25  |  7  | 12  | 0.781  | 0.676|

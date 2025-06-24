@@ -2673,7 +2673,10 @@ public class UMLModelDiff {
 				UMLGeneralization addedGeneralization = generalizationDiff.getAddedGeneralization();
 				UMLGeneralization removedGeneralization = generalizationDiff.getRemovedGeneralization();
 				if(!addedGeneralization.getParent().equals(removedGeneralization.getParent())) {
-					processAddedGeneralization(addedClass, subclassSetBefore, subclassSetAfter, addedGeneralization);
+					UMLClassBaseDiff classDiff = getUMLClassDiff(UMLType.extractTypeObject(removedGeneralization.getParent()));
+					if(!(classDiff instanceof UMLClassMoveDiff) && !(classDiff instanceof UMLClassRenameDiff)) {
+						processAddedGeneralization(addedClass, subclassSetBefore, subclassSetAfter, addedGeneralization);
+					}
 				}
 			}
 			Map<String, Integer> nonConflictingSourceFolders = new LinkedHashMap<String, Integer>();

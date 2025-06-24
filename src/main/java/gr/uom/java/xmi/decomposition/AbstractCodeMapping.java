@@ -883,7 +883,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			checkForAliasedVariable(getFragment2().getVariableDeclarations().get(0).getInitializer(), replacements.iterator().next(), nonMappedLeavesT2, classDiff, insideExtractedOrInlinedMethod);
 		}
 		String argumentizedString = statement.getArgumentizedString();
-		if(argumentizedString.contains(JAVA.ASSIGNMENT) && (statement.getLocationInfo().before(fragment2.getLocationInfo()) || fragment2.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT))) {
+		if(argumentizedString.contains(JAVA.ASSIGNMENT) && !getFragment1().getString().equals(JAVA.THIS_DOT + statement.getString())  && (statement.getLocationInfo().before(fragment2.getLocationInfo()) || fragment2.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT))) {
 			String beforeAssignment = argumentizedString.substring(0, argumentizedString.indexOf(JAVA.ASSIGNMENT));
 			String[] tokens = beforeAssignment.split("\\s");
 			String variable = tokens[tokens.length-1];
@@ -1213,7 +1213,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			}
 		}
 		String argumentizedString = statement.getArgumentizedString();
-		if(argumentizedString.contains(JAVA.ASSIGNMENT) && (statement.getLocationInfo().before(fragment1.getLocationInfo()) || fragment1.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT))) {
+		if(argumentizedString.contains(JAVA.ASSIGNMENT) && !getFragment2().getString().equals(JAVA.THIS_DOT + statement.getString()) && (statement.getLocationInfo().before(fragment1.getLocationInfo()) || fragment1.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT))) {
 			String beforeAssignment = argumentizedString.substring(0, argumentizedString.indexOf(JAVA.ASSIGNMENT));
 			String[] tokens = beforeAssignment.split("\\s");
 			String variable = tokens[tokens.length-1];

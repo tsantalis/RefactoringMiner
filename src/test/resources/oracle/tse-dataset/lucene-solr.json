@@ -512,7 +512,7 @@
       "commonRefactoring": [
         {
           "type": "MOVE_CLASS",
-          "description": "Move Class\torg.apache.lucene.codecs.lucene80.IndexedDISI moved to org.apache.lucene.codecs.lucene90.IndexedDISI",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.IndexedDISI moved to org.apache.lucene.backward_codecs.lucene80.IndexedDISI",
           "validation": true
         },
         {
@@ -595,7 +595,7 @@
         {
           "type": "PUSH_DOWN_OPERATION",
           "description": "Push Down Method\tpublic normsConsumer(state SegmentWriteState) : NormsConsumer from class org.apache.lucene.codecs.lucene80.Lucene80NormsFormat to public normsConsumer(state SegmentWriteState) : NormsConsumer from class org.apache.lucene.backward_codecs.lucene80.Lucene80RWNormsFormat",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_CLASS",
@@ -605,7 +605,7 @@
         {
           "type": "EXTRACT_SUBCLASS",
           "description": "Extract Subclass\torg.apache.lucene.backward_codecs.lucene80.Lucene80RWNormsFormat from class org.apache.lucene.codecs.lucene80.Lucene80NormsFormat",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [

@@ -368,17 +368,17 @@
         {
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tpackage VECTORS_INDEX_CODEC_NAME : String from class org.apache.lucene.codecs.compressing.CompressingTermVectorsWriter to package VECTORS_INDEX_CODEC_NAME : String from class org.apache.lucene.backward_codecs.lucene50.compressing.Lucene50CompressingTermVectorsReader",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tpackage VERSION_CURRENT : int from class org.apache.lucene.codecs.compressing.CompressingTermVectorsWriter to package VERSION_CURRENT : int from class org.apache.lucene.backward_codecs.lucene50.compressing.Lucene50CompressingTermVectorsReader",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tpackage VERSION_START : int from class org.apache.lucene.codecs.compressing.CompressingTermVectorsWriter to package VERSION_START : int from class org.apache.lucene.backward_codecs.lucene50.compressing.Lucene50CompressingTermVectorsReader",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_RENAME_CLASS",
@@ -388,7 +388,7 @@
         {
           "type": "MOVE_RENAME_CLASS",
           "description": "Move And Rename Class\torg.apache.lucene.codecs.compressing.CompressingTermVectorsReader moved and renamed to org.apache.lucene.backward_codecs.lucene50.compressing.Lucene50CompressingTermVectorsReader",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
@@ -405,7 +405,7 @@
         {
           "type": "RENAME_CLASS",
           "description": "Rename Class\torg.apache.lucene.codecs.compressing.CompressingTermVectorsReader renamed to org.apache.lucene.codecs.compressing.Lucene90CompressingTermVectorsReader",
-          "validation": false
+          "validation": true
         },
         {
           "type": "INLINE_VARIABLE",

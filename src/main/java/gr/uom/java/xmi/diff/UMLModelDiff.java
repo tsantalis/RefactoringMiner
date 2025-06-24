@@ -674,11 +674,30 @@ public class UMLModelDiff {
 		}
 	}
 
+	private RenamePattern prevalentPattern() {
+		Map<RenamePattern, Integer> map = new LinkedHashMap<>();
+		for(UMLClassMoveDiff moveDiff : classMoveDiffList) {
+			RenamePattern pattern = moveDiff.extractRenamePattern();
+			if(pattern != null) {
+				if(map.containsKey(pattern)) {
+					map.put(pattern, map.get(pattern) + 1);
+				}
+				else {
+					map.put(pattern, 1);
+				}
+			}
+		}
+		if(map.size() == 1) {
+			return map.keySet().iterator().next();
+		}
+		return null;
+	}
+
 	public void checkForMovedClasses(Set<String> repositoryDirectories, UMLClassMatcher matcher) throws RefactoringMinerTimedOutException {
 		if(removedClasses.size() <= addedClasses.size()) {
 			for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
 				UMLClass removedClass = removedClassIterator.next();
-				TreeSet<UMLClassMoveDiff> diffSet = new TreeSet<UMLClassMoveDiff>(new ClassMoveComparator());
+				TreeSet<UMLClassMoveDiff> diffSet = new TreeSet<UMLClassMoveDiff>(new ClassMoveComparator(prevalentPattern()));
 				for(Iterator<UMLClass> addedClassIterator = addedClasses.iterator(); addedClassIterator.hasNext();) {
 					UMLClass addedClass = addedClassIterator.next();
 					String removedClassSourceFile = removedClass.getSourceFile();
@@ -741,7 +760,7 @@ public class UMLModelDiff {
 		else {
 			for(Iterator<UMLClass> addedClassIterator = addedClasses.iterator(); addedClassIterator.hasNext();) {
 				UMLClass addedClass = addedClassIterator.next();
-				TreeSet<UMLClassMoveDiff> diffSet = new TreeSet<UMLClassMoveDiff>(new ClassMoveComparator());
+				TreeSet<UMLClassMoveDiff> diffSet = new TreeSet<UMLClassMoveDiff>(new ClassMoveComparator(prevalentPattern()));
 				for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
 					UMLClass removedClass = removedClassIterator.next();
 					String removedClassSourceFile = removedClass.getSourceFile();

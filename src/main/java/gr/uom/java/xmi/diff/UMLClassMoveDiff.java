@@ -2,6 +2,7 @@ package gr.uom.java.xmi.diff;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
+import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
@@ -93,5 +94,23 @@ public class UMLClassMoveDiff extends UMLClassBaseDiff {
 			return this.originalClass.equals(classMoveDiff.originalClass) && this.nextClass.equals(classMoveDiff.nextClass);
 		}
 		return false;
+	}
+
+	public RenamePattern extractRenamePattern() {
+		String name1 = getOriginalClassName();
+		String name2 = getNextClassName();
+		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(name1, name2);
+		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(name1, name2);
+		RenamePattern pattern = null;
+		if(!commonPrefix.isEmpty() || !commonSuffix.isEmpty()) {
+			int beginIndexS1 = name1.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS1 = name1.lastIndexOf(commonSuffix);
+			String diff1 = beginIndexS1 > endIndexS1 ? "" :	name1.substring(beginIndexS1, endIndexS1);
+			int beginIndexS2 = name2.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS2 = name2.lastIndexOf(commonSuffix);
+			String diff2 = beginIndexS2 > endIndexS2 ? "" :	name2.substring(beginIndexS2, endIndexS2);
+			pattern = new RenamePattern(diff1, diff2);
+		}
+		return pattern;
 	}
 }

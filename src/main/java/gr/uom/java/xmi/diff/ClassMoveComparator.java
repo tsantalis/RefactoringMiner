@@ -4,6 +4,10 @@ import java.util.Comparator;
 import java.util.Set;
 
 public class ClassMoveComparator implements Comparator<UMLClassMoveDiff> {
+	private RenamePattern prevalentPattern;
+	public ClassMoveComparator(RenamePattern prevalentPattern) {
+		this.prevalentPattern = prevalentPattern;
+	}
 
 	@Override
 	public int compare(UMLClassMoveDiff o1, UMLClassMoveDiff o2) {
@@ -39,6 +43,16 @@ public class ClassMoveComparator implements Comparator<UMLClassMoveDiff> {
 					else {
 						return Integer.compare(lineNumberDifference1, lineNumberDifference2);
 					}
+				}
+			}
+			else if(set1.size() == set2.size() && !isEmpty1 && !isEmpty2 && prevalentPattern != null) {
+				RenamePattern r1 = o1.extractRenamePattern();
+				RenamePattern r2 = o2.extractRenamePattern();
+				if(r1 != null && prevalentPattern.equals(r1) && r2 != null && !prevalentPattern.equals(r2)) {
+					return -1;
+				}
+				else if(r1 != null && !prevalentPattern.equals(r1) && r2 != null && prevalentPattern.equals(r2)) {
+					return 1;
 				}
 			}
 			double sourceFolderDistance1 = o1.getMovedClass().normalizedSourceFolderDistance(o1.getOriginalClass());

@@ -16,6 +16,7 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
+import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLAbstractClass;
@@ -1056,12 +1057,21 @@ public abstract class UMLAbstractClassDiff {
 								candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getReferences(), false);
 						if(!refactorings.contains(ref)) {
 							refactorings.add(ref);
-							if(!candidate.getOriginalVariableDeclaration().equalType(a2.getVariableDeclaration()) ||
-									!candidate.getOriginalVariableDeclaration().equalQualifiedType(a2.getVariableDeclaration())) {
-								ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(candidate.getOriginalVariableDeclaration(), a2.getVariableDeclaration(),
-										candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getReferences(), false);
-								refactoring.addRelatedRefactoring(ref);
-								refactorings.add(refactoring);
+							boolean variableRemainsWithTheSameType = false;
+							if(ref.getRefactoringType().equals(RefactoringType.REPLACE_VARIABLE_WITH_ATTRIBUTE)) {
+								VariableDeclaration declaration = candidate.getOperationAfter().getVariableDeclaration(candidate.getOriginalVariableDeclaration().getVariableName());
+								if(declaration != null && declaration.getType().equals(candidate.getOriginalVariableDeclaration().getType())) {
+									variableRemainsWithTheSameType = true;
+								}
+							}
+							if(!variableRemainsWithTheSameType) {
+								if(!candidate.getOriginalVariableDeclaration().equalType(a2.getVariableDeclaration()) ||
+										!candidate.getOriginalVariableDeclaration().equalQualifiedType(a2.getVariableDeclaration())) {
+									ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(candidate.getOriginalVariableDeclaration(), a2.getVariableDeclaration(),
+											candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getReferences(), false);
+									refactoring.addRelatedRefactoring(ref);
+									refactorings.add(refactoring);
+								}
 							}
 						}
 					}

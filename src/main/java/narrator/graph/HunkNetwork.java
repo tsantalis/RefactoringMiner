@@ -89,6 +89,7 @@ public class HunkNetwork {
                     uniqueSrcs.sort(Comparator.comparingInt(Tree::getPos));
                     node.setSrcs(uniqueSrcs.stream().map(src -> srcContents.get(srcPath).substring(src.getPos(),
                             src.getEndPos())).toList());
+                    node.setDsts(uniqueSrcs.stream().map(mappings::getDstForSrc).filter(Objects::nonNull).toList());
                 }
             }
 

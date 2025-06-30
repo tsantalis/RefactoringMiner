@@ -15,10 +15,9 @@ public class Node {
     private final String fileContent;
     private boolean active = true;
     private final Tree tree;
-    private final int startLine;
-    private final int endLine;
     private NodeType nodeType;
     private List<String> srcs = null;
+    private List<Tree> dsts = null;
 
     public String getSubAggregatorId(String aggregatorId) {
         String result = id;
@@ -35,9 +34,13 @@ public class Node {
         nodeObj.addProperty("hunkId", id);
         nodeObj.addProperty("path", path);
         nodeObj.addProperty("content", getContent());
-        nodeObj.addProperty("startLine", startLine);
-        nodeObj.addProperty("endLine", endLine);
         nodeObj.addProperty("nodeType", nodeType.name());
+        nodeObj.addProperty("pos", tree.getPos());
+        nodeObj.addProperty("endPos", tree.getEndPos());
+
+        Pair<Integer, Integer> lineRange = TreeUtilFunctions.getLineRange(this.tree, this.fileContent);
+        nodeObj.addProperty("startLine", lineRange.first);
+        nodeObj.addProperty("endLine", lineRange.second);
 
         if (srcs != null) {
             JsonArray srcsArr = new JsonArray();
@@ -47,11 +50,32 @@ public class Node {
             nodeObj.add("srcs", srcsArr);
         }
 
+        if (dsts != null) {
+            JsonArray dstsArr = new JsonArray();
+            for (Tree dst : dsts) {
+                JsonObject dstObj = new JsonObject();
+
+                dstObj.addProperty("pos", dst.getPos());
+                dstObj.addProperty("endPos", dst.getEndPos());
+
+                Pair<Integer, Integer> dstLineRange = TreeUtilFunctions.getLineRange(dst, this.fileContent);
+                dstObj.addProperty("startLine", dstLineRange.first);
+                dstObj.addProperty("endLine", dstLineRange.second);
+
+                dstsArr.add(dstObj);
+            }
+            nodeObj.add("dsts", dstsArr);
+        }
+
         return nodeObj;
     }
 
     public void setSrcs(List<String> srcs) {
         this.srcs = srcs;
+    }
+
+    public void setDsts(List<Tree> dsts) {
+        this.dsts = dsts;
     }
 
     public static String formatId(String path, Tree tree) {
@@ -64,10 +88,6 @@ public class Node {
         this.path = path;
         this.tree = tree;
         this.nodeType = NodeType.BASE;
-
-        Pair<Integer, Integer> lineRange = TreeUtilFunctions.getLineRange(tree, fileContent);
-        this.startLine = lineRange.first;
-        this.endLine = lineRange.second;
     }
 
     public Node(String fileContent, String path, Tree tree, NodeType nodeType) {
@@ -97,14 +117,6 @@ public class Node {
 
     public NodeType getNodeType() {
         return nodeType;
-    }
-
-    public int getStartLine() {
-        return startLine;
-    }
-
-    public int getEndLine() {
-        return endLine;
     }
 
     public String getContent() {

@@ -58,9 +58,6 @@ public class Node {
             for (Tree dst : dsts) {
                 JsonObject dstObj = new JsonObject();
 
-                dstObj.addProperty("pos", dst.getPos());
-                dstObj.addProperty("endPos", dst.getEndPos());
-
                 Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> dstLineRange =
                         TreeUtilFunctions.getLineRange(dst, this.fileContent);
                 Pair<Integer, Integer> startDstRange = dstLineRange.first;

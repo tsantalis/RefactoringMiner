@@ -27,12 +27,12 @@ public class TreeUtilFunctions {
     private static FakeTree _instance;
 
     public static Tree findByLocationInfo(Tree tree, LocationInfo locationInfo) {
-		if (locationInfo == null) {return null;}
+        if (locationInfo == null) {return null;}
         int start_offset = locationInfo.getStartOffset();
         int end_offset = locationInfo.getEndOffset();
-		if (tree.getPos() > start_offset || tree.getEndPos() < end_offset) {
-			return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(), locationInfo) : null;
-		}
+        if (tree.getPos() > start_offset || tree.getEndPos() < end_offset) {
+            return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(), locationInfo) : null;
+        }
         return findByLocationInfoNoLookAhead(tree, locationInfo);
     }
 
@@ -40,14 +40,14 @@ public class TreeUtilFunctions {
         int start_offset = locationInfo.getStartOffset();
         int end_offset = locationInfo.getEndOffset();
         Tree treeBetweenPositions = getTreeBetweenPositions(tree, start_offset, end_offset);
-		if (treeBetweenPositions == null) {return null;}
+        if (treeBetweenPositions == null) {return null;}
         if (isFromType(treeBetweenPositions, Constants.METHOD_INVOCATION_ARGUMENTS)) {
             if (treeBetweenPositions.getChildren().size() > 0) {
-				if (treeBetweenPositions.getChild(0).getPos() == start_offset && treeBetweenPositions.getChild(0).getEndPos() == end_offset) {
-					return treeBetweenPositions.getChild(0);
-				} else {
-					return treeBetweenPositions;
-				}
+                if (treeBetweenPositions.getChild(0).getPos() == start_offset && treeBetweenPositions.getChild(0).getEndPos() == end_offset) {
+                    return treeBetweenPositions.getChild(0);
+                } else {
+                    return treeBetweenPositions;
+                }
             } else {
                 return treeBetweenPositions;
             }
@@ -63,27 +63,27 @@ public class TreeUtilFunctions {
 
     public static Tree getTreeBetweenPositions(Tree tree, int position, int endPosition) {
         for (Tree t : tree.preOrder()) {
-			if (t.getPos() >= position && t.getEndPos() <= endPosition) {return t;}
+            if (t.getPos() >= position && t.getEndPos() <= endPosition) {return t;}
         }
         return null;
     }
 
     public static Tree getTreeBetweenPositions(Tree tree, int position, int endPosition, String type) {
         for (Tree t : tree.preOrder()) {
-			if (t.getPos() >= position && t.getEndPos() <= endPosition) {if (isFromType(t, type)) {return t;}}
+            if (t.getPos() >= position && t.getEndPos() <= endPosition) {if (isFromType(t, type)) {return t;}}
         }
         return null;
     }
 
     public static Tree getTreeBetweenPositionsSecure(Tree tree, int position, int endPosition, String type,
-													 String parentType, String label) {
+                                                     String parentType, String label) {
         for (Tree t : tree.preOrder()) {
-			if (t.getPos() == position && t.getEndPos() == endPosition) {
-				if (isFromType(t, type) && t.getLabel().equals(label)) {
-					String t_parentType = (t.getParent() != null) ? t.getParent().getType().name : "";
-					if (t_parentType.equals(parentType)) {return t;}
-				}
-			}
+            if (t.getPos() == position && t.getEndPos() == endPosition) {
+                if (isFromType(t, type) && t.getLabel().equals(label)) {
+                    String t_parentType = (t.getParent() != null) ? t.getParent().getType().name : "";
+                    if (t_parentType.equals(parentType)) {return t;}
+                }
+            }
         }
         return null;
     }
@@ -91,7 +91,7 @@ public class TreeUtilFunctions {
     public static Tree findChildByType(Tree tree, String type) {
         if (!tree.getChildren().isEmpty()) {
             for (Tree child : tree.getChildren()) {
-				if (isFromType(child, type)) {return child;}
+                if (isFromType(child, type)) {return child;}
             }
         }
         return null;
@@ -100,7 +100,7 @@ public class TreeUtilFunctions {
     public static Tree findChildByTypeAndLabel(Tree tree, String type, String label) {
         if (!tree.getChildren().isEmpty()) {
             for (Tree child : tree.getChildren()) {
-				if (isFromType(child, type) && child.getLabel().equals(label)) {return child;}
+                if (isFromType(child, type) && child.getLabel().equals(label)) {return child;}
             }
         }
         return null;
@@ -113,15 +113,15 @@ public class TreeUtilFunctions {
     }
 
     public static Tree deepCopyWithMapPruning(Tree tree, Map<Tree, Tree> cpyMap) {
-		if (isFromType(tree, Constants.BLOCK)) {if (tree.getChildren().size() != 0) {return null;}}
+        if (isFromType(tree, Constants.BLOCK)) {if (tree.getChildren().size() != 0) {return null;}}
         Tree copy = makeDefaultTree(tree);
         cpyMap.put(copy, tree);
-		if (isFromType(tree, Constants.ANONYMOUS_CLASS_DECLARATION)) {return copy;}
+        if (isFromType(tree, Constants.ANONYMOUS_CLASS_DECLARATION)) {return copy;}
         for (Tree child : tree.getChildren()) {
             Tree childCopy = deepCopyWithMapPruning(child, cpyMap);
-			if (childCopy != null) {copy.addChild(childCopy);}
+            if (childCopy != null) {copy.addChild(childCopy);}
         }
-		if (copy.getChildren().size() == 0) {copy.setParent(tree.getParent());}
+        if (copy.getChildren().size() == 0) {copy.setParent(tree.getParent());}
         return copy;
     }
 
@@ -150,29 +150,29 @@ public class TreeUtilFunctions {
         for (String type : types) {
             srcRes = TreeUtilFunctions.findFirstByType(srcTree, type);
             dstRes = TreeUtilFunctions.findFirstByType(dstTree, type);
-			if (srcRes != null && dstRes != null) {break;} else {
-				//In case, only one of them is null. We want to avoid this scenario (unless we get more examples)
-				srcRes = null;
-				dstRes = null;
-			}
+            if (srcRes != null && dstRes != null) {break;} else {
+                //In case, only one of them is null. We want to avoid this scenario (unless we get more examples)
+                srcRes = null;
+                dstRes = null;
+            }
         }
         return org.apache.commons.lang3.tuple.Pair.of(srcRes, dstRes);
     }
 
     public static FakeTree getFakeTreeInstance() {
-		if (_instance == null) {_instance = new FakeTree();}
+        if (_instance == null) {_instance = new FakeTree();}
         return _instance;
     }
 
     public static Tree getFinalRoot(Tree tree) {
-		if (tree.isRoot()) {return tree;}
-		if (tree.getParent() instanceof FakeTree) {return tree;}
+        if (tree.isRoot()) {return tree;}
+        if (tree.getParent() instanceof FakeTree) {return tree;}
         return getFinalRoot(tree.getParent());
     }
 
     public static Tree getParentUntilType(Tree tree, String matchingType) {
-		if (isFromType(tree, matchingType)) {return tree;}
-		if (tree.getParent() != null) {return getParentUntilType(tree.getParent(), matchingType);} else {return null;}
+        if (isFromType(tree, matchingType)) {return tree;}
+        if (tree.getParent() != null) {return getParentUntilType(tree.getParent(), matchingType);} else {return null;}
     }
 
     public static Tree loadTree(String name) {
@@ -195,8 +195,8 @@ public class TreeUtilFunctions {
     }
 
     public static boolean isPartOf(Tree srcSubTree, String type) {
-		if (srcSubTree.getType().name.equals(type)) {return true;}
-		if (srcSubTree.getParent() == null) {return false;}
+        if (srcSubTree.getType().name.equals(type)) {return true;}
+        if (srcSubTree.getParent() == null) {return false;}
         return isPartOf(srcSubTree.getParent(), type);
     }
 
@@ -231,13 +231,13 @@ public class TreeUtilFunctions {
     }
 
     public static boolean isPartOfJavadoc(Tree srcSubTree) {
-		if (isFromType(srcSubTree, Constants.JAVA_DOC)) {return true;}
-		if (srcSubTree.getParent() == null) {return false;}
+        if (isFromType(srcSubTree, Constants.JAVA_DOC)) {return true;}
+        if (srcSubTree.getParent() == null) {return false;}
         return isPartOfJavadoc(srcSubTree.getParent());
     }
 
     public static List<Tree> findVariable(Tree inputTree, String variableName) {
-		if (inputTree == null) {return null;}
+        if (inputTree == null) {return null;}
         boolean _seen = false;
         List<Tree> refs = new ArrayList<>();
         for (Tree tree : inputTree.preOrder()) {
@@ -258,13 +258,13 @@ public class TreeUtilFunctions {
     }
 
     public static boolean isIsomorphicTo(Tree t1, Tree t2) {
-		if (!hasSameTypeAndLabel(t1, t2)) {return false;}
+        if (!hasSameTypeAndLabel(t1, t2)) {return false;}
 
-		if (t1.getChildren().size() != t2.getChildren().size()) {return false;}
+        if (t1.getChildren().size() != t2.getChildren().size()) {return false;}
 
         for (int i = 0; i < t1.getChildren().size(); i++) {
             boolean isChildrenIsomophic = isIsomorphicTo(t1.getChild(i), (t2.getChild(i)));
-			if (!isChildrenIsomophic) {return false;}
+            if (!isChildrenIsomophic) {return false;}
         }
 
         return true;
@@ -283,7 +283,7 @@ public class TreeUtilFunctions {
     }
 
     public static Tree findFirstByType(Tree inputTree, String typeName) {
-		if (inputTree == null) {return null;}
+        if (inputTree == null) {return null;}
         Tree fieldAnnotation = null;
         for (Tree child : inputTree.getChildren()) {
             if (isFromType(child, typeName)) {
@@ -294,8 +294,8 @@ public class TreeUtilFunctions {
         return fieldAnnotation;
     }
 
-    public static Pair<Integer, Integer> getLineRange(Tree tree, String fileContent) {
-        int startLine = -1, endLine = -1;
+    public static Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> getLineRange(Tree tree, String fileContent) {
+        int startLine = -1, endLine = -1, startLineOffset = -1, endLineOffset = -1;
 
         int pos = tree.getPos();
         int endPos = tree.getEndPos();
@@ -304,14 +304,17 @@ public class TreeUtilFunctions {
         int lineCount = 1;
         String[] lines = fileContent.split("\n", -1);
         for (String line : lines) {
+            int lineStart = charCount;
             int lineEnd = charCount + line.length() + 1;
 
-            if (startLine == -1 && pos < lineEnd) {
+            if (pos >= lineStart && pos <= lineEnd) {
                 startLine = lineCount;
+                startLineOffset = pos - lineStart;
             }
 
-            if (endLine == -1 && endPos <= lineEnd) {
+            if (endPos >= lineStart && endPos <= lineEnd) {
                 endLine = lineCount;
+                endLineOffset = endPos - lineStart;
             }
 
             if (startLine != -1 && endLine != -1) {
@@ -322,6 +325,6 @@ public class TreeUtilFunctions {
             lineCount++;
         }
 
-        return new Pair<>(startLine, endLine);
+        return new Pair<>(new Pair<>(startLine, startLineOffset), new Pair<>(endLine, endLineOffset));
     }
 }

@@ -35,12 +35,15 @@ public class Node {
         nodeObj.addProperty("path", path);
         nodeObj.addProperty("content", getContent());
         nodeObj.addProperty("nodeType", nodeType.name());
-        nodeObj.addProperty("pos", tree.getPos());
-        nodeObj.addProperty("endPos", tree.getEndPos());
 
-        Pair<Integer, Integer> lineRange = TreeUtilFunctions.getLineRange(this.tree, this.fileContent);
-        nodeObj.addProperty("startLine", lineRange.first);
-        nodeObj.addProperty("endLine", lineRange.second);
+        Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> lineRange = TreeUtilFunctions.getLineRange(this.tree,
+                this.fileContent);
+        Pair<Integer, Integer> startLineRange = lineRange.first;
+        nodeObj.addProperty("startLine", startLineRange.first);
+        nodeObj.addProperty("startLineOffset", startLineRange.second);
+        Pair<Integer, Integer> endLineRange = lineRange.second;
+        nodeObj.addProperty("endLine", endLineRange.first);
+        nodeObj.addProperty("endLineOffset", endLineRange.second);
 
         if (srcs != null) {
             JsonArray srcsArr = new JsonArray();
@@ -58,9 +61,14 @@ public class Node {
                 dstObj.addProperty("pos", dst.getPos());
                 dstObj.addProperty("endPos", dst.getEndPos());
 
-                Pair<Integer, Integer> dstLineRange = TreeUtilFunctions.getLineRange(dst, this.fileContent);
-                dstObj.addProperty("startLine", dstLineRange.first);
-                dstObj.addProperty("endLine", dstLineRange.second);
+                Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> dstLineRange =
+                        TreeUtilFunctions.getLineRange(dst, this.fileContent);
+                Pair<Integer, Integer> startDstRange = dstLineRange.first;
+                dstObj.addProperty("startLine", startDstRange.first);
+                dstObj.addProperty("startLineOffset", startDstRange.second);
+                Pair<Integer, Integer> endDstRange = dstLineRange.second;
+                dstObj.addProperty("endLine", endDstRange.first);
+                dstObj.addProperty("endLineOffset", endDstRange.second);
 
                 dstsArr.add(dstObj);
             }

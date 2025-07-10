@@ -16,7 +16,7 @@ public class Node {
     private boolean active = true;
     private final Tree tree;
     private NodeType nodeType;
-    private List<String> srcs = null;
+    private List<Node> srcs = null;
     private List<Tree> dsts = null;
 
     public JsonObject stringify() {
@@ -38,8 +38,21 @@ public class Node {
 
         if (srcs != null) {
             JsonArray srcsArr = new JsonArray();
-            for (String src : srcs) {
-                srcsArr.add(src);
+            for (Node src : srcs) {
+                JsonObject srcObj = new JsonObject();
+                srcObj.addProperty("path", src.getPath());
+                srcObj.addProperty("content", src.getContent());
+
+                Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> srcLineRange =
+                        TreeUtilFunctions.getLineRange(src.getTree(), src.getFileContent());
+                Pair<Integer, Integer> srcStartRange = srcLineRange.first;
+                srcObj.addProperty("startLine", srcStartRange.first);
+                srcObj.addProperty("startLineOffset", srcStartRange.second);
+                Pair<Integer, Integer> srcEndRange = srcLineRange.second;
+                srcObj.addProperty("endLine", srcEndRange.first);
+                srcObj.addProperty("endLineOffset", srcEndRange.second);
+
+                srcsArr.add(srcObj);
             }
             nodeObj.add("srcs", srcsArr);
         }
@@ -66,7 +79,7 @@ public class Node {
         return nodeObj;
     }
 
-    public void setSrcs(List<String> srcs) {
+    public void setSrcs(List<Node> srcs) {
         this.srcs = srcs;
     }
 

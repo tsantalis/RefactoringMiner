@@ -10,8 +10,6 @@ import java.util.*;
 
 public class Stringifier {
     public static JsonObject graph(Graph<Node, Edge> graph) {
-        String aggregatorId = "";
-
         Set<Node> nodes = graph.vertexSet();
 
         Map<String, PreprocessedNode> preprocessedNodes = new HashMap<>();
@@ -20,9 +18,8 @@ public class Stringifier {
                 continue;
             }
 
-            String id = node.getSubAggregatorId(aggregatorId);
-            preprocessedNodes.put(id, new PreprocessedNode(node.stringify(aggregatorId), new HashSet<>()));
-            preprocessedNodes.get(id).aggregatorIds.add(aggregatorId);
+            String id = node.getId();
+            preprocessedNodes.put(id, new PreprocessedNode(node.stringify(), new HashSet<>()));
         }
 
         JsonArray edgesArray = new JsonArray();
@@ -34,8 +31,7 @@ public class Stringifier {
 
                 Set<Edge> edges = graph.getAllEdges(source, target);
                 for (Edge edge : edges) {
-                    edgesArray.add(stringifyEdge(source.getSubAggregatorId(aggregatorId),
-                            target.getSubAggregatorId(aggregatorId), edge.getType().name()));
+                    edgesArray.add(stringifyEdge(source.getId(), target.getId(), edge.getType().name()));
                 }
             }
         }
@@ -49,46 +45,50 @@ public class Stringifier {
 
     private static void stringifyComponentGraph(TraversalPattern traversalComponent, String aggregatorId, Map<String,
             PreprocessedNode> preprocessedNodes, JsonArray edges) {
-        Map<Node, UsagePattern> replacements = new HashMap<>();
+        Map<Node, UsagePattern> requirements = new HashMap<>();
         if (traversalComponent instanceof UsagePattern) {
-            replacements.putAll(((UsagePattern) traversalComponent).getRequirements());
+            requirements.putAll(((UsagePattern) traversalComponent).getRequirements());
         }
 
         Graph<Node, Edge> graph = traversalComponent.getGraph();
-
         List<Node> nodes = graph.vertexSet().stream().filter(Node::isActive).toList();
+
+        for (Node node : nodes) {
+            if (requirements.containsKey(node)) {
+                stringifyTraversalComponent(requirements.get(node), aggregatorId, preprocessedNodes, edges);
+                continue;
+            }
+
+            String nodeId = node.getId();
+            if (!preprocessedNodes.containsKey(nodeId)) {
+                preprocessedNodes.put(nodeId, new PreprocessedNode(node.stringify(), new HashSet<>()));
+            }
+            preprocessedNodes.get(nodeId).aggregatorIds.add(aggregatorId);
+        }
+
         for (Node source : nodes) {
             for (Node target : nodes) {
-                if (source.equals(target) || !source.isActive() || !target.isActive()) {
+                if (source.equals(target)) {
                     continue;
-                }
-
-                String sourceId;
-                if (replacements.containsKey(source)) {
-                    TraversalPattern sourceComponent = replacements.get(source);
-                    sourceId = sourceComponent.getId();
-                    stringifyTraversalComponent(sourceComponent, aggregatorId, preprocessedNodes, edges);
-                } else {
-                    sourceId = source.getSubAggregatorId(aggregatorId);
-                    preprocessedNodes.put(sourceId, new PreprocessedNode(source.stringify(aggregatorId),
-                            new HashSet<>()));
-                    preprocessedNodes.get(sourceId).aggregatorIds.add(aggregatorId);
-                }
-
-                String targetId;
-                if (replacements.containsKey(target)) {
-                    TraversalPattern targetComponent = replacements.get(target);
-                    targetId = targetComponent.getId();
-                    stringifyTraversalComponent(targetComponent, aggregatorId, preprocessedNodes, edges);
-                } else {
-                    targetId = target.getSubAggregatorId(aggregatorId);
-                    preprocessedNodes.put(targetId, new PreprocessedNode(target.stringify(aggregatorId),
-                            new HashSet<>()));
-                    preprocessedNodes.get(targetId).aggregatorIds.add(aggregatorId);
                 }
 
                 Set<Edge> sourceTargetEdges = graph.getAllEdges(source, target);
                 for (Edge edge : sourceTargetEdges) {
+                    String sourceId = source.getId();
+                    String targetId = target.getId();
+                    if (edge.getType().equals(EdgeType.DEF_USE)) {
+                        if (requirements.containsKey(source)) {
+                            sourceId = requirements.get(source).getId();
+                        }
+                        if (requirements.containsKey(target)) {
+                            targetId = requirements.get(target).getId();
+                        }
+                    }
+
+                    if (isDuplicateEdge(edges, sourceId, targetId, edge.getType().name())) {
+                        continue;
+                    }
+                    
                     edges.add(stringifyEdge(sourceId, targetId, edge.getType().name()));
                 }
             }
@@ -113,10 +113,6 @@ public class Stringifier {
 
     private static void stringifyTraversalComponent(TraversalPattern traversalComponent, String aggregatorId,
                                                     Map<String, PreprocessedNode> preprocessedNodes, JsonArray edges) {
-        if (aggregatorId.isEmpty()) {
-            System.out.println("aggregatorId is empty");
-        }
-
         String traversalComponentId = traversalComponent.getId();
 
         PreprocessedNode preprocessedNode = preprocessedNodes.get(traversalComponentId);
@@ -139,8 +135,7 @@ public class Stringifier {
             }
         } else {
             Node lead = traversalComponent.getLead();
-            edges.add(stringifyEdge(traversalComponentId, lead.getSubAggregatorId(traversalComponentId),
-                    EdgeType.EXPANSION.name()));
+            edges.add(stringifyEdge(traversalComponentId, lead.getId(), EdgeType.EXPANSION.name()));
 
             stringifyComponentGraph(traversalComponent, traversalComponentId, preprocessedNodes, edges);
         }
@@ -151,8 +146,8 @@ public class Stringifier {
 
         preprocessedNodes.values().forEach((preprocessedNode) -> {
             JsonArray aggregatorIdsJson = new JsonArray();
-            for (String ai : preprocessedNode.aggregatorIds) {
-                aggregatorIdsJson.add(ai);
+            for (String aggregatorId : preprocessedNode.aggregatorIds) {
+                aggregatorIdsJson.add(aggregatorId);
             }
             preprocessedNode.node.add("aggregatorIds", aggregatorIdsJson);
 
@@ -207,6 +202,13 @@ public class Stringifier {
         edgeObj.addProperty("type", type);
 
         return edgeObj;
+    }
+
+    private static boolean isDuplicateEdge(JsonArray edges, String sourceId, String targetId, String type) {
+        return edges.asList().stream().anyMatch(edge -> {
+            JsonObject edgeObj = edge.getAsJsonObject();
+            return edgeObj.get("sourceId").getAsString().equals(sourceId) && edgeObj.get("targetId").getAsString().equals(targetId) && edgeObj.get("type").getAsString().equals(type);
+        });
     }
 }
 

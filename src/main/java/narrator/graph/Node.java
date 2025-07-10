@@ -19,19 +19,10 @@ public class Node {
     private List<String> srcs = null;
     private List<Tree> dsts = null;
 
-    public String getSubAggregatorId(String aggregatorId) {
-        String result = id;
-        if (!aggregatorId.isEmpty()) {
-            result += "-" + aggregatorId;
-        }
-        return result;
-    }
-
-    public JsonObject stringify(String aggregatorId) {
+    public JsonObject stringify() {
         JsonObject nodeObj = new JsonObject();
 
-        nodeObj.addProperty("id", getSubAggregatorId(aggregatorId));
-        nodeObj.addProperty("hunkId", id);
+        nodeObj.addProperty("id", id);
         nodeObj.addProperty("path", path);
         nodeObj.addProperty("content", getContent());
         nodeObj.addProperty("nodeType", nodeType.name());

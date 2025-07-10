@@ -31,7 +31,7 @@ public class SuccessivePattern extends TraversalPattern {
     public JsonObject stringify() {
         JsonObject result = super.stringify();
 
-        result.addProperty("headId", getHead().getSubAggregatorId(getId()));
+        result.addProperty("headId", getHead().getId());
         result.addProperty("nodeType", NodeType.SUCCESSIVE.name());
 
         return result;

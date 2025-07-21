@@ -664,8 +664,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 		else {
 			GHRepository repository = getGitHubRepository(cloneURL);
-			List<GHCommit.File> commitFiles = new ArrayList<>();
-			GHCommit commit = new GHRepositoryWrapper(repository).getCommit(currentCommitId, commitFiles);
+        	GHCommit commit = repository.getCommit(currentCommitId);
+        	List<GHCommit.File> commitFiles = commit.listFiles().toList();
 			//if parents.size() == 0 then currentCommit is the initial commit of the repository, but then all files will have an ADDED status
 			String parentCommitId = commit.getParents().size() > 0 ? commit.getParents().get(0).getSHA1() : null;
 			List<String> filesBefore = new ArrayList<String>();
@@ -1056,8 +1056,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		GHRepository repository = getGitHubRepository(cloneURL);
 		final String commitId = repository.queryCommits().from(currentCommitId).list().iterator().next().getSHA1();
 		logger.info("Processing {} {} ...", cloneURL, commitId);
-		List<GHCommit.File> commitFiles = new ArrayList<>();
-		GHCommit currentCommit = new GHRepositoryWrapper(repository).getCommit(commitId, commitFiles);
+		GHCommit currentCommit = repository.getCommit(currentCommitId);
+    	List<GHCommit.File> commitFiles = currentCommit.listFiles().toList();
 		//if parents.size() == 0 then currentCommit is the initial commit of the repository, but then all files will have an ADDED status
 		final String parentCommitId = currentCommit.getParents().size() > 0 ? currentCommit.getParents().get(0).getSHA1() : null;
 		Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();
@@ -1376,8 +1376,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 		GHRepository repository = getGitHubRepository(cloneURL);
 		final String commitId = repository.queryCommits().from(currentCommitId).list().iterator().next().getSHA1();
-		List<GHCommit.File> commitFiles = new ArrayList<>();
-		GHCommit currentCommit = new GHRepositoryWrapper(repository).getCommit(commitId, commitFiles);
+		GHCommit currentCommit = repository.getCommit(currentCommitId);
+    	List<GHCommit.File> commitFiles = currentCommit.listFiles().toList();
 		//if parents.size() == 0 then currentCommit is the initial commit of the repository, but then all files will have an ADDED status
 		final String parentCommitId = currentCommit.getParents().size() > 0 ? currentCommit.getParents().get(0).getSHA1() : null;
 		Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();
@@ -2231,8 +2231,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		for(GHCommit currentGHCommit : reverseCommits) {
 			final String commitId = currentGHCommit.getSHA1();
 			logger.info("Processing {} {} ...", cloneURL, commitId);
-			List<GHCommit.File> commitFiles = new ArrayList<>();
-			GHCommit currentCommit = new GHRepositoryWrapper(repository).getCommit(commitId, commitFiles);
+			GHCommit currentCommit = repository.getCommit(commitId);
+	    	List<GHCommit.File> commitFiles = currentCommit.listFiles().toList();
 			//if parents.size() == 0 then currentCommit is the initial commit of the repository, but then all files will have an ADDED status
 			final String parentCommitId = currentCommit.getParents().size() > 0 ? currentCommit.getParents().get(0).getSHA1() : null;
 			Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();

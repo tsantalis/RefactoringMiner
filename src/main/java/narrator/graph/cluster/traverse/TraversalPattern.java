@@ -11,14 +11,16 @@ import java.util.Set;
 
 public class TraversalPattern extends GraphWrapper {
     protected final Util util = new Util(getGraph());
+    protected Node cachedLead = null;
 
     public Node getLead() {
-        List<Node> nodes = getGraph().vertexSet().stream().toList();
+        if (cachedLead == null) {
+            List<Node> nodes = getGraph().vertexSet().stream().toList();
+            int randomIndex = new Random().nextInt(nodes.size());
+            cachedLead = nodes.get(randomIndex);
+        }
 
-        Random random = new Random();
-        int randomIndex = random.nextInt(nodes.size());
-
-        return nodes.get(randomIndex);
+        return cachedLead;
     }
 
     public String getId() {

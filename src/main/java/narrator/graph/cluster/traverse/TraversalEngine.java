@@ -199,7 +199,7 @@ public class TraversalEngine {
     private void addSingularComponents() {
         List<Node> singularNodes =
                 graph.vertexSet().stream().filter(node -> !node.isContext()).filter(node -> singularTypes.contains(node.getTree().getType().name)).filter(node -> {
-            boolean result = true;
+            boolean isSingularNode = true;
 
             for (TraversalPattern traversalComponent : components) {
                 boolean contains = traversalComponent.containsNode(node);
@@ -208,7 +208,7 @@ public class TraversalEngine {
                 }
             }
 
-            return result;
+            return isSingularNode;
         }).toList();
 
         for (Node node : singularNodes) {
@@ -400,6 +400,7 @@ public class TraversalEngine {
             nodes.add(pair.getRight());
         }
 
+        // Stage 1: merge components with similarity nodes
         while (true) {
             HashMap<Node, List<TraversalPattern>> nodesComponents = getNodesComponents(nodes);
 
@@ -475,6 +476,29 @@ public class TraversalEngine {
                 components.remove(component);
             }
             components.add(parentComponent);
+        }
+
+        // Stage 2: Create Similarity patterns
+        while (true) {
+            HashMap<Node, List<TraversalPattern>> nodesComponents = getNodesComponents(nodes);
+            List<Node> singularNodes =
+                    nodesComponents.entrySet().stream().filter(entry -> entry.getValue().isEmpty()).map(Map.Entry::getKey).toList();
+            if (singularNodes.isEmpty()) {
+                break;
+            }
+
+            Node singularNode = singularNodes.get(0);
+            List<Node> similarityTargets =
+                    similarityPairs.stream().filter(pair -> pair.getLeft().equals(singularNode)).map(ImmutablePair::getRight).toList();
+            Set<Node> similarityNodes = new HashSet<>(similarityTargets);
+            similarityNodes.add(singularNode);
+
+            SimilarityPattern similarityPattern = new SimilarityPattern(similarityNodes);
+            for (Node node : similarityNodes) {
+                addContext(node, similarityPattern);
+            }
+
+            components.add(similarityPattern);
         }
     }
 

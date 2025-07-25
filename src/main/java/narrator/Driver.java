@@ -3,12 +3,8 @@ package narrator;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import narrator.graph.HunkNetwork;
-import narrator.graph.cluster.Cluster;
-import narrator.graph.cluster.Clusterer;
 import narrator.graph.Edge;
 import narrator.graph.Node;
-import narrator.graph.cluster.traverse.TraversalEngine;
-import narrator.graph.cluster.traverse.TraversalPattern;
 import org.jgrapht.Graph;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
@@ -18,13 +14,6 @@ import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import java.util.*;
 
 public class Driver {
-    public static void main(String[] args) throws Exception {
-        //        Graph<Node, Edge> graph = getCommitGraph("https://github.com/LMAX-Exchange/disruptor/commit" +
-        //                "/6a93ff9e94a878cd2d7672b2a07b94a2307d41fe");
-        Graph<Node, Edge> graph = getPullRequestGraph("https://github.com/JabRef/jabref/pull/13233");
-        List<List<TraversalPattern>> components = getComponents(graph);
-    }
-
     public static Graph<Node, Edge> getPullRequestGraph(String url) throws Exception {
         String repo = URLHelper.getRepo(url);
         String PR = URLHelper.getPRID(url);
@@ -68,11 +57,5 @@ public class Driver {
         network.process();
 
         return network.getGraph();
-    }
-
-    private static List<List<TraversalPattern>> getComponents(Graph<Node, Edge> graph) {
-        Clusterer clusterer = new Clusterer(graph);
-        List<Cluster> clusters = clusterer.getClusters();
-        return clusters.stream().map(TraversalEngine::new).map(TraversalEngine::getComponents).toList();
     }
 }

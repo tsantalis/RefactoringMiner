@@ -39,7 +39,7 @@ public class Service {
         Clusterer clusterer = new Clusterer(graph);
         List<Cluster> clusters = clusterer.getClusters();
         List<List<TraversalPattern>> clustersComponents =
-                clusters.stream().map(TraversalEngine::new).map(TraversalEngine::getComponents).toList();
+                clusters.stream().map(TraversalEngine::new).map(TraversalEngine::getComponents).filter(components -> !components.isEmpty()).toList();
 
         JsonObject stringifiedCommit = Stringifier.hierarchy(clustersComponents);
         return stringifiedCommit.toString();

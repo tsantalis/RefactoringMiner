@@ -2350,6 +2350,18 @@ public class UMLModelDiff {
 		return addedOperations;
 	}
 
+	private List<UMLOperation> getRemovedOperationsConvertedToAbstractInCommonClasses() {
+		List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
+		for(UMLClassDiff classDiff : commonClassDiffList) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getOperation1() != null && mapper.getContainer1().getBody() != null && mapper.getContainer2().getBody() == null) {
+					removedOperations.add(mapper.getOperation1());
+				}
+			}
+		}
+		return removedOperations;
+	}
+
 	private List<UMLOperation> getAddedAndExtractedOperationsInCommonClasses() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> addedOperations = new ArrayList<UMLOperation>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
@@ -3624,6 +3636,7 @@ public class UMLModelDiff {
 		inferPushDownRefactorings();
 		checkForOperationMovesBetweenCommonClasses();
 		checkForOperationMovesIncludingRemovedAndAddedClasses();
+		checkForMatchedOperationMovesInAddedClasses();
 		List<UMLOperation> addedAndExtractedOperationsInCommonClasses = getAddedAndExtractedOperationsInCommonClasses();
 		List<UMLOperation> addedOperationsInMovedAndRenamedClasses = getAddedOperationsInMovedAndRenamedClasses();
 		List<UMLOperation> allAddedOperations = new ArrayList<UMLOperation>(addedAndExtractedOperationsInCommonClasses);
@@ -5565,6 +5578,14 @@ public class UMLModelDiff {
 				(exactMatchesWithoutMatchesInNestedContainers == 1 && !exactMatchListWithoutMatchesInNestedContainers.get(0).getFragment1().throwsNewException() && nonMappedElementsT2-exactMatchesWithoutMatchesInNestedContainers <= 10) ||
 				(exactMatches > 1 && nonMappedElementsT2-exactMatches < 20) ||
 				(mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2()));
+	}
+
+	private void checkForMatchedOperationMovesInAddedClasses() throws RefactoringMinerTimedOutException {
+		List<UMLOperation> convertedToInterfaceOperations = getRemovedOperationsConvertedToAbstractInCommonClasses();
+		List<UMLOperation> allOperationsInAddedClasses = getOperationsInAddedClasses();
+		if(condition(allOperationsInAddedClasses.size(), convertedToInterfaceOperations.size())) {
+			checkForOperationMoves(allOperationsInAddedClasses, convertedToInterfaceOperations);
+		}
 	}
 
 	private void checkForOperationMovesIncludingRemovedAndAddedClasses() throws RefactoringMinerTimedOutException {

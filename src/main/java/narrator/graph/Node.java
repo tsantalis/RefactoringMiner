@@ -43,6 +43,19 @@ public class Node {
                 srcObj.addProperty("path", src.getPath());
                 srcObj.addProperty("content", src.getContent());
 
+                JsonArray contextsArr = new JsonArray();
+                List<Node> contexts =
+                        Context.get(src.getTree()).stream().map(context -> new Node(src.getFileContent(),
+                                src.getPath(), context.first, context.second)).toList();
+                contexts.forEach(context -> {
+                    JsonObject contextObj = new JsonObject();
+                    contextObj.addProperty("content", context.getContent());
+                    contextObj.addProperty("nodeType", context.nodeType.name());
+
+                    contextsArr.add(contextObj);
+                });
+                srcObj.add("contexts", contextsArr);
+
                 Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> srcLineRange =
                         TreeUtilFunctions.getLineRange(src.getTree(), src.getFileContent());
                 Pair<Integer, Integer> srcStartRange = srcLineRange.first;
@@ -187,29 +200,5 @@ public class Node {
         }
 
         return new Pair<>(left, right);
-    }
-
-    private final HashMap<String, String> typeTextualRepresentation = new HashMap<>() {{
-        put(Constants.VARIABLE_DECLARATION_STATEMENT, "VARIABLE");
-        put(Constants.METHOD_DECLARATION, "METHOD");
-        put(Constants.TYPE_DECLARATION, "TYPE");
-        put(Constants.COMPILATION_UNIT, "FILE");
-    }};
-
-    public String textualRepresentation() {
-        if (isContext()) {
-            String result = "";
-
-            String type = tree.getType().name;
-            if (typeTextualRepresentation.containsKey(type)) {
-                result += typeTextualRepresentation.get(type) + " ";
-            }
-
-            result += "\"" + getContent() + "\"";
-
-            return result;
-        }
-
-        return getContent();
     }
 }

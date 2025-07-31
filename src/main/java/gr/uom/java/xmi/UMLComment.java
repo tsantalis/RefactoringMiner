@@ -1,5 +1,7 @@
 package gr.uom.java.xmi;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -14,6 +16,7 @@ public class UMLComment extends UMLAbstractDocumentation {
 	//represents non-attached Javadocs found within method bodies
 	private Optional<UMLJavadoc> javaDoc;
 	private CompositeStatementObject parent;
+	private List<LocationInfo> previousLineLocations = new ArrayList<>();
 
 	public UMLComment(String text, LocationInfo locationInfo) {
 		super(text, locationInfo);
@@ -34,6 +37,14 @@ public class UMLComment extends UMLAbstractDocumentation {
 
 	public void setParent(CompositeStatementObject parent) {
 		this.parent = parent;
+	}
+
+	public List<LocationInfo> getPreviousLocations() {
+		return previousLineLocations;
+	}
+
+	public void addPreviousLocation(LocationInfo info) {
+		previousLineLocations.add(info);
 	}
 
 	@Override

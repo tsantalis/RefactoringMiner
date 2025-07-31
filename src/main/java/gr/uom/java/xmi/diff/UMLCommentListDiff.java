@@ -14,7 +14,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLCommentGroup;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLAttribute;
 
 public class UMLCommentListDiff {
 	private List<Pair<UMLComment, UMLComment>> commonComments;
@@ -22,6 +24,7 @@ public class UMLCommentListDiff {
 	private List<UMLComment> addedComments;
 	private boolean manyToManyReformat;
 	private Set<AbstractCodeMapping> mappings;
+	private UMLAbstractClassDiff classDiff;
 
 	public UMLCommentListDiff(List<UMLComment> commentsBefore, List<UMLComment> commentsAfter, Set<AbstractCodeMapping> mappings) {
 		this.mappings = mappings;
@@ -30,6 +33,12 @@ public class UMLCommentListDiff {
 
 	public UMLCommentListDiff(List<UMLComment> commentsBefore, List<UMLComment> commentsAfter) {
 		this.mappings = Collections.emptySet();
+		init(commentsBefore, commentsAfter);
+	}
+
+	public UMLCommentListDiff(List<UMLComment> commentsBefore, List<UMLComment> commentsAfter, UMLAbstractClassDiff classDiff) {
+		this.mappings = Collections.emptySet();
+		this.classDiff = classDiff;
 		init(commentsBefore, commentsAfter);
 	}
 
@@ -143,6 +152,33 @@ public class UMLCommentListDiff {
 		processRemainingComments(groupBefore.getGroup(), groupAfter.getGroup());
 	}
 
+	private boolean mappedPreviousStatement(UMLComment left, UMLComment right) {
+		if(left.getPreviousLocations().size() > 0 && right.getPreviousLocations().size() > 0 &&
+				left.getPreviousLocations().size() == right.getPreviousLocations().size()) {
+			for(AbstractCodeMapping mapping : mappings) {
+				if(mapping.getFragment1().getLocationInfo().equals(left.getPreviousLocations().get(0)) &&
+						mapping.getFragment2().getLocationInfo().equals(right.getPreviousLocations().get(0))) {
+					return true;
+				}
+			}
+			if(classDiff != null) {
+				for(Pair<UMLAttribute, UMLAttribute> pair : classDiff.getCommonAtrributes()) {
+					if(pair.getLeft().getLocationInfo().equals(left.getPreviousLocations().get(0)) &&
+							pair.getRight().getLocationInfo().equals(right.getPreviousLocations().get(0))) {
+						return true;
+					}
+				}
+				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+					if(mapper.getContainer1().getLocationInfo().equals(left.getPreviousLocations().get(0)) &&
+							mapper.getContainer2().getLocationInfo().equals(right.getPreviousLocations().get(0))) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	private boolean mappedParent(UMLComment left, UMLComment right) {
 		if(left.getParent() != null && right.getParent() != null) {
 			if(left.getParent().getParent() == null && right.getParent().getParent() == null) {
@@ -165,9 +201,11 @@ public class UMLCommentListDiff {
 			for(UMLComment comment : commentsBefore) {
 				List<Integer> matchingIndices = findAllMatchingIndices(commentsAfter, comment);
 				List<Boolean> mappedParent = new ArrayList<Boolean>();
+				List<Boolean> mappedPreviousStatement = new ArrayList<Boolean>();
 				if(matchingIndices.size() > 1) {
 					for(Integer index : matchingIndices) {
 						mappedParent.add(mappedParent(comment, commentsAfter.get(index)));
+						mappedPreviousStatement.add(mappedPreviousStatement(comment, commentsAfter.get(index)));
 					}
 				}
 				int i = -1;
@@ -175,6 +213,9 @@ public class UMLCommentListDiff {
 					i++;
 					if(!alreadyMatchedComment(comment, commentsAfter.get(index))) {
 						if(mappedParent.contains(true) && mappedParent.get(i) == false) {
+							continue;
+						}
+						if(mappedPreviousStatement.contains(true) && mappedPreviousStatement.get(i) == false) {
 							continue;
 						}
 						Pair<UMLComment, UMLComment> pair = Pair.of(comment, commentsAfter.get(index));
@@ -190,9 +231,11 @@ public class UMLCommentListDiff {
 			for(UMLComment comment : commentsAfter) {
 				List<Integer> matchingIndices = findAllMatchingIndices(commentsBefore, comment);
 				List<Boolean> mappedParent = new ArrayList<Boolean>();
+				List<Boolean> mappedPreviousStatement = new ArrayList<Boolean>();
 				if(matchingIndices.size() > 1) {
 					for(Integer index : matchingIndices) {
 						mappedParent.add(mappedParent(commentsBefore.get(index), comment));
+						mappedPreviousStatement.add(mappedPreviousStatement(commentsBefore.get(index), comment));
 					}
 				}
 				int i = -1;
@@ -200,6 +243,9 @@ public class UMLCommentListDiff {
 					i++;
 					if(!alreadyMatchedComment(commentsBefore.get(index), comment)) {
 						if(mappedParent.contains(true) && mappedParent.get(i) == false) {
+							continue;
+						}
+						if(mappedPreviousStatement.contains(true) && mappedPreviousStatement.get(i) == false) {
 							continue;
 						}
 						Pair<UMLComment, UMLComment> pair = Pair.of(commentsBefore.get(index), comment);

@@ -353,6 +353,9 @@ public class UMLModelASTReader {
 					(codeElementComments.size() > 0 && codeElementComments.get(0).getLocationInfo().nextLine(commentLocationInfo))) {
 				codeElementComments.add(0, comment);
 			}
+			if(commentLocationInfo.nextLine(codeElementLocationInfo)) {
+				comment.addPreviousLocation(codeElementLocationInfo);
+			}
 		}
 		compilationUnitComments.removeAll(codeElementComments);
 	}

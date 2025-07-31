@@ -221,7 +221,7 @@ public abstract class UMLAbstractClassDiff {
 
 	public UMLCommentListDiff getCommentListDiff() {
 		if(commentListDiff == null)
-			commentListDiff = new UMLCommentListDiff(originalClass.getComments(), nextClass.getComments());
+			commentListDiff = new UMLCommentListDiff(originalClass.getComments(), nextClass.getComments(), this);
 		return commentListDiff;
 	}
 

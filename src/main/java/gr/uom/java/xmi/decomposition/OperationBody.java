@@ -532,6 +532,11 @@ public class OperationBody {
 				}
 			}
 		}
+		for(UMLComment comment : comments) {
+			if(comment.getLocationInfo().nextLine(statement.getLocationInfo())) {
+				comment.addPreviousLocation(statement.getLocationInfo());
+			}
+		}
 	}
 
 	public Map<String, Set<String>> aliasedVariables() {

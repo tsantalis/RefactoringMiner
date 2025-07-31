@@ -191,7 +191,7 @@ public abstract class AbstractMenuBar implements Renderable {
                         .href(shouldDisableNext ? "#" : getNextHRef()))
                 .content(getNextButtonText())
                 ._if()
-                .a(class_("btn btn-default btn-sm btn-danger").href("/quit")).content(QUIT_BUTTON_TEXT)
+                //.a(class_("btn btn-default btn-sm btn-danger").href("/quit")).content(QUIT_BUTTON_TEXT)
                 ._div()
                 ._div()
                 ._div();

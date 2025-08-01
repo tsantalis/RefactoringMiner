@@ -24,10 +24,12 @@ public class UMLCommentListDiff {
 	private List<UMLComment> addedComments;
 	private boolean manyToManyReformat;
 	private Set<AbstractCodeMapping> mappings;
+	private UMLOperationBodyMapper operationBodyMapper;
 	private UMLAbstractClassDiff classDiff;
 
-	public UMLCommentListDiff(List<UMLComment> commentsBefore, List<UMLComment> commentsAfter, Set<AbstractCodeMapping> mappings) {
-		this.mappings = mappings;
+	public UMLCommentListDiff(List<UMLComment> commentsBefore, List<UMLComment> commentsAfter, UMLOperationBodyMapper mapper) {
+		this.operationBodyMapper = mapper;
+		this.mappings = mapper.getMappings();
 		init(commentsBefore, commentsAfter);
 	}
 
@@ -161,6 +163,14 @@ public class UMLCommentListDiff {
 					return true;
 				}
 			}
+			if(operationBodyMapper != null && operationBodyMapper.getParentMapper() != null) {
+				for(AbstractCodeMapping mapping : operationBodyMapper.getParentMapper().getMappings()) {
+					if(mapping.getFragment1().getLocationInfo().equals(left.getPreviousLocations().get(0)) &&
+							mapping.getFragment2().getLocationInfo().equals(right.getPreviousLocations().get(0))) {
+						return true;
+					}
+				}
+			}
 			if(classDiff != null) {
 				for(Pair<UMLAttribute, UMLAttribute> pair : classDiff.getCommonAtrributes()) {
 					if(pair.getLeft().getLocationInfo().equals(left.getPreviousLocations().get(0)) &&
@@ -174,6 +184,74 @@ public class UMLCommentListDiff {
 						return true;
 					}
 				}
+			}
+		}
+		return false;
+	}
+
+	private boolean isDeletedCommentWithPreviousDeletedStatement(UMLComment comment) {
+		if(comment.getPreviousLocations().size() > 0) {
+			boolean mappingFound = false;
+			for(AbstractCodeMapping mapping : mappings) {
+				if(mapping.getFragment1().getLocationInfo().equals(comment.getPreviousLocations().get(0))) {
+					mappingFound = true;
+				}
+			}
+			if(operationBodyMapper != null && operationBodyMapper.getParentMapper() != null) {
+				for(AbstractCodeMapping mapping : operationBodyMapper.getParentMapper().getMappings()) {
+					if(mapping.getFragment1().getLocationInfo().equals(comment.getPreviousLocations().get(0))) {
+						mappingFound = true;
+					}
+				}
+			}
+			if(classDiff != null) {
+				for(Pair<UMLAttribute, UMLAttribute> pair : classDiff.getCommonAtrributes()) {
+					if(pair.getLeft().getLocationInfo().equals(comment.getPreviousLocations().get(0))) {
+						mappingFound = true;
+					}
+				}
+				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+					if(mapper.getContainer1().getLocationInfo().equals(comment.getPreviousLocations().get(0))) {
+						mappingFound = true;
+					}
+				}
+			}
+			if(!mappingFound) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isAddedCommentWithPreviousAddedStatement(UMLComment comment) {
+		if(comment.getPreviousLocations().size() > 0) {
+			boolean mappingFound = false;
+			for(AbstractCodeMapping mapping : mappings) {
+				if(mapping.getFragment2().getLocationInfo().equals(comment.getPreviousLocations().get(0))) {
+					mappingFound = true;
+				}
+			}
+			if(operationBodyMapper != null && operationBodyMapper.getParentMapper() != null) {
+				for(AbstractCodeMapping mapping : operationBodyMapper.getParentMapper().getMappings()) {
+					if(mapping.getFragment2().getLocationInfo().equals(comment.getPreviousLocations().get(0))) {
+						mappingFound = true;
+					}
+				}
+			}
+			if(classDiff != null) {
+				for(Pair<UMLAttribute, UMLAttribute> pair : classDiff.getCommonAtrributes()) {
+					if(pair.getRight().getLocationInfo().equals(comment.getPreviousLocations().get(0))) {
+						mappingFound = true;
+					}
+				}
+				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+					if(mapper.getContainer2().getLocationInfo().equals(comment.getPreviousLocations().get(0))) {
+						mappingFound = true;
+					}
+				}
+			}
+			if(!mappingFound) {
+				return true;
 			}
 		}
 		return false;
@@ -263,7 +341,8 @@ public class UMLCommentListDiff {
 				for(Pair<UMLComment, UMLComment> pair : commonComments) {
 					if(pair.getLeft().getText().equals(deletedComment.getText()) &&
 							pair.getRight().getText().equals(deletedComment.getText()) &&
-							!deletedComment.isCommentedCode() && !deletedComment.nestedInCatchBlock()) {
+							!deletedComment.isCommentedCode() && !deletedComment.nestedInCatchBlock() &&
+							!isDeletedCommentWithPreviousDeletedStatement(deletedComment)) {
 						Pair<UMLComment, UMLComment> newPair = Pair.of(deletedComment, pair.getRight());
 						commonComments.add(newPair);
 						deletedComments.remove(deletedComment);
@@ -278,7 +357,8 @@ public class UMLCommentListDiff {
 				for(Pair<UMLComment, UMLComment> pair : commonComments) {
 					if(pair.getLeft().getText().equals(addedComment.getText()) &&
 							pair.getRight().getText().equals(addedComment.getText()) &&
-							!addedComment.isCommentedCode() && !addedComment.nestedInCatchBlock()) {
+							!addedComment.isCommentedCode() && !addedComment.nestedInCatchBlock() &&
+							!isAddedCommentWithPreviousAddedStatement(addedComment)) {
 						Pair<UMLComment, UMLComment> newPair = Pair.of(pair.getLeft(), addedComment);
 						commonComments.add(newPair);
 						addedComments.remove(addedComment);

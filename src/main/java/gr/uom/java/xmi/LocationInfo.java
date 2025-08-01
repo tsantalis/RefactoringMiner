@@ -141,6 +141,11 @@ public class LocationInfo {
 				this.startLine == other.endLine + 1;
 	}
 
+	public boolean rightAfterNextLine(LocationInfo other) {
+		return this.filePath.equals(other.filePath) &&
+				this.startLine == other.endLine + 2;
+	}
+
 	public boolean startsAtTheEndLineOf(LocationInfo other) {
 		return this.filePath.equals(other.filePath) &&
 				this.startLine == other.endLine;

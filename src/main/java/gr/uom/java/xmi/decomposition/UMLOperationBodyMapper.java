@@ -7980,7 +7980,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
-						if(allowAdd || nested) {
+						boolean matchWithLessReplacements = mappingSet.size() == 1 && replacements.size() < mappingSet.first().getReplacements().size();
+						if(allowAdd || nested || matchWithLessReplacements) {
 							extractInlineVariableAnalysis(leaves1, leaves2, leaf1, leaf, mapping, replacementInfo);
 							mappingSet.add(mapping);
 						}

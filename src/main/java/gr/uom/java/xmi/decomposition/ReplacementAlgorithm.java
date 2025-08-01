@@ -5467,6 +5467,15 @@ public class ReplacementAlgorithm {
 						streamAPICalls.add(inv);
 					}
 				}
+				for(LambdaExpressionObject lambda : statement.getLambdas()) {
+					if(lambda.getExpression() != null) {
+						for(AbstractCall inv : lambda.getExpression().getAllOperationInvocations()) {
+							if(streamAPIName(inv.getName())) {
+								streamAPICalls.add(inv);
+							}
+						}
+					}
+				}
 			}
 		}
 		return streamAPICalls;

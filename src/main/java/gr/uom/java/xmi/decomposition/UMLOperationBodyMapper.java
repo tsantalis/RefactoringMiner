@@ -841,6 +841,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			else if(streamAPIStatements1.size() > 1 || streamAPIStatements2.size() > 1) {
 				processStreamAPIStatements(leaves1, leaves2, innerNodes1, streamAPIStatements2);
 			}
+			else if(streamAPIStatements1.size() == 1 && streamAPIStatements2.size() == 1) {
+				processStreamAPIStatements(leaves1, leaves2, innerNodes1, streamAPIStatements2);
+			}
 			
 			for(Refactoring r : this.refactorings) {
 				if(r instanceof ReplaceLoopWithPipelineRefactoring) {
@@ -2183,6 +2186,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									streamAPICallStatement = leaf2;
 									streamAPICalls = streamAPICalls(leaf2);
 									break;
+								}
+							}
+							else {
+								for(LambdaExpressionObject lambda : leaf2.getLambdas()) {
+									if(lambda.getBody() != null) {
+										for(AbstractCodeFragment leaf : lambda.getBody().getCompositeStatement().getLeaves()) {
+											boolean matchingLambda = nestedLambdaExpressionMatch(leaf.getLambdas(), fragment2);
+											if(matchingLambda) {
+												streamAPICallStatement = leaf;
+												streamAPICalls = streamAPICalls(leaf);
+												break;
+											}
+										}
+									}
 								}
 							}
 							List<AbstractCall> tmpStreamAPICalls = streamAPICalls(leaf2);

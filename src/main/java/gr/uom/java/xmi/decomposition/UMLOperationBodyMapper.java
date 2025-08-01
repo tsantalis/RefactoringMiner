@@ -632,7 +632,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			if(lambdas1.size() == lambdas2.size() && lambdasWithBody1 != lambdasWithBody2) {
+			if(lambdas1.size() == lambdas2.size() && (lambdasWithBody1 != lambdasWithBody2 || nestedLambdas1.size() != nestedLambdas2.size())) {
 				for(AbstractCodeFragment leaf1 : new ArrayList<>(leaves1)) {
 					if(leaf1.getLambdas().size() > 0) {
 						expandAnonymousAndLambdas(leaf1, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1, true);
@@ -6317,7 +6317,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(!(mapping instanceof CompositeStatementObjectMapping) &&
 						!mapping.getFragment1().getLambdas().contains(((AbstractExpression) fragment).getLambdaOwner()) &&
 						mapping.getFragment1().getLocationInfo().subsumes(fragment.getLocationInfo())) {
-					return true;
+					List<LambdaExpressionObject> nestedLambdas = new ArrayList<>();
+					if(mapping.getFragment1().getLambdas().size() == 1) {
+						collectNestedLambdaExpressions(mapping.getFragment1().getLambdas().get(0), nestedLambdas);
+					}
+					if(!nestedLambdas.contains(((AbstractExpression) fragment).getLambdaOwner())) {
+						return true;
+					}
 				}
 			}
 			return false;
@@ -6331,7 +6337,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(!(mapping instanceof CompositeStatementObjectMapping) &&
 						!mapping.getFragment2().getLambdas().contains(((AbstractExpression) fragment).getLambdaOwner()) &&
 						mapping.getFragment2().getLocationInfo().subsumes(fragment.getLocationInfo())) {
-					return true;
+					List<LambdaExpressionObject> nestedLambdas = new ArrayList<>();
+					if(mapping.getFragment2().getLambdas().size() == 1) {
+						collectNestedLambdaExpressions(mapping.getFragment2().getLambdas().get(0), nestedLambdas);
+					}
+					if(!nestedLambdas.contains(((AbstractExpression) fragment).getLambdaOwner())) {
+						return true;
+					}
 				}
 			}
 			return false;

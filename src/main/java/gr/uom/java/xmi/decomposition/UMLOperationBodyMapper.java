@@ -204,7 +204,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		nonMappedInnerNodesT1.addAll(innerNodes1);
 		nonMappedInnerNodesT2.addAll(innerNodes2);
 		if(mapper1.commentListDiff != null && mapper2.commentListDiff != null) {
-			this.commentListDiff = new UMLCommentListDiff(mapper1.commentListDiff.getDeletedComments(), mapper2.commentListDiff.getAddedComments(), this.mappings);
+			this.commentListDiff = new UMLCommentListDiff(mapper1.commentListDiff.getDeletedComments(), mapper2.commentListDiff.getAddedComments(), this);
 			checkUnmatchedStatementsBeingCommented();
 		}
 	}
@@ -236,7 +236,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			nonMappedInnerNodesT1.addAll(innerNodes1);
 			nonMappedInnerNodesT2.addAll(innerNodes2);
 			if(mapper2.commentListDiff != null) {
-				this.commentListDiff = new UMLCommentListDiff(container1.getComments(), mapper2.commentListDiff.getAddedComments(), this.mappings);
+				this.commentListDiff = new UMLCommentListDiff(container1.getComments(), mapper2.commentListDiff.getAddedComments(), this);
 				checkUnmatchedStatementsBeingCommented();
 			}
 		}
@@ -269,7 +269,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			nonMappedInnerNodesT1.addAll(innerNodes1);
 			nonMappedInnerNodesT2.addAll(innerNodes2);
 			if(mapper1.commentListDiff != null) {
-				this.commentListDiff = new UMLCommentListDiff(mapper1.commentListDiff.getDeletedComments(), container2.getComments(), this.mappings);
+				this.commentListDiff = new UMLCommentListDiff(mapper1.commentListDiff.getDeletedComments(), container2.getComments(), this);
 				checkUnmatchedStatementsBeingCommented();
 			}
 		}
@@ -1277,7 +1277,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			UMLJavadocDiff diff = new UMLJavadocDiff(operation1.getJavadoc(), operation2.getJavadoc(), operationSignatureDiff);
 			this.javadocDiff = Optional.of(diff);
 		}
-		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this.mappings);
+		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this);
 		checkUnmatchedStatementsBeingCommented();
 	}
 
@@ -1619,7 +1619,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			UMLJavadocDiff diff = new UMLJavadocDiff(initializer1.getJavadoc(), initializer2.getJavadoc());
 			this.javadocDiff = Optional.of(diff);
 		}
-		this.commentListDiff = new UMLCommentListDiff(initializer1.getComments(), initializer2.getComments(), this.mappings);
+		this.commentListDiff = new UMLCommentListDiff(initializer1.getComments(), initializer2.getComments(), this);
 		checkUnmatchedStatementsBeingCommented();
 	}
 
@@ -1669,7 +1669,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			this.lambdaBodyMapper = true;
 			processCompositeStatements(composite1.getLeaves(), leaves2, composite1.getInnerNodes(), Collections.emptyList());
 		}
-		this.commentListDiff = new UMLCommentListDiff(lambda1.getComments(), lambda2.getComments(), this.mappings);
+		this.commentListDiff = new UMLCommentListDiff(lambda1.getComments(), lambda2.getComments(), this);
 		checkUnmatchedStatementsBeingCommented();
 	}
 
@@ -2667,7 +2667,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				processCompositeStatements(composite1.getLeaves(), leaves2, composite1.getInnerNodes(), new ArrayList<CompositeStatementObject>());
 			}
 		}
-		this.commentListDiff = new UMLCommentListDiff(anonymousClassOperation.getComments(), lambda2.getComments(), this.mappings);
+		this.commentListDiff = new UMLCommentListDiff(anonymousClassOperation.getComments(), lambda2.getComments(), this);
 		checkUnmatchedStatementsBeingCommented();
 	}
 
@@ -3349,7 +3349,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(childMapper.commentListDiff != null)
 					deletedComments.addAll(childMapper.commentListDiff.getDeletedComments());
 			}
-			this.commentListDiff = new UMLCommentListDiff(new ArrayList<>(deletedComments), container2.getComments(), this.mappings);
+			this.commentListDiff = new UMLCommentListDiff(new ArrayList<>(deletedComments), container2.getComments(), this);
 			checkUnmatchedStatementsBeingCommented();
 		}
 		if(totalCallCountFromDifferentMethods > 1) {
@@ -3829,7 +3829,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(childMapper.commentListDiff != null)
 						addedComments.addAll(childMapper.commentListDiff.getAddedComments());
 				}
-				this.commentListDiff = new UMLCommentListDiff(container1.getComments(), new ArrayList<>(addedComments), this.mappings);
+				this.commentListDiff = new UMLCommentListDiff(container1.getComments(), new ArrayList<>(addedComments), this);
 				checkUnmatchedStatementsBeingCommented();
 			}
 		}

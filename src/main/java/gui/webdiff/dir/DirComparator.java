@@ -117,7 +117,8 @@ public class DirComparator {
             GHRepository repository = new GitHistoryRefactoringMinerImpl().getGitHubRepository(cloneURL);
             GHPullRequest pullRequest = repository.getPullRequest(pullRequestId);
             PagedIterable<GHPullRequestReview> reviews = pullRequest.listReviews();
-            ExecutorService pool = Executors.newFixedThreadPool(reviews.toList().size());
+            int size = reviews.toList().size();
+			ExecutorService pool = Executors.newFixedThreadPool(size == 0 ? 1 : size);
             for (GHPullRequestReview review : reviews) {
                 Runnable r = () -> {
                     try {

@@ -1262,6 +1262,50 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 						}
+						for(Refactoring r : new ArrayList<>(refactorings)) {
+							if(r instanceof ReplaceLoopWithPipelineRefactoring) {
+								ReplaceLoopWithPipelineRefactoring pipeline = (ReplaceLoopWithPipelineRefactoring)r;
+								for(AbstractCodeFragment nonMappedLeaf2 : pipeline.getCodeFragmentsAfter()) {
+									boolean matchingVariableDeclaration = false;
+									List<VariableDeclaration> declarations2 = nonMappedLeaf2.getVariableDeclarations();
+									for(VariableDeclaration declaration2 : declarations2) {
+										if(declaration2.getVariableName().equals(declaration.getVariableName()) && declaration2.equalType(declaration)) {
+											matchingVariableDeclaration = true;
+											break;
+										}
+									}
+									String initializerAfterRename = null;
+									if(!matchingVariableDeclaration &&
+											!nonMappedLeaf2.getString().endsWith(JAVA.ASSIGNMENT + initializer + JAVA.STATEMENT_TERMINATION) &&
+											(nonMappedLeaf2.getString().contains(initializer.getString()) || (initializerAfterRename = matchesWithOverlappingRenameVariable(initializer, nonMappedLeaf2)) != null) &&
+											existsMappingSubsumingBoth(statement, nonMappedLeaf2)) {
+										boolean anotherInlineVariableWithSameInitializer = false;
+										for(Refactoring r2 : refactorings) {
+											if(r2 instanceof InlineVariableRefactoring) {
+												InlineVariableRefactoring inline = (InlineVariableRefactoring)r2;
+												if(inline.getVariableDeclaration().getInitializer().getString().contains(initializer.getString())) {
+													anotherInlineVariableWithSameInitializer = true;
+													break;
+												}
+											}
+										}
+										if(!anotherInlineVariableWithSameInitializer) {
+											InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, parentMapper != null);
+											ref.addUnmatchedStatementReference(nonMappedLeaf2);
+											List<LeafExpression> subExpressions = nonMappedLeaf2.findExpression(initializerAfterRename != null ? initializerAfterRename : initializer.getString());
+											for(LeafExpression subExpression : subExpressions) {
+												LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
+												ref.addSubExpressionMapping(leafMapping);
+											}
+											if(!refactorings.contains(ref)) {
+												refactorings.add(ref);
+												leavesToBeRemovedT1.add(statement);
+											}
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			}

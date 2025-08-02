@@ -14,6 +14,12 @@ Table of Contents
 =================
 
    * [General info](#general-info)
+      * [AST diff features](#ast-diff-features)
+         * [Refactoring-aware tooltips](#refactoring-aware-tooltips)
+         * [Refactoring listing with links to diffs](#refactoring-listing-with-links-to-diffs)
+         * [Single Page View](#single-page-view)
+         * [Embedded GitHub Code Review Comments](#embedded-gitHub-code-review-comments)
+         * [Diff for code moved between different files](#diff-for-code-moved-between-different-files)
    * [Supported Refactoring Types](#supported-refactoring-types)
    * [Contributors](#contributors)
    * [Current precision and recall](#current-precision-and-recall)
@@ -57,7 +63,25 @@ RefactoringMiner is a library/API written in Java that can detect refactorings a
 Since version 3.0, RefactoringMiner can also generate Abstract Syntax Tree (AST) diff at **commit**, **pull request** and **commit range** levels.
 You can also use our tool to visualize the diffs in your browser.
 
-<img width="1875" alt="Image" src="https://github.com/user-attachments/assets/6a5d72e2-e9b1-4606-ac9a-dbd4dba4ef8a" />
+## AST diff features
+
+### Refactoring-aware tooltips
+<img width="1920" height="1080" alt="RefactoringAwareTooltips" src="https://github.com/user-attachments/assets/e4e14c4c-a966-46e3-b4c7-6808a0506a9c" />
+<img width="1920" height="1080" alt="RefactoringAwareTooltips2" src="https://github.com/user-attachments/assets/51731aaa-fcbc-4704-ae39-8365b93bcdf3" />
+
+### Refactoring listing with links to diffs
+<img width="1920" height="1080" alt="RefactoringAnalysis" src="https://github.com/user-attachments/assets/351d059a-1767-4032-a541-b9f6589ec35b" />
+
+### Single Page View
+All AST diffs loaded in a single page similar to GitHub
+<img width="1920" height="1080" alt="SinglePageView" src="https://github.com/user-attachments/assets/09f3007b-db87-46e0-b61a-ab3076d3f1ce" />
+
+### Embedded GitHub Code Review Comments
+<img width="1920" height="1080" alt="GitHubCodeReviewComments" src="https://github.com/user-attachments/assets/03afa1de-7e68-4951-a466-eac74cfe5385" />
+
+### Diff for code moved between different files
+<img width="1920" height="1080" alt="MoveDiff" src="https://github.com/user-attachments/assets/7b2dfd94-912d-49aa-8998-ae351c3e43e2" />
+
 
 Currently, it supports the detection of the following refactorings:
 

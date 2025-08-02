@@ -47,3 +47,16 @@ You can invoke RefactoringMiner from git by running the command `git difftool -d
 You can then use the command `git rmd`.
 
 Note: Ensure your Docker setup includes access to virtual file shares, particularly for the tmp folder, as Git temporarily stores revisions there. Configure necessary read permissions appropriately.
+
+## GitHub Pull Request integration
+
+You can execute RefactoringMiner's container on a GitHub Pull Request as follows:
+
+```
+docker run -p 6789:6789  -v c:\users\user\rmc:/diff tsantalis/refactoringminer diff --url https://github.com/JabRef/jabref/pull/11845
+```
+In `rmc` there is a file `github-oauth.properties` where you should edit to enter your personal GitHub OAuth token.
+
+    OAuthToken=ghp_Tz...
+
+This is a [generated classic personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic)

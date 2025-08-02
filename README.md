@@ -20,6 +20,7 @@ Table of Contents
          * [Single Page View](#single-page-view)
          * [Embedded GitHub Code Review Comments](#embedded-gitHub-code-review-comments)
          * [Diff for code moved between different files](#diff-for-code-moved-between-different-files)
+      * [Refactoring Support History](#refactoring-support-history) 
    * [Supported Refactoring Types](#supported-refactoring-types)
    * [Contributors](#contributors)
    * [Current precision and recall](#current-precision-and-recall)
@@ -82,7 +83,7 @@ All AST diffs loaded in a single page similar to GitHub
 ### Diff for code moved between different files
 <img width="1920" height="1080" alt="MoveDiff" src="https://github.com/user-attachments/assets/7b2dfd94-912d-49aa-8998-ae351c3e43e2" />
 
-
+## Refactoring Support History
 Currently, it supports the detection of the following refactorings:
 
 **<ins>supported by RefactoringMiner 1.0 and newer versions</ins>**

@@ -38,7 +38,7 @@ public class VanillaDiffView extends AbstractDiffView implements Renderable {
             .body()
                 .div(class_("container-fluid"))
                     .div(class_("row"))
-                        .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, metaInfo, deletedFilePaths, addedFilePaths) {
+                        .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, metaInfo, deletedFilePaths, addedFilePaths, isMovedDiff) {
                             @Override
                             public String getLegendValue() {
                                 return "<span class=&quot;del&quot;>&nbsp;&nbsp;</span> deleted<br>"

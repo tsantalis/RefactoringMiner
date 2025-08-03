@@ -29,6 +29,8 @@ import gr.uom.java.xmi.diff.MoveClassRefactoring;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring;
 import gr.uom.java.xmi.diff.MoveOperationRefactoring;
 import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
+import gr.uom.java.xmi.diff.RenameClassRefactoring;
+import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithClassRefactoring;
 import gr.uom.java.xmi.diff.ReplaceConditionalWithTernaryRefactoring;
 import gr.uom.java.xmi.diff.SplitConditionalRefactoring;
@@ -301,11 +303,10 @@ public class MonacoCore {
     //private Map<Tree, Set<String>> appliedTooltips = new HashMap<>();
 
     private void appendRange(StringBuilder b, Tree t, String kind, String tip) {
-        Set<String> tooltips = tooltip(t);
-        if((isStatement(t) || t.getType().toString().endsWith("Declaration") || isExpression(t) ||
+        Set<String> tooltips = kind.equals("updated") ? updateTooltip(t) : tooltip(t);
+        if(!tooltips.isEmpty() && (isStatement(t) || t.getType().toString().endsWith("Declaration") || isExpression(t) ||
         		t.getType().toString().startsWith("LineComment") || t.getType().toString().startsWith("BlockComment")) &&
-        		(kind.equals("moved") || kind.startsWith("mm") || kind.equals("moveOut") || kind.equals("moveIn")) &&
-        		!tooltips.isEmpty()) {
+        		(kind.equals("moved") || kind.startsWith("mm") || kind.equals("moveOut") || kind.equals("moveIn"))) {
         	for(String tooltip : tooltips) {
         		//TODO the problem with duplicated tooltips seems to be related with cascading tooltips from parent nodes
         		//when an AST in nested under a parent with tooltips, it inherits all tooltips from its parent
@@ -356,6 +357,17 @@ public class MonacoCore {
             	.append("}").append(",");
         	}
         }
+        else if(kind.equals("updated") && !tooltips.isEmpty()) {
+        	for(String tooltip : tooltips) {
+            	b.append("{")
+            	.append("from: ").append(t.getPos())
+            	.append(",").append("to: ").append(t.getEndPos()).append(",")
+            	.append("index: ").append(t.getMetrics().depth).append(",")
+            	.append("kind: ").append("\"" + kind + "\"").append(",")
+            	.append("tooltip: ").append("\"" + tooltip + "\"").append(",")
+            	.append("}").append(",");
+        	}
+        }
         else {
         	b.append("{")
         	.append("from: ").append(t.getPos())
@@ -366,6 +378,66 @@ public class MonacoCore {
         	.append("}").append(",");
         }
     }
+
+	private Set<String> updateTooltip(Tree t) {
+		Set<String> tooltips = new LinkedHashSet<>();
+		for(Refactoring r : refactorings) {
+			if(r instanceof RenameClassRefactoring) {
+				RenameClassRefactoring rename = (RenameClassRefactoring)r;
+				if(t.getLabel().equals(rename.getOriginalClassName()) || rename.getOriginalClassName().endsWith("." + t.getLabel())) {
+					tooltips.add(rename.getOriginalClassName() + " renamed to " + rename.getRenamedClassName());
+				}
+				else if(t.getLabel().equals(rename.getRenamedClassName()) || rename.getRenamedClassName().endsWith("." + t.getLabel())) {
+					tooltips.add(rename.getOriginalClassName() + " renamed to " + rename.getRenamedClassName());
+				}
+			}
+			else if(r instanceof MoveClassRefactoring) {
+				MoveClassRefactoring rename = (MoveClassRefactoring)r;
+				if(t.getLabel().equals(rename.getOriginalClassName()) || rename.getOriginalClassName().endsWith("." + t.getLabel())) {
+					tooltips.add(rename.getOriginalClassName() + " moved to " + rename.getMovedClassName());
+				}
+				else if(t.getLabel().equals(rename.getMovedClassName()) || rename.getMovedClassName().endsWith("." + t.getLabel())) {
+					tooltips.add(rename.getOriginalClassName() + " moved to " + rename.getMovedClassName());
+				}
+			}
+			else if(r instanceof RenameVariableRefactoring) {
+				RenameVariableRefactoring rename = (RenameVariableRefactoring)r;
+				if(!rename.getOriginalVariable().getVariableName().equals(rename.getRenamedVariable().getVariableName())) {
+					if(t.getLabel().equals(rename.getOriginalVariable().getVariableName()) && subsumesOriginalVariable(t, rename)) {
+						tooltips.add(rename.getOriginalVariable().getVariableName() + " renamed to " + rename.getRenamedVariable().getVariableName());
+					}
+					else if(t.getLabel().equals(rename.getRenamedVariable().getVariableName()) && subsumesRenamedVariable(t, rename)) {
+						tooltips.add(rename.getOriginalVariable().getVariableName() + " renamed to " + rename.getRenamedVariable().getVariableName());
+					}
+				}
+			}
+		}
+		return tooltips;
+	}
+
+	private boolean subsumesOriginalVariable(Tree t, RenameVariableRefactoring rename) {
+		if(subsumes(rename.getOriginalVariable().codeRange(),t)) {
+			return true;
+		}
+		for(AbstractCodeMapping mapping : rename.getReferences()) {
+			if(subsumes(mapping.getFragment1().codeRange(),t)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean subsumesRenamedVariable(Tree t, RenameVariableRefactoring rename) {
+		if(subsumes(rename.getRenamedVariable().codeRange(),t)) {
+			return true;
+		}
+		for(AbstractCodeMapping mapping : rename.getReferences()) {
+			if(subsumes(mapping.getFragment2().codeRange(),t)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
     private Set<String> tooltip(Tree t) {
     	ExtendedTreeClassifier c = (ExtendedTreeClassifier) diff.createRootNodesClassifier();

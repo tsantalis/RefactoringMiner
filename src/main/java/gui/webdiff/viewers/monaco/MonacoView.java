@@ -79,7 +79,7 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                 .div(class_("container-fluid h-100"))
                 .if_(decorate && _buttons)
                     .div(class_("row"))
-                    .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, metaInfo, deletedFilePaths, addedFilePaths){
+                    .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, metaInfo, deletedFilePaths, addedFilePaths, isMovedDiff){
                         @Override
                         public String getShortcutDescriptions() {
                             return super.getShortcutDescriptions() + "<b>Alt + w</b> toggle word wrap";

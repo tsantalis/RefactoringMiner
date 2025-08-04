@@ -59,7 +59,7 @@ To export the mappings/actions, add --export to the end of the command.
         }
         return projectASTDiff;
     }
-        public void execute(String[] args) {
+    public void execute(String[] args) {
         JCommander jCommander = JCommander.newBuilder()
                 .addObject(this)
                 .build();
@@ -83,8 +83,11 @@ To export the mappings/actions, add --export to the end of the command.
                 else
                     webDiff.openInBrowser();
             }
+        } catch (org.kohsuke.github.HttpException e) {
+            System.out.println("Error in connecting. Please retry");
+            throw new RuntimeException(e);
         } catch (Exception e) {
-	        System.out.println(HELP_MSG);
+            System.out.println(HELP_MSG);
             throw new RuntimeException(e);
         }
     }

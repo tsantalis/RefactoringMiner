@@ -332,6 +332,7 @@ public class DirectoryDiffView implements Renderable {
                      .head()
                         .meta(charset("utf8"))
                         .meta(name("viewport").content("width=device-width, initial-scale=1.0"))
+                        .link(w -> w.write(" rel=\"icon\" type=\"image/x-icon\" href=\"/favicon.ico\""))
                         .title().content("RefactoringMiner")
                         .macros().stylesheet(WebDiff.BOOTSTRAP_CSS_URL)
                         .macros().javascript(WebDiff.JQUERY_JS_URL)

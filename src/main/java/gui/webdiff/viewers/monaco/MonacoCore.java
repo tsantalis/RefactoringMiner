@@ -30,8 +30,10 @@ import gr.uom.java.xmi.diff.MoveClassRefactoring;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring;
 import gr.uom.java.xmi.diff.MoveOperationRefactoring;
 import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
+import gr.uom.java.xmi.diff.PullUpOperationRefactoring;
 import gr.uom.java.xmi.diff.RenameAttributeRefactoring;
 import gr.uom.java.xmi.diff.RenameClassRefactoring;
+import gr.uom.java.xmi.diff.RenameOperationRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithClassRefactoring;
 import gr.uom.java.xmi.diff.ReplaceConditionalWithTernaryRefactoring;
@@ -435,6 +437,30 @@ public class MonacoCore {
 					else if(t.getLabel().equals(rename.getMovedAttribute().getName()) && subsumesRenamedVariable(t, rename.getMovedAttribute().codeRange(), rename.getReferences())) {
 						tooltips.add(rename.getOriginalAttribute().getName() + " renamed to " + rename.getMovedAttribute().getName());
 					}
+				}
+			}
+			else if(r instanceof RenameOperationRefactoring) {
+				RenameOperationRefactoring rename = (RenameOperationRefactoring)r;
+				if(t.getLabel().equals(rename.getOriginalOperation().getName())) {
+					tooltips.add(rename.getOriginalOperation().getName() + " renamed to " + rename.getRenamedOperation().getName());
+				}
+				else if(t.getLabel().equals(rename.getRenamedOperation().getName())) {
+					tooltips.add(rename.getOriginalOperation().getName() + " renamed to " + rename.getRenamedOperation().getName());
+				}
+			}
+			else if(r instanceof PullUpOperationRefactoring) {
+				PullUpOperationRefactoring rename = (PullUpOperationRefactoring)r;
+				String originalClassName = rename.getOriginalOperation().getClassName();
+				String nextClassName = rename.getMovedOperation().getClassName();
+				String originalNonQualifiedClassName = rename.getOriginalOperation().getNonQualifiedClassName();
+				String nextNonQualifiedClassName = rename.getMovedOperation().getNonQualifiedClassName();
+				if(t.getLabel().equals(originalClassName) || originalClassName.endsWith("." + t.getLabel()) ||
+						t.getLabel().startsWith(originalNonQualifiedClassName + ".")) {
+					tooltips.add(originalClassName + " replaced with superType " + nextClassName);
+				}
+				else if(t.getLabel().equals(nextClassName) || nextClassName.endsWith("." + t.getLabel()) ||
+						t.getLabel().startsWith(nextNonQualifiedClassName + ".")) {
+					tooltips.add(originalClassName + " replaced with superType " + nextClassName);
 				}
 			}
 		}

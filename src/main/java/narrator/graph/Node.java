@@ -18,6 +18,7 @@ public class Node {
     private NodeType nodeType;
     private List<Node> srcs = null;
     private List<Tree> dsts = null;
+    private Set<String> identifiers = new HashSet<>();
 
     public JsonObject stringify() {
         JsonObject nodeObj = new JsonObject();
@@ -26,6 +27,15 @@ public class Node {
         nodeObj.addProperty("path", path);
         nodeObj.addProperty("content", getContent());
         nodeObj.addProperty("nodeType", nodeType.name());
+
+        if (!identifiers.isEmpty()) {
+            JsonArray identifiersArr = new JsonArray();
+            for (String identifier : identifiers) {
+                identifiersArr.add(identifier);
+            }
+
+            nodeObj.add("identifiers", identifiersArr);
+        }
 
         Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> lineRange = TreeUtilFunctions.getLineRange(this.tree,
                 this.fileContent);
@@ -90,6 +100,10 @@ public class Node {
         }
 
         return nodeObj;
+    }
+
+    public void addIdentifier(String identifier) {
+        this.identifiers.add(identifier);
     }
 
     public void setSrcs(List<Node> srcs) {

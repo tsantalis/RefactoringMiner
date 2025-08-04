@@ -217,8 +217,10 @@ public class HunkNetwork {
                     continue;
                 }
 
-                List<Node> useNodes = findAccessNodes(umlAttribute.getVariableDeclaration().getVariableName(),
-                        umlAttribute.getLocationInfo(), modelDiff.findFieldAccessesInChildModel(umlAttribute));
+                node.addIdentifier(umlAttribute.getVariableDeclaration().getVariableName());
+
+                List<Node> useNodes = findAccessNodes(umlAttribute.getLocationInfo(),
+                        modelDiff.findFieldAccessesInChildModel(umlAttribute));
                 for (Node useNode : useNodes) {
                     addEdge(node, useNode, EdgeType.DEF_USE);
                 }
@@ -270,15 +272,16 @@ public class HunkNetwork {
                     continue;
                 }
 
-                LocationInfo createdClassLocation = instantiatedClass.get().getLocationInfo();
-                List<Node> classNodes = findOverlappingNodes(createdClassLocation.getFilePath(),
-                        createdClassLocation.getStartOffset(), createdClassLocation.getEndOffset());
-                for (Node classNode : classNodes) {
+                LocationInfo classDeclarationLocation = instantiatedClass.get().getLocationInfo();
+                List<Node> classDeclarationNodes = findOverlappingNodes(classDeclarationLocation.getFilePath(),
+                        classDeclarationLocation.getStartOffset(), classDeclarationLocation.getEndOffset());
+                for (Node classNode : classDeclarationNodes) {
                     if (classNode.equals(node) || !classNode.getNodeType().equals(NodeType.BASE)) {
                         continue;
                     }
 
                     addEdge(classNode, node, EdgeType.DEF_USE);
+                    classNode.addIdentifier(instantiatedClass.get().getNonQualifiedName());
                 }
             }
         }
@@ -336,8 +339,9 @@ public class HunkNetwork {
             if (operationVariableLoc.getStartOffset() == variableDeclarationTree.getPos() && variableDeclarationTree.getEndPos() == operationVariableLoc.getEndOffset()) {
                 VariableDeclaration variableDeclaration = operationVariable.getVariableDeclaration();
 
-                List<Node> useNodes = findAccessNodes(variableDeclaration.getVariableName(),
-                        variableDeclaration.getLocationInfo(),
+                node.addIdentifier(variableDeclaration.getVariableName());
+
+                List<Node> useNodes = findAccessNodes(variableDeclaration.getLocationInfo(),
                         variableDeclaration.getScope().getStatementsInScopeUsingVariable());
                 for (Node useNode : useNodes) {
                     addEdge(node, useNode, EdgeType.DEF_USE);
@@ -380,14 +384,15 @@ public class HunkNetwork {
             return;
         }
 
+        node.addIdentifier(operation.getName());
+
         List<Node> invocationNodes = findInvocationNodes(operation);
         for (Node invocationNode : invocationNodes) {
             addEdge(node, invocationNode, EdgeType.DEF_USE);
         }
     }
 
-    private List<Node> findAccessNodes(String variableName, LocationInfo declarationLocation,
-                                       Set<AbstractCodeFragment> accessFragments) {
+    private List<Node> findAccessNodes(LocationInfo declarationLocation, Set<AbstractCodeFragment> accessFragments) {
         ArrayList<Node> result = new ArrayList<>();
 
         for (AbstractCodeFragment accessFragment : accessFragments) {

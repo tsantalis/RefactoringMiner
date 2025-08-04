@@ -1829,8 +1829,20 @@ public class UMLModelDiff {
 
 	private MoveAttributeRefactoring processPairOfAttributes(UMLAttribute addedAttribute, UMLAttribute removedAttribute, Map<Replacement,
 			Set<CandidateAttributeRefactoring>> renameMap, Set<Refactoring> pastRefactorings) throws RefactoringMinerTimedOutException {
-		if(!removedAttribute.getName().equals(addedAttribute.getName()) && movedAttributeRenamed(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), pastRefactorings).size() > 0) {
+		Set<Refactoring> conflictingRefactorings = movedAttributeRenamed(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), pastRefactorings);
+		boolean conflict = conflictingRefactorings.size() > 0;
+		if(!removedAttribute.getName().equals(addedAttribute.getName()) && conflict) {
 			return null;
+		}
+		if(removedAttribute.getName().equals(addedAttribute.getName()) && conflict && isSubclassOf(addedAttribute.getClassName(), removedAttribute.getClassName())) {
+			for(Refactoring r : conflictingRefactorings) {
+				if(r instanceof RenameAttributeRefactoring) {
+					RenameAttributeRefactoring rename = (RenameAttributeRefactoring)r;
+					if(rename.getReferences().size() > 1) {
+						return null;
+					}
+				}
+			}
 		}
 		if(addedAttribute.getName().equals(removedAttribute.getName()) &&
 				(addedAttribute.getType().equals(removedAttribute.getType()) || (removedAttribute instanceof UMLEnumConstant && addedAttribute instanceof UMLEnumConstant))) {

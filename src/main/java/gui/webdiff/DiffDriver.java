@@ -2,6 +2,8 @@ package gui.webdiff;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import com.perforce.p4java.Log;
+import org.refactoringminer.exceptions.NetworkException;
 import gui.webdiff.export.WebExporter;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
@@ -48,18 +50,14 @@ You can run the diff with the following options:
 To export the mappings/actions, add --export to the end of the command.
 """;
 
-    public ProjectASTDiff getProjectASTDiff() {
+    public ProjectASTDiff getProjectASTDiff() throws Exception {
         RunMode runMode = RunMode.getRunMode(this);
         if (runMode == null) return null;
         ProjectASTDiff projectASTDiff;
-        try {
-            projectASTDiff = runMode.getProjectASTDIFF(this);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        projectASTDiff = runMode.getProjectASTDIFF(this);
         return projectASTDiff;
     }
-    public void execute(String[] args) {
+    public void execute(String[] args) throws Exception {
         JCommander jCommander = JCommander.newBuilder()
                 .addObject(this)
                 .build();
@@ -83,13 +81,36 @@ To export the mappings/actions, add --export to the end of the command.
                 else
                     webDiff.openInBrowser();
             }
-        } catch (org.kohsuke.github.HttpException e) {
-            System.out.println("Error in connecting. Please retry");
-            throw new RuntimeException(e);
-        } catch (Exception e) {
-            System.out.println(HELP_MSG);
-            throw new RuntimeException(e);
+		}
+		catch (NetworkException e) {
+			throw e;
+		}
+		catch (Exception e) {
+            if (isConnectionIssue(e))
+				throw new NetworkException();
+			else
+            {
+                System.out.println(HELP_MSG);
+                throw e;
+            }
         }
+    }
+
+    private static boolean isConnectionIssue(Throwable e) {
+        while (e != null) {
+            if (e instanceof java.net.ConnectException ||
+                e instanceof java.nio.channels.UnresolvedAddressException ||
+                (e.getMessage() != null && (
+                        e.getMessage().contains("api.github.com") ||
+                        e.getMessage().contains("Failed to connect") ||
+                        e.getMessage().contains("Connection refused") ||
+                        e.getMessage().contains("Network is unreachable")
+                ))) {
+                return true;
+            }
+            e = e.getCause();
+        }
+        return false;
     }
 
     public static void export(ProjectASTDiff projectASTDiff, String exportDestination) throws IOException {

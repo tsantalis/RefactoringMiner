@@ -23,12 +23,14 @@ import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.MergeConditionalRefactoring;
 import gr.uom.java.xmi.diff.MergeOperationRefactoring;
+import gr.uom.java.xmi.diff.MoveAndRenameAttributeRefactoring;
 import gr.uom.java.xmi.diff.MoveAndRenameClassRefactoring;
 import gr.uom.java.xmi.diff.MoveAttributeRefactoring;
 import gr.uom.java.xmi.diff.MoveClassRefactoring;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring;
 import gr.uom.java.xmi.diff.MoveOperationRefactoring;
 import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
+import gr.uom.java.xmi.diff.RenameAttributeRefactoring;
 import gr.uom.java.xmi.diff.RenameClassRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithClassRefactoring;
@@ -384,10 +386,12 @@ public class MonacoCore {
 		for(Refactoring r : refactorings) {
 			if(r instanceof RenameClassRefactoring) {
 				RenameClassRefactoring rename = (RenameClassRefactoring)r;
-				if(t.getLabel().equals(rename.getOriginalClassName()) || rename.getOriginalClassName().endsWith("." + t.getLabel())) {
+				if(t.getLabel().equals(rename.getOriginalClassName()) || rename.getOriginalClassName().endsWith("." + t.getLabel()) ||
+						t.getLabel().startsWith(rename.getOriginalClass().getNonQualifiedName() + ".")) {
 					tooltips.add(rename.getOriginalClassName() + " renamed to " + rename.getRenamedClassName());
 				}
-				else if(t.getLabel().equals(rename.getRenamedClassName()) || rename.getRenamedClassName().endsWith("." + t.getLabel())) {
+				else if(t.getLabel().equals(rename.getRenamedClassName()) || rename.getRenamedClassName().endsWith("." + t.getLabel()) ||
+						t.getLabel().startsWith(rename.getRenamedClass().getNonQualifiedName() + ".")) {
 					tooltips.add(rename.getOriginalClassName() + " renamed to " + rename.getRenamedClassName());
 				}
 			}
@@ -403,11 +407,33 @@ public class MonacoCore {
 			else if(r instanceof RenameVariableRefactoring) {
 				RenameVariableRefactoring rename = (RenameVariableRefactoring)r;
 				if(!rename.getOriginalVariable().getVariableName().equals(rename.getRenamedVariable().getVariableName())) {
-					if(t.getLabel().equals(rename.getOriginalVariable().getVariableName()) && subsumesOriginalVariable(t, rename)) {
+					if(t.getLabel().equals(rename.getOriginalVariable().getVariableName()) && subsumesOriginalVariable(t, rename.getOriginalVariable().codeRange(), rename.getReferences())) {
 						tooltips.add(rename.getOriginalVariable().getVariableName() + " renamed to " + rename.getRenamedVariable().getVariableName());
 					}
-					else if(t.getLabel().equals(rename.getRenamedVariable().getVariableName()) && subsumesRenamedVariable(t, rename)) {
+					else if(t.getLabel().equals(rename.getRenamedVariable().getVariableName()) && subsumesRenamedVariable(t, rename.getRenamedVariable().codeRange(), rename.getReferences())) {
 						tooltips.add(rename.getOriginalVariable().getVariableName() + " renamed to " + rename.getRenamedVariable().getVariableName());
+					}
+				}
+			}
+			else if(r instanceof RenameAttributeRefactoring) {
+				RenameAttributeRefactoring rename = (RenameAttributeRefactoring)r;
+				if(!rename.getOriginalAttribute().getName().equals(rename.getRenamedAttribute().getName())) {
+					if(t.getLabel().equals(rename.getOriginalAttribute().getName()) && subsumesOriginalVariable(t, rename.getOriginalAttribute().codeRange(), rename.getReferences())) {
+						tooltips.add(rename.getOriginalAttribute().getName() + " renamed to " + rename.getRenamedAttribute().getName());
+					}
+					else if(t.getLabel().equals(rename.getRenamedAttribute().getName()) && subsumesRenamedVariable(t, rename.getRenamedAttribute().codeRange(), rename.getReferences())) {
+						tooltips.add(rename.getOriginalAttribute().getName() + " renamed to " + rename.getRenamedAttribute().getName());
+					}
+				}
+			}
+			else if(r instanceof MoveAndRenameAttributeRefactoring) {
+				MoveAndRenameAttributeRefactoring rename = (MoveAndRenameAttributeRefactoring)r;
+				if(!rename.getOriginalAttribute().getName().equals(rename.getMovedAttribute().getName())) {
+					if(t.getLabel().equals(rename.getOriginalAttribute().getName()) && subsumesOriginalVariable(t, rename.getOriginalAttribute().codeRange(), rename.getReferences())) {
+						tooltips.add(rename.getOriginalAttribute().getName() + " renamed to " + rename.getMovedAttribute().getName());
+					}
+					else if(t.getLabel().equals(rename.getMovedAttribute().getName()) && subsumesRenamedVariable(t, rename.getMovedAttribute().codeRange(), rename.getReferences())) {
+						tooltips.add(rename.getOriginalAttribute().getName() + " renamed to " + rename.getMovedAttribute().getName());
 					}
 				}
 			}
@@ -415,11 +441,11 @@ public class MonacoCore {
 		return tooltips;
 	}
 
-	private boolean subsumesOriginalVariable(Tree t, RenameVariableRefactoring rename) {
-		if(subsumes(rename.getOriginalVariable().codeRange(),t)) {
+	private boolean subsumesOriginalVariable(Tree t, CodeRange declarationRange, Set<AbstractCodeMapping> references) {
+		if(subsumes(declarationRange,t)) {
 			return true;
 		}
-		for(AbstractCodeMapping mapping : rename.getReferences()) {
+		for(AbstractCodeMapping mapping : references) {
 			if(subsumes(mapping.getFragment1().codeRange(),t)) {
 				return true;
 			}
@@ -427,11 +453,11 @@ public class MonacoCore {
 		return false;
 	}
 
-	private boolean subsumesRenamedVariable(Tree t, RenameVariableRefactoring rename) {
-		if(subsumes(rename.getRenamedVariable().codeRange(),t)) {
+	private boolean subsumesRenamedVariable(Tree t, CodeRange declarationRange, Set<AbstractCodeMapping> references) {
+		if(subsumes(declarationRange,t)) {
 			return true;
 		}
-		for(AbstractCodeMapping mapping : rename.getReferences()) {
+		for(AbstractCodeMapping mapping : references) {
 			if(subsumes(mapping.getFragment2().codeRange(),t)) {
 				return true;
 			}

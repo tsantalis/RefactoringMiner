@@ -2561,7 +2561,12 @@ public class UMLModelDiff {
 				if(matchedOperation != null &&
 						operation.getAnonymousClassList().size() == matchedOperation.getAnonymousClassList().size() &&
 						operation.getSynchronizedStatements().size() == matchedOperation.getSynchronizedStatements().size()) {
-					commonOperations.put(operation, matchedOperation);
+					AbstractCall call1 = operation.singleStatementCallingMethod();
+					AbstractCall call2 = matchedOperation.singleStatementCallingMethod();
+					boolean incompatible = (call1 != null && call2 == null) || (call1 == null && call2 != null);
+					if(!incompatible) {
+						commonOperations.put(operation, matchedOperation);
+					}
 				}
 				if(matchedOperation == null && !operation.hasEmptyBody()) {
 					matchedOperation = umlClass.operationWithIdenticalBody(operation);
@@ -2581,7 +2586,12 @@ public class UMLModelDiff {
 					if(matchedOperationEmptyBody == operationEmptyBody && (commonParameters.size() > 0 || operation.getParameters().size() == matchedOperation.getParameters().size()) &&
 							operation.getAnonymousClassList().size() == matchedOperation.getAnonymousClassList().size() &&
 							operation.getSynchronizedStatements().size() == matchedOperation.getSynchronizedStatements().size()) {
-						commonOperations.put(operation, matchedOperation);
+						AbstractCall call1 = operation.singleStatementCallingMethod();
+						AbstractCall call2 = matchedOperation.singleStatementCallingMethod();
+						boolean incompatible = (call1 != null && call2 == null) || (call1 == null && call2 != null);
+						if(!incompatible) {
+							commonOperations.put(operation, matchedOperation);
+						}
 					}
 				}
 			}

@@ -43,10 +43,11 @@ public class TestNewDatasetRefactorings {
 				.or(Refactorings.ChangeAttributeType.getValue())
 				.or(Refactorings.ChangeVariableType.getValue())
 				.or(Refactorings.SplitMethod.getValue())
+				.or(Refactorings.MergeMethod.getValue())
 				.or(Refactorings.ReplaceAnonymousWithClass.getValue())
 				.or(Refactorings.ReplacePipelineWithLoop.getValue());
 		TestBuilder test = new TestBuilder(detector, REPOS, types);
 		RefactoringPopulator.feedTSERefactoringInstances(test);
-		test.assertExpectationsWithGitHubAPI(3190, 137, 253);
+		test.assertExpectationsWithGitHubAPI(3192, 136, 252);
 	}
 }

@@ -285,7 +285,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public boolean hasParametersAnnotation() {
 		for(UMLAnnotation annotation : annotations) {
-			if(annotation.getTypeName().equals("Parameters")) {
+			if(annotation.getTypeName().equals("Parameters") || annotation.getTypeName().equals("Parameterized.Parameters")) {
 				return true;
 			}
 		}

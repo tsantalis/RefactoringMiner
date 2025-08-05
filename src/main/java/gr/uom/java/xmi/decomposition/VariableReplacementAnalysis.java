@@ -1919,7 +1919,9 @@ public class VariableReplacementAnalysis {
 			refactorings.add(refactoring);
 		}
 		if(variableDeclaration1.getType() != null && variableDeclaration2.getType() != null) {
-			if(!equalType(variableDeclaration2, variableDeclaration1) || !variableDeclaration1.equalQualifiedType(variableDeclaration2)) {
+			String typeArguments1 = variableDeclaration1.getType().typeArgumentsToString();
+			String typeArguments2 = variableDeclaration2.getType().typeArgumentsToString();
+			if(!equalType(variableDeclaration2, variableDeclaration1) || !variableDeclaration1.equalQualifiedType(variableDeclaration2) || !typeArguments1.equals(typeArguments2)) {
 				ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
 				if(ref != null) {
 					refactoring.addRelatedRefactoring(ref);

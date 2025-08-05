@@ -2592,11 +2592,31 @@ public class UMLModelDiff {
 			if(matchedAttribute != null) {
 				commonAttributes.put(attribute, matchedAttribute);
 			}
+			else if(attributeOfExtractedClassType != null) {
+				for(UMLAttribute addedClassAttribute : umlClass.getAttributes()) {
+					if(attribute.getType().equalClassType(addedClassAttribute.getType())) {
+						String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(attribute.getName());
+						String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(addedClassAttribute.getName());
+						boolean matchFound = false;
+						for(String token1 : tokens1) {
+							for(String token2 : tokens2) {
+								if(token1.toLowerCase().equals(token2.toLowerCase())) {
+									matchFound = true;
+									break;
+								}
+							}
+						}
+						if(matchFound) {
+							commonAttributes.put(attribute, addedClassAttribute);
+						}
+					}
+				}
+			}
 		}
 		for(UMLAttributeDiff diff : classDiff.getAttributeDiffList()) {
 			if(umlClass.getNonQualifiedName().equals(diff.getAddedAttribute().getType().getClassType()) && diff.isTypeChanged()) {
 				for(UMLAttribute matchedAttribute : umlClass.getAttributes()) {
-					if(diff.getRemovedAttribute().getType().getClassType().equals(matchedAttribute.getType().getClassType())) {
+					if(diff.getRemovedAttribute().getType().equalClassType(matchedAttribute.getType())) {
 						commonAttributes.put(diff.getRemovedAttribute(), matchedAttribute);
 					}
 				}

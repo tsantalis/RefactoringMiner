@@ -2268,6 +2268,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		}
 		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
 		List<AbstractCodeMapping> totalMappings = new ArrayList<AbstractCodeMapping>(operationBodyMapper.getMappings());
+		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+			Set<Replacement> replacements = mapping.getReplacements();
+			for(UMLAttribute attribute : originalClass.getAttributes()) {
+				if(attribute.getVariableDeclaration().getInitializer() != null) {
+					for(Replacement r : replacements) {
+						if(r.getBefore().equals(attribute.getName()) && attribute.getVariableDeclaration().getInitializer().getString().contains(r.getAfter())) {
+							mapping.setIdenticalWithInlinedVariable(true);
+							break;
+						}
+					}
+				}
+			}
+		}
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
 		if(mappings > 0 || (delegatesToAnotherRemovedOperation(removedOperation) && addedOperation.getBody() != null && addedOperation.stringRepresentation().size() > 3) || (removedOperation.getName().equals(addedOperation.getName()) && removedOperation.getBody() != null && addedOperation.getBody() != null) ||
 				removedOperation.equalSignatureForAbstractMethods(addedOperation)) {

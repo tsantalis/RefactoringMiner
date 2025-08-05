@@ -388,7 +388,7 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic testDateCacheFormatNow() : void renamed to public testDateCache() : void in class org.eclipse.jetty.util.jmh.DateCacheBenchmark",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_CLASS",
@@ -444,8 +444,13 @@
         },
         {
           "type": "RENAME_METHOD",
-          "description": "Rename Method\tpublic testDateCacheNow() : void renamed to public testDateTimeFormatter() : void in class org.eclipse.jetty.util.jmh.DateCacheBenchmark",
-          "validation": false
+          "description": "Rename Method\tpublic testDateCacheTimestamp() : void renamed to public testDateTimeFormatter() : void in class org.eclipse.jetty.util.jmh.DateCacheBenchmark",
+          "validation": true
+        },
+        {
+          "type": "MERGE_METHOD",
+          "description": "Merge Method\t[public testDateCacheNow() : void, public testDateCacheFormatNow() : void] to public testDateCache() : void in class org.eclipse.jetty.util.jmh.DateCacheBenchmark",
+          "validation": true
         }
       ]
     },

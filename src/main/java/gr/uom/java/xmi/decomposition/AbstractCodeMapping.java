@@ -88,6 +88,14 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		return operation2;
 	}
 
+	public void setIdenticalWithExtractedVariable(boolean identicalWithExtractedVariable) {
+		this.identicalWithExtractedVariable = identicalWithExtractedVariable;
+	}
+
+	public void setIdenticalWithInlinedVariable(boolean identicalWithInlinedVariable) {
+		this.identicalWithInlinedVariable = identicalWithInlinedVariable;
+	}
+
 	public boolean isIdenticalWithExtractedVariable() {
 		return identicalWithExtractedVariable;
 	}

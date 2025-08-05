@@ -483,12 +483,12 @@ As of **August 5, 2025** the precision and recall of RefactoringMiner on this be
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3190  | 137  | 253  | 0.959  | 0.927|
+|**Total**|3192  | 136  | 252  | 0.959  | 0.927|
 |Extract Method|362  |  4  | 11  | 0.989  | 0.971|
 |Rename Class|230  |  1  |  3  | 0.996  | 0.987|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
 |Move And Rename Attribute| 4  |  0  |  4  | 1.000  | 0.500|
-|Rename Method|286  | 17  | 16  | 0.944  | 0.947|
+|Rename Method|287  | 16  | 15  | 0.947  | 0.950|
 |Inline Method|66  |  6  |  4  | 0.917  | 0.943|
 |Move Method|261  |  4  |  3  | 0.985  | 0.989|
 |Move And Rename Method|20  |  4  | 11  | 0.833  | 0.645|
@@ -515,6 +515,7 @@ As of **August 5, 2025** the precision and recall of RefactoringMiner on this be
 |Change Attribute Type|161  |  3  |  7  | 0.982  | 0.958|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|
+|Merge Method| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 6  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner

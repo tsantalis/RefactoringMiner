@@ -2593,6 +2593,15 @@ public class UMLModelDiff {
 				commonAttributes.put(attribute, matchedAttribute);
 			}
 		}
+		for(UMLAttributeDiff diff : classDiff.getAttributeDiffList()) {
+			if(umlClass.getNonQualifiedName().equals(diff.getAddedAttribute().getType().getClassType()) && diff.isTypeChanged()) {
+				for(UMLAttribute matchedAttribute : umlClass.getAttributes()) {
+					if(diff.getRemovedAttribute().getType().getClassType().equals(matchedAttribute.getType().getClassType())) {
+						commonAttributes.put(diff.getRemovedAttribute(), matchedAttribute);
+					}
+				}
+			}
+		}
 		int threshold = 1;
 		if(attributeOfExtractedClassType != null || variablesOfExtractedClassType.size() > 0 || classDiff.getNextClass().isInnerClass(umlClass) || addedClassFoundInAddedImport)
 			threshold = 0;

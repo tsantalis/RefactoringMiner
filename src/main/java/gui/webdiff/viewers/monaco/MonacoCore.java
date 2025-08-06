@@ -397,6 +397,17 @@ public class MonacoCore {
 					tooltips.add(rename.getOriginalClassName() + " renamed to " + rename.getRenamedClassName());
 				}
 			}
+			else if(r instanceof MoveAndRenameClassRefactoring) {
+				MoveAndRenameClassRefactoring rename = (MoveAndRenameClassRefactoring)r;
+				if(t.getLabel().equals(rename.getOriginalClassName()) || rename.getOriginalClassName().endsWith("." + t.getLabel()) ||
+						t.getLabel().startsWith(rename.getOriginalClass().getNonQualifiedName() + ".")) {
+					tooltips.add(rename.getOriginalClassName() + " renamed to " + rename.getRenamedClassName());
+				}
+				else if(t.getLabel().equals(rename.getRenamedClassName()) || rename.getRenamedClassName().endsWith("." + t.getLabel()) ||
+						t.getLabel().startsWith(rename.getRenamedClass().getNonQualifiedName() + ".")) {
+					tooltips.add(rename.getOriginalClassName() + " renamed to " + rename.getRenamedClassName());
+				}
+			}
 			else if(r instanceof MoveClassRefactoring) {
 				MoveClassRefactoring rename = (MoveClassRefactoring)r;
 				if(t.getLabel().equals(rename.getOriginalClassName()) || rename.getOriginalClassName().endsWith("." + t.getLabel())) {

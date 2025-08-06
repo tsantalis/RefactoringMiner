@@ -4844,6 +4844,18 @@ public class UMLModelDiff {
 				}
 			}
 		}
+		for(Refactoring r : refactorings) {
+			if(r instanceof RenameOperationRefactoring) {
+				RenameOperationRefactoring rename = (RenameOperationRefactoring)r;
+				if(removedOperationInvocation.getName().equals(rename.getOperationBefore().getName())) {
+					for(AbstractCall invocation : operationInvocationsInNewMethod) {
+						if(invocation.getName().equals(rename.getOperationAfter().getName())) {
+							return true;
+						}
+					}
+				}
+			}
+		}
 		return false;
 	}
 

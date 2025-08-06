@@ -2303,6 +2303,16 @@
           "type": "PULL_UP_OPERATION",
           "description": "Pull Up Method\tpublic mappedTypeContext(mappedTypeName String) : ProjectionMappedTypeContext from class org.hibernate.search.mapper.pojo.standalone.mapping.impl.StandalonePojoMapping to public mappedTypeContext(mappedTypeName String) : ProjectionMappedTypeContext from class org.hibernate.search.mapper.pojo.mapping.spi.AbstractPojoMappingImplementor",
           "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tstrategyOptional : Optional<MassLoadingStrategy<? super T,?>> to strategy : PojoMassLoadingStrategy<? super E,?> in method private single(mappingContext PojoMassIndexingMappingContext, typeContextProvider PojoMassIndexingTypeContextProvider, typeContext PojoMassIndexingIndexedTypeContext<E>, loadingContext PojoMassLoadingContext) : PojoMassIndexingIndexedTypeGroup<? super E> from class org.hibernate.search.mapper.pojo.massindexing.impl.PojoMassIndexingIndexedTypeGroup",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tstrategyOptional : Optional<MassLoadingStrategy<? super T,?>> to strategy : PojoMassLoadingStrategy<? super E,?> in method private single(mappingContext PojoMassIndexingMappingContext, typeContextProvider PojoMassIndexingTypeContextProvider, typeContext PojoMassIndexingIndexedTypeContext<E>, loadingContext PojoMassLoadingContext) : PojoMassIndexingIndexedTypeGroup<? super E> from class org.hibernate.search.mapper.pojo.massindexing.impl.PojoMassIndexingIndexedTypeGroup",
+          "validation": true
         }
       ]
     },

@@ -1899,7 +1899,7 @@ public class UMLModelDiff {
 			}
 		}
 		if(!removedAttribute.getClassName().equals(addedAttribute.getClassName()) &&
-				addedAttribute.getType().equals(removedAttribute.getType())) {
+				(addedAttribute.getType().equals(removedAttribute.getType()) || addedAttribute.getType().equalClassType(removedAttribute.getType()))) {
 			Replacement rename = new Replacement(removedAttribute.getName(), addedAttribute.getName(), ReplacementType.VARIABLE_NAME);
 			if(renameMap.containsKey(rename)) {
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, Collections.emptyList()); 
@@ -4602,10 +4602,34 @@ public class UMLModelDiff {
 									refactorings.removeAll(refactoringsToBeRemoved);
 									if(!skip) {
 										refactorings.add(inlineOperationRefactoring);
+										//compute refactorings
+										operationBodyMapper.getRefactorings();
 										deleteRemovedOperation(removedOperation);
 										mapper.addChildMapper(operationBodyMapper);
 										MappingOptimizer optimizer = new MappingOptimizer(mapper.getClassDiff());
 										optimizer.optimizeDuplicateMappingsForInline(mapper, refactorings);
+										refactorings.addAll(operationBodyMapper.getRefactoringsAfterPostProcessing());
+										for(CandidateAttributeRefactoring candidate : operationBodyMapper.getCandidateAttributeRenames()) {
+											String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
+											String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
+											if(before.contains(".") && after.contains(".")) {
+												String prefix1 = before.substring(0, before.lastIndexOf(".") + 1);
+												String prefix2 = after.substring(0, after.lastIndexOf(".") + 1);
+												if(prefix1.equals(prefix2)) {
+													before = before.substring(prefix1.length(), before.length());
+													after = after.substring(prefix2.length(), after.length());
+												}
+											}
+											Replacement renamePattern = new Replacement(before, after, ReplacementType.VARIABLE_NAME);
+											if(renameMap.containsKey(renamePattern)) {
+												renameMap.get(renamePattern).add(candidate);
+											}
+											else {
+												Set<CandidateAttributeRefactoring> set = new LinkedHashSet<CandidateAttributeRefactoring>();
+												set.add(candidate);
+												renameMap.put(renamePattern, set);
+											}
+										}
 									}
 								}
 								else {

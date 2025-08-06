@@ -2085,12 +2085,12 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic includedTypes() : Set<PojoRawTypeIdentifier<? extends E>> renamed to public parent() : PojoMassLoadingContext in class org.hibernate.search.mapper.pojo.loading.spi.PojoMassEntityLoadingContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tSet<PojoRawTypeIdentifier<? extends E>> to PojoMassLoadingContext in method public parent() : PojoMassLoadingContext from class org.hibernate.search.mapper.pojo.loading.spi.PojoMassEntityLoadingContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_AND_RENAME_OPERATION",
@@ -2105,12 +2105,12 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic includedTypes() : Set<PojoRawTypeIdentifier<? extends E>> renamed to public parent() : PojoMassLoadingContext in class org.hibernate.search.mapper.pojo.massindexing.impl.PojoMassIndexingEntityIdentifierLoadingRunnable.LoadingContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tSet<PojoRawTypeIdentifier<? extends E>> to PojoMassLoadingContext in method public parent() : PojoMassLoadingContext from class org.hibernate.search.mapper.pojo.massindexing.impl.PojoMassIndexingEntityIdentifierLoadingRunnable.LoadingContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_ATTRIBUTE",

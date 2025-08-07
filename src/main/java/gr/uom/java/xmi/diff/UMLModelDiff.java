@@ -5937,7 +5937,8 @@ public class UMLModelDiff {
 							if(exactMatchingMethodInvocationReplacements(replacements, removedOperation, addedOperation)) {
 								boolean skip = false;
 								if(umlClassDiff != null && (umlClassDiff.getNextClass().containsOperationWithTheSameSignature(addedOperation)
-										|| umlClassDiff.getNextClass().containsOperationWithTheSameSignatureRelaxedReturnType(addedOperation))) {
+										|| umlClassDiff.getNextClass().containsOperationWithTheSameSignatureRelaxedReturnType(addedOperation)
+										|| umlClassDiff.getInterfaceListDiff().getAddedTypes().size() > 0)) {
 									skip = true;
 								}
 								if(!skip) {
@@ -6067,7 +6068,8 @@ public class UMLModelDiff {
 							if(exactMatchingMethodInvocationReplacements(replacements, removedOperation, addedOperation)) {
 								boolean skip = false;
 								if(umlClassDiff != null && (umlClassDiff.getNextClass().containsOperationWithTheSameSignature(addedOperation)
-										|| umlClassDiff.getNextClass().containsOperationWithTheSameSignatureRelaxedReturnType(addedOperation))) {
+										|| umlClassDiff.getNextClass().containsOperationWithTheSameSignatureRelaxedReturnType(addedOperation)
+										|| umlClassDiff.getInterfaceListDiff().getAddedTypes().size() > 0)) {
 									skip = true;
 								}
 								if(!skip) {

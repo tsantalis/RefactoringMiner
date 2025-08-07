@@ -5932,6 +5932,28 @@ public class UMLModelDiff {
 								operationBodyMapperMap.put(exactMatches, mapperList);
 							}
 						}
+						else if(mappings == 0 && removedOperation.getBody() == null && addedOperation.getBody() == null) {							
+							Set<MethodInvocationReplacement> replacements = findMethodInvocationReplacementWithMatchingSignatures(removedOperation, addedOperation);
+							if(exactMatchingMethodInvocationReplacements(replacements, removedOperation, addedOperation)) {
+								boolean skip = false;
+								if(umlClassDiff != null && (umlClassDiff.getNextClass().containsOperationWithTheSameSignature(addedOperation)
+										|| umlClassDiff.getNextClass().containsOperationWithTheSameSignatureRelaxedReturnType(addedOperation))) {
+									skip = true;
+								}
+								if(!skip) {
+									int exactMatches = 0;
+									if(operationBodyMapperMap.containsKey(exactMatches)) {
+										List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
+										mapperList.add(operationBodyMapper);
+									}
+									else {
+										List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>();
+										mapperList.add(operationBodyMapper);
+										operationBodyMapperMap.put(exactMatches, mapperList);
+									}
+								}
+							}
+						}
 					}
 				}
 				if(!operationBodyMapperMap.isEmpty()) {
@@ -6038,6 +6060,28 @@ public class UMLModelDiff {
 								List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>();
 								mapperList.add(operationBodyMapper);
 								operationBodyMapperMap.put(exactMatches, mapperList);
+							}
+						}
+						else if(mappings == 0 && removedOperation.getBody() == null && addedOperation.getBody() == null) {							
+							Set<MethodInvocationReplacement> replacements = findMethodInvocationReplacementWithMatchingSignatures(removedOperation, addedOperation);
+							if(exactMatchingMethodInvocationReplacements(replacements, removedOperation, addedOperation)) {
+								boolean skip = false;
+								if(umlClassDiff != null && (umlClassDiff.getNextClass().containsOperationWithTheSameSignature(addedOperation)
+										|| umlClassDiff.getNextClass().containsOperationWithTheSameSignatureRelaxedReturnType(addedOperation))) {
+									skip = true;
+								}
+								if(!skip) {
+									int exactMatches = 0;
+									if(operationBodyMapperMap.containsKey(exactMatches)) {
+										List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
+										mapperList.add(operationBodyMapper);
+									}
+									else {
+										List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>();
+										mapperList.add(operationBodyMapper);
+										operationBodyMapperMap.put(exactMatches, mapperList);
+									}
+								}
 							}
 						}
 					}
@@ -6708,6 +6752,9 @@ public class UMLModelDiff {
 						(parameterMatch && addedOperation.equalReturnParameter(removedOperation) && (oldParameters.size() == 0 || newParameters.size() == 0)) ||
 						 exactLeafMappings > 1 || parametersAnnotation;
 			}
+		}
+		if(removedOperation.getBody() == null && addedOperation.getBody() == null) {
+			return true;
 		}
 		return false;
 	}

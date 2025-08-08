@@ -15949,60 +15949,16 @@
   "firstEndPos" : 11902,
   "secondEndPos" : 12555
 }, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "ExpressionStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 11833,
-  "secondPos" : 12451,
-  "firstEndPos" : 11848,
-  "secondEndPos" : 12501
-}, {
-  "firstType" : "Assignment",
-  "secondType" : "Assignment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "ExpressionStatement",
-  "firstPos" : 11833,
-  "secondPos" : 12451,
-  "firstEndPos" : 11847,
-  "secondEndPos" : 12500
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "mSites",
-  "secondLabel" : "mSites",
-  "firstParentType" : "Assignment",
-  "secondParentType" : "Assignment",
-  "firstPos" : 11833,
-  "secondPos" : 12451,
-  "firstEndPos" : 11839,
-  "secondEndPos" : 12457
-}, {
-  "firstType" : "ASSIGNMENT_OPERATOR",
-  "secondType" : "ASSIGNMENT_OPERATOR",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
-  "firstParentType" : "Assignment",
-  "secondParentType" : "Assignment",
-  "firstPos" : 11840,
-  "secondPos" : 12458,
-  "firstEndPos" : 11841,
-  "secondEndPos" : 12459
-}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "sites",
   "secondLabel" : "sites",
   "firstParentType" : "Assignment",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "ReturnStatement",
   "firstPos" : 11842,
-  "secondPos" : 12494,
+  "secondPos" : 10389,
   "firstEndPos" : 11847,
-  "secondEndPos" : 12499
+  "secondEndPos" : 10394
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

@@ -3481,8 +3481,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private List<UMLOperationBodyMapper> checkForExtractedOperations() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperationBodyMapper> extractedOperationMappers = new ArrayList<UMLOperationBodyMapper>();
+		List<UMLOperation> outerClassAddedOperations = new ArrayList<>();
+		if(modelDiff != null && getNextClassName().contains(".")) {
+			String outerClassName = getNextClassName().substring(0, getNextClassName().lastIndexOf("."));
+			UMLClassBaseDiff outerClassDiff = modelDiff.getUMLClassDiff(outerClassName);
+			if(outerClassDiff != null) {
+				outerClassAddedOperations.addAll(outerClassDiff.getAddedOperations());
+			}
+		}
+		List<UMLOperation> allAddedOperations = new ArrayList<>(addedOperations);
+		allAddedOperations.addAll(outerClassAddedOperations);
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-			ExtractOperationDetection detection = new ExtractOperationDetection(mapper, addedOperations, this, modelDiff);
+			ExtractOperationDetection detection = new ExtractOperationDetection(mapper, allAddedOperations, this, modelDiff);
 			List<UMLOperation> sortedAddedOperations = detection.getAddedOperationsSortedByCalls();
 			for(UMLOperation addedOperation : sortedAddedOperations) {
 				List<ExtractOperationRefactoring> refs = detection.check(addedOperation);

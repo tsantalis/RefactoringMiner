@@ -98,7 +98,7 @@ public class UnifiedModelDiffRefactoringsMatcher {
                 MoveAttributeRefactoring moveAttributeRefactoring = (MoveAttributeRefactoring) refactoring;
                 String srcPath = moveAttributeRefactoring.getOriginalAttribute().getLocationInfo().getFilePath();
                 String dstPath = moveAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
-                findDiffsAndApplyMatcher(srcPath, dstPath, 
+                findDiffsAndApplyMatcher(srcPath, dstPath,
                 new FieldDeclarationMatcher(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(),
                 		(moveAttributeRefactoring.getOriginalAttribute().getJavadoc() != null && moveAttributeRefactoring.getMovedAttribute().getJavadoc() != null) ?
                                 Optional.of(new UMLJavadocDiff(moveAttributeRefactoring.getOriginalAttribute().getJavadoc(), moveAttributeRefactoring.getMovedAttribute().getJavadoc()))
@@ -129,6 +129,20 @@ public class UnifiedModelDiffRefactoringsMatcher {
                     findDiffsAndApplyMatcher(srcPath, dstPath, new BodyMapperMatcher(moveCodeRefactoring.getBodyMapper(), true));
             	}
             }
+			else if (refactoring instanceof InlineVariableRefactoring) {
+                //TODO: This else-if branch has been introduced as a fix for https://github.com/tsantalis/RefactoringMiner/issues/967
+                // Later on we might need to introduce the same behavior for extract variable refactoring
+				InlineVariableRefactoring inlineVariableRefactoring = (InlineVariableRefactoring) refactoring;
+				String srcPath = inlineVariableRefactoring.getOperationBefore().getLocationInfo().getFilePath();
+				String dstPath = inlineVariableRefactoring.getOperationAfter().getLocationInfo().getFilePath();
+				findDiffsAndApplyMatcher(srcPath, dstPath, new OptimizationAwareMatcher() {
+							@Override
+							void matchAndUpdateOptimizationStore(Tree src, Tree dst, ExtendedMultiMappingStore mappingStore) {
+								optimizationData.getLastStepMappings().addAll(inlineVariableRefactoring.getSubExpressionMappings());
+							}
+					}
+				);
+			}
         }
     }
 

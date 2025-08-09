@@ -6,6 +6,7 @@ import com.github.gumtreediff.matchers.optimizations.*;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import org.refactoringminer.astDiff.matchers.vanilla.FixedLeafMoveMatcherThetaE;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
@@ -156,7 +157,7 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 					, new LcsOptMatcherThetaB()
 					, new UnmappedLeavesMatcherThetaC()
 					, new InnerNodesMatcherThetaD()
-					, new LeafMoveMatcherThetaE()
+					, new FixedLeafMoveMatcherThetaE()
 					, new SafeCrossMoveMatcherThetaF()
 			);
 		}

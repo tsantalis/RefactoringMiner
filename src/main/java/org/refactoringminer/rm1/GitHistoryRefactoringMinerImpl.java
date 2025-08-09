@@ -8,14 +8,7 @@ import gr.uom.java.xmi.diff.RenamePattern;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.StringWriter;
+import java.io.*;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -71,6 +64,8 @@ import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.astDiff.matchers.ProjectASTDiffer;
+import org.refactoringminer.exceptions.NetworkException;
+import org.refactoringminer.exceptions.OAuthTokenNotFoundException;
 import org.refactoringminer.util.GitServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -723,15 +718,14 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					InputStream input = new FileInputStream("github-oauth.properties");
 					prop.load(input);
 					oAuthToken = prop.getProperty("OAuthToken");
+					if (oAuthToken == null || oAuthToken.isEmpty()) throw new OAuthTokenNotFoundException();
 				}
-				if (oAuthToken != null) {
-					gitHub = GitHub.connectUsingOAuth(oAuthToken);
-					if(gitHub.isCredentialValid()) {
-						logger.info("Connected to GitHub with OAuth token");
-					}
+				gitHub = GitHub.connectUsingOAuth(oAuthToken);
+				if(gitHub.isCredentialValid()) {
+					logger.info("Connected to GitHub with OAuth token");
 				}
 				else {
-					gitHub = GitHub.connect();
+					throw new NetworkException();
 				}
 			} catch(FileNotFoundException e) {
 				logger.warn("File github-oauth.properties was not found in RefactoringMiner's execution directory", e);
@@ -945,10 +939,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			f.get(timeout, TimeUnit.SECONDS);
 		} catch (TimeoutException e) {
 			f.cancel(true);
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		} catch (ExecutionException | InterruptedException e) {
+			throw new RuntimeException(e);
 		} finally {
 			service.shutdown();
 		}
@@ -997,10 +989,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			f.get(timeout, TimeUnit.SECONDS);
 		} catch (TimeoutException e) {
 			f.cancel(true);
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		} catch (ExecutionException | InterruptedException e) {
+			throw new RuntimeException(e);
 		} finally {
 			service.shutdown();
 		}
@@ -1902,10 +1892,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			f.get(timeout, TimeUnit.SECONDS);
 		} catch (TimeoutException e) {
 			f.cancel(true);
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		} catch (ExecutionException | InterruptedException e) {
+			throw new RuntimeException(e);
 		} finally {
 			service.shutdown();
 		}
@@ -2078,10 +2066,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			f.get(timeout, TimeUnit.SECONDS);
 		} catch (TimeoutException e) {
 			f.cancel(true);
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		} catch (ExecutionException | InterruptedException e) {
+			throw new RuntimeException(e);
 		} finally {
 			service.shutdown();
 		}

@@ -119,12 +119,14 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
                 UMLOperationBodyMapper bodyMapper = extractOperationRefactoring.getBodyMapper();
                 new BodyMapperMatcher(optimizationData, bodyMapper, true).match(srcTree,dstTree,mappingStore);
-                processArgumentMappings(srcTree, dstTree, refactoringList, refactoring, extractOperationRefactoring.getArgumentMappings());
+				if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
+                	processArgumentMappings(srcTree, dstTree, extractOperationRefactoring.getArgumentMappings());
             } else if (refactoring instanceof InlineOperationRefactoring) {
                 InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
                 UMLOperationBodyMapper bodyMapper = inlineOperationRefactoring.getBodyMapper();
                 new BodyMapperMatcher(optimizationData, bodyMapper, false).match(srcTree,dstTree,mappingStore);
-                processArgumentMappings(srcTree, dstTree, refactoringList, refactoring, inlineOperationRefactoring.getArgumentMappings());
+				if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
+                	processArgumentMappings(srcTree, dstTree, inlineOperationRefactoring.getArgumentMappings());
             } else if (refactoring instanceof MoveCodeRefactoring) {
                 MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) refactoring;
                 if (!moveCodeRefactoring.getMoveType().equals(Type.MOVE_BETWEEN_FILES)) {
@@ -333,15 +335,12 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
         }
         return count > 1;
     }
-    private void processArgumentMappings(Tree srcTree, Tree dstTree, List<Refactoring> refactoringList, Refactoring refactoring, List<AbstractCodeMapping> argumentMappings) {
-        //skip argument mappings, if the same method is extracted more than once from the original method.
-        if(!multipleInstancesWithSameDescription(refactoringList, refactoring)) {
-            for(AbstractCodeMapping expressionMapping : argumentMappings) {
-                Tree t1 = TreeUtilFunctions.findByLocationInfo(srcTree,expressionMapping.getFragment1().getLocationInfo());
-                Tree t2 = TreeUtilFunctions.findByLocationInfo(dstTree,expressionMapping.getFragment2().getLocationInfo());
-                new LeafMatcher().match(t1,t2,optimizationData.getSubtreeMappings());
-            }
-        }
+    private void processArgumentMappings(Tree srcTree, Tree dstTree, List<AbstractCodeMapping> argumentMappings) {
+		for(AbstractCodeMapping expressionMapping : argumentMappings) {
+			Tree t1 = TreeUtilFunctions.findByLocationInfo(srcTree,expressionMapping.getFragment1().getLocationInfo());
+			Tree t2 = TreeUtilFunctions.findByLocationInfo(dstTree,expressionMapping.getFragment2().getLocationInfo());
+			new LeafMatcher().match(t1,t2,optimizationData.getSubtreeMappings());
+		}
     }
 
     private boolean multipleInstancesWithSameDescription(List<Refactoring> refactoringList, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {

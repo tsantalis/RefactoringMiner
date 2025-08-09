@@ -47,6 +47,8 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
 import org.refactoringminer.astDiff.models.ASTDiff;
+import org.refactoringminer.astDiff.utils.Constants;
+import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.rendersnake.HtmlCanvas;
 
 import java.io.IOException;
@@ -265,6 +267,7 @@ public class MonacoCore {
                     if (dsts == null) continue;
                     for (Tree dst : dsts) {
                         if (dst == null) continue;
+                        if (isInterfile(astDiff, t, dst)) continue;
                         b.append(String.format("[%s, %s, %s, %s], ",
                                 t.getPos(),
                                 t.getEndPos(),
@@ -290,6 +293,17 @@ public class MonacoCore {
             b.append("]").append(",");
             return b.toString();
         }
+    }
+
+    private boolean isInterfile(ASTDiff astDiff, Tree t, Tree dst) {
+        //find the most parent of t and dst
+        //if they are not same as the astdiff src,dst return false
+        Tree t_outerP = TreeUtilFunctions.getParentUntilType(t, Constants.COMPILATION_UNIT);
+        Tree dst_outerP = TreeUtilFunctions.getParentUntilType(dst, Constants.COMPILATION_UNIT);
+        if (t_outerP == null || dst_outerP == null) {
+            return false;
+        }
+        return !t_outerP.equals(astDiff.src.getRoot()) || !dst_outerP.equals(astDiff.dst.getRoot());
     }
 
     private static boolean isStatement(Tree t) {

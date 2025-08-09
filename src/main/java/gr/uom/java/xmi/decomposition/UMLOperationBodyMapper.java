@@ -49,6 +49,7 @@ import gr.uom.java.xmi.diff.MergeConditionalRefactoring;
 import gr.uom.java.xmi.diff.MergeVariableRefactoring;
 import gr.uom.java.xmi.diff.ReferenceBasedRefactoring;
 import gr.uom.java.xmi.diff.RemoveParameterRefactoring;
+import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithLambdaRefactoring;
 import gr.uom.java.xmi.diff.ReplaceLoopWithPipelineRefactoring;
 import gr.uom.java.xmi.diff.ReplacePipelineWithLoopRefactoring;
@@ -3980,6 +3981,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				temp.removeAll(refactoringsToBeRemoved);
+			}
+			for(Refactoring refactoring : temp) {
+				if(refactoring.getRefactoringType().equals(RefactoringType.RENAME_PARAMETER)) {
+					RenameVariableRefactoring rename = (RenameVariableRefactoring)refactoring;
+					matchedVariables.add(Pair.of(rename.getOriginalVariable(), rename.getRenamedVariable()));
+				}
 			}
 			this.refactorings.addAll(temp);
 		}

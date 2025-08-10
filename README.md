@@ -81,7 +81,11 @@ All AST diffs loaded in a single page similar to GitHub
 <img width="1920" height="1080" alt="GitHubCodeReviewComments" src="https://github.com/user-attachments/assets/03afa1de-7e68-4951-a466-eac74cfe5385" />
 
 ### Diff for code moved between different files
-<img width="1920" height="1080" alt="MoveDiff" src="https://github.com/user-attachments/assets/7b2dfd94-912d-49aa-8998-ae351c3e43e2" />
+The diffs show also overlapping refactorings within the moved code
+<img width="1920" height="1080" alt="MoveDiff" src="https://github.com/user-attachments/assets/5a6de2ed-9535-4a89-b025-b9f4f41e8a69" />
+<img width="1920" height="1080" alt="MoveDiff2" src="https://github.com/user-attachments/assets/2a1bd916-7fd7-4bf9-ad3e-e319b7452fb5" />
+<img width="1920" height="1080" alt="MoveDiff3" src="https://github.com/user-attachments/assets/170779c2-68f7-4ef6-aebd-67fcc0fb7e70" />
+
 
 ## Refactoring Support History
 Currently, it supports the detection of the following refactorings:
@@ -479,11 +483,11 @@ As of **August 7, 2025** the precision and recall of RefactoringMiner on this be
 **Files**: [tse-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/tse-dataset)
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **August 7, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **August 10, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3205  | 135  | 237  | 0.960  | 0.931|
+|**Total**|3209  | 134  | 235  | 0.960  | 0.932|
 |Extract Method|362  |  4  | 11  | 0.989  | 0.971|
 |Rename Class|230  |  1  |  3  | 0.996  | 0.987|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -491,7 +495,7 @@ As of **August 7, 2025** the precision and recall of RefactoringMiner on this be
 |Rename Method|287  | 16  | 13  | 0.947  | 0.957|
 |Inline Method|66  |  6  |  4  | 0.917  | 0.943|
 |Move Method|261  |  4  |  3  | 0.985  | 0.989|
-|Move And Rename Method|24  |  4  |  7  | 0.857  | 0.774|
+|Move And Rename Method|24  |  4  |  6  | 0.857  | 0.800|
 |Pull Up Method|43  |  3  |  7  | 0.935  | 0.860|
 |Move Class|141  |  4  |  2  | 0.972  | 0.986|
 |Move And Rename Class|28  |  1  |  1  | 0.966  | 0.966|
@@ -502,10 +506,10 @@ As of **August 7, 2025** the precision and recall of RefactoringMiner on this be
 |Extract Superclass| 7  |  1  |  0  | 0.875  | 1.000|
 |Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|44  |  1  |  5  | 0.978  | 0.898|
-|Extract And Move Method|100  | 18  | 21  | 0.847  | 0.826|
-|Move And Inline Method|25  |  6  | 12  | 0.806  | 0.676|
+|Extract And Move Method|101  | 17  | 21  | 0.856  | 0.828|
+|Move And Inline Method|26  |  6  | 12  | 0.813  | 0.684|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|253  |  9  | 32  | 0.966  | 0.888|
+|Extract Variable|255  |  9  | 31  | 0.966  | 0.892|
 |Extract Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|91  |  7  | 31  | 0.929  | 0.746|
 |Rename Variable|286  | 17  | 20  | 0.944  | 0.935|
@@ -552,12 +556,12 @@ In order to use RefactoringMiner as a maven dependency in your project, add the 
     <dependency>
       <groupId>com.github.tsantalis</groupId>
       <artifactId>refactoring-miner</artifactId>
-      <version>3.0.10</version>
+      <version>3.0.11</version>
     </dependency>
 
 **build.gradle**
 
-    implementation 'com.github.tsantalis:refactoring-miner:3.0.10'
+    implementation 'com.github.tsantalis:refactoring-miner:3.0.11'
 
 # How to use RefactoringMiner as a docker image
 <a href="https://hub.docker.com/r/tsantalis/refactoringminer"><img src="https://img.shields.io/badge/dockerhub-images-important.svg?logo=Docker"></a>
@@ -781,7 +785,7 @@ Nikolaos Tsantalis, Ameya Ketkar, and Danny Dig, "[RefactoringMiner 2.0](https:/
 }
 ```
 
-Pouria Alikhanifard and Nikolaos Tsantalis, "[A Novel Refactoring and Semantic Aware Abstract Syntax Tree Differencing Tool and a Benchmark for Evaluating the Accuracy of Diff Tools](https://users.encs.concordia.ca/~nikolaos/publications/TOSEM_2024.pdf)," *ACM Transactions on Software Engineering and Methodology*, 2024. (accepted)
+Pouria Alikhanifard and Nikolaos Tsantalis, "[A Novel Refactoring and Semantic Aware Abstract Syntax Tree Differencing Tool and a Benchmark for Evaluating the Accuracy of Diff Tools](https://users.encs.concordia.ca/~nikolaos/publications/TOSEM_2024.pdf)," *ACM Transactions on Software Engineering and Methodology*, vol. 34, issue 2, article number 40, February 2025.
 
 ```bibtex
 @article{Alikhanifard:TOSEM:2024:RefactoringMiner3.0,

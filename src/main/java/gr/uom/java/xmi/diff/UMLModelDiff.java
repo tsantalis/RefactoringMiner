@@ -6202,7 +6202,7 @@ public class UMLModelDiff {
 				if(isMovedClass(firstMapper)) {
 					refactoring = new RenameOperationRefactoring(firstMapper.getOperation1(), firstMapper.getOperation2());
 				}
-				else {
+				else if(!firstMapper.getContainer1().getClassName().equals(firstMapper.getContainer2().getClassName())) {
 					refactoring = new MoveOperationRefactoring(firstMapper);
 				}
 			}

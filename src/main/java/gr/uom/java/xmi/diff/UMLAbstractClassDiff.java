@@ -470,6 +470,29 @@ public abstract class UMLAbstractClassDiff {
 						}
 					}
 				}
+				else if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor()) {
+					for(AbstractCall invocation : invocationsCalledOnlyInOperation2) {
+						for(UMLOperation insertedOperation : addedOperations) {
+							if(!insertedOperation.equals(addedOperation)) {
+								if(invocation.matchesOperation(insertedOperation, mapper.getContainer2(), this, modelDiff)) {
+									List<String> insertedOperationRepresentation = insertedOperation.stringRepresentation();
+									List<String> removedOperationRepresentation = removedOperation.stringRepresentation();
+									Set<String> set2 = new LinkedHashSet<String>(insertedOperationRepresentation);
+									set2.remove("{");
+									set2.remove("}");
+									Set<String> set1 = new LinkedHashSet<String>(removedOperationRepresentation);
+									set1.remove("{");
+									set1.remove("}");
+									Set<String> intersection = new LinkedHashSet<String>(set1);
+									intersection.retainAll(set2);
+									if(intersection.size() > 1) {
+										return true;
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		return false;

@@ -1805,6 +1805,7 @@ public class VariableReplacementAnalysis {
 				finalConsistentRenames.put(replacement, set);
 			}
 		}
+		boolean incompatibleTestAnnotationMethodsInDifferentClasses = operation1.hasTestAnnotation() != operation2.hasTestAnnotation() && !operation1.getClassName().equals(operation2.getClassName());
 		for(Replacement replacement : finalConsistentRenames.keySet()) {
 			Set<SimpleEntry<VariableDeclaration, VariableDeclarationContainer>> v1s = getVariableDeclaration1(replacement);
 			SimpleEntry<VariableDeclaration, VariableDeclarationContainer> v2 = getVariableDeclaration2(replacement);
@@ -1840,7 +1841,7 @@ public class VariableReplacementAnalysis {
 					!fieldAssignmentWithPreviouslyExistingParameter(replacementOccurrenceMap.get(replacement)) &&
 					!fieldAssignmentToPreviouslyExistingAttribute(replacementOccurrenceMap.get(replacement)) &&
 					!(operation1.getName().equals("toString") && operation2.getName().equals("toString")) &&
-					operation1.hasTestAnnotation() == operation2.hasTestAnnotation()) {
+					!incompatibleTestAnnotationMethodsInDifferentClasses) {
 				CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
 						replacement.getBefore(), replacement.getAfter(), operation1, operation2,
 						replacementOccurrenceMap.get(replacement));

@@ -1839,7 +1839,8 @@ public class VariableReplacementAnalysis {
 					(!operation2.getAllVariables().contains(replacement.getBefore()) || cyclicRename(finalConsistentRenames.keySet(), replacement)) &&
 					!fieldAssignmentWithPreviouslyExistingParameter(replacementOccurrenceMap.get(replacement)) &&
 					!fieldAssignmentToPreviouslyExistingAttribute(replacementOccurrenceMap.get(replacement)) &&
-					!(operation1.getName().equals("toString") && operation2.getName().equals("toString"))) {
+					!(operation1.getName().equals("toString") && operation2.getName().equals("toString")) &&
+					operation1.hasTestAnnotation() == operation2.hasTestAnnotation()) {
 				CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
 						replacement.getBefore(), replacement.getAfter(), operation1, operation2,
 						replacementOccurrenceMap.get(replacement));

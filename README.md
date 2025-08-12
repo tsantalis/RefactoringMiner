@@ -483,11 +483,11 @@ As of **August 7, 2025** the precision and recall of RefactoringMiner on this be
 **Files**: [tse-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/tse-dataset)
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **August 10, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **August 12, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3209  | 134  | 235  | 0.960  | 0.932|
+|**Total**|3209  | 134  | 233  | 0.960  | 0.932|
 |Extract Method|362  |  4  | 11  | 0.989  | 0.971|
 |Rename Class|230  |  1  |  3  | 0.996  | 0.987|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -515,7 +515,7 @@ As of **August 10, 2025** the precision and recall of RefactoringMiner on this b
 |Rename Variable|286  | 17  | 20  | 0.944  | 0.935|
 |Rename Attribute|103  |  5  | 13  | 0.954  | 0.888|
 |Change Return Type|159  |  6  | 19  | 0.964  | 0.893|
-|Change Variable Type|372  | 17  | 15  | 0.956  | 0.961|
+|Change Variable Type|372  | 17  | 13  | 0.956  | 0.966|
 |Change Attribute Type|162  |  3  |  6  | 0.982  | 0.964|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|

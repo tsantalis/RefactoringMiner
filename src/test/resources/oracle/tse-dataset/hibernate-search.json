@@ -2582,12 +2582,12 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\ttypeManager : PojoContainedTypeManager<?,?> to typeManager : var in method private PojoTypeManagerContainer(builder Builder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\ttypeManager : PojoIndexedTypeManager<?,?> to typeManager : var in method private PojoTypeManagerContainer(builder Builder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [

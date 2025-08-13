@@ -1755,6 +1755,27 @@ public class VariableReplacementAnalysis {
 
 	private void findConsistentVariableRenames() {
 		Map<Replacement, Set<AbstractCodeMapping>> variableDeclarationReplacementOccurrenceMap = getVariableDeclarationReplacementOccurrenceMap();
+		Set<Replacement> toBeExcluded = new LinkedHashSet<>();
+		for(Replacement r : variableDeclarationReplacementOccurrenceMap.keySet()) {
+			VariableDeclarationReplacement vR = (VariableDeclarationReplacement)r;
+			for(AbstractCodeMapping mapping : mappings) {
+				if(mapping.getFragment1() instanceof StatementObject && mapping.getFragment2() instanceof StatementObject) {
+					if(mapping.getFragment1().getVariableDeclarations().size() > 0 && mapping.getFragment2().getVariableDeclarations().size() == 0) {
+						VariableDeclaration declaration = mapping.getFragment1().getVariableDeclaration(vR.getVariableDeclaration1().getVariableName());
+						if(declaration != null && declaration.getScope().equals(vR.getVariableDeclaration1().getScope())) {
+							toBeExcluded.add(r);
+						}
+					}
+					else if(mapping.getFragment2().getVariableDeclarations().size() > 0 && mapping.getFragment1().getVariableDeclarations().size() == 0) {
+						VariableDeclaration declaration = mapping.getFragment2().getVariableDeclaration(vR.getVariableDeclaration2().getVariableName());
+						if(declaration != null && declaration.getScope().equals(vR.getVariableDeclaration2().getScope())) {
+							toBeExcluded.add(r);
+						}
+					}
+				}
+			}
+		}
+		variableDeclarationReplacementOccurrenceMap.keySet().removeAll(toBeExcluded);
 		Set<Replacement> allConsistentVariableDeclarationRenames = allConsistentRenames(variableDeclarationReplacementOccurrenceMap);
 		for(Replacement replacement : allConsistentVariableDeclarationRenames) {
 			VariableDeclarationReplacement vdReplacement = (VariableDeclarationReplacement)replacement;

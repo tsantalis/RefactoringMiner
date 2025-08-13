@@ -25,24 +25,24 @@
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic queryTimeout() : HibernateSearchQueryTimeout extracted from public collectMatchingDocs() : void in class org.hibernate.search.backend.lucene.search.extraction.impl.LuceneCollectors & moved to class org.hibernate.search.backend.lucene.search.extraction.impl.HibernateSearchMultiCollectorManager",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic newCollector() : Collector renamed to public queryTimeout() : HibernateSearchQueryTimeout in class org.hibernate.search.backend.lucene.search.extraction.impl.HibernateSearchMultiCollectorManager",
-          "validation": false
+          "validation": true
         },
         {
           "type": "INLINE_OPERATION",
           "description": "Inline Method\tprivate wrapTimeLimitingCollectorIfNecessary(collector Collector) : Collector inlined to public queryTimeout() : HibernateSearchQueryTimeout in class org.hibernate.search.backend.lucene.search.extraction.impl.HibernateSearchMultiCollectorManager",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tCollector to HibernateSearchQueryTimeout in method public queryTimeout() : HibernateSearchQueryTimeout from class org.hibernate.search.backend.lucene.search.extraction.impl.HibernateSearchMultiCollectorManager",
-          "validation": false
+          "validation": true
         }
       ]
     },

@@ -483,22 +483,22 @@ As of **August 13, 2025** the precision and recall of RefactoringMiner on this b
 **Files**: [tse-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/tse-dataset)
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **August 13, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **August 14, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3214  | 131  | 230  | 0.961  | 0.933|
+|**Total**|3216  | 130  | 228  | 0.961  | 0.934|
 |Extract Method|362  |  4  | 11  | 0.989  | 0.971|
-|Rename Class|230  |  1  |  3  | 0.996  | 0.987|
+|Rename Class|231  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
 |Move And Rename Attribute| 5  |  0  |  3  | 1.000  | 0.625|
 |Rename Method|288  | 15  | 13  | 0.950  | 0.957|
 |Inline Method|67  |  5  |  4  | 0.931  | 0.944|
-|Move Method|261  |  4  |  3  | 0.985  | 0.989|
+|Move Method|262  |  4  |  2  | 0.985  | 0.992|
 |Move And Rename Method|24  |  4  |  6  | 0.857  | 0.800|
 |Pull Up Method|43  |  3  |  7  | 0.935  | 0.860|
 |Move Class|141  |  4  |  2  | 0.972  | 0.986|
-|Move And Rename Class|28  |  1  |  1  | 0.966  | 0.966|
+|Move And Rename Class|28  |  0  |  1  | 1.000  | 0.966|
 |Pull Up Attribute|11  |  0  |  1  | 1.000  | 0.917|
 |Push Down Attribute| 6  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method|22  |  0  |  1  | 1.000  | 0.957|

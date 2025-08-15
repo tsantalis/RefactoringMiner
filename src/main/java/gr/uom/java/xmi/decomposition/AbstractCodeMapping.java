@@ -1389,7 +1389,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				replacementCount++;
 			}
 		}
-		if(replacementCount > 1) {
+		if(replacementCount > 2) {
 			return false;
 		}
 		AbstractCall invocation = initializer.invocationCoveringEntireFragment();

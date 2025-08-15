@@ -209,14 +209,25 @@ public class DirectoryDiffView implements Renderable {
                     boolean empty = comparator.getASTDiff(nodeInfo.getId()).isEmpty();
                     if(!empty) {
                         ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
+                        String datatype;
+                        String datapath;
+                        if (astDiff.getSrcPath().equals(astDiff.getDstPath())) {
+                            datatype = "modified";
+                            datapath = astDiff.getSrcPath();
+                        }
+                        else {
+                            datatype = "renamed";
+                            datapath = astDiff.getSrcPath() + "|" + astDiff.getDstPath();
+                        }
+
                         ul.tr()
                         .td(style("white-space: normal; word-wrap: break-word; word-break: break-all;"))
                         .if_(!external && _checkBox)
                         .input(type("checkbox")
                                 .name("fileSelect").value(nodeInfo.getId())
                                 .data("id", nodeInfo.getId())
-                                .data("path", astDiff.getSrcPath())
-                                .data("type", "modified"))
+                                .data("path", datapath)
+                                .data("type", datatype))
                         ._if()
                         .a(id("diff_row_" + nodeInfo.getId()).href("/monaco-page/" + nodeInfo.getId()))
                         .img(src(iconPath).width(iconWidth).height(iconHeight).title(title))

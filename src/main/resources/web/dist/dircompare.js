@@ -53,12 +53,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 const [a, b] = types;
 
                 return (
-                    (a === "added" && b === "deleted") ||
-                    (a === "deleted" && b === "added") ||
-                    (a === "modified" && b === "added") ||
-                    (a === "added" && b === "modified") ||
-                    (a === "deleted" && b === "modified") ||
-                    (a === "modified" && b === "deleted")
+                    (a === "added" && (b === "deleted" || b === "modified" || b === "renamed")) ||
+                    (a === "deleted" && (b === "added" || b === "modified" || b === "renamed")) ||
+                    ((a === "modified" || a === "renamed") && (b === "added" || b === "deleted")) ||
+                    (a === "added" && (b === "modified" || b === "renamed")) ||
+                    (a === "deleted" && (b === "modified" || b === "renamed")) ||
+                    ((a === "modified" || a === "renamed") && (b === "deleted" || b === "added"))
                 );
             }
 
@@ -69,26 +69,47 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     window.handleCompareClick = () => {
-        if (selectedDiffs.length === 2) {
-            const a = selectedDiffs[0];
-            const b = selectedDiffs[1];
+        if (selectedDiffs.length !== 2) return;
 
-            let file1, file2;
+        const a = selectedDiffs[0];
+        const b = selectedDiffs[1];
 
-            if (
-                (a.type === "deleted" && b.type === "added") ||
-                (a.type === "modified" && b.type === "added") ||
-                (a.type === "deleted" && b.type === "modified")
-            ) {
-                file1 = a;
-                file2 = b;
-            } else {
-                file1 = b;
-                file2 = a;
-            }
+        // Normalize for pairing logic: `renamed` behaves like `modified`
+        const norm = t => (t === "renamed" ? "modified" : t);
+        const A = norm(a.type);
+        const B = norm(b.type);
 
-            const url = `/onDemand?file1=${encodeURIComponent(file1.path)}&file2=${encodeURIComponent(file2.path)}`;
-            window.location.href = url;
+        // Keep original intent:
+        // (deleted, added) OR (modified/renamed, added) OR (deleted, modified/renamed) -> [a,b]
+        // otherwise swap
+        let file1 = a, file2 = b;
+        if (!(
+            (A === "deleted"  && B === "added") ||
+            (A === "modified" && B === "added") ||
+            (A === "deleted"  && B === "modified")
+        )) {
+            file1 = b;
+            file2 = a;
         }
+
+        // Helper: for a `renamed` item, pick side of the "old|new" path
+        function resolvePath(item, otherType) {
+            if (item.type !== "renamed") return item.path;
+
+            // Expect "before|after"
+            const [before, after] = String(item.path).split("|");
+
+            if (otherType === "added")   return (before ?? "").trim() || item.path; // use BEFORE
+            if (otherType === "deleted") return (after  ?? "").trim() || item.path; // use AFTER
+
+            // default when paired with modified/renamed: prefer AFTER, fallback to BEFORE
+            return (after ?? before ?? item.path).trim();
+        }
+
+        const path1 = resolvePath(file1, file2.type);
+        const path2 = resolvePath(file2, file1.type);
+
+        const url = `/onDemand?file1=${encodeURIComponent(path1)}&file2=${encodeURIComponent(path2)}`;
+        window.location.href = url;
     };
 });

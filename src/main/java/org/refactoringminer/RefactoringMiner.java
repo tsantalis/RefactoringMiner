@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.LogManager;
 
 import gui.webdiff.DiffDriver;
 import org.eclipse.jgit.lib.Repository;
@@ -18,10 +19,15 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.util.GitServiceImpl;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
 public class RefactoringMiner {
 	private static Path path = null;
 	public static void main(String[] args) throws Exception {
+		LogManager.getLogManager().reset();
+		SLF4JBridgeHandler.removeHandlersForRootLogger();
+		SLF4JBridgeHandler.install();
+
 		if (args.length < 1) {
 			throw argumentException();
 		}

@@ -121,6 +121,8 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 			return this.arrayDimension == typeObject.arrayDimension && this.annotations.equals(typeObject.annotations);
 		else if(this.isParameterized() && typeObject.isParameterized())
 			return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension && this.annotations.equals(typeObject.annotations);
+		else if(this.isParameterized() != typeObject.isParameterized())
+			return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension && this.annotations.equals(typeObject.annotations);
 		return false;
 	}
 

@@ -27,23 +27,21 @@ import java.util.Set;
 /* Created by pourya on 2024-05-22*/
 public class RefactoringMatcher extends OptimizationAwareMatcher {
 
-    private final UMLClassBaseDiff baseClassDiff;
-    private final List<Refactoring> modelDiffRefactorings;
-
-    public RefactoringMatcher(UMLClassBaseDiff baseClassDiff, List<Refactoring> modelDiffRefactorings) {
-        this.baseClassDiff = baseClassDiff;
-        this.modelDiffRefactorings = modelDiffRefactorings;
-    }
+    private final List<Refactoring> refactoringList;
 
     public RefactoringMatcher(OptimizationData optimizationData, List<Refactoring> modelDiffRefactorings, UMLClassBaseDiff baseClassDiff) {
         super(optimizationData);
-        this.modelDiffRefactorings = modelDiffRefactorings;
-        this.baseClassDiff = baseClassDiff;
+        this.refactoringList = getClassDiffRefactorings(baseClassDiff, modelDiffRefactorings);
+    }
+
+    public RefactoringMatcher(OptimizationData optimizationData, List<Refactoring> refactoringList) {
+        super(optimizationData);
+        this.refactoringList = refactoringList;
     }
 
     @Override
     public void matchAndUpdateOptimizationStore(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
-        processRefactorings(srcTree,dstTree,getClassDiffRefactorings(baseClassDiff),mappingStore);
+        processRefactorings(srcTree,dstTree,refactoringList,mappingStore);
     }
 
     private void processRefactorings(Tree srcTree, Tree dstTree, List<Refactoring> refactoringList, ExtendedMultiMappingStore mappingStore){
@@ -201,7 +199,8 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                     new GeneralMatcher(eachMerged, mergeCatchRefactoring.getNewCatchBlock())
                             .match(srcSubTree,dstSubTree,mappingStore);
                 }
-            } else if (refactoring instanceof RenameVariableRefactoring) {
+            }
+            else if (refactoring instanceof RenameVariableRefactoring) {
                 RenameVariableRefactoring renameVariableRefactoring = (RenameVariableRefactoring) refactoring;
                 VariableDeclaration originalVariable = renameVariableRefactoring.getOriginalVariable();
                 VariableDeclaration renamedVariable = renameVariableRefactoring.getRenamedVariable();
@@ -224,9 +223,16 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                         break;
                     case RENAME_PARAMETER:
                         eligible = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();
+//                        for (AbstractCodeMapping abstractCodeMapping : renameVariableRefactoring.getReferences()) {
+//                            if (abstractCodeMapping instanceof LeafMapping) {
+//                                findVariablesAndMatch(TreeUtilFunctions.findByLocationInfo(srcTree, abstractCodeMapping.getFragment1().getLocationInfo()), TreeUtilFunctions.findByLocationInfo(dstTree, abstractCodeMapping.getFragment2().getLocationInfo()), renameVariableRefactoring.getOriginalVariable().getVariableName(), renameVariableRefactoring.getRenamedVariable().getVariableName());
+//                            }
+//                        }
                         break;
                     case RENAME_VARIABLE:
                         Set<AbstractCodeMapping> references = renameVariableRefactoring.getReferences();
+//                        findVariablesAndMatch(srcInput, dstInput, renameVariableRefactoring.getOriginalVariable().getVariableName(), renameVariableRefactoring.getRenamedVariable().getVariableName());
+
                         for (AbstractCodeMapping abstractCodeMapping : references) {
                             if (((RenameVariableRefactoring) refactoring).isInsideExtractedOrInlinedMethod() &&
                                     multipleInstancesWithSameDescription(refactoringList,((RenameVariableRefactoring) refactoring).getOperationBefore(),((RenameVariableRefactoring) refactoring).getOperationAfter())) {
@@ -234,7 +240,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                             }
                             if (eligible) {
                                 if (abstractCodeMapping instanceof LeafMapping) {
-                                    findVariablesAndMatch(srcTree, dstTree, abstractCodeMapping, renameVariableRefactoring.getOriginalVariable().getVariableName(), renameVariableRefactoring.getRenamedVariable().getVariableName());
+                                    findVariablesAndMatch(TreeUtilFunctions.findByLocationInfo(srcTree, abstractCodeMapping.getFragment1().getLocationInfo()), TreeUtilFunctions.findByLocationInfo(dstTree, abstractCodeMapping.getFragment2().getLocationInfo()), renameVariableRefactoring.getOriginalVariable().getVariableName(), renameVariableRefactoring.getRenamedVariable().getVariableName());
                                 }
                             }
                         }
@@ -369,11 +375,9 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
         mappingStore.addMapping(srcAnnotationTree,dstAnnotationTree);
     }
 
-    private void findVariablesAndMatch(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, String originalVariableName, String renamedVariableName) {
-        Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTree, abstractCodeMapping.getFragment1().getLocationInfo());
-        Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTree, abstractCodeMapping.getFragment2().getLocationInfo());
-        List<Tree> srcRefs = TreeUtilFunctions.findVariable(srcStatement ,originalVariableName);
-        List<Tree> dstRefs = TreeUtilFunctions.findVariable(dstStatement ,renamedVariableName);
+    private void findVariablesAndMatch(Tree srcStatement, Tree dstStatement, String originalVariableName, String renamedVariableName) {
+        List<Tree> srcRefs = TreeUtilFunctions.findVariable(srcStatement,originalVariableName);
+        List<Tree> dstRefs = TreeUtilFunctions.findVariable(dstStatement,renamedVariableName);
         if (srcRefs == null || dstRefs == null) return;
         if (srcRefs.size() == 1 && dstRefs.size() == 1)
             optimizationData.getSubtreeMappings().addMapping(srcRefs.get(0),dstRefs.get(0));
@@ -384,10 +388,23 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                     optimizationData.getSubtreeMappings().addMapping(srcRefs.get(i),dstRefs.get(i));
                 }
             }
+            else {
+//                //find the ones with the same parent type and match em
+//                for (Tree srcRef : srcRefs) {
+//                    for (Tree dstRef : dstRefs) {
+//                        if (srcRef.getParent() != null && dstRef.getParent() != null &&
+//                                srcRef.getParent().getType().name.equals(dstRef.getParent().getType().name)) {
+//                            optimizationData.getSubtreeMappings().addMapping(srcRef, dstRef);
+//                            break;
+//                        }
+//                    }
+//                }
+
+            }
         }
 
     }
-    private List<Refactoring> getClassDiffRefactorings(UMLClassBaseDiff classDiff) {
+    private List<Refactoring> getClassDiffRefactorings(UMLClassBaseDiff classDiff, List<Refactoring> modelDiffRefactorings) {
         List<Refactoring> classDiffRefactorings = new ArrayList<>();
         for (Refactoring modelDiffRefactoring : modelDiffRefactorings) {
             Set<ImmutablePair<String, String>> involvedClassesBeforeRefactoring = modelDiffRefactoring.getInvolvedClassesBeforeRefactoring();

@@ -144,6 +144,20 @@ public class UMLModelDiff {
 		return refactorings;
 	}
 
+	public UMLAbstractClass findClassInParentModel(String sourceFolder, String className) {
+		for(UMLClass umlClass : parentModel.getClassList()) {
+			if(umlClass.getName().equals(className) && umlClass.getSourceFolder().equals(sourceFolder)) {
+				return umlClass;
+			}
+		}
+		for(UMLClass umlClass : parentModel.getClassList()) {
+			if(umlClass.getName().endsWith("." + className) && umlClass.getSourceFolder().equals(sourceFolder)) {
+				return umlClass;
+			}
+		}
+		return null;
+	}
+
 	public UMLAbstractClass findClassInParentModel(String className) {
 		for(UMLClass umlClass : parentModel.getClassList()) {
 			if(umlClass.getName().equals(className)) {

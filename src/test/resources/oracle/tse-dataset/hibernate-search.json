@@ -813,6 +813,11 @@
           "type": "MOVE_AND_INLINE_OPERATION",
           "description": "Move And Inline Method\tpublic tenantFilterOrNull() : Query moved from class org.hibernate.search.backend.lucene.search.predicate.impl.PredicateRequestContext.FullPredicateRequestContext to class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneKnnPredicate & inlined to private prepareFilter(context PredicateRequestContext) : Query",
           "validation": false
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\ttenantIdentifier : String in method public tenantFilterOrNull() : Query from class org.hibernate.search.backend.lucene.search.predicate.impl.PredicateRequestContext.FullPredicateRequestContext",
+          "validation": true
         }
       ]
     },

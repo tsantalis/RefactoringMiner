@@ -27,6 +27,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.SourceAnnotation;
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
@@ -2318,6 +2319,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				mapperSet.add(operationBodyMapper);
 			}
 			else {
+				String originalClassName = getOriginalClassName();
+				String nextClassName = getNextClassName();
+				if(modelDiff != null && originalClassName.contains(".") && nextClassName.contains(".")) {
+					UMLAbstractClass originalOuterClass = modelDiff.findClassInParentModel(getOriginalClass().getSourceFolder(), originalClassName.substring(0, originalClassName.lastIndexOf(".")));
+					UMLAbstractClass nextOuterClass = modelDiff.findClassInChildModel(getNextClass().getSourceFolder(), nextClassName.substring(0, nextClassName.lastIndexOf(".")));
+					if(originalOuterClass != null && nextOuterClass != null) {
+						UMLOperation op1 = originalOuterClass.operationWithTheSameSignature(removedOperation);
+						UMLOperation op2 = nextOuterClass.operationWithTheSameSignature(addedOperation);
+						if(op1 != null && op2 != null) {
+							mapperSet.add(operationBodyMapper);
+						}
+					}
+				}
 				if((removedOperation.hasSetUpAnnotation() || removedOperation.getName().equals("setUp")) && (addedOperation.hasSetUpAnnotation() || addedOperation.getName().equals("setUp"))) {
 					potentialCodeMoveBetweenSetUpTearDownMethods.add(operationBodyMapper);
 				}

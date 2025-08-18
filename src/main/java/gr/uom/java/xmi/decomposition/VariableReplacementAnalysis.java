@@ -1839,8 +1839,8 @@ public class VariableReplacementAnalysis {
 					VariableDeclarationContainer operation2 = v2.getValue();
 					Set<AbstractCodeMapping> actualReferences = new LinkedHashSet<>();
 					for(AbstractCodeMapping mapping : variableReferences) {
-						if(variableDeclaration1.getScope().subsumes(mapping.getFragment1().getLocationInfo()) &&
-								variableDeclaration2.getScope().subsumes(mapping.getFragment2().getLocationInfo())) {
+						if((variableDeclaration1.getScope().subsumes(mapping.getFragment1().getLocationInfo()) || mapping.getFragment1().getVariableDeclarations().contains(variableDeclaration1)) &&
+								(variableDeclaration2.getScope().subsumes(mapping.getFragment2().getLocationInfo()) || mapping.getFragment2().getVariableDeclarations().contains(variableDeclaration2))) {
 							actualReferences.add(mapping);
 						}
 					}

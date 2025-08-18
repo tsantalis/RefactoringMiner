@@ -866,12 +866,12 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tfilter : JsonObject in method protected doToJsonQuery(context PredicateRequestContext, outerObject JsonObject, innerObject JsonObject) : JsonObject from class org.hibernate.search.backend.elasticsearch.search.predicate.impl.ElasticsearchKnnPredicate.Elasticsearch812Impl",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tfilter : JsonObject in method protected doToJsonQuery(context PredicateRequestContext, outerObject JsonObject, innerObject JsonObject) : JsonObject from class org.hibernate.search.backend.elasticsearch.search.predicate.impl.ElasticsearchKnnPredicate.OpenSearchImpl",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [

@@ -1342,7 +1342,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 			}
 		}
-		if(getReplacements().size() == 2 && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size()) {
+		if(getReplacements().size() == 2 && (fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size() || fragment1.getTernaryOperatorExpressions().size() > 0 || fragment2.getTernaryOperatorExpressions().size() > 0)) {
 			boolean listToArrayConversion = false;
 			boolean identicalCallWithExtraArguments = false;
 			for(Replacement r : replacements) {

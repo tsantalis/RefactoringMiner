@@ -4819,6 +4819,9 @@ public class UMLModelDiff {
 					}
 				}
 			}
+			if(mappingList.get(0).containsReplacement(ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION)) {
+				return false;
+			}
 		}
 		int delegateStatements = 0;
 		for(AbstractCodeFragment statement : operationBodyMapper.getNonMappedLeavesT1()) {

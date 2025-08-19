@@ -65,13 +65,19 @@ public class UMLCommentGroup {
 		return false;
 	}
 
-	public boolean modifiedMatchingText(UMLCommentGroup other) {
+	public UMLCommentListDiff modifiedMatchingText(UMLCommentGroup other) {
 		if(this.group.size() == other.group.size() && this.group.size() > 1) {
 			UMLCommentListDiff diff = new UMLCommentListDiff(this, other);
 			if(diff.getCommonComments().size() == this.group.size()) {
-				return true;
+				return diff;
 			}
 		}
-		return false;
+		else if(this.group.size() != other.group.size() && this.group.size() > 1) {
+			UMLCommentListDiff diff = new UMLCommentListDiff(this, other);
+			if(diff.isManyToManyReformat()) {
+				return diff;
+			}
+		}
+		return null;
 	}
 }

@@ -51,7 +51,10 @@ public class UMLComment extends UMLAbstractDocumentation {
 	public String getText() {
 		if(locationInfo.getCodeElementType().equals(CodeElementType.LINE_COMMENT)) {
 			String text = new String(this.text);
-			if(text.startsWith("//")) {
+			if(text.startsWith("///")) {
+				text = text.substring(3);
+			}
+			else if(text.startsWith("//")) {
 				text = text.substring(2);
 			}
 			text = text.trim();
@@ -68,6 +71,9 @@ public class UMLComment extends UMLAbstractDocumentation {
 				}
 				if(line.endsWith("*/")) {
 					line = line.substring(0, line.length()-2);
+				}
+				if(line.startsWith("///")) {
+					line = line.substring(3);
 				}
 				if(line.startsWith("//")) {
 					line = line.substring(2);

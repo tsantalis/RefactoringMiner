@@ -85,7 +85,7 @@ public class UnifiedModelDiffRefactoringsMatcher {
 //                if (isExtractedMethodRef(moveOperationRefactoring.getBodyMapper().getOperation2())) continue;
                 String srcPath = moveOperationRefactoring.getOriginalOperation().getLocationInfo().getFilePath();
                 String dstPath = moveOperationRefactoring.getMovedOperation().getLocationInfo().getFilePath();
-                findDiffsAndApplyMatcher(srcPath, dstPath, new MethodMatcher(moveOperationRefactoring.getBodyMapper(), true));
+                findDiffsAndApplyMatcher(srcPath, dstPath, new MethodMatcher(moveOperationRefactoring.getBodyMapper(), true, true));
                 if (moveOperationRefactoring.getOriginalOperation().getJavadoc() == null && moveOperationRefactoring.getMovedOperation().getJavadoc() != null) {
                     UMLClass originalClass = modelDiff.getRemovedClass(moveOperationRefactoring.getOriginalOperation().getClassName());
                     if (originalClass != null && originalClass.getJavadoc() != null) {

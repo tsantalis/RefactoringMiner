@@ -1313,6 +1313,10 @@ public class UMLModelASTReader {
 			umlAttribute.setVariableDeclaration(variableDeclaration);
 			umlAttribute.setJavadoc(javadoc);
 			distributeComments(comments, locationInfo, umlAttribute.getComments());
+			if(variableDeclaration.getAnnotations().size() > 0) {
+				LocationInfo annotationLocationInfo = variableDeclaration.getAnnotations().get(0).getLocationInfo();
+				distributeComments(comments, annotationLocationInfo, umlAttribute.getComments());
+			}
 			
 			int fieldModifiers = fieldDeclaration.getModifiers();
 			if((fieldModifiers & Modifier.PUBLIC) != 0)

@@ -223,11 +223,10 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                         break;
                     case RENAME_PARAMETER:
                         eligible = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();
-//                        for (AbstractCodeMapping abstractCodeMapping : renameVariableRefactoring.getReferences()) {
-//                            if (abstractCodeMapping instanceof LeafMapping) {
-//                                findVariablesAndMatch(TreeUtilFunctions.findByLocationInfo(srcTree, abstractCodeMapping.getFragment1().getLocationInfo()), TreeUtilFunctions.findByLocationInfo(dstTree, abstractCodeMapping.getFragment2().getLocationInfo()), renameVariableRefactoring.getOriginalVariable().getVariableName(), renameVariableRefactoring.getRenamedVariable().getVariableName());
-//                            }
-//                        }
+                        if (eligible)
+                            for (AbstractCodeMapping abstractCodeMapping : renameVariableRefactoring.getReferences())
+                                if (abstractCodeMapping instanceof LeafMapping)
+                                    findVariablesAndMatch(TreeUtilFunctions.findByLocationInfo(srcTree, abstractCodeMapping.getFragment1().getLocationInfo()), TreeUtilFunctions.findByLocationInfo(dstTree, abstractCodeMapping.getFragment2().getLocationInfo()), renameVariableRefactoring.getOriginalVariable().getVariableName(), renameVariableRefactoring.getRenamedVariable().getVariableName());
                         break;
                     case RENAME_VARIABLE:
                         Set<AbstractCodeMapping> references = renameVariableRefactoring.getReferences();
@@ -389,16 +388,16 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 }
             }
             else {
-//                //find the ones with the same parent type and match em
-//                for (Tree srcRef : srcRefs) {
-//                    for (Tree dstRef : dstRefs) {
-//                        if (srcRef.getParent() != null && dstRef.getParent() != null &&
-//                                srcRef.getParent().getType().name.equals(dstRef.getParent().getType().name)) {
-//                            optimizationData.getSubtreeMappings().addMapping(srcRef, dstRef);
-//                            break;
-//                        }
-//                    }
-//                }
+                //TODO: Begin with the one with fewer occurrences, find the match with the exact same parent type
+                for (Tree srcRef : srcRefs) {
+                    for (Tree dstRef : dstRefs) {
+                        if (srcRef.getParent() != null && dstRef.getParent() != null &&
+                                srcRef.getParent().getType().name.equals(dstRef.getParent().getType().name)) {
+                            optimizationData.getSubtreeMappings().addMapping(srcRef, dstRef);
+                            break;
+                        }
+                    }
+                }
 
             }
         }

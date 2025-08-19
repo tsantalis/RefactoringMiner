@@ -21,6 +21,12 @@ import java.util.*;
 public class MethodMatcher extends BodyMapperMatcher{
 
     private static final String THROWS_KEYWORD_LABEL = "throws";
+    private boolean refactoringProcessor = false;
+
+    public MethodMatcher(UMLOperationBodyMapper bodyMapper, boolean isPartOfExtractMethod, boolean refactoringProcessor) {
+        super(bodyMapper, isPartOfExtractMethod);
+        this.refactoringProcessor = refactoringProcessor;
+    }
 
     public MethodMatcher(UMLOperationBodyMapper bodyMapper, boolean isPartOfExtractMethod) {
         super(bodyMapper, isPartOfExtractMethod);
@@ -78,6 +84,10 @@ public class MethodMatcher extends BodyMapperMatcher{
             new BodyMapperMatcher(optimizationData, umlOperationBodyMapper, isPartOfExtractedMethod).match(srcOperationNode, dstOperationNode, mappingStore);
             processOperationDiff(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
             processMethodParameters(srcOperationNode, dstOperationNode, umlOperationBodyMapper.getMatchedVariables(), mappingStore);
+            if (refactoringProcessor){
+                new RefactoringMatcher(optimizationData, new ArrayList<>(bodyMapper.getRefactoringsAfterPostProcessing())).
+                        matchAndUpdateOptimizationStore(srcTree, dstTree, mappingStore);
+            }
         }
     }
 

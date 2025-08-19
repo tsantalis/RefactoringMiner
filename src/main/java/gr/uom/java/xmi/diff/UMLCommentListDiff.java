@@ -280,10 +280,16 @@ public class UMLCommentListDiff {
 				List<Integer> matchingIndices = findAllMatchingIndices(commentsAfter, comment);
 				List<Boolean> mappedParent = new ArrayList<Boolean>();
 				List<Boolean> mappedPreviousStatement = new ArrayList<Boolean>();
+				List<Boolean> identicalNextComment = new ArrayList<Boolean>();
 				if(matchingIndices.size() > 1) {
 					for(Integer index : matchingIndices) {
 						mappedParent.add(mappedParent(comment, commentsAfter.get(index)));
 						mappedPreviousStatement.add(mappedPreviousStatement(comment, commentsAfter.get(index)));
+						if(commentsBefore.indexOf(comment) < commentsBefore.size() - 1 && index < commentsAfter.size() - 1) {
+							UMLComment commentAfterLeft = commentsBefore.get(commentsBefore.indexOf(comment)+1);
+							UMLComment commentAfterRight = commentsAfter.get(index + 1);
+							identicalNextComment.add(commentAfterLeft.getFullText().equals(commentAfterRight.getFullText()));
+						}
 					}
 				}
 				int i = -1;
@@ -294,6 +300,9 @@ public class UMLCommentListDiff {
 							continue;
 						}
 						if(mappedPreviousStatement.contains(true) && mappedPreviousStatement.get(i) == false) {
+							continue;
+						}
+						if(identicalNextComment.contains(true) && identicalNextComment.get(i) == false) {
 							continue;
 						}
 						Pair<UMLComment, UMLComment> pair = Pair.of(comment, commentsAfter.get(index));
@@ -310,10 +319,16 @@ public class UMLCommentListDiff {
 				List<Integer> matchingIndices = findAllMatchingIndices(commentsBefore, comment);
 				List<Boolean> mappedParent = new ArrayList<Boolean>();
 				List<Boolean> mappedPreviousStatement = new ArrayList<Boolean>();
+				List<Boolean> identicalNextComment = new ArrayList<Boolean>();
 				if(matchingIndices.size() > 1) {
 					for(Integer index : matchingIndices) {
 						mappedParent.add(mappedParent(commentsBefore.get(index), comment));
 						mappedPreviousStatement.add(mappedPreviousStatement(commentsBefore.get(index), comment));
+						if(commentsAfter.indexOf(comment) < commentsAfter.size() - 1 && index < commentsBefore.size() - 1) {
+							UMLComment commentAfterLeft = commentsBefore.get(index + 1);
+							UMLComment commentAfterRight = commentsAfter.get(commentsAfter.indexOf(comment)+1);
+							identicalNextComment.add(commentAfterLeft.getFullText().equals(commentAfterRight.getFullText()));
+						}
 					}
 				}
 				int i = -1;
@@ -324,6 +339,9 @@ public class UMLCommentListDiff {
 							continue;
 						}
 						if(mappedPreviousStatement.contains(true) && mappedPreviousStatement.get(i) == false) {
+							continue;
+						}
+						if(identicalNextComment.contains(true) && identicalNextComment.get(i) == false) {
 							continue;
 						}
 						Pair<UMLComment, UMLComment> pair = Pair.of(commentsBefore.get(index), comment);

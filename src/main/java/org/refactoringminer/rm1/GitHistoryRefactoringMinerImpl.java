@@ -2015,15 +2015,24 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			String[] patchLines = patch.split("\\n");
 			List<String> patchLineList = new ArrayList<String>();
 			patchLineList.add("+++");
-			for(String line : patchLines) {
-				if(line.contains("@@")) {
-					String s = line.substring(0, line.lastIndexOf("@@")+2);
-					patchLineList.add(s);
-				}
-				else {
-					patchLineList.add(line);
-				}
-			}
+            for (String raw : patchLines) {
+                String line = raw.replace("\r", ""); // guard against CRLF
+
+                // Only treat as a hunk header if it *starts* with "@@ ".
+                if (line.startsWith("@@ ")) {
+                    // Find the *closing* "@@" of the header and keep up to there.
+                    int close = line.indexOf("@@", 3); // start searching after the initial "@@ "
+                    if (close != -1) {
+                        patchLineList.add(line.substring(0, close + 2));
+                    } else {
+                        // Malformed header: keep the line untouched rather than corrupting it
+                        patchLineList.add(line);
+                    }
+                } else {
+                    // Normal diff/content line (may contain "@@" in the middle—leave it alone)
+                    patchLineList.add(line);
+                }
+            }
 			return patchLineList;
 		}
 		return Collections.emptyList();

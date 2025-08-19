@@ -102,18 +102,18 @@ public class UMLCommentListDiff {
 		groupsAfter.removeAll(groupsAfterToBeRemoved);
 		for(UMLCommentGroup groupBefore : groupsBefore) {
 			for(UMLCommentGroup groupAfter : groupsAfter) {
-				if(groupBefore.modifiedMatchingText(groupAfter) && !groupsAfterToBeRemoved.contains(groupAfter)) {
-					for(int i=0; i<groupBefore.getGroup().size(); i++) {
-						UMLComment commentBefore = groupBefore.getGroup().get(i);
-						UMLComment commentAfter = groupAfter.getGroup().get(i);
-						Pair<UMLComment, UMLComment> pair = Pair.of(commentBefore, commentAfter);
-						commonComments.add(pair);
-						deletedComments.remove(commentBefore);
-						addedComments.remove(commentAfter);
+				if(!groupsAfterToBeRemoved.contains(groupAfter)) {
+					UMLCommentListDiff diff = groupBefore.modifiedMatchingText(groupAfter);
+					if(diff != null) {
+						for(Pair<UMLComment, UMLComment> pair : diff.getCommonComments()) {
+							commonComments.add(pair);
+							deletedComments.remove(pair.getLeft());
+							addedComments.remove(pair.getRight());
+						}
+						groupsBeforeToBeRemoved.add(groupBefore);
+						groupsAfterToBeRemoved.add(groupAfter);
+						break;
 					}
-					groupsBeforeToBeRemoved.add(groupBefore);
-					groupsAfterToBeRemoved.add(groupAfter);
-					break;
 				}
 			}
 		}

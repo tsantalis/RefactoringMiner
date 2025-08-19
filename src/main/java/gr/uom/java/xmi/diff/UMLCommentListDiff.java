@@ -290,6 +290,9 @@ public class UMLCommentListDiff {
 							UMLComment commentAfterRight = commentsAfter.get(index + 1);
 							identicalNextComment.add(commentAfterLeft.getFullText().equals(commentAfterRight.getFullText()));
 						}
+						else {
+							identicalNextComment.add(false);
+						}
 					}
 				}
 				int i = -1;
@@ -302,7 +305,7 @@ public class UMLCommentListDiff {
 						if(mappedPreviousStatement.contains(true) && mappedPreviousStatement.get(i) == false) {
 							continue;
 						}
-						if(identicalNextComment.contains(true) && identicalNextComment.get(i) == false) {
+						if(identicalNextComment.contains(true) && identicalNextComment.indexOf(true) == identicalNextComment.lastIndexOf(true)  && identicalNextComment.get(i) == false) {
 							continue;
 						}
 						Pair<UMLComment, UMLComment> pair = Pair.of(comment, commentsAfter.get(index));
@@ -329,6 +332,9 @@ public class UMLCommentListDiff {
 							UMLComment commentAfterRight = commentsAfter.get(commentsAfter.indexOf(comment)+1);
 							identicalNextComment.add(commentAfterLeft.getFullText().equals(commentAfterRight.getFullText()));
 						}
+						else {
+							identicalNextComment.add(false);
+						}
 					}
 				}
 				int i = -1;
@@ -341,7 +347,7 @@ public class UMLCommentListDiff {
 						if(mappedPreviousStatement.contains(true) && mappedPreviousStatement.get(i) == false) {
 							continue;
 						}
-						if(identicalNextComment.contains(true) && identicalNextComment.get(i) == false) {
+						if(identicalNextComment.contains(true) && identicalNextComment.indexOf(true) == identicalNextComment.lastIndexOf(true) && identicalNextComment.get(i) == false) {
 							continue;
 						}
 						Pair<UMLComment, UMLComment> pair = Pair.of(commentsBefore.get(index), comment);

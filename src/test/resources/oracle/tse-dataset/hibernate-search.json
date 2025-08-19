@@ -2945,7 +2945,7 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpackage checkSameEntity(entityName String) : void renamed to public entityName(entityName String) : void in class org.hibernate.search.mapper.pojo.model.additionalmetadata.building.impl.PojoEntityTypeAdditionalMetadataBuilder",
-          "validation": false
+          "validation": true
         }
       ]
     },

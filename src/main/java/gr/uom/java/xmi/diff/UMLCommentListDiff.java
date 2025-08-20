@@ -23,6 +23,7 @@ public class UMLCommentListDiff {
 	private List<UMLComment> deletedComments;
 	private List<UMLComment> addedComments;
 	private boolean manyToManyReformat;
+	private boolean manyToManyReformatWithIdenticalText;
 	private Set<AbstractCodeMapping> mappings;
 	private UMLOperationBodyMapper operationBodyMapper;
 	private UMLAbstractClassDiff classDiff;
@@ -582,6 +583,7 @@ public class UMLCommentListDiff {
 			}
 			if(deletedComments.size() >= 1 && addedComments.size() >= 1) {
 				manyToManyReformat = true;
+				manyToManyReformatWithIdenticalText = true;
 			}
 		}
 		else {
@@ -862,5 +864,9 @@ public class UMLCommentListDiff {
 
 	public boolean isManyToManyReformat() {
 		return manyToManyReformat;
+	}
+
+	public boolean isManyToManyReformatWithIdenticalText() {
+		return manyToManyReformatWithIdenticalText;
 	}
 }

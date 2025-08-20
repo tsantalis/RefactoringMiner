@@ -25,7 +25,7 @@ public class UMLCommentGroup {
 	}
 
 	public boolean sameText(UMLCommentGroup other) {
-		if(this.group.size() == other.group.size() && this.group.size() > 1) {
+		if(this.group.size() == other.group.size() && this.group.size() > 0) {
 			int matches = 0;
 			for(int i=0; i<this.group.size(); i++) {
 				if(this.group.get(i).getText().equals(other.group.get(i).getText())) {
@@ -72,7 +72,7 @@ public class UMLCommentGroup {
 				return diff;
 			}
 		}
-		else if(this.group.size() != other.group.size() && this.group.size() > 1) {
+		else if(this.group.size() != other.group.size() && this.group.size() > 0) {
 			UMLCommentListDiff diff = new UMLCommentListDiff(this, other);
 			if(diff.isManyToManyReformat() && diff.getDeletedComments().isEmpty() && diff.getAddedComments().isEmpty()) {
 				return diff;

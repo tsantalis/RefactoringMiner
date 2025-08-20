@@ -1,0 +1,147 @@
+public GroupNodeViewModel(databaseContext BibDatabaseContext, stateManager StateManager, taskExecutor TaskExecutor, groupNode GroupTreeNode, localDragBoard CustomLocalDragboard, preferences GuiPreferences) -> public GroupNodeViewModel(databaseContext BibDatabaseContext, stateManager StateManager, taskExecutor TaskExecutor, groupNode GroupTreeNode, localDragBoard CustomLocalDragboard, preferences GuiPreferences)
+line range:119-119==line range:137-137
+line range:120-120==line range:138-138
+line range:120-120==line range:139-139
+line range:120-120==line range:140-140
+line range:120-120==line range:138-138
+line range:120-120==line range:139-139
+line range:120-120==line range:140-140
+line range:126-126==line range:147-147
+public GroupNodeViewModel(databaseContext BibDatabaseContext, stateManager StateManager, taskExecutor TaskExecutor, group AbstractGroup, localDragboard CustomLocalDragboard, preferences GuiPreferences) -> public GroupNodeViewModel(databaseContext BibDatabaseContext, stateManager StateManager, taskExecutor TaskExecutor, group AbstractGroup, localDragboard CustomLocalDragboard, preferences GuiPreferences)
+package getAllEntriesGroup(newDatabase BibDatabaseContext, stateManager StateManager, taskExecutor TaskExecutor, localDragBoard CustomLocalDragboard, preferences GuiPreferences) : GroupNodeViewModel -> package getAllEntriesGroup(newDatabase BibDatabaseContext, stateManager StateManager, taskExecutor TaskExecutor, localDragBoard CustomLocalDragboard, preferences GuiPreferences) : GroupNodeViewModel
+private toViewModel(child GroupTreeNode) : GroupNodeViewModel -> private toViewModel(child GroupTreeNode) : GroupNodeViewModel
+public addEntriesToGroup(entries List<BibEntry>) : List<FieldChange> -> public addEntriesToGroup(entries List<BibEntry>) : List<FieldChange>
+line range:147-147==line range:175-175
+line range:148-148==line range:176-176
+line range:149-149==line range:177-177
+line range:145-145==line range:171-171
+line range:145-145==line range:172-172
+line range:145-145==line range:173-173
+line range:145-145==line range:174-174
+line range:146-146==line range:171-171
+line range:146-146==line range:172-172
+line range:146-146==line range:173-173
+line range:146-146==line range:174-174
+line range:145-145==line range:171-171
+line range:145-145==line range:172-172
+line range:146-146==line range:173-173
+line range:146-146==line range:174-174
+line range:158-158==line range:186-186
+line range:159-159==line range:187-187
+line range:160-160==line range:188-188
+line range:160-160==line range:189-189
+line range:160-160==line range:188-188
+line range:160-160==line range:189-189
+line range:153-153==line range:181-181
+public expandedProperty() : SimpleBooleanProperty -> public expandedProperty() : SimpleBooleanProperty
+public anySelectedEntriesMatchedProperty() : BooleanBinding -> public anySelectedEntriesMatchedProperty() : BooleanBinding
+public allSelectedEntriesMatchedProperty() : BooleanBinding -> public allSelectedEntriesMatchedProperty() : BooleanBinding
+public hasChildrenProperty() : SimpleBooleanProperty -> public hasChildrenProperty() : SimpleBooleanProperty
+public getDisplayName() : String -> public getDisplayName() : String
+public setDisplayName(newName String) : void -> public setDisplayName(newName String) : void
+public isRoot() : boolean -> public isRoot() : boolean
+public getDescription() : String -> public getDescription() : String
+public getHits() : IntegerBinding -> public getHits() : IntegerBinding
+public equals(o Object) : boolean -> public equals(o Object) : boolean
+public toString() : String -> public toString() : String
+public hashCode() : int -> public hashCode() : int
+public getIcon() : JabRefIcon -> public getIcon() : JabRefIcon
+private createDefaultIcon() : JabRefIcon -> private createDefaultIcon() : JabRefIcon
+private parseIcon(iconCode String) : Optional<JabRefIcon> -> private parseIcon(iconCode String) : Optional<JabRefIcon>
+public getChildren() : ObservableList<GroupNodeViewModel> -> public getChildren() : ObservableList<GroupNodeViewModel>
+public getGroupNode() : GroupTreeNode -> public getGroupNode() : GroupTreeNode
+private onDatabaseChanged(change ListChangeListener.Change<? extends BibEntry>) : void -> private onDatabaseChanged(change ListChangeListener.Change<? extends BibEntry>) : void
+line range:265-265==line range:287-287
+line range:269-269==line range:292-292
+line range:272-272==line range:296-296
+line range:278-278==line range:303-303
+line range:283-283==line range:308-308
+private refreshGroup() : void -> private refreshGroup() : void
+line range:293-293==line range:318-318
+line range:294-294==line range:319-319
+line range:294-294==line range:320-320
+line range:294-294==line range:319-319
+line range:294-294==line range:320-320
+private updateMatchedEntries() : void -> private updateMatchedEntries() : void
+line range:303-303==line range:329-329
+line range:305-305==line range:332-332
+line range:304-304==line range:330-330
+line range:304-304==line range:331-331
+line range:304-304==line range:330-330
+line range:304-304==line range:331-331
+line range:311-311==line range:336-336
+public addSubgroup(subgroup AbstractGroup) : GroupTreeNode -> public addSubgroup(subgroup AbstractGroup) : GroupTreeNode
+package toggleExpansion() : void -> package toggleExpansion() : void
+package isMatchedBy(searchString String) : boolean -> package isMatchedBy(searchString String) : boolean
+public getColor() : Color -> public getColor() : Color
+public getPath() : String -> public getPath() : String
+public getChildByPath(pathToSource String) : Optional<GroupNodeViewModel> -> public getChildByPath(pathToSource String) : Optional<GroupNodeViewModel>
+public acceptableDrop(dragboard Dragboard) : boolean -> public acceptableDrop(dragboard Dragboard) : boolean
+line range:350-350==line range:376-376
+public moveTo(target GroupNodeViewModel) : void -> public moveTo(target GroupNodeViewModel) : void
+line range:358-358==line range:384-384
+line range:359-359==line range:385-385
+line range:359-359==line range:386-386
+line range:359-359==line range:387-387
+line range:359-359==line range:388-388
+line range:360-360==line range:385-385
+line range:360-360==line range:386-386
+line range:360-360==line range:387-387
+line range:360-360==line range:388-388
+line range:359-359==line range:385-385
+line range:359-359==line range:386-386
+line range:360-360==line range:387-387
+line range:360-360==line range:388-388
+line range:364-364==line range:393-393
+line range:363-363==line range:391-391
+line range:363-363==line range:392-392
+line range:363-363==line range:391-391
+line range:363-363==line range:392-392
+line range:365-365==line range:394-394
+line range:365-365==line range:395-395
+line range:365-365==line range:394-394
+line range:365-365==line range:395-395
+public moveTo(target GroupTreeNode, targetIndex int) : void -> public moveTo(target GroupTreeNode, targetIndex int) : void
+public getParent() : Optional<GroupTreeNode> -> public getParent() : Optional<GroupTreeNode>
+public draggedOn(target GroupNodeViewModel, mouseLocation DroppingMouseLocation) : void -> public draggedOn(target GroupNodeViewModel, mouseLocation DroppingMouseLocation) : void
+line range:385-385==line range:415-415
+line range:386-386==line range:416-416
+line range:395-395==line range:426-426
+line range:396-396==line range:427-427
+line range:394-394==line range:424-424
+line range:394-394==line range:425-425
+line range:394-394==line range:424-424
+line range:394-394==line range:425-425
+line range:377-377==line range:407-407
+line range:403-403==line range:435-435
+private getPositionInParent() : int -> private getPositionInParent() : int
+public hasSubgroups() : boolean -> public hasSubgroups() : boolean
+public isAllEntriesGroup() : boolean -> public isAllEntriesGroup() : boolean
+public hasSimilarSearchGroup(searchGroup SearchGroup) : boolean -> public hasSimilarSearchGroup(searchGroup SearchGroup) : boolean
+public hasAllSuggestedGroups() : boolean -> public hasAllSuggestedGroups() : boolean
+public canAddEntriesIn() : boolean -> public canAddEntriesIn() : boolean
+line range:446-446==line range:483-483
+public canBeDragged() : boolean -> public canBeDragged() : boolean
+line range:467-467==line range:510-510
+line range:467-467==line range:511-511
+line range:467-467==line range:510-510
+line range:467-467==line range:511-511
+public canAddGroupsIn() : boolean -> public canAddGroupsIn() : boolean
+line range:485-485==line range:530-530
+line range:485-485==line range:531-531
+line range:485-485==line range:530-530
+line range:485-485==line range:531-531
+public canRemove() : boolean -> public canRemove() : boolean
+line range:501-501==line range:549-549
+line range:501-501==line range:550-550
+line range:501-501==line range:549-549
+line range:501-501==line range:550-550
+public isEditable() : boolean -> public isEditable() : boolean
+line range:517-517==line range:568-568
+line range:517-517==line range:569-569
+line range:517-517==line range:568-568
+line range:517-517==line range:569-569
+public listen(event IndexStartedEvent) : void -> public listen(event IndexStartedEvent) : void
+public listen(event IndexAddedOrUpdatedEvent) : void -> public listen(event IndexAddedOrUpdatedEvent) : void
+public listen(event IndexRemovedEvent) : void -> public listen(event IndexRemovedEvent) : void
+public listen(event IndexClosedEvent) : void -> public listen(event IndexClosedEvent) : void

@@ -74,7 +74,7 @@ public class UMLCommentGroup {
 		}
 		else if(this.group.size() != other.group.size() && this.group.size() > 0) {
 			UMLCommentListDiff diff = new UMLCommentListDiff(this, other);
-			if(diff.isManyToManyReformat() && diff.getDeletedComments().isEmpty() && diff.getAddedComments().isEmpty()) {
+			if(diff.isManyToManyReformatWithIdenticalText() && diff.getDeletedComments().isEmpty() && diff.getAddedComments().isEmpty()) {
 				return diff;
 			}
 		}

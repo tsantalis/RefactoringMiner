@@ -175,6 +175,17 @@ public class UMLJavadocDiff {
 						break;
 					}
 				}
+				else if(tagBefore.isSee() && tagAfter.isSee()) {
+					boolean match = processModifiedTags(tagBefore, tagAfter);
+					if(match) {
+						deletedToBeDeleted.add(tagBefore);
+						addedToBeDeleted.add(tagAfter);
+						Pair<UMLTagElement, UMLTagElement> pair = Pair.of(tagBefore, tagAfter);
+						commonTags.add(pair);
+						matchNestedTags(tagBefore, tagAfter);
+						break;
+					}
+				}
 			}
 		}
 		deletedTags.removeAll(deletedToBeDeleted);
@@ -594,7 +605,7 @@ public class UMLJavadocDiff {
 		}
 		String deletedWithoutTags = Jsoup.parse(deletedSB.toString()).text();
 		String addedWithoutTags = Jsoup.parse(addedSB.toString()).text();
-		if(deletedSB.toString().replaceAll("\\s", "").equals(addedSB.toString().replaceAll("\\s", ""))) {
+		if(deletedSB.toString().replaceAll("\\s", "").replaceAll("\\*", "").equals(addedSB.toString().replaceAll("\\s", "").replaceAll("\\*", ""))) {
 			//make all pair combinations
 			for(UMLDocElement deletedDocElement : deletedDocElements) {
 				for(UMLDocElement addedDocElement : addedDocElements) {
@@ -656,7 +667,8 @@ public class UMLJavadocDiff {
 						break;
 					}
 				}
-				if(longestSubSequence != null) {
+				String joined = longestSubSequence != null ? String.join("", longestSubSequence) : "";
+				if(longestSubSequence != null && !joined.equals("<ahref=")) {
 					//make all pair combinations
 					for(UMLDocElement deletedDocElement : deletedDocElements) {
 						if(containsAnySubSequence(deletedTokenSequenceMap.get(deletedDocElement), longestSubSequence)) {
@@ -709,7 +721,8 @@ public class UMLJavadocDiff {
 						break;
 					}
 				}
-				if(longestSubSequence != null) {
+				String joined = longestSubSequence != null ? String.join("", longestSubSequence) : "";
+				if(longestSubSequence != null && !joined.equals("<ahref=")) {
 					//make all pair combinations
 					for(UMLDocElement deletedDocElement : deletedDocElements) {
 						if(containsAnySubSequence(deletedTokenSequenceMap.get(deletedDocElement), longestSubSequence)) {

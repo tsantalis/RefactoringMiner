@@ -30,6 +30,10 @@ public class UMLTagElement implements LocationInfoProvider {
 		return tagName != null && tagName.equals("@throws");
 	}
 
+	public boolean isSee() {
+		return tagName != null && tagName.equals("@see");
+	}
+
 	public String getParamName() {
 		if(isParam() && fragments.size() > 0) {
 			return fragments.get(0).getText();

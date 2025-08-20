@@ -7,10 +7,10 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
 import gr.uom.java.xmi.diff.UMLTypeParameterListDiff;
 import org.apache.commons.lang3.tuple.Pair;
+import org.refactoringminer.astDiff.matchers.statement.IgnoringCommentsLeafMatcher;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
-import org.refactoringminer.astDiff.matchers.statement.BasicTreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
@@ -139,7 +139,12 @@ public class MethodMatcher extends BodyMapperMatcher{
         for (org.apache.commons.lang3.tuple.Pair<UMLAnnotation, UMLAnnotation>  umlAnnotationUMLAnnotationPair : umlOperationDiff.getAnnotationListDiff().getCommonAnnotations()) {
             Tree srcClassAnnotationTree = TreeUtilFunctions.findByLocationInfo(srcTree , umlAnnotationUMLAnnotationPair.getLeft().getLocationInfo());
             Tree dstClassAnnotationTree = TreeUtilFunctions.findByLocationInfo(dstTree, umlAnnotationUMLAnnotationPair.getRight().getLocationInfo());
-            mappingStore.addMappingRecursively(srcClassAnnotationTree,dstClassAnnotationTree);
+            if (srcClassAnnotationTree == null || dstClassAnnotationTree == null) continue;
+            if (srcClassAnnotationTree.isIsoStructuralTo(dstClassAnnotationTree))
+                mappingStore.addMappingRecursively(srcClassAnnotationTree, dstClassAnnotationTree);
+            else {
+                new IgnoringCommentsLeafMatcher().match(srcClassAnnotationTree, dstClassAnnotationTree, mappingStore);
+            }
         }
         Set<org.apache.commons.lang3.tuple.Pair<UMLType, UMLType>> commonExceptionTypes = umlOperationDiff.getCommonExceptionTypes();
         new KeywordMatcher(Constants.THROWS_KEYWORD, THROWS_KEYWORD_LABEL).match(srcTree, dstTree, mappingStore);

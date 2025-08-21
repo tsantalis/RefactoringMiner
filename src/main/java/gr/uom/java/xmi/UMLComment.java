@@ -102,6 +102,12 @@ public class UMLComment extends UMLAbstractDocumentation {
 		return sb.toString();
 	}
 
+	public boolean equalTextIgnoringEmptyLines(UMLComment other) {
+		String text1 = this.getText().replaceAll("(?m)^\\s+$", "").replaceAll("(?m)^\\n", "").replaceAll("(\\r?\\n)$", "");
+		String text2 = other.getText().replaceAll("(?m)^\\s+$", "").replaceAll("(?m)^\\n", "").replaceAll("(\\r?\\n)$", "");
+		return text1.equals(text2) || text1.equals(text2 + "*") || text2.equals(text1 + "*");
+	}
+
 	public boolean isCommentedCode() {
 		if(locationInfo.getCodeElementType().equals(CodeElementType.LINE_COMMENT)) {
 			String text = getText();

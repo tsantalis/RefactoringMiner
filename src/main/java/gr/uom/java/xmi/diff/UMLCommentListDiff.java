@@ -449,6 +449,9 @@ public class UMLCommentListDiff {
 			if(comment.getText().equals(element.getText())) {
 				matchingIndices.add(i);
 			}
+			else if(comment.equalTextIgnoringEmptyLines(element)) {
+				matchingIndices.add(i);
+			}
 		}
 		return matchingIndices;
 	}

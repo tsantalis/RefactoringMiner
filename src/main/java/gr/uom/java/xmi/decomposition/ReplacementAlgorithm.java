@@ -722,6 +722,10 @@ public class ReplacementAlgorithm {
 		Set<String> castExpressions2 = convertToStringSet(statement2.getCastExpressions());
 		removeCommonElements(castExpressions1, castExpressions2);
 		
+		Set<String> textBlocks1 = convertToStringSet(statement1.getTextBlocks());
+		Set<String> textBlocks2 = convertToStringSet(statement2.getTextBlocks());
+		removeCommonElements(textBlocks1, textBlocks2);
+		
 		//perform type replacements
 		findReplacements(types1, types2, replacementInfo, ReplacementType.TYPE, container1, container2, classDiff);
 		
@@ -971,6 +975,25 @@ public class ReplacementAlgorithm {
 		findReplacements(parenthesizedExpressions1, parenthesizedExpressions2, replacementInfo, ReplacementType.PARENTHESIZED_EXPRESSION, container1, container2, classDiff);
 		
 		//perform literal replacements
+		if(textBlocks1.size() == textBlocks2.size()) {
+			Iterator<String> it1 = textBlocks1.iterator();
+			Iterator<String> it2 = textBlocks2.iterator();
+			while(it1.hasNext() && it2.hasNext()) {
+				String s1 = it1.next();
+				String s2 = it2.next();
+				String strippedText1 = Arrays.stream(s1.split("\\R"))
+                        .map(String::stripLeading)
+                        .collect(Collectors.joining("\n"));
+				String strippedText2 = Arrays.stream(s2.split("\\R"))
+                        .map(String::stripLeading)
+                        .collect(Collectors.joining("\n"));
+				if(strippedText1.equals(strippedText2)) {
+					Replacement replacement = new Replacement(s1, s2, ReplacementType.TEXT_BLOCK);
+					replacementInfo.addReplacement(replacement);
+					replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement.getBefore(), replacement.getAfter()));
+				}
+			}
+		}
 		findReplacements(stringLiterals1, stringLiterals2, replacementInfo, ReplacementType.STRING_LITERAL, container1, container2, classDiff);
 		findReplacements(charLiterals1, charLiterals2, replacementInfo, ReplacementType.CHAR_LITERAL, container1, container2, classDiff);
 		findReplacements(numberLiterals1, numberLiterals2, replacementInfo, ReplacementType.NUMBER_LITERAL, container1, container2, classDiff);

@@ -470,6 +470,9 @@ public class UMLModelASTReader {
 				if(comment.getLocationInfo().before(locationInfo) && !locationInfo.nextLine(comment.getLocationInfo())) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
+				else if(locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
+					umlClass.getPackageDeclarationComments().add(comment);
+				}
 			}
 			comments.removeAll(umlClass.getPackageDeclarationComments());
 		}
@@ -573,6 +576,9 @@ public class UMLModelASTReader {
 				if(comment.getLocationInfo().before(locationInfo) && !locationInfo.nextLine(comment.getLocationInfo())) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
+				else if(locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
+					umlClass.getPackageDeclarationComments().add(comment);
+				}
 			}
 			comments.removeAll(umlClass.getPackageDeclarationComments());
 		}
@@ -631,6 +637,9 @@ public class UMLModelASTReader {
 			umlClass.setPackageDeclarationJavadoc(packageDoc);
 			for(UMLComment comment : comments) {
 				if(comment.getLocationInfo().before(locationInfo) && !locationInfo.nextLine(comment.getLocationInfo())) {
+					umlClass.getPackageDeclarationComments().add(comment);
+				}
+				else if(locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
 			}
@@ -762,6 +771,9 @@ public class UMLModelASTReader {
 			umlClass.setPackageDeclarationJavadoc(packageDoc);
 			for(UMLComment comment : comments) {
 				if(comment.getLocationInfo().before(locationInfo) && !locationInfo.nextLine(comment.getLocationInfo())) {
+					umlClass.getPackageDeclarationComments().add(comment);
+				}
+				else if(locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
 			}

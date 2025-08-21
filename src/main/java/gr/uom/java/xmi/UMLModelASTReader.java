@@ -466,11 +466,12 @@ public class UMLModelASTReader {
 		if(recordDeclaration.isPackageMemberTypeDeclaration()) {
 			umlClass.setPackageDeclaration(umlPackage);
 			umlClass.setPackageDeclarationJavadoc(packageDoc);
+			boolean isLastType = cu.types().get(cu.types().size()-1).equals(recordDeclaration);
 			for(UMLComment comment : comments) {
 				if(comment.getLocationInfo().before(locationInfo) && !locationInfo.nextLine(comment.getLocationInfo())) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
-				else if(locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
+				else if(isLastType && locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
 			}
@@ -572,11 +573,12 @@ public class UMLModelASTReader {
 		if(annotationDeclaration.isPackageMemberTypeDeclaration()) {
 			umlClass.setPackageDeclaration(umlPackage);
 			umlClass.setPackageDeclarationJavadoc(packageDoc);
+			boolean isLastType = cu.types().get(cu.types().size()-1).equals(annotationDeclaration);
 			for(UMLComment comment : comments) {
 				if(comment.getLocationInfo().before(locationInfo) && !locationInfo.nextLine(comment.getLocationInfo())) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
-				else if(locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
+				else if(isLastType && locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
 			}
@@ -635,11 +637,12 @@ public class UMLModelASTReader {
 		if(enumDeclaration.isPackageMemberTypeDeclaration()) {
 			umlClass.setPackageDeclaration(umlPackage);
 			umlClass.setPackageDeclarationJavadoc(packageDoc);
+			boolean isLastType = cu.types().get(cu.types().size()-1).equals(enumDeclaration);
 			for(UMLComment comment : comments) {
 				if(comment.getLocationInfo().before(locationInfo) && !locationInfo.nextLine(comment.getLocationInfo())) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
-				else if(locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
+				else if(isLastType && locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
 			}
@@ -769,11 +772,12 @@ public class UMLModelASTReader {
 		if(typeDeclaration.isPackageMemberTypeDeclaration()) {
 			umlClass.setPackageDeclaration(umlPackage);
 			umlClass.setPackageDeclarationJavadoc(packageDoc);
+			boolean isLastType = cu.types().get(cu.types().size()-1).equals(typeDeclaration);
 			for(UMLComment comment : comments) {
 				if(comment.getLocationInfo().before(locationInfo) && !locationInfo.nextLine(comment.getLocationInfo())) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
-				else if(locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
+				else if(isLastType && locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
 			}

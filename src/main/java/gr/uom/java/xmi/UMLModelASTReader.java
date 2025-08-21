@@ -311,6 +311,26 @@ public class UMLModelASTReader {
         	}
         	this.umlModel.addPackageInfo(packageInfo);
         }
+        for(UMLClass c : umlModel.getClassList()) {
+        	for(UMLComment comment : new ArrayList<>(c.getComments())) {
+        		for(UMLAttribute attr : c.getAttributes()) {
+        			int size = attr.getComments().size();
+					if(size > 0 && comment.getLocationInfo().nextLine(attr.getComments().get(size-1).getLocationInfo())) {
+						attr.getComments().add(comment);
+						c.getComments().remove(comment);
+						break;
+					}
+        		}
+        		for(UMLEnumConstant attr : c.getEnumConstants()) {
+        			int size = attr.getComments().size();
+					if(size > 0 && comment.getLocationInfo().nextLine(attr.getComments().get(size-1).getLocationInfo())) {
+						attr.getComments().add(comment);
+						c.getComments().remove(comment);
+						break;
+					}
+        		}
+        	}
+        }
 	}
 
 	private List<UMLComment> extractInternalComments(CompilationUnit cu, String sourceFolder, String sourceFile, String javaFileContent) {

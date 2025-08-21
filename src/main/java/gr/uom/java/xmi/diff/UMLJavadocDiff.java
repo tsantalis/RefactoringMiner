@@ -425,7 +425,7 @@ public class UMLJavadocDiff {
 							}
 						}
 					}
-					if(!matchFound) {
+					if(!matchFound && beforeMatchingIndices.size() == matchingIndices.size()) {
 						for(Integer index : matchingIndices) {
 							if(!alreadyMatchedDocElement(docElement, fragmentsAfter.get(index))) {
 								Pair<UMLDocElement, UMLDocElement> pair = Pair.of(docElement, fragmentsAfter.get(index));
@@ -513,7 +513,7 @@ public class UMLJavadocDiff {
 							}
 						}
 					}
-					if(!matchFound) {
+					if(!matchFound && afterMatchingIndices.size() == matchingIndices.size()) {
 						for(Integer index : matchingIndices) {
 							if(!alreadyMatchedDocElement(fragmentsBefore.get(index), docElement)) {
 								Pair<UMLDocElement, UMLDocElement> pair = Pair.of(fragmentsBefore.get(index), docElement);
@@ -550,13 +550,15 @@ public class UMLJavadocDiff {
 		if(deletedDocElements.size() <= addedDocElements.size()) {
 			for(UMLDocElement deletedDocElement : new ArrayList<>(deletedDocElements)) {
 				String trimmed1 = deletedDocElement.getText().replaceAll("^\"|\"$", "");
-				for(UMLDocElement addedDocElement : new ArrayList<>(addedDocElements)) {
-					String trimmed2 = addedDocElement.getText().replaceAll("^\"|\"$", "");
-					if(trimmed1.equals(trimmed2) || trimmed1.equals(trimmed2 + ".") || trimmed2.equals(trimmed1 + ".")) {
-						Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
-						commonDocElements.add(pair);
-						deletedDocElements.remove(deletedDocElement);
-						addedDocElements.remove(addedDocElement);
+				if(!trimmed1.equals(".")) {
+					for(UMLDocElement addedDocElement : new ArrayList<>(addedDocElements)) {
+						String trimmed2 = addedDocElement.getText().replaceAll("^\"|\"$", "");
+						if(trimmed1.equals(trimmed2) || trimmed1.equals(trimmed2 + ".") || trimmed2.equals(trimmed1 + ".")) {
+							Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+							commonDocElements.add(pair);
+							deletedDocElements.remove(deletedDocElement);
+							addedDocElements.remove(addedDocElement);
+						}
 					}
 				}
 			}
@@ -564,13 +566,15 @@ public class UMLJavadocDiff {
 		else {
 			for(UMLDocElement addedDocElement : new ArrayList<>(addedDocElements)) {
 				String trimmed2 = addedDocElement.getText().replaceAll("^\"|\"$", "");
-				for(UMLDocElement deletedDocElement : new ArrayList<>(deletedDocElements)) {
-					String trimmed1 = deletedDocElement.getText().replaceAll("^\"|\"$", "");
-					if(trimmed1.equals(trimmed2) || trimmed1.equals(trimmed2 + ".") || trimmed2.equals(trimmed1 + ".")) {
-						Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
-						commonDocElements.add(pair);
-						deletedDocElements.remove(deletedDocElement);
-						addedDocElements.remove(addedDocElement);
+				if(!trimmed2.equals(".")) {
+					for(UMLDocElement deletedDocElement : new ArrayList<>(deletedDocElements)) {
+						String trimmed1 = deletedDocElement.getText().replaceAll("^\"|\"$", "");
+						if(trimmed1.equals(trimmed2) || trimmed1.equals(trimmed2 + ".") || trimmed2.equals(trimmed1 + ".")) {
+							Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+							commonDocElements.add(pair);
+							deletedDocElements.remove(deletedDocElement);
+							addedDocElements.remove(addedDocElement);
+						}
 					}
 				}
 			}

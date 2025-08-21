@@ -81,6 +81,8 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             if (srcUMLAttribute instanceof UMLEnumConstant && dstUMLAttribute instanceof UMLEnumConstant) {
                 //JavaDocs are mapped as well.
                 new LeafMatcher().match(srcAttr,dstAttr,mappingStore);
+                new JavaDocMatcher(optimizationData, srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc(), umlJavadocDiff)
+                .match(srcTree, dstTree, mappingStore);
                 return;
             }
         }

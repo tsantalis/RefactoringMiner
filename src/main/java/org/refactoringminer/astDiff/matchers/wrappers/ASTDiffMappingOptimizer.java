@@ -4,6 +4,7 @@ import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import org.refactoringminer.astDiff.matchers.statement.IgnoringCommentsLeafMatcher;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
@@ -61,7 +62,7 @@ public class ASTDiffMappingOptimizer extends OptimizationAwareMatcher{
                 Tree dstExp = TreeUtilFunctions.findByLocationInfo(dstTree, lastStepMapping.getFragment2().getLocationInfo());
                 if (srcExp == null || dstExp == null) continue;
                 if (needToOverride(input, srcExp, dstExp))
-                    new LeafMatcher().match(srcExp, dstExp, lastStepMappingStore);
+                    new IgnoringCommentsLeafMatcher().match(srcExp, dstExp, lastStepMappingStore);
                 else
                     new LeafMatcher().match(srcExp,dstExp,input.getAllMappings());
             }

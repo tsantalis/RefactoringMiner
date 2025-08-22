@@ -137,7 +137,14 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 				initializerChanged = true;
 			}
 			this.mapper = new UMLOperationBodyMapper(removedAttribute, addedAttribute, classDiff, modelDiff);
-			if(this.mapper.getMappings().size() > 1) {
+			boolean mapperContainsLambda = false;
+			for(AbstractCodeMapping mapping : mapper.getMappings()) {
+				if(mapping.getFragment1().getLambdas().size() > 0 && mapping.getFragment2().getLambdas().size() > 0) {
+					mapperContainsLambda = true;
+					break;
+				}
+			}
+			if(mapperContainsLambda) {
 				if(removedAttribute.getComments().size() != addedAttribute.getComments().size() || this.commentListDiff.getAddedComments().size() > 0 || this.commentListDiff.getDeletedComments().size() > 0) {
 					commentsChanged = true;
 				}

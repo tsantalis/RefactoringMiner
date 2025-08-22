@@ -9794,6 +9794,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
+				else if(mapper.getMappings().size() == 1 && mapper.getMappings().iterator().next() instanceof CompositeStatementObjectMapping) {
+					addAllMappings(mapper.mappings);
+				}
 			}
 		}
 	}

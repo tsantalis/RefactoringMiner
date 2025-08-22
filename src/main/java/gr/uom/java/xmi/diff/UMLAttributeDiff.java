@@ -38,6 +38,7 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 	private boolean volatileChanged;
 	private boolean transientChanged;
 	private boolean initializerChanged;
+	private boolean commentsChanged;
 	private List<UMLOperationBodyMapper> operationBodyMapperList;
 	private UMLAnnotationListDiff annotationListDiff;
 	private UMLOperation addedGetter;
@@ -131,6 +132,9 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 			this.javadocDiff = Optional.of(diff);
 		}
 		this.commentListDiff = new UMLCommentListDiff(removedAttribute.getComments(), addedAttribute.getComments());
+		if(removedAttribute.getComments().size() != addedAttribute.getComments().size() || this.commentListDiff.getAddedComments().size() > 0 || this.commentListDiff.getDeletedComments().size() > 0) {
+			commentsChanged = true;
+		}
 		if(initializer1 != null && initializer2 != null) {
 			if(!initializer1.getExpression().equals(initializer2.getExpression())) {
 				initializerChanged = true;
@@ -229,7 +233,7 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 
 	public boolean isEmpty() {
 		return !visibilityChanged && !staticChanged && !finalChanged && !volatileChanged && !transientChanged && !typeChanged && !renamed && !qualifiedTypeChanged && annotationListDiff.isEmpty() &&
-				!initializerChanged;
+				!initializerChanged && !commentsChanged;
 	}
 
 	public String toString() {

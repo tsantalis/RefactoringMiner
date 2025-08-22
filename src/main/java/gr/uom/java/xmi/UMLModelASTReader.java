@@ -369,6 +369,7 @@ public class UMLModelASTReader {
 			LocationInfo commentLocationInfo = comment.getLocationInfo();
 			if(codeElementLocationInfo.subsumes(commentLocationInfo) ||
 					codeElementLocationInfo.sameLine(commentLocationInfo) ||
+					commentLocationInfo.startsAtTheEndLineOf(codeElementLocationInfo) ||
 					(codeElementLocationInfo.nextLine(commentLocationInfo) && !codeElementLocationInfo.getCodeElementType().equals(CodeElementType.ANONYMOUS_CLASS_DECLARATION)) ||
 					(codeElementComments.size() > 0 && codeElementComments.get(0).getLocationInfo().nextLine(commentLocationInfo))) {
 				codeElementComments.add(0, comment);

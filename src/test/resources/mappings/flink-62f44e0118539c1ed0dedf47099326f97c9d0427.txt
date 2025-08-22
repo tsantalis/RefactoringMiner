@@ -325,6 +325,7 @@ line range:62-62==line range:62-62
 line range:64-69==line range:64-69
 line range:71-82==line range:71-82
 line range:79-79==line range:79-79
+line range:79-79==line range:79-79
 line range:85-85==line range:85-85
 line range:87-87==line range:87-87
 line range:92-92==line range:92-92
@@ -431,6 +432,7 @@ private createCheckpointedInputGate(gate IndexedInputGate, toNotify AbstractInvo
 line range:140-140==line range:128-128
 private createCheckpointedInputGate(gate IndexedInputGate, toNotify AbstractInvokable, enableCheckpointsAfterTasksFinish boolean) : CheckpointedInputGate -> private createCheckpointedInputGate(gate IndexedInputGate, toNotify AbstractInvokable, enableCheckpointsAfterTasksFinish boolean) : CheckpointedInputGate
 line range:147-157==line range:135-145
+line range:154-154==line range:142-142
 line range:154-154==line range:142-142
 private createBarrier(checkpointId long, channel int) : BufferOrEvent -> private createBarrier(checkpointId long, channel int) : BufferOrEvent
 line range:1126-1126==line range:1098-1098
@@ -1191,6 +1193,7 @@ line range:692-692==line range:677-677
 line range:693-701==line range:678-686
 line range:697-697==line range:682-682
 line range:699-699==line range:684-684
+line range:699-699==line range:684-684
 line range:702-702==line range:687-687
 line range:703-711==line range:688-696
 line range:713-713==line range:698-698
@@ -1483,6 +1486,7 @@ line range:70-70==line range:65-65
 line range:66-70==line range:65-67
 line range:42-42==line range:41-41
 line range:43-44==line range:42-43
+line range:44-44==line range:43-43
 line range:45-47==line range:44-46
 line range:49-49==line range:48-48
 line range:50-50==line range:49-49
@@ -3024,6 +3028,8 @@ private assertExpectedValues() : void -> private assertExpectedValues() : void
 line range:167-167==line range:163-163
 public testCustomTimeServiceProvider() : void -> package testCustomTimeServiceProvider() : void
 line range:72-72==line range:72-72
+line range:72-72==line range:72-72
+line range:74-74==line range:74-74
 line range:74-74==line range:74-74
 line range:78-78==line range:78-78
 line range:81-81==line range:81-81
@@ -8438,6 +8444,7 @@ line range:1278-1278==line range:1274-1274
 line range:1280-1280==line range:1276-1276
 line range:1282-1282==line range:1278-1278
 line range:1284-1288==line range:1280-1284
+line range:1290-1302==line range:1286-1298
 line range:1304-1304==line range:1300-1300
 line range:1306-1306==line range:1302-1302
 line range:1307-1307==line range:1303-1303
@@ -9928,11 +9935,15 @@ line range:99-103==line range:96-99
 line range:103-105==line range:99-101
 private createAsyncRunnable(snapshotsInProgress Map<OperatorID,OperatorSnapshotFutures>, environment TestEnvironment, isTaskDeployedAsFinished boolean, isTaskRunning boolean) : AsyncCheckpointRunnable -> private createAsyncRunnable(snapshotsInProgress Map<OperatorID,OperatorSnapshotFutures>, environment TestEnvironment, isTaskDeployedAsFinished boolean, isTaskRunning boolean) : AsyncCheckpointRunnable
 line range:158-171==line range:151-164
+line range:166-166==line range:159-159
+line range:168-168==line range:161-161
 line range:171-171==line range:164-164
 public testReportIncompleteStats() : void -> package testReportIncompleteStats() : void
 line range:51-51==line range:49-49
 line range:52-52==line range:50-50
 line range:53-65==line range:51-63
+line range:59-59==line range:57-57
+line range:61-61==line range:59-59
 line range:64-64==line range:62-62
 line range:66-68==line range:64-65
 public testDeclineWithAsyncCheckpointExceptionWhenRunning() : void -> package testDeclineWithAsyncCheckpointExceptionWhenRunning() : void
@@ -10500,6 +10511,7 @@ line range:116-117==line range:116-117
 line range:119-119==line range:119-119
 line range:120-120==line range:120-120
 line range:122-134==line range:122-134
+line range:129-129==line range:129-129
 line range:134-134==line range:134-134
 line range:136-136==line range:136-136
 line range:137-137==line range:137-137
@@ -11045,6 +11057,7 @@ line range:921-921==line range:915-915
 line range:923-923==line range:917-917
 line range:928-928==line range:922-922
 line range:932-932==line range:926-926
+line range:936-936==line range:930-930
 line range:936-936==line range:930-930
 line range:939-939==line range:933-933
 line range:924-924==line range:918-918
@@ -11635,6 +11648,7 @@ line range:990-990==line range:985-985
 line range:991-991==line range:986-986
 line range:994-994==line range:989-989
 line range:995-995==line range:990-990
+line range:998-998==line range:993-993
 line range:998-998==line range:993-993
 line range:1001-1001==line range:996-996
 line range:999-999==line range:994-994
@@ -13869,6 +13883,7 @@ line range:1745-1773==line range:1742-1770
 line range:1747-1773==line range:1744-1770
 line range:1750-1752==line range:1747-1749
 line range:1760-1762==line range:1757-1759
+line range:1762-1762==line range:1759-1759
 line range:1763-1763==line range:1760-1760
 line range:1765-1765==line range:1762-1762
 line range:1766-1766==line range:1763-1763
@@ -14513,6 +14528,7 @@ line range:872-883==line range:871-882
 line range:878-878==line range:877-877
 line range:879-879==line range:878-878
 line range:883-883==line range:882-882
+line range:883-883==line range:882-882
 public testInitCheckpoint() : void -> package testInitCheckpoint() : void
 line range:102-102==line range:98-98
 line range:103-103==line range:99-99
@@ -14892,6 +14908,7 @@ private createBlockingSystemProcessingTimeService(blockUntilTriggered OneShotLat
 line range:399-399==line range:345-345
 line range:401-401==line range:347-347
 line range:403-404==line range:349-350
+line range:404-404==line range:350-350
 line range:406-423==line range:352-369
 line range:408-408==line range:354-354
 line range:410-410==line range:356-356
@@ -14981,7 +14998,9 @@ line range:203-254==line range:167-210
 line range:252-254==line range:208-210
 public testFutureCancellation() : void -> package testFutureCancellation() : void
 line range:268-269==line range:224-225
+line range:269-269==line range:225-225
 line range:272-272==line range:228-228
+line range:276-276==line range:232-232
 line range:276-276==line range:232-232
 line range:280-280==line range:236-236
 line range:270-270==line range:226-226
@@ -15410,6 +15429,7 @@ line range:820-820==line range:814-814
 line range:823-823==line range:817-817
 line range:824-824==line range:818-818
 line range:827-827==line range:821-821
+line range:827-827==line range:821-821
 line range:830-830==line range:824-824
 line range:828-828==line range:822-822
 line range:831-831==line range:825-825
@@ -15492,6 +15512,7 @@ line range:58-58==line range:52-52
 line range:59-61==line range:53-55
 line range:62-62==line range:56-56
 line range:63-64==line range:57-58
+line range:64-64==line range:58-58
 public tearDown() : void -> package tearDown() : void
 line range:69-69==line range:63-63
 line range:72-72==line range:66-66
@@ -15506,6 +15527,7 @@ line range:73-75==line range:67-69
 line range:71-76==line range:65-70
 public testIsIdle() : void -> package testIsIdle() : void
 line range:93-93==line range:87-87
+line range:99-99==line range:93-93
 line range:99-99==line range:93-93
 line range:102-102==line range:96-96
 line range:103-103==line range:97-97
@@ -15619,8 +15641,12 @@ public tearDown() : void -> package tearDown() : void
 line range:61-61==line range:60-60
 public testPutAsHead() : void -> package testPutAsHead() : void
 line range:67-67==line range:66-66
+line range:67-67==line range:66-66
+line range:68-68==line range:67-67
 line range:68-68==line range:67-67
 line range:69-69==line range:68-68
+line range:69-69==line range:68-68
+line range:70-70==line range:69-69
 line range:70-70==line range:69-69
 line range:72-72==line range:71-71
 line range:73-73==line range:72-72
@@ -15673,8 +15699,12 @@ line range:151-151==line range:149-149
 line range:157-157==line range:152-152
 public testPutAsHeadWithPriority() : void -> package testPutAsHeadWithPriority() : void
 line range:278-278==line range:264-264
+line range:278-278==line range:264-264
+line range:279-279==line range:265-265
 line range:279-279==line range:265-265
 line range:280-280==line range:266-266
+line range:280-280==line range:266-266
+line range:281-281==line range:267-267
 line range:281-281==line range:267-267
 line range:283-283==line range:269-269
 line range:284-284==line range:270-270
@@ -15690,8 +15720,12 @@ line range:313-313==line range:299-299
 line range:314-314==line range:300-300
 line range:315-315==line range:301-301
 line range:301-301==line range:287-287
+line range:301-301==line range:287-287
+line range:302-302==line range:288-288
 line range:302-302==line range:288-288
 line range:303-303==line range:289-289
+line range:303-303==line range:289-289
+line range:304-304==line range:290-290
 line range:304-304==line range:290-290
 line range:306-306==line range:292-292
 line range:307-307==line range:293-293
@@ -15712,12 +15746,16 @@ line range:329-332==line range:315-318
 line range:331-331==line range:317-317
 public testBatchDrain() : void -> package testBatchDrain() : void
 line range:357-357==line range:343-343
+line range:357-357==line range:343-343
+line range:358-358==line range:344-344
 line range:358-358==line range:344-344
 line range:360-360==line range:346-346
 line range:362-362==line range:348-348
 line range:361-361==line range:347-347
 public testBatchPriority() : void -> package testBatchPriority() : void
 line range:370-370==line range:356-356
+line range:370-370==line range:356-356
+line range:371-371==line range:357-357
 line range:371-371==line range:357-357
 line range:373-373==line range:359-359
 line range:375-375==line range:361-361
@@ -15728,6 +15766,7 @@ public testRunExclusively() : void -> package testRunExclusively() : void
 line range:389-402==line range:375-388
 line range:391-401==line range:377-387
 line range:393-393==line range:379-379
+line range:396-396==line range:382-382
 line range:396-396==line range:382-382
 line range:397-397==line range:383-383
 line range:395-399==line range:381-385
@@ -15748,6 +15787,7 @@ line range:269-269==line range:270-270
 line range:270-270==line range:271-271
 public testRejectIfNotOpen() : void -> package testRejectIfNotOpen() : void
 line range:50-50==line range:43-43
+line range:50-50==line range:43-43
 line range:51-51==line range:44-44
 line range:53-53==line range:48-50
 public testSubmittingRunnableWithException() : void -> package testSubmittingRunnableWithException() : void
@@ -15761,6 +15801,8 @@ line range:74-74==line range:70-70
 line range:62-76==line range:57-75
 public testShutdown() : void -> package testShutdown() : void
 line range:85-85==line range:84-84
+line range:85-85==line range:84-84
+line range:86-86==line range:85-85
 line range:86-86==line range:85-85
 line range:87-89==line range:86-88
 line range:90-90==line range:89-89
@@ -15823,6 +15865,7 @@ line range:224-225==line range:225-226
 line range:227-229==line range:228-230
 line range:229-229==line range:230-230
 line range:232-234==line range:233-235
+line range:234-234==line range:235-235
 line range:239-239==line range:240-240
 line range:242-242==line range:243-243
 line range:244-244==line range:245-245
@@ -15857,6 +15900,7 @@ line range:205-211==line range:206-212
 line range:203-205==line range:204-206
 line range:188-213==line range:188-214
 public testCancelAfterClose() : void -> package testCancelAfterClose() : void
+line range:261-261==line range:262-262
 line range:261-261==line range:262-262
 line range:262-262==line range:263-263
 line range:263-263==line range:264-264

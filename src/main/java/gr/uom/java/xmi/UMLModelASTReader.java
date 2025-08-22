@@ -1353,6 +1353,11 @@ public class UMLModelASTReader {
 				LocationInfo annotationLocationInfo = variableDeclaration.getAnnotations().get(0).getLocationInfo();
 				distributeComments(comments, annotationLocationInfo, umlAttribute.getComments());
 			}
+			//handle case where modifiers are in the previous line before the variable declaration fragment
+			if(variableDeclaration.getModifiers().size() > 0) {
+				LocationInfo modifierLocationInfo = variableDeclaration.getModifiers().get(0).getLocationInfo();
+				distributeComments(comments, modifierLocationInfo, umlAttribute.getComments());
+			}
 			
 			int fieldModifiers = fieldDeclaration.getModifiers();
 			if((fieldModifiers & Modifier.PUBLIC) != 0)

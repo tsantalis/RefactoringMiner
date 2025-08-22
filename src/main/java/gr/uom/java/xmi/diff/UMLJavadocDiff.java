@@ -165,8 +165,7 @@ public class UMLJavadocDiff {
 					}
 				}
 				else if(tagBefore.isThrows() && tagAfter.isThrows()) {
-					boolean match = processModifiedTags(tagBefore, tagAfter);
-					if(match && !throwsTagAlreadyMatchedWithSameType(tagAfter)) {
+					if(!throwsTagAlreadyMatchedWithSameType(tagAfter) && processModifiedTags(tagBefore, tagAfter)) {
 						deletedToBeDeleted.add(tagBefore);
 						addedToBeDeleted.add(tagAfter);
 						Pair<UMLTagElement, UMLTagElement> pair = Pair.of(tagBefore, tagAfter);
@@ -176,8 +175,7 @@ public class UMLJavadocDiff {
 					}
 				}
 				else if(tagBefore.isSee() && tagAfter.isSee()) {
-					boolean match = processModifiedTags(tagBefore, tagAfter);
-					if(match) {
+					if(!seeTagAlreadyMatched(tagAfter) && processModifiedTags(tagBefore, tagAfter)) {
 						deletedToBeDeleted.add(tagBefore);
 						addedToBeDeleted.add(tagAfter);
 						Pair<UMLTagElement, UMLTagElement> pair = Pair.of(tagBefore, tagAfter);
@@ -238,6 +236,15 @@ public class UMLJavadocDiff {
 	private boolean throwsTagAlreadyMatchedWithSameType(UMLTagElement tagAfter) {
 		for(Pair<UMLTagElement, UMLTagElement> pair : commonTags) {
 			if(pair.getRight().equals(tagAfter) && pair.getLeft().getFragments().get(0).equals(pair.getRight().getFragments().get(0))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean seeTagAlreadyMatched(UMLTagElement tagAfter) {
+		for(Pair<UMLTagElement, UMLTagElement> pair : commonTags) {
+			if(pair.getRight().equals(tagAfter)) {
 				return true;
 			}
 		}

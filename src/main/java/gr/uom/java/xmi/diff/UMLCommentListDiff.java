@@ -582,12 +582,16 @@ public class UMLCommentListDiff {
 				for(UMLComment addedComment : addedComments) {
 					Pair<UMLComment, UMLComment> pair = Pair.of(deletedComment, addedComment);
 					commonComments.add(pair);
+					deletedToBeDeleted.add(deletedComment);
+					addedToBeDeleted.add(addedComment);
 				}
 			}
 			if(deletedComments.size() >= 1 && addedComments.size() >= 1) {
 				manyToManyReformat = true;
 				manyToManyReformatWithIdenticalText = true;
 			}
+			deletedComments.removeAll(deletedToBeDeleted);
+			addedComments.removeAll(addedToBeDeleted);
 		}
 		else {
 			//match comments that one contains a subsequence of the other

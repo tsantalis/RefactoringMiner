@@ -132,14 +132,16 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 			this.javadocDiff = Optional.of(diff);
 		}
 		this.commentListDiff = new UMLCommentListDiff(removedAttribute.getComments(), addedAttribute.getComments());
-		if(removedAttribute.getComments().size() != addedAttribute.getComments().size() || this.commentListDiff.getAddedComments().size() > 0 || this.commentListDiff.getDeletedComments().size() > 0) {
-			commentsChanged = true;
-		}
 		if(initializer1 != null && initializer2 != null) {
 			if(!initializer1.getExpression().equals(initializer2.getExpression())) {
 				initializerChanged = true;
 			}
 			this.mapper = new UMLOperationBodyMapper(removedAttribute, addedAttribute, classDiff, modelDiff);
+			if(this.mapper.getMappings().size() > 1) {
+				if(removedAttribute.getComments().size() != addedAttribute.getComments().size() || this.commentListDiff.getAddedComments().size() > 0 || this.commentListDiff.getDeletedComments().size() > 0) {
+					commentsChanged = true;
+				}
+			}
 		}
 		else if(initializer1 == null && initializer2 != null) {
 			initializerChanged = true;

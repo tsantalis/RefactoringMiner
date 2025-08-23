@@ -14,6 +14,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLCommentGroup;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAttribute;
@@ -52,8 +54,8 @@ public class UMLCommentListDiff {
 		List<UMLComment> deletedComments = new ArrayList<UMLComment>(commentsBefore);
 		List<UMLComment> addedComments = new ArrayList<UMLComment>(commentsAfter);
 		//check if there exist comment groups, consecutive line comments
-		List<UMLCommentGroup> groupsBefore = createCommentGroups(commentsBefore);
-		List<UMLCommentGroup> groupsAfter = createCommentGroups(commentsAfter);
+		List<UMLCommentGroup> groupsBefore = createCommentGroups(commentsBefore, true);
+		List<UMLCommentGroup> groupsAfter = createCommentGroups(commentsAfter, false);
 		int groupsBeforeSize = groupsBefore.size();
 		int groupsAfterSize = groupsAfter.size();
 		List<UMLCommentGroup> groupsBeforeToBeRemoved = new ArrayList<UMLCommentGroup>();
@@ -84,7 +86,7 @@ public class UMLCommentListDiff {
 						for(int j=0; j<groupAfter.getGroup().size(); j++) {
 							UMLComment commentBefore = groupBefore.getGroup().get(i);
 							UMLComment commentAfter = groupAfter.getGroup().get(j);
-							if(commentBefore.getText().equals(commentAfter.getText())) {
+							if(commentBefore.getText().equals(commentAfter.getText()) && !alreadyMatchedComment(commentBefore, commentAfter)) {
 								Pair<UMLComment, UMLComment> pair = Pair.of(commentBefore, commentAfter);
 								commonComments.add(pair);
 								deletedComments.remove(commentBefore);
@@ -395,17 +397,38 @@ public class UMLCommentListDiff {
 		processModifiedComments(deletedComments, addedComments);
 	}
 
-	private List<UMLCommentGroup> createCommentGroups(List<UMLComment> commentsBefore) {
+	private List<UMLCommentGroup> createCommentGroups(List<UMLComment> commentsBefore, boolean left) {
 		List<UMLCommentGroup> groups = new ArrayList<UMLCommentGroup>();
 		UMLCommentGroup currentGroup = new UMLCommentGroup();
+		StatementObject previousFragment = null;
 		for(int i=0; i<commentsBefore.size(); i++) {
 			UMLComment current = commentsBefore.get(i);
 			if(current.getLocationInfo().getCodeElementType().equals(CodeElementType.LINE_COMMENT)) {
+				StatementObject currentFragment = null;
+				for(AbstractCodeMapping m : mappings) {
+					if(m.getFragment1() instanceof CompositeStatementObject && m.getFragment2() instanceof CompositeStatementObject) {
+						break;
+					}
+					if(m.getFragment1() instanceof StatementObject && m.getFragment2() instanceof StatementObject) {
+						if(left && m.getFragment1().getLocationInfo().subsumes(current.getLocationInfo())) {
+							currentFragment = (StatementObject) m.getFragment1();
+							break;
+						}
+						else if(m.getFragment1().getLocationInfo().subsumes(current.getLocationInfo())) {
+							currentFragment = (StatementObject) m.getFragment2();
+							break;
+						}
+					}
+				}
 				if(i-1 >= 0) {
 					UMLComment previous = commentsBefore.get(i-1);
 					if(previous.getLocationInfo().getCodeElementType().equals(CodeElementType.LINE_COMMENT)) {
 						if(previous.getLocationInfo().getStartLine() + 1 == current.getLocationInfo().getStartLine()) {
 							//consecutive line comments
+							currentGroup.addComment(current);
+						}
+						else if(commentInSameStatementWithLeadingComma(previousFragment, currentFragment, current)) {
+							//line comment belongs to the same statement as previous line comment
 							currentGroup.addComment(current);
 						}
 						else {
@@ -430,6 +453,7 @@ public class UMLCommentListDiff {
 					//this is the first line comment
 					currentGroup.addComment(current);
 				}
+				previousFragment = currentFragment;
 			}
 			else if (currentGroup.getGroup().size() > 0) {
 				//there is a comment of different type
@@ -440,6 +464,27 @@ public class UMLCommentListDiff {
 		if(!currentGroup.getGroup().isEmpty())
 			groups.add(currentGroup);
 		return groups;
+	}
+
+	private boolean commentInSameStatementWithLeadingComma(StatementObject previousFragment, StatementObject currentFragment, UMLComment current) {
+		if(previousFragment != null && currentFragment != null && previousFragment.equals(currentFragment)) {
+			String actualSignature = currentFragment.getActualSignature();
+			int indexOfComment = actualSignature.indexOf(current.getFullText());
+			if(indexOfComment != -1) {
+				int currentIndex = indexOfComment -1;
+				while(currentIndex > 0) {
+					char c = actualSignature.charAt(currentIndex);
+					if(c == ',') {
+						return true;
+					}
+					if(!Character.isWhitespace(c)) {
+						return false;
+					}
+					currentIndex--;
+				}
+			}
+		}
+		return false;
 	}
 
 	public static List<Integer> findAllMatchingIndices(List<UMLComment> fragments, UMLComment comment) {
@@ -462,8 +507,8 @@ public class UMLCommentListDiff {
 			this.addedComments.addAll(addedComments);
 			return;
 		}
-		List<UMLCommentGroup> groupsBefore = createCommentGroups(deletedComments);
-		List<UMLCommentGroup> groupsAfter = createCommentGroups(addedComments);
+		List<UMLCommentGroup> groupsBefore = createCommentGroups(deletedComments, true);
+		List<UMLCommentGroup> groupsAfter = createCommentGroups(addedComments, false);
 		List<UMLCommentGroup> groupsBeforeToBeRemoved = new ArrayList<UMLCommentGroup>();
 		List<UMLCommentGroup> groupsAfterToBeRemoved = new ArrayList<UMLCommentGroup>();
 		if(groupsBefore.size() <= groupsAfter.size()) {

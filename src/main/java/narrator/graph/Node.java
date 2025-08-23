@@ -27,6 +27,7 @@ public class Node {
         nodeObj.addProperty("path", path);
         nodeObj.addProperty("content", getContent());
         nodeObj.addProperty("nodeType", nodeType.name());
+        nodeObj.addProperty("astType", tree.getType().name);
 
         if (!identifiers.isEmpty()) {
             JsonArray identifiersArr = new JsonArray();
@@ -52,6 +53,7 @@ public class Node {
                 JsonObject srcObj = new JsonObject();
                 srcObj.addProperty("path", src.getPath());
                 srcObj.addProperty("content", src.getContent());
+                srcObj.addProperty("astType", src.tree.getType().name);
 
                 JsonArray contextsArr = new JsonArray();
                 List<Node> contexts =

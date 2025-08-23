@@ -189,6 +189,8 @@ public class HunkNetwork {
                 switch (subTreeType) {
                     case Constants.METHOD_DECLARATION -> methodDeclarations.add(subTree);
                     case Constants.FIELD_DECLARATION -> fieldDeclarations.add(subTree);
+                    // TODO: investigation: it is only for "Enhanced For" and other parameters will be in variable
+                    //  declarations array
                     case Constants.RECORD_COMPONENT -> parameterDeclarations.add(subTree);
                     case Constants.VARIABLE_DECLARATION_STATEMENT -> variableDeclarations.add(subTree);
                 }

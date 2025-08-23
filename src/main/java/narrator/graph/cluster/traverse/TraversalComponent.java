@@ -62,11 +62,14 @@ public class TraversalComponent extends TraversalPattern {
     public JsonObject stringify() {
         JsonObject result = super.stringify();
 
-        JsonArray reasonsJson = new JsonArray();
+        JsonArray reasonsArr = new JsonArray();
         for (Node reason : reasons) {
-            reasonsJson.add(reason.getContent());
+            JsonObject reasonObj = new JsonObject();
+            reasonObj.addProperty("id", reason.getId());
+            reasonObj.addProperty("content", reason.getContent());
+            reasonsArr.add(reasonObj);
         }
-        result.add("reasons", reasonsJson);
+        result.add("reasons", reasonsArr);
 
         result.addProperty("reasonType", reasonType.name());
         result.addProperty("nodeType", NodeType.COMPONENT.name());

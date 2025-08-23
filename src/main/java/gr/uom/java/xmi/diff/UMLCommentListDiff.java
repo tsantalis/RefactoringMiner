@@ -477,7 +477,7 @@ public class UMLCommentListDiff {
 					if(c == ',') {
 						return true;
 					}
-					if(!Character.isWhitespace(c)) {
+					if(!Character.isWhitespace(c) || c == '\n') {
 						return false;
 					}
 					currentIndex--;

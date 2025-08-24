@@ -28,6 +28,7 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.SourceAnnotation;
 import gr.uom.java.xmi.UMLAbstractClass;
+import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
@@ -1774,7 +1775,29 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							int overallMaxMatchingTestParameters = -1;
 							Map<Integer, Integer> overallMatchingTestParameters = new LinkedHashMap<Integer, Integer>();
 							boolean internalParameterizeTest = false;
+							Set<String> commonTokensInName = null;
 							for(UMLOperationBodyMapper mapper : mapperSet) {
+								Set<String> commonTokens = new LinkedHashSet<>();
+								String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(mapper.getContainer1().getName());
+								String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(mapper.getContainer2().getName());
+								boolean commonTokenCheck = false;
+								for(String token1 : tokens1) {
+									for(String token2 : tokens2) {
+										if(token1.equals(token2) || token1.startsWith(token2)) {
+											commonTokens.add(token2);
+										}
+									}
+								}
+								if(commonTokensInName == null) {
+									commonTokensInName = commonTokens;
+								}
+								else if(commonTokens.size() > commonTokensInName.size()) {
+									commonTokensInName = commonTokens;
+									filteredMapperSet.clear();
+								}
+								else if(commonTokensInName.equals(commonTokens)) {
+									commonTokenCheck = true;
+								}
 								if(mapper.getInternalParameterizeTestMultiMappings().size() > 0) {
 									internalParameterizeTest = true;
 								}
@@ -1797,6 +1820,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 									else {
 										filteredMapperSet.add(mapper);
 									}
+								}
+								else if(commonTokenCheck) {
+									filteredMapperSet.add(mapper);
 								}
 							}
 							//cluster mappers based on number of mappings and number of total replacements

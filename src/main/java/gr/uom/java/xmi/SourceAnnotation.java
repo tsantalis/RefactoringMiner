@@ -15,7 +15,8 @@ public abstract class SourceAnnotation {
             EnumSourceAnnotation.ANNOTATION_TYPENAME, EnumSourceAnnotation::new,
             NullAndEmptySourceAnnotation.ANNOTATION_TYPENAME, NullAndEmptySourceAnnotation::new,
             EmptySourceAnnotation.ANNOTATION_TYPENAME, EmptySourceAnnotation::new,
-            NullSourceAnnotation.ANNOTATION_TYPENAME, NullSourceAnnotation::new
+            NullSourceAnnotation.ANNOTATION_TYPENAME, NullSourceAnnotation::new,
+            MethodSourceAnnotation.ANNOTATION_TYPENAME, MethodSourceAnnotation::new
     );
     protected List<List<String>> testParameters;
     protected UMLAnnotation annotation;

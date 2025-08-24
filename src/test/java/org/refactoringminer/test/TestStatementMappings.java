@@ -1116,15 +1116,20 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
-	@Test
-	public void testParameterizedTestMappings() throws Exception {
+	@ParameterizedTest
+	@CsvSource({
+		"TestStatementMappings-v1.txt, TestStatementMappings-v2.txt, src-test/org/refactoringminer/test/TestStatementMappings.java, miner-TestStatementMappings.txt",
+		"FileNameCleanerTest-v1.txt, FileNameCleanerTest-v2.txt, src/test/java/org/jabref/logic/util/FileNameCleanerTest.java, jabRef-FileNameCleanerTest.txt",
+		"CopyMoreActionTest-v1.txt, CopyMoreActionTest-v2.txt, jabgui/src/test/java/org/jabref/gui/edit/CopyMoreActionTest.java, jabRef-CopyMoreActionTest.txt"
+	})
+	public void testParameterizedTestMappings(String input1, String input2, String filePath, String expectedOutput) throws Exception {
 		final List<String> actual = new ArrayList<>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
 		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
-		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + "TestStatementMappings-v1.txt"));
-		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + "TestStatementMappings-v2.txt"));
-		fileContentsBefore.put("src-test/org/refactoringminer/test/TestStatementMappings.java", contentsV1);
-		fileContentsCurrent.put("src-test/org/refactoringminer/test/TestStatementMappings.java", contentsV2);
+		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + input1));
+		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + input2));
+		fileContentsBefore.put(filePath, contentsV1);
+		fileContentsCurrent.put(filePath, contentsV2);
 		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
 		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
 
@@ -1137,32 +1142,7 @@ public class TestStatementMappings {
 				mapperInfo(mapper, actual);
 			}
 		}
-		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "miner-TestStatementMappings.txt"));
-		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
-	}
-
-	@Test
-	public void testParameterizedTestMappings4() throws Exception {
-		final List<String> actual = new ArrayList<>();
-		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
-		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
-		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + "FileNameCleanerTest-v1.txt"));
-		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + "FileNameCleanerTest-v2.txt"));
-		fileContentsBefore.put("src/test/java/org/jabref/logic/util/FileNameCleanerTest.java", contentsV1);
-		fileContentsCurrent.put("src/test/java/org/jabref/logic/util/FileNameCleanerTest.java", contentsV2);
-		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
-		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
-
-		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-		List<Refactoring> refactorings = modelDiff.getRefactorings();
-		for(Refactoring r : refactorings) {
-			if(r instanceof ParameterizeTestRefactoring) {
-				ParameterizeTestRefactoring parameterizeTest = (ParameterizeTestRefactoring)r;
-				UMLOperationBodyMapper mapper = parameterizeTest.getBodyMapper();
-				mapperInfo(mapper, actual);
-			}
-		}
-		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jabRef-FileNameCleanerTest.txt"));
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + expectedOutput));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

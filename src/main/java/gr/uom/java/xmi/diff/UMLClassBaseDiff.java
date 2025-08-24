@@ -2084,7 +2084,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		} else if (expression.endsWith(".class")) {
 			return expression.substring(0, expression.lastIndexOf(".class"));
 		} else if (expression.contains(".")) {
-			return expression.substring(expression.lastIndexOf('.') + 1);
+			//return expression.substring(expression.lastIndexOf('.') + 1);
 		}
 		return expression;
 	}

@@ -384,6 +384,17 @@ public class UMLJavadocDiff {
 		return matchingIndices;
 	}
 
+	private List<Integer> findAllMatchingIndices(List<UMLDocElement> fragments, String text) {
+		List<Integer> matchingIndices = new ArrayList<>();
+		for(int i=0; i<fragments.size(); i++) {
+			UMLDocElement element = fragments.get(i);
+			if(text.equals(element.getText())) {
+				matchingIndices.add(i);
+			}
+		}
+		return matchingIndices;
+	}
+
 	private boolean processModifiedTags(UMLTagElement tagBefore, UMLTagElement tagAfter) {
 		int commonDocElementsBefore = commonDocElements.size();
 		List<UMLDocElement> fragmentsBefore = tagBefore.getFragments();
@@ -433,6 +444,21 @@ public class UMLJavadocDiff {
 						}
 					}
 					if(!matchFound && beforeMatchingIndices.size() == matchingIndices.size()) {
+						for(Integer index : matchingIndices) {
+							if(!alreadyMatchedDocElement(docElement, fragmentsAfter.get(index))) {
+								Pair<UMLDocElement, UMLDocElement> pair = Pair.of(docElement, fragmentsAfter.get(index));
+								commonDocElements.add(pair);
+								deletedDocElements.remove(docElement);
+								addedDocElements.remove(docElement);
+								break;
+							}
+						}
+					}
+				}
+				else if(docElement.getText().equals(". <br>")) {
+					List<Integer> matchingIndices = findAllMatchingIndices(fragmentsAfter, "<br>");
+					List<Integer> beforeMatchingIndices = findAllMatchingIndices(fragmentsBefore, "<br>");
+					if(beforeMatchingIndices.size() == matchingIndices.size()) {
 						for(Integer index : matchingIndices) {
 							if(!alreadyMatchedDocElement(docElement, fragmentsAfter.get(index))) {
 								Pair<UMLDocElement, UMLDocElement> pair = Pair.of(docElement, fragmentsAfter.get(index));

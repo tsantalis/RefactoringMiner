@@ -21,6 +21,7 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAttribute;
 
 public class UMLCommentListDiff {
+	private static final Pattern LEAD_TRAIL_QUOTE = Pattern.compile("^\"|\"$");
 	private List<Pair<UMLComment, UMLComment>> commonComments;
 	private List<UMLComment> deletedComments;
 	private List<UMLComment> addedComments;
@@ -549,15 +550,28 @@ public class UMLCommentListDiff {
 		groupsBefore.removeAll(groupsBeforeToBeRemoved);
 		groupsAfter.removeAll(groupsAfterToBeRemoved);
 		if(groupsBefore.isEmpty() && groupsAfter.isEmpty()) {
-			UMLCommentGroup groupBefore = new UMLCommentGroup();
-			for(UMLComment comment : deletedComments)
-				groupBefore.addComment(comment);
-			UMLCommentGroup groupAfter = new UMLCommentGroup();
-			for(UMLComment comment : addedComments)
-				groupAfter.addComment(comment);
-			processModifiedComments(groupBefore, groupAfter);
-			this.deletedComments.addAll(groupBefore.getGroup());
-			this.addedComments.addAll(groupAfter.getGroup());
+			if(deletedComments.size() == addedComments.size() && allBlockComments(deletedComments) && allBlockComments(addedComments)) {
+				for(int i=0; i<deletedComments.size(); i++) {
+					UMLCommentGroup groupBefore = new UMLCommentGroup();
+					UMLCommentGroup groupAfter = new UMLCommentGroup();
+					groupBefore.addComment(deletedComments.get(i));
+					groupAfter.addComment(addedComments.get(i));
+					processModifiedComments(groupBefore, groupAfter);
+					this.deletedComments.addAll(groupBefore.getGroup());
+					this.addedComments.addAll(groupAfter.getGroup());
+				}
+			}
+			else {
+				UMLCommentGroup groupBefore = new UMLCommentGroup();
+				for(UMLComment comment : deletedComments)
+					groupBefore.addComment(comment);
+				UMLCommentGroup groupAfter = new UMLCommentGroup();
+				for(UMLComment comment : addedComments)
+					groupAfter.addComment(comment);
+				processModifiedComments(groupBefore, groupAfter);
+				this.deletedComments.addAll(groupBefore.getGroup());
+				this.addedComments.addAll(groupAfter.getGroup());
+			}
 		}
 		for(UMLCommentGroup group : groupsBefore) {
 			this.deletedComments.addAll(group.getGroup());
@@ -577,15 +591,25 @@ public class UMLCommentListDiff {
 		}
 	}
 
+	private boolean allBlockComments(List<UMLComment> comments) {
+		int count = 0;
+		for(UMLComment comment : comments) {
+			if(comment.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK_COMMENT)) {
+				count++;
+			}
+		}
+		return count == comments.size() && count > 0;
+	}
+
 	private void processModifiedComments(UMLCommentGroup groupBefore, UMLCommentGroup groupAfter) {
 		List<UMLComment> deletedComments = groupBefore.getGroup();
 		List<UMLComment> addedComments = groupAfter.getGroup();
 		//match comments differing only in opening/closing quotes
 		if(deletedComments.size() <= addedComments.size()) {
 			for(UMLComment deletedComment : new ArrayList<>(deletedComments)) {
+				String trimmed1 = LEAD_TRAIL_QUOTE.matcher(deletedComment.getText()).replaceAll("");
 				for(UMLComment addedComment : new ArrayList<>(addedComments)) {
-					String trimmed1 = deletedComment.getText().replaceAll("^\"|\"$", "");
-					String trimmed2 = addedComment.getText().replaceAll("^\"|\"$", "");
+					String trimmed2 = LEAD_TRAIL_QUOTE.matcher(addedComment.getText()).replaceAll("");
 					if(trimmed1.equals(trimmed2)) {
 						Pair<UMLComment, UMLComment> pair = Pair.of(deletedComment, addedComment);
 						commonComments.add(pair);
@@ -597,9 +621,9 @@ public class UMLCommentListDiff {
 		}
 		else {
 			for(UMLComment addedComment : new ArrayList<>(addedComments)) {
+				String trimmed2 = LEAD_TRAIL_QUOTE.matcher(addedComment.getText()).replaceAll("");
 				for(UMLComment deletedComment : new ArrayList<>(deletedComments)) {
-					String trimmed1 = deletedComment.getText().replaceAll("^\"|\"$", "");
-					String trimmed2 = addedComment.getText().replaceAll("^\"|\"$", "");
+					String trimmed1 = LEAD_TRAIL_QUOTE.matcher(deletedComment.getText()).replaceAll("");
 					if(trimmed1.equals(trimmed2)) {
 						Pair<UMLComment, UMLComment> pair = Pair.of(deletedComment, addedComment);
 						commonComments.add(pair);

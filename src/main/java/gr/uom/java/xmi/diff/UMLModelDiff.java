@@ -3593,9 +3593,11 @@ public class UMLModelDiff {
 										if(!conflictingRefactorings.isEmpty()) {
 											Set<AbstractCodeMapping> conflictingReferences = new LinkedHashSet<>();
 											Set<Replacement> conflictingReplacements = new LinkedHashSet<>();
+											ReferenceBasedRefactoring conflictingRefactoring = null;
 											for(Refactoring r : conflictingRefactorings) {
 												if(r instanceof ReferenceBasedRefactoring) {
-													Set<AbstractCodeMapping> references = ((ReferenceBasedRefactoring)r).getReferences();
+													conflictingRefactoring = (ReferenceBasedRefactoring)r;
+													Set<AbstractCodeMapping> references = conflictingRefactoring.getReferences();
 													conflictingReferences.addAll(references);
 													for(AbstractCodeMapping mapping : references) {
 														conflictingReplacements.addAll(mapping.getReplacements());
@@ -3615,9 +3617,27 @@ public class UMLModelDiff {
 											}
 											if(references.size() > conflictingReferences.size()) {
 												refactorings.removeAll(conflictingRefactorings);
+												if(conflictingRefactoring != null && conflictingRefactoring instanceof RenameAttributeRefactoring) {
+													UMLAttribute removed = ((RenameAttributeRefactoring)conflictingRefactoring).getOriginalAttribute();
+													UMLAttribute added = ((RenameAttributeRefactoring)conflictingRefactoring).getRenamedAttribute();
+													for(UMLEnumConstantDiff d : new ArrayList<>(diff.getEnumConstantDiffList())) {
+														if(d.getRemovedEnumConstant().equals(removed) && d.getAddedEnumConstant().equals(added)) {
+															diff.getEnumConstantDiffList().remove(d);
+														}
+													}
+												}
 											}
 											else if(references.size() == conflictingReferences.size() && replacements.size() < conflictingReplacements.size()) {
 												refactorings.removeAll(conflictingRefactorings);
+												if(conflictingRefactoring != null && conflictingRefactoring instanceof RenameAttributeRefactoring) {
+													UMLAttribute removed = ((RenameAttributeRefactoring)conflictingRefactoring).getOriginalAttribute();
+													UMLAttribute added = ((RenameAttributeRefactoring)conflictingRefactoring).getRenamedAttribute();
+													for(UMLEnumConstantDiff d : new ArrayList<>(diff.getEnumConstantDiffList())) {
+														if(d.getRemovedEnumConstant().equals(removed) && d.getAddedEnumConstant().equals(added)) {
+															diff.getEnumConstantDiffList().remove(d);
+														}
+													}
+												}
 											}
 										}
 										refactorings.addAll(enumConstantDiffRefactorings);

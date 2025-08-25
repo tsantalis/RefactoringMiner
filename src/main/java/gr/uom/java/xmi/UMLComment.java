@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
@@ -17,6 +18,7 @@ public class UMLComment extends UMLAbstractDocumentation {
 	private Optional<UMLJavadoc> javaDoc;
 	private CompositeStatementObject parent;
 	private List<LocationInfo> previousLineLocations = new ArrayList<>();
+	private static final Pattern EMPTY_LINES = Pattern.compile("(^\\s*$\\r?\\n)+", Pattern.MULTILINE);
 
 	public UMLComment(String text, LocationInfo locationInfo) {
 		super(text, locationInfo);
@@ -103,9 +105,19 @@ public class UMLComment extends UMLAbstractDocumentation {
 	}
 
 	public boolean equalTextIgnoringEmptyLines(UMLComment other) {
-		String text1 = this.getText().replaceAll("(?m)^\\s+$", "").replaceAll("(?m)^\\n", "").replaceAll("(\\r?\\n)$", "");
-		String text2 = other.getText().replaceAll("(?m)^\\s+$", "").replaceAll("(?m)^\\n", "").replaceAll("(\\r?\\n)$", "");
-		return text1.equals(text2) || text1.equals(text2 + "*") || text2.equals(text1 + "*");
+		if(this.locationInfo.getCodeElementType().equals(CodeElementType.BLOCK_COMMENT) && other.locationInfo.getCodeElementType().equals(CodeElementType.BLOCK_COMMENT)) {
+			String text1 = EMPTY_LINES.matcher(this.getText()).replaceAll("");
+			String text2 = EMPTY_LINES.matcher(other.getText()).replaceAll("");
+			if(text1.equals(text2)) {
+				return true;
+			}
+			else if(text1.endsWith("\n") && text2.endsWith("\n")) {
+				text1 = text1.substring(0, text1.length()-1);
+				text2 = text2.substring(0, text2.length()-1);
+				return text1.equals(text2 + "*") || text2.equals(text1 + "*");
+			}
+		}
+		return false;
 	}
 
 	public boolean isCommentedCode() {

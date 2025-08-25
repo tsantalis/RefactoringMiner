@@ -2072,6 +2072,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
 						matchingTestParameters.put(parameterRow, previousValue + 1);
 					}
+					else if (paramsWithoutDoubleQuotes.contains(".")) {
+						for(String s : testParameters.get(parameterRow)) {
+							if(paramsWithoutDoubleQuotes.endsWith("." + s)) {
+								Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
+								matchingTestParameters.put(parameterRow, previousValue + 1);
+							}
+						}
+					}
 				}
 			}
 		}

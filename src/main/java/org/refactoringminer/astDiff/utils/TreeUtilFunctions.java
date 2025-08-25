@@ -58,8 +58,10 @@ public class TreeUtilFunctions {
 	}
 
 	public static Tree findByLocationInfo(Tree tree, LocationInfo locationInfo, String... type){
+        if (locationInfo == null) return null;
 		int startoffset = locationInfo.getStartOffset();
 		int endoffset = locationInfo.getEndOffset();
+        if (tree.getPos() > startoffset || tree.getEndPos() < endoffset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo) : null;
 		return getTreeBetweenPositions(tree, startoffset, endoffset,type);
 	}
 

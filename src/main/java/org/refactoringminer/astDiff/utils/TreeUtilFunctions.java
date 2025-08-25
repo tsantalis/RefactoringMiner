@@ -57,7 +57,7 @@ public class TreeUtilFunctions {
 		return treeBetweenPositions;
 	}
 
-	public static Tree findByLocationInfo(Tree tree, LocationInfo locationInfo, String type){
+	public static Tree findByLocationInfo(Tree tree, LocationInfo locationInfo, String... type){
 		int startoffset = locationInfo.getStartOffset();
 		int endoffset = locationInfo.getEndOffset();
 		return getTreeBetweenPositions(tree, startoffset, endoffset,type);
@@ -71,7 +71,7 @@ public class TreeUtilFunctions {
 		return null;
 	}
 
-	public static Tree getTreeBetweenPositions(Tree tree, int position, int endPosition,String type) {
+	public static Tree getTreeBetweenPositions(Tree tree, int position, int endPosition,String... type) {
 		for (Tree t: tree.preOrder()) {
 			if (t.getPos() >= position && t.getEndPos() <= endPosition)
 				if (isFromType(t, type))
@@ -301,8 +301,12 @@ public class TreeUtilFunctions {
 				&& isFromType(t2, type);
 	}
 
-	public static boolean isFromType(Tree t1, String type) {
-		return t1.getType().name.equals(type);
+	public static boolean isFromType(Tree t1, String... type) {
+        if (t1 == null) return false;
+        for (String t: type)
+		    if (t1.getType().name.equals(t))
+                return true;
+        return false;
 	}
 
 	public static Tree findFirstByType(Tree inputTree, String typeName) {

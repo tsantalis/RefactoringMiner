@@ -3589,6 +3589,37 @@ public class UMLModelDiff {
 									}
 									Set<Refactoring> enumConstantDiffRefactorings = enumConstantDiff.getRefactorings(set);
 									if(!refactorings.containsAll(enumConstantDiffRefactorings)) {
+										Set<Refactoring> conflictingRefactorings = movedAttributeRenamed(a1.getVariableDeclaration(), a2.getVariableDeclaration(), refactorings);
+										if(!conflictingRefactorings.isEmpty()) {
+											Set<AbstractCodeMapping> conflictingReferences = new LinkedHashSet<>();
+											Set<Replacement> conflictingReplacements = new LinkedHashSet<>();
+											for(Refactoring r : conflictingRefactorings) {
+												if(r instanceof ReferenceBasedRefactoring) {
+													Set<AbstractCodeMapping> references = ((ReferenceBasedRefactoring)r).getReferences();
+													conflictingReferences.addAll(references);
+													for(AbstractCodeMapping mapping : references) {
+														conflictingReplacements.addAll(mapping.getReplacements());
+													}
+												}
+											}
+											Set<AbstractCodeMapping> references = new LinkedHashSet<>();
+											Set<Replacement> replacements = new LinkedHashSet<>();
+											for(Refactoring r : enumConstantDiffRefactorings) {
+												if(r instanceof ReferenceBasedRefactoring) {
+													Set<AbstractCodeMapping> references2 = ((ReferenceBasedRefactoring)r).getReferences();
+													references.addAll(references2);
+													for(AbstractCodeMapping mapping : references2) {
+														replacements.addAll(mapping.getReplacements());
+													}
+												}
+											}
+											if(references.size() > conflictingReferences.size()) {
+												refactorings.removeAll(conflictingRefactorings);
+											}
+											else if(references.size() == conflictingReferences.size() && replacements.size() < conflictingReplacements.size()) {
+												refactorings.removeAll(conflictingRefactorings);
+											}
+										}
 										refactorings.addAll(enumConstantDiffRefactorings);
 										break;//it's not necessary to repeat the same process for all candidates in the set
 									}

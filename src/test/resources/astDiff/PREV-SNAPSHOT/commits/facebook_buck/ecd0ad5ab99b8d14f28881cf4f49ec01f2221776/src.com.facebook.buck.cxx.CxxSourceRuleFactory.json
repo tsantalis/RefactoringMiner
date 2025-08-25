@@ -10944,17 +10944,6 @@
   "firstEndPos" : 8973,
   "secondEndPos" : 16654
 }, {
-  "firstType" : "LineComment",
-  "secondType" : "LineComment",
-  "firstLabel" : "// Depend on the rule that generates the sources and headers we're compiling.",
-  "secondLabel" : "// Add in all preprocessor deps.",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 8990,
-  "secondPos" : 16675,
-  "firstEndPos" : 9067,
-  "secondEndPos" : 16707
-}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "addAll",

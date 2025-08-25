@@ -24,6 +24,16 @@ public class UMLCommentGroup {
 		return group;
 	}
 
+	public boolean isUniqueInGroup(UMLComment comment) {
+		int matches = 0;
+		for(UMLComment c : group) {
+			if(comment.getText().equals(c.getText())) {
+				matches++;
+			}
+		}
+		return matches == 1;
+	}
+
 	public boolean sameText(UMLCommentGroup other) {
 		if(this.group.size() == other.group.size() && this.group.size() > 1) {
 			int matches = 0;

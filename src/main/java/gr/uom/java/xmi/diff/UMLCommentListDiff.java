@@ -86,7 +86,8 @@ public class UMLCommentListDiff {
 						for(int j=0; j<groupAfter.getGroup().size(); j++) {
 							UMLComment commentBefore = groupBefore.getGroup().get(i);
 							UMLComment commentAfter = groupAfter.getGroup().get(j);
-							if(commentBefore.getText().equals(commentAfter.getText()) && !alreadyMatchedComment(commentBefore, commentAfter)) {
+							if(commentBefore.getText().equals(commentAfter.getText()) && !alreadyMatchedComment(commentBefore, commentAfter) && 
+									(groupBefore.isUniqueInGroup(commentBefore) || (i==groupBefore.getGroup().size()-1 && j==groupAfter.getGroup().size()-1))) {
 								Pair<UMLComment, UMLComment> pair = Pair.of(commentBefore, commentAfter);
 								commonComments.add(pair);
 								deletedComments.remove(commentBefore);

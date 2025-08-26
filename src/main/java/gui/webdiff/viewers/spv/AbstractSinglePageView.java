@@ -4,6 +4,8 @@ import com.github.gumtreediff.utils.Pair;
 import gui.webdiff.viewers.monaco.MonacoCore;
 import gui.webdiff.dir.DirComparator;
 import gui.webdiff.dir.DirectoryDiffView;
+
+import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
@@ -42,9 +44,10 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
             // Generate panels for /monaco-0 to /monaco-n
             for (int i = 0; i < n; i++) {
                 Pair<String, String> fileContentsPair = comparator.getFileContentsPair(i);
-                boolean empty = comparator.getASTDiff(i).isEmpty();
-                if(!empty) {
-                    MonacoCore core = new MonacoCore(comparator, comparator.getASTDiff(i), i, comparator.isMoveDiff(i), fileContentsPair.first, fileContentsPair.second, comparator.getRefactorings(), metaInfo.getComments());
+                ASTDiff astDiff = comparator.getASTDiff(i);
+				boolean empty = astDiff.isEmpty();
+                if(!empty && astDiff.changesOtherThanCommentUpdates()) {
+                    MonacoCore core = new MonacoCore(comparator, astDiff, i, comparator.isMoveDiff(i), fileContentsPair.first, fileContentsPair.second, comparator.getRefactorings(), metaInfo.getComments());
                     core.setShowFilenames(false);
                     html.div(class_("card"))
                             .div(class_("card-header").id("heading-" + i).style("padding-right: 0;"))

@@ -7,12 +7,12 @@ import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
 import gui.webdiff.dir.DirComparator;
 import gui.webdiff.dir.DirectoryDiffView;
-import gui.webdiff.dir.PullRequestReviewComment;
+import gui.webdiff.dir.filters.DiffFilterer;
+import gui.webdiff.dir.filters.DiffFilterKind;
 import gui.webdiff.viewers.monaco.MonacoView;
 import gui.webdiff.viewers.monaco.SingleMonacoContent;
 import gui.webdiff.viewers.spv.SinglePageView;
 import gui.webdiff.viewers.vanilla.VanillaDiffView;
-import org.apache.commons.text.StringEscapeUtils;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
@@ -28,7 +28,6 @@ import java.net.URI;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -70,8 +69,12 @@ public class WebDiff  {
     }
 
     public WebDiff(ProjectASTDiff projectASTDiff) {
+        this(projectASTDiff, DiffFilterKind.NO_FILTER);
+    }
+
+    public WebDiff(ProjectASTDiff projectASTDiff, DiffFilterer diffFilterer) {
         this.projectASTDiff = projectASTDiff;
-        this.comparator = new DirComparator(projectASTDiff);
+        this.comparator = new DirComparator(projectASTDiff, diffFilterer);
     }
 
     public void run() {

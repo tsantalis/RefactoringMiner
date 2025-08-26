@@ -2,13 +2,11 @@ package org.refactoringminer.astDiff.models;
 
 import com.github.gumtreediff.actions.*;
 import com.github.gumtreediff.actions.model.Action;
-import com.github.gumtreediff.actions.model.Update;
 import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import org.refactoringminer.astDiff.actions.classifier.ExtendedOnlyRootsClassifier;
 import org.refactoringminer.astDiff.actions.editscript.ExtendedEditScriptGenerator;
-import org.refactoringminer.astDiff.actions.model.MultiMove;
 
 import java.util.Map;
 import java.util.Objects;
@@ -124,25 +122,5 @@ public class ASTDiff extends Diff {
 			return false;
 		ASTDiff other = (ASTDiff) obj;
 		return Objects.equals(dstPath, other.dstPath) && Objects.equals(srcPath, other.srcPath);
-	}
-
-	public boolean changesOtherThanCommentUpdates() {
-        for(com.github.gumtreediff.actions.model.Action action : this.editScript.asList()) {
-        	boolean validMultiMove = false;
-        	if(action instanceof MultiMove) {
-        		validMultiMove = action.getNode().getType().name.equals("TextElement") ||
-        				action.getNode().getType().name.equals("LineComment");
-        	}
-        	boolean validUpdate = false;
-        	if(action instanceof Update) {
-        		validUpdate = action.getNode().getType().name.equals("TextElement") ||
-        				action.getNode().getType().name.equals("LineComment") ||
-        				action.getNode().getType().name.equals("BlockComment");
-        	}
-        	if(!validUpdate && !validMultiMove) {
-        		return true;
-        	}
-        }
-        return false;
 	}
 }

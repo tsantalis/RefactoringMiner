@@ -1,10 +1,7 @@
 package org.refactoringminer.astDiff.matchers.wrappers;
 
 import com.github.gumtreediff.tree.Tree;
-import gr.uom.java.xmi.LocationInfo;
-import gr.uom.java.xmi.UMLAnnotation;
-import gr.uom.java.xmi.UMLClass;
-import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.decomposition.*;
 import gr.uom.java.xmi.diff.*;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring.Type;
@@ -311,6 +308,9 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 for (AbstractCodeMapping reference : renameAttributeRefactoring.getReferences()) {
                     List<LeafMapping> subExpressionMappings = reference.getSubExpressionMappings();
                     for (LeafMapping subExpressionMapping : subExpressionMappings) {
+                        if (belongToDifferentFiles(subExpressionMapping.getFragment1(), renameAttributeRefactoring.getOriginalAttribute()) ||
+                                belongToDifferentFiles(subExpressionMapping.getFragment2(), renameAttributeRefactoring.getRenamedAttribute()))
+                            continue;
                         Tree srcSimpleName = TreeUtilFunctions.findByLocationInfo(srcTree, subExpressionMapping.getFragment1().getLocationInfo(), Constants.SIMPLE_NAME);
                         Tree dstSimpleName = TreeUtilFunctions.findByLocationInfo(dstTree, subExpressionMapping.getFragment2().getLocationInfo(), Constants.SIMPLE_NAME);
                         if (srcSimpleName != null && dstSimpleName != null)
@@ -330,6 +330,10 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
             }
         }
 
+    }
+
+    private boolean belongToDifferentFiles(LocationInfoProvider lp1, LocationInfoProvider lp2) {
+        return !lp1.getLocationInfo().getFilePath().equals(lp2.getLocationInfo().getFilePath());
     }
 
     private static boolean multipleInstancesWithSameDescription(List<Refactoring> refactoringList, Refactoring refactoring) {

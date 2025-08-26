@@ -95,9 +95,10 @@ public class DirComparator {
         this.projectASTDiff = projectASTDiff;
         this.diffs = new ArrayList<>(projectASTDiff.getDiffSet());
         this.diffs.addAll(projectASTDiff.getMoveDiffSet());
+        this.diffs = diffFilteringOptions.filter(diffs);
+
         modifiedFilesName = new ArrayList<>();
         compare();
-        this.diffs = diffFilteringOptions.filter(diffs);
         TreeViewGenerator treeViewGenerator = new TreeViewGenerator(getModifiedFilesName(), diffs);
         compressedTree = treeViewGenerator.getCompressedTree();
         this.diffs = treeViewGenerator.getOrderedDiffs();

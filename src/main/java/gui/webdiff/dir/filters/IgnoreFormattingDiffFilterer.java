@@ -1,31 +1,43 @@
 package gui.webdiff.dir.filters;
 
 import com.github.gumtreediff.actions.model.*;
-import org.refactoringminer.astDiff.actions.model.MoveIn;
-import org.refactoringminer.astDiff.actions.model.MoveOut;
+import com.github.gumtreediff.tree.Tree;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
 import org.refactoringminer.astDiff.models.ASTDiff;
+import org.refactoringminer.astDiff.utils.Constants;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.refactoringminer.astDiff.utils.TreeUtilFunctions.isFromType;
 
 public class IgnoreFormattingDiffFilterer implements DiffFilterer {
     @Override
     public List<ASTDiff> filter(List<ASTDiff> diffs) {
-        return diffs.stream().filter(this::isPureFormatting).toList();
+        return new ArrayList<>(diffs.stream().filter(this::changesOtherThanCommentUpdates).toList());
     }
 
-    private boolean isPureFormatting(ASTDiff diff) {
-        for (Action action : diff.editScript) {
-            if (action instanceof Addition || action instanceof Delete || action instanceof Update)
-                return false;
-            if (action instanceof MoveIn || action instanceof MoveOut)
-                return false;
-            if (action instanceof MultiMove || action instanceof Move){
-                //TODO:
+    public boolean changesOtherThanCommentUpdates(ASTDiff diff) {
+        for(Action action : diff.editScript) {
+            boolean validMultiMove = false;
+            if(action instanceof MultiMove) {
+                validMultiMove = isFromType(action.getNode(), Constants.LINE_COMMENT, Constants.TEXT_ELEMENT);
             }
-            //TODO
+            boolean validUpdate = false;
+            if(action instanceof Update) {
+                validUpdate = isCommentOrJavaDoc(action.getNode());
+            }
+            if(!validUpdate && !validMultiMove) {
+                return true;
+            }
         }
-        return true;
+        return false;
+    }
+
+    public static boolean isCommentOrJavaDoc(Tree tree) {
+        return isFromType(tree, Constants.LINE_COMMENT, Constants.BLOCK_COMMENT, Constants.TEXT_ELEMENT);
     }
 }
+
+
 

@@ -2329,7 +2329,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				mapperSet.add(operationBodyMapper);
 			}
 			else if(mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper) &&
-					(absoluteDifferenceInPosition <= differenceInPosition || zeroNonMapped || containsAnonymousClassDiff) &&
+					(relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) || zeroNonMapped || containsAnonymousClassDiff) &&
 					compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition) &&
 					removedOperation.testMethodCheck(addedOperation)) {
 				isPartOfMethodMovedFromDeletedMethod(removedOperation, addedOperation, operationBodyMapper, mapperSet);
@@ -2338,7 +2338,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 			else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 					mappedElementsMoreThanNonMappedT2(mappings, operationBodyMapper) &&
-					absoluteDifferenceInPosition <= differenceInPosition &&
+					relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
 					(isPartOfMethodExtracted(removedOperation, addedOperation) || isPartOfMethodMovedToExistingMethod(removedOperation, addedOperation) ||
 							(operationBodyMapper.exactMatches() > 0 && !mapperWithZeroNonMappedStatementsOrIdenticalMethodName && isPartOfMethodMovedToAddedMethod(removedOperation, addedOperation, operationBodyMapper))) &&
 					removedOperation.testMethodCheck(addedOperation)) {
@@ -2346,7 +2346,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 			else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 					mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper) &&
-					absoluteDifferenceInPosition <= differenceInPosition &&
+					relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
 					(isPartOfMethodInlined(removedOperation, addedOperation) || isPartOfMethodMovedFromExistingMethod(removedOperation, addedOperation) ||
 							(operationBodyMapper.exactMatches() > 0 && !mapperWithZeroNonMappedStatementsOrIdenticalMethodName && isPartOfMethodMovedFromDeletedMethod(removedOperation, addedOperation, operationBodyMapper, mapperSet))) &&
 					removedOperation.testMethodCheck(addedOperation)) {
@@ -2470,7 +2470,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(totalMappings.size() > 0) {
 			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
 			if(singleUnmatchedStatementCallsAddedOperation(operationBodyMapper) &&
-					absoluteDifferenceInPosition <= differenceInPosition &&
+					relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
 					compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition)) {
 				mapperSet.add(operationBodyMapper);
 			}
@@ -2479,11 +2479,15 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
 			if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 					mappedElementsMoreThanNonMappedT2(mappings, operationBodyMapper) &&
-					absoluteDifferenceInPosition <= differenceInPosition &&
+					relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
 					removedOperation.testMethodCheck(addedOperation)) {
 				mapperSet.add(operationBodyMapper);
 			}
 		}
+	}
+
+	private boolean relativePositionCheck(int differenceInPosition, int absoluteDifferenceInPosition) {
+		return absoluteDifferenceInPosition <= differenceInPosition || (removedOperations.size() == addedOperations.size() && removedOperations.size() == 1 && !originalClass.isTestClass() && !nextClass.isTestClass());
 	}
 
 	private void updateMapperSet(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperation removedOperation, UMLOperation operationInsideAnonymousClass, UMLOperation addedOperation, int differenceInPosition) throws RefactoringMinerTimedOutException {
@@ -2495,19 +2499,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				mapperSet.add(operationBodyMapper);
 			}
 			else if(mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper) &&
-					absoluteDifferenceInPosition <= differenceInPosition &&
+					relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
 					compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition)) {
 				mapperSet.add(operationBodyMapper);
 			}
 			else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 					mappedElementsMoreThanNonMappedT2(mappings, operationBodyMapper) &&
-					absoluteDifferenceInPosition <= differenceInPosition &&
+					relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
 					(isPartOfMethodExtracted(removedOperation, addedOperation) || isPartOfMethodMovedToExistingMethod(removedOperation, addedOperation))) {
 				mapperSet.add(operationBodyMapper);
 			}
 			else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 					mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper) &&
-					absoluteDifferenceInPosition <= differenceInPosition &&
+					relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
 					(isPartOfMethodInlined(removedOperation, addedOperation) || isPartOfMethodMovedFromExistingMethod(removedOperation, addedOperation))) {
 				mapperSet.add(operationBodyMapper);
 			}

@@ -1,6 +1,7 @@
 package gui.webdiff.dir;
 
 import com.github.gumtreediff.utils.Pair;
+import gui.webdiff.dir.filters.DiffFilterer;
 import gui.webdiff.tree.TreeViewGenerator;
 
 import org.kohsuke.github.GHPullRequest;
@@ -89,13 +90,14 @@ public class DirComparator {
         return -1;
     }
 
-    public DirComparator(ProjectASTDiff projectASTDiff)
+    public DirComparator(ProjectASTDiff projectASTDiff, DiffFilterer diffFilteringOptions)
     {
         this.projectASTDiff = projectASTDiff;
         this.diffs = new ArrayList<>(projectASTDiff.getDiffSet());
         this.diffs.addAll(projectASTDiff.getMoveDiffSet());
         modifiedFilesName = new ArrayList<>();
         compare();
+        this.diffs = diffFilteringOptions.filter(diffs);
         TreeViewGenerator treeViewGenerator = new TreeViewGenerator(getModifiedFilesName(), diffs);
         compressedTree = treeViewGenerator.getCompressedTree();
         this.diffs = treeViewGenerator.getOrderedDiffs();

@@ -206,9 +206,9 @@ public class DirectoryDiffView implements Renderable {
                             }
                         }
                     }
-                    ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
-                    boolean empty = astDiff.isEmpty();
-                    if(!empty && astDiff.changesOtherThanCommentUpdates()) {
+                    boolean empty = comparator.getASTDiff(nodeInfo.getId()).isEmpty();
+                    if(!empty) {
+                        ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
                         String datatype;
                         String datapath;
                         if (astDiff.getSrcPath().equals(astDiff.getDstPath())) {

@@ -20,6 +20,7 @@ Table of Contents
          * [Single Page View](#single-page-view)
          * [Embedded GitHub Code Review Comments](#embedded-gitHub-code-review-comments)
          * [Diff for code moved between different files](#diff-for-code-moved-between-different-files)
+         * [On-demand diff generation](#on-demand-diff-generation)
       * [Refactoring Support History](#refactoring-support-history) 
    * [Supported Refactoring Types](#supported-refactoring-types)
    * [Contributors](#contributors)
@@ -85,6 +86,10 @@ The diffs show also overlapping refactorings within the moved code
 <img width="1920" height="1080" alt="MoveDiff" src="https://github.com/user-attachments/assets/5a6de2ed-9535-4a89-b025-b9f4f41e8a69" />
 <img width="1920" height="1080" alt="MoveDiff2" src="https://github.com/user-attachments/assets/2a1bd916-7fd7-4bf9-ad3e-e319b7452fb5" />
 <img width="1920" height="1080" alt="MoveDiff3" src="https://github.com/user-attachments/assets/170779c2-68f7-4ef6-aebd-67fcc0fb7e70" />
+
+### On-demand diff generation
+The user can select any pair of files (between modified, added and deleted files) and generate a diff
+<img width="1920" height="1080" alt="OnDemandDiffGeneration" src="https://github.com/user-attachments/assets/7525366e-2377-4a05-9819-9cefaf5de86b" />
 
 
 ## Refactoring Support History

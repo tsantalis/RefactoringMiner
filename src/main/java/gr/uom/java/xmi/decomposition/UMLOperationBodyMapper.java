@@ -10045,6 +10045,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			if(variableDeclarationMappings.size() == mappingSet.size()) {
+				LeafMapping topMapping = variableDeclarationMappings.iterator().next();
+				boolean topMappingHasIdenticalTypeAndInitializer = 
+						topMapping.getFragment1().getVariableDeclarations().get(0).getInitializer() != null &&
+						topMapping.getFragment2().getVariableDeclarations().get(0).getInitializer() != null &&
+						topMapping.getFragment1().getVariableDeclarations().get(0).getType() != null &&
+						topMapping.getFragment2().getVariableDeclarations().get(0).getType() != null &&
+						topMapping.getFragment1().getVariableDeclarations().get(0).getInitializer().getString().equals(topMapping.getFragment2().getVariableDeclarations().get(0).getInitializer().getString()) &&
+						topMapping.getFragment1().getVariableDeclarations().get(0).getType().equals(topMapping.getFragment2().getVariableDeclarations().get(0).getType());
 				Set<ReplacementType> replacementTypes = null;
 				Set<LeafMapping> mappingsWithSameReplacementTypes = new LinkedHashSet<LeafMapping>();
 				List<Boolean> equalNames = new ArrayList<>();
@@ -10067,8 +10075,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							for(Replacement replacement : mapping.getReplacements()) {
 								if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.METHOD_INVOCATION_NAME)) {
 									if(invocation1.getName().equals(replacement.getBefore()) && invocation2.getName().equals(replacement.getAfter())) {
-										mappingsWithSameReplacementTypes.add(mapping);
-										break;
+										if(!topMappingHasIdenticalTypeAndInitializer || !mapping.containsReplacement(ReplacementType.TYPE)) {
+											mappingsWithSameReplacementTypes.add(mapping);
+											break;
+										}
 									}
 								}
 							}

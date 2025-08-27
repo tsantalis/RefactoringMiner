@@ -738,6 +738,8 @@ Each command creates a jetty server instance to visualize the AST diff in your w
 
 To export the mappings/actions, add `--export` to the end of the command. The files are saved by default in the RefactoringMiner `bin` directory.
 
+To exclude diffs including only comment formatting changes, add `--ignore-formatting` to the end of the command.
+
 For example, to visualize the diff of a GitHub Pull Request, run
 
     > ./RefactoringMiner diff --url https://github.com/JabRef/jabref/pull/11180

@@ -681,7 +681,8 @@ public abstract class AbstractCall extends LeafExpression {
 				identicalExpression(call, replacements, parameterToArgumentMap) &&
 				(normalizedNameDistance(call) <= distance || allExactLambdaMappers || (this.methodNameContainsArgumentName() && call.methodNameContainsArgumentName()) || argumentIntersectionContainsClassInstanceCreation(call)) &&
 				!equalArguments(call) &&
-				!this.argumentContainsAnonymousClassDeclaration() && !call.argumentContainsAnonymousClassDeclaration();
+				!this.argumentContainsAnonymousClassDeclaration() && !call.argumentContainsAnonymousClassDeclaration() &&
+				(this.argumentContainsLambda() == call.argumentContainsLambda() || this.identicalName(call));
 	}
 
 	private boolean compatibleName(AbstractCall call, double distance) {
@@ -778,6 +779,15 @@ public abstract class AbstractCall extends LeafExpression {
 	private boolean argumentContainsAnonymousClassDeclaration() {
 		for(String argument : arguments) {
 			if(argument.contains("{\n")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean argumentContainsLambda() {
+		for(String argument : arguments) {
+			if(argument.contains(JAVA.LAMBDA_ARROW)) {
 				return true;
 			}
 		}

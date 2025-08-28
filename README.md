@@ -21,6 +21,7 @@ Table of Contents
          * [Embedded GitHub Code Review Comments](#embedded-gitHub-code-review-comments)
          * [Diff for code moved between different files](#diff-for-code-moved-between-different-files)
          * [On-demand diff generation](#on-demand-diff-generation)
+         * [Javadoc and comment reformatting](#javadoc-and-comment-reformatting)
       * [Refactoring Support History](#refactoring-support-history) 
    * [Supported Refactoring Types](#supported-refactoring-types)
    * [Contributors](#contributors)
@@ -90,6 +91,10 @@ The diffs show also overlapping refactorings within the moved code
 ### On-demand diff generation
 The user can select any pair of files (between modified, added and deleted files) and generate a diff
 <img width="1920" height="1080" alt="OnDemandDiffGeneration" src="https://github.com/user-attachments/assets/7525366e-2377-4a05-9819-9cefaf5de86b" />
+
+### Javadoc and comment reformatting
+Our tool can match Javadoc and inline comments with formatting changes. You can also exclude diffs including only comment formatting changes by adding `--ignore-formatting` in the command-line arguments.
+<img width="1920" height="1080" alt="CommentFormatting" src="https://github.com/user-attachments/assets/f69aabbd-fcce-49e2-a18b-d1a80b1676a8" />
 
 
 ## Refactoring Support History

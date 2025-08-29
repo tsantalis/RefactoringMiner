@@ -8373,6 +8373,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				LeafMapping newMapping = createLeafMapping(matchingVariableDeclaration1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 				addMapping(newMapping);
 				leaves1ToBeRemoved.add(matchingVariableDeclaration1);
+				mapping.setMergedVariableDeclaration(true);
 			}
 			if(matchingVariableDeclarations1.size() == 0) {
 				AbstractCodeMapping mappingToBeRemoved = null;
@@ -8428,7 +8429,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) && mapping.getFragment2().getString().startsWith(declaration1.getVariableName() + JAVA.ASSIGNMENT);
-						if((equalName || variableRenamed) && declaration1.getType() != null && declaration1.getType().equals(declaration2.getType())) {
+						if((equalName || variableRenamed) && declaration1.getType() != null && (declaration1.getType().equals(declaration2.getType()) || declaration1.getType().getClassType().equals("var"))) {
 							matchingVariableDeclarations2.add(leaf2);
 						}
 					}
@@ -8439,6 +8440,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				LeafMapping newMapping = createLeafMapping(leaf1, matchingVariableDeclaration2, parameterToArgumentMap, equalNumberOfAssertions);
 				addMapping(newMapping);
 				leaves2ToBeRemoved.add(matchingVariableDeclaration2);
+				mapping.setSplitVariableDeclaration(true);
 				return true;
 			}
 		}

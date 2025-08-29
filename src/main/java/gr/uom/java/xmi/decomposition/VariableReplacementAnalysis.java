@@ -1760,7 +1760,7 @@ public class VariableReplacementAnalysis {
 			VariableDeclarationReplacement vR = (VariableDeclarationReplacement)r;
 			for(AbstractCodeMapping mapping : mappings) {
 				if(mapping.getFragment1() instanceof StatementObject && mapping.getFragment2() instanceof StatementObject) {
-					if(mapping.getFragment1().getVariableDeclarations().size() > 0 && mapping.getFragment2().getVariableDeclarations().size() == 0) {
+					if(mapping.getFragment1().getVariableDeclarations().size() > 0 && mapping.getFragment2().getVariableDeclarations().size() == 0 && !mapping.isSplitVariableDeclaration()) {
 						VariableDeclaration declaration = mapping.getFragment1().getVariableDeclaration(vR.getVariableDeclaration1().getVariableName());
 						if(declaration != null && declaration.getScope().equals(vR.getVariableDeclaration1().getScope())) {
 							toBeExcluded.add(r);
@@ -2439,7 +2439,7 @@ public class VariableReplacementAnalysis {
 			AbstractCodeFragment statement2 = referenceMapping.getFragment2();
 			if(set.size() == 1) {
 				if(statement1.getVariableDeclarations().contains(v1) && !statement2.getVariableDeclarations().contains(v2)) {
-					if(v2 != null && v2.getInitializer() == null) {
+					if(v2 != null && v2.getInitializer() == null && !referenceMapping.isSplitVariableDeclaration()) {
 						onlyOneFragmentIncludesDeclarationInReferences = true;
 					}
 				}

@@ -22,9 +22,11 @@ import static org.refactoringminer.test.TestJavadocDiff.generateClassDiff;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
+import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.MergeOperationRefactoring;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring;
 import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
@@ -531,6 +533,13 @@ public class TestStatementMappingsJunit4 {
 					}
 				}
 				mapperInfo(bodyMapper, actual);
+			}
+			else if(ref instanceof InlineVariableRefactoring) {
+				InlineVariableRefactoring inline = (InlineVariableRefactoring)ref;
+				for (LeafMapping mapping : inline.getSubExpressionMappings()) {
+					String line = mapping.getFragment1().getLocationInfo() + "==" + mapping.getFragment2().getLocationInfo();
+					actual.add(line);
+				}
 			}
 		}
 		for(UMLOperationBodyMapper parentMapper : parentMappers) {

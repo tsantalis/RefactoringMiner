@@ -144,6 +144,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return packageDeclarationCommentListDiff;
 	}
 
+	public Map<MethodInvocationReplacement, UMLOperationBodyMapper> getConsistentMethodInvocationRenames() {
+		return consistentMethodInvocationRenames;
+	}
+
 	protected void reportAddedOperation(UMLOperation umlOperation) {
 		this.addedOperations.add(umlOperation);
 	}

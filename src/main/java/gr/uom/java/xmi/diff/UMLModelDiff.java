@@ -6049,8 +6049,44 @@ public class UMLModelDiff {
 						//if(sameSourceAndTargetClass) {
 						//	removedOperations.remove(removedOperation);
 						//}
-
-						createRefactoring(removedOperation, addedOperation, firstMapper, firstMappers.size() > 1);
+						UMLOperation newRemovedOperation = null;
+						UMLOperationBodyMapper newMapper = null;
+						if(firstMapper.getClassDiff() instanceof UMLClassBaseDiff && !addedOperation.hasVarargsParameter() && !removedOperation.hasVarargsParameter()) {
+							Map<MethodInvocationReplacement, UMLOperationBodyMapper> map = ((UMLClassBaseDiff)firstMapper.getClassDiff()).getConsistentMethodInvocationRenames();
+							for(Map.Entry<MethodInvocationReplacement, UMLOperationBodyMapper> r : map.entrySet()) {
+								AbstractCall call1 = r.getKey().getInvokedOperationBefore();
+								AbstractCall call2 = r.getKey().getInvokedOperationAfter();
+								UMLOperationBodyMapper callerMapper = r.getValue();
+								if(call2.matchesOperation(addedOperation, callerMapper.getContainer2(), firstMapper.getClassDiff(), this)) {
+									if(!call1.matchesOperation(removedOperation, callerMapper.getContainer1(), firstMapper.getClassDiff(), this)) {
+										boolean callToExtractMethodFound = false;
+										for(Refactoring ref : firstMapper.getClassDiff().getRefactoringsBeforePostProcessing()) {
+											if(ref instanceof ExtractOperationRefactoring) {
+												ExtractOperationRefactoring extract = (ExtractOperationRefactoring)ref;
+												if(extract.getExtractedOperationInvocations().contains(call2)) {
+													callToExtractMethodFound = true;
+												}
+											}
+										}
+										if(!callToExtractMethodFound) {
+											for(UMLOperation removed : removedOperations) {
+												if(call1.matchesOperation(removed, callerMapper.getContainer1(), firstMapper.getClassDiff(), this)) {
+													newRemovedOperation = removed;
+													newMapper = new UMLOperationBodyMapper(newRemovedOperation, addedOperation, firstMapper.getClassDiff());
+													break;
+												}
+											}
+											if(newRemovedOperation != null) {
+												break;
+											}
+										}
+									}
+								}
+							}
+						}
+						createRefactoring(newRemovedOperation != null ? newRemovedOperation : removedOperation, 
+								addedOperation,
+								newMapper != null ? newMapper : firstMapper, firstMappers.size() > 1);
 					}
 				}
 			}
@@ -6180,8 +6216,33 @@ public class UMLModelDiff {
 						if(sameSourceAndTargetClass) {
 							addedOperations.remove(addedOperation);
 						}
-
-						createRefactoring(removedOperation, addedOperation, firstMapper, firstMappers.size() > 1);
+						UMLOperation newAddedOperation = null;
+						UMLOperationBodyMapper newMapper = null;
+						if(firstMapper.getClassDiff() instanceof UMLClassBaseDiff && !addedOperation.hasVarargsParameter() && !removedOperation.hasVarargsParameter()) {
+							Map<MethodInvocationReplacement, UMLOperationBodyMapper> map = ((UMLClassBaseDiff)firstMapper.getClassDiff()).getConsistentMethodInvocationRenames();
+							for(Map.Entry<MethodInvocationReplacement, UMLOperationBodyMapper> r : map.entrySet()) {
+								AbstractCall call1 = r.getKey().getInvokedOperationBefore();
+								AbstractCall call2 = r.getKey().getInvokedOperationAfter();
+								UMLOperationBodyMapper callerMapper = r.getValue();
+								if(call1.matchesOperation(removedOperation, callerMapper.getContainer1(), firstMapper.getClassDiff(), this)) {
+									if(!call2.matchesOperation(addedOperation, callerMapper.getContainer2(), firstMapper.getClassDiff(), this)) {
+										for(UMLOperation added : addedOperations) {
+											if(call2.matchesOperation(added, callerMapper.getContainer2(), firstMapper.getClassDiff(), this)) {
+												newAddedOperation = added;
+												newMapper = new UMLOperationBodyMapper(removedOperation, newAddedOperation, firstMapper.getClassDiff());
+												break;
+											}
+										}
+										if(newAddedOperation != null) {
+											break;
+										}
+									}
+								}
+							}
+						}
+						createRefactoring(removedOperation, 
+								newAddedOperation != null ? newAddedOperation : addedOperation,
+								newMapper != null ? newMapper : firstMapper, firstMappers.size() > 1);
 					}
 				}
 			}

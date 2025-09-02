@@ -101,6 +101,7 @@ public class UMLModelDiff {
 	private Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
 	private Map<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>> mergeMap = new LinkedHashMap<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>>();
 	private List<UMLCommentListDiff> commentsMovedBetweenClasses = new ArrayList<UMLCommentListDiff>();
+	private Map<MethodInvocationReplacement, UMLOperationBodyMapper> consistentMethodInvocationRenames = new LinkedHashMap<>();
 
 	public UMLModelDiff(UMLModel parentModel, UMLModel childModel) {
 		this.parentModel = parentModel;
@@ -6053,6 +6054,9 @@ public class UMLModelDiff {
 						UMLOperationBodyMapper newMapper = null;
 						if(firstMapper.getClassDiff() instanceof UMLClassBaseDiff && !addedOperation.hasVarargsParameter() && !removedOperation.hasVarargsParameter()) {
 							Map<MethodInvocationReplacement, UMLOperationBodyMapper> map = ((UMLClassBaseDiff)firstMapper.getClassDiff()).getConsistentMethodInvocationRenames();
+							if(map.isEmpty()) {
+								map = consistentMethodInvocationRenames;
+							}
 							for(Map.Entry<MethodInvocationReplacement, UMLOperationBodyMapper> r : map.entrySet()) {
 								AbstractCall call1 = r.getKey().getInvokedOperationBefore();
 								AbstractCall call2 = r.getKey().getInvokedOperationAfter();
@@ -6073,6 +6077,9 @@ public class UMLModelDiff {
 												if(call1.matchesOperation(removed, callerMapper.getContainer1(), firstMapper.getClassDiff(), this)) {
 													newRemovedOperation = removed;
 													newMapper = new UMLOperationBodyMapper(newRemovedOperation, addedOperation, firstMapper.getClassDiff());
+													if(!consistentMethodInvocationRenames.containsKey(r)) {
+														consistentMethodInvocationRenames.put(r.getKey(), r.getValue());
+													}
 													break;
 												}
 											}
@@ -6220,6 +6227,9 @@ public class UMLModelDiff {
 						UMLOperationBodyMapper newMapper = null;
 						if(firstMapper.getClassDiff() instanceof UMLClassBaseDiff && !addedOperation.hasVarargsParameter() && !removedOperation.hasVarargsParameter()) {
 							Map<MethodInvocationReplacement, UMLOperationBodyMapper> map = ((UMLClassBaseDiff)firstMapper.getClassDiff()).getConsistentMethodInvocationRenames();
+							if(map.isEmpty()) {
+								map = consistentMethodInvocationRenames;
+							}
 							for(Map.Entry<MethodInvocationReplacement, UMLOperationBodyMapper> r : map.entrySet()) {
 								AbstractCall call1 = r.getKey().getInvokedOperationBefore();
 								AbstractCall call2 = r.getKey().getInvokedOperationAfter();
@@ -6230,6 +6240,9 @@ public class UMLModelDiff {
 											if(call2.matchesOperation(added, callerMapper.getContainer2(), firstMapper.getClassDiff(), this)) {
 												newAddedOperation = added;
 												newMapper = new UMLOperationBodyMapper(removedOperation, newAddedOperation, firstMapper.getClassDiff());
+												if(!consistentMethodInvocationRenames.containsKey(r)) {
+													consistentMethodInvocationRenames.put(r.getKey(), r.getValue());
+												}
 												break;
 											}
 										}

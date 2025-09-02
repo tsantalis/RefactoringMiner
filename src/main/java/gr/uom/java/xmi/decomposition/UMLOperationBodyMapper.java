@@ -1144,7 +1144,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					VariableDeclaration declaration = statement.getVariableDeclarations().get(0);
 					AbstractExpression initializer = declaration.getInitializer();
 					if(initializer != null && (initializer.getMethodInvocations().size() > 0 || initializer.getCreations().size() > 0 || initializer.getTypeLiterals().size() > 0 ||
-							initializer.getStringLiterals().size() > 0 || initializer.getCastExpressions().size() > 0 || (initializer.getNumberLiterals().size() > 0 && !isDefaultValue(initializer.getString())))) {
+							initializer.getStringLiterals().size() > 0 || initializer.getCastExpressions().size() > 0 || initializer.getLambdas().size() > 0 || (initializer.getNumberLiterals().size() > 0 && !isDefaultValue(initializer.getString())))) {
 						for(AbstractCodeFragment nonMappedLeaf1 : nonMappedLeavesT1) {
 							boolean matchingVariableDeclaration = false;
 							List<VariableDeclaration> declarations1 = nonMappedLeaf1.getVariableDeclarations();
@@ -1213,7 +1213,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					VariableDeclaration declaration = statement.getVariableDeclarations().get(0);
 					AbstractExpression initializer = declaration.getInitializer();
 					if(initializer != null && (initializer.getMethodInvocations().size() > 0 || initializer.getCreations().size() > 0 || initializer.getTypeLiterals().size() > 0 ||
-							initializer.getStringLiterals().size() > 0 || initializer.getCastExpressions().size() > 0 || (initializer.getNumberLiterals().size() > 0 && !isDefaultValue(initializer.getString())))) {
+							initializer.getStringLiterals().size() > 0 || initializer.getCastExpressions().size() > 0 || initializer.getLambdas().size() > 0 || (initializer.getNumberLiterals().size() > 0 && !isDefaultValue(initializer.getString())))) {
 						for(AbstractCodeFragment nonMappedLeaf2 : nonMappedLeavesT2) {
 							boolean matchingVariableDeclaration = false;
 							List<VariableDeclaration> declarations2 = nonMappedLeaf2.getVariableDeclarations();

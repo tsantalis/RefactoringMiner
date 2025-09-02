@@ -59,8 +59,8 @@ public class StringBasedHeuristics {
 		if(s.contains(JAVA.LAMBDA_ARROW)) {
 			if(lines.length > 1)
 				return true;
-			else if(lines.length == 1 && s.endsWith(JAVA.STATEMENT_TERMINATION))
-				return true;
+			//else if(lines.length == 1 && s.endsWith(JAVA.STATEMENT_TERMINATION))
+			//	return true;
 		}
 		for(String line : lines) {
 			line = VariableReplacementAnalysis.prepareLine(line);

@@ -6419,6 +6419,23 @@ public class UMLModelDiff {
 					if(removedClassDiff != null) {
 						checkForExtractedOperationsWithinMovedMethod(firstMapper, potentiallyMovedOperations, removedClassDiff.getNextClass(), firstMapper.getClassDiff());
 					}
+					for(UMLImport umlImport : addedClass.getImportedTypes()) {
+						if(umlImport.isStatic()) {
+							String name = umlImport.getName();
+							if(name.contains(".")) {
+								String className = name.substring(0, name.lastIndexOf("."));
+								String methodName = name.substring(name.lastIndexOf(".") + 1, name.length());
+								UMLClassBaseDiff modifiedClassDiff = getUMLClassDiff(className);
+								if(modifiedClassDiff != null) {
+									for(UMLOperation operation : modifiedClassDiff.getAddedOperations()) {
+										if(operation.getName().equals(methodName)) {
+											checkForExtractedOperationsWithinMovedMethod(firstMapper, potentiallyMovedOperations, modifiedClassDiff.getNextClass(), firstMapper.getClassDiff());
+										}
+									}
+								}
+							}
+						}
+					}
 					List<UMLOperationBodyMapper> moveCodeMappers = new ArrayList<>();
 					for(UMLOperationBodyMapper mapper : mappersWithUnmatchedStatements) {
 						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, firstMapper, mapper.getClassDiff());

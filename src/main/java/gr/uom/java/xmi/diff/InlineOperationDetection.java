@@ -22,6 +22,7 @@ import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.ReplacementUtil;
 import gr.uom.java.xmi.decomposition.StatementObject;
+import gr.uom.java.xmi.decomposition.TernaryOperatorExpression;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
@@ -354,6 +355,12 @@ public class InlineOperationDetection {
 							boolean matchingReplacementFound = false;
 							for(Replacement r : mapping.getReplacements()) {
 								if(r.getBefore().equals(variableDeclaration.getVariableName())) {
+									matchingReplacementFound = true;
+								}
+							}
+							for(TernaryOperatorExpression exp : mapping.getFragment1().getTernaryOperatorExpressions()) {
+								if(exp.getThenExpression().getString().equals(variableDeclaration.getVariableName()) ||
+										exp.getElseExpression().getString().equals(variableDeclaration.getVariableName())) {
 									matchingReplacementFound = true;
 								}
 							}

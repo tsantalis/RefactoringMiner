@@ -42,32 +42,46 @@ public class HunkNetwork {
     }
 
     public void importHunks(String path, String srcPath, Set<Tree> additions, MappingStore mappings) {
-        Set<Tree> uniqueAdditions = new HashSet<>();
+        HashMap<Tree, Set<Tree>> additionsChildren = new HashMap<>();
         for (Tree subject : additions) {
-            boolean isUnique = true;
+            boolean isParent = true;
 
             for (Tree object : additions) {
                 if (subject.equals(object)) {
                     continue;
                 }
 
-                if (object.getPos() <= subject.getPos() && subject.getEndPos() <= object.getEndPos() && !subject.equals(object)) {
-                    isUnique = false;
+                if (object.getPos() <= subject.getPos() && subject.getEndPos() <= object.getEndPos()) {
+                    isParent = false;
                     break;
                 }
             }
 
-            if (isUnique) {
-                uniqueAdditions.add(subject);
+            if (isParent) {
+                additionsChildren.put(subject, new HashSet<>());
+            }
+        }
+        for (Tree parent : additionsChildren.keySet()) {
+            for (Tree addition : additions) {
+                if (parent.equals(addition)) {
+                    continue;
+                }
+
+                if (parent.getPos() <= addition.getPos() && addition.getEndPos() <= parent.getEndPos()) {
+                    additionsChildren.get(parent).add(addition);
+                }
             }
         }
 
-        for (Tree addition : uniqueAdditions) {
-            Node node = new Node(dstContents.get(path), path, addition);
+
+        for (Map.Entry<Tree, Set<Tree>> additionChildren : additionsChildren.entrySet()) {
+            Tree parent = additionChildren.getKey();
+
+            Node node = new Node(dstContents.get(path), path, parent);
 
             if (mappings != null && srcPath != null) {
-                List<Tree> trees = new ArrayList<>(addition.getDescendants());
-                trees.add(addition);
+                List<Tree> trees = new ArrayList<>(parent.getDescendants());
+                trees.add(parent);
                 List<Tree> srcs = trees.stream().map(mappings::getSrcForDst).filter(Objects::nonNull).toList();
 
                 List<Tree> uniqueSrcs = new ArrayList<>();
@@ -90,6 +104,11 @@ public class HunkNetwork {
                     node.setSrcs(uniqueSrcs.stream().map(src -> new Node(srcContents.get(path), path, src)).toList());
                     node.setDsts(uniqueSrcs.stream().map(mappings::getDstForSrc).filter(Objects::nonNull).toList());
                 }
+            }
+
+            Set<Tree> children = additionChildren.getValue();
+            if (!children.isEmpty()) {
+                node.setDstExceptions(children);
             }
 
             addNode(node);

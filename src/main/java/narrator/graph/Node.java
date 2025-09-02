@@ -18,6 +18,7 @@ public class Node {
     private NodeType nodeType;
     private List<Node> srcs = null;
     private List<Tree> dsts = null;
+    private Set<Tree> dstExceptions = null;
     private Set<String> identifiers = new HashSet<>();
 
     public JsonObject stringify() {
@@ -46,6 +47,7 @@ public class Node {
         Pair<Integer, Integer> endLineRange = lineRange.second;
         nodeObj.addProperty("endLine", endLineRange.first);
         nodeObj.addProperty("endLineOffset", endLineRange.second);
+        nodeObj.addProperty("length", this.tree.getEndPos() - this.tree.getPos() + 1);
 
         if (srcs != null) {
             JsonArray srcsArr = new JsonArray();
@@ -76,6 +78,7 @@ public class Node {
                 Pair<Integer, Integer> srcEndRange = srcLineRange.second;
                 srcObj.addProperty("endLine", srcEndRange.first);
                 srcObj.addProperty("endLineOffset", srcEndRange.second);
+                srcObj.addProperty("length", src.getTree().getEndPos() - src.getTree().getPos() + 1);
 
                 srcsArr.add(srcObj);
             }
@@ -95,10 +98,31 @@ public class Node {
                 Pair<Integer, Integer> endDstRange = dstLineRange.second;
                 dstObj.addProperty("endLine", endDstRange.first);
                 dstObj.addProperty("endLineOffset", endDstRange.second);
+                dstObj.addProperty("length", dst.getEndPos() - dst.getPos() + 1);
 
                 dstsArr.add(dstObj);
             }
             nodeObj.add("dsts", dstsArr);
+        }
+
+        if (dstExceptions != null) {
+            JsonArray exceptionsArr = new JsonArray();
+            for (Tree exception : dstExceptions) {
+                JsonObject exceptionObj = new JsonObject();
+
+                Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> exceptionLineRange =
+                        TreeUtilFunctions.getLineRange(exception, this.fileContent);
+                Pair<Integer, Integer> startExceptionRange = exceptionLineRange.first;
+                exceptionObj.addProperty("startLine", startExceptionRange.first);
+                exceptionObj.addProperty("startLineOffset", startExceptionRange.second);
+                Pair<Integer, Integer> endExceptionRange = exceptionLineRange.second;
+                exceptionObj.addProperty("endLine", endExceptionRange.first);
+                exceptionObj.addProperty("endLineOffset", endExceptionRange.second);
+                exceptionObj.addProperty("length", exception.getEndPos() - exception.getPos() + 1);
+
+                exceptionsArr.add(exceptionObj);
+            }
+            nodeObj.add("dstExceptions", exceptionsArr);
         }
 
         return nodeObj;
@@ -115,6 +139,8 @@ public class Node {
     public void setDsts(List<Tree> dsts) {
         this.dsts = dsts;
     }
+
+    public void setDstExceptions(Set<Tree> dstExceptions) {this.dstExceptions = dstExceptions;}
 
     public static String formatId(String path, Tree tree) {
         return String.format("%s-%s-%s-%s", path, tree.getPos(), tree.getEndPos(), tree.getType().name);

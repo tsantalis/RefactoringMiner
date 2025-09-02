@@ -397,6 +397,11 @@
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate checkThrowEof(message String) : void extracted from public skip(numberOfBytes long) : long in class org.apache.commons.io.input.NullInputStream",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcount4 : int in method public testReadByteArray() : void from class org.apache.commons.io.input.NullInputStreamTest",
+          "validation": true
         }
       ]
     },

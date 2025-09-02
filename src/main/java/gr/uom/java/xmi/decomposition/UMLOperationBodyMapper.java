@@ -1154,7 +1154,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									break;
 								}
 							}
-							if(!matchingVariableDeclaration && !containsMethodSignatureOfAnonymousClass(nonMappedLeaf1 instanceof StatementObject ? ((StatementObject)nonMappedLeaf1).getActualSignature() : nonMappedLeaf1.getString()) &&
+							if(!matchingVariableDeclaration && !containsAnonymousClass(nonMappedLeaf1.getString()) &&
 									!nonMappedLeaf1.getString().endsWith(JAVA.ASSIGNMENT + initializer + JAVA.STATEMENT_TERMINATION) && !nonMappedLeaf1.getString().contains(JAVA.ASSIGNMENT + initializer + ".") &&
 									nonMappedLeaf1.getString().contains(initializer.getString())) {
 								UMLOperation inlinedOperation = callToInlinedMethod(nonMappedLeaf1);
@@ -1224,7 +1224,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 							String initializerAfterRename = null;
-							if(!matchingVariableDeclaration && !containsMethodSignatureOfAnonymousClass(nonMappedLeaf2 instanceof StatementObject ? ((StatementObject)nonMappedLeaf2).getActualSignature() : nonMappedLeaf2.getString()) &&
+							if(!matchingVariableDeclaration && !containsAnonymousClass(nonMappedLeaf2.getString()) &&
 									!nonMappedLeaf2.getString().endsWith(JAVA.ASSIGNMENT + initializer + JAVA.STATEMENT_TERMINATION) && !nonMappedLeaf2.getString().contains(JAVA.ASSIGNMENT + initializer + ".") &&
 									(nonMappedLeaf2.getString().contains(initializer.getString()) || (initializerAfterRename = matchesWithOverlappingRenameVariable(initializer, nonMappedLeaf2)) != null) &&
 									existsMappingSubsumingBoth(statement, nonMappedLeaf2)) {

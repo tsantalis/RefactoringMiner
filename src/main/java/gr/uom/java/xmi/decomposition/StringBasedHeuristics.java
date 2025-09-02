@@ -71,6 +71,17 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
+	protected static boolean containsAnonymousClass(String s) {
+		String[] lines = s.split("\\n");
+		for(String line : lines) {
+			line = VariableReplacementAnalysis.prepareLine(line);
+			if(Visitor.METHOD_SIGNATURE_PATTERN.matcher(line).matches()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	protected static boolean argumentsWithIdenticalMethodCalls(Set<String> arguments1, Set<String> arguments2,
 			Set<String> variables1, Set<String> variables2) {
 		int identicalMethodCalls = 0;

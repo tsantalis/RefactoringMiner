@@ -1,5 +1,5 @@
 public fetchAndMerge(entry BibEntry, fields List<Field>) : void -> private executeFetchTask(fetcher IdBasedFetcher, field Field, entry BibEntry) : void
-line range:75-75==line range:73-78
+line range:76-76==line range:73-78
 line range:79-100==line range:74-77
 public fetchAndMerge(entry BibEntry, fields List<Field>) : void -> private processFetchedEntry(fetchedEntry Optional<BibEntry>, originalEntry BibEntry, fetcher IdBasedFetcher) : void
 line range:81-81==line range:82-82
@@ -14,7 +14,6 @@ public fetchAndMerge(entry BibEntry, fields List<Field>) : void -> private notif
 line range:87-87==line range:93-95
 public fetchAndMerge(entry BibEntry, fields List<Field>) : void -> private fetchAndMergeEntry(entry BibEntry, field Field) : void
 line range:78-78==line range:67-69
-line range:77-77==line range:68-68
 private showMergeDialog(originalEntry BibEntry, fetchedEntry BibEntry, fetcher WebFetcher) : void -> private createMergeDialog(originalEntry BibEntry, fetchedEntry BibEntry, fetcher WebFetcher) : MergeEntriesDialog
 line range:109-109==line range:118-118
 line range:110-110==line range:119-119
@@ -38,6 +37,9 @@ line range:174-174==line range:160-160
 public fetchAndMerge(entry BibEntry, fetcher EntryBasedFetcher) : void -> private processFetchedEntryForEntryBasedFetcher(fetchedEntry Optional<BibEntry>, originalEntry BibEntry, fetcher EntryBasedFetcher) : void
 line range:175-175==line range:153-153
 line range:177-177==line range:154-154
+line range:82-82==line range:94-94
+line range:75-75==line range:67-67
+line range:77-77==line range:68-68
 public fetchAndMerge(entry BibEntry, fields List<Field>) : void -> public fetchAndMerge(entry BibEntry, fields List<Field>) : void
 line range:78-101==line range:67-69
 line range:74-105==line range:63-63

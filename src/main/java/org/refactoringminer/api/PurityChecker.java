@@ -1772,7 +1772,7 @@ public class PurityChecker {
                 if (!mapping.getFragment1().getTernaryOperatorExpressions().isEmpty()) {
                     for (TernaryOperatorExpression ternaryOperatorExpression : mapping.getFragment1().getTernaryOperatorExpressions()) {
                         AbstractExpression condition = ternaryOperatorExpression.getCondition();
-                        if (mapping.getFragment2().getParent().getParent() != null) {
+                        if (mapping.getFragment2().getParent() != null && mapping.getFragment2().getParent().getParent() != null) {
                             if (mapping.getFragment2().getParent().getParent().getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.IF_STATEMENT)) {
                                 if (mapping.getFragment2().getParent().getParent().getExpressions().size() == 1) {
                                     if (mapping.getFragment2().getParent().getParent().getExpressions().get(0).getExpression().equals(condition.getExpression()))

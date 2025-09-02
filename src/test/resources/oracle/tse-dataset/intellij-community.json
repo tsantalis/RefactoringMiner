@@ -293,7 +293,7 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tprivate useNativeMacChooser(descriptor FileChooserDescriptor) : boolean renamed to private canUseNativeDialog(descriptor FileChooserDescriptor) : boolean in class com.intellij.openapi.fileChooser.impl.LocalFileChooserFactory",
-          "validation": true
+          "validation": false
         },
         {
           "type": "INLINE_OPERATION",
@@ -308,12 +308,12 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tvirtualFileList : List<VirtualFile> to selectedFiles : var in method public choose(toSelect VirtualFile, callback Consumer<? super List<VirtualFile>>) : void from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tvirtualFileList : List<VirtualFile> to selectedFiles : var in method public choose(toSelect VirtualFile, callback Consumer<? super List<VirtualFile>>) : void from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
@@ -330,7 +330,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tselectedFiles : var in method public choose(toSelect VirtualFile, callback Consumer<? super List<VirtualFile>>) : void from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",

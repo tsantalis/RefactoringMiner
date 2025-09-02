@@ -943,7 +943,12 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tdefaultJavadocTokens : int[] in method private validateDefaultJavadocTokens() : void from class com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheck",
-          "validation": false
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmissingRequiredTokenNames : List<Integer> in method private validateDefaultJavadocTokens() : void from class com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheck",
+          "validation": true
         }
       ]
     },

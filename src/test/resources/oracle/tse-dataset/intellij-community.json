@@ -371,6 +371,16 @@
           "type": "MOVE_AND_INLINE_OPERATION",
           "description": "Move And Inline Method\tpublic value(file VirtualFile) : boolean moved from class com.intellij.openapi.fileChooser.FileChooserDescriptorFactory.FileExtFilter to class com.intellij.openapi.fileChooser.FileChooserDescriptorFactory & inlined to public createSingleFileDescriptor(extension String) : FileChooserDescriptor",
           "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tdialogConsumer : Consumer<Dialog> in method public MacFileSaverDialog(descriptor FileSaverDescriptor, parent Component) from class com.intellij.ui.mac.MacFileSaverDialog",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tframeConsumer : Consumer<Frame> in method public MacFileSaverDialog(descriptor FileSaverDescriptor, parent Component) from class com.intellij.ui.mac.MacFileSaverDialog",
+          "validation": true
         }
       ]
     },

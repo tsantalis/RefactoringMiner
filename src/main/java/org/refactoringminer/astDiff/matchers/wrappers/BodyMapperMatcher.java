@@ -10,6 +10,7 @@ import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.matchers.statement.CompositeMatcher;
+import org.refactoringminer.astDiff.matchers.statement.IgnoringCommentsLeafMatcher;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
@@ -62,6 +63,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         if (isPartOfExtractedMethod)
             new JavaDocMatcher(optimizationData, bodyMapper.getContainer1().getJavadoc(), bodyMapper.getContainer2().getJavadoc(), bodyMapper.getJavadocDiff()).match(srcTree,dstTree,mappingStore);
         new CommentMatcher(optimizationData, bodyMapper.getCommentListDiff()).match(srcTree,dstTree,mappingStore);
+
     }
 
     private void processCompositeMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {
@@ -121,7 +123,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         if (_abstractExpWithNonCompositeOwner || _leafExp) {
             optimizationData.getLastStepMappings().add(abstractCodeMapping);
         } else {
-            new LeafMatcher().match(srcStatementNode,dstStatementNode,mappingStore);
+            new IgnoringCommentsLeafMatcher().match(srcStatementNode,dstStatementNode,mappingStore);
             additionallyMatchedStatements(srcTree, dstTree, srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
         }
         optimizeVariableDeclarations(abstractCodeMapping);

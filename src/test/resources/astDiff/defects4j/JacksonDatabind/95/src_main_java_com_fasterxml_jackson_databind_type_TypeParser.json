@@ -197,6 +197,17 @@
   "firstEndPos" : 273,
   "secondEndPos" : 273
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 278,
+  "secondPos" : 278,
+  "firstEndPos" : 288,
+  "secondEndPos" : 288
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "java.io.Serializable",
@@ -912,6 +923,17 @@
   "firstEndPos" : 680,
   "secondEndPos" : 680
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 682,
+  "secondPos" : 682,
+  "firstEndPos" : 688,
+  "secondEndPos" : 688
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IllegalArgumentException",
@@ -1439,6 +1461,17 @@
   "secondPos" : 1053,
   "firstEndPos" : 1059,
   "secondEndPos" : 1059
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 1069,
+  "secondPos" : 1069,
+  "firstEndPos" : 1075,
+  "secondEndPos" : 1075
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2726,6 +2759,17 @@
   "secondPos" : 1929,
   "firstEndPos" : 1911,
   "secondEndPos" : 1935
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 1921,
+  "secondPos" : 1945,
+  "firstEndPos" : 1927,
+  "secondEndPos" : 1951
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -4695,6 +4739,17 @@
   "secondPos" : 3193,
   "firstEndPos" : 3180,
   "secondEndPos" : 3204
+}, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3181,
+  "secondPos" : 3205,
+  "firstEndPos" : 3188,
+  "secondEndPos" : 3212
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

@@ -8,6 +8,8 @@ import com.github.gumtreediff.matchers.MultiMappingStore;
 import com.github.gumtreediff.tree.FakeTree;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
+import org.refactoringminer.astDiff.utils.Constants;
+import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 /**
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
@@ -236,18 +238,28 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 			if (this.getDsts(srcMapped) != null)
 			{
 				Set<Tree> dstForSrcList = new LinkedHashSet<>(this.getDsts(srcMapped));
-				for (Tree dstForSrc : dstForSrcList)
-					removeMapping(srcMapped,dstForSrc);
+				for (Tree dstForSrc : dstForSrcList) {
+                    if (sameFile(dstMapped, dstForSrc))
+                        removeMapping(srcMapped, dstForSrc);
+                }
 			}
 			if (this.getSrcs(dstMapped) != null)
 			{
 				Set<Tree> srcForDstList = new LinkedHashSet<>(this.getSrcs(dstMapped));
 				for (Tree srcForDst : srcForDstList)
-					removeMapping(srcForDst,dstMapped);
+                    if (sameFile(srcMapped, srcForDst))
+					    removeMapping(srcForDst,dstMapped);
 			}
 		}
 		for (Mapping optimizationMapping : optimizationMappings) {
 			this.addMapping(optimizationMapping.first,optimizationMapping.second);
 		}
 	}
+
+    private boolean sameFile(Tree t1, Tree t2) {
+        // find the most parent of both, and compare
+        Tree t1_p = TreeUtilFunctions.getParentUntilType(t1, Constants.COMPILATION_UNIT);
+        Tree t2_p = TreeUtilFunctions.getParentUntilType(t2, Constants.COMPILATION_UNIT);
+        return Objects.equals(t1_p, t2_p);
+    }
 }

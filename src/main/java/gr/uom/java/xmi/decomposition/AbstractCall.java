@@ -416,7 +416,7 @@ public abstract class AbstractCall extends LeafExpression {
 		return true;
 	}
 
-	public boolean identicalOrConcatenatedArguments(AbstractCall call) {
+	public boolean identicalOrConcatenatedArguments(AbstractCall call, Map<String, String> parameterToArgumentMap) {
 		List<String> arguments1 = arguments();
 		List<String> arguments2 = call.arguments();
 		if(arguments1.size() != arguments2.size())
@@ -435,11 +435,69 @@ public abstract class AbstractCall extends LeafExpression {
 				if(size > 0 && size >= threshold) {
 					argumentConcatenated = true;
 				}
+				if(concatenatedArgument(argument1, argument2, parameterToArgumentMap)) {
+					argumentConcatenated = true;
+				}
 			}
 			if(!argument1.equals(argument2) && !argumentConcatenated)
 				return false;
 		}
 		return true;
+	}
+
+	private static boolean concatenatedArgument(String s1, String s2, Map<String, String> parameterToArgumentMap) {
+		if(s1.contains(JAVA.STRING_CONCATENATION) && s2.contains(JAVA.STRING_CONCATENATION)) {
+			Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(s1)));
+			Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(s2)));
+			Set<String> intersection = new LinkedHashSet<String>(tokens1);
+			intersection.retainAll(tokens2);
+			return intersection.size() == Math.min(tokens1.size(), tokens2.size());
+		}
+		else if(s1.contains(JAVA.STRING_CONCATENATION) && !s2.contains(JAVA.STRING_CONCATENATION)) {
+			List<String> tokens1 = Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(s1));
+			StringBuilder concatenated = new StringBuilder();
+			for(int i=0; i<tokens1.size(); i++) {
+				String token = tokens1.get(i);
+				if(token.startsWith("\"") && token.endsWith("\"") && token.length() >= 2) {
+					concatenated.append(token.substring(1, token.length()-1));
+				}
+				else if(parameterToArgumentMap.containsKey(token)) {
+					String value = parameterToArgumentMap.get(token);
+					if(value.startsWith("\"") && value.endsWith("\"") && value.length() >= 2) {
+						concatenated.append(value.substring(1, value.length()-1));
+					}
+				}
+				else {
+					concatenated.append(token);
+				}
+			}
+			if(s2.contains(concatenated)) {
+				return true;
+			}
+		}
+		else if(!s1.contains(JAVA.STRING_CONCATENATION) && s2.contains(JAVA.STRING_CONCATENATION)) {
+			List<String> tokens2 = Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(s2));
+			StringBuilder concatenated = new StringBuilder();
+			for(int i=0; i<tokens2.size(); i++) {
+				String token = tokens2.get(i);
+				if(token.startsWith("\"") && token.endsWith("\"") && token.length() >= 2) {
+					concatenated.append(token.substring(1, token.length()-1));
+				}
+				else if(parameterToArgumentMap.containsKey(token)) {
+					String value = parameterToArgumentMap.get(token);
+					if(value.startsWith("\"") && value.endsWith("\"") && value.length() >= 2) {
+						concatenated.append(value.substring(1, value.length()-1));
+					}
+				}
+				else {
+					concatenated.append(token);
+				}
+			}
+			if(s1.contains(concatenated)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public boolean identicalOrWrappedArguments(AbstractCall call) {
@@ -623,7 +681,8 @@ public abstract class AbstractCall extends LeafExpression {
 				identicalExpression(call, replacements, parameterToArgumentMap) &&
 				(normalizedNameDistance(call) <= distance || allExactLambdaMappers || (this.methodNameContainsArgumentName() && call.methodNameContainsArgumentName()) || argumentIntersectionContainsClassInstanceCreation(call)) &&
 				!equalArguments(call) &&
-				!this.argumentContainsAnonymousClassDeclaration() && !call.argumentContainsAnonymousClassDeclaration();
+				!this.argumentContainsAnonymousClassDeclaration() && !call.argumentContainsAnonymousClassDeclaration() &&
+				(this.argumentContainsLambda() == call.argumentContainsLambda() || this.identicalName(call));
 	}
 
 	private boolean compatibleName(AbstractCall call, double distance) {
@@ -720,6 +779,15 @@ public abstract class AbstractCall extends LeafExpression {
 	private boolean argumentContainsAnonymousClassDeclaration() {
 		for(String argument : arguments) {
 			if(argument.contains("{\n")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean argumentContainsLambda() {
+		for(String argument : arguments) {
+			if(argument.contains(JAVA.LAMBDA_ARROW)) {
 				return true;
 			}
 		}
@@ -1205,7 +1273,7 @@ public abstract class AbstractCall extends LeafExpression {
 			return new Replacement(arguments().get(index), arg,
 					ReplacementType.ARGUMENT_REPLACED_WITH_STATEMENT);
 		}
-		else if((index = argumentIsExpression(statement)) != -1 && indexCondition(statement, index)) {
+		else if((index = argumentIsExpression(statement)) != -1 && indexCondition(statement, index) && !statement.contains(JAVA.METHOD_REFERENCE)) {
 			return new Replacement(arguments().get(index), statement,
 					ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION);
 		}

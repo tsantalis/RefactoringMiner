@@ -22,9 +22,11 @@ import static org.refactoringminer.test.TestJavadocDiff.generateClassDiff;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
+import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.MergeOperationRefactoring;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring;
 import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
@@ -531,6 +533,13 @@ public class TestStatementMappingsJunit4 {
 					}
 				}
 				mapperInfo(bodyMapper, actual);
+			}
+			else if(ref instanceof InlineVariableRefactoring) {
+				InlineVariableRefactoring inline = (InlineVariableRefactoring)ref;
+				for (LeafMapping mapping : inline.getSubExpressionMappings()) {
+					String line = mapping.getFragment1().getLocationInfo() + "==" + mapping.getFragment2().getLocationInfo();
+					actual.add(line);
+				}
 			}
 		}
 		for(UMLOperationBodyMapper parentMapper : parentMappers) {
@@ -1938,6 +1947,21 @@ public class TestStatementMappingsJunit4 {
 	}
 
 	@Test
+	public void testAssertStatementMappings4() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/apache/flink.git", "62f44e0118539c1ed0dedf47099326f97c9d0427", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				mapperInfo(mapper, actual);
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "flink-62f44e0118539c1ed0dedf47099326f97c9d0427.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testRestructuredStatementMappings2() throws Exception {
 		final List<String> actual = new ArrayList<>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
@@ -2328,6 +2352,31 @@ public class TestStatementMappingsJunit4 {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jabRef-JabRefFrame-12210.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testAnonymousLambdaRestructuring() throws Exception {
+		final List<String> actual = new ArrayList<>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + "ConsistencyCheckAction-v1.txt"));
+		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + "ConsistencyCheckAction-v2.txt"));
+		fileContentsBefore.put("jabgui/src/main/java/org/jabref/gui/consistency/ConsistencyCheckAction.java", contentsV1);
+		fileContentsCurrent.put("jabgui/src/main/java/org/jabref/gui/consistency/ConsistencyCheckAction.java", contentsV2);
+		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
+		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
+
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("execute") && mapper.getContainer2().getName().equals("execute")) {
+					mapperInfo(mapper, actual);
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jabRef-ConsistencyCheckAction-13181.txt"));
 		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
@@ -3480,6 +3529,25 @@ public class TestStatementMappingsJunit4 {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "Aeron-35893c115ba23bd62a7036a33390420f074ce660.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testAssertMappings3() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/apache/hadoop.git", "87fb97777745b2cefed6bef57490b84676d2343d", new File(REPOS));
+		List<UMLClassMoveDiff> commonClassDiff = modelDiff.getClassMoveDiffList();
+		for(UMLClassMoveDiff classDiff : commonClassDiff) {
+			if(classDiff.getOriginalClassName().equals("org.apache.hadoop.fs.TestVectoredReadUtils")) {
+				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+					if(mapper.getContainer1().getName().equals("testSortAndMerge") && mapper.getContainer2().getName().equals("testSortAndMerge")) {
+						mapperInfo(mapper, actual);
+					}
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "hadoop-87fb97777745b2cefed6bef57490b84676d2343d.txt"));
 		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

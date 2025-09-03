@@ -21,7 +21,6 @@ import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
-import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -63,6 +62,17 @@ public class StringBasedHeuristics {
 			else if(lines.length == 1 && s.endsWith(JAVA.STATEMENT_TERMINATION))
 				return true;
 		}
+		for(String line : lines) {
+			line = VariableReplacementAnalysis.prepareLine(line);
+			if(Visitor.METHOD_SIGNATURE_PATTERN.matcher(line).matches()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	protected static boolean containsAnonymousClass(String s) {
+		String[] lines = s.split("\\n");
 		for(String line : lines) {
 			line = VariableReplacementAnalysis.prepareLine(line);
 			if(Visitor.METHOD_SIGNATURE_PATTERN.matcher(line).matches()) {
@@ -1359,6 +1369,18 @@ public class StringBasedHeuristics {
 								intersection.add(commonPrefix);
 							}
 						}
+						else if(token1.endsWith("," + token2)) {
+							intersection.add(token2);
+						}
+						else if(token2.endsWith("," + token1)) {
+							intersection.add(token1);
+						}
+						else if(token1.endsWith(token2 + ")" + JAVA.STATEMENT_TERMINATION)) {
+							intersection.add(token2);
+						}
+						else if(token2.endsWith(token1 + ")" + JAVA.STATEMENT_TERMINATION)) {
+							intersection.add(token1);
+						}
 					}
 				}
 				Set<String> filteredIntersection = new LinkedHashSet<String>();
@@ -1376,6 +1398,9 @@ public class StringBasedHeuristics {
 				}
 				Set<LeafMapping> subExpressionMappings = new LinkedHashSet<LeafMapping>();
 				for(String key : filteredIntersection) {
+					if(key.endsWith(JAVA.STATEMENT_TERMINATION)) {
+						key = key.substring(0, key.length()-JAVA.STATEMENT_TERMINATION.length());
+					}
 					List<LeafExpression> expressions1 = statement1.findExpression(key);
 					List<LeafExpression> expressions2 = statement2.findExpression(key);
 					if(expressions1.size() == expressions2.size()) {
@@ -1386,6 +1411,21 @@ public class StringBasedHeuristics {
 					}
 				}
 				int size = filteredIntersection.size();
+				if(mapper.getClassDiff() != null) {
+					for(AbstractCall call : statement2.getMethodInvocations()) {
+						for(UMLOperation operation : mapper.getClassDiff().getOriginalClass().getOperations()) {
+							StatementObject returnedStatement = null;
+							if((returnedStatement = operation.singleReturnStatement()) != null && call.matchesOperation(operation, mapper.getContainer1(), mapper.getClassDiff(), mapper.getModelDiff())) {
+								String string = returnedStatement.getString();
+								String returnedExpression = string.substring(JAVA.RETURN_SPACE.length(), string.length()-JAVA.STATEMENT_TERMINATION.length());
+								if(statement1.getString().contains(returnedExpression + JAVA.STRING_CONCATENATION) || statement1.getString().contains(JAVA.STRING_CONCATENATION + returnedExpression)) {
+									size++;
+									break;
+								}
+							}
+						}
+					}
+				}
 				int threshold = Math.max(tokens1.size(), tokens2.size()) - size;
 				if((size > 0 && size > threshold) || (size > 1 && size >= threshold) || (size > 1 && subExpressionMappings.size() == size) || (size > 1 && intersection.size() == Math.min(tokens1.size(), tokens2.size()))) {
 					List<String> tokens1AsList = new ArrayList<>(tokens1);
@@ -1453,20 +1493,43 @@ public class StringBasedHeuristics {
 					}
 				}
 				if(filteredIntersection.size() > 0) {
-					IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONCATENATION);
-					for(String key : filteredIntersection) {
-						List<LeafExpression> expressions1 = statement1.findExpression(key);
-						List<LeafExpression> expressions2 = statement2.findExpression(key);
-						if(expressions1.size() == expressions2.size()) {
-							for(int i=0; i<expressions1.size(); i++) {
-								LeafMapping leafMapping = new LeafMapping(expressions1.get(i), expressions2.get(i), container1, container2);
-								r.addSubExpressionMapping(leafMapping);
+					boolean singleVariableIntersection = false;
+					if(filteredIntersection.size() == 1 && !(statement1.isLogCall() && statement2.isLogCall())) {
+						String next = filteredIntersection.iterator().next();
+						List<LeafExpression> variables1 = statement1.getVariables();
+						for(LeafExpression variable : variables1) {
+							if(variable.getString().equals(next)) {
+								singleVariableIntersection = true;
+								break;
 							}
 						}
 					}
-					processStringLiterals(statement1, statement2, container1, container2, r);
-					info.getReplacements().add(r);
-					return true;
+					if(!singleVariableIntersection) {
+						IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONCATENATION);
+						int notFoundSubExpressionsInBothSides = 0;
+						for(String key : filteredIntersection) {
+							List<LeafExpression> expressions1 = statement1.findExpression(key);
+							List<LeafExpression> expressions2 = statement2.findExpression(key);
+							if(expressions1.size() == expressions2.size()) {
+								for(int i=0; i<expressions1.size(); i++) {
+									LeafMapping leafMapping = new LeafMapping(expressions1.get(i), expressions2.get(i), container1, container2);
+									r.addSubExpressionMapping(leafMapping);
+								}
+							}
+							else if(expressions1.size() == 0 && expressions2.size() > 0) {
+								notFoundSubExpressionsInBothSides++;
+							}
+							else if(expressions1.size() > 0 && expressions2.size() == 0) {
+								notFoundSubExpressionsInBothSides++;
+							}
+						}
+						if(notFoundSubExpressionsInBothSides == filteredIntersection.size()) {
+							return false;
+						}
+						processStringLiterals(statement1, statement2, container1, container2, r);
+						info.getReplacements().add(r);
+						return true;
+					}
 				}
 			}
 			else if((s1.contains(JAVA.STRING_CONCATENATION) ^ s2.contains(JAVA.STRING_CONCATENATION)) && s1.contains(",") && s2.contains(",")) {
@@ -2177,6 +2240,10 @@ public class StringBasedHeuristics {
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()))
 					rightHandSideReplacement = true;
+				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_CAST_EXPRESSION) &&
+						assignment1.equals(replacement.getBefore()) &&
+						assignment2.equals(replacement.getAfter()))
+					rightHandSideReplacement = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION) &&
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()) &&
@@ -2220,8 +2287,14 @@ public class StringBasedHeuristics {
 						}
 					}
 				}
-				if(commonTokens < Math.max(tokens1.length, tokens2.length)/2.0)
+				if(commonTokens < Math.max(tokens1.length, tokens2.length)/2.0) {
 					return true;
+				}
+				for(AbstractCodeFragment fragment : replacementInfo.getStatements2()) {
+					if(fragment.getString().startsWith(variableName1 + "=")) {
+						return true;
+					}
+				}
 			}
 			if(variableRename && inv1 != null && inv2 != null && inv1.differentExpressionNameAndArguments(inv2)) {
 				if(inv1.arguments().size() > inv2.arguments().size()) {
@@ -2695,6 +2768,16 @@ public class StringBasedHeuristics {
 					intersection.add(c1);
 					break;
 				}
+				else if(c1.contains(" < ") && c2.contains(" < ")) {
+					String prefix1 = c1.substring(0, c1.indexOf(" < "));
+					String prefix2 = c2.substring(0, c2.indexOf(" < "));
+					String suffix1 = c1.substring(c1.indexOf(" < ") + 3);
+					String suffix2 = c2.substring(c2.indexOf(" < ") + 3);
+					if(prefix1.equals(prefix2) || suffix1.equals(suffix2)) {
+						intersection.add(c1);
+						break;
+					}
+				}
 				else if(c1.contains("!=") && c2.contains("==")) {
 					String prefix1 = c1.substring(0, c1.indexOf("!="));
 					String prefix2 = c2.substring(0, c2.indexOf("=="));
@@ -3155,6 +3238,14 @@ public class StringBasedHeuristics {
 					if(!booleanReturn) {
 						createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, r);
 						info.addReplacement(r);
+					}
+					if(statement1.getVariableDeclarations().size() == 1 && statement2.getVariableDeclarations().size() == 1) {
+						String before = statement1.getVariableDeclarations().get(0).getVariableName();
+						String after = statement2.getVariableDeclarations().get(0).getVariableName();
+						if(!before.equals(after)) {
+							Replacement replacement = new Replacement(before, after, ReplacementType.VARIABLE_NAME);
+							info.addReplacement(replacement);
+						}
 					}
 					CompositeStatementObject root1 = statement1.getParent();
 					CompositeStatementObject root2 = statement2.getParent();

@@ -58,7 +58,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		arrayDimension++;
 	}
 
-	protected String typeArgumentsToString() {
+	public String typeArgumentsToString() {
 		StringBuilder sb = new StringBuilder();
 		if(typeArguments.isEmpty()) {
 			if(parameterized) {
@@ -120,6 +120,8 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		if(!this.isParameterized() && !typeObject.isParameterized())
 			return this.arrayDimension == typeObject.arrayDimension && this.annotations.equals(typeObject.annotations);
 		else if(this.isParameterized() && typeObject.isParameterized())
+			return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension && this.annotations.equals(typeObject.annotations);
+		else if(this.isParameterized() != typeObject.isParameterized())
 			return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension && this.annotations.equals(typeObject.annotations);
 		return false;
 	}

@@ -2,6 +2,8 @@ package gui.webdiff;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import gui.webdiff.dir.filters.DiffFilterKind;
+import gui.webdiff.dir.filters.DiffFilteringOptions;
 import gui.webdiff.export.WebExporter;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
@@ -37,6 +39,8 @@ public class DiffDriver {
     String perforcePassword = null;
     @Parameter(names = {"--no-browser", "-nb"}, description = "Not open the diff in the browser")
     boolean no_browser = false;
+    @Parameter(names = {"--ignore-formatting", "-if"}, description = "Not include formatting changes")
+    boolean ignore_formatting = false;
 
     private static final String HELP_MSG = """
 You can run the diff with the following options:
@@ -59,7 +63,7 @@ To export the mappings/actions, add --export to the end of the command.
         }
         return projectASTDiff;
     }
-        public void execute(String[] args) {
+    public void execute(String[] args) {
         JCommander jCommander = JCommander.newBuilder()
                 .addObject(this)
                 .build();
@@ -76,15 +80,20 @@ To export the mappings/actions, add --export to the end of the command.
                 export(projectASTDiff, exportPath);
             }
             else {
-                WebDiff webDiff = new WebDiff(projectASTDiff);
+                WebDiff webDiff = new WebDiff(projectASTDiff,
+                        DiffFilterKind.fromOptions(new DiffFilteringOptions(ignore_formatting))
+                );
                 if (no_browser) {
                     webDiff.run();
                 }
                 else
                     webDiff.openInBrowser();
             }
+        } catch (org.kohsuke.github.HttpException e) {
+            System.out.println("Error in connecting. Please retry");
+            throw new RuntimeException(e);
         } catch (Exception e) {
-	        System.out.println(HELP_MSG);
+            System.out.println(HELP_MSG);
             throw new RuntimeException(e);
         }
     }

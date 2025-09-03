@@ -17,7 +17,7 @@ plugins {
 group = "com.github.tsantalis"
 version = project.hasProperty('buildVersion') ?
         project.buildVersion
-        : '3.0.10'
+        : '3.0.11'
 
 applicationName = rootProject.name
 mainClassName = "org.refactoringminer.RefactoringMiner"
@@ -82,15 +82,18 @@ tasks.processTestResources {
     }
 }
 dependencies {
-    implementation 'org.eclipse.jgit:org.eclipse.jgit:6.10.0.202406032230-r'
-    implementation 'org.slf4j:slf4j-api:2.0.16'
-    implementation 'org.slf4j:slf4j-simple:2.0.16'
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:6.10.1.202505221210-r'
+    implementation 'org.slf4j:slf4j-api:2.0.17'
+    runtimeOnly 'ch.qos.logback:logback-classic:1.5.13'
     implementation 'org.eclipse.jdt:org.eclipse.jdt.core:3.39.0'
-    implementation 'org.apache.commons:commons-text:1.12.0'
-    implementation 'org.kohsuke:github-api:1.135'
+    implementation 'org.apache.commons:commons-text:1.13.1'
+    implementation 'org.kohsuke:github-api:1.327'
     implementation 'io.github.java-diff-utils:java-diff-utils:4.15'
     implementation 'com.github.gumtreediff:core:3.0.0'
     implementation 'com.github.gumtreediff:gen.jdt:3.0.0'
+    implementation 'org.jcommander:jcommander:2.0'
+    implementation 'org.jsoup:jsoup:1.20.1'
+    implementation 'com.perforce:p4java:2024.2.2695691'
     implementation 'org.jcommander:jcommander:1.85'
     implementation 'org.jsoup:jsoup:1.18.2'
     implementation 'org.jgrapht:jgrapht-core:1.5.1'

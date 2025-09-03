@@ -141,7 +141,7 @@ public class UMLModelASTReader {
 					compilationUnit = getCompilationUnit(maxRecommendedVersionFromProblems, parser, charArray, filePath);
 				processCompilationUnit(filePath, compilationUnit, javaFileContent);
 				if(astDiff) {
-					IScanner scanner = ToolFactory.createScanner(true, false, false, false);
+					IScanner scanner = ToolFactory.createScanner(true, false, false, (maxRecommendedVersionFromProblems == null) ? DEFAULT_JAVA_CORE_VERSION : maxRecommendedVersionFromProblems );
 					scanner.setSource(charArray);
 					AbstractJdtVisitor visitor = (VISIT_JDT_COMMENTS) ?
 							new JdtWithCommentsVisitor(scanner) :
@@ -238,7 +238,7 @@ public class UMLModelASTReader {
 		}
 		
 		this.getUmlModel().addModule(module);
-		distributeComments(comments, locationInfo, module.getComments());
+		distributeComments(comments, locationInfo, module.getComments(), compilationUnit);
 	}
 
 	protected void processCompilationUnit(String sourceFilePath, CompilationUnit compilationUnit, String javaFileContent) {
@@ -311,6 +311,26 @@ public class UMLModelASTReader {
         	}
         	this.umlModel.addPackageInfo(packageInfo);
         }
+        for(UMLClass c : umlModel.getClassList()) {
+        	for(UMLComment comment : new ArrayList<>(c.getComments())) {
+        		for(UMLAttribute attr : c.getAttributes()) {
+        			int size = attr.getComments().size();
+					if(size > 0 && comment.getLocationInfo().nextLine(attr.getComments().get(size-1).getLocationInfo())) {
+						attr.getComments().add(comment);
+						c.getComments().remove(comment);
+						break;
+					}
+        		}
+        		for(UMLEnumConstant attr : c.getEnumConstants()) {
+        			int size = attr.getComments().size();
+					if(size > 0 && comment.getLocationInfo().nextLine(attr.getComments().get(size-1).getLocationInfo())) {
+						attr.getComments().add(comment);
+						c.getComments().remove(comment);
+						break;
+					}
+        		}
+        	}
+        }
 	}
 
 	private List<UMLComment> extractInternalComments(CompilationUnit cu, String sourceFolder, String sourceFile, String javaFileContent) {
@@ -342,19 +362,43 @@ public class UMLModelASTReader {
 		return comments;
 	}
 
-	private void distributeComments(List<UMLComment> compilationUnitComments, LocationInfo codeElementLocationInfo, List<UMLComment> codeElementComments) {
+	private void distributeComments(List<UMLComment> compilationUnitComments, LocationInfo codeElementLocationInfo, List<UMLComment> codeElementComments, CompilationUnit cu) {
 		ListIterator<UMLComment> listIterator = compilationUnitComments.listIterator(compilationUnitComments.size());
 		while(listIterator.hasPrevious()) {
 			UMLComment comment = listIterator.previous();
 			LocationInfo commentLocationInfo = comment.getLocationInfo();
 			if(codeElementLocationInfo.subsumes(commentLocationInfo) ||
 					codeElementLocationInfo.sameLine(commentLocationInfo) ||
+					(commentLocationInfo.startsAtTheEndLineOf(codeElementLocationInfo) && !codeElementLocationInfo.getCodeElementType().equals(CodeElementType.ANONYMOUS_CLASS_DECLARATION)) ||
 					(codeElementLocationInfo.nextLine(commentLocationInfo) && !codeElementLocationInfo.getCodeElementType().equals(CodeElementType.ANONYMOUS_CLASS_DECLARATION)) ||
-					(codeElementComments.size() > 0 && codeElementComments.get(0).getLocationInfo().nextLine(commentLocationInfo))) {
+					(codeElementComments.size() > 0 && codeElementComments.get(0).getLocationInfo().nextLine(commentLocationInfo)) ||
+					handleEnumConstantComment(codeElementLocationInfo, commentLocationInfo, cu)) {
 				codeElementComments.add(0, comment);
+			}
+			if(commentLocationInfo.nextLine(codeElementLocationInfo) || commentLocationInfo.rightAfterNextLine(codeElementLocationInfo)) {
+				comment.addPreviousLocation(codeElementLocationInfo);
 			}
 		}
 		compilationUnitComments.removeAll(codeElementComments);
+	}
+
+	private boolean handleEnumConstantComment(LocationInfo codeElementLocationInfo, LocationInfo commentLocationInfo, CompilationUnit cu) {
+		if(codeElementLocationInfo.getCodeElementType().equals(CodeElementType.ENUM_CONSTANT_DECLARATION) && commentLocationInfo.getStartColumn() > codeElementLocationInfo.getEndColumn() && commentLocationInfo.nextLine(codeElementLocationInfo)) {
+			List<AbstractTypeDeclaration> topLevelTypeDeclarations = cu.types();
+	        for(AbstractTypeDeclaration abstractTypeDeclaration : topLevelTypeDeclarations) {
+	        	if(abstractTypeDeclaration instanceof EnumDeclaration) {
+		        	List<EnumConstantDeclaration> bodyDeclarations = ((EnumDeclaration)abstractTypeDeclaration).enumConstants();
+		        	for(EnumConstantDeclaration bodyDeclaration : bodyDeclarations) {
+		        		int lineNumber = cu.getLineNumber(bodyDeclaration.getStartPosition());
+		        		if(lineNumber == commentLocationInfo.getStartLine()) {
+		        			return false;
+		        		}
+		        	}
+	        	}
+	        }
+			return true;
+		}
+		return false;
 	}
 
 	private UMLJavadoc generateJavadoc(CompilationUnit cu, BodyDeclaration bodyDeclaration, String sourceFolder, String sourceFile, String javaFileContent) {
@@ -443,8 +487,12 @@ public class UMLModelASTReader {
 		if(recordDeclaration.isPackageMemberTypeDeclaration()) {
 			umlClass.setPackageDeclaration(umlPackage);
 			umlClass.setPackageDeclarationJavadoc(packageDoc);
+			boolean isLastType = cu.types().get(cu.types().size()-1).equals(recordDeclaration);
 			for(UMLComment comment : comments) {
 				if(comment.getLocationInfo().before(locationInfo) && !locationInfo.nextLine(comment.getLocationInfo())) {
+					umlClass.getPackageDeclarationComments().add(comment);
+				}
+				else if(isLastType && locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
 			}
@@ -527,7 +575,7 @@ public class UMLModelASTReader {
 			umlClass.setActualSignature(text);
 		}
 		this.getUmlModel().addClass(umlClass);
-		distributeComments(comments, locationInfo, umlClass.getComments());
+		distributeComments(comments, locationInfo, umlClass.getComments(), cu);
 	}
 
 	private void processAnnotationTypeDeclaration(CompilationUnit cu, AnnotationTypeDeclaration annotationDeclaration, UMLPackage umlPackage, String packageName, String sourceFolder, String sourceFile,
@@ -546,8 +594,12 @@ public class UMLModelASTReader {
 		if(annotationDeclaration.isPackageMemberTypeDeclaration()) {
 			umlClass.setPackageDeclaration(umlPackage);
 			umlClass.setPackageDeclarationJavadoc(packageDoc);
+			boolean isLastType = cu.types().get(cu.types().size()-1).equals(annotationDeclaration);
 			for(UMLComment comment : comments) {
 				if(comment.getLocationInfo().before(locationInfo) && !locationInfo.nextLine(comment.getLocationInfo())) {
+					umlClass.getPackageDeclarationComments().add(comment);
+				}
+				else if(isLastType && locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
 			}
@@ -587,7 +639,7 @@ public class UMLModelASTReader {
 			umlClass.setActualSignature(text);
 		}
 		this.getUmlModel().addClass(umlClass);
-		distributeComments(comments, locationInfo, umlClass.getComments());
+		distributeComments(comments, locationInfo, umlClass.getComments(), cu);
 	}
 
 	private void processEnumDeclaration(CompilationUnit cu, EnumDeclaration enumDeclaration, UMLPackage umlPackage, String packageName, String sourceFolder, String sourceFile,
@@ -606,8 +658,12 @@ public class UMLModelASTReader {
 		if(enumDeclaration.isPackageMemberTypeDeclaration()) {
 			umlClass.setPackageDeclaration(umlPackage);
 			umlClass.setPackageDeclarationJavadoc(packageDoc);
+			boolean isLastType = cu.types().get(cu.types().size()-1).equals(enumDeclaration);
 			for(UMLComment comment : comments) {
 				if(comment.getLocationInfo().before(locationInfo) && !locationInfo.nextLine(comment.getLocationInfo())) {
+					umlClass.getPackageDeclarationComments().add(comment);
+				}
+				else if(isLastType && locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
 			}
@@ -660,7 +716,7 @@ public class UMLModelASTReader {
 			umlClass.setActualSignature(text);
 		}
 		this.getUmlModel().addClass(umlClass);
-		distributeComments(comments, locationInfo, umlClass.getComments());
+		distributeComments(comments, locationInfo, umlClass.getComments(), cu);
 	}
 
 	private Map<BodyDeclaration, VariableDeclarationContainer> processBodyDeclarations(CompilationUnit cu, AbstractTypeDeclaration abstractTypeDeclaration, UMLPackage umlPackage, String packageName,
@@ -737,8 +793,12 @@ public class UMLModelASTReader {
 		if(typeDeclaration.isPackageMemberTypeDeclaration()) {
 			umlClass.setPackageDeclaration(umlPackage);
 			umlClass.setPackageDeclarationJavadoc(packageDoc);
+			boolean isLastType = cu.types().get(cu.types().size()-1).equals(typeDeclaration);
 			for(UMLComment comment : comments) {
 				if(comment.getLocationInfo().before(locationInfo) && !locationInfo.nextLine(comment.getLocationInfo())) {
+					umlClass.getPackageDeclarationComments().add(comment);
+				}
+				else if(isLastType && locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
 			}
@@ -825,7 +885,7 @@ public class UMLModelASTReader {
 			umlClass.setActualSignature(text);
 		}
     	this.getUmlModel().addClass(umlClass);
-		distributeComments(comments, locationInfo, umlClass.getComments());
+		distributeComments(comments, locationInfo, umlClass.getComments(), cu);
 	}
 
 	private void processAnonymousClassDeclarations(CompilationUnit cu, AbstractTypeDeclaration typeDeclaration,
@@ -1038,6 +1098,8 @@ public class UMLModelASTReader {
     		umlClass.setFinal(true);
     	if((modifiers & Modifier.SEALED) != 0)
     		umlClass.setSealed(true);
+    	if((modifiers & Modifier.STRICTFP) != 0)
+    		umlClass.setStrictfp(true);
     	
     	if((modifiers & Modifier.PUBLIC) != 0)
     		umlClass.setVisibility(Visibility.PUBLIC);
@@ -1079,7 +1141,7 @@ public class UMLModelASTReader {
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, initializer, CodeElementType.INITIALIZER);
 		UMLInitializer umlInitializer = new UMLInitializer(name, locationInfo);
 		umlInitializer.setJavadoc(javadoc);
-		distributeComments(comments, locationInfo, umlInitializer.getComments());
+		distributeComments(comments, locationInfo, umlInitializer.getComments(), cu);
 		
 		int methodModifiers = initializer.getModifiers();
 		if((methodModifiers & Modifier.STATIC) != 0)
@@ -1095,7 +1157,7 @@ public class UMLModelASTReader {
 		
 		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo);
 		umlOperation.setJavadoc(javadoc);
-		distributeComments(comments, locationInfo, umlOperation.getComments());
+		distributeComments(comments, locationInfo, umlOperation.getComments(), cu);
 		
 		int methodModifiers = annotationTypeMemberDeclatation.getModifiers();
 		if((methodModifiers & Modifier.PUBLIC) != 0)
@@ -1159,7 +1221,7 @@ public class UMLModelASTReader {
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, methodDeclaration, CodeElementType.METHOD_DECLARATION);
 		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo);
 		umlOperation.setJavadoc(javadoc);
-		distributeComments(comments, locationInfo, umlOperation.getComments());
+		distributeComments(comments, locationInfo, umlOperation.getComments(), cu);
 		
 		if(methodDeclaration.isConstructor())
 			umlOperation.setConstructor(true);
@@ -1193,6 +1255,9 @@ public class UMLModelASTReader {
 		
 		if((methodModifiers & Modifier.DEFAULT) != 0)
 			umlOperation.setDefault(true);
+		
+		if((methodModifiers & Modifier.STRICTFP) != 0)
+			umlOperation.setStrictfp(true);
 		
 		List<IExtendedModifier> extendedModifiers = methodDeclaration.modifiers();
 		int startSignatureOffset = -1;
@@ -1277,7 +1342,7 @@ public class UMLModelASTReader {
 		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFolder, sourceFile, enumConstantDeclaration, new LinkedHashMap<>(), javaFileContent);
 		enumConstant.setVariableDeclaration(variableDeclaration);
 		enumConstant.setJavadoc(javadoc);
-		distributeComments(comments, locationInfo, enumConstant.getComments());
+		distributeComments(comments, locationInfo, enumConstant.getComments(), cu);
 		enumConstant.setFinal(true);
 		enumConstant.setStatic(true);
 		enumConstant.setVisibility(Visibility.PUBLIC);
@@ -1304,7 +1369,16 @@ public class UMLModelASTReader {
 			variableDeclaration.setAttribute(true);
 			umlAttribute.setVariableDeclaration(variableDeclaration);
 			umlAttribute.setJavadoc(javadoc);
-			distributeComments(comments, locationInfo, umlAttribute.getComments());
+			distributeComments(comments, locationInfo, umlAttribute.getComments(), cu);
+			if(variableDeclaration.getAnnotations().size() > 0) {
+				LocationInfo annotationLocationInfo = variableDeclaration.getAnnotations().get(0).getLocationInfo();
+				distributeComments(comments, annotationLocationInfo, umlAttribute.getComments(), cu);
+			}
+			//handle case where modifiers are in the previous line before the variable declaration fragment
+			if(variableDeclaration.getModifiers().size() > 0) {
+				LocationInfo modifierLocationInfo = variableDeclaration.getModifiers().get(0).getLocationInfo();
+				distributeComments(comments, modifierLocationInfo, umlAttribute.getComments(), cu);
+			}
 			
 			int fieldModifiers = fieldDeclaration.getModifiers();
 			if((fieldModifiers & Modifier.PUBLIC) != 0)
@@ -1381,7 +1455,7 @@ public class UMLModelASTReader {
 				processRecordDeclaration(cu, recordDeclaration, umlPackage, anonymousClass.getName(), sourceFolder, sourceFile, importedTypes, packageDoc, comments, javaFileContent);
 			}
 		}
-		distributeComments(comments, locationInfo, anonymousClass.getComments());
+		distributeComments(comments, locationInfo, anonymousClass.getComments(), cu);
 		return anonymousClass;
 	}
 	

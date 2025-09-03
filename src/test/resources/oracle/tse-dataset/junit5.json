@@ -155,12 +155,12 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tclassesWithApiAnnotation : ClassInfoList to types : var in method private collectTypes(scanResult ScanResult) : SortedSet<ClassInfo> from class org.junit.api.tools.ApiReportGenerator",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tclassesWithApiAnnotation : ClassInfoList to types : var in method private collectTypes(scanResult ScanResult) : SortedSet<ClassInfo> from class org.junit.api.tools.ApiReportGenerator",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
@@ -1548,7 +1548,18 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+		{
+		  "type": "RENAME_VARIABLE",
+		  "description": "Rename Variable\tignoreAnnotation : Ignore to reason : Optional<String> in method private determineReasonForIgnoredTest(testDescriptor TestDescriptor, description Description) : Optional<String> from class org.junit.vintage.engine.execution.RunListenerAdapter",
+		  "validation": true
+		},
+		{
+		  "type": "CHANGE_VARIABLE_TYPE",
+		  "description": "Change Variable Type\tignoreAnnotation : Ignore to reason : Optional<String> in method private determineReasonForIgnoredTest(testDescriptor TestDescriptor, description Description) : Optional<String> from class org.junit.vintage.engine.execution.RunListenerAdapter",
+		  "validation": true
+		}
+	  ]
     },
     {
       "repository": "https://github.com/junit-team/junit5.git",
@@ -1592,6 +1603,11 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\te : JUnitException to exception : JUnitException in method package pruneStackTraceOfEverythingPriorToFirstLauncherCall() : void from class org.junit.platform.commons.util.ExceptionUtilsTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_ATTRIBUTE",
+          "description": "Extract Attribute\tprivate leaf111 : LeafDescriptor in class org.junit.platform.engine.support.descriptor.AbstractTestDescriptorTests",
           "validation": true
         }
       ]
@@ -2180,7 +2196,7 @@
         {
           "type": "MOVE_AND_RENAME_OPERATION",
           "description": "Move And Rename Method\tpackage selectMethodByClassAndMethodNameWithParameterTypes() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByClassAndMethodName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
-          "validation": false
+          "validation": true
         }
       ]
     },

@@ -23,14 +23,22 @@ public class WebExporter {
     final WebDiff webDiff;
     final String baseURL = "http://127.0.0.1";
     final String resourcePath = "src/main/resources/";
-    final Set<String> viewers_path = Set.of(
+    Set<String> viewers_path = Set.of(
             "monaco-page",
             "vanilla-diff"
     );
-    final Set<String> otherPages = Set.of(
+    Set<String> otherPages = Set.of(
             "singleView",
             "list"
     );
+
+    public void setViewers_path(Set<String> viewers_path) {
+        this.viewers_path = viewers_path;
+    }
+
+    public void setOtherPages(Set<String> otherPages) {
+        this.otherPages = otherPages;
+    }
 
     final String baseFolder = "web";
     final String resourceFolderNameInFinalExport = "resources";

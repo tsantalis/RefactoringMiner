@@ -23,6 +23,9 @@ import static org.refactoringminer.astDiff.utils.Helpers.findPairOfType;
 public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements TreeMatcher {
 
     private final UMLClassBaseDiff baseClassDiff;
+    private final String IMPLEMENTS_KEYWORD_LABEL = "implements";
+    private final String EXTENDS_KEYWORD_LABEL = "extends";
+    private final String PERMITS_KEYWORD_LABEL = "permits";
 
     public ClassDeclarationMatcher(UMLClassBaseDiff baseClassDiff) {
         this.baseClassDiff = baseClassDiff;
@@ -83,6 +86,8 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             new SameModifierMatcher(Constants.ABSTRACT).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
         if (classDiff.getOriginalClass().isSealed() && classDiff.getNextClass().isSealed())
             new SameModifierMatcher(Constants.SEALED).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
+        if (classDiff.getOriginalClass().isStrictfp() && classDiff.getNextClass().isStrictfp())
+            new SameModifierMatcher(Constants.STRICTFP).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
 
         for (org.apache.commons.lang3.tuple.Pair<UMLTypeParameter, UMLTypeParameter> commonTypeParamSet : classDiff.getTypeParameterDiffList().getCommonTypeParameters()) {
             Tree srcTypeParam = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, commonTypeParamSet.getLeft().getLocationInfo());
@@ -119,13 +124,20 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, commonInterface.getLeft(), commonInterface.getRight());
         for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> changedInterface : classDiff.getInterfaceListDiff().getChangedTypes())
             processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, changedInterface.getLeft(), changedInterface.getRight());
+        String keyword = IMPLEMENTS_KEYWORD_LABEL;
+        if (classDiff.getOriginalClass().isInterface())
+            keyword = EXTENDS_KEYWORD_LABEL;
+        new KeywordMatcher(Constants.TYPE_INHERITANCE_KEYWORD, keyword).match(srcTree, dstTree, mappingStore);
+
     }
+
 
     private void processClassPermittedTypes(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
         for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> commonInterface : classDiff.getPermittedTypeListDiff().getCommonTypes())
             processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, commonInterface.getLeft(), commonInterface.getRight());
         for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> changedInterface : classDiff.getPermittedTypeListDiff().getChangedTypes())
             processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, changedInterface.getLeft(), changedInterface.getRight());
+        new KeywordMatcher(Constants.PERMITS_KEYWORD, PERMITS_KEYWORD_LABEL).match(srcTree, dstTree, mappingStore);
     }
 
     private static void processLocationInfoProvidersRecursively(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore, LocationInfoProvider left, LocationInfoProvider right) {
@@ -141,6 +153,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (srcParentUML != null && dstParentUML != null) {
             processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, srcParentUML, dstParentUML);
         }
+        new KeywordMatcher(Constants.TYPE_INHERITANCE_KEYWORD, EXTENDS_KEYWORD_LABEL).match(srcTree, dstTree, mappingStore);
     }
     private void processClassAnnotations(Tree srcTree, Tree dstTree, UMLAnnotationListDiff annotationListDiff, ExtendedMultiMappingStore mappingStore) {
         for (org.apache.commons.lang3.tuple.Pair<UMLAnnotation, UMLAnnotation> umlAnnotationUMLAnnotationPair : annotationListDiff.getCommonAnnotations())

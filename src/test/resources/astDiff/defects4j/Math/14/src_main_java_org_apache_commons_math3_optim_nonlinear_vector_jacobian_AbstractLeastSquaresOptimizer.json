@@ -538,6 +538,17 @@
   "firstEndPos" : 1972,
   "secondEndPos" : 1972
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1977,
+  "secondPos" : 1977,
+  "firstEndPos" : 1984,
+  "secondEndPos" : 1984
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "JacobianMultivariateVectorOptimizer",
@@ -6235,6 +6246,17 @@
   "secondPos" : 7812,
   "firstEndPos" : 7819,
   "secondEndPos" : 7819
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 7829,
+  "secondPos" : 7829,
+  "firstEndPos" : 7835,
+  "secondEndPos" : 7835
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

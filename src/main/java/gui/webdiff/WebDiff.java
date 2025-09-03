@@ -7,10 +7,12 @@ import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
 import gui.webdiff.dir.DirComparator;
 import gui.webdiff.dir.DirectoryDiffView;
+import gui.webdiff.dir.filters.DiffFilterer;
+import gui.webdiff.dir.filters.DiffFilterKind;
 import gui.webdiff.viewers.monaco.MonacoView;
+import gui.webdiff.viewers.monaco.SingleMonacoContent;
 import gui.webdiff.viewers.spv.SinglePageView;
 import gui.webdiff.viewers.vanilla.VanillaDiffView;
-import org.apache.commons.text.StringEscapeUtils;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
@@ -27,6 +29,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static spark.Spark.*;
 
@@ -37,9 +40,17 @@ public class WebDiff  {
     public static final String HIGHLIGHT_CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css";
     public static final String HIGHLIGHT_JS_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js";
     public static final String HIGHLIGHT_JAVA_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js";
-    public final int port = 6789;
+    public int port = 6789;
 
-    private final String toolName = "RefactoringMiner";
+    private String toolName = "RefactoringMiner";
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public void setToolName(String toolName) {
+        this.toolName = toolName;
+    }
 
     private final ProjectASTDiff projectASTDiff;
     private final String resourcesPath = "/web/";
@@ -58,12 +69,16 @@ public class WebDiff  {
     }
 
     public WebDiff(ProjectASTDiff projectASTDiff) {
+        this(projectASTDiff, DiffFilterKind.NO_FILTER);
+    }
+
+    public WebDiff(ProjectASTDiff projectASTDiff, DiffFilterer diffFilterer) {
         this.projectASTDiff = projectASTDiff;
-        this.comparator = new DirComparator(projectASTDiff);
+        this.comparator = new DirComparator(projectASTDiff, diffFilterer);
     }
 
     public void run() {
-        killProcessOnPort(this.port);
+//        killProcessOnPort(this.port);
         configureSpark(comparator, this.port);
         awaitInitialization();
         System.out.println(String.format("Starting server: %s:%d.", "http://127.0.0.1", this.port));
@@ -138,6 +153,14 @@ public class WebDiff  {
             );
             return render(view);
         });
+        get("/monaco-minimal/:id", (request, response) -> {
+            int id = Integer.parseInt(request.params(":id"));
+            MonacoView view = new MonacoView(
+                    toolName, comparator, request.pathInfo().split("/")[0], id
+            );
+            view.setButtons(false);
+            return render(view);
+        });
         get("/monaco-diff/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
             MonacoView view = new MonacoView(
@@ -146,6 +169,7 @@ public class WebDiff  {
             view.setDecorate(false);
             return render(view);
         });
+
         get("/left/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
 //            String id = (request.params(":id"));
@@ -183,26 +207,10 @@ public class WebDiff  {
 
             String path = URLDecoder.decode(rawFilePath, StandardCharsets.UTF_8);
             String content = contentsMap.getOrDefault(path, "");
-
-            String escapedContent = StringEscapeUtils.escapeHtml4(content);
-
-            String boxColor = isAdded ? "#d4edda" : "#f8d7da";  // Green or red
-            String textColor = isAdded ? "#155724" : "#721c24"; // Dark green or dark red
-            String borderColor = isAdded ? "#c3e6cb" : "#f5c6cb";
-
-            String headerHtml = "<div style=\"background-color:" + boxColor + ";" +
-                                "color:" + textColor + ";" +
-                                "border: 1px solid " + borderColor + ";" +
-                                "padding: 10px; border-radius: 5px; font-weight: bold;\">" +
-                                path +
-                                "</div>";
-
-            return "<div style=\"padding:10px\">" +
-                   headerHtml +
-                   "<pre style=\"white-space: pre-wrap; background:#f8f8f8; padding:10px; border-radius:5px; margin-top:10px;\">" +
-                   escapedContent +
-                   "</pre>" +
-                   "</div>";
+            return render(new SingleMonacoContent(toolName, request.pathInfo(), comparator.getNumOfDiffs(), 
+                    isAdded, path, content, projectASTDiff.getMetaInfo(),
+                    comparator.getRemovedFilesName().stream().collect(Collectors.toList()),
+                    comparator.getAddedFilesName().stream().collect(Collectors.toList())));
         });
         get("/onDemand", (request, response) -> {
             String rawFile1 = request.queryParams("file1");
@@ -247,8 +255,6 @@ public class WebDiff  {
             return render(view);
         });
     }
-
-
 
     private static String render(Renderable r) throws IOException {
         HtmlCanvas c = new HtmlCanvas();

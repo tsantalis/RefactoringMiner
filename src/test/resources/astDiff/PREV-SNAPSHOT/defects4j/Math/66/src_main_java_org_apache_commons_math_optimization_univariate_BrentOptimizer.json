@@ -329,6 +329,17 @@
   "firstEndPos" : 1536,
   "secondEndPos" : 1536
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1537,
+  "secondPos" : 1537,
+  "firstEndPos" : 1544,
+  "secondEndPos" : 1544
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "AbstractUnivariateRealOptimizer",
@@ -999,6 +1010,17 @@
   "secondPos" : 2022,
   "firstEndPos" : 2048,
   "secondEndPos" : 2032
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 2059,
+  "secondPos" : 2043,
+  "firstEndPos" : 2065,
+  "secondEndPos" : 2049
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2385,6 +2407,17 @@
   "secondPos" : 3676,
   "firstEndPos" : 4365,
   "secondEndPos" : 3677
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 4375,
+  "secondPos" : 3687,
+  "firstEndPos" : 4381,
+  "secondEndPos" : 3693
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

@@ -696,22 +696,22 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tbytes : byte[] to payload : ByteString in method public serverSmallBufferedPayloadWrittenAsOneFrame() : void from class okhttp3.internal.ws.WebSocketWriterTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tbytes : byte[] to payload : ByteString in method public serverSmallBufferedPayloadWrittenAsOneFrame() : void from class okhttp3.internal.ws.WebSocketWriterTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tbytes : byte[] to payload : ByteString in method public serverLargeBufferedPayloadWrittenAsOneFrame() : void from class okhttp3.internal.ws.WebSocketWriterTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tbytes : byte[] to payload : ByteString in method public serverLargeBufferedPayloadWrittenAsOneFrame() : void from class okhttp3.internal.ws.WebSocketWriterTest",
-          "validation": false
+          "validation": true
         }
       ]
     },
@@ -736,12 +736,12 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\ttransmitter : Transmitter in method public inUseConnectionsNotEvicted() : void from class okhttp3.internal.connection.ConnectionPoolTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\ttransmitter : Transmitter in method private allocateAndLeakAllocation(pool ConnectionPool, connection RealConnection) : void from class okhttp3.internal.connection.ConnectionPoolTest",
-          "validation": false
+          "validation": true
         }
       ]
     },
@@ -879,12 +879,12 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tpool : RealConnectionPool in method public inUseConnectionsNotEvicted() : void from class okhttp3.internal.connection.ConnectionPoolTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tpool : RealConnectionPool in method public leakedAllocation() : void from class okhttp3.internal.connection.ConnectionPoolTest",
-          "validation": false
+          "validation": true
         }
       ]
     }

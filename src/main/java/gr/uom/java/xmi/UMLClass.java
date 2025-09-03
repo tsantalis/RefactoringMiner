@@ -15,6 +15,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private Visibility visibility;
     private boolean isFinal;
     private boolean isStatic;
+    private boolean isStrictfp;
 	private boolean isAbstract;
 	private boolean isSealed;
 	private boolean isInterface;
@@ -157,6 +158,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void setStatic(boolean isStatic) {
 		this.isStatic = isStatic;
+	}
+
+	public boolean isStrictfp() {
+		return isStrictfp;
+	}
+
+	public void setStrictfp(boolean isStrictfp) {
+		this.isStrictfp = isStrictfp;
 	}
 
 	public boolean isSealed() {

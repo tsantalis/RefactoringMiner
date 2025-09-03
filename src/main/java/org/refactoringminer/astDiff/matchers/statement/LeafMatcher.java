@@ -6,13 +6,18 @@ import com.github.gumtreediff.matchers.optimizations.*;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import org.refactoringminer.astDiff.matchers.vanilla.FixedLeafMoveMatcherThetaE;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static org.refactoringminer.astDiff.matchers.statement.LRAUtils.LRAify;
+
 /**
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
@@ -32,12 +37,13 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 		Map<Tree,Tree> dstCopy = new HashMap<>();
 		Pair<Tree, Tree> prunedPair = pruneTrees(src, dst, srcCopy, dstCopy);
 		MappingStore match;
-		try {
+		try
+        {
 			if (prunedPair.first.isIsoStructuralTo(prunedPair.second))
 			{
 				if (!TreeUtilFunctions.isIsomorphicTo(prunedPair.first,prunedPair.second))
 				{
-					match = new MoveOptimizedIsomorphic().match(prunedPair.first, prunedPair.second);
+					match = new LRAMoveOptimizedIsomorphic().match(prunedPair.first, prunedPair.second);
 				}
 				else{
 					match = new MappingStore(src, dst);
@@ -54,9 +60,9 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 		}
 		catch (Exception exception)
 		{
-			//TODO: ADD ERR LOGGING
-//			logger.error("Error in LeafMatcher", exception);
-		}
+//			TODO: ADD ERR LOGGING
+            System.out.println(exception.getMessage());
+        }
 	}
 	public Pair<Tree,Tree> pruneTrees(Tree src, Tree dst, Map<Tree,Tree> srcCopy, Map<Tree,Tree> dstCopy) {
 		Tree prunedSrc = TreeUtilFunctions.deepCopyWithMapPruning(src,srcCopy);
@@ -151,10 +157,40 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 					, new LcsOptMatcherThetaB()
 					, new UnmappedLeavesMatcherThetaC()
 					, new InnerNodesMatcherThetaD()
-					, new LeafMoveMatcherThetaE()
-					, new CrossMoveMatcherThetaF()
+					, new FixedLeafMoveMatcherThetaE()
+					, new SafeCrossMoveMatcherThetaF()
 			);
 		}
 	}
+
+    //LeftRightAware (LRA) matcher version of MTD
+    static class LRAMoveOptimizedIsomorphic extends MoveOptimizedIsomorphic {
+        @Override
+        public MappingStore match(Tree src, Tree dst) {
+            return match(src, dst, new MappingStore(src, dst));
+        }
+
+        @Override
+        public MappingStore match(Tree src, Tree dst, MappingStore mappings) {
+            List<Pair<Tree, Tree>> pairs = LRAify(src, dst, mappings);
+            for (Pair<Tree, Tree> pair : pairs) {
+                super.match(pair.first, pair.second, mappings);
+            }
+            return mappings;
+        }
+    }
+    static class SafeCrossMoveMatcherThetaF extends CrossMoveMatcherThetaF {
+        @Override
+        public MappingStore match(Tree src, Tree dst, MappingStore mappings) {
+            try {
+                return super.match(src, dst, mappings);
+            }
+            catch (Exception e) {
+                // Handle the exception gracefully, e.g., log it or ignore it
+                return mappings;
+            }
+        }
+    }
+
 }
 

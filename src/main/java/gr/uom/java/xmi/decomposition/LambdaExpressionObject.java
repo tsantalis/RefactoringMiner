@@ -411,6 +411,11 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	}
 
 	@Override
+	public boolean hasDeprecatedAnnotation() {
+		return false;
+	}
+
+	@Override
 	public boolean isDeclaredInAnonymousClass() {
 		return false;
 	}

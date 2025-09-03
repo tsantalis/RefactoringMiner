@@ -324,6 +324,9 @@ public class OperationInvocation extends AbstractCall {
     			if(cast.charAt(0) != '(') {
     				inferredArgumentTypes.add(UMLType.extractTypeObject(cast));
     			}
+    			else {
+    				inferredArgumentTypes.add(null);
+    			}
     		}
     		else if(arg.endsWith(".getClassLoader()")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("ClassLoader"));
@@ -376,7 +379,17 @@ public class OperationInvocation extends AbstractCall {
     				inferredArgumentTypes.add(UMLType.extractTypeObject(numberType));
     			}
     			else {
-    				inferredArgumentTypes.add(null);
+    				UMLType returnType = null;
+    				if(classDiff != null) {
+    					for(UMLOperation originalClassOperation : classDiff.getOriginalClass().getOperations()) {
+    						if(arg.startsWith(originalClassOperation.getName() + "(") && originalClassOperation.getReturnParameter() != null &&
+    								!originalClassOperation.getReturnParameter().getType().getClassType().equals("void")) {
+    							returnType = originalClassOperation.getReturnParameter().getType();
+    							break;
+    						}
+    					}
+    				}
+    				inferredArgumentTypes.add(returnType);
     			}
     		}
     	}
@@ -495,6 +508,12 @@ public class OperationInvocation extends AbstractCall {
     	if(type1.equals("Throwable") && type2.endsWith("Exception"))
     		return true;
     	if(type1.equals("Exception") && type2.endsWith("Exception"))
+    		return true;
+    	if(type1.equals("Statement") && type2.equals("Fail"))
+    		return true;
+    	if(type1.equals("CharSequence") && type2.equals("String"))
+    		return true;
+    	else if(type2.equals("CharSequence") && type1.equals("String"))
     		return true;
     	if(isPrimitiveType(type1) && isPrimitiveType(type2)) {
             if(isWideningPrimitiveConversion(type2, type1))

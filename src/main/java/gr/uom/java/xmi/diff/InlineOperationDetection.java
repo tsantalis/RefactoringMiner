@@ -18,7 +18,11 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.LeafExpression;
+import gr.uom.java.xmi.decomposition.LeafMapping;
+import gr.uom.java.xmi.decomposition.ReplacementUtil;
 import gr.uom.java.xmi.decomposition.StatementObject;
+import gr.uom.java.xmi.decomposition.TernaryOperatorExpression;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
@@ -123,6 +127,47 @@ public class InlineOperationDetection {
 			callTreeMap.put(root, callTree);
 		}
 		UMLOperationBodyMapper operationBodyMapper = createMapperForInlinedMethod(mapper, removedOperation, removedOperationInvocation, false);
+		StatementObject singleReturnStatement = removedOperation.singleReturnStatement();
+		if(operationBodyMapper != null && (operationBodyMapper.getMappings().isEmpty() || containsRefactoringWithIdenticalMappings(refactorings, operationBodyMapper)) && singleReturnStatement != null) {
+			String s = singleReturnStatement.getString();
+			String expression = s.substring(JAVA.RETURN_SPACE.length(), s.length()-JAVA.STATEMENT_TERMINATION.length());
+			for(AbstractCodeMapping mapping : mapper.getMappings()) {
+				for(Replacement r : mapping.getReplacements()) {
+					if(r.getBefore().contains(removedOperation.getName() + "(")) {
+						if(expression.equals(r.getAfter())) {
+							List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(r.getAfter());
+							List<LeafExpression> expressions1 = singleReturnStatement.findExpression(expression);
+							if(expressions1.size() == 1) {
+								for(LeafExpression expression2 : expressions2) {
+									LeafMapping newMapping = new LeafMapping(expressions1.get(0), expression2, removedOperation, mapper.getContainer2());
+									operationBodyMapper.addMapping(newMapping);
+								}
+							}
+						}
+						else if(operationBodyMapper.getParameterToArgumentMap1().isPresent()) {
+							Map<String, String> parameterToArgumentMap = operationBodyMapper.getParameterToArgumentMap1().get();
+							String after = r.getAfter();
+							for(String key : parameterToArgumentMap.keySet()) {
+								String value = parameterToArgumentMap.get(key);
+								if(!key.equals(value)) {
+									after = ReplacementUtil.performReplacement(after, value, key);
+								}
+							}
+							if(expression.equals(after)) {
+								List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(r.getAfter());
+								List<LeafExpression> expressions1 = singleReturnStatement.findExpression(expression);
+								if(expressions1.size() == 1) {
+									for(LeafExpression expression2 : expressions2) {
+										LeafMapping newMapping = new LeafMapping(expressions1.get(0), expression2, removedOperation, mapper.getContainer2());
+										operationBodyMapper.addMapping(newMapping);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 		if(operationBodyMapper != null && !containsRefactoringWithIdenticalMappings(refactorings, operationBodyMapper)) {
 			List<CallTreeNode> nodesInBreadthFirstOrder = callTree.getNodesInBreadthFirstOrder();
 			for(int i=1; i<nodesInBreadthFirstOrder.size(); i++) {
@@ -310,6 +355,12 @@ public class InlineOperationDetection {
 							boolean matchingReplacementFound = false;
 							for(Replacement r : mapping.getReplacements()) {
 								if(r.getBefore().equals(variableDeclaration.getVariableName())) {
+									matchingReplacementFound = true;
+								}
+							}
+							for(TernaryOperatorExpression exp : mapping.getFragment1().getTernaryOperatorExpressions()) {
+								if(exp.getThenExpression().getString().equals(variableDeclaration.getVariableName()) ||
+										exp.getElseExpression().getString().equals(variableDeclaration.getVariableName())) {
 									matchingReplacementFound = true;
 								}
 							}

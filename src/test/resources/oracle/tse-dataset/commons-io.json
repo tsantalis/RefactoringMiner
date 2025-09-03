@@ -146,7 +146,7 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\ttrimPathStr : String in method package freeSpaceWindows(pathStr String, timeout Duration) : long from class org.apache.commons.io.FileSystemUtils",
-          "validation": false
+          "validation": true
         }
       ]
     },
@@ -386,17 +386,22 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate checkThrowEof(message String) : void extracted from public read() : int in class org.apache.commons.io.input.NullInputStream",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate checkThrowEof(message String) : void extracted from public read(bytes byte[], offset int, length int) : int in class org.apache.commons.io.input.NullInputStream",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate checkThrowEof(message String) : void extracted from public skip(numberOfBytes long) : long in class org.apache.commons.io.input.NullInputStream",
-          "validation": false
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcount4 : int in method public testReadByteArray() : void from class org.apache.commons.io.input.NullInputStreamTest",
+          "validation": true
         }
       ]
     },
@@ -478,7 +483,7 @@
         {
           "type": "INLINE_OPERATION",
           "description": "Inline Method\tprivate requireFileCopy(source File, destination File) : void inlined to public copyFile(srcFile File, destFile File, preserveFileDate boolean, copyOptions CopyOption...) : void in class org.apache.commons.io.FileUtils",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_VARIABLE",

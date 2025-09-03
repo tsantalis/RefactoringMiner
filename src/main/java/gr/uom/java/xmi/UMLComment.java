@@ -1,7 +1,10 @@
 package gr.uom.java.xmi;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
@@ -14,6 +17,8 @@ public class UMLComment extends UMLAbstractDocumentation {
 	//represents non-attached Javadocs found within method bodies
 	private Optional<UMLJavadoc> javaDoc;
 	private CompositeStatementObject parent;
+	private List<LocationInfo> previousLineLocations = new ArrayList<>();
+	private static final Pattern EMPTY_LINES = Pattern.compile("(^\\s*$\\r?\\n)+", Pattern.MULTILINE);
 
 	public UMLComment(String text, LocationInfo locationInfo) {
 		super(text, locationInfo);
@@ -36,11 +41,22 @@ public class UMLComment extends UMLAbstractDocumentation {
 		this.parent = parent;
 	}
 
+	public List<LocationInfo> getPreviousLocations() {
+		return previousLineLocations;
+	}
+
+	public void addPreviousLocation(LocationInfo info) {
+		previousLineLocations.add(info);
+	}
+
 	@Override
 	public String getText() {
 		if(locationInfo.getCodeElementType().equals(CodeElementType.LINE_COMMENT)) {
 			String text = new String(this.text);
-			if(text.startsWith("//")) {
+			if(text.startsWith("///")) {
+				text = text.substring(3);
+			}
+			else if(text.startsWith("//")) {
 				text = text.substring(2);
 			}
 			text = text.trim();
@@ -57,6 +73,9 @@ public class UMLComment extends UMLAbstractDocumentation {
 				}
 				if(line.endsWith("*/")) {
 					line = line.substring(0, line.length()-2);
+				}
+				if(line.startsWith("///")) {
+					line = line.substring(3);
 				}
 				if(line.startsWith("//")) {
 					line = line.substring(2);
@@ -83,6 +102,22 @@ public class UMLComment extends UMLAbstractDocumentation {
 		sb.append(": ");
 		sb.append(text);
 		return sb.toString();
+	}
+
+	public boolean equalTextIgnoringEmptyLines(UMLComment other) {
+		if(this.locationInfo.getCodeElementType().equals(CodeElementType.BLOCK_COMMENT) && other.locationInfo.getCodeElementType().equals(CodeElementType.BLOCK_COMMENT)) {
+			String text1 = EMPTY_LINES.matcher(this.getText()).replaceAll("");
+			String text2 = EMPTY_LINES.matcher(other.getText()).replaceAll("");
+			if(text1.equals(text2)) {
+				return true;
+			}
+			else if(text1.endsWith("\n") && text2.endsWith("\n")) {
+				text1 = text1.substring(0, text1.length()-1);
+				text2 = text2.substring(0, text2.length()-1);
+				return text1.equals(text2 + "*") || text2.equals(text1 + "*");
+			}
+		}
+		return false;
 	}
 
 	public boolean isCommentedCode() {

@@ -516,6 +516,17 @@
   "firstEndPos" : 700,
   "secondEndPos" : 700
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 701,
+  "secondPos" : 701,
+  "firstEndPos" : 708,
+  "secondEndPos" : 708
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "TreeBuilder",

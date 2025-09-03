@@ -38,6 +38,7 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 	private boolean volatileChanged;
 	private boolean transientChanged;
 	private boolean initializerChanged;
+	private boolean commentsChanged;
 	private List<UMLOperationBodyMapper> operationBodyMapperList;
 	private UMLAnnotationListDiff annotationListDiff;
 	private UMLOperation addedGetter;
@@ -136,6 +137,18 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 				initializerChanged = true;
 			}
 			this.mapper = new UMLOperationBodyMapper(removedAttribute, addedAttribute, classDiff, modelDiff);
+			boolean mapperContainsLambda = false;
+			for(AbstractCodeMapping mapping : mapper.getMappings()) {
+				if(mapping.getFragment1().getLambdas().size() > 0 && mapping.getFragment2().getLambdas().size() > 0) {
+					mapperContainsLambda = true;
+					break;
+				}
+			}
+			if(mapperContainsLambda) {
+				if(removedAttribute.getComments().size() != addedAttribute.getComments().size() || this.commentListDiff.getAddedComments().size() > 0 || this.commentListDiff.getDeletedComments().size() > 0) {
+					commentsChanged = true;
+				}
+			}
 		}
 		else if(initializer1 == null && initializer2 != null) {
 			initializerChanged = true;
@@ -229,7 +242,7 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 
 	public boolean isEmpty() {
 		return !visibilityChanged && !staticChanged && !finalChanged && !volatileChanged && !transientChanged && !typeChanged && !renamed && !qualifiedTypeChanged && annotationListDiff.isEmpty() &&
-				!initializerChanged;
+				!initializerChanged && !commentsChanged;
 	}
 
 	public String toString() {

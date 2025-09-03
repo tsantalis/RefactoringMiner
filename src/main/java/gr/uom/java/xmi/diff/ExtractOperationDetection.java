@@ -28,6 +28,7 @@ import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
+import gr.uom.java.xmi.decomposition.ReplacementUtil;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -270,6 +271,47 @@ public class ExtractOperationDetection {
 			callTreeMap.put(root, callTree);
 		}
 		UMLOperationBodyMapper operationBodyMapper = createMapperForExtractedMethod(mapper, mapper.getContainer1(), addedOperation, addedOperationInvocation, false);
+		StatementObject singleReturnStatement = addedOperation.singleReturnStatement();
+		if(operationBodyMapper != null && (operationBodyMapper.getMappings().isEmpty() || containsRefactoringWithIdenticalMappings(refactorings, operationBodyMapper)) && singleReturnStatement != null) {
+			String s = singleReturnStatement.getString();
+			String expression = s.substring(JAVA.RETURN_SPACE.length(), s.length()-JAVA.STATEMENT_TERMINATION.length());
+			for(AbstractCodeMapping mapping : mapper.getMappings()) {
+				for(Replacement r : mapping.getReplacements()) {
+					if(r.getAfter().contains(addedOperation.getName() + "(")) {
+						if(expression.equals(r.getBefore())) {
+							List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(r.getBefore());
+							List<LeafExpression> expressions2 = singleReturnStatement.findExpression(expression);
+							if(expressions2.size() == 1) {
+								for(LeafExpression expression1 : expressions1) {
+									LeafMapping newMapping = new LeafMapping(expression1, expressions2.get(0), mapper.getContainer1(), addedOperation);
+									operationBodyMapper.addMapping(newMapping);
+								}
+							}
+						}
+						else if(operationBodyMapper.getParameterToArgumentMap2().isPresent()) {
+							Map<String, String> parameterToArgumentMap = operationBodyMapper.getParameterToArgumentMap2().get();
+							String before = r.getBefore();
+							for(String key : parameterToArgumentMap.keySet()) {
+								String value = parameterToArgumentMap.get(key);
+								if(!key.equals(value)) {
+									before = ReplacementUtil.performReplacement(before, value, key);
+								}
+							}
+							if(expression.equals(before)) {
+								List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(r.getBefore());
+								List<LeafExpression> expressions2 = singleReturnStatement.findExpression(expression);
+								if(expressions2.size() == 1) {
+									for(LeafExpression expression1 : expressions1) {
+										LeafMapping newMapping = new LeafMapping(expression1, expressions2.get(0), mapper.getContainer1(), addedOperation);
+										operationBodyMapper.addMapping(newMapping);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 		boolean skip = operationBodyMapper != null && operationBodyMapper.hasAnonymousClassDiffNestedUnderLambda() && mapper.hasAnonymousClassDiffNestedUnderLambda() &&
 				operationBodyMapper.getAnonymousClassDiffs().iterator().next().getOriginalClass().equals(mapper.getAnonymousClassDiffs().iterator().next().getOriginalClass());
 		if(operationBodyMapper != null && (!containsRefactoringWithIdenticalMappings(refactorings, operationBodyMapper) || parentMapperContainsOperationInvocation(mapper, operationBodyMapper, addedOperationInvocation)) && !skip) {
@@ -552,7 +594,11 @@ public class ExtractOperationDetection {
 				synchronizedBlockExactMatch = true;
 			}
 		}
+		boolean mappingOwnedByLambda = false;
 		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+			if(mapping.getFragment1().ownedByLambda()) {
+				mappingOwnedByLambda = true;
+			}
 			List<VariableDeclaration> variableDeclarations = mapping.getFragment2().getVariableDeclarations();
 			if(variableDeclarations.size() > 0) {
 				for(VariableDeclaration variableDeclaration : variableDeclarations) {
@@ -628,7 +674,8 @@ public class ExtractOperationDetection {
 				(exactMatches >= mappings && nonMappedElementsT1 == 0) ||
 				(exactMatches == 1 && !throwsNewExceptionExactMatch && !synchronizedBlockExactMatch && nonMappedElementsT2-exactMatches <= 10) ||
 				(!exceptionHandlingExactMatch && exactMatches > 1 && additionalExactMatches.size() <= exactMatches && nonMappedElementsT2-exactMatches < 20) ||
-				(mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2())) ||
+				(mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2()) ||
+				(mappings == 1 && mappingOwnedByLambda && mappings >= operationBodyMapper.nonMappedLeafElementsT2())) ||
 				argumentExtractedWithDefaultReturnAdded(operationBodyMapper);
 	}
 

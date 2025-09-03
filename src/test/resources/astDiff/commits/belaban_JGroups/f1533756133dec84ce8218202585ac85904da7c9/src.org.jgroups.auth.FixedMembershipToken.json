@@ -505,6 +505,17 @@
   "firstEndPos" : 919,
   "secondEndPos" : 1054
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 920,
+  "secondPos" : 1055,
+  "firstEndPos" : 927,
+  "secondEndPos" : 1062
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "AuthToken",
@@ -3288,6 +3299,17 @@
   "firstEndPos" : 3473,
   "secondEndPos" : 3768
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 3475,
+  "secondPos" : 3770,
+  "firstEndPos" : 3481,
+  "secondEndPos" : 3776
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Exception",
@@ -3749,6 +3771,17 @@
   "secondPos" : 4082,
   "firstEndPos" : 3823,
   "secondEndPos" : 4084
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 3825,
+  "secondPos" : 4086,
+  "firstEndPos" : 3831,
+  "secondEndPos" : 4092
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

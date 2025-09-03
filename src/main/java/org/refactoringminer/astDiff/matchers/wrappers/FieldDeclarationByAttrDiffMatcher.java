@@ -28,6 +28,7 @@ public class FieldDeclarationByAttrDiffMatcher extends OptimizationAwareMatcher 
         if (umlAttributeDiff.getInitializerMapper().isPresent()) {
             UMLOperationBodyMapper umlOperationBodyMapper = umlAttributeDiff.getInitializerMapper().get();
             new MethodMatcher(optimizationData, umlOperationBodyMapper).match(srcTree, dstTree, mappingStore);
+            //TODO: if its a moved process its refactoring
         }
     }
 }

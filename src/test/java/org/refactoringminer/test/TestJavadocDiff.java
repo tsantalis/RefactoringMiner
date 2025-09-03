@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Assertions;
@@ -26,6 +28,7 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.UMLClassDiff;
+import gr.uom.java.xmi.diff.UMLModelDiff;
 
 public class TestJavadocDiff {
 	private static final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits";
@@ -112,6 +115,34 @@ public class TestJavadocDiff {
 			if(mapper.getContainer1().getName().equals(containerName) && mapper.getContainer2().getName().equals(containerName)) {
 				commentInfo(mapper, actual);
 				//break;
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+		"GroupTreeViewModel-v1.txt, GroupTreeViewModel-v2.txt, jabgui/src/main/java/org/jabref/gui/groups/GroupTreeViewModel.java, jabRef-GroupTreeViewModel-716.txt",
+		"GroupNodeViewModel-v1.txt, GroupNodeViewModel-v2.txt, jabgui/src/main/java/org/jabref/gui/groups/GroupNodeViewModel.java, jabRef-GroupNodeViewModel-716.txt",
+		"NewEntryAction-v1.txt, NewEntryAction-v2.txt, jabgui/src/main/java/org/jabref/gui/importer/NewEntryAction.java, jabRef-NewEntryAction-716.txt"
+	})
+	public void testMethodCommentMappings(String filePath1, String filePath2, String qualifiedName, String testResultFileName) throws Exception {
+		final List<String> actual = new ArrayList<>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + filePath1));
+		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + filePath2));
+		fileContentsBefore.put(qualifiedName, contentsV1);
+		fileContentsCurrent.put(qualifiedName, contentsV2);
+		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
+		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
+
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				commentInfo(mapper, actual);
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));

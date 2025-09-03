@@ -406,6 +406,17 @@
   "firstEndPos" : 1226,
   "secondEndPos" : 1226
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1227,
+  "secondPos" : 1227,
+  "firstEndPos" : 1237,
+  "secondEndPos" : 1237
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "SearchableConfigurable",
@@ -7831,6 +7842,17 @@
   "firstEndPos" : 5754,
   "secondEndPos" : 6061
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 5757,
+  "secondPos" : 6064,
+  "firstEndPos" : 5763,
+  "secondEndPos" : 6070
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ConfigurationException",
@@ -10086,6 +10108,17 @@
   "firstEndPos" : 7187,
   "secondEndPos" : 7494
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7188,
+  "secondPos" : 7495,
+  "firstEndPos" : 7195,
+  "secondEndPos" : 7502
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ConfigurableWrapper",
@@ -10107,6 +10140,17 @@
   "secondPos" : 7503,
   "firstEndPos" : 7215,
   "secondEndPos" : 7522
+}, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7216,
+  "secondPos" : 7523,
+  "firstEndPos" : 7226,
+  "secondEndPos" : 7533
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",

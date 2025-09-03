@@ -482,7 +482,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\trange0 : CombinedFileRange in method public testSortAndMerge() : void from class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
@@ -1542,7 +1542,7 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate assumeNoPrefetching() : void extracted from public testStreamIsNotChecksummed() : void in class org.apache.hadoop.fs.s3a.performance.ITestS3AOpenCost",
-          "validation": false
+          "validation": true
         }
       ]
     },
@@ -1774,12 +1774,17 @@
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic getExternalData(conf Configuration) : Path extracted from public setUp() : void in class org.apache.hadoop.fs.s3a.ITestS3APrefetchingCacheFiles & moved to class org.apache.hadoop.fs.s3a.test.PublicDatasetTestUtils",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic requireDefaultExternalDataFile(conf Configuration) : String extracted from public getLandsatCSVFile(conf Configuration) : String in class org.apache.hadoop.fs.s3a.S3ATestUtils & moved to class org.apache.hadoop.fs.s3a.test.PublicDatasetTestUtils",
-          "validation": false
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic getExternalData(conf Configuration) : Path extracted from public getLandsatCSVPath(conf Configuration) : Path in class org.apache.hadoop.fs.s3a.S3ATestUtils & moved to class org.apache.hadoop.fs.s3a.test.PublicDatasetTestUtils",
+          "validation": true
         }
       ]
     },

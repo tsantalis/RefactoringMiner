@@ -1077,6 +1077,72 @@
   "firstEndPos" : 2146,
   "secondEndPos" : 2199
 }, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "FieldDeclaration",
+  "firstPos" : 2153,
+  "secondPos" : 2206,
+  "firstEndPos" : 2227,
+  "secondEndPos" : 2280
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 2164,
+  "secondPos" : 2217,
+  "firstEndPos" : 2219,
+  "secondEndPos" : 2272
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Whether the mapping is actually used by the source map.",
+  "secondLabel" : "Whether the mapping is actually used by the source map.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2164,
+  "secondPos" : 2217,
+  "firstEndPos" : 2219,
+  "secondEndPos" : 2272
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "FieldDeclaration",
+  "firstPos" : 2233,
+  "secondPos" : 2348,
+  "firstEndPos" : 2286,
+  "secondEndPos" : 2401
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 2244,
+  "secondPos" : 2359,
+  "firstEndPos" : 2278,
+  "secondEndPos" : 2393
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Cache of escaped source file name.",
+  "secondLabel" : "Cache of escaped source file name.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2244,
+  "secondPos" : 2359,
+  "firstEndPos" : 2278,
+  "secondEndPos" : 2393
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -1186,6 +1252,17 @@
   "secondPos" : 2707,
   "firstEndPos" : 2384,
   "secondEndPos" : 2710
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 2386,
+  "secondPos" : 2712,
+  "firstEndPos" : 2392,
+  "secondEndPos" : 2718
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2121,6 +2198,39 @@
   "secondPos" : 3648,
   "firstEndPos" : 2844,
   "secondEndPos" : 3653
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 2857,
+  "secondPos" : 3667,
+  "firstEndPos" : 2921,
+  "secondEndPos" : 3731
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 2868,
+  "secondPos" : 3678,
+  "firstEndPos" : 2913,
+  "secondEndPos" : 3723
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Add used mappings to the supplied Appendable.",
+  "secondLabel" : "Add used mappings to the supplied Appendable.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2868,
+  "secondPos" : 3678,
+  "firstEndPos" : 2913,
+  "secondEndPos" : 3723
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -8194,6 +8304,17 @@
   "firstEndPos" : 8242,
   "secondEndPos" : 8764
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 8244,
+  "secondPos" : 8766,
+  "firstEndPos" : 8250,
+  "secondEndPos" : 8772
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IOException",
@@ -10603,6 +10724,17 @@
   "firstEndPos" : 11166,
   "secondEndPos" : 12652
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 11169,
+  "secondPos" : 12655,
+  "firstEndPos" : 11175,
+  "secondEndPos" : 12661
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IOException",
@@ -12209,6 +12341,17 @@
   "firstEndPos" : 13493,
   "secondEndPos" : 12969
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 13496,
+  "secondPos" : 12972,
+  "firstEndPos" : 13502,
+  "secondEndPos" : 12978
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IOException",
@@ -12440,6 +12583,17 @@
   "firstEndPos" : 13601,
   "secondEndPos" : 13164
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 13604,
+  "secondPos" : 13167,
+  "firstEndPos" : 13610,
+  "secondEndPos" : 13173
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IOException",
@@ -12637,6 +12791,17 @@
   "secondPos" : 13389,
   "firstEndPos" : 13695,
   "secondEndPos" : 13391
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 13697,
+  "secondPos" : 13393,
+  "firstEndPos" : 13703,
+  "secondEndPos" : 13399
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -14563,6 +14728,17 @@
   "firstEndPos" : 15031,
   "secondEndPos" : 17298
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 15033,
+  "secondPos" : 17300,
+  "firstEndPos" : 15039,
+  "secondEndPos" : 17306
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IOException",
@@ -15234,6 +15410,17 @@
   "firstEndPos" : 15557,
   "secondEndPos" : 17831
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 15567,
+  "secondPos" : 17841,
+  "firstEndPos" : 15573,
+  "secondEndPos" : 17847
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IOException",
@@ -15673,6 +15860,17 @@
   "secondPos" : 18437,
   "firstEndPos" : 16066,
   "secondEndPos" : 18444
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 16084,
+  "secondPos" : 18454,
+  "firstEndPos" : 16090,
+  "secondEndPos" : 18460
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

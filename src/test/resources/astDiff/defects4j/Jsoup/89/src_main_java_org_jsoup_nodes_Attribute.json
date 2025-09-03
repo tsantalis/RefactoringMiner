@@ -241,6 +241,17 @@
   "firstEndPos" : 309,
   "secondEndPos" : 309
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 310,
+  "secondPos" : 310,
+  "firstEndPos" : 320,
+  "secondEndPos" : 320
+}, {
   "firstType" : "ParameterizedType",
   "secondType" : "ParameterizedType",
   "firstLabel" : "",
@@ -5092,6 +5103,17 @@
   "firstEndPos" : 3643,
   "secondEndPos" : 3702
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 3645,
+  "secondPos" : 3704,
+  "firstEndPos" : 3651,
+  "secondEndPos" : 3710
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IOException",
@@ -5784,6 +5806,17 @@
   "secondPos" : 4050,
   "firstEndPos" : 3994,
   "secondEndPos" : 4053
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 3996,
+  "secondPos" : 4055,
+  "firstEndPos" : 4002,
+  "secondEndPos" : 4061
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

@@ -549,6 +549,17 @@
   "firstEndPos" : 2159,
   "secondEndPos" : 2159
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2160,
+  "secondPos" : 2160,
+  "firstEndPos" : 2170,
+  "secondEndPos" : 2170
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "BinaryEncoder",
@@ -26322,6 +26333,17 @@
   "firstEndPos" : 28320,
   "secondEndPos" : 28321
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 28322,
+  "secondPos" : 28323,
+  "firstEndPos" : 28328,
+  "secondEndPos" : 28329
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "DecoderException",
@@ -33262,6 +33284,17 @@
   "secondPos" : 35728,
   "firstEndPos" : 35734,
   "secondEndPos" : 35735
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 35736,
+  "secondPos" : 35737,
+  "firstEndPos" : 35742,
+  "secondEndPos" : 35743
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

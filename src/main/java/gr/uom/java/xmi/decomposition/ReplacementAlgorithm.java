@@ -253,10 +253,32 @@ public class ReplacementAlgorithm {
 		// ignore the variables in the intersection that also appear with "this." prefix in the sets of variables
 		// ignore the variables in the intersection that also appear with "OtherVar." prefix in the sets of variables
 		// ignore the variables in the intersection that are static fields
+		// ignore the variables in the intersection that are array accesses
 		// ignore the variables in the intersection that one of them is a variable declaration and the other is not
 		// ignore the variables in the intersection that one of them is part of a method invocation, but the same method invocation does not appear on the other side
 		Set<String> variablesToBeRemovedFromTheIntersection = new LinkedHashSet<String>();
 		for(String variable : variableIntersection) {
+			List<LeafExpression> arrayAccesses1 = statement1.getArrayAccesses();
+			int index1 = -1;
+			for(int i=0; i<arrayAccesses1.size(); i++) {
+				LeafExpression exp1 = arrayAccesses1.get(i);
+				if(exp1.getString().startsWith(variable)) {
+					index1 = i;
+					break;
+				}
+			}
+			List<LeafExpression> arrayAccesses2 = statement2.getArrayAccesses();
+			int index2 = -1;
+			for(int i=0; i<arrayAccesses2.size(); i++) {
+				LeafExpression exp2 = arrayAccesses2.get(i);
+				if(exp2.getString().startsWith(variable)) {
+					index2 = i;
+					break;
+				}
+			}
+			if(index1 != -1 && index2 != -1 && index1 != index2) {
+				variablesToBeRemovedFromTheIntersection.add(variable);
+			}
 			if(!variable.startsWith(JAVA.THIS_DOT) && !variableIntersection.contains(JAVA.THIS_DOT+variable) &&
 					(variables1.contains(JAVA.THIS_DOT+variable) || variables2.contains(JAVA.THIS_DOT+variable))) {
 				variablesToBeRemovedFromTheIntersection.add(variable);
@@ -700,6 +722,10 @@ public class ReplacementAlgorithm {
 		Set<String> castExpressions2 = convertToStringSet(statement2.getCastExpressions());
 		removeCommonElements(castExpressions1, castExpressions2);
 		
+		Set<String> textBlocks1 = convertToStringSet(statement1.getTextBlocks());
+		Set<String> textBlocks2 = convertToStringSet(statement2.getTextBlocks());
+		removeCommonElements(textBlocks1, textBlocks2);
+		
 		//perform type replacements
 		findReplacements(types1, types2, replacementInfo, ReplacementType.TYPE, container1, container2, classDiff);
 		
@@ -949,12 +975,35 @@ public class ReplacementAlgorithm {
 		findReplacements(parenthesizedExpressions1, parenthesizedExpressions2, replacementInfo, ReplacementType.PARENTHESIZED_EXPRESSION, container1, container2, classDiff);
 		
 		//perform literal replacements
+		if(textBlocks1.size() == textBlocks2.size()) {
+			Iterator<String> it1 = textBlocks1.iterator();
+			Iterator<String> it2 = textBlocks2.iterator();
+			while(it1.hasNext() && it2.hasNext()) {
+				String s1 = it1.next();
+				String s2 = it2.next();
+				String strippedText1 = Arrays.stream(s1.split("\\R"))
+                        .map(String::stripLeading)
+                        .collect(Collectors.joining("\n"));
+				String strippedText2 = Arrays.stream(s2.split("\\R"))
+                        .map(String::stripLeading)
+                        .collect(Collectors.joining("\n"));
+				if(strippedText1.equals(strippedText2)) {
+					Replacement replacement = new Replacement(s1, s2, ReplacementType.TEXT_BLOCK);
+					replacementInfo.addReplacement(replacement);
+					replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement.getBefore(), replacement.getAfter()));
+				}
+			}
+		}
 		findReplacements(stringLiterals1, stringLiterals2, replacementInfo, ReplacementType.STRING_LITERAL, container1, container2, classDiff);
 		findReplacements(charLiterals1, charLiterals2, replacementInfo, ReplacementType.CHAR_LITERAL, container1, container2, classDiff);
 		findReplacements(numberLiterals1, numberLiterals2, replacementInfo, ReplacementType.NUMBER_LITERAL, container1, container2, classDiff);
 		if(!statement1.containsInitializerOfVariableDeclaration(numberLiterals1) && !statement2.containsInitializerOfVariableDeclaration(variables2) &&
 				(!statement1.getString().endsWith("=0;\n") || (statement1.getString().endsWith("=0;\n") && statement2.getString().endsWith(".length;\n")))) {
 			findReplacements(numberLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_NUMBER_LITERAL, container1, container2, classDiff);
+			if(variables1.size() > 0 && numberLiterals2.size() > 0 && statement1.getString().contains(JAVA.ASSIGNMENT + variables1.iterator().next()) && statement2.getString().contains(JAVA.ASSIGNMENT + numberLiterals2.iterator().next()) &&
+					!statement2.getString().endsWith(JAVA.ASSIGNMENT + numberLiterals2.iterator().next() + JAVA.STATEMENT_TERMINATION)) {
+				findReplacements(variables1, numberLiterals2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_NUMBER_LITERAL, container1, container2, classDiff);
+			}
 		}
 		findReplacements(variables1, arrayAccesses2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS, container1, container2, classDiff);
 		findReplacements(arrayAccesses1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS, container1, container2, classDiff);
@@ -976,9 +1025,11 @@ public class ReplacementAlgorithm {
 		if(statement1.getThisExpressions().size() > 0 && !statement1.getString().equals(JAVA.RETURN_THIS)) {
 			findReplacements(Set.of("this"), variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION, container1, container2, classDiff);
 		}
-		if(!container1.isGetter() && !container2.isGetter()) {
+		if(!container1.isGetter() && !container2.isGetter() && !container1.isSetter() && !container2.isSetter()) {
 			findReplacements(stringLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
 			findReplacements(variables1, stringLiterals2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
+			findReplacements(castExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CAST_EXPRESSION, container1, container2, classDiff);
+			findReplacements(variables1, castExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CAST_EXPRESSION, container1, container2, classDiff);
 		}
 		findReplacements(parenthesizedExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION, container1, container2, classDiff);
 		findReplacements(variables1, parenthesizedExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION, container1, container2, classDiff);
@@ -1915,7 +1966,9 @@ public class ReplacementAlgorithm {
 			}
 			else if(try1.isTryWithResources() && try2.isTryWithResources()) {
 				if((creationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) ||
-						(invocationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null)) {
+						(invocationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null) ||
+						(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) ||
+						(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null)) {
 					List<AbstractStatement> tryStatements1 = try1.getStatements();
 					List<AbstractStatement> tryStatements2 = try2.getStatements();
 					List<AbstractCodeFragment> matchedChildStatements1 = new ArrayList<>();
@@ -1928,6 +1981,20 @@ public class ReplacementAlgorithm {
 					}
 					if(matchedChildStatements1.size() > 0 && matchedChildStatements1.size() == matchedChildStatements2.size() &&
 							(tryStatements1.size() == matchedChildStatements1.size() || tryStatements2.size() == matchedChildStatements2.size())) {
+						List<VariableDeclaration> declarations1 = try1.getVariableDeclarations();
+						List<VariableDeclaration> declarations2 = try2.getVariableDeclarations();
+						if(declarations1.size() < declarations2.size()) {
+							for(int i=0; i<declarations1.size(); i++) {
+								VariableDeclaration d1 = declarations1.get(i);
+								for(int j=0; j<declarations2.size(); j++) {
+									VariableDeclaration d2 = declarations2.get(j);
+									if(d1.equalType(d2) && d1.getVariableName().equals(d2.getVariableName())) {
+										LeafMapping leafMapping = new LeafMapping(try1.getExpressions().get(i), try2.getExpressions().get(j), container1, container2);
+										replacementInfo.addSubExpressionMapping(leafMapping);
+									}
+								}
+							}
+						}
 						return replacementInfo.getReplacements();
 					}
 				}
@@ -2174,7 +2241,7 @@ public class ReplacementAlgorithm {
 						replacementInfo.addReplacement(replacement);
 						return replacementInfo.getReplacements();
 					}
-					if(invocationCoveringTheEntireStatement1.identicalOrConcatenatedArguments(invocation2)) {
+					if(invocationCoveringTheEntireStatement1.identicalOrConcatenatedArguments(invocation2, parameterToArgumentMap)) {
 						Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 								invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_ARGUMENT_CONCATENATED);
 						replacementInfo.addReplacement(replacement);
@@ -2593,7 +2660,9 @@ public class ReplacementAlgorithm {
 									!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
 								return null;
 							}
-							return replacementInfo.getReplacements();
+							if(statement1.isLogCall() == statement2.isLogCall()) {
+								return replacementInfo.getReplacements();
+							}
 						}
 						if(invocation1 instanceof OperationInvocation) {
 							Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<AbstractCodeFragment>();
@@ -2697,8 +2766,72 @@ public class ReplacementAlgorithm {
 		}
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
 			//assertTrue() to fluid assertThat().isTrue() conversion
+			//assertSame() to fluid assertThat().isSameAs()
+			//assertFalse() to fluid assertThat().isFalse() conversion
+			//assertEquals() to fluid assertThat().isEqualTo()
+			//assertArrayEquals() to fluid assertThat().isEqualTo()
+			//assertEquals() to fluid assertThat().hasValue()
+			//assertNull() to fluid assertThat().isNull()
+			//assertNotNull() to fluid assertThat().isNotNull()
+			//assertThat(empty()) to fluid assertThat().isEmpty()
+			//assertThat(equalTo(false)) to assertThat().isFalse()
+			//assertThat(equalTo(x)) to assertThat().isEqualTo(x)
+			//assertThat(containsInAnyOrder()) to fluid assertThat().containsExactlyInAnyOrder()
+			//assertThat(contains()) to fluid assertThat().containsExactly()
+			//assertThat(lessThanOrEqualTo()) to fluid assertThat().isLessThanOrEqualTo()
+			//assertThat(greaterThanOrEqualTo()) to fluid assertThat().isGreaterThanOrEqualTo()
+			//assertThat(instanceOf()) to fluid assertThat().isInstanceOf()
+			//assertTrue(isEmpty()) to fluid assertThat().isEmpty()
+			//assertTrue(instanceof) to fluid assertThat().isInstanceOf()
+			//assertThat(is()) to fluid assertThat().is()
+			//assertTrue(>0) to fluid assertThat().isPositive()
+			//assertTrue(<0) to fluid assertThat().isNegative()
+			//assertTrue(==0) to fluid assertThat().isZero()
+			//assertEquals(y, x.size()) to assertThat(x).hasSize(y)
 			if((invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isTrue")) ||
-					(invocationCoveringTheEntireStatement1.getName().equals("assertFalse") && invocationCoveringTheEntireStatement2.getName().equals("isFalse"))) {
+					(invocationCoveringTheEntireStatement1.getName().equals("assertSame") && invocationCoveringTheEntireStatement2.getName().equals("isSameAs")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertFalse") && invocationCoveringTheEntireStatement2.getName().equals("isFalse")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertNull") && invocationCoveringTheEntireStatement2.getName().equals("isNull")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertNotNull") && invocationCoveringTheEntireStatement2.getName().equals("isNotNull")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("isEqualTo")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertArrayEquals") && invocationCoveringTheEntireStatement2.getName().equals("isEqualTo")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("hasValue")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("hasSize") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("size()")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("isZero") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).startsWith("0")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("isOne") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).startsWith("1")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isEmpty") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("empty()")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isFalse") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("equalTo(false)")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isTrue") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("equalTo(true)")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isEqualTo") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("equalTo(")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && (invocationCoveringTheEntireStatement2.getName().equals("containsExactlyInAnyOrder") || invocationCoveringTheEntireStatement2.getName().equals("containsExactly")) &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("containsInAnyOrder(")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("containsExactly") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("contains(")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isGreaterThanOrEqualTo") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("greaterThanOrEqualTo(")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isLessThanOrEqualTo") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("lessThanOrEqualTo(")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isInstanceOf") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("instanceOf(")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("is") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("is(")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isEmpty") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).contains("isEmpty()")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isInstanceOf") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(" instanceof ")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isPositive") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(" > 0")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isNegative") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(" < 0")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isZero") &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(" == 0"))) {
 				for(String key2 : methodInvocationMap2.keySet()) {
 					for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
 						if(invocation2.getName().equals("assertThat")) {
@@ -2713,14 +2846,44 @@ public class ReplacementAlgorithm {
 										return replacementInfo.getReplacements();
 									}
 									else if(arg.contains(".")) {
-										String trim = arg.substring(arg.indexOf(".") + 1, arg.length()); {
-											if(statement2.getArgumentizedString().contains(trim)) {
-												Replacement replacement = new MethodInvocationReplacement(
-														invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
-														invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
-												//replacementInfo.addReplacement(replacement);
-												return replacementInfo.getReplacements();
-											}
+										String trim = arg.substring(arg.indexOf(".") + 1, arg.length());
+										if(statement2.getArgumentizedString().contains(trim)) {
+											Replacement replacement = new MethodInvocationReplacement(
+													invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
+													invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
+											//replacementInfo.addReplacement(replacement);
+											return replacementInfo.getReplacements();
+										}
+									}
+									if(arg.contains(" instanceof ")) {
+										String before = arg.substring(0, arg.indexOf(" instanceof "));
+										String after = arg.substring(arg.indexOf(" instanceof ") + " instanceof ".length(), arg.length());
+										if(statement2.getArgumentizedString().contains(before) && statement2.getArgumentizedString().contains(after)) {
+											return replacementInfo.getReplacements();
+										}
+									}
+									else if(arg.contains(" > 0")) {
+										String before = arg.substring(0, arg.indexOf(" > 0"));
+										if(statement2.getArgumentizedString().contains(before)) {
+											return replacementInfo.getReplacements();
+										}
+									}
+									else if(arg.contains(" < 0")) {
+										String before = arg.substring(0, arg.indexOf(" < 0"));
+										if(statement2.getArgumentizedString().contains(before)) {
+											return replacementInfo.getReplacements();
+										}
+									}
+									else if(arg.contains(" == 0")) {
+										String before = arg.substring(0, arg.indexOf(" == 0"));
+										if(statement2.getArgumentizedString().contains(before)) {
+											return replacementInfo.getReplacements();
+										}
+									}
+									else if(arg.endsWith(".isEmpty()")) {
+										String before = arg.substring(0, arg.indexOf(".isEmpty()"));
+										if(statement2.getArgumentizedString().contains(before)) {
+											return replacementInfo.getReplacements();
 										}
 									}
 								}
@@ -2731,7 +2894,49 @@ public class ReplacementAlgorithm {
 			}
 			//fluid assertThat().isTrue() to assertTrue() conversion
 			else if((invocationCoveringTheEntireStatement1.getName().equals("isTrue") && invocationCoveringTheEntireStatement2.getName().equals("assertTrue")) ||
-					(invocationCoveringTheEntireStatement1.getName().equals("isFalse") && invocationCoveringTheEntireStatement2.getName().equals("assertFalse"))) {
+					(invocationCoveringTheEntireStatement1.getName().equals("isSameAs") && invocationCoveringTheEntireStatement2.getName().equals("assertSame")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("isFalse") && invocationCoveringTheEntireStatement2.getName().equals("assertFalse")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("isNull") && invocationCoveringTheEntireStatement2.getName().equals("assertNull")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("isNotNull") && invocationCoveringTheEntireStatement2.getName().equals("assertNotNull")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("isEqualTo") && invocationCoveringTheEntireStatement2.getName().equals("assertEquals")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("isEqualTo") && invocationCoveringTheEntireStatement2.getName().equals("assertArrayEquals")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("hasValue") && invocationCoveringTheEntireStatement2.getName().equals("assertEquals")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertEquals") && invocationCoveringTheEntireStatement1.getName().equals("hasSize") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("size()")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertEquals") && invocationCoveringTheEntireStatement1.getName().equals("isZero") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).startsWith("0")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertEquals") && invocationCoveringTheEntireStatement1.getName().equals("isOne") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).startsWith("1")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isEmpty") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("empty()")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isFalse") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("equalTo(false)")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isTrue") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("equalTo(true)")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isEqualTo") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("equalTo(")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && (invocationCoveringTheEntireStatement1.getName().equals("containsExactlyInAnyOrder") || invocationCoveringTheEntireStatement1.getName().equals("containsExactly")) &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("containsInAnyOrder(")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("containsExactly") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("contains(")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isGreaterThanOrEqualTo") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("greaterThanOrEqualTo(")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isLessThanOrEqualTo") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("lessThanOrEqualTo(")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isInstanceOf") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("instanceOf(")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("is") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("is(")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertTrue") && invocationCoveringTheEntireStatement1.getName().equals("isEmpty") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).contains("isEmpty()")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertTrue") && invocationCoveringTheEntireStatement1.getName().equals("isInstanceOf") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).contains(" instanceof ")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertTrue") && invocationCoveringTheEntireStatement1.getName().equals("isPositive") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).contains(" > 0")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertTrue") && invocationCoveringTheEntireStatement1.getName().equals("isNegative") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).contains(" < 0")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertTrue") && invocationCoveringTheEntireStatement1.getName().equals("isZero") &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).contains(" == 0"))) {
 				for(String key1 : methodInvocationMap1.keySet()) {
 					for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
 						if(invocation1.getName().equals("assertThat")) {
@@ -2746,14 +2951,44 @@ public class ReplacementAlgorithm {
 										return replacementInfo.getReplacements();
 									}
 									else if(arg.contains(".")) {
-										String trim = arg.substring(arg.indexOf(".") + 1, arg.length()); {
-											if(statement1.getArgumentizedString().contains(trim)) {
-												Replacement replacement = new MethodInvocationReplacement(
-														invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
-														invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
-												//replacementInfo.addReplacement(replacement);
-												return replacementInfo.getReplacements();
-											}
+										String trim = arg.substring(arg.indexOf(".") + 1, arg.length());
+										if(statement1.getArgumentizedString().contains(trim)) {
+											Replacement replacement = new MethodInvocationReplacement(
+													invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
+													invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
+											//replacementInfo.addReplacement(replacement);
+											return replacementInfo.getReplacements();
+										}
+									}
+									if(arg.contains(" instanceof ")) {
+										String before = arg.substring(0, arg.indexOf(" instanceof "));
+										String after = arg.substring(arg.indexOf(" instanceof ") + " instanceof ".length(), arg.length());
+										if(statement1.getArgumentizedString().contains(before) && statement1.getArgumentizedString().contains(after)) {
+											return replacementInfo.getReplacements();
+										}
+									}
+									else if(arg.contains(" > 0")) {
+										String before = arg.substring(0, arg.indexOf(" > 0"));
+										if(statement1.getArgumentizedString().contains(before)) {
+											return replacementInfo.getReplacements();
+										}
+									}
+									else if(arg.contains(" < 0")) {
+										String before = arg.substring(0, arg.indexOf(" < 0"));
+										if(statement1.getArgumentizedString().contains(before)) {
+											return replacementInfo.getReplacements();
+										}
+									}
+									else if(arg.contains(" == 0")) {
+										String before = arg.substring(0, arg.indexOf(" == 0"));
+										if(statement1.getArgumentizedString().contains(before)) {
+											return replacementInfo.getReplacements();
+										}
+									}
+									else if(arg.endsWith(".isEmpty()")) {
+										String before = arg.substring(0, arg.indexOf(".isEmpty()"));
+										if(statement1.getArgumentizedString().contains(before)) {
+											return replacementInfo.getReplacements();
 										}
 									}
 								}
@@ -3016,6 +3251,12 @@ public class ReplacementAlgorithm {
 					replacementInfo.addReplacement(replacement);
 					return replacementInfo.getReplacements();
 				}
+				else if(creationCoveringTheEntireStatement1.argumentIntersection(creationCoveringTheEntireStatement2).size() > 0) {
+					Replacement replacement = new ObjectCreationReplacement(creationCoveringTheEntireStatement1.getName(),
+							creationCoveringTheEntireStatement2.getName(), creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION);
+					replacementInfo.addReplacement(replacement);
+					return replacementInfo.getReplacements();
+				}
 			}
 		}
 		//object creation has identical arguments, but different type
@@ -3072,6 +3313,14 @@ public class ReplacementAlgorithm {
 				return replacementInfo.getReplacements();
 			}
 			else if(creationCoveringTheEntireStatement1.inlinedStatementBecomesAdditionalArgument(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), statement1, replacementInfo.getStatements1())) {
+				Replacement replacement = new ObjectCreationReplacement(creationCoveringTheEntireStatement1.actualString(),
+						creationCoveringTheEntireStatement2.actualString(), creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);
+				replacementInfo.addReplacement(replacement);
+				return replacementInfo.getReplacements();
+			}
+			else if(creationCoveringTheEntireStatement1.identicalName(creationCoveringTheEntireStatement2) &&
+					creationCoveringTheEntireStatement1.arguments().size() > 0 && creationCoveringTheEntireStatement2.arguments().size() > 0 &&
+					creationCoveringTheEntireStatement1.identicalOrConcatenatedArguments(creationCoveringTheEntireStatement2, parameterToArgumentMap)) {
 				Replacement replacement = new ObjectCreationReplacement(creationCoveringTheEntireStatement1.actualString(),
 						creationCoveringTheEntireStatement2.actualString(), creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);
 				replacementInfo.addReplacement(replacement);
@@ -4945,9 +5194,17 @@ public class ReplacementAlgorithm {
 			for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
 				if(call1.matchesOperation(removedOperation, container1, classDiff, modelDiff)) {
 					for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
-						if(removedOperation.getBodyHashCode() == addedOperation.getBodyHashCode()) {
-							if(call2.matchesOperation(addedOperation, container2, classDiff, modelDiff)) {
+						if(call2.matchesOperation(addedOperation, container2, classDiff, modelDiff)) {
+							if(removedOperation.getBodyHashCode() == addedOperation.getBodyHashCode()) {
 								return true;
+							}
+							List<String> removed = removedOperation.stringRepresentation();
+							List<String> added = addedOperation.stringRepresentation();
+							// 3 corresponds to the opening and closing bracket of a method + a single statement
+							if(added.size() > 3 && removed.size() > 3) {
+								if(added.containsAll(removed) || removed.containsAll(added)) {
+									return true;
+								}
 							}
 						}
 					}
@@ -5233,6 +5490,15 @@ public class ReplacementAlgorithm {
 						streamAPICalls.add(inv);
 					}
 				}
+				/*for(LambdaExpressionObject lambda : statement.getLambdas()) {
+					if(lambda.getExpression() != null) {
+						for(AbstractCall inv : lambda.getExpression().getAllOperationInvocations()) {
+							if(streamAPIName(inv.getName())) {
+								streamAPICalls.add(inv);
+							}
+						}
+					}
+				}*/
 			}
 		}
 		return streamAPICalls;

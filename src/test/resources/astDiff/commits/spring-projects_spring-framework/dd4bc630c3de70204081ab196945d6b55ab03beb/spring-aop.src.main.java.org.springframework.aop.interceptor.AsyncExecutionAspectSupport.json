@@ -846,6 +846,17 @@
   "firstEndPos" : 2182,
   "secondEndPos" : 2500
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2183,
+  "secondPos" : 2501,
+  "firstEndPos" : 2193,
+  "secondEndPos" : 2511
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "BeanFactoryAware",
@@ -7071,6 +7082,17 @@
   "secondPos" : 8889,
   "firstEndPos" : 6873,
   "secondEndPos" : 8895
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 6870,
+  "secondPos" : 8331,
+  "firstEndPos" : 6876,
+  "secondEndPos" : 8337
 }, {
   "firstType" : "TYPE_DECLARATION_KIND",
   "secondType" : "TYPE_DECLARATION_KIND",

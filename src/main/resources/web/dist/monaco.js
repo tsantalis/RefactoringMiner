@@ -45,7 +45,6 @@ function mymonaco(config) {
                     const rightHeight = rightEditor.getContentHeight();
                     let maxHeight = Math.max(leftHeight, rightHeight);
                     const editorHeight = maxHeight > maxAllowedHeight ? maxAllowedHeight : maxHeight;
-                    console.log(editorHeight);
                     leftContainer.style.height = editorHeight + 'px';
                     rightContainer.style.height = editorHeight + 'px';
                     leftEditor.layout();
@@ -79,12 +78,13 @@ function mymonaco(config) {
                 leftEditor.getAction('editor.foldAll').run();
                 rightEditor.getAction('editor.foldAll').run();
             }
+            addInlineComments(leftEditor, config.left_comments || []);
+            addInlineComments(rightEditor, config.right_comments || []);
             window.leftEditor = leftEditor;
             window.rightEditor = rightEditor;
         });
     }
 }
-
 
 function varInits(config, rightEditor, leftEditor) {
     rightEditor.getModel().moved = config.moved;

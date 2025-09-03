@@ -70,9 +70,11 @@ public class DirectoryDiffView implements Renderable {
                     .div(class_("row"))
                         .render(new MenuBar(external, metaInfo))
                     ._div()
+                    .if_(!external)
                     .div(class_("row"))
                     .render(new RefactoringBar(comparator))
                     ._div()
+                    ._if()
 //                .if_(!external)
 //                    .div(class_("row justify-content-center"))
 //                        .div(class_("col-6 text-center"))
@@ -207,14 +209,25 @@ public class DirectoryDiffView implements Renderable {
                     boolean empty = comparator.getASTDiff(nodeInfo.getId()).isEmpty();
                     if(!empty) {
                         ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
+                        String datatype;
+                        String datapath;
+                        if (astDiff.getSrcPath().equals(astDiff.getDstPath())) {
+                            datatype = "modified";
+                            datapath = astDiff.getSrcPath();
+                        }
+                        else {
+                            datatype = "renamed";
+                            datapath = astDiff.getSrcPath() + "|" + astDiff.getDstPath();
+                        }
+
                         ul.tr()
                         .td(style("white-space: normal; word-wrap: break-word; word-break: break-all;"))
                         .if_(!external && _checkBox)
                         .input(type("checkbox")
                                 .name("fileSelect").value(nodeInfo.getId())
                                 .data("id", nodeInfo.getId())
-                                .data("path", astDiff.getSrcPath())
-                                .data("type", "modified"))
+                                .data("path", datapath)
+                                .data("type", datatype))
                         ._if()
                         .a(id("diff_row_" + nodeInfo.getId()).href("/monaco-page/" + nodeInfo.getId()))
                         .img(src(iconPath).width(iconWidth).height(iconHeight).title(title))
@@ -330,6 +343,7 @@ public class DirectoryDiffView implements Renderable {
                      .head()
                         .meta(charset("utf8"))
                         .meta(name("viewport").content("width=device-width, initial-scale=1.0"))
+                        .link(w -> w.write(" rel=\"icon\" type=\"image/x-icon\" href=\"/favicon.ico\""))
                         .title().content("RefactoringMiner")
                         .macros().stylesheet(WebDiff.BOOTSTRAP_CSS_URL)
                         .macros().javascript(WebDiff.JQUERY_JS_URL)
@@ -453,8 +467,10 @@ public class DirectoryDiffView implements Renderable {
                         	ImmutablePair<String, String> afterIteratorNext = afterIterator.next();
                         	String filePathAfter = afterIteratorNext.left;
                         	String classNameAfter = afterIteratorNext.right;
-                        	//for Extract and Move Method take the second
-                        	if(r.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION) && afterIterator.hasNext()) {
+                        	//for Extract and Move Method and Extract Class take the second
+                        	if((r.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION) ||
+                        			r.getRefactoringType().equals(RefactoringType.EXTRACT_CLASS) ||
+                        			r.getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS)) && afterIterator.hasNext()) {
                         		afterIteratorNext = afterIterator.next();
                         		filePathAfter = afterIteratorNext.left;
                         		classNameAfter = afterIteratorNext.right;
@@ -465,18 +481,9 @@ public class DirectoryDiffView implements Renderable {
                         		id = filePathPairToDiffId.get(pair);
                         	}
                         	String description = r.toString();
-                        	String refactoringTypeWithBold = "<b>" + r.getRefactoringType().getDisplayName() + "</b>";
-                        	description = description.replace(r.getRefactoringType().getDisplayName(), refactoringTypeWithBold);
-                        	if(id != -1) {
-                        		if(description.contains(classNameBefore)) {
-                        			String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameBefore + "</a>"; 
-                        			description = description.replace(classNameBefore, classNameWithLink);
-                        		}
-                        		if(description.contains(classNameAfter) && !classNameBefore.equals(classNameAfter)) {
-                        			String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameAfter + "</a>"; 
-                        			description = description.replace(classNameAfter, classNameWithLink);
-                        		}
-                        	}
+                        	String displayName = r.getRefactoringType().getDisplayName();
+							String refactoringTypeWithBold = "<b>" + displayName + "</b>";
+                        	description = description.replace(displayName, refactoringTypeWithBold);
                         	Set<String> processed = new LinkedHashSet<>();
                         	String openingTag = "<code>";
 							String closingTag = "</code>";
@@ -522,8 +529,38 @@ public class DirectoryDiffView implements Renderable {
                         	}
                         	List<String> list = new ArrayList<>(toBeReplaced.keySet());
                         	Collections.sort(list, Comparator.comparing(String::length).reversed());
+                        	String previous = null;
                         	for(String codeElement : list) {
-                        		description = description.replace(codeElement, toBeReplaced.get(codeElement));
+                        		if(previous != null && previous.contains(codeElement)) {
+                        			int index = description.indexOf(codeElement);
+                        			boolean skip = false;
+                        			if(index > 6) {
+                        				String s = description.substring(index-6, index);
+                        				if(s.equals(openingTag)) {
+                        					skip = true;
+                        				}
+                        			}
+                        			if(!skip) {
+                        				description = description.replaceFirst(codeElement, toBeReplaced.get(codeElement));
+                        			}
+                        		}
+                        		else {
+                        			description = description.replace(codeElement, toBeReplaced.get(codeElement));
+                        		}
+                        		previous = codeElement;
+                        	}
+                        	if(id != -1) {
+                        		description = processClassNameAfter(classNameAfter, id, description, openingTag, closingTag);
+                        		if(displayName.contains("Class") || displayName.contains("Move") || displayName.contains("Pull Up") || displayName.contains("Push Down") || displayName.contains("Remove")) {
+                        			boolean skip = false;
+                        			if((r.getRefactoringType().equals(RefactoringType.EXTRACT_CLASS) ||
+                                			r.getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS)) && classNameAfter.contains(classNameBefore)) {
+                        				skip = true;
+                        			}
+                        			if(!skip) {
+                        				description = processClassNameBefore(classNameBefore, id, description, openingTag, closingTag);
+                        			}
+                        		}
                         	}
                             html.li(class_("list-group-item")).write(description, NO_ESCAPE)
                             ._li();
@@ -535,6 +572,34 @@ public class DirectoryDiffView implements Renderable {
                 ._div()
             ._div();
         }
+
+		private String processClassNameAfter(String classNameAfter, int id, String description, String openingTag, String closingTag) {
+			if(description.contains(openingTag + classNameAfter + closingTag)) {
+				String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameAfter + "</a>";
+				description = description.replace(openingTag + classNameAfter + closingTag, classNameWithLink);
+			}
+			else if(description.contains(classNameAfter)) {
+				String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameAfter + "</a>";
+				description = description.replace(classNameAfter, classNameWithLink);
+			}
+			return description;
+		}
+
+		private String processClassNameBefore(String classNameBefore, int id, String description, String openingTag, String closingTag) {
+			if(description.contains(openingTag + classNameBefore + closingTag)) {
+				String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameBefore + "</a>";
+				description = description.replace(openingTag + classNameBefore + closingTag, classNameWithLink);
+			}
+			else if(description.contains(classNameBefore) && !description.contains(">"+classNameBefore)) {
+				String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameBefore + "</a>";
+				description = description.replace(classNameBefore, classNameWithLink);
+			}
+			else if(description.contains(classNameBefore) && !description.contains(">"+classNameBefore+"</a>")) {
+				String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameBefore + "</a>";
+				description = description.replaceFirst(classNameBefore, classNameWithLink);
+			}
+			return description;
+		}
 
         private String escape(String codeElement) {
             return codeElement.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&apos;");

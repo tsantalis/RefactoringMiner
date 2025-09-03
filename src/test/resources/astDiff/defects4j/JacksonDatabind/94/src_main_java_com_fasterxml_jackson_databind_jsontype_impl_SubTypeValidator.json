@@ -2661,6 +2661,17 @@
   "firstEndPos" : 3018,
   "secondEndPos" : 3090
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 3020,
+  "secondPos" : 3092,
+  "firstEndPos" : 3026,
+  "secondEndPos" : 3098
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "JsonMappingException",

@@ -165,8 +165,17 @@ public class UMLJavadocDiff {
 					}
 				}
 				else if(tagBefore.isThrows() && tagAfter.isThrows()) {
-					boolean match = processModifiedTags(tagBefore, tagAfter);
-					if(match) {
+					if(!throwsTagAlreadyMatchedWithSameType(tagAfter) && processModifiedTags(tagBefore, tagAfter)) {
+						deletedToBeDeleted.add(tagBefore);
+						addedToBeDeleted.add(tagAfter);
+						Pair<UMLTagElement, UMLTagElement> pair = Pair.of(tagBefore, tagAfter);
+						commonTags.add(pair);
+						matchNestedTags(tagBefore, tagAfter);
+						break;
+					}
+				}
+				else if(tagBefore.isSee() && tagAfter.isSee()) {
+					if(!seeTagAlreadyMatched(tagAfter) && processModifiedTags(tagBefore, tagAfter)) {
 						deletedToBeDeleted.add(tagBefore);
 						addedToBeDeleted.add(tagAfter);
 						Pair<UMLTagElement, UMLTagElement> pair = Pair.of(tagBefore, tagAfter);
@@ -222,6 +231,24 @@ public class UMLJavadocDiff {
 		addedTags.removeAll(addedToBeDeleted);
 		this.deletedTags.addAll(deletedTags);
 		this.addedTags.addAll(addedTags);
+	}
+
+	private boolean throwsTagAlreadyMatchedWithSameType(UMLTagElement tagAfter) {
+		for(Pair<UMLTagElement, UMLTagElement> pair : commonTags) {
+			if(pair.getRight().equals(tagAfter) && pair.getLeft().getFragments().get(0).equals(pair.getRight().getFragments().get(0))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean seeTagAlreadyMatched(UMLTagElement tagAfter) {
+		for(Pair<UMLTagElement, UMLTagElement> pair : commonTags) {
+			if(pair.getRight().equals(tagAfter)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void matchNestedTags(UMLTagElement tagBefore, UMLTagElement tagAfter) {
@@ -357,6 +384,17 @@ public class UMLJavadocDiff {
 		return matchingIndices;
 	}
 
+	private List<Integer> findAllMatchingIndices(List<UMLDocElement> fragments, String text) {
+		List<Integer> matchingIndices = new ArrayList<>();
+		for(int i=0; i<fragments.size(); i++) {
+			UMLDocElement element = fragments.get(i);
+			if(text.equals(element.getText())) {
+				matchingIndices.add(i);
+			}
+		}
+		return matchingIndices;
+	}
+
 	private boolean processModifiedTags(UMLTagElement tagBefore, UMLTagElement tagAfter) {
 		int commonDocElementsBefore = commonDocElements.size();
 		List<UMLDocElement> fragmentsBefore = tagBefore.getFragments();
@@ -405,7 +443,22 @@ public class UMLJavadocDiff {
 							}
 						}
 					}
-					if(!matchFound) {
+					if(!matchFound && beforeMatchingIndices.size() == matchingIndices.size()) {
+						for(Integer index : matchingIndices) {
+							if(!alreadyMatchedDocElement(docElement, fragmentsAfter.get(index))) {
+								Pair<UMLDocElement, UMLDocElement> pair = Pair.of(docElement, fragmentsAfter.get(index));
+								commonDocElements.add(pair);
+								deletedDocElements.remove(docElement);
+								addedDocElements.remove(docElement);
+								break;
+							}
+						}
+					}
+				}
+				else if(docElement.getText().equals(". <br>")) {
+					List<Integer> matchingIndices = findAllMatchingIndices(fragmentsAfter, "<br>");
+					List<Integer> beforeMatchingIndices = findAllMatchingIndices(fragmentsBefore, "<br>");
+					if(beforeMatchingIndices.size() == matchingIndices.size()) {
 						for(Integer index : matchingIndices) {
 							if(!alreadyMatchedDocElement(docElement, fragmentsAfter.get(index))) {
 								Pair<UMLDocElement, UMLDocElement> pair = Pair.of(docElement, fragmentsAfter.get(index));
@@ -493,7 +546,7 @@ public class UMLJavadocDiff {
 							}
 						}
 					}
-					if(!matchFound) {
+					if(!matchFound && afterMatchingIndices.size() == matchingIndices.size()) {
 						for(Integer index : matchingIndices) {
 							if(!alreadyMatchedDocElement(fragmentsBefore.get(index), docElement)) {
 								Pair<UMLDocElement, UMLDocElement> pair = Pair.of(fragmentsBefore.get(index), docElement);
@@ -529,28 +582,94 @@ public class UMLJavadocDiff {
 		//match doc elements differing only in opening/closing quotes
 		if(deletedDocElements.size() <= addedDocElements.size()) {
 			for(UMLDocElement deletedDocElement : new ArrayList<>(deletedDocElements)) {
+				List<Integer> matchingIndices = findAllMatchingIndices(fragmentsAfter, deletedDocElement);
+				List<Integer> beforeMatchingIndices = findAllMatchingIndices(fragmentsBefore, deletedDocElement);
 				String trimmed1 = deletedDocElement.getText().replaceAll("^\"|\"$", "");
-				for(UMLDocElement addedDocElement : new ArrayList<>(addedDocElements)) {
-					String trimmed2 = addedDocElement.getText().replaceAll("^\"|\"$", "");
-					if(trimmed1.equals(trimmed2) || trimmed1.equals(trimmed2 + ".") || trimmed2.equals(trimmed1 + ".")) {
-						Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
-						commonDocElements.add(pair);
-						deletedDocElements.remove(deletedDocElement);
-						addedDocElements.remove(addedDocElement);
+				if(!trimmed1.equals(".")) {
+					for(UMLDocElement addedDocElement : new ArrayList<>(addedDocElements)) {
+						String trimmed2 = addedDocElement.getText().replaceAll("^\"|\"$", "");
+						if((matchingIndices.size() > 1 || beforeMatchingIndices.size() > 1) && trimmed1.equals(trimmed2)) {
+							for(Integer index : matchingIndices) {
+								if(index > 0 && index < fragmentsAfter.size()-1) {
+									for(Integer beforeIndex : beforeMatchingIndices) {
+										if(beforeIndex > 0 && beforeIndex < fragmentsBefore.size()-1) {
+											UMLDocElement before1 = fragmentsBefore.get(beforeIndex-1);
+											UMLDocElement after1 = fragmentsBefore.get(beforeIndex+1);
+											UMLDocElement before2 = fragmentsAfter.get(index-1);
+											UMLDocElement after2 = fragmentsAfter.get(index+1);
+											if(before1.equals(before2) && after1.equals(after2) && !alreadyMatchedDocElement(deletedDocElement, fragmentsAfter.get(index)) &&
+													!alreadyMatchedDocElement(fragmentsBefore.get(beforeIndex), deletedDocElement)) {
+												Pair<UMLDocElement, UMLDocElement> pair = Pair.of(fragmentsBefore.get(beforeIndex), fragmentsAfter.get(index));
+												commonDocElements.add(pair);
+												deletedDocElements.remove(deletedDocElement);
+												//remove fragmentsAfter.get(index) with the same location
+												int addIndex = 0;
+												for(UMLDocElement d : addedDocElements) {
+													if(d.getLocationInfo().equals(fragmentsAfter.get(index).getLocationInfo()) && d.equals(fragmentsAfter.get(index))) {
+														break;
+													}
+													addIndex++;
+												}
+												addedDocElements.remove(addIndex);
+											}
+										}
+									}
+								}
+							}
+						}
+						else if(trimmed1.equals(trimmed2) || trimmed1.equals(trimmed2 + ".") || trimmed2.equals(trimmed1 + ".")) {
+							Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+							commonDocElements.add(pair);
+							deletedDocElements.remove(deletedDocElement);
+							addedDocElements.remove(addedDocElement);
+						}
 					}
 				}
 			}
 		}
 		else {
 			for(UMLDocElement addedDocElement : new ArrayList<>(addedDocElements)) {
+				List<Integer> matchingIndices = findAllMatchingIndices(fragmentsBefore, addedDocElement);
+				List<Integer> afterMatchingIndices = findAllMatchingIndices(fragmentsAfter, addedDocElement);
 				String trimmed2 = addedDocElement.getText().replaceAll("^\"|\"$", "");
-				for(UMLDocElement deletedDocElement : new ArrayList<>(deletedDocElements)) {
-					String trimmed1 = deletedDocElement.getText().replaceAll("^\"|\"$", "");
-					if(trimmed1.equals(trimmed2) || trimmed1.equals(trimmed2 + ".") || trimmed2.equals(trimmed1 + ".")) {
-						Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
-						commonDocElements.add(pair);
-						deletedDocElements.remove(deletedDocElement);
-						addedDocElements.remove(addedDocElement);
+				if(!trimmed2.equals(".")) {
+					for(UMLDocElement deletedDocElement : new ArrayList<>(deletedDocElements)) {
+						String trimmed1 = deletedDocElement.getText().replaceAll("^\"|\"$", "");
+						if((matchingIndices.size() > 1 || afterMatchingIndices.size() > 1) && trimmed1.equals(trimmed2)) {
+							for(Integer index : matchingIndices) {
+								if(index > 0 && index < fragmentsBefore.size()-1) {
+									for(Integer afterIndex : afterMatchingIndices) {
+										if(afterIndex > 0 && afterIndex < fragmentsAfter.size()-1) {
+											UMLDocElement before1 = fragmentsBefore.get(index-1);
+											UMLDocElement after1 = fragmentsBefore.get(index+1);
+											UMLDocElement before2 = fragmentsAfter.get(afterIndex-1);
+											UMLDocElement after2 = fragmentsAfter.get(afterIndex+1);
+											if(before1.equals(before2) && after1.equals(after2) && !alreadyMatchedDocElement(fragmentsBefore.get(index), addedDocElement) &&
+													!alreadyMatchedDocElement(addedDocElement, fragmentsAfter.get(afterIndex))) {
+												Pair<UMLDocElement, UMLDocElement> pair = Pair.of(fragmentsBefore.get(index), fragmentsAfter.get(afterIndex));
+												commonDocElements.add(pair);
+												//remove fragmentsBefore.get(index) with the same location
+												int removeIndex = 0;
+												for(UMLDocElement d : deletedDocElements) {
+													if(d.getLocationInfo().equals(fragmentsBefore.get(index).getLocationInfo()) && d.equals(fragmentsBefore.get(index))) {
+														break;
+													}
+													removeIndex++;
+												}
+												deletedDocElements.remove(removeIndex);
+												addedDocElements.remove(addedDocElement);
+											}
+										}
+									}
+								}
+							}
+						}
+						else if(trimmed1.equals(trimmed2) || trimmed1.equals(trimmed2 + ".") || trimmed2.equals(trimmed1 + ".")) {
+							Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+							commonDocElements.add(pair);
+							deletedDocElements.remove(deletedDocElement);
+							addedDocElements.remove(addedDocElement);
+						}
 					}
 				}
 			}
@@ -594,7 +713,7 @@ public class UMLJavadocDiff {
 		}
 		String deletedWithoutTags = Jsoup.parse(deletedSB.toString()).text();
 		String addedWithoutTags = Jsoup.parse(addedSB.toString()).text();
-		if(deletedSB.toString().replaceAll("\\s", "").equals(addedSB.toString().replaceAll("\\s", ""))) {
+		if(deletedSB.toString().replaceAll("\\s", "").replaceAll("\\*", "").equals(addedSB.toString().replaceAll("\\s", "").replaceAll("\\*", ""))) {
 			//make all pair combinations
 			for(UMLDocElement deletedDocElement : deletedDocElements) {
 				for(UMLDocElement addedDocElement : addedDocElements) {
@@ -656,7 +775,8 @@ public class UMLJavadocDiff {
 						break;
 					}
 				}
-				if(longestSubSequence != null) {
+				String joined = longestSubSequence != null ? String.join("", longestSubSequence) : "";
+				if(longestSubSequence != null && !joined.equals("<ahref=")) {
 					//make all pair combinations
 					for(UMLDocElement deletedDocElement : deletedDocElements) {
 						if(containsAnySubSequence(deletedTokenSequenceMap.get(deletedDocElement), longestSubSequence)) {
@@ -709,7 +829,8 @@ public class UMLJavadocDiff {
 						break;
 					}
 				}
-				if(longestSubSequence != null) {
+				String joined = longestSubSequence != null ? String.join("", longestSubSequence) : "";
+				if(longestSubSequence != null && !joined.equals("<ahref=")) {
 					//make all pair combinations
 					for(UMLDocElement deletedDocElement : deletedDocElements) {
 						if(containsAnySubSequence(deletedTokenSequenceMap.get(deletedDocElement), longestSubSequence)) {

@@ -24,6 +24,16 @@ public class UMLCommentGroup {
 		return group;
 	}
 
+	public boolean isUniqueInGroup(UMLComment comment) {
+		int matches = 0;
+		for(UMLComment c : group) {
+			if(comment.getText().equals(c.getText())) {
+				matches++;
+			}
+		}
+		return matches == 1;
+	}
+
 	public boolean sameText(UMLCommentGroup other) {
 		if(this.group.size() == other.group.size() && this.group.size() > 1) {
 			int matches = 0;
@@ -65,13 +75,19 @@ public class UMLCommentGroup {
 		return false;
 	}
 
-	public boolean modifiedMatchingText(UMLCommentGroup other) {
+	public UMLCommentListDiff modifiedMatchingText(UMLCommentGroup other) {
 		if(this.group.size() == other.group.size() && this.group.size() > 1) {
 			UMLCommentListDiff diff = new UMLCommentListDiff(this, other);
 			if(diff.getCommonComments().size() == this.group.size()) {
-				return true;
+				return diff;
 			}
 		}
-		return false;
+		else if(this.group.size() != other.group.size() && this.group.size() > 0) {
+			UMLCommentListDiff diff = new UMLCommentListDiff(this, other);
+			if(diff.isManyToManyReformatWithIdenticalText() && diff.getDeletedComments().isEmpty() && diff.getAddedComments().isEmpty()) {
+				return diff;
+			}
+		}
+		return null;
 	}
 }

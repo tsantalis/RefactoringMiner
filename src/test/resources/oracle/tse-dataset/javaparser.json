@@ -67,10 +67,16 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\toType : Optional<Class<N>> in method public findAncestor(predicate Predicate<N>, types Class<N>...) : Optional<N> from class com.github.javaparser.HasParentNode",
-          "validation": true
+          "validation": false
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "REPLACE_PIPELINE_WITH_LOOP",
+          "description": "Replace Pipeline With Loop\tOptional<Class<N>> oType=Arrays.stream(types).filter(type -> type.isAssignableFrom(parent.getClass()) && predicate.test(type.cast(parent))).findFirst(); with for(type: types) in method public findAncestor(predicate Predicate<N>, types Class<N>...) : Optional<N> from class com.github.javaparser.HasParentNode",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/javaparser/javaparser.git",
@@ -107,12 +113,12 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tcallableDeclaration : CallableDeclaration to parentNode : Optional<Node> in method public resolveDeclaration(node Node, resultClass Class<T>) : T from class com.github.javaparser.symbolsolver.JavaSymbolSolver",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tcallableDeclaration : CallableDeclaration to parentNode : Optional<Node> in method public resolveDeclaration(node Node, resultClass Class<T>) : T from class com.github.javaparser.symbolsolver.JavaSymbolSolver",
-          "validation": false
+          "validation": true
         }
       ]
     },
@@ -164,13 +170,13 @@
           "validation": true
         },
         {
-          "type": "MOVE_OPERATION",
-          "description": "Move Method\tpublic JavaConcepts(x int) from class japa.bdd.samples.JavaConcepts to public JavaConceptsInnerClasses(x int) from class japa.bdd.samples.JavaConceptsInnerClasses",
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpublic JavaConcepts(x int) from class japa.bdd.samples.JavaConcepts to public JavaConceptsInnerClasses(x int) from class japa.bdd.samples.JavaConceptsInnerClasses",
           "validation": true
         },
         {
-          "type": "MOVE_OPERATION",
-          "description": "Move Method\tpublic JavaConcepts(str String) from class japa.bdd.samples.JavaConcepts to public JavaConceptsInnerClasses(str String) from class japa.bdd.samples.JavaConceptsInnerClasses",
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpublic JavaConcepts(str String) from class japa.bdd.samples.JavaConcepts to public JavaConceptsInnerClasses(str String) from class japa.bdd.samples.JavaConceptsInnerClasses",
           "validation": true
         },
         {
@@ -263,7 +269,7 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tpublic outputNode(node Node, name String, xmlWriter XMLStreamWriter) : void extracted from public output(node Node, name String, level int, builder StringBuilder) : void in class com.github.javaparser.printer.XmlPrinter",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_RETURN_TYPE",
@@ -340,24 +346,24 @@
         {
           "type": "PULL_UP_ATTRIBUTE",
           "description": "Pull Up Attribute\tprivate JAVA_LANG_COMPARABLE : String from class com.github.javaparser.symbolsolver.javaparsermodel.declarations.JavaParserEnumDeclaration to public JAVA_LANG_COMPARABLE : String from class com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration",
-          "validation": true
+          "validation": false
         },
         {
           "type": "PULL_UP_ATTRIBUTE",
           "description": "Pull Up Attribute\tprivate JAVA_IO_SERIALIZABLE : String from class com.github.javaparser.symbolsolver.javaparsermodel.declarations.JavaParserEnumDeclaration to public JAVA_IO_SERIALIZABLE : String from class com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
         {
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tprivate JAVA_LANG_COMPARABLE : String from class com.github.javaparser.symbolsolver.javaparsermodel.declarations.JavaParserEnumDeclaration to public JAVA_LANG_COMPARABLE : String from class com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration",
-          "validation": false
+          "validation": true
         },
         {
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tprivate JAVA_IO_SERIALIZABLE : String from class com.github.javaparser.symbolsolver.javaparsermodel.declarations.JavaParserEnumDeclaration to public JAVA_IO_SERIALIZABLE : String from class com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration",
-          "validation": false
+          "validation": true
         }
       ]
     },
@@ -420,7 +426,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tcsmElementListIterator : ListIterator<CsmElement> in method private findIndexOfCorrespondingNodeTextElement(elements List<CsmElement>, nodeText NodeText) : List<Integer> from class com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": []

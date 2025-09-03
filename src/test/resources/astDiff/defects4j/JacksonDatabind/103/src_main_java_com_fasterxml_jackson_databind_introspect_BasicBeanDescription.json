@@ -516,6 +516,17 @@
   "firstEndPos" : 1101,
   "secondEndPos" : 1101
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1102,
+  "secondPos" : 1102,
+  "firstEndPos" : 1109,
+  "secondEndPos" : 1109
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "BeanDescription",
@@ -8656,6 +8667,17 @@
   "firstEndPos" : 8776,
   "secondEndPos" : 8776
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 8779,
+  "secondPos" : 8779,
+  "firstEndPos" : 8785,
+  "secondEndPos" : 8785
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IllegalArgumentException",
@@ -15453,6 +15475,17 @@
   "secondPos" : 15106,
   "firstEndPos" : 15104,
   "secondEndPos" : 15119
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 15107,
+  "secondPos" : 15122,
+  "firstEndPos" : 15113,
+  "secondEndPos" : 15128
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

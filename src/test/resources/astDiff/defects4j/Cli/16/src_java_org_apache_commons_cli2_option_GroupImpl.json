@@ -560,6 +560,17 @@
   "firstEndPos" : 1592,
   "secondEndPos" : 1592
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1597,
+  "secondPos" : 1597,
+  "firstEndPos" : 1604,
+  "secondEndPos" : 1604
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "OptionImpl",
@@ -581,6 +592,17 @@
   "secondPos" : 1605,
   "firstEndPos" : 1615,
   "secondEndPos" : 1615
+}, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1616,
+  "secondPos" : 1616,
+  "firstEndPos" : 1626,
+  "secondEndPos" : 1626
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -5697,6 +5719,17 @@
   "firstEndPos" : 5164,
   "secondEndPos" : 5200
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 5174,
+  "secondPos" : 5210,
+  "firstEndPos" : 5180,
+  "secondEndPos" : 5216
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "OptionException",
@@ -8644,6 +8677,17 @@
   "secondPos" : 8189,
   "firstEndPos" : 8164,
   "secondEndPos" : 8200
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 8174,
+  "secondPos" : 8210,
+  "firstEndPos" : 8180,
+  "secondEndPos" : 8216
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -19622,6 +19666,17 @@
   "secondPos" : 15756,
   "firstEndPos" : 15743,
   "secondEndPos" : 15779
+}, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15744,
+  "secondPos" : 15780,
+  "firstEndPos" : 15754,
+  "secondEndPos" : 15790
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

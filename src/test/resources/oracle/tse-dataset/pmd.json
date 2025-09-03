@@ -70,17 +70,17 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate testPrettyPrintIdentity(expr String, nodeTy Class<T>) : void extracted from package ppMethodCallOnCast() : void in class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate testPrettyPrintIdentity(expr String, nodeTy Class<T>) : void extracted from package ppMethodRef() : void in class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate testPrettyPrintIdentity(expr String, nodeTy Class<T>) : void extracted from package ppCtorCall() : void in class net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtilTest",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_VARIABLE",

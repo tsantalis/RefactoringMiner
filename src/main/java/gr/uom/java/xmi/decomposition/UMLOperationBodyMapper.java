@@ -49,6 +49,7 @@ import gr.uom.java.xmi.diff.MergeConditionalRefactoring;
 import gr.uom.java.xmi.diff.MergeVariableRefactoring;
 import gr.uom.java.xmi.diff.ReferenceBasedRefactoring;
 import gr.uom.java.xmi.diff.RemoveParameterRefactoring;
+import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithLambdaRefactoring;
 import gr.uom.java.xmi.diff.ReplaceLoopWithPipelineRefactoring;
 import gr.uom.java.xmi.diff.ReplacePipelineWithLoopRefactoring;
@@ -204,7 +205,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		nonMappedInnerNodesT1.addAll(innerNodes1);
 		nonMappedInnerNodesT2.addAll(innerNodes2);
 		if(mapper1.commentListDiff != null && mapper2.commentListDiff != null) {
-			this.commentListDiff = new UMLCommentListDiff(mapper1.commentListDiff.getDeletedComments(), mapper2.commentListDiff.getAddedComments(), this.mappings);
+			this.commentListDiff = new UMLCommentListDiff(mapper1.commentListDiff.getDeletedComments(), mapper2.commentListDiff.getAddedComments(), this);
 			checkUnmatchedStatementsBeingCommented();
 		}
 	}
@@ -236,7 +237,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			nonMappedInnerNodesT1.addAll(innerNodes1);
 			nonMappedInnerNodesT2.addAll(innerNodes2);
 			if(mapper2.commentListDiff != null) {
-				this.commentListDiff = new UMLCommentListDiff(container1.getComments(), mapper2.commentListDiff.getAddedComments(), this.mappings);
+				this.commentListDiff = new UMLCommentListDiff(container1.getComments(), mapper2.commentListDiff.getAddedComments(), this);
 				checkUnmatchedStatementsBeingCommented();
 			}
 		}
@@ -269,7 +270,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			nonMappedInnerNodesT1.addAll(innerNodes1);
 			nonMappedInnerNodesT2.addAll(innerNodes2);
 			if(mapper1.commentListDiff != null) {
-				this.commentListDiff = new UMLCommentListDiff(mapper1.commentListDiff.getDeletedComments(), container2.getComments(), this.mappings);
+				this.commentListDiff = new UMLCommentListDiff(mapper1.commentListDiff.getDeletedComments(), container2.getComments(), this);
 				checkUnmatchedStatementsBeingCommented();
 			}
 		}
@@ -472,15 +473,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			int totalNodes1 = leaves1.size() + innerNodes1.size();
 			int totalNodes2 = leaves2.size() + innerNodes2.size();
 			int assertThrows1 = 0;
+			int assertThatThrownBy1 = 0;
 			for(AbstractCall call : container1.getAllOperationInvocations()) {
 				if(call.getName().equals("assertThrows")) {
 					assertThrows1++;
 				}
+				else if(call.getName().equals("assertThatThrownBy")) {
+					assertThatThrownBy1++;
+				}
 			}
 			int assertThrows2 = 0;
+			int assertThatThrownBy2 = 0;
 			for(AbstractCall call : container2.getAllOperationInvocations()) {
 				if(call.getName().equals("assertThrows")) {
 					assertThrows2++;
+				}
+				else if(call.getName().equals("assertThatThrownBy")) {
+					assertThatThrownBy2++;
 				}
 			}
 			boolean anonymousCollapse = Math.abs(totalNodes1 - totalNodes2) > Math.min(totalNodes1, totalNodes2);
@@ -498,6 +507,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					if(anonymousFragment != null) {
 						expandAnonymousAndLambdas(anonymousFragment, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1, true);
+						if(leaves2.size() == 1 && lambdas2.size() > 0) {
+							expandAnonymousAndLambdas(leaves2.get(0), leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
+							for(AbstractCodeFragment leaf1 : new ArrayList<>(leaves1)) {
+								if(!leaf1.equals(anonymousFragment) && leaf1.getLambdas().size() > 0) {
+									expandAnonymousAndLambdas(leaf1, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1, true);
+								}
+							}
+						}
 					}
 				}
 				else if(anonymous2.size() == 0 && ((lambdas1.size() == 1 && lambdas2.size() == 0) || (lambdas1.size() == 1 && containsAll(lambdas1.get(0), lambdas2)))) {
@@ -525,6 +542,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					if(anonymousFragment != null) {
 						expandAnonymousAndLambdas(anonymousFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
+						if(leaves1.size() == 1 && lambdas1.size() > 0) {
+							expandAnonymousAndLambdas(leaves1.get(0), leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1, true);
+							for(AbstractCodeFragment leaf2 : new ArrayList<>(leaves2)) {
+								if(!leaf2.equals(anonymousFragment) && leaf2.getLambdas().size() > 0) {
+									expandAnonymousAndLambdas(leaf2, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
+								}
+							}
+						}
 					}
 				}
 				else if(anonymous1.size() == 0 && ((lambdas1.size() == 0 && lambdas2.size() == 1) || (lambdas2.size() == 1 && containsAll(lambdas2.get(0), lambdas1)))) {
@@ -542,10 +567,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				else if (assertThrows1 == 0 && assertThrows2 > 0) {
 					handleAssertThrowsLambda(leaves1, leaves2, innerNodes2, lambdas2, operation2);
 				}
+				else if (assertThatThrownBy1 == 0 && assertThatThrownBy2 > 0) {
+					handleAssertThrowsLambda(leaves1, leaves2, innerNodes2, lambdas2, operation2);
+				}
 			}
 			else if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && assertThrows2 > 0 &&
 					(lambdas2.size() + nestedLambdas2.size() == lambdas1.size() + nestedLambdas1.size() + assertThrows2 ||
 					lambdas2.size() == lambdas1.size() + assertThrows2 || assertThrows1 == 0)) {
+				handleAssertThrowsLambda(leaves1, leaves2, innerNodes2, lambdas2, operation2);
+			}
+			else if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && assertThatThrownBy2 > 0 &&
+					(lambdas2.size() + nestedLambdas2.size() == lambdas1.size() + nestedLambdas1.size() + assertThatThrownBy2 ||
+					lambdas2.size() == lambdas1.size() + assertThatThrownBy2 || assertThatThrownBy1 == 0)) {
 				handleAssertThrowsLambda(leaves1, leaves2, innerNodes2, lambdas2, operation2);
 			}
 			else if(doubleBraceInitializations1 > 0 && doubleBraceInitializations2 == 0) {
@@ -560,6 +593,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(leaf2.getAnonymousClassDeclarations().size() > 0) {
 						expandAnonymousAndLambdas(leaf2, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
 					}
+				}
+			}
+			else if(lambdasWithBody2 == 1 && lambdasWithBody1 == 0) {
+				AbstractCodeFragment lambdaFragment = null;
+				for(AbstractCodeFragment leaf2 : leaves2) {
+					if(leaf2.getLambdas().size() > 0 && leaf2.getLambdas().get(0).getBody() != null) {
+						lambdaFragment = leaf2;
+						break;
+					}
+				}
+				if(lambdaFragment != null) {
+					expandAnonymousAndLambdas(lambdaFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
 				}
 			}
 			Set<AbstractCodeFragment> streamAPIStatements1 = statementsWithStreamAPICalls(leaves1);
@@ -588,7 +633,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			if(lambdas1.size() == lambdas2.size() && lambdasWithBody1 != lambdasWithBody2) {
+			if(lambdas1.size() == lambdas2.size() && (lambdasWithBody1 != lambdasWithBody2 || nestedLambdas1.size() != nestedLambdas2.size())) {
 				for(AbstractCodeFragment leaf1 : new ArrayList<>(leaves1)) {
 					if(leaf1.getLambdas().size() > 0) {
 						expandAnonymousAndLambdas(leaf1, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1, true);
@@ -657,56 +702,116 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			boolean isomorphic = isomorphicCompositeStructure(innerNodes1, innerNodes2);
 			//check if it is possible to group statements based on comments, useful for junit tests
 			if((operation1.hasTestAnnotation() || operation1.hasDataPointsAnnotation() || operation1.hasDataProviderAnnotation() || operation1.hasParametersAnnotation()) &&
-					(operation2.hasTestAnnotation() || operation2.hasDataPointsAnnotation() || operation2.hasDataProviderAnnotation() || operation2.hasParametersAnnotation())) {
+					(operation2.hasTestAnnotation() || operation2.hasDataPointsAnnotation() || operation2.hasDataProviderAnnotation() || operation2.hasParametersAnnotation()) &&
+					operation1.getBodyHashCode() != operation2.getBodyHashCode()) {
 				List<CodeBlockBetweenComments> blocks1 = CodeBlockBetweenComments.generateCodeBlocks(leaves1, operation1);
 				List<CodeBlockBetweenComments> blocks2 = CodeBlockBetweenComments.generateCodeBlocks(leaves2, operation2);
-				List<CodeBlockBetweenComments> nonMatchedBlocks1 = new ArrayList<CodeBlockBetweenComments>();
-				for(CodeBlockBetweenComments block1 : blocks1) {
-					boolean matchFound = false;
-					for(CodeBlockBetweenComments block2 : blocks2) {
-						if(block1.compatible(block2)) {
-							matchFound = true;
-							processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
-							break;
-						}
-					}
-					if(!matchFound) {
+				if(blocks1.size() <= blocks2.size()) {
+					List<CodeBlockBetweenComments> nonMatchedBlocks1 = new ArrayList<CodeBlockBetweenComments>();
+					for(CodeBlockBetweenComments block1 : blocks1) {
+						boolean matchFound = false;
 						for(CodeBlockBetweenComments block2 : blocks2) {
-							if(block1.compatibleWithAfterEnd(block2)) {
+							if(block1.compatible(block2)) {
 								matchFound = true;
 								processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
 								break;
 							}
 						}
-					}
-					if(!matchFound) {
-						for(CodeBlockBetweenComments block2 : blocks2) {
-							if(block1.identicalStartCommentAndCode(block2)) {
-								matchFound = true;
-								processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
-								break;
+						if(!matchFound) {
+							for(CodeBlockBetweenComments block2 : blocks2) {
+								if(block1.compatibleWithAfterEnd(block2)) {
+									matchFound = true;
+									processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
+									break;
+								}
 							}
 						}
-					}
-					if(!matchFound) {
-						for(CodeBlockBetweenComments block2 : blocks2) {
-							if(block1.identicalEndCommentAndCode(block2)) {
-								matchFound = true;
-								processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
-								break;
+						if(!matchFound) {
+							for(CodeBlockBetweenComments block2 : blocks2) {
+								if(block1.identicalStartCommentAndCode(block2)) {
+									matchFound = true;
+									processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
+									break;
+								}
 							}
 						}
+						if(!matchFound) {
+							for(CodeBlockBetweenComments block2 : blocks2) {
+								if(block1.identicalEndCommentAndCode(block2)) {
+									matchFound = true;
+									processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
+									break;
+								}
+							}
+						}
+						if(!matchFound) {
+							nonMatchedBlocks1.add(block1);
+						}
 					}
-					if(!matchFound) {
-						nonMatchedBlocks1.add(block1);
+					for(CodeBlockBetweenComments block1 : nonMatchedBlocks1) {
+						int index = blocks1.indexOf(block1);
+						boolean previousMatched = index > 0 && !nonMatchedBlocks1.contains(blocks1.get(index-1));
+						boolean nextMatched = index < blocks1.size()-1 && !nonMatchedBlocks1.contains(blocks1.get(index+1));
+						if(previousMatched && nextMatched) {
+							leaves1.removeAll(block1.getLeaves());
+						}
 					}
 				}
-				for(CodeBlockBetweenComments block1 : nonMatchedBlocks1) {
-					int index = blocks1.indexOf(block1);
-					boolean previousMatched = index > 0 && !nonMatchedBlocks1.contains(blocks1.get(index-1));
-					boolean nextMatched = index < blocks1.size()-1 && !nonMatchedBlocks1.contains(blocks1.get(index+1));
-					if(previousMatched && nextMatched) {
-						leaves1.removeAll(block1.getLeaves());
+				else {
+					List<CodeBlockBetweenComments> nonMatchedBlocks2 = new ArrayList<CodeBlockBetweenComments>();
+					for(CodeBlockBetweenComments block2 : blocks2) {
+						boolean matchFound = false;
+						for(CodeBlockBetweenComments block1 : blocks1) {
+							if(block1.compatible(block2)) {
+								matchFound = true;
+								processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
+								break;
+							}
+						}
+						if(!matchFound) {
+							for(CodeBlockBetweenComments block1 : blocks1) {
+								if(block1.compatibleWithAfterEnd(block2)) {
+									matchFound = true;
+									int index = blocks1.indexOf(block1);
+									CodeBlockBetweenComments nextBlock1 = index < blocks1.size()-1 ? blocks1.get(index+1) : null;
+									CodeBlockBetweenComments union = null;
+									if(nextBlock1 != null && nextBlock1.equalEndComment(block2)) {
+										union = CodeBlockBetweenComments.union(block1, nextBlock1);
+									}
+									processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, union != null ? union : block1, block2);
+									break;
+								}
+							}
+						}
+						if(!matchFound) {
+							for(CodeBlockBetweenComments block1 : blocks1) {
+								if(block1.identicalStartCommentAndCode(block2)) {
+									matchFound = true;
+									processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
+									break;
+								}
+							}
+						}
+						if(!matchFound) {
+							for(CodeBlockBetweenComments block1 : blocks1) {
+								if(block1.identicalEndCommentAndCode(block2)) {
+									matchFound = true;
+									processCodeBlocksBetweenComments(leaves1, leaves2, isomorphic, block1, block2);
+									break;
+								}
+							}
+						}
+						if(!matchFound) {
+							nonMatchedBlocks2.add(block2);
+						}
+					}
+					for(CodeBlockBetweenComments block2 : nonMatchedBlocks2) {
+						int index = blocks2.indexOf(block2);
+						boolean previousMatched = index > 0 && !nonMatchedBlocks2.contains(blocks2.get(index-1));
+						boolean nextMatched = index < blocks2.size()-1 && !nonMatchedBlocks2.contains(blocks2.get(index+1));
+						if(previousMatched && nextMatched) {
+							leaves2.removeAll(block2.getLeaves());
+						}
 					}
 				}
 			}
@@ -736,6 +841,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				processStreamAPIStatements(leaves1, leaves2, streamAPIStatements1, innerNodes2);
 			}
 			else if(streamAPIStatements1.size() > 1 || streamAPIStatements2.size() > 1) {
+				processStreamAPIStatements(leaves1, leaves2, innerNodes1, streamAPIStatements2);
+			}
+			else if(streamAPIStatements1.size() == 1 && streamAPIStatements2.size() == 1 && nestedLambdas1.size() != nestedLambdas2.size()) {
 				processStreamAPIStatements(leaves1, leaves2, innerNodes1, streamAPIStatements2);
 			}
 			
@@ -1036,7 +1144,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					VariableDeclaration declaration = statement.getVariableDeclarations().get(0);
 					AbstractExpression initializer = declaration.getInitializer();
 					if(initializer != null && (initializer.getMethodInvocations().size() > 0 || initializer.getCreations().size() > 0 || initializer.getTypeLiterals().size() > 0 ||
-							initializer.getStringLiterals().size() > 0 || initializer.getCastExpressions().size() > 0 || (initializer.getNumberLiterals().size() > 0 && !isDefaultValue(initializer.getString())))) {
+							initializer.getStringLiterals().size() > 0 || initializer.getCastExpressions().size() > 0 || initializer.getLambdas().size() > 0 || (initializer.getNumberLiterals().size() > 0 && !isDefaultValue(initializer.getString())))) {
 						for(AbstractCodeFragment nonMappedLeaf1 : nonMappedLeavesT1) {
 							boolean matchingVariableDeclaration = false;
 							List<VariableDeclaration> declarations1 = nonMappedLeaf1.getVariableDeclarations();
@@ -1046,9 +1154,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									break;
 								}
 							}
-							if(!matchingVariableDeclaration && !containsMethodSignatureOfAnonymousClass(nonMappedLeaf1.getString()) &&
+							String matchingString = null;
+							if(!matchingVariableDeclaration && !containsAnonymousClass(nonMappedLeaf1.getString()) &&
 									!nonMappedLeaf1.getString().endsWith(JAVA.ASSIGNMENT + initializer + JAVA.STATEMENT_TERMINATION) && !nonMappedLeaf1.getString().contains(JAVA.ASSIGNMENT + initializer + ".") &&
-									nonMappedLeaf1.getString().contains(initializer.getString())) {
+									(matchingString = matchingString(initializer, nonMappedLeaf1)) != null) {
 								UMLOperation inlinedOperation = callToInlinedMethod(nonMappedLeaf1);
 								boolean matchingInlinedOperationLeaf = false;
 								if(inlinedOperation != null) {
@@ -1064,6 +1173,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								for(Refactoring r : refactorings) {
 									if(r instanceof ExtractVariableRefactoring) {
 										ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
+										if(extract.getVariableDeclaration().getInitializer().getString().equals(initializer.getString()) &&
+												!extract.getVariableDeclaration().getInitializer().getLocationInfo().equals(initializer.getLocationInfo())) {
+											continue;
+										}
 										if(extract.getVariableDeclaration().getInitializer().getString().contains(initializer.getString())) {
 											anotherExtractVariableWithSameInitializer = true;
 											break;
@@ -1074,6 +1187,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, parentMapper != null);
 									ref.addUnmatchedStatementReference(nonMappedLeaf1);
 									List<LeafExpression> subExpressions = nonMappedLeaf1.findExpression(initializer.getString());
+									if(subExpressions.isEmpty() && matchingString != null) {
+										subExpressions = nonMappedLeaf1.findExpression(matchingString);
+									}
 									for(LeafExpression subExpression : subExpressions) {
 										LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
 										ref.addSubExpressionMapping(leafMapping);
@@ -1105,7 +1221,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					VariableDeclaration declaration = statement.getVariableDeclarations().get(0);
 					AbstractExpression initializer = declaration.getInitializer();
 					if(initializer != null && (initializer.getMethodInvocations().size() > 0 || initializer.getCreations().size() > 0 || initializer.getTypeLiterals().size() > 0 ||
-							initializer.getStringLiterals().size() > 0 || initializer.getCastExpressions().size() > 0 || (initializer.getNumberLiterals().size() > 0 && !isDefaultValue(initializer.getString())))) {
+							initializer.getStringLiterals().size() > 0 || initializer.getCastExpressions().size() > 0 || initializer.getLambdas().size() > 0 || (initializer.getNumberLiterals().size() > 0 && !isDefaultValue(initializer.getString())))) {
 						for(AbstractCodeFragment nonMappedLeaf2 : nonMappedLeavesT2) {
 							boolean matchingVariableDeclaration = false;
 							List<VariableDeclaration> declarations2 = nonMappedLeaf2.getVariableDeclarations();
@@ -1116,9 +1232,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 							String initializerAfterRename = null;
-							if(!matchingVariableDeclaration && !containsMethodSignatureOfAnonymousClass(nonMappedLeaf2.getString()) &&
+							String matchingString = null;
+							if(!matchingVariableDeclaration && !containsAnonymousClass(nonMappedLeaf2.getString()) &&
 									!nonMappedLeaf2.getString().endsWith(JAVA.ASSIGNMENT + initializer + JAVA.STATEMENT_TERMINATION) && !nonMappedLeaf2.getString().contains(JAVA.ASSIGNMENT + initializer + ".") &&
-									(nonMappedLeaf2.getString().contains(initializer.getString()) || (initializerAfterRename = matchesWithOverlappingRenameVariable(initializer, nonMappedLeaf2)) != null) &&
+									((matchingString = matchingString(initializer, nonMappedLeaf2)) != null || (initializerAfterRename = matchesWithOverlappingRenameVariable(initializer, nonMappedLeaf2)) != null) &&
 									existsMappingSubsumingBoth(statement, nonMappedLeaf2)) {
 								UMLOperation extractedOperation = callToExtractedMethod(nonMappedLeaf2);
 								boolean matchingExtractedOperationLeaf = false;
@@ -1135,6 +1252,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								for(Refactoring r : refactorings) {
 									if(r instanceof InlineVariableRefactoring) {
 										InlineVariableRefactoring inline = (InlineVariableRefactoring)r;
+										if(inline.getVariableDeclaration().getInitializer().getString().equals(initializer.getString()) &&
+												!inline.getVariableDeclaration().getInitializer().getLocationInfo().equals(initializer.getLocationInfo())) {
+											continue;
+										}
 										if(inline.getVariableDeclaration().getInitializer().getString().contains(initializer.getString())) {
 											anotherInlineVariableWithSameInitializer = true;
 											break;
@@ -1145,6 +1266,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, parentMapper != null);
 									ref.addUnmatchedStatementReference(nonMappedLeaf2);
 									List<LeafExpression> subExpressions = nonMappedLeaf2.findExpression(initializerAfterRename != null ? initializerAfterRename : initializer.getString());
+									if(subExpressions.isEmpty() && matchingString != null) {
+										subExpressions = nonMappedLeaf2.findExpression(matchingString);
+									}
 									for(LeafExpression subExpression : subExpressions) {
 										LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
 										ref.addSubExpressionMapping(leafMapping);
@@ -1152,6 +1276,58 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(!refactorings.contains(ref)) {
 										refactorings.add(ref);
 										leavesToBeRemovedT1.add(statement);
+									}
+								}
+							}
+						}
+						for(Refactoring r : new ArrayList<>(refactorings)) {
+							if(r instanceof ReplaceLoopWithPipelineRefactoring) {
+								ReplaceLoopWithPipelineRefactoring pipeline = (ReplaceLoopWithPipelineRefactoring)r;
+								for(AbstractCodeFragment nonMappedLeaf2 : pipeline.getCodeFragmentsAfter()) {
+									boolean matchingVariableDeclaration = false;
+									List<VariableDeclaration> declarations2 = nonMappedLeaf2.getVariableDeclarations();
+									for(VariableDeclaration declaration2 : declarations2) {
+										if(declaration2.getVariableName().equals(declaration.getVariableName()) && declaration2.equalType(declaration)) {
+											matchingVariableDeclaration = true;
+											break;
+										}
+									}
+									String initializerAfterRename = null;
+									String matchingString = null;
+									if(!matchingVariableDeclaration &&
+											!nonMappedLeaf2.getString().endsWith(JAVA.ASSIGNMENT + initializer + JAVA.STATEMENT_TERMINATION) &&
+											((matchingString = matchingString(initializer, nonMappedLeaf2)) != null || (initializerAfterRename = matchesWithOverlappingRenameVariable(initializer, nonMappedLeaf2)) != null) &&
+											existsMappingSubsumingBoth(statement, nonMappedLeaf2)) {
+										boolean anotherInlineVariableWithSameInitializer = false;
+										for(Refactoring r2 : refactorings) {
+											if(r2 instanceof InlineVariableRefactoring) {
+												InlineVariableRefactoring inline = (InlineVariableRefactoring)r2;
+												if(inline.getVariableDeclaration().getInitializer().getString().equals(initializer.getString()) &&
+														!inline.getVariableDeclaration().getInitializer().getLocationInfo().equals(initializer.getLocationInfo())) {
+													continue;
+												}
+												if(inline.getVariableDeclaration().getInitializer().getString().contains(initializer.getString())) {
+													anotherInlineVariableWithSameInitializer = true;
+													break;
+												}
+											}
+										}
+										if(!anotherInlineVariableWithSameInitializer) {
+											InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, parentMapper != null);
+											ref.addUnmatchedStatementReference(nonMappedLeaf2);
+											List<LeafExpression> subExpressions = nonMappedLeaf2.findExpression(initializerAfterRename != null ? initializerAfterRename : initializer.getString());
+											if(subExpressions.isEmpty() && matchingString != null) {
+												subExpressions = nonMappedLeaf2.findExpression(matchingString);
+											}
+											for(LeafExpression subExpression : subExpressions) {
+												LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
+												ref.addSubExpressionMapping(leafMapping);
+											}
+											if(!refactorings.contains(ref)) {
+												refactorings.add(ref);
+												leavesToBeRemovedT1.add(statement);
+											}
+										}
 									}
 								}
 							}
@@ -1174,8 +1350,50 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			UMLJavadocDiff diff = new UMLJavadocDiff(operation1.getJavadoc(), operation2.getJavadoc(), operationSignatureDiff);
 			this.javadocDiff = Optional.of(diff);
 		}
-		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this.mappings);
+		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this);
 		checkUnmatchedStatementsBeingCommented();
+	}
+
+	private String matchingString(AbstractExpression initializer, AbstractCodeFragment nonMappedLeaf) {
+		String string = initializer.getString();
+		if(nonMappedLeaf.getString().contains(string)) {
+			return string;
+		}
+		if(string.contains(JAVA.ASSIGNMENT)) {
+			String afterAssignment = string.substring(string.indexOf(JAVA.ASSIGNMENT) + 1, string.length());
+			String initializerLambdaParameter = null;
+			if(string.contains(JAVA.LAMBDA_ARROW)) {
+				initializerLambdaParameter = string.substring(0, string.indexOf(JAVA.LAMBDA_ARROW));
+			}
+			if(nonMappedLeaf.getString().contains(afterAssignment)) {
+				return afterAssignment;
+			}
+			if(initializerLambdaParameter != null) {
+				for(LambdaExpressionObject lambda : nonMappedLeaf.getLambdas()) {
+					for(String lambdaParameterName : lambda.getParameterNameList()) {
+						String temp = ReplacementUtil.performReplacement(afterAssignment, initializerLambdaParameter, lambdaParameterName);
+						if(nonMappedLeaf.getString().contains(temp)) {
+							boolean skip = false;
+							for(Refactoring r : refactorings) {
+								if(r instanceof InlineVariableRefactoring) {
+									InlineVariableRefactoring inline = (InlineVariableRefactoring)r;
+									for(LeafMapping leafMapping : inline.getSubExpressionMappings()) {
+										if(leafMapping.getFragment2().getLocationInfo().equals(lambda.getLocationInfo())) {
+											skip = true;
+											break;
+										}
+									}
+								}
+							}
+							if(!skip) {
+								return lambda.getString();
+							}
+						}
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	private void processCodeBlocksBetweenComments(List<AbstractCodeFragment> leaves1,
@@ -1516,7 +1734,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			UMLJavadocDiff diff = new UMLJavadocDiff(initializer1.getJavadoc(), initializer2.getJavadoc());
 			this.javadocDiff = Optional.of(diff);
 		}
-		this.commentListDiff = new UMLCommentListDiff(initializer1.getComments(), initializer2.getComments(), this.mappings);
+		this.commentListDiff = new UMLCommentListDiff(initializer1.getComments(), initializer2.getComments(), this);
 		checkUnmatchedStatementsBeingCommented();
 	}
 
@@ -1566,7 +1784,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			this.lambdaBodyMapper = true;
 			processCompositeStatements(composite1.getLeaves(), leaves2, composite1.getInnerNodes(), Collections.emptyList());
 		}
-		this.commentListDiff = new UMLCommentListDiff(lambda1.getComments(), lambda2.getComments(), this.mappings);
+		this.commentListDiff = new UMLCommentListDiff(lambda1.getComments(), lambda2.getComments(), this);
 		checkUnmatchedStatementsBeingCommented();
 	}
 
@@ -1714,7 +1932,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						for(AbstractCodeFragment leaf1 : streamAPIStatements1) {
 							if(leaves1.contains(leaf1)) {
 								boolean matchingLambda = nestedLambdaExpressionMatch(leaf1.getLambdas(), fragment1);
-								if(matchingLambda) {
+								AbstractCall call = leaf1.invocationCoveringEntireFragment();
+								boolean findCall = call != null && (call.getName().equals("findFirst") || call.getName().equals("findAny"));
+								if(matchingLambda || findCall) {
 									streamAPICallStatement = leaf1;
 									streamAPICalls = streamAPICalls(leaf1);
 									break;
@@ -1982,11 +2202,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 						}
-						ReplacePipelineWithLoopRefactoring ref = new ReplacePipelineWithLoopRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, container1, container2);
-						newMapping.addRefactoring(ref);
-						for(AbstractCodeMapping m : this.mappings) {
-							if(composite.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) && streamAPICallStatement.getLocationInfo().subsumes(m.getFragment1().getLocationInfo())) {
-								ref.addNestedStatementMapping(m);
+						int count = 0;
+						if(parentMapper != null) {
+							for(AbstractCodeFragment fragment : additionallyMatchedStatements1) {
+								if(parentMapper.alreadyMatched1(fragment)) {
+									count++;
+								}
+							}
+						}
+						boolean allAdditionalMatchedStatementsInParentMapper = count == additionallyMatchedStatements1.size();
+						if(!allAdditionalMatchedStatementsInParentMapper) {
+							ReplacePipelineWithLoopRefactoring ref = new ReplacePipelineWithLoopRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, container1, container2);
+							newMapping.addRefactoring(ref);
+							for(AbstractCodeMapping m : this.mappings) {
+								if(composite.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) && streamAPICallStatement.getLocationInfo().subsumes(m.getFragment1().getLocationInfo())) {
+									ref.addNestedStatementMapping(m);
+								}
 							}
 						}
 						addToMappings(newMapping, mappingSet);
@@ -2067,6 +2298,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									streamAPICallStatement = leaf2;
 									streamAPICalls = streamAPICalls(leaf2);
 									break;
+								}
+							}
+							else {
+								for(LambdaExpressionObject lambda : leaf2.getLambdas()) {
+									if(lambda.getBody() != null) {
+										for(AbstractCodeFragment leaf : lambda.getBody().getCompositeStatement().getLeaves()) {
+											boolean matchingLambda = nestedLambdaExpressionMatch(leaf.getLambdas(), fragment2);
+											if(matchingLambda) {
+												streamAPICallStatement = leaf;
+												streamAPICalls = streamAPICalls(leaf);
+												break;
+											}
+										}
+									}
 								}
 							}
 							List<AbstractCall> tmpStreamAPICalls = streamAPICalls(leaf2);
@@ -2551,7 +2796,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				processCompositeStatements(composite1.getLeaves(), leaves2, composite1.getInnerNodes(), new ArrayList<CompositeStatementObject>());
 			}
 		}
-		this.commentListDiff = new UMLCommentListDiff(anonymousClassOperation.getComments(), lambda2.getComments(), this.mappings);
+		this.commentListDiff = new UMLCommentListDiff(anonymousClassOperation.getComments(), lambda2.getComments(), this);
 		checkUnmatchedStatementsBeingCommented();
 	}
 
@@ -3177,6 +3422,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private void processCommentsAndJavadoc(UMLOperation addedOperation) {
+		int totalCallCountFromDifferentMethods = 0;
+		if(classDiff != null) {
+			for(UMLOperation operation : classDiff.getNextClass().getOperations()) {
+				AbstractCall delegateCall = operation.isDelegate();
+				for(AbstractCall call : operation.getAllOperationInvocations()) {
+					if(delegateCall != null && call.equals(delegateCall) && operation.equals(container1)) {
+						continue;
+					}
+					if(call.matchesOperation(addedOperation, operation, classDiff, modelDiff)) {
+						if(classDiff.getOriginalClass().containsOperationWithTheSameSignature(operation) ||
+								classDiff.getOriginalClass().containsOperationWithTheSameSignatureIgnoringTypeParameters(operation)) {
+							totalCallCountFromDifferentMethods++;
+							break;
+						}
+					}
+				}
+			}
+		}
 		if(parentMapper != null && parentMapper.commentListDiff != null) {
 			AbstractCodeMapping parentMapping = findParentMappingContainingOperationInvocation();
 			Set<UMLComment> deletedComments = new LinkedHashSet<UMLComment>();
@@ -3215,8 +3478,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(childMapper.commentListDiff != null)
 					deletedComments.addAll(childMapper.commentListDiff.getDeletedComments());
 			}
-			this.commentListDiff = new UMLCommentListDiff(new ArrayList<>(deletedComments), container2.getComments(), this.mappings);
+			this.commentListDiff = new UMLCommentListDiff(new ArrayList<>(deletedComments), container2.getComments(), this);
 			checkUnmatchedStatementsBeingCommented();
+		}
+		if(totalCallCountFromDifferentMethods > 1) {
+			return;
 		}
 		if(parentMapper != null && parentMapper.javadocDiff.isPresent() && addedOperation.getJavadoc() != null) {
 			if(parentMapper.javadocDiff.get().getDeletedTags().size() > 0 || parentMapper.javadocDiff.get().getDeletedDocElements().size() > 0) {
@@ -3692,7 +3958,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(childMapper.commentListDiff != null)
 						addedComments.addAll(childMapper.commentListDiff.getAddedComments());
 				}
-				this.commentListDiff = new UMLCommentListDiff(container1.getComments(), new ArrayList<>(addedComments), this.mappings);
+				this.commentListDiff = new UMLCommentListDiff(container1.getComments(), new ArrayList<>(addedComments), this);
 				checkUnmatchedStatementsBeingCommented();
 			}
 		}
@@ -3783,6 +4049,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				temp.removeAll(refactoringsToBeRemoved);
 			}
+			for(Refactoring refactoring : temp) {
+				if(refactoring.getRefactoringType().equals(RefactoringType.RENAME_PARAMETER)) {
+					RenameVariableRefactoring rename = (RenameVariableRefactoring)refactoring;
+					matchedVariables.add(Pair.of(rename.getOriginalVariable(), rename.getRenamedVariable()));
+				}
+			}
 			this.refactorings.addAll(temp);
 		}
 		return refactorings;
@@ -3804,19 +4076,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		addedVariables.addAll(analysis.getAddedVariablesStoringTheReturnOfExtractedMethod());
 		movedVariables = analysis.getMovedVariables();
 		int assertThrows1 = 0;
+		int assertThatThrownBy1 = 0;
 		int assertTimeout1 = 0;
 		for(AbstractCall call : container1.getAllOperationInvocations()) {
 			if(call.getName().equals("assertThrows")) {
 				assertThrows1++;
+			}
+			if(call.getName().equals("assertThatThrownBy")) {
+				assertThatThrownBy1++;
 			}
 			else if(call.getName().equals("assertTimeout")) {
 				assertTimeout1++;
 			}
 		}
 		Map<String, Set<AbstractCodeMapping>> assertThrowsMappings = new LinkedHashMap<>();
+		Map<String, Set<AbstractCodeMapping>> assertThatThrownByMappings = new LinkedHashMap<>();
 		Map<String, Set<AbstractCodeMapping>> assertTimeoutMappings = new LinkedHashMap<>();
 		List<AbstractCall> assertThrowsCalls = new ArrayList<AbstractCall>();
 		List<AbstractCall> assertTimeoutCalls = new ArrayList<AbstractCall>();
+		List<AbstractCall> assertThatThrownByCalls = new ArrayList<AbstractCall>();
 		for(AbstractCall call : container2.getAllOperationInvocations()) {
 			if(call.getName().equals("assertThrows")) {
 				assertThrowsCalls.add(call);
@@ -3854,43 +4132,101 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			else if(call.getName().equals("assertThatThrownBy")) {
+				assertThatThrownByCalls.add(call);
+				for(AbstractCodeMapping mapping : this.mappings) {
+					if(call.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo()) || mapping.getFragment2().getLocationInfo().subsumes(call.getLocationInfo())) {
+						if(parentMapper != null && parentMapper.getMappings().contains(mapping)) {
+							continue;
+						}
+						if(assertThatThrownByMappings.containsKey(call.actualString())) {
+							assertThatThrownByMappings.get(call.actualString()).add(mapping);
+						}
+						else {
+							Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
+							mappings.add(mapping);
+							assertThatThrownByMappings.put(call.actualString(), mappings);
+						}
+					}
+				}
+			}
 		}
 		if(assertThrows1 < assertThrowsCalls.size()) {
 			for(AbstractCall assertThrowsCall : assertThrowsCalls) {
 				Set<AbstractCodeMapping> set = assertThrowsMappings.get(assertThrowsCall.actualString());
 				if(set != null && set.size() > 0) {
+					AbstractCodeMapping firstMapping = set.iterator().next();
+					AbstractCall call2 = firstMapping.getFragment2().invocationCoveringEntireFragment();
+					if(call2 != null && call2.equals(assertThrowsCall)) {
+						AbstractCall call1 = firstMapping.getFragment1().invocationCoveringEntireFragment();
+						if(call1 != null && call1.equalArguments(call2)) {
+							continue;
+						}
+					}
 					AssertThrowsRefactoring ref = new AssertThrowsRefactoring(set, assertThrowsCall, container1, container2);
 					refactorings.add(ref);
-					UMLOperation operation1 = getOperation1();
-					UMLOperation operation2 = getOperation2();
-					if(operation1 != null && operation2 != null) {
-						for(UMLAnnotation annotation : operation1.getAnnotations()) {
-							Map<String, AbstractExpression> memberValuePairs = annotation.getMemberValuePairs();
-							if(memberValuePairs.containsKey("expected")) {
-								AbstractExpression expectedException = memberValuePairs.get("expected");
-								for(AbstractCodeFragment fragment2 : nonMappedLeavesT2) {
-									List<LeafExpression> leafExpressions = fragment2.findExpression(expectedException.getString());
-									if(leafExpressions.size() == 1) {
-										LeafMapping leafMapping = new LeafMapping(expectedException, leafExpressions.get(0), operation1, operation2);
-										ref.addSubExpressionMapping(leafMapping);
-										break;
-									}
-									if(fragment2 instanceof AbstractExpression) {
-										for(AbstractCodeMapping mapping : mappings) {
-											if(mapping instanceof LeafMapping && !mapping.getFragment2().equals(fragment2) && mapping.getFragment2().getLocationInfo().subsumes(fragment2.getLocationInfo())) {
-												leafExpressions = mapping.getFragment2().findExpression(expectedException.getString());
-												if(leafExpressions.size() == 1) {
-													LeafMapping leafMapping = new LeafMapping(expectedException, leafExpressions.get(0), operation1, operation2);
-													ref.addSubExpressionMapping(leafMapping);
-													break;
-												}
-											}
-										}
-									}
-								}
-								if(nonMappedLeavesT2.isEmpty()) {
-									AbstractCodeMapping firstMapping = set.iterator().next();
-									List<LeafExpression> leafExpressions = firstMapping.getFragment2().findExpression(expectedException.getString());
+					handleAdditionalAssertThrowMappings(firstMapping, ref);
+				}
+			}
+		}
+		if(assertTimeout1 < assertTimeoutCalls.size()) {
+			for(AbstractCall assertTimeoutCall : assertTimeoutCalls) {
+				Set<AbstractCodeMapping> set = assertTimeoutMappings.get(assertTimeoutCall.actualString());
+				if(set != null && set.size() > 0) {
+					AbstractCodeMapping firstMapping = set.iterator().next();
+					AbstractCall call2 = firstMapping.getFragment2().invocationCoveringEntireFragment();
+					if(call2 != null && call2.equals(assertTimeoutCall)) {
+						AbstractCall call1 = firstMapping.getFragment1().invocationCoveringEntireFragment();
+						if(call1 != null && call1.equalArguments(call2)) {
+							continue;
+						}
+					}
+					AssertTimeoutRefactoring ref = new AssertTimeoutRefactoring(set, assertTimeoutCall, container1, container2);
+					refactorings.add(ref);
+				}
+			}
+		}
+		if(assertThatThrownBy1 < assertThatThrownByCalls.size()) {
+			for(AbstractCall assertThrowsCall : assertThatThrownByCalls) {
+				Set<AbstractCodeMapping> set = assertThatThrownByMappings.get(assertThrowsCall.actualString());
+				if(set != null && set.size() > 0) {
+					AbstractCodeMapping firstMapping = set.iterator().next();
+					AbstractCall call2 = firstMapping.getFragment2().invocationCoveringEntireFragment();
+					if(call2 != null && call2.equals(assertThrowsCall)) {
+						AbstractCall call1 = firstMapping.getFragment1().invocationCoveringEntireFragment();
+						if(call1 != null && call1.equalArguments(call2)) {
+							continue;
+						}
+					}
+					AssertThrowsRefactoring ref = new AssertThrowsRefactoring(set, assertThrowsCall, container1, container2);
+					refactorings.add(ref);
+					handleAdditionalAssertThrowMappings(firstMapping, ref);
+				}
+			}
+		}
+	}
+
+	private void handleAdditionalAssertThrowMappings(AbstractCodeMapping firstMapping, AssertThrowsRefactoring ref) {
+		UMLOperation operation1 = getOperation1();
+		UMLOperation operation2 = getOperation2();
+		if(operation1 != null && operation2 != null) {
+			boolean expectedFound = false;
+			for(UMLAnnotation annotation : operation1.getAnnotations()) {
+				Map<String, AbstractExpression> memberValuePairs = annotation.getMemberValuePairs();
+				if(memberValuePairs.containsKey("expected")) {
+					expectedFound = true;
+					AbstractExpression expectedException = memberValuePairs.get("expected");
+					for(AbstractCodeFragment fragment2 : nonMappedLeavesT2) {
+						List<LeafExpression> leafExpressions = fragment2.findExpression(expectedException.getString());
+						if(leafExpressions.size() == 1) {
+							LeafMapping leafMapping = new LeafMapping(expectedException, leafExpressions.get(0), operation1, operation2);
+							ref.addSubExpressionMapping(leafMapping);
+							break;
+						}
+						if(fragment2 instanceof AbstractExpression) {
+							for(AbstractCodeMapping mapping : mappings) {
+								if(mapping instanceof LeafMapping && !mapping.getFragment2().equals(fragment2) && mapping.getFragment2().getLocationInfo().subsumes(fragment2.getLocationInfo())) {
+									leafExpressions = mapping.getFragment2().findExpression(expectedException.getString());
 									if(leafExpressions.size() == 1) {
 										LeafMapping leafMapping = new LeafMapping(expectedException, leafExpressions.get(0), operation1, operation2);
 										ref.addSubExpressionMapping(leafMapping);
@@ -3900,15 +4236,48 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 					}
+					if(nonMappedLeavesT2.isEmpty()) {
+						List<LeafExpression> leafExpressions = firstMapping.getFragment2().findExpression(expectedException.getString());
+						if(leafExpressions.size() == 1) {
+							LeafMapping leafMapping = new LeafMapping(expectedException, leafExpressions.get(0), operation1, operation2);
+							ref.addSubExpressionMapping(leafMapping);
+							break;
+						}
+					}
 				}
 			}
-		}
-		if(assertTimeout1 < assertTimeoutCalls.size()) {
-			for(AbstractCall assertTimeoutCall : assertTimeoutCalls) {
-				Set<AbstractCodeMapping> set = assertTimeoutMappings.get(assertTimeoutCall.actualString());
-				if(set != null && set.size() > 0) {
-					AssertTimeoutRefactoring ref = new AssertTimeoutRefactoring(set, assertTimeoutCall, container1, container2);
-					refactorings.add(ref);
+			if(!expectedFound) {
+				List<LeafExpression> typeLiterals1 = new ArrayList<>();
+				List<LeafExpression> stringLiterals1 = new ArrayList<>();
+				for(AbstractCodeFragment fragment1 : nonMappedLeavesT1) {
+					typeLiterals1.addAll(fragment1.getTypeLiterals());
+					stringLiterals1.addAll(fragment1.getStringLiterals());
+				}
+				List<LeafExpression> typeLiterals2 = new ArrayList<>();
+				List<LeafExpression> stringLiterals2 = new ArrayList<>();
+				for(AbstractCodeFragment fragment2 : nonMappedLeavesT2) {
+					typeLiterals2.addAll(fragment2.getTypeLiterals());
+					stringLiterals2.addAll(fragment2.getStringLiterals());
+				}
+				if(typeLiterals1.size() == typeLiterals2.size()) {
+					for(int i=0; i<typeLiterals1.size(); i++) {
+						LeafExpression expr1 = typeLiterals1.get(i);
+						LeafExpression expr2 = typeLiterals2.get(i);
+						if(expr1.getString().equals(expr2.getString())) {
+							LeafMapping leafMapping = new LeafMapping(expr1, expr2, operation1, operation2);
+							ref.addSubExpressionMapping(leafMapping);
+						}
+					}
+				}
+				if(stringLiterals1.size() == stringLiterals2.size()) {
+					for(int i=0; i<stringLiterals1.size(); i++) {
+						LeafExpression expr1 = stringLiterals1.get(i);
+						LeafExpression expr2 = stringLiterals2.get(i);
+						if(expr1.getString().equals(expr2.getString())) {
+							LeafMapping leafMapping = new LeafMapping(expr1, expr2, operation1, operation2);
+							ref.addSubExpressionMapping(leafMapping);
+						}
+					}
 				}
 			}
 		}
@@ -4183,6 +4552,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return mappedNodeCount;
+	}
+
+	public List<VariableDeclarationContainer> addedOperationsCalledByMappedElementsT2(List<? extends VariableDeclarationContainer> addedOperations) {
+		List<VariableDeclarationContainer> calledOperations = new ArrayList<>();
+		for(AbstractCodeMapping mapping : mappings) {
+			if(mapping.getFragment2().countableStatement()) {
+				for(AbstractCall invocation : mapping.getFragment2().getMethodInvocations()) {
+					for(VariableDeclarationContainer operation : addedOperations) {
+						if(invocation.matchesOperation(operation, container2, classDiff, modelDiff)) {
+							calledOperations.add(operation);
+							break;
+						}
+					}
+				}
+			}
+		}
+		return calledOperations;
 	}
 
 	public int nonMappedElementsT1CallingRemovedOperation(List<? extends VariableDeclarationContainer> removedOperations) {
@@ -4670,6 +5056,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						replacement.getType().equals(ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT) ||
 						replacement.getType().equals(ReplacementType.METHOD_INVOCATION_ARGUMENT)) {
 					replacements.add((MethodInvocationReplacement) replacement);
+				}
+				if(replacement.getType().equals(ReplacementType.METHOD_INVOCATION)) {
+					MethodInvocationReplacement invocationReplacement = (MethodInvocationReplacement) replacement;
+					AbstractCall callBefore = invocationReplacement.getInvokedOperationBefore();
+					AbstractCall callAfter = invocationReplacement.getInvokedOperationAfter();
+					if(callBefore.getExpression() != null && callAfter.getExpression() != null &&
+							Character.isUpperCase(callBefore.getExpression().charAt(0)) &&
+							Character.isUpperCase(callAfter.getExpression().charAt(0))) {
+						replacements.add(invocationReplacement);
+					}
 				}
 			}
 		}
@@ -6056,7 +6452,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(!(mapping instanceof CompositeStatementObjectMapping) &&
 						!mapping.getFragment1().getLambdas().contains(((AbstractExpression) fragment).getLambdaOwner()) &&
 						mapping.getFragment1().getLocationInfo().subsumes(fragment.getLocationInfo())) {
-					return true;
+					List<LambdaExpressionObject> nestedLambdas = new ArrayList<>();
+					if(mapping.getFragment1().getLambdas().size() == 1) {
+						collectNestedLambdaExpressions(mapping.getFragment1().getLambdas().get(0), nestedLambdas);
+					}
+					if(!nestedLambdas.contains(((AbstractExpression) fragment).getLambdaOwner())) {
+						return true;
+					}
 				}
 			}
 			return false;
@@ -6070,7 +6472,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(!(mapping instanceof CompositeStatementObjectMapping) &&
 						!mapping.getFragment2().getLambdas().contains(((AbstractExpression) fragment).getLambdaOwner()) &&
 						mapping.getFragment2().getLocationInfo().subsumes(fragment.getLocationInfo())) {
-					return true;
+					List<LambdaExpressionObject> nestedLambdas = new ArrayList<>();
+					if(mapping.getFragment2().getLambdas().size() == 1) {
+						collectNestedLambdaExpressions(mapping.getFragment2().getLambdas().get(0), nestedLambdas);
+					}
+					if(!nestedLambdas.contains(((AbstractExpression) fragment).getLambdaOwner())) {
+						return true;
+					}
 				}
 			}
 			return false;
@@ -6544,20 +6952,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Set<VariableDeclaration> referencedVariableDeclarations1 = new LinkedHashSet<>();
 			Set<VariableDeclaration> referencedVariableDeclarations2 = new LinkedHashSet<>();
 			if(parentMapper != null) {
-				for(AbstractCodeMapping mapping : this.mappings) {
-					if(startMapping == null) {
-						startMapping = mapping;
-					}
-					else if(mapping.getFragment1().getLocationInfo().getStartLine() < startMapping.getFragment1().getLocationInfo().getStartLine() &&
-							mapping.getFragment2().getLocationInfo().getStartLine() < startMapping.getFragment2().getLocationInfo().getStartLine()) {
-						startMapping = mapping;
-					}
-					if(endMapping == null) {
-						endMapping = mapping;
-					}
-					else if(mapping.getFragment1().getLocationInfo().getStartLine() > endMapping.getFragment1().getLocationInfo().getStartLine() &&
-							mapping.getFragment2().getLocationInfo().getStartLine() > endMapping.getFragment2().getLocationInfo().getStartLine()) {
-						endMapping = mapping;
+				if(this.mappings.size() > 1) {
+					for(AbstractCodeMapping mapping : this.mappings) {
+						if(startMapping == null) {
+							startMapping = mapping;
+						}
+						else if(mapping.getFragment1().getLocationInfo().getStartLine() < startMapping.getFragment1().getLocationInfo().getStartLine() &&
+								mapping.getFragment2().getLocationInfo().getStartLine() < startMapping.getFragment2().getLocationInfo().getStartLine()) {
+							startMapping = mapping;
+						}
+						if(endMapping == null) {
+							endMapping = mapping;
+						}
+						else if(mapping.getFragment1().getLocationInfo().getStartLine() > endMapping.getFragment1().getLocationInfo().getStartLine() &&
+								mapping.getFragment2().getLocationInfo().getStartLine() > endMapping.getFragment2().getLocationInfo().getStartLine()) {
+							endMapping = mapping;
+						}
 					}
 				}
 				if(startMapping != null && endMapping != null && startMapping.equals(endMapping)) {
@@ -7572,7 +7982,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		for(AbstractCodeFragment leaf : leaves1) {
 			if(!leaf.equals(leaf1)) {
-				int numberOfMappings = mappings.size();
+				int mappingsBefore = mappings.size();
+				int refactoringsBefore = refactorings.size();
 				ReplacementInfo replacementInfo = initializeReplacementInfo(leaf, leaf2, leaves1, leaves2);
 				Set<Replacement> replacements = findReplacementsWithExactMatching(leaf, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 				if (replacements != null) {
@@ -7606,10 +8017,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					boolean matchWithLessReplacements = mappingSet.size() == 1 && replacements.size() < mappingSet.first().getReplacements().size();
-					boolean differentVariableDeclarationNumber = matchingMappings > 0 &&
+					boolean differentVariableDeclarationNumber =
 							mappingSet.last().getFragment1().getVariableDeclarations().size() != mappingSet.last().getFragment2().getVariableDeclarations().size() &&
 							leaf.getVariableDeclarations().size() == leaf2.getVariableDeclarations().size();
-					if(matchingMappings == mappingSet.size() || matchWithLessReplacements || differentVariableDeclarationNumber) {
+					boolean ownedByLambdaWithMultipleCallsToExtractedMethod = leaf.ownedByLambda() && callsToExtractedMethod > 1;
+					if(matchingMappings == mappingSet.size() || matchWithLessReplacements || differentVariableDeclarationNumber || ownedByLambdaWithMultipleCallsToExtractedMethod) {
 						LeafMapping mapping = createLeafMapping(leaf, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 						mapping.addReplacements(replacements);
 						mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
@@ -7619,7 +8031,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					else {
 						List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
-						for(int i = numberOfMappings; i < mappings.size(); i++) {
+						for(int i = mappingsBefore; i < mappings.size(); i++) {
 							this.mappings.remove(mappings.get(i));
 						}
 					}
@@ -7627,7 +8039,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				else {
 					//removed any nested mappings
 					List<AbstractCodeMapping> orderedMappings = new ArrayList<AbstractCodeMapping>(mappings);
-					for(int i=orderedMappings.size()-1; i>=0; i--) {
+					for(int i=orderedMappings.size()-1; i>=0 && i>=mappingsBefore; i--) {
 						AbstractCodeMapping m = orderedMappings.get(i);
 						if(leaf.getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) && leaf2.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) &&
 								replacementInfo.lambdaMapperContainsMapping(m)) {
@@ -7636,6 +8048,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						else {
 							break;
 						}
+					}
+					List<Refactoring> orderedRefactorings = new ArrayList<>(refactorings);
+					for(int i=orderedRefactorings.size()-1; i>=0 && i>=refactoringsBefore; i--) {
+						Refactoring r = orderedRefactorings.get(i);
+						refactorings.remove(r);
 					}
 				}
 			}
@@ -7678,6 +8095,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
 						parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
 						possibleExtractVariable || possibleInlineVariable)) {
+					int mappingsBefore = mappings.size();
+					int refactoringsBefore = refactorings.size();
 					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf, leaves1, leaves2);
 					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 					if (replacements != null) {
@@ -7696,7 +8115,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
-						if(allowAdd || nested) {
+						boolean matchWithLessReplacements = mappingSet.size() == 1 && replacements.size() < mappingSet.first().getReplacements().size();
+						if(allowAdd || nested || matchWithLessReplacements) {
 							extractInlineVariableAnalysis(leaves1, leaves2, leaf1, leaf, mapping, replacementInfo);
 							mappingSet.add(mapping);
 						}
@@ -7704,7 +8124,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					else {
 						//removed any nested mappings
 						List<AbstractCodeMapping> orderedMappings = new ArrayList<AbstractCodeMapping>(mappings);
-						for(int i=orderedMappings.size()-1; i>=0; i--) {
+						for(int i=orderedMappings.size()-1; i>=0 && i>=mappingsBefore; i--) {
 							AbstractCodeMapping m = orderedMappings.get(i);
 							if(leaf1.getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) && leaf.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) &&
 									replacementInfo.lambdaMapperContainsMapping(m)) {
@@ -7714,10 +8134,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
+						List<Refactoring> orderedRefactorings = new ArrayList<>(refactorings);
+						for(int i=orderedRefactorings.size()-1; i>=0 && i>=refactoringsBefore; i--) {
+							Refactoring r = orderedRefactorings.get(i);
+							refactorings.remove(r);
+						}
 					}
 				}
 				else if(parent1 == null && (parent2 == null || parent2.getParent() == null) && (possibleExtractVariable || possibleInlineVariable ||
 						(leaf1.getVariableDeclarations().toString().equals(leaf.getVariableDeclarations().toString()) && leaf1.getVariableDeclarations().size() > 0))) {
+					int mappingsBefore = mappings.size();
+					int refactoringsBefore = refactorings.size();
 					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf, leaves1, leaves2);
 					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 					if (replacements != null) {
@@ -7731,7 +8158,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					else {
 						//removed any nested mappings
 						List<AbstractCodeMapping> orderedMappings = new ArrayList<AbstractCodeMapping>(mappings);
-						for(int i=orderedMappings.size()-1; i>=0; i--) {
+						for(int i=orderedMappings.size()-1; i>=0 && i>=mappingsBefore; i--) {
 							AbstractCodeMapping m = orderedMappings.get(i);
 							if(leaf1.getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) && leaf.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) &&
 									replacementInfo.lambdaMapperContainsMapping(m)) {
@@ -7740,6 +8167,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							else {
 								break;
 							}
+						}
+						List<Refactoring> orderedRefactorings = new ArrayList<>(refactorings);
+						for(int i=orderedRefactorings.size()-1; i>=0 && i>=refactoringsBefore; i--) {
+							Refactoring r = orderedRefactorings.get(i);
+							refactorings.remove(r);
 						}
 					}
 				}
@@ -8007,6 +8439,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				LeafMapping newMapping = createLeafMapping(matchingVariableDeclaration1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 				addMapping(newMapping);
 				leaves1ToBeRemoved.add(matchingVariableDeclaration1);
+				mapping.setMergedVariableDeclaration(true);
 			}
 			if(matchingVariableDeclarations1.size() == 0) {
 				AbstractCodeMapping mappingToBeRemoved = null;
@@ -8062,7 +8495,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) && mapping.getFragment2().getString().startsWith(declaration1.getVariableName() + JAVA.ASSIGNMENT);
-						if((equalName || variableRenamed) && declaration1.getType() != null && declaration1.getType().equals(declaration2.getType())) {
+						if((equalName || variableRenamed) && declaration1.getType() != null && (declaration1.getType().equals(declaration2.getType()) || declaration1.getType().getClassType().equals("var"))) {
 							matchingVariableDeclarations2.add(leaf2);
 						}
 					}
@@ -8073,6 +8506,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				LeafMapping newMapping = createLeafMapping(leaf1, matchingVariableDeclaration2, parameterToArgumentMap, equalNumberOfAssertions);
 				addMapping(newMapping);
 				leaves2ToBeRemoved.add(matchingVariableDeclaration2);
+				mapping.setSplitVariableDeclaration(true);
 				return true;
 			}
 		}
@@ -9221,6 +9655,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(statementContainingOperationInvocation != null) {
 							AbstractCodeMapping newEndMapping = null;
 							for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
+								if(mapping.getFragment2().equals(statementContainingOperationInvocation)) {
+									break;
+								}
 								if(mapping.getFragment2().getLocationInfo().getStartLine() > statementContainingOperationInvocation.getLocationInfo().getStartLine()) {
 									newEndMapping = mapping;
 									break;
@@ -9425,6 +9862,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
+				else if(mapper.getMappings().size() == 1 && mapper.getMappings().iterator().next() instanceof CompositeStatementObjectMapping) {
+					addAllMappings(mapper.mappings);
+				}
 			}
 		}
 	}
@@ -9597,22 +10037,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		boolean ownedByLambda1 = false;
-		CompositeStatementObject parent1 = minStatementMapping.getFragment1().getParent();
-		while(parent1 != null) {
-			if(parent1.getOwner().isPresent() && parent1.getOwner().get() instanceof LambdaExpressionObject) {
-				ownedByLambda1 = true;
-			}
-			parent1 = parent1.getParent();
-		}
-		boolean ownedByLambda2 = false;
-		CompositeStatementObject parent2 = minStatementMapping.getFragment2().getParent();
-		while(parent2 != null) {
-			if(parent2.getOwner().isPresent() && parent2.getOwner().get() instanceof LambdaExpressionObject) {
-				ownedByLambda2 = true;
-			}
-			parent2 = parent2.getParent();
-		}
+		AbstractCodeFragment fragment1 = minStatementMapping.getFragment1();
+		boolean ownedByLambda1 = fragment1.ownedByLambda();
+		AbstractCodeFragment fragment2 = minStatementMapping.getFragment2();
+		boolean ownedByLambda2 = fragment2.ownedByLambda();
 		for(Refactoring r : refactorings) {
 			if(r instanceof ExtractVariableRefactoring) {
 				ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
@@ -9685,6 +10113,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			if(variableDeclarationMappings.size() == mappingSet.size()) {
+				LeafMapping topMapping = variableDeclarationMappings.iterator().next();
+				boolean topMappingHasIdenticalTypeAndInitializer = 
+						topMapping.getFragment1().getVariableDeclarations().get(0).getInitializer() != null &&
+						topMapping.getFragment2().getVariableDeclarations().get(0).getInitializer() != null &&
+						topMapping.getFragment1().getVariableDeclarations().get(0).getType() != null &&
+						topMapping.getFragment2().getVariableDeclarations().get(0).getType() != null &&
+						topMapping.getFragment1().getVariableDeclarations().get(0).getInitializer().getString().equals(topMapping.getFragment2().getVariableDeclarations().get(0).getInitializer().getString()) &&
+						topMapping.getFragment1().getVariableDeclarations().get(0).getType().equals(topMapping.getFragment2().getVariableDeclarations().get(0).getType());
 				Set<ReplacementType> replacementTypes = null;
 				Set<LeafMapping> mappingsWithSameReplacementTypes = new LinkedHashSet<LeafMapping>();
 				List<Boolean> equalNames = new ArrayList<>();
@@ -9707,8 +10143,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							for(Replacement replacement : mapping.getReplacements()) {
 								if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.METHOD_INVOCATION_NAME)) {
 									if(invocation1.getName().equals(replacement.getBefore()) && invocation2.getName().equals(replacement.getAfter())) {
-										mappingsWithSameReplacementTypes.add(mapping);
-										break;
+										if(!topMappingHasIdenticalTypeAndInitializer || !mapping.containsReplacement(ReplacementType.TYPE)) {
+											mappingsWithSameReplacementTypes.add(mapping);
+											break;
+										}
 									}
 								}
 							}

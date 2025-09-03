@@ -44,6 +44,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private boolean isNative;
 	private boolean isSynchronized;
 	private boolean isDefault;
+	private boolean isStrictfp;
 	private Optional<UMLAnonymousClass> anonymousClassContainer;
 	private OperationBody operationBody;
 	private AbstractExpression defaultExpression;
@@ -185,6 +186,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		this.isDefault = isDefault;
 	}
 
+	public boolean isStrictfp() {
+		return isStrictfp;
+	}
+
+	public void setStrictfp(boolean isStrictfp) {
+		this.isStrictfp = isStrictfp;
+	}
+
 	public boolean isDeclaredInAnonymousClass() {
 		return anonymousClassContainer != null && anonymousClassContainer.isPresent();
 	}
@@ -276,7 +285,16 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public boolean hasParametersAnnotation() {
 		for(UMLAnnotation annotation : annotations) {
-			if(annotation.getTypeName().equals("Parameters")) {
+			if(annotation.getTypeName().equals("Parameters") || annotation.getTypeName().equals("Parameterized.Parameters")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean hasDeprecatedAnnotation() {
+		for(UMLAnnotation annotation : annotations) {
+			if(annotation.getTypeName().equals("Deprecated")) {
 				return true;
 			}
 		}
@@ -424,6 +442,17 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			return false;
 	}
 
+	public boolean equalReturnParameterClassType(UMLOperation operation) {
+		UMLParameter thisReturnParameter = this.getReturnParameter();
+		UMLParameter otherReturnParameter = operation.getReturnParameter();
+		if(thisReturnParameter != null && otherReturnParameter != null)
+			return thisReturnParameter.getType().equalClassType(otherReturnParameter.getType());
+		else if(thisReturnParameter == null && otherReturnParameter == null)
+			return true;
+		else
+			return false;
+	}
+
 	public boolean equalQualifiedReturnParameter(UMLOperation operation) {
 		UMLParameter thisReturnParameter = this.getReturnParameter();
 		UMLParameter otherReturnParameter = operation.getReturnParameter();
@@ -467,6 +496,35 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			}
 		}
 		return this.name.equals(operation.name) && equalTypeParameters(operation) && (equalParameterTypes || compatibleParameterTypes) && equalReturnParameter(operation);
+	}
+
+	public boolean equalSignatureRelaxedReturnType(UMLOperation operation) {
+		boolean equalParameterTypes = this.getParameterTypeList().equals(operation.getParameterTypeList());
+		boolean compatibleParameterTypes = false;
+		if(!equalParameterTypes) {
+			List<UMLType> thisParameterTypeList = this.getParameterTypeList();
+			List<UMLType> otherParameterTypeList = operation.getParameterTypeList();
+			if(thisParameterTypeList.size() == otherParameterTypeList.size()) {
+				int compatibleTypes = 0;
+				int equalTypes = 0;
+				for(int i=0; i<thisParameterTypeList.size(); i++) {
+					UMLType thisParameterType = thisParameterTypeList.get(i);
+					UMLType otherParameterType = otherParameterTypeList.get(i);
+					if((thisParameterType.getClassType().endsWith("." + otherParameterType.getClassType()) ||
+							otherParameterType.getClassType().endsWith("." + thisParameterType.getClassType())) &&
+							thisParameterType.getArrayDimension() == otherParameterType.getArrayDimension()) {
+						compatibleTypes++;
+					}
+					else if(thisParameterType.equals(otherParameterType)) {
+						equalTypes++;
+					}
+				}
+				if(equalTypes + compatibleTypes == thisParameterTypeList.size()) {
+					compatibleParameterTypes = true;
+				}
+			}
+		}
+		return this.name.equals(operation.name) && equalTypeParameters(operation) && (equalParameterTypes || compatibleParameterTypes) && equalReturnParameterClassType(operation);
 	}
 
 	public boolean equalSignatureIgnoringOperationName(UMLOperation operation) {
@@ -635,6 +693,19 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
 				StatementObject statement = (StatementObject)statements.get(0);
 				return statement.invocationCoveringEntireFragment();
+			}
+		}
+		return null;
+	}
+
+	public StatementObject singleReturnStatement() {
+		if(getBody() != null) {
+			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
+			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
+				StatementObject statement = (StatementObject)statements.get(0);
+				if(statement.getString().startsWith(JAVA.RETURN_SPACE)) {
+					return statement;
+				}
 			}
 		}
 		return null;

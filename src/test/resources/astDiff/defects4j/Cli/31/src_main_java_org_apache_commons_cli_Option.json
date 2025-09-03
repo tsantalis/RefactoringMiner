@@ -593,6 +593,17 @@
   "firstEndPos" : 1549,
   "secondEndPos" : 1549
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1550,
+  "secondPos" : 1550,
+  "firstEndPos" : 1560,
+  "secondEndPos" : 1560
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Cloneable",
@@ -2331,6 +2342,17 @@
   "firstEndPos" : 3144,
   "secondEndPos" : 3136
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 3146,
+  "secondPos" : 3138,
+  "firstEndPos" : 3152,
+  "secondEndPos" : 3144
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IllegalArgumentException",
@@ -2792,6 +2814,17 @@
   "secondPos" : 3672,
   "firstEndPos" : 3691,
   "secondEndPos" : 3683
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 3693,
+  "secondPos" : 3685,
+  "firstEndPos" : 3699,
+  "secondEndPos" : 3691
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -3342,6 +3375,17 @@
   "secondPos" : 4296,
   "firstEndPos" : 4315,
   "secondEndPos" : 4307
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 4328,
+  "secondPos" : 4320,
+  "firstEndPos" : 4334,
+  "secondEndPos" : 4326
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -11625,6 +11669,17 @@
   "secondPos" : 13408,
   "firstEndPos" : 13421,
   "secondEndPos" : 13413
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 13423,
+  "secondPos" : 13415,
+  "firstEndPos" : 13429,
+  "secondEndPos" : 13421
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

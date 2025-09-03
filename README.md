@@ -14,6 +14,15 @@ Table of Contents
 =================
 
    * [General info](#general-info)
+      * [AST diff features](#ast-diff-features)
+         * [Refactoring-aware tooltips](#refactoring-aware-tooltips)
+         * [Refactoring listing with links to diffs](#refactoring-listing-with-links-to-diffs)
+         * [Single Page View](#single-page-view)
+         * [Embedded GitHub Code Review Comments](#embedded-gitHub-code-review-comments)
+         * [Diff for code moved between different files](#diff-for-code-moved-between-different-files)
+         * [On-demand diff generation](#on-demand-diff-generation)
+         * [Javadoc and comment reformatting](#javadoc-and-comment-reformatting)
+      * [Refactoring Support History](#refactoring-support-history) 
    * [Supported Refactoring Types](#supported-refactoring-types)
    * [Contributors](#contributors)
    * [Current precision and recall](#current-precision-and-recall)
@@ -57,8 +66,38 @@ RefactoringMiner is a library/API written in Java that can detect refactorings a
 Since version 3.0, RefactoringMiner can also generate Abstract Syntax Tree (AST) diff at **commit**, **pull request** and **commit range** levels.
 You can also use our tool to visualize the diffs in your browser.
 
-<img width="1875" alt="Image" src="https://github.com/user-attachments/assets/6a5d72e2-e9b1-4606-ac9a-dbd4dba4ef8a" />
+## AST diff features
 
+### Refactoring-aware tooltips
+<img width="1920" height="1080" alt="RefactoringAwareTooltips" src="https://github.com/user-attachments/assets/e4e14c4c-a966-46e3-b4c7-6808a0506a9c" />
+<img width="1920" height="1080" alt="RefactoringAwareTooltips2" src="https://github.com/user-attachments/assets/51731aaa-fcbc-4704-ae39-8365b93bcdf3" />
+
+### Refactoring listing with links to diffs
+<img width="1920" height="1080" alt="RefactoringAnalysis" src="https://github.com/user-attachments/assets/351d059a-1767-4032-a541-b9f6589ec35b" />
+
+### Single Page View
+All AST diffs loaded in a single page similar to GitHub
+<img width="1920" height="1080" alt="SinglePageView" src="https://github.com/user-attachments/assets/09f3007b-db87-46e0-b61a-ab3076d3f1ce" />
+
+### Embedded GitHub Code Review Comments
+<img width="1920" height="1080" alt="GitHubCodeReviewComments" src="https://github.com/user-attachments/assets/03afa1de-7e68-4951-a466-eac74cfe5385" />
+
+### Diff for code moved between different files
+The diffs show also overlapping refactorings within the moved code
+<img width="1920" height="1080" alt="MoveDiff" src="https://github.com/user-attachments/assets/5a6de2ed-9535-4a89-b025-b9f4f41e8a69" />
+<img width="1920" height="1080" alt="MoveDiff2" src="https://github.com/user-attachments/assets/2a1bd916-7fd7-4bf9-ad3e-e319b7452fb5" />
+<img width="1920" height="1080" alt="MoveDiff3" src="https://github.com/user-attachments/assets/170779c2-68f7-4ef6-aebd-67fcc0fb7e70" />
+
+### On-demand diff generation
+The user can select any pair of files (between modified, added and deleted files) and generate a diff
+<img width="1920" height="1080" alt="OnDemandDiffGeneration" src="https://github.com/user-attachments/assets/7525366e-2377-4a05-9819-9cefaf5de86b" />
+
+### Javadoc and comment reformatting
+Our tool can match Javadoc and inline comments with formatting changes. You can also exclude diffs including only comment formatting changes by adding `--ignore-formatting` in the command-line arguments.
+<img width="1920" height="1080" alt="CommentFormatting" src="https://github.com/user-attachments/assets/f69aabbd-fcce-49e2-a18b-d1a80b1676a8" />
+
+
+## Refactoring Support History
 Currently, it supports the detection of the following refactorings:
 
 **<ins>supported by RefactoringMiner 1.0 and newer versions</ins>**
@@ -334,21 +373,23 @@ Currently, it supports the detection of the following refactorings:
 
 **Commit dates**: between June 8th and August 7th, 2015
 
+**File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
+
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **March 20, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **August 26, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12427  | 16  | 223  | 0.999  | 0.982|
-|Extract Method|1008  |  1  | 21  | 0.999  | 0.980|
+|**Total**|12459  | 15  | 221  | 0.999  | 0.983|
+|Extract Method|1010  |  1  | 21  | 0.999  | 0.980|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
 |Move And Rename Attribute|17  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|392  |  3  | 21  | 0.992  | 0.949|
+|Rename Method|396  |  2  | 20  | 0.995  | 0.952|
 |Inline Method|118  |  0  |  1  | 1.000  | 0.992|
 |Move Method|388  |  3  |  5  | 0.992  | 0.987|
-|Move And Rename Method|128  |  0  |  4  | 1.000  | 0.970|
+|Move And Rename Method|132  |  0  |  4  | 1.000  | 0.971|
 |Pull Up Method|285  |  0  |  5  | 1.000  | 0.983|
 |Move Class|1095  |  0  |  4  | 1.000  | 0.996|
 |Move And Rename Class|38  |  0  |  1  | 1.000  | 0.974|
@@ -365,12 +406,12 @@ As of **March 20, 2025** the precision and recall of RefactoringMiner on this be
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|304  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|307  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|25  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|118  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|120  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|333  |  3  | 11  | 0.991  | 0.968|
-|Rename Parameter|492  |  2  | 24  | 0.996  | 0.953|
+|Rename Variable|332  |  3  | 11  | 0.991  | 0.968|
+|Rename Parameter|493  |  2  | 24  | 0.996  | 0.954|
 |Rename Attribute|146  |  0  |  9  | 1.000  | 0.942|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
@@ -379,15 +420,15 @@ As of **March 20, 2025** the precision and recall of RefactoringMiner on this be
 |Split Parameter| 7  |  0  |  0  | 1.000  | 1.000|
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute|123  |  0  |  0  | 1.000  | 1.000|
-|Replace Attribute With Variable|28  |  0  |  1  | 1.000  | 0.966|
+|Replace Attribute With Variable|29  |  0  |  1  | 1.000  | 0.967|
 |Parameterize Variable|110  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|26  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|23  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|434  |  0  | 12  | 1.000  | 0.973|
-|Change Variable Type|807  |  2  |  7  | 0.998  | 0.991|
+|Change Return Type|436  |  0  | 12  | 1.000  | 0.973|
+|Change Variable Type|810  |  2  |  7  | 0.998  | 0.991|
 |Change Parameter Type|654  |  1  | 10  | 0.998  | 0.985|
 |Change Attribute Type|244  |  0  |  8  | 1.000  | 0.968|
-|Add Method Annotation|333  |  0  |  1  | 1.000  | 0.997|
+|Add Method Annotation|334  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|97  |  0  |  0  | 1.000  | 1.000|
 |Modify Method Annotation|29  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Annotation|62  |  0  |  1  | 1.000  | 0.984|
@@ -399,19 +440,19 @@ As of **March 20, 2025** the precision and recall of RefactoringMiner on this be
 |Add Parameter Annotation|34  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|851  |  1  |  1  | 0.999  | 0.999|
-|Remove Parameter|311  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|852  |  1  |  1  | 0.999  | 0.999|
+|Remove Parameter|318  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Add Thrown Exception Type|41  |  0  |  0  | 1.000  | 1.000|
 |Remove Thrown Exception Type|270  |  0  |  0  | 1.000  | 1.000|
 |Change Thrown Exception Type| 9  |  0  |  0  | 1.000  | 1.000|
-|Change Method Access Modifier|333  |  0  |  0  | 1.000  | 1.000|
+|Change Method Access Modifier|334  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Access Modifier|232  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute|52  |  0  |  0  | 1.000  | 1.000|
 |Add Method Modifier|90  |  0  |  0  | 1.000  | 1.000|
-|Remove Method Modifier|111  |  0  |  0  | 1.000  | 1.000|
+|Remove Method Modifier|112  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Modifier|142  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Modifier|143  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Modifier|135  |  0  |  0  | 1.000  | 1.000|
@@ -447,43 +488,48 @@ As of **March 20, 2025** the precision and recall of RefactoringMiner on this be
 
 **Properties**: 400 commits from 20 open-source projects (20 commits per project)
 
-**Commit dates**: March 28, 2024
+**Commit dates**: March 28, 2024 or newer
+
+**Files**: [tse-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/tse-dataset)
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **April 16, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **September 2, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3050  | 209  | 349  | 0.936  | 0.897|
-|Extract Method|330  | 21  | 33  | 0.940  | 0.909|
-|Rename Class|229  |  2  |  3  | 0.991  | 0.987|
-|Move Attribute|69  |  3  | 10  | 0.958  | 0.873|
-|Move And Rename Attribute| 4  |  0  |  4  | 1.000  | 0.500|
-|Rename Method|272  | 23  | 24  | 0.922  | 0.919|
-|Inline Method|64  |  9  |  6  | 0.877  | 0.914|
-|Move Method|260  |  5  |  5  | 0.981  | 0.981|
-|Move And Rename Method|18  |  6  | 10  | 0.750  | 0.643|
-|Pull Up Method|42  |  3  |  8  | 0.933  | 0.840|
-|Move Class|138  |  7  |  4  | 0.952  | 0.972|
-|Move And Rename Class|28  |  1  |  2  | 0.966  | 0.933|
-|Pull Up Attribute|11  |  0  |  3  | 1.000  | 0.786|
-|Push Down Attribute| 5  |  0  |  1  | 1.000  | 0.833|
-|Push Down Method|18  |  0  |  6  | 1.000  | 0.750|
+|**Total**|3245  | 119  | 205  | 0.965  | 0.941|
+|Extract Method|362  |  4  | 11  | 0.989  | 0.971|
+|Rename Class|231  |  1  |  2  | 0.996  | 0.991|
+|Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
+|Move And Rename Attribute| 5  |  0  |  3  | 1.000  | 0.625|
+|Rename Method|290  | 14  | 11  | 0.954  | 0.963|
+|Inline Method|69  |  5  |  2  | 0.932  | 0.972|
+|Move Method|262  |  4  |  2  | 0.985  | 0.992|
+|Move And Rename Method|24  |  4  |  6  | 0.857  | 0.800|
+|Pull Up Method|45  |  1  |  5  | 0.978  | 0.900|
+|Move Class|141  |  4  |  2  | 0.972  | 0.986|
+|Move And Rename Class|28  |  0  |  1  | 1.000  | 0.966|
+|Pull Up Attribute|11  |  0  |  1  | 1.000  | 0.917|
+|Push Down Attribute| 6  |  0  |  0  | 1.000  | 1.000|
+|Push Down Method|22  |  0  |  1  | 1.000  | 0.957|
 |Extract Interface|16  |  2  |  0  | 0.889  | 1.000|
-|Extract Superclass| 7  |  2  |  0  | 0.778  | 1.000|
-|Extract Subclass| 3  |  0  |  6  | 1.000  | 0.333|
-|Extract Class|39  |  2  | 10  | 0.951  | 0.796|
-|Extract And Move Method|98  | 21  | 21  | 0.824  | 0.824|
-|Move And Inline Method|25  |  7  | 12  | 0.781  | 0.676|
-|Replace Anonymous With Class| 5  |  0  |  0  | 0.800  | 1.000|
-|Extract Variable|238  | 15  | 42  | 0.941  | 0.850|
-|Inline Variable|82  | 12  | 40  | 0.872  | 0.672|
-|Rename Variable|264  | 26  | 30  | 0.910  | 0.898|
-|Rename Attribute|101  |  6  | 15  | 0.944  | 0.871|
-|Change Return Type|153  |  9  | 27  | 0.944  | 0.850|
-|Change Variable Type|363  | 24  | 18  | 0.938  | 0.953|
-|Change Attribute Type|158  |  3  |  9  | 0.981  | 0.946|
+|Extract Superclass| 7  |  1  |  0  | 0.875  | 1.000|
+|Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
+|Extract Class|44  |  1  |  5  | 0.978  | 0.898|
+|Extract And Move Method|106  | 13  | 18  | 0.891  | 0.855|
+|Move And Inline Method|26  |  4  | 12  | 0.867  | 0.684|
+|Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|259  |  8  | 28  | 0.970  | 0.902|
+|Extract Attribute| 3  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|99  |  6  | 27  | 0.943  | 0.786|
+|Rename Variable|288  | 17  | 17  | 0.944  | 0.944|
+|Rename Attribute|104  |  5  | 12  | 0.954  | 0.897|
+|Change Return Type|162  |  5  | 17  | 0.970  | 0.905|
+|Change Variable Type|374  | 17  | 10  | 0.957  | 0.974|
+|Change Attribute Type|163  |  3  |  5  | 0.982  | 0.970|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
+|Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|
+|Merge Method| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 6  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
@@ -520,12 +566,12 @@ In order to use RefactoringMiner as a maven dependency in your project, add the 
     <dependency>
       <groupId>com.github.tsantalis</groupId>
       <artifactId>refactoring-miner</artifactId>
-      <version>3.0.10</version>
+      <version>3.0.11</version>
     </dependency>
 
 **build.gradle**
 
-    implementation 'com.github.tsantalis:refactoring-miner:3.0.10'
+    implementation 'com.github.tsantalis:refactoring-miner:3.0.11'
 
 # How to use RefactoringMiner as a docker image
 <a href="https://hub.docker.com/r/tsantalis/refactoringminer"><img src="https://img.shields.io/badge/dockerhub-images-important.svg?logo=Docker"></a>
@@ -697,6 +743,8 @@ Each command creates a jetty server instance to visualize the AST diff in your w
 
 To export the mappings/actions, add `--export` to the end of the command. The files are saved by default in the RefactoringMiner `bin` directory.
 
+To exclude diffs including only comment formatting changes, add `--ignore-formatting` to the end of the command.
+
 For example, to visualize the diff of a GitHub Pull Request, run
 
     > ./RefactoringMiner diff --url https://github.com/JabRef/jabref/pull/11180
@@ -749,7 +797,7 @@ Nikolaos Tsantalis, Ameya Ketkar, and Danny Dig, "[RefactoringMiner 2.0](https:/
 }
 ```
 
-Pouria Alikhanifard and Nikolaos Tsantalis, "[A Novel Refactoring and Semantic Aware Abstract Syntax Tree Differencing Tool and a Benchmark for Evaluating the Accuracy of Diff Tools](https://users.encs.concordia.ca/~nikolaos/publications/TOSEM_2024.pdf)," *ACM Transactions on Software Engineering and Methodology*, 2024. (accepted)
+Pouria Alikhanifard and Nikolaos Tsantalis, "[A Novel Refactoring and Semantic Aware Abstract Syntax Tree Differencing Tool and a Benchmark for Evaluating the Accuracy of Diff Tools](https://users.encs.concordia.ca/~nikolaos/publications/TOSEM_2024.pdf)," *ACM Transactions on Software Engineering and Methodology*, vol. 34, issue 2, article number 40, February 2025.
 
 ```bibtex
 @article{Alikhanifard:TOSEM:2024:RefactoringMiner3.0,

@@ -1517,6 +1517,17 @@
   "firstEndPos" : 3398,
   "secondEndPos" : 3398
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3399,
+  "secondPos" : 3399,
+  "firstEndPos" : 3409,
+  "secondEndPos" : 3409
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "TrustManager.TrustListener",
@@ -40434,6 +40445,17 @@
   "secondPos" : 34100,
   "firstEndPos" : 34109,
   "secondEndPos" : 34109
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 34111,
+  "secondPos" : 34111,
+  "firstEndPos" : 34117,
+  "secondEndPos" : 34117
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

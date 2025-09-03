@@ -746,14 +746,36 @@ public class UMLOperationDiff {
 					}
 				}
 				if(removedFieldAssignmentMap.size() == 1 && addedFieldAssignmentMap.size() > 1) {
-					SplitVariableRefactoring ref = new SplitVariableRefactoring(removedFieldAssignmentMap.keySet().iterator().next(), addedFieldAssignmentMap.keySet(), removedOperation, addedOperation, references, false);
-					refactorings.add(ref);
-					cleanUpParameters(removedFieldAssignmentMap, addedFieldAssignmentMap);
+					int count = 0;
+					for(VariableDeclaration removedParameter : removedParameters) {
+						for(VariableDeclaration addedParameter : addedFieldAssignmentMap.keySet()) {
+							if(removedParameter.getVariableName().startsWith(addedParameter.getVariableName())) {
+								count++;
+								break;
+							}
+						}
+					}
+					if(count == 0) {
+						SplitVariableRefactoring ref = new SplitVariableRefactoring(removedFieldAssignmentMap.keySet().iterator().next(), addedFieldAssignmentMap.keySet(), removedOperation, addedOperation, references, false);
+						refactorings.add(ref);
+						cleanUpParameters(removedFieldAssignmentMap, addedFieldAssignmentMap);
+					}
 				}
 				if(removedFieldAssignmentMap.size() > 1 && addedFieldAssignmentMap.size() == 1) {
-					MergeVariableRefactoring ref = new MergeVariableRefactoring(removedFieldAssignmentMap.keySet(), addedFieldAssignmentMap.keySet().iterator().next(), removedOperation, addedOperation, references, false);
-					refactorings.add(ref);
-					cleanUpParameters(removedFieldAssignmentMap, addedFieldAssignmentMap);
+					int count = 0;
+					for(VariableDeclaration addedParameter : addedParameters) {
+						for(VariableDeclaration removedParameter : removedFieldAssignmentMap.keySet()) {
+							if(addedParameter.getVariableName().startsWith(removedParameter.getVariableName())) {
+								count++;
+								break;
+							}
+						}
+					}
+					if(count == 0) {
+						MergeVariableRefactoring ref = new MergeVariableRefactoring(removedFieldAssignmentMap.keySet(), addedFieldAssignmentMap.keySet().iterator().next(), removedOperation, addedOperation, references, false);
+						refactorings.add(ref);
+						cleanUpParameters(removedFieldAssignmentMap, addedFieldAssignmentMap);
+					}
 				}
 			}
 		}

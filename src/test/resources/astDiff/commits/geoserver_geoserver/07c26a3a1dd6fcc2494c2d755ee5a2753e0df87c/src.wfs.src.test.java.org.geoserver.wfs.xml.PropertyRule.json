@@ -164,6 +164,17 @@
   "firstEndPos" : 423,
   "secondEndPos" : 427
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 424,
+  "secondPos" : 428,
+  "firstEndPos" : 431,
+  "secondEndPos" : 435
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "org.junit.rules.ExternalResource",
@@ -1318,6 +1329,17 @@
   "secondPos" : 1055,
   "firstEndPos" : 1057,
   "secondEndPos" : 1061
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 1060,
+  "secondPos" : 1064,
+  "firstEndPos" : 1066,
+  "secondEndPos" : 1070
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

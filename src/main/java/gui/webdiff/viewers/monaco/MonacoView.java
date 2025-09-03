@@ -14,13 +14,14 @@ import org.rendersnake.Renderable;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
 public class MonacoView extends AbstractDiffView implements Renderable {
     final MonacoCore core;
     boolean decorate = true;
-
+    boolean _buttons = true;
     public MonacoView(String toolName, DirComparator comparator, String routePath, int id) {
         super(toolName, 
             comparator.getProjectASTDiff().getMetaInfo(), 
@@ -30,14 +31,16 @@ public class MonacoView extends AbstractDiffView implements Renderable {
             id, 
             comparator.getNumOfDiffs(), 
             routePath, 
-            comparator.isMoveDiff(id) 
+            comparator.isMoveDiff(id),
+            comparator.getRemovedFilesName().stream().collect(Collectors.toList()),
+            comparator.getAddedFilesName().stream().collect(Collectors.toList())
         );
         ASTDiff diff = comparator.getASTDiff(id);
         boolean isMovedDiff = comparator.isMoveDiff(id);
         String srcFileContent = comparator.getProjectASTDiff().getFileContentsBefore().get(diff.getSrcPath());
         String dstFileContent = comparator.getProjectASTDiff().getFileContentsAfter().get(diff.getDstPath());
         List<Refactoring> refactorings = comparator.getRefactorings();
-        core = new MonacoCore(comparator, diff, id, isMovedDiff, srcFileContent, dstFileContent, refactorings);
+        core = new MonacoCore(comparator, diff, id, isMovedDiff, srcFileContent, dstFileContent, refactorings, comparator.getProjectASTDiff().getMetaInfo().getComments());
     }
 
     public MonacoView(String toolName, DirComparator comparator, String routePath, int id, ASTDiff diff) {
@@ -49,12 +52,15 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                 id, 
                 comparator.getNumOfDiffs(), 
                 routePath, 
-                false 
+                false,
+                comparator.getRemovedFilesName().stream().collect(Collectors.toList()),
+                comparator.getAddedFilesName().stream().collect(Collectors.toList())
             );
             String srcFileContent = comparator.getProjectASTDiff().getFileContentsBefore().get(diff.getSrcPath());
             String dstFileContent = comparator.getProjectASTDiff().getFileContentsAfter().get(diff.getDstPath());
             List<Refactoring> refactorings = comparator.getRefactorings();
-            core = new MonacoCore(comparator, diff, id, false, srcFileContent, dstFileContent, refactorings);
+            core = new MonacoCore(comparator, diff, id, false, srcFileContent, dstFileContent, refactorings,
+                    comparator.getProjectASTDiff().getMetaInfo().getComments());
     }
 
     public void setDecorate(boolean decorate) {
@@ -71,9 +77,9 @@ public class MonacoView extends AbstractDiffView implements Renderable {
             .render(new Header())
             .body(class_("h-100").style("overflow: hidden;"))
                 .div(class_("container-fluid h-100"))
-                .if_(decorate)
+                .if_(decorate && _buttons)
                     .div(class_("row"))
-                    .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, isMovedDiff, metaInfo){
+                    .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, metaInfo, deletedFilePaths, addedFilePaths, isMovedDiff){
                         @Override
                         public String getShortcutDescriptions() {
                             return super.getShortcutDescriptions() + "<b>Alt + w</b> toggle word wrap";
@@ -96,6 +102,10 @@ public class MonacoView extends AbstractDiffView implements Renderable {
         ._html();
     }
 
+    public void setButtons(boolean b) {
+        this._buttons = b;
+        core.setMinimal(!b);
+    }
 
 
     private static class Header implements Renderable {
@@ -112,11 +122,14 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                     .macros().javascript("https://code.jquery.com/ui/1.12.1/jquery-ui.min.js")
 //                    .macros().stylesheet(JQ_UI_CSS)
                     .macros().javascript(WebDiff.BOOTSTRAP_JS_URL)
+                    .macros().javascript("/dist/marked.min.js")
                     .macros().javascript("/monaco/min/vs/loader.js")
                     .macros().javascript("/dist/utils.js")
                     .macros().javascript("/dist/folding.js")
                     .macros().javascript("/dist/decorations.js")
+                    .macros().javascript("/dist/pr-utils.js")
                     .macros().javascript("/dist/monaco.js")
+                    .macros().javascript("/dist/listeners.js")
                 ._head();
         }
     }

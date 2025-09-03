@@ -8,6 +8,7 @@ import gr.uom.java.xmi.diff.UMLJavadocDiff;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
+import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.Optional;
@@ -37,8 +38,8 @@ public class CommentMatcher extends OptimizationAwareMatcher {
                             matchAndUpdateOptimizationStore(src, dst, mappingStore);
                 }
                 else {
-                    Tree srcComment = TreeUtilFunctions.findByLocationInfo(src, commonComment.getLeft().getLocationInfo());
-                    Tree dstComment = TreeUtilFunctions.findByLocationInfo(dst, commonComment.getRight().getLocationInfo());
+                    Tree srcComment = TreeUtilFunctions.findByLocationInfo(src, commonComment.getLeft().getLocationInfo(), Constants.LINE_COMMENT, Constants.BLOCK_COMMENT);
+                    Tree dstComment = TreeUtilFunctions.findByLocationInfo(dst, commonComment.getRight().getLocationInfo(), Constants.LINE_COMMENT, Constants.BLOCK_COMMENT);
                     if (srcComment != null && dstComment != null) {
                         mappingStore.addMapping(srcComment, dstComment);
                     }

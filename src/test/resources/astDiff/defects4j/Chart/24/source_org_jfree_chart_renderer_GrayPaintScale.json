@@ -241,6 +241,17 @@
   "firstEndPos" : 2084,
   "secondEndPos" : 2084
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2095,
+  "secondPos" : 2095,
+  "firstEndPos" : 2105,
+  "secondEndPos" : 2105
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "PaintScale",
@@ -3463,6 +3474,17 @@
   "secondPos" : 5247,
   "firstEndPos" : 5256,
   "secondEndPos" : 5252
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 5259,
+  "secondPos" : 5255,
+  "firstEndPos" : 5265,
+  "secondEndPos" : 5261
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

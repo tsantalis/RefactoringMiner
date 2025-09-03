@@ -659,6 +659,17 @@
   "firstEndPos" : 1241,
   "secondEndPos" : 1241
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1246,
+  "secondPos" : 1246,
+  "firstEndPos" : 1256,
+  "secondEndPos" : 1256
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "java.io.Serializable",
@@ -7280,6 +7291,17 @@
   "secondPos" : 8896,
   "firstEndPos" : 8905,
   "secondEndPos" : 8905
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 8907,
+  "secondPos" : 8907,
+  "firstEndPos" : 8913,
+  "secondEndPos" : 8913
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

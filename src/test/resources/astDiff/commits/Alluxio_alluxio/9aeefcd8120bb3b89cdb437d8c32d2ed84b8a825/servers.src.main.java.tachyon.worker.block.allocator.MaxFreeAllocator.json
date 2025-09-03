@@ -274,6 +274,17 @@
   "firstEndPos" : 1264,
   "secondEndPos" : 1358
 }, {
+  "firstType" : "TYPE_INHERITANCE_KEYWORD",
+  "secondType" : "TYPE_INHERITANCE_KEYWORD",
+  "firstLabel" : "implements",
+  "secondLabel" : "implements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1265,
+  "secondPos" : 1359,
+  "firstEndPos" : 1275,
+  "secondEndPos" : 1369
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Allocator",
@@ -790,6 +801,17 @@
   "secondPos" : 1672,
   "firstEndPos" : 1586,
   "secondEndPos" : 1680
+}, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "THROWS_KEYWORD",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 1588,
+  "secondPos" : 1682,
+  "firstEndPos" : 1594,
+  "secondEndPos" : 1688
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

@@ -305,6 +305,11 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\ts : null to candidate : String in method package suggest(word String, wordCase WordCase) : boolean from class org.apache.lucene.analysis.hunspell.ModifyingSuggester",
           "validation": true
+        },
+        {
+          "type": "REPLACE_PIPELINE_WITH_LOOP",
+          "description": "Replace Pipeline With Loop\tList<String> adjusted=result.stream().map(s -> capitalizeAfterSpace(word,s)).collect(Collectors.toList()); with for(candidate: result) in method package suggest(word String, wordCase WordCase) : boolean from class org.apache.lucene.analysis.hunspell.ModifyingSuggester",
+          "validation": true
         }
       ]
     },
@@ -363,17 +368,17 @@
         {
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tpackage VECTORS_INDEX_CODEC_NAME : String from class org.apache.lucene.codecs.compressing.CompressingTermVectorsWriter to package VECTORS_INDEX_CODEC_NAME : String from class org.apache.lucene.backward_codecs.lucene50.compressing.Lucene50CompressingTermVectorsReader",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tpackage VERSION_CURRENT : int from class org.apache.lucene.codecs.compressing.CompressingTermVectorsWriter to package VERSION_CURRENT : int from class org.apache.lucene.backward_codecs.lucene50.compressing.Lucene50CompressingTermVectorsReader",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tpackage VERSION_START : int from class org.apache.lucene.codecs.compressing.CompressingTermVectorsWriter to package VERSION_START : int from class org.apache.lucene.backward_codecs.lucene50.compressing.Lucene50CompressingTermVectorsReader",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_RENAME_CLASS",
@@ -383,7 +388,7 @@
         {
           "type": "MOVE_RENAME_CLASS",
           "description": "Move And Rename Class\torg.apache.lucene.codecs.compressing.CompressingTermVectorsReader moved and renamed to org.apache.lucene.backward_codecs.lucene50.compressing.Lucene50CompressingTermVectorsReader",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
@@ -400,7 +405,7 @@
         {
           "type": "RENAME_CLASS",
           "description": "Rename Class\torg.apache.lucene.codecs.compressing.CompressingTermVectorsReader renamed to org.apache.lucene.codecs.compressing.Lucene90CompressingTermVectorsReader",
-          "validation": false
+          "validation": true
         },
         {
           "type": "INLINE_VARIABLE",
@@ -487,6 +492,16 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tNO_OUTPUT : IntsRef to output : IntsRef in method private stem(word char[], offset int, length int, context WordContext, previous int, prevFlag char, prefixId int, recursionDepth int, doPrefix boolean, previousWasPrefix boolean, processor RootProcessor) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer",
           "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tkey : null to prefixLength : null in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tids : null to prefixId : null in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
+          "validation": true
         }
       ]
     },
@@ -497,7 +512,7 @@
       "commonRefactoring": [
         {
           "type": "MOVE_CLASS",
-          "description": "Move Class\torg.apache.lucene.codecs.lucene80.IndexedDISI moved to org.apache.lucene.codecs.lucene90.IndexedDISI",
+          "description": "Move Class\torg.apache.lucene.codecs.lucene80.IndexedDISI moved to org.apache.lucene.backward_codecs.lucene80.IndexedDISI",
           "validation": true
         },
         {
@@ -580,7 +595,7 @@
         {
           "type": "PUSH_DOWN_OPERATION",
           "description": "Push Down Method\tpublic normsConsumer(state SegmentWriteState) : NormsConsumer from class org.apache.lucene.codecs.lucene80.Lucene80NormsFormat to public normsConsumer(state SegmentWriteState) : NormsConsumer from class org.apache.lucene.backward_codecs.lucene80.Lucene80RWNormsFormat",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_CLASS",
@@ -590,7 +605,7 @@
         {
           "type": "EXTRACT_SUBCLASS",
           "description": "Extract Subclass\torg.apache.lucene.backward_codecs.lucene80.Lucene80RWNormsFormat from class org.apache.lucene.codecs.lucene80.Lucene80NormsFormat",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
@@ -712,7 +727,7 @@
         {
           "type": "MOVE_CLASS",
           "description": "Move Class\torg.apache.lucene.codecs.lucene80.TestLucene80NormsFormat moved to org.apache.lucene.backward_codecs.lucene80.TestLucene80NormsFormat",
-          "validation": false
+          "validation": true
         }
       ]
     },

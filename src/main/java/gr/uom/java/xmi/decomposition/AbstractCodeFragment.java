@@ -126,6 +126,13 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				locations.add(expression.getLocationInfo());
 			}
 		}
+		for(LeafExpression expression : getCharLiterals()) {
+			if(expression.getString().equals(s)) {
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
+			}
+		}
 		for(AbstractCall expression : getCreations()) {
 			if(expression.getString().equals(s)) {
 				if(!locations.contains(expression.getLocationInfo()))
@@ -717,5 +724,17 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		}
 		return !statement.equals(JAVA.OPEN_BLOCK) && !statement.startsWith("catch(") && !statement.startsWith(JAVA.CASE_SPACE) &&
 				!statement.equals(JAVA.RETURN_TRUE) && !statement.equals(JAVA.RETURN_FALSE) && !statement.equals(JAVA.RETURN_THIS) && !statement.equals(JAVA.RETURN_NULL) && !statement.equals(JAVA.RETURN_STATEMENT);
+	}
+
+	public boolean ownedByLambda() {
+		boolean ownedByLambda = false;
+		CompositeStatementObject parent = getParent();
+		while(parent != null) {
+			if(parent.getOwner().isPresent() && parent.getOwner().get() instanceof LambdaExpressionObject) {
+				ownedByLambda = true;
+			}
+			parent = parent.getParent();
+		}
+		return ownedByLambda;
 	}
 }

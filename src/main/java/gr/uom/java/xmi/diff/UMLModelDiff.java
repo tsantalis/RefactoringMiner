@@ -4604,6 +4604,26 @@ public class UMLModelDiff {
 									}
 								}
 							}
+							else if(mapping.getReplacementsInvolvingMethodInvocation().size() > 0) {
+								Set<Replacement> replacements = mapping.getReplacementsInvolvingMethodInvocation();
+								for(Replacement r : replacements) {
+									if(r instanceof MethodInvocationReplacement) {
+										MethodInvocationReplacement m = (MethodInvocationReplacement)r;
+										for(ListIterator<AbstractCall> iterator = removedOperationInvocations.listIterator(); iterator.hasNext();) {
+											AbstractCall matchingInvocation = iterator.next();
+											if(m.getInvokedOperationBefore() == matchingInvocation || m.getInvokedOperationBefore().actualString().equals(matchingInvocation.actualString())) {
+												if(m.getInvokedOperationAfter().getName().equals(matchingInvocation.getName()) &&
+														m.getInvokedOperationAfter().identicalExpression(matchingInvocation) &&
+														(m.getInvokedOperationAfter().argumentIntersection(matchingInvocation).size() == Math.min(m.getInvokedOperationAfter().arguments().size(), matchingInvocation.arguments().size()) ||
+																(m.getInvokedOperationAfter().argumentIntersection(matchingInvocation).size() > 0 && m.getInvokedOperationAfter().arguments().size() == matchingInvocation.arguments().size()))) {
+													iterator.remove();
+													break;
+												}
+											}
+										}
+									}
+								}
+							}
 						}
 					}
 					List<AbstractCall> creations = mapper.getContainer1().getAllCreations();

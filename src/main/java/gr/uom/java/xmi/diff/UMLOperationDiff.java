@@ -163,7 +163,7 @@ public class UMLOperationDiff {
 						removedParameterIterator.remove();
 						break;
 					}
-					else {
+					else if(removedParameters.size() == addedParameters.size()) {
 						boolean matched = false;
 						for(AbstractCodeMapping mapping : mappings) {
 							Set<Replacement> replacements = mapping.getReplacements();

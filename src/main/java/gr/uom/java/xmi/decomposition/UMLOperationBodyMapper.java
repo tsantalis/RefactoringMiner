@@ -7129,7 +7129,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 							else {
 								boolean isTestMethod = (container1.hasTestAnnotation() || container2.hasTestAnnotation() || container1.getName().startsWith("test") || container2.getName().startsWith("test"))
-										&& !container2.hasParameterizedTestAnnotation();
+										&& !container2.hasParameterizedTestAnnotation() && leaves2.size() < 2*leaves1.size();
 								boolean mappingWithNestedLambdaMapper = mappingSet.first().getLambdaMappers().size() > 0/* && mappingSet.first().nestedLambdaMappers().size() > 0*/;
 								if(!isTestMethod && !allIdenticalStatementsHaveSameIndex && !mappingWithNestedLambdaMapper)
 									checkForOtherPossibleMatchesForFragment2(leaves1, leaves2, leaf1, mappingSet, parameterToArgumentMap, equalNumberOfAssertions);

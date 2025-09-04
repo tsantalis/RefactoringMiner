@@ -1386,6 +1386,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 							if(!skip) {
+								VariableDeclaration v1 = null;
+								for(LambdaExpressionObject l : initializer.getLambdas()) {
+									v1 = l.getVariableDeclaration(initializerLambdaParameter);
+									if(v1 != null) {
+										break;
+									}
+								}		
+								VariableDeclaration v2 = nonMappedLeaf.getVariableDeclaration(lambdaParameterName);
+								if(v1 != null && v2 != null && !v1.getVariableName().equals(v2.getVariableName()) &&
+										container1.getLocationInfo().getFilePath().equals(v1.getLocationInfo().getFilePath()) &&
+										container2.getLocationInfo().getFilePath().equals(v2.getLocationInfo().getFilePath())) {
+									UMLParameterDiff parameterDiff = new UMLParameterDiff(v1, v2, container1, container2, mappings, refactorings, classDiff);
+									if(!parameterDiff.isEmpty()) {
+										refactorings.addAll(parameterDiff.getRefactorings());
+									}
+								}
 								return lambda.getString();
 							}
 						}
@@ -7113,7 +7129,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 							else {
 								boolean isTestMethod = (container1.hasTestAnnotation() || container2.hasTestAnnotation() || container1.getName().startsWith("test") || container2.getName().startsWith("test"))
-										&& !container2.hasParameterizedTestAnnotation();
+										&& !container2.hasParameterizedTestAnnotation() && leaves2.size() < 2*leaves1.size();
 								boolean mappingWithNestedLambdaMapper = mappingSet.first().getLambdaMappers().size() > 0/* && mappingSet.first().nestedLambdaMappers().size() > 0*/;
 								if(!isTestMethod && !allIdenticalStatementsHaveSameIndex && !mappingWithNestedLambdaMapper)
 									checkForOtherPossibleMatchesForFragment2(leaves1, leaves2, leaf1, mappingSet, parameterToArgumentMap, equalNumberOfAssertions);

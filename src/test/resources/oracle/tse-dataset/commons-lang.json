@@ -385,7 +385,23 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic build() : DiffBuilder<T> extracted from public testNoDifferencesString() : void in class org.apache.commons.lang3.builder.DiffResultTest & moved to class org.apache.commons.lang3.builder.DiffBuilder.Builder",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic build() : DiffBuilder<T> extracted from public ReflectionDiffBuilder(lhs T, rhs T, style ToStringStyle) in class org.apache.commons.lang3.builder.ReflectionDiffBuilder & moved to class org.apache.commons.lang3.builder.DiffBuilder.Builder",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic build() : DiffBuilder<T> extracted from public testToStringOutput() : void in class org.apache.commons.lang3.builder.DiffResultTest & moved to class org.apache.commons.lang3.builder.DiffBuilder.Builder",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/apache/commons-lang.git",

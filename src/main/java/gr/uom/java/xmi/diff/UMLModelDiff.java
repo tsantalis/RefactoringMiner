@@ -5418,7 +5418,7 @@ public class UMLModelDiff {
 							else if(!newMappingSamePackage && oldMappingSamePackage) {
 								skip = true;
 							}
-							else if(newMappingSamePackage && oldMappingSamePackage) {
+							else if(newMappingSamePackage && oldMappingSamePackage && !(newMapping.getFragment1() instanceof AbstractExpression)) {
 								skip = true;
 							}
 						}

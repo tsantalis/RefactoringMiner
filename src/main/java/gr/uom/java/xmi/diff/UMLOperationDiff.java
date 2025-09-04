@@ -13,6 +13,8 @@ import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
 import java.util.AbstractMap.SimpleEntry;
 
@@ -151,15 +153,40 @@ public class UMLOperationDiff {
 			VariableDeclaration removedParameter = removedParameterIterator.next();
 			for(Iterator<VariableDeclaration> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
 				VariableDeclaration addedParameter = addedParameterIterator.next();
-				if(removedParameter.equalQualifiedType(addedParameter) &&
-						!existsAnotherAddedParameterWithTheSameType(addedParameter)) {
-					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings, classDiff);
-					if(!parameterDiff.isEmpty()) {
-						parameterDiffList.add(parameterDiff);
+				if(removedParameter.equalQualifiedType(addedParameter)) {
+					if(!existsAnotherAddedParameterWithTheSameType(addedParameter)) {
+						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings, classDiff);
+						if(!parameterDiff.isEmpty()) {
+							parameterDiffList.add(parameterDiff);
+						}
+						addedParameterIterator.remove();
+						removedParameterIterator.remove();
+						break;
 					}
-					addedParameterIterator.remove();
-					removedParameterIterator.remove();
-					break;
+					else {
+						boolean matched = false;
+						for(AbstractCodeMapping mapping : mappings) {
+							Set<Replacement> replacements = mapping.getReplacements();
+							for(Replacement r : replacements) {
+								if(r.getType().equals(ReplacementType.VARIABLE_NAME) && r.getBefore().equals(removedParameter.getVariableName()) && r.getAfter().equals(addedParameter.getVariableName())) {
+									UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings, classDiff);
+									if(!parameterDiff.isEmpty()) {
+										parameterDiffList.add(parameterDiff);
+									}
+									addedParameterIterator.remove();
+									removedParameterIterator.remove();
+									matched = true;
+									break;
+								}
+							}
+							if(matched) {
+								break;
+							}
+						}
+						if(matched) {
+							break;
+						}
+					}
 				}
 			}
 		}

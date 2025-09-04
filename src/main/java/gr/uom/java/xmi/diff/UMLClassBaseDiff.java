@@ -3603,6 +3603,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
 						extractedOperationMappers.add(operationBodyMapper);
 						mapper.addChildMapper(operationBodyMapper);
+						if(mapper.getChildMappers().size() == 1 && mapper.getContainer1().getJavadoc() != null && mapper.getContainer2().getJavadoc() != null) {
+							UMLOperationDiff signatureDiff = new UMLOperationDiff(operationBodyMapper);
+							mapper.updateJavadocDiff(new UMLJavadocDiff(mapper.getContainer1().getJavadoc(), mapper.getContainer2().getJavadoc(), signatureDiff));
+						}
 						operationsToBeRemoved.add(addedOperation);
 					}
 				}

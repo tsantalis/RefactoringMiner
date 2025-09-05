@@ -805,19 +805,19 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic rethrow(throwable Throwable) : R renamed to public asRuntimeException(throwable Throwable) : T in class org.apache.commons.lang3.exception.ExceptionUtils",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tR to T in method public asRuntimeException(throwable Throwable) : T from class org.apache.commons.lang3.exception.ExceptionUtils",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tR to T in method public rethrow(throwable Throwable) : T from class org.apache.commons.lang3.exception.ExceptionUtils",
-          "validation": false
+          "validation": true
         }
       ]
     },

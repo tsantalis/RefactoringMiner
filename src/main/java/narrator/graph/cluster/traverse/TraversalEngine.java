@@ -193,6 +193,7 @@ public class TraversalEngine {
 
     private List<String> singularTypes = new ArrayList<>() {{
         add(Constants.METHOD_DECLARATION);
+        add(Constants.EXPRESSION_STATEMENT);
     }};
 
     // for chunks of code which are using already existing declarations, or their uses are not regular

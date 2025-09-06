@@ -2794,6 +2794,7 @@ public class ReplacementAlgorithm {
 					(invocationCoveringTheEntireStatement1.getName().equals("assertNull") && invocationCoveringTheEntireStatement2.getName().equals("isNull")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertNotNull") && invocationCoveringTheEntireStatement2.getName().equals("isNotNull")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("isEqualTo")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertNotEquals") && invocationCoveringTheEntireStatement2.getName().equals("isNotEqualTo")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertArrayEquals") && invocationCoveringTheEntireStatement2.getName().equals("isEqualTo")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("hasValue")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("hasSize") &&
@@ -2899,6 +2900,7 @@ public class ReplacementAlgorithm {
 					(invocationCoveringTheEntireStatement1.getName().equals("isNull") && invocationCoveringTheEntireStatement2.getName().equals("assertNull")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("isNotNull") && invocationCoveringTheEntireStatement2.getName().equals("assertNotNull")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("isEqualTo") && invocationCoveringTheEntireStatement2.getName().equals("assertEquals")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("isNotEqualTo") && invocationCoveringTheEntireStatement2.getName().equals("assertNotEquals")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("isEqualTo") && invocationCoveringTheEntireStatement2.getName().equals("assertArrayEquals")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("hasValue") && invocationCoveringTheEntireStatement2.getName().equals("assertEquals")) ||
 					(invocationCoveringTheEntireStatement2.getName().equals("assertEquals") && invocationCoveringTheEntireStatement1.getName().equals("hasSize") &&

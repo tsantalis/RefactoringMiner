@@ -3445,10 +3445,32 @@ public class ReplacementAlgorithm {
 				return replacementInfo.getReplacements();
 			}
 		}
+		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.getAnonymousClassDeclaration() != null && invocationCoveringTheEntireStatement2 != null && !(invocationCoveringTheEntireStatement2 instanceof MethodReference) && variableDeclarations2.isEmpty() &&
+				!containsMethodSignatureOfAnonymousClass(statement1.getString()) && !containsMethodSignatureOfAnonymousClass(statement2.getString())) {
+			String arrayInitializer = creationCoveringTheEntireStatement1.getAnonymousClassDeclaration();
+			String args1 = arrayInitializer.substring(arrayInitializer.indexOf(JAVA.OPEN_ARRAY_INITIALIZER)+1, arrayInitializer.lastIndexOf(JAVA.CLOSE_ARRAY_INITIALIZER));
+			String args2 = s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"));
+			if(args1.equals(args2)) {
+				r = new Replacement(args1, args2, ReplacementType.ARRAY_INITIALIZER_REPLACED_WITH_METHOD_INVOCATION_ARGUMENTS);
+				replacementInfo.addReplacement(r);
+				return replacementInfo.getReplacements();
+			}
+		}
 		if(variableDeclarationWithArrayInitializer2 != null && invocationCoveringTheEntireStatement1 != null && !(invocationCoveringTheEntireStatement1 instanceof MethodReference) && variableDeclarations1.isEmpty() &&
 				!containsMethodSignatureOfAnonymousClass(statement1.getString()) && !containsMethodSignatureOfAnonymousClass(statement2.getString())) {
 			String args1 = s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")"));
 			String args2 = s2.substring(s2.indexOf(JAVA.OPEN_ARRAY_INITIALIZER)+1, s2.lastIndexOf(JAVA.CLOSE_ARRAY_INITIALIZER));
+			if(args1.equals(args2)) {
+				r = new Replacement(args1, args2, ReplacementType.ARRAY_INITIALIZER_REPLACED_WITH_METHOD_INVOCATION_ARGUMENTS);
+				replacementInfo.addReplacement(r);
+				return replacementInfo.getReplacements();
+			}
+		}
+		if(creationCoveringTheEntireStatement2 != null && creationCoveringTheEntireStatement2.getAnonymousClassDeclaration() != null && invocationCoveringTheEntireStatement1 != null && !(invocationCoveringTheEntireStatement1 instanceof MethodReference) && variableDeclarations1.isEmpty() &&
+				!containsMethodSignatureOfAnonymousClass(statement1.getString()) && !containsMethodSignatureOfAnonymousClass(statement2.getString())) {
+			String args1 = s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")"));
+			String arrayInitializer = creationCoveringTheEntireStatement2.getAnonymousClassDeclaration();
+			String args2 = arrayInitializer.substring(arrayInitializer.indexOf(JAVA.OPEN_ARRAY_INITIALIZER)+1, arrayInitializer.lastIndexOf(JAVA.CLOSE_ARRAY_INITIALIZER));
 			if(args1.equals(args2)) {
 				r = new Replacement(args1, args2, ReplacementType.ARRAY_INITIALIZER_REPLACED_WITH_METHOD_INVOCATION_ARGUMENTS);
 				replacementInfo.addReplacement(r);

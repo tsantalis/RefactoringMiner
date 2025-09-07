@@ -10476,6 +10476,8 @@ line range:528-537==line range:519-528
 line range:486-538==line range:476-529
 line range:530-536==line range:521-527
 line range:529-537==line range:520-528
+public parameters() : Boolean[] -> private parameters() : Collection<Boolean>
+line range:102-102==line range:96-96
 private performCheck(resultFuture Future<SnapshotResult<T>>, jmState StateObjectCollection<T>, tmState StateObjectCollection<T>) : void -> private performCheck(resultFuture Future<SnapshotResult<T>>, jmState StateObjectCollection<T>, tmState StateObjectCollection<T>) : void
 line range:273-273==line range:272-272
 line range:275-275==line range:274-274
@@ -11139,6 +11141,8 @@ line range:1453-1455==line range:1442-1444
 line range:1456-1458==line range:1445-1447
 line range:1459-1461==line range:1448-1450
 line range:1477-1479==line range:1467-1469
+public parameters() : Boolean[] -> private parameters() : Collection<Boolean>
+line range:155-155==line range:148-148
 public DuplicatingInput(owner AbstractStreamOperatorV2<String>, inputId int) -> public DuplicatingInput(owner AbstractStreamOperatorV2<String>, inputId int)
 line range:511-511==line range:504-504
 public processElement(element StreamRecord<String>) : void -> public processElement(element StreamRecord<String>) : void

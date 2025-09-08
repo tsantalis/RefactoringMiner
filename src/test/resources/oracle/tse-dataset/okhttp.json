@@ -658,6 +658,11 @@
           "type": "INLINE_OPERATION",
           "description": "Inline Method\tprivate remapResponse(response Response) : Response inlined to public intercept(chain Chain) : Response in class okhttp3.URLConnectionTest.LegacyRedirectInterceptor",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcode : int in method public intercept(chain Chain) : Response from class okhttp3.URLConnectionTest.LegacyRedirectInterceptor",
+          "validation": true
         }
       ]
     },

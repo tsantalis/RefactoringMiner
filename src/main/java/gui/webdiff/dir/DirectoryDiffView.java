@@ -539,6 +539,12 @@ public class DirectoryDiffView implements Renderable {
                         				if(s.equals(openingTag)) {
                         					skip = true;
                         				}
+                        				if(description.length() > index+codeElement.length()) {
+                        					s = description.substring(index+codeElement.length());
+                        					if(s.startsWith(closingTag)) {
+                        						skip = true;
+                        					}
+                        				}
                         			}
                         			if(!skip) {
                         				description = description.replaceFirst(codeElement, toBeReplaced.get(codeElement));

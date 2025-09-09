@@ -1363,6 +1363,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		if(getReplacements().size() == 2 && (fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size() || fragment1.getTernaryOperatorExpressions().size() > 0 || fragment2.getTernaryOperatorExpressions().size() > 0)) {
 			boolean listToArrayConversion = false;
 			boolean identicalCallWithExtraArguments = false;
+			boolean thisDotAdded = false;
 			for(Replacement r : replacements) {
 				if(r instanceof VariableReplacementWithMethodInvocation) {
 					VariableReplacementWithMethodInvocation replacement = (VariableReplacementWithMethodInvocation)r;
@@ -1384,6 +1385,9 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						identicalCallWithExtraArguments = true;
 					}
 				}
+				else if(r.getBefore().equals(JAVA.THIS_DOT + r.getAfter()) || r.getAfter().equals(JAVA.THIS_DOT + r.getBefore())) {
+					thisDotAdded = true;
+				}
 				if(classDiff != null) {
 					for(UMLAttribute attribute : classDiff.getNextClass().getAttributes()) {
 						if(r.getAfter().equals(attribute.getName()) && attribute.getVariableDeclaration().getInitializer() != null &&
@@ -1393,7 +1397,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					}
 				}
 			}
-			if(listToArrayConversion || identicalCallWithExtraArguments) {
+			if(listToArrayConversion || identicalCallWithExtraArguments || thisDotAdded) {
 				return true;
 			}
 		}
@@ -1432,6 +1436,40 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		AbstractCall creation = initializer.creationCoveringEntireFragment();
 		if(creation != null) {
 			if(creation.arguments().contains(replacedExpression)) {
+				return true;
+			}
+			if(replacedExpression.startsWith("new " + creation.getName()) && replacedExpression.endsWith(")")) {
+				if(creation.arguments().size() > 0) {
+					List<String> literals1 = new ArrayList<>();
+					for(String arg : creation.arguments()) {
+						if(arg.startsWith("\"") && arg.endsWith("\"")) {
+							literals1.add(arg.substring(1, arg.length()-1));
+						}
+					}
+					String arguments = replacedExpression.substring(replacedExpression.indexOf("(")+1, replacedExpression.indexOf(")"));
+					List<String> literals2 = new ArrayList<>();
+					if(arguments.startsWith("\"") && arguments.endsWith("\"")) {
+						literals2.add(arguments.substring(1, arguments.length()-1));
+					}
+					if(literals1.size() == literals2.size() && literals1.size() > 0) {
+						int matchCount = 0;
+						for(int i=0; i<literals1.size(); i++) {
+							String s1 = literals1.get(i);
+							String s2 = literals2.get(i);
+							List<String> words1 = List.of(s1.split("\\s+"));
+							List<String> words2 = List.of(s2.split("\\s+"));
+							for(String word : words1) {
+								if(words2.contains(word)) {
+									matchCount++;
+									break;
+								}
+							}
+						}
+						if(matchCount == 0) {
+							return false;
+						}
+					}
+				}
 				return true;
 			}
 		}

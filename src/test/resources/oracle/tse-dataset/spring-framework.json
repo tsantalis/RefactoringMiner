@@ -398,6 +398,11 @@
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tBeanDefinition to void in method private addInfrastructureBeanDefinition(registry BeanDefinitionRegistry, clazz Class<?>, beanName String, constructorArgumentsConsumer Consumer<ConstructorArgumentValues>) : void from class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessor",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tregistrarReference : RuntimeBeanReference in method public register(registry BeanDefinitionRegistry) : void from class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessor",
+          "validation": true
         }
       ]
     },
@@ -1113,6 +1118,11 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tbd3 : RootBeanDefinition in method package individualBeanWithUnresolvedFactoryBeanTypeAsTargetType() : void from class org.springframework.context.annotation.AnnotationConfigApplicationContextTests",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tbd3 : RootBeanDefinition in method package genericMatchingWithFullTypeDifferentiation(factoryClass Class<?>) : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
           "validation": true
         }
       ]

@@ -1129,6 +1129,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							overlappingExtractVariable(initializer, after, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
 							(initializer.toString().equals("(" + declaration.getType() + ")" + after) && !containsVariableNameReplacement(variableName)) ||
 							ternaryMatch(initializer, after) ||
+							callChainMatch(initializer, after) ||
 							fieldAccessReplacedWithGetter(initializer, after) ||
 							infixOperandMatch(initializer, after) ||
 							wrappedAsArgument(initializer, after) ||

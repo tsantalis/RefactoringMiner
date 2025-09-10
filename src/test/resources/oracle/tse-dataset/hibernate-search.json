@@ -1732,6 +1732,11 @@
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tprivate documentIdSourceProperty : PojoPropertyModel<?> from class org.hibernate.search.mapper.pojo.identity.impl.PojoRootIdentityMappingCollector to public documentIdSourceProperty : Optional<PojoPropertyModel<I>> from class org.hibernate.search.mapper.pojo.identity.impl.BoundIdentifierMapping",
           "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tsearchMapping : CloseableSearchMapping in method package setup() : void from class org.hibernate.search.documentation.mapper.pojo.standalone.loading.StandalonePojoSelectionLoadingIT",
+          "validation": true
         }
       ]
     },

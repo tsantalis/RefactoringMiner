@@ -110,7 +110,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 		if(invocation1 == null) {
 			invocation1 = mapping.getFragment1().assignmentInvocationCoveringEntireStatement();
 		}
-		if(invocation1 instanceof OperationInvocation && ((OperationInvocation)invocation1).numberOfSubExpressions() > 0) {
+		if(invocation1 instanceof OperationInvocation && ((OperationInvocation)invocation1).numberOfSubExpressions() > 0 && this.bodyMapper.getParentMapper() != null) {
 			for(AbstractCodeMapping m : this.bodyMapper.getParentMapper().getMappings()) {
 				if(m.getFragment2().getLocationInfo().subsumes(this.bodyMapper.getOperationInvocation().getLocationInfo())) {
 					AbstractCall invocation2 = m.getFragment2().invocationCoveringEntireFragment();

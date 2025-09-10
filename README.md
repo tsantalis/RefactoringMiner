@@ -493,16 +493,16 @@ As of **September 9, 2025** the precision and recall of RefactoringMiner on this
 **Files**: [tse-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/tse-dataset)
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **September 9, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **September 10, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3260  | 108  | 195  | 0.968  | 0.944|
+|**Total**|3262  | 108  | 195  | 0.968  | 0.944|
 |Extract Method|362  |  4  | 11  | 0.989  | 0.971|
 |Rename Class|231  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
 |Move And Rename Attribute| 5  |  0  |  3  | 1.000  | 0.625|
-|Rename Method|291  | 13  | 10  | 0.957  | 0.967|
+|Rename Method|292  | 13  | 10  | 0.957  | 0.967|
 |Inline Method|69  |  5  |  2  | 0.932  | 0.972|
 |Move Method|262  |  4  |  2  | 0.985  | 0.992|
 |Move And Rename Method|24  |  4  |  6  | 0.857  | 0.800|
@@ -519,7 +519,7 @@ As of **September 9, 2025** the precision and recall of RefactoringMiner on this
 |Extract And Move Method|109  |  8  | 18  | 0.932  | 0.858|
 |Move And Inline Method|26  |  1  | 12  | 0.963  | 0.684|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|265  |  7  | 25  | 0.974  | 0.914|
+|Extract Variable|266  |  7  | 25  | 0.974  | 0.914|
 |Extract Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|99  |  6  | 27  | 0.943  | 0.786|
 |Rename Variable|290  | 17  | 15  | 0.945  | 0.951|

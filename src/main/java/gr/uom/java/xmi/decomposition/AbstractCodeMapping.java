@@ -2,6 +2,7 @@ package gr.uom.java.xmi.decomposition;
 
 import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.ReplacementUtil.isDefaultValue;
+import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.containsAnonymousClass;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -704,6 +705,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							overlappingExtractVariable(initializer, before, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
 							(initializer.toString().equals("(" + declaration.getType() + ")" + before) && !containsVariableNameReplacement(variableName)) ||
 							ternaryMatch(initializer, before) ||
+							callChainMatch(initializer, before) ||
 							fieldAccessReplacedWithGetter(initializer, before) ||
 							infixOperandMatch(initializer, before) ||
 							wrappedAsArgument(initializer, before) ||
@@ -1530,6 +1532,27 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			}
 			if(matchingTokens == tokens1.length) {
 				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean callChainMatch(AbstractExpression initializer, String replacedExpression) {
+		if(initializer.getString().contains(".") && replacedExpression.contains(".") && !containsAnonymousClass(replacedExpression)) {
+			List<String> tokens1 = List.of(initializer.getString().split("\\."));
+			List<String> tokens2 = List.of(replacedExpression.split("\\."));
+			if(tokens1.size() > 1 && tokens2.size() > 1) {
+				Set<String> intersection = new LinkedHashSet<>(tokens1);
+				intersection.retainAll(tokens2);
+				if(intersection.size() == 1 && intersection.iterator().next().equals(tokens1.get(0))) {
+					return false;
+				}
+				if(intersection.size() == 1 && intersection.iterator().next().equals("this")) {
+					return false;
+				}
+				if(intersection.size() >= Math.min(tokens1.size(), tokens2.size()) - 1) {
+					return true;
+				}
 			}
 		}
 		return false;

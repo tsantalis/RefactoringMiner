@@ -1418,6 +1418,16 @@
           "type": "CHANGE_ATTRIBUTE_TYPE",
           "description": "Change Attribute Type\tfield : String to field : AutoCloseable in class org.junit.jupiter.engine.extension.AutoCloseTests.NullCloseableFieldTestCase",
           "validation": false
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate getQualifiedFieldName(field Field) : String renamed to private getQualifiedName(field Field) : String in class org.junit.jupiter.engine.extension.AutoCloseExtension",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttypeName : String in method private getQualifiedName(field Field) : String from class org.junit.jupiter.engine.extension.AutoCloseExtension",
+          "validation": true
         }
       ]
     },

@@ -12352,6 +12352,61 @@
   "firstEndPos" : 9667,
   "secondEndPos" : 10130
 }, {
+  "firstType" : "ClassInstanceCreation",
+  "secondType" : "ClassInstanceCreation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 9502,
+  "secondPos" : 10068,
+  "firstEndPos" : 9597,
+  "secondEndPos" : 10093
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Parameter",
+  "secondLabel" : "Parameter",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 9506,
+  "secondPos" : 10072,
+  "firstEndPos" : 9515,
+  "secondEndPos" : 10081
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "ClassInstanceCreation",
+  "firstPos" : 9506,
+  "secondPos" : 10072,
+  "firstEndPos" : 9515,
+  "secondEndPos" : 10081
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "key",
+  "secondLabel" : "key",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "ClassInstanceCreation",
+  "firstPos" : 9550,
+  "secondPos" : 10082,
+  "firstEndPos" : 9553,
+  "secondEndPos" : 10085
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "value",
+  "secondLabel" : "value",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "ClassInstanceCreation",
+  "firstPos" : 9590,
+  "secondPos" : 10087,
+  "firstEndPos" : 9595,
+  "secondEndPos" : 10092
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",

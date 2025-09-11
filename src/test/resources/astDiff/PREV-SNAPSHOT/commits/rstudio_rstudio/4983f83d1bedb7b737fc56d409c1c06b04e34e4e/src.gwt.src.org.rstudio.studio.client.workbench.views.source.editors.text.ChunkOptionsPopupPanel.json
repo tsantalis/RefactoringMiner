@@ -7094,6 +7094,50 @@
   "firstEndPos" : 7301,
   "secondEndPos" : 7495
 }, {
+  "firstType" : "ClassInstanceCreation",
+  "secondType" : "ClassInstanceCreation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 7303,
+  "secondPos" : 7353,
+  "firstEndPos" : 7334,
+  "secondEndPos" : 7381
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Label",
+  "secondLabel" : "Label",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 7307,
+  "secondPos" : 7357,
+  "firstEndPos" : 7312,
+  "secondEndPos" : 7362
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "ClassInstanceCreation",
+  "firstPos" : 7307,
+  "secondPos" : 7357,
+  "firstEndPos" : 7312,
+  "secondEndPos" : 7362
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"Width (in inches):\"",
+  "secondLabel" : "\"Width (inches):\"",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "ClassInstanceCreation",
+  "firstPos" : 7313,
+  "secondPos" : 7363,
+  "firstEndPos" : 7333,
+  "secondEndPos" : 7380
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7368,6 +7412,50 @@
   "secondPos" : 7796,
   "firstEndPos" : 7497,
   "secondEndPos" : 7797
+}, {
+  "firstType" : "ClassInstanceCreation",
+  "secondType" : "ClassInstanceCreation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 7499,
+  "secondPos" : 7653,
+  "firstEndPos" : 7531,
+  "secondEndPos" : 7682
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Label",
+  "secondLabel" : "Label",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 7503,
+  "secondPos" : 7657,
+  "firstEndPos" : 7508,
+  "secondEndPos" : 7662
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "ClassInstanceCreation",
+  "firstPos" : 7503,
+  "secondPos" : 7657,
+  "firstEndPos" : 7508,
+  "secondEndPos" : 7662
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"Height (in inches):\"",
+  "secondLabel" : "\"Height (inches):\"",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "ClassInstanceCreation",
+  "firstPos" : 7509,
+  "secondPos" : 7663,
+  "firstEndPos" : 7530,
+  "secondEndPos" : 7681
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

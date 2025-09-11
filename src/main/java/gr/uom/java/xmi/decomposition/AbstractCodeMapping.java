@@ -1454,6 +1454,12 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					if(arguments.startsWith("\"") && arguments.endsWith("\"")) {
 						literals2.add(arguments.substring(1, arguments.length()-1));
 					}
+					if(literals2.isEmpty()) {
+						arguments = replacedExpression.substring(replacedExpression.indexOf("(")+1, replacedExpression.lastIndexOf(")"));
+						if(arguments.startsWith("\"") && arguments.endsWith("\"")) {
+							literals2.add(arguments.substring(1, arguments.length()-1));
+						}
+					}
 					if(literals1.size() == literals2.size() && literals1.size() > 0) {
 						int matchCount = 0;
 						for(int i=0; i<literals1.size(); i++) {

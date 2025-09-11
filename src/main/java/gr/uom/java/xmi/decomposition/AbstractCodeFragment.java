@@ -706,6 +706,14 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		}
 		CompositeStatementObject parent = getParent();
 		if(parent != null && parent.getParent() != null) {
+			if(parent.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT)) {
+				if(parent.getStatements().size() > index + 1) {
+					AbstractStatement next = parent.getStatements().get(index + 1);
+					if(next.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_CASE)) {
+						return true;
+					}
+				}
+			}
 			return index == parent.getStatements().size() - 1;
 		}
 		return false;

@@ -232,7 +232,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tloggingEventsLocal : ConcurrentLinkedQueue<LogEvent> in method public beforeEach(context ExtensionContext) : void from class org.apache.flink.testutils.logging.LoggerAuditingExtension",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [

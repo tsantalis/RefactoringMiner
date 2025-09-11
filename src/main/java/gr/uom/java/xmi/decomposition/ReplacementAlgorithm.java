@@ -3968,8 +3968,13 @@ public class ReplacementAlgorithm {
 				if(invocationCoveringTheEntireStatement2 != null) {
 					boolean superCall2 = invocationCoveringTheEntireStatement2.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression().equals("super");
 					if(!superCall2) {
-						UMLOperation addedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getNextClass().getOperations(), container2);
-						callToAddedOperation = addedOperation != null && !addedOperation.equals(container2);
+						List<UMLOperation> addedOperations = classDiff.matchesAllOperation(invocationCoveringTheEntireStatement2, classDiff.getNextClass().getOperations(), container2);
+						for(UMLOperation addedOperation : addedOperations) {
+							if(!addedOperation.equals(container2)) {
+								callToAddedOperation = true;
+								break;
+							}
+						}
 						if(callToAddedOperation == false) {
 							if(invocationCoveringTheEntireStatement2.getExpression() != null) {
 								List<AbstractCall> methodInvocations = methodInvocationMap2.get(invocationCoveringTheEntireStatement2.getExpression());
@@ -3988,8 +3993,13 @@ public class ReplacementAlgorithm {
 				if(invocationCoveringTheEntireStatement1 != null) {
 					boolean superCall1 = invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement1.getExpression().equals("super");
 					if(!superCall1) {
-						UMLOperation removedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getOriginalClass().getOperations(), container1);
-						callToDeletedOperation = removedOperation != null && !removedOperation.equals(container1);
+						List<UMLOperation> removedOperations = classDiff.matchesAllOperation(invocationCoveringTheEntireStatement1, classDiff.getOriginalClass().getOperations(), container1);
+						for(UMLOperation removedOperation : removedOperations) {
+							if(!removedOperation.equals(container1)) {
+								callToDeletedOperation = true;
+								break;
+							}
+						}
 						if(callToDeletedOperation == false) {
 							if(invocationCoveringTheEntireStatement1.getExpression() != null) {
 								List<AbstractCall> methodInvocations = methodInvocationMap1.get(invocationCoveringTheEntireStatement1.getExpression());
@@ -4187,8 +4197,18 @@ public class ReplacementAlgorithm {
 		if(operationBodyMapper.getOperation1().equalSignature(operationBodyMapper.getOperation2())) {
 			return true;
 		}
+		List<UMLType> parameterTypeList1 = operationBodyMapper.getOperation1().getParameterTypeList();
+		List<UMLType> parameterTypeList2 = operationBodyMapper.getOperation2().getParameterTypeList();
+		if(operationBodyMapper.getOperation1().getName().equals(operationBodyMapper.getOperation2().getName()) && operationBodyMapper.getOperation1().equalReturnParameter(operationBodyMapper.getOperation2()) &&
+				parameterTypeList1.size() > 0 && parameterTypeList2.size() > 0) {
+			boolean parameterTypeCompatible = parameterTypeList1.containsAll(parameterTypeList2) ||
+					parameterTypeList2.containsAll(parameterTypeList1);
+			boolean parameterNameCompatible = operationBodyMapper.getOperation1().getParameterNameList().containsAll(operationBodyMapper.getOperation2().getParameterNameList()) ||
+					operationBodyMapper.getOperation2().getParameterNameList().containsAll(operationBodyMapper.getOperation1().getParameterNameList());
+			return parameterTypeCompatible && parameterNameCompatible;
+		}
 		if(operationBodyMapper.getOperation1().getName().contains(operationBodyMapper.getOperation2().getName()) || operationBodyMapper.getOperation2().getName().contains(operationBodyMapper.getOperation1().getName())) {
-			return operationBodyMapper.getOperation1().getParameterTypeList().equals(operationBodyMapper.getOperation2().getParameterTypeList()) && operationBodyMapper.getOperation1().equalReturnParameter(operationBodyMapper.getOperation2());
+			return parameterTypeList1.equals(parameterTypeList2) && operationBodyMapper.getOperation1().equalReturnParameter(operationBodyMapper.getOperation2());
 		}
 		return false;
 	}

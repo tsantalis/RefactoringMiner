@@ -297,6 +297,15 @@ public abstract class UMLAbstractClassDiff {
 		return null;
 	}
 
+	public List<UMLOperation> matchesAllOperation(AbstractCall invocation, List<UMLOperation> operations, VariableDeclarationContainer callerOperation) {
+		List<UMLOperation> matches = new ArrayList<>();
+		for(UMLOperation operation : operations) {
+			if(invocation.matchesOperation(operation, callerOperation, this, modelDiff))
+				matches.add(operation);
+		}
+		return matches;
+	}
+
 	public Set<Replacement> getReplacementsOfType(ReplacementType type) {
 		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {

@@ -63,7 +63,13 @@
           "validation": false
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tresolver : Supplier<?> in method private hasResolver(parameterName String) : boolean from class org.hibernate.internal.FilterImpl",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/hibernate/hibernate-orm.git",

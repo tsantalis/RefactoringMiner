@@ -542,6 +542,18 @@ public abstract class UMLAbstractClass {
 		return false;
 	}
 
+	public boolean containsAttributeWithTheSameNameIgnoringCase(UMLAttribute attribute) {
+		for(UMLAttribute originalAttribute : attributes) {
+			if(originalAttribute.equalsIgnoringNameCase(attribute))
+				return true;
+		}
+		for(UMLAttribute originalAttribute : enumConstants) {
+			if(originalAttribute.equalsIgnoringNameCase(attribute))
+				return true;
+		}
+		return false;
+	}
+
 	public boolean containsAttributeWithTheSameNameIgnoringChangedType(UMLAttribute attribute) {
 		for(UMLAttribute originalAttribute : attributes) {
 			if(originalAttribute.equalsIgnoringChangedType(attribute))
@@ -844,6 +856,7 @@ public abstract class UMLAbstractClass {
 			totalAttributes++;
 			if(umlClass.containsAttributeWithTheSameNameIgnoringChangedType(attribute) ||
 					umlClass.containsRenamedAttributeWithIdenticalTypeAndInitializer(attribute) ||
+					umlClass.containsAttributeWithTheSameNameIgnoringCase(attribute) ||
 					(pattern != null && umlClass.containsAttributeWithTheSameRenamePattern(attribute, pattern.reverse()))) {
 				commonAttributes.add(attribute);
 				if(umlClass.containsIdenticalAttributeIncludingAnnotation(attribute)) {
@@ -858,6 +871,7 @@ public abstract class UMLAbstractClass {
 			totalAttributes++;
 			if(this.containsAttributeWithTheSameNameIgnoringChangedType(attribute) ||
 					this.containsRenamedAttributeWithIdenticalTypeAndInitializer(attribute) ||
+					this.containsAttributeWithTheSameNameIgnoringCase(attribute) ||
 					(pattern != null && this.containsAttributeWithTheSameRenamePattern(attribute, pattern))) {
 				commonAttributes.add(attribute);
 				if(this.containsIdenticalAttributeIncludingAnnotation(attribute)) {

@@ -967,7 +967,25 @@ public class UMLModelDiff {
 				}
 				else if(isSubclassOf(renamedClass.getName(), renameDiff.getRenamedClass().getName()) ||
 						isSubclassOf(renameDiff.getRenamedClass().getName(), renamedClass.getName()) ||
-						renamedClass.hasCommonOperationWithTheSameSignature(renameDiff.getRenamedClass()).isMatch()) {
+						commonAPIs(renamedClass, renameDiff)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean commonAPIs(UMLClass renamedClass, UMLClassRenameDiff renameDiff) {
+		MatchResult matchResult = renamedClass.hasCommonOperationWithTheSameSignature(renameDiff.getRenamedClass());
+		if(matchResult.isMatch()) {
+			if(matchResult.getIdenticalBodyOperations() == matchResult.getMatchedOperations()) {
+				return true;
+			}
+			if(renamedClass.getSuperclass() != null && renameDiff.getOriginalClass().getSuperclass() != null && renameDiff.getNextClass().getSuperclass() != null) {
+				if(renamedClass.getSuperclass().equals(renameDiff.getOriginalClass().getSuperclass()) && !renamedClass.getSuperclass().equals(renameDiff.getNextClass().getSuperclass())) {
+					return true;
+				}
+				else if(!renamedClass.getSuperclass().equals(renameDiff.getOriginalClass().getSuperclass()) && renamedClass.getSuperclass().equals(renameDiff.getNextClass().getSuperclass())) {
 					return true;
 				}
 			}

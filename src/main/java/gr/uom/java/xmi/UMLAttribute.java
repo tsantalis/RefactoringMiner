@@ -438,6 +438,10 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return false;
 	}
 
+	public boolean equalsIgnoringNameCase(UMLAttribute attribute) {
+		return this.name.equalsIgnoreCase(attribute.name) && this.type.equals(attribute.type);
+	}
+
 	public CodeRange codeRange() {
 		LocationInfo info = getLocationInfo();
 		return info.codeRange();

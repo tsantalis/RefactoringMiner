@@ -3365,6 +3365,7 @@ public class UMLModelDiff {
 			SplitClassRefactoring refactoring = new SplitClassRefactoring(classSplitDiff);
 			for(UMLClassRenameDiff renameDiff : classSplitDiff.getClassRenameDiffs()) {
 				renameDiff.process();
+				renameDiff.getRefactorings();
 				detectSubRefactorings(renameDiff, renameDiff.getRenamedClass(), refactoring.getRefactoringType());
 				for(UMLOperationBodyMapper mapper : renameDiff.getOperationBodyMapperList()) {
 					MoveOperationRefactoring move = new MoveOperationRefactoring(mapper);

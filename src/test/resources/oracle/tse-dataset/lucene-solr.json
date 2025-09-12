@@ -1225,7 +1225,12 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tresult : boolean to found : boolean in method private checkLastCompoundPart(wordChars char[], start int, length int, words List<IntsRef>) : boolean from class org.apache.lucene.analysis.hunspell.Hunspell",
-          "validation": false
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcFlag : char in method private isRootCompatibleWithContext(context WordContext, lastAffix int, entryId int) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer",
+          "validation": true
         }
       ]
     },

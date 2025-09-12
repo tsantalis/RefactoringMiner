@@ -1848,7 +1848,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tendpointEndsWithCentral : boolean in method private configureEndpointAndRegion(builder BuilderT, parameters S3ClientCreationParameters, conf Configuration) : void from class org.apache.hadoop.fs.s3a.DefaultS3ClientFactory",
-          "validation": true
+          "validation": false
         }
       ]
     }

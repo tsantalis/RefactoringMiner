@@ -1754,7 +1754,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				ExtractVariableRefactoring extractVariable = (ExtractVariableRefactoring)ref;
 				VariableDeclaration declaration = extractVariable.getVariableDeclaration();
 				if(declaration.getInitializer() != null && input.contains(declaration.getInitializer().toString())) {
-					output = output.replace(declaration.getInitializer().toString(), declaration.getVariableName());
+					output = ReplacementUtil.performReplacement(output, declaration.getInitializer().toString(), declaration.getVariableName());
 				}
 			}
 		}
@@ -1819,12 +1819,24 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					List<LeafExpression> leafExpressions1 = getFragment1().findExpression(input);
 					if(leafExpressions1.size() > 0 && variableDeclaration.getInitializer().findExpression(input).size() > 0) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(variableDeclaration, operation1, operation2, insideExtractedOrInlinedMethod);
-						for(LeafExpression subExpression : leafExpressions1) {
-							LeafMapping leafMapping = new LeafMapping(subExpression, variableDeclaration.getInitializer(), operation1, operation2);
-							ref.addSubExpressionMapping(leafMapping);
+						boolean found = false;
+						for(Refactoring r : refactorings) {
+							if(r instanceof ExtractVariableRefactoring) {
+								ExtractVariableRefactoring old = (ExtractVariableRefactoring)r;
+								if(old.getVariableDeclaration().equals(ref.getVariableDeclaration()) ||
+										old.getVariableDeclaration().getVariableName().equals(ref.getVariableDeclaration().getVariableName())) {
+									found = true;
+								}
+							}
 						}
-						processExtractVariableRefactoring(ref, refactorings);
-						return true;
+						if(!found) {
+							for(LeafExpression subExpression : leafExpressions1) {
+								LeafMapping leafMapping = new LeafMapping(subExpression, variableDeclaration.getInitializer(), operation1, operation2);
+								ref.addSubExpressionMapping(leafMapping);
+							}
+							processExtractVariableRefactoring(ref, refactorings);
+							return true;
+						}
 					}
 				}
 			}

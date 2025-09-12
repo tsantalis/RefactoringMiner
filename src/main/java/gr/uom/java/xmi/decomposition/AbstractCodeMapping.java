@@ -577,7 +577,14 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			if(!insideExtractedOrInlinedMethod && !declaration.getScope().subsumes(this.getFragment2().getLocationInfo())) {
 				continue;
 			}
-			for(Replacement replacement : getReplacements()) {
+			Set<Replacement> replacements = new LinkedHashSet<>();
+			for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
+				for(AbstractCodeMapping mapping : lambdaMapper.getMappings()) {
+					replacements.addAll(mapping.getReplacements());
+				}
+			}
+			replacements.addAll(getReplacements());
+			for(Replacement replacement : replacements) {
 				String after = replacement.getAfter();
 				String before = replacement.getBefore();
 				if(replacement.getType().equals(ReplacementType.PARENTHESIZED_EXPRESSION) ||
@@ -608,7 +615,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					AbstractCall callBefore = r.getInvokedOperationBefore();
 					AbstractCall callAfter = r.getInvokedOperationAfter();
 					int indexOfArgument2 = callAfter.arguments().indexOf(variableName);
-					if(indexOfArgument2 != -1 && callBefore.arguments().size() == callAfter.arguments().size() &&
+					if(indexOfArgument2 != -1 && (callBefore.arguments().size() == callAfter.arguments().size() ||
+							indexOfArgument2 < Math.min(callBefore.arguments().size(), callAfter.arguments().size())) &&
 							!callAfter.arguments().contains(callBefore.arguments().get(indexOfArgument2))) {
 						after = variableName;
 						before = callBefore.arguments().get(indexOfArgument2);
@@ -627,11 +635,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							if(initializer.toString().equals(prefixBefore) ||
 									overlappingExtractVariable(initializer, prefixBefore, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings)) {
 								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
-								List<LeafExpression> subExpressions = getFragment1().findExpression(prefixBefore);
-								for(LeafExpression subExpression : subExpressions) {
-									LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
-									ref.addSubExpressionMapping(leafMapping);
-								}
+								addSubExpressionMappings(initializer, prefixBefore, ref, replacement);
 								processExtractVariableRefactoring(ref, refactorings);
 								checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
 								if(identical(classDiff)) {
@@ -643,11 +647,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					}
 					else if(initializer != null && initializer.toString().equals(before)) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
-						List<LeafExpression> subExpressions = getFragment1().findExpression(before);
-						for(LeafExpression subExpression : subExpressions) {
-							LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
-							ref.addSubExpressionMapping(leafMapping);
-						}
+						addSubExpressionMappings(initializer, before, ref, replacement);
 						processExtractVariableRefactoring(ref, refactorings);
 						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
 						if(identical(classDiff)) {
@@ -667,11 +667,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						if(initializer != null) {
 							if(initializer.toString().equals(prefixBefore)) {
 								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
-								List<LeafExpression> subExpressions = getFragment1().findExpression(prefixBefore);
-								for(LeafExpression subExpression : subExpressions) {
-									LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
-									ref.addSubExpressionMapping(leafMapping);
-								}
+								addSubExpressionMappings(initializer, prefixBefore, ref, replacement);
 								processExtractVariableRefactoring(ref, refactorings);
 								checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
 								if(identical(classDiff)) {
@@ -685,11 +681,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				else if(after.startsWith(variableName + " ") && initializer != null) {
 					if(initializer.toString().contains(before)) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
-						List<LeafExpression> subExpressions = getFragment1().findExpression(before);
-						for(LeafExpression subExpression : subExpressions) {
-							LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
-							ref.addSubExpressionMapping(leafMapping);
-						}
+						addSubExpressionMappings(initializer, before, ref, replacement);
 						processExtractVariableRefactoring(ref, refactorings);
 						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
 						//if(identical()) {
@@ -715,11 +707,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							classInstanceCreationToCreationReference(initializer, before) ||
 							anonymousWithMethodSignatureChange(initializer, before, classDiff)) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
-						List<LeafExpression> subExpressions = getFragment1().findExpression(before);
-						for(LeafExpression subExpression : subExpressions) {
-							LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
-							ref.addSubExpressionMapping(leafMapping);
-						}
+						addSubExpressionMappings(initializer, before, ref, replacement);
 						if(infixOperandMatch(initializer, before)) {
 							List<LeafExpression> infixExpressions = initializer.getInfixExpressions();
 							for(LeafExpression infixExpression : infixExpressions) {
@@ -960,6 +948,30 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						}
 					}
 				}
+			}
+		}
+	}
+
+	private void addSubExpressionMappings(AbstractExpression initializer, String before,
+			ExtractVariableRefactoring ref, Replacement replacement) {
+		boolean foundInLambdaMapper = false;
+		for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
+			for(AbstractCodeMapping mapping : lambdaMapper.getMappings()) {
+				if(mapping.getReplacements().contains(replacement)) {
+					List<LeafExpression> subExpressions = mapping.getFragment1().findExpression(before);
+					for(LeafExpression subExpression : subExpressions) {
+						LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
+						ref.addSubExpressionMapping(leafMapping);
+					}
+					foundInLambdaMapper = true;
+				}
+			}
+		}
+		if(!foundInLambdaMapper) {
+			List<LeafExpression> subExpressions = getFragment1().findExpression(before);
+			for(LeafExpression subExpression : subExpressions) {
+				LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
+				ref.addSubExpressionMapping(leafMapping);
 			}
 		}
 	}

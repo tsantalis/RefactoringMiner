@@ -1057,7 +1057,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					AbstractCall callBefore = r.getInvokedOperationBefore();
 					AbstractCall callAfter = r.getInvokedOperationAfter();
 					int indexOfArgument1 = callBefore.arguments().indexOf(variableName);
-					if(indexOfArgument1 != -1 && callBefore.arguments().size() == callAfter.arguments().size() &&
+					if(indexOfArgument1 != -1 && (callBefore.arguments().size() == callAfter.arguments().size() ||
+							indexOfArgument1 < Math.min(callBefore.arguments().size(), callAfter.arguments().size())) &&
 							!callBefore.arguments().contains(callAfter.arguments().get(indexOfArgument1))) {
 						before = variableName;
 						after = callAfter.arguments().get(indexOfArgument1);

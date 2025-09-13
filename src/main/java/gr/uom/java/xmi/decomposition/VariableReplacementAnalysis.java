@@ -1848,7 +1848,7 @@ public class VariableReplacementAnalysis {
 					actualReferences.addAll(additionalReferences);
 					RenameVariableRefactoring ref = new RenameVariableRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, actualReferences, insideExtractedOrInlinedMethod);
 					if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref) && !existsConflictingSplitVariableRefactoring(ref) && !existsConflictingParameter(ref) &&
-							variableDeclaration1.isVarargsParameter() == variableDeclaration2.isVarargsParameter()) {
+							variableDeclaration1.isVarargsParameter() == variableDeclaration2.isVarargsParameter() && matchedEnhancedForLoopFormalParameter(variableDeclaration1, variableDeclaration2)) {
 						variableRenames.add(ref);
 						removedVariables.remove(variableDeclaration1);
 						addedVariables.remove(variableDeclaration2);
@@ -2695,8 +2695,20 @@ public class VariableReplacementAnalysis {
 											skip = true;
 										}
 									}
-									if(!skip)
-										return true;
+									if(!skip) {
+										boolean anotherDeclarationFound = false;
+										if(statement2.getParent() != null) {
+											for(VariableDeclaration vd : statement2.getParent().getAllVariableDeclarations()) {
+												if(vd.getVariableName().equals(v1.getVariableName()) && vd.getScope().subsumes(mapping.getFragment2().getLocationInfo())) {
+													anotherDeclarationFound = true;
+													break;
+												}
+											}
+										}
+										if(!anotherDeclarationFound) {
+											return true;
+										}
+									}
 								}
 							}
 							if(bothFragmentsUseVariable(v2, mapping)) {
@@ -2770,6 +2782,12 @@ public class VariableReplacementAnalysis {
 			AbstractCall creation = initializer.creationCoveringEntireFragment();
 			if(creation != null) {
 				if(creation.arguments().contains(variableDeclaration.getVariableName())) {
+					return true;
+				}
+			}
+			List<LeafExpression> castExpressions = initializer.getCastExpressions();
+			for(LeafExpression castExpression : castExpressions) {
+				if(castExpression.getString().contains(variableDeclaration.getVariableName())) {
 					return true;
 				}
 			}
@@ -3152,6 +3170,29 @@ public class VariableReplacementAnalysis {
 			return false;
 		}
 		return index1 >= 0 && index1 == index2;
+	}
+
+	private boolean matchedEnhancedForLoopFormalParameter(VariableDeclaration v1, VariableDeclaration v2) {
+		for(AbstractCodeMapping mapping : mappings) {
+			if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
+					mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+				CompositeStatementObject comp1 = null;
+				CompositeStatementObject comp2 = null;
+				if(mapping.getFragment1().getVariableDeclarations().contains(v1)) {
+					comp1 = (CompositeStatementObject) mapping.getFragment1();
+				}
+				if(mapping.getFragment2().getVariableDeclarations().contains(v2)) {
+					comp2 = (CompositeStatementObject) mapping.getFragment2();
+				}
+				if(comp1 == null && comp2 != null) {
+					return false;
+				}
+				else if(comp1 != null && comp2 == null) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	private SimpleEntry<VariableDeclaration, VariableDeclarationContainer> getVariableDeclaration1(String before, Replacement replacement, AbstractCodeMapping mapping) {

@@ -438,7 +438,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							else {
 								String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(initializer, invocationActualString);
 								String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(initializer, invocationActualString);
-								if(commonPrefix.length() > 1 && commonSuffix.length() > 1) {
+								if(commonPrefix.length() > 2 && commonSuffix.length() > 2) {
 									int beginIndexS1 = initializer.indexOf(commonPrefix) + commonPrefix.length();
 									int endIndexS1 = initializer.lastIndexOf(commonSuffix);
 									String diff1 = beginIndexS1 > endIndexS1 ? "" :	initializer.substring(beginIndexS1, endIndexS1);

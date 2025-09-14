@@ -741,6 +741,23 @@ public class TestStatementMappings {
 	}
 
 	@Test
+	public void testSwappedVariableDeclarationStatementMappings() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/apache/flink.git", "2e257896661ad5e0dca521fa274cad3a0bae7a61", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			if(classDiff.getOriginalClassName().equals("org.apache.flink.runtime.io.network.partition.consumer.InputBuffersMetricsTest")) {
+				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+					mapperInfo(mapper, actual);
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "flink-2e257896661ad5e0dca521fa274cad3a0bae7a61.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testCopiedAndExtractedStatementMappings() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();

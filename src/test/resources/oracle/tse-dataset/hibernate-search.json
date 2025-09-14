@@ -43,6 +43,11 @@
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tCollector to HibernateSearchQueryTimeout in method public queryTimeout() : HibernateSearchQueryTimeout from class org.hibernate.search.backend.lucene.search.extraction.impl.HibernateSearchMultiCollectorManager",
           "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tpossiblyWrappedCollector : Collector to collector : Collector in method public reduce(collectors Collection<Collector>) : MultiCollectedResults from class org.hibernate.search.backend.lucene.search.extraction.impl.HibernateSearchMultiCollectorManager.HibernateSearchMultiCollectorManagerMulti",
+          "validation": true
         }
       ]
     },

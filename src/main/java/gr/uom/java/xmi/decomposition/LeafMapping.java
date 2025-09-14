@@ -132,7 +132,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				if(this.identicalPreviousAndNextStatement && !o.identicalPreviousAndNextStatement) {
 					return -1;
 				}
-				else if(!this.identicalPreviousAndNextStatement && o.identicalPreviousAndNextStatement) {
+				else if(!this.identicalPreviousAndNextStatement && o.identicalPreviousAndNextStatement && !this.isSwappedVariableDeclaration() && !o.isSwappedVariableDeclaration()) {
 					return 1;
 				}
 				if(this.identicalPreviousStatement && !o.identicalPreviousStatement) {
@@ -305,7 +305,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				int identicalTypeIntersection1 = 0;
 				for(String type1 : this.getFragment1().getTypes()) {
 					for(String type2 : this.getFragment2().getTypes()) {
-						if(type1.equals(type2) || type1.endsWith(type2) || type2.endsWith(type1)) {
+						if(type1.equals(type2) || type1.endsWith(type2) || type2.endsWith(type1) || type2.startsWith(type1)) {
 							typeIntersection1++;
 						}
 						if(type1.equals(type2)) {
@@ -317,7 +317,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				int identicalTypeIntersection2 = 0;
 				for(String type1 : o.getFragment1().getTypes()) {
 					for(String type2 : o.getFragment2().getTypes()) {
-						if(type1.equals(type2) || type1.endsWith(type2) || type2.endsWith(type1)) {
+						if(type1.equals(type2) || type1.endsWith(type2) || type2.endsWith(type1) || type2.startsWith(type1)) {
 							typeIntersection2++;
 						}
 						if(type1.equals(type2)) {
@@ -331,9 +331,9 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				else if(typeIntersection2 > 0 && typeIntersection1 == 0 && this.getFragment1().getTypes().size() > 0 && this.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 == 0 && identicalTypeIntersection2 == 0) {
 					return 1;
 				}
-				//if(this.getFragment1().getVariableDeclarations().size() == this.getFragment2().getVariableDeclarations().size() && typeIntersection1 > 0 && typeIntersection2 == 0 && o.getFragment1().getTypes().size() > 0 && o.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 >= 0 && identicalTypeIntersection2 == 0) {
-				//	return -1;
-				//}
+				if(this.getFragment1().getVariableDeclarations().size() == this.getFragment2().getVariableDeclarations().size() && typeIntersection1 > 0 && typeIntersection2 == 0 && o.getFragment1().getTypes().size() > 0 && o.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 >= 0 && identicalTypeIntersection2 == 0) {
+					return -1;
+				}
 				if(o.getFragment1().getVariableDeclarations().size() == o.getFragment2().getVariableDeclarations().size() && typeIntersection2 > 0 && typeIntersection1 == 0 && this.getFragment1().getTypes().size() > 0 && this.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 == 0 && identicalTypeIntersection2 >= 0) {
 					return 1;
 				}

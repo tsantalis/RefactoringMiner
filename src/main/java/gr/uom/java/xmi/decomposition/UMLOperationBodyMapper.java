@@ -6943,6 +6943,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			
 			boolean allIdenticalStatementsHaveSameIndex = false;
+			boolean swappedVariableDeclarations = false;
 			if(leaves1.size() == leaves2.size() && isomorphic) {
 				int nonComposite = 0;
 				int count = 0;
@@ -6961,7 +6962,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				if(count == nonComposite && mappingsDirectlyNestedUnderMethodBody == nonComposite && count > 1) {
-					allIdenticalStatementsHaveSameIndex = true;
+					List<String> declarationNames1 = new ArrayList<>();
+					for(AbstractCodeFragment leaf1 : leaves1) {
+						if(leaf1.getVariableDeclarations().size() > 0) {
+							declarationNames1.add(leaf1.getVariableDeclarations().get(0).getVariableName());
+						}
+					}
+					List<String> declarationNames2 = new ArrayList<>();
+					for(AbstractCodeFragment leaf2 : leaves2) {
+						if(leaf2.getVariableDeclarations().size() > 0) {
+							declarationNames2.add(leaf2.getVariableDeclarations().get(0).getVariableName());
+						}
+					}
+					if(declarationNames1.size() > 0 && declarationNames1.containsAll(declarationNames2) && declarationNames2.containsAll(declarationNames1) && !declarationNames1.equals(declarationNames2)) {
+						swappedVariableDeclarations = true;
+					}
+					if(!swappedVariableDeclarations)
+						allIdenticalStatementsHaveSameIndex = true;
 				}
 			}
 			AbstractCodeMapping startMapping = null;
@@ -7048,6 +7065,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 							if (replacements != null) {
 								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
+								if(leaf1.getVariableDeclarations().size() > 0 && leaf2.getVariableDeclarations().size() > 0 && swappedVariableDeclarations) {
+									mapping.setSwappedVariableDeclaration(true);
+								}
 								mapping.addReplacements(replacements);
 								mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 								mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
@@ -7464,6 +7484,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			boolean swappedVariableDeclarations = false;
+			List<String> declarationNames1 = new ArrayList<>();
+			for(AbstractCodeFragment leaf1 : leaves1) {
+				if(leaf1.getVariableDeclarations().size() > 0) {
+					declarationNames1.add(leaf1.getVariableDeclarations().get(0).getVariableName());
+				}
+			}
+			List<String> declarationNames2 = new ArrayList<>();
+			for(AbstractCodeFragment leaf2 : leaves2) {
+				if(leaf2.getVariableDeclarations().size() > 0) {
+					declarationNames2.add(leaf2.getVariableDeclarations().get(0).getVariableName());
+				}
+			}
+			if(declarationNames1.size() > 0 && declarationNames1.containsAll(declarationNames2) && declarationNames2.containsAll(declarationNames1) && !declarationNames1.equals(declarationNames2)) {
+				swappedVariableDeclarations = true;
+			}
+			else if(declarationNames1.size() > 0 && declarationNames2.size() > 0 && declarationNames1.size() > declarationNames2.size() && declarationNames1.containsAll(declarationNames2) && !declarationNames2.contains(declarationNames1.get(0))) {
+				swappedVariableDeclarations = true;
+			}
 			AbstractCodeMapping startMapping = null;
 			AbstractCodeMapping endMapping = null;
 			Set<VariableDeclaration> referencedVariableDeclarations1 = new LinkedHashSet<>();
@@ -7546,6 +7585,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 							if (replacements != null) {
 								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
+								if(leaf1.getVariableDeclarations().size() > 0 && leaf2.getVariableDeclarations().size() > 0 && swappedVariableDeclarations) {
+									mapping.setSwappedVariableDeclaration(true);
+								}
 								mapping.addReplacements(replacements);
 								mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 								mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());

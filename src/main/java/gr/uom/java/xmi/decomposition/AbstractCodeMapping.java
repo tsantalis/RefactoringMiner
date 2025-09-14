@@ -53,6 +53,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	private boolean identicalWithInlinedVariable;
 	private boolean isSplitVariableDeclaration;
 	private boolean isMergedVariableDeclaration;
+	private boolean isSwappedVariableDeclaration;
 	private Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 	private int matchingArgumentsWithOperationInvocation;
 	private boolean matchedWithNullReplacements;
@@ -121,6 +122,14 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 
 	public void setMergedVariableDeclaration(boolean isMergedVariableDeclaration) {
 		this.isMergedVariableDeclaration = isMergedVariableDeclaration;
+	}
+
+	public boolean isSwappedVariableDeclaration() {
+		return isSwappedVariableDeclaration;
+	}
+
+	public void setSwappedVariableDeclaration(boolean isSwappedVariableDeclaration) {
+		this.isSwappedVariableDeclaration = isSwappedVariableDeclaration;
 	}
 
 	public void addRefactoring(Refactoring r) {

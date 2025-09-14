@@ -2700,8 +2700,19 @@ public class VariableReplacementAnalysis {
 										if(statement2.getParent() != null) {
 											for(VariableDeclaration vd : statement2.getParent().getAllVariableDeclarations()) {
 												if(vd.getVariableName().equals(v1.getVariableName()) && vd.getScope().subsumes(mapping.getFragment2().getLocationInfo())) {
-													anotherDeclarationFound = true;
-													break;
+													boolean extracted = false;
+													for(UMLOperationBodyMapper childMapper : childMappers) {
+														for(AbstractCodeMapping m : childMapper.getMappings()) {
+															if(m.getFragment2().getVariableDeclarations().contains(vd)) {
+																extracted = true;
+																break;
+															}
+														}
+													}
+													if(!extracted) {
+														anotherDeclarationFound = true;
+														break;
+													}
 												}
 											}
 										}
@@ -2729,8 +2740,31 @@ public class VariableReplacementAnalysis {
 											skip = true;
 										}
 									}
-									if(!skip)
-										return true;
+									if(!skip) {
+										boolean anotherDeclarationFound = false;
+										if(statement1.getParent() != null) {
+											for(VariableDeclaration vd : statement1.getParent().getAllVariableDeclarations()) {
+												if(vd.getVariableName().equals(v2.getVariableName()) && vd.getScope().subsumes(mapping.getFragment1().getLocationInfo())) {
+													boolean extracted = false;
+													for(UMLOperationBodyMapper childMapper : childMappers) {
+														for(AbstractCodeMapping m : childMapper.getMappings()) {
+															if(m.getFragment1().getVariableDeclarations().contains(vd)) {
+																extracted = true;
+																break;
+															}
+														}
+													}
+													if(!extracted) {
+														anotherDeclarationFound = true;
+														break;
+													}
+												}
+											}
+										}
+										if(!anotherDeclarationFound) {
+											return true;
+										}
+									}
 								}
 							}
 						}

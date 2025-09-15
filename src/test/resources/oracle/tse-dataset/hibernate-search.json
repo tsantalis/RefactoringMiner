@@ -153,32 +153,32 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tcodec : LuceneFieldCodec<?> to builder : var in method protected newFieldQuery(analyzer Analyzer, field String, queryText String, quoted boolean) : Query from class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneQueryStringPredicate.HibernateSearchMultiFieldQueryParser",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tcodec : LuceneFieldCodec<?> to builder : var in method protected newFieldQuery(analyzer Analyzer, field String, queryText String, quoted boolean) : Query from class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneQueryStringPredicate.HibernateSearchMultiFieldQueryParser",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tcodec : LuceneFieldCodec<?> to builder : var in method protected newRangeQuery(field String, part1 String, part2 String, startInclusive boolean, endInclusive boolean) : Query from class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneQueryStringPredicate.HibernateSearchMultiFieldQueryParser",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tcodec : LuceneFieldCodec<?> to builder : var in method protected newRangeQuery(field String, part1 String, part2 String, startInclusive boolean, endInclusive boolean) : Query from class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneQueryStringPredicate.HibernateSearchMultiFieldQueryParser",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tcodec : LuceneFieldCodec<?> to builder : var in method protected createFieldQuery(analyzer Analyzer, operator BooleanClause.Occur, field String, queryText String, quoted boolean, phraseSlop int) : Query from class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneSimpleQueryStringPredicate.HibernateSearchSimpleQueryParser",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tcodec : LuceneFieldCodec<?> to builder : var in method protected createFieldQuery(analyzer Analyzer, operator BooleanClause.Occur, field String, queryText String, quoted boolean, phraseSlop int) : Query from class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneSimpleQueryStringPredicate.HibernateSearchSimpleQueryParser",
-          "validation": false
+          "validation": true
         },
         {
           "type": "MOVE_AND_RENAME_OPERATION",

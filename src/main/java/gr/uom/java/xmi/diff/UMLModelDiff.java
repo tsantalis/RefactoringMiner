@@ -6898,7 +6898,25 @@ public class UMLModelDiff {
 		boolean zeroNonMapped = mapper.getNonMappedLeavesT1().size() == 0 && mapper.getNonMappedLeavesT2().size() == 0 &&
 				mapper.getNonMappedInnerNodesT1().size() == 0 && mapper.getNonMappedInnerNodesT2().size() == 0 &&
 				removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation();
-		if(exactLeafMappings == 0 && !zeroNonMapped && normalizedEditDistance > 0.24) {
+		boolean identicalStringLiterals = false;
+		for(AbstractCodeMapping mapping : mapper.getMappings()) {
+			List<LeafExpression> expressions1 = mapping.getFragment1().getStringLiterals();
+			List<LeafExpression> expressions2 = mapping.getFragment2().getStringLiterals();
+			int matches = 0;
+			if(expressions1.size() == expressions2.size()) {
+				for(int i=0; i<expressions1.size(); i++) {
+					LeafExpression expr1 = expressions1.get(i);
+					LeafExpression expr2 = expressions2.get(i);
+					if(expr1.getString().equals(expr2.getString())) {
+						matches++;
+					}
+				}
+			}
+			if(matches == expressions1.size() && matches >= 10) {
+				identicalStringLiterals = true;
+			}
+		}
+		if(exactLeafMappings == 0 && !zeroNonMapped && !identicalStringLiterals && normalizedEditDistance > 0.24) {
 			return false;
 		}
 		if(exactLeafMappings == 1 && normalizedEditDistance > 0.51 && (mapper.nonMappedElementsT1() > 0 || mapper.nonMappedElementsT2() > 0)) {

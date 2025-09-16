@@ -965,7 +965,7 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tgenerics : Class<?>[] to resolvedGenerics : Class<?>[] in method private resolveGenerics(type ResolvableType) : Class<?>[] from class org.springframework.boot.autoconfigure.service.connection.ConnectionDetailsFactories.Registration",
-          "validation": false
+          "validation": true
         }
       ]
     },

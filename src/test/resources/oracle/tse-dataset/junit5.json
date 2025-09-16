@@ -2207,6 +2207,11 @@
           "type": "MOVE_AND_RENAME_OPERATION",
           "description": "Move And Rename Method\tpackage selectMethodByClassAndMethodNameWithParameterTypes() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByClassAndMethodName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttestClass : var in method package selectMethodWithParametersByMethodReference() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": true
         }
       ]
     },

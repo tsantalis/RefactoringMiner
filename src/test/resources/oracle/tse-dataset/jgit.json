@@ -259,7 +259,13 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic clear() : void extracted from public close() : void in class org.eclipse.jgit.internal.storage.file.Pack & moved to class org.eclipse.jgit.internal.util.Optionally.Hard",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/eclipse-jgit/jgit.git",

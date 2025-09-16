@@ -376,11 +376,11 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **September 15, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **September 16, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12494  | 15  | 221  | 0.999  | 0.983|
+|**Total**|12497  | 15  | 221  | 0.999  | 0.983|
 |Extract Method|1010  |  1  | 21  | 0.999  | 0.980|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
@@ -408,7 +408,7 @@ As of **September 15, 2025** the precision and recall of RefactoringMiner on thi
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|315  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|25  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|138  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|141  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|338  |  3  | 11  | 0.991  | 0.968|
 |Rename Parameter|493  |  2  | 24  | 0.996  | 0.954|
@@ -493,11 +493,11 @@ As of **September 15, 2025** the precision and recall of RefactoringMiner on thi
 **Files**: [tse-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/tse-dataset)
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **September 15, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **September 16, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3271  | 103  | 188  | 0.969  | 0.946|
+|**Total**|3285  | 92  | 185  | 0.973  | 0.947|
 |Extract Method|362  |  4  | 11  | 0.989  | 0.971|
 |Rename Class|231  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -509,23 +509,23 @@ As of **September 15, 2025** the precision and recall of RefactoringMiner on thi
 |Pull Up Method|45  |  1  |  5  | 0.978  | 0.900|
 |Move Class|141  |  4  |  2  | 0.972  | 0.986|
 |Move And Rename Class|28  |  0  |  1  | 1.000  | 0.966|
-|Pull Up Attribute|11  |  0  |  1  | 1.000  | 0.917|
+|Pull Up Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Push Down Attribute| 6  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method|22  |  0  |  1  | 1.000  | 0.957|
 |Extract Interface|16  |  2  |  0  | 0.889  | 1.000|
 |Extract Superclass| 7  |  1  |  0  | 0.875  | 1.000|
 |Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|44  |  1  |  5  | 0.978  | 0.898|
-|Extract And Move Method|109  |  8  | 18  | 0.932  | 0.858|
+|Extract And Move Method|110  |  7  | 18  | 0.940  | 0.859|
 |Move And Inline Method|26  |  1  | 12  | 0.963  | 0.684|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|270  |  4  | 20  | 0.985  | 0.931|
+|Extract Variable|273  |  3  | 19  | 0.989  | 0.935|
 |Extract Attribute| 3  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|100  |  6  | 27  | 0.943  | 0.787|
-|Rename Variable|294  | 16  | 14  | 0.948  | 0.955|
+|Inline Variable|101  |  6  | 26  | 0.944  | 0.795|
+|Rename Variable|299  | 11  | 14  | 0.965  | 0.955|
 |Rename Attribute|104  |  5  | 12  | 0.954  | 0.897|
 |Change Return Type|165  |  4  | 13  | 0.976  | 0.927|
-|Change Variable Type|373  | 16  | 10  | 0.959  | 0.974|
+|Change Variable Type|377  | 12  | 10  | 0.969  | 0.974|
 |Change Attribute Type|163  |  3  |  5  | 0.982  | 0.970|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|

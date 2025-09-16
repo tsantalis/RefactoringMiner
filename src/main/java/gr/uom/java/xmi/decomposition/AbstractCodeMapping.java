@@ -1736,6 +1736,30 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				this.replacements.add(r);
 				return true;
 			}
+			if(initializerInvocation.identicalExpression(replacementInvocation) && initializerInvocation.equalArguments(replacementInvocation) && !initializerInvocation.getName().equals(replacementInvocation.getName())) {
+				String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(initializerInvocation.getName());
+				String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(replacementInvocation.getName());
+				Set<String> commonTokens = new LinkedHashSet<>();
+				for(String token1 : tokens1) {
+					for(String token2 : tokens2) {
+						if(token1.equals(token2)) {
+							commonTokens.add(token1);
+						}
+					}
+				}
+				if(commonTokens.size() == 1) {
+					String common = commonTokens.iterator().next();
+					if(common.equals("get") || common.equals("set")) {
+						return false;
+					}
+					if(tokens1.length != tokens2.length) {
+						return false;
+					}
+				}
+				if(commonTokens.size() > 0) {
+					return true;
+				}
+			}
 		}
 		else if(initializerInvocation != null && replacementInvocation == null) {
 			methodInvocationMatch = false;

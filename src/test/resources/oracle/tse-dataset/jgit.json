@@ -497,7 +497,7 @@
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic renamed(entry DiffEntry, commit RevCommit) : void extracted from private updateFollowFilter(trees ObjectId[], cfg DiffConfig) : void in class org.eclipse.jgit.revwalk.TreeRevFilter & moved to class org.eclipse.jgit.revwalk.RenameCallback",
-          "validation": false
+          "validation": true
         }
       ]
     },
@@ -888,7 +888,7 @@
         {
           "type": "PULL_UP_ATTRIBUTE",
           "description": "Pull Up Attribute\tprivate homeDir : File from class org.eclipse.jgit.junit.ssh.SshTestHarness to private homeDir : File from class org.eclipse.jgit.junit.LocalDiskRepositoryTestCase",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
@@ -975,7 +975,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\torigSize : int in method public testGetRefs_LooseSorting_Bug_348834() : void from class org.eclipse.jgit.internal.storage.file.RefDirectoryTest",
-          "validation": false
+          "validation": true
         }
       ],
       "baseline": []

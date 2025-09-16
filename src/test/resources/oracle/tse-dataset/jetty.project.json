@@ -275,7 +275,7 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tex : Exception to t : Throwable in method public testMissingDirectory() : void from class org.eclipse.jetty.util.RolloverFileOutputStreamTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
@@ -285,7 +285,7 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tex : Exception to t : Throwable in method public testMissingDirectory() : void from class org.eclipse.jetty.util.RolloverFileOutputStreamTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_VARIABLE",
@@ -1013,6 +1013,11 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tpublic getHpackEncoder() : HpackEncoder extracted from public setValidateHpackEncoding(validateEncoding boolean) : void in class org.eclipse.jetty.http2.generator.Generator",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tmaxTableSize : int in method protected newSettings() : Map<Integer,Integer> from class org.eclipse.jetty.http2.server.AbstractHTTP2ServerConnectionFactory",
           "validation": true
         }
       ]

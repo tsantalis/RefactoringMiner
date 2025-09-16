@@ -607,7 +607,7 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tval : Map.Entry<PublicKey,String> to val : KeyAgentIdentity in method protected initializeAgentIdentities(session ClientSession) : Iterable<KeyAgentIdentity> from class org.eclipse.jgit.internal.transport.sshd.JGitPublicKeyAuthentication.KeyIterator",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_VARIABLE",

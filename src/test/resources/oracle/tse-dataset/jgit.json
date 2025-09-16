@@ -484,6 +484,11 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testNoFooters_ShortBodyWithLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
           "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tsrc : List<FooterLine> in method public getFooterLines(keyName FooterKey) : List<String> from class org.eclipse.jgit.revwalk.RevCommit",
+          "validation": true
         }
       ]
     },

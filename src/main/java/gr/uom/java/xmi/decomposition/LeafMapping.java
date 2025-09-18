@@ -305,7 +305,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				int identicalTypeIntersection1 = 0;
 				for(String type1 : this.getFragment1().getTypes()) {
 					for(String type2 : this.getFragment2().getTypes()) {
-						if(type1.equals(type2) || type1.endsWith(type2) || type2.endsWith(type1) || type2.startsWith(type1)) {
+						if(type1.equals(type2) || type1.endsWith(type2) || type2.endsWith(type1) || type2.startsWith(type1) || type2.contains(type1)) {
 							typeIntersection1++;
 						}
 						if(type1.equals(type2)) {
@@ -317,7 +317,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				int identicalTypeIntersection2 = 0;
 				for(String type1 : o.getFragment1().getTypes()) {
 					for(String type2 : o.getFragment2().getTypes()) {
-						if(type1.equals(type2) || type1.endsWith(type2) || type2.endsWith(type1) || type2.startsWith(type1)) {
+						if(type1.equals(type2) || type1.endsWith(type2) || type2.endsWith(type1) || type2.startsWith(type1) || type2.contains(type1)) {
 							typeIntersection2++;
 						}
 						if(type1.equals(type2)) {

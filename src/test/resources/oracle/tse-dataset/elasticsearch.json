@@ -770,7 +770,13 @@
           "validation": false
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tresolution : Expression.TypeResolution in method public testEvaluate() : void from class org.elasticsearch.xpack.esql.expression.function.AbstractFunctionTestCase",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/elastic/elasticsearch.git",

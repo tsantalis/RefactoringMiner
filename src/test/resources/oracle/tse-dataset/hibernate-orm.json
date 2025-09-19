@@ -68,6 +68,11 @@
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tresolver : Supplier<?> in method private hasResolver(parameterName String) : boolean from class org.hibernate.internal.FilterImpl",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tbootstrapContext : BootstrapContext in method private resolveParamResolver(paramDef ParamDef, context MetadataBuildingContext) : ManagedBean<? extends Supplier<?>> from class org.hibernate.boot.model.internal.FilterDefBinder",
+          "validation": true
         }
       ]
     },

@@ -303,8 +303,8 @@ public class ReplacementAlgorithm {
 			}
 			if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 					invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2)) {
-				if(!invocationCoveringTheEntireStatement1.arguments().contains(variable) &&
-						invocationCoveringTheEntireStatement2.arguments().contains(variable)) {
+				if(!containsInArguments(invocationCoveringTheEntireStatement1, variable) &&
+						containsInArguments(invocationCoveringTheEntireStatement2, variable)) {
 					for(String argument : invocationCoveringTheEntireStatement1.arguments()) {
 						String argumentNoWhiteSpace = argument.replaceAll("\\s","");
 						if(argument.contains(variable) && !argument.equals(variable) && !argumentNoWhiteSpace.contains("+" + variable + "+") &&
@@ -314,8 +314,8 @@ public class ReplacementAlgorithm {
 						}
 					}
 				}
-				else if(invocationCoveringTheEntireStatement1.arguments().contains(variable) &&
-						!invocationCoveringTheEntireStatement2.arguments().contains(variable)) {
+				else if(containsInArguments(invocationCoveringTheEntireStatement1, variable) &&
+						!containsInArguments(invocationCoveringTheEntireStatement2, variable)) {
 					for(String argument : invocationCoveringTheEntireStatement2.arguments()) {
 						String argumentNoWhiteSpace = argument.replaceAll("\\s","");
 						if(argument.contains(variable) && !argument.equals(variable) && !argumentNoWhiteSpace.contains("+" + variable + "+") &&
@@ -558,12 +558,12 @@ public class ReplacementAlgorithm {
 		for(String methodInvocation : methodInvocationIntersection) {
 			if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 					invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2)) {
-				if(!invocationCoveringTheEntireStatement1.arguments().contains(methodInvocation) &&
-						invocationCoveringTheEntireStatement2.arguments().contains(methodInvocation)) {
+				if(!containsInArguments(invocationCoveringTheEntireStatement1, methodInvocation) &&
+						containsInArguments(invocationCoveringTheEntireStatement2, methodInvocation)) {
 					methodInvocationsToBeRemovedFromTheIntersection.add(methodInvocation);
 				}
-				else if(invocationCoveringTheEntireStatement1.arguments().contains(methodInvocation) &&
-						!invocationCoveringTheEntireStatement2.arguments().contains(methodInvocation)) {
+				else if(containsInArguments(invocationCoveringTheEntireStatement1, methodInvocation) &&
+						!containsInArguments(invocationCoveringTheEntireStatement2, methodInvocation)) {
 					methodInvocationsToBeRemovedFromTheIntersection.add(methodInvocation);
 				}
 			}
@@ -2005,7 +2005,7 @@ public class ReplacementAlgorithm {
 			for(String key1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
 					if(invocation1.identical(assignmentInvocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, replacementInfo.getLambdaMappers()) &&
-							!assignmentInvocationCoveringTheEntireStatement1.arguments().contains(key1)) {
+							!containsInArguments(assignmentInvocationCoveringTheEntireStatement1, key1)) {
 						if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo) &&
 								!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
 								!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
@@ -2017,7 +2017,7 @@ public class ReplacementAlgorithm {
 						}
 					}
 					else if(invocation1.identicalName(assignmentInvocationCoveringTheEntireStatement2) && invocation1.equalArguments(assignmentInvocationCoveringTheEntireStatement2) &&
-							(!assignmentInvocationCoveringTheEntireStatement1.arguments().contains(key1) || statement2 instanceof AbstractExpression) && assignmentInvocationCoveringTheEntireStatement2.getExpression() != null) {
+							(!containsInArguments(assignmentInvocationCoveringTheEntireStatement1, key1) || statement2 instanceof AbstractExpression) && assignmentInvocationCoveringTheEntireStatement2.getExpression() != null) {
 						boolean expressionMatched = false;
 						Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<AbstractCodeFragment>();
 						Map<VariableDeclaration, AbstractCodeFragment> variableDeclarationsInUnmatchedStatements2 = new LinkedHashMap<VariableDeclaration, AbstractCodeFragment>();
@@ -2528,12 +2528,12 @@ public class ReplacementAlgorithm {
 							}
 							int matchingArguments = 0;
 							for(String arg2 : invocationCoveringTheEntireStatement2.arguments()) {
-								if(argument1.contains(arg2) || invocationCoveringTheEntireStatement1.arguments().contains(arg2)) {
+								if(argument1.contains(arg2) || containsInArguments(invocationCoveringTheEntireStatement1, arg2)) {
 									matchingArguments++;
 								}
 								else if(arg2.contains(".")) {
 									String prefix = arg2.substring(0, arg2.indexOf("."));
-									if(argument1.contains(prefix) || invocationCoveringTheEntireStatement1.arguments().contains(prefix)) {
+									if(argument1.contains(prefix) || containsInArguments(invocationCoveringTheEntireStatement1, prefix)) {
 										matchingArguments++;
 									}
 								}
@@ -2565,12 +2565,12 @@ public class ReplacementAlgorithm {
 					}
 					int matchingArguments = 0;
 					for(String arg2 : invocationCoveringTheEntireStatement2.arguments()) {
-						if(argument1.contains(arg2) || invocationCoveringTheEntireStatement1.arguments().contains(arg2)) {
+						if(argument1.contains(arg2) || containsInArguments(invocationCoveringTheEntireStatement1, arg2)) {
 							matchingArguments++;
 						}
 						else if(arg2.contains(".")) {
 							String prefix = arg2.substring(0, arg2.indexOf("."));
-							if(argument1.contains(prefix) || invocationCoveringTheEntireStatement1.arguments().contains(prefix)) {
+							if(argument1.contains(prefix) || containsInArguments(invocationCoveringTheEntireStatement1, prefix)) {
 								matchingArguments++;
 							}
 						}
@@ -4191,6 +4191,15 @@ public class ReplacementAlgorithm {
 			}
 		}
 		return null;
+	}
+
+	private static boolean containsInArguments(AbstractCall call, String key) {
+		for(String arg : call.arguments()) {
+			if(arg.equals(key) || arg.contains("(" + key) || arg.contains(key + ")") || arg.contains("," + key) || arg.contains(key + ",") || arg.contains(key + ".")) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static boolean compatibleSignatureForFinalReturnStatement(UMLOperationBodyMapper operationBodyMapper) {

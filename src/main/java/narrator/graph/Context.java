@@ -67,7 +67,8 @@ public class Context {
         put(Constants.TEXT_ELEMENT, List.of(Constants.JAVA_DOC, Constants.TAG_ELEMENT));
         put("CastExpression", List.of(Constants.CLASS_INSTANCE_CREATION, Constants.ENUM_CONSTANT_DECLARATION));
         put("ArrayCreation", List.of(Constants.EXPRESSION_STATEMENT));
-        put("ParameterizedType", List.of(Constants.VARIABLE_DECLARATION_STATEMENT));
+        put("ParameterizedType", List.of(Constants.VARIABLE_DECLARATION_STATEMENT, Constants.RECORD_COMPONENT,
+                Constants.ENHANCED_FOR_STATEMENT));
         put(Constants.CATCH_CLAUSE, List.of(Constants.TRY_STATEMENT));
         put("ParenthesizedExpression", List.of(Constants.VARIABLE_DECLARATION_STATEMENT, Constants.IF_STATEMENT));
         put(Constants.THROW_STATEMENT, List.of(Constants.TRY_STATEMENT, Constants.IF_STATEMENT));

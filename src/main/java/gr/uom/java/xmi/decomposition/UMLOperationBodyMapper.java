@@ -8163,6 +8163,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						mapping.addReplacements(replacements);
 						mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 						mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
+						extractInlineVariableAnalysis(leaves1, leaves2, leaf1, leaf, mapping, replacementInfo);
 						boolean allowAdd = false;
 						for(LeafMapping m : mappingSet) {
 							if(mapping.levelParentEditDistanceSum() < m.levelParentEditDistanceSum()) {
@@ -8175,8 +8176,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						boolean matchWithLessReplacements = mappingSet.size() == 1 && replacements.size() < mappingSet.first().getReplacements().size();
-						if(allowAdd || nested || matchWithLessReplacements) {
-							extractInlineVariableAnalysis(leaves1, leaves2, leaf1, leaf, mapping, replacementInfo);
+						if(allowAdd || nested || matchWithLessReplacements || mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable()) {
 							mappingSet.add(mapping);
 						}
 					}

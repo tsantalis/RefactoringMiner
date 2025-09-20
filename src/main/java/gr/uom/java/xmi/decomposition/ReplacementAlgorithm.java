@@ -4196,6 +4196,9 @@ public class ReplacementAlgorithm {
 	private static boolean containsInArguments(AbstractCall call, String key) {
 		for(String arg : call.arguments()) {
 			if(arg.equals(key) || arg.contains("(" + key) || arg.contains(key + ")") || arg.contains("," + key) || arg.contains(key + ",") || arg.contains(key + ".")) {
+				if(arg.startsWith(key + ".") && arg.endsWith("()")) {
+					return false;
+				}
 				return true;
 			}
 		}

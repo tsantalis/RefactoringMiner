@@ -303,8 +303,8 @@ public class ReplacementAlgorithm {
 			}
 			if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 					invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2)) {
-				if(!invocationCoveringTheEntireStatement1.arguments().contains(variable) &&
-						invocationCoveringTheEntireStatement2.arguments().contains(variable)) {
+				if(!containsInArguments(invocationCoveringTheEntireStatement1, variable) &&
+						containsInArguments(invocationCoveringTheEntireStatement2, variable)) {
 					for(String argument : invocationCoveringTheEntireStatement1.arguments()) {
 						String argumentNoWhiteSpace = argument.replaceAll("\\s","");
 						if(argument.contains(variable) && !argument.equals(variable) && !argumentNoWhiteSpace.contains("+" + variable + "+") &&
@@ -314,8 +314,8 @@ public class ReplacementAlgorithm {
 						}
 					}
 				}
-				else if(invocationCoveringTheEntireStatement1.arguments().contains(variable) &&
-						!invocationCoveringTheEntireStatement2.arguments().contains(variable)) {
+				else if(containsInArguments(invocationCoveringTheEntireStatement1, variable) &&
+						!containsInArguments(invocationCoveringTheEntireStatement2, variable)) {
 					for(String argument : invocationCoveringTheEntireStatement2.arguments()) {
 						String argumentNoWhiteSpace = argument.replaceAll("\\s","");
 						if(argument.contains(variable) && !argument.equals(variable) && !argumentNoWhiteSpace.contains("+" + variable + "+") &&

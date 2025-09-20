@@ -303,8 +303,8 @@ public class ReplacementAlgorithm {
 			}
 			if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 					invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2)) {
-				if(!containsInArguments(invocationCoveringTheEntireStatement1, variable) &&
-						containsInArguments(invocationCoveringTheEntireStatement2, variable)) {
+				if(!invocationCoveringTheEntireStatement1.arguments().contains(variable) &&
+						invocationCoveringTheEntireStatement2.arguments().contains(variable)) {
 					for(String argument : invocationCoveringTheEntireStatement1.arguments()) {
 						String argumentNoWhiteSpace = argument.replaceAll("\\s","");
 						if(argument.contains(variable) && !argument.equals(variable) && !argumentNoWhiteSpace.contains("+" + variable + "+") &&
@@ -314,8 +314,8 @@ public class ReplacementAlgorithm {
 						}
 					}
 				}
-				else if(containsInArguments(invocationCoveringTheEntireStatement1, variable) &&
-						!containsInArguments(invocationCoveringTheEntireStatement2, variable)) {
+				else if(invocationCoveringTheEntireStatement1.arguments().contains(variable) &&
+						!invocationCoveringTheEntireStatement2.arguments().contains(variable)) {
 					for(String argument : invocationCoveringTheEntireStatement2.arguments()) {
 						String argumentNoWhiteSpace = argument.replaceAll("\\s","");
 						if(argument.contains(variable) && !argument.equals(variable) && !argumentNoWhiteSpace.contains("+" + variable + "+") &&
@@ -558,12 +558,12 @@ public class ReplacementAlgorithm {
 		for(String methodInvocation : methodInvocationIntersection) {
 			if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 					invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2)) {
-				if(!containsInArguments(invocationCoveringTheEntireStatement1, methodInvocation) &&
-						containsInArguments(invocationCoveringTheEntireStatement2, methodInvocation)) {
+				if(!invocationCoveringTheEntireStatement1.arguments().contains(methodInvocation) &&
+						invocationCoveringTheEntireStatement2.arguments().contains(methodInvocation)) {
 					methodInvocationsToBeRemovedFromTheIntersection.add(methodInvocation);
 				}
-				else if(containsInArguments(invocationCoveringTheEntireStatement1, methodInvocation) &&
-						!containsInArguments(invocationCoveringTheEntireStatement2, methodInvocation)) {
+				else if(invocationCoveringTheEntireStatement1.arguments().contains(methodInvocation) &&
+						!invocationCoveringTheEntireStatement2.arguments().contains(methodInvocation)) {
 					methodInvocationsToBeRemovedFromTheIntersection.add(methodInvocation);
 				}
 			}

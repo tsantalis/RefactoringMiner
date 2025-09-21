@@ -2259,6 +2259,14 @@ public class ReplacementAlgorithm {
 					!argumentsWithVariableDeclarationMapping(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, mappings)) {
 				variableDeclarationMatch = false;
 			}
+			if(variableDeclarations1.size() > 0  && variableDeclarations2.size() > 0 &&
+					invocationCoveringTheEntireStatement1.arguments().isEmpty() &&
+					!variableDeclarations1.get(0).equalType(variableDeclarations2.get(0)) &&
+					!variableDeclarations1.get(0).getVariableName().equals(variableDeclarations2.get(0).getVariableName()) &&
+					variableDeclarations1.get(0).getInitializer() != null && variableDeclarations2.get(0).getInitializer() != null &&
+					!variableDeclarations1.get(0).getInitializer().getString().equals(variableDeclarations2.get(0).getInitializer().getString())) {
+				variableDeclarationMatch = false;
+			}
 			if(variableDeclarationMatch) {
 				Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getName(),
 						invocationCoveringTheEntireStatement2.getName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME);
@@ -4196,9 +4204,6 @@ public class ReplacementAlgorithm {
 	private static boolean containsInArguments(AbstractCall call, String key) {
 		for(String arg : call.arguments()) {
 			if(arg.equals(key) || arg.contains("(" + key) || arg.contains(key + ")") || arg.contains("," + key) || arg.contains(key + ",") || arg.contains(key + ".")) {
-				if(arg.startsWith(key + ".") && arg.endsWith("()")) {
-					return false;
-				}
 				return true;
 			}
 		}

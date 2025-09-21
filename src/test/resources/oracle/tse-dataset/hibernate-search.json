@@ -823,6 +823,11 @@
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\ttenantIdentifier : String in method public tenantFilterOrNull() : Query from class org.hibernate.search.backend.lucene.search.predicate.impl.PredicateRequestContext.FullPredicateRequestContext",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tfilters : JsonArray in method protected prepareFilter(context PredicateRequestContext) : JsonObject from class org.hibernate.search.backend.elasticsearch.search.predicate.impl.ElasticsearchKnnPredicate",
+          "validation": true
         }
       ]
     },

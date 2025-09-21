@@ -63,6 +63,7 @@ import org.eclipse.jdt.core.dom.TypeLiteral;
 import org.eclipse.jdt.core.dom.TypeMethodReference;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.WildcardType;
+import org.eclipse.jdt.core.dom.YieldStatement;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -818,6 +819,14 @@ public class Visitor extends ASTVisitor {
 		List<Statement> statements = node.statements();
 		for(Statement statement : statements) {
 			if(statement instanceof Block) {
+				LambdaExpressionObject lambda = new LambdaExpressionObject(cu, sourceFolder, filePath, statement, container, activeVariableDeclarations, javaFileContent);
+				lambdas.add(lambda);
+				if(current.getUserObject() != null) {
+					AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+					anonymous.getLambdas().add(lambda);
+				}
+			}
+			else if(statement instanceof YieldStatement) {
 				LambdaExpressionObject lambda = new LambdaExpressionObject(cu, sourceFolder, filePath, statement, container, activeVariableDeclarations, javaFileContent);
 				lambdas.add(lambda);
 				if(current.getUserObject() != null) {

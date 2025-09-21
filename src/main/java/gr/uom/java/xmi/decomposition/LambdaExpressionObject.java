@@ -22,6 +22,7 @@ import org.eclipse.jdt.core.dom.SuperMethodReference;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeMethodReference;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.YieldStatement;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -89,6 +90,12 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, switchCaseBody, CodeElementType.LAMBDA_EXPRESSION);
 		if(switchCaseBody instanceof Block) {
 			this.body = new OperationBody(cu, sourceFolder, filePath, (Block)switchCaseBody, this, activeVariableDeclarations, javaFileContent);
+		}
+		else if(switchCaseBody instanceof YieldStatement) {
+			this.owner = owner;
+			this.asString = ((YieldStatement)switchCaseBody).getExpression().toString();
+			this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, ((YieldStatement)switchCaseBody).getExpression(), CodeElementType.YIELD_EXPRESSION);
+			this.expression = new AbstractExpression(cu, sourceFolder, filePath, ((YieldStatement)switchCaseBody).getExpression(), CodeElementType.LAMBDA_EXPRESSION, this, activeVariableDeclarations, javaFileContent);
 		}
 		else {
 			//TODO find a way to support switch-case with a single statement

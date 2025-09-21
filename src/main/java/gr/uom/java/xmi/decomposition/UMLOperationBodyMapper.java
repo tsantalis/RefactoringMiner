@@ -7670,6 +7670,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 									leafIterator2.remove();
 									checkForMatchingMergedVariableDeclaration(leaf2, leaves1, parameterToArgumentMap, equalNumberOfAssertions);
+									checkForSwitchExpressionMatches(movedOutOfIfElseBranch, leaves2);
 								}
 								else if(internalParameterizeTest(mappingSet) && mappingSet.size() > 1) {
 									Set<AbstractCodeMapping> multiMappings = new LinkedHashSet<AbstractCodeMapping>();
@@ -7760,6 +7761,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					addToMappings(minStatementMapping, postponed);
 					leaves1.remove(minStatementMapping.getFragment1());
 					leaves2.remove(minStatementMapping.getFragment2());
+				}
+			}
+		}
+	}
+
+	private void checkForSwitchExpressionMatches(Set<AbstractCodeMapping> movedOutOfIfElseBranch,
+			List<? extends AbstractCodeFragment> leaves2) {
+		for(AbstractCodeFragment l : leaves2) {
+			if(l.getString().contains("=switch (")) {
+				for(AbstractCodeMapping mapping : movedOutOfIfElseBranch) {
+					for(LeafExpression expression1 : mapping.getFragment1().getArguments()) {
+						List<LeafExpression> expressions2 = l.findExpression(expression1.getString());
+						for(int i=0; i<expressions2.size(); i++) {
+							LeafMapping leafMapping = new LeafMapping(expression1, expressions2.get(i), container1, container2);
+							addMapping(leafMapping);
+						}
+					}
 				}
 			}
 		}

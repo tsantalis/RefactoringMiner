@@ -1769,7 +1769,7 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate externalBucket() : String extracted from public testLandsatBucketRequireUnencrypted() : void in class org.apache.hadoop.fs.s3a.s3guard.ITestS3GuardTool",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",

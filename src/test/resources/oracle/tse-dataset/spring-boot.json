@@ -453,6 +453,21 @@
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tentry : ZipEntry to entry : JarEntry in method private withJarEntries(file File, callback ThrowingConsumer) : void from class org.springframework.boot.jarmode.tools.ExtractCommand",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getCreationTime(entry JarEntry) : FileTime extracted from private extractEntry(zip ZipInputStream, entry ZipEntry, file File) : void in class org.springframework.boot.jarmode.tools.ExtractCommand",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getLastAccessTime(entry JarEntry) : FileTime extracted from private extractEntry(zip ZipInputStream, entry ZipEntry, file File) : void in class org.springframework.boot.jarmode.tools.ExtractCommand",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getLastModifiedTime(entry JarEntry) : FileTime extracted from private extractEntry(zip ZipInputStream, entry ZipEntry, file File) : void in class org.springframework.boot.jarmode.tools.ExtractCommand",
+          "validation": true
         }
       ]
     },

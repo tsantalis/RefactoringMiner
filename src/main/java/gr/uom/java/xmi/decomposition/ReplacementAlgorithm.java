@@ -2005,7 +2005,7 @@ public class ReplacementAlgorithm {
 			for(String key1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
 					if(invocation1.identical(assignmentInvocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, replacementInfo.getLambdaMappers()) &&
-							!containsInArguments(assignmentInvocationCoveringTheEntireStatement1, key1)) {
+							(!containsInArguments(assignmentInvocationCoveringTheEntireStatement1, key1) || operationBodyMapper.parentMapperContainsMapping(statement1))) {
 						if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo) &&
 								!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
 								!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {

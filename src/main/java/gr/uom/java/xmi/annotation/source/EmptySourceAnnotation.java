@@ -1,8 +1,8 @@
 package gr.uom.java.xmi.annotation.source;
 
 import gr.uom.java.xmi.SourceAnnotation;
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
-import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.annotation.MarkerAnnotation;
 
@@ -12,11 +12,11 @@ import java.util.List;
 public class EmptySourceAnnotation extends SourceAnnotation implements MarkerAnnotation {
     public static final String ANNOTATION_TYPENAME = "EmptySource";
 
-    public EmptySourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLModel model) {
-        this(annotation, operation, model, ANNOTATION_TYPENAME);
+    public EmptySourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
+        this(annotation, operation, declaringClass, ANNOTATION_TYPENAME);
     }
 
-    public EmptySourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLModel model, String typeName) {
+    public EmptySourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass, String typeName) {
         super(annotation, typeName);
         switch (operation.getParametersWithoutReturnType().get(0).getType().toQualifiedString()) {
             case "List":

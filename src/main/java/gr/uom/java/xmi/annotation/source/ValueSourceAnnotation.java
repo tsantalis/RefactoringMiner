@@ -1,8 +1,8 @@
 package gr.uom.java.xmi.annotation.source;
 
 import gr.uom.java.xmi.SourceAnnotation;
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
-import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.LeafExpression;
@@ -40,7 +40,7 @@ public class ValueSourceAnnotation extends SourceAnnotation implements NormalAnn
         return Collections.emptyList();
     }
 
-    public ValueSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLModel model) {
+    public ValueSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
         super(annotation, ANNOTATION_TYPENAME);
         memberValuePairs = annotation.getMemberValuePairs();
         Set<String> providedKeys = memberValuePairs.keySet();

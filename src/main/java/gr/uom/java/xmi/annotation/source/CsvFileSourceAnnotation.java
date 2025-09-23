@@ -1,8 +1,8 @@
 package gr.uom.java.xmi.annotation.source;
 
 import gr.uom.java.xmi.SourceAnnotation;
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
-import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.LeafExpression;
@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 public class CsvFileSourceAnnotation extends SourceAnnotation implements NormalAnnotation, SingleMemberAnnotation {
     public static final String ANNOTATION_TYPENAME = "CsvFileSource";
 
-    public CsvFileSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLModel model) {
+    public CsvFileSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
         // TODO: Add non-java files to UMLModel + Use model to get CSV based on relative path
         super(annotation, ANNOTATION_TYPENAME);
         testParameters = CsvUtils.extractParametersFromCsvFile(getValue());

@@ -5579,6 +5579,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if((replacements != null || identicalBody(statement1, statement2) || allLeavesWithinBodyMapped(statement1, statement2)) &&
 									(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
+								if(replacements == null && statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
+										statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+									if(statement1.getExpressions().size() == statement2.getExpressions().size()) {
+										for(int i=0; i<statement1.getExpressions().size(); i++) {
+											Replacement r = new Replacement(statement1.getExpressions().get(i).getString(), statement2.getExpressions().get(i).getString(), ReplacementType.ARGUMENT);
+											mapping.addReplacement(r);
+										}
+									}
+								}
 								mapping.addReplacements(replacements);
 								mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 								mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());

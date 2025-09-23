@@ -191,27 +191,29 @@ public class TraversalEngine {
         }
     }
 
-    private List<String> singularTypes = new ArrayList<>() {{
-        add(Constants.METHOD_DECLARATION);
-        add(Constants.EXPRESSION_STATEMENT);
-        add(Constants.METHOD_INVOCATION);
-    }};
+    //    private List<String> singularTypes = new ArrayList<>() {{
+    //        add(Constants.METHOD_DECLARATION);
+    //        add(Constants.EXPRESSION_STATEMENT);
+    //        add(Constants.METHOD_INVOCATION);
+    //        add(Constants.RETURN_STATEMENT);
+    //    }};
 
     // for chunks of code which are using already existing declarations, or their uses are not regular
     private void addSingularComponents() {
-        List<Node> singularNodes =
-                graph.vertexSet().stream().filter(node -> !node.isContext()).filter(node -> singularTypes.contains(node.getTree().getType().name)).filter(node -> {
-            boolean isSingularNode = true;
+        List<Node> singularNodes = graph.vertexSet().stream().filter(node -> !node.isContext())
+                //                        .filter(node -> singularTypes.contains(node.getTree().getType().name))
+                .filter(node -> {
+                    boolean isSingularNode = true;
 
-            for (TraversalPattern traversalComponent : components) {
-                boolean contains = traversalComponent.containsNode(node);
-                if (contains) {
-                    return false;
-                }
-            }
+                    for (TraversalPattern traversalComponent : components) {
+                        boolean contains = traversalComponent.containsNode(node);
+                        if (contains) {
+                            return false;
+                        }
+                    }
 
-            return isSingularNode;
-        }).toList();
+                    return isSingularNode;
+                }).toList();
 
         for (Node node : singularNodes) {
             SingularPattern singularComponent = new SingularPattern(node);

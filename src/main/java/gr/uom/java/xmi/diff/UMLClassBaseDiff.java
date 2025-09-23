@@ -1499,6 +1499,25 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					this.addOperationBodyMapper(bestMapper);
 					consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
 				}
+				else if(removedOperation.getComments().size() > 0 && addedOperation.getComments().size() > 0 && removedOperation.identicalComments(addedOperation)) {
+					UMLOperationBodyMapper bestMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
+					removedOperationsToBeRemoved.add(removedOperation);
+					addedOperationsToBeRemoved.add(addedOperation);
+					if(!removedOperation.getName().equals(addedOperation.getName()) &&
+							!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
+						Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);
+						RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper, callReferences);
+						refactorings.add(rename);
+					}
+					for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+						if(containCallToOperation(bestMapper.getContainer1(), mapper.getContainer1()) && containCallToOperation(bestMapper.getContainer2(), mapper.getContainer2())) {
+							Pair<UMLOperationBodyMapper, UMLOperationBodyMapper> pair = Pair.of(bestMapper, mapper);
+							calledBy.add(pair);
+						}
+					}
+					this.addOperationBodyMapper(bestMapper);
+					consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
+				}
 			}
 			removedOperations.removeAll(removedOperationsToBeRemoved);
 			addedOperations.removeAll(addedOperationsToBeRemoved);

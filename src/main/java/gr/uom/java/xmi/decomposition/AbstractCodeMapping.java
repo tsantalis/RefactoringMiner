@@ -1638,6 +1638,11 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			if(ternary.getThenExpression().toString().equals(replacedExpression) || ternary.getElseExpression().toString().equals(replacedExpression)) {
 				return true;
 			}
+			//ignore differences in spaces within string literals
+			if(ternary.getThenExpression().toString().replaceAll("\\s", "").equals(replacedExpression.replaceAll("\\s", "")) ||
+					ternary.getElseExpression().toString().replaceAll("\\s", "").equals(replacedExpression.replaceAll("\\s", ""))) {
+				return true;
+			}
 		}
 		return false;
 	}

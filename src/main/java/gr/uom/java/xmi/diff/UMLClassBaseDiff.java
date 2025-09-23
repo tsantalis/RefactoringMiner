@@ -1805,7 +1805,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
-						List<List<String>> parameterValues = getParameterValues(addedOperation, modelDiff);
+						List<List<String>> parameterValues = getParameterValues(addedOperation);
 						if(addedOperation.hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation()) {
 							Set<UMLOperationBodyMapper> filteredMapperSet = new LinkedHashSet<UMLOperationBodyMapper>();
 							List<String> parameterNames = addedOperation.getParameterNameList();
@@ -2065,16 +2065,47 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return mapper.getMappings().size() > 0 && nonMappedLeavesT1 <= 0 && nonMappedLeavesT2 <= 0 && nonMappedInnerNodesT1 == 0 && nonMappedInnerNodesT2 == 0;
 	}
 
-	public static List<List<String>> getParameterValues(UMLOperation addedOperation, UMLModelDiff modelDiff) {
+	public List<List<String>> getParameterValues(UMLOperation addedOperation) {
 		List<List<String>> parameterValues = new ArrayList<>();
 		for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
 			try {
-				UMLModel childModel = modelDiff != null ? modelDiff.getChildModel() : null;
-				List<List<String>> testParameters = SourceAnnotation.create(annotation, addedOperation, childModel).getTestParameters();
+				UMLAbstractClass inputDeclaration = nextClass;
+				if(annotation.getTypeName().equals("EnumSource") && modelDiff != null) {
+					String enumClassLiteral = null;
+					if (annotation.isMarkerAnnotation()) {
+						enumClassLiteral = SourceAnnotation.sanitizeLiteral(getFirstParameterType(addedOperation));
+					} else {
+						AbstractExpression value = annotation.isSingleMemberAnnotation() ? annotation.getValue() : annotation.getMemberValuePairs().get("value");
+						List<LeafExpression> typeLiterals = value.getTypeLiterals();
+						if(typeLiterals.size() > 0)
+							enumClassLiteral = SourceAnnotation.sanitizeLiteral(typeLiterals.get(0).getString());
+					}
+					if(enumClassLiteral != null) {
+						UMLClass enumClassDeclaration = findEnumDeclaration(modelDiff.getChildModel(), enumClassLiteral);
+						if(enumClassDeclaration != null) {
+							inputDeclaration = enumClassDeclaration;
+						}
+					}
+				}
+				List<List<String>> testParameters = SourceAnnotation.create(annotation, addedOperation, inputDeclaration).getTestParameters();
 				parameterValues.addAll(testParameters);
 			} catch (IllegalArgumentException ignored) {/* Do nothing */}
 		}
 		return parameterValues;
+	}
+
+	private static UMLClass findEnumDeclaration(UMLModel model, String enumClassLiteral) {
+		UMLClass enumClassDeclaration = null;
+		for (UMLClass aClass : model.getClassList()) {
+			if (aClass.getName().contains(enumClassLiteral)) {
+				enumClassDeclaration = aClass;
+			}
+		}
+		return enumClassDeclaration;
+	}
+
+	private static String getFirstParameterType(UMLOperation operation) {
+		return operation.getParametersWithoutReturnType().get(0).getType().getClassType();
 	}
 
 	private Map<Integer, Integer> matchParamsWithRemovedStatements(List<List<String>> parameterValues, List<String> parameterNames, List<AbstractCodeFragment> nonMappedLeavesT1) {

@@ -21,7 +21,6 @@ import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.streamAPIName;
 import static gr.uom.java.xmi.decomposition.ReplacementUtil.isDefaultValue;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.*;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
-import static gr.uom.java.xmi.diff.UMLClassBaseDiff.getParameterValues;
 import static gr.uom.java.xmi.diff.UMLClassBaseDiff.matchParamsWithReplacements;
 
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
@@ -31,6 +30,7 @@ import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethod
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
+import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.AddParameterRefactoring;
 import gr.uom.java.xmi.diff.AssertThrowsRefactoring;
 import gr.uom.java.xmi.diff.AssertTimeoutRefactoring;
@@ -7839,9 +7839,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean internalParameterizeTest(Set<LeafMapping> mappingSet) {
-		if(container2.hasParameterizedTestAnnotation() && !container1.hasParameterizedTestAnnotation()) {
+		if(container2.hasParameterizedTestAnnotation() && !container1.hasParameterizedTestAnnotation() && classDiff instanceof UMLClassBaseDiff) {
 			List<String> parameterNames = container2.getParameterNameList();
-			List<List<String>> parameterValues = getParameterValues((UMLOperation)container2, modelDiff);
+			List<List<String>> parameterValues = ((UMLClassBaseDiff)classDiff).getParameterValues((UMLOperation)container2);
 			Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 			for(AbstractCodeMapping mapping : mappingSet) {
 				replacements.addAll(mapping.getReplacements());

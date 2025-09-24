@@ -24408,6 +24408,94 @@
   "firstEndPos" : 22343,
   "secondEndPos" : 25093
 }, {
+  "firstType" : "IfStatement",
+  "secondType" : "IfStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20191,
+  "secondPos" : 24446,
+  "firstEndPos" : 20268,
+  "secondEndPos" : 24479
+}, {
+  "firstType" : "InfixExpression",
+  "secondType" : "InfixExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 20195,
+  "secondPos" : 24450,
+  "firstEndPos" : 20224,
+  "secondEndPos" : 24466
+}, {
+  "firstType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondType" : "INFIX_EXPRESSION_OPERATOR",
+  "firstLabel" : "==",
+  "secondLabel" : "==",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 20217,
+  "secondPos" : 24459,
+  "firstEndPos" : 20219,
+  "secondEndPos" : 24461
+}, {
+  "firstType" : "NullLiteral",
+  "secondType" : "NullLiteral",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 20220,
+  "secondPos" : 24462,
+  "firstEndPos" : 20224,
+  "secondEndPos" : 24466
+}, {
+  "firstType" : "ReturnStatement",
+  "secondType" : "ReturnStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 20244,
+  "secondPos" : 24468,
+  "firstEndPos" : 20254,
+  "secondEndPos" : 24479
+}, {
+  "firstType" : "PrefixExpression",
+  "secondType" : "PrefixExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ReturnStatement",
+  "secondParentType" : "ReturnStatement",
+  "firstPos" : 20251,
+  "secondPos" : 24475,
+  "firstEndPos" : 20253,
+  "secondEndPos" : 24478
+}, {
+  "firstType" : "PREFIX_EXPRESSION_OPERATOR",
+  "secondType" : "PREFIX_EXPRESSION_OPERATOR",
+  "firstLabel" : "-",
+  "secondLabel" : "-",
+  "firstParentType" : "PrefixExpression",
+  "secondParentType" : "PrefixExpression",
+  "firstPos" : 20251,
+  "secondPos" : 24475,
+  "firstEndPos" : 20252,
+  "secondEndPos" : 24476
+}, {
+  "firstType" : "NumberLiteral",
+  "secondType" : "NumberLiteral",
+  "firstLabel" : "1",
+  "secondLabel" : "1L",
+  "firstParentType" : "PrefixExpression",
+  "secondParentType" : "PrefixExpression",
+  "firstPos" : 20252,
+  "secondPos" : 24476,
+  "firstEndPos" : 20253,
+  "secondEndPos" : 24478
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "SimpleConsumer",
@@ -25695,6 +25783,17 @@
   "firstEndPos" : 22010,
   "secondEndPos" : 22310
 }, {
+  "firstType" : "ReturnStatement",
+  "secondType" : "ReturnStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 22158,
+  "secondPos" : 24988,
+  "firstEndPos" : 22176,
+  "secondEndPos" : 25004
+}, {
   "firstType" : "CatchClause",
   "secondType" : "CatchClause",
   "firstLabel" : "",
@@ -25867,9 +25966,9 @@
   "firstParentType" : "Block",
   "secondParentType" : "Block",
   "firstPos" : 22323,
-  "secondPos" : 25069,
+  "secondPos" : 22691,
   "firstEndPos" : 22333,
-  "secondEndPos" : 25083
+  "secondEndPos" : 22707
 }, {
   "firstType" : "LineComment",
   "secondType" : "LineComment",

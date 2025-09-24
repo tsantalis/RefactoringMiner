@@ -5498,6 +5498,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								else if(replacementInfo.getReplacements(ReplacementType.COMPOSITE).size() > 0) {
 									score = 0.99;
 								}
+								else if(replacementInfo.getReplacements(ReplacementType.PATTERN_INSTANCE).size() > 0) {
+									score = 0.99;
+								}
 								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
 									//find if the corresponding try blocks are already matched
 									for(AbstractCodeMapping mapping : mappings) {

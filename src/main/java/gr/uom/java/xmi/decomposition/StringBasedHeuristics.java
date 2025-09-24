@@ -495,6 +495,26 @@ public class StringBasedHeuristics {
 				enhancedForDifferInFinalModifierAndFormalParameterName(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo);
 	}
 
+	protected static boolean differOnlyInPatternInstanceExpressions(String s1, String s2, AbstractCodeFragment statement1, AbstractCodeFragment statement2, ReplacementInfo replacementInfo) {
+		if(statement1.getInstanceofExpressions().size() > 0 && statement2.getPatternInstanceofExpressions().size() > 0 &&
+				statement1.getInstanceofExpressions().size() == statement2.getPatternInstanceofExpressions().size()) {
+			String tmp = new String(s1);
+			Set<Replacement> replacements = new LinkedHashSet<>();
+			for(int i=0; i<statement1.getInstanceofExpressions().size(); i++) {
+				LeafExpression expr1 = statement1.getInstanceofExpressions().get(i);
+				LeafExpression expr2 = statement2.getPatternInstanceofExpressions().get(i);
+				tmp = ReplacementUtil.performReplacement(tmp, expr1.getString(), expr2.getString());
+				Replacement r = new Replacement(expr1.getString(), expr2.getString(), ReplacementType.PATTERN_INSTANCE);
+				replacements.add(r);
+			}
+			if(tmp.equals(s2)) {
+				replacementInfo.addReplacements(replacements);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private static boolean variableDeclarationDifferInFinalModifer(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2) {
 		if(differOnlyInPrefix(s1, s2, "", "final ")) {
 			if(variableDeclarations1.size() > 0 && variableDeclarations1.size() == variableDeclarations2.size()) {

@@ -649,6 +649,17 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						after = variableName;
 						before = callBefore.arguments().get(indexOfArgument2);
 					}
+					if(callBefore.identicalName(callAfter) && callBefore.equalArguments(callAfter) && !callBefore.identicalExpression(callAfter) &&
+							callBefore.getExpression() != null && callAfter.getExpression() != null) {
+						before = callBefore.getExpression();
+						after = callAfter.getExpression();
+						if(after.startsWith("(") && after.endsWith(")")) {
+							after = after.substring(1, after.length()-1);
+						}
+						if(before.startsWith("(") && before.endsWith(")")) {
+							before = before.substring(1, before.length()-1);
+						}
+					}
 				}
 				String lambdaArrow = "()" + JAVA.LAMBDA_ARROW;
 				if(before.startsWith(lambdaArrow) && after.startsWith(lambdaArrow)) {
@@ -1097,6 +1108,17 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							!callBefore.arguments().contains(callAfter.arguments().get(indexOfArgument1))) {
 						before = variableName;
 						after = callAfter.arguments().get(indexOfArgument1);
+					}
+					if(callBefore.identicalName(callAfter) && callBefore.equalArguments(callAfter) && !callBefore.identicalExpression(callAfter) &&
+							callBefore.getExpression() != null && callAfter.getExpression() != null) {
+						before = callBefore.getExpression();
+						after = callAfter.getExpression();
+						if(after.startsWith("(") && after.endsWith(")")) {
+							after = after.substring(1, after.length()-1);
+						}
+						if(before.startsWith("(") && before.endsWith(")")) {
+							before = before.substring(1, before.length()-1);
+						}
 					}
 				}
 				String lambdaArrow = "()" + JAVA.LAMBDA_ARROW;

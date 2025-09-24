@@ -408,7 +408,7 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\ti : int to currentTextElementIndex : int in method private findIndexOfCorrespondingNodeTextElement(elements List<CsmElement>, nodeText NodeText) : List<Integer> from class com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor",
-          "validation": false
+          "validation": true
         }
       ]
     },

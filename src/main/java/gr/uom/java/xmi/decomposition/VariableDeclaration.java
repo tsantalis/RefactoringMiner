@@ -19,13 +19,17 @@ import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.LambdaExpression;
 import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.ParenthesizedExpression;
 import org.eclipse.jdt.core.dom.PatternInstanceofExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypePattern;
 import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.WhileStatement;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -347,8 +351,17 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 				ASTNode grandParent = variableDeclaration.getParent().getParent();
 				if(grandParent instanceof PatternInstanceofExpression) {
 					ASTNode grandGrandParent = grandParent.getParent();
-					if(grandGrandParent instanceof IfStatement) {
+					if(grandGrandParent instanceof IfStatement || grandParent instanceof WhileStatement) {
 						return grandGrandParent;
+					}
+					else if(grandGrandParent instanceof ParenthesizedExpression) {
+						ASTNode p = grandGrandParent.getParent();
+						if(p instanceof PrefixExpression && ((PrefixExpression)p).getOperator().equals(PrefixExpression.Operator.NOT)) {
+							// The scope of a pattern variable can extend beyond the statement that introduced it
+							// https://docs.oracle.com/en/java/javase/23/language/pattern-matching-instanceof.html#GUID-E8F57F2F-C14C-4822-9C70-7C76033D4331
+							if(p.getParent() instanceof Statement)
+								return p.getParent().getParent();
+						}
 					}
 					else if(grandGrandParent instanceof InfixExpression) {
 						return grandGrandParent.getParent();

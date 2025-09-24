@@ -557,7 +557,28 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tforEach : PsiForeachStatement in method private canBeMutated(expr PsiExpression) : boolean from class com.siyeh.ig.psiutils.ExpressionUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcall : PsiMethodCallExpression in method private canBeMutated(expr PsiExpression) : boolean from class com.siyeh.ig.psiutils.ExpressionUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\trefParent : PsiReferenceExpression in method private canBeMutated(expr PsiExpression) : boolean from class com.siyeh.ig.psiutils.ExpressionUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tarrayAccess : PsiArrayAccessExpression in method private canBeMutated(expr PsiExpression) : boolean from class com.siyeh.ig.psiutils.ExpressionUtils",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/JetBrains/intellij-community.git",

@@ -3465,10 +3465,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(parentMapping.getFragment1() instanceof CompositeStatementObject) {
 					CompositeStatementObject comp = (CompositeStatementObject)parentMapping.getFragment1();
 					for(AbstractCodeFragment fragment : comp.getLeaves()) {
-						if(fragment.getString().equals(JAVA.RETURN_STATEMENT) ||
-								fragment.getString().equals(JAVA.RETURN_TRUE) ||
-								fragment.getString().equals(JAVA.RETURN_FALSE) ||
-								fragment.getString().equals(JAVA.RETURN_NULL)) {
+						if(fragment.commonReturnStatement()) {
 							containsReturn = true;
 							break;
 						}

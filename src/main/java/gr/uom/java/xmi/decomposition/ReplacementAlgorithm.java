@@ -1603,9 +1603,10 @@ public class ReplacementAlgorithm {
 			if(invocationWithEverythingReplaced(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacementInfo)) {
 				return null;
 			}
-			if(statement1.getString().startsWith(JAVA.RETURN_SPACE) && statement2.getString().startsWith(JAVA.RETURN_SPACE) && statement1.getParent() != null && statement2.getParent() != null &&
-					!statement1.getParent().getLocationInfo().getCodeElementType().equals(statement2.getParent().getLocationInfo().getCodeElementType()) &&
-					!statement2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+			if(statement1.getString().startsWith(JAVA.RETURN_SPACE) && statement2.getString().startsWith(JAVA.RETURN_SPACE) &&
+					(statement1.commonReturnStatement() || statement2.commonReturnStatement()) &&
+					statement1.getParent() != null && statement2.getParent() != null &&
+					!statement1.getParent().getLocationInfo().getCodeElementType().equals(statement2.getParent().getLocationInfo().getCodeElementType())) {
 				if(!(statement1.isLastStatementInParentBlock() && statement1.getParent() instanceof TryStatementObject && statement2.isLastStatement()) &&
 						!(statement2.isLastStatementInParentBlock() && statement2.getParent() instanceof TryStatementObject && statement1.isLastStatement())) {
 					return null;

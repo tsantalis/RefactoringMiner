@@ -1173,11 +1173,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								for(Refactoring r : refactorings) {
 									if(r instanceof ExtractVariableRefactoring) {
 										ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
-										if(extract.getVariableDeclaration().getInitializer().getString().equals(initializer.getString()) &&
+										if(extract.getVariableDeclaration().getInitializer() != null && extract.getVariableDeclaration().getInitializer().getString().equals(initializer.getString()) &&
 												!extract.getVariableDeclaration().getInitializer().getLocationInfo().equals(initializer.getLocationInfo())) {
 											continue;
 										}
-										if(extract.getVariableDeclaration().getInitializer().getString().contains(initializer.getString())) {
+										if(extract.getVariableDeclaration().getInitializer() != null && extract.getVariableDeclaration().getInitializer().getString().contains(initializer.getString())) {
 											anotherExtractVariableWithSameInitializer = true;
 											break;
 										}
@@ -1252,11 +1252,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								for(Refactoring r : refactorings) {
 									if(r instanceof InlineVariableRefactoring) {
 										InlineVariableRefactoring inline = (InlineVariableRefactoring)r;
-										if(inline.getVariableDeclaration().getInitializer().getString().equals(initializer.getString()) &&
+										if(inline.getVariableDeclaration().getInitializer() != null && inline.getVariableDeclaration().getInitializer().getString().equals(initializer.getString()) &&
 												!inline.getVariableDeclaration().getInitializer().getLocationInfo().equals(initializer.getLocationInfo())) {
 											continue;
 										}
-										if(inline.getVariableDeclaration().getInitializer().getString().contains(initializer.getString())) {
+										if(inline.getVariableDeclaration().getInitializer() != null && inline.getVariableDeclaration().getInitializer().getString().contains(initializer.getString())) {
 											anotherInlineVariableWithSameInitializer = true;
 											break;
 										}

@@ -148,7 +148,13 @@
         }
       ],
       "ourApproach": [],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tcleanupHook : Thread to cleanupHook : Thread in method package lock() : boolean from class org.eclipse.jgit.internal.storage.file.GC.PidLock",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/eclipse-jgit/jgit.git",

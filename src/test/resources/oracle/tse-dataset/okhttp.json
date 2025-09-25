@@ -852,6 +852,11 @@
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tprivate logger : Logger from class okhttp3.CallTest to private logger : Logger from class okhttp3.TestLogHandler",
           "validation": true
+        },
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tlogs : TestLogHandler to testLogHandler : TestLogHandler in method public throwingOnFailLogs() : void from class okhttp3.internal.ws.WebSocketHttpTest",
+          "validation": true
         }
       ]
     },

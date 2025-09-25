@@ -488,6 +488,11 @@
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\toutputList : List<CombinedFileRange> to input : List<? extends FileRange> in method private assertOrderedDisjoint(input List<? extends FileRange>, chunkSize int, minimumSeek int) : void from class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
           "validation": true
+        },
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tpath : Path to vectorPath : Path in method public setup() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
         }
       ]
     },
@@ -1324,6 +1329,11 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\toutputList : List<CombinedFileRange> to input : List<? extends FileRange> in method private assertOrderedDisjoint(input List<? extends FileRange>, chunkSize int, minimumSeek int) : void from class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tpath : Path to vectorPath : Path in method public setup() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
           "validation": true
         }
       ]

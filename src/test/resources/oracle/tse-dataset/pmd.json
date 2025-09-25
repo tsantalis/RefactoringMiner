@@ -493,7 +493,13 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tcanBePreview : boolean to wasStandardized : boolean in method public errorMessage(jdk int, preview boolean) : String from class net.sourceforge.pmd.lang.java.ast.internal.LanguageLevelChecker.PreviewFeature",
+          "validation": false
+        }
+      ]
     },
     {
       "repository": "https://github.com/pmd/pmd.git",

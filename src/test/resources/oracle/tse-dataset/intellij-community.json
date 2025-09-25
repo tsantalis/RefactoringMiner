@@ -96,6 +96,11 @@
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tgroup : Group to TYPE_POPUP_GROUP : int in method public readExternal(element Element) : void from class com.intellij.ide.ui.customization.ActionUrl",
           "validation": true
+        },
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tgroup : Group to TYPE_POPUP_GROUP : int in method public readExternal(element Element) : void from class com.intellij.ide.ui.customization.ActionUrl",
+          "validation": true
         }
       ]
     },
@@ -370,6 +375,11 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tframeConsumer : Consumer<Frame> in method public MacFileSaverDialog(descriptor FileSaverDescriptor, parent Component) from class com.intellij.ui.mac.MacFileSaverDialog",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tchosenFiles : var to myChosenFiles : VirtualFile[] in method public choose(project Project, toSelect VirtualFile...) : VirtualFile @NotNull [] from class com.intellij.openapi.fileChooser.impl.NewFileChooserDialogImpl",
           "validation": true
         }
       ]

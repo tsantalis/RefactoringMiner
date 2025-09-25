@@ -2333,6 +2333,11 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tstrategyOptional : Optional<MassLoadingStrategy<? super T,?>> to strategy : PojoMassLoadingStrategy<? super E,?> in method private single(mappingContext PojoMassIndexingMappingContext, typeContextProvider PojoMassIndexingTypeContextProvider, typeContext PojoMassIndexingIndexedTypeContext<E>, loadingContext PojoMassLoadingContext) : PojoMassIndexingIndexedTypeGroup<? super E> from class org.hibernate.search.mapper.pojo.massindexing.impl.PojoMassIndexingIndexedTypeGroup",
           "validation": true
+        },
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tfailureCollector : RootFailureCollector to failureCollector : RootFailureCollector in method public finalizeIntegration() : SearchIntegration from class org.hibernate.search.engine.common.impl.SearchIntegrationPartialBuildStateImpl.SearchIntegrationFinalizerImpl",
+          "validation": true
         }
       ]
     },
@@ -2659,6 +2664,11 @@
         {
           "type": "CHANGE_ATTRIBUTE_TYPE",
           "description": "Change Attribute Type\tidentifierMapping : IdentifierMappingImplementor<I,E> to identifierMapping : IdentifierMappingImplementor<?,E> in class org.hibernate.search.mapper.pojo.mapping.impl.AbstractPojoTypeManager.Builder",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\ttypeManagerContainerBuilder : PojoTypeManagerContainer.Builder to typeManagerContainerBuilder : PojoTypeManagerContainer.Builder in method public prepareBuild() : MPBS from class org.hibernate.search.mapper.pojo.mapping.building.impl.PojoMapper",
           "validation": true
         }
       ]

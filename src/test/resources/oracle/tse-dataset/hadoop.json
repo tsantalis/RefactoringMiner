@@ -1512,7 +1512,7 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tbuf : byte to buf : byte[] in method private copyFileToStream(out OutputStream, localfile File, infile FileInputStream, throttler DataTransferThrottler, canceler Canceler, bufferSize int) : void from class org.apache.hadoop.hdfs.server.namenode.TransferFsImage",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": []

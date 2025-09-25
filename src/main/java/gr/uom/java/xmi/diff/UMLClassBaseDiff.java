@@ -2823,20 +2823,24 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+		boolean operationsWithSameName = operationBodyMapper.getContainer1().getName().equals(operationBodyMapper.getContainer2().getName()) &&
+				!operationBodyMapper.getContainer1().isConstructor() && !operationBodyMapper.getContainer2().isConstructor();
 		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
 			if(mapping.isIdenticalWithInlinedVariable() || mapping.isIdenticalWithExtractedVariable()) {
 				for(Refactoring r : mapping.getRefactorings()) {
 					if(r instanceof InlineVariableRefactoring) {
 						nonMappedElementsT1--;
+						if(operationsWithSameName)
+							mappings++;
 					}
-					if(r instanceof ExtractVariableRefactoring) {
+					else if(r instanceof ExtractVariableRefactoring) {
 						nonMappedElementsT2--;
+						if(operationsWithSameName)
+							mappings++;
 					}
 				}
 			}
 		}
-		boolean operationsWithSameName = operationBodyMapper.getContainer1().getName().equals(operationBodyMapper.getContainer2().getName()) &&
-				!operationBodyMapper.getContainer1().isConstructor() && !operationBodyMapper.getContainer2().isConstructor();
 		boolean identicalFixtureAnnotation = operationBodyMapper.getContainer1().identicalTextFixture(operationBodyMapper.getContainer2());
 		return (mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 				(mappings > 0 && identicalFixtureAnnotation) ||

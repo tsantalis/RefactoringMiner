@@ -10951,6 +10951,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		List<CompositeStatementObject> nestedTryCatch1 = getNestedTryCatch(compStatements1);
 		List<CompositeStatementObject> nestedTryCatch2 = getNestedTryCatch(compStatements2);
 		boolean equalIfElseIfChain = false;
+		boolean reorderedIfElseIfChain = false;
 		
 		if(parentMapper != null && comp1.getLocationInfo().getCodeElementType().equals(comp2.getLocationInfo().getCodeElementType()) &&
 				childrenSize1 == 1 && childrenSize2 == 1 && !comp1.getString().equals(JAVA.OPEN_BLOCK) && !comp2.getString().equals(JAVA.OPEN_BLOCK)) {
@@ -11049,6 +11050,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						Set<CompositeStatementObject> ifElseIfChain1 = constructIfElseIfChain(mapping.getFragment1());
 						Set<CompositeStatementObject> ifElseIfChain2 = constructIfElseIfChain(mapping.getFragment2());
 						equalIfElseIfChain = ifElseIfChain1.size() == ifElseIfChain2.size() && ifElseIfChain1.size() > 1;
+						if(equalIfElseIfChain) {
+							List<String> list1 = new ArrayList<String>();
+							for(CompositeStatementObject if1 : ifElseIfChain1) {
+								list1.add(if1.getString());
+							}
+							List<String> list2 = new ArrayList<String>();
+							for(CompositeStatementObject if2 : ifElseIfChain2) {
+								list2.add(if2.getString());
+							}
+							if(list1.containsAll(list2) && list2.containsAll(list1) && !list1.equals(list2)) {
+								reorderedIfElseIfChain = true;
+							}
+						}
 					}
 					boolean mappingUnderNestedTryCatch = false;
 					if(nestedTryCatch1.isEmpty() && !nestedTryCatch2.isEmpty() && !blocksWithMappedTryContainer) {
@@ -11079,7 +11093,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 					}
-					if(!mappingUnderNestedTryCatch && !equalIfElseIfChain) {
+					if(!mappingUnderNestedTryCatch && (!equalIfElseIfChain || reorderedIfElseIfChain)) {
 						mappedLeavesSize++;
 					}
 				}

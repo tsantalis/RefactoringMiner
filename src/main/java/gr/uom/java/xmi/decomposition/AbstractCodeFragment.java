@@ -719,6 +719,13 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return false;
 	}
 
+	public boolean commonReturnStatement() {
+		return getString().equals(JAVA.RETURN_STATEMENT) ||
+				getString().equals(JAVA.RETURN_TRUE) ||
+				getString().equals(JAVA.RETURN_FALSE) ||
+				getString().equals(JAVA.RETURN_NULL);
+	}
+
 	public boolean countableStatement() {
 		String statement = getString();
 		//covers the cases of lambda expressions having an expression as their body

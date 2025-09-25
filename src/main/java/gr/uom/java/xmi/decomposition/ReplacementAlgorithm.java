@@ -1997,6 +1997,18 @@ public class ReplacementAlgorithm {
 								}
 							}
 						}
+						else if(declarations1.size() > declarations2.size()) {
+							for(int j=0; j<declarations2.size(); j++) {
+								VariableDeclaration d2 = declarations2.get(j);
+								for(int i=0; i<declarations1.size(); i++) {
+									VariableDeclaration d1 = declarations1.get(i);
+									if(d1.equalType(d2) && d1.getVariableName().equals(d2.getVariableName())) {
+										LeafMapping leafMapping = new LeafMapping(try1.getExpressions().get(i), try2.getExpressions().get(j), container1, container2);
+										replacementInfo.addSubExpressionMapping(leafMapping);
+									}
+								}
+							}
+						}
 						return replacementInfo.getReplacements();
 					}
 				}

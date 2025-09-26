@@ -6142,7 +6142,7 @@ public class UMLModelDiff {
 						}
 						createRefactoring(newRemovedOperation != null ? newRemovedOperation : removedOperation, 
 								addedOperation,
-								newMapper != null ? newMapper : firstMapper, firstMappers.size() > 1);
+								newMapper != null ? newMapper : firstMapper, filteredFirstMappers.size() > 1);
 					}
 				}
 			}
@@ -6304,7 +6304,7 @@ public class UMLModelDiff {
 						}
 						createRefactoring(removedOperation, 
 								newAddedOperation != null ? newAddedOperation : addedOperation,
-								newMapper != null ? newMapper : firstMapper, firstMappers.size() > 1);
+								newMapper != null ? newMapper : firstMapper, filteredFirstMappers.size() > 1);
 					}
 				}
 			}
@@ -6344,7 +6344,42 @@ public class UMLModelDiff {
 				}
 			}
 		}
-		return list2;
+		List<UMLOperationBodyMapper> list3 = new ArrayList<UMLOperationBodyMapper>(list2);
+		//filter based on superclass relationship
+		for(int i=0; i<list2.size(); i++) {
+			UMLOperationBodyMapper mapperI = list2.get(i);
+			int matchesI = foo(mapperI);
+			if(matchesI > 1) {
+				for(int j=i+1; j<list2.size(); j++) {
+					UMLOperationBodyMapper mapperJ = list2.get(j);
+					int matchesJ = foo(mapperJ);
+					if(matchesJ < matchesI) {
+						list3.remove(mapperJ);
+					}
+				}
+			}
+		}
+		return list3;
+	}
+
+	private int foo(UMLOperationBodyMapper mapper) {
+		UMLClassBaseDiff classDiff = getUMLClassDiff(mapper.getContainer1().getClassName());
+		if(classDiff != null && classDiff.getSuperclass() != null) {
+			String superclassType = classDiff.getSuperclass().getClassType();
+			String container2ClassName = mapper.getContainer2().getClassName();
+			if(container2ClassName.contains(".")) {
+				container2ClassName = container2ClassName.substring(container2ClassName.lastIndexOf(".") + 1, container2ClassName.length());
+			}
+			String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(superclassType);
+			int matches = 0;
+			for(String token : tokens1) {
+				if(container2ClassName.contains(token)) {
+					matches++;
+				}
+			}
+			return matches;
+		}
+		return 0;
 	}
 
 	private void createRefactoring(UMLOperation removedOperation, UMLOperation addedOperation,

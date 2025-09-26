@@ -497,16 +497,16 @@ As of **September 26, 2025** the precision and recall of RefactoringMiner on thi
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3325  | 81  | 168  | 0.976  | 0.952|
+|**Total**|3327  | 81  | 165  | 0.976  | 0.953|
 |Extract Method|368  |  3  |  9  | 0.992  | 0.976|
 |Rename Class|231  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
 |Move And Rename Attribute| 5  |  0  |  3  | 1.000  | 0.625|
 |Rename Method|292  | 13  |  9  | 0.957  | 0.970|
 |Inline Method|69  |  5  |  2  | 0.932  | 0.972|
-|Move Method|262  |  4  |  2  | 0.985  | 0.992|
+|Move Method|263  |  4  |  2  | 0.985  | 0.992|
 |Move And Rename Method|25  |  4  |  5  | 0.862  | 0.833|
-|Pull Up Method|45  |  1  |  5  | 0.978  | 0.900|
+|Pull Up Method|45  |  1  |  3  | 0.978  | 0.938|
 |Move Class|141  |  4  |  2  | 0.972  | 0.986|
 |Move And Rename Class|28  |  0  |  1  | 1.000  | 0.966|
 |Pull Up Attribute|11  |  0  |  0  | 1.000  | 1.000|
@@ -515,7 +515,7 @@ As of **September 26, 2025** the precision and recall of RefactoringMiner on thi
 |Extract Interface|16  |  2  |  0  | 0.889  | 1.000|
 |Extract Superclass| 7  |  1  |  0  | 0.875  | 1.000|
 |Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
-|Extract Class|44  |  1  |  5  | 0.978  | 0.898|
+|Extract Class|45  |  1  |  4  | 0.978  | 0.918|
 |Extract And Move Method|112  |  6  | 16  | 0.949  | 0.875|
 |Move And Inline Method|26  |  1  | 10  | 0.963  | 0.722|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|

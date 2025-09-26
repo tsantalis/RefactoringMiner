@@ -284,18 +284,23 @@
         {
           "type": "PULL_UP_OPERATION",
           "description": "Pull Up Method\tpublic isStatic() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration to public isStatic() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTExecutableDeclaration",
-          "validation": true
+          "validation": false
         },
         {
           "type": "PULL_UP_OPERATION",
           "description": "Pull Up Method\tpublic isFinal() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration to public isFinal() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTExecutableDeclaration",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
         {
           "type": "MOVE_OPERATION",
           "description": "Move Method\tpublic isFinal() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration to public isFinal() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTExecutableDeclaration",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic isStatic() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration to public isStatic() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTExecutableDeclaration",
           "validation": true
         }
       ]

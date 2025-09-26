@@ -493,16 +493,16 @@ As of **September 24, 2025** the precision and recall of RefactoringMiner on thi
 **Files**: [tse-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/tse-dataset)
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **September 25, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **September 26, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3324  | 81  | 169  | 0.976  | 0.952|
+|**Total**|3325  | 81  | 168  | 0.976  | 0.952|
 |Extract Method|368  |  3  |  9  | 0.992  | 0.976|
 |Rename Class|231  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
 |Move And Rename Attribute| 5  |  0  |  3  | 1.000  | 0.625|
-|Rename Method|293  | 13  |  9  | 0.958  | 0.970|
+|Rename Method|292  | 13  |  9  | 0.957  | 0.970|
 |Inline Method|69  |  5  |  2  | 0.932  | 0.972|
 |Move Method|262  |  4  |  2  | 0.985  | 0.992|
 |Move And Rename Method|25  |  4  |  5  | 0.862  | 0.833|
@@ -523,15 +523,15 @@ As of **September 25, 2025** the precision and recall of RefactoringMiner on thi
 |Extract Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|106  |  5  | 23  | 0.955  | 0.822|
 |Rename Variable|301  |  7  | 14  | 0.977  | 0.956|
-|Rename Attribute|104  |  5  | 12  | 0.954  | 0.897|
+|Rename Attribute|105  |  5  | 11  | 0.955  | 0.905|
 |Replace Variable With Attribute|10  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|165  |  4  | 13  | 0.976  | 0.927|
+|Change Return Type|164  |  4  | 13  | 0.976  | 0.927|
 |Change Variable Type|378  |  8  |  8  | 0.979  | 0.979|
 |Change Attribute Type|163  |  3  |  5  | 0.982  | 0.970|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 1  |  0  |  0  | 1.000  | 1.000|
-|Split Method| 6  |  0  |  0  | 1.000  | 1.000|
+|Split Method| 8  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 Since release 3.0.0, RefactoringMiner requires **Java 17** or newer and **Gradle 7.4** or newer.

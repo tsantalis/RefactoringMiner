@@ -388,7 +388,13 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "SPLIT_METHOD",
+          "description": "Split Method\tpublic assumtionViolationInParameters() : void to [public testsAreNotExecutedWhenAssumptionInParametersMethodFails() : void, public testsAreExecutedWhenAssumptionInParametersMethodDoesNotFail() : void] in class org.junit.tests.running.classes.ParameterizedTestTest",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/junit-team/junit4.git",

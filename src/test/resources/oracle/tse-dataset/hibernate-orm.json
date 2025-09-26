@@ -467,7 +467,7 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tprivate getPossibleEnumValues(expressionContext HqlParser.ExpressionContext) : Map<Class<?>,Enum<?>> renamed to private getPossibleEnumTypes(expressionContext HqlParser.ExpressionContext) : Set<String> in class org.hibernate.query.hql.internal.SemanticQueryBuilder",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
@@ -492,7 +492,7 @@
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tMap<Class<?>,Enum<?>> to Set<String> in method private getPossibleEnumTypes(expressionContext HqlParser.ExpressionContext) : Set<String> from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",
@@ -550,6 +550,11 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tenumValue : Enum<?> to enumValue : String in method private resolveEnumShorthandLiteral(expressionContext HqlParser.ExpressionContext, enumValue String, enumType String, enumTypes Set<String>) : SqmExpression<?> from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        },
+        {
+          "type": "SPLIT_METHOD",
+          "description": "Split Method\tprivate getPossibleEnumValues(expressionContext HqlParser.ExpressionContext) : Map<Class<?>,Enum<?>> to [private getPossibleEnumTypes(expressionContext HqlParser.ExpressionContext) : Set<String>, private getPossibleEnumValue(expressionContext HqlParser.ExpressionContext) : String] in class org.hibernate.query.hql.internal.SemanticQueryBuilder",
           "validation": true
         }
       ]

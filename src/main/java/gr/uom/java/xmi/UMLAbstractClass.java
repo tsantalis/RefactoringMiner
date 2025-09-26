@@ -395,12 +395,13 @@ public abstract class UMLAbstractClass {
 		return false;
 	}
 
-	public UMLOperation operationWithTheSameName(UMLOperation operation) {
+	public List<UMLOperation> operationsWithTheSameName(UMLOperation operation) {
+		List<UMLOperation> list = new ArrayList<>();
 		for(UMLOperation originalOperation : operations) {
 			if(originalOperation.getName().equals(operation.getName()))
-				return originalOperation;
+				list.add(originalOperation);
 		}
-		return null;
+		return list;
 	}
 
 	public boolean containsOperationWithName(String name) {

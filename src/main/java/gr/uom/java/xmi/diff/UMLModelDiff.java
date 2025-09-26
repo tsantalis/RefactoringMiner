@@ -2611,19 +2611,21 @@ public class UMLModelDiff {
 		}
 		for(UMLOperation operation : classDiff.getRemovedOperations()) {
 			if(!operation.isConstructor() && !operation.overridesObject() && !commonOperations.containsKey(operation)) {
-				UMLOperation matchedOperation = umlClass.operationWithTheSameName(operation);
-				if(matchedOperation != null && !commonOperations.containsValue(matchedOperation)) {
-					boolean matchedOperationEmptyBody = matchedOperation.getBody() == null || matchedOperation.hasEmptyBody();
-					boolean operationEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
-					Set<String> commonParameters = operation.commonParameters(matchedOperation);
-					if(matchedOperationEmptyBody == operationEmptyBody && (commonParameters.size() > 0 || operation.getParameters().size() == matchedOperation.getParameters().size()) &&
-							operation.getAnonymousClassList().size() == matchedOperation.getAnonymousClassList().size() &&
-							operation.getSynchronizedStatements().size() == matchedOperation.getSynchronizedStatements().size()) {
-						AbstractCall call1 = operation.singleStatementCallingMethod();
-						AbstractCall call2 = matchedOperation.singleStatementCallingMethod();
-						boolean incompatible = (call1 != null && call2 == null) || (call1 == null && call2 != null);
-						if(!incompatible) {
-							commonOperations.put(operation, matchedOperation);
+				List<UMLOperation> matchedOperations = umlClass.operationsWithTheSameName(operation);
+				for(UMLOperation matchedOperation : matchedOperations) {
+					if(!commonOperations.containsValue(matchedOperation)) {
+						boolean matchedOperationEmptyBody = matchedOperation.getBody() == null || matchedOperation.hasEmptyBody();
+						boolean operationEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
+						Set<String> commonParameters = operation.commonParameters(matchedOperation);
+						if(matchedOperationEmptyBody == operationEmptyBody && (commonParameters.size() > 0 || operation.getParameters().size() == matchedOperation.getParameters().size()) &&
+								operation.getAnonymousClassList().size() == matchedOperation.getAnonymousClassList().size() &&
+								operation.getSynchronizedStatements().size() == matchedOperation.getSynchronizedStatements().size()) {
+							AbstractCall call1 = operation.singleStatementCallingMethod();
+							AbstractCall call2 = matchedOperation.singleStatementCallingMethod();
+							boolean incompatible = (call1 != null && call2 == null) || (call1 == null && call2 != null);
+							if(!incompatible) {
+								commonOperations.put(operation, matchedOperation);
+							}
 						}
 					}
 				}
@@ -2855,7 +2857,12 @@ public class UMLModelDiff {
 			if(removedOperation != null) {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
 				int mappings = mapper.mappingsWithoutBlocks();
-				if(removedOperation.equalSignature(addedOperation) || (mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, mapper))) {
+				List<UMLType> removedParameterTypeList = removedOperation.getParameterTypeList();
+				Set<UMLType> parameterTypeIntersection = new LinkedHashSet<>(removedParameterTypeList);
+				List<UMLType> addedParameterTypeList = addedOperation.getParameterTypeList();
+				parameterTypeIntersection.retainAll(addedParameterTypeList);
+				boolean parameterTypeCompatible = parameterTypeIntersection.size() > 0 || addedParameterTypeList.size() == 0 || removedParameterTypeList.size() == 0;
+				if(removedOperation.equalSignature(addedOperation) || (mappings > 0 && parameterTypeCompatible && mappedElementsMoreThanNonMappedT1AndT2(mappings, mapper))) {
 					if(!parentType.equals(RefactoringType.EXTRACT_SUBCLASS)) {
 						classDiff.getRemovedOperations().remove(removedOperation);
 					}

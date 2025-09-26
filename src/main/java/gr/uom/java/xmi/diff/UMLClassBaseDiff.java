@@ -1577,13 +1577,79 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					CandidateSplitMethodRefactoring newCandidate = new CandidateSplitMethodRefactoring();
 					newCandidate.setOriginalMethodBeforeSplit(removedOperation);
 					for(UMLOperationBodyMapper mapper : mapperSet) {
-						if(mapper.allMappingsAreIdentical()) {
+						if(mapper.allMappingsAreIdentical() && !mapper.getContainer2().isGetter() && !mapper.getContainer2().isSetter()) {
 							exactMappers.add(mapper);
 							newCandidate.addSplitMethod(mapper.getContainer2());
 						}
 					}
 					if(exactMappers.size() < mapperSet.size() && exactMappers.size() > 1) {
 						candidateMethodSplits.add(newCandidate);
+					}
+					Map<AbstractCodeFragment, Set<UMLOperationBodyMapper>> uniqueAndCommonMappings = new LinkedHashMap<>();
+					Map<Integer, Set<UMLOperationBodyMapper>> mappingCounter = new LinkedHashMap<>();
+					Set<UMLOperationBodyMapper> mappersWithZeroAddedStatements = new LinkedHashSet<>();
+					for(UMLOperationBodyMapper mapper : mapperSet) {
+						for(AbstractCodeMapping mapping : mapper.getMappings()) {
+							if(uniqueAndCommonMappings.containsKey(mapping.getFragment1())) {
+								uniqueAndCommonMappings.get(mapping.getFragment1()).add(mapper);
+							}
+							else {
+								Set<UMLOperationBodyMapper> mappers = new LinkedHashSet<>();
+								mappers.add(mapper);
+								uniqueAndCommonMappings.put(mapping.getFragment1(), mappers);
+							}
+						}
+						if(mapper.getNonMappedInnerNodesT2().size() == 0 && mapper.getNonMappedLeavesT2().size() == 0) {
+							mappersWithZeroAddedStatements.add(mapper);
+						}
+						int mappingCount = mapper.getMappings().size();
+						if(mappingCounter.containsKey(mappingCount)) {
+							mappingCounter.get(mappingCount).add(mapper);
+						}
+						else {
+							Set<UMLOperationBodyMapper> mappers = new LinkedHashSet<>();
+							mappers.add(mapper);
+							mappingCounter.put(mappingCount, mappers);
+						}
+					}
+					int commonMappingCount = 0;
+					int uniqueMappingCount = 0;
+					for(AbstractCodeFragment fragment : uniqueAndCommonMappings.keySet()) {
+						if(uniqueAndCommonMappings.get(fragment).size() == mapperSet.size()) {
+							commonMappingCount++;
+						}
+						else if(uniqueAndCommonMappings.get(fragment).size() == 1) {
+							uniqueMappingCount++;
+						}
+					}
+					if(commonMappingCount > 0 && uniqueMappingCount > 0 && (mappingCounter.size() == 1 || mappersWithZeroAddedStatements.size() == mapperSet.size())) {
+						for(UMLOperationBodyMapper mapper : mapperSet) {
+							if(!mapper.getContainer1().getName().equals(mapper.getContainer2().getName()) && !mapper.getContainer2().isGetter() && !mapper.getContainer2().isSetter()) {
+								newCandidate.addSplitMethod(mapper.getContainer2());
+							}
+						}
+						boolean oneMapperCallsTheOther = false;
+						for(VariableDeclarationContainer containerI : newCandidate.getSplitMethods()) {
+							for(VariableDeclarationContainer containerJ : newCandidate.getSplitMethods()) {
+								if(!containerI.equals(containerJ)) {
+									for(AbstractCall call : containerI.getAllOperationInvocations()) {
+										if(call.matchesOperation(containerJ, containerI, this, modelDiff)) {
+											oneMapperCallsTheOther = true;
+											break;
+										}
+									}
+								}
+								if(oneMapperCallsTheOther) {
+									break;
+								}
+							}
+							if(oneMapperCallsTheOther) {
+								break;
+							}
+						}
+						if(newCandidate.getSplitMethods().size() > 1 && !oneMapperCallsTheOther) {
+							candidateMethodSplits.add(newCandidate);
+						}
 					}
 					if(!firstMapperWithIdenticalMethodName) {
 						for(CandidateMergeMethodRefactoring candidate : candidateMethodMerges) {
@@ -1670,6 +1736,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							for(UMLOperationBodyMapper mapper : merge.getMappers()) {
 								mapper.computeRefactoringsWithinBody();
 								refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
+								getCandidateAttributeRenames().addAll(mapper.getCandidateAttributeRenames());
 							}
 						}
 						//group split based on original method
@@ -1698,6 +1765,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							for(UMLOperationBodyMapper mapper : split.getMappers()) {
 								mapper.computeRefactoringsWithinBody();
 								refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
+								getCandidateAttributeRenames().addAll(mapper.getCandidateAttributeRenames());
 							}
 						}
 						if(candidateMethodMerges.size() > 0 || candidateMethodSplits.size() > 0) {
@@ -2845,8 +2913,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return (mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 				(mappings > 0 && identicalFixtureAnnotation) ||
 				(operationsWithSameName && mappings >= nonMappedElementsT1 && mappings >= nonMappedElementsT2) ||
-				(nonMappedElementsT1 == 0 && mappings > Math.floor(nonMappedElementsT2/2.0) && !operationBodyMapper.involvesTestMethods()) ||
-				(nonMappedElementsT2 == 0 && mappings > Math.floor(nonMappedElementsT1/2.0) && !operationBodyMapper.involvesTestMethods() && !(this instanceof UMLClassMoveDiff)) ||
+				(nonMappedElementsT1 == 0 && mappings > Math.floor(nonMappedElementsT2/2.0) && (!operationBodyMapper.involvesTestMethods() || removedOperations.size() == 1 || addedOperations.size() == 1)) ||
+				(nonMappedElementsT2 == 0 && mappings > Math.floor(nonMappedElementsT1/2.0) && (!operationBodyMapper.involvesTestMethods() || removedOperations.size() == 1 || addedOperations.size() == 1) && !(this instanceof UMLClassMoveDiff)) ||
 				(nonMappedElementsT1 == 0 && exactMappings >= Math.floor(nonMappedElementsT2/2.0) && operationBodyMapper.getContainer1().isConstructor() == operationBodyMapper.getContainer2().isConstructor()) ||
 				(nonMappedElementsT1 <= 1 && exactMappings > 1 && exactMappings >= Math.floor(nonMappedElementsT2/2.0)) ||
 				(nonMappedElementsT2 <= 1 && exactMappings > 1 && exactMappings >= Math.floor(nonMappedElementsT1/2.0)) ||

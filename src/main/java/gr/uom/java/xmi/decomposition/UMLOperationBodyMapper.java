@@ -8066,6 +8066,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(leaf2 instanceof AbstractExpression) {
 			return;
 		}
+		if(parentMapper != null && parentMapper.alreadyMatched2(leaf2)) {
+			return;
+		}
 		for(AbstractCodeFragment leaf : leaves1) {
 			if(!leaf.equals(leaf1)) {
 				int mappingsBefore = mappings.size();
@@ -8150,6 +8153,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions)
 			throws RefactoringMinerTimedOutException {
 		AbstractCodeFragment leaf1 = mappingSet.first().getFragment1();
+		if(parentMapper != null && parentMapper.alreadyMatched1(leaf1)) {
+			return;
+		}
 		CompositeStatementObject parent1 = leaf1.getParent();
 		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 			parent1 = parent1.getParent();

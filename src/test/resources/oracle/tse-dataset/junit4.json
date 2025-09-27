@@ -492,6 +492,11 @@
           "type": "PULL_UP_OPERATION",
           "description": "Pull Up Method\tpackage handlePossibleBridgeMethod(members List<FrameworkField>) : FrameworkField from class org.junit.runners.model.FrameworkField to private self() : T from class org.junit.runners.model.FrameworkMember",
           "validation": false
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate self() : T extracted from package handlePossibleBridgeMethod(methods List<FrameworkMethod>) : FrameworkMethod in class org.junit.runners.model.FrameworkMember",
+          "validation": true
         }
       ]
     },

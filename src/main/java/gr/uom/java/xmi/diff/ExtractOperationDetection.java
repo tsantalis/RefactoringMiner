@@ -660,6 +660,10 @@ public class ExtractOperationDetection {
 					beforeAfterContains++;
 				}
 			}
+			if(mappings == 0 && mapping.getFragment1().getString().equals(JAVA.RETURN_THIS) && !mapping.getFragment2().getString().equals(JAVA.RETURN_THIS) &&
+					mapping.getFragment2().getString().startsWith(JAVA.RETURN_SPACE) && mapping.getFragment2().getString().endsWith("this;\n")) {
+				mappings++;
+			}
 			if(beforeAfterContains == mapping.getReplacements().size()) {
 				exactMatches++;
 			}

@@ -1090,12 +1090,12 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic getCollectorsForAllMatchingDocs() : CollectorSet renamed to public collectedMultiResults() : MultiCollectedResults in class org.hibernate.search.backend.lucene.search.extraction.impl.LuceneCollectors",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tCollectorSet to MultiCollectedResults in method public collectedMultiResults() : MultiCollectedResults from class org.hibernate.search.backend.lucene.search.extraction.impl.LuceneCollectors",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_METHOD",
@@ -1164,7 +1164,7 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tcomposed : Collector in method public build() : CollectorSet from class org.hibernate.search.backend.lucene.search.extraction.impl.CollectorSet.Builder",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_ATTRIBUTE",

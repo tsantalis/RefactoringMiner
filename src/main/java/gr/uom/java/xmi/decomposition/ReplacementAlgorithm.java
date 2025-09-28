@@ -2225,12 +2225,12 @@ public class ReplacementAlgorithm {
 			}
 		}
 		//method invocation is identical if arguments are replaced
-		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.identicalExpression(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) &&
-				invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2) ) {
+		if(assignmentInvocationCoveringTheEntireStatement1 != null && assignmentInvocationCoveringTheEntireStatement2 != null &&
+				assignmentInvocationCoveringTheEntireStatement1.identicalExpression(assignmentInvocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) &&
+				assignmentInvocationCoveringTheEntireStatement1.identicalName(assignmentInvocationCoveringTheEntireStatement2) ) {
 			for(String key : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key)) {
-					if(invocation2.arguments().size() > 0 && invocationCoveringTheEntireStatement1.identicalOrReplacedArguments(invocation2, replacementInfo.getReplacements(), replacementInfo.getLambdaMappers())) {
+					if(invocation2.arguments().size() > 0 && assignmentInvocationCoveringTheEntireStatement1.identicalOrReplacedArguments(invocation2, replacementInfo.getReplacements(), replacementInfo.getLambdaMappers())) {
 						return replacementInfo.getReplacements();
 					}
 				}

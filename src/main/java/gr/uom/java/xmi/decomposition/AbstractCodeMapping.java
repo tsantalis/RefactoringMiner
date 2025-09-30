@@ -1635,7 +1635,11 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				if(intersection.size() == 1 && intersection.iterator().next().equals("this")) {
 					return false;
 				}
-				if(intersection.size() > 1 && intersection.size() >= Math.min(tokens1.size(), tokens2.size()) - 2) {
+				int minTokens = Math.min(tokens1.size(), tokens2.size());
+				if(intersection.size() > 1 && intersection.size() >= minTokens - 2) {
+					return true;
+				}
+				if(intersection.size() >= minTokens - 1) {
 					return true;
 				}
 			}

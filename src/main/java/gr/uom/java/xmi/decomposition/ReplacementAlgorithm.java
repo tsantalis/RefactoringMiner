@@ -3988,12 +3988,24 @@ public class ReplacementAlgorithm {
 						isMovedMethod = false;
 					}
 				}
+				Set<String> thisReferences = Set.of("this", "INSTANCE");
 				if(invocationCoveringTheEntireStatement2 != null) {
+					Set<String> thisReferences2 = new LinkedHashSet<>();
+					Map<String, Set<VariableDeclaration>> variableDeclarationMap2 = container2.variableDeclarationMap();
+					for(String key : variableDeclarationMap2.keySet()) {
+						for(VariableDeclaration v : variableDeclarationMap2.get(key)) {
+							if(v.getType() != null && container2.getClassName().endsWith("." + v.getType().getClassType())) {
+								thisReferences2.add(key);
+							}
+						}
+					}
+					thisReferences2.addAll(thisReferences);
 					boolean superCall2 = invocationCoveringTheEntireStatement2.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression().equals("super");
+					boolean thisCall2 = (invocationCoveringTheEntireStatement2.getExpression() != null && thisReferences2.contains(invocationCoveringTheEntireStatement2.getExpression())) || invocationCoveringTheEntireStatement2.getExpression() == null;
 					if(!superCall2) {
 						List<UMLOperation> addedOperations = classDiff.matchesAllOperation(invocationCoveringTheEntireStatement2, classDiff.getNextClass().getOperations(), container2);
 						for(UMLOperation addedOperation : addedOperations) {
-							if(!addedOperation.equals(container2)) {
+							if(!addedOperation.equals(container2) && thisCall2) {
 								callToAddedOperation = true;
 								break;
 							}
@@ -4003,7 +4015,8 @@ public class ReplacementAlgorithm {
 								List<AbstractCall> methodInvocations = methodInvocationMap2.get(invocationCoveringTheEntireStatement2.getExpression());
 								if(methodInvocations != null) {
 									for(AbstractCall invocation : methodInvocations) {
-										if(classDiff.matchesOperation(invocation, classDiff.getNextClass().getOperations(), container2) != null) {
+										boolean thisCall = (invocation.getExpression() != null && thisReferences2.contains(invocation.getExpression())) || invocation.getExpression() == null;
+										if(thisCall && classDiff.matchesOperation(invocation, classDiff.getNextClass().getOperations(), container2) != null) {
 											callToAddedOperation = true;
 											break;
 										}
@@ -4014,11 +4027,22 @@ public class ReplacementAlgorithm {
 					}
 				}
 				if(invocationCoveringTheEntireStatement1 != null) {
+					Set<String> thisReferences1 = new LinkedHashSet<>();
+					Map<String, Set<VariableDeclaration>> variableDeclarationMap1 = container1.variableDeclarationMap();
+					for(String key : variableDeclarationMap1.keySet()) {
+						for(VariableDeclaration v : variableDeclarationMap1.get(key)) {
+							if(v.getType() != null && container1.getClassName().endsWith("." + v.getType().getClassType())) {
+								thisReferences1.add(key);
+							}
+						}
+					}
+					thisReferences1.addAll(thisReferences);
 					boolean superCall1 = invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement1.getExpression().equals("super");
+					boolean thisCall1 = (invocationCoveringTheEntireStatement1.getExpression() != null && thisReferences1.contains(invocationCoveringTheEntireStatement1.getExpression())) || invocationCoveringTheEntireStatement1.getExpression() == null;
 					if(!superCall1) {
 						List<UMLOperation> removedOperations = classDiff.matchesAllOperation(invocationCoveringTheEntireStatement1, classDiff.getOriginalClass().getOperations(), container1);
 						for(UMLOperation removedOperation : removedOperations) {
-							if(!removedOperation.equals(container1)) {
+							if(!removedOperation.equals(container1) && thisCall1) {
 								callToDeletedOperation = true;
 								break;
 							}
@@ -4028,7 +4052,8 @@ public class ReplacementAlgorithm {
 								List<AbstractCall> methodInvocations = methodInvocationMap1.get(invocationCoveringTheEntireStatement1.getExpression());
 								if(methodInvocations != null) {
 									for(AbstractCall invocation : methodInvocations) {
-										if(classDiff.matchesOperation(invocation, classDiff.getOriginalClass().getOperations(), container1) != null) {
+										boolean thisCall = (invocation.getExpression() != null && thisReferences1.contains(invocation.getExpression())) || invocation.getExpression() == null;
+										if(thisCall && classDiff.matchesOperation(invocation, classDiff.getOriginalClass().getOperations(), container1) != null) {
 											callToDeletedOperation = true;
 											break;
 										}

@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1895,6 +1896,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								}
 								if(commonTokensInName == null) {
 									commonTokensInName = commonTokens;
+									if(Arrays.equals(tokens1, tokens2)) {
+										commonTokenCheck = true;
+									}
 								}
 								else if(commonTokens.size() > commonTokensInName.size()) {
 									commonTokensInName = commonTokens;
@@ -1953,6 +1957,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							for(UMLOperationBodyMapper mapper : filteredMapperSet2) {
 								ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper);
 								refactorings.add(refactoring);
+								mapper.computeRefactoringsWithinBody();
 								refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
 								UMLOperation removedOperation = mapper.getOperation1();
 								removedOperations.remove(removedOperation);

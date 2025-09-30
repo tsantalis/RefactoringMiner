@@ -1622,7 +1622,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							uniqueMappingCount++;
 						}
 					}
-					if(commonMappingCount > 0 && uniqueMappingCount > 0 && (mappingCounter.size() == 1 || mappersWithZeroAddedStatements.size() == mapperSet.size())) {
+					if((initialNumberOfAddedOperations <= 2 || initialNumberOfRemovedOperations <= 2) && commonMappingCount > 0 && uniqueMappingCount > 0 && (mappingCounter.size() == 1 || mappersWithZeroAddedStatements.size() == mapperSet.size())) {
 						for(UMLOperationBodyMapper mapper : mapperSet) {
 							if(!mapper.getContainer1().getName().equals(mapper.getContainer2().getName()) && !mapper.getContainer2().isGetter() && !mapper.getContainer2().isSetter()) {
 								newCandidate.addSplitMethod(mapper.getContainer2());
@@ -3111,6 +3111,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		if(identicalBodyWithOperation2OfTheBestMapper || identicalBodyWithOperation1OfTheBestMapper) {
+			for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
+				if(replacement.getInvokedOperationBefore().getName().equals(bestMapper.getContainer1().getName()) &&
+						replacement.getInvokedOperationAfter().getName().equals(bestMapper.getContainer2().getName())) {
+					return bestMapper;
+				}
+			}
 			return null;
 		}
 		return bestMapper;

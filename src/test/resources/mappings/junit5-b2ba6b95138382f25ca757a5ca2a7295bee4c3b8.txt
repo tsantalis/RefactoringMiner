@@ -1,0 +1,28 @@
+private registerBeforeAllMethods(extensionRegistry ExtensionRegistry) : void -> private registerBeforeAllMethodAdapters(extensionRegistry ExtensionRegistry) : void
+line range:175-175==line range:194-194
+line range:175-175==line range:194-194
+line range:174-175==line range:193-194
+private registerAfterAllMethods(extensionRegistry ExtensionRegistry) : void -> private registerAfterAllMethodAdapters(extensionRegistry ExtensionRegistry) : void
+line range:180-180==line range:199-199
+line range:180-180==line range:199-199
+line range:179-180==line range:198-199
+private registerBeforeEachMethods(extensionRegistry ExtensionRegistry) : void -> private registerBeforeEachMethodAdapters(extensionRegistry ExtensionRegistry) : void
+line range:185-185==line range:204-204
+line range:185-185==line range:204-204
+line range:184-185==line range:203-204
+private registerAfterEachMethods(extensionRegistry ExtensionRegistry) : void -> private registerAfterEachMethodAdapters(extensionRegistry ExtensionRegistry) : void
+line range:190-190==line range:209-209
+line range:190-190==line range:209-209
+line range:189-190==line range:208-209
+private synthesizeBeforeAllCallback(registry ExtensionRegistry, method Method) : BeforeAllCallback -> private synthesizeBeforeAllMethodAdapter(registry ExtensionRegistry, method Method) : BeforeAllMethodAdapter
+line range:207-208==line range:226-227
+line range:207-208==line range:226-227
+private synthesizeAfterAllCallback(registry ExtensionRegistry, method Method) : AfterAllCallback -> private synthesizeAfterAllMethodAdapter(registry ExtensionRegistry, method Method) : AfterAllMethodAdapter
+line range:212-213==line range:231-232
+line range:212-213==line range:231-232
+private synthesizeBeforeEachCallback(registry ExtensionRegistry, method Method) : BeforeEachCallback -> private synthesizeBeforeEachMethodAdapter(registry ExtensionRegistry, method Method) : BeforeEachMethodAdapter
+line range:217-217==line range:236-236
+line range:217-217==line range:236-236
+private synthesizeAfterEachCallback(registry ExtensionRegistry, method Method) : AfterEachCallback -> private synthesizeAfterEachMethodAdapter(registry ExtensionRegistry, method Method) : AfterEachMethodAdapter
+line range:221-221==line range:240-240
+line range:221-221==line range:240-240

@@ -949,9 +949,37 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			else {
 				initializer = argumentizedString.substring(argumentizedString.indexOf(JAVA.ASSIGNMENT)+1, argumentizedString.length());
 			}
+			AbstractCall initializerCall = null;
+			for(AbstractCall call : statement.getMethodInvocations()) {
+				if(initializer.equals(call.actualString())) {
+					initializerCall = call;
+					break;
+				}
+			}
+			for(AbstractCall call : statement.getCreations()) {
+				if(initializer.equals(call.actualString())) {
+					initializerCall = call;
+					break;
+				}
+			}
 			for(Replacement replacement : getReplacements()) {
+				boolean creationMatch = false;
+				if(replacement.getBefore().startsWith("new ") && initializerCall != null && initializerCall instanceof ObjectCreation) {
+					ObjectCreation creation = (ObjectCreation)initializerCall;
+					if(replacement.getBefore().startsWith("new " + creation.getType())) {
+						if(replacement instanceof VariableReplacementWithMethodInvocation) {
+							VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;
+							if(r.getInvokedOperation() instanceof ObjectCreation) {
+								creationMatch = true;
+							}
+						}
+						else {
+							creationMatch = true;
+						}
+					}
+				}
 				if(variable.endsWith(replacement.getAfter()) &&	(initializer.equals(replacement.getBefore()) ||
-						initializer.contains(": " + replacement.getBefore()) || initializer.contains("? " + replacement.getBefore()))) {
+						initializer.contains(": " + replacement.getBefore()) || initializer.contains("? " + replacement.getBefore()) || creationMatch)) {
 					List<VariableDeclaration> variableDeclarations = operation2.getVariableDeclarationsInScope(fragment2.getLocationInfo());
 					for(VariableDeclaration declaration : variableDeclarations) {
 						if(declaration.getVariableName().equals(variable)) {
@@ -1307,8 +1335,37 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			else {
 				initializer = argumentizedString.substring(argumentizedString.indexOf(JAVA.ASSIGNMENT)+1, argumentizedString.length());
 			}
+			AbstractCall initializerCall = null;
+			for(AbstractCall call : statement.getMethodInvocations()) {
+				if(initializer.equals(call.actualString())) {
+					initializerCall = call;
+					break;
+				}
+			}
+			for(AbstractCall call : statement.getCreations()) {
+				if(initializer.equals(call.actualString())) {
+					initializerCall = call;
+					break;
+				}
+			}
 			for(Replacement replacement : getReplacements()) {
-				if(variable.endsWith(replacement.getBefore()) && initializer.equals(replacement.getAfter())) {
+				boolean creationMatch = false;
+				if(replacement.getAfter().startsWith("new ") && initializerCall != null && initializerCall instanceof ObjectCreation) {
+					ObjectCreation creation = (ObjectCreation)initializerCall;
+					if(replacement.getAfter().startsWith("new " + creation.getType())) {
+						if(replacement instanceof VariableReplacementWithMethodInvocation) {
+							VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;
+							if(r.getInvokedOperation() instanceof ObjectCreation) {
+								creationMatch = true;
+							}
+						}
+						else {
+							creationMatch = true;
+						}
+					}
+				}
+				if(variable.endsWith(replacement.getBefore()) && (initializer.equals(replacement.getAfter()) ||
+						initializer.contains(": " + replacement.getAfter()) || initializer.contains("? " + replacement.getAfter()) || creationMatch)) {
 					List<VariableDeclaration> variableDeclarations = operation1.getVariableDeclarationsInScope(fragment1.getLocationInfo());
 					for(VariableDeclaration declaration : variableDeclarations) {
 						if(declaration.getVariableName().equals(variable)) {

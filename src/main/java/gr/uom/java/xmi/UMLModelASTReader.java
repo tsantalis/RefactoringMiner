@@ -798,7 +798,7 @@ public class UMLModelASTReader {
 			boolean isLastType = cu.types().get(cu.types().size()-1).equals(typeDeclaration);
 			for(UMLComment comment : comments) {
 				if(umlPackage != null && umlPackage.getLocationInfo().before(comment.getLocationInfo()) && isFirstType && comment.getLocationInfo().before(locationInfo)) {
-					if(lastImportLocationInfo != null && lastImportLocationInfo.before(comment.getLocationInfo()))
+					if(lastImportLocationInfo != null && lastImportLocationInfo.before(comment.getLocationInfo()) && !lastImportLocationInfo.sameLine(comment.getLocationInfo()))
 						umlClass.getComments().add(comment);
 				}
 				if(comment.getLocationInfo().before(locationInfo) && !locationInfo.nextLine(comment.getLocationInfo())) {

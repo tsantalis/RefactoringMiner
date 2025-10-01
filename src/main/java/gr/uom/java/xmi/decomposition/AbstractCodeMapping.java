@@ -964,7 +964,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			}
 			for(Replacement replacement : getReplacements()) {
 				boolean creationMatch = false;
-				if(replacement.getBefore().startsWith("new ") && initializerCall != null && initializerCall instanceof ObjectCreation) {
+				if(replacement.getBefore().startsWith("new ") && initializerCall != null && initializerCall instanceof ObjectCreation && statement.getVariableDeclarations().isEmpty() &&
+						!replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION) && !replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION)) {
 					ObjectCreation creation = (ObjectCreation)initializerCall;
 					if(replacement.getBefore().startsWith("new " + creation.getType())) {
 						if(replacement instanceof VariableReplacementWithMethodInvocation) {
@@ -1350,7 +1351,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			}
 			for(Replacement replacement : getReplacements()) {
 				boolean creationMatch = false;
-				if(replacement.getAfter().startsWith("new ") && initializerCall != null && initializerCall instanceof ObjectCreation) {
+				if(replacement.getAfter().startsWith("new ") && initializerCall != null && initializerCall instanceof ObjectCreation && statement.getVariableDeclarations().isEmpty() &&
+						!replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION) && !replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION)) {
 					ObjectCreation creation = (ObjectCreation)initializerCall;
 					if(replacement.getAfter().startsWith("new " + creation.getType())) {
 						if(replacement instanceof VariableReplacementWithMethodInvocation) {

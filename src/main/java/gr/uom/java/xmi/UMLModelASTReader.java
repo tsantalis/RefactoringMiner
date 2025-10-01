@@ -790,11 +790,17 @@ public class UMLModelASTReader {
 			umlClass.setLocal(true);
 		}
 		umlClass.setJavadoc(javadoc);
+		LocationInfo lastImportLocationInfo = importedTypes.size() > 0 ? importedTypes.get(importedTypes.size()-1).getLocationInfo() : null;
 		if(typeDeclaration.isPackageMemberTypeDeclaration()) {
 			umlClass.setPackageDeclaration(umlPackage);
 			umlClass.setPackageDeclarationJavadoc(packageDoc);
+			boolean isFirstType = cu.types().get(0).equals(typeDeclaration);
 			boolean isLastType = cu.types().get(cu.types().size()-1).equals(typeDeclaration);
 			for(UMLComment comment : comments) {
+				if(umlPackage != null && umlPackage.getLocationInfo().before(comment.getLocationInfo()) && isFirstType && comment.getLocationInfo().before(locationInfo)) {
+					if(lastImportLocationInfo != null && lastImportLocationInfo.before(comment.getLocationInfo()))
+						umlClass.getComments().add(comment);
+				}
 				if(comment.getLocationInfo().before(locationInfo) && !locationInfo.nextLine(comment.getLocationInfo())) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
@@ -803,6 +809,7 @@ public class UMLModelASTReader {
 				}
 			}
 			comments.removeAll(umlClass.getPackageDeclarationComments());
+			comments.removeAll(umlClass.getComments());
 		}
 		if(typeDeclaration.isInterface()) {
 			umlClass.setInterface(true);

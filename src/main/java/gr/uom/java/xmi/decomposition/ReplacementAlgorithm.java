@@ -3949,6 +3949,7 @@ public class ReplacementAlgorithm {
 		boolean variableReturnAsLastStatement2 = variableReturn2 && statement2.isLastStatement();
 		boolean numberLiteralReturn1 = statement1.getNumberLiterals().size() > 0 && statement1.getString().equals(JAVA.RETURN_SPACE + statement1.getNumberLiterals().get(0).getString() + JAVA.STATEMENT_TERMINATION) && statement1.isLastStatementInParentBlock();
 		boolean numberLiteralReturn2 = statement2.getNumberLiterals().size() > 0 && statement2.getString().equals(JAVA.RETURN_SPACE + statement2.getNumberLiterals().get(0).getString() + JAVA.STATEMENT_TERMINATION) && statement2.isLastStatementInParentBlock();
+		boolean singleReturnStatement = container1.singleReturnStatement() != null && container2.singleReturnStatement() != null;
 		boolean lastStatement = (statement1.isLastStatement() && statement2.isLastStatement()) || 
 				lastStatementInParentBlockWithSameParentType(statement1, statement2);
 		boolean possibleExtract = false;
@@ -3958,7 +3959,7 @@ public class ReplacementAlgorithm {
 				break;
 			}
 		}
-		if(parentMapper == null && !variableReturnAsLastStatement1 && (!variableReturnAsLastStatement2 || possibleExtract) && !numberLiteralReturn1 && !numberLiteralReturn2 && statement1.getString().startsWith(JAVA.RETURN_SPACE) && statement2.getString().startsWith(JAVA.RETURN_SPACE) && lastStatement &&
+		if(parentMapper == null && !variableReturnAsLastStatement1 && (!variableReturnAsLastStatement2 || possibleExtract) && ((!numberLiteralReturn1 && !numberLiteralReturn2) || singleReturnStatement) && statement1.getString().startsWith(JAVA.RETURN_SPACE) && statement2.getString().startsWith(JAVA.RETURN_SPACE) && lastStatement &&
 				variableReturnQualified1 == variableReturnQualified2 && container1 instanceof UMLOperation && container2 instanceof UMLOperation &&
 				compatibleSignatureForFinalReturnStatement(operationBodyMapper) &&
 				(statement1.getLambdas().size() == statement2.getLambdas().size() || possibleExtract)) {
@@ -5212,6 +5213,22 @@ public class ReplacementAlgorithm {
 				if(isWithinIfBranch1 == isWithinIfBranch2 && isWithinElseBranch1 == isWithinElseBranch2 && isWithinElseIfBranch1 == isWithinElseIfBranch2 &&
 						hasElseIfBranch1 == hasElseIfBranch2 /*&& hasElseBranch1 == hasElseBranch2*/) {
 					return true;
+				}
+			}
+			if(parent1 != null && parent2 == null && statement2.getParent() != null) {
+				List<AbstractStatement> statements2 = statement2.getParent().getAllStatements();
+				if(statements2.size() > 0) {
+					AbstractStatement first = statements2.get(0);
+					if(first.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+						CompositeStatementObject comp = (CompositeStatementObject)first;
+						List<AbstractCodeFragment> leaves = comp.getLeaves();
+						if(leaves.size() > 0) {
+							AbstractCodeFragment lastLeaf = leaves.get(leaves.size()-1);
+							if(lastLeaf.getString().equals(JAVA.RETURN_STATEMENT) || lastLeaf.getString().startsWith(JAVA.RETURN_SPACE)) {
+								return true;
+							}
+						}
+					}
 				}
 			}
 		}

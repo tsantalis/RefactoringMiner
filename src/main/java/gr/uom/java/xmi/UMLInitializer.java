@@ -14,6 +14,7 @@ import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
+import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 
@@ -139,6 +140,12 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 		return null;
 	}
 
+	@Override
+	public StatementObject singleReturnStatement() {
+		return null;
+	}
+
+	@Override
 	public Optional<UMLAnonymousClass> getAnonymousClassContainer() {
 		return anonymousClassContainer;
 	}

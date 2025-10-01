@@ -6,6 +6,7 @@ import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.OperationBody;
+import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
@@ -97,6 +98,12 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return null;
 	}
 
+	@Override
+	public StatementObject singleReturnStatement() {
+		return null;
+	}
+
+	@Override
 	public boolean isRecursive() {
 		return false;
 	}

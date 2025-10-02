@@ -456,7 +456,7 @@
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic withReporter(ruleSetLoader RuleSetLoader, reporter PmdReporter) : RuleSetLoader extracted from private loadRuleSetByFileName(ruleSetFileName String) : RuleSet in class net.sourceforge.pmd.lang.rule.AbstractRuleSetFactoryTest & moved to class net.sourceforge.pmd.lang.rule.InternalApiBridge",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [

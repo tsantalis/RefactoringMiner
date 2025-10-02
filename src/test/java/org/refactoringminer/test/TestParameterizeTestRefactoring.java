@@ -59,6 +59,7 @@ class TestParameterizeTestRefactoring {
         }
         return result;
     }
+    @SafeVarargs
     private static List<RefactoringType> combine(List<RefactoringType>... lists) {
         return Arrays.stream(lists).flatMap(List::stream).collect(Collectors.toList());
     }

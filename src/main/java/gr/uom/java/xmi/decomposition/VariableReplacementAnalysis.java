@@ -2142,7 +2142,7 @@ public class VariableReplacementAnalysis {
 						}
 					}
 					String getPrefix = "get";
-					if(invocation.getName().startsWith(getPrefix) && invocation.arguments().size() == 0 && (invocation.getExpression() == null || invocation.getExpression().equals("this"))) {
+					if(invocation.getName().startsWith(getPrefix) && invocation.arguments().size() == 0 && (invocation.getExpression() == null || invocation.getExpression().equals(JAVA.THIS))) {
 						Replacement variableReplacement = null;
 						if(variableReplacedWithMethod.getDirection().equals(Direction.VARIABLE_TO_INVOCATION)) {
 							String before = variable;

@@ -676,7 +676,7 @@ public class MappingOptimizer {
 				return true;
 			}
 			String expression = invocation.getExpression();
-			if(expression != null && !expression.equals("this") && !Character.isUpperCase(expression.charAt(0))) {
+			if(expression != null && !expression.equals(JAVA.THIS) && !Character.isUpperCase(expression.charAt(0))) {
 				return true;
 			}
 		}

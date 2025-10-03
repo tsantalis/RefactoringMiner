@@ -1020,10 +1020,10 @@ public class ReplacementAlgorithm {
 			findReplacements(booleanLiterals1, prefixExpressions2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_PREFIX_EXPRESSION, container1, container2, classDiff);
 		}
 		if(statement2.getThisExpressions().size() > 0 && !statement2.getString().equals(JAVA.RETURN_THIS)) {
-			findReplacements(variables1, Set.of("this"), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION, container1, container2, classDiff);
+			findReplacements(variables1, Set.of(JAVA.THIS), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION, container1, container2, classDiff);
 		}
 		if(statement1.getThisExpressions().size() > 0 && !statement1.getString().equals(JAVA.RETURN_THIS)) {
-			findReplacements(Set.of("this"), variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION, container1, container2, classDiff);
+			findReplacements(Set.of(JAVA.THIS), variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION, container1, container2, classDiff);
 		}
 		if(!container1.isGetter() && !container2.isGetter() && !container1.isSetter() && !container2.isSetter()) {
 			findReplacements(stringLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
@@ -3989,7 +3989,7 @@ public class ReplacementAlgorithm {
 						isMovedMethod = false;
 					}
 				}
-				Set<String> thisReferences = Set.of("this", "INSTANCE");
+				Set<String> thisReferences = Set.of(JAVA.THIS, "INSTANCE");
 				if(invocationCoveringTheEntireStatement2 != null) {
 					Set<String> thisReferences2 = new LinkedHashSet<>();
 					Map<String, Set<VariableDeclaration>> variableDeclarationMap2 = container2.variableDeclarationMap();

@@ -376,11 +376,11 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **September 28, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **October 2, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12509  | 13  | 221  | 0.999  | 0.983|
+|**Total**|12511  | 13  | 220  | 0.999  | 0.983|
 |Extract Method|1015  |  1  | 21  | 0.999  | 0.980|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
@@ -401,14 +401,14 @@ As of **September 28, 2025** the precision and recall of RefactoringMiner on thi
 |Extract Superclass|74  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|108  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|123  |  0  | 61  | 1.000  | 0.668|
+|Extract And Move Method|124  |  0  | 60  | 1.000  | 0.674|
 |Move And Inline Method|12  |  0  |  4  | 1.000  | 0.750|
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|320  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|25  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|143  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|144  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|339  |  2  | 11  | 0.994  | 0.969|
 |Rename Parameter|493  |  2  | 24  | 0.996  | 0.954|
@@ -497,7 +497,7 @@ As of **October 2, 2025** the precision and recall of RefactoringMiner on this b
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3338  | 74  | 157  | 0.978  | 0.955|
+|**Total**|3341  | 74  | 156  | 0.978  | 0.955|
 |Extract Method|369  |  3  |  9  | 0.992  | 0.976|
 |Rename Class|231  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -516,7 +516,7 @@ As of **October 2, 2025** the precision and recall of RefactoringMiner on this b
 |Extract Superclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|45  |  1  |  4  | 0.978  | 0.918|
-|Extract And Move Method|112  |  6  | 15  | 0.949  | 0.882|
+|Extract And Move Method|115  |  6  | 14  | 0.950  | 0.891|
 |Move And Inline Method|26  |  1  |  9  | 0.963  | 0.743|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|287  |  3  | 13  | 0.990  | 0.957|

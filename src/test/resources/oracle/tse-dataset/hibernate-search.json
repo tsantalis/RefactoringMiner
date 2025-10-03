@@ -1591,6 +1591,16 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tc : null to ctx : null in method package inheritance_explicitName() : void from class org.hibernate.search.integrationtest.mapper.pojo.loading.EntityLoadingBinderInheritanceIT",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic clear() : void extracted from public close() : void in class org.hibernate.search.integrationtest.java.modules.pojo.standalone.elasticsearch.service.AuthorService & moved to class org.hibernate.search.integrationtest.java.modules.pojo.standalone.elasticsearch.service.SimulatedDatastore",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic clear() : void extracted from public close() : void in class org.hibernate.search.integrationtest.java.modules.pojo.standalone.lucene.service.AuthorService & moved to class org.hibernate.search.integrationtest.java.modules.pojo.standalone.lucene.service.SimulatedDatastore",
+          "validation": true
         }
       ]
     },

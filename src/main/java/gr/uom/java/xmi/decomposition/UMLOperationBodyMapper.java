@@ -37,6 +37,7 @@ import gr.uom.java.xmi.diff.AssertTimeoutRefactoring;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
 import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
+import gr.uom.java.xmi.diff.ChangeVariableTypeRefactoring;
 import gr.uom.java.xmi.diff.ExtractOperationDetection;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
@@ -5010,7 +5011,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(int i=0; i<methodInvocations1.size(); i++) {
 						AbstractCall call1 = methodInvocations1.get(i);
 						AbstractCall call2 = methodInvocations2.get(i);
-						if(!call1.equals(call2)) {
+						boolean unequalExpression = !call1.identicalExpression(call2) && call1.getExpression() != null && !call1.getExpression().equals("this");
+						boolean variableRenamed = false;
+						if(unequalExpression) {
+							for(Refactoring r : refactorings) {
+								if(r instanceof ChangeVariableTypeRefactoring) {
+									ChangeVariableTypeRefactoring change = (ChangeVariableTypeRefactoring)r;
+									if(change.getOriginalVariable().getVariableName().equals(call1.getExpression()) && change.getChangedTypeVariable().getVariableName().equals(call2.getExpression())) {
+										variableRenamed = true;
+									}
+								}
+								else if(r instanceof RenameVariableRefactoring) {
+									RenameVariableRefactoring change = (RenameVariableRefactoring)r;
+									if(change.getOriginalVariable().getVariableName().equals(call1.getExpression()) && change.getRenamedVariable().getVariableName().equals(call2.getExpression())) {
+										variableRenamed = true;
+									}
+								}
+							}
+						}
+						if(!call1.equals(call2) || (unequalExpression && !variableRenamed)) {
 							MethodInvocationReplacement r = new MethodInvocationReplacement(call1.actualString(), call2.actualString(), call1, call2, ReplacementType.METHOD_INVOCATION);
 							replacements.add(r);
 						}

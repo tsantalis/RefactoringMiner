@@ -175,7 +175,7 @@ public class OperationInvocation extends AbstractCall {
 
 	public OperationInvocation(CompilationUnit cu, String sourceFolder, String filePath, ConstructorInvocation invocation, VariableDeclarationContainer container) {
 		super(cu, sourceFolder, filePath, invocation, CodeElementType.CONSTRUCTOR_INVOCATION, container);
-		this.methodName = "this";
+		this.methodName = JAVA.THIS;
 		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
 		List<Expression> args = invocation.arguments();
@@ -220,7 +220,7 @@ public class OperationInvocation extends AbstractCall {
     public boolean matchesOperation(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation,
     		UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
     	boolean constructorCall = false;
-    	if(this.methodName.equals("this") && operation.getClassName().equals(callerOperation.getClassName()) && operation.getName().equals(callerOperation.getName())) {
+    	if(this.methodName.equals(JAVA.THIS) && operation.getClassName().equals(callerOperation.getClassName()) && operation.getName().equals(callerOperation.getName())) {
     		constructorCall = true;
     	}
     	if(!this.methodName.equals(operation.getName()) && !constructorCall) {

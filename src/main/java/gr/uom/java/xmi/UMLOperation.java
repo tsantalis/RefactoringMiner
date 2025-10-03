@@ -718,7 +718,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				StatementObject statement = (StatementObject)statements.get(0);
 				for(AbstractCall operationInvocation : statement.getMethodInvocations()) {
 					if(operationInvocation.matchesOperation(this, this, null, null) ||
-							(operationInvocation.getName().equals(this.getName()) && (operationInvocation.getExpression() == null || operationInvocation.getExpression().endsWith("this")))) {
+							(operationInvocation.getName().equals(this.getName()) && (operationInvocation.getExpression() == null || operationInvocation.getExpression().endsWith(JAVA.THIS)))) {
 						return operationInvocation;
 					}
 				}

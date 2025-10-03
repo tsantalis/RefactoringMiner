@@ -3036,7 +3036,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				for(AbstractCall invocation : operationInvocations2) {
 					if(!(invocation instanceof MethodReference) && invocation.matchesOperation(bestMapper.getContainer2(), operation2, this, modelDiff) && !invocation.matchesOperation(bestMapper.getContainer1(), operation2, this, modelDiff) &&
 							(!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, removedOperations) || commonParameterTypes > bestCommonParameterTypes) &&
-							(invocation.getExpression() == null || invocation.getExpression().equals("this"))) {
+							(invocation.getExpression() == null || invocation.getExpression().equals(JAVA.THIS))) {
 						boolean skip = false;
 						for(UMLOperationBodyMapper m : operationBodyMapperList) {
 							if(m.getContainer1().getName().equals(operation2.getName()) && !m.getContainer1().stringRepresentation().equals(m.getContainer2().stringRepresentation())) {
@@ -3060,7 +3060,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				for(AbstractCall invocation : operationInvocations1) {
 					if(!(invocation instanceof MethodReference) && invocation.matchesOperation(bestMapper.getContainer1(), operation1, this, modelDiff) && !invocation.matchesOperation(bestMapper.getContainer2(), operation1, this, modelDiff) &&
 							!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, addedOperations) &&
-							(invocation.getExpression() == null || invocation.getExpression().equals("this"))) {
+							(invocation.getExpression() == null || invocation.getExpression().equals(JAVA.THIS))) {
 						boolean skip = false;
 						for(UMLOperationBodyMapper m : operationBodyMapperList) {
 							if(m.getContainer2().getName().equals(operation1.getName()) && !m.getContainer1().stringRepresentation().equals(m.getContainer2().stringRepresentation())) {

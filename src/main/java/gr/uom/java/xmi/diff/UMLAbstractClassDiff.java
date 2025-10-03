@@ -868,7 +868,7 @@ public abstract class UMLAbstractClassDiff {
 		if(modelDiff != null) {
 			for(AbstractCall addedOperationInvocation : addedOperationInvocations) {
 				String expression = addedOperationInvocation.getExpression();
-				if(expression != null && !expression.equals("this") &&
+				if(expression != null && !expression.equals(JAVA.THIS) &&
 						!intersection.contains(addedOperationInvocation) && !matchedOperationInvocations.contains(addedOperationInvocation)) {
 					UMLOperation operation = modelDiff.findOperationInAddedClasses(addedOperationInvocation, addedOperation, this);
 					if(operation != null) {

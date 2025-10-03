@@ -3238,8 +3238,8 @@ Mapping state for Move Method refactoring purity:
 
         for (Replacement replacement : replacementsToCheck) {
             if (replacement.getType().equals(Replacement.ReplacementType.VARIABLE_NAME)) {
-                if (findLongestPrefixSuffix(replacement.getBefore(), replacement.getAfter()).equals("this") ||
-                        findLongestPrefixSuffix(replacement.getAfter(), replacement.getBefore()).equals("this")) {
+                if (findLongestPrefixSuffix(replacement.getBefore(), replacement.getAfter()).equals(JAVA.THIS) ||
+                        findLongestPrefixSuffix(replacement.getAfter(), replacement.getBefore()).equals(JAVA.THIS)) {
                     replacementsToRemove.add(replacement);
                 }
             }
@@ -4219,12 +4219,12 @@ Mapping state for Move Method refactoring purity:
         Set<Replacement> replacementsToRemove = new HashSet<>();
 
         for (Replacement replacement : replacementsToCheck) {
-                if (replacement.getBefore().contains("this") || replacement.getAfter().contains("this")) {
+                if (replacement.getBefore().contains(JAVA.THIS) || replacement.getAfter().contains(JAVA.THIS)) {
                     int findSimilar1 = replacement.getAfter().indexOf(replacement.getBefore());
                     int findSimilar2 = replacement.getBefore().indexOf(replacement.getAfter());
                     if (findSimilar1 != -1) {
                         try {
-	                        if (replacement.getAfter().substring(0, findSimilar1 - 1).equals("this")) {
+	                        if (replacement.getAfter().substring(0, findSimilar1 - 1).equals(JAVA.THIS)) {
 	                            replacementsToRemove.add(replacement);
 	                        }
                         } catch (StringIndexOutOfBoundsException ignored) {
@@ -4233,7 +4233,7 @@ Mapping state for Move Method refactoring purity:
                     } else if (findSimilar2 != -1) {
                         try {
                             String temp = replacement.getBefore().substring(0, findSimilar2 - 1);
-                            if (temp.equals("this")) {
+                            if (temp.equals(JAVA.THIS)) {
                                 replacementsToRemove.add(replacement);
                             }
                         } catch (StringIndexOutOfBoundsException ignored) {

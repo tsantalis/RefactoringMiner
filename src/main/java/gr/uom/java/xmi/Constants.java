@@ -2,7 +2,11 @@ package gr.uom.java.xmi;
 
 public enum Constants {
 	JAVA(";\n", "return ", "return;\n", "return true;\n", "return false;\n", "return null;\n", "return this;\n", "=", "break;\n", "continue;\n",
-			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this.", " ? ", " : ");
+			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", " ? ", " : "),
+	
+	PYTHON("", "return ", "return", "return true", "return false", "return None", "return self", "=", "break", "continue",
+			" -> ", "::", " + ", "raise ", "case ", "try", "{", "}", "[", "]", "self", "self.", " if ", " else ");
+	
 	public final String STATEMENT_TERMINATION;
 	public final String RETURN_SPACE;
 	public final String RETURN_STATEMENT;
@@ -23,6 +27,7 @@ public enum Constants {
 	public final String CLOSE_BLOCK;
 	public final String OPEN_ARRAY_INITIALIZER;
 	public final String CLOSE_ARRAY_INITIALIZER;
+	public final String THIS;
 	public final String THIS_DOT;
 	public final String TERNARY_CONDITION;
 	public final String TERNARY_ELSE;
@@ -48,6 +53,7 @@ public enum Constants {
 			String CLOSE_BLOCK,
 			String OPEN_ARRAY_INITIALIZER,
 			String CLOSE_ARRAY_INITIALIZER,
+			String THIS,
 			String THIS_DOT,
 			String TERNARY_CONDITION,
 			String TERNARY_ELSE) {
@@ -71,6 +77,7 @@ public enum Constants {
 		this.CLOSE_BLOCK = CLOSE_BLOCK;
 		this.OPEN_ARRAY_INITIALIZER = OPEN_ARRAY_INITIALIZER;
 		this.CLOSE_ARRAY_INITIALIZER = CLOSE_ARRAY_INITIALIZER;
+		this.THIS = THIS;
 		this.THIS_DOT = THIS_DOT;
 		this.TERNARY_CONDITION = TERNARY_CONDITION;
 		this.TERNARY_ELSE = TERNARY_ELSE;

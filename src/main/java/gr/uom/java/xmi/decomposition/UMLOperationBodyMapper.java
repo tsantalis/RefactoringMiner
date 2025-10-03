@@ -5011,7 +5011,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(int i=0; i<methodInvocations1.size(); i++) {
 						AbstractCall call1 = methodInvocations1.get(i);
 						AbstractCall call2 = methodInvocations2.get(i);
-						boolean unequalExpression = !call1.identicalExpression(call2) && call1.getExpression() != null && !call1.getExpression().equals("this");
+						boolean unequalExpression = !call1.identicalExpression(call2) && call1.getExpression() != null && !call1.getExpression().equals(JAVA.THIS);
 						boolean variableRenamed = false;
 						if(unequalExpression) {
 							for(Refactoring r : refactorings) {

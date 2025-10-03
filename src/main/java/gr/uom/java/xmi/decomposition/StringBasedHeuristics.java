@@ -2026,7 +2026,7 @@ public class StringBasedHeuristics {
 	protected static boolean thisConstructorCallWithEverythingReplaced(AbstractCall invocationCoveringTheEntireStatement1, AbstractCall invocationCoveringTheEntireStatement2,
 			ReplacementInfo replacementInfo) {
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.getName().equals("this") && invocationCoveringTheEntireStatement2.getName().equals("this")) {
+				invocationCoveringTheEntireStatement1.getName().equals(JAVA.THIS) && invocationCoveringTheEntireStatement2.getName().equals(JAVA.THIS)) {
 			List<String> arguments1 = invocationCoveringTheEntireStatement1.arguments();
 			List<String> arguments2 = invocationCoveringTheEntireStatement2.arguments();
 			Set<String> argumentIntersection = invocationCoveringTheEntireStatement1.argumentIntersection(invocationCoveringTheEntireStatement2);

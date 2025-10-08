@@ -57,6 +57,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private List<UMLComment> comments;
 	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
 	private String actualSignature;
+	private List<UMLOperation> nestedOperations;
 	
 	public UMLOperation(String name, LocationInfo locationInfo) {
 		this.locationInfo = locationInfo;
@@ -68,7 +69,47 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
         this.annotations = new ArrayList<UMLAnnotation>();
         this.modifiers = new ArrayList<UMLModifier>();
         this.comments = new ArrayList<UMLComment>();
+        this.nestedOperations = new ArrayList<UMLOperation>();
     }
+
+	public void addNestedOperation(UMLOperation operation) {
+		nestedOperations.add(operation);
+	}
+
+	public List<UMLOperation> getNestedOperations() {
+		return nestedOperations;
+	}
+
+	public UMLOperation nestedOperationWithTheSameSignatureIgnoringChangedTypes(UMLOperation operation) {
+		List<UMLOperation> matchingOperations = new ArrayList<UMLOperation>();
+		for(UMLOperation originalOperation : nestedOperations) {
+			boolean matchesOperation = originalOperation.isNative() ?
+				originalOperation.equalSignatureIgnoringChangedTypes(operation) :
+				originalOperation.equalSignatureWithIdenticalNameIgnoringChangedTypes(operation);
+			if(matchesOperation) {
+				boolean originalOperationEmptyBody = originalOperation.getBody() == null || originalOperation.hasEmptyBody();
+				boolean operationEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
+				if(originalOperationEmptyBody == operationEmptyBody)
+					matchingOperations.add(originalOperation);
+			}
+		}
+		if(matchingOperations.size() == 1) {
+			return matchingOperations.get(0);
+		}
+		else if(matchingOperations.size() > 1) {
+			int minDistance = StringDistance.editDistance(matchingOperations.get(0).toString(), operation.toString());
+			UMLOperation matchingOperation = matchingOperations.get(0);
+			for(int i=1; i<matchingOperations.size(); i++) {
+				int distance = StringDistance.editDistance(matchingOperations.get(i).toString(), operation.toString());
+				if(distance < minDistance) {
+					minDistance = distance;
+					matchingOperation = matchingOperations.get(i);
+				}
+			}
+			return matchingOperation;
+		}
+		return null;
+	}
 
 	public String getActualSignature() {
 		return actualSignature;

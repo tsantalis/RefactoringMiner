@@ -183,8 +183,35 @@ public abstract class UMLAbstractClassDiff {
 		this.removedAnonymousClasses.add(umlClass);
 	}
 
-	public void addOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper) {
+	public void addOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
 		this.operationBodyMapperList.add(operationBodyMapper);
+		if(operationBodyMapper.getOperation1() != null && operationBodyMapper.getOperation1().getNestedOperations().size() > 0 &&
+				operationBodyMapper.getOperation2() != null && operationBodyMapper.getOperation2().getNestedOperations().size() > 0) {
+			processNestedOperations(operationBodyMapper.getOperation1(), operationBodyMapper.getOperation2());
+		}
+	}
+
+	private void processNestedOperations(UMLOperation operation1, UMLOperation operation2) throws RefactoringMinerTimedOutException {
+		for(UMLOperation operation : operation1.getNestedOperations()) {
+			UMLOperation operationWithTheSameSignature = operation2.nestedOperationWithTheSameSignatureIgnoringChangedTypes(operation);
+			if(operationWithTheSameSignature == null) {
+				this.removedOperations.add(operation);
+			}
+			else if(!mapperListContainsOperation(operation, operationWithTheSameSignature)) {
+				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation, operationWithTheSameSignature, this);
+				this.addOperationBodyMapper(mapper);
+			}
+		}
+		for(UMLOperation operation : operation2.getNestedOperations()) {
+			UMLOperation operationWithTheSameSignature = operation1.nestedOperationWithTheSameSignatureIgnoringChangedTypes(operation);
+			if(operationWithTheSameSignature == null) {
+				this.addedOperations.add(operation);
+			}
+			else if(!mapperListContainsOperation(operationWithTheSameSignature, operation)) {
+				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operationWithTheSameSignature, operation, this);
+				this.addOperationBodyMapper(mapper);
+			}
+		}
 	}
 
 	public UMLModelDiff getModelDiff() {

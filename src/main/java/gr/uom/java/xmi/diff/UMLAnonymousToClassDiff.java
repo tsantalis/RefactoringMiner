@@ -73,7 +73,7 @@ public class UMLAnonymousToClassDiff extends UMLAbstractClassDiff {
     		}
 			else if(!mapperListContainsOperation(operation, operationWithTheSameSignature)) {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation, operationWithTheSameSignature, this);
-				this.operationBodyMapperList.add(mapper);
+				this.addOperationBodyMapper(mapper);
 			}
     	}
     	for(UMLOperation operation : nextClass.getOperations()) {
@@ -83,7 +83,7 @@ public class UMLAnonymousToClassDiff extends UMLAbstractClassDiff {
     		}
 			else if(!mapperListContainsOperation(operationWithTheSameSignature, operation)) {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operationWithTheSameSignature, operation, this);
-				this.operationBodyMapperList.add(mapper);
+				this.addOperationBodyMapper(mapper);
 			}
     	}
 	}

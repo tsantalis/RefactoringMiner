@@ -73,7 +73,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 					int nonMappedElementsT2 = mapper.nonMappedElementsT2();
 					if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 							isPartOfMethodExtracted(initializer1, initializer2) || isPartOfMethodInlined(initializer1, initializer2)) {
-						operationBodyMapperList.add(mapper);
+						addOperationBodyMapper(mapper);
 					}
 				}
 			}
@@ -89,7 +89,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 							int nonMappedElementsT2 = mapper.nonMappedElementsT2();
 							if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 									isPartOfMethodExtracted(initializer1, initializer2) || isPartOfMethodInlined(initializer1, initializer2)) {
-								operationBodyMapperList.add(mapper);
+								addOperationBodyMapper(mapper);
 							}
 						}
 					}
@@ -107,7 +107,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 							int nonMappedElementsT2 = mapper.nonMappedElementsT2();
 							if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 									isPartOfMethodExtracted(initializer1, initializer2) || isPartOfMethodInlined(initializer1, initializer2)) {
-								operationBodyMapperList.add(mapper);
+								addOperationBodyMapper(mapper);
 							}
 						}
 					}
@@ -193,7 +193,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 						int nonMappedElementsT2 = mapper.nonMappedElementsT2();
 						if((mappings > nonMappedElementsT1 || mappings > nonMappedElementsT2) || matchingEmptyBodies ||
 								isPartOfMethodExtracted(operation1, operation2) || isPartOfMethodInlined(operation1, operation2)) {
-							operationBodyMapperList.add(mapper);
+							addOperationBodyMapper(mapper);
 							removedOperations.remove(operation1);
 							addedOperations.remove(operation2);
 						}
@@ -226,7 +226,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 							int nonMappedElementsT2 = mapper.nonMappedElementsT2();
 							if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 									isPartOfMethodExtracted(operation1, operation2) || isPartOfMethodInlined(operation1, operation2)) {
-								operationBodyMapperList.add(mapper);
+								addOperationBodyMapper(mapper);
 								removedOperations.remove(operation1);
 								addedOperations.remove(operation2);
 							}

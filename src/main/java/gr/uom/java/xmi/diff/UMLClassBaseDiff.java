@@ -587,7 +587,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					int nonMappedElementsT2 = mapper.nonMappedElementsT2();
 					if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 							isPartOfMethodExtracted(initializer1, initializer2) || isPartOfMethodInlined(initializer1, initializer2)) {
-						operationBodyMapperList.add(mapper);
+						addOperationBodyMapper(mapper);
 						this.removedInitializers.remove(initializer1);
 						this.addedInitializers.remove(initializer2);
 					}
@@ -605,7 +605,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							int nonMappedElementsT2 = mapper.nonMappedElementsT2();
 							if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 									isPartOfMethodExtracted(initializer1, initializer2) || isPartOfMethodInlined(initializer1, initializer2)) {
-								operationBodyMapperList.add(mapper);
+								addOperationBodyMapper(mapper);
 								this.removedInitializers.remove(initializer1);
 								this.addedInitializers.remove(initializer2);
 							}
@@ -625,7 +625,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							int nonMappedElementsT2 = mapper.nonMappedElementsT2();
 							if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 									isPartOfMethodExtracted(initializer1, initializer2) || isPartOfMethodInlined(initializer1, initializer2)) {
-								operationBodyMapperList.add(mapper);
+								addOperationBodyMapper(mapper);
 								this.removedInitializers.remove(initializer1);
 								this.addedInitializers.remove(initializer2);
 							}
@@ -931,7 +931,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     		}
 			else if(!mapperListContainsOperation(operation, operationWithTheSameSignature)) {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation, operationWithTheSameSignature, this);
-				this.operationBodyMapperList.add(mapper);
+				this.addOperationBodyMapper(mapper);
 			}
     	}
     	for(UMLOperation operation : nextClass.getOperations()) {
@@ -941,7 +941,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     		}
 			else if(!mapperListContainsOperation(operationWithTheSameSignature, operation)) {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operationWithTheSameSignature, operation, this);
-				this.operationBodyMapperList.add(mapper);
+				this.addOperationBodyMapper(mapper);
 			}
     	}
 	}

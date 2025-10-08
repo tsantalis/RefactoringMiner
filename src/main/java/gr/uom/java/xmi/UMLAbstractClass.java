@@ -226,12 +226,14 @@ public abstract class UMLAbstractClass {
 
 	public boolean isSubTypeOf(UMLClass umlClass) {
 		if(superclass != null) {
-			if(umlClass.getName().endsWith("." + superclass.getClassType())) {
+			if(umlClass.getName().endsWith("." + superclass.getClassType()) ||
+					umlClass.getName().equals(superclass.getClassType())) {
 				return true;
 			}
 		}
 		for(UMLType implementedInterface : implementedInterfaces) {
-			if(umlClass.getName().endsWith("." + implementedInterface.getClassType())) {
+			if(umlClass.getName().endsWith("." + implementedInterface.getClassType()) ||
+					umlClass.getName().equals(implementedInterface.getClassType())) {
 				return true;
 			}
 		}

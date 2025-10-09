@@ -2296,6 +2296,13 @@ public class StringBasedHeuristics {
 			if(typeReplacement && !compatibleTypes && variableRename && classInstanceCreationReplacement && !equalArguments) {
 				return true;
 			}
+			if(statement1.getVariableDeclarations().size() != statement2.getVariableDeclarations().size() && variableRename && !compatibleTypes &&
+					ReplacementUtil.isDefaultValue(assignment1) && ReplacementUtil.isDefaultValue(assignment2)) {
+				return true;
+			}
+			if(statement1.getVariableDeclarations().size() == 0 && statement2.getVariableDeclarations().size() == 0 && variableRename && variableName1.startsWith("_") != variableName2.startsWith("_")) {
+				return true;
+			}
 			if(variableRename && rightHandSideReplacement) {
 				String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variableName1);
 				String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variableName2);

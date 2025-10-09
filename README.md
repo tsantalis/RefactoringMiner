@@ -376,15 +376,15 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **October 2, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **October 9, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12511  | 13  | 220  | 0.999  | 0.983|
+|**Total**|12514  | 13  | 220  | 0.999  | 0.983|
 |Extract Method|1015  |  1  | 21  | 0.999  | 0.980|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
-|Move And Rename Attribute|17  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|395  |  2  | 20  | 0.995  | 0.952|
 |Inline Method|118  |  0  |  1  | 1.000  | 0.992|
@@ -394,7 +394,7 @@ As of **October 2, 2025** the precision and recall of RefactoringMiner on this b
 |Move Class|1095  |  0  |  4  | 1.000  | 0.996|
 |Move And Rename Class|38  |  0  |  1  | 1.000  | 0.974|
 |Move Source Folder| 3  |  0  |  0  | 1.000  | 1.000|
-|Pull Up Attribute|139  |  0  |  1  | 1.000  | 0.993|
+|Pull Up Attribute|145  |  0  |  1  | 1.000  | 0.993|
 |Push Down Attribute|35  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method|46  |  0  |  0  | 1.000  | 1.000|
 |Extract Interface|22  |  0  |  0  | 1.000  | 1.000|
@@ -419,11 +419,11 @@ As of **October 2, 2025** the precision and recall of RefactoringMiner on this b
 |Split Variable| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 7  |  0  |  0  | 1.000  | 1.000|
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
-|Replace Variable With Attribute|123  |  0  |  0  | 1.000  | 1.000|
+|Replace Variable With Attribute|124  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|28  |  0  |  1  | 1.000  | 0.966|
 |Parameterize Variable|110  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|26  |  0  |  0  | 1.000  | 1.000|
-|Parameterize Attribute|23  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Attribute|25  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|435  |  0  | 12  | 1.000  | 0.973|
 |Change Variable Type|813  |  1  |  7  | 0.999  | 0.991|
 |Change Parameter Type|654  |  1  | 10  | 0.998  | 0.985|
@@ -493,7 +493,7 @@ As of **October 2, 2025** the precision and recall of RefactoringMiner on this b
 **Files**: [tse-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/tse-dataset)
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **October 2, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **October 9, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
@@ -501,7 +501,7 @@ As of **October 2, 2025** the precision and recall of RefactoringMiner on this b
 |Extract Method|369  |  3  |  9  | 0.992  | 0.976|
 |Rename Class|231  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
-|Move And Rename Attribute| 5  |  0  |  3  | 1.000  | 0.625|
+|Move And Rename Attribute| 4  |  0  |  3  | 1.000  | 0.571|
 |Rename Method|294  | 11  |  9  | 0.964  | 0.970|
 |Inline Method|69  |  5  |  2  | 0.932  | 0.972|
 |Move Method|263  |  4  |  2  | 0.985  | 0.992|
@@ -509,7 +509,7 @@ As of **October 2, 2025** the precision and recall of RefactoringMiner on this b
 |Pull Up Method|45  |  0  |  3  | 1.000  | 0.938|
 |Move Class|141  |  4  |  2  | 0.972  | 0.986|
 |Move And Rename Class|28  |  0  |  1  | 1.000  | 0.966|
-|Pull Up Attribute|11  |  0  |  0  | 1.000  | 1.000|
+|Pull Up Attribute|12  |  0  |  0  | 1.000  | 1.000|
 |Push Down Attribute| 6  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method|22  |  0  |  1  | 1.000  | 0.957|
 |Extract Interface|16  |  2  |  0  | 0.889  | 1.000|

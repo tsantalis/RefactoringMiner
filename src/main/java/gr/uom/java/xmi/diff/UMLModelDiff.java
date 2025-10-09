@@ -3754,8 +3754,20 @@ public class UMLModelDiff {
 									if(!movedAttributeDiffList.contains(attributeDiff)) {
 										movedAttributeDiffList.add(attributeDiff);
 									}
-									MoveAndRenameAttributeRefactoring ref = new MoveAndRenameAttributeRefactoring(candidate.getOriginalAttribute(), a2, set);
-									if(!refactorings.contains(ref)) {
+									Refactoring ref = null;
+									if(isSubclassOf(candidate.getOriginalAttribute().getClassName(), a2.getClassName())) {
+										ref = new PullUpAttributeRefactoring(candidate.getOriginalAttribute(), a2);
+									}
+									else if(isSubclassOf(a2.getClassName(), candidate.getOriginalAttribute().getClassName())) {
+										ref = new PushDownAttributeRefactoring(candidate.getOriginalAttribute(), a2);
+									}
+									else if(candidate.getOriginalAttribute().getName().equals(a2.getName())) {
+										ref = new MoveAttributeRefactoring(candidate.getOriginalAttribute(), a2);
+									}
+									else {
+										ref = new MoveAndRenameAttributeRefactoring(candidate.getOriginalAttribute(), a2, set);
+									}
+									if(ref != null && !refactorings.contains(ref)) {
 										refactorings.add(ref);
 										break;//it's not necessary to repeat the same process for all candidates in the set
 									}

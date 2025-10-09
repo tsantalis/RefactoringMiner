@@ -92,8 +92,8 @@
           "validation": true
         },
         {
-          "type": "MOVE_RENAME_ATTRIBUTE",
-          "description": "Move And Rename Attribute\tprivate returnType : String renamed to package fullReturnType : String and moved from class org.hibernate.processor.annotation.CriteriaDeleteMethod to class org.hibernate.processor.annotation.AbstractQueryMethod",
+          "type": "PULL_UP_ATTRIBUTE",
+          "description": "Pull Up Attribute\tprivate returnType : String from class org.hibernate.processor.annotation.CriteriaDeleteMethod to package fullReturnType : String from class org.hibernate.processor.annotation.AbstractQueryMethod",
           "validation": true
         }
       ],

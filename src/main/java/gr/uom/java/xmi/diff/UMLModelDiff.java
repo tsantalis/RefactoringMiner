@@ -6151,7 +6151,7 @@ public class UMLModelDiff {
 												if(call1.matchesOperation(removed, callerMapper.getContainer1(), firstMapper.getClassDiff(), this)) {
 													newRemovedOperation = removed;
 													newMapper = new UMLOperationBodyMapper(newRemovedOperation, addedOperation, firstMapper.getClassDiff());
-													if(!consistentMethodInvocationRenames.containsKey(r)) {
+													if(!consistentMethodInvocationRenames.containsKey(r.getKey())) {
 														consistentMethodInvocationRenames.put(r.getKey(), r.getValue());
 													}
 													break;
@@ -6314,7 +6314,7 @@ public class UMLModelDiff {
 											if(call2.matchesOperation(added, callerMapper.getContainer2(), firstMapper.getClassDiff(), this)) {
 												newAddedOperation = added;
 												newMapper = new UMLOperationBodyMapper(removedOperation, newAddedOperation, firstMapper.getClassDiff());
-												if(!consistentMethodInvocationRenames.containsKey(r)) {
+												if(!consistentMethodInvocationRenames.containsKey(r.getKey())) {
 													consistentMethodInvocationRenames.put(r.getKey(), r.getValue());
 												}
 												break;

@@ -310,6 +310,11 @@
           "type": "REPLACE_PIPELINE_WITH_LOOP",
           "description": "Replace Pipeline With Loop\tList<String> adjusted=result.stream().map(s -> capitalizeAfterSpace(word,s)).collect(Collectors.toList()); with for(candidate: result) in method package suggest(word String, wordCase WordCase) : boolean from class org.apache.lucene.analysis.hunspell.ModifyingSuggester",
           "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\thasGoodSuggestions : boolean to hasGoodSuggestions : boolean in method private tryVariationsOf(word String) : boolean from class org.apache.lucene.analysis.hunspell.ModifyingSuggester",
+          "validation": true
         }
       ]
     },

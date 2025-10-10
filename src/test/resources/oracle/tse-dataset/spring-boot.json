@@ -282,7 +282,18 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tenvironment : MockEnvironment to environment : MockEnvironment in method package setup() : void from class org.springframework.boot.context.config.ConfigDataEnvironmentContributorsTests",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbinder : Binder to binder : Binder in method package setup() : void from class org.springframework.boot.context.config.ConfigDataEnvironmentContributorsTests",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/spring-projects/spring-boot.git",
@@ -911,6 +922,11 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tzip : ZipInputStream to stream : ZipInputStream in method private checkJarCompatibility() : void from class org.springframework.boot.jarmode.tools.ExtractCommand",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tjarFile : File to jarFile : File in method package setup() : void from class org.springframework.boot.jarmode.tools.ListCommandTests",
           "validation": true
         }
       ]

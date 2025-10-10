@@ -2406,6 +2406,40 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			Set<MethodInvocationReplacement> methodInvocationRenames = bodyMapper.getMethodInvocationRenameReplacements();
 			for(MethodInvocationReplacement replacement : methodInvocationRenames) {
 				map.put(replacement, bodyMapper);
+				//check for nested method calls
+				AbstractCall invokedOperationBefore = replacement.getInvokedOperationBefore();
+				AbstractCall invokedOperationAfter = replacement.getInvokedOperationAfter();
+				if(invokedOperationBefore.arguments().size() == invokedOperationAfter.arguments().size() && invokedOperationBefore.arguments().size() > 0) {
+					for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
+						if(mapping.getFragment1().getLocationInfo().subsumes(invokedOperationBefore.getLocationInfo()) &&
+								mapping.getFragment2().getLocationInfo().subsumes(invokedOperationAfter.getLocationInfo())) {
+							List<AbstractCall> invocationsBefore = mapping.getFragment1().getMethodInvocations();
+							List<AbstractCall> invocationsAfter = mapping.getFragment2().getMethodInvocations();
+							for(int i=0; i<invokedOperationBefore.arguments().size(); i++) {
+								String argumentBefore = invokedOperationBefore.arguments().get(i);
+								String argumentAfter = invokedOperationAfter.arguments().get(i);
+								AbstractCall invocationBefore = null;
+								for(AbstractCall inv : invocationsBefore) {
+									if(inv.actualString().equals(argumentBefore)) {
+										invocationBefore = inv;
+										break;
+									}
+								}
+								AbstractCall invocationAfter = null;
+								for(AbstractCall inv : invocationsAfter) {
+									if(inv.actualString().equals(argumentAfter)) {
+										invocationAfter = inv;
+										break;
+									}
+								}
+								if(invocationBefore != null && invocationAfter != null) {
+									MethodInvocationReplacement nested = new MethodInvocationReplacement(argumentBefore, argumentAfter, invocationBefore, invocationAfter, ReplacementType.METHOD_INVOCATION);
+									map.put(nested, bodyMapper);
+								}
+							}
+						}
+					}
+				}
 			}
 			ConsistentReplacementDetector.updateRenames(allConsistentMethodInvocationRenames, allInconsistentMethodInvocationRenames,
 					methodInvocationRenames);

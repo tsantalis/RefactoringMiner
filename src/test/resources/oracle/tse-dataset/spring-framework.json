@@ -533,6 +533,16 @@
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tprivate updatePropertyWriteState(propertyAccessor PropertyAccessor, name String, targetType Class<?>) : void extracted from public setValue(newValue Object) : void in class org.springframework.expression.spel.ast.Indexer.PropertyIndexingValueRef & moved to class org.springframework.expression.spel.ast.Indexer",
           "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tindexAccessor : IndexAccessor to indexAccessor : IndexAccessor in method public getValue() : TypedValue from class org.springframework.expression.spel.ast.Indexer.IndexAccessorValueRef",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tindexAccessor : IndexAccessor to indexAccessor : IndexAccessor in method public setValue(newValue Object) : void from class org.springframework.expression.spel.ast.Indexer.IndexAccessorValueRef",
+          "validation": true
         }
       ]
     },
@@ -1169,6 +1179,11 @@
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate getMethodArgumentValuesOnScheduler(exchange ServerWebExchange, bindingContext BindingContext, providedArgs Object...) : Mono<Object[]> extracted from public invoke(exchange ServerWebExchange, bindingContext BindingContext, providedArgs Object...) : Mono<HandlerResult> in class org.springframework.web.reactive.result.method.InvocableHandlerMethod",
           "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tscheduler : Scheduler to optionalScheduler : Scheduler in method public handle(exchange ServerWebExchange, handler Object) : Mono<HandlerResult> from class org.springframework.web.reactive.result.method.annotation.RequestMappingHandlerAdapter",
+          "validation": true
         }
       ]
     },
@@ -1204,6 +1219,61 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate configureBeanFactory(tbd RootBeanDefinition) : DefaultListableBeanFactory extracted from public testWithNullBean() : void in class org.springframework.beans.factory.annotation.LookupAnnotationTests",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbeanFactory : DefaultListableBeanFactory to beanFactory : DefaultListableBeanFactory in method package testWithOverloadedArg() : void from class org.springframework.beans.factory.annotation.LookupAnnotationTests",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbeanFactory : DefaultListableBeanFactory to beanFactory : DefaultListableBeanFactory in method package testWithOneConstructorArg() : void from class org.springframework.beans.factory.annotation.LookupAnnotationTests",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbeanFactory : DefaultListableBeanFactory to beanFactory : DefaultListableBeanFactory in method package testPrototypeWithoutMetadataCaching() : void from class org.springframework.beans.factory.annotation.LookupAnnotationTests",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbeanFactory : DefaultListableBeanFactory to beanFactory : DefaultListableBeanFactory in method package testWithGenericBean() : void from class org.springframework.beans.factory.annotation.LookupAnnotationTests",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbeanFactory : DefaultListableBeanFactory to beanFactory : DefaultListableBeanFactory in method package testSingletonWithoutMetadataCaching() : void from class org.springframework.beans.factory.annotation.LookupAnnotationTests",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbeanFactory : DefaultListableBeanFactory to beanFactory : DefaultListableBeanFactory in method package testWithEarlyInjection() : void from class org.springframework.beans.factory.annotation.LookupAnnotationTests",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbeanFactory : DefaultListableBeanFactory to beanFactory : DefaultListableBeanFactory in method package testWithTwoConstructorArg() : void from class org.springframework.beans.factory.annotation.LookupAnnotationTests",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbeanFactory : DefaultListableBeanFactory to beanFactory : DefaultListableBeanFactory in method private configureBeanFactory(tbd RootBeanDefinition) : DefaultListableBeanFactory from class org.springframework.beans.factory.annotation.LookupAnnotationTests",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbeanFactory : DefaultListableBeanFactory to beanFactory : DefaultListableBeanFactory in method package testWithThreeArgsShouldFail() : void from class org.springframework.beans.factory.annotation.LookupAnnotationTests",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbeanFactory : DefaultListableBeanFactory to beanFactory : DefaultListableBeanFactory in method public testWithNullBean() : void from class org.springframework.beans.factory.annotation.LookupAnnotationTests",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbeanFactory : DefaultListableBeanFactory to beanFactory : DefaultListableBeanFactory in method package testWithoutConstructorArg() : void from class org.springframework.beans.factory.annotation.LookupAnnotationTests",
           "validation": true
         }
       ]

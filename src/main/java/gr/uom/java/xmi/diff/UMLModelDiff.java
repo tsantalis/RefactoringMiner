@@ -20,6 +20,7 @@ import gr.uom.java.xmi.UMLRealization;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.UMLTypeParameter;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -4960,6 +4961,18 @@ public class UMLModelDiff {
 				if(mapping.getFragment2().getVariables().size() == 1 && mapping.getFragment2().getString().equals(mapping.getFragment2().getVariables().get(0).getString())) {
 					mappings--;
 				}
+			}
+			if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
+					mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
+				CompositeStatementObjectMapping compositeMapping = (CompositeStatementObjectMapping)mapping;
+				int nestedMappings = operationBodyMapper.mappingsNestedUnderCompositeExcludingBlocks(compositeMapping);
+				if(nestedMappings == 0) {
+					mappings--;
+				}
+			}
+			if(mapping.getFragment1() instanceof StatementObject && mapping.getFragment2() instanceof AbstractExpression &&
+					mapping.getFragment2().getString().endsWith("++")) {
+				mappings--;
 			}
 		}
 		List<AbstractCodeMapping> exactMatchList = operationBodyMapper.getExactMatches();

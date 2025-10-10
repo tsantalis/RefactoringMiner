@@ -10,14 +10,17 @@ import java.util.Set;
 
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.CompositeStatementObjectMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.ReplacementUtil;
@@ -336,6 +339,18 @@ public class InlineOperationDetection {
 						}
 					}
 	 			}
+			}
+			if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
+					mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
+				CompositeStatementObjectMapping compositeMapping = (CompositeStatementObjectMapping)mapping;
+				int nestedMappings = operationBodyMapper.mappingsNestedUnderCompositeExcludingBlocks(compositeMapping);
+				if(nestedMappings == 0) {
+					mappings--;
+				}
+			}
+			if(mapping.getFragment1() instanceof StatementObject && mapping.getFragment2() instanceof AbstractExpression &&
+					mapping.getFragment2().getString().endsWith("++")) {
+				mappings--;
 			}
 		}
 		for(VariableDeclaration variableDeclaration : operationBodyMapper.getContainer1().getParameterDeclarationList()) {

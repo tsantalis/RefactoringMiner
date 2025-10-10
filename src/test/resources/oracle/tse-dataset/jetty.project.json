@@ -1019,6 +1019,16 @@
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tmaxTableSize : int in method protected newSettings() : Map<Integer,Integer> from class org.eclipse.jetty.http2.server.AbstractHTTP2ServerConnectionFactory",
           "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tlistener : Listener to listener : Listener in method private notifyPreface() : void from class org.eclipse.jetty.http2.parser.ServerParser",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\t_maxSize : int to maxSize : int in method public emit(field HttpField) : void from class org.eclipse.jetty.http2.hpack.MetaDataBuilder",
+          "validation": true
         }
       ]
     },

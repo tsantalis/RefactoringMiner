@@ -657,6 +657,11 @@
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tresult : KeyAgentIdentity in method public next() : KeyAgentIdentity from class org.eclipse.jgit.internal.transport.sshd.JGitPublicKeyAuthentication.KeyIterator.getAgentIdentities.new Iterator<>",
           "validation": false
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tagent : SshAgent to allAgentKeys : Iterable<KeyAgentIdentity> in method protected initializeAgentIdentities(session ClientSession) : Iterable<KeyAgentIdentity> from class org.eclipse.jgit.internal.transport.sshd.JGitPublicKeyAuthentication.KeyIterator",
+          "validation": true
         }
       ]
     },

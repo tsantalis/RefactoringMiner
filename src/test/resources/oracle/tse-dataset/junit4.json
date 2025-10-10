@@ -161,22 +161,22 @@
         {
           "type": "INLINE_OPERATION",
           "description": "Inline Method\tprivate evaluateWithWaitDuration(waitDuration long) : ThrowingRunnable inlined to public throwExceptionIfTheSecondCallToEvaluateNeedsTooMuchTime() : void in class org.junit.internal.runners.statements.FailOnTimeoutTest",
-          "validation": true
+          "validation": false
         },
         {
           "type": "INLINE_OPERATION",
           "description": "Inline Method\tprivate evaluateWithWaitDuration(waitDuration long) : ThrowingRunnable inlined to public throwTimeoutExceptionOnSecondCallAlthoughFirstCallThrowsException() : void in class org.junit.internal.runners.statements.FailOnTimeoutTest",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate run(failOnTimeout FailOnTimeout) : ThrowingRunnable extracted from public throwExceptionIfTheSecondCallToEvaluateNeedsTooMuchTime() : void in class org.junit.internal.runners.statements.FailOnTimeoutTest",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate run(failOnTimeout FailOnTimeout) : ThrowingRunnable extracted from public throwTimeoutExceptionOnSecondCallAlthoughFirstCallThrowsException() : void in class org.junit.internal.runners.statements.FailOnTimeoutTest",
-          "validation": true
+          "validation": false
         },
         {
           "type": "INLINE_OPERATION",

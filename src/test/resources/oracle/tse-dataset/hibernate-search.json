@@ -752,6 +752,11 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\trootEntityMappingType : var to commonSuperType : EntityMappingType in method public createQueryLoader(sessionFactory SessionFactoryImplementor, typeContexts Set<? extends PojoLoadingTypeContext<? extends E>>, conditionalExpressions List<ConditionalExpression>, order String) : HibernateOrmQueryLoader<E,I> from class org.hibernate.search.mapper.orm.loading.impl.AbstractHibernateOrmLoadingStrategy",
           "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tqueryFactory : TypeQueryFactory<E,I> to actualQueryFactory : TypeQueryFactory<E,I> in method public createQueryLoader(sessionFactory SessionFactoryImplementor, typeContexts Set<? extends PojoLoadingTypeContext<? extends E>>, conditionalExpressions List<ConditionalExpression>, order String) : HibernateOrmQueryLoader<E,I> from class org.hibernate.search.mapper.orm.loading.impl.AbstractHibernateOrmLoadingStrategy",
+          "validation": true
         }
       ]
     },
@@ -827,6 +832,11 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tfilters : JsonArray in method protected prepareFilter(context PredicateRequestContext) : JsonObject from class org.hibernate.search.backend.elasticsearch.search.predicate.impl.ElasticsearchKnnPredicate",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tluceneQuery : Query to luceneQuery : Query in method public build() : LuceneSearchQuery<H> from class org.hibernate.search.backend.lucene.search.query.impl.LuceneSearchQueryBuilder",
           "validation": true
         }
       ]
@@ -913,6 +923,11 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic root() : PredicateRequestContext renamed to public withoutSession() : PredicateRequestContext in class org.hibernate.search.backend.lucene.search.predicate.impl.PredicateRequestContext",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tjsonPredicate : JsonObject to jsonPredicate : JsonObject in method public build() : ElasticsearchSearchQuery<H> from class org.hibernate.search.backend.elasticsearch.search.query.impl.ElasticsearchSearchQueryBuilder",
           "validation": true
         }
       ]
@@ -2464,6 +2479,11 @@
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tHibernateOrmEntityLoadingStrategy<?,?> to HibernateOrmEntityLoadingStrategy<?,? super I> in method public create(persistentClass PersistentClass, documentIdSourceProperty DocumentIdSourceProperty<I>) : HibernateOrmEntityLoadingStrategy<?,? super I> from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmNonEntityIdPropertyEntityLoadingStrategy",
           "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\trootEntityMappingType : EntityMappingType to rootEntityMappingType : EntityMappingType in method private doCreate(entityMappingType EntityMappingType, sessionContext LoadingSessionContext, cacheLookupStrategy EntityLoadingCacheLookupStrategy, loadingOptions MutableEntityLoadingOptions) : PojoSelectionEntityLoader<?> from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmEntityIdEntityLoadingStrategy",
+          "validation": true
         }
       ]
     },
@@ -2945,6 +2965,11 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic invalidScopeTarget(nonIndexedTypes Collection<PojoRawTypeIdentifier<?>>, validSuperTypes Collection<PojoRawTypeIdentifier<?>>) : SearchException renamed to public invalidIndexedSuperTypes(nonIndexedTypes Collection<PojoRawTypeIdentifier<?>>, validSuperTypes Collection<PojoRawTypeIdentifier<?>>) : SearchException in class org.hibernate.search.mapper.pojo.logging.impl.Log",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tindexedBySuperType : Map<PojoRawTypeIdentifier<?>,Set<? extends PojoIndexedTypeManager<?,?>>> to indexedBySuperTypeClassContent : Map<Class<?>,Set<PojoIndexedTypeManager<?,?>>> in method private PojoTypeManagerContainer(builder Builder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer",
           "validation": true
         }
       ]

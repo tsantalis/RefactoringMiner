@@ -11839,6 +11839,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return count;
 	}
 
+	public int mappingsNestedUnderCompositeExcludingBlocks(CompositeStatementObjectMapping compositeMapping) {
+		int count = 0;
+		for(AbstractCodeMapping mapping : mappings) {
+			if(mapping.equals(compositeMapping)) {
+				break;
+			}
+			if(compositeMapping.getFragment1().getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo()) &&
+					compositeMapping.getFragment2().getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo()) &&
+					!mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && 
+					!mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+				count++;
+			}
+		}
+		return count;
+	}
+
 	public boolean identicalMappings(UMLOperationBodyMapper other) {
 		if(this.mappings.size() == other.mappings.size()) {
 			Iterator<AbstractCodeMapping> thisIt = this.mappings.iterator();

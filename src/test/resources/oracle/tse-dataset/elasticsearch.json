@@ -17,7 +17,23 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\ttmp : long[] to tmp : long[] in method public decodeTo32(bitsPerValue int, in DataInput, longs long[]) : void from class org.elasticsearch.index.codec.ForUtil",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\ttmp : long[] to tmp : long[] in method public encode(longs long[], bitsPerValue int, out DataOutput) : void from class org.elasticsearch.index.codec.ForUtil",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\ttmp : long[] to tmp : long[] in method public decode(bitsPerValue int, in DataInput, longs long[]) : void from class org.elasticsearch.index.codec.ForUtil",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/elastic/elasticsearch.git",

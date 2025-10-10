@@ -2700,6 +2700,16 @@
           "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
           "description": "Replace Variable With Attribute\ttypeManagerContainerBuilder : PojoTypeManagerContainer.Builder to typeManagerContainerBuilder : PojoTypeManagerContainer.Builder in method public prepareBuild() : MPBS from class org.hibernate.search.mapper.pojo.mapping.building.impl.PojoMapper",
           "validation": true
+        },
+        {
+          "type": "MOVE_AND_RENAME_ATTRIBUTE",
+          "description": "Move And Rename Attribute\tprivate processorBuilder : PojoIndexingProcessorOriginalTypeNodeBuilder<E> renamed to private indexingProcessorBuilder : PojoIndexingProcessorOriginalTypeNodeBuilder<E> and moved from class org.hibernate.search.mapper.pojo.mapping.building.impl.PojoIndexedTypeManagerBuilder to class org.hibernate.search.mapper.pojo.mapping.impl.PojoIndexedTypeManager.Builder",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_RENAME_ATTRIBUTE",
+          "description": "Move And Rename Attribute\tprivate preBuiltIndexingProcessor : PojoIndexingProcessor<E> renamed to private indexingProcessor : PojoIndexingProcessor<E> and moved from class org.hibernate.search.mapper.pojo.mapping.building.impl.PojoIndexedTypeManagerBuilder to class org.hibernate.search.mapper.pojo.mapping.impl.PojoIndexedTypeManager.Builder",
+          "validation": true
         }
       ]
     },

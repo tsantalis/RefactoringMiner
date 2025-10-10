@@ -493,7 +493,7 @@ As of **October 9, 2025** the precision and recall of RefactoringMiner on this b
 **Files**: [tse-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/tse-dataset)
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-Moreover, the benchmark has been extended to include valid instances for the following refactoring types:
+Moreover, the benchmark has been extended with valid instances for the following refactoring types:
 * `Replace Variable With Attribute`
 * `Replace Attribute With Variable`
 * `Extract Attribute`
@@ -502,6 +502,7 @@ Moreover, the benchmark has been extended to include valid instances for the fol
 * `Merge Method`
 * `Split Method`
 * `Replace Anonymous With Class`
+
 As of **October 10, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |

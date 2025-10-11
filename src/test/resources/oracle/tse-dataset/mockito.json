@@ -674,12 +674,12 @@
         {
           "type": "MOVE_RENAME_ATTRIBUTE",
           "description": "Move And Rename Attribute\tprivate expected : String renamed to private value : String and moved from class org.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest.StringContainsNumberMatcher to class org.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest.ThrowableMessageContainsOccurrencesCondition",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_AND_RENAME_OPERATION",
           "description": "Move And Rename Method\tpublic matchesSafely(text String) : boolean from class org.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest.StringContainsNumberMatcher to public matches(ex Throwable) : boolean from class org.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest.ThrowableMessageContainsOccurrencesCondition",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_VARIABLE",
@@ -695,7 +695,7 @@
         },
         {
           "type": "RENAME_METHOD",
-          "description": "Rename Method\tpublic matchesSafely(text String) : boolean renamed to public matches(ex Throwable) : boolean in class org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest.ThrowableMessageContainsOccurrencesCondition",
+          "description": "Rename Method\tpublic matchesSafely(text String) : boolean renamed to public matches(ex Throwable) : boolean in class org.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest.ThrowableMessageContainsOccurrencesCondition",
           "validation": true
         },
         {
@@ -705,7 +705,7 @@
         },
         {
           "type": "RENAME_ATTRIBUTE",
-          "description": "Rename Attribute\texpected : String to value : String in class org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest.ThrowableMessageContainsOccurrencesCondition",
+          "description": "Rename Attribute\texpected : String to value : String in class org.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest.ThrowableMessageContainsOccurrencesCondition",
           "validation": true
         },
         {
@@ -715,7 +715,7 @@
         },
         {
           "type": "RENAME_ATTRIBUTE",
-          "description": "Rename Attribute\tamount : int to expectedOccurrences : int in class org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest.ThrowableMessageContainsOccurrencesCondition",
+          "description": "Rename Attribute\tamount : int to expectedOccurrences : int in class org.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest.ThrowableMessageContainsOccurrencesCondition",
           "validation": true
         },
         {
@@ -724,8 +724,8 @@
           "validation": true
         },
         {
-          "type": "MOVE_RENAME_CLASS",
-          "description": "Move And Rename Class\torg.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest.StringContainsNumberMatcher moved and renamed to org.mockito.internal.verification.checkers.NumberOfInvocationsCheckerTest.ThrowableMessageContainsOccurrencesCondition",
+          "type": "RENAME_CLASS",
+          "description": "Rename Class\torg.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest.StringContainsNumberMatcher renamed to org.mockito.internal.verification.checkers.NumberOfInvocationsInOrderCheckerTest.ThrowableMessageContainsOccurrencesCondition",
           "validation": true
         },
         {

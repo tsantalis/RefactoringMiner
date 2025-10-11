@@ -6396,24 +6396,51 @@ public class UMLModelDiff {
 			}
 		}
 		List<UMLOperationBodyMapper> list3 = new ArrayList<UMLOperationBodyMapper>(list2);
-		//filter based on superclass relationship
+		//filter based on outer class names
 		for(int i=0; i<list2.size(); i++) {
 			UMLOperationBodyMapper mapperI = list2.get(i);
-			int matchesI = foo(mapperI);
-			if(matchesI > 1) {
+			boolean sameClassI = sameOuterClass(mapperI);
+			if(sameClassI) {
 				for(int j=i+1; j<list2.size(); j++) {
 					UMLOperationBodyMapper mapperJ = list2.get(j);
-					int matchesJ = foo(mapperJ);
-					if(matchesJ < matchesI) {
+					boolean sameClassJ = sameOuterClass(mapperJ);
+					if(!sameClassJ && !isSubclassOf(mapperJ.getContainer1().getClassName(), mapperJ.getContainer2().getClassName())) {
 						list3.remove(mapperJ);
 					}
 				}
 			}
 		}
-		return list3;
+		List<UMLOperationBodyMapper> list4 = new ArrayList<UMLOperationBodyMapper>(list3);
+		//filter based on superclass relationship
+		for(int i=0; i<list3.size(); i++) {
+			UMLOperationBodyMapper mapperI = list3.get(i);
+			int matchesI = superclassRelationship(mapperI);
+			if(matchesI > 1) {
+				for(int j=i+1; j<list3.size(); j++) {
+					UMLOperationBodyMapper mapperJ = list3.get(j);
+					int matchesJ = superclassRelationship(mapperJ);
+					if(matchesJ < matchesI) {
+						list4.remove(mapperJ);
+					}
+				}
+			}
+		}
+		return list4;
 	}
 
-	private int foo(UMLOperationBodyMapper mapper) {
+	private boolean sameOuterClass(UMLOperationBodyMapper mapper) {
+		String className1 = mapper.getContainer1().getClassName();
+		String className2 = mapper.getContainer2().getClassName();
+		boolean sameClass = className1.equals(className2);
+		if(className1.contains(".") && className2.contains(".")) {
+			String outerName1 = className1.substring(0, className1.lastIndexOf("."));
+			String outerName2 = className2.substring(0, className2.lastIndexOf("."));
+			sameClass = outerName1.equals(outerName2) && getUMLClassDiff(outerName1) != null;
+		}
+		return sameClass;
+	}
+
+	private int superclassRelationship(UMLOperationBodyMapper mapper) {
 		UMLClassBaseDiff classDiff = getUMLClassDiff(mapper.getContainer1().getClassName());
 		if(classDiff != null && classDiff.getSuperclass() != null) {
 			String superclassType = classDiff.getSuperclass().getClassType();

@@ -503,22 +503,22 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Split Method`
 * `Replace Anonymous With Class`
 
-As of **October 10, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **October 11, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3372  | 71  | 153  | 0.979  | 0.957|
+|**Total**|3375  | 71  | 151  | 0.979  | 0.957|
 |Extract Method|367  |  3  |  9  | 0.992  | 0.976|
-|Rename Class|231  |  1  |  2  | 0.996  | 0.991|
+|Rename Class|232  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
-|Move And Rename Attribute| 7  |  0  |  2  | 1.000  | 0.778|
-|Rename Method|295  | 11  |  8  | 0.964  | 0.974|
+|Move And Rename Attribute| 7  |  0  |  1  | 1.000  | 0.875|
+|Rename Method|296  | 11  |  8  | 0.964  | 0.974|
 |Inline Method|67  |  4  |  2  | 0.944  | 0.971|
 |Move Method|263  |  4  |  2  | 0.985  | 0.992|
-|Move And Rename Method|25  |  4  |  5  | 0.862  | 0.833|
+|Move And Rename Method|25  |  4  |  4  | 0.862  | 0.862|
 |Pull Up Method|45  |  0  |  3  | 1.000  | 0.938|
 |Move Class|141  |  4  |  2  | 0.972  | 0.986|
-|Move And Rename Class|28  |  0  |  1  | 1.000  | 0.966|
+|Move And Rename Class|27  |  0  |  1  | 1.000  | 0.964|
 |Pull Up Attribute|12  |  0  |  0  | 1.000  | 1.000|
 |Push Down Attribute| 6  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method|22  |  0  |  1  | 1.000  | 0.957|
@@ -533,7 +533,7 @@ As of **October 10, 2025** the precision and recall of RefactoringMiner on this 
 |Extract Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|109  |  4  | 20  | 0.965  | 0.845|
 |Rename Variable|302  |  7  | 13  | 0.977  | 0.959|
-|Rename Attribute|105  |  4  | 11  | 0.963  | 0.905|
+|Rename Attribute|107  |  4  | 11  | 0.964  | 0.907|
 |Replace Variable With Attribute|10  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|30  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|165  |  2  | 13  | 0.988  | 0.927|

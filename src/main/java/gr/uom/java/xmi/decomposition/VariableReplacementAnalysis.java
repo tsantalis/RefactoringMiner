@@ -1358,7 +1358,21 @@ public class VariableReplacementAnalysis {
 							splitVariablesAppearingAsParametersInBothMethods++;
 						}
 					}
-					if(splitVariables.size() != splitVariablesAppearingAsParametersInBothMethods) {
+					//check if a variable remains with the same initializer
+					boolean variableRenamedWithSameInitializer = false;
+					for(AbstractCodeMapping m : mappings) {
+						if(m.getFragment1().getVariableDeclaration(replacement.getBefore()) != null && m.getFragment2().getVariableDeclarations().size() > 0) {
+							VariableDeclaration v1 = m.getFragment1().getVariableDeclarations().get(0);
+							VariableDeclaration v2 = m.getFragment2().getVariableDeclarations().get(0);
+							if(v1.getInitializer() != null && v2.getInitializer() != null && splitVariables.contains(v2.getVariableName())) {
+								if(v1.getInitializer().getString().equals(v2.getInitializer().getString()) && !ReplacementUtil.isDefaultValue(v1.getInitializer().getString())) {
+									variableRenamedWithSameInitializer = true;
+									break;
+								}
+							}
+						}
+					}
+					if(splitVariables.size() != splitVariablesAppearingAsParametersInBothMethods && !variableRenamedWithSameInitializer) {
 						if(splitMap.containsKey(split)) {
 							splitMap.get(split).add(mapping);
 						}

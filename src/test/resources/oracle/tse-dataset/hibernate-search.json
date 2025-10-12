@@ -126,7 +126,7 @@
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tprotected addMatchAllForBoolMustNotOnly(query Query) : Query extracted from protected buildQuery() : Query in class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneQueryStringPredicate.Builder & moved to class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneCommonQueryStringPredicate.Builder",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_VARIABLE",

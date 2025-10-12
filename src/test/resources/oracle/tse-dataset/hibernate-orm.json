@@ -393,12 +393,12 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tvalue : Object to name : AnnotationValue in method private entityName(resultType DeclaredType, annotation AnnotationMirror) : String from class org.hibernate.processor.annotation.AnnotationMetaEntity",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tvalue : Object to name : AnnotationValue in method private entityName(resultType DeclaredType, annotation AnnotationMirror) : String from class org.hibernate.processor.annotation.AnnotationMetaEntity",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_VARIABLE",

@@ -5818,6 +5818,14 @@ public class UMLModelDiff {
 					}
 				}
 			}
+			AbstractCodeFragment fragment1 = mappingList.get(0).getFragment1();
+			AbstractCodeFragment fragment2 = mappingList.get(0).getFragment2();
+			if(parentMapper.getContainer2().isDelegate() == null &&
+					fragment1.getVariables().size() == 1 && fragment2.getVariables().size() == 1 &&
+					fragment1.getString().equals(JAVA.RETURN_SPACE + fragment1.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION) &&
+					fragment2.getString().equals(JAVA.RETURN_SPACE + fragment2.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION)) {
+				return false;
+			}
 		}
 		if(operationBodyMapper.getContainer2().getBodyHashCode() == parentMapper.getContainer2().getBodyHashCode()) {
 			return false;

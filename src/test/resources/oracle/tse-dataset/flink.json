@@ -137,7 +137,7 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tstateFuture : StateFutureImpl<Void> to stateFuture : InternalStateFuture<OUT> in method public handleRequest(state State, type StateRequestType, payload IN) : InternalStateFuture<OUT> from class org.apache.flink.runtime.asyncprocessing.AsyncExecutionController",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
@@ -147,7 +147,7 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tstateFuture : StateFutureImpl<Integer> to stateFuture : InternalStateFuture<OUT> in method public handleRequest(state State, type StateRequestType, payload IN) : InternalStateFuture<OUT> from class org.apache.flink.runtime.asyncprocessing.AsyncExecutionController",
-          "validation": true
+          "validation": false
         }
       ]
     },
@@ -1353,12 +1353,12 @@
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic builder() : TestingBufferPool.Builder extracted from package testOnUpstreamBlockedAndResumed() : void in class org.apache.flink.runtime.io.network.partition.consumer.RemoteInputChannelTest & moved to class org.apache.flink.runtime.io.network.buffer.TestingBufferPool",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic builder() : TestingBufferPool.Builder extracted from package testRequestBuffer() : void in class org.apache.flink.runtime.io.network.partition.consumer.RemoteInputChannelTest & moved to class org.apache.flink.runtime.io.network.buffer.TestingBufferPool",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_VARIABLE",

@@ -376,7 +376,7 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **October 9, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **October 12, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
@@ -410,13 +410,12 @@ As of **October 9, 2025** the precision and recall of RefactoringMiner on this b
 |Extract Attribute|25  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|144  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|339  |  2  | 11  | 0.994  | 0.969|
+|Rename Variable|340  |  2  | 11  | 0.994  | 0.969|
 |Rename Parameter|493  |  2  | 24  | 0.996  | 0.954|
 |Rename Attribute|146  |  0  |  9  | 1.000  | 0.942|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
 |Merge Attribute| 5  |  0  |  0  | 1.000  | 1.000|
-|Split Variable| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 7  |  0  |  0  | 1.000  | 1.000|
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute|124  |  0  |  0  | 1.000  | 1.000|
@@ -507,7 +506,7 @@ As of **October 12, 2025** the precision and recall of RefactoringMiner on this 
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3375  | 67  | 150  | 0.981  | 0.957|
+|**Total**|3376  | 67  | 149  | 0.981  | 0.958|
 |Extract Method|367  |  3  |  9  | 0.992  | 0.976|
 |Rename Class|232  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -532,7 +531,7 @@ As of **October 12, 2025** the precision and recall of RefactoringMiner on this 
 |Extract Variable|287  |  3  | 13  | 0.990  | 0.957|
 |Extract Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|109  |  4  | 20  | 0.965  | 0.845|
-|Rename Variable|302  |  7  | 13  | 0.977  | 0.959|
+|Rename Variable|303  |  7  | 12  | 0.977  | 0.962|
 |Rename Attribute|107  |  4  | 11  | 0.964  | 0.907|
 |Replace Variable With Attribute|10  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|30  |  0  |  0  | 1.000  | 1.000|

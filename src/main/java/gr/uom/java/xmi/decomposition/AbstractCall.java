@@ -1146,6 +1146,16 @@ public abstract class AbstractCall extends LeafExpression {
 			if(index2 == -1 && call.arguments().contains(r.getAfter() + ".length")) {
 				index2 = call.arguments().indexOf(r.getAfter() + ".length");
 			}
+			if(index2 == -1) {
+				String argumentized = new String(r.getAfter());
+				for(String key : parameterToArgumentMap.keySet()) {
+					String value = parameterToArgumentMap.get(key);
+					if(argumentized.contains(value) && !argumentized.equals(value) && !value.isEmpty()) {
+						argumentized = ReplacementUtil.performReplacement(argumentized, value, key);
+					}
+				}
+				index2 = call.arguments().indexOf(argumentized);
+			}
 			if(index1 != -1 && index2 != -1) {
 				if(arguments().size() == call.arguments().size()) {
 					if(index1 == index2) {

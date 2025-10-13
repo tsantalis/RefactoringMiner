@@ -734,7 +734,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					if(initializer.toString().equals(before) ||
 							initializer.toString().equals(JAVA.THIS_DOT + before) ||
 							overlappingExtractVariable(initializer, before, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
-							(initializer.toString().equals("(" + declaration.getType() + ")" + before) && !containsVariableNameReplacement(variableName)) ||
+							initializer.toString().equals("(" + declaration.getType() + ")" + before) ||
 							ternaryMatch(initializer, before) ||
 							callChainMatch(initializer, before) ||
 							fieldAccessReplacedWithGetter(initializer, before) ||
@@ -1214,7 +1214,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					if(initializer.toString().equals(after) ||
 							initializer.toString().equals(JAVA.THIS_DOT + after) ||
 							overlappingExtractVariable(initializer, after, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
-							(initializer.toString().equals("(" + declaration.getType() + ")" + after) && !containsVariableNameReplacement(variableName)) ||
+							initializer.toString().equals("(" + declaration.getType() + ")" + after) ||
 							ternaryMatch(initializer, after) ||
 							callChainMatch(initializer, after) ||
 							fieldAccessReplacedWithGetter(initializer, after) ||
@@ -1797,17 +1797,6 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			}
 			if(s1.contains(concatenated)) {
 				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean containsVariableNameReplacement(String variableName) {
-		for(Replacement replacement : getReplacements()) {
-			if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
-				if(replacement.getBefore().equals(variableName) || replacement.getAfter().equals(variableName)) {
-					return true;
-				}
 			}
 		}
 		return false;

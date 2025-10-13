@@ -457,6 +457,13 @@ public class MappingOptimizer {
 						}
 					}
 				}
+				if(!parentIsContainerBody.contains(false)) {
+					if(mappings.get(0).getFragment1() instanceof AbstractExpression &&
+							(mappings.get(0).getFragment1().getString().contains(" || ") ||
+							mappings.get(0).getFragment1().getString().contains(" && "))) {
+						splitConditional = true;
+					}
+				}
 				if(!splitConditional && !splitDeclaration)
 					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances);
 			}

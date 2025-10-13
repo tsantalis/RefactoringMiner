@@ -2300,6 +2300,20 @@ public class ReplacementAlgorithm {
 				return replacementInfo.getReplacements();
 			}
 		}
+		//handle AbstractExpression
+		if(invocationCoveringTheEntireStatement1 == null && statement1 instanceof AbstractExpression && invocationCoveringTheEntireStatement2 != null) {
+			for(String key : methodInvocationMap1.keySet()) {
+				for(AbstractCall invocation1 : methodInvocationMap1.get(key)) {
+					if(invocation1.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().size() > 0 &&
+							invocation1.renamedWithIdenticalExpressionAndArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, replacementInfo.getLambdaMappers(), matchPairOfRemovedAddedOperationsWithIdenticalBody(invocation1, invocationCoveringTheEntireStatement2, operationBodyMapper), argumentsWithVariableDeclarationMapping(invocation1, invocationCoveringTheEntireStatement2, mappings))) {
+						Replacement replacement = new MethodInvocationReplacement(invocation1.getName(),
+								invocationCoveringTheEntireStatement2.getName(), invocation1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME);
+						replacementInfo.addReplacement(replacement);
+						return replacementInfo.getReplacements();
+					}
+				}
+			}
+		}
 		//method invocation has been renamed and the expression is different but the arguments are identical, and the variable declarations are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				variableDeclarations1.size() > 0 && variableDeclarations1.toString().equals(variableDeclarations2.toString()) &&

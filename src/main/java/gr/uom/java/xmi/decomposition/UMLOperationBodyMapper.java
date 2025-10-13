@@ -5577,6 +5577,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										score = 0.99;
 									}
 								}
+								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+										statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+										statement1.getParent() != null && statement2.getParent() != null &&
+										statement1.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+										statement2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+										((alreadyMatched1(statement1.getParent()) && alreadyMatched2(statement2.getParent())) ||
+												compositeChildMatchingScore(statement1.getParent(), statement2.getParent(), Optional.of(replacementInfo), mappings, removedOperations, addedOperations) > 0)) {
+									score = 0.99;
+								}
 								if(score == 0.99) {
 									for(CompositeStatementObject matchingInnerNode1 : matchingInnerNodes1) {
 										if(!matchingInnerNode1.equals(statement1)) {
@@ -5884,6 +5893,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								else if(replacementInfo.getReplacements(ReplacementType.COMPOSITE).size() > 0) {
 									score = 0.99;
 								}
+								else if(replacementInfo.getReplacements(ReplacementType.PATTERN_INSTANCE).size() > 0) {
+									score = 0.99;
+								}
 								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
 									//find if the corresponding try blocks are already matched
 									for(AbstractCodeMapping mapping : mappings) {
@@ -5943,6 +5955,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(typeReplacement.getBefore().startsWith(typeReplacement.getAfter() + "<") || typeReplacement.getAfter().startsWith(typeReplacement.getBefore() + "<")) {
 										score = 0.99;
 									}
+								}
+								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+										statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+										statement1.getParent() != null && statement2.getParent() != null &&
+										statement1.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+										statement2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+										((alreadyMatched1(statement1.getParent()) && alreadyMatched2(statement2.getParent())) ||
+												compositeChildMatchingScore(statement1.getParent(), statement2.getParent(), Optional.of(replacementInfo), mappings, removedOperations, addedOperations) > 0)) {
+									score = 0.99;
 								}
 								if(score == 0.99) {
 									for(CompositeStatementObject matchingInnerNode2 : matchingInnerNodes2) {

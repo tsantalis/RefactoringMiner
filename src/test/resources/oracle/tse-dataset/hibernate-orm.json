@@ -238,12 +238,12 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate isLegalAssignment(param SqmParameter<?>, argType String, queryParamType String) : boolean extracted from private checkParameter(param SqmParameter<?>, paramNames List<String>, paramTypes List<String>, method ExecutableElement, mirror AnnotationMirror, value AnnotationValue) : void in class org.hibernate.processor.annotation.AnnotationMetaEntity",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate isLegalAssignment(param SqmParameter<?>, argType String, queryParamType String) : boolean extracted from private checkParameter(param SqmParameter<?>, paramNames List<String>, paramTypes List<String>, method ExecutableElement, mirror AnnotationMirror, value AnnotationValue) : void in class org.hibernate.processor.annotation.AnnotationMetaEntity",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",

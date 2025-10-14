@@ -8559,8 +8559,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) &&
 								(mapping.getFragment1().getString().startsWith(declaration1.getVariableName() + JAVA.ASSIGNMENT) ||
-								(call != null && call.getName().equals("collect")));
-						if((equalName || variableRenamed) && declaration1.getType() != null && declaration1.getType().equals(declaration2.getType())) {
+								(call != null && call.getName().equals("collect")) ||
+								mapping.getFragment1().getString().startsWith(declaration1.getVariableName() + ".addAll("));
+						if((equalName || variableRenamed) && declaration1.getType() != null && declaration2.getType() != null &&
+								(declaration1.getType().equals(declaration2.getType()) || declaration1.getType().getClassType().equals("var") || declaration2.getType().getClassType().equals("var") ||
+										OperationInvocation.compatibleTypes(declaration1.getType(), declaration2.getType(), classDiff, modelDiff, false))) {
 							matchingVariableDeclarations1.add(leaf1);
 						}
 					}
@@ -8629,8 +8632,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) &&
 								(mapping.getFragment2().getString().startsWith(declaration1.getVariableName() + JAVA.ASSIGNMENT) ||
 										mapping.getFragment2().getString().startsWith(declaration1.getVariableName() + ".addAll("));
-						if((equalName || variableRenamed) && declaration1.getType() != null &&
-								(declaration1.getType().equals(declaration2.getType()) || declaration1.getType().getClassType().equals("var") ||
+						if((equalName || variableRenamed) && declaration1.getType() != null && declaration2.getType() != null &&
+								(declaration1.getType().equals(declaration2.getType()) || declaration1.getType().getClassType().equals("var") || declaration2.getType().getClassType().equals("var") ||
 										OperationInvocation.compatibleTypes(declaration1.getType(), declaration2.getType(), classDiff, modelDiff, false))) {
 							matchingVariableDeclarations2.add(leaf2);
 						}

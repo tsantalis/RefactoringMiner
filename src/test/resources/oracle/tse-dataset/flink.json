@@ -1452,7 +1452,7 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tsegments : Collection<MemorySegment> to segments : List<MemorySegment> in method package requestExclusiveBuffers() : void from class org.apache.flink.runtime.io.network.partition.consumer.BufferManager",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [

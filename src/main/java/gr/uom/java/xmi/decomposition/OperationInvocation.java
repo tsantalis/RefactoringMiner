@@ -495,15 +495,22 @@ public class OperationInvocation extends AbstractCall {
 	}
 
     public static boolean compatibleTypes(UMLParameter parameter, UMLType type, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
-    	String type1 = parameter.getType().toString();
+    	UMLType parameterType = parameter.getType();
+    	boolean varargsParameter = parameter.isVarargs();
+		return compatibleTypes(parameterType, type, classDiff, modelDiff, varargsParameter);
+    }
+
+	public static boolean compatibleTypes(UMLType parameterType, UMLType type, UMLAbstractClassDiff classDiff,
+			UMLModelDiff modelDiff, boolean varargsParameter) {
+		String type1 = parameterType.toString();
     	String type2 = type.toString();
-    	if(parameter.getType().getClassType().length() == 1) {
+    	if(parameterType.getClassType().length() == 1) {
     		return true;
     	}
     	if(type2.equals("var")) {
     		return true;
     	}
-    	if(collectionMatch(parameter.getType(), type))
+    	if(collectionMatch(parameterType, type))
     		return true;
     	if(type1.equals("Throwable") && type2.endsWith("Exception"))
     		return true;
@@ -534,47 +541,47 @@ public class OperationInvocation extends AbstractCall {
     	if(type.getArrayDimension() > 0 && type1.equals("Object")) {
     		return true;
     	}
-    	if(modelDiff != null) {
+		if(modelDiff != null) {
 	    	UMLAbstractClass subClassInParentModel = modelDiff.findClassInParentModel(type2);
-	    	if(!parameter.isVarargs() && subClassInParentModel instanceof UMLClass) {
+	    	if(!varargsParameter && subClassInParentModel instanceof UMLClass) {
 	    		UMLClass subClass = (UMLClass)subClassInParentModel;
 	    		if(subClass.getSuperclass() != null) {
-	    			if(subClass.getSuperclass().equalClassType(parameter.getType()))
+	    			if(subClass.getSuperclass().equalClassType(parameterType))
 	    				return true;
 	    		}
 				for(UMLType implementedInterface : subClass.getImplementedInterfaces()) {
-	    			if(implementedInterface.equalClassType(parameter.getType()))
+	    			if(implementedInterface.equalClassType(parameterType))
 	    				return true;
 	    		}
 	    	}
 	    	UMLAbstractClass subClassInChildModel = modelDiff.findClassInChildModel(type2);
-	    	if(!parameter.isVarargs() && subClassInChildModel instanceof UMLClass) {
+	    	if(!varargsParameter && subClassInChildModel instanceof UMLClass) {
 	    		UMLClass subClass = (UMLClass)subClassInChildModel;
 	    		if(subClass.getSuperclass() != null) {
-	    			if(subClass.getSuperclass().equalClassType(parameter.getType()))
+	    			if(subClass.getSuperclass().equalClassType(parameterType))
 	    				return true;
 	    		}
 				for(UMLType implementedInterface : subClass.getImplementedInterfaces()) {
-	    			if(implementedInterface.equalClassType(parameter.getType()))
+	    			if(implementedInterface.equalClassType(parameterType))
 	    				return true;
 	    		}
 	    	}
     	}
-    	if(!parameter.isVarargs() && type1.endsWith("Object") && !type2.endsWith("Object"))
+    	if(!varargsParameter && type1.endsWith("Object") && !type2.endsWith("Object"))
     		return true;
-    	if(parameter.isVarargs() && type1.endsWith("Object[]") && (type2.equals("Throwable") || type2.endsWith("Exception") || isPrimitiveType(type2) || type2.equals("String")))
+    	if(varargsParameter && type1.endsWith("Object[]") && (type2.equals("Throwable") || type2.endsWith("Exception") || isPrimitiveType(type2) || type2.equals("String")))
     		return true;
-    	if(parameter.getType().equalsWithSubType(type))
+    	if(parameterType.equalsWithSubType(type))
     		return true;
-    	if(parameter.getType().isParameterized() && type.isParameterized() &&
-    			parameter.getType().getClassType().equals(type.getClassType()))
+    	if(parameterType.isParameterized() && type.isParameterized() &&
+    			parameterType.getClassType().equals(type.getClassType()))
     		return true;
-    	if(modelDiff != null && modelDiff.isSubclassOf(type.getClassType(), parameter.getType().getClassType())) {
+    	if(modelDiff != null && modelDiff.isSubclassOf(type.getClassType(), parameterType.getClassType())) {
     		return true;
     	}
     	// the super type is available in the modelDiff, but not the subclass type
     	UMLClassBaseDiff subclassDiff = getUMLClassDiff(modelDiff, type);
-    	UMLClassBaseDiff superclassDiff = getUMLClassDiff(modelDiff, parameter.getType());
+    	UMLClassBaseDiff superclassDiff = getUMLClassDiff(modelDiff, parameterType);
     	if(superclassDiff != null && subclassDiff == null) {
     		return true;
     	}
@@ -595,7 +602,7 @@ public class OperationInvocation extends AbstractCall {
 			}
     	}
     	return false;
-    }
+	}
 
 	private static boolean collectionMatch(UMLType parameterType, UMLType type) {
 		if(parameterType.getClassType().equals("Iterable") || parameterType.getClassType().equals("Collection") ||

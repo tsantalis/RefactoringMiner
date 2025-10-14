@@ -13,6 +13,7 @@ import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class RenameAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring {
 	private UMLAttribute originalAttribute;
@@ -94,9 +95,16 @@ public class RenameAttributeRefactoring implements Refactoring, ReferenceBasedRe
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(originalAttribute.getVariableDeclaration());
+		VariableDeclaration originalVariableDeclaration = originalAttribute.getVariableDeclaration();
+		VariableDeclaration renamedVariableDeclaration = renamedAttribute.getVariableDeclaration();
+		boolean qualified = originalVariableDeclaration.equalType(renamedVariableDeclaration) && !originalVariableDeclaration.equalQualifiedType(renamedVariableDeclaration);
+		if(originalVariableDeclaration.equalType(renamedVariableDeclaration) && originalVariableDeclaration.equalQualifiedType(renamedVariableDeclaration) &&
+				!originalAttribute.toQualifiedString().equals(originalAttribute.toString())) {
+			qualified = true;
+		}
+		sb.append(qualified ? originalVariableDeclaration.toQualifiedString() : originalVariableDeclaration.toString());
 		sb.append(" to ");
-		sb.append(renamedAttribute.getVariableDeclaration());
+		sb.append(qualified ? renamedVariableDeclaration.toQualifiedString() : renamedVariableDeclaration.toString());
 		sb.append(" in class ").append(classNameAfter);
 		return sb.toString();
 	}

@@ -591,12 +591,12 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tprotected startSchedulingInternal() : void renamed to public init(executionGraph ExecutionGraph, mainThreadExecutor ComponentMainThreadExecutor, metricGroup MetricGroup) : void in class org.apache.flink.runtime.scheduler.adaptivebatch.DefaultSpeculativeExecutionHandler",
-          "validation": false
+          "validation": true
         },
         {
           "type": "INLINE_OPERATION",
           "description": "Inline Method\tprivate registerMetrics(metricGroup MetricGroup) : void inlined to public init(executionGraph ExecutionGraph, mainThreadExecutor ComponentMainThreadExecutor, metricGroup MetricGroup) : void in class org.apache.flink.runtime.scheduler.adaptivebatch.DefaultSpeculativeExecutionHandler",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_METHOD",
@@ -1257,11 +1257,6 @@
         {
           "type": "INLINE_OPERATION",
           "description": "Inline Method\tprivate writeUnorderedRecords(testHarness OneInputStreamOperatorTestHarness<Row,Object>) : void inlined to private checkWriteAndCommit(override boolean, partitioned boolean, dynamicGrouped boolean, staticPartitions LinkedHashMap<String,String>, inputSupplier Supplier<List<StreamRecord<Row>>>, outputSupplier Supplier<?>) : void in class org.apache.flink.connector.file.table.FileSystemOutputFormatTest",
-          "validation": true
-        },
-        {
-          "type": "RENAME_ATTRIBUTE",
-          "description": "Rename Attribute\ttmpPath : Path to stagingBaseDir : Path in class org.apache.flink.connector.file.table.FileSystemOutputFormatTest",
           "validation": true
         }
       ]

@@ -10616,6 +10616,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		public int getRawDistance() {
 			return rawDistance;
 		}
+		public void swapReplacements(Replacement oldReplacement, Replacement newReplacement) {
+			this.replacements.remove(oldReplacement);
+			this.replacements.add(newReplacement);
+			this.replacements.add(oldReplacement);
+		}
 		public void addReplacement(Replacement r) {
 			this.replacements.add(r);
 		}

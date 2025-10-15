@@ -3973,7 +3973,14 @@ public class ReplacementAlgorithm {
 				break;
 			}
 		}
-		if(parentMapper == null && !variableReturnAsLastStatement1 && (!variableReturnAsLastStatement2 || possibleExtract) && ((!numberLiteralReturn1 && !numberLiteralReturn2) || singleReturnStatement) && statement1.getString().startsWith(JAVA.RETURN_SPACE) && statement2.getString().startsWith(JAVA.RETURN_SPACE) && lastStatement &&
+		boolean possibleInline = false;
+		for(AbstractCodeFragment fragment1 : replacementInfo.getStatements1()) {
+			if(statement1.getVariables().size() == 1 && fragment1.getVariableDeclaration(statement1.getVariables().get(0).getString()) != null) {
+				possibleInline = true;
+				break;
+			}
+		}
+		if(parentMapper == null && (!variableReturnAsLastStatement1 || possibleInline) && (!variableReturnAsLastStatement2 || possibleExtract) && ((!numberLiteralReturn1 && !numberLiteralReturn2) || singleReturnStatement) && statement1.getString().startsWith(JAVA.RETURN_SPACE) && statement2.getString().startsWith(JAVA.RETURN_SPACE) && lastStatement &&
 				variableReturnQualified1 == variableReturnQualified2 && container1 instanceof UMLOperation && container2 instanceof UMLOperation &&
 				compatibleSignatureForFinalReturnStatement(operationBodyMapper) &&
 				(statement1.getLambdas().size() == statement2.getLambdas().size() || possibleExtract)) {
@@ -4254,6 +4261,15 @@ public class ReplacementAlgorithm {
 					boolean returnVariable2 = statement2.getString().equals(JAVA.RETURN_SPACE + statement2.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION);
 					if(returnInfix1 && returnVariable2) {
 						Replacement replacement = new Replacement(statement1.getInfixExpressions().get(0).getString(), statement2.getVariables().get(0).getString(), ReplacementType.VARIABLE_REPLACED_WITH_INFIX_EXPRESSION);
+						replacementInfo.addReplacement(replacement);
+					}
+				}
+				if(statement2.getInfixExpressions().size() >= 1 && statement1.getInfixExpressions().size() == 0 && statement1.getVariables().size() == 1) {
+					boolean returnInfix2 = statement2.getString().equals(JAVA.RETURN_SPACE + statement2.getInfixExpressions().get(0).getString() + JAVA.STATEMENT_TERMINATION) &&
+							!statement2.getInfixExpressions().get(0).getString().contains(JAVA.STRING_CONCATENATION);
+					boolean returnVariable1 = statement1.getString().equals(JAVA.RETURN_SPACE + statement1.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION);
+					if(returnInfix2 && returnVariable1) {
+						Replacement replacement = new Replacement(statement1.getVariables().get(0).getString(), statement2.getInfixExpressions().get(0).getString(), ReplacementType.VARIABLE_REPLACED_WITH_INFIX_EXPRESSION);
 						replacementInfo.addReplacement(replacement);
 					}
 				}

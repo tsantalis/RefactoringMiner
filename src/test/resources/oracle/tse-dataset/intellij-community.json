@@ -101,6 +101,11 @@
           "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
           "description": "Replace Variable With Attribute\tgroup : Group to TYPE_POPUP_GROUP : int in method public readExternal(element Element) : void from class com.intellij.ide.ui.customization.ActionUrl",
           "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\turl : ActionUrl in method public copy() : ActionUrl from class com.intellij.ide.ui.customization.ActionUrl",
+          "validation": true
         }
       ]
     },

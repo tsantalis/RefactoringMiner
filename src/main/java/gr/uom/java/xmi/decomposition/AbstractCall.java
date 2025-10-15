@@ -1258,7 +1258,7 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	private boolean indexCondition(String statement, int index) {
-		return (arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows") || "Assert".equals(this.getExpression()))) || (statement.contains(JAVA.TERNARY_CONDITION) && statement.contains(JAVA.TERNARY_ELSE));
+		return (arguments().size() <= 2 && (index == 0 || this.getName().equals(JAVA.ASSERT_THROWS) || "Assert".equals(this.getExpression()))) || (statement.contains(JAVA.TERNARY_CONDITION) && statement.contains(JAVA.TERNARY_ELSE));
 	}
 
 	public Replacement makeReplacementForReturnedArgument(String statement) {

@@ -2,10 +2,10 @@ package gr.uom.java.xmi;
 
 public enum Constants {
 	JAVA(";\n", "return ", "return;\n", "return true;\n", "return false;\n", "return null;\n", "return this;\n", "=", "break;\n", "continue;\n",
-			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", " ? ", " : "),
+			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", " ? ", " : ", "assertThrows", "assertThatThrownBy", " && ", " || "),
 	
-	PYTHON("", "return ", "return", "return true", "return false", "return None", "return self", "=", "break", "continue",
-			" -> ", "::", " + ", "raise ", "case ", "try", "{", "}", "[", "]", "self", "self.", " if ", " else ");
+	PYTHON("\n", "return ", "return\n", "return true\n", "return false\n", "return None\n", "return self\n", "=", "break\n", "continue\n",
+			" -> ", "::", " + ", "raise ", "case ", "try", "{", "}", "{", "}", "self", "self.", " if ", " else ", "assertRaises", "assertRaises", " and ", " or ");
 	
 	public final String STATEMENT_TERMINATION;
 	public final String RETURN_SPACE;
@@ -31,6 +31,10 @@ public enum Constants {
 	public final String THIS_DOT;
 	public final String TERNARY_CONDITION;
 	public final String TERNARY_ELSE;
+	public final String ASSERT_THROWS;
+	public final String ASSERT_THAT_THROWN_BY;
+	public final String AND;
+	public final String OR;
 	
 	Constants(
 			String STATEMENT_TERMINATION,
@@ -56,7 +60,11 @@ public enum Constants {
 			String THIS,
 			String THIS_DOT,
 			String TERNARY_CONDITION,
-			String TERNARY_ELSE) {
+			String TERNARY_ELSE,
+			String ASSERT_THROWS,
+			String ASSERT_THAT_THROWN_BY,
+			String AND,
+			String OR) {
 		this.STATEMENT_TERMINATION = STATEMENT_TERMINATION;
 		this.RETURN_SPACE = RETURN_SPACE;
 		this.RETURN_STATEMENT = RETURN_STATEMENT;
@@ -81,5 +89,9 @@ public enum Constants {
 		this.THIS_DOT = THIS_DOT;
 		this.TERNARY_CONDITION = TERNARY_CONDITION;
 		this.TERNARY_ELSE = TERNARY_ELSE;
+		this.ASSERT_THROWS = ASSERT_THROWS;
+		this.ASSERT_THAT_THROWN_BY = ASSERT_THAT_THROWN_BY;
+		this.AND = AND;
+		this.OR = OR;
 	}
 }

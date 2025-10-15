@@ -459,8 +459,8 @@ public class MappingOptimizer {
 				}
 				if(!parentIsContainerBody.contains(false)) {
 					if(mappings.get(0).getFragment1() instanceof AbstractExpression &&
-							(mappings.get(0).getFragment1().getString().contains(" || ") ||
-							mappings.get(0).getFragment1().getString().contains(" && "))) {
+							(mappings.get(0).getFragment1().getString().contains(JAVA.OR) ||
+							mappings.get(0).getFragment1().getString().contains(JAVA.AND))) {
 						splitConditional = true;
 					}
 				}

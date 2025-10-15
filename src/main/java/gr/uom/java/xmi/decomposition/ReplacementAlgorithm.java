@@ -4267,13 +4267,13 @@ public class ReplacementAlgorithm {
 							if(oldReplacement.getBefore().equals(newReplacement.getBefore()) &&
 									!oldReplacement.getAfter().equals(newReplacement.getAfter())) {
 								if(newReplacement.getAfter().contains(oldReplacement.getAfter())) {
-									replacementInfo.swapReplacements(oldReplacement, newReplacement);
+									replacementInfo.moveLast(oldReplacement);
 								}
 							}
 							if(oldReplacement.getAfter().equals(newReplacement.getAfter()) &&
 									!oldReplacement.getBefore().equals(newReplacement.getBefore())) {
 								if(newReplacement.getBefore().contains(oldReplacement.getBefore())) {
-									replacementInfo.swapReplacements(oldReplacement, newReplacement);
+									replacementInfo.moveLast(oldReplacement);
 								}
 							}
 						}

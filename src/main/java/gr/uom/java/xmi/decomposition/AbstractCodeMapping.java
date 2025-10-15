@@ -325,6 +325,31 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		return replacements;
 	}
 
+	private List<Replacement> getNonOverlappingReplacements() {
+		List<Replacement> rs = new ArrayList<>(replacements);
+		List<Replacement> overlapping = new ArrayList<>();
+		for(int i=0; i<rs.size(); i++) {
+			Replacement newReplacement = rs.get(i);
+			for(int j=i+1; j<rs.size(); j++) {
+				Replacement oldReplacement = rs.get(j);
+				if(oldReplacement.getBefore().equals(newReplacement.getBefore()) &&
+						!oldReplacement.getAfter().equals(newReplacement.getAfter())) {
+					if(newReplacement.getAfter().contains(oldReplacement.getAfter())) {
+						overlapping.add(oldReplacement);
+					}
+				}
+				if(oldReplacement.getAfter().equals(newReplacement.getAfter()) &&
+						!oldReplacement.getBefore().equals(newReplacement.getBefore())) {
+					if(newReplacement.getBefore().contains(oldReplacement.getBefore())) {
+						overlapping.add(oldReplacement);
+					}
+				}
+			}
+		}
+		rs.removeAll(overlapping);
+		return rs;
+	}
+
 	public boolean containsReplacement(ReplacementType type) {
 		for(Replacement replacement : replacements) {
 			if(replacement.getType().equals(type)) {
@@ -1417,7 +1442,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	}
 
 	private boolean identical(UMLAbstractClassDiff classDiff) {
-		if(getReplacements().size() == 1 && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size()) {
+		if((getReplacements().size() == 1 || getNonOverlappingReplacements().size() == 1) && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size()) {
 			return true;
 		}
 		if(fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size() && fragment2.getTernaryOperatorExpressions().size() > 0) {

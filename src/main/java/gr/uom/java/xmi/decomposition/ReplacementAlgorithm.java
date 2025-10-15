@@ -735,7 +735,7 @@ public class ReplacementAlgorithm {
 			if(infixExpressionCoveringTheEntireFragment != null) {
 				boolean skip = false;
 				if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) || statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT)) {
-					if(infixExpressionCoveringTheEntireFragment.contains(" || ") || infixExpressionCoveringTheEntireFragment.contains(" && ")) {
+					if(infixExpressionCoveringTheEntireFragment.contains(JAVA.OR) || infixExpressionCoveringTheEntireFragment.contains(JAVA.AND)) {
 						skip = true;
 					}
 				}
@@ -4248,7 +4248,36 @@ public class ReplacementAlgorithm {
 						replacementInfo.addReplacement(replacement);
 					}
 				}
+				if(statement1.getInfixExpressions().size() >= 1 && statement2.getInfixExpressions().size() == 0 && statement2.getVariables().size() == 1) {
+					boolean returnInfix1 = statement1.getString().equals(JAVA.RETURN_SPACE + statement1.getInfixExpressions().get(0).getString() + JAVA.STATEMENT_TERMINATION) &&
+							!statement1.getInfixExpressions().get(0).getString().contains(JAVA.STRING_CONCATENATION);
+					boolean returnVariable2 = statement2.getString().equals(JAVA.RETURN_SPACE + statement2.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION);
+					if(returnInfix1 && returnVariable2) {
+						Replacement replacement = new Replacement(statement1.getInfixExpressions().get(0).getString(), statement2.getVariables().get(0).getString(), ReplacementType.VARIABLE_REPLACED_WITH_INFIX_EXPRESSION);
+						replacementInfo.addReplacement(replacement);
+					}
+				}
 				if(replacementInfo.getReplacements().size() > replacementCount) {
+					//check if a replacement overlaps a pre-existing one
+					List<Replacement> rs = new ArrayList<>(replacementInfo.getReplacements());
+					for(int i=replacementCount; i<replacementInfo.getReplacements().size(); i++) {
+						Replacement newReplacement = rs.get(i);
+						for(int j=0; j<replacementCount; j++) {
+							Replacement oldReplacement = rs.get(j);
+							if(oldReplacement.getBefore().equals(newReplacement.getBefore()) &&
+									!oldReplacement.getAfter().equals(newReplacement.getAfter())) {
+								if(newReplacement.getAfter().contains(oldReplacement.getAfter())) {
+									replacementInfo.getReplacements().remove(oldReplacement);
+								}
+							}
+							if(oldReplacement.getAfter().equals(newReplacement.getAfter()) &&
+									!oldReplacement.getBefore().equals(newReplacement.getBefore())) {
+								if(newReplacement.getBefore().contains(oldReplacement.getBefore())) {
+									replacementInfo.getReplacements().remove(oldReplacement);
+								}
+							}
+						}
+					}
 					return replacementInfo.getReplacements();
 				}
 			}

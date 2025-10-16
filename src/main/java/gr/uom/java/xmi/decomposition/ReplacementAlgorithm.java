@@ -1229,11 +1229,14 @@ public class ReplacementAlgorithm {
 			TernaryOperatorExpression ternary1 = statement1.getTernaryOperatorExpressions().get(0);
 			TernaryOperatorExpression ternary2 = statement2.getTernaryOperatorExpressions().get(0);
 			int matches = 0;
+			int exactMatches = 0;
 			if(ternary1.getCondition().getString().equals(ternary2.getCondition().getString())) {
 				matches++;
+				exactMatches++;
 			}
 			if(ternary1.getThenExpression().getString().equals(ternary2.getThenExpression().getString())) {
 				matches++;
+				exactMatches++;
 			}
 			else {
 				for(Replacement r : replacementInfo.getReplacements()) {
@@ -1245,6 +1248,7 @@ public class ReplacementAlgorithm {
 			}
 			if(ternary1.getElseExpression().getString().equals(ternary2.getElseExpression().getString())) {
 				matches++;
+				exactMatches++;
 			}
 			else {
 				for(Replacement r : replacementInfo.getReplacements()) {
@@ -1255,6 +1259,11 @@ public class ReplacementAlgorithm {
 				}
 			}
 			if(matches == 3) {
+				return replacementInfo.getReplacements();
+			}
+			else if (exactMatches == 2 && !ternary1.getCondition().getString().equals(ternary2.getCondition().getString())) {
+				Replacement r = new Replacement(ternary1.getCondition().getString(), ternary2.getCondition().getString(), ReplacementType.VARIABLE_REPLACED_WITH_CONDITIONAL_EXPRESSION);
+				replacementInfo.addReplacement(r);
 				return replacementInfo.getReplacements();
 			}
 		}

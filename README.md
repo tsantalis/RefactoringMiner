@@ -380,8 +380,8 @@ As of **October 15, 2025** the precision and recall of RefactoringMiner on this 
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12523  | 13  | 220  | 0.999  | 0.983|
-|Extract Method|1015  |  1  | 21  | 0.999  | 0.980|
+|**Total**|12524  | 13  | 219  | 0.999  | 0.983|
+|Extract Method|1016  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
 |Move And Rename Attribute|11  |  0  |  0  | 1.000  | 1.000|

@@ -887,12 +887,12 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tparts : MultipartFile[] in method package resolveMultipartFileArray() : void from class org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests",
-          "validation": true
+          "validation": false
         },
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tparts : Part[] in method package resolvePartArray() : void from class org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests",
-          "validation": true
+          "validation": false
         },
         {
           "type": "INLINE_VARIABLE",
@@ -900,7 +900,38 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tcondition : boolean in method package resolveStringArrayWithEmptyArraySuffix() : void from class org.springframework.web.reactive.result.method.annotation.RequestParamMethodArgumentResolverTests",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tcondition : boolean in method package resolveMultipartFileArray() : void from class org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tcondition : boolean in method package resolvePartArray() : void from class org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tcondition : boolean in method package resolveStringArray() : void from class org.springframework.web.reactive.result.method.annotation.RequestParamMethodArgumentResolverTests",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tcondition : boolean in method package resolveStringArrayWithEmptyArraySuffix() : void from class org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tcondition : boolean in method package resolveStringArray() : void from class org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/spring-projects/spring-framework.git",

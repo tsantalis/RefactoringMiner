@@ -78,6 +78,7 @@ public class Context {
                 Constants.RETURN_STATEMENT, Constants.METHOD_INVOCATION));
         put("MethodRefParameter", List.of(Constants.TAG_ELEMENT));
         put("ThisExpression", List.of(Constants.METHOD_INVOCATION, Constants.CLASS_INSTANCE_CREATION));
+        put("ArrayAccess", List.of(Constants.INFIX_EXPRESSION));
     }};
 
     public static List<Pair<Tree, NodeType>> get(Tree tree) {

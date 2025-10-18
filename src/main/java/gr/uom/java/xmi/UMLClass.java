@@ -24,6 +24,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean isRecord;
 	private boolean topLevel;
 	private boolean isLocal;
+	private boolean isModule;
     private List<UMLTypeParameter> typeParameters;
     private UMLJavadoc javadoc;
     private Optional<UMLPackage> packageDeclaration;
@@ -214,6 +215,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void setAbstract(boolean isAbstract) {
 		this.isAbstract = isAbstract;
+	}
+
+	public boolean isModule() {
+		return isModule;
+	}
+
+	public void setModule(boolean isModule) {
+		this.isModule = isModule;
 	}
 
 	public UMLJavadoc getJavadoc() {

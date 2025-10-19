@@ -7180,6 +7180,13 @@ public class UMLModelDiff {
 						fragment2.equals(JAVA.RETURN_TRUE) || fragment2.equals(JAVA.RETURN_FALSE) || fragment2.equals(JAVA.RETURN_THIS) || fragment2.equals(JAVA.RETURN_NULL) || fragment2.equals(JAVA.RETURN_STATEMENT)) {
 					return false;
 				}
+				if(mapping.getFragment1().getVariables().size() == 1 && mapping.getFragment2().getVariables().size() == 1 &&
+						fragment1.equals(JAVA.RETURN_SPACE + mapping.getFragment1().getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION) &&
+						fragment2.equals(JAVA.RETURN_SPACE + mapping.getFragment2().getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION) &&
+						!removedOperation.getParameterNameList().contains(mapping.getFragment1().getVariables().get(0).getString()) &&
+						!addedOperation.getParameterNameList().contains(mapping.getFragment2().getVariables().get(0).getString())) {
+					return false;
+				}
 			}
 			if(removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation()) {
 				return false;

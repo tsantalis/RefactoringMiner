@@ -376,11 +376,11 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **October 15, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **October 19, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12524  | 13  | 219  | 0.999  | 0.983|
+|**Total**|12511  | 13  | 219  | 0.999  | 0.983|
 |Extract Method|1016  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
@@ -389,7 +389,7 @@ As of **October 15, 2025** the precision and recall of RefactoringMiner on this 
 |Rename Method|395  |  2  | 20  | 0.995  | 0.952|
 |Inline Method|119  |  0  |  1  | 1.000  | 0.992|
 |Move Method|388  |  3  |  5  | 0.992  | 0.987|
-|Move And Rename Method|132  |  0  |  4  | 1.000  | 0.971|
+|Move And Rename Method|130  |  0  |  4  | 1.000  | 0.970|
 |Pull Up Method|285  |  0  |  5  | 1.000  | 0.983|
 |Move Class|1095  |  0  |  4  | 1.000  | 0.996|
 |Move And Rename Class|38  |  0  |  1  | 1.000  | 0.974|
@@ -423,11 +423,11 @@ As of **October 15, 2025** the precision and recall of RefactoringMiner on this 
 |Parameterize Variable|110  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|26  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|25  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|435  |  0  | 12  | 1.000  | 0.973|
+|Change Return Type|433  |  0  | 12  | 1.000  | 0.973|
 |Change Variable Type|813  |  1  |  7  | 0.999  | 0.991|
-|Change Parameter Type|654  |  1  | 10  | 0.998  | 0.985|
+|Change Parameter Type|651  |  1  | 10  | 0.998  | 0.985|
 |Change Attribute Type|244  |  0  |  8  | 1.000  | 0.968|
-|Add Method Annotation|334  |  0  |  0  | 1.000  | 1.000|
+|Add Method Annotation|330  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|97  |  0  |  0  | 1.000  | 1.000|
 |Modify Method Annotation|29  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Annotation|62  |  0  |  1  | 1.000  | 0.984|
@@ -439,7 +439,7 @@ As of **October 15, 2025** the precision and recall of RefactoringMiner on this 
 |Add Parameter Annotation|34  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|852  |  1  |  1  | 0.999  | 0.999|
+|Add Parameter|850  |  1  |  1  | 0.999  | 0.999|
 |Remove Parameter|318  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
@@ -502,11 +502,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Split Method`
 * `Replace Anonymous With Class`
 
-As of **October 16, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **October 19, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3393  | 64  | 136  | 0.981  | 0.961|
+|**Total**|3392  | 64  | 136  | 0.981  | 0.961|
 |Extract Method|369  |  2  |  8  | 0.995  | 0.979|
 |Rename Class|232  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -514,7 +514,7 @@ As of **October 16, 2025** the precision and recall of RefactoringMiner on this 
 |Rename Method|297  | 10  |  8  | 0.967  | 0.974|
 |Inline Method|68  |  3  |  2  | 0.958  | 0.971|
 |Move Method|263  |  4  |  2  | 0.985  | 0.992|
-|Move And Rename Method|25  |  4  |  4  | 0.862  | 0.862|
+|Move And Rename Method|24  |  4  |  4  | 0.857  | 0.857|
 |Pull Up Method|45  |  0  |  3  | 1.000  | 0.938|
 |Move Class|141  |  4  |  2  | 0.972  | 0.986|
 |Move And Rename Class|27  |  0  |  1  | 1.000  | 0.964|

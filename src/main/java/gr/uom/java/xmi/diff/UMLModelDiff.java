@@ -7311,7 +7311,9 @@ public class UMLModelDiff {
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof MoveOperationRefactoring) {
 				MoveOperationRefactoring moveRefactoring = (MoveOperationRefactoring)refactoring;
-				if(moveRefactoring.getOriginalOperation().equals(removedOperation) && !addedOperation.getClassName().startsWith(removedOperation.getClassName() + ".")) {
+				VariableDeclarationContainer originalOperation = moveRefactoring.getOriginalOperation();
+				VariableDeclarationContainer movedOperation = moveRefactoring.getMovedOperation();
+				if(originalOperation.equals(removedOperation) && !addedOperation.getClassName().startsWith(removedOperation.getClassName() + ".")) {
 					//promote pull-up push-down over move
 					if(!pullUp && !pushDown) {
 						return true;
@@ -7331,12 +7333,17 @@ public class UMLModelDiff {
 						toBeRemoved.add(refactoring);
 						for(Refactoring r : refactorings) {
 							if(r instanceof MethodLevelRefactoring methodRefactoring) {
-								if(methodRefactoring.getOperationBefore().equals(moveRefactoring.getOriginalOperation()) &&
-										methodRefactoring.getOperationAfter().equals(moveRefactoring.getMovedOperation())) {
+								if(methodRefactoring.getOperationBefore().equals(originalOperation) &&
+										methodRefactoring.getOperationAfter().equals(movedOperation)) {
 									toBeRemoved.add(r);
 								}
 							}
 						}
+					}
+					else if(refactoring.getRefactoringType().equals(RefactoringType.MOVE_OPERATION) &&
+							((UMLOperation)originalOperation).equalSignature((UMLOperation)movedOperation) &&
+							!removedOperation.equalSignature(addedOperation)) {
+						return true;
 					}
 				}
 			}

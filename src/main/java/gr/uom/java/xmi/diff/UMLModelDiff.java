@@ -998,34 +998,36 @@ public class UMLModelDiff {
 	public void checkForRenamedClasses(UMLClassMatcher matcher) throws RefactoringMinerTimedOutException {
 		if(removedClasses.size() <= addedClasses.size()) {
 			removedClassesInOuterLoop(matcher);
-			for(UMLClassDiff classDiff : commonClassDiffList) {
-				boolean matchFound = false;
-				for(UMLClassRenameDiff classRenameDiff : classRenameDiffList) {
-					if(classRenameDiff.getNextClass().equals(classDiff.getNextClass())) {
-						matchFound = true;
-					}
-				}
-				if(matchFound && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && classDiff.getRemovedOperations().size() > classDiff.getOperationBodyMapperList().size()) {
-					for(Iterator<UMLClass> addedClassIterator = addedClasses.iterator(); addedClassIterator.hasNext();) {
-						UMLClass addedClass = addedClassIterator.next();
-						if(matcher instanceof UMLClassMatcher.RelaxedRename) {
-							Pair<UMLClass, UMLClass> pair = Pair.of(classDiff.getOriginalClass(), addedClass);
-							if(processedClassPairs.contains(pair)) {
-								continue;
-							}
-							else {
-								processedClassPairs.add(pair);
-							}
+			if(!partialModel()) {
+				for(UMLClassDiff classDiff : commonClassDiffList) {
+					boolean matchFound = false;
+					for(UMLClassRenameDiff classRenameDiff : classRenameDiffList) {
+						if(classRenameDiff.getNextClass().equals(classDiff.getNextClass())) {
+							matchFound = true;
 						}
-						MatchResult matchResult = matcher.match(classDiff.getOriginalClass(), addedClass);
-						if(matchResult.isMatch()) {
-							if(!conflictingMoveOfTopLevelClass(classDiff.getOriginalClass(), addedClass) && !innerClassWithTheSameName(classDiff.getOriginalClass(), addedClass)) {
-								UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(classDiff.getOriginalClass(), addedClass, this, matchResult);
-								if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName())) {
-									classRenameDiff.process();
-									classRenameDiffList.add(classRenameDiff);
-									removedClasses.remove(classRenameDiff.getOriginalClass());
-									addedClassIterator.remove();
+					}
+					if(matchFound && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && classDiff.getRemovedOperations().size() > classDiff.getOperationBodyMapperList().size()) {
+						for(Iterator<UMLClass> addedClassIterator = addedClasses.iterator(); addedClassIterator.hasNext();) {
+							UMLClass addedClass = addedClassIterator.next();
+							if(matcher instanceof UMLClassMatcher.RelaxedRename) {
+								Pair<UMLClass, UMLClass> pair = Pair.of(classDiff.getOriginalClass(), addedClass);
+								if(processedClassPairs.contains(pair)) {
+									continue;
+								}
+								else {
+									processedClassPairs.add(pair);
+								}
+							}
+							MatchResult matchResult = matcher.match(classDiff.getOriginalClass(), addedClass);
+							if(matchResult.isMatch()) {
+								if(!conflictingMoveOfTopLevelClass(classDiff.getOriginalClass(), addedClass) && !innerClassWithTheSameName(classDiff.getOriginalClass(), addedClass)) {
+									UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(classDiff.getOriginalClass(), addedClass, this, matchResult);
+									if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName())) {
+										classRenameDiff.process();
+										classRenameDiffList.add(classRenameDiff);
+										removedClasses.remove(classRenameDiff.getOriginalClass());
+										addedClassIterator.remove();
+									}
 								}
 							}
 						}
@@ -1234,24 +1236,26 @@ public class UMLModelDiff {
 				}
 			}
 		}
-		//include classes from commonClassDiff
-		for(UMLClassDiff classDiff : commonClassDiffList) {
-			if(!classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && classDiff.getAddedOperations().size() > classDiff.getOperationBodyMapperList().size()) {
-				if(matcher instanceof UMLClassMatcher.RelaxedRename) {
-					Pair<UMLClass, UMLClass> pair = Pair.of(removedClass, classDiff.getNextClass());
-					if(processedClassPairs.contains(pair)) {
-						continue;
+		if(!partialModel()) {
+			//include classes from commonClassDiff
+			for(UMLClassDiff classDiff : commonClassDiffList) {
+				if(!classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && classDiff.getAddedOperations().size() > classDiff.getOperationBodyMapperList().size()) {
+					if(matcher instanceof UMLClassMatcher.RelaxedRename) {
+						Pair<UMLClass, UMLClass> pair = Pair.of(removedClass, classDiff.getNextClass());
+						if(processedClassPairs.contains(pair)) {
+							continue;
+						}
+						else {
+							processedClassPairs.add(pair);
+						}
 					}
-					else {
-						processedClassPairs.add(pair);
-					}
-				}
-				MatchResult matchResult = matcher.match(removedClass, classDiff.getNextClass());
-				if(matchResult.isMatch()) {
-					if(!conflictingMoveOfTopLevelClass(removedClass, classDiff.getNextClass()) && !innerClassWithTheSameName(removedClass, classDiff.getNextClass())) {
-						UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, classDiff.getNextClass(), this, matchResult);
-						if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName())) {
-							diffSet.add(classRenameDiff);
+					MatchResult matchResult = matcher.match(removedClass, classDiff.getNextClass());
+					if(matchResult.isMatch()) {
+						if(!conflictingMoveOfTopLevelClass(removedClass, classDiff.getNextClass()) && !innerClassWithTheSameName(removedClass, classDiff.getNextClass())) {
+							UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, classDiff.getNextClass(), this, matchResult);
+							if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName())) {
+								diffSet.add(classRenameDiff);
+							}
 						}
 					}
 				}
@@ -1299,24 +1303,26 @@ public class UMLModelDiff {
 				}
 			}
 		}
-		//include classes from commonClassDiff
-		for(UMLClassDiff classDiff : commonClassDiffList) {
-			if(!classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && classDiff.getRemovedOperations().size() > classDiff.getOperationBodyMapperList().size()) {
-				if(matcher instanceof UMLClassMatcher.RelaxedRename) {
-					Pair<UMLClass, UMLClass> pair = Pair.of(classDiff.getOriginalClass(), addedClass);
-					if(processedClassPairs.contains(pair)) {
-						continue;
+		if(!partialModel()) {
+			//include classes from commonClassDiff
+			for(UMLClassDiff classDiff : commonClassDiffList) {
+				if(!classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && classDiff.getRemovedOperations().size() > classDiff.getOperationBodyMapperList().size()) {
+					if(matcher instanceof UMLClassMatcher.RelaxedRename) {
+						Pair<UMLClass, UMLClass> pair = Pair.of(classDiff.getOriginalClass(), addedClass);
+						if(processedClassPairs.contains(pair)) {
+							continue;
+						}
+						else {
+							processedClassPairs.add(pair);
+						}
 					}
-					else {
-						processedClassPairs.add(pair);
-					}
-				}
-				MatchResult matchResult = matcher.match(classDiff.getOriginalClass(), addedClass);
-				if(matchResult.isMatch()) {
-					if(!conflictingMoveOfTopLevelClass(classDiff.getOriginalClass(), addedClass) && !innerClassWithTheSameName(classDiff.getOriginalClass(), addedClass)) {
-						UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(classDiff.getOriginalClass(), addedClass, this, matchResult);
-						if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName())) {
-							diffSet.add(classRenameDiff);
+					MatchResult matchResult = matcher.match(classDiff.getOriginalClass(), addedClass);
+					if(matchResult.isMatch()) {
+						if(!conflictingMoveOfTopLevelClass(classDiff.getOriginalClass(), addedClass) && !innerClassWithTheSameName(classDiff.getOriginalClass(), addedClass)) {
+							UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(classDiff.getOriginalClass(), addedClass, this, matchResult);
+							if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName())) {
+								diffSet.add(classRenameDiff);
+							}
 						}
 					}
 				}

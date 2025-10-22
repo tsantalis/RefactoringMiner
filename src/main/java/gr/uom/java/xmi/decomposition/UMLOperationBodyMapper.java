@@ -22,6 +22,7 @@ import static gr.uom.java.xmi.decomposition.ReplacementUtil.isDefaultValue;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.*;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 import static gr.uom.java.xmi.diff.UMLClassBaseDiff.matchParamsWithReplacements;
+import static gr.uom.java.xmi.diff.UMLClassBaseDiff.sanitizeStringLiteral;
 
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.IntersectionReplacement;
@@ -7910,13 +7911,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						index = key;
 					}
 				}
-				if(index != null && max == parameterNames.size() && parameterValuesAsLeafExpressions.size() > index) {
+				if(index != null && max >= 1 && parameterValuesAsLeafExpressions.size() > index) {
 					List<LeafExpression> parameterValueList = parameterValuesAsLeafExpressions.get(index);
 					for(Replacement r : mapping.getReplacements()) {
 						List<LeafExpression> matchingExpressions = mapping.getFragment1().findExpression(r.getBefore());
 						for(LeafExpression matchingExpression : matchingExpressions) {
 							for(LeafExpression parameterValue : parameterValueList) {
-								if(matchingExpression.getString().equals(parameterValue.getString())) {
+								if(matchingExpression.getString().equals(parameterValue.getString()) ||
+										// handle comma-separated csv values
+										sanitizeStringLiteral(parameterValue.getString()).contains(sanitizeStringLiteral(matchingExpression.getString()))) {
 									LeafMapping leafMapping = new LeafMapping(matchingExpression, parameterValue, container1, container2);
 									leafMappings.add(leafMapping);
 									break;

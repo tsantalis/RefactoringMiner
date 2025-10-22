@@ -10,7 +10,7 @@ public class CsvUtils {
     public static List<String> extractParametersFromCsv(String s) {
         List<String> parameters = new ArrayList<>();
         //fix for arguments with single quotes
-        if(s.contains("'")) {
+        if(s.contains("'") && !s.contains("''")) {
         	String[] tokens = s.split("'");
         	for (String token : tokens) {
         		if(!token.equals("\"") && !token.matches("\s*,\s*")) {

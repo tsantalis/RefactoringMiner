@@ -16,9 +16,11 @@ import java.util.Map;
 
 public class CsvSourceAnnotation extends SourceAnnotation implements NormalAnnotation, SingleMemberAnnotation {
     public static final String ANNOTATION_TYPENAME = "CsvSource";
+    private List<List<LeafExpression>> testParameterLeafExpressions;
 
     public CsvSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
         super(annotation, ANNOTATION_TYPENAME);
+        this.testParameterLeafExpressions = new ArrayList<>();
         for (String csvParams : getValue()) {
             List<String> parameters = CsvUtils.extractParametersFromCsv(csvParams);
             testParameters.add(parameters);
@@ -36,6 +38,7 @@ public class CsvSourceAnnotation extends SourceAnnotation implements NormalAnnot
         if (annotation.isSingleMemberAnnotation()) {
             for (LeafExpression literal : annotation.getValue().getStringLiterals()) {
                 result.add(literal.getString());
+                testParameterLeafExpressions.add(List.of(literal));
             }
             return result;
         } else if (annotation.isNormalAnnotation()) {
@@ -44,6 +47,7 @@ public class CsvSourceAnnotation extends SourceAnnotation implements NormalAnnot
                 // Value is a list of string literals as expected
                 for (LeafExpression literal : parameters.get("value").getStringLiterals()) {
                     result.add(literal.getString());
+                    testParameterLeafExpressions.add(List.of(literal));
                 }
             } else if (parameters.containsKey("textBlock")) {
                 List<LeafExpression> textBlock = parameters.get("textBlock").getStringLiterals();
@@ -52,10 +56,12 @@ public class CsvSourceAnnotation extends SourceAnnotation implements NormalAnnot
                     for (String line : textBlock.get(0).getString().split("[\\r\\n]+")) {
                         result.add(line);
                     }
+                    testParameterLeafExpressions.add(List.of(textBlock.get(0)));
                 } else if (textBlock.size() > 1) {
                     // Text block contains multiple string literals concatenated
                     for (LeafExpression literal : textBlock) {
                         result.add(literal.getString());
+                        testParameterLeafExpressions.add(List.of(literal));
                     }
                 } else {
                     throw new IllegalArgumentException("@CsvSource text block should not be empty");
@@ -65,5 +71,9 @@ public class CsvSourceAnnotation extends SourceAnnotation implements NormalAnnot
             }
         }
         return result;
+    }
+
+    public List<List<LeafExpression>> getTestParameterLeafExpressions() {
+        return testParameterLeafExpressions;
     }
 }

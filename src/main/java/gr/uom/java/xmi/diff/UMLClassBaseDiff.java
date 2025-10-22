@@ -46,6 +46,7 @@ import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.Visibility;
+import gr.uom.java.xmi.annotation.source.CsvSourceAnnotation;
 import gr.uom.java.xmi.annotation.source.MethodSourceAnnotation;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -2165,6 +2166,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				if(sourceAnnotation instanceof MethodSourceAnnotation methodSource) {
 					parameterValues.addAll(methodSource.getTestParameterLeafExpressions());
 				}
+				else if(sourceAnnotation instanceof CsvSourceAnnotation csvSource) {
+					parameterValues.addAll(csvSource.getTestParameterLeafExpressions());
+				}
 			} catch (IllegalArgumentException ignored) {/* Do nothing */}
 		}
 		return parameterValues;
@@ -2261,7 +2265,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return matchingTestParameters;
 	}
 
-	private static String sanitizeStringLiteral(String expression) {
+	public static String sanitizeStringLiteral(String expression) {
 		if (expression.startsWith("\"") && expression.endsWith("\"")) {
 			return expression.substring(1, expression.length() - 1);
 		} else if (expression.endsWith(".class")) {

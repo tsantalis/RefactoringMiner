@@ -4868,7 +4868,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				processedMappings.addAll(set);
 			}
 			for(AbstractCodeMapping mapping : getMappings()) {
-				if(!processedMappings.contains(mapping)) {
+				if(!processedMappings.contains(mapping) && !(mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression)) {
 					count++;
 				}
 			}

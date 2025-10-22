@@ -395,7 +395,13 @@ public class OperationInvocation extends AbstractCall {
     	}
     	int i=0;
     	int originalExactlyMatchingArguments = 0;
+    	int parametersWithDefaultValue = 0;
     	for(UMLParameter parameter : operation.getParametersWithoutReturnType()) {
+    		// handle parameters with a default value
+    		if(parameter.getVariableDeclaration().getInitializer() != null) {
+    			parametersWithDefaultValue++;
+    			continue;
+    		}
     		UMLType parameterType = parameter.getType();
     		if(inferredArgumentTypes.size() > i && inferredArgumentTypes.get(i) != null) {
     			if(exactlyMatchingArgumentType(parameterType, inferredArgumentTypes.get(i))) {
@@ -411,7 +417,9 @@ public class OperationInvocation extends AbstractCall {
     	}
     	UMLType lastInferredArgumentType = inferredArgumentTypes.size() > 0 ? inferredArgumentTypes.get(inferredArgumentTypes.size()-1) : null;
 		List<UMLType> parameterTypeList = operation.getParameterTypeList();
-		boolean result = this.numberOfArguments == parameterTypeList.size() || varArgsMatch(operation, lastInferredArgumentType, parameterTypeList);
+		boolean result = this.numberOfArguments == parameterTypeList.size() ||
+				(parametersWithDefaultValue > 0 && this.numberOfArguments + parametersWithDefaultValue >= parameterTypeList.size()) ||
+				varArgsMatch(operation, lastInferredArgumentType, parameterTypeList);
 		if(result && classDiff != null) {
 			for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
 				if(!addedOperation.equals(operation) && addedOperation.getName().equals(operation.getName()) && addedOperation.getParameterDeclarationList().size() == operation.getParameterDeclarationList().size()) {

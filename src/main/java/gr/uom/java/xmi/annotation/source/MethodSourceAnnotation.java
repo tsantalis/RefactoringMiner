@@ -4,6 +4,7 @@ import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.annotation.MarkerAnnotation;
@@ -15,12 +16,14 @@ import java.util.stream.Collectors;
 public class MethodSourceAnnotation extends SourceAnnotation implements SingleMemberAnnotation, MarkerAnnotation {
     public static final String ANNOTATION_TYPENAME = "MethodSource";
     private final UMLOperation annotatedOperation;
+    private List<List<LeafExpression>> testParameterLeafExpressions;
     private List<List<String>> testParameters;
 
     public MethodSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
         super(annotation, ANNOTATION_TYPENAME);
         this.annotatedOperation = operation;
         this.testParameters = new ArrayList<>();
+        this.testParameterLeafExpressions = new ArrayList<>();
         List<String> values = getValue();
         assert values.size() == 1;
         String methodSourceName = values.get(0);
@@ -63,6 +66,16 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
 	                    for(AbstractCall nestedCall : stmtCandidate.get().getMethodInvocations()) {
 	                        if(nestedCall.getExpression() != null && !nestedCall.getExpression().equals("Stream") && nestedCall.getName().equals("of")) {
 	                            testParameters.add(nestedCall.arguments());
+	                            List<LeafExpression> leafExpressions = new ArrayList<>();
+	                            for(String arg : nestedCall.arguments()) {
+	                            	List<LeafExpression> matches = stmtCandidate.get().findExpression(arg);
+	                            	for(LeafExpression match : matches) {
+	                            		if(nestedCall.getLocationInfo().subsumes(match.getLocationInfo())) {
+	                            			leafExpressions.add(match);
+	                            		}
+	                            	}
+	                            }
+	                            testParameterLeafExpressions.add(leafExpressions);
 	                        }
 	                    }
 	                }
@@ -91,5 +104,9 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
     @Override
     public List<List<String>> getTestParameters() {
         return testParameters;
+    }
+
+    public List<List<LeafExpression>> getTestParameterLeafExpressions() {
+        return testParameterLeafExpressions;
     }
 }

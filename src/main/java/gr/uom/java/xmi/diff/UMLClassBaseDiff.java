@@ -46,6 +46,7 @@ import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.Visibility;
+import gr.uom.java.xmi.annotation.source.MethodSourceAnnotation;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -2138,6 +2139,37 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return mapper.getMappings().size() > 0 && nonMappedLeavesT1 <= 0 && nonMappedLeavesT2 <= 0 && nonMappedInnerNodesT1 == 0 && nonMappedInnerNodesT2 == 0;
 	}
 
+	public List<List<LeafExpression>> getParameterValuesAsLeafExpressions(UMLOperation addedOperation) {
+		List<List<LeafExpression>> parameterValues = new ArrayList<>();
+		for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
+			try {
+				UMLAbstractClass inputDeclaration = nextClass;
+				if(annotation.getTypeName().equals("EnumSource") && modelDiff != null) {
+					String enumClassLiteral = null;
+					if (annotation.isMarkerAnnotation()) {
+						enumClassLiteral = SourceAnnotation.sanitizeLiteral(getFirstParameterType(addedOperation));
+					} else {
+						AbstractExpression value = annotation.isSingleMemberAnnotation() ? annotation.getValue() : annotation.getMemberValuePairs().get("value");
+						List<LeafExpression> typeLiterals = value.getTypeLiterals();
+						if(typeLiterals.size() > 0)
+							enumClassLiteral = SourceAnnotation.sanitizeLiteral(typeLiterals.get(0).getString());
+					}
+					if(enumClassLiteral != null) {
+						UMLClass enumClassDeclaration = findEnumDeclaration(modelDiff.getChildModel(), enumClassLiteral);
+						if(enumClassDeclaration != null) {
+							inputDeclaration = enumClassDeclaration;
+						}
+					}
+				}
+				SourceAnnotation sourceAnnotation = SourceAnnotation.create(annotation, addedOperation, inputDeclaration);
+				if(sourceAnnotation instanceof MethodSourceAnnotation methodSource) {
+					parameterValues.addAll(methodSource.getTestParameterLeafExpressions());
+				}
+			} catch (IllegalArgumentException ignored) {/* Do nothing */}
+		}
+		return parameterValues;
+	}
+
 	public List<List<String>> getParameterValues(UMLOperation addedOperation) {
 		List<List<String>> parameterValues = new ArrayList<>();
 		for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
@@ -2160,7 +2192,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 				}
-				List<List<String>> testParameters = SourceAnnotation.create(annotation, addedOperation, inputDeclaration).getTestParameters();
+				SourceAnnotation sourceAnnotation = SourceAnnotation.create(annotation, addedOperation, inputDeclaration);
+				List<List<String>> testParameters = sourceAnnotation.getTestParameters();
 				parameterValues.addAll(testParameters);
 			} catch (IllegalArgumentException ignored) {/* Do nothing */}
 		}
@@ -2209,7 +2242,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			if(parameterNames.contains(r.getAfter())) {
 				String paramsWithoutDoubleQuotes = sanitizeStringLiteral(r.getBefore());
 				for (int parameterRow = 0; parameterRow < testParameters.size(); parameterRow++) {
-					if (testParameters.get(parameterRow).contains(paramsWithoutDoubleQuotes)) {
+					if (testParameters.get(parameterRow).contains(paramsWithoutDoubleQuotes) ||
+							testParameters.get(parameterRow).contains(r.getBefore())) {
 						Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
 						matchingTestParameters.put(parameterRow, previousValue + 1);
 					}

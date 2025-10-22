@@ -7897,13 +7897,42 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(container2.hasParameterizedTestAnnotation() && !container1.hasParameterizedTestAnnotation() && classDiff instanceof UMLClassBaseDiff) {
 			List<String> parameterNames = container2.getParameterNameList();
 			List<List<String>> parameterValues = ((UMLClassBaseDiff)classDiff).getParameterValues((UMLOperation)container2);
+			List<List<LeafExpression>> parameterValuesAsLeafExpressions = ((UMLClassBaseDiff)classDiff).getParameterValuesAsLeafExpressions((UMLOperation)container2);
 			Set<Replacement> replacements = new LinkedHashSet<Replacement>();
+			List<LeafMapping> leafMappings = new ArrayList<LeafMapping>();
 			for(AbstractCodeMapping mapping : mappingSet) {
+				Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, mapping.getReplacements());
+				Integer index = null;
+				int max = -1;
+				for(Integer key : matchingTestParameters.keySet()) {
+					if(matchingTestParameters.get(key) > max) {
+						max = matchingTestParameters.get(key);
+						index = key;
+					}
+				}
+				if(index != null && max == parameterNames.size() && parameterValuesAsLeafExpressions.size() > index) {
+					List<LeafExpression> parameterValueList = parameterValuesAsLeafExpressions.get(index);
+					for(Replacement r : mapping.getReplacements()) {
+						List<LeafExpression> matchingExpressions = mapping.getFragment1().findExpression(r.getBefore());
+						for(LeafExpression matchingExpression : matchingExpressions) {
+							for(LeafExpression parameterValue : parameterValueList) {
+								if(matchingExpression.getString().equals(parameterValue.getString())) {
+									LeafMapping leafMapping = new LeafMapping(matchingExpression, parameterValue, container1, container2);
+									leafMappings.add(leafMapping);
+									break;
+								}
+							}
+						}
+					}
+				}
 				replacements.addAll(mapping.getReplacements());
 			}
 			Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, replacements);
 			int max = matchingTestParameters.isEmpty() ? 0 : Collections.max(matchingTestParameters.values());
 			if(max >= 1) {
+				for(LeafMapping leafMapping : leafMappings) {
+					addMapping(leafMapping);
+				}
 				return true;
 			}
 		}

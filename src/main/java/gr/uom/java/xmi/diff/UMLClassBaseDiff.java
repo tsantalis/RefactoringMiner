@@ -1917,7 +1917,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 									matchingTestParameters = matchParamsWithRemovedStatements(parameterValues, parameterNames, mapper.getNonMappedLeavesT1());
 								}
 								int max = matchingTestParameters.isEmpty() ? 0 : Collections.max(matchingTestParameters.values());
-								if(max >= 1 && (overallMaxMatchingTestParameters == -1 || max == overallMaxMatchingTestParameters)) {
+								if(max >= 1 && (overallMaxMatchingTestParameters == -1 || max >= overallMaxMatchingTestParameters)) {
 									if(max > overallMaxMatchingTestParameters) {
 										overallMaxMatchingTestParameters = max;
 									}

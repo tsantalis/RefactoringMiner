@@ -2144,25 +2144,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		List<List<LeafExpression>> parameterValues = new ArrayList<>();
 		for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
 			try {
-				UMLAbstractClass inputDeclaration = nextClass;
-				if(annotation.getTypeName().equals("EnumSource") && modelDiff != null) {
-					String enumClassLiteral = null;
-					if (annotation.isMarkerAnnotation()) {
-						enumClassLiteral = SourceAnnotation.sanitizeLiteral(getFirstParameterType(addedOperation));
-					} else {
-						AbstractExpression value = annotation.isSingleMemberAnnotation() ? annotation.getValue() : annotation.getMemberValuePairs().get("value");
-						List<LeafExpression> typeLiterals = value.getTypeLiterals();
-						if(typeLiterals.size() > 0)
-							enumClassLiteral = SourceAnnotation.sanitizeLiteral(typeLiterals.get(0).getString());
-					}
-					if(enumClassLiteral != null) {
-						UMLClass enumClassDeclaration = findEnumDeclaration(modelDiff.getChildModel(), enumClassLiteral);
-						if(enumClassDeclaration != null) {
-							inputDeclaration = enumClassDeclaration;
-						}
-					}
-				}
-				SourceAnnotation sourceAnnotation = SourceAnnotation.create(annotation, addedOperation, inputDeclaration);
+				SourceAnnotation sourceAnnotation = generateSourceAnnotation(annotation, addedOperation);
 				List<List<LeafExpression>> testParameters = sourceAnnotation.getTestParameterLeafExpressions();
 				parameterValues.addAll(testParameters);
 			} catch (IllegalArgumentException ignored) {/* Do nothing */}
@@ -2174,30 +2156,35 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		List<List<String>> parameterValues = new ArrayList<>();
 		for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
 			try {
-				UMLAbstractClass inputDeclaration = nextClass;
-				if(annotation.getTypeName().equals("EnumSource") && modelDiff != null) {
-					String enumClassLiteral = null;
-					if (annotation.isMarkerAnnotation()) {
-						enumClassLiteral = SourceAnnotation.sanitizeLiteral(getFirstParameterType(addedOperation));
-					} else {
-						AbstractExpression value = annotation.isSingleMemberAnnotation() ? annotation.getValue() : annotation.getMemberValuePairs().get("value");
-						List<LeafExpression> typeLiterals = value.getTypeLiterals();
-						if(typeLiterals.size() > 0)
-							enumClassLiteral = SourceAnnotation.sanitizeLiteral(typeLiterals.get(0).getString());
-					}
-					if(enumClassLiteral != null) {
-						UMLClass enumClassDeclaration = findEnumDeclaration(modelDiff.getChildModel(), enumClassLiteral);
-						if(enumClassDeclaration != null) {
-							inputDeclaration = enumClassDeclaration;
-						}
-					}
-				}
-				SourceAnnotation sourceAnnotation = SourceAnnotation.create(annotation, addedOperation, inputDeclaration);
+				SourceAnnotation sourceAnnotation = generateSourceAnnotation(annotation, addedOperation);
 				List<List<String>> testParameters = sourceAnnotation.getTestParameters();
 				parameterValues.addAll(testParameters);
 			} catch (IllegalArgumentException ignored) {/* Do nothing */}
 		}
 		return parameterValues;
+	}
+
+	private SourceAnnotation generateSourceAnnotation(UMLAnnotation annotation, UMLOperation addedOperation) {
+		UMLAbstractClass inputDeclaration = nextClass;
+		if(annotation.getTypeName().equals("EnumSource") && modelDiff != null) {
+			String enumClassLiteral = null;
+			if (annotation.isMarkerAnnotation()) {
+				enumClassLiteral = SourceAnnotation.sanitizeLiteral(getFirstParameterType(addedOperation));
+			} else {
+				AbstractExpression value = annotation.isSingleMemberAnnotation() ? annotation.getValue() : annotation.getMemberValuePairs().get("value");
+				List<LeafExpression> typeLiterals = value.getTypeLiterals();
+				if(typeLiterals.size() > 0)
+					enumClassLiteral = SourceAnnotation.sanitizeLiteral(typeLiterals.get(0).getString());
+			}
+			if(enumClassLiteral != null) {
+				UMLClass enumClassDeclaration = findEnumDeclaration(modelDiff.getChildModel(), enumClassLiteral);
+				if(enumClassDeclaration != null) {
+					inputDeclaration = enumClassDeclaration;
+				}
+			}
+		}
+		SourceAnnotation sourceAnnotation = SourceAnnotation.create(annotation, addedOperation, inputDeclaration);
+		return sourceAnnotation;
 	}
 
 	private static UMLClass findEnumDeclaration(UMLModel model, String enumClassLiteral) {

@@ -7,7 +7,6 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.annotation.MarkerAnnotation;
 
 import java.util.Collections;
-import java.util.List;
 
 public class EmptySourceAnnotation extends SourceAnnotation implements MarkerAnnotation {
     public static final String ANNOTATION_TYPENAME = "EmptySource";
@@ -47,10 +46,5 @@ public class EmptySourceAnnotation extends SourceAnnotation implements MarkerAnn
                 testParameters.add(Collections.singletonList("0"));
                 break;
         }
-    }
-
-    @Override
-    public List<List<String>> getTestParameters() {
-        return testParameters;
     }
 }

@@ -13,7 +13,6 @@ import java.util.List;
 
 public class EnumSourceAnnotation extends SourceAnnotation implements SingleMemberAnnotation, MarkerAnnotation, NormalAnnotation {
     public static final String ANNOTATION_TYPENAME = "EnumSource";
-    private List<List<String>> testParameters = new ArrayList<>();
 
     public EnumSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass enumClassDeclaration) {
         super(annotation, ANNOTATION_TYPENAME);
@@ -58,10 +57,5 @@ public class EnumSourceAnnotation extends SourceAnnotation implements SingleMemb
         List<LeafExpression> typeLiterals = value.getTypeLiterals();
         assert typeLiterals.size() == 1;
         return Collections.singletonList(typeLiterals.get(0).getString());
-    }
-
-    @Override
-    public List<List<String>> getTestParameters() {
-        return testParameters;
     }
 }

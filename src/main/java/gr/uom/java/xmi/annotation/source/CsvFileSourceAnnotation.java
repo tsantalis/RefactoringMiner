@@ -23,12 +23,7 @@ public class CsvFileSourceAnnotation extends SourceAnnotation implements NormalA
     public CsvFileSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
         // TODO: Add non-java files to UMLModel + Use model to get CSV based on relative path
         super(annotation, ANNOTATION_TYPENAME);
-        testParameters = CsvUtils.extractParametersFromCsvFile(getValue());
-    }
-
-    @Override
-    public List<List<String>> getTestParameters() {
-        return testParameters;
+        testParameters.addAll(CsvUtils.extractParametersFromCsvFile(getValue()));
     }
 
     @Override

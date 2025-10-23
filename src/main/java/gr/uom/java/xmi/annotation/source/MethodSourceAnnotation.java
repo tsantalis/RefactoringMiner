@@ -16,14 +16,10 @@ import java.util.stream.Collectors;
 public class MethodSourceAnnotation extends SourceAnnotation implements SingleMemberAnnotation, MarkerAnnotation {
     public static final String ANNOTATION_TYPENAME = "MethodSource";
     private final UMLOperation annotatedOperation;
-    private List<List<LeafExpression>> testParameterLeafExpressions;
-    private List<List<String>> testParameters;
 
     public MethodSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
         super(annotation, ANNOTATION_TYPENAME);
         this.annotatedOperation = operation;
-        this.testParameters = new ArrayList<>();
-        this.testParameterLeafExpressions = new ArrayList<>();
         List<String> values = getValue();
         assert values.size() == 1;
         String methodSourceName = values.get(0);
@@ -99,14 +95,5 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
             }
         }
         return Collections.emptyList();
-    }
-
-    @Override
-    public List<List<String>> getTestParameters() {
-        return testParameters;
-    }
-
-    public List<List<LeafExpression>> getTestParameterLeafExpressions() {
-        return testParameterLeafExpressions;
     }
 }

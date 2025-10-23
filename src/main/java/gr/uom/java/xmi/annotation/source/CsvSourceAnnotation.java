@@ -16,20 +16,13 @@ import java.util.Map;
 
 public class CsvSourceAnnotation extends SourceAnnotation implements NormalAnnotation, SingleMemberAnnotation {
     public static final String ANNOTATION_TYPENAME = "CsvSource";
-    private List<List<LeafExpression>> testParameterLeafExpressions;
 
     public CsvSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
         super(annotation, ANNOTATION_TYPENAME);
-        this.testParameterLeafExpressions = new ArrayList<>();
         for (String csvParams : getValue()) {
             List<String> parameters = CsvUtils.extractParametersFromCsv(csvParams);
             testParameters.add(parameters);
         }
-    }
-
-    @Override
-    public List<List<String>> getTestParameters() {
-        return testParameters;
     }
 
     @Override

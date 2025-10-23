@@ -5,7 +5,6 @@ import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLOperation;
 
 import java.util.Collections;
-import java.util.List;
 
 public class NullAndEmptySourceAnnotation extends EmptySourceAnnotation {
     public static final String ANNOTATION_TYPENAME = "NullAndEmptySource";
@@ -13,10 +12,5 @@ public class NullAndEmptySourceAnnotation extends EmptySourceAnnotation {
     public NullAndEmptySourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
         super(annotation, operation, declaringClass, ANNOTATION_TYPENAME);
         testParameters.add(Collections.singletonList("null"));
-    }
-
-    @Override
-    public List<List<String>> getTestParameters() {
-        return testParameters;
     }
 }

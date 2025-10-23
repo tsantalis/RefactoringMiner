@@ -4874,7 +4874,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			return count;
 		}
-		return getMappings().size();
+		int count = 0;
+		for(AbstractCodeMapping mapping : getMappings()) {
+			if(!(mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression)) {
+				count++;
+			}
+		}
+		return count;
 	}
 
 	public int countReplacementsForInternalParameterizedTest() {
@@ -7256,6 +7262,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										else {
 											leaves1ToBeRemoved.add(minStatementMapping.getFragment1());
 										}
+										// internalParameterizeTest() generates LeafExpression mappings for parameterized test
+										internalParameterizeTest(mappingSet);
 										checkForSplitVariableDeclaration(minStatementMapping.getFragment1(), leaves1, leaves2, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions, leaves2ToBeRemoved);
 										checkForMergedVariableDeclaration(minStatementMapping.getFragment2(), leaves1, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions, leaves1ToBeRemoved);
 									}

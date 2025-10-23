@@ -2163,12 +2163,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 				SourceAnnotation sourceAnnotation = SourceAnnotation.create(annotation, addedOperation, inputDeclaration);
-				if(sourceAnnotation instanceof MethodSourceAnnotation methodSource) {
-					parameterValues.addAll(methodSource.getTestParameterLeafExpressions());
-				}
-				else if(sourceAnnotation instanceof CsvSourceAnnotation csvSource) {
-					parameterValues.addAll(csvSource.getTestParameterLeafExpressions());
-				}
+				List<List<LeafExpression>> testParameters = sourceAnnotation.getTestParameterLeafExpressions();
+				parameterValues.addAll(testParameters);
 			} catch (IllegalArgumentException ignored) {/* Do nothing */}
 		}
 		return parameterValues;

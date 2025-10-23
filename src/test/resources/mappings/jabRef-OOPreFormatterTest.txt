@@ -29,6 +29,8 @@ package unsupportedSpecialCommands() : void -> package format(input String, expe
 line range:41-41==line range:58-58
 line range:42-42==line range:58-58
 line range:43-43==line range:58-58
+package removeBraces() : void -> package format(input String, expected String) : void
+line range:19-19==line range:58-58
 package equations() : void -> package format(input String, expected String) : void
 line range:48-48==line range:58-58
 package formatStripLatexCommands() : void -> package format(input String, expected String) : void

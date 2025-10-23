@@ -97,6 +97,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private Optional<UMLJavadocDiff> javadocDiff;
 	private Optional<UMLJavadocDiff> packageDeclarationJavadocDiff;
 	private UMLCommentListDiff packageDeclarationCommentListDiff;
+	private Set<UMLOperationBodyMapper> extractMethodCandidates;
 
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
 		super(originalClass, nextClass, modelDiff);
@@ -108,6 +109,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		this.consistentMethodInvocationRenamesInModel = findConsistentMethodInvocationRenamesInModelDiff();
 		this.implementedInterfaceBecomesSuperclass = Optional.empty();
 		this.superclassBecomesImplementedInterface = Optional.empty();
+		this.extractMethodCandidates = new LinkedHashSet<>();
 		if(originalClass.getJavadoc() != null && nextClass.getJavadoc() != null) {
 			UMLJavadocDiff diff = new UMLJavadocDiff(originalClass.getJavadoc(), nextClass.getJavadoc());
 			this.javadocDiff = Optional.of(diff);
@@ -1712,7 +1714,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
-						if(bestMapper != null && !modelDiffContainsConflictingMoveOperationRefactoring(bestMapper) && !potentialExtractFixture(bestMapper)) {
+						if(bestMapper != null && !modelDiffContainsConflictingMoveOperationRefactoring(bestMapper) && !potentialExtractFixture(bestMapper) && !conflictWithExtractMethodCandidate(bestMapper)) {
 							removedOperation = bestMapper.getOperation1();
 							UMLOperation addedOperation = bestMapper.getOperation2();
 							addedOperations.remove(addedOperation);
@@ -2097,6 +2099,15 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+	}
+
+	private boolean conflictWithExtractMethodCandidate(UMLOperationBodyMapper mapper) {
+		for(UMLOperationBodyMapper candidate : extractMethodCandidates) {
+			if(candidate.getContainer2().equals(mapper.getContainer2())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean potentialExtractFixture(UMLOperationBodyMapper mapper) {
@@ -3120,6 +3131,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 						if(!skip) {
 							anotherMapperCallsOperation2OfTheBestMapper = true;
+							extractMethodCandidates.add(bestMapper);
 							break;
 						}
 					}

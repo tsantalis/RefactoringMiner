@@ -1,0 +1,35 @@
+package formatting() : void -> package format(input String, expected String) : void
+line range:63-63==line range:58-58
+line range:59-59==line range:58-58
+line range:60-60==line range:58-58
+line range:58-58==line range:58-58
+line range:61-61==line range:58-58
+line range:65-65==line range:58-58
+line range:64-64==line range:58-58
+line range:67-67==line range:58-58
+line range:66-66==line range:58-58
+line range:62-62==line range:58-58
+package specialCommands() : void -> package format(input String, expected String) : void
+line range:36-36==line range:58-58
+line range:31-31==line range:58-58
+line range:32-32==line range:58-58
+line range:33-33==line range:58-58
+line range:34-34==line range:58-58
+line range:35-35==line range:58-58
+package plainFormat() : void -> package format(input String, expected String) : void
+line range:11-11==line range:58-58
+line range:12-12==line range:58-58
+line range:13-13==line range:58-58
+line range:14-14==line range:58-58
+package formatAccents() : void -> package format(input String, expected String) : void
+line range:26-26==line range:58-58
+line range:24-24==line range:58-58
+line range:25-25==line range:58-58
+package unsupportedSpecialCommands() : void -> package format(input String, expected String) : void
+line range:41-41==line range:58-58
+line range:42-42==line range:58-58
+line range:43-43==line range:58-58
+package equations() : void -> package format(input String, expected String) : void
+line range:48-48==line range:58-58
+package formatStripLatexCommands() : void -> package format(input String, expected String) : void
+line range:53-53==line range:58-58

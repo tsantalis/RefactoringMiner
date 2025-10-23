@@ -1146,7 +1146,8 @@ public class TestStatementMappings {
 	@CsvSource({
 		"TestStatementMappings-v1.txt, TestStatementMappings-v2.txt, src-test/org/refactoringminer/test/TestStatementMappings.java, miner-TestStatementMappings.txt",
 		"FileNameCleanerTest-v1.txt, FileNameCleanerTest-v2.txt, src/test/java/org/jabref/logic/util/FileNameCleanerTest.java, jabRef-FileNameCleanerTest.txt",
-		"CopyMoreActionTest-v1.txt, CopyMoreActionTest-v2.txt, jabgui/src/test/java/org/jabref/gui/edit/CopyMoreActionTest.java, jabRef-CopyMoreActionTest.txt"
+		"CopyMoreActionTest-v1.txt, CopyMoreActionTest-v2.txt, jabgui/src/test/java/org/jabref/gui/edit/CopyMoreActionTest.java, jabRef-CopyMoreActionTest.txt",
+		"OOPreFormatterTest-v1.txt, OOPreFormatterTest-v2.txt, jablib/src/test/java/org/jabref/logic/openoffice/style/OOPreFormatterTest.java, jabRef-OOPreFormatterTest.txt"
 	})
 	public void testParameterizedTestMappings(String input1, String input2, String filePath, String expectedOutput) throws Exception {
 		final List<String> actual = new ArrayList<>();
@@ -1166,6 +1167,35 @@ public class TestStatementMappings {
 				ParameterizeTestRefactoring parameterizeTest = (ParameterizeTestRefactoring)r;
 				UMLOperationBodyMapper mapper = parameterizeTest.getBodyMapper();
 				mapperInfo(mapper, actual);
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + expectedOutput));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+		"URLUtilTest-v1.txt, URLUtilTest-v2.txt, jablib/src/test/java/org/jabref/logic/net/URLUtilTest.java, jabRef-URLUtilTest.txt"
+	})
+	public void testSplitToParameterizedTestMappings(String input1, String input2, String filePath, String expectedOutput) throws Exception {
+		final List<String> actual = new ArrayList<>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + input1));
+		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + input2));
+		fileContentsBefore.put(filePath, contentsV1);
+		fileContentsCurrent.put(filePath, contentsV2);
+		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
+		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
+
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		List<Refactoring> refactorings = modelDiff.getRefactorings();
+		for(Refactoring r : refactorings) {
+			if(r instanceof SplitOperationRefactoring) {
+				SplitOperationRefactoring splitTest = (SplitOperationRefactoring)r;
+				for(UMLOperationBodyMapper mapper : splitTest.getMappers()) {
+					mapperInfo(mapper, actual);
+				}
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + expectedOutput));

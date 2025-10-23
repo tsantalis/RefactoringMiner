@@ -1925,10 +1925,21 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 									if(max > overallMaxMatchingTestParameters) {
 										overallMaxMatchingTestParameters = max;
 									}
+									int exactMatchCount = 0;
+									for(Map.Entry<Integer, Integer> entry  : matchingTestParameters.entrySet()) {
+										if(overallMatchingTestParameters.containsKey(entry.getKey()) &&
+												overallMatchingTestParameters.get(entry.getKey()).equals(entry.getValue())) {
+											exactMatchCount++;
+										}
+									}
+									boolean containsAll = exactMatchCount == matchingTestParameters.size() && exactMatchCount > 0;
 									int sizeBefore = overallMatchingTestParameters.size();
 									overallMatchingTestParameters.putAll(matchingTestParameters);
 									if(internalParameterizeTest) {
 										if(overallMatchingTestParameters.size() > sizeBefore) {
+											filteredMapperSet.add(mapper);
+										}
+										else if(overallMatchingTestParameters.size() == sizeBefore && !containsAll) {
 											filteredMapperSet.add(mapper);
 										}
 									}

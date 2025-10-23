@@ -1591,7 +1591,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					Map<AbstractCodeFragment, Set<UMLOperationBodyMapper>> uniqueAndCommonMappings = new LinkedHashMap<>();
 					Map<Integer, Set<UMLOperationBodyMapper>> mappingCounter = new LinkedHashMap<>();
 					Set<UMLOperationBodyMapper> mappersWithZeroAddedStatements = new LinkedHashSet<>();
+					Set<UMLOperationBodyMapper> mappersWithParameterizedTest = new LinkedHashSet<>();
 					for(UMLOperationBodyMapper mapper : mapperSet) {
+						if(!mapper.getContainer1().hasParameterizedTestAnnotation() && mapper.getContainer2().hasParameterizedTestAnnotation()) {
+							mappersWithParameterizedTest.add(mapper);
+						}
 						for(AbstractCodeMapping mapping : mapper.getMappings()) {
 							if(uniqueAndCommonMappings.containsKey(mapping.getFragment1())) {
 								uniqueAndCommonMappings.get(mapping.getFragment1()).add(mapper);
@@ -1625,7 +1629,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							uniqueMappingCount++;
 						}
 					}
-					if((initialNumberOfAddedOperations <= 2 || initialNumberOfRemovedOperations <= 2) && commonMappingCount > 0 && uniqueMappingCount > 0 && (mappingCounter.size() == 1 || mappersWithZeroAddedStatements.size() == mapperSet.size())) {
+					if((initialNumberOfAddedOperations <= 2 || initialNumberOfRemovedOperations <= 2 || mappersWithParameterizedTest.size() == mapperSet.size()) && commonMappingCount > 0 && uniqueMappingCount > 0 && (mappingCounter.size() == 1 || mappersWithZeroAddedStatements.size() == mapperSet.size())) {
 						for(UMLOperationBodyMapper mapper : mapperSet) {
 							if(!mapper.getContainer1().getName().equals(mapper.getContainer2().getName()) && !mapper.getContainer2().isGetter() && !mapper.getContainer2().isSetter()) {
 								newCandidate.addSplitMethod(mapper.getContainer2());

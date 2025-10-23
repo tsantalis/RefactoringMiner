@@ -1,6 +1,8 @@
 package gr.uom.java.xmi;
 
 import gr.uom.java.xmi.annotation.source.*;
+import gr.uom.java.xmi.decomposition.LeafExpression;
+
 import org.apache.commons.lang3.function.TriFunction;
 
 import java.util.ArrayList;
@@ -19,12 +21,14 @@ public abstract class SourceAnnotation {
             MethodSourceAnnotation.ANNOTATION_TYPENAME, MethodSourceAnnotation::new
     );
     protected List<List<String>> testParameters;
+    protected List<List<LeafExpression>> testParameterLeafExpressions;
     protected UMLAnnotation annotation;
 
     protected SourceAnnotation(UMLAnnotation annotation, String typeName) {
         assert annotation.getTypeName().equals(typeName) : "Annotation is not a " + typeName + " annotation";
         this.annotation = annotation;
         this.testParameters = new ArrayList<>();
+        this.testParameterLeafExpressions = new ArrayList<>();
     }
 
     public static SourceAnnotation create(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
@@ -41,5 +45,11 @@ public abstract class SourceAnnotation {
         return literal;
     }
 
-    public abstract List<List<String>> getTestParameters();
+    public List<List<String>> getTestParameters() {
+        return testParameters;
+    }
+
+    public List<List<LeafExpression>> getTestParameterLeafExpressions() {
+        return testParameterLeafExpressions;
+    }
 }

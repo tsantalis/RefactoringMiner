@@ -13,7 +13,7 @@ import java.util.*;
 public class ValueSourceAnnotation extends SourceAnnotation implements NormalAnnotation {
     public static final String ANNOTATION_TYPENAME = "ValueSource";
     private final Map<String, AbstractExpression> memberValuePairs;
-    private final List<List<String>> testParameters;
+
     private Set<String> numberKeys = Set.of(
             "bytes",
             "doubles",
@@ -44,7 +44,6 @@ public class ValueSourceAnnotation extends SourceAnnotation implements NormalAnn
         super(annotation, ANNOTATION_TYPENAME);
         memberValuePairs = annotation.getMemberValuePairs();
         Set<String> providedKeys = memberValuePairs.keySet();
-        testParameters = new ArrayList<>();
         for (String key : providedKeys) {
             AbstractExpression annotationParameterValue = memberValuePairs.get(key);
             for (LeafExpression literal : extractLiterals(annotationParameterValue, key)) {
@@ -52,10 +51,5 @@ public class ValueSourceAnnotation extends SourceAnnotation implements NormalAnn
             }
         }
 
-    }
-
-    @Override
-    public List<List<String>> getTestParameters() {
-        return testParameters;
     }
 }

@@ -31,6 +31,7 @@ import gr.uom.java.xmi.SourceAnnotation;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
@@ -3001,8 +3002,33 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		boolean identicalFixtureAnnotation = operationBodyMapper.getContainer1().identicalTextFixture(operationBodyMapper.getContainer2());
+		boolean migrateToExpected = false;
+		if(!operationBodyMapper.getContainer1().hasTestAnnotation() && operationBodyMapper.getContainer2().hasTestAnnotation()) {
+			AbstractExpression expectedException = null;
+			for(UMLAnnotation annotation : operationBodyMapper.getContainer2().getAnnotations()) {
+				if(annotation.getTypeName().equals("Test")) {
+					for(String key : annotation.getMemberValuePairs().keySet()) {
+						if(key.equals("expected")) {
+							expectedException = annotation.getMemberValuePairs().get(key);
+						}
+					}
+				}
+			}
+			if(expectedException != null) {
+				for(CompositeStatementObject composite1 : operationBodyMapper.getNonMappedInnerNodesT1()) {
+					if(composite1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+						for(VariableDeclaration declaration : composite1.getVariableDeclarations()) {
+							if(declaration.getType() != null && expectedException.getString().equals(declaration.getType() + ".class")) {
+								migrateToExpected = true;
+							}
+						}
+					}
+				}
+			}
+		}
 		return (mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 				(mappings > 0 && identicalFixtureAnnotation) ||
+				(mappings > 0 && migrateToExpected) ||
 				(operationsWithSameName && mappings >= nonMappedElementsT1 && mappings >= nonMappedElementsT2) ||
 				(nonMappedElementsT1 == 0 && mappings > Math.floor(nonMappedElementsT2/2.0) && (!operationBodyMapper.involvesTestMethods() || removedOperations.size() == 1 || addedOperations.size() == 1)) ||
 				(nonMappedElementsT2 == 0 && mappings > Math.floor(nonMappedElementsT1/2.0) && (!operationBodyMapper.involvesTestMethods() || removedOperations.size() == 1 || addedOperations.size() == 1) && !(this instanceof UMLClassMoveDiff)) ||

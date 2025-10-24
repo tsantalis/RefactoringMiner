@@ -1138,9 +1138,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	public boolean testMethodCheck(UMLOperation operation) { 
-		if(this.hasTestAnnotation() && !operation.hasTestAnnotation() && !operation.hasParameterizedTestAnnotation() && !operation.containsAssertion())
+		boolean thisIsTestCase = this.hasTestAnnotation() || this.name.startsWith("test");
+		boolean otherIsTestCase = operation.hasTestAnnotation() || operation.getName().startsWith("test");
+		if(thisIsTestCase && !otherIsTestCase && !operation.hasParameterizedTestAnnotation() && !operation.containsAssertion())
 			return false;
-		if(!this.hasTestAnnotation() && !this.hasParameterizedTestAnnotation() && !this.containsAssertion() && operation.hasTestAnnotation())
+		if(!thisIsTestCase && !this.hasParameterizedTestAnnotation() && !this.containsAssertion() && otherIsTestCase)
 			return false;
 		return true;
 	}

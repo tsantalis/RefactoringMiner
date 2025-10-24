@@ -1495,7 +1495,7 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public boolean isAssertion() {
-		return getName().startsWith("assert") || getName().equals("fail");
+		return getName().startsWith("assert") || getName().equals("fail") || getName().startsWith("expect");
 	}
 
 	public enum StatementCoverageType {

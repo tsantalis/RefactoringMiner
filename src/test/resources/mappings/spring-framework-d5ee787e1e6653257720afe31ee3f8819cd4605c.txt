@@ -4046,6 +4046,12 @@ line range:132-132==line range:111-111
 line range:134-134==line range:112-112
 line range:135-135==line range:113-113
 line range:136-136==line range:115-115
+public testCompileTwice() : void -> public compileTwice() : void
+line range:146-146==line range:120-120
+line range:147-147==line range:121-121
+line range:148-148==line range:122-122
+line range:149-149==line range:123-123
+line range:150-150==line range:124-124
 public testEmptyDataSource() : void -> public emptyDataSource() : void
 line range:154-155==line range:129-129
 line range:156-156==line range:130-130
@@ -4060,6 +4066,12 @@ line range:173-173==line range:142-142
 line range:174-174==line range:143-143
 line range:175-175==line range:144-144
 line range:176-176==line range:145-145
+public testValidateInOutParameter() : void -> public validateInOutParameter() : void
+line range:181-181==line range:150-150
+line range:182-182==line range:151-151
+line range:183-183==line range:152-152
+line range:184-184==line range:153-153
+line range:185-185==line range:154-154
 public testParametersSetWithList() : void -> public parametersSetWithList() : void
 line range:190-190==line range:159-159
 line range:191-191==line range:160-160
@@ -7090,6 +7102,28 @@ line range:37-37==line range:44-44
 line range:40-40==line range:47-47
 public testInvalid() : void -> public invalidFormat() : void
 line range:46-46==line range:52-52
+public testMatchesSpecific() : void -> public matchesSpecific() : void
+line range:65-66==line range:65-66
+line range:67-68==line range:67-68
+line range:69-70==line range:69-70
+line range:71-72==line range:71-72
+line range:73-74==line range:73-74
+line range:75-76==line range:75-76
+line range:77-78==line range:77-78
+line range:79-79==line range:79-79
+line range:57-62==line range:57-62
+line range:63-63==line range:63-63
+public testMatchesAll() : void -> public matchesAll() : void
+line range:87-88==line range:87-88
+line range:89-90==line range:89-90
+line range:91-92==line range:91-92
+line range:93-94==line range:93-94
+line range:95-96==line range:95-96
+line range:97-98==line range:97-98
+line range:99-100==line range:99-100
+line range:101-102==line range:101-102
+line range:84-84==line range:84-84
+line range:85-85==line range:85-85
 public testMatchAlwaysTransactionAttributeSource() : void -> public matchAlwaysTransactionAttributeSource() : void
 line range:45-45==line range:42-42
 line range:46-47==line range:43-44

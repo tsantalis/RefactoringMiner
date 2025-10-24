@@ -427,12 +427,14 @@ line range:130-130==line range:121-121
 line range:131-131==line range:122-122
 line range:122-136==line range:113-123
 line range:126-132==line range:117-123
-public testGetSharedInstanceByMatchingClass() : void -> public getSharedInstanceByNonmatchingClass() : void
-line range:141-141==line range:141-141
-line range:142-142==line range:146-146
-line range:146-146==line range:142-142
-line range:140-147==line range:140-149
-line range:144-147==line range:144-149
+public testGetSharedInstanceByNonmatchingClass() : void -> public getSharedInstanceByNonmatchingClass() : void
+line range:157-157==line range:141-141
+line range:158-158==line range:142-142
+line range:162-162==line range:146-146
+line range:163-163==line range:147-147
+line range:164-164==line range:148-148
+line range:156-169==line range:140-149
+line range:160-165==line range:144-149
 public testSharedInstancesAreEqual() : void -> public sharedInstancesAreEqual() : void
 line range:174-174==line range:154-154
 line range:175-175==line range:155-155
@@ -476,8 +478,29 @@ line range:258-258==line range:226-226
 line range:259-259==line range:227-227
 line range:260-260==line range:228-228
 line range:261-261==line range:229-229
+public testFactoryIsInitialized() : void -> public factoryIsInitialized() : void
+line range:279-279==line range:248-248
+line range:280-280==line range:249-249
+line range:281-281==line range:250-250
+line range:282-282==line range:251-251
 public testRejectsFactoryGetOnNormalBean() : void -> public rejectsFactoryGetOnNormalBean() : void
 line range:291-291==line range:259-259
+public testAliasing() : void -> public aliasing() : void
+line range:302-302==line range:266-266
+line range:304-304==line range:268-268
+line range:306-306==line range:270-270
+line range:308-308==line range:272-272
+line range:310-310==line range:274-274
+line range:311-311==line range:275-275
+line range:315-315==line range:279-279
+line range:319-319==line range:283-283
+line range:320-320==line range:284-284
+line range:321-321==line range:285-285
+line range:322-322==line range:286-286
+line range:303-305==line range:267-269
+line range:309-316==line range:273-280
+line range:313-316==line range:277-280
+line range:303-305==line range:267-269
 public setAsText(text String) : void -> public setAsText(text String) : void
 line range:330-330==line range:294-294
 line range:331-331==line range:295-295
@@ -8720,29 +8743,54 @@ line range:699-699==line range:751-751
 line range:700-700==line range:752-752
 line range:701-701==line range:753-753
 line range:703-703==line range:755-755
+public testInitParameterSet() : void -> public initParameterSet() : void
+line range:35-35==line range:40-40
+line range:36-36==line range:41-41
+line range:37-37==line range:42-42
+line range:38-38==line range:43-43
+line range:39-39==line range:44-44
+line range:40-40==line range:45-45
+line range:41-41==line range:46-46
 public testInitParameterNotSet() : void -> public initParameterNotSet() : void
 line range:47-47==line range:51-51
 line range:48-48==line range:52-52
 line range:49-49==line range:53-53
 line range:50-50==line range:54-54
-public testMultipleInitParametersSet() : void -> public requiredInitParameterSet() : void
-line range:56-56==line range:91-91
-line range:61-61==line range:93-93
-line range:62-62==line range:95-95
-line range:64-64==line range:96-96
-line range:65-65==line range:97-97
-line range:67-67==line range:98-98
-line range:57-57==line range:90-90
-line range:58-58==line range:92-92
-public testRequiredInitParameterSet() : void -> public requiredInitParameterNotSetOtherParameterNotSet() : void
-line range:89-89==line range:118-118
-line range:90-90==line range:119-119
-line range:91-91==line range:120-120
-line range:92-92==line range:121-121
-line range:94-94==line range:123-123
-line range:95-95==line range:125-125
-line range:93-93==line range:122-122
-line range:96-96==line range:131-131
+public testMultipleInitParametersSet() : void -> public multipleInitParametersSet() : void
+line range:56-56==line range:59-59
+line range:57-57==line range:60-60
+line range:58-58==line range:61-61
+line range:59-59==line range:62-62
+line range:60-60==line range:63-63
+line range:61-61==line range:64-64
+line range:62-62==line range:65-65
+line range:63-63==line range:66-66
+line range:64-64==line range:67-67
+line range:65-65==line range:68-68
+line range:66-66==line range:69-69
+line range:67-67==line range:70-70
+line range:68-68==line range:71-71
+public testMultipleInitParametersOnlyOneSet() : void -> public multipleInitParametersOnlyOneSet() : void
+line range:74-74==line range:76-76
+line range:75-75==line range:77-77
+line range:76-76==line range:78-78
+line range:77-77==line range:79-79
+line range:78-78==line range:80-80
+line range:79-79==line range:81-81
+line range:80-80==line range:82-82
+line range:81-81==line range:83-83
+line range:82-82==line range:84-84
+line range:83-83==line range:85-85
+public testRequiredInitParameterSet() : void -> public requiredInitParameterSet() : void
+line range:89-89==line range:90-90
+line range:90-90==line range:91-91
+line range:91-91==line range:92-92
+line range:92-92==line range:93-93
+line range:93-93==line range:94-94
+line range:94-94==line range:95-95
+line range:95-95==line range:96-96
+line range:96-96==line range:97-97
+line range:97-97==line range:98-98
 public testRequiredInitParameterNotSet() : void -> public requiredInitParameterNotSet() : void
 line range:103-103==line range:103-103
 line range:104-104==line range:104-104
@@ -8752,18 +8800,30 @@ line range:108-108==line range:108-108
 line range:109-109==line range:109-109
 line range:107-113==line range:107-113
 line range:111-113==line range:111-113
-public testRequiredInitParameterNotSetOtherParameterNotSet() : void -> public unknownRequiredInitParameter() : void
-line range:119-119==line range:136-136
-line range:120-120==line range:137-137
-line range:121-121==line range:138-138
-line range:122-122==line range:139-139
-line range:124-124==line range:141-141
-line range:126-126==line range:143-143
-line range:127-127==line range:144-144
-line range:132-132==line range:149-149
-line range:123-123==line range:140-140
-line range:125-131==line range:142-148
-line range:129-131==line range:146-148
+public testRequiredInitParameterNotSetOtherParameterNotSet() : void -> public requiredInitParameterNotSetOtherParameterNotSet() : void
+line range:119-119==line range:118-118
+line range:120-120==line range:119-119
+line range:121-121==line range:120-120
+line range:122-122==line range:121-121
+line range:123-123==line range:122-122
+line range:124-124==line range:123-123
+line range:126-126==line range:125-125
+line range:127-127==line range:126-126
+line range:132-132==line range:131-131
+line range:125-131==line range:124-130
+line range:129-131==line range:128-130
+public testUnknownRequiredInitParameter() : void -> public unknownRequiredInitParameter() : void
+line range:138-138==line range:136-136
+line range:139-139==line range:137-137
+line range:140-140==line range:138-138
+line range:141-141==line range:139-139
+line range:142-142==line range:140-140
+line range:143-143==line range:141-141
+line range:145-145==line range:143-143
+line range:146-146==line range:144-144
+line range:151-151==line range:149-149
+line range:144-150==line range:142-148
+line range:148-150==line range:146-148
 public setTestParam(value String) : void -> public setTestParam(value String) : void
 line range:161-161==line range:160-160
 public getTestParam() : String -> public getTestParam() : String
@@ -8772,6 +8832,13 @@ public setAnotherParam(value String) : void -> public setAnotherParam(value Stri
 line range:169-169==line range:168-168
 public getAnotherParam() : String -> public getAnotherParam() : String
 line range:173-173==line range:172-172
+public testSimpleBind() : void -> public simpleBind() : void
+line range:44-44==line range:49-49
+line range:45-45==line range:50-50
+line range:47-47==line range:52-52
+line range:48-48==line range:53-53
+line range:50-50==line range:55-55
+line range:51-51==line range:56-56
 public testNestedBind() : void -> public nestedBind() : void
 line range:56-56==line range:61-61
 line range:59-59==line range:63-63
@@ -8866,6 +8933,14 @@ line range:217-217==line range:207-207
 line range:219-219==line range:209-209
 line range:220-220==line range:210-210
 line range:221-221==line range:211-211
+public testBindingExcludesDisallowedParam() : void -> public bindingExcludesDisallowedParam() : void
+line range:226-226==line range:216-216
+line range:227-227==line range:217-217
+line range:230-230==line range:219-219
+line range:231-231==line range:220-220
+line range:232-232==line range:221-221
+line range:234-234==line range:223-223
+line range:235-235==line range:224-224
 public testWithNoParams() : void -> public withNoParams() : void
 line range:30-30==line range:34-34
 line range:31-31==line range:35-35
@@ -8945,40 +9020,48 @@ line range:133-133==line range:139-139
 line range:128-129==line range:134-135
 line range:130-132==line range:136-138
 line range:130-132==line range:136-138
-public testPortletContextAwareWithPortletContext() : void -> public portletContextAwareWithPortletConfig() : void
-line range:36-36==line range:55-55
-line range:37-37==line range:56-56
-line range:38-38==line range:57-57
-line range:39-39==line range:58-58
-line range:34-34==line range:54-54
-public testPortletContextAwareWithPortletConfig() : void -> public portletContextAwareWithNullPortletContextAndNonNullPortletConfig() : void
-line range:47-47==line range:73-73
-line range:48-48==line range:74-74
-line range:49-49==line range:75-75
-line range:50-50==line range:76-76
-line range:45-45==line range:72-72
-public testPortletContextAwareWithNullPortletContextAndNonNullPortletConfig() : void -> public portletContextAwareWithNonNullPortletContextAndNullPortletConfig() : void
-line range:69-69==line range:82-82
-line range:70-70==line range:83-83
-line range:71-71==line range:84-84
-line range:72-72==line range:85-85
-line range:67-67==line range:81-81
-public testPortletContextAwareWithNonNullPortletContextAndNullPortletConfig() : void -> public portletConfigAwareWithNonNullPortletContextAndNullPortletConfig() : void
-line range:77-77==line range:136-136
-line range:80-80==line range:139-139
-line range:78-78==line range:137-137
-line range:79-79==line range:138-138
+public testPortletContextAwareWithPortletConfig() : void -> public portletContextAwareWithPortletConfig() : void
+line range:45-45==line range:54-54
+line range:47-47==line range:55-55
+line range:48-48==line range:56-56
+line range:49-49==line range:57-57
+line range:50-50==line range:58-58
+public testPortletContextAwareWithPortletContextAndPortletConfig() : void -> public portletContextAwareWithPortletContextAndPortletConfig() : void
+line range:56-56==line range:63-63
+line range:58-58==line range:64-64
+line range:59-59==line range:65-65
+line range:60-60==line range:66-66
+line range:61-61==line range:67-67
+public testPortletContextAwareWithNullPortletContextAndNonNullPortletConfig() : void -> public portletContextAwareWithNullPortletContextAndNonNullPortletConfig() : void
+line range:67-67==line range:72-72
+line range:69-69==line range:73-73
+line range:70-70==line range:74-74
+line range:71-71==line range:75-75
+line range:72-72==line range:76-76
+public testPortletContextAwareWithNonNullPortletContextAndNullPortletConfig() : void -> public portletContextAwareWithNonNullPortletContextAndNullPortletConfig() : void
+line range:77-77==line range:81-81
+line range:79-79==line range:82-82
+line range:80-80==line range:83-83
+line range:81-81==line range:84-84
+line range:82-82==line range:85-85
 public testPortletContextAwareWithNullPortletContext() : void -> public portletContextAwareWithNullPortletContext() : void
 line range:89-89==line range:91-91
 line range:90-90==line range:92-92
 line range:91-91==line range:93-93
 line range:87-87==line range:90-90
-public testPortletConfigAwareWithPortletContextOnly() : void -> public portletConfigAwareWithNullPortletContext() : void
-line range:97-97==line range:146-146
-line range:98-98==line range:147-147
-line range:99-99==line range:148-148
-line range:100-100==line range:149-149
-line range:96-96==line range:145-145
+public testPortletConfigAwareWithNonNullPortletContextAndNullPortletConfig() : void -> public portletConfigAwareWithNonNullPortletContextAndNullPortletConfig() : void
+line range:138-138==line range:136-136
+line range:139-139==line range:137-137
+line range:140-140==line range:138-138
+line range:141-141==line range:139-139
+line range:142-142==line range:140-140
+public testPortletConfigAwareWithPortletConfig() : void -> public portletConfigAwareWithPortletConfig() : void
+line range:106-106==line range:106-106
+line range:107-107==line range:107-107
+line range:108-108==line range:108-108
+line range:109-109==line range:109-109
+line range:110-110==line range:110-110
+line range:111-111==line range:111-111
 public testPortletConfigAwareWithPortletContextAndPortletConfig() : void -> public portletConfigAwareWithPortletContextAndPortletConfig() : void
 line range:117-117==line range:116-116
 line range:118-118==line range:117-117
@@ -8993,6 +9076,12 @@ line range:130-130==line range:128-128
 line range:131-131==line range:129-129
 line range:132-132==line range:130-130
 line range:133-133==line range:131-131
+public testPortletConfigAwareWithNullPortletContext() : void -> public portletConfigAwareWithNullPortletContext() : void
+line range:148-148==line range:146-146
+line range:149-149==line range:147-147
+line range:150-150==line range:148-148
+line range:151-151==line range:149-149
+line range:147-147==line range:145-145
 protected createContext() : ConfigurableApplicationContext -> protected createContext() : ConfigurableApplicationContext
 line range:45-45==line range:50-50
 line range:46-46==line range:51-51
@@ -9084,6 +9173,15 @@ line range:40-40==line range:47-47
 line range:41-41==line range:48-48
 line range:42-42==line range:49-49
 line range:43-43==line range:50-50
+public testNonDefaultParameterNotMapped() : void -> public nonDefaultParameterNotMapped() : void
+line range:51-51==line range:55-55
+line range:52-52==line range:56-56
+line range:53-53==line range:57-57
+line range:54-54==line range:58-58
+line range:55-55==line range:59-59
+line range:56-56==line range:60-60
+line range:57-57==line range:61-61
+line range:58-58==line range:62-62
 public testNonDefaultParameterMappedWhenHandlerMappingProvided() : void -> public nonDefaultParameterMappedWhenHandlerMappingProvided() : void
 line range:62-62==line range:67-67
 line range:63-63==line range:68-68
@@ -9109,12 +9207,15 @@ line range:98-98==line range:93-93
 line range:99-99==line range:94-94
 line range:100-100==line range:95-95
 line range:101-101==line range:96-96
-public testNoParameterValueSetWithNonDefaultParameterName() : void -> public noParameterValueSetWithNonDefaultParameterNameWhenHandlerMappingProvided() : void
-line range:109-109==line range:110-110
-line range:110-110==line range:114-114
-line range:111-111==line range:115-115
-line range:112-112==line range:116-116
-line range:113-113==line range:117-117
+public testNoParameterValueSetWithNonDefaultParameterNameWhenHandlerMappingProvided() : void -> public noParameterValueSetWithNonDefaultParameterNameWhenHandlerMappingProvided() : void
+line range:117-117==line range:110-110
+line range:118-118==line range:111-111
+line range:119-119==line range:112-112
+line range:121-121==line range:113-113
+line range:125-125==line range:114-114
+line range:126-126==line range:115-115
+line range:127-127==line range:116-116
+line range:128-128==line range:117-117
 public setUp() : void -> public setUp() : void
 line range:42-42==line range:50-50
 line range:43-43==line range:51-51

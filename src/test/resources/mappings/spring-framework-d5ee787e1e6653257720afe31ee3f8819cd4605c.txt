@@ -418,6 +418,9 @@ line range:99-99==line range:99-99
 line range:100-100==line range:100-100
 line range:101-101==line range:101-101
 line range:102-102==line range:102-102
+public testGetInstanceByMatchingClass() : void -> public getInstanceByMatchingClass() : void
+line range:112-112==line range:107-107
+line range:113-113==line range:108-108
 public testGetInstanceByNonmatchingClass() : void -> public getInstanceByNonmatchingClass() : void
 line range:123-123==line range:114-114
 line range:124-124==line range:115-115
@@ -427,6 +430,12 @@ line range:130-130==line range:121-121
 line range:131-131==line range:122-122
 line range:122-136==line range:113-123
 line range:126-132==line range:117-123
+public testGetSharedInstanceByMatchingClass() : void -> public getSharedInstanceByMatchingClass() : void
+line range:141-141==line range:128-128
+line range:142-142==line range:129-129
+public testGetSharedInstanceByMatchingClassNoCatch() : void -> public getSharedInstanceByMatchingClassNoCatch() : void
+line range:151-151==line range:134-134
+line range:152-152==line range:135-135
 public testGetSharedInstanceByNonmatchingClass() : void -> public getSharedInstanceByNonmatchingClass() : void
 line range:157-157==line range:141-141
 line range:158-158==line range:142-142
@@ -478,6 +487,8 @@ line range:258-258==line range:226-226
 line range:259-259==line range:227-227
 line range:260-260==line range:228-228
 line range:261-261==line range:229-229
+public testGetFactoryItself() : void -> public getFactoryItself() : void
+line range:270-270==line range:239-239
 public testFactoryIsInitialized() : void -> public factoryIsInitialized() : void
 line range:279-279==line range:248-248
 line range:280-280==line range:249-249
@@ -1567,6 +1578,12 @@ line range:73-73==line range:76-76
 public testThisAsClassAndTargetAsClassCounterNotMatch() : void -> public thisAsClassAndTargetAsClassCounterNotMatch() : void
 line range:78-78==line range:81-81
 line range:79-79==line range:82-82
+public testThisAsInterfaceAndTargetAsInterfaceCounterMatch() : void -> public thisAsInterfaceAndTargetAsInterfaceCounterMatch() : void
+line range:84-84==line range:87-87
+line range:85-85==line range:88-88
+public testThisAsInterfaceAndTargetAsClassCounterMatch() : void -> public thisAsInterfaceAndTargetAsClassCounterMatch() : void
+line range:90-90==line range:93-93
+line range:91-91==line range:94-94
 public testAtTargetClassAnnotationMatch() : void -> public atTargetClassAnnotationMatch() : void
 line range:97-97==line range:100-100
 line range:98-98==line range:101-101
@@ -1620,6 +1637,50 @@ line range:161-161==line range:168-168
 line range:162-162==line range:169-169
 protected setUp() : void -> public setUp() : void
 line range:50-50==line range:53-53
+public testContextAwareSingletonWasCalledBack() : void -> public contextAwareSingletonWasCalledBack() : void
+line range:71-71==line range:75-75
+line range:72-72==line range:76-76
+line range:73-73==line range:77-77
+line range:74-74==line range:78-78
+line range:75-75==line range:79-79
+public testContextAwarePrototypeWasCalledBack() : void -> public contextAwarePrototypeWasCalledBack() : void
+line range:79-79==line range:84-84
+line range:80-80==line range:85-85
+line range:81-81==line range:86-86
+line range:82-82==line range:87-87
+line range:83-83==line range:88-88
+public testParentNonNull() : void -> public parentNonNull() : void
+line range:87-87==line range:93-93
+public testGrandparentNull() : void -> public grandparentNull() : void
+line range:91-91==line range:98-98
+public testOverrideWorked() : void -> public overrideWorked() : void
+line range:95-95==line range:103-103
+line range:96-96==line range:104-104
+public testGrandparentDefinitionFound() : void -> public grandparentDefinitionFound() : void
+line range:100-100==line range:109-109
+line range:101-101==line range:110-110
+public testGrandparentTypedDefinitionFound() : void -> public grandparentTypedDefinitionFound() : void
+line range:105-105==line range:115-115
+line range:106-106==line range:116-116
+public testCloseTriggersDestroy() : void -> public closeTriggersDestroy() : void
+line range:110-110==line range:121-121
+line range:111-111==line range:122-122
+line range:112-112==line range:123-123
+line range:114-114==line range:125-125
+line range:116-116==line range:127-127
+line range:117-117==line range:128-128
+line range:119-119==line range:130-130
+line range:121-121==line range:132-132
+line range:113-115==line range:124-126
+line range:118-120==line range:129-131
+line range:113-115==line range:124-126
+line range:118-120==line range:129-131
+public testMessageSource() : void -> public messageSource() : void
+line range:125-125==line range:137-137
+line range:126-126==line range:138-138
+line range:129-129==line range:140-140
+public testEvents() : void -> public events() : void
+line range:138-138==line range:145-145
 public testEventsWithNoSource() : void -> public eventsWithNoSource() : void
 line range:144-144==line range:151-151
 line range:145-145==line range:152-152
@@ -1628,8 +1689,12 @@ line range:147-147==line range:154-154
 line range:148-148==line range:155-155
 line range:149-150==line range:156-157
 line range:151-151==line range:158-158
-public testEvents() : void -> public events() : void
-line range:138-138==line range:145-145
+public testBeanAutomaticallyHearsEvents() : void -> public beanAutomaticallyHearsEvents() : void
+line range:168-168==line range:176-176
+line range:169-169==line range:177-177
+line range:170-170==line range:178-178
+line range:171-171==line range:179-179
+line range:172-172==line range:180-180
 public MyEvent(source Object) -> public MyEvent(source Object)
 line range:180-180==line range:188-188
 public testBeanFactoryPathRequiredFromJndiEnvironment() : void -> public beanFactoryPathRequiredFromJndiEnvironment() : void
@@ -2029,6 +2094,7 @@ line range:256-256==line range:248-248
 line range:257-257==line range:249-249
 line range:259-260==line range:251-252
 line range:262-262==line range:254-254
+public testMessageSource() : void -> public messageSource() : void
 RemoteMBeanClientInterceptorTests -> RemoteMBeanClientInterceptorTests
 line range:47-47==line range:49-49
 line range:48-48==line range:50-50
@@ -9023,6 +9089,11 @@ line range:133-133==line range:139-139
 line range:128-129==line range:134-135
 line range:130-132==line range:136-138
 line range:130-132==line range:136-138
+public testPortletContextAwareWithPortletContext() : void -> public portletContextAwareWithPortletContext() : void
+line range:36-36==line range:46-46
+line range:37-37==line range:47-47
+line range:38-38==line range:48-48
+line range:39-39==line range:49-49
 public testPortletContextAwareWithPortletConfig() : void -> public portletContextAwareWithPortletConfig() : void
 line range:45-45==line range:54-54
 line range:47-47==line range:55-55
@@ -9052,12 +9123,11 @@ line range:89-89==line range:91-91
 line range:90-90==line range:92-92
 line range:91-91==line range:93-93
 line range:87-87==line range:90-90
-public testPortletConfigAwareWithNonNullPortletContextAndNullPortletConfig() : void -> public portletConfigAwareWithNonNullPortletContextAndNullPortletConfig() : void
-line range:138-138==line range:136-136
-line range:139-139==line range:137-137
-line range:140-140==line range:138-138
-line range:141-141==line range:139-139
-line range:142-142==line range:140-140
+public testPortletConfigAwareWithPortletContextOnly() : void -> public portletConfigAwareWithPortletContextOnly() : void
+line range:97-97==line range:98-98
+line range:98-98==line range:99-99
+line range:99-99==line range:100-100
+line range:100-100==line range:101-101
 public testPortletConfigAwareWithPortletConfig() : void -> public portletConfigAwareWithPortletConfig() : void
 line range:106-106==line range:106-106
 line range:107-107==line range:107-107
@@ -9079,6 +9149,12 @@ line range:130-130==line range:128-128
 line range:131-131==line range:129-129
 line range:132-132==line range:130-130
 line range:133-133==line range:131-131
+public testPortletConfigAwareWithNonNullPortletContextAndNullPortletConfig() : void -> public portletConfigAwareWithNonNullPortletContextAndNullPortletConfig() : void
+line range:138-138==line range:136-136
+line range:139-139==line range:137-137
+line range:140-140==line range:138-138
+line range:141-141==line range:139-139
+line range:142-142==line range:140-140
 public testPortletConfigAwareWithNullPortletContext() : void -> public portletConfigAwareWithNullPortletContext() : void
 line range:148-148==line range:146-146
 line range:149-149==line range:147-147
@@ -9210,6 +9286,12 @@ line range:98-98==line range:93-93
 line range:99-99==line range:94-94
 line range:100-100==line range:95-95
 line range:101-101==line range:96-96
+public testNoParameterValueSetWithNonDefaultParameterName() : void -> public noParameterValueSetWithNonDefaultParameterName() : void
+line range:109-109==line range:101-101
+line range:110-110==line range:102-102
+line range:111-111==line range:103-103
+line range:112-112==line range:104-104
+line range:113-113==line range:105-105
 public testNoParameterValueSetWithNonDefaultParameterNameWhenHandlerMappingProvided() : void -> public noParameterValueSetWithNonDefaultParameterNameWhenHandlerMappingProvided() : void
 line range:117-117==line range:110-110
 line range:118-118==line range:111-111
@@ -17630,6 +17712,14 @@ line range:116-116==line range:124-124
 line range:117-117==line range:125-125
 line range:119-119==line range:127-127
 line range:120-120==line range:128-128
+public testWithList() : void -> public withList() : void
+line range:124-124==line range:133-133
+line range:125-125==line range:134-134
+line range:126-126==line range:135-135
+public testWithResolvedList() : void -> public withResolvedList() : void
+line range:130-130==line range:140-140
+line range:131-131==line range:141-141
+line range:132-132==line range:142-142
 public testWithOtherValue() : void -> public withOtherValue() : void
 line range:136-136==line range:147-147
 line range:137-137==line range:148-148
@@ -17787,6 +17877,14 @@ line range:352-352==line range:374-374
 line range:353-353==line range:375-375
 line range:354-354==line range:376-376
 line range:355-355==line range:377-377
+public testWithStringArray() : void -> public withStringArray() : void
+line range:359-359==line range:382-382
+line range:360-360==line range:383-383
+line range:361-361==line range:384-384
+public testWithResolvedStringArray() : void -> public withResolvedStringArray() : void
+line range:365-365==line range:389-389
+line range:366-366==line range:390-390
+line range:367-367==line range:391-391
 public testWithIntegerArray() : void -> public withIntegerArray() : void
 line range:371-371==line range:396-396
 line range:372-372==line range:397-397

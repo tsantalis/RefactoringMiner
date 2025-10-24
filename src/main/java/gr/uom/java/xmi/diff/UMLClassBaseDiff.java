@@ -47,8 +47,6 @@ import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.Visibility;
-import gr.uom.java.xmi.annotation.source.CsvSourceAnnotation;
-import gr.uom.java.xmi.annotation.source.MethodSourceAnnotation;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -1222,12 +1220,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	private boolean parameterTypeChanges(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) {
-		if(removedOperations.size() == addedOperations.size() && !originalClass.isTestClass() && !nextClass.isTestClass()) {
+		if(removedOperations.size() == addedOperations.size()) {
 			int count = 0;
 			for(int i=0; i<removedOperations.size(); i++) {
 				UMLOperation removedOperation = removedOperations.get(i);
 				UMLOperation addedOperation = addedOperations.get(i);
-				if(removedOperation.getName().equals(addedOperation.getName()) &&
+				boolean migration = removedOperation.getName().toLowerCase().equals("test" + addedOperation.getName().toLowerCase());
+				if((removedOperation.getName().equals(addedOperation.getName()) || migration) &&
 						removedOperation.getParameters().size() == addedOperation.getParameters().size() &&
 						removedOperation.isAbstract() == addedOperation.isAbstract()) {
 					count++;
@@ -1446,7 +1445,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 			removedOperations.removeAll(removedOperationsToBeRemoved);
 			addedOperations.removeAll(addedOperationsToBeRemoved);
-			return;
 		}
 		List<Pair<UMLOperation, UMLOperation>> pairs = operationAlignment(removedOperations, addedOperations);
 		if(pairs.size() == Math.min(removedOperations.size(), addedOperations.size()) && !conflictingPairs(pairs)) {

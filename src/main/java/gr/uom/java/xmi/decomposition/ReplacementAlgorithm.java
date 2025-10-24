@@ -3101,6 +3101,34 @@ public class ReplacementAlgorithm {
 					}
 				}
 			}
+			//assertTrue() to assertNull() conversion
+			if(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("assertNull")) {
+				if(invocationCoveringTheEntireStatement1.arguments().size() == 1 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(" == null") && invocationCoveringTheEntireStatement2.arguments().size() == 1) {
+					String assertTrueArgument = invocationCoveringTheEntireStatement1.arguments().get(0);
+					String assertNullArgument = invocationCoveringTheEntireStatement2.arguments().get(0);
+					String arg1 = assertTrueArgument.substring(0, assertTrueArgument.indexOf(" == null"));
+					if(arg1.equals(assertNullArgument)) {
+						Replacement replacement = new MethodInvocationReplacement(
+								invocationCoveringTheEntireStatement1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
+								invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
+						replacementInfo.addReplacement(replacement);
+						return replacementInfo.getReplacements();
+					}
+				}
+			}
+			//assertEquals() to assertNull() conversion
+			if(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("assertNull")) {
+				if(invocationCoveringTheEntireStatement1.arguments().size() == 2 && invocationCoveringTheEntireStatement1.arguments().contains("null") && invocationCoveringTheEntireStatement2.arguments().size() == 1) {
+					String assertNullArgument = invocationCoveringTheEntireStatement2.arguments().get(0);
+					if(invocationCoveringTheEntireStatement1.arguments().contains(assertNullArgument)) {
+						Replacement replacement = new MethodInvocationReplacement(
+								invocationCoveringTheEntireStatement1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
+								invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
+						replacementInfo.addReplacement(replacement);
+						return replacementInfo.getReplacements();
+					}
+				}
+			}
 		}
 		//check if the class instance creation in the first statement is the expression of the method invocation in the second statement
 		if(creationCoveringTheEntireStatement1 != null) {

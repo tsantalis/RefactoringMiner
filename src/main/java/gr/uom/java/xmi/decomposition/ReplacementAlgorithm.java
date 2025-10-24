@@ -3076,7 +3076,9 @@ public class ReplacementAlgorithm {
 					String assertTrueArgument = invocationCoveringTheEntireStatement1.arguments().get(0);
 					String arg1 = assertTrueArgument.substring(0, assertTrueArgument.indexOf(" == "));
 					String arg2 = assertTrueArgument.substring(assertTrueArgument.indexOf(" == ") + " == ".length(), assertTrueArgument.length());
-					if(invocationCoveringTheEntireStatement2.arguments().contains(arg1) && invocationCoveringTheEntireStatement2.arguments().contains(arg2)) {
+					int index1 = invocationCoveringTheEntireStatement2.arguments().indexOf(arg1);
+					int index2 = invocationCoveringTheEntireStatement2.arguments().indexOf(arg2);
+					if(index1 != -1 && index2 != -1 && index1 != index2) {
 						Replacement replacement = new MethodInvocationReplacement(
 								invocationCoveringTheEntireStatement1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
 								invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
@@ -3088,7 +3090,9 @@ public class ReplacementAlgorithm {
 					String assertTrueArgument = invocationCoveringTheEntireStatement1.arguments().get(0);
 					String arg1 = assertTrueArgument.substring(0, assertTrueArgument.indexOf(".equals("));
 					String arg2 = assertTrueArgument.substring(assertTrueArgument.indexOf(".equals(") + ".equals(".length(), assertTrueArgument.length()-1); // -1 to exclude the closing parenthesis
-					if(invocationCoveringTheEntireStatement2.arguments().contains(arg1) && invocationCoveringTheEntireStatement2.arguments().contains(arg2)) {
+					int index1 = invocationCoveringTheEntireStatement2.arguments().indexOf(arg1);
+					int index2 = invocationCoveringTheEntireStatement2.arguments().indexOf(arg2);
+					if(index1 != -1 && index2 != -1 && index1 != index2) {
 						Replacement replacement = new MethodInvocationReplacement(
 								invocationCoveringTheEntireStatement1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
 								invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);

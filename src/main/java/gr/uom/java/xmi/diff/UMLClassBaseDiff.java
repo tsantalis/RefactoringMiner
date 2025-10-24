@@ -3023,12 +3023,23 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		boolean identicalFixtureAnnotation = operationBodyMapper.getContainer1().identicalTextFixture(operationBodyMapper.getContainer2());
 		boolean migrateToExpected = false;
 		if(!operationBodyMapper.getContainer1().hasTestAnnotation() && operationBodyMapper.getContainer2().hasTestAnnotation()) {
-			AbstractExpression expectedException = null;
+			AbstractCodeFragment expectedException = null;
 			for(UMLAnnotation annotation : operationBodyMapper.getContainer2().getAnnotations()) {
 				if(annotation.getTypeName().equals("Test")) {
 					for(String key : annotation.getMemberValuePairs().keySet()) {
 						if(key.equals("expected")) {
 							expectedException = annotation.getMemberValuePairs().get(key);
+						}
+					}
+				}
+			}
+			if(expectedException == null) {
+				for(AbstractCodeFragment fragment2 : operationBodyMapper.getNonMappedLeavesT2()) {
+					AbstractCall call = fragment2.invocationCoveringEntireFragment();
+					if(call != null && call.getName().equals("expect") && call.arguments().size() == 1) {
+						List<LeafExpression> leafExpressions = fragment2.findExpression(call.arguments().get(0));
+						if(leafExpressions.size() == 1) {
+							expectedException = leafExpressions.get(0);
 						}
 					}
 				}

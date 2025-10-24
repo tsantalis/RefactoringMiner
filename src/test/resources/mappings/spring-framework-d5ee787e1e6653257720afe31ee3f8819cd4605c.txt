@@ -2938,6 +2938,10 @@ line range:105-105==line range:121-121
 line range:106-106==line range:122-122
 line range:107-107==line range:123-123
 line range:110-110==line range:126-126
+public testFailureToStartBeforeGettingTimings() : void -> public failureToStartBeforeGettingTimings() : void
+line range:121-121==line range:132-132
+public testFailureToStartBeforeStop() : void -> public failureToStartBeforeStop() : void
+line range:132-132==line range:138-138
 public testRejectsStartTwice() : void -> public rejectsStartTwice() : void
 line range:143-143==line range:143-143
 line range:144-144==line range:144-144
@@ -3160,6 +3164,8 @@ public testSimpleObject() : void -> public simpleObject() : void
 line range:35-35==line range:44-44
 public testArray() : void -> public array() : void
 line range:40-40==line range:49-49
+public testCollections() : void -> public emptyList() : void
+line range:54-54==line range:61-61
 public testAttributeNameToPropertyName() : void -> public attributeNameToPropertyName() : void
 line range:63-63==line range:71-71
 line range:64-64==line range:72-72
@@ -3295,6 +3301,8 @@ line range:61-61==line range:75-75
 line range:64-64==line range:78-78
 line range:65-65==line range:79-79
 line range:66-66==line range:80-80
+public testThrowsExceptionWhenSuppliedWithNullRunnable() : void -> public throwsExceptionWhenSuppliedWithNullRunnable() : void
+line range:71-71==line range:86-86
 protected AbstractNotifyingRunnable(monitor Object) -> protected AbstractNotifyingRunnable(monitor Object)
 line range:104-104==line range:115-115
 public run() : void -> public run() : void
@@ -4007,6 +4015,8 @@ line range:135-135==line range:126-126
 line range:136-136==line range:127-127
 line range:137-137==line range:128-128
 line range:131-134==line range:122-125
+public testEmptySql() : void -> public emptySql() : void
+line range:42-42==line range:56-56
 public testSetTypeAfterCompile() : void -> public setTypeAfterCompile() : void
 line range:52-52==line range:61-61
 line range:53-53==line range:62-62
@@ -4025,6 +4035,9 @@ public testTooFewMapParameters() : void -> public tooFewMapParameters() : void
 line range:93-93==line range:87-87
 line range:94-94==line range:88-88
 line range:96-96==line range:90-90
+public testOperationConfiguredViaJdbcTemplateMustGetDataSource() : void -> public operationConfiguredViaJdbcTemplateMustGetDataSource() : void
+line range:107-107==line range:95-95
+line range:108-108==line range:99-99
 public testTooManyParameters() : void -> public tooManyParameters() : void
 line range:120-120==line range:104-104
 line range:122-122==line range:106-106
@@ -4067,6 +4080,12 @@ line range:37-37==line range:41-41
 line range:38-38==line range:42-42
 line range:39-39==line range:43-43
 line range:40-40==line range:44-44
+public testSingleKeyNonNumeric() : void -> public singleKeyNonNumeric() : void
+line range:60-60==line range:63-63
+line range:58-58==line range:59-59
+public testNoKeyReturnedInMap() : void -> public noKeyReturnedInMap() : void
+line range:73-73==line range:72-72
+line range:71-71==line range:68-68
 public testMultipleKeys() : void -> public multipleKeys() : void
 line range:90-90==line range:86-86
 line range:82-82==line range:77-80

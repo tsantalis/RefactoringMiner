@@ -4254,6 +4254,7 @@ line range:31-31==line range:37-37
 line range:33-42==line range:39-48
 line range:36-36==line range:42-42
 line range:46-46==line range:52-52
+line range:45-45==line range:51-51
 public testInterceptorWithCglibProxy() : void -> public interceptorWithCglibProxy() : void
 line range:51-51==line range:57-57
 line range:52-52==line range:58-58
@@ -6993,6 +6994,7 @@ private checkTransactionProperties(tas TransactionAttributeSource, method Method
 line range:106-106==line range:106-106
 line range:109-109==line range:109-109
 line range:110-110==line range:110-110
+line range:113-113==line range:113-113
 line range:107-114==line range:107-114
 line range:107-111==line range:107-111
 line range:112-114==line range:112-114
@@ -7000,6 +7002,7 @@ public testNull() : void -> public nullValue() : void
 line range:39-39==line range:46-46
 line range:36-36==line range:43-43
 line range:37-37==line range:44-44
+line range:40-40==line range:47-47
 public testInvalid() : void -> public invalidFormat() : void
 line range:46-46==line range:52-52
 public testMatchAlwaysTransactionAttributeSource() : void -> public matchAlwaysTransactionAttributeSource() : void

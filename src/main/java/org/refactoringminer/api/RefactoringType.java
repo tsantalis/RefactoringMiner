@@ -115,7 +115,10 @@ public enum RefactoringType {
 	ASSERT_TIMEOUT("Assert Timeout", "Assert Timeout (.+) in method (.+) from class (.+)"),
 	TRY_WITH_RESOURCES("Try With Resources", "Try With Resources (.+) in method (.+) from class (.+)"),
 	REPLACE_GENERIC_WITH_DIAMOND("Replace Generic With Diamond", "Replace Generic With Diamond (.+) with (.+) in method (.+) from class (.+)"),
-	REPLACE_CONDITIONAL_WITH_TERNARY("Replace Conditional With Ternary", "Replace Conditional With Ternary (.+) to (.+) in method (.+) from class (.+)"),;
+	REPLACE_CONDITIONAL_WITH_TERNARY("Replace Conditional With Ternary", "Replace Conditional With Ternary (.+) to (.+) in method (.+) from class (.+)"),
+	REPLACE_CONDITIONAL_WITH_ASSUMPTION("Replace Conditional With Assumption", "Replace Conditional With Assumption (.+) to (.+) in method (.+) from class (.+)"),
+	REPLACE_ASSERTION_WITH_ASSUMPTION("Replace Assertion With Assumption", "Replace Assertion With Assumption (.+) to (.+) in method (.+) from class (.+)"),
+	REPLACE_IGNORE_WITH_ASSUMPTION("Replace Ignore With Assumption", "Replace Ignore With Assumption (.+) to (.+) in method (.+) from class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -224,7 +227,10 @@ public enum RefactoringType {
 		ASSERT_TIMEOUT,
 		TRY_WITH_RESOURCES,
 		REPLACE_GENERIC_WITH_DIAMOND,
-		REPLACE_CONDITIONAL_WITH_TERNARY
+		REPLACE_CONDITIONAL_WITH_TERNARY,
+		REPLACE_CONDITIONAL_WITH_ASSUMPTION,
+		REPLACE_ASSERTION_WITH_ASSUMPTION,
+		REPLACE_IGNORE_WITH_ASSUMPTION
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

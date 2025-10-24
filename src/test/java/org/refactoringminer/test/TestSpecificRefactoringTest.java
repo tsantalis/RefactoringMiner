@@ -114,19 +114,6 @@ public class TestSpecificRefactoringTest {
         Assertions.assertFalse(refactorings.isEmpty());
     }
 
-    private static boolean containsCommonReturn(CompositeStatementObject conditional) {
-        return conditional.getAllStatements().stream().anyMatch(s->s.getString().startsWith("return"));
-    }
-
-    private boolean isAssumption(AbstractCodeFragment abstractCodeFragment) {
-        return switch (abstractCodeFragment) {
-            case OperationInvocation op -> op.getMethodName().startsWith("assume");
-            case StatementObject stmt -> stmt.getMethodInvocations().stream().anyMatch(this::isAssumption);
-            case AbstractCall call -> call.getName().startsWith("assume");
-            default -> false;
-        };
-    }
-
     private static boolean hasInvocation(AbstractCodeFragment fragment, String invocation) {
         for (AbstractCall methodInvocation : fragment.getMethodInvocations()) {
             if (methodInvocation.toString().equals(invocation)) {

@@ -39,6 +39,7 @@ import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
 import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
 import gr.uom.java.xmi.diff.ChangeVariableTypeRefactoring;
+import gr.uom.java.xmi.diff.EnforcePreconditionRefactoring;
 import gr.uom.java.xmi.diff.ExtractOperationDetection;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
@@ -4235,6 +4236,43 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		for (AbstractCodeMapping mapping : mappings) {
+			if (mapping.containsReplacement(Replacement.ReplacementType.CONDITIONAL) && mapping.getOperation1().hasTestAnnotation())
+				if (isAssumption(mapping.getFragment2())) {
+					AbstractCodeMapping newMapping = mapping;
+					if (mapping.getFragment1() instanceof AbstractExpression) {
+						CompositeStatementObject conditional = mapping.getFragment1().getParent();
+						if (containsCommonReturn(conditional)) {
+							removeMapping(mapping);
+							newMapping = new LeafMapping(conditional, mapping.getFragment2(), mapping.getOperation1(), mapping.getOperation2());
+							addMapping(newMapping);
+						}
+					}
+					AbstractCall assumptionCall = switch (newMapping.getFragment2()) {
+						case AbstractCall ac -> ac;
+						case StatementObject stmt -> stmt.getMethodInvocations().stream().filter(c->c.getName().startsWith("assume")).findFirst().orElse(null);
+						default -> null;
+					};
+					assert assumptionCall != null : "Assumption call should only pass isAssumption being either an AbstractCall (or an AbstractCall wrapped into a StatementObject)";
+					EnforcePreconditionRefactoring ref = new EnforcePreconditionRefactoring(assumptionCall, newMapping.getFragment1(), newMapping.getOperation1(), newMapping.getOperation2());
+					if (Set.of(RefactoringType.REPLACE_IGNORE_WITH_ASSUMPTION, RefactoringType.REPLACE_CONDITIONAL_WITH_ASSUMPTION, RefactoringType.REPLACE_ASSERTION_WITH_ASSUMPTION).contains(ref.getRefactoringType())) {
+						newMapping.addRefactoring(ref);
+						addMapping(newMapping);
+					}
+				}
+		}
+	}
+	private static boolean containsCommonReturn(CompositeStatementObject conditional) {
+		return conditional.getAllStatements().stream().anyMatch(s->s.getString().startsWith("return"));
+	}
+
+	private boolean isAssumption(AbstractCodeFragment abstractCodeFragment) {
+		return switch (abstractCodeFragment) {
+			case OperationInvocation op -> op.getMethodName().startsWith("assume");
+			case StatementObject stmt -> stmt.getMethodInvocations().stream().anyMatch(this::isAssumption);
+			case AbstractCall call -> call.getName().startsWith("assume");
+			default -> false;
+		};
 	}
 
 	private void handleAdditionalAssertThrowMappings(AbstractCodeMapping firstMapping, AssertThrowsRefactoring ref) {

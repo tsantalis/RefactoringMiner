@@ -1591,7 +1591,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							newCandidate.addSplitMethod(mapper.getContainer2());
 						}
 					}
-					if(exactMappers.size() < mapperSet.size() && exactMappers.size() > 1) {
+					if(exactMappers.size() < mapperSet.size() && exactMappers.size() > 1 && !junit3Migration) {
 						candidateMethodSplits.add(newCandidate);
 					}
 					Map<AbstractCodeFragment, Set<UMLOperationBodyMapper>> uniqueAndCommonMappings = new LinkedHashMap<>();
@@ -1718,6 +1718,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
+						int size = mapperSet.size();
+						betterMatchForAddedOperation(mapperSet, bestMapper);
+						if(mapperSet.size() > size) {
+							bestMapper = findBestMapper(mapperSet);
+						}
 						if(bestMapper != null && !modelDiffContainsConflictingMoveOperationRefactoring(bestMapper) && !potentialExtractFixture(bestMapper) && !conflictWithExtractMethodCandidate(bestMapper)) {
 							removedOperation = bestMapper.getOperation1();
 							UMLOperation addedOperation = bestMapper.getOperation2();
@@ -2023,7 +2028,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							if(mapperSet.size() > mapperSetSize) {
 								bestMapper = findBestMapper(mapperSet);
 							}
-							if(bestMapper != null && !modelDiffContainsConflictingMoveOperationRefactoring(bestMapper) && !potentialExtractFixture(bestMapper)) {
+							if(bestMapper != null && !modelDiffContainsConflictingMoveOperationRefactoring(bestMapper) && !potentialExtractFixture(bestMapper) && !conflictWithExtractMethodCandidate(bestMapper)) {
 								UMLOperation removedOperation = bestMapper.getOperation1();
 								addedOperation = bestMapper.getOperation2();
 								if(mapperSet.size() > mapperSetSize) {
@@ -2114,6 +2119,22 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		return false;
+	}
+
+	private void betterMatchForAddedOperation(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperationBodyMapper mapper) throws RefactoringMinerTimedOutException {
+		if(mapper != null && !mapper.getContainer1().getName().toLowerCase().contains(mapper.getContainer2().getName().toLowerCase())) {
+			List<String> representation2 = mapper.getContainer2().stringRepresentation();
+			for(UMLOperation removedOperation : removedOperations) {
+				if(!removedOperation.equals(mapper.getContainer1()) &&
+						removedOperation.getName().toLowerCase().contains(mapper.getContainer2().getName().toLowerCase())) {
+					List<String> representation1 = removedOperation.stringRepresentation();
+					if(representation1.containsAll(representation2)) {
+						UMLOperationBodyMapper newMapper = new UMLOperationBodyMapper(removedOperation, mapper.getOperation2(), this);
+						mapperSet.add(newMapper);
+					}
+				}
+			}
+		}
 	}
 
 	private boolean potentialExtractFixture(UMLOperationBodyMapper mapper) {

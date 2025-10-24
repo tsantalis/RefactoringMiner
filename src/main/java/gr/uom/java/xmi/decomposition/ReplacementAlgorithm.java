@@ -3072,6 +3072,30 @@ public class ReplacementAlgorithm {
 						}
 					}
 				}
+				if(invocationCoveringTheEntireStatement1.arguments().size() == 1 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(" == ")) {
+					String assertTrueArgument = invocationCoveringTheEntireStatement1.arguments().get(0);
+					String arg1 = assertTrueArgument.substring(0, assertTrueArgument.indexOf(" == "));
+					String arg2 = assertTrueArgument.substring(assertTrueArgument.indexOf(" == ") + " == ".length(), assertTrueArgument.length());
+					if(invocationCoveringTheEntireStatement2.arguments().contains(arg1) && invocationCoveringTheEntireStatement2.arguments().contains(arg2)) {
+						Replacement replacement = new MethodInvocationReplacement(
+								invocationCoveringTheEntireStatement1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
+								invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
+						replacementInfo.addReplacement(replacement);
+						return replacementInfo.getReplacements();
+					}
+				}
+				else if(invocationCoveringTheEntireStatement1.arguments().size() == 1 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(".equals(")) {
+					String assertTrueArgument = invocationCoveringTheEntireStatement1.arguments().get(0);
+					String arg1 = assertTrueArgument.substring(0, assertTrueArgument.indexOf(".equals("));
+					String arg2 = assertTrueArgument.substring(assertTrueArgument.indexOf(".equals(") + ".equals(".length(), assertTrueArgument.length()-1); // -1 to exclude the closing parenthesis
+					if(invocationCoveringTheEntireStatement2.arguments().contains(arg1) && invocationCoveringTheEntireStatement2.arguments().contains(arg2)) {
+						Replacement replacement = new MethodInvocationReplacement(
+								invocationCoveringTheEntireStatement1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
+								invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
+						replacementInfo.addReplacement(replacement);
+						return replacementInfo.getReplacements();
+					}
+				}
 			}
 		}
 		//check if the class instance creation in the first statement is the expression of the method invocation in the second statement

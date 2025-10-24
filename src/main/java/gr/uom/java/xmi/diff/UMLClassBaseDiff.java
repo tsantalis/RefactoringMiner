@@ -1420,6 +1420,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	private void checkForOperationSignatureChanges() throws RefactoringMinerTimedOutException {
+		boolean junit3Migration = nextClass.importsType("org.junit.Test") != originalClass.importsType("org.junit.Test");
 		if(parameterTypeChanges(removedOperations, addedOperations)) {
 			this.consistentMethodInvocationRenames = new HashMap<MethodInvocationReplacement, UMLOperationBodyMapper>();
 			Set<VariableDeclarationContainer> removedOperationsToBeRemoved = new LinkedHashSet<>();
@@ -1544,7 +1545,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					UMLOperation addedOperation = addedOperationIterator.next();
 					if((removedOperation.hasTestAnnotation() && addedOperation.getAnnotations().isEmpty()) ||
 							(addedOperation.hasTestAnnotation() && removedOperation.getAnnotations().isEmpty())) {
-						continue;
+						// exclude case of JUnit 3 to JUnit 4 migration
+						if(!junit3Migration)
+							continue;
 					}
 					if(!containsMapperForOperation1(removedOperation) && !containsMapperForOperation2(addedOperation) && !existingMapperDelegatesToAddedOperation(addedOperation) &&
 							removedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD) {
@@ -1796,7 +1799,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					UMLOperation removedOperation = removedOperationIterator.next();
 					if((removedOperation.hasTestAnnotation() && addedOperation.getAnnotations().isEmpty()) ||
 							(addedOperation.hasTestAnnotation() && removedOperation.getAnnotations().isEmpty())) {
-						continue;
+						// exclude case of JUnit 3 to JUnit 4 migration
+						if(!junit3Migration)
+							continue;
 					}
 					if(!containsMapperForOperation1(removedOperation) && !containsMapperForOperation2(addedOperation) &&
 							removedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD) {

@@ -1516,7 +1516,7 @@ public class ReplacementAlgorithm {
 					replacementsToBeRemoved.add(replacement);
 					replacementsToBeAdded.addAll(r2);
 				}
-				Set<Replacement> r3 = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), numberLiterals1, variables2, operationBodyMapper.getParameterToArgumentMap1(), LANG);
+				Set<Replacement> r3 = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), numberLiterals1, variables2, operationBodyMapper.getParameterToArgumentMap1());
 				if(!r3.isEmpty()) {
 					replacementsToBeRemoved.add(replacement);
 					replacementsToBeAdded.addAll(r3);

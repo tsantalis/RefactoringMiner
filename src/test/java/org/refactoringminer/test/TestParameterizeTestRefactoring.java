@@ -429,10 +429,10 @@ class TestParameterizeTestRefactoring {
         void setUp() throws RefactoringMinerTimedOutException {
             String originalSourceCode = new TestSrcCodeBuilder().testMethod("testMethod_A")
                     .statement("assertNotEquals(\"A\", null);")
-                    .statement("assertNotEquals(\"B\", null);")
+                    .statement("assertEquals(\"B\", null);")
                     .testMethod("testMethod_B")
                     .statement("assertNotEquals(\"C\", null);")
-                    .statement("assertNotEquals(\"D\", null);")
+                    .statement("assertEquals(\"D\", null);")
                     .build();
             Path csvPath = dir.resolve("file.csv");
             String newSourceCode = new TestSrcCodeBuilder().testMethod("testMethod")
@@ -441,7 +441,7 @@ class TestParameterizeTestRefactoring {
                     .parameter("String param1")
                     .parameter("String param2")
                     .statement("assertNotEquals(param1, null);")
-                    .statement("assertNotEquals(param2, null);")
+                    .statement("assertEquals(param2, null);")
                     .build();
             try {
                 FileWriter fileWriter = new FileWriter(csvPath.toFile());

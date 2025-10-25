@@ -1356,7 +1356,8 @@ public class TestStatementMappings {
 		"https://github.com/javaparser/javaparser.git, acdac6790f4424f8097b3aa6c888e825cac485f9, inferTypes, true, javaparser-acdac6790f4424f8097b3aa6c888e825cac485f9.txt",
 		"https://github.com/apache/lucene-solr.git, 4f6469b17387fb1ee05a8304c80ff607cdce7bc1, expandRoot, true, lucene-solr-4f6469b17387fb1ee05a8304c80ff607cdce7bc1.txt",
 		"https://github.com/apache/kafka.git, d171ff08a70f9fa8065e6661fcc1f3da092d7faf, testRejectMinIsrChangeWhenElrEnabled, true, kafka-d171ff08a70f9fa8065e6661fcc1f3da092d7faf.txt",
-		"https://github.com/apache/flink.git, 583722e721a121fa7a6787fe5acb47949b30454a, testCreateAndReuseFiles, true, flink-583722e721a121fa7a6787fe5acb47949b30454a.txt"
+		"https://github.com/apache/flink.git, 583722e721a121fa7a6787fe5acb47949b30454a, testCreateAndReuseFiles, true, flink-583722e721a121fa7a6787fe5acb47949b30454a.txt",
+		"https://github.com/tsantalis/RefactoringMiner.git, 1b15f4a76b5aaad9959866fa10dcd815934e1789, findReplacementsWithExactMatching, true, miner-1b15f4a76b5aaad9959866fa10dcd815934e1789.txt",
 	})
 	public void testRestructuredStatementMappings(String url, String commitId, String containerName, boolean breakOnFirstMatch, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

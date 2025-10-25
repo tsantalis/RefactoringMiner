@@ -2278,25 +2278,44 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		Map<Integer, Integer> matchingTestParameters = new LinkedHashMap<>();
 		for(Replacement r : replacements) {
 			if(parameterNames.contains(r.getAfter())) {
-				String paramsWithoutDoubleQuotes = sanitizeStringLiteral(r.getBefore());
-				for (int parameterRow = 0; parameterRow < testParameters.size(); parameterRow++) {
-					if (testParameters.get(parameterRow).contains(paramsWithoutDoubleQuotes) ||
-							testParameters.get(parameterRow).contains(r.getBefore())) {
-						Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
-						matchingTestParameters.put(parameterRow, previousValue + 1);
-					}
-					else if (paramsWithoutDoubleQuotes.contains(".")) {
-						for(String s : testParameters.get(parameterRow)) {
-							if(paramsWithoutDoubleQuotes.endsWith("." + s)) {
-								Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
-								matchingTestParameters.put(parameterRow, previousValue + 1);
-							}
+				String before = r.getBefore();
+				matchParamsWithReplacement(before, testParameters, matchingTestParameters);
+			}
+			if(r instanceof MethodInvocationReplacement) {
+				MethodInvocationReplacement m = (MethodInvocationReplacement)r;
+				AbstractCall invocationBefore = m.getInvokedOperationBefore();
+				AbstractCall invocationAfter = m.getInvokedOperationAfter();
+				if(invocationBefore.arguments().size() == invocationAfter.arguments().size()) {
+					for(int i=0; i<invocationBefore.arguments().size(); i++) {
+						String argumentBefore = invocationBefore.arguments().get(i);
+						String argumentAfter = invocationAfter.arguments().get(i);
+						if(parameterNames.contains(argumentAfter)) {
+							matchParamsWithReplacement(argumentBefore, testParameters, matchingTestParameters);
 						}
 					}
 				}
 			}
 		}
 		return matchingTestParameters;
+	}
+
+	private static void matchParamsWithReplacement(String before, List<List<String>> testParameters, Map<Integer, Integer> matchingTestParameters) {
+		String paramsWithoutDoubleQuotes = sanitizeStringLiteral(before);
+		for (int parameterRow = 0; parameterRow < testParameters.size(); parameterRow++) {
+			if (testParameters.get(parameterRow).contains(paramsWithoutDoubleQuotes) ||
+					testParameters.get(parameterRow).contains(before)) {
+				Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
+				matchingTestParameters.put(parameterRow, previousValue + 1);
+			}
+			else if (paramsWithoutDoubleQuotes.contains(".")) {
+				for(String s : testParameters.get(parameterRow)) {
+					if(paramsWithoutDoubleQuotes.endsWith("." + s)) {
+						Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
+						matchingTestParameters.put(parameterRow, previousValue + 1);
+					}
+				}
+			}
+		}
 	}
 
 	public static String sanitizeStringLiteral(String expression) {

@@ -376,11 +376,11 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **October 19, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **October 25, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12511  | 13  | 219  | 0.999  | 0.983|
+|**Total**|12512  | 13  | 219  | 0.999  | 0.983|
 |Extract Method|1016  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
@@ -407,7 +407,7 @@ As of **October 19, 2025** the precision and recall of RefactoringMiner on this 
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|325  |  0  |  0  | 1.000  | 1.000|
-|Extract Attribute|25  |  0  |  0  | 1.000  | 1.000|
+|Extract Attribute|26  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|147  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|340  |  2  | 11  | 0.994  | 0.969|

@@ -7251,6 +7251,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 									leafIterator1.remove();
 								}
+								else if(mappingSet.size() > 1 && internalParameterizeTest(mappingSet) && mappingsWithSameReplacementTypes(mappingSet)) {
+									Set<AbstractCodeMapping> multiMappings = new LinkedHashSet<AbstractCodeMapping>();
+									for(AbstractCodeMapping mapping : mappingSet) {
+										multiMappings.add(mapping);
+										addToMappings((LeafMapping) mapping, mappingSet);
+										leaves2.remove(mapping.getFragment2());
+									}
+									this.internalParameterizeTestMultiMappings.add(multiMappings);
+									leafIterator1.remove();
+								}
 								else {
 									LeafMapping minStatementMapping = mappingSet.first();
 									if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
@@ -7745,7 +7755,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									checkForMatchingMergedVariableDeclaration(leaf2, leaves1, parameterToArgumentMap, equalNumberOfAssertions);
 									checkForSwitchExpressionMatches(movedOutOfIfElseBranch, leaves2);
 								}
-								else if(internalParameterizeTest(mappingSet) && mappingSet.size() > 1) {
+								else if(mappingSet.size() > 1 && internalParameterizeTest(mappingSet) && mappingsWithSameReplacementTypes(mappingSet)) {
 									Set<AbstractCodeMapping> multiMappings = new LinkedHashSet<AbstractCodeMapping>();
 									for(AbstractCodeMapping mapping : mappingSet) {
 										multiMappings.add(mapping);
@@ -10295,6 +10305,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				preprocessInput2(leaf1, leaf2),
 				l1, l2);
 		return replacementInfo;
+	}
+
+	private boolean mappingsWithSameReplacementTypes(Set<LeafMapping> mappingSet) {
+		if(mappingSet.size() > 1) {
+			Set<ReplacementType> replacementTypes = null;
+			Set<LeafMapping> mappingsWithSameReplacementTypes = new LinkedHashSet<LeafMapping>();
+			for(LeafMapping mapping : mappingSet) {
+				if(replacementTypes == null) {
+					replacementTypes = mapping.getReplacementTypes();
+					mappingsWithSameReplacementTypes.add(mapping);
+				}
+				else if(mapping.getReplacementTypes().equals(replacementTypes)) {
+					mappingsWithSameReplacementTypes.add(mapping);
+				}
+			}
+			if(mappingsWithSameReplacementTypes.size() == mappingSet.size()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean variableDeclarationMappingsWithSameReplacementTypes(Set<LeafMapping> mappingSet) {

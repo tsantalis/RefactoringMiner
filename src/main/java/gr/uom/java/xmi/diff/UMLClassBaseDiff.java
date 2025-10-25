@@ -1589,7 +1589,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							newCandidate.addSplitMethod(mapper.getContainer2());
 						}
 					}
-					if(exactMappers.size() < mapperSet.size() && exactMappers.size() > 1 && !junit3Migration) {
+					if(exactMappers.size() < mapperSet.size() && exactMappers.size() > 1) {
 						candidateMethodSplits.add(newCandidate);
 					}
 					Map<AbstractCodeFragment, Set<UMLOperationBodyMapper>> uniqueAndCommonMappings = new LinkedHashMap<>();

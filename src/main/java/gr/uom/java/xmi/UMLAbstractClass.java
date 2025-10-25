@@ -92,6 +92,9 @@ public abstract class UMLAbstractClass {
 
 	public void addOperation(UMLOperation operation) {
 		this.operations.add(operation);
+		if(importsType("junit.framework.TestCase")) {
+			operation.setImportsTestCase(true);
+		}
 		List<String> signature = operation.getSignatureIdentifiers();
 		if(operationIdentifierSignatureMap.containsKey(signature)) {
 			operationIdentifierSignatureMap.put(signature, operationIdentifierSignatureMap.get(signature) + 1);

@@ -502,12 +502,12 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Split Method`
 * `Replace Anonymous With Class`
 
-As of **October 19, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **October 26, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3392  | 64  | 136  | 0.981  | 0.961|
-|Extract Method|369  |  2  |  8  | 0.995  | 0.979|
+|**Total**|3393  | 63  | 132  | 0.982  | 0.963|
+|Extract Method|370  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|232  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
 |Move And Rename Attribute| 7  |  0  |  1  | 1.000  | 0.875|

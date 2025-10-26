@@ -311,22 +311,22 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate getLeft() : T extracted from private appendFields(clazz Class<?>) : void in class org.apache.commons.lang3.builder.ReflectionDiffBuilder",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate getLeft() : T extracted from public build() : DiffResult<T> in class org.apache.commons.lang3.builder.ReflectionDiffBuilder",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate getRight() : T extracted from private appendFields(clazz Class<?>) : void in class org.apache.commons.lang3.builder.ReflectionDiffBuilder",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate getRight() : T extracted from public build() : DiffResult<T> in class org.apache.commons.lang3.builder.ReflectionDiffBuilder",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [

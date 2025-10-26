@@ -36,6 +36,16 @@ public class CsvSourceAnnotation extends SourceAnnotation implements NormalAnnot
             return result;
         } else if (annotation.isNormalAnnotation()) {
             Map<String, AbstractExpression> parameters = annotation.getMemberValuePairs();
+            String delimiter = null;
+            if (parameters.containsKey("delimiterString")) {
+            	AbstractExpression expression = parameters.get("delimiterString");
+            	if(expression.getStringLiterals().size() > 0) {
+            		delimiter = expression.getStringLiterals().get(0).getString();
+            		if(delimiter.startsWith("\"") && delimiter.endsWith("\"")) {
+            			delimiter = delimiter.substring(1, delimiter.length()-1); // remove surrounding double quotes
+            		}
+            	}
+            }
             if (parameters.containsKey("value")) {
                 // Value is a list of string literals as expected
                 for (LeafExpression literal : parameters.get("value").getStringLiterals()) {
@@ -43,11 +53,20 @@ public class CsvSourceAnnotation extends SourceAnnotation implements NormalAnnot
                     testParameterLeafExpressions.add(List.of(literal));
                 }
             } else if (parameters.containsKey("textBlock")) {
-                List<LeafExpression> textBlock = parameters.get("textBlock").getStringLiterals();
+                List<LeafExpression> textBlock = parameters.get("textBlock").getTextBlocks();
                 if (textBlock.size() == 1) {
                     // Text block is a single multi-line string literal as expected
                     for (String line : textBlock.get(0).getString().split("[\\r\\n]+")) {
-                        result.add(line);
+                    	// skip """ and # comments
+                    	String raw = line.strip();
+						if(!raw.equals("\"\"\"") && !raw.startsWith("#")) {
+							if(delimiter != null) {
+								result.add(raw.replace(delimiter, ",")); // format with commas as standard csv
+							}
+							else {
+								result.add(raw);
+							}
+                    	}
                     }
                     testParameterLeafExpressions.add(List.of(textBlock.get(0)));
                 } else if (textBlock.size() > 1) {

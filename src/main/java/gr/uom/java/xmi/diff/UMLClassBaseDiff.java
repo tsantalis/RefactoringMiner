@@ -2294,6 +2294,16 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 				}
+				else if(invocationBefore.identicalName(invocationAfter)) {
+					int min = Math.min(invocationBefore.arguments().size(), invocationAfter.arguments().size());
+					for(int i=0; i<min; i++) {
+						String argumentBefore = invocationBefore.arguments().get(i);
+						String argumentAfter = invocationAfter.arguments().get(i);
+						if(parameterNames.contains(argumentAfter)) {
+							matchParamsWithReplacement(argumentBefore, testParameters, matchingTestParameters);
+						}
+					}
+				}
 			}
 		}
 		return matchingTestParameters;

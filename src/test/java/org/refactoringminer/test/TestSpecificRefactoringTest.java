@@ -105,7 +105,7 @@ public class TestSpecificRefactoringTest {
             https://github.com/uber/h3-java.git,8b9d3f230393b4a89a21545745754eeb46f56516,/src/test/java/com/uber/h3core/TestH3CoreSystemInstance.java,35
             """)
     void testAssumptionIntroducingRefactoring(String url,String currentCommit,String filepath,int line) throws Exception {
-        Assumptions.assumeTrue(Set.of("32044d9522b881ae1b4723667695c9c01ea342aa", "e4254e385dea9b915ad74d0c8a0375848e9279f0", "ed67eeac4f9e0e8710e174db2df6da7985790240", "8b9d3f230393b4a89a21545745754eeb46f56516").contains(currentCommit));
+        Assumptions.assumeTrue(Set.of("32044d9522b881ae1b4723667695c9c01ea342aa", "e4254e385dea9b915ad74d0c8a0375848e9279f0", "ed67eeac4f9e0e8710e174db2df6da7985790240", "8b9d3f230393b4a89a21545745754eeb46f56516", "f47bbb0d9e8023590c0fd965acb009719aea6b67", "efc2eed5b0ddb889e39049bc64628772034f91a3").contains(currentCommit));
         System.out.println(url + " " + currentCommit + " " + filepath + " " + line);
         String projectName = url.substring(url.lastIndexOf("/") + 1, url.length() - 4);
         String pathToClonedRepository = System.getProperty("user.dir") + "/tmp/" + projectName;

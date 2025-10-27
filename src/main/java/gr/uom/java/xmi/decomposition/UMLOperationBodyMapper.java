@@ -4239,34 +4239,43 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Set<AbstractCodeMapping> assumptionMappings = new HashSet<>();
 		for (Iterator<AbstractCodeMapping> it = mappings.iterator(); it.hasNext();) {
 			AbstractCodeMapping mapping = it.next();
-			if ((mapping.containsReplacement(ReplacementType.CONDITIONAL) || mapping.containsReplacement(ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION)) && (mapping.getOperation1().hasTestAnnotation() || mapping.getOperation1().hasSetUpAnnotation())) {
-				if (isAssumption(mapping.getFragment2())) {
-					AbstractCodeMapping newMapping = mapping;
-					if (mapping.getFragment1() instanceof AbstractExpression) {
-						CompositeStatementObject conditional = mapping.getFragment1().getParent();
-						if (containsCommonReturn(conditional)) {
-							newMapping = new LeafMapping(conditional, mapping.getFragment2(), mapping.getOperation1(), mapping.getOperation2());
-							// Make mapping subExpressionMapping of newMapping
-							newMapping.addSubExpressionMapping((LeafMapping) mapping);
-						}
-					}
-					AbstractCall assumptionCall = switch (newMapping.getFragment2()) {
-						case AbstractCall ac -> ac;
-						case StatementObject stmt -> stmt.getMethodInvocations().stream().filter(c->c.getName().startsWith("assume")).findFirst().orElse(null);
-						default -> null;
-					};
-					assert assumptionCall != null : "Assumption call should only pass isAssumption being either an AbstractCall (or an AbstractCall wrapped into a StatementObject)";
-					ExtractPreconditionRefactoring ref = new ExtractPreconditionRefactoring(assumptionCall, newMapping.getFragment1(), newMapping.getOperation1(), newMapping.getOperation2());
-					if (Set.of(RefactoringType.REPLACE_IGNORE_WITH_ASSUMPTION, RefactoringType.REPLACE_CONDITIONAL_WITH_ASSUMPTION, RefactoringType.REPLACE_ASSERTION_WITH_ASSUMPTION).contains(ref.getRefactoringType())) {
-						newMapping.addRefactoring(ref);
+			if ((mapping.getOperation1().hasTestAnnotation() || mapping.getOperation1().hasSetUpAnnotation()) && (mapping.getOperation2().hasTestAnnotation() || mapping.getOperation2().hasSetUpAnnotation())) {
+				if ((mapping.containsReplacement(ReplacementType.INVERT_CONDITIONAL) || mapping.containsReplacement(ReplacementType.CONDITIONAL) || mapping.containsReplacement(ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION))) {
+					checkForExtractedPrecondition(mapping).ifPresent(m -> {
 						// Replace mapping with newMapping
 						it.remove();
-						assumptionMappings.add(newMapping);
-					}
+						assumptionMappings.add(m);
+					});
 				}
 			}
 		}
 		assumptionMappings.forEach(this::addMapping);
+	}
+
+	private Optional<AbstractCodeMapping> checkForExtractedPrecondition(AbstractCodeMapping mapping) {
+		if (isAssumption(mapping.getFragment2())) {
+			AbstractCodeMapping newMapping = mapping;
+			if (mapping.getFragment1() instanceof AbstractExpression) {
+				CompositeStatementObject conditional = mapping.getFragment1().getParent();
+				if (containsCommonReturn(conditional)) {
+					newMapping = new LeafMapping(conditional, mapping.getFragment2(), mapping.getOperation1(), mapping.getOperation2());
+					// Make mapping subExpressionMapping of newMapping
+					newMapping.addSubExpressionMapping((LeafMapping) mapping);
+				}
+			}
+			AbstractCall assumptionCall = switch (newMapping.getFragment2()) {
+				case AbstractCall ac -> ac;
+				case StatementObject stmt -> stmt.getMethodInvocations().stream().filter(c->c.getName().startsWith("assume")).findFirst().orElse(null);
+				default -> null;
+			};
+			assert assumptionCall != null : "Assumption call should only pass isAssumption being either an AbstractCall (or an AbstractCall wrapped into a StatementObject)";
+			ExtractPreconditionRefactoring ref = new ExtractPreconditionRefactoring(assumptionCall, newMapping.getFragment1(), newMapping.getOperation1(), newMapping.getOperation2());
+			if (Set.of(RefactoringType.REPLACE_IGNORE_WITH_ASSUMPTION, RefactoringType.REPLACE_CONDITIONAL_WITH_ASSUMPTION, RefactoringType.REPLACE_ASSERTION_WITH_ASSUMPTION).contains(ref.getRefactoringType())) {
+				newMapping.addRefactoring(ref);
+				return Optional.of(newMapping);
+			}
+		}
+		return Optional.empty();
 	}
 	private static boolean containsCommonReturn(CompositeStatementObject conditional) {
 		return conditional.getAllStatements().stream().anyMatch(s->s.getString().startsWith("return"));

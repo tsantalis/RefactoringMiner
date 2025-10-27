@@ -22,9 +22,6 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
-import gr.uom.java.xmi.decomposition.AbstractStatement;
-import gr.uom.java.xmi.decomposition.CompositeStatementObjectMapping;
-import gr.uom.java.xmi.decomposition.LeafMapping;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.refactoringminer.api.Refactoring;
@@ -214,37 +211,25 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
         }
 		for (UMLOperationBodyMapper testMapper : testMappers) {
 			for (UMLOperation addedOperationWithNonMappedLeaves : addedOperationsWithNonMappedLeaves) {
+				boolean detected = false;
 				UMLOperationBodyMapper extractFixtureMapper = new UMLOperationBodyMapper(testMapper, addedOperationWithNonMappedLeaves, this);
-				for (CompositeStatementObject compositeStatementObject : testMapper.getNonMappedInnerNodesT1()) {
-					CompositeStatementObject methodBody = testMapper.getOperation1().getBody().getCompositeStatement();
-					if (isOnlyStatementInMethodBody(compositeStatementObject, methodBody) || endsWithReturnStatement(compositeStatementObject, methodBody)) {
-						for (AbstractCodeFragment abstractCodeFragment : extractFixtureMapper.getNonMappedLeavesT2()) {
-							for (AbstractCall methodInvocation : abstractCodeFragment.getMethodInvocations()) {
-								if (methodInvocation.getName().startsWith("assume")) {
-									for (AbstractExpression expression : compositeStatementObject.getExpressions()) {
-										for (String argument : methodInvocation.arguments()) {
-											if (expression.getString().equals(argument)) {
-												ExtractPreconditionRefactoring extractPreconditionRefactoring = new ExtractPreconditionRefactoring(methodInvocation, compositeStatementObject, testMapper.getOperation1(), addedOperationWithNonMappedLeaves);
-												ExtractOperationRefactoring extractFixtureRefactoring = new ExtractOperationRefactoring(extractFixtureMapper, testMapper.getOperation2(), List.of());
-												extractFixtureMapper.addMapping(new LeafMapping(compositeStatementObject, methodInvocation, testMapper.getOperation1(), addedOperationWithNonMappedLeaves));
-												if (!operationBodyMapperList.contains(extractFixtureMapper)) {
-													operationBodyMapperList.add(extractFixtureMapper);
-													refactorings.add(extractFixtureRefactoring);
-													refactorings.add(extractPreconditionRefactoring);
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
+                for (Iterator<CompositeStatementObject> iterator = testMapper.getNonMappedInnerNodesT1().iterator(); iterator.hasNext(); ) {
+                    CompositeStatementObject compositeStatementObject = iterator.next();
+                    CompositeStatementObject methodBody = testMapper.getOperation1().getBody().getCompositeStatement();
+                    if (isTheOnlyStatementInMethodBody(compositeStatementObject, methodBody) || endsWithReturnStatement(compositeStatementObject, methodBody)) {
+                        extractFixtureMapper.detectMatchingNonMappedExpression(compositeStatementObject, testMapper.getOperation2());
+						iterator.remove();
+                        detected = true;
+                    }
+                }
+				if (detected) {
+					operationBodyMapperList.add(extractFixtureMapper);
 				}
 			}
 		}
 	}
 
-	private static boolean isOnlyStatementInMethodBody(CompositeStatementObject compositeStatementObject, CompositeStatementObject methodBody) {
+	private static boolean isTheOnlyStatementInMethodBody(CompositeStatementObject compositeStatementObject, CompositeStatementObject methodBody) {
 		return methodBody.getStatements().size() == 1 && methodBody.getStatements().get(0).equals(compositeStatementObject);
 	}
 

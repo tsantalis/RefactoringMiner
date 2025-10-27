@@ -10714,6 +10714,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return argumentizedString;
 	}
 
+	public void detectMatchingNonMappedExpression(CompositeStatementObject ifStatement, UMLOperation sourceOperationAfterExtraction) {
+        for (Iterator<AbstractCodeFragment> iterator = getNonMappedLeavesT2().iterator(); iterator.hasNext(); ) {
+            AbstractCodeFragment abstractCodeFragment = iterator.next();
+            for (AbstractCall methodInvocation : abstractCodeFragment.getMethodInvocations()) {
+                if (isAssumption(methodInvocation)) {
+					LeafMapping mappingCandidate = new LeafMapping(ifStatement, methodInvocation, getOperation1(), getOperation2());
+					for (AbstractExpression expression : ifStatement.getExpressions()) {
+						for (String argument : methodInvocation.arguments()) {
+							if (expression.getString().equals(argument)) {
+								addMapping(mappingCandidate);
+								iterator.remove();
+                                refactorings.add(new ExtractOperationRefactoring(this, sourceOperationAfterExtraction, List.of()));
+                                refactorings.add(new ExtractPreconditionRefactoring(methodInvocation, ifStatement, getOperation1(), getOperation2()));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+	}
+
 	protected static class ReplacementInfo {
 		private String argumentizedString1;
 		private String argumentizedString2;

@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public class EnforcePreconditionRefactoring implements Refactoring {
+public class ExtractPreconditionRefactoring implements Refactoring {
     private AbstractCall assumption;
     private LocationInfoProvider replacedElement;
     private VariableDeclarationContainer operationBefore;
     private VariableDeclarationContainer operationAfter;
 
-    public EnforcePreconditionRefactoring(AbstractCall assumption, LocationInfoProvider replacedElement, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
+    public ExtractPreconditionRefactoring(AbstractCall assumption, LocationInfoProvider replacedElement, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
         this.assumption = assumption;
         this.replacedElement = replacedElement;
         this.operationBefore = operationBefore;
@@ -138,7 +138,7 @@ public class EnforcePreconditionRefactoring implements Refactoring {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        EnforcePreconditionRefactoring other = (EnforcePreconditionRefactoring) obj;
+        ExtractPreconditionRefactoring other = (ExtractPreconditionRefactoring) obj;
         return Objects.equals(assumption, other.assumption) && Objects.equals(replacedElement, other.replacedElement) && Objects.equals(operationBefore, other.operationBefore) && Objects.equals(operationAfter, other.operationAfter);
     }
 

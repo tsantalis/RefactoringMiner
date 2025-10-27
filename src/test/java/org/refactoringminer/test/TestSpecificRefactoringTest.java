@@ -114,6 +114,20 @@ public class TestSpecificRefactoringTest {
         Assertions.assertFalse(refactorings.isEmpty());
     }
 
+    @ParameterizedTest
+    @CsvSource(textBlock = """
+            https://github.com/uber/h3-java.git,8b9d3f230393b4a89a21545745754eeb46f56516,/src/test/java/com/uber/h3core/TestH3CoreSystemInstance.java,35
+            """)
+    void testExtractFixtureRefactoring(String url,String currentCommit,String filepath,int line) throws Exception {
+        System.out.println(url + " " + currentCommit + " " + filepath + " " + line);
+        String projectName = url.substring(url.lastIndexOf("/") + 1, url.length() - 4);
+        String pathToClonedRepository = System.getProperty("user.dir") + "/tmp/" + projectName;
+        Set<RefactoringType> expectedRefactoringTypes = Set.of(RefactoringType.EXTRACT_FIXTURE);
+        UMLModelDiff modelDiff = new GitHistoryRefactoringMinerImpl().diffAtCommit(new GitServiceImpl().cloneIfNotExists(pathToClonedRepository, url), currentCommit).getModelDiff();
+        List<Refactoring> refactorings = modelDiff.getRefactorings().stream().filter(ref -> expectedRefactoringTypes.contains(ref.getRefactoringType())).toList();
+        Assertions.assertFalse(refactorings.isEmpty());
+    }
+
     private static boolean hasInvocation(AbstractCodeFragment fragment, String invocation) {
         for (AbstractCall methodInvocation : fragment.getMethodInvocations()) {
             if (methodInvocation.toString().equals(invocation)) {

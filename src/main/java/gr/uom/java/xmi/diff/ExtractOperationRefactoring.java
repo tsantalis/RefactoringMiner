@@ -440,6 +440,11 @@ public class ExtractOperationRefactoring implements Refactoring {
 	}
 
 	public RefactoringType getRefactoringType() {
+		if (extractedOperationInvocations.isEmpty() && extractedOperation.getLocationInfo().getFilePath().equals(sourceOperationBeforeExtraction.getLocationInfo().getFilePath()) && extractedOperation.getLocationInfo().getFilePath().equals(sourceOperationAfterExtraction.getLocationInfo().getFilePath())) {
+			if (extractedOperation.hasSetUpAnnotation() || extractedOperation.getName().equals("setUp") || extractedOperation.getName().equals("prepare") || extractedOperation.hasTearDownAnnotation() || extractedOperation.getName().equals("tearDown")) {
+				return RefactoringType.EXTRACT_FIXTURE;
+			}
+		}
 		if(!getSourceOperationAfterExtraction().getClassName().equals(getExtractedOperation().getClassName()))
 			return RefactoringType.EXTRACT_AND_MOVE_OPERATION;
 		return RefactoringType.EXTRACT_OPERATION;

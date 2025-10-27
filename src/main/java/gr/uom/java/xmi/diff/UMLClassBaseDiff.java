@@ -22,6 +22,9 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
+import gr.uom.java.xmi.decomposition.AbstractStatement;
+import gr.uom.java.xmi.decomposition.CompositeStatementObjectMapping;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.refactoringminer.api.Refactoring;
@@ -185,6 +188,61 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		checkForExtractedOperationsWithCallsInOtherMappers();
 		checkForInlinedOperationsToExtractedOperations(extractedbodyMappers);
 		checkForMovedCodeBetweenOperations();
+		checkForExtractedTestFixtures();
+	}
+
+	private void checkForExtractedTestFixtures() throws RefactoringMinerTimedOutException {
+		List<UMLOperation> addedOperationsWithNonMappedLeaves = new ArrayList<>();
+		addedOperationsWithNonMappedLeaves.addAll(addedOperations);
+		List<UMLOperationBodyMapper> testMappers = new ArrayList<>();
+		for (UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			if(isTestMethodMapping(mapper) && mapper.nonMappedElementsT1() > 0) {
+				testMappers.add(mapper);
+			}
+            if (addedOperationsWithNonMappedLeaves.contains(mapper.getOperation1())) {
+				addedOperationsWithNonMappedLeaves.remove(mapper.getOperation1());
+            }
+			if (addedOperationsWithNonMappedLeaves.contains(mapper.getOperation2())) {
+				addedOperationsWithNonMappedLeaves.remove(mapper.getOperation2());
+            }
+		}
+        for (Iterator<UMLOperation> iterator = addedOperationsWithNonMappedLeaves.iterator(); iterator.hasNext(); ) {
+            UMLOperation addedOperation = iterator.next();
+            if (!isSetUpMethod(addedOperation)) {
+				iterator.remove();
+            }
+        }
+		for (UMLOperationBodyMapper testMapper : testMappers) {
+			for (UMLOperation addedOperationWithNonMappedLeaves : addedOperationsWithNonMappedLeaves) {
+				UMLOperationBodyMapper extractFixtureMapper = new UMLOperationBodyMapper(testMapper, addedOperationWithNonMappedLeaves, this);
+				for (CompositeStatementObject compositeStatementObject : testMapper.getNonMappedInnerNodesT1()) {
+					for (AbstractCodeFragment abstractCodeFragment : extractFixtureMapper.getNonMappedLeavesT2()) {
+						for (AbstractCall methodInvocation : abstractCodeFragment.getMethodInvocations()) {
+							if (methodInvocation.getName().startsWith("assume")) {
+								for (AbstractExpression expression : compositeStatementObject.getExpressions()) {
+									for (String argument : methodInvocation.arguments()) {
+										if (expression.getString().equals(argument)) {
+											ExtractPreconditionRefactoring extractPreconditionRefactoring = new ExtractPreconditionRefactoring(methodInvocation, compositeStatementObject, testMapper.getOperation1(), addedOperationWithNonMappedLeaves);
+											ExtractOperationRefactoring extractFixtureRefactoring = new ExtractOperationRefactoring(extractFixtureMapper, testMapper.getOperation2(), List.of());
+											extractFixtureMapper.addMapping(new LeafMapping(compositeStatementObject, methodInvocation, testMapper.getOperation1(), addedOperationWithNonMappedLeaves));
+											if (!operationBodyMapperList.contains(extractFixtureMapper)) {
+												operationBodyMapperList.add(extractFixtureMapper);
+												refactorings.add(extractFixtureRefactoring);
+												refactorings.add(extractPreconditionRefactoring);
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private static boolean isTestMethodMapping(UMLOperationBodyMapper mapper) {
+		return mapper.getContainer1().hasTestAnnotation() || mapper.getContainer1().getName().startsWith("test");
 	}
 
 	private void checkForMovedCodeBetweenOperations() throws RefactoringMinerTimedOutException {
@@ -519,6 +577,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		}
 		MappingOptimizer optimizer = new MappingOptimizer(this);
 		optimizer.optimizeDuplicateMappingsForMoveCode(moveCodeMappers, refactorings);
+	}
+
+	private static boolean isSetUpMethod(UMLOperation mapper) {
+		return mapper.hasSetUpAnnotation() || mapper.getName().equals("setUp") || mapper.getName().equals("prepare");
 	}
 
 	private boolean mappingFoundInExtractedMethod(Set<AbstractCodeMapping> mappings) {

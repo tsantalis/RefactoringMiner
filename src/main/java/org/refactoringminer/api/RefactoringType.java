@@ -118,7 +118,8 @@ public enum RefactoringType {
 	REPLACE_CONDITIONAL_WITH_TERNARY("Replace Conditional With Ternary", "Replace Conditional With Ternary (.+) to (.+) in method (.+) from class (.+)"),
 	REPLACE_CONDITIONAL_WITH_ASSUMPTION("Replace Conditional With Assumption", "Replace Conditional With Assumption (.+) to (.+) in method (.+) from class (.+)"),
 	REPLACE_ASSERTION_WITH_ASSUMPTION("Replace Assertion With Assumption", "Replace Assertion With Assumption (.+) to (.+) in method (.+) from class (.+)"),
-	REPLACE_IGNORE_WITH_ASSUMPTION("Replace Ignore With Assumption", "Replace Ignore With Assumption (.+) to (.+) in method (.+) from class (.+)");
+	REPLACE_IGNORE_WITH_ASSUMPTION("Replace Ignore With Assumption", "Replace Ignore With Assumption (.+) to (.+) in method (.+) from class (.+)"),
+	EXTRACT_FIXTURE("Extract Test Fixture", "Extract Test Fixture (.+) extracted from (.+) in class (.+)");
 
 	private String displayName;
 	private Pattern regex;

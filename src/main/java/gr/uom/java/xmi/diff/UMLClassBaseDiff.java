@@ -185,60 +185,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		checkForExtractedOperationsWithCallsInOtherMappers();
 		checkForInlinedOperationsToExtractedOperations(extractedbodyMappers);
 		checkForMovedCodeBetweenOperations();
-		checkForExtractedTestFixtures();
-	}
-
-	private void checkForExtractedTestFixtures() throws RefactoringMinerTimedOutException {
-		List<UMLOperation> addedOperationsWithNonMappedLeaves = new ArrayList<>();
-		addedOperationsWithNonMappedLeaves.addAll(addedOperations);
-		List<UMLOperationBodyMapper> testMappers = new ArrayList<>();
-		for (UMLOperationBodyMapper mapper : operationBodyMapperList) {
-			if(isTestMethodMapping(mapper) && mapper.nonMappedElementsT1() > 0) {
-				testMappers.add(mapper);
-			}
-            if (addedOperationsWithNonMappedLeaves.contains(mapper.getOperation1())) {
-				addedOperationsWithNonMappedLeaves.remove(mapper.getOperation1());
-            }
-			if (addedOperationsWithNonMappedLeaves.contains(mapper.getOperation2())) {
-				addedOperationsWithNonMappedLeaves.remove(mapper.getOperation2());
-            }
-		}
-        for (Iterator<UMLOperation> iterator = addedOperationsWithNonMappedLeaves.iterator(); iterator.hasNext(); ) {
-            UMLOperation addedOperation = iterator.next();
-            if (!isSetUpMethod(addedOperation)) {
-				iterator.remove();
-            }
-        }
-		for (UMLOperationBodyMapper testMapper : testMappers) {
-			for (UMLOperation addedOperationWithNonMappedLeaves : addedOperationsWithNonMappedLeaves) {
-				boolean detected = false;
-				UMLOperationBodyMapper extractFixtureMapper = new UMLOperationBodyMapper(testMapper, addedOperationWithNonMappedLeaves, this);
-                for (Iterator<CompositeStatementObject> iterator = testMapper.getNonMappedInnerNodesT1().iterator(); iterator.hasNext(); ) {
-                    CompositeStatementObject compositeStatementObject = iterator.next();
-                    CompositeStatementObject methodBody = testMapper.getOperation1().getBody().getCompositeStatement();
-                    if (isTheOnlyStatementInMethodBody(compositeStatementObject, methodBody) || endsWithReturnStatement(compositeStatementObject, methodBody)) {
-                        extractFixtureMapper.detectMatchingNonMappedExpression(compositeStatementObject, testMapper.getOperation2());
-						iterator.remove();
-                        detected = true;
-                    }
-                }
-				if (detected) {
-					operationBodyMapperList.add(extractFixtureMapper);
-				}
-			}
-		}
-	}
-
-	private static boolean isTheOnlyStatementInMethodBody(CompositeStatementObject compositeStatementObject, CompositeStatementObject methodBody) {
-		return methodBody.getStatements().size() == 1 && methodBody.getStatements().get(0).equals(compositeStatementObject);
-	}
-
-	private static boolean endsWithReturnStatement(CompositeStatementObject compositeStatementObject, CompositeStatementObject methodBody) {
-		return methodBody.getStatements().size() > 1 && compositeStatementObject.getAllStatements().getLast().toString().startsWith("return");
-	}
-
-	private static boolean isTestMethodMapping(UMLOperationBodyMapper mapper) {
-		return mapper.getContainer1().hasTestAnnotation() || mapper.getContainer1().getName().startsWith("test");
 	}
 
 	private void checkForMovedCodeBetweenOperations() throws RefactoringMinerTimedOutException {
@@ -247,6 +193,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		Set<UMLOperationBodyMapper> tearDownMappers = new LinkedHashSet<>();
 		Set<UMLOperationBodyMapper> constructorMappers = new LinkedHashSet<>();
 		List<UMLOperationBodyMapper> moveCodeMappers = new ArrayList<>();
+        List<UMLOperationBodyMapper> extractedTestFixtureMappers = new ArrayList<>();
+
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			if(mapper.getContainer1().hasSetUpAnnotation() && mapper.getContainer2().hasSetUpAnnotation()) {
 				setUpMappers.add(mapper);
@@ -517,21 +465,42 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		for(UMLOperation addedOperation : addedOperations) {
-			if(addedOperation.hasSetUpAnnotation() || addedOperation.hasTearDownAnnotation() ||
-					addedOperation.getName().equals("setUp") || addedOperation.getName().equals("tearDown") || addedOperation.getName().equals("prepare")) {
+            boolean isSetUp = addedOperation.hasSetUpAnnotation() || addedOperation.getName().equals("setUp") || addedOperation.getName().equals("prepare");
+            boolean isTearDown = addedOperation.hasTearDownAnnotation() || addedOperation.getName().equals("tearDown");
+
+            if(isSetUp || isTearDown) {
 				for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 					if(mapper.nonMappedElementsT1() > 0) {
-						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, addedOperation, this);
-						if(moveCodeMapper.getMappings().size() > 0) {
-							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_TO_ADDED);
-							if(!moveCodeMappers.contains(moveCodeMapper))
-								moveCodeMappers.add(moveCodeMapper);
-							refactorings.add(ref);
+                        if (isSetUp && isTestMethodMapping(mapper)) {
+                            boolean detected = false;
+                            UMLOperationBodyMapper extractFixtureMapper = new UMLOperationBodyMapper(mapper, addedOperation, this);
+                            for (Iterator<CompositeStatementObject> iterator = mapper.getNonMappedInnerNodesT1().iterator(); iterator.hasNext(); ) {
+                                CompositeStatementObject compositeStatementObject = iterator.next();
+                                CompositeStatementObject methodBody = mapper.getOperation1().getBody().getCompositeStatement();
+                                if (isTheOnlyStatementInMethodBody(compositeStatementObject, methodBody) || endsWithReturnStatement(compositeStatementObject, methodBody)) {
+                                    extractFixtureMapper.detectMatchingNonMappedExpression(compositeStatementObject, mapper.getOperation2());
+                                    iterator.remove();
+                                    detected = true;
+                                }
+                            }
+                            if (detected) {
+                                extractedTestFixtureMappers.add(extractFixtureMapper);
+                            }
+                        }
+                        else {
+							UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, addedOperation, this);
+							if(moveCodeMapper.getMappings().size() > 0) {
+								MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_TO_ADDED);
+								if(!moveCodeMappers.contains(moveCodeMapper))
+									moveCodeMappers.add(moveCodeMapper);
+								refactorings.add(ref);
+							}
 						}
 					}
 				}
 			}
-		}
+        }
+        operationBodyMapperList.addAll(extractedTestFixtureMappers);
 		//move from deprecated method to new one
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			if(mapper.nonMappedElementsT1() > 0 && mapper.getContainer2().hasDeprecatedAnnotation() && !mapper.getContainer1().hasDeprecatedAnnotation()) {
@@ -573,6 +542,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		}
 		MappingOptimizer optimizer = new MappingOptimizer(this);
 		optimizer.optimizeDuplicateMappingsForMoveCode(moveCodeMappers, refactorings);
+	}
+
+	private static boolean isTheOnlyStatementInMethodBody(CompositeStatementObject compositeStatementObject, CompositeStatementObject methodBody) {
+		return methodBody.getStatements().size() == 1 && methodBody.getStatements().get(0).equals(compositeStatementObject);
+	}
+
+	private static boolean endsWithReturnStatement(CompositeStatementObject compositeStatementObject, CompositeStatementObject methodBody) {
+		return methodBody.getStatements().size() > 1 && compositeStatementObject.getAllStatements().getLast().toString().startsWith("return");
+	}
+
+	private static boolean isTestMethodMapping(UMLOperationBodyMapper mapper) {
+		return mapper.getContainer1().hasTestAnnotation() || mapper.getContainer1().getName().startsWith("test");
 	}
 
 	private static boolean isSetUpMethod(UMLOperation mapper) {

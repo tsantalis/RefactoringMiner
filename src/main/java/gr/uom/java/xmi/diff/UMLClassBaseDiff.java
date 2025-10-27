@@ -216,19 +216,22 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			for (UMLOperation addedOperationWithNonMappedLeaves : addedOperationsWithNonMappedLeaves) {
 				UMLOperationBodyMapper extractFixtureMapper = new UMLOperationBodyMapper(testMapper, addedOperationWithNonMappedLeaves, this);
 				for (CompositeStatementObject compositeStatementObject : testMapper.getNonMappedInnerNodesT1()) {
-					for (AbstractCodeFragment abstractCodeFragment : extractFixtureMapper.getNonMappedLeavesT2()) {
-						for (AbstractCall methodInvocation : abstractCodeFragment.getMethodInvocations()) {
-							if (methodInvocation.getName().startsWith("assume")) {
-								for (AbstractExpression expression : compositeStatementObject.getExpressions()) {
-									for (String argument : methodInvocation.arguments()) {
-										if (expression.getString().equals(argument)) {
-											ExtractPreconditionRefactoring extractPreconditionRefactoring = new ExtractPreconditionRefactoring(methodInvocation, compositeStatementObject, testMapper.getOperation1(), addedOperationWithNonMappedLeaves);
-											ExtractOperationRefactoring extractFixtureRefactoring = new ExtractOperationRefactoring(extractFixtureMapper, testMapper.getOperation2(), List.of());
-											extractFixtureMapper.addMapping(new LeafMapping(compositeStatementObject, methodInvocation, testMapper.getOperation1(), addedOperationWithNonMappedLeaves));
-											if (!operationBodyMapperList.contains(extractFixtureMapper)) {
-												operationBodyMapperList.add(extractFixtureMapper);
-												refactorings.add(extractFixtureRefactoring);
-												refactorings.add(extractPreconditionRefactoring);
+					CompositeStatementObject methodBody = testMapper.getOperation1().getBody().getCompositeStatement();
+					if (isOnlyStatementInMethodBody(compositeStatementObject, methodBody) || endsWithReturnStatement(compositeStatementObject, methodBody)) {
+						for (AbstractCodeFragment abstractCodeFragment : extractFixtureMapper.getNonMappedLeavesT2()) {
+							for (AbstractCall methodInvocation : abstractCodeFragment.getMethodInvocations()) {
+								if (methodInvocation.getName().startsWith("assume")) {
+									for (AbstractExpression expression : compositeStatementObject.getExpressions()) {
+										for (String argument : methodInvocation.arguments()) {
+											if (expression.getString().equals(argument)) {
+												ExtractPreconditionRefactoring extractPreconditionRefactoring = new ExtractPreconditionRefactoring(methodInvocation, compositeStatementObject, testMapper.getOperation1(), addedOperationWithNonMappedLeaves);
+												ExtractOperationRefactoring extractFixtureRefactoring = new ExtractOperationRefactoring(extractFixtureMapper, testMapper.getOperation2(), List.of());
+												extractFixtureMapper.addMapping(new LeafMapping(compositeStatementObject, methodInvocation, testMapper.getOperation1(), addedOperationWithNonMappedLeaves));
+												if (!operationBodyMapperList.contains(extractFixtureMapper)) {
+													operationBodyMapperList.add(extractFixtureMapper);
+													refactorings.add(extractFixtureRefactoring);
+													refactorings.add(extractPreconditionRefactoring);
+												}
 											}
 										}
 									}
@@ -239,6 +242,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+	}
+
+	private static boolean isOnlyStatementInMethodBody(CompositeStatementObject compositeStatementObject, CompositeStatementObject methodBody) {
+		return methodBody.getStatements().size() == 1 && methodBody.getStatements().get(0).equals(compositeStatementObject);
+	}
+
+	private static boolean endsWithReturnStatement(CompositeStatementObject compositeStatementObject, CompositeStatementObject methodBody) {
+		return methodBody.getStatements().size() > 1 && compositeStatementObject.getAllStatements().getLast().toString().startsWith("return");
 	}
 
 	private static boolean isTestMethodMapping(UMLOperationBodyMapper mapper) {

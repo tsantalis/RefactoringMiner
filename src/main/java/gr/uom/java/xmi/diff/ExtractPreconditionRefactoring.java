@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -54,10 +55,10 @@ public class ExtractPreconditionRefactoring implements Refactoring {
 
     @Override
     public RefactoringType getRefactoringType() {
-        return switch (replacedElement) {
-            case UMLAnnotation ignored -> RefactoringType.REPLACE_IGNORE_WITH_ASSUMPTION;
-            case CompositeStatementObject ignored -> RefactoringType.REPLACE_CONDITIONAL_WITH_ASSUMPTION;
-            case AbstractCall ignored -> RefactoringType.REPLACE_ASSERTION_WITH_ASSUMPTION;
+        return switch (replacedElement.getLocationInfo().getCodeElementType()) {
+            case ANNOTATION -> RefactoringType.REPLACE_IGNORE_WITH_ASSUMPTION;
+            case IF_STATEMENT -> RefactoringType.REPLACE_CONDITIONAL_WITH_ASSUMPTION;
+            case METHOD_INVOCATION -> RefactoringType.REPLACE_ASSERTION_WITH_ASSUMPTION;
             default -> throw new IllegalStateException("Unexpected replaced element type: " + replacedElement.getClass().getName());
         };
     }
@@ -85,10 +86,10 @@ public class ExtractPreconditionRefactoring implements Refactoring {
     public List<CodeRange> leftSide() {
         List<CodeRange> ranges = new ArrayList<CodeRange>();
         ranges.add(replacedElement.codeRange()
-                .setDescription("original " + switch (replacedElement) {
-                    case UMLAnnotation ignored -> "annotation";
-                    case CompositeStatementObject ignored -> "condition";
-                    case AbstractCall ignored -> "assertion";
+                .setDescription("original " + switch (replacedElement.getLocationInfo().getCodeElementType()) {
+                    case ANNOTATION -> "annotation";
+                    case IF_STATEMENT -> "condition";
+                    case METHOD_INVOCATION -> "assertion";
                     default -> throw new IllegalStateException("Unexpected replaced element type: " + replacedElement.getClass().getName());
                 })
                 .setCodeElement(replacedElement.toString()));
@@ -115,10 +116,12 @@ public class ExtractPreconditionRefactoring implements Refactoring {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getName()).append("\t");
-        sb.append(switch (replacedElement) {
-            case UMLAnnotation ann -> ann.toString();
-            case CompositeStatementObject cond -> cond.getString().contains("\n") ? cond.getString().substring(0, cond.getString().indexOf("\n")) : cond.getString();
-            case AbstractCall ass -> ass.getString();
+        sb.append(switch (replacedElement.getLocationInfo().getCodeElementType()) {
+            case ANNOTATION -> ((UMLAnnotation)replacedElement).toString();
+            case IF_STATEMENT -> ((CompositeStatementObject)replacedElement).getString().contains("\n") ?
+                    ((CompositeStatementObject)replacedElement).getString().substring(0, ((CompositeStatementObject)replacedElement).getString().indexOf("\n")) :
+                    ((CompositeStatementObject)replacedElement).getString();
+            case METHOD_INVOCATION -> ((AbstractCall)replacedElement).getString();
             default -> throw new IllegalStateException("Unexpected replaced element type: " + replacedElement.getClass().getName());
         });
         sb.append(" to ");

@@ -22,6 +22,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
+import gr.uom.java.xmi.decomposition.AbstractStatement;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.refactoringminer.api.Refactoring;
@@ -549,7 +550,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	private static boolean endsWithReturnStatement(CompositeStatementObject compositeStatementObject, CompositeStatementObject methodBody) {
-		return methodBody.getStatements().size() > 1 && compositeStatementObject.getAllStatements().getLast().toString().startsWith("return");
+		List<AbstractStatement> allStatements = compositeStatementObject.getAllStatements();
+		return methodBody.getStatements().size() > 1 && allStatements.get(allStatements.size() - 1).toString().startsWith("return");
 	}
 
 	private static boolean isTestMethodMapping(UMLOperationBodyMapper mapper) {

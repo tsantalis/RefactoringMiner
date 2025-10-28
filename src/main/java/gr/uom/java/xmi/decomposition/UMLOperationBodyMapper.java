@@ -12,6 +12,8 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAnnotation;
 
 import static gr.uom.java.xmi.Constants.JAVA;
+import static gr.uom.java.xmi.LocationInfo.CodeElementType.EXPRESSION_STATEMENT;
+import static gr.uom.java.xmi.LocationInfo.CodeElementType.METHOD_INVOCATION;
 import static gr.uom.java.xmi.UMLModelASTReader.processBlock;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.findReplacementsWithExactMatching;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.isForEach;
@@ -4263,9 +4265,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					newMapping.addSubExpressionMapping((LeafMapping) mapping);
 				}
 			}
-			AbstractCall assumptionCall = switch (newMapping.getFragment2()) {
-				case AbstractCall ac -> ac;
-				case StatementObject stmt -> stmt.getMethodInvocations().stream().filter(c->c.getName().startsWith("assume")).findFirst().orElse(null);
+			AbstractCall assumptionCall = switch (newMapping.getFragment2().getLocationInfo().getCodeElementType()) {
+				case METHOD_INVOCATION -> (AbstractCall) newMapping.getFragment2();
+				case EXPRESSION_STATEMENT -> ((StatementObject) newMapping.getFragment2()).getMethodInvocations().stream().filter(c->c.getName().startsWith("assume")).findFirst().orElse(null);
 				default -> null;
 			};
 			assert assumptionCall != null : "Assumption call should only pass isAssumption being either an AbstractCall (or an AbstractCall wrapped into a StatementObject)";
@@ -4282,10 +4284,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean isAssumption(AbstractCodeFragment abstractCodeFragment) {
-		return switch (abstractCodeFragment) {
-			case OperationInvocation op -> op.getMethodName().startsWith("assume");
-			case StatementObject stmt -> stmt.getMethodInvocations().stream().anyMatch(this::isAssumption);
-			case AbstractCall call -> call.getName().startsWith("assume");
+		return switch (abstractCodeFragment.getLocationInfo().getCodeElementType()) {
+			case METHOD_INVOCATION -> ((OperationInvocation) abstractCodeFragment).getMethodName().startsWith("assume");
+			case EXPRESSION_STATEMENT -> ((StatementObject) abstractCodeFragment).getMethodInvocations().stream().anyMatch(this::isAssumption);
 			default -> false;
 		};
 	}

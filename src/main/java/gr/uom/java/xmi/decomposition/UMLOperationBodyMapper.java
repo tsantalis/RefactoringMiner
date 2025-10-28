@@ -4218,9 +4218,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					AbstractCodeMapping firstMapping = set.iterator().next();
 					AbstractCall call2 = firstMapping.getFragment2().invocationCoveringEntireFragment();
 					if(call2 != null && call2.equals(assumeCall)) {
-						ExtractPreconditionRefactoring ref = new ExtractPreconditionRefactoring(set, assumeCall, container1, container2);
-						refactorings.add(ref);
+						AbstractCall call1 = firstMapping.getFragment1().invocationCoveringEntireFragment();
+						if(call1 != null && call1.equalArguments(call2)) {
+							continue;
+						}
 					}
+					ExtractPreconditionRefactoring ref = new ExtractPreconditionRefactoring(set, assumeCall, container1, container2);
+					refactorings.add(ref);
 				}
 			}
 		}

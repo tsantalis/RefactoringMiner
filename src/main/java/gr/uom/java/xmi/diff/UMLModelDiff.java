@@ -4375,7 +4375,7 @@ public class UMLModelDiff {
 			for(UMLOperation addedOperation : classDiff.getAddedAndExtractedOperations()) {
 				if(allowInference(classDiff, removedOperation, addedOperation)) {
 					List<UMLOperationBodyMapper> mappers = findMappersWithMatchingSignatures(removedOperation, addedOperation);
-					if(!mappers.isEmpty()) {
+					if(!mappers.isEmpty() && (!classDiff.containsMapperForOperation1(removedOperation) || mappers.size() > 1)) {
 						UMLOperationBodyMapper bodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
 						if(!classDiff.getOperationBodyMapperList().contains(bodyMapper)) {
 							classDiff.addOperationBodyMapper(bodyMapper);

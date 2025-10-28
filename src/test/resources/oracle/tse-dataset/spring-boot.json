@@ -902,12 +902,12 @@
         {
           "type": "MOVE_OPERATION",
           "description": "Move Method\tpublic run(mode String, args String[]) : void from class org.springframework.boot.jarmode.layertools.LayerToolsJarMode to public run(mode String, args String[]) : void from class org.springframework.boot.jarmode.tools.ToolsJarMode",
-          "validation": false
+          "validation": true
         },
         {
           "type": "MOVE_OPERATION",
           "description": "Move Method\tpackage getCommands(context Context) : List<Command> from class org.springframework.boot.jarmode.layertools.LayerToolsJarMode.Runner to package getCommands(context Context) : List<Command> from class org.springframework.boot.jarmode.tools.LayerToolsJarMode",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_METHOD",

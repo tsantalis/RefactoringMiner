@@ -13,7 +13,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
-public class MoveOperationRefactoring implements Refactoring {
+public class MoveOperationRefactoring implements Refactoring, BodyMapperProvider {
 	protected VariableDeclarationContainer originalOperation;
 	protected VariableDeclarationContainer movedOperation;
 	private Set<Replacement> replacements;
@@ -50,6 +50,7 @@ public class MoveOperationRefactoring implements Refactoring {
 		return RefactoringType.MOVE_OPERATION;
 	}
 
+	@Override
 	public UMLOperationBodyMapper getBodyMapper() {
 		return bodyMapper;
 	}

@@ -13,7 +13,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class ParameterizeTestRefactoring implements Refactoring {
+public class ParameterizeTestRefactoring implements Refactoring, BodyMapperProvider {
 	private UMLOperation removedOperation;
 	private UMLOperation parameterizedTestOperation;
 	private UMLOperationBodyMapper bodyMapper;
@@ -24,6 +24,7 @@ public class ParameterizeTestRefactoring implements Refactoring {
 		this.parameterizedTestOperation = bodyMapper.getOperation2();
 	}
 
+	@Override
 	public UMLOperationBodyMapper getBodyMapper() {
 		return bodyMapper;
 	}

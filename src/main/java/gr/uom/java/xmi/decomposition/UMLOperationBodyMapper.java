@@ -4271,7 +4271,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				default -> null;
 			};
 			assert assumptionCall != null : "Assumption call should only pass isAssumption being either an AbstractCall (or an AbstractCall wrapped into a StatementObject)";
-			ExtractPreconditionRefactoring ref = new ExtractPreconditionRefactoring(assumptionCall, newMapping.getFragment1(), newMapping.getOperation1(), newMapping.getOperation2());
+			ExtractPreconditionRefactoring ref = new ExtractPreconditionRefactoring(this, assumptionCall, newMapping.getFragment1(), newMapping.getOperation1(), newMapping.getOperation2());
 			if (Set.of(RefactoringType.REPLACE_IGNORE_WITH_ASSUMPTION, RefactoringType.REPLACE_CONDITIONAL_WITH_ASSUMPTION, RefactoringType.REPLACE_ASSERTION_WITH_ASSUMPTION).contains(ref.getRefactoringType())) {
 				newMapping.addRefactoring(ref);
 				return Optional.of(newMapping);
@@ -10727,7 +10727,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								addMapping(mappingCandidate);
 								iterator.remove();
                                 refactorings.add(new ExtractOperationRefactoring(this, sourceOperationAfterExtraction, List.of()));
-                                refactorings.add(new ExtractPreconditionRefactoring(methodInvocation, ifStatement, getOperation1(), getOperation2()));
+                                refactorings.add(new ExtractPreconditionRefactoring(this, methodInvocation, ifStatement, getOperation1(), getOperation2()));
                             }
                         }
                     }

@@ -6,6 +6,7 @@ import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -16,13 +17,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public class ExtractPreconditionRefactoring implements Refactoring {
+public class ExtractPreconditionRefactoring implements Refactoring, BodyMapperProvider {
     private AbstractCall assumption;
     private LocationInfoProvider replacedElement;
     private VariableDeclarationContainer operationBefore;
     private VariableDeclarationContainer operationAfter;
+    private UMLOperationBodyMapper bodyMapper;
 
-    public ExtractPreconditionRefactoring(AbstractCall assumption, LocationInfoProvider replacedElement, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
+    public ExtractPreconditionRefactoring(UMLOperationBodyMapper bodyMapper, AbstractCall assumption, LocationInfoProvider replacedElement, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
+        this.bodyMapper = bodyMapper;
         this.assumption = assumption;
         this.replacedElement = replacedElement;
         this.operationBefore = operationBefore;
@@ -148,5 +151,10 @@ public class ExtractPreconditionRefactoring implements Refactoring {
     @Override
     public int hashCode() {
         return Objects.hash(assumption, operationAfter, operationBefore, replacedElement);
+    }
+
+    @Override
+    public UMLOperationBodyMapper getBodyMapper() {
+        return bodyMapper;
     }
 }

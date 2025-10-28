@@ -16,7 +16,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class MoveCodeRefactoring implements Refactoring {
+public class MoveCodeRefactoring implements Refactoring, BodyMapperProvider {
 	public enum Type {
 		MOVE_FROM_REMOVED,
 		MOVE_TO_ADDED,
@@ -54,6 +54,7 @@ public class MoveCodeRefactoring implements Refactoring {
 		}
 	}
 
+	@Override
 	public UMLOperationBodyMapper getBodyMapper() {
 		return bodyMapper;
 	}

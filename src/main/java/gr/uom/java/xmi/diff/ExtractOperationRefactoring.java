@@ -32,7 +32,7 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
-public class ExtractOperationRefactoring implements Refactoring {
+public class ExtractOperationRefactoring implements Refactoring, BodyMapperProvider {
 	private UMLOperation extractedOperation;
 	private VariableDeclarationContainer sourceOperationBeforeExtraction;
 	private VariableDeclarationContainer sourceOperationAfterExtraction;
@@ -349,6 +349,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 		return sourceClassName.equals(targetClassName) ? sourceClassName : targetClassName;
 	}
 
+	@Override
 	public UMLOperationBodyMapper getBodyMapper() {
 		return bodyMapper;
 	}

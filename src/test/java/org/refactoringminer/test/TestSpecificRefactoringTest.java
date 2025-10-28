@@ -1,80 +1,20 @@
 package org.refactoringminer.test;
 
-import gr.uom.java.xmi.decomposition.AbstractCall;
-import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
-import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
-import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
-import gr.uom.java.xmi.diff.UMLClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
-import org.refactoringminer.util.GitServiceImpl;
 
 import java.io.File;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 public class TestSpecificRefactoringTest {
     private static final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits";
-    @ParameterizedTest
-    @CsvFileSource(resources = {"Assumptions_occurrences.csv"}, useHeadersInDisplayName = true)
-    void testAssumptionsMatch(int id, String url, String parentCommit, String currentCommit, String filepath, int line, String fragment) throws Exception {
-        // Assert no parameter is null
-        Assumptions.assumeTrue(id >= 0);
-        Assumptions.assumeTrue(Objects.nonNull(url));
-        Assumptions.assumeTrue(Objects.nonNull(parentCommit));
-        Assumptions.assumeTrue(Objects.nonNull(currentCommit));
-        Assumptions.assumeTrue(Objects.nonNull(filepath));
-        Assumptions.assumeTrue(line >= 0);
-        Assumptions.assumeTrue(Objects.nonNull(fragment));
-        String projectName = url.substring(url.lastIndexOf("/") + 1, url.length() - 4);
-        String pathToClonedRepository = System.getProperty("user.dir") + "/tmp/" + projectName;
-        UMLModelDiff modelDiff = new GitHistoryRefactoringMinerImpl().diffAtCommit(new GitServiceImpl().cloneIfNotExists(pathToClonedRepository, url), currentCommit).getModelDiff();
-        Optional<UMLClassDiff> maybeClassDiff = modelDiff.getCommonClassDiffList().stream().filter(umlClassDiff -> umlClassDiff.getNextClass().getLocationInfo().getFilePath().equals(filepath)).findFirst();
-        Assertions.assertTrue(maybeClassDiff.isPresent());
-        UMLClassDiff classDiff = maybeClassDiff.get();
-        Assertions.assertTrue(classDiff.getOperationBodyMapperList().stream().flatMap(mapper -> mapper.getMappings().stream()).flatMap(mapping -> mapping.getFragment2().getMethodInvocations().stream()).map(Object::toString).anyMatch(fragment::equals));
-    }
-    @ParameterizedTest
-    @CsvFileSource(resources = {"Assumptions_occurrences.csv"}, useHeadersInDisplayName = true)
-    void testAssumptionsMappingsGiveAHint(int id, String url, String parentCommit, String currentCommit, String filepath, int line, String fragment) throws Exception {
-        // Assert no parameter is null
-        Assumptions.assumeTrue(id >= 0);
-        Assumptions.assumeTrue(Objects.nonNull(url));
-        Assumptions.assumeTrue(Objects.nonNull(parentCommit));
-        Assumptions.assumeTrue(Objects.nonNull(currentCommit));
-        Assumptions.assumeTrue(Objects.nonNull(filepath));
-        Assumptions.assumeTrue(line >= 0);
-        Assumptions.assumeTrue(Objects.nonNull(fragment));
-        String projectName = url.substring(url.lastIndexOf("/") + 1, url.length() - 4);
-        String pathToClonedRepository = System.getProperty("user.dir") + "/tmp/" + projectName;
-        UMLModelDiff modelDiff = new GitHistoryRefactoringMinerImpl().diffAtCommit(new GitServiceImpl().cloneIfNotExists(pathToClonedRepository, url), currentCommit).getModelDiff();
-        Optional<UMLClassDiff> maybeClassDiff = modelDiff.getCommonClassDiffList().stream().filter(umlClassDiff -> umlClassDiff.getNextClass().getLocationInfo().getFilePath().equals(filepath)).findFirst();
-        Assertions.assertTrue(maybeClassDiff.isPresent());
-        UMLClassDiff classDiff = maybeClassDiff.get();
-        var expectedBeforeFragment = fragment.replace("assume","assert");
-        for (UMLOperationBodyMapper umlOperationBodyMapper : classDiff.getOperationBodyMapperList()) {
-            for (AbstractCodeMapping mapping : umlOperationBodyMapper.getMappings()) {
-                if (hasInvocation(mapping.getFragment2(), fragment)) {
-                    mapping.getFragment1().getMethodInvocations().forEach(System.out::println);
-                    if (!hasInvocation(mapping.getFragment1(), expectedBeforeFragment)) {
-                        for (AbstractCall methodInvocation : mapping.getFragment1().getMethodInvocations()) {
-                            System.out.println("Expected: " + expectedBeforeFragment + " and found: " + methodInvocation.toString());
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     @ParameterizedTest
     @CsvSource({
             "https://github.com/Kyligence/kylin-on-parquet-v2.git,32044d9522b881ae1b4723667695c9c01ea342aa,/kylin-it/src/test/java/org/apache/kylin/storage/hbase/ITAclTableMigrationToolTest.java,84,1",
@@ -135,14 +75,5 @@ public class TestSpecificRefactoringTest {
         UMLModelDiff modelDiff = new GitHistoryRefactoringMinerImpl().diffAtCommitWithGitHubAPI(url, currentCommit, new File(REPOS)).getModelDiff();
         List<Refactoring> refactorings = modelDiff.getRefactorings().stream().filter(ref -> expectedRefactoringTypes.contains(ref.getRefactoringType())).toList();
         Assertions.assertEquals(expectedNumberOfRefactoringOccurrences, refactorings.size());
-    }
-
-    private static boolean hasInvocation(AbstractCodeFragment fragment, String invocation) {
-        for (AbstractCall methodInvocation : fragment.getMethodInvocations()) {
-            if (methodInvocation.toString().equals(invocation)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

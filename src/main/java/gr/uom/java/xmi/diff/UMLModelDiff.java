@@ -32,6 +32,7 @@ import gr.uom.java.xmi.decomposition.CompositeStatementObjectMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.StatementObject;
+import gr.uom.java.xmi.decomposition.TernaryOperatorExpression;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapperComparator;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -2462,16 +2463,16 @@ public class UMLModelDiff {
 		return removedAttributes;
 	}
 
-	private List<UMLOperation> getOperationsInRemovedInnerClasses() {
+	private List<UMLOperation> getOperationsInRemovedClasses() {
 		List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
 		for(UMLClass removedClass : removedClasses) {
-			if(!removedClass.isTopLevel()) {
+			//if(!removedClass.isTopLevel()) {
 				for(UMLOperation operation : removedClass.getOperations()) {
 					if(!operation.isGetter() && !operation.isSetter() && !operation.getName().equals("build")) {
 						removedOperations.add(operation);
 					}
 				}
-			}
+			//}
 		}
 		return removedOperations;
 	}
@@ -3920,7 +3921,7 @@ public class UMLModelDiff {
 		if(removedAndInlinedOperationsInCommonClasses.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
 			checkForMovedAndInlinedOperations(getOperationBodyMappersInCommonClasses(), removedAndInlinedOperationsInCommonClasses);
 		}
-		List<UMLOperation> operationsInRemovedClasses = getOperationsInRemovedInnerClasses();
+		List<UMLOperation> operationsInRemovedClasses = getOperationsInRemovedClasses();
 		if(operationsInRemovedClasses.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
 			checkForMovedAndInlinedOperations(getOperationBodyMappersInCommonClasses(), operationsInRemovedClasses);
 		}
@@ -5081,8 +5082,35 @@ public class UMLModelDiff {
 				}
 			}
 			if(mapping.getFragment1() instanceof StatementObject && mapping.getFragment2() instanceof AbstractExpression &&
-					mapping.getFragment2().getString().endsWith("++")) {
+					(mapping.getFragment2().getString().endsWith("++") || mapping.getFragment2().getString().contains(" == "))) {
 				mappings--;
+			}
+		}
+		for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
+			List<VariableDeclaration> variableDeclarations = fragment1.getVariableDeclarations();
+			if(variableDeclarations.size() > 0) {
+				for(VariableDeclaration variableDeclaration : variableDeclarations) {
+					for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+						if(!(mapping.getFragment2() instanceof AbstractExpression)) {
+							boolean matchingReplacementFound = false;
+							for(Replacement r : mapping.getReplacements()) {
+								if(r.getBefore().equals(variableDeclaration.getVariableName())) {
+									matchingReplacementFound = true;
+								}
+							}
+							for(TernaryOperatorExpression exp : mapping.getFragment1().getTernaryOperatorExpressions()) {
+								if(exp.getThenExpression().getString().equals(variableDeclaration.getVariableName()) ||
+										exp.getElseExpression().getString().equals(variableDeclaration.getVariableName())) {
+									matchingReplacementFound = true;
+								}
+							}
+							if(matchingReplacementFound) {
+								nonMappedElementsT1--;
+								break;
+							}
+						}
+					}
+	 			}
 			}
 		}
 		List<AbstractCodeMapping> exactMatchList = operationBodyMapper.getExactMatches();

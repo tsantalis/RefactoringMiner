@@ -168,6 +168,11 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tfile : Path to argFile : ArgFile in method package create(content CharSequence) : ArgFile from class org.springframework.boot.maven.AbstractRunMojo.ArgFile",
           "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfile : Path to argFile : ArgFile in method package create(content CharSequence) : ArgFile from class org.springframework.boot.maven.AbstractRunMojo.ArgFile",
+          "validation": true
         }
       ]
     },
@@ -207,12 +212,12 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tresolvedGenerics : Class<?>[] to generics : Class<?>[] in method private get(factory ConnectionDetailsFactory<S,D>) : Registration<S,D> from class org.springframework.boot.autoconfigure.service.connection.ConnectionDetailsFactories.Registration",
-          "validation": false
+          "validation": true
         },
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tresult : Object in method protected bindAggregate(name ConfigurationPropertyName, target Bindable<?>, elementBinder AggregateElementBinder) : Object from class org.springframework.boot.context.properties.bind.MapBinder",
-          "validation": false
+          "validation": true
         }
       ]
     },

@@ -506,7 +506,7 @@ As of **October 28, 2025** the precision and recall of RefactoringMiner on this 
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3395  | 60  | 132  | 0.983  | 0.963|
+|**Total**|3402  | 57  | 128  | 0.984  | 0.964|
 |Extract Method|370  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|232  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -526,17 +526,17 @@ As of **October 28, 2025** the precision and recall of RefactoringMiner on this 
 |Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|45  |  1  |  4  | 0.978  | 0.918|
 |Extract And Move Method|118  |  2  | 12  | 0.983  | 0.908|
-|Move And Inline Method|26  |  1  |  9  | 0.963  | 0.743|
+|Move And Inline Method|29  |  1  |  6  | 0.967  | 0.829|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|288  |  3  | 12  | 0.990  | 0.960|
 |Extract Attribute| 3  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|120  |  4  | 14  | 0.968  | 0.896|
-|Rename Variable|303  |  7  | 11  | 0.977  | 0.965|
+|Inline Variable|122  |  3  | 13  | 0.976  | 0.904|
+|Rename Variable|304  |  6  | 11  | 0.981  | 0.965|
 |Rename Attribute|107  |  4  | 10  | 0.964  | 0.915|
 |Replace Variable With Attribute|10  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|30  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|165  |  2  | 13  | 0.988  | 0.927|
-|Change Variable Type|376  |  8  |  6  | 0.979  | 0.984|
+|Change Variable Type|377  |  7  |  6  | 0.982  | 0.984|
 |Change Attribute Type|164  |  2  |  4  | 0.988  | 0.976|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|

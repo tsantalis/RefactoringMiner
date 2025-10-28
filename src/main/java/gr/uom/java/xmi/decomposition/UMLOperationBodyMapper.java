@@ -267,6 +267,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			resetNodes(innerNodes1);
 			resetNodes(innerNodes2);
 			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			
+			//match expressions in inner nodes from T1 with leaves from T2
+			List<AbstractExpression> expressionsT1 = new ArrayList<AbstractExpression>();
+			for(CompositeStatementObject composite : innerNodes1) {
+				if(!nonMappedCompositeExistsIdenticalInExtractedMethod(composite)) {
+					for(AbstractExpression expression : composite.getExpressions()) {
+						expressionsT1.add(expression);
+					}
+				}
+			}
+			processLeaves(expressionsT1, leaves2, new LinkedHashMap<String, String>(), false);
 			updateNonMappedLeavesT1(leaves1);
 			updateNonMappedLeavesT2(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
@@ -4109,6 +4120,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		int assertThrows1 = 0;
 		int assertThatThrownBy1 = 0;
 		int assertTimeout1 = 0;
+		int assume1 = 0;
 		for(AbstractCall call : container1.getAllOperationInvocations()) {
 			if(call.getName().equals(JAVA.ASSERT_THROWS)) {
 				assertThrows1++;
@@ -4119,67 +4131,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			else if(call.getName().equals("assertTimeout")) {
 				assertTimeout1++;
 			}
+			else if(call.getName().startsWith("assume")) {
+				assume1++;
+			}
 		}
 		Map<String, Set<AbstractCodeMapping>> assertThrowsMappings = new LinkedHashMap<>();
 		Map<String, Set<AbstractCodeMapping>> assertThatThrownByMappings = new LinkedHashMap<>();
 		Map<String, Set<AbstractCodeMapping>> assertTimeoutMappings = new LinkedHashMap<>();
+		Map<String, Set<AbstractCodeMapping>> assumeMappings = new LinkedHashMap<>();
 		List<AbstractCall> assertThrowsCalls = new ArrayList<AbstractCall>();
 		List<AbstractCall> assertTimeoutCalls = new ArrayList<AbstractCall>();
 		List<AbstractCall> assertThatThrownByCalls = new ArrayList<AbstractCall>();
+		List<AbstractCall> assumeCalls = new ArrayList<AbstractCall>();
 		for(AbstractCall call : container2.getAllOperationInvocations()) {
 			if(call.getName().equals(JAVA.ASSERT_THROWS)) {
-				assertThrowsCalls.add(call);
-				for(AbstractCodeMapping mapping : this.mappings) {
-					if(call.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo()) || mapping.getFragment2().getLocationInfo().subsumes(call.getLocationInfo())) {
-						if(parentMapper != null && parentMapper.getMappings().contains(mapping)) {
-							continue;
-						}
-						if(assertThrowsMappings.containsKey(call.actualString())) {
-							assertThrowsMappings.get(call.actualString()).add(mapping);
-						}
-						else {
-							Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
-							mappings.add(mapping);
-							assertThrowsMappings.put(call.actualString(), mappings);
-						}
-					}
-				}
+				populate(call, assertThrowsCalls, assertThrowsMappings);
 			}
 			else if(call.getName().equals("assertTimeout")) {
-				assertTimeoutCalls.add(call);
-				for(AbstractCodeMapping mapping : this.mappings) {
-					if(call.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo()) || mapping.getFragment2().getLocationInfo().subsumes(call.getLocationInfo())) {
-						if(parentMapper != null && parentMapper.getMappings().contains(mapping)) {
-							continue;
-						}
-						if(assertTimeoutMappings.containsKey(call.actualString())) {
-							assertTimeoutMappings.get(call.actualString()).add(mapping);
-						}
-						else {
-							Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
-							mappings.add(mapping);
-							assertTimeoutMappings.put(call.actualString(), mappings);
-						}
-					}
-				}
+				populate(call, assertTimeoutCalls, assertTimeoutMappings);
 			}
 			else if(call.getName().equals(JAVA.ASSERT_THAT_THROWN_BY)) {
-				assertThatThrownByCalls.add(call);
-				for(AbstractCodeMapping mapping : this.mappings) {
-					if(call.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo()) || mapping.getFragment2().getLocationInfo().subsumes(call.getLocationInfo())) {
-						if(parentMapper != null && parentMapper.getMappings().contains(mapping)) {
-							continue;
-						}
-						if(assertThatThrownByMappings.containsKey(call.actualString())) {
-							assertThatThrownByMappings.get(call.actualString()).add(mapping);
-						}
-						else {
-							Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
-							mappings.add(mapping);
-							assertThatThrownByMappings.put(call.actualString(), mappings);
-						}
-					}
-				}
+				populate(call, assertThatThrownByCalls, assertThatThrownByMappings);
+			}
+			else if(call.getName().startsWith("assume")) {
+				populate(call, assumeCalls, assumeMappings);
 			}
 		}
 		if(assertThrows1 < assertThrowsCalls.size()) {
@@ -4232,6 +4207,37 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					AssertThrowsRefactoring ref = new AssertThrowsRefactoring(set, assertThrowsCall, container1, container2);
 					refactorings.add(ref);
 					handleAdditionalAssertThrowMappings(firstMapping, ref);
+				}
+			}
+		}
+		if(assume1 < assumeCalls.size()) {
+			for(AbstractCall assumeCall : assumeCalls) {
+				Set<AbstractCodeMapping> set = assumeMappings.get(assumeCall.actualString());
+				if(set != null && set.size() > 0) {
+					AbstractCodeMapping firstMapping = set.iterator().next();
+					AbstractCall call2 = firstMapping.getFragment2().invocationCoveringEntireFragment();
+					if(call2 != null && call2.equals(assumeCall)) {
+						// TODO Create refactoring
+					}
+				}
+			}
+		}
+	}
+
+	private void populate(AbstractCall call, List<AbstractCall> calls, Map<String, Set<AbstractCodeMapping>> codeMappings) {
+		calls.add(call);
+		for(AbstractCodeMapping mapping : this.mappings) {
+			if(call.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo()) || mapping.getFragment2().getLocationInfo().subsumes(call.getLocationInfo())) {
+				if(parentMapper != null && parentMapper.getMappings().contains(mapping)) {
+					continue;
+				}
+				if(codeMappings.containsKey(call.actualString())) {
+					codeMappings.get(call.actualString()).add(mapping);
+				}
+				else {
+					Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
+					mappings.add(mapping);
+					codeMappings.put(call.actualString(), mappings);
 				}
 			}
 		}

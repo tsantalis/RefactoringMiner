@@ -16,12 +16,14 @@ import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.util.GitServiceImpl;
 
+import java.io.File;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
 public class TestSpecificRefactoringTest {
+    private static final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits";
     @ParameterizedTest
     @CsvFileSource(resources = {"Assumptions_occurrences.csv"}, useHeadersInDisplayName = true)
     void testAssumptionsMatch(int id, String url, String parentCommit, String currentCommit, String filepath, int line, String fragment) throws Exception {
@@ -117,10 +119,8 @@ public class TestSpecificRefactoringTest {
     void testAssumptionIntroducingRefactoring(String url,String currentCommit,String filepath,int line, int expectedNumberOfRefactoringOccurrences) throws Exception {
         Assumptions.assumeTrue(Set.of("32044d9522b881ae1b4723667695c9c01ea342aa", "e4254e385dea9b915ad74d0c8a0375848e9279f0", "ed67eeac4f9e0e8710e174db2df6da7985790240", "8b9d3f230393b4a89a21545745754eeb46f56516", "f47bbb0d9e8023590c0fd965acb009719aea6b67", "efc2eed5b0ddb889e39049bc64628772034f91a3").contains(currentCommit));
         System.out.println(url + " " + currentCommit + " " + filepath + " " + line);
-        String projectName = url.substring(url.lastIndexOf("/") + 1, url.length() - 4);
-        String pathToClonedRepository = System.getProperty("user.dir") + "/tmp/" + projectName;
         Set<RefactoringType> expectedRefactoringTypes = Set.of(RefactoringType.REPLACE_ASSERTION_WITH_ASSUMPTION, RefactoringType.REPLACE_CONDITIONAL_WITH_ASSUMPTION, RefactoringType.REPLACE_IGNORE_WITH_ASSUMPTION);
-        UMLModelDiff modelDiff = new GitHistoryRefactoringMinerImpl().diffAtCommit(new GitServiceImpl().cloneIfNotExists(pathToClonedRepository, url), currentCommit).getModelDiff();
+        UMLModelDiff modelDiff = new GitHistoryRefactoringMinerImpl().diffAtCommitWithGitHubAPI(url, currentCommit, new File(REPOS)).getModelDiff();
         List<Refactoring> refactorings = modelDiff.getRefactorings().stream().filter(ref -> expectedRefactoringTypes.contains(ref.getRefactoringType())).toList();
         Assertions.assertEquals(expectedNumberOfRefactoringOccurrences, refactorings.size());
     }
@@ -131,10 +131,8 @@ public class TestSpecificRefactoringTest {
             """)
     void testExtractFixtureRefactoring(String url,String currentCommit,String filepath,int line, int expectedNumberOfRefactoringOccurrences) throws Exception {
         System.out.println(url + " " + currentCommit + " " + filepath + " " + line);
-        String projectName = url.substring(url.lastIndexOf("/") + 1, url.length() - 4);
-        String pathToClonedRepository = System.getProperty("user.dir") + "/tmp/" + projectName;
         Set<RefactoringType> expectedRefactoringTypes = Set.of(RefactoringType.EXTRACT_FIXTURE);
-        UMLModelDiff modelDiff = new GitHistoryRefactoringMinerImpl().diffAtCommit(new GitServiceImpl().cloneIfNotExists(pathToClonedRepository, url), currentCommit).getModelDiff();
+        UMLModelDiff modelDiff = new GitHistoryRefactoringMinerImpl().diffAtCommitWithGitHubAPI(url, currentCommit, new File(REPOS)).getModelDiff();
         List<Refactoring> refactorings = modelDiff.getRefactorings().stream().filter(ref -> expectedRefactoringTypes.contains(ref.getRefactoringType())).toList();
         Assertions.assertEquals(expectedNumberOfRefactoringOccurrences, refactorings.size());
     }

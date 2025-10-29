@@ -3142,6 +3142,28 @@ public class ReplacementAlgorithm {
 					}
 				}
 			}
+			//assertTrue(instanceof) to assertThat(instanceOf())
+			if(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("assertThat")) {
+				String before = null;
+				String after = null;
+				for(String arg : invocationCoveringTheEntireStatement1.arguments()) {
+					if(arg.contains(" instanceof ")) {
+						before = arg.substring(0, arg.indexOf(" instanceof "));
+						after = arg.substring(arg.indexOf(" instanceof ") + " instanceof ".length(), arg.length());
+					}
+				}
+				if(before != null && after != null) {
+					for(String arg : invocationCoveringTheEntireStatement2.arguments()) {
+						if(arg.startsWith("instanceOf(" + after)) {
+							Replacement replacement = new MethodInvocationReplacement(
+									invocationCoveringTheEntireStatement1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
+									invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
+							replacementInfo.addReplacement(replacement);
+							return replacementInfo.getReplacements();
+						}
+					}
+				}
+			}
 		}
 		//check if the class instance creation in the first statement is the expression of the method invocation in the second statement
 		if(creationCoveringTheEntireStatement1 != null) {

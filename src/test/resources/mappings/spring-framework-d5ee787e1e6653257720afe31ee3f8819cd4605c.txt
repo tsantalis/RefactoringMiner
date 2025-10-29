@@ -187,6 +187,8 @@ public testMergeWithNonCompatibleParentType() : void -> public mergeWithNonCompa
 line range:47-47==line range:54-54
 line range:48-48==line range:55-55
 line range:50-50==line range:56-56
+public testMergeNotAllowedWhenMergeNotEnabled() : void -> public mergeNotAllowedWhenMergeNotEnabled() : void
+line range:60-60==line range:61-61
 public testMergeEmptyChild() : void -> public mergeEmptyChild() : void
 line range:68-68==line range:66-66
 line range:69-69==line range:67-67
@@ -205,8 +207,6 @@ line range:83-83==line range:82-82
 line range:84-84==line range:83-83
 line range:86-86==line range:85-85
 line range:87-87==line range:86-86
-public testMergeNotAllowedWhenMergeNotEnabled() : void -> public mergeNotAllowedWhenMergeNotEnabled() : void
-line range:60-60==line range:61-61
 public testMergeSunnyDay() : void -> public mergeSunnyDay() : void
 line range:30-30==line range:35-35
 line range:31-31==line range:36-36
@@ -259,6 +259,8 @@ line range:41-41==line range:47-47
 line range:42-42==line range:48-48
 line range:43-43==line range:49-49
 line range:44-44==line range:50-50
+public testMergeNotAllowedWhenMergeNotEnabled() : void -> public mergeNotAllowedWhenMergeNotEnabled() : void
+line range:50-50==line range:55-55
 public testMergeWithNonCompatibleParentType() : void -> public mergeWithNonCompatibleParentType() : void
 line range:58-58==line range:60-60
 line range:59-59==line range:61-61
@@ -281,8 +283,6 @@ line range:85-85==line range:84-84
 line range:86-86==line range:85-85
 line range:87-87==line range:86-86
 line range:88-88==line range:87-87
-public testMergeNotAllowedWhenMergeNotEnabled() : void -> public mergeNotAllowedWhenMergeNotEnabled() : void
-line range:50-50==line range:55-55
 public testWithSimpleConstructorArg() : void -> public withSimpleConstructorArg() : void
 line range:40-40==line range:39-39
 line range:41-41==line range:40-40
@@ -9247,6 +9247,7 @@ line range:91-91==line range:98-98
 line range:93-93==line range:100-100
 line range:94-94==line range:101-101
 line range:99-99==line range:106-106
+line range:100-100==line range:107-107
 line range:92-98==line range:99-105
 line range:96-98==line range:103-105
 public testContextNesting() : void -> public contextNesting() : void
@@ -18450,6 +18451,8 @@ line range:75-75==line range:81-81
 line range:76-76==line range:82-82
 line range:77-77==line range:83-83
 private checkContainsAll(expected Map, actual Map<String,Object>) : void -> private checkContainsAll(expected Map, actual Map<String,Object>) : void
+line range:283-283==line range:285-285
+line range:280-284==line range:284-286
 public testRenderWithoutStaticAttributes() : void -> public renderWithoutStaticAttributes() : void
 line range:49-49==line range:53-53
 line range:50-50==line range:54-54
@@ -18660,6 +18663,20 @@ line range:73-79==line range:80-86
 line range:77-79==line range:84-86
 line range:80-86==line range:87-93
 line range:84-86==line range:91-93
+public testDebugViewEnglish() : void -> public debugViewEnglish() : void
+line range:90-90==line range:98-98
+line range:92-92==line range:100-100
+line range:93-93==line range:101-101
+line range:95-95==line range:103-103
+line range:96-96==line range:104-104
+line range:97-97==line range:105-105
+line range:98-98==line range:106-106
+line range:100-100==line range:108-108
+public testDebugViewFrench() : void -> public debugViewFrench() : void
+line range:104-104==line range:113-113
+line range:106-106==line range:115-115
+line range:107-107==line range:116-116
+line range:108-110==line range:117-117
 public testEagerInitialization() : void -> public eagerInitialization() : void
 line range:114-114==line range:122-122
 line range:115-115==line range:123-123
@@ -18669,6 +18686,8 @@ line range:118-118==line range:126-126
 line range:119-119==line range:127-127
 line range:121-121==line range:129-129
 line range:123-123==line range:131-131
+line range:124-124==line range:132-132
+line range:125-127==line range:133-133
 public testSameBundleOnlyCachedOnce() : void -> public sameBundleOnlyCachedOnce() : void
 line range:132-132==line range:140-140
 line range:133-133==line range:141-141
@@ -18680,6 +18699,8 @@ public testOnSetContextCalledOnce() : void -> public onSetContextCalledOnce() : 
 line range:144-144==line range:152-152
 line range:145-145==line range:153-153
 line range:146-146==line range:154-154
+line range:147-147==line range:155-155
+line range:148-148==line range:156-156
 public testNoSuchBasename() : void -> public noSuchBasename() : void
 line range:153-153==line range:161-161
 line range:154-154==line range:162-162

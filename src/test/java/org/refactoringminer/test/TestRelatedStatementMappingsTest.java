@@ -49,7 +49,12 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/EvoSuite/evosuite.git,ed67eeac4f9e0e8710e174db2df6da7985790240",
             "https://github.com/uber/h3-java.git,8b9d3f230393b4a89a21545745754eeb46f56516",
             // Similar to (4) but inline in the same test method
+            // SOS: The following is a large commit, which is already tested in TestStatementMappings.testJUnit3MigrationMappings()
+            // The assume-related mapping is already captured in the other test
+            // public testSameBundleOnlyCachedOnce() : void -> public sameBundleOnlyCachedOnce() : void
+            // line range:131-131==line range:138-138
             //"https://github.com/MrSorrow/spring-framework.git,d5ee787e1e6653257720afe31ee3f8819cd4605c",
+            
             //"https://github.com/antlibs/ant-contrib.git,3975cfdae22ddd462f034d79f51d35e159cdd3d4",
             // Inline variant where if-body ends with return (not detected because condition is inverted!)
             "https://github.com/MrSorrow/spring-framework.git,f47bbb0d9e8023590c0fd965acb009719aea6b67",

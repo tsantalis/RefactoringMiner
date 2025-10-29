@@ -35,6 +35,7 @@ import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.AddParameterRefactoring;
 import gr.uom.java.xmi.diff.AssertThrowsRefactoring;
 import gr.uom.java.xmi.diff.AssertTimeoutRefactoring;
+import gr.uom.java.xmi.diff.AssertionRefactoring;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
 import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
@@ -83,6 +84,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -4158,6 +4160,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				populate(call, assumeCalls, assumeMappings);
 			}
 		}
+		BiFunction<Set<AbstractCodeMapping>, AbstractCall, AssertionRefactoring> assertionRef = (set, assertThrowsCall) -> new AssertThrowsRefactoring(set, assertThrowsCall, container1, container2);
 		if(assertThrows1 < assertThrowsCalls.size()) {
 			for(AbstractCall assertThrowsCall : assertThrowsCalls) {
 				Set<AbstractCodeMapping> set = assertThrowsMappings.get(assertThrowsCall.actualString());
@@ -4170,12 +4173,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							continue;
 						}
 					}
-					AssertThrowsRefactoring ref = new AssertThrowsRefactoring(set, assertThrowsCall, container1, container2);
+					AssertionRefactoring ref = assertionRef.apply(set, assertThrowsCall);
 					refactorings.add(ref);
-					handleAdditionalAssertThrowMappings(firstMapping, ref);
+					if(ref instanceof AssertThrowsRefactoring assertThrows) {
+						handleAdditionalAssertThrowMappings(firstMapping, assertThrows);
+					}
 				}
 			}
 		}
+		BiFunction<Set<AbstractCodeMapping>, AbstractCall, AssertionRefactoring> assertionRef2 = (set, assertTimeoutCall) -> new AssertTimeoutRefactoring(set, assertTimeoutCall, container1, container2);
 		if(assertTimeout1 < assertTimeoutCalls.size()) {
 			for(AbstractCall assertTimeoutCall : assertTimeoutCalls) {
 				Set<AbstractCodeMapping> set = assertTimeoutMappings.get(assertTimeoutCall.actualString());
@@ -4188,11 +4194,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							continue;
 						}
 					}
-					AssertTimeoutRefactoring ref = new AssertTimeoutRefactoring(set, assertTimeoutCall, container1, container2);
+					AssertionRefactoring ref = assertionRef2.apply(set, assertTimeoutCall);
 					refactorings.add(ref);
+					if(ref instanceof AssertThrowsRefactoring assertThrows) {
+						handleAdditionalAssertThrowMappings(firstMapping, assertThrows);
+					}
 				}
 			}
 		}
+		BiFunction<Set<AbstractCodeMapping>, AbstractCall, AssertionRefactoring> assertionRef3 = (set, assertThrowsCall) -> new AssertThrowsRefactoring(set, assertThrowsCall, container1, container2);
 		if(assertThatThrownBy1 < assertThatThrownByCalls.size()) {
 			for(AbstractCall assertThrowsCall : assertThatThrownByCalls) {
 				Set<AbstractCodeMapping> set = assertThatThrownByMappings.get(assertThrowsCall.actualString());
@@ -4205,12 +4215,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							continue;
 						}
 					}
-					AssertThrowsRefactoring ref = new AssertThrowsRefactoring(set, assertThrowsCall, container1, container2);
+					AssertionRefactoring ref = assertionRef3.apply(set, assertThrowsCall);
 					refactorings.add(ref);
-					handleAdditionalAssertThrowMappings(firstMapping, ref);
+					if(ref instanceof AssertThrowsRefactoring assertThrows) {
+						handleAdditionalAssertThrowMappings(firstMapping, assertThrows);
+					}
 				}
 			}
 		}
+		BiFunction<Set<AbstractCodeMapping>, AbstractCall, AssertionRefactoring> assertionRef4 = (set, assumeCall) -> new AssumeRefactoring(set, assumeCall, container1, container2);
 		if(assume1 < assumeCalls.size()) {
 			for(AbstractCall assumeCall : assumeCalls) {
 				Set<AbstractCodeMapping> set = assumeMappings.get(assumeCall.actualString());
@@ -4223,8 +4236,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							continue;
 						}
 					}
-					AssumeRefactoring ref = new AssumeRefactoring(set, assumeCall, container1, container2);
+					AssertionRefactoring ref = assertionRef4.apply(set, assumeCall);
 					refactorings.add(ref);
+					if(ref instanceof AssertThrowsRefactoring assertThrows) {
+						handleAdditionalAssertThrowMappings(firstMapping, assertThrows);
+					}
 				}
 			}
 		}

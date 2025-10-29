@@ -41,7 +41,7 @@ import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
 import gr.uom.java.xmi.diff.ChangeVariableTypeRefactoring;
 import gr.uom.java.xmi.diff.ExtractOperationDetection;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
-import gr.uom.java.xmi.diff.ExtractPreconditionRefactoring;
+import gr.uom.java.xmi.diff.AssumeRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
@@ -4223,7 +4223,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							continue;
 						}
 					}
-					ExtractPreconditionRefactoring ref = new ExtractPreconditionRefactoring(set, assumeCall, container1, container2);
+					AssumeRefactoring ref = new AssumeRefactoring(set, assumeCall, container1, container2);
 					refactorings.add(ref);
 				}
 			}

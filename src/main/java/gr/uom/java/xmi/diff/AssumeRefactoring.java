@@ -5,7 +5,6 @@ import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import java.util.ArrayList;
@@ -14,24 +13,24 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public class ExtractPreconditionRefactoring implements Refactoring {
+public class AssumeRefactoring implements MethodLevelRefactoring, AssertionRefactoring {
     private Set<AbstractCodeMapping> assumeMappings;
     private AbstractCall assumption;
     private VariableDeclarationContainer operationBefore;
     private VariableDeclarationContainer operationAfter;
 
-    public ExtractPreconditionRefactoring(Set<AbstractCodeMapping> mappings, AbstractCall assumption, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
+    public AssumeRefactoring(Set<AbstractCodeMapping> mappings, AbstractCall assumption, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
         this.assumeMappings = mappings;
         this.assumption = assumption;
         this.operationBefore = operationBefore;
         this.operationAfter = operationAfter;
     }
 
-    public AbstractCall getAssumption() {
+    public AbstractCall getCall() {
         return assumption;
     }
 
-    public Set<AbstractCodeMapping> getAssumeMappings() {
+    public Set<AbstractCodeMapping> getMappings() {
         return assumeMappings;
     }
 
@@ -122,7 +121,7 @@ public class ExtractPreconditionRefactoring implements Refactoring {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        ExtractPreconditionRefactoring other = (ExtractPreconditionRefactoring) obj;
+        AssumeRefactoring other = (AssumeRefactoring) obj;
         return Objects.equals(assumption, other.assumption) && Objects.equals(assumeMappings, other.assumeMappings) && Objects.equals(operationBefore, other.operationBefore) && Objects.equals(operationAfter, other.operationAfter);
     }
 

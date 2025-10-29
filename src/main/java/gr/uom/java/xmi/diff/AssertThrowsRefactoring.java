@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -16,7 +15,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class AssertThrowsRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
+public class AssertThrowsRefactoring implements MethodLevelRefactoring, LeafMappingProvider, AssertionRefactoring {
 	private Set<AbstractCodeMapping> assertThrowsMappings;
 	private AbstractCall assertThrowsCall;
 	private VariableDeclarationContainer operationBefore;
@@ -50,11 +49,11 @@ public class AssertThrowsRefactoring implements MethodLevelRefactoring, LeafMapp
 		return subExpressionMappings;
 	}
 
-	public Set<AbstractCodeMapping> getAssertThrowsMappings() {
+	public Set<AbstractCodeMapping> getMappings() {
 		return assertThrowsMappings;
 	}
 
-	public AbstractCall getAssertThrowsCall() {
+	public AbstractCall getCall() {
 		return assertThrowsCall;
 	}
 

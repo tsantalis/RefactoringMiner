@@ -176,11 +176,11 @@ public class ExpectedAnnotationToAssertThrowsTest {
             Assert.assertEquals("testClass",new ArrayList<>(refactoring.getInvolvedClassesBeforeRefactoring()).get(0).left);
             Assert.assertEquals("ca.concordia.victor.exception.ExampleClassTest",new ArrayList<>(refactoring.getInvolvedClassesBeforeRefactoring()).get(0).right);
             Assert.assertEquals("Assert Throws\tAssert.assertThrows(IllegalArgumentException.class,() -> { in method public testExampleMethod_WrongGuess() : void from class ca.concordia.victor.exception.ExampleClassTest", refactoring.toString());
-            Assert.assertEquals(2,refactoring.getAssertThrowsCall().arguments().size());
-            Assert.assertEquals("IllegalArgumentException.class",refactoring.getAssertThrowsCall().arguments().get(0));
+            Assert.assertEquals(2,refactoring.getCall().arguments().size());
+            Assert.assertEquals("IllegalArgumentException.class",refactoring.getCall().arguments().get(0));
             Assert.assertEquals("() -> {\n" +
                     "  exampleObj.exampleMethod(0);\n" +
-                    "}\n",refactoring.getAssertThrowsCall().arguments().get(1));
+                    "}\n",refactoring.getCall().arguments().get(1));
             possibleRefactoring = refactorings.stream()
                     .filter(r -> r instanceof ModifyMethodAnnotationRefactoring)
                     .findAny();

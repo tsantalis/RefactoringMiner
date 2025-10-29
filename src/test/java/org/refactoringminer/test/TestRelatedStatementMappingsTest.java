@@ -91,9 +91,9 @@ public class TestRelatedStatementMappingsTest {
     public void testAssumptionIntroducingRefactoring(String url,String commit) throws Exception {
         String testResultFileName = url.substring(url.lastIndexOf('/') + 1, url.indexOf(".git")) + "-" + commit + ".txt";
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof ExtractPreconditionRefactoring) {
-                ExtractPreconditionRefactoring refactoring = (ExtractPreconditionRefactoring) ref;
-                Set<AbstractCodeMapping> mapper = refactoring.getAssumeMappings();
+            if (ref instanceof AssumeRefactoring) {
+                AssumeRefactoring refactoring = (AssumeRefactoring) ref;
+                Set<AbstractCodeMapping> mapper = refactoring.getMappings();
                 mapperInfo(mapper, refactoring.getOperationBefore(), refactoring.getOperationAfter());
             }
         });
@@ -130,7 +130,7 @@ public class TestRelatedStatementMappingsTest {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
             if (ref instanceof AssertThrowsRefactoring) {
                 AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref;
-                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
+                Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getMappings();
                 mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
             }
         });

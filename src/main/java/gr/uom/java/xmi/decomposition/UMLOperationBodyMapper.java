@@ -4160,10 +4160,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				populate(call, assumeCalls, assumeMappings);
 			}
 		}
-		BiFunction<Set<AbstractCodeMapping>, AbstractCall, AssertionRefactoring> assertionRef = (set, assertThrowsCall) -> new AssertThrowsRefactoring(set, assertThrowsCall, container1, container2);
-		if(assertThrows1 < assertThrowsCalls.size()) {
-			for(AbstractCall assertThrowsCall : assertThrowsCalls) {
-				Set<AbstractCodeMapping> set = assertThrowsMappings.get(assertThrowsCall.actualString());
+		createAssertRefactorings(assertThrows1, assertThrowsMappings, assertThrowsCalls, (set, assertThrowsCall) -> new AssertThrowsRefactoring(set, assertThrowsCall, container1, container2));
+		createAssertRefactorings(assertTimeout1, assertTimeoutMappings, assertTimeoutCalls, (set, assertTimeoutCall) -> new AssertTimeoutRefactoring(set, assertTimeoutCall, container1, container2));
+		createAssertRefactorings(assertThatThrownBy1, assertThatThrownByMappings, assertThatThrownByCalls, (set, assertThrowsCall) -> new AssertThrowsRefactoring(set, assertThrowsCall, container1, container2));
+		createAssertRefactorings(assume1, assumeMappings, assumeCalls, (set, assumeCall) -> new AssumeRefactoring(set, assumeCall, container1, container2));
+	}
+
+	private void createAssertRefactorings(int assertCountBefore, Map<String, Set<AbstractCodeMapping>> assertMappings,
+			List<AbstractCall> assertCalls,
+			BiFunction<Set<AbstractCodeMapping>, AbstractCall, AssertionRefactoring> assertionRefProvider) {
+		if(assertCountBefore < assertCalls.size()) {
+			for(AbstractCall assertThrowsCall : assertCalls) {
+				Set<AbstractCodeMapping> set = assertMappings.get(assertThrowsCall.actualString());
 				if(set != null && set.size() > 0) {
 					AbstractCodeMapping firstMapping = set.iterator().next();
 					AbstractCall call2 = firstMapping.getFragment2().invocationCoveringEntireFragment();
@@ -4173,70 +4181,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							continue;
 						}
 					}
-					AssertionRefactoring ref = assertionRef.apply(set, assertThrowsCall);
-					refactorings.add(ref);
-					if(ref instanceof AssertThrowsRefactoring assertThrows) {
-						handleAdditionalAssertThrowMappings(firstMapping, assertThrows);
-					}
-				}
-			}
-		}
-		BiFunction<Set<AbstractCodeMapping>, AbstractCall, AssertionRefactoring> assertionRef2 = (set, assertTimeoutCall) -> new AssertTimeoutRefactoring(set, assertTimeoutCall, container1, container2);
-		if(assertTimeout1 < assertTimeoutCalls.size()) {
-			for(AbstractCall assertTimeoutCall : assertTimeoutCalls) {
-				Set<AbstractCodeMapping> set = assertTimeoutMappings.get(assertTimeoutCall.actualString());
-				if(set != null && set.size() > 0) {
-					AbstractCodeMapping firstMapping = set.iterator().next();
-					AbstractCall call2 = firstMapping.getFragment2().invocationCoveringEntireFragment();
-					if(call2 != null && call2.equals(assertTimeoutCall)) {
-						AbstractCall call1 = firstMapping.getFragment1().invocationCoveringEntireFragment();
-						if(call1 != null && call1.equalArguments(call2)) {
-							continue;
-						}
-					}
-					AssertionRefactoring ref = assertionRef2.apply(set, assertTimeoutCall);
-					refactorings.add(ref);
-					if(ref instanceof AssertThrowsRefactoring assertThrows) {
-						handleAdditionalAssertThrowMappings(firstMapping, assertThrows);
-					}
-				}
-			}
-		}
-		BiFunction<Set<AbstractCodeMapping>, AbstractCall, AssertionRefactoring> assertionRef3 = (set, assertThrowsCall) -> new AssertThrowsRefactoring(set, assertThrowsCall, container1, container2);
-		if(assertThatThrownBy1 < assertThatThrownByCalls.size()) {
-			for(AbstractCall assertThrowsCall : assertThatThrownByCalls) {
-				Set<AbstractCodeMapping> set = assertThatThrownByMappings.get(assertThrowsCall.actualString());
-				if(set != null && set.size() > 0) {
-					AbstractCodeMapping firstMapping = set.iterator().next();
-					AbstractCall call2 = firstMapping.getFragment2().invocationCoveringEntireFragment();
-					if(call2 != null && call2.equals(assertThrowsCall)) {
-						AbstractCall call1 = firstMapping.getFragment1().invocationCoveringEntireFragment();
-						if(call1 != null && call1.equalArguments(call2)) {
-							continue;
-						}
-					}
-					AssertionRefactoring ref = assertionRef3.apply(set, assertThrowsCall);
-					refactorings.add(ref);
-					if(ref instanceof AssertThrowsRefactoring assertThrows) {
-						handleAdditionalAssertThrowMappings(firstMapping, assertThrows);
-					}
-				}
-			}
-		}
-		BiFunction<Set<AbstractCodeMapping>, AbstractCall, AssertionRefactoring> assertionRef4 = (set, assumeCall) -> new AssumeRefactoring(set, assumeCall, container1, container2);
-		if(assume1 < assumeCalls.size()) {
-			for(AbstractCall assumeCall : assumeCalls) {
-				Set<AbstractCodeMapping> set = assumeMappings.get(assumeCall.actualString());
-				if(set != null && set.size() > 0) {
-					AbstractCodeMapping firstMapping = set.iterator().next();
-					AbstractCall call2 = firstMapping.getFragment2().invocationCoveringEntireFragment();
-					if(call2 != null && call2.equals(assumeCall)) {
-						AbstractCall call1 = firstMapping.getFragment1().invocationCoveringEntireFragment();
-						if(call1 != null && call1.equalArguments(call2)) {
-							continue;
-						}
-					}
-					AssertionRefactoring ref = assertionRef4.apply(set, assumeCall);
+					AssertionRefactoring ref = assertionRefProvider.apply(set, assertThrowsCall);
 					refactorings.add(ref);
 					if(ref instanceof AssertThrowsRefactoring assertThrows) {
 						handleAdditionalAssertThrowMappings(firstMapping, assertThrows);

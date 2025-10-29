@@ -128,10 +128,13 @@ public class TestRelatedStatementMappingsTest {
     })
     public void testAssertThrowsMappings(String url, String commit, String testResultFileName) throws Exception {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof AssertThrowsRefactoring) {
-                AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref;
+            if (ref instanceof AssertThrowsRefactoring assertThrowsRefactoring) {
                 Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getMappings();
                 mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            }
+            else if (ref instanceof AssertTimeoutRefactoring assertTimeoutRefactoring) {
+                Set<AbstractCodeMapping> mapper = assertTimeoutRefactoring.getMappings();
+                mapperInfo(mapper, assertTimeoutRefactoring.getOperationBefore(), assertTimeoutRefactoring.getOperationAfter());
             }
         });
     }

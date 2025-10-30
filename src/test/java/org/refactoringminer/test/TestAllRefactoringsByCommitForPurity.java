@@ -73,47 +73,39 @@ public class TestAllRefactoringsByCommitForPurity {
     @JsonFileSource(resources = "/oracle/sampleResPurity.json")
     public void testAllRefactoringsParameterized(@ConvertWith(RefactoringPurityJsonConverter.class) RefactoringPopulator.Root testCase) throws Exception {
         GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
-        detector.detectAtCommitWithGitHubAPI(testCase.repository, testCase.sha1, new File(REPOS), new ModelDiffRefactoringHandler() {
-            @Override
-            public boolean skipCommit(String commitId) {
-                return commitId != testCase.sha1;
-            }
-
-			@Override
-            public void handleModelDiff(String commitId, List<Refactoring> refactorings, UMLModelDiff modelDiff) {
-        		int actualTP = 0, actualTN = 0, actualFP = 0, actualFN = 0;
-        		for (Refactoring found : refactorings) {
-        			PurityCheckResult actual = PurityChecker.check(found, refactorings, modelDiff);
-        			String description = found.toString();
-					if(actual != null) {
-						RefactoringPopulator.Purity p = findPurity(testCase, description);
-						if(p != null) {
-							if(p.purityValue.equals("1") && actual.isPure()) {
-								actualTP++;
-							}
-							else if(p.purityValue.equals("0") && !actual.isPure()) {
-								actualTN++;
-							}
-							else if(p.purityValue.equals("0") && actual.isPure()) {
-								actualFP++;
-							}
-							else if(p.purityValue.equals("1") && !actual.isPure()) {
-								actualFN++;
-							}
+        detector.detectAtCommitWithGitHubAPI(testCase.repository, testCase.sha1, new File(REPOS), (ModelDiffRefactoringHandler) (commitId, refactorings, modelDiff) -> {
+			int actualTP = 0, actualTN = 0, actualFP = 0, actualFN = 0;
+			for (Refactoring found : refactorings) {
+				PurityCheckResult actual = PurityChecker.check(found, refactorings, modelDiff);
+				String description = found.toString();
+				if(actual != null) {
+					RefactoringPopulator.Purity p = findPurity(testCase, description);
+					if(p != null) {
+						if(p.purityValue.equals("1") && actual.isPure()) {
+							actualTP++;
+						}
+						else if(p.purityValue.equals("0") && !actual.isPure()) {
+							actualTN++;
+						}
+						else if(p.purityValue.equals("0") && actual.isPure()) {
+							actualFP++;
+						}
+						else if(p.purityValue.equals("1") && !actual.isPure()) {
+							actualFN++;
 						}
 					}
-        		}
-        		final int finalActualTP = actualTP;
-        		final int finalActualTN = actualTN;
-        		final int finalActualFP = actualFP;
-        		final int finalActualFN = actualFN;
-        		Assertions.assertAll(
-        		() -> Assertions.assertEquals(expectedTP.get(commitId), finalActualTP, String.format("Should have %s True Positives, but has %s", expectedTP.get(commitId), finalActualTP)),
-        		() -> Assertions.assertEquals(expectedTN.get(commitId), finalActualTN, String.format("Should have %s True Negatives, but has %s", expectedTN.get(commitId), finalActualTN)),
-        		() -> Assertions.assertEquals(expectedFP.get(commitId), finalActualFP, String.format("Should have %s False Positives, but has %s", expectedFP.get(commitId), finalActualFP)),
-        		() -> Assertions.assertEquals(expectedFN.get(commitId), finalActualFN, String.format("Should have %s False Negatives, but has %s", expectedFN.get(commitId), finalActualFN))
-        		);
-        	}
+				}
+			}
+			final int finalActualTP = actualTP;
+			final int finalActualTN = actualTN;
+			final int finalActualFP = actualFP;
+			final int finalActualFN = actualFN;
+			Assertions.assertAll(
+			() -> Assertions.assertEquals(expectedTP.get(commitId), finalActualTP, String.format("Should have %s True Positives, but has %s", expectedTP.get(commitId), finalActualTP)),
+			() -> Assertions.assertEquals(expectedTN.get(commitId), finalActualTN, String.format("Should have %s True Negatives, but has %s", expectedTN.get(commitId), finalActualTN)),
+			() -> Assertions.assertEquals(expectedFP.get(commitId), finalActualFP, String.format("Should have %s False Positives, but has %s", expectedFP.get(commitId), finalActualFP)),
+			() -> Assertions.assertEquals(expectedFN.get(commitId), finalActualFN, String.format("Should have %s False Negatives, but has %s", expectedFN.get(commitId), finalActualFN))
+			);
         });
     }
 }

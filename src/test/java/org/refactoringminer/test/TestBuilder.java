@@ -259,7 +259,7 @@ public class TestBuilder {
 		return sb.toString();
 	}
 
-	public class ProjectMatcher extends RefactoringHandler {
+	public class ProjectMatcher implements RefactoringHandler {
 
 		private final String cloneUrl;
 		private final String branch;

@@ -8,7 +8,8 @@ import gr.uom.java.xmi.diff.UMLModelDiff;
  * Handler object that works in conjunction with {@link org.refactoringminer.api.GitHistoryRefactoringMiner}.
  * 
  */
-public abstract class RefactoringHandler {
+@FunctionalInterface
+public interface RefactoringHandler {
 
 	/**
 	 * Indicate commits that should be ignored.
@@ -17,7 +18,7 @@ public abstract class RefactoringHandler {
 	 * @param commitId The SHA key that identifies the commit.
 	 * @return True to skip the commit, false otherwise.
 	 */
-	public boolean skipCommit(String commitId) {
+	default boolean skipCommit(String commitId) {
 		return false;
 	}
 
@@ -28,7 +29,7 @@ public abstract class RefactoringHandler {
 	 * @param commitId The sha of the analyzed commit.
 	 * @param refactorings List of refactorings detected in the commit.
 	 */
-	public void handle(String commitId, List<Refactoring> refactorings) {}
+	void handle(String commitId, List<Refactoring> refactorings);
 
 	/**
      * This method is called whenever an exception is thrown during the analysis of the given commit.
@@ -37,7 +38,7 @@ public abstract class RefactoringHandler {
      * @param commitId The SHA key that identifies the commit.
      * @param e The exception thrown.
      */
-    public void handleException(String commitId, Exception e) {
+    default void handleException(String commitId, Exception e) {
         throw new RuntimeException(e);
     }
 
@@ -49,7 +50,7 @@ public abstract class RefactoringHandler {
 	 * @param commitsCount Total number of commits analyzed.
 	 * @param errorCommitsCount Total number of commits not analyzed due to errors.
 	 */
-	public void onFinish(int refactoringsCount, int commitsCount, int errorCommitsCount) {}
+	default void onFinish(int refactoringsCount, int commitsCount, int errorCommitsCount) {}
 
-	public void handleModelDiff(String commitId, List<Refactoring> refactoringsAtRevision, UMLModelDiff modelDiff) {}
+	default void handleModelDiff(String commitId, List<Refactoring> refactoringsAtRevision, UMLModelDiff modelDiff) {}
 }

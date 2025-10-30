@@ -19,6 +19,8 @@ import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN;
+
+import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper.ReplacementInfo;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
@@ -369,7 +371,14 @@ public abstract class AbstractCall extends LeafExpression {
 				!arguments().equals(call.arguments()) && arguments().containsAll(call.arguments());
 	}
 
-	public boolean identicalOrReplacedArguments(AbstractCall call, Set<Replacement> replacements, List<UMLOperationBodyMapper> lambdaMappers) {
+	public boolean identicalOrReplacedArguments(AbstractCall call, ReplacementInfo replacementInfo) {
+		Set<Replacement> replacements = replacementInfo.getReplacements();
+		List<UMLOperationBodyMapper> lambdaMappers = replacementInfo.getLambdaMappers();
+		return identicalOrReplacedArguments(call, replacements, lambdaMappers, replacementInfo.getStatements1());
+	}
+
+	public boolean identicalOrReplacedArguments(AbstractCall call, Set<Replacement> replacements,
+			List<UMLOperationBodyMapper> lambdaMappers, List<? extends AbstractCodeFragment> statements1) {
 		List<String> arguments1 = arguments();
 		List<String> arguments2 = call.arguments();
 		if(arguments1.size() != arguments2.size())
@@ -410,7 +419,17 @@ public abstract class AbstractCall extends LeafExpression {
 					}
 				}
 			}
-			if(!argument1.equals(argument2) && !argumentReplacement && !lambdaReplacement)
+			boolean inline = false;
+			for(AbstractCodeFragment statement1 : statements1) {
+				VariableDeclaration vd = statement1.getVariableDeclaration(argument2);
+				if(vd != null && vd.getInitializer() != null) {
+					if(vd.getInitializer().getString().contains(argument1)) {
+						inline = true;
+						break;
+					}
+				}
+			}
+			if(!argument1.equals(argument2) && !argumentReplacement && !lambdaReplacement && !inline)
 				return false;
 		}
 		return true;
@@ -559,9 +578,10 @@ public abstract class AbstractCall extends LeafExpression {
 		return replacedArguments > 0 && replacedArguments == arguments1.size();
 	}
 
-	public boolean renamedWithIdenticalExpressionAndArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, double distance,
-			List<UMLOperationBodyMapper> lambdaMappers, boolean matchPairOfRemovedAddedOperationsWithIdenticalBody, boolean argumentsWithVariableDeclarationMapping) {
-		boolean identicalOrReplacedArguments = identicalOrReplacedArguments(call, replacements, lambdaMappers);
+	public boolean renamedWithIdenticalExpressionAndArguments(AbstractCall call, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap, double distance,
+			boolean matchPairOfRemovedAddedOperationsWithIdenticalBody, boolean argumentsWithVariableDeclarationMapping) {
+		boolean identicalOrReplacedArguments = identicalOrReplacedArguments(call, replacementInfo);
+		Set<Replacement> replacements = replacementInfo.getReplacements();
 		boolean allArgumentsReplaced = allArgumentsReplaced(call, replacements);
 		boolean nameMatch = false;
 		if(this.arguments.size() > call.arguments.size()) {

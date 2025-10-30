@@ -6,13 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
-public class AddMethodAnnotationRefactoring implements MethodLevelRefactoring {
+public class AddMethodAnnotationRefactoring implements MethodLevelRefactoring, AnnotationRefactoring {
 	private UMLAnnotation annotation;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
@@ -24,14 +23,17 @@ public class AddMethodAnnotationRefactoring implements MethodLevelRefactoring {
 		this.operationAfter = operationAfter;
 	}
 
+	@Override
 	public UMLAnnotation getAnnotation() {
 		return annotation;
 	}
 
+	@Override
 	public VariableDeclarationContainer getOperationBefore() {
 		return operationBefore;
 	}
 
+	@Override
 	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
 	}

@@ -12,7 +12,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 
-public class RemoveClassAnnotationRefactoring implements Refactoring {
+public class RemoveClassAnnotationRefactoring implements Refactoring, ClassLevelRefactoring, AnnotationRefactoring {
 	private UMLAnnotation annotation;
 	private UMLAbstractClass classBefore;
 	private UMLAbstractClass classAfter;
@@ -23,14 +23,17 @@ public class RemoveClassAnnotationRefactoring implements Refactoring {
 		this.classAfter = classAfter;
 	}
 
+	@Override
 	public UMLAnnotation getAnnotation() {
 		return annotation;
 	}
 
+	@Override
 	public UMLAbstractClass getClassBefore() {
 		return classBefore;
 	}
 
+	@Override
 	public UMLAbstractClass getClassAfter() {
 		return classAfter;
 	}

@@ -19,6 +19,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
+import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 import java.io.File;
@@ -54,7 +55,7 @@ public class TestRelatedStatementMappingsTest {
             // public testSameBundleOnlyCachedOnce() : void -> public sameBundleOnlyCachedOnce() : void
             // line range:131-131==line range:138-138
             //"https://github.com/MrSorrow/spring-framework.git,d5ee787e1e6653257720afe31ee3f8819cd4605c",
-            
+
             //"https://github.com/antlibs/ant-contrib.git,3975cfdae22ddd462f034d79f51d35e159cdd3d4",
             // Inline variant where if-body ends with return (not detected because condition is inverted!)
             "https://github.com/MrSorrow/spring-framework.git,f47bbb0d9e8023590c0fd965acb009719aea6b67",
@@ -135,6 +136,19 @@ public class TestRelatedStatementMappingsTest {
             else if (ref instanceof AssertTimeoutRefactoring assertTimeoutRefactoring) {
                 Set<AbstractCodeMapping> mapper = assertTimeoutRefactoring.getMappings();
                 mapperInfo(mapper, assertTimeoutRefactoring.getOperationBefore(), assertTimeoutRefactoring.getOperationAfter());
+            }
+        });
+    }
+
+    @ParameterizedTest
+    @CsvSource(textBlock = """
+            https://github.com/uber/h3-java.git,8b9d3f230393b4a89a21545745754eeb46f56516
+            """)
+    void testExtractFixtureRefactoring(String url,String commit) {
+        String testResultFileName = url.substring(url.lastIndexOf('/') + 1, url.indexOf(".git")) + "-" + commit + ".txt";
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof MoveCodeRefactoring moveCodeRefactoring && ref.getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE)) {
+                mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getBodyMapper().getOperation1(), moveCodeRefactoring.getBodyMapper().getOperation2());
             }
         });
     }

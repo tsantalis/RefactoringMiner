@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
+import org.refactoringminer.api.ModelDiffRefactoringHandler;
 import org.refactoringminer.api.PurityCheckResult;
 import org.refactoringminer.api.PurityChecker;
 import org.refactoringminer.api.Refactoring;
-import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.utils.RefactoringPurityJsonConverter;
 
@@ -73,14 +73,13 @@ public class TestAllRefactoringsByCommitForPurity {
     @JsonFileSource(resources = "/oracle/sampleResPurity.json")
     public void testAllRefactoringsParameterized(@ConvertWith(RefactoringPurityJsonConverter.class) RefactoringPopulator.Root testCase) throws Exception {
         GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
-        detector.detectAtCommitWithGitHubAPI(testCase.repository, testCase.sha1, new File(REPOS), new RefactoringHandler() {
-
+        detector.detectAtCommitWithGitHubAPI(testCase.repository, testCase.sha1, new File(REPOS), new ModelDiffRefactoringHandler() {
             @Override
             public boolean skipCommit(String commitId) {
                 return commitId != testCase.sha1;
             }
 
-            @Override
+			@Override
             public void handleModelDiff(String commitId, List<Refactoring> refactorings, UMLModelDiff modelDiff) {
         		int actualTP = 0, actualTN = 0, actualFP = 0, actualFN = 0;
         		for (Refactoring found : refactorings) {

@@ -17,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.refactoringminer.api.ModelDiffRefactoringHandler;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
@@ -198,45 +199,39 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/apache/commons-math.git, 9b08855c247eb7522fc4b25b8aaece2a0d58d990, commons-math-9b08855c247eb7522fc4b25b8aaece2a0d58d990.txt",
     })
     public void testReplaceAssertionMappings(String url, String commit, String testResultFileName) throws Exception {
-        miner.detectAtCommitWithGitHubAPI(url, commit, new File(REPOS), new RefactoringHandler() {
-            @Override
-            public void handle(String commitId, List<Refactoring> refactorings) {}
-
-            @Override
-            public void handleModelDiff(String commitId, List<Refactoring> refactoringsAtRevision, UMLModelDiff modelDiff) {
-                for (UMLClassDiff umlClassDiff : modelDiff.getCommonClassDiffList()) {
-                    for (UMLOperationBodyMapper umlOperationBodyMapper : umlClassDiff.getOperationBodyMapperList()) {
-                        Set<Pair<LocationInfoProvider, LocationInfoProvider>> replacementMappings = new HashSet<>();
-                        boolean hasAssertionReplacement = false;
-                        for (Replacement replacement : umlOperationBodyMapper.getReplacements()) {
-                            switch (replacement.getType()) {
-                                case ASSERTION_CONVERSION:
-                                case METHOD_INVOCATION:
-                                case METHOD_INVOCATION_EXPRESSION:
-                                case METHOD_INVOCATION_NAME:
-                                case METHOD_INVOCATION_NAME_AND_ARGUMENT:
-                                case METHOD_INVOCATION_NAME_AND_EXPRESSION:
-                                    //System.out.println(replacement.getType().toString());
-                            }
-                            if (replacement instanceof MethodInvocationReplacement) {
-                                MethodInvocationReplacement methodInvocationReplacement = (MethodInvocationReplacement) replacement;
-                                //System.out.println(methodInvocationReplacement.getInvokedOperationBefore().getContainer().toQualifiedString());
-                                //System.out.println(methodInvocationReplacement.getInvokedOperationAfter().getContainer().toQualifiedString());
-                                if (methodInvocationReplacement.getInvokedOperationAfter().getName().contains("assert") ||
-                                        methodInvocationReplacement.getInvokedOperationAfter().getName().contains("is") ||
-                                        methodInvocationReplacement.getInvokedOperationBefore().getName().contains("assert") ||
-                                        methodInvocationReplacement.getInvokedOperationBefore().getName().contains("is")) {
-                                    replacementMappings.add(Pair.of(methodInvocationReplacement.getInvokedOperationBefore().asLeafExpression(), methodInvocationReplacement.getInvokedOperationAfter().asLeafExpression()));
-                                    hasAssertionReplacement = true;
-                                }
+        miner.detectAtCommitWithGitHubAPI(url, commit, new File(REPOS), (ModelDiffRefactoringHandler) (commitId, refactoringsAtRevision, modelDiff) -> {
+            for (UMLClassDiff umlClassDiff : modelDiff.getCommonClassDiffList()) {
+                for (UMLOperationBodyMapper umlOperationBodyMapper : umlClassDiff.getOperationBodyMapperList()) {
+                    Set<Pair<LocationInfoProvider, LocationInfoProvider>> replacementMappings = new HashSet<>();
+                    boolean hasAssertionReplacement = false;
+                    for (Replacement replacement : umlOperationBodyMapper.getReplacements()) {
+                        switch (replacement.getType()) {
+                            case ASSERTION_CONVERSION:
+                            case METHOD_INVOCATION:
+                            case METHOD_INVOCATION_EXPRESSION:
+                            case METHOD_INVOCATION_NAME:
+                            case METHOD_INVOCATION_NAME_AND_ARGUMENT:
+                            case METHOD_INVOCATION_NAME_AND_EXPRESSION:
+                                //System.out.println(replacement.getType().toString());
+                        }
+                        if (replacement instanceof MethodInvocationReplacement) {
+                            MethodInvocationReplacement methodInvocationReplacement = (MethodInvocationReplacement) replacement;
+                            //System.out.println(methodInvocationReplacement.getInvokedOperationBefore().getContainer().toQualifiedString());
+                            //System.out.println(methodInvocationReplacement.getInvokedOperationAfter().getContainer().toQualifiedString());
+                            if (methodInvocationReplacement.getInvokedOperationAfter().getName().contains("assert") ||
+                                    methodInvocationReplacement.getInvokedOperationAfter().getName().contains("is") ||
+                                    methodInvocationReplacement.getInvokedOperationBefore().getName().contains("assert") ||
+                                    methodInvocationReplacement.getInvokedOperationBefore().getName().contains("is")) {
+                                replacementMappings.add(Pair.of(methodInvocationReplacement.getInvokedOperationBefore().asLeafExpression(), methodInvocationReplacement.getInvokedOperationAfter().asLeafExpression()));
+                                hasAssertionReplacement = true;
                             }
                         }
-                        if (hasAssertionReplacement) {
-                            //Set<AbstractCodeMapping> mapper = umlOperationBodyMapper.getMappings();
-                            mapperInfo(replacementMappings, umlOperationBodyMapper.getOperation1(), umlOperationBodyMapper.getOperation2());
-                        }
-
                     }
+                    if (hasAssertionReplacement) {
+                        //Set<AbstractCodeMapping> mapper = umlOperationBodyMapper.getMappings();
+                        mapperInfo(replacementMappings, umlOperationBodyMapper.getOperation1(), umlOperationBodyMapper.getOperation2());
+                    }
+
                 }
             }
         });

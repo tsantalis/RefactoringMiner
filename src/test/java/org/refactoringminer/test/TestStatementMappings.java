@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.refactoringminer.api.ModelDiffRefactoringHandler;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.api.RefactoringType;
@@ -1361,56 +1362,50 @@ public class TestStatementMappings {
 		"https://github.com/checkstyle/checkstyle.git, 1a2c318e22a0b2b22ccc76019217c0892fe2d59b, com.puppycrawl.tools.checkstyle.Main, main, checkstyle-1a2c318e22a0b2b22ccc76019217c0892fe2d59b.txt",
 		"https://github.com/hibernate/hibernate-search.git, fee1c5f90c639ec7fe30699873788b892b84e4c7, org.hibernate.search.integrationtest.mapper.orm.outboxpolling.automaticindexing.OutboxPollingAutomaticIndexingLifecycleIT, stopWhileOutboxEventsIsBeingProcessed, hibernate-search-fee1c5f90c639ec7fe30699873788b892b84e4c7.txt"
 	})
-	public void testMoveCodeStatementMappings(String url, String commitId, String className, String methodName, String testResultFileName) throws Exception {
+	public void testMoveCodeStatementMappings(String url, String commit, String className, String methodName, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommitWithGitHubAPI(url, commitId, new File(REPOS), new RefactoringHandler() {
-			@Override
-			public void handle(String commitId, List<Refactoring> refactorings) {}
-
-			@Override
-			public void handleModelDiff(String commitId, List<Refactoring> refactorings, UMLModelDiff modelDiff) {
-				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
-				for (Refactoring ref : refactorings) {
-					if(ref instanceof ExtractOperationRefactoring) {
-						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
-						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
-						if(!bodyMapper.isNested()) {
-							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
-								parentMappers.add(bodyMapper.getParentMapper());
-							}
-						}
-						mapperInfo(bodyMapper, actual);
-					}
-					else if(ref instanceof InlineOperationRefactoring) {
-						InlineOperationRefactoring in = (InlineOperationRefactoring)ref;
-						UMLOperationBodyMapper bodyMapper = in.getBodyMapper();
-						if(!bodyMapper.isNested()) {
-							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
-								parentMappers.add(bodyMapper.getParentMapper());
-							}
-						}
-						mapperInfo(bodyMapper, actual);
-					}
-					else if(ref instanceof MoveCodeRefactoring) {
-						MoveCodeRefactoring in = (MoveCodeRefactoring)ref;
-						UMLOperationBodyMapper bodyMapper = in.getBodyMapper();
-						mapperInfo(bodyMapper, actual);
-					}
-				}
-				for(UMLOperationBodyMapper parentMapper : parentMappers) {
-					mapperInfo(parentMapper, actual);
-				}
-				//add main mapper
-				UMLClassBaseDiff classDiff = modelDiff.getUMLClassDiff(className);
-				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-					if(mapper.getContainer1().getName().equals(methodName) && mapper.getContainer2().getName().equals(methodName)) {
-						mapperInfo(mapper, actual);
-						break;
-					}
-				}
-			}
-		});
+		miner.detectAtCommitWithGitHubAPI(url, commit, new File(REPOS), (ModelDiffRefactoringHandler) (commitId, refactorings, modelDiff) -> {
+            List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+            for (Refactoring ref : refactorings) {
+                if(ref instanceof ExtractOperationRefactoring) {
+                    ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+                    UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+                    if(!bodyMapper.isNested()) {
+                        if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+                            parentMappers.add(bodyMapper.getParentMapper());
+                        }
+                    }
+                    mapperInfo(bodyMapper, actual);
+                }
+                else if(ref instanceof InlineOperationRefactoring) {
+                    InlineOperationRefactoring in = (InlineOperationRefactoring)ref;
+                    UMLOperationBodyMapper bodyMapper = in.getBodyMapper();
+                    if(!bodyMapper.isNested()) {
+                        if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+                            parentMappers.add(bodyMapper.getParentMapper());
+                        }
+                    }
+                    mapperInfo(bodyMapper, actual);
+                }
+                else if(ref instanceof MoveCodeRefactoring) {
+                    MoveCodeRefactoring in = (MoveCodeRefactoring)ref;
+                    UMLOperationBodyMapper bodyMapper = in.getBodyMapper();
+                    mapperInfo(bodyMapper, actual);
+                }
+            }
+            for(UMLOperationBodyMapper parentMapper : parentMappers) {
+                mapperInfo(parentMapper, actual);
+            }
+            //add main mapper
+            UMLClassBaseDiff classDiff = modelDiff.getUMLClassDiff(className);
+            for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+                if(mapper.getContainer1().getName().equals(methodName) && mapper.getContainer2().getName().equals(methodName)) {
+                    mapperInfo(mapper, actual);
+                    break;
+                }
+            }
+        });
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
@@ -1419,61 +1414,55 @@ public class TestStatementMappings {
 	public void testMoveCodeStatementMappings2() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommitWithGitHubAPI("https://github.com/junit-team/junit5.git", "3e3b402131a99f01480c57dd82c2e81ad6d9a4ea", new File(REPOS), new RefactoringHandler() {
-			@Override
-			public void handle(String commitId, List<Refactoring> refactorings) {}
-
-			@Override
-			public void handleModelDiff(String commitId, List<Refactoring> refactorings, UMLModelDiff modelDiff) {
-				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
-				for (Refactoring ref : refactorings) {
-					if(ref instanceof ExtractOperationRefactoring) {
-						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
-						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
-						if(!bodyMapper.isNested()) {
-							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
-								parentMappers.add(bodyMapper.getParentMapper());
-							}
-						}
-						mapperInfo(bodyMapper, actual);
-					}
-					else if(ref instanceof InlineOperationRefactoring) {
-						InlineOperationRefactoring in = (InlineOperationRefactoring)ref;
-						UMLOperationBodyMapper bodyMapper = in.getBodyMapper();
-						if(!bodyMapper.isNested()) {
-							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
-								parentMappers.add(bodyMapper.getParentMapper());
-							}
-						}
-						mapperInfo(bodyMapper, actual);
-					}
-					else if(ref instanceof MoveCodeRefactoring) {
-						MoveCodeRefactoring in = (MoveCodeRefactoring)ref;
-						UMLOperationBodyMapper bodyMapper = in.getBodyMapper();
-						mapperInfo(bodyMapper, actual);
-					}
-				}
-				for(UMLOperationBodyMapper parentMapper : parentMappers) {
-					mapperInfo(parentMapper, actual);
-				}
-				//add main mapper
-				UMLClassBaseDiff classDiff = modelDiff.getUMLClassDiff("org.junit.jupiter.engine.descriptor.ClassTestDescriptor");
-				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-					if(mapper.getContainer1().getName().equals("before") && mapper.getContainer2().getName().equals("before")) {
-						mapperInfo(mapper, actual);
-					}
-					if(mapper.getContainer1().getName().equals("after") && mapper.getContainer2().getName().equals("after")) {
-						mapperInfo(mapper, actual);
-					}
-				}
-				classDiff = modelDiff.getUMLClassDiff("org.junit.jupiter.engine.descriptor.MethodTestDescriptor");
-				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-					if(mapper.getContainer1().getName().equals("execute") && mapper.getContainer2().getName().equals("execute")) {
-						mapperInfo(mapper, actual);
-					}
-				}
-			}
-		});
+		miner.detectAtCommitWithGitHubAPI("https://github.com/junit-team/junit5.git", "3e3b402131a99f01480c57dd82c2e81ad6d9a4ea", new File(REPOS), (ModelDiffRefactoringHandler) (commitId, refactorings, modelDiff) -> {
+            List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+            for (Refactoring ref : refactorings) {
+                if(ref instanceof ExtractOperationRefactoring) {
+                    ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+                    UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+                    if(!bodyMapper.isNested()) {
+                        if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+                            parentMappers.add(bodyMapper.getParentMapper());
+                        }
+                    }
+                    mapperInfo(bodyMapper, actual);
+                }
+                else if(ref instanceof InlineOperationRefactoring) {
+                    InlineOperationRefactoring in = (InlineOperationRefactoring)ref;
+                    UMLOperationBodyMapper bodyMapper = in.getBodyMapper();
+                    if(!bodyMapper.isNested()) {
+                        if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+                            parentMappers.add(bodyMapper.getParentMapper());
+                        }
+                    }
+                    mapperInfo(bodyMapper, actual);
+                }
+                else if(ref instanceof MoveCodeRefactoring) {
+                    MoveCodeRefactoring in = (MoveCodeRefactoring)ref;
+                    UMLOperationBodyMapper bodyMapper = in.getBodyMapper();
+                    mapperInfo(bodyMapper, actual);
+                }
+            }
+            for(UMLOperationBodyMapper parentMapper : parentMappers) {
+                mapperInfo(parentMapper, actual);
+            }
+            //add main mapper
+            UMLClassBaseDiff classDiff = modelDiff.getUMLClassDiff("org.junit.jupiter.engine.descriptor.ClassTestDescriptor");
+            for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+                if(mapper.getContainer1().getName().equals("before") && mapper.getContainer2().getName().equals("before")) {
+                    mapperInfo(mapper, actual);
+                }
+                if(mapper.getContainer1().getName().equals("after") && mapper.getContainer2().getName().equals("after")) {
+                    mapperInfo(mapper, actual);
+                }
+            }
+            classDiff = modelDiff.getUMLClassDiff("org.junit.jupiter.engine.descriptor.MethodTestDescriptor");
+            for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+                if(mapper.getContainer1().getName().equals("execute") && mapper.getContainer2().getName().equals("execute")) {
+                    mapperInfo(mapper, actual);
+                }
+            }
+        });
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "junit5-3e3b402131a99f01480c57dd82c2e81ad6d9a4ea.txt"));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}

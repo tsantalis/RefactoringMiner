@@ -351,6 +351,11 @@
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tcharset : Charset to origin : T in method public getReader(charset Charset) : Reader from class org.apache.commons.io.build.AbstractOrigin.CharSequenceOrigin",
           "validation": false
+        },
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tcharset : Charset to origin : T in method public getReader(charset Charset) : Reader from class org.apache.commons.io.build.AbstractOrigin.CharSequenceOrigin",
+          "validation": true
         }
       ]
     },

@@ -403,6 +403,11 @@
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tregistrarReference : RuntimeBeanReference in method public register(registry BeanDefinitionRegistry) : void from class org.springframework.test.context.bean.override.BeanOverrideBeanFactoryPostProcessor",
           "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tdeclaringClass : Class<?> in method public createMetadata(field Field, overrideAnnotation Annotation, typeToOverride ResolvableType) : OverrideMetadata from class org.springframework.test.context.bean.override.convention.TestBeanOverrideProcessor",
+          "validation": true
         }
       ]
     },

@@ -477,6 +477,18 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return null;
 	}
 
+	public boolean compatibleReturnParameter(UMLOperation operation) {
+		UMLParameter thisReturnParameter = this.getReturnParameter();
+		UMLParameter otherReturnParameter = operation.getReturnParameter();
+		if(thisReturnParameter != null && otherReturnParameter != null &&
+				thisReturnParameter.getType() != null && otherReturnParameter.getType() != null)
+			return thisReturnParameter.getType().compatibleTypes(otherReturnParameter.getType());
+		else if(thisReturnParameter == null && otherReturnParameter == null)
+			return true;
+		else
+			return false;
+	}
+
 	public boolean equalReturnParameter(UMLOperation operation) {
 		UMLParameter thisReturnParameter = this.getReturnParameter();
 		UMLParameter otherReturnParameter = operation.getReturnParameter();

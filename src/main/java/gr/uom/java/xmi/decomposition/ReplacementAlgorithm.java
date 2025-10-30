@@ -4203,6 +4203,11 @@ public class ReplacementAlgorithm {
 							invocationCoveringTheEntireStatement2.actualString(), creationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION);
 					replacementInfo.addReplacement(replacement);
 				}
+				else if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null) {
+					Replacement replacement = new MethodInvocationReplacement(creationCoveringTheEntireStatement1.actualString(),
+							creationCoveringTheEntireStatement2.actualString(), creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION);
+					replacementInfo.addReplacement(replacement);
+				}
 				else if(methodInvocationMap1.size() > 0 && invocationCoveringTheEntireStatement2 != null) {
 					AbstractCall invocation1 = null;
 					for(String key : methodInvocationMap1.keySet()) {
@@ -4416,16 +4421,22 @@ public class ReplacementAlgorithm {
 		}
 		List<UMLType> parameterTypeList1 = operationBodyMapper.getOperation1().getParameterTypeList();
 		List<UMLType> parameterTypeList2 = operationBodyMapper.getOperation2().getParameterTypeList();
-		if(operationBodyMapper.getOperation1().getName().equals(operationBodyMapper.getOperation2().getName()) && operationBodyMapper.getOperation1().equalReturnParameter(operationBodyMapper.getOperation2()) &&
+		if(operationBodyMapper.getOperation1().getName().equals(operationBodyMapper.getOperation2().getName()) && operationBodyMapper.getOperation1().compatibleReturnParameter(operationBodyMapper.getOperation2()) &&
 				parameterTypeList1.size() > 0 && parameterTypeList2.size() > 0) {
 			boolean parameterTypeCompatible = parameterTypeList1.containsAll(parameterTypeList2) ||
 					parameterTypeList2.containsAll(parameterTypeList1);
-			boolean parameterNameCompatible = operationBodyMapper.getOperation1().getParameterNameList().containsAll(operationBodyMapper.getOperation2().getParameterNameList()) ||
-					operationBodyMapper.getOperation2().getParameterNameList().containsAll(operationBodyMapper.getOperation1().getParameterNameList());
-			return parameterTypeCompatible && parameterNameCompatible;
+			List<String> parameterNameList1 = operationBodyMapper.getOperation1().getParameterNameList();
+			List<String> parameterNameList2 = operationBodyMapper.getOperation2().getParameterNameList();
+			boolean parameterNameCompatible = parameterNameList1.containsAll(parameterNameList2) ||
+					parameterNameList2.containsAll(parameterNameList1);
+			Set<UMLType> typeIntersection = new LinkedHashSet<UMLType>(parameterTypeList1);
+			typeIntersection.retainAll(parameterTypeList2);
+			Set<String> nameIntersection = new LinkedHashSet<String>(parameterNameList1);
+			nameIntersection.retainAll(parameterNameList2);
+			return (parameterTypeCompatible && parameterNameCompatible) || (typeIntersection.size() >= 2 && nameIntersection.size() >= 2);
 		}
 		if(operationBodyMapper.getOperation1().getName().contains(operationBodyMapper.getOperation2().getName()) || operationBodyMapper.getOperation2().getName().contains(operationBodyMapper.getOperation1().getName())) {
-			return parameterTypeList1.equals(parameterTypeList2) && operationBodyMapper.getOperation1().equalReturnParameter(operationBodyMapper.getOperation2());
+			return parameterTypeList1.equals(parameterTypeList2) && operationBodyMapper.getOperation1().compatibleReturnParameter(operationBodyMapper.getOperation2());
 		}
 		return false;
 	}

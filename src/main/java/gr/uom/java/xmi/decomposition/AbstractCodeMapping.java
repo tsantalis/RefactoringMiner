@@ -38,6 +38,7 @@ import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.LeafMappingProvider;
 import gr.uom.java.xmi.diff.RenameOperationRefactoring;
+import gr.uom.java.xmi.diff.ReplaceConditionalWithTernaryRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 
@@ -1913,8 +1914,22 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 
 	private void processExtractVariableRefactoring(ExtractVariableRefactoring ref, Set<Refactoring> refactorings) {
 		if(!refactorings.contains(ref)) {
-			ref.addReference(this);
-			refactorings.add(ref);
+			boolean skip = false;
+			for(Refactoring r : refactorings) {
+				if(r instanceof ReplaceConditionalWithTernaryRefactoring ternary) {
+					for(LeafMapping leafMapping : ref.getSubExpressionMappings()) {
+						if(ternary.getTernaryConditional().getLocationInfo().subsumes(leafMapping.getFragment2().getLocationInfo()) &&
+								operation1.variableDeclarationMap().containsKey(ref.getVariableDeclaration().getVariableName())) {
+							skip = true;
+							break;
+						}
+					}
+				}
+			}
+			if(!skip) {
+				ref.addReference(this);
+				refactorings.add(ref);
+			}
 		}
 		else {
 			for(Refactoring refactoring : refactorings) {

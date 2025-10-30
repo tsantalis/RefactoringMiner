@@ -265,21 +265,10 @@ public class TestBuilder {
 		private final String branch;
 		private Map<String, CommitMatcher> expected = new HashMap<>();
 		private boolean ignoreNonSpecifiedCommits = true;
-		private int truePositiveCount = 0;
-		private int falsePositiveCount = 0;
-		private int falseNegativeCount = 0;
-		private int trueNegativeCount = 0;
-		private int unknownCount = 0;
-		// private int errorsCount = 0;
 
 		private ProjectMatcher(String cloneUrl, String branch) {
 			this.cloneUrl = cloneUrl;
 			this.branch = branch;
-		}
-
-		public ProjectMatcher atNonSpecifiedCommitsContainsNothing() {
-			this.ignoreNonSpecifiedCommits = false;
-			return this;
 		}
 
 		public CommitMatcher atCommit(String commitId) {
@@ -308,7 +297,6 @@ public class TestBuilder {
 			refactorings= filterRefactoring(refactorings);
 			CommitMatcher matcher;
 			commitsCount++;
-			//String commitId = curRevision.getId().getName();
 			if (expected.containsKey(commitId)) {
 				matcher = expected.get(commitId);
 			} else if (!this.ignoreNonSpecifiedCommits) {
@@ -330,12 +318,10 @@ public class TestBuilder {
 					if (refactoringsFound.contains(expectedRefactoring)) {
 						iter.remove();
 						refactoringsFound.remove(expectedRefactoring);
-						this.truePositiveCount++;
 						count(TP, expectedRefactoring);
 						matcher.truePositive.add(expectedRefactoring);
 					}
 					else if(countAsFN(expectedRefactoring)) {
-						this.falseNegativeCount++;
 						count(FN, expectedRefactoring);
 					}
 				}
@@ -345,10 +331,8 @@ public class TestBuilder {
 					String notExpectedRefactoring = iter.next();
 					if (refactoringsFound.contains(notExpectedRefactoring)) {
 						refactoringsFound.remove(notExpectedRefactoring);
-						this.falsePositiveCount++;
 						count(FP, notExpectedRefactoring);
 					} else {
-						this.trueNegativeCount++;
 						count(TN, notExpectedRefactoring);
 						iter.remove();
 					}
@@ -357,22 +341,14 @@ public class TestBuilder {
 				if (matcher.ignoreNonSpecified) {
 					for (String refactoring : refactoringsFound) {
 						matcher.unknown.add(refactoring);
-						this.unknownCount++;
 						count(UNK, refactoring);
 					}
 				} else {
 					for (String refactoring : refactoringsFound) {
 						matcher.notExpected.add(refactoring);
-						this.falsePositiveCount++;
 						count(FP, refactoring);
 					}
 				}
-
-				// count false negatives
-				//for (String expectedButNotFound : matcher.expected) {
-				//	this.falseNegativeCount++;
-				//	count(FN, expectedButNotFound);
-				//}
 			}
 		}
 
@@ -405,15 +381,9 @@ public class TestBuilder {
 				matcher.error = e.toString();
 			}
 			errorCommitsCount++;
-			// System.err.println(" error at commit " + commitId + ": " +
-			// e.getMessage());
 		}
 
 		private void printResults() {
-			// if (verbose || this.falsePositiveCount > 0 ||
-			// this.falseNegativeCount > 0 || this.errorsCount > 0) {
-			// System.out.println(this.cloneUrl);
-			// }
 			String baseUrl = this.cloneUrl.substring(0, this.cloneUrl.length() - 4) + "/commit/";
 			for (Map.Entry<String, CommitMatcher> entry : this.expected.entrySet()) {
 				String commitUrl = baseUrl + entry.getKey();
@@ -457,16 +427,6 @@ public class TestBuilder {
 			}
 		}
 
-		// private void countFalseNegatives() {
-		// for (Map.Entry<String, CommitMatcher> entry :
-		// this.expected.entrySet()) {
-		// CommitMatcher matcher = entry.getValue();
-		// if (matcher.error == null) {
-		// this.falseNegativeCount += matcher.expected.size();
-		// }
-		// }
-		// }
-
 		public class CommitMatcher {
 			private Set<String> expected = new HashSet<String>();
 			private Set<String> notExpected = new HashSet<String>();
@@ -492,17 +452,6 @@ public class TestBuilder {
 				this.notExpected = new HashSet<String>();
 				for (String refactoring : refactorings) {
 					expected.addAll(normalize(refactoring));
-				}
-				return ProjectMatcher.this;
-			}
-
-			public ProjectMatcher containsNothing() {
-				return containsOnly();
-			}
-
-			public ProjectMatcher notContains(String... refactorings) {
-				for (String refactoring : refactorings) {
-					notExpected.addAll(normalize(refactoring));
 				}
 				return ProjectMatcher.this;
 			}

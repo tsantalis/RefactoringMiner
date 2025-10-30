@@ -116,7 +116,11 @@ public class MoveCodeRefactoring implements Refactoring {
 
 	@Override
 	public RefactoringType getRefactoringType() {
-		return RefactoringType.MOVE_CODE;
+        if (bodyMapper.getOperation2().hasSetUpAnnotation() || bodyMapper.getOperation2().getName().equals("setUp") || bodyMapper.getOperation2().getName().equals("prepare")) {
+            return RefactoringType.EXTRACT_FIXTURE;
+        }
+
+        return RefactoringType.MOVE_CODE;
 	}
 
 	@Override

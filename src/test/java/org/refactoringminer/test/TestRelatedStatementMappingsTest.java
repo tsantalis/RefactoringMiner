@@ -200,8 +200,10 @@ public class TestRelatedStatementMappingsTest {
     public void testReplaceAssertionMappings(String url, String commit, String testResultFileName) throws Exception {
         miner.detectAtCommitWithGitHubAPI(url, commit, new File(REPOS), new RefactoringHandler() {
             @Override
+            public void handle(String commitId, List<Refactoring> refactorings) {}
+
+            @Override
             public void handleModelDiff(String commitId, List<Refactoring> refactoringsAtRevision, UMLModelDiff modelDiff) {
-                super.handleModelDiff(commitId, refactoringsAtRevision, modelDiff);
                 for (UMLClassDiff umlClassDiff : modelDiff.getCommonClassDiffList()) {
                     for (UMLOperationBodyMapper umlOperationBodyMapper : umlClassDiff.getOperationBodyMapperList()) {
                         Set<Pair<LocationInfoProvider, LocationInfoProvider>> replacementMappings = new HashSet<>();
@@ -614,14 +616,7 @@ public class TestRelatedStatementMappingsTest {
     }
 
     private void testRefactoringMappings(String url, String commit, String testResultFileName, final Consumer<Refactoring> consumer) {
-        miner.detectAtCommitWithGitHubAPI(url, commit, new File(REPOS), new RefactoringHandler() {
-            @Override
-            public void handle(String commitId, List<Refactoring> refactorings) {
-                for (Refactoring ref : refactorings) {
-                    consumer.accept(ref);
-                }
-            }
-        });
+        miner.detectAtCommitWithGitHubAPI(url, commit, new File(REPOS), (String commitId, List<Refactoring> refactorings) -> refactorings.forEach(consumer));
         assertion(testResultFileName);
     }
 

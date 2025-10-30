@@ -13,7 +13,7 @@ import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
 
-public class ModifyAttributeAnnotationRefactoring implements Refactoring {
+public class ModifyAttributeAnnotationRefactoring implements Refactoring, AttributeLevelRefactoring, ModifyAnnotationRefactoring {
 	private UMLAnnotation annotationBefore;
 	private UMLAnnotation annotationAfter;
 	private UMLAttribute attributeBefore;
@@ -27,18 +27,22 @@ public class ModifyAttributeAnnotationRefactoring implements Refactoring {
 		this.attributeAfter = attributeAfter;
 	}
 
+	@Override
 	public UMLAnnotation getAnnotationBefore() {
 		return annotationBefore;
 	}
 
+	@Override
 	public UMLAnnotation getAnnotationAfter() {
 		return annotationAfter;
 	}
 
+	@Override
 	public UMLAttribute getAttributeBefore() {
 		return attributeBefore;
 	}
 
+	@Override
 	public UMLAttribute getAttributeAfter() {
 		return attributeAfter;
 	}

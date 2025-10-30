@@ -371,14 +371,14 @@ public abstract class AbstractCall extends LeafExpression {
 				!arguments().equals(call.arguments()) && arguments().containsAll(call.arguments());
 	}
 
-	public boolean identicalOrReplacedArguments(AbstractCall call, ReplacementInfo replacementInfo) {
+	public boolean identicalOrReplacedArguments(AbstractCall call, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap) {
 		Set<Replacement> replacements = replacementInfo.getReplacements();
 		List<UMLOperationBodyMapper> lambdaMappers = replacementInfo.getLambdaMappers();
-		return identicalOrReplacedArguments(call, replacements, lambdaMappers, replacementInfo.getStatements1());
+		return identicalOrReplacedArguments(call, replacements, lambdaMappers, replacementInfo.getStatements1(), parameterToArgumentMap);
 	}
 
 	public boolean identicalOrReplacedArguments(AbstractCall call, Set<Replacement> replacements,
-			List<UMLOperationBodyMapper> lambdaMappers, List<? extends AbstractCodeFragment> statements1) {
+			List<UMLOperationBodyMapper> lambdaMappers, List<? extends AbstractCodeFragment> statements1, Map<String, String> parameterToArgumentMap) {
 		List<String> arguments1 = arguments();
 		List<String> arguments2 = call.arguments();
 		if(arguments1.size() != arguments2.size())
@@ -429,7 +429,14 @@ public abstract class AbstractCall extends LeafExpression {
 					}
 				}
 			}
-			if(!argument1.equals(argument2) && !argumentReplacement && !lambdaReplacement && !inline)
+			boolean paramToArg = false;
+			if(parameterToArgumentMap.containsKey(argument2) && parameterToArgumentMap.get(argument2).equals(argument1)) {
+				paramToArg = true;
+			}
+			else if(parameterToArgumentMap.containsKey(argument1) && parameterToArgumentMap.get(argument1).equals(argument2)) {
+				paramToArg = true;
+			}
+			if(!argument1.equals(argument2) && !argumentReplacement && !lambdaReplacement && !inline && !paramToArg)
 				return false;
 		}
 		return true;
@@ -580,7 +587,7 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public boolean renamedWithIdenticalExpressionAndArguments(AbstractCall call, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap, double distance,
 			boolean matchPairOfRemovedAddedOperationsWithIdenticalBody, boolean argumentsWithVariableDeclarationMapping) {
-		boolean identicalOrReplacedArguments = identicalOrReplacedArguments(call, replacementInfo);
+		boolean identicalOrReplacedArguments = identicalOrReplacedArguments(call, replacementInfo, Collections.emptyMap());
 		Set<Replacement> replacements = replacementInfo.getReplacements();
 		boolean allArgumentsReplaced = allArgumentsReplaced(call, replacements);
 		boolean nameMatch = false;

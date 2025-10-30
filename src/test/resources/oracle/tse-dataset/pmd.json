@@ -793,7 +793,7 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprotected newRuleViolation(rule Rule, location FileLocation, message String) : RuleViolation extracted from protected newRuleViolation(beginLine int, beginColumn int, endLine int, endColumn int, rule Rule) : RuleViolation in class net.sourceforge.pmd.renderers.AbstractRendererTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",

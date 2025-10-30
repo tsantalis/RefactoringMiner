@@ -937,7 +937,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								AbstractExpression expression2 = comp2.getExpressions().get(0);
 								AbstractCall call2 = expression2.invocationCoveringEntireFragment();
 								if(call2 != null && call1.identicalExpression(call2) && (call1.equalArguments(call2) ||
-										call1.identicalOrReplacedArguments(call2, mapping.getReplacements(), Collections.emptyList(), Collections.emptyList()))) {
+										call1.identicalOrReplacedArguments(call2, mapping.getReplacements(), Collections.emptyList(), Collections.emptyList(), Collections.emptyMap()))) {
 									continue;
 								}
 							}

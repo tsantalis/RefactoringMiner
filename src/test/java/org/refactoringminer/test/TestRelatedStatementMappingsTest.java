@@ -87,10 +87,8 @@ public class TestRelatedStatementMappingsTest {
     public void testAssumptionIntroducingRefactoring(String url,String commit) throws Exception {
         String testResultFileName = url.substring(url.lastIndexOf('/') + 1, url.indexOf(".git")) + "-" + commit + ".txt";
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof AssumeRefactoring) {
-                AssumeRefactoring refactoring = (AssumeRefactoring) ref;
-                Set<AbstractCodeMapping> mapper = refactoring.getMappings();
-                mapperInfo(mapper, refactoring.getOperationBefore(), refactoring.getOperationAfter());
+            if (ref instanceof AssumeRefactoring assumeRefactoring) {
+                mapperInfo(assumeRefactoring.getMappings(), assumeRefactoring.getOperationBefore(), assumeRefactoring.getOperationAfter());
             }
         });
     }
@@ -122,7 +120,7 @@ public class TestRelatedStatementMappingsTest {
             //"https://github.com/zanata/zanata-platform.git, 0297e0513ac1f487f1570b1cc38979a73ac97da8, zanata-platform-0297e0513ac1f487f1570b1cc38979a73ac97da8-assertthrows.txt", // FIXME: TestNG to JUnit 4 expected exception not supported
             //"https://github.com/apache/commons-math.git, 5fbeb731b9d26a6f340fd3772e86cd23ba61c65a, commons-math-5fbeb731b9d26a6f340fd3772e86cd23ba61c65a.txt", // FIXME: try-fail-catch to JUnit 4 expected exception not supported
     })
-    public void testAssertThrowsMappings(String url, String commit, String testResultFileName) throws Exception {
+    public void testAssertThrowsMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
             switch (ref) {
                 case AssertThrowsRefactoring a -> mapperInfo(a.getMappings(), a.getOperationBefore(), a.getOperationAfter());
@@ -151,7 +149,7 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/apache/iceberg.git, fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b, iceberg-fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b-runner.txt",
             "https://github.com/mapstruct/mapstruct.git, 293a12d7ffa22c29ad3f2d433b6e420514e29a8b, mapstruct-293a12d7ffa22c29ad3f2d433b6e420514e29a8b.txt",
     })
-    public void testCustomRunnerMappings(String url, String commit, String testResultFileName) throws Exception {
+    public void testCustomRunnerMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
             Set<Pair<UMLAnnotation, UMLAnnotation>> annotations = switch (ref) {
                 case ModifyMethodAnnotationRefactoring modifyRef -> Set.of(Pair.of(modifyRef.getAnnotationBefore(), modifyRef.getAnnotationAfter()));
@@ -195,26 +193,15 @@ public class TestRelatedStatementMappingsTest {
             //Replace assertTrue(Double.isInfinite(x)) with assertEqual(Double.POSITIVE_INFINITY, x)
             "https://github.com/apache/commons-math.git, 9b08855c247eb7522fc4b25b8aaece2a0d58d990, commons-math-9b08855c247eb7522fc4b25b8aaece2a0d58d990.txt",
     })
-    public void testReplaceAssertionMappings(String url, String commit, String testResultFileName) throws Exception {
+    public void testReplaceAssertionMappings(String url, String commit, String testResultFileName) {
         miner.detectAtCommitWithGitHubAPI(url, commit, new File(REPOS), (ModelDiffRefactoringHandler) (commitId, refactoringsAtRevision, modelDiff) -> {
             for (UMLClassDiff umlClassDiff : modelDiff.getCommonClassDiffList()) {
                 for (UMLOperationBodyMapper umlOperationBodyMapper : umlClassDiff.getOperationBodyMapperList()) {
                     Set<Pair<LocationInfoProvider, LocationInfoProvider>> replacementMappings = new HashSet<>();
                     boolean hasAssertionReplacement = false;
                     for (Replacement replacement : umlOperationBodyMapper.getReplacements()) {
-                        switch (replacement.getType()) {
-                            case ASSERTION_CONVERSION:
-                            case METHOD_INVOCATION:
-                            case METHOD_INVOCATION_EXPRESSION:
-                            case METHOD_INVOCATION_NAME:
-                            case METHOD_INVOCATION_NAME_AND_ARGUMENT:
-                            case METHOD_INVOCATION_NAME_AND_EXPRESSION:
-                                //System.out.println(replacement.getType().toString());
-                        }
                         if (replacement instanceof MethodInvocationReplacement) {
                             MethodInvocationReplacement methodInvocationReplacement = (MethodInvocationReplacement) replacement;
-                            //System.out.println(methodInvocationReplacement.getInvokedOperationBefore().getContainer().toQualifiedString());
-                            //System.out.println(methodInvocationReplacement.getInvokedOperationAfter().getContainer().toQualifiedString());
                             if (methodInvocationReplacement.getInvokedOperationAfter().getName().contains("assert") ||
                                     methodInvocationReplacement.getInvokedOperationAfter().getName().contains("is") ||
                                     methodInvocationReplacement.getInvokedOperationBefore().getName().contains("assert") ||
@@ -225,7 +212,6 @@ public class TestRelatedStatementMappingsTest {
                         }
                     }
                     if (hasAssertionReplacement) {
-                        //Set<AbstractCodeMapping> mapper = umlOperationBodyMapper.getMappings();
                         mapperInfo(replacementMappings, umlOperationBodyMapper.getOperation1(), umlOperationBodyMapper.getOperation2());
                     }
 
@@ -242,25 +228,17 @@ public class TestRelatedStatementMappingsTest {
             // This is actually two refactorings: one more complex (Replace before fixture with fixture utility method that is invoked in the test methods) and inline after fixture
             "https://github.com/apache/hbase.git, 587f5bc11f9d5d37557baf36c7df110af860a95c, hbase-587f5bc11f9d5d37557baf36c7df110af860a95c-inline.txt",
     })
-    public void testInlineFixtureMappings(String url, String commit, String testResultFileName) throws Exception {
+    public void testInlineFixtureMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof MoveCodeRefactoring) {
-                MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) ref;
-                Set<AbstractCodeMapping> mapper = moveCodeRefactoring.getMappings();
-                mapperInfo(mapper, moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
-            }
-            else if (ref instanceof RemoveMethodAnnotationRefactoring) {
-                RemoveMethodAnnotationRefactoring removeMethodAnnotationRefactoring = (RemoveMethodAnnotationRefactoring) ref;
-                UMLAnnotation annotation = removeMethodAnnotationRefactoring.getAnnotation();
-                if (Set.of("Before", "BeforeEach", "BeforeAll", "BeforeClass","After", "AfterEach", "AfterAll", "AfterClass").contains(annotation.getTypeName())) {
-                    mapperInfo(Set.of(Pair.of(annotation, null)), removeMethodAnnotationRefactoring.getOperationBefore(), removeMethodAnnotationRefactoring.getOperationAfter());
+            switch (ref) {
+                case MoveCodeRefactoring moveCodeRefactoring -> mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+                case RemoveMethodAnnotationRefactoring removeMethodAnnotationRefactoring -> {
+                    if (Set.of("Before", "BeforeEach", "BeforeAll", "BeforeClass","After", "AfterEach", "AfterAll", "AfterClass").contains(removeMethodAnnotationRefactoring.getAnnotation().getTypeName())) {
+                        mapperInfo(Set.of(Pair.of(removeMethodAnnotationRefactoring.getAnnotation(), null)), removeMethodAnnotationRefactoring.getOperationBefore(), removeMethodAnnotationRefactoring.getOperationAfter());
+                    }
                 }
-            }
-            else if (ref instanceof InlineOperationRefactoring) { // FIXME: Expected Inline of "@After tearDown()" not detected (probably because fixture is not invoked through a method call)
-                InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) ref;
-                UMLOperationBodyMapper bodyMapper = inlineOperationRefactoring.getBodyMapper();
-                Set<AbstractCodeMapping> mapper = bodyMapper.getMappings();
-                mapperInfo(mapper, inlineOperationRefactoring.getInlinedOperation(), inlineOperationRefactoring.getTargetOperationAfterInline());
+                case InlineOperationRefactoring inlineOperationRefactoring -> mapperInfo(inlineOperationRefactoring.getBodyMapper().getMappings(), inlineOperationRefactoring.getInlinedOperation(), inlineOperationRefactoring.getTargetOperationAfterInline());
+                default -> {}
             }
         });
     }
@@ -275,17 +253,16 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/apache/commons-math.git, 9b08855c247eb7522fc4b25b8aaece2a0d58d990, commons-math-9b08855c247eb7522fc4b25b8aaece2a0d58d990-split.txt", // Empty as it should be: it's a copy-paste rather than a split
             "https://github.com/apache/commons-math.git, de001e7bcf9acb761047bdcf40f48244f8b63642, commons-math-de001e7bcf9acb761047bdcf40f48244f8b63642-split.txt"
     })
-    public void testSplitTestMappings(String url, String commit, String testResultFileName) throws Exception {
+    public void testSplitTestMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof SplitOperationRefactoring) {
-                SplitOperationRefactoring splitOperationRefactoring = (SplitOperationRefactoring) ref;
-                for (UMLOperationBodyMapper methodMapping : splitOperationRefactoring.getMappers()) {
-                    mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
+            switch (ref) {
+                case MoveCodeRefactoring moveCodeRefactoring -> mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+                case SplitOperationRefactoring splitOperationRefactoring -> {
+                    for (UMLOperationBodyMapper methodMapping : splitOperationRefactoring.getMappers()) {
+                        mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
+                    }
                 }
-            } else if (ref instanceof MoveCodeRefactoring) {
-                MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) ref;
-                Set<AbstractCodeMapping> mapper = moveCodeRefactoring.getMappings();
-                mapperInfo(mapper, moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+                default -> {}
             }
         });
     }
@@ -297,12 +274,10 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/apache/commons-math.git, c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65, commons-math-c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65-specialize-exception.txt", // Misses refactoring when try block does not match
             //"https://github.com/apache/commons-math.git, de001e7bcf9acb761047bdcf40f48244f8b63642, commons-math-de001e7bcf9acb761047bdcf40f48244f8b63642-specialize-exception.txt", // FIXME: Misses all refactoring since try blocks do not match (Also a split test)
     })
-    public void testSpecializeExpectedExceptionMappings(String url, String commit, String testResultFileName) throws Exception {
+    public void testSpecializeExpectedExceptionMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof ChangeVariableTypeRefactoring) {
-                ChangeVariableTypeRefactoring changeVariableTypeRefactoring = (ChangeVariableTypeRefactoring) ref;
-                Set<AbstractCodeMapping> mapper = changeVariableTypeRefactoring.getReferences();
-                mapperInfo(mapper, changeVariableTypeRefactoring.getOperationBefore(), changeVariableTypeRefactoring.getOperationAfter());
+            if (ref instanceof ChangeVariableTypeRefactoring changeVariableTypeRefactoring) {
+                mapperInfo(changeVariableTypeRefactoring.getReferences(), changeVariableTypeRefactoring.getOperationBefore(), changeVariableTypeRefactoring.getOperationAfter());
             }
         });
     }
@@ -313,17 +288,16 @@ public class TestRelatedStatementMappingsTest {
             //Merge Test
             "https://github.com/apache/commons-math.git, c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65, commons-math-c6d53a52582d2d4c6fdec7a5f1a8cbee16db0e65-merge.txt",
     })
-    public void testMergeTestMappings(String url, String commit, String testResultFileName) throws Exception {
+    public void testMergeTestMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof MergeOperationRefactoring) {
-                MergeOperationRefactoring mergeOperationRefactoring = (MergeOperationRefactoring) ref;
-                for (UMLOperationBodyMapper methodMapping : mergeOperationRefactoring.getMappers()) {
-                    mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
+            switch (ref) {
+                case MoveCodeRefactoring moveCodeRefactoring -> mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+                case MergeOperationRefactoring mergeOperationRefactoring -> {
+                    for (UMLOperationBodyMapper methodMapping : mergeOperationRefactoring.getMappers()) {
+                        mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
+                    }
                 }
-            } else if (ref instanceof MoveCodeRefactoring) {
-                MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) ref;
-                Set<AbstractCodeMapping> mapper = moveCodeRefactoring.getMappings();
-                mapperInfo(mapper, moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+                default -> {}
             }
         });
     }
@@ -335,18 +309,16 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/apache/druid.git, da32e1ae534a99c29ff60c5535f2d4cb0e344a73, druid-da32e1ae534a99c29ff60c5535f2d4cb0e344a73.txt",
             "https://github.com/spring-projects/spring-integration.git, d5d954def737038a5982ca34ecc8f14610061090, spring-integration-d5d954def737038a5982ca34ecc8f14610061090.txt",
     })
-    public void testSplitFixturesMappings(String url, String commit, String testResultFileName) throws Exception {
+    public void testSplitFixturesMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof SplitOperationRefactoring) {
-                SplitOperationRefactoring splitOperationRefactoring = (SplitOperationRefactoring) ref;
-                for (UMLOperationBodyMapper methodMapping : splitOperationRefactoring.getMappers()) {
-                    mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
+            switch (ref) {
+                case MoveCodeRefactoring moveCodeRefactoring -> mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+                case SplitOperationRefactoring splitOperationRefactoring -> {
+                    for (UMLOperationBodyMapper methodMapping : splitOperationRefactoring.getMappers()) {
+                        mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
+                    }
                 }
-            }
-            else if (ref instanceof MoveCodeRefactoring) {
-                MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) ref;
-                Set<AbstractCodeMapping> mapper = moveCodeRefactoring.getMappings();
-                mapperInfo(mapper, moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+                default -> {}
             }
         });
     }
@@ -358,18 +330,16 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/apache/hadoop.git, 973987089090b428ae34a86926c8ef8ebca45aa5, hadoop-973987089090b428ae34a86926c8ef8ebca45aa5.txt",
             "https://github.com/apache/hbase.git, 587f5bc11f9d5d37557baf36c7df110af860a95c, hbase-587f5bc11f9d5d37557baf36c7df110af860a95c-merge.txt",
     })
-    public void testMergeFixtureMappings(String url, String commit, String testResultFileName) throws Exception {
+    public void testMergeFixtureMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof MergeOperationRefactoring) {
-                MergeOperationRefactoring mergeOperationRefactoring = (MergeOperationRefactoring) ref;
-                for (UMLOperationBodyMapper methodMapping : mergeOperationRefactoring.getMappers()) {
-                    mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
+            switch (ref) {
+                case MoveCodeRefactoring moveCodeRefactoring -> mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+                case MergeOperationRefactoring mergeOperationRefactoring -> {
+                    for (UMLOperationBodyMapper methodMapping : mergeOperationRefactoring.getMappers()) {
+                        mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
+                    }
                 }
-            }
-            else if (ref instanceof MoveCodeRefactoring) {
-                MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) ref;
-                Set<AbstractCodeMapping> mapper = moveCodeRefactoring.getMappings();
-                mapperInfo(mapper, moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+                default -> {}
             }
         });
     }
@@ -382,12 +352,10 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/apache/struts.git, 0a71e2c3b92d2d58fda40f252a6a5a4392fa58b7, struts-0a71e2c3b92d2d58fda40f252a6a5a4392fa58b7.txt",
             "https://github.com/orientechnologies/orientdb.git, 1b371c7cecbc7ec14b81a3f8a08c2ab71d12577f, orientdb-1b371c7cecbc7ec14b81a3f8a08c2ab71d12577f.txt",
     })
-    public void testExtractFixture(String url, String commit, String testResultFileName) throws Exception {
+    public void testExtractFixture(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof MoveCodeRefactoring) {
-                MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) ref;
-                Set<AbstractCodeMapping> mapper = moveCodeRefactoring.getMappings();
-                mapperInfo(mapper, moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+            if (ref instanceof MoveCodeRefactoring moveCodeRefactoring) {
+                mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
             }
         });
     }
@@ -399,12 +367,10 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/apache/hbase.git, 587f5bc11f9d5d37557baf36c7df110af860a95c, hbase-587f5bc11f9d5d37557baf36c7df110af860a95c-minimize.txt",
             //"https://github.com/spring-projects/spring-integration.git, 7edc55f5bf0fce164dabc26f005cc8cb2d008100, spring-integration-7edc55f5bf0fce164dabc26f005cc8cb2d008100.txt", // FIXME: Impure refactoring too different from old code
     })
-    public void testMinimizeFixture(String url, String commit, String testResultFileName) throws Exception {
+    public void testMinimizeFixture(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof MoveCodeRefactoring) {
-                MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) ref;
-                Set<AbstractCodeMapping> mapper = moveCodeRefactoring.getMappings();
-                mapperInfo(mapper, moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+            if (ref instanceof MoveCodeRefactoring moveCodeRefactoring) {
+                mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
             }
         });
     }
@@ -427,7 +393,7 @@ public class TestRelatedStatementMappingsTest {
             //"https://github.com/debezium/debezium.git, 66bb7958604527aa975e72aa23be45163de39246, debezium-66bb7958604527aa975e72aa23be45163de39246.txt", // FIXME: Categorize not detected
             "https://github.com/strimzi/strimzi-kafka-operator.git, 9ab848e76f4c0b0399fb556c9d853fcbdf1c55f1, strimzi-kafka-operator-9ab848e76f4c0b0399fb556c9d853fcbdf1c55f1.txt",
     })
-    public void testAddAndRemoveMethodAnnotationMappings(String url, String commit, String testResultFileName) throws Exception {
+    public void testAddAndRemoveMethodAnnotationMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
             Set<Pair<UMLAnnotation, UMLAnnotation>> annotations = switch (ref.getRefactoringType()) {
                 case RefactoringType.REMOVE_METHOD_ANNOTATION -> Set.of(Pair.of(((AnnotationRefactoring) ref).getAnnotation(), null));
@@ -451,7 +417,7 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/orientechnologies/orientdb.git, a8ac595e36c8b4c2c3069c365dcbed220726424d, orientdb-a8ac595e36c8b4c2c3069c365dcbed220726424d.txt",
             "https://github.com/zanata/zanata-platform.git, 0297e0513ac1f487f1570b1cc38979a73ac97da8, zanata-platform-0297e0513ac1f487f1570b1cc38979a73ac97da8-annotation.txt",
     })
-    public void testChangeTestAnnotationGranularityMappings(String url, String commit, String testResultFileName) throws Exception {
+    public void testChangeTestAnnotationGranularityMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
             Set<Pair<UMLAnnotation, UMLAnnotation>> annotations = switch (ref.getRefactoringType()) {
                 case RefactoringType.REMOVE_METHOD_ANNOTATION, RefactoringType.REMOVE_CLASS_ANNOTATION -> Set.of(Pair.of(((AnnotationRefactoring) ref).getAnnotation(), null));
@@ -479,16 +445,12 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/cloudfoundry/uaa.git, 69e3c6d3ce2b263b3fd3da61cabb8ca6d8bd563c, uaa-69e3c6d3ce2b263b3fd3da61cabb8ca6d8bd563c.txt",
             "https://github.com/cqframework/clinical_quality_language.git, 06b42c0bf811df6934138e39cffffa92fa617893, clinical_quality_language-06b42c0bf811df6934138e39cffffa92fa617893.txt",
     })
-    public void testRenameTestMappings(String url, String commit, String testResultFileName) throws Exception {
+    public void testRenameTestMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof RenameOperationRefactoring) {
-                RenameOperationRefactoring renameTestRefactoring = (RenameOperationRefactoring) ref;
-                UMLOperationBodyMapper mapper = renameTestRefactoring.getBodyMapper();
-                mapperInfo(mapper.getMappings(), renameTestRefactoring.getOriginalOperation(), renameTestRefactoring.getRenamedOperation());
-            }
-            else if (ref instanceof RenameClassRefactoring) {
-                RenameClassRefactoring renameTestRefactoring = (RenameClassRefactoring) ref;
-                mapperInfo(Collections.emptySet(), renameTestRefactoring.getOriginalClass(), renameTestRefactoring.getRenamedClass());
+            switch (ref) {
+                case RenameOperationRefactoring renameTestRefactoring -> mapperInfo(renameTestRefactoring.getBodyMapper().getMappings(), renameTestRefactoring.getOriginalOperation(), renameTestRefactoring.getRenamedOperation());
+                case RenameClassRefactoring renameTestRefactoring -> mapperInfo(Collections.emptySet(), renameTestRefactoring.getOriginalClass(), renameTestRefactoring.getRenamedClass());
+                default -> {}
             }
         });
     }
@@ -509,7 +471,7 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/OpenGamma/Strata.git, e007f826c49075500def8638de8367960c054c19, Strata-e007f826c49075500def8638de8367960c054c19-migrate-param.txt",
             "https://github.com/zanata/zanata-platform.git, 0297e0513ac1f487f1570b1cc38979a73ac97da8, zanata-platform-0297e0513ac1f487f1570b1cc38979a73ac97da8-migrate-param.txt",
     })
-    public void testParameterizedTestMigrationMappings(String url, String commit, String testResultFileName) throws Exception {
+    public void testParameterizedTestMigrationMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
             Set<Pair<UMLAnnotation, UMLAnnotation>> annotations = switch (ref.getRefactoringType()) {
                 case RefactoringType.REMOVE_METHOD_ANNOTATION, RefactoringType.REMOVE_ATTRIBUTE_ANNOTATION, RefactoringType.REMOVE_CLASS_ANNOTATION -> Set.of(Pair.of(((AnnotationRefactoring) ref).getAnnotation(), null));
@@ -549,12 +511,10 @@ public class TestRelatedStatementMappingsTest {
             ////Multiple data and multiple algorithms become parameterized test with inheritance and fixture overrides
             "https://github.com/apache/hadoop.git, 4d01dbda508691beb07a4c8bfe113ec568166ddc, hadoop-4d01dbda508691beb07a4c8bfe113ec568166ddc.txt", //FIXME: JUnit 4 parameterization not supported
     })
-    public void testParameterizedTestMappings(String url, String commit, String testResultFileName) throws Exception {
+    public void testParameterizedTestMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof ParameterizeTestRefactoring) {
-                ParameterizeTestRefactoring parameterizedTestRefactoring = (ParameterizeTestRefactoring) ref;
-                UMLOperationBodyMapper mapper = parameterizedTestRefactoring.getBodyMapper();
-                mapperInfo(mapper.getMappings(), parameterizedTestRefactoring.getRemovedOperation(), parameterizedTestRefactoring.getParameterizedTestOperation());
+            if (ref instanceof ParameterizeTestRefactoring parameterizedTestRefactoring) {
+                mapperInfo(parameterizedTestRefactoring.getBodyMapper().getMappings(), parameterizedTestRefactoring.getRemovedOperation(), parameterizedTestRefactoring.getParameterizedTestOperation());
             }
         });
     }

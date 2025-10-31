@@ -19,7 +19,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.refactoringminer.api.ModelDiffRefactoringHandler;
 import org.refactoringminer.api.Refactoring;
-import org.refactoringminer.api.RefactoringHandler;
+import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 import java.io.File;
@@ -140,6 +140,18 @@ public class TestRelatedStatementMappingsTest {
         });
     }
 
+    @ParameterizedTest
+    @CsvSource({
+            "https://github.com/uber/h3-java.git,8b9d3f230393b4a89a21545745754eeb46f56516"
+    })
+    void testExtractFixtureRefactoring(String url,String commit) {
+        String testResultFileName = url.substring(url.lastIndexOf('/') + 1, url.indexOf(".git")) + "-" + commit + ".txt";
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof MoveCodeRefactoring moveCodeRefactoring && ref.getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE)) {
+                mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getBodyMapper().getOperation1(), moveCodeRefactoring.getBodyMapper().getOperation2());
+            }
+        });
+    }
 
     @ParameterizedTest
     @CsvSource({

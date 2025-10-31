@@ -5756,8 +5756,7 @@ public class ReplacementAlgorithm {
 			for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
 				AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);
 				UMLAnonymousClass anonymousClass1 = operationBodyMapper.findAnonymousClass1(anonymousClassDeclaration1);
-				if(anonymousClass1.getOperations().size() == 1) {
-					UMLOperation anonymousClass1Operation = anonymousClass1.getOperations().get(0);
+				for(UMLOperation anonymousClass1Operation : anonymousClass1.getOperations()) {
 					for(int j=0; j<lambdas2.size(); j++) {
 						LambdaExpressionObject lambda2 = lambdas2.get(j);
 						UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(anonymousClass1Operation, lambda2, operationBodyMapper);
@@ -5773,7 +5772,7 @@ public class ReplacementAlgorithm {
 								operationBodyMapper.getNonMappedLeavesT1().addAll(mapper.getNonMappedLeavesT1());
 								operationBodyMapper.getNonMappedLeavesT2().addAll(mapper.getNonMappedLeavesT2());
 								if(operationBodyMapper.getContainer1() != null && operationBodyMapper.getContainer2() != null) {
-									ReplaceAnonymousWithLambdaRefactoring ref = new ReplaceAnonymousWithLambdaRefactoring(anonymousClass1, lambda2, statement1, statement2, container1, container2, mapper.getMappings());
+									ReplaceAnonymousWithLambdaRefactoring ref = new ReplaceAnonymousWithLambdaRefactoring(anonymousClass1, lambda2, statement1, statement2, container1, container2, mapper);
 									operationBodyMapper.getRefactoringsAfterPostProcessing().add(ref);
 									operationBodyMapper.getRefactoringsAfterPostProcessing().addAll(mapper.getRefactorings());
 								}

@@ -7,10 +7,10 @@ import org.junit.jupiter.api.parallel.Isolated;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.refactoringminer.RefactoringMiner;
-import org.refactoringminer.util.GitServiceImpl;
 
 import java.io.File;
 import java.io.FileReader;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -149,6 +149,7 @@ public class TestCommandLine {
         RefactoringMiner.detectAtGitHubCommit(args);
         List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "drill-" + commit + "-expected.json"));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
+        //String content = Files.readString(Path.of(jsonPath));
         Assertions.assertEquals(expected, actual);
     }
 
@@ -167,6 +168,7 @@ public class TestCommandLine {
         RefactoringMiner.detectAtGitHubPullRequest(args);
         List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "drill-gp-expected.json"));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
+        //String content = Files.readString(Path.of(jsonPath));
         Assertions.assertEquals(expected, actual);
     }
 

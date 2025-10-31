@@ -500,6 +500,17 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			return false;
 	}
 
+	public boolean equalReturnParameterWithPluralClassType(UMLOperation operation) {
+		UMLParameter thisReturnParameter = this.getReturnParameter();
+		UMLParameter otherReturnParameter = operation.getReturnParameter();
+		if(thisReturnParameter != null && otherReturnParameter != null)
+			return thisReturnParameter.getType().pluralClassType(otherReturnParameter.getType());
+		else if(thisReturnParameter == null && otherReturnParameter == null)
+			return true;
+		else
+			return false;
+	}
+
 	public boolean equalReturnParameterClassType(UMLOperation operation) {
 		UMLParameter thisReturnParameter = this.getReturnParameter();
 		UMLParameter otherReturnParameter = operation.getReturnParameter();

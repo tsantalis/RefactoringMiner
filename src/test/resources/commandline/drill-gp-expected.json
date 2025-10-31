@@ -4431,6 +4431,48 @@
 },
 {
 	"type": "Change Return Type",
+	"description": "Change Return Type NodeResource to NodeResources in method public create(cpu long, memory long) : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
+		"startLine": 70,
+		"endLine": 70,
+		"startColumn": 17,
+		"endColumn": 29,
+		"codeElementType": "TYPE",
+		"description": "original return type",
+		"codeElement": "NodeResource"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
+		"startLine": 70,
+		"endLine": 72,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public create(cpu long, memory long) : NodeResource"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 147,
+		"endLine": 147,
+		"startColumn": 17,
+		"endColumn": 30,
+		"codeElementType": "TYPE",
+		"description": "changed return type",
+		"codeElement": "NodeResources"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 147,
+		"endLine": 149,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed return type",
+		"codeElement": "public create(cpu long, memory long) : NodeResources"
+}]
+},
+{
+	"type": "Change Return Type",
 	"description": "Change Return Type int to long in method public getNumVirtualCpu() : long from class org.apache.drill.exec.resourcemgr.NodeResources",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
@@ -5291,57 +5333,6 @@
 }]
 },
 {
-	"type": "Move And Inline Method",
-	"description": "Move And Inline Method public create(cpu long, memory long) : NodeResource moved from class org.apache.drill.exec.planner.cost.NodeResource to class org.apache.drill.exec.planner.fragment.Wrapper & inlined to public computeCpuResources() : void",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
-		"startLine": 70,
-		"endLine": 72,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "inlined method declaration",
-		"codeElement": "public create(cpu long, memory long) : NodeResource"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
-		"startLine": 71,
-		"endLine": 71,
-		"startColumn": 5,
-		"endColumn": 42,
-		"codeElementType": "RETURN_STATEMENT",
-		"description": "inlined code from inlined method declaration",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
-		"startLine": 214,
-		"endLine": 234,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "target method declaration before inline",
-		"codeElement": "public computeCpuResources() : void"
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
-		"startLine": 214,
-		"endLine": 234,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "target method declaration after inline",
-		"codeElement": "public computeCpuResources() : void"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
-		"startLine": 228,
-		"endLine": 228,
-		"startColumn": 78,
-		"endColumn": 101,
-		"codeElementType": "LAMBDA_EXPRESSION_BODY",
-		"description": "inlined code in target method declaration",
-		"codeElement": null
-}]
-},
-{
 	"type": "Move Method",
 	"description": "Move Method public create() : NodeResource from class org.apache.drill.exec.planner.cost.NodeResource to public create() : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
 	"leftSideLocations": [{
@@ -5387,6 +5378,30 @@
 		"codeElementType": "METHOD_DECLARATION",
 		"description": "moved method declaration",
 		"codeElement": "public create(cpu long) : NodeResources"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public create(cpu long, memory long) : NodeResource from class org.apache.drill.exec.planner.cost.NodeResource to public create(cpu long, memory long) : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
+		"startLine": 70,
+		"endLine": 72,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public create(cpu long, memory long) : NodeResource"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 147,
+		"endLine": 149,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public create(cpu long, memory long) : NodeResources"
 }]
 },
 {

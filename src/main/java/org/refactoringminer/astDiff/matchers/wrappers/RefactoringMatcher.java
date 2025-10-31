@@ -128,6 +128,10 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
 	                UMLOperationBodyMapper bodyMapper = moveCodeRefactoring.getBodyMapper();
 	                new BodyMapperMatcher(optimizationData, bodyMapper, false).match(srcTree,dstTree,mappingStore);
                 }
+            } else if (refactoring instanceof ReplaceAnonymousWithLambdaRefactoring) {
+            	ReplaceAnonymousWithLambdaRefactoring replaceAnonymousWithLambdaRefactoring = (ReplaceAnonymousWithLambdaRefactoring) refactoring;
+                UMLOperationBodyMapper bodyMapper = replaceAnonymousWithLambdaRefactoring.getBodyMapper();
+                new BodyMapperMatcher(optimizationData, bodyMapper, false).match(srcTree,dstTree,mappingStore);
             } else if (refactoring instanceof ParameterizeTestRefactoring) {
                 ParameterizeTestRefactoring parameterizeTestRefactoring = (ParameterizeTestRefactoring) refactoring;
                 UMLOperationBodyMapper bodyMapper = parameterizeTestRefactoring.getBodyMapper();

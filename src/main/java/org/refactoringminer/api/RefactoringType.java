@@ -119,7 +119,7 @@ public enum RefactoringType {
 	REPLACE_CONDITIONAL_WITH_ASSUMPTION("Replace Conditional With Assumption", "Replace Conditional With Assumption (.+) to (.+) in method (.+) from class (.+)"),
 	REPLACE_ASSERTION_WITH_ASSUMPTION("Replace Assertion With Assumption", "Replace Assertion With Assumption (.+) to (.+) in method (.+) from class (.+)"),
 	REPLACE_IGNORE_WITH_ASSUMPTION("Replace Ignore With Assumption", "Replace Ignore With Assumption (.+) to (.+) in method (.+) from class (.+)"),
-	EXTRACT_FIXTURE("Extract Test Fixture", "Extract Test Fixture (.+) extracted from (.+) in class (.+)");
+	EXTRACT_FIXTURE("Extract Fixture", "Extract Fixture (.+) extracted from (.+) in class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -229,10 +229,10 @@ public enum RefactoringType {
 		TRY_WITH_RESOURCES,
 		REPLACE_GENERIC_WITH_DIAMOND,
 		REPLACE_CONDITIONAL_WITH_TERNARY,
-		REPLACE_CONDITIONAL_WITH_TERNARY,
 		REPLACE_CONDITIONAL_WITH_ASSUMPTION,
 		REPLACE_ASSERTION_WITH_ASSUMPTION,
-		REPLACE_IGNORE_WITH_ASSUMPTION
+		REPLACE_IGNORE_WITH_ASSUMPTION,
+		EXTRACT_FIXTURE
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

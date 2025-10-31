@@ -3417,9 +3417,9 @@ public class ReplacementAlgorithm {
 			return replacementInfo.getReplacements();
 		}
 		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null &&
-				creationCoveringTheEntireStatement1.arguments().size() > 0 && creationCoveringTheEntireStatement1.getType().equalsWithSubType(creationCoveringTheEntireStatement2.getType()) &&
-				creationCoveringTheEntireStatement1.getType().getClassType().endsWith("Exception") &&
-				creationCoveringTheEntireStatement2.getType().getClassType().endsWith("Exception")) {
+				creationCoveringTheEntireStatement1.arguments().size() > 0 && 
+				(compatibleExceptionType(creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2) ||
+				creationCoveringTheEntireStatement1.getType().pluralClassType(creationCoveringTheEntireStatement2.getType()))) {
 			Set<String> argumentIntersection = creationCoveringTheEntireStatement1.argumentIntersection(creationCoveringTheEntireStatement2);
 			if(argumentIntersection.size() > 0 && argumentIntersection.size() == Math.min(creationCoveringTheEntireStatement1.arguments().size(), creationCoveringTheEntireStatement2.arguments().size())) {
 				Replacement replacement = new ObjectCreationReplacement(creationCoveringTheEntireStatement1.actualString(),
@@ -4414,6 +4414,12 @@ public class ReplacementAlgorithm {
 			}
 		}
 		return null;
+	}
+
+	private static boolean compatibleExceptionType(ObjectCreation creationCoveringTheEntireStatement1, ObjectCreation creationCoveringTheEntireStatement2) {
+		return creationCoveringTheEntireStatement1.getType().equalsWithSubType(creationCoveringTheEntireStatement2.getType()) &&
+		creationCoveringTheEntireStatement1.getType().getClassType().endsWith("Exception") &&
+		creationCoveringTheEntireStatement2.getType().getClassType().endsWith("Exception");
 	}
 
 	private static boolean containsInArguments(AbstractCall call, String key) {

@@ -36,6 +36,7 @@ import gr.uom.java.xmi.diff.RenameClassRefactoring;
 import gr.uom.java.xmi.diff.RenameOperationRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithClassRefactoring;
+import gr.uom.java.xmi.diff.ReplaceAnonymousWithLambdaRefactoring;
 import gr.uom.java.xmi.diff.ReplaceConditionalWithTernaryRefactoring;
 import gr.uom.java.xmi.diff.SplitConditionalRefactoring;
 import gr.uom.java.xmi.diff.SplitOperationRefactoring;
@@ -627,6 +628,15 @@ public class MonacoCore {
 						tooltips.add(tooltipRight);
 					}
 				}
+    		}
+    		else if(r instanceof ReplaceAnonymousWithLambdaRefactoring) {
+				ReplaceAnonymousWithLambdaRefactoring replace = (ReplaceAnonymousWithLambdaRefactoring)r;
+				UMLOperationBodyMapper bodyMapper = replace.getBodyMapper();
+				String tooltipLeft = "anonymous extracted to lambda";
+				String tooltipRight = "lambda extracted from anonymous";
+				String tooltip = generateTooltip(t, c, bodyMapper, tooltipLeft, tooltipRight);
+				if(tooltip != null)
+					tooltips.add(tooltip);
     		}
     		else if(r instanceof ExtractVariableRefactoring) {
     			ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;

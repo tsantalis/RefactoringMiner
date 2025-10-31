@@ -116,6 +116,12 @@ public class MoveCodeRefactoring implements Refactoring {
 
 	@Override
 	public RefactoringType getRefactoringType() {
+		if(moveType.equals(Type.MOVE_TO_ADDED)) {
+			if(targetContainer.hasSetUpAnnotation() || targetContainer.hasTearDownAnnotation() ||
+					targetContainer.getName().equals("setUp") || targetContainer.getName().equals("tearDown") || targetContainer.getName().equals("prepare")) {
+				return RefactoringType.EXTRACT_FIXTURE;
+			}
+		}
 		return RefactoringType.MOVE_CODE;
 	}
 
@@ -168,12 +174,21 @@ public class MoveCodeRefactoring implements Refactoring {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append("from ");
-		sb.append(sourceContainer.toQualifiedString());
-		sb.append(" to ");
-		sb.append(targetContainer.toQualifiedString());
-		sb.append(" in class ");
-		sb.append(getClassName());
+		if(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE)) {
+			sb.append(targetContainer.toQualifiedString());
+			sb.append(" extracted from ");
+			sb.append(sourceContainer.toQualifiedString());
+			sb.append(" in class ");
+			sb.append(getClassName());
+		}
+		else {
+			sb.append("from ");
+			sb.append(sourceContainer.toQualifiedString());
+			sb.append(" to ");
+			sb.append(targetContainer.toQualifiedString());
+			sb.append(" in class ");
+			sb.append(getClassName());
+		}
 		return sb.toString();
 	}
 }

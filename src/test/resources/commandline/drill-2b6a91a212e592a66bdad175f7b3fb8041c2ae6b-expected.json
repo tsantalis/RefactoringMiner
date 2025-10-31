@@ -1955,6 +1955,57 @@
 }]
 },
 {
+	"type": "Move And Inline Method",
+	"description": "Move And Inline Method public create(cpu long, memory long) : NodeResource moved from class org.apache.drill.exec.planner.cost.NodeResource to class org.apache.drill.exec.planner.fragment.Wrapper & inlined to public computeCpuResources() : void",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
+		"startLine": 70,
+		"endLine": 72,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "inlined method declaration",
+		"codeElement": "public create(cpu long, memory long) : NodeResource"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
+		"startLine": 71,
+		"endLine": 71,
+		"startColumn": 5,
+		"endColumn": 42,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "inlined code from inlined method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 214,
+		"endLine": 234,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration before inline",
+		"codeElement": "public computeCpuResources() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 214,
+		"endLine": 234,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration after inline",
+		"codeElement": "public computeCpuResources() : void"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 228,
+		"endLine": 228,
+		"startColumn": 78,
+		"endColumn": 101,
+		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "inlined code in target method declaration",
+		"codeElement": null
+}]
+},
+{
 	"type": "Move Method",
 	"description": "Move Method public create() : NodeResource from class org.apache.drill.exec.planner.cost.NodeResource to public create() : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
 	"leftSideLocations": [{

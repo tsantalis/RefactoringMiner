@@ -987,7 +987,7 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpackage applicationNameLoggingWhenDisabled(output CapturedOutput) : void renamed to package applicationNameLoggingToFileWhenDisabled() : void in class org.springframework.boot.logging.log4j2.Log4J2LoggingSystemTests",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_VARIABLE",

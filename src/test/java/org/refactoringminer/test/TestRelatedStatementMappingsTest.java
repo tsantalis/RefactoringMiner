@@ -132,7 +132,10 @@ public class TestRelatedStatementMappingsTest {
 
     @ParameterizedTest
     @CsvSource({
-            "https://github.com/uber/h3-java.git,8b9d3f230393b4a89a21545745754eeb46f56516"
+            "https://github.com/uber/h3-java.git,8b9d3f230393b4a89a21545745754eeb46f56516",
+            //"https://github.com/apache/camel.git, ee55a3bc6e04fea, camel-ee55a3bc6e04fea.txt", // FIXME: No move code refactoring detected
+            "https://github.com/apache/struts.git, 0a71e2c3b92d2d58fda40f252a6a5a4392fa58b7",
+            "https://github.com/orientechnologies/orientdb.git, 1b371c7cecbc7ec14b81a3f8a08c2ab71d12577f",
     })
     void testExtractFixtureRefactoring(String url,String commit) {
         String testResultFileName = url.substring(url.lastIndexOf('/') + 1, url.indexOf(".git")) + "-" + commit + ".txt";
@@ -333,23 +336,6 @@ public class TestRelatedStatementMappingsTest {
             }
         });
     }
-
-
-    @ParameterizedTest
-    @CsvSource({
-            //Extract Fixture
-            // "https://github.com/apache/camel.git, ee55a3bc6e04fea, camel-ee55a3bc6e04fea.txt", // FIXME: No move code refactoring detected
-            "https://github.com/apache/struts.git, 0a71e2c3b92d2d58fda40f252a6a5a4392fa58b7, struts-0a71e2c3b92d2d58fda40f252a6a5a4392fa58b7.txt",
-            "https://github.com/orientechnologies/orientdb.git, 1b371c7cecbc7ec14b81a3f8a08c2ab71d12577f, orientdb-1b371c7cecbc7ec14b81a3f8a08c2ab71d12577f.txt",
-    })
-    public void testExtractFixture(String url, String commit, String testResultFileName) {
-        testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof MoveCodeRefactoring moveCodeRefactoring) {
-                mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
-            }
-        });
-    }
-
 
     @ParameterizedTest
     @CsvSource({

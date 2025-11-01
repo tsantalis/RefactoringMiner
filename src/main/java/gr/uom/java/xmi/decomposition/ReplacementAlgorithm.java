@@ -3887,6 +3887,22 @@ public class ReplacementAlgorithm {
 				replacementInfo.addReplacement(replacement);
 				return replacementInfo.getReplacements();
 			}
+			for(String creation1 : creations1) {
+				List<AbstractCall> creationCalls = creationMap1.get(creation1);
+				AbstractCall call1 = creationCalls.get(0);
+				if(invocationCoveringTheEntireStatement1.getLocationInfo().subsumes(call1.getLocationInfo())) {
+					if((r = call1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
+						replacementInfo.addReplacement(r);
+						addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
+						return replacementInfo.getReplacements();
+					}
+					else if((r = call1.makeReplacementForReturnedArgument(statement2.getString())) != null) {
+						replacementInfo.addReplacement(r);
+						addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
+						return replacementInfo.getReplacements();
+					}
+				}
+			}
 		}
 		if(invocationCoveringTheEntireStatement1 instanceof OperationInvocation && invocationCoveringTheEntireStatement2 instanceof MethodReference) {
 			if(invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2)) {

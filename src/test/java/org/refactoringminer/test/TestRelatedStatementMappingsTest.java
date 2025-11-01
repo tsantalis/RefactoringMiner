@@ -123,11 +123,10 @@ public class TestRelatedStatementMappingsTest {
     })
     public void testAssertThrowsMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            switch (ref) {
-                case AssertThrowsRefactoring a -> mapperInfo(a.getMappings(), a.getOperationBefore(), a.getOperationAfter());
-                case AssertTimeoutRefactoring a -> mapperInfo(a.getMappings(), a.getOperationBefore(), a.getOperationAfter());
-                default -> {}
-            }
+            if (ref instanceof AssertThrowsRefactoring a)
+                mapperInfo(a.getMappings(), a.getOperationBefore(), a.getOperationAfter());
+            else if (ref instanceof AssertTimeoutRefactoring a)
+                mapperInfo(a.getMappings(), a.getOperationBefore(), a.getOperationAfter());
         });
     }
 
@@ -152,11 +151,11 @@ public class TestRelatedStatementMappingsTest {
     })
     public void testCustomRunnerMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            Set<Pair<UMLAnnotation, UMLAnnotation>> annotations = switch (ref) {
-                case ModifyClassAnnotationRefactoring modifyRef -> Set.of(Pair.of(modifyRef.getAnnotationBefore(), modifyRef.getAnnotationAfter()));
-                case AddClassAnnotationRefactoring addRef -> Set.of(Pair.of(null, addRef.getAnnotation()));
-                default -> Set.of();
-            };
+            Set<Pair<UMLAnnotation, UMLAnnotation>> annotations = Set.of();
+            if (ref instanceof ModifyClassAnnotationRefactoring modifyRef)
+                annotations = Set.of(Pair.of(modifyRef.getAnnotationBefore(), modifyRef.getAnnotationAfter()));
+            else if (ref instanceof AddClassAnnotationRefactoring addRef)
+                annotations = Set.of(Pair.of(null, addRef.getAnnotation()));
             if (!annotations.isEmpty() && Set.of("RunWith", "ExtendWith").contains(((AnnotationRefactoring) ref).getAnnotation().getTypeName())) {
                 mapperInfo(annotations, ((ClassLevelRefactoring) ref).getClassBefore(), ((ClassLevelRefactoring) ref).getClassAfter());
             }
@@ -230,16 +229,15 @@ public class TestRelatedStatementMappingsTest {
     })
     public void testInlineFixtureMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            switch (ref) {
-                case MoveCodeRefactoring moveCodeRefactoring -> mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
-                case RemoveMethodAnnotationRefactoring removeMethodAnnotationRefactoring -> {
-                    if (Set.of("Before", "BeforeEach", "BeforeAll", "BeforeClass","After", "AfterEach", "AfterAll", "AfterClass").contains(removeMethodAnnotationRefactoring.getAnnotation().getTypeName())) {
-                        mapperInfo(Set.of(Pair.of(removeMethodAnnotationRefactoring.getAnnotation(), null)), removeMethodAnnotationRefactoring.getOperationBefore(), removeMethodAnnotationRefactoring.getOperationAfter());
-                    }
+            if (ref instanceof MoveCodeRefactoring moveCodeRefactoring)
+                mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+            else if(ref instanceof RemoveMethodAnnotationRefactoring removeMethodAnnotationRefactoring) {
+                if (Set.of("Before", "BeforeEach", "BeforeAll", "BeforeClass","After", "AfterEach", "AfterAll", "AfterClass").contains(removeMethodAnnotationRefactoring.getAnnotation().getTypeName())) {
+                    mapperInfo(Set.of(Pair.of(removeMethodAnnotationRefactoring.getAnnotation(), null)), removeMethodAnnotationRefactoring.getOperationBefore(), removeMethodAnnotationRefactoring.getOperationAfter());
                 }
-                case InlineOperationRefactoring inlineOperationRefactoring -> mapperInfo(inlineOperationRefactoring.getBodyMapper().getMappings(), inlineOperationRefactoring.getInlinedOperation(), inlineOperationRefactoring.getTargetOperationAfterInline());
-                default -> {}
             }
+            else if (ref instanceof InlineOperationRefactoring inlineOperationRefactoring)
+                mapperInfo(inlineOperationRefactoring.getBodyMapper().getMappings(), inlineOperationRefactoring.getInlinedOperation(), inlineOperationRefactoring.getTargetOperationAfterInline());
         });
     }
 
@@ -255,14 +253,12 @@ public class TestRelatedStatementMappingsTest {
     })
     public void testSplitTestMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            switch (ref) {
-                case MoveCodeRefactoring moveCodeRefactoring -> mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
-                case SplitOperationRefactoring splitOperationRefactoring -> {
-                    for (UMLOperationBodyMapper methodMapping : splitOperationRefactoring.getMappers()) {
-                        mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
-                    }
+            if (ref instanceof MoveCodeRefactoring moveCodeRefactoring)
+                mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+            else if (ref instanceof SplitOperationRefactoring splitOperationRefactoring) {
+                for (UMLOperationBodyMapper methodMapping : splitOperationRefactoring.getMappers()) {
+                    mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
                 }
-                default -> {}
             }
         });
     }
@@ -290,14 +286,12 @@ public class TestRelatedStatementMappingsTest {
     })
     public void testMergeTestMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            switch (ref) {
-                case MoveCodeRefactoring moveCodeRefactoring -> mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
-                case MergeOperationRefactoring mergeOperationRefactoring -> {
-                    for (UMLOperationBodyMapper methodMapping : mergeOperationRefactoring.getMappers()) {
-                        mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
-                    }
+            if (ref instanceof MoveCodeRefactoring moveCodeRefactoring)
+                mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+            else if (ref instanceof MergeOperationRefactoring mergeOperationRefactoring) {
+                for (UMLOperationBodyMapper methodMapping : mergeOperationRefactoring.getMappers()) {
+                    mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
                 }
-                default -> {}
             }
         });
     }
@@ -311,14 +305,12 @@ public class TestRelatedStatementMappingsTest {
     })
     public void testSplitFixturesMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            switch (ref) {
-                case MoveCodeRefactoring moveCodeRefactoring -> mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
-                case SplitOperationRefactoring splitOperationRefactoring -> {
-                    for (UMLOperationBodyMapper methodMapping : splitOperationRefactoring.getMappers()) {
-                        mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
-                    }
+            if (ref instanceof MoveCodeRefactoring moveCodeRefactoring)
+                mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+            else if (ref instanceof SplitOperationRefactoring splitOperationRefactoring) {
+                for (UMLOperationBodyMapper methodMapping : splitOperationRefactoring.getMappers()) {
+                    mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
                 }
-                default -> {}
             }
         });
     }
@@ -332,14 +324,12 @@ public class TestRelatedStatementMappingsTest {
     })
     public void testMergeFixtureMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            switch (ref) {
-                case MoveCodeRefactoring moveCodeRefactoring -> mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
-                case MergeOperationRefactoring mergeOperationRefactoring -> {
-                    for (UMLOperationBodyMapper methodMapping : mergeOperationRefactoring.getMappers()) {
-                        mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
-                    }
+            if (ref instanceof MoveCodeRefactoring moveCodeRefactoring)
+                mapperInfo(moveCodeRefactoring.getMappings(), moveCodeRefactoring.getSourceContainer(), moveCodeRefactoring.getTargetContainer());
+            else if (ref instanceof MergeOperationRefactoring mergeOperationRefactoring) {
+                for (UMLOperationBodyMapper methodMapping : mergeOperationRefactoring.getMappers()) {
+                    mapperInfo(methodMapping.getMappings(), methodMapping.getOperation1(), methodMapping.getOperation2());
                 }
-                default -> {}
             }
         });
     }
@@ -395,11 +385,11 @@ public class TestRelatedStatementMappingsTest {
     })
     public void testAddAndRemoveMethodAnnotationMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            Set<Pair<UMLAnnotation, UMLAnnotation>> annotations = switch (ref.getRefactoringType()) {
-                case RefactoringType.REMOVE_METHOD_ANNOTATION -> Set.of(Pair.of(((AnnotationRefactoring) ref).getAnnotation(), null));
-                case RefactoringType.ADD_METHOD_ANNOTATION -> Set.of(Pair.of(null, ((AnnotationRefactoring) ref).getAnnotation()));
-                default -> Set.of();
-            };
+            Set<Pair<UMLAnnotation, UMLAnnotation>> annotations = Set.of();
+            if (ref instanceof RemoveMethodAnnotationRefactoring)
+                annotations = Set.of(Pair.of(((AnnotationRefactoring) ref).getAnnotation(), null));
+            else if (ref instanceof AddMethodAnnotationRefactoring)
+                annotations = Set.of(Pair.of(null, ((AnnotationRefactoring) ref).getAnnotation()));
             if (!annotations.isEmpty()) {
                 mapperInfo(annotations, ((MethodLevelRefactoring) ref).getOperationBefore(), ((MethodLevelRefactoring) ref).getOperationAfter());
             }
@@ -419,22 +409,17 @@ public class TestRelatedStatementMappingsTest {
     })
     public void testChangeTestAnnotationGranularityMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            Set<Pair<UMLAnnotation, UMLAnnotation>> annotations = switch (ref.getRefactoringType()) {
-                case RefactoringType.REMOVE_METHOD_ANNOTATION, RefactoringType.REMOVE_CLASS_ANNOTATION -> Set.of(Pair.of(((AnnotationRefactoring) ref).getAnnotation(), null));
-                case RefactoringType.ADD_METHOD_ANNOTATION, RefactoringType.ADD_CLASS_ANNOTATION -> Set.of(Pair.of(null, ((AnnotationRefactoring) ref).getAnnotation()));
-                default -> Set.of();
-            };
-            if (!annotations.isEmpty() && "Test".equals(((AnnotationRefactoring) ref).getAnnotation().getTypeName())) {
-                mapperInfo(annotations, switch (ref) {
-                    case MethodLevelRefactoring m -> m.getOperationBefore();
-                    case ClassLevelRefactoring c -> c.getClassBefore();
-                    default -> null;
-                }, switch (ref) {
-                    case MethodLevelRefactoring m -> m.getOperationAfter();
-                    case ClassLevelRefactoring c -> c.getClassAfter();
-                    default -> null;
-                });
-            }
+            Set<Pair<UMLAnnotation, UMLAnnotation>> annotations = Set.of();
+            UMLAnnotation annotation = ref instanceof AnnotationRefactoring ? ((AnnotationRefactoring) ref).getAnnotation() : null;
+            if (ref instanceof RemoveMethodAnnotationRefactoring || ref instanceof RemoveClassAnnotationRefactoring)
+                annotations = Set.of(Pair.of(annotation, null));
+            else if (ref instanceof AddMethodAnnotationRefactoring || ref instanceof AddClassAnnotationRefactoring)
+                annotations = Set.of(Pair.of(null, annotation));
+            if (!annotations.isEmpty() && "Test".equals(annotation.getTypeName()))
+                if (ref instanceof MethodLevelRefactoring m)
+                    mapperInfo(annotations, m.getOperationBefore(), m.getOperationAfter());
+                else if (ref instanceof ClassLevelRefactoring c)
+                    mapperInfo(annotations, c.getClassBefore(), c.getClassAfter());
         });
     }
 
@@ -447,11 +432,10 @@ public class TestRelatedStatementMappingsTest {
     })
     public void testRenameTestMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            switch (ref) {
-                case RenameOperationRefactoring renameTestRefactoring -> mapperInfo(renameTestRefactoring.getBodyMapper().getMappings(), renameTestRefactoring.getOriginalOperation(), renameTestRefactoring.getRenamedOperation());
-                case RenameClassRefactoring renameTestRefactoring -> mapperInfo(Collections.emptySet(), renameTestRefactoring.getOriginalClass(), renameTestRefactoring.getRenamedClass());
-                default -> {}
-            }
+            if (ref instanceof RenameOperationRefactoring renameTestRefactoring)
+                mapperInfo(renameTestRefactoring.getBodyMapper().getMappings(), renameTestRefactoring.getOriginalOperation(), renameTestRefactoring.getRenamedOperation());
+            else if (ref instanceof RenameClassRefactoring renameTestRefactoring)
+                mapperInfo(Collections.emptySet(), renameTestRefactoring.getOriginalClass(), renameTestRefactoring.getRenamedClass());
         });
     }
 
@@ -473,23 +457,20 @@ public class TestRelatedStatementMappingsTest {
     })
     public void testParameterizedTestMigrationMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            Set<Pair<UMLAnnotation, UMLAnnotation>> annotations = switch (ref.getRefactoringType()) {
-                case RefactoringType.REMOVE_METHOD_ANNOTATION, RefactoringType.REMOVE_ATTRIBUTE_ANNOTATION, RefactoringType.REMOVE_CLASS_ANNOTATION -> Set.of(Pair.of(((AnnotationRefactoring) ref).getAnnotation(), null));
-                case RefactoringType.ADD_METHOD_ANNOTATION, RefactoringType.ADD_ATTRIBUTE_ANNOTATION, RefactoringType.ADD_CLASS_ANNOTATION -> Set.of(Pair.of(null, ((AnnotationRefactoring) ref).getAnnotation()));
-                default -> Set.of();
-            };
-            if (!annotations.isEmpty() && Set.of("RunWith", "Parameterized.Parameters", "ParameterizedTest", "Test", "Parameters", "Parameter", "DataProvider", "ExtendWith", "ValueSource", "NullSource", "EmptySource", "NullAndEmptySource", "EnumSource", "MethodSource", "FieldSource", "CsvSource", "CsvFileSource", "ArgumentsSource").contains(((AnnotationRefactoring) ref).getAnnotation().getTypeName())) {
-                mapperInfo(annotations, switch (ref) {
-                    case MethodLevelRefactoring m -> m.getOperationBefore();
-                    case ClassLevelRefactoring c -> c.getClassBefore();
-                    case AttributeLevelRefactoring a -> a.getAttributeBefore();
-                    default -> null;
-                }, switch (ref) {
-                    case MethodLevelRefactoring m -> m.getOperationAfter();
-                    case ClassLevelRefactoring c -> c.getClassAfter();
-                    case AttributeLevelRefactoring a -> a.getAttributeAfter();
-                    default -> null;
-                });
+            Set<String> set = Set.of("RunWith", "Parameterized.Parameters", "ParameterizedTest", "Test", "Parameters", "Parameter", "DataProvider", "ExtendWith", "ValueSource", "NullSource", "EmptySource", "NullAndEmptySource", "EnumSource", "MethodSource", "FieldSource", "CsvSource", "CsvFileSource", "ArgumentsSource");
+            UMLAnnotation annotation = ref instanceof AnnotationRefactoring ? ((AnnotationRefactoring) ref).getAnnotation() : null;
+            Set<Pair<UMLAnnotation, UMLAnnotation>> annotations = Set.of();
+            if (ref instanceof RemoveMethodAnnotationRefactoring || ref instanceof RemoveAttributeAnnotationRefactoring || ref instanceof RemoveClassAnnotationRefactoring)
+                annotations = Set.of(Pair.of(annotation, null));
+            else if (ref instanceof AddMethodAnnotationRefactoring || ref instanceof AddAttributeAnnotationRefactoring || ref instanceof AddClassAnnotationRefactoring)
+                annotations = Set.of(Pair.of(null, annotation));
+            if (!annotations.isEmpty() && set.contains(annotation.getTypeName())) {
+                if (ref instanceof MethodLevelRefactoring m)
+                    mapperInfo(annotations, m.getOperationBefore(), m.getOperationAfter());
+                else if (ref instanceof ClassLevelRefactoring c)
+                    mapperInfo(annotations, c.getClassBefore(), c.getClassAfter());
+                else if (ref instanceof AttributeLevelRefactoring a)
+                    mapperInfo(annotations, a.getAttributeBefore(), a.getAttributeAfter());
             }
         });
     }
@@ -542,12 +523,14 @@ public class TestRelatedStatementMappingsTest {
     private <T, Y> void mapperInfo(Set<Y> mappings, T before, T after) {
         actual.add(before + " -> " + after);
         for (var mapping : mappings) {
-            switch (mapping) {
-                case AbstractCodeMapping ac -> mapperInfo(ac);
-                case Pair p -> mapperInfo(p);
-                case AbstractCodeFragment frag -> mapperInfo(frag);
-                default -> throw new IllegalArgumentException("Invalid mapping type: " + mapping.getClass());
-            }
+            if (mapping instanceof AbstractCodeMapping ac)
+                mapperInfo(ac);
+            else if (mapping instanceof Pair p)
+                mapperInfo(p);
+            else if (mapping instanceof AbstractCodeFragment frag)
+                mapperInfo(frag);
+            else
+                throw new IllegalArgumentException("Invalid mapping type: " + mapping.getClass());
         }
     }
 

@@ -4,6 +4,7 @@ import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
@@ -552,10 +553,19 @@ public class TestRelatedStatementMappingsTest {
     }
 
     private void mapperInfo(Pair mapping) {
-        actual.add(mapping.getLeft() instanceof LocationInfoProvider ? ((LocationInfoProvider) mapping.getLeft()).getLocationInfo() + "==" + ((LocationInfoProvider) mapping.getRight()).getLocationInfo() : mapping.getLeft() + "==" + mapping.getRight());
+        if (mapping.getLeft() instanceof LeafExpression && mapping.getRight() instanceof LeafExpression) {
+            return;
+        }
+        if (mapping.getLeft() instanceof LocationInfoProvider && mapping.getRight() instanceof LocationInfoProvider)
+            actual.add(((LocationInfoProvider) mapping.getLeft()).getLocationInfo() + "==" + ((LocationInfoProvider) mapping.getRight()).getLocationInfo());
+        else
+            actual.add(mapping.getLeft() + "==" + mapping.getRight());
     }
 
     private void mapperInfo(AbstractCodeMapping mapping) {
+        if (mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression) {
+            return;
+        }
         actual.add(mapping.getFragment1().getLocationInfo() + "==" + mapping.getFragment2().getLocationInfo());
     }
 

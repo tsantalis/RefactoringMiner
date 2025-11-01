@@ -234,6 +234,11 @@
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tpath : String in method public checkout(entry DirCacheEntry, metadata CheckoutMetadata, reader ObjectReader, gitPath String) : void from class org.eclipse.jgit.dircache.Checkout",
           "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\topt : WorkingTreeOptions in method public checkoutEntry(repo Repository, entry DirCacheEntry, or ObjectReader, deleteRecursive boolean, checkoutMetadata CheckoutMetadata, options WorkingTreeOptions) : void from class org.eclipse.jgit.dircache.DirCacheCheckout",
+          "validation": true
         }
       ]
     },

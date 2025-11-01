@@ -153,8 +153,8 @@ public class TestRelatedStatementMappingsTest {
     public void testCustomRunnerMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
             Set<Pair<UMLAnnotation, UMLAnnotation>> annotations = switch (ref) {
-                case ModifyMethodAnnotationRefactoring modifyRef -> Set.of(Pair.of(modifyRef.getAnnotationBefore(), modifyRef.getAnnotationAfter()));
-                case AddMethodAnnotationRefactoring addRef -> Set.of(Pair.of(null, addRef.getAnnotation()));
+                case ModifyClassAnnotationRefactoring modifyRef -> Set.of(Pair.of(modifyRef.getAnnotationBefore(), modifyRef.getAnnotationAfter()));
+                case AddClassAnnotationRefactoring addRef -> Set.of(Pair.of(null, addRef.getAnnotation()));
                 default -> Set.of();
             };
             if (!annotations.isEmpty() && Set.of("RunWith", "ExtendWith").contains(((AnnotationRefactoring) ref).getAnnotation().getTypeName())) {
@@ -162,7 +162,6 @@ public class TestRelatedStatementMappingsTest {
             }
         });
     }
-
 
     @ParameterizedTest
     @CsvSource({

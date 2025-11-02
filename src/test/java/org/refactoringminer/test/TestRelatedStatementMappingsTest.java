@@ -521,9 +521,6 @@ public class TestRelatedStatementMappingsTest {
     }
 
     private void mapperInfo(Pair mapping) {
-        if (mapping.getLeft() instanceof LeafExpression && mapping.getRight() instanceof LeafExpression) {
-            return;
-        }
         if (mapping.getLeft() instanceof LocationInfoProvider && mapping.getRight() instanceof LocationInfoProvider)
             actual.add(((LocationInfoProvider) mapping.getLeft()).getLocationInfo() + "==" + ((LocationInfoProvider) mapping.getRight()).getLocationInfo());
         else

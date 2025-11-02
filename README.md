@@ -503,18 +503,18 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Split Method`
 * `Replace Anonymous With Class`
 
-As of **November 1, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 2, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3414  | 50  | 120  | 0.986  | 0.966|
+|**Total**|3416  | 50  | 117  | 0.986  | 0.967|
 |Extract Method|371  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|232  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
 |Move And Rename Attribute| 7  |  0  |  1  | 1.000  | 0.875|
 |Rename Method|299  |  7  |  8  | 0.977  | 0.974|
 |Inline Method|68  |  3  |  2  | 0.958  | 0.971|
-|Move Method|265  |  2  |  2  | 0.993  | 0.993|
+|Move Method|265  |  2  |  1  | 0.993  | 0.996|
 |Move And Rename Method|24  |  4  |  4  | 0.857  | 0.857|
 |Pull Up Method|45  |  0  |  3  | 1.000  | 0.938|
 |Move Class|141  |  4  |  2  | 0.972  | 0.986|
@@ -526,10 +526,10 @@ As of **November 1, 2025** the precision and recall of RefactoringMiner on this 
 |Extract Superclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|45  |  1  |  4  | 0.978  | 0.918|
-|Extract And Move Method|121  |  2  |  7  | 0.984  | 0.945|
+|Extract And Move Method|122  |  2  |  6  | 0.984  | 0.953|
 |Move And Inline Method|29  |  1  |  6  | 0.967  | 0.829|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|288  |  1  | 12  | 0.997  | 0.960|
+|Extract Variable|289  |  1  | 11  | 0.997  | 0.963|
 |Extract Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|127  |  0  | 12  | 1.000  | 0.914|
 |Rename Variable|305  |  6  | 10  | 0.981  | 0.968|

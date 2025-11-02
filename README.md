@@ -376,11 +376,11 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **October 25, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 1, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12512  | 13  | 219  | 0.999  | 0.983|
+|**Total**|12517  | 13  | 219  | 0.999  | 0.983|
 |Extract Method|1016  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
@@ -401,7 +401,7 @@ As of **October 25, 2025** the precision and recall of RefactoringMiner on this 
 |Extract Superclass|74  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|108  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|124  |  0  | 60  | 1.000  | 0.674|
+|Extract And Move Method|127  |  0  | 60  | 1.000  | 0.679|
 |Move And Inline Method|12  |  0  |  4  | 1.000  | 0.750|
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
@@ -411,7 +411,7 @@ As of **October 25, 2025** the precision and recall of RefactoringMiner on this 
 |Inline Variable|147  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|340  |  2  | 11  | 0.994  | 0.969|
-|Rename Parameter|493  |  2  | 24  | 0.996  | 0.954|
+|Rename Parameter|494  |  2  | 24  | 0.996  | 0.954|
 |Rename Attribute|146  |  0  |  9  | 1.000  | 0.942|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
@@ -455,7 +455,7 @@ As of **October 25, 2025** the precision and recall of RefactoringMiner on this 
 |Add Attribute Modifier|142  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Modifier|143  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Modifier|135  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter Modifier|132  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter Modifier|133  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Modifier|65  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Modifier|39  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier|78  |  0  |  0  | 1.000  | 1.000|
@@ -476,11 +476,12 @@ As of **October 25, 2025** the precision and recall of RefactoringMiner on this 
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 5  |  0  |  0  | 1.000  | 1.000|
-|Move Code|16  |  0  |  0  | 1.000  | 1.000|
+|Move Code|13  |  0  |  0  | 1.000  | 1.000|
 |Assert Throws|14  |  0  |  0  | 1.000  | 1.000|
 |Try With Resources| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Generic With Diamond|77  |  0  |  0  | 1.000  | 1.000|
 |Replace Conditional With Ternary| 8  |  0  |  0  | 1.000  | 1.000|
+|Extract Fixture| 3  |  0  |  0  | 1.000  | 1.000|
 
 ## Benchmark 2
 **Source**: Bo Liu, Hui Liu, Nan Niu, Yuxia Zhang, Guangjie Li, He Jiang, and Yanjie Jiang, "An Automated Approach to Discovering Software Refactorings by Comparing Successive Versions," IEEE Transactions on Software Engineering, 2025.
@@ -506,7 +507,7 @@ As of **November 1, 2025** the precision and recall of RefactoringMiner on this 
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3415  | 50  | 121  | 0.986  | 0.966|
+|**Total**|3416  | 50  | 120  | 0.986  | 0.966|
 |Extract Method|371  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|232  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -525,7 +526,7 @@ As of **November 1, 2025** the precision and recall of RefactoringMiner on this 
 |Extract Superclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|45  |  1  |  4  | 0.978  | 0.918|
-|Extract And Move Method|120  |  2  |  8  | 0.984  | 0.938|
+|Extract And Move Method|121  |  2  |  7  | 0.984  | 0.945|
 |Move And Inline Method|29  |  1  |  6  | 0.967  | 0.829|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|288  |  1  | 12  | 0.997  | 0.960|

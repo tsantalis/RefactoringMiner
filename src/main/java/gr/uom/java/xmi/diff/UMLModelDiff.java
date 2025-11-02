@@ -2595,6 +2595,17 @@ public class UMLModelDiff {
 		return mappers;
 	}
 
+	private List<UMLOperationBodyMapper> getOperationBodyMappersInMovedClasses() {
+		List<UMLOperationBodyMapper> mappers = new ArrayList<UMLOperationBodyMapper>();
+		for(UMLClassMoveDiff classDiff : classMoveDiffList) {
+			mappers.addAll(classDiff.getOperationBodyMapperList());
+		}
+		for(UMLClassMoveDiff classDiff : innerClassMoveDiffList) {
+			mappers.addAll(classDiff.getOperationBodyMapperList());
+		}
+		return mappers;
+	}
+
 	private List<UMLOperationBodyMapper> getOperationBodyMappersInMovedAndRenamedClasses() {
 		List<UMLOperationBodyMapper> mappers = new ArrayList<UMLOperationBodyMapper>();
 		for(UMLClassMoveDiff classDiff : classMoveDiffList) {
@@ -3929,6 +3940,8 @@ public class UMLModelDiff {
 		checkForExtractedAndMovedLambdas(getOperationBodyMappersInMovedAndRenamedClasses(), allOperationsInAddedClasses);
 		if(allOperationsInAddedClasses.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
 			checkForExtractedAndMovedOperations(getOperationBodyMappersInCommonClasses(), allOperationsInAddedClasses);
+			processedOperationPairs.clear();
+			checkForExtractedAndMovedOperations(getOperationBodyMappersInMovedClasses(), allOperationsInAddedClasses);
 		}
 		checkForMovedCodeBetweenTestFixtures();
 		List<MoveAttributeRefactoring> moveAttributeRefactorings = new ArrayList<MoveAttributeRefactoring>();
@@ -5867,6 +5880,13 @@ public class UMLModelDiff {
 		List<AbstractCodeMapping> mappingList = new ArrayList<AbstractCodeMapping>(operationBodyMapper.getMappings());
 		if(operationBodyMapper.containsOnlySystemCalls()) {
 			return false;
+		}
+		if(addedOperationInvocation.getContainer() != null && parentMapper.getMappings().isEmpty()) {
+			for(UMLAnonymousClass anonymous : addedOperationInvocation.getContainer().getAnonymousClassList()) {
+				if(anonymous.getLocationInfo().subsumes(addedOperationInvocation.getLocationInfo())) {
+					return false;
+				}
+			}
 		}
 		if(operationBodyMapper.getContainer2().isGetter() && mappingList.size() == 1) {
 			List<AbstractCodeMapping> parentMappingList = new ArrayList<AbstractCodeMapping>(parentMapper.getMappings());

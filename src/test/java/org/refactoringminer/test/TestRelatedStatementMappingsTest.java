@@ -189,7 +189,7 @@ public class TestRelatedStatementMappingsTest {
             //Introduce Equality Method  // TODO: Completely new refactoring needed! Replace multiple property checks with a single assertEqual of the entire object
              //"https://github.com/JodaOrg/joda-time.git, 119f68ba20f38f7b4b9d676d4a7b787e5e005b89, joda-time-119f68ba20f38f7b4b9d676d4a7b787e5e005b89.txt", // FIXME: Replacements are one-to-one, not one-to-many. Thus, it might be hard to detect this refactoring
             //Consolidate Multiple Assertions into a Fluent Assertion
-             "https://github.com/cbeust/testng.git, 706dcf52c5df3591e7d9d49f0fb980f041fae385, testng-706dcf52c5df3591e7d9d49f0fb980f041fae385.txt", // FIXME: Missing fluent assertion replacements/mappings (InjectBeforeAndAfterMethodsWithTestResultSampleTest.java:46)
+             "https://github.com/cbeust/testng.git, 706dcf52c5df3591e7d9d49f0fb980f041fae385, testng-706dcf52c5df3591e7d9d49f0fb980f041fae385.txt",
              //"https://github.com/dCache/dcache.git, 4a6e55f40f1c, dcache-4a6e55f40f1c.txt", // FIXME: Hamcrest assertion syntax not supported yet
              "https://github.com/atlanmod/NeoEMF.git, 0188e9aa280b800710848d68a93af4cb28b050da, NeoEMF-0188e9aa280b800710848d68a93af4cb28b050da.txt", // FIXME: Hamcrest assertion syntax not supported yet
             //Replace assertTrue(Double.isInfinite(x)) with assertEqual(Double.POSITIVE_INFINITY, x)

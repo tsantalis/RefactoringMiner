@@ -507,7 +507,7 @@ As of **November 1, 2025** the precision and recall of RefactoringMiner on this 
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3416  | 50  | 120  | 0.986  | 0.966|
+|**Total**|3414  | 50  | 120  | 0.986  | 0.966|
 |Extract Method|371  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|232  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -537,7 +537,7 @@ As of **November 1, 2025** the precision and recall of RefactoringMiner on this 
 |Replace Variable With Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|30  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|166  |  2  | 12  | 0.988  | 0.933|
-|Change Variable Type|377  |  7  |  6  | 0.982  | 0.984|
+|Change Variable Type|375  |  7  |  6  | 0.982  | 0.984|
 |Change Attribute Type|164  |  2  |  4  | 0.988  | 0.976|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|

@@ -345,6 +345,14 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						overlapping.add(oldReplacement);
 					}
 				}
+				if(oldReplacement instanceof MethodInvocationReplacement mReplacement) {
+					AbstractCall callBefore = mReplacement.getInvokedOperationBefore();
+					AbstractCall callAfter = mReplacement.getInvokedOperationAfter();
+					if(callBefore.arguments().size() == 1 && callAfter.arguments().size() == 1 &&
+							callAfter.arguments().contains(newReplacement.getAfter()) && callBefore.arguments().contains(newReplacement.getBefore())) {
+						overlapping.add(newReplacement);
+					}
+				}
 			}
 		}
 		rs.removeAll(overlapping);
@@ -1808,6 +1816,9 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			if(s2.contains(concatenated)) {
 				return true;
 			}
+			if(tokens1.contains(s2)) {
+				return true;
+			}
 		}
 		else if(!s1.contains(JAVA.STRING_CONCATENATION) && s2.contains(JAVA.STRING_CONCATENATION)) {
 			List<String> tokens2 = Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(s2));
@@ -1822,6 +1833,9 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 			}
 			if(s1.contains(concatenated)) {
+				return true;
+			}
+			if(tokens2.contains(s1)) {
 				return true;
 			}
 		}

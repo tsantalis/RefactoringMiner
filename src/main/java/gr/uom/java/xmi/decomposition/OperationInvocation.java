@@ -472,6 +472,12 @@ public class OperationInvocation extends AbstractCall {
 				if(classDiff != null && classDiff.getNextClass().importsType(operation.getClassName() + "." + operation.getName())) {
 					return true;
 				}
+				if(classDiff != null && classDiff.getNextClass().getSuperclass() != null && modelDiff != null) {
+					UMLClassBaseDiff superClassDiff = modelDiff.getUMLClassDiff(classDiff.getNextClass().getSuperclass());
+					if(superClassDiff != null && superClassDiff.getNextClass().importsType(operation.getClassName())) {
+						return true;
+					}
+				}
 				return callerOperation.getClassName().equals(operation.getClassName()) || callerOperation.getClassName().startsWith(operation.getClassName());
 			}
 		}

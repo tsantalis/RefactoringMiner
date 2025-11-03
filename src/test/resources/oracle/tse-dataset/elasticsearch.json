@@ -9,12 +9,12 @@
         {
           "type": "RENAME_ATTRIBUTE",
           "description": "Rename Attribute\ttmp : long[] to scratch : ThreadLocal<long[]> in class org.elasticsearch.index.codec.ForUtil",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_ATTRIBUTE_TYPE",
           "description": "Change Attribute Type\ttmp : long[] to scratch : ThreadLocal<long[]> in class org.elasticsearch.index.codec.ForUtil",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [

@@ -16,6 +16,7 @@ line range:917-917==line range:943-943
 line range:918-918==line range:944-944
 line range:919-919==line range:945-945
 line range:920-920==line range:946-946
+public compare(a ObjectToPack, b ObjectToPack) : int -> public compare(a ObjectToPack, b ObjectToPack) : int
 private searchForDeltas(monitor ProgressMonitor, list ObjectToPack[], cnt int) : void -> private searchForDeltas(monitor ProgressMonitor, list ObjectToPack[], cnt int) : void
 line range:989-989==line range:1012-1012
 line range:990-990==line range:1013-1013

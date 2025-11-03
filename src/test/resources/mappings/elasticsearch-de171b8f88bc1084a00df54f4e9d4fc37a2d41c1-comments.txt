@@ -1,0 +1,11 @@
+protected getLeaderReducer(reduceContext AggregationReduceContext, size int) : AggregatorReducer -> private reduceBuckets(pq PriorityQueue<IteratorAndCurrent<Bucket>>, reduceRoundingIdx int, min long, max long, reduceContext AggregationReduceContext) : BucketReduceResult
+line range:475-475==line range:310-310
+line range:476-476==line range:311-311
+line range:489-489==line range:316-316
+line range:495-495==line range:324-324
+protected getLeaderReducer(reduceContext AggregationReduceContext, size int) : AggregatorReducer -> protected getLeaderReducer(reduceContext AggregationReduceContext, size int) : AggregatorReducer
+public accept(aggregation InternalAggregation) : void -> public accept(aggregation InternalAggregation) : void
+public get() : InternalAggregation -> public get() : InternalAggregation
+line range:520-520==line range:526-526
+line range:523-523==line range:529-529
+line range:526-526==line range:532-532

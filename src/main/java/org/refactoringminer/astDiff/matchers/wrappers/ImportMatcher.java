@@ -43,7 +43,8 @@ public class ImportMatcher implements TreeMatcher {
             Tree dstImportStatement = findImportByTypeAndLabel(dstTree,searchingType,dstImport);
             for (UMLImport srcUMLImport : srcImportSet) {
                 Tree srcImportStatement = findImportByTypeAndLabel(srcTree,searchingType,srcUMLImport);
-                mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
+                if (srcImportStatement != null && dstImportStatement != null)
+                    mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
             }
         }
         //UnGrouped Imports
@@ -53,14 +54,16 @@ public class ImportMatcher implements TreeMatcher {
             Tree srcImportStatement = findImportByTypeAndLabel(srcTree,searchingType,srcImport);
             for (UMLImport dstUMLImport : dstImportSet) {
                 Tree dstImportStatement = findImportByTypeAndLabel(dstTree,searchingType,dstUMLImport);
-                mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
+                if (srcImportStatement != null && dstImportStatement != null)
+                    mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
             }
         }
         //Changed Imports
         for(org.apache.commons.lang3.tuple.Pair<UMLImport, UMLImport> pair : importDiffList.getChangedImports()) {
             Tree srcImportStatement = findImportByTypeAndLabel(srcTree,searchingType,pair.getLeft());
             Tree dstImportStatement = findImportByTypeAndLabel(dstTree,searchingType,pair.getRight());
-            mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
+            if (srcImportStatement != null && dstImportStatement != null)
+                mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
         }
     }
 

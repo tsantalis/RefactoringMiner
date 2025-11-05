@@ -63,10 +63,18 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 		return null;
 	}
 
-	List<VariableDeclaration> getParameterDeclarationList();
-	List<UMLType> getParameterTypeList();
-	List<String> getParameterNameList();
-	List<UMLParameter> getParametersWithoutReturnType();
+	default List<VariableDeclaration> getParameterDeclarationList() {
+		return Collections.emptyList();
+	}
+	default List<UMLType> getParameterTypeList() {
+		return Collections.emptyList();
+	}
+	default List<String> getParameterNameList() {
+		return Collections.emptyList();
+	}
+	default List<UMLParameter> getParametersWithoutReturnType() {
+		return Collections.emptyList();
+	}
 
 	default boolean equalReturnParameter(VariableDeclarationContainer operation) {
 		if(this instanceof UMLOperation && operation instanceof UMLOperation) {
@@ -98,8 +106,12 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 		return false;
 	}
 
-	int getNumberOfNonVarargsParameters();
-	boolean hasVarargsParameter();
+	default int getNumberOfNonVarargsParameters() {
+		return 0;
+	}
+	default boolean hasVarargsParameter() {
+		return false;
+	}
 	OperationBody getBody();
 	List<UMLAnonymousClass> getAnonymousClassList();
 	List<LambdaExpressionObject> getAllLambdas();

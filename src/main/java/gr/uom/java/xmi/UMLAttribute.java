@@ -6,7 +6,6 @@ import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.OperationBody;
-import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
@@ -77,41 +76,6 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return anonymousClassContainer != null && anonymousClassContainer.isPresent();
 	}
 
-	public boolean isGetter() {
-		return false;
-	}
-
-	public boolean isSetter() {
-		return false;
-	}
-
-	public boolean isConstructor() {
-		return false;
-	}
-
-	public AbstractCall isDelegate() {
-		return null;
-	}
-
-	@Override
-	public AbstractCall singleStatementCallingMethod() {
-		return null;
-	}
-
-	@Override
-	public StatementObject singleReturnStatement() {
-		return null;
-	}
-
-	@Override
-	public boolean isRecursive() {
-		return false;
-	}
-
-	public boolean isMain() {
-		return false;
-	}
-
 	public Optional<UMLAnonymousClass> getAnonymousClassContainer() {
 		return anonymousClassContainer;
 	}
@@ -126,15 +90,6 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 
 	public List<UMLAnonymousClass> getAnonymousClassList() {
 		return anonymousClassList;
-	}
-
-	public UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration) {
-		for(UMLAnonymousClass anonymousClass : this.getAnonymousClassList()) {
-			if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration.getLocationInfo())) {
-				return anonymousClass;
-			}
-		}
-		return null;
 	}
 
 	public List<VariableDeclaration> getParameterDeclarationList() {
@@ -286,31 +241,6 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 			}
 		}
 		return variableDeclarationMap;
-	}
-
-	@Override
-	public boolean hasTestAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasParameterizedTestAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasSetUpAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasTearDownAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasDeprecatedAnnotation() {
-		return false;
 	}
 
 	public Visibility getVisibility() {

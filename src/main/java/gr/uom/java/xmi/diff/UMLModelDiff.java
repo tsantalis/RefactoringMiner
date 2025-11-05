@@ -1001,6 +1001,8 @@ public class UMLModelDiff {
 			removedClassesInOuterLoop(matcher);
 			if(!partialModel()) {
 				Set<UMLClassDiff> classDiffsToBeRemoved = new LinkedHashSet<>();
+				Set<UMLClass> removedClassesToBeAdded = new LinkedHashSet<>();
+				Set<UMLClass> addedClassesToBeAdded = new LinkedHashSet<>();
 				for(UMLClassDiff classDiff : commonClassDiffList) {
 					boolean matchFound = false;
 					for(UMLClassRenameDiff classRenameDiff : classRenameDiffList) {
@@ -1030,6 +1032,19 @@ public class UMLModelDiff {
 										removedClasses.remove(classRenameDiff.getOriginalClass());
 										addedClassIterator.remove();
 										classDiffsToBeRemoved.add(classDiff);
+										//find the module class that classDiff belongs to
+										for(UMLClassDiff diff : commonClassDiffList) {
+											if(diff.getOriginalClass().isModule() && diff.getNextClass().isModule() &&
+													diff.getOriginalClass().getPackageName().equals(classDiff.getOriginalClass().getPackageName())) {
+												if(!removedClasses.contains(diff.getOriginalClass())) {
+													removedClassesToBeAdded.add(diff.getOriginalClass());
+												}
+												if(!addedClasses.contains(diff.getNextClass())) {
+													addedClassesToBeAdded.add(diff.getNextClass());
+												}
+												classDiffsToBeRemoved.add(diff);
+											}
+										}
 									}
 								}
 							}
@@ -1037,6 +1052,8 @@ public class UMLModelDiff {
 					}
 				}
 				this.commonClassDiffList.removeAll(classDiffsToBeRemoved);
+				this.removedClasses.addAll(removedClassesToBeAdded);
+				this.addedClasses.addAll(addedClassesToBeAdded);
 			}
 		}
 		else {

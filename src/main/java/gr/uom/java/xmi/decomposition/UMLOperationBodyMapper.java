@@ -9,6 +9,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.ListCompositeType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.UMLAnnotation;
 
 import static gr.uom.java.xmi.Constants.JAVA;
@@ -1783,6 +1784,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			this.javadocDiff = Optional.of(diff);
 		}
 		this.commentListDiff = new UMLCommentListDiff(initializer1.getComments(), initializer2.getComments(), this);
+		checkUnmatchedStatementsBeingCommented();
+	}
+
+	public UMLOperationBodyMapper(ModuleContainer container1, ModuleContainer container2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
+		this.classDiff = classDiff;
+		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
+		this.container1 = container1;
+		this.container2 = container2;
+		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
+		this.nonMappedLeavesT1 = new ArrayList<AbstractCodeFragment>();
+		this.nonMappedLeavesT2 = new ArrayList<AbstractCodeFragment>();
+		this.nonMappedInnerNodesT1 = new ArrayList<CompositeStatementObject>();
+		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
+		processCompositeStatements(container1.getLeaves(), container2.getLeaves(), container1.getInnerNodes(), container2.getInnerNodes());
+		if(container1.getJavadoc() != null && container2.getJavadoc() != null) {
+			UMLJavadocDiff diff = new UMLJavadocDiff(container1.getJavadoc(), container2.getJavadoc());
+			this.javadocDiff = Optional.of(diff);
+		}
+		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this);
 		checkUnmatchedStatementsBeingCommented();
 	}
 

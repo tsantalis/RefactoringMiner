@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.refactoringminer.util.PrefixSuffixUtils;
@@ -14,6 +15,7 @@ import gr.uom.java.xmi.UMLClassMatcher.MatchResult;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
+import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.RenamePattern;
@@ -27,6 +29,7 @@ public abstract class UMLAbstractClass {
 	protected List<UMLOperation> operations;
 	protected List<UMLAttribute> attributes;
 	protected List<UMLComment> comments;
+	protected Optional<ModuleContainer> container;
 	private List<UMLAnonymousClass> anonymousClassList;
 	private Map<List<String>, Integer> operationIdentifierSignatureMap;
 	private Map<String, VariableDeclaration> fieldDeclarationMap;
@@ -47,6 +50,7 @@ public abstract class UMLAbstractClass {
         this.operations = new ArrayList<UMLOperation>();
         this.attributes = new ArrayList<UMLAttribute>();
         this.comments = new ArrayList<UMLComment>();
+        this.container = Optional.empty();
         this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
         this.initializers = new ArrayList<UMLInitializer>();
         this.operationIdentifierSignatureMap = new LinkedHashMap<>();
@@ -104,6 +108,10 @@ public abstract class UMLAbstractClass {
 		}
 	}
 
+	public void setContainer(List<AbstractStatement> statements) {
+		this.container = Optional.of(new ModuleContainer(statements, locationInfo, name));
+	}
+
 	public void addAttribute(UMLAttribute attribute) {
 		this.attributes.add(attribute);
 	}
@@ -118,6 +126,10 @@ public abstract class UMLAbstractClass {
 
 	public List<UMLComment> getComments() {
 		return comments;
+	}
+
+	public Optional<ModuleContainer> getContainer() {
+		return container;
 	}
 
 	public void addInitializer(UMLInitializer initializer) {

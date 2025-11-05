@@ -67,36 +67,6 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	}
 
 	@Override
-	public List<VariableDeclaration> getParameterDeclarationList() {
-		return Collections.emptyList();
-	}
-
-	@Override
-	public List<UMLType> getParameterTypeList() {
-		return Collections.emptyList();
-	}
-
-	@Override
-	public List<String> getParameterNameList() {
-		return Collections.emptyList();
-	}
-
-	@Override
-	public List<UMLParameter> getParametersWithoutReturnType() {
-		return Collections.emptyList();
-	}
-
-	@Override
-	public int getNumberOfNonVarargsParameters() {
-		return 0;
-	}
-
-	@Override
-	public boolean hasVarargsParameter() {
-		return false;
-	}
-
-	@Override
 	public OperationBody getBody() {
 		return body;
 	}

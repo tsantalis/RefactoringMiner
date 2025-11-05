@@ -169,6 +169,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	public void process() throws RefactoringMinerTimedOutException {
+		if(originalClass.getContainer().isPresent() && nextClass.getContainer().isPresent()) {
+			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(originalClass.getContainer().get(), nextClass.getContainer().get(), this);
+			addOperationBodyMapper(mapper);
+		}
 		processInitializers();
 		processModifiers();
 		processTypeParameters();

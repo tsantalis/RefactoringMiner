@@ -8,7 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.Block;
@@ -28,10 +27,8 @@ import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.LocationInfoProvider;
-import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLComment;
-import gr.uom.java.xmi.UMLJavadoc;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -385,105 +382,5 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			}
 		}
 		return variableDeclarationMap;
-	}
-
-	@Override
-	public UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration) {
-		for(UMLAnonymousClass anonymousClass : this.getAnonymousClassList()) {
-			if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration.getLocationInfo())) {
-				return anonymousClass;
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public boolean hasTestAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasParameterizedTestAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasSetUpAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasTearDownAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasDeprecatedAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean isDeclaredInAnonymousClass() {
-		return false;
-	}
-
-	@Override
-	public Optional<UMLAnonymousClass> getAnonymousClassContainer() {
-		return Optional.empty();
-	}
-
-	@Override
-	public boolean isGetter() {
-		return false;
-	}
-
-	@Override
-	public boolean isSetter() {
-		return false;
-	}
-
-	@Override
-	public boolean isConstructor() {
-		return false;
-	}
-
-	@Override
-	public AbstractCall isDelegate() {
-		return null;
-	}
-
-	@Override
-	public AbstractCall singleStatementCallingMethod() {
-		return null;
-	}
-
-	@Override
-	public StatementObject singleReturnStatement() {
-		return null;
-	}
-
-	@Override
-	public boolean isRecursive() {
-		return false;
-	}
-
-	@Override
-	public boolean isMain() {
-		return false;
-	}
-
-	@Override
-	public boolean isStatic() {
-		return false;
-	}
-
-	@Override
-	public UMLJavadoc getJavadoc() {
-		return null;
-	}
-
-	@Override
-	public List<UMLAnnotation> getAnnotations() {
-		return Collections.emptyList();
 	}
 }

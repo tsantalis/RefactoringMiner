@@ -107,31 +107,74 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	List<AbstractCall> getAllCreations();
 	List<String> getAllVariables();
 	List<UMLComment> getComments();
-	UMLJavadoc getJavadoc();
-	List<UMLAnnotation> getAnnotations();
+	default UMLJavadoc getJavadoc() {
+		return null;
+	}
+	default List<UMLAnnotation> getAnnotations() {
+		return Collections.emptyList();
+	}
 	String getName();
 	String getElementType();
 	String getClassName();
 	String getNonQualifiedClassName();
 	String toQualifiedString();
 	Map<String, Set<VariableDeclaration>> variableDeclarationMap();
-	UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration);
-	boolean hasTestAnnotation();
-	boolean hasParameterizedTestAnnotation();
-	boolean hasSetUpAnnotation();
-	boolean hasTearDownAnnotation();
-	boolean hasDeprecatedAnnotation();
-	boolean isDeclaredInAnonymousClass();
-	Optional<UMLAnonymousClass> getAnonymousClassContainer();
-	boolean isGetter();
-	boolean isSetter();
-	boolean isConstructor();
-	AbstractCall isDelegate();
-	AbstractCall singleStatementCallingMethod();
-	StatementObject singleReturnStatement();
-	boolean isRecursive();
-	boolean isMain();
-	boolean isStatic();
+	default UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration) {
+		for(UMLAnonymousClass anonymousClass : this.getAnonymousClassList()) {
+			if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration.getLocationInfo())) {
+				return anonymousClass;
+			}
+		}
+		return null;
+	}
+	default boolean hasTestAnnotation() {
+		return false;
+	}
+	default boolean hasParameterizedTestAnnotation() {
+		return false;
+	}
+	default boolean hasSetUpAnnotation() {
+		return false;
+	}
+	default boolean hasTearDownAnnotation() {
+		return false;
+	}
+	default boolean hasDeprecatedAnnotation() {
+		return false;
+	}
+	default boolean isDeclaredInAnonymousClass() {
+		return false;
+	}
+	default Optional<UMLAnonymousClass> getAnonymousClassContainer() {
+		return Optional.empty();
+	}
+	default boolean isGetter() {
+		return false;
+	}
+	default boolean isSetter() {
+		return false;
+	}
+	default boolean isConstructor() {
+		return false;
+	}
+	default AbstractCall isDelegate() {
+		return null;
+	}
+	default AbstractCall singleStatementCallingMethod() {
+		return null;
+	}
+	default StatementObject singleReturnStatement() {
+		return null;
+	}
+	default boolean isRecursive() {
+		return false;
+	}
+	default boolean isMain() {
+		return false;
+	}
+	default boolean isStatic() {
+		return false;
+	}
 
 	default boolean hasEmptyBody() {
 		OperationBody operationBody = getBody();

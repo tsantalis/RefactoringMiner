@@ -28,6 +28,17 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	private String name;
 	private String className;
 
+	public ModuleContainer(LocationInfo locationInfo, String name) {
+		this.statementList = new ArrayList<>();
+		this.locationInfo = locationInfo;
+		this.name = name;
+		this.className = name;
+	}
+
+	public void addStatements(List<AbstractStatement> statements) {
+		statementList.addAll(statements);
+	}
+
 	public ModuleContainer(List<AbstractStatement> statements, LocationInfo locationInfo, String name) {
 		this.statementList = statements;
 		this.locationInfo = locationInfo;

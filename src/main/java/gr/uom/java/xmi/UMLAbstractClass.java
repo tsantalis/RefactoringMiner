@@ -112,6 +112,10 @@ public abstract class UMLAbstractClass {
 		this.container = Optional.of(new ModuleContainer(statements, locationInfo, name));
 	}
 
+	public void setContainer(ModuleContainer container) {
+		this.container = Optional.of(container);
+	}
+
 	public void addAttribute(UMLAttribute attribute) {
 		this.attributes.add(attribute);
 	}

@@ -2044,6 +2044,23 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
+	protected static boolean multiAssignmentWithReorderedVariables(String string1, String string2) {
+		if(string1.contains(JAVA.ASSIGNMENT) && string2.contains(JAVA.ASSIGNMENT)) {
+			String assignment1 = string1.substring(string1.indexOf(JAVA.ASSIGNMENT)+1, string1.length());
+			String assignment2 = string2.substring(string2.indexOf(JAVA.ASSIGNMENT)+1, string2.length());
+			if(assignment1.equals(assignment2)) {
+				String assignedVariables1 = string1.substring(0, string1.indexOf(JAVA.ASSIGNMENT));
+				String assignedVariables2 = string2.substring(0, string2.indexOf(JAVA.ASSIGNMENT));
+				List<String> variables1 = Arrays.asList(SPLIT_COMMA_PATTERN.split(assignedVariables1));
+				List<String> variables2 = Arrays.asList(SPLIT_COMMA_PATTERN.split(assignedVariables2));
+				if(variables1.size() > 1 && variables1.containsAll(variables2) && variables2.containsAll(variables1)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	protected static boolean classInstanceCreationWithEverythingReplaced(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap) {
 		String string1 = statement1.getString();

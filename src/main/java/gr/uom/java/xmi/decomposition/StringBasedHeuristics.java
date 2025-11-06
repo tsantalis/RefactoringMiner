@@ -982,7 +982,8 @@ public class StringBasedHeuristics {
 							counter++;
 						}
 						SplitVariableReplacement split = new SplitVariableReplacement(matchingReplacement.getBefore(), splitVariables);
-						if(!split.getSplitVariables().contains(split.getBefore()) && concat.toString().equals(diff2)) {
+						boolean skip = splitVariables.size() == 1 && splitVariables.contains(diff2);
+						if(!split.getSplitVariables().contains(split.getBefore()) && concat.toString().equals(diff2) && !skip) {
 							replacementInfo.getReplacements().remove(matchingReplacement);
 							replacementInfo.getReplacements().add(split);
 							return true;
@@ -1057,7 +1058,8 @@ public class StringBasedHeuristics {
 								counter++;
 							}
 							SplitVariableReplacement split = new SplitVariableReplacement(matchingReplacement.getBefore(), splitVariables);
-							if(!split.getSplitVariables().contains(split.getBefore()) && concat.toString().equals(diff2)) {
+							boolean skip = splitVariables.size() == 1 && splitVariables.contains(diff2);
+							if(!split.getSplitVariables().contains(split.getBefore()) && concat.toString().equals(diff2) && !skip) {
 								replacementInfo.getReplacements().remove(matchingReplacement);
 								replacementInfo.getReplacements().add(split);
 								return true;
@@ -1143,7 +1145,8 @@ public class StringBasedHeuristics {
 							counter++;
 						}
 						SplitVariableReplacement split = new SplitVariableReplacement(matchingReplacement.getBefore(), splitVariables);
-						if(!split.getSplitVariables().contains(split.getBefore()) && concat.toString().equals(diff2)) {
+						boolean skip = splitVariables.size() == 1 && splitVariables.contains(diff2);
+						if(!split.getSplitVariables().contains(split.getBefore()) && concat.toString().equals(diff2) && !skip) {
 							replacementInfo.getReplacements().remove(matchingReplacement);
 							replacementInfo.getReplacements().add(split);
 							return true;

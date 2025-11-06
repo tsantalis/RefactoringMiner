@@ -185,8 +185,8 @@ public abstract class UMLAbstractClassDiff {
 
 	public void addOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
 		this.operationBodyMapperList.add(operationBodyMapper);
-		if(operationBodyMapper.getOperation1() != null && operationBodyMapper.getOperation1().getNestedOperations().size() > 0 &&
-				operationBodyMapper.getOperation2() != null && operationBodyMapper.getOperation2().getNestedOperations().size() > 0) {
+		if(operationBodyMapper.getOperation1() != null && operationBodyMapper.getOperation2() != null &&
+				(operationBodyMapper.getOperation1().getNestedOperations().size() > 0 || operationBodyMapper.getOperation2().getNestedOperations().size() > 0)) {
 			processNestedOperations(operationBodyMapper.getOperation1(), operationBodyMapper.getOperation2());
 		}
 	}

@@ -4003,6 +4003,61 @@
   "firstEndPos" : 5522,
   "secondEndPos" : 3416
 }, {
+  "firstType" : "IfStatement",
+  "secondType" : "IfStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5228,
+  "secondPos" : 6870,
+  "firstEndPos" : 5516,
+  "secondEndPos" : 7072
+}, {
+  "firstType" : "PrefixExpression",
+  "secondType" : "PrefixExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 5231,
+  "secondPos" : 6873,
+  "firstEndPos" : 5262,
+  "secondEndPos" : 6892
+}, {
+  "firstType" : "PREFIX_EXPRESSION_OPERATOR",
+  "secondType" : "PREFIX_EXPRESSION_OPERATOR",
+  "firstLabel" : "!",
+  "secondLabel" : "!",
+  "firstParentType" : "PrefixExpression",
+  "secondParentType" : "PrefixExpression",
+  "firstPos" : 5231,
+  "secondPos" : 6873,
+  "firstEndPos" : 5232,
+  "secondEndPos" : 6874
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "disableSaveOnResponseCommitted",
+  "secondLabel" : "disableOnCommitted",
+  "firstParentType" : "PrefixExpression",
+  "secondParentType" : "PrefixExpression",
+  "firstPos" : 5232,
+  "secondPos" : 6874,
+  "firstEndPos" : 5262,
+  "secondEndPos" : 6892
+}, {
+  "firstType" : "Block",
+  "secondType" : "Block",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 5264,
+  "secondPos" : 6894,
+  "firstEndPos" : 5369,
+  "secondEndPos" : 6982
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4145,6 +4200,149 @@
   "secondPos" : 3405,
   "firstEndPos" : 5358,
   "secondEndPos" : 3409
+}, {
+  "firstType" : "IfStatement",
+  "secondType" : "IfStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 5375,
+  "secondPos" : 6988,
+  "firstEndPos" : 5516,
+  "secondEndPos" : 7072
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "MethodInvocation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 5378,
+  "secondPos" : 6991,
+  "firstEndPos" : 5401,
+  "secondEndPos" : 7014
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "METHOD_INVOCATION_RECEIVER",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 5378,
+  "secondPos" : 6991,
+  "firstEndPos" : 5384,
+  "secondEndPos" : 6997
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "logger",
+  "secondLabel" : "logger",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 5378,
+  "secondPos" : 6991,
+  "firstEndPos" : 5384,
+  "secondEndPos" : 6997
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "isDebugEnabled",
+  "secondLabel" : "isDebugEnabled",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 5385,
+  "secondPos" : 6998,
+  "firstEndPos" : 5399,
+  "secondEndPos" : 7012
+}, {
+  "firstType" : "Block",
+  "secondType" : "Block",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 5402,
+  "secondPos" : 7015,
+  "firstEndPos" : 5516,
+  "secondEndPos" : 7072
+}, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "ExpressionStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5416,
+  "secondPos" : 7029,
+  "firstEndPos" : 5506,
+  "secondEndPos" : 7062
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "MethodInvocation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "ExpressionStatement",
+  "firstPos" : 5416,
+  "secondPos" : 7029,
+  "firstEndPos" : 5505,
+  "secondEndPos" : 7061
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "METHOD_INVOCATION_RECEIVER",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 5416,
+  "secondPos" : 7029,
+  "firstEndPos" : 5422,
+  "secondEndPos" : 7035
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "logger",
+  "secondLabel" : "logger",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 5416,
+  "secondPos" : 7029,
+  "firstEndPos" : 5422,
+  "secondEndPos" : 7035
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "debug",
+  "secondLabel" : "debug",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 5423,
+  "secondPos" : 7036,
+  "firstEndPos" : 5428,
+  "secondEndPos" : 7041
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 5429,
+  "secondPos" : 7042,
+  "firstEndPos" : 5504,
+  "secondEndPos" : 7060
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"Skip saving SecurityContext since saving on response commited is disabled\"",
+  "secondLabel" : "\"Skip invoking on\"",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 5429,
+  "secondPos" : 7042,
+  "firstEndPos" : 5504,
+  "secondEndPos" : 7060
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

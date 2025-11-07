@@ -509,6 +509,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					assertThatThrownBy2++;
 				}
 			}
+			if(operation1.getNestedOperations().size() == 0 && operation2.getNestedOperations().size() > 0) {
+				for(UMLOperation nested : operation2.getNestedOperations()) {
+					if(nested.getBody() != null) {
+						innerNodes2.addAll(nested.getBody().getCompositeStatement().getInnerNodes());
+						leaves2.addAll(nested.getBody().getCompositeStatement().getLeaves());
+					}
+				}
+			}
 			boolean anonymousCollapse = Math.abs(totalNodes1 - totalNodes2) > Math.min(totalNodes1, totalNodes2);
 			if(!operation1.isDeclaredInAnonymousClass() && !operation2.isDeclaredInAnonymousClass() && anonymousCollapse) {
 				if((anonymous1.size() == 1 && anonymous2.size() == 0) ||

@@ -184,6 +184,10 @@ public class MoveCodeRefactoring implements Refactoring {
 		else {
 			sb.append("from ");
 			sb.append(sourceContainer.toQualifiedString());
+			if(moveType.equals(Type.MOVE_BETWEEN_FILES)) {
+				sb.append(" in class ");
+				sb.append(sourceContainer.getClassName());
+			}
 			sb.append(" to ");
 			sb.append(targetContainer.toQualifiedString());
 			sb.append(" in class ");

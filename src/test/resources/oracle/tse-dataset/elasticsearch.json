@@ -644,6 +644,16 @@
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\treducedBuckets : List<Bucket> to reducedBuckets : List<InternalIpPrefix.Bucket> in method public get() : InternalAggregation from class org.elasticsearch.search.aggregations.bucket.prefix.InternalIpPrefix.getLeaderReducer.new AggregatorReducer",
           "validation": true
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom protected getLeaderReducer(reduceContext AggregationReduceContext, size int) : AggregatorReducer to public InternalDateHistogram(in StreamInput) in class org.elasticsearch.search.aggregations.bucket.histogram.InternalDateHistogram",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom protected getLeaderReducer(reduceContext AggregationReduceContext, size int) : AggregatorReducer to public InternalHistogram(in StreamInput) in class org.elasticsearch.search.aggregations.bucket.histogram.InternalHistogram",
+          "validation": true
         }
       ]
     },

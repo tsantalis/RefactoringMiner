@@ -498,6 +498,11 @@
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpackage afterAll() : void renamed to package afterEach() : void in class org.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinHttpClientSenderTests",
           "validation": true
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom package beforeAll() : void to package beforeEach() : void in class org.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinHttpClientSenderTests",
+          "validation": true
         }
       ]
     },

@@ -1029,6 +1029,11 @@
           "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
           "description": "Replace Attribute With Variable\t_maxSize : int to maxSize : int in method public emit(field HttpField) : void from class org.eclipse.jetty.http2.hpack.MetaDataBuilder",
           "validation": true
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom public Parser(byteBufferPool ByteBufferPool, listener Listener, maxDynamicTableSize int, maxHeaderSize int, rateControl RateControl) to public init(listener Listener) : void in class org.eclipse.jetty.http2.parser.Parser",
+          "validation": true
         }
       ]
     },

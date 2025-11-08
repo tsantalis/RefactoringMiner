@@ -221,7 +221,13 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom private runReadWrites(test Method, readIterations int, writeIterations int) : void to private runReadWrites(readIterations int, writeIterations int) : void in class com.intellij.openapi.application.impl.ApplicationImplTest",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/JetBrains/intellij-community.git",

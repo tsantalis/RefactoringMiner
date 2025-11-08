@@ -114,19 +114,19 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
                 UMLOperationBodyMapper bodyMapper = extractOperationRefactoring.getBodyMapper();
                 new BodyMapperMatcher(optimizationData, bodyMapper, true).match(srcTree,dstTree,mappingStore);
-				if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
-                	processArgumentMappings(srcTree, dstTree, extractOperationRefactoring.getArgumentMappings());
+                if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
+                    processArgumentMappings(srcTree, dstTree, extractOperationRefactoring.getArgumentMappings());
             } else if (refactoring instanceof InlineOperationRefactoring) {
                 InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
                 UMLOperationBodyMapper bodyMapper = inlineOperationRefactoring.getBodyMapper();
                 new BodyMapperMatcher(optimizationData, bodyMapper, false).match(srcTree,dstTree,mappingStore);
-				if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
-                	processArgumentMappings(srcTree, dstTree, inlineOperationRefactoring.getArgumentMappings());
+                if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
+                    processArgumentMappings(srcTree, dstTree, inlineOperationRefactoring.getArgumentMappings());
             } else if (refactoring instanceof MoveCodeRefactoring) {
                 MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) refactoring;
                 if (!moveCodeRefactoring.getMoveType().equals(Type.MOVE_BETWEEN_FILES)) {
-	                UMLOperationBodyMapper bodyMapper = moveCodeRefactoring.getBodyMapper();
-	                new BodyMapperMatcher(optimizationData, bodyMapper, false).match(srcTree,dstTree,mappingStore);
+                    UMLOperationBodyMapper bodyMapper = moveCodeRefactoring.getBodyMapper();
+                    new BodyMapperMatcher(optimizationData, bodyMapper, false).match(srcTree,dstTree,mappingStore);
                 }
             } else if (refactoring instanceof ReplaceAnonymousWithLambdaRefactoring) {
             	ReplaceAnonymousWithLambdaRefactoring replaceAnonymousWithLambdaRefactoring = (ReplaceAnonymousWithLambdaRefactoring) refactoring;

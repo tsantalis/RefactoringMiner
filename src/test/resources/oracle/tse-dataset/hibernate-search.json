@@ -707,7 +707,13 @@
           "validation": false
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom package stopWhileOutboxEventsIsBeingProcessed() : void to package stopWhileOutboxEventsIsBeingProcessed() : void in class org.hibernate.search.integrationtest.mapper.orm.outboxpolling.automaticindexing.OutboxPollingAutomaticIndexingLifecycleIT",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/hibernate/hibernate-search.git",

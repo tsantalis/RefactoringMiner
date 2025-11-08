@@ -6869,13 +6869,13 @@ public class UMLModelDiff {
 								for(AbstractCodeMapping mapping : new LinkedHashSet<>(moveCodeMapper.getMappings())) {
 									for(Refactoring r : refactorings) {
 										if(r instanceof MoveOperationRefactoring move) {
-											if(move.getBodyMapper().alreadyMatched2(mapping.getFragment2())) {
+											if(move.getBodyMapper().alreadyMatched1(mapping.getFragment1()) || move.getBodyMapper().alreadyMatched2(mapping.getFragment2())) {
 												moveCodeMapper.removeMapping(mapping);
 												break;
 											}
 										}
 										else if(r instanceof ExtractOperationRefactoring move) {
-											if(move.getBodyMapper().alreadyMatched2(mapping.getFragment2())) {
+											if(move.getBodyMapper().alreadyMatched1(mapping.getFragment1()) || move.getBodyMapper().alreadyMatched2(mapping.getFragment2())) {
 												moveCodeMapper.removeMapping(mapping);
 												break;
 											}
@@ -6926,6 +6926,22 @@ public class UMLModelDiff {
 		for(UMLOperationBodyMapper mapperT1 : mappersWithUnmatchedStatementsInSetUpT1) {
 			for(UMLOperationBodyMapper mapperT2 : mappersWithUnmatchedStatementsInSetUpT2) {
 				UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapperT1, mapperT2, mapperT1.getClassDiff());
+				for(AbstractCodeMapping mapping : new LinkedHashSet<>(moveCodeMapper.getMappings())) {
+					for(Refactoring r : refactorings) {
+						if(r instanceof MoveOperationRefactoring move) {
+							if(move.getBodyMapper().alreadyMatched1(mapping.getFragment1()) || move.getBodyMapper().alreadyMatched2(mapping.getFragment2())) {
+								moveCodeMapper.removeMapping(mapping);
+								break;
+							}
+						}
+						else if(r instanceof ExtractOperationRefactoring move) {
+							if(move.getBodyMapper().alreadyMatched1(mapping.getFragment1()) || move.getBodyMapper().alreadyMatched2(mapping.getFragment2())) {
+								moveCodeMapper.removeMapping(mapping);
+								break;
+							}
+						}
+					}
+				}
 				if(moveCodeMapper.getMappings().size() > 0) {
 					MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_FILES);
 					if(!moveCodeMappers.contains(moveCodeMapper))
@@ -6937,6 +6953,22 @@ public class UMLModelDiff {
 		for(UMLOperationBodyMapper mapperT1 : mappersWithUnmatchedStatementsInTearDownT1) {
 			for(UMLOperationBodyMapper mapperT2 : mappersWithUnmatchedStatementsInTearDownT2) {
 				UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapperT1, mapperT2, mapperT1.getClassDiff());
+				for(AbstractCodeMapping mapping : new LinkedHashSet<>(moveCodeMapper.getMappings())) {
+					for(Refactoring r : refactorings) {
+						if(r instanceof MoveOperationRefactoring move) {
+							if(move.getBodyMapper().alreadyMatched1(mapping.getFragment1()) || move.getBodyMapper().alreadyMatched2(mapping.getFragment2())) {
+								moveCodeMapper.removeMapping(mapping);
+								break;
+							}
+						}
+						else if(r instanceof ExtractOperationRefactoring move) {
+							if(move.getBodyMapper().alreadyMatched1(mapping.getFragment1()) || move.getBodyMapper().alreadyMatched2(mapping.getFragment2())) {
+								moveCodeMapper.removeMapping(mapping);
+								break;
+							}
+						}
+					}
+				}
 				if(moveCodeMapper.getMappings().size() > 0) {
 					MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_FILES);
 					if(!moveCodeMappers.contains(moveCodeMapper))

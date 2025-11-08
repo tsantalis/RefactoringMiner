@@ -376,11 +376,11 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **November 1, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 8, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12517  | 13  | 219  | 0.999  | 0.983|
+|**Total**|12528  | 13  | 219  | 0.999  | 0.983|
 |Extract Method|1016  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
@@ -476,7 +476,7 @@ As of **November 1, 2025** the precision and recall of RefactoringMiner on this 
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 5  |  0  |  0  | 1.000  | 1.000|
-|Move Code|13  |  0  |  0  | 1.000  | 1.000|
+|Move Code|24  |  0  |  0  | 1.000  | 1.000|
 |Assert Throws|14  |  0  |  0  | 1.000  | 1.000|
 |Try With Resources| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Generic With Diamond|77  |  0  |  0  | 1.000  | 1.000|
@@ -503,11 +503,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Split Method`
 * `Replace Anonymous With Class`
 
-As of **November 2, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 8, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3417  | 50  | 114  | 0.986  | 0.968|
+|**Total**|3427  | 50  | 114  | 0.986  | 0.968|
 |Extract Method|371  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|232  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -532,7 +532,7 @@ As of **November 2, 2025** the precision and recall of RefactoringMiner on this 
 |Extract Variable|289  |  1  | 11  | 0.997  | 0.963|
 |Extract Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|127  |  0  | 12  | 1.000  | 0.914|
-|Rename Variable|305  |  6  | 10  | 0.981  | 0.968|
+|Rename Variable|303  |  6  | 10  | 0.981  | 0.968|
 |Rename Attribute|107  |  4  |  9  | 0.964  | 0.922|
 |Replace Variable With Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|30  |  0  |  0  | 1.000  | 1.000|
@@ -543,6 +543,7 @@ As of **November 2, 2025** the precision and recall of RefactoringMiner on this 
 |Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 8  |  0  |  0  | 1.000  | 1.000|
+|Move Code|12  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 Since release 3.0.0, RefactoringMiner requires **Java 17** or newer and **Gradle 7.4** or newer.

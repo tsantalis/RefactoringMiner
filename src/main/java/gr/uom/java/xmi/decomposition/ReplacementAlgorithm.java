@@ -26,6 +26,7 @@ import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
@@ -5876,7 +5877,44 @@ public class ReplacementAlgorithm {
 			else if(invocations1.size() == 0 && invocations2.size() > 0) {
 				nonMappedElementsT1 = nonMappedElementsT1 - ignoredNonMappedElements(invocations2, mapper.getNonMappedLeavesT1(), mapper.getNonMappedInnerNodesT1());
 			}
-			if((mappings >= nonMappedElementsT1 && mappings >= nonMappedElementsT2) ||
+			AbstractCodeFragment parentStatement1 = null;
+			if(operationBodyMapper.getContainer1().getBody() != null) {
+				for(AbstractCodeFragment leaf1 : operationBodyMapper.getContainer1().getBody().getCompositeStatement().getLeaves()) {
+					if(leaf1.getLocationInfo().subsumes(lambda1.getLocationInfo())) {
+						parentStatement1 = leaf1;
+						break;
+					}
+				}
+			}
+			AbstractCodeFragment parentStatement2 = null;
+			if(operationBodyMapper.getContainer2().getBody() != null) {
+				for(AbstractCodeFragment leaf2 : operationBodyMapper.getContainer2().getBody().getCompositeStatement().getLeaves()) {
+					if(leaf2.getLocationInfo().subsumes(lambda2.getLocationInfo())) {
+						parentStatement2 = leaf2;
+						break;
+					}
+				}
+			}
+			UMLComment previousComment1 = null;
+			if(parentStatement1 != null) {
+				for(UMLComment comment : operationBodyMapper.getContainer1().getComments()) {
+					if(parentStatement1.getLocationInfo().nextLine(comment.getLocationInfo())) {
+						previousComment1 = comment;
+						break;
+					}
+				}
+			}
+			UMLComment previousComment2 = null;
+			if(parentStatement2 != null) {
+				for(UMLComment comment : operationBodyMapper.getContainer2().getComments()) {
+					if(parentStatement2.getLocationInfo().nextLine(comment.getLocationInfo())) {
+						previousComment2 = comment;
+						break;
+					}
+				}
+			}
+			boolean identicalPreviousComment = previousComment1 != null && previousComment2 != null && previousComment1.getText().equals(previousComment2.getText());
+			if((mappings >= nonMappedElementsT1 && mappings >= nonMappedElementsT2) || identicalPreviousComment ||
 					(nonMappedElementsT1 == 0 && !methodReference1) || (nonMappedElementsT2 == 0 && !methodReference2) ||
 					(classDiff != null && (classDiff.isPartOfMethodExtracted(lambda1, lambda2) || classDiff.isPartOfMethodInlined(lambda1, lambda2) || isPartOfLambdaMovedToParentMapper(mapper)))) {
 				operationBodyMapper.addAllMappings(mapper.getMappings());

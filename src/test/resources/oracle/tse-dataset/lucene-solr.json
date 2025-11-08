@@ -275,6 +275,16 @@
           "type": "MOVE_OPERATION",
           "description": "Move Method\tpackage escapeDash(re String) : String from class org.apache.lucene.analysis.hunspell.Dictionary to private escapeDash(re String) : String from class org.apache.lucene.analysis.hunspell.AffixCondition",
           "validation": true
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom private parseAffix(affixes TreeMap<String,List<Integer>>, secondStageFlags Set<Character>, header String, reader LineNumberReader, isSuffix boolean, seenPatterns Map<String,Integer>, seenStrips Map<String,Integer>, flags FlagEnumerator) : void in class org.apache.lucene.analysis.hunspell.Dictionary to public compile(kind AffixKind, strip String, condition String, line String) : AffixCondition in class org.apache.lucene.analysis.hunspell.AffixCondition",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom private parseAffix(affixes TreeMap<String,List<Integer>>, secondStageFlags Set<Character>, header String, reader LineNumberReader, isSuffix boolean, seenPatterns Map<String,Integer>, seenStrips Map<String,Integer>, flags FlagEnumerator) : void in class org.apache.lucene.analysis.hunspell.Dictionary to private skipCharPattern(condition String, pos int) : int in class org.apache.lucene.analysis.hunspell.AffixCondition",
+          "validation": true
         }
       ]
     },
@@ -501,12 +511,12 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tkey : null to prefixLength : null in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tids : null to prefixId : null in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
-          "validation": true
+          "validation": false
         }
       ]
     },

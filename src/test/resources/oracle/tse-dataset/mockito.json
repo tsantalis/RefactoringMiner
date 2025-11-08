@@ -300,6 +300,11 @@
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\targuments : Object[] in method public forEachMatcherAndArgument(action ArgumentMatcherAction) : boolean from class org.mockito.internal.invocation.MatcherApplicationStrategy",
           "validation": true
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom private MatcherApplicationStrategy(invocation Invocation, matchers List<ArgumentMatcher<?>>, matchingType MatcherApplicationType) to public forEachMatcherAndArgument(action ArgumentMatcherAction) : boolean in class org.mockito.internal.invocation.MatcherApplicationStrategy",
+          "validation": true
         }
       ]
     },

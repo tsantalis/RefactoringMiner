@@ -827,6 +827,11 @@
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tcodePoint : int to s : String in method public canonicalize(s String) : String from class okhttp3.UrlComponentEncodingTester.Component",
           "validation": false
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom public test(component Component) : UrlComponentEncodingTester to private testUri(codePoint int, codePointString String, encoding Encoding, component Component) : void in class okhttp3.UrlComponentEncodingTester",
+          "validation": true
         }
       ]
     },

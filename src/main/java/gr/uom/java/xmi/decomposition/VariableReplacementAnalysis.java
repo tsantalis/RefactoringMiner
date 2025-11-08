@@ -2352,6 +2352,18 @@ public class VariableReplacementAnalysis {
 			}
 			return replacementBeforeNotFoundInMethodSignature && replacementAfterNotFoundInMethodSignature;
 		}
+		for(UMLOperationBodyMapper lambdaMapper : mapping.getLambdaMappers()) {
+			if(lambdaMapper.getOperationSignatureDiff().isPresent()) {
+				UMLOperationDiff signatureDiff = lambdaMapper.getOperationSignatureDiff().get();
+				List<String> parameterNameList1 = signatureDiff.getRemovedOperation().getParameterNameList();
+				int index1 = parameterNameList1.indexOf(replacement.getBefore());
+				List<String> parameterNameList2 = signatureDiff.getAddedOperation().getParameterNameList();
+				int index2 = parameterNameList2.indexOf(replacement.getAfter());
+				if(index1 != -1 && index2 != -1 && index1 != index2 && parameterNameList1.size() == parameterNameList2.size()) {
+					return false;
+				}
+			}
+		}
 		return true;
 	}
 

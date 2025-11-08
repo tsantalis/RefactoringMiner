@@ -301,7 +301,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 											}
 										}
 										if(moveCodeMapper.getMappings().size() > invalidMappings) {
-											MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);
+											MoveCodeRefactoring ref = new MoveCodeRefactoring(lambdaMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);
 											ref.setLambdaMapper(lambdaMapper);
 											if(!moveCodeMappers.contains(moveCodeMapper))
 												moveCodeMappers.add(moveCodeMapper);
@@ -331,7 +331,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 											}
 										}
 										if(moveCodeMapper.getMappings().size() > invalidMappings) {
-											MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);
+											MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), lambdaMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);
 											ref.setLambdaMapper(lambdaMapper);
 											if(!moveCodeMappers.contains(moveCodeMapper))
 												moveCodeMappers.add(moveCodeMapper);

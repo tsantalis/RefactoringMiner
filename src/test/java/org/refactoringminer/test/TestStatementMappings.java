@@ -210,7 +210,8 @@ public class TestStatementMappings {
 			"https://github.com/k9mail/k-9.git, 9d44f0e06232661259681d64002dd53c7c43099d, k9mail-9d44f0e06232661259681d64002dd53c7c43099d.txt", // FIX 3472-3472==3541-3541
 			"https://github.com/tsantalis/RefactoringMiner.git, 447005f5c62ad6236aad9116e932f13c4d449546, miner-447005f5c62ad6236aad9116e932f13c4d449546.txt", // WithIntermediateDelegate
 			"https://github.com/hibernate/hibernate-orm.git, a1e8d7cb0dcb4bd58fc5d210031bd0fb28196034, hibernate-orm-a1e8d7cb0dcb4bd58fc5d210031bd0fb28196034.txt",
-			"https://github.com/junit-team/junit5.git, 5b4c642be9b1d09f9b9cebad7dd55fa40aae78bc, junit5-5b4c642be9b1d09f9b9cebad7dd55fa40aae78bc.txt"
+			"https://github.com/junit-team/junit5.git, 5b4c642be9b1d09f9b9cebad7dd55fa40aae78bc, junit5-5b4c642be9b1d09f9b9cebad7dd55fa40aae78bc.txt",
+			"https://github.com/spring-projects/spring-boot.git, 9d61882bb114fd03abd647e0e9d76c778e7f911f, spring-boot-9d61882bb114fd03abd647e0e9d76c778e7f911f.txt"
 	})
 	public void testNestedExtractMethodStatementMappings(String url, String commitId, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

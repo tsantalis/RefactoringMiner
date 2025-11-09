@@ -5702,6 +5702,22 @@ public class UMLModelDiff {
 		operationBodyMapper.getRefactorings();
 		deleteAddedOperation(addedOperation);
 		mapper.addChildMapper(operationBodyMapper);
+		UMLClass addedClass = getAddedClass(addedOperation.getClassName());
+		if(addedClass != null) {
+			//extracted in the class where the method is moved after refactoring
+			List<UMLOperation> potentiallyMovedOperations = new ArrayList<>();
+			UMLClassBaseDiff removedClassDiff = getUMLClassDiff(operationBodyMapper.getContainer1().getClassName());
+			if(removedClassDiff != null) {
+				potentiallyMovedOperations.addAll(removedClassDiff.getRemovedOperations());
+			}
+			else {
+				UMLClass removedClass = getRemovedClass(operationBodyMapper.getContainer1().getClassName());
+				if(removedClass != null) {
+					potentiallyMovedOperations.addAll(removedClass.getOperations());
+				}
+			}
+			checkForExtractedOperationsWithinMovedMethod(operationBodyMapper, potentiallyMovedOperations, addedClass.getOperations(), operationBodyMapper.getClassDiff());
+		}
 		if(!nested) {
 			MappingOptimizer optimizer = new MappingOptimizer(mapper.getClassDiff());
 			optimizer.optimizeDuplicateMappingsForExtract(mapper, refactorings);

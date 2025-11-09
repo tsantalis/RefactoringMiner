@@ -470,6 +470,33 @@ public class TestStatementMappingsJunit4 {
 	}
 
 	@Test
+	public void testNestedExtractMethodStatementMappings8() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommitWithGitHubAPI("https://github.com/spring-projects/spring-boot.git", "9d61882bb114fd03abd647e0e9d76c778e7f911f", new File(REPOS), (commitId, refactorings) -> {
+            List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+            for (Refactoring ref : refactorings) {
+                if(ref instanceof ExtractOperationRefactoring) {
+                    ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+                    UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+                    if(!bodyMapper.isNested()) {
+                        if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+                            parentMappers.add(bodyMapper.getParentMapper());
+                        }
+                    }
+                    mapperInfo(bodyMapper, actual);
+                }
+            }
+            for(UMLOperationBodyMapper parentMapper : parentMappers) {
+                mapperInfo(parentMapper, actual);
+            }
+        });
+		
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "spring-boot-9d61882bb114fd03abd647e0e9d76c778e7f911f.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testNestedExtractMethodStatementMappingsWithStreamsMigration() throws Exception {
 		final List<String> actual = new ArrayList<>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();

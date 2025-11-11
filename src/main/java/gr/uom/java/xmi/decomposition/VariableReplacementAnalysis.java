@@ -2253,6 +2253,22 @@ public class VariableReplacementAnalysis {
 					}
 				}
 			}
+			if(mapping.getReplacements().isEmpty() && mapping.getFragment1().getVariableDeclarations().size() > 0 && mapping.getFragment2().getVariableDeclarations().size() > 0) {
+				VariableDeclaration v1 = mapping.getFragment1().getVariableDeclarations().get(0);
+				VariableDeclaration v2 = mapping.getFragment2().getVariableDeclarations().get(0);
+				if(!v1.getVariableName().equals(v2.getVariableName())) {
+					VariableDeclarationReplacement r = new VariableDeclarationReplacement(v1, v2, operation1, operation2);
+					mapping.addReplacement(r.getVariableNameReplacement());
+					if(map.containsKey(r)) {
+						map.get(r).add(mapping);
+					}
+					else {
+						Set<AbstractCodeMapping> list = new LinkedHashSet<AbstractCodeMapping>();
+						list.add(mapping);
+						map.put(r, list);
+					}
+				}
+			}
 		}
 		if(operationDiff != null) {
 			List<UMLParameterDiff> allParameterDiffs = new ArrayList<UMLParameterDiff>();
@@ -2702,7 +2718,7 @@ public class VariableReplacementAnalysis {
 							containsMapping = comp1.contains(mapping.getFragment1()) && comp2.contains(mapping.getFragment2());
 						}
 						if(containsMapping && operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) == null) {
-							if(bothFragmentsUseVariable(v1, mapping)) {
+							if(bothFragmentsUseVariable(v1, mapping) && v1.getScope().subsumes(mapping.getFragment1().getLocationInfo())) {
 								VariableDeclaration otherV1 = mapping.getFragment1().getVariableDeclaration(v1.getVariableName());
 								if(otherV1 != null) {
 									VariableScope otherV1Scope = otherV1.getScope();
@@ -2747,7 +2763,7 @@ public class VariableReplacementAnalysis {
 									}
 								}
 							}
-							if(bothFragmentsUseVariable(v2, mapping)) {
+							if(bothFragmentsUseVariable(v2, mapping) && v2.getScope().subsumes(mapping.getFragment2().getLocationInfo())) {
 								VariableDeclaration otherV2 = mapping.getFragment2().getVariableDeclaration(v2.getVariableName());
 								if(otherV2 != null) {
 									VariableScope otherV2Scope = otherV2.getScope();

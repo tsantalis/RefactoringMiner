@@ -1861,7 +1861,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				Set<String> commonTokens = new LinkedHashSet<>();
 				for(String token1 : tokens1) {
 					for(String token2 : tokens2) {
-						if(token1.equals(token2)) {
+						if(token1.equals(token2) || token1.toLowerCase().equals(token2.toLowerCase())) {
 							commonTokens.add(token1);
 						}
 					}
@@ -1871,7 +1871,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					if(common.equals("get") || common.equals("set")) {
 						return false;
 					}
-					if(tokens1.length != tokens2.length) {
+					if(tokens1.length != tokens2.length && !replacementInvocation.getName().equals(replacement.getAfter())) {
 						return false;
 					}
 				}

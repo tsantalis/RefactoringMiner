@@ -2186,12 +2186,12 @@
         {
           "type": "MOVE_AND_RENAME_OPERATION",
           "description": "Move And Rename Method\tprivate createQueryLoader(sessionFactory SessionFactoryImplementor, typeContexts List<LoadingTypeContext<? extends E>>) : HibernateOrmQueryLoader<E,I> from class org.hibernate.search.mapper.orm.massindexing.impl.HibernateOrmMassIndexingContext.HibernateOrmMassIndexingLoadingStrategy to private conditionalExpressions(expectedTypes Set<? extends PojoLoadingTypeContext<? extends E>>, context HibernateOrmMassLoadingContext) : List<ConditionalExpression> from class org.hibernate.search.mapper.orm.loading.impl.AbstractHibernateOrmLoadingStrategy",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tHibernateOrmQueryLoader<E,I> to List<ConditionalExpression> in method private conditionalExpressions(expectedTypes Set<? extends PojoLoadingTypeContext<? extends E>>, context HibernateOrmMassLoadingContext) : List<ConditionalExpression> from class org.hibernate.search.mapper.orm.loading.impl.AbstractHibernateOrmLoadingStrategy",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_METHOD",
@@ -2221,12 +2221,12 @@
         {
           "type": "MOVE_AND_RENAME_OPERATION",
           "description": "Move And Rename Method\tpublic loadingStrategy(expectedType PojoRawTypeIdentifier<T>) : PojoMassIndexingLoadingStrategy<? super T,?> from class org.hibernate.search.mapper.pojo.massindexing.spi.PojoMassIndexingContext to public massLoadingStrategy() : PojoMassLoadingStrategy<? super E,?> from class org.hibernate.search.mapper.pojo.loading.spi.PojoLoadingTypeContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tPojoMassIndexingLoadingStrategy<? super T,?> to PojoMassLoadingStrategy<? super E,?> in method public massLoadingStrategy() : PojoMassLoadingStrategy<? super E,?> from class org.hibernate.search.mapper.pojo.loading.spi.PojoLoadingTypeContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "PULL_UP_OPERATION",

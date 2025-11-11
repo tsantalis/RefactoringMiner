@@ -466,10 +466,10 @@ public class TestRelatedStatementMappingsTest {
     @CsvSource({
             //Parameterize Test with Framework support
             ////Extract Common Logic from Multiple Test Methods
-            "https://github.com/aws/aws-sdk-java-v2.git, 4236a962dc0ca45149845317caa144a1ba768c5f, aws-sdk-java-v2-4236a962dc0ca45149845317caa144a1ba768c5f.txt", //FIXME: JUnit 4 parameterization not supported
-            "https://github.com/Atrox/haikunatorjava.git, 42679988419b68dd51f0a7b3c045536b3c5ef37b, haikunatorjava-42679988419b68dd51f0a7b3c045536b3c5ef37b.txt", //FIXME: MethodSource not supported
-            "https://github.com/opentripplanner/OpenTripPlanner.git, 1abed1191c2df7a747ef21cd3b669c14d54c3011, OpenTripPlanner-1abed1191c2df7a747ef21cd3b669c14d54c3011.txt", //FIXME: MethodSource not supported
-            "https://github.com/samtools/htsjdk.git, 1734eb99e5dcf16d92febead5e1b62323e0b6199, htsjdk-1734eb99e5dcf16d92febead5e1b62323e0b6199.txt", //FIXME: TestNG not supported
+            "https://github.com/aws/aws-sdk-java-v2.git, 4236a962dc0ca45149845317caa144a1ba768c5f, aws-sdk-java-v2-4236a962dc0ca45149845317caa144a1ba768c5f.txt", //FIXME: JUnit 4 parameterization not supported, Nikos: there is no refactoring, the parameters are for new test
+            "https://github.com/Atrox/haikunatorjava.git, 42679988419b68dd51f0a7b3c045536b3c5ef37b, haikunatorjava-42679988419b68dd51f0a7b3c045536b3c5ef37b.txt", //FIXME: MethodSource not supported, Nikos: regular expressions passed as parameters have been refactored
+            "https://github.com/opentripplanner/OpenTripPlanner.git, 1abed1191c2df7a747ef21cd3b669c14d54c3011, OpenTripPlanner-1abed1191c2df7a747ef21cd3b669c14d54c3011.txt", //FIXME: MethodSource not supported, Nikos: the test is using a switch-case to execute a different method based on the parameter value
+            "https://github.com/samtools/htsjdk.git, 1734eb99e5dcf16d92febead5e1b62323e0b6199, htsjdk-1734eb99e5dcf16d92febead5e1b62323e0b6199.txt", //FIXME: TestNG not supported, Nikos: 3 tests parameterized into testCheckTerminationForFiles + newly added tests
             "https://github.com/apache/hbase.git, 2306820df8b41d9af5227465ee2cf9e18b8f0b5c, hbase-2306820df8b41d9af5227465ee2cf9e18b8f0b5c.txt", //FIXME: JUnit 4 parameterization not supported
             ////Add Parameterized Test
             "https://github.com/hapifhir/hapi-fhir/pull/5764.git, ad470cff726d800cbf9baa49abd6a9a536781ec0, hapi-fhir-pull-5764-ad470cff726d800cbf9baa49abd6a9a536781ec0.txt", //TODO: Should test addition of parameterized test be supported?

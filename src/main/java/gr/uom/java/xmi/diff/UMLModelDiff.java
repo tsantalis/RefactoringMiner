@@ -1590,6 +1590,12 @@ public class UMLModelDiff {
 		for(UMLClass addedClass : addedClasses) {
 			addedClassNameMap.put(addedClass.getNonQualifiedName(), addedClass);
 		}
+		Map<String, UMLClass> renamedRemovedClassMap = new LinkedHashMap<>();
+		Map<String, UMLClass> renamedAddedClassMap = new LinkedHashMap<>();
+		for(UMLClassRenameDiff classRenameDiff : classRenameDiffList) {
+			renamedRemovedClassMap.put(classRenameDiff.getOriginalClass().getNonQualifiedName(), classRenameDiff.getOriginalClass());
+			renamedAddedClassMap.put(classRenameDiff.getNextClass().getNonQualifiedName(), classRenameDiff.getNextClass());
+		}
 		Set<String> removedClassNames = removedClassNameMap.keySet();
 		Set<String> addedClassNames = addedClassNameMap.keySet();
 		Map<Pair<String, String>, Integer> countMap = new LinkedHashMap<>();
@@ -1599,6 +1605,9 @@ public class UMLModelDiff {
 					for(Replacement r : mapping.getReplacements()) {
 						if(!r.getBefore().contains("{\n") && !r.getAfter().contains("{\n")) {
 							String matchingClassNameBefore = matches(r.getBefore(), removedClassNames, mapping.getFragment1());
+							if(matchingClassNameBefore == null) {
+								matchingClassNameBefore = matches(r.getBefore(), renamedRemovedClassMap.keySet(), mapping.getFragment1());
+							}
 							String matchingClassNameAfter = matches(r.getAfter(), addedClassNames, mapping.getFragment2());
 							if(condition(matchingClassNameBefore, matchingClassNameAfter, r)) {
 								Pair<String, String> pair = Pair.of(matchingClassNameBefore, matchingClassNameAfter);
@@ -1633,12 +1642,18 @@ public class UMLModelDiff {
 			}
 		}
 		Set<UMLClassRenameDiff> diffsToBeAdded = new LinkedHashSet<UMLClassRenameDiff>();
+		Set<UMLClassRenameDiff> diffsToBeRemoved = new LinkedHashSet<UMLClassRenameDiff>();
 		Set<UMLClass> addedClassesToBeRemoved = new LinkedHashSet<UMLClass>();
 		Set<UMLClass> removedClassesToBeRemoved = new LinkedHashSet<UMLClass>();
 		UMLClassMatcher matcher = new UMLClassMatcher.RelaxedRename();
 		for(Pair<String, String> pair : countMap.keySet()) {
 			if(!conflictingPair(pair, countMap.keySet())) {
 				UMLClass removedClass = removedClassNameMap.get(pair.getLeft());
+				UMLClassRenameDiff oldClassRenameDiff = null;
+				if(removedClass == null) {
+					removedClass = renamedRemovedClassMap.get(pair.getLeft());
+					oldClassRenameDiff = (UMLClassRenameDiff) getUMLClassDiff(removedClass.getName());
+				}
 				UMLClass addedClass = addedClassNameMap.get(pair.getRight());
 				MatchResult matchResult = matcher.match(removedClass, addedClass);
 				int removedClassConstants = 0;
@@ -1654,15 +1669,27 @@ public class UMLModelDiff {
 					}
 				}
 				boolean skip = removedClass.getAttributes().size() - removedClassConstants > 0 && addedClass.getAttributes().size() - addedClassConstants > 0 && matchResult.getMatchedAttributes() == 0;
+				if(oldClassRenameDiff != null) {
+					MatchResult oldMatchResult = matcher.match(oldClassRenameDiff.getOriginalClass(), oldClassRenameDiff.getNextClass());
+					if(oldMatchResult.isMatch() && !matchResult.isMatch()) {
+						skip = true;
+					}
+					else if(oldMatchResult.isMatch() && matchResult.isMatch() && oldMatchResult.getMatchedOperations() + oldMatchResult.getMatchedAttributes() > matchResult.getMatchedOperations() + matchResult.getMatchedAttributes()) {
+						skip = true;
+					}
+				}
 				if(!skip) {
 					UMLClassRenameDiff newClassRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
 					newClassRenameDiff.process();
 					diffsToBeAdded.add(newClassRenameDiff);
 					addedClassesToBeRemoved.add(addedClass);
 					removedClassesToBeRemoved.add(removedClass);
+					if(oldClassRenameDiff != null)
+						diffsToBeRemoved.add(oldClassRenameDiff);
 				}
 			}
 		}
+		classRenameDiffList.removeAll(diffsToBeRemoved);
 		classRenameDiffList.addAll(diffsToBeAdded);
 		removedClasses.removeAll(removedClassesToBeRemoved);
 		addedClasses.removeAll(addedClassesToBeRemoved);

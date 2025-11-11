@@ -2859,7 +2859,7 @@
         {
           "type": "RENAME_ATTRIBUTE",
           "description": "Rename Attribute\tallByNonInterfaceSuperType : Map<PojoRawTypeIdentifier<?>,Set<AbstractPojoTypeManager<?,?>>> to bySuperType : Map<PojoRawTypeIdentifier<?>,Set<AbstractPojoTypeManager<?,?>>> in class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer.Builder",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_AND_RENAME_OPERATION",
@@ -2929,7 +2929,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tindexedBySuperTypeContent : Map<PojoRawTypeIdentifier<?>,Set<PojoIndexedTypeManager<?,?>>> in method private PojoTypeManagerContainer(builder Builder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_VARIABLE",

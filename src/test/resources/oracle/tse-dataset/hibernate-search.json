@@ -2864,12 +2864,12 @@
         {
           "type": "MOVE_AND_RENAME_OPERATION",
           "description": "Move And Rename Method\tpublic typeIdentifierResolver() : HibernateOrmRawTypeIdentifierResolver from class org.hibernate.search.mapper.orm.model.impl.HibernateOrmRuntimeIntrospectorTypeContextProvider to public typeIdentifierBySecondaryEntityName() : KeyValueProvider<String,PojoRawTypeIdentifier<?>> from class org.hibernate.search.mapper.pojo.mapping.spi.PojoRawTypeIdentifierResolver",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tHibernateOrmRawTypeIdentifierResolver to KeyValueProvider<String,PojoRawTypeIdentifier<?>> in method public typeIdentifierBySecondaryEntityName() : KeyValueProvider<String,PojoRawTypeIdentifier<?>> from class org.hibernate.search.mapper.pojo.mapping.spi.PojoRawTypeIdentifierResolver",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_METHOD",
@@ -2884,7 +2884,7 @@
         {
           "type": "PUSH_DOWN_OPERATION",
           "description": "Push Down Method\tpublic typeIdentifierByEntityName() : KeyValueProvider<String,PojoRawTypeIdentifier<?>> from class org.hibernate.search.mapper.pojo.work.impl.PojoWorkTypeContextProvider to public nonInterfaceSuperTypeIdentifierByEntityName() : KeyValueProvider<String,PojoRawTypeIdentifier<?>> from class org.hibernate.search.mapper.pojo.scope.impl.PojoScopeTypeContextProvider",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",
@@ -2919,12 +2919,12 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tallNonInterfaceSuperTypesClassesContent : Set<Class<?>> to indexedBySuperTypeClassContent : Map<Class<?>,Set<PojoIndexedTypeManager<?,?>>> in method private PojoTypeManagerContainer(builder Builder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tallNonInterfaceSuperTypesClassesContent : Set<Class<?>> to indexedBySuperTypeClassContent : Map<Class<?>,Set<PojoIndexedTypeManager<?,?>>> in method private PojoTypeManagerContainer(builder Builder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_VARIABLE",

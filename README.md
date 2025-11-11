@@ -376,11 +376,11 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **November 8, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 11, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12528  | 13  | 219  | 0.999  | 0.983|
+|**Total**|12533  | 13  | 219  | 0.999  | 0.983|
 |Extract Method|1016  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
@@ -410,7 +410,7 @@ As of **November 8, 2025** the precision and recall of RefactoringMiner on this 
 |Extract Attribute|26  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|147  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|340  |  2  | 11  | 0.994  | 0.969|
+|Rename Variable|343  |  2  | 11  | 0.994  | 0.969|
 |Rename Parameter|494  |  2  | 24  | 0.996  | 0.954|
 |Rename Attribute|146  |  0  |  9  | 1.000  | 0.942|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
@@ -424,7 +424,7 @@ As of **November 8, 2025** the precision and recall of RefactoringMiner on this 
 |Localize Parameter|26  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|25  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|433  |  0  | 12  | 1.000  | 0.973|
-|Change Variable Type|813  |  1  |  7  | 0.999  | 0.991|
+|Change Variable Type|815  |  1  |  7  | 0.999  | 0.991|
 |Change Parameter Type|651  |  1  | 10  | 0.998  | 0.985|
 |Change Attribute Type|244  |  0  |  8  | 1.000  | 0.968|
 |Add Method Annotation|330  |  0  |  0  | 1.000  | 1.000|
@@ -508,7 +508,7 @@ As of **November 11, 2025** the precision and recall of RefactoringMiner on this
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3430  | 49  | 101  | 0.986  | 0.971|
+|**Total**|3431  | 49  | 95  | 0.986  | 0.973|
 |Extract Method|371  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|232  |  1  |  2  | 0.996  | 0.991|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -516,13 +516,13 @@ As of **November 11, 2025** the precision and recall of RefactoringMiner on this
 |Rename Method|299  |  7  |  6  | 0.977  | 0.980|
 |Inline Method|68  |  3  |  2  | 0.958  | 0.971|
 |Move Method|266  |  1  |  0  | 0.996  | 1.000|
-|Move And Rename Method|24  |  4  |  2  | 0.857  | 0.923|
+|Move And Rename Method|24  |  4  |  1  | 0.857  | 0.960|
 |Pull Up Method|45  |  0  |  1  | 1.000  | 0.978|
 |Move Class|141  |  4  |  2  | 0.972  | 0.986|
 |Move And Rename Class|27  |  0  |  1  | 1.000  | 0.964|
 |Pull Up Attribute|12  |  0  |  0  | 1.000  | 1.000|
 |Push Down Attribute| 6  |  0  |  0  | 1.000  | 1.000|
-|Push Down Method|22  |  0  |  1  | 1.000  | 0.957|
+|Push Down Method|22  |  0  |  0  | 1.000  | 1.000|
 |Extract Interface|16  |  2  |  0  | 0.889  | 1.000|
 |Extract Superclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
@@ -533,12 +533,12 @@ As of **November 11, 2025** the precision and recall of RefactoringMiner on this
 |Extract Variable|290  |  1  | 10  | 0.997  | 0.967|
 |Extract Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|127  |  0  | 12  | 1.000  | 0.914|
-|Rename Variable|303  |  6  | 10  | 0.981  | 0.968|
+|Rename Variable|304  |  6  |  8  | 0.981  | 0.974|
 |Rename Attribute|107  |  4  |  9  | 0.964  | 0.922|
 |Replace Variable With Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|30  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|166  |  2  |  8  | 0.988  | 0.954|
-|Change Variable Type|376  |  7  |  5  | 0.982  | 0.987|
+|Change Return Type|166  |  2  |  7  | 0.988  | 0.960|
+|Change Variable Type|376  |  7  |  4  | 0.982  | 0.989|
 |Change Attribute Type|164  |  2  |  3  | 0.988  | 0.982|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|

@@ -5881,6 +5881,16 @@ public class ReplacementAlgorithm {
 			else if(invocations1.size() == 0 && invocations2.size() > 0) {
 				nonMappedElementsT1 = nonMappedElementsT1 - ignoredNonMappedElements(invocations2, mapper.getNonMappedLeavesT1(), mapper.getNonMappedInnerNodesT1());
 			}
+			for(CompositeStatementObject comp1 : mapper.getNonMappedInnerNodesT1()) {
+				if(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+					nonMappedElementsT1--;
+				}
+			}
+			for(CompositeStatementObject comp2 : mapper.getNonMappedInnerNodesT2()) {
+				if(comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+					nonMappedElementsT2--;
+				}
+			}
 			AbstractCodeFragment parentStatement1 = null;
 			if(operationBodyMapper.getContainer1().getBody() != null) {
 				for(AbstractCodeFragment leaf1 : operationBodyMapper.getContainer1().getBody().getCompositeStatement().getLeaves()) {

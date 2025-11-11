@@ -2176,12 +2176,12 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic includedTypes() : Set<PojoRawTypeIdentifier<? extends E>> renamed to public parent() : PojoMassLoadingContext in class org.hibernate.search.mapper.pojo.loading.spi.PojoMassIdentifierLoadingContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tSet<PojoRawTypeIdentifier<? extends E>> to PojoMassLoadingContext in method public parent() : PojoMassLoadingContext from class org.hibernate.search.mapper.pojo.loading.spi.PojoMassIdentifierLoadingContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_AND_RENAME_OPERATION",
@@ -2196,12 +2196,12 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic includedTypes() : Set<PojoRawTypeIdentifier<? extends E>> renamed to public parent() : PojoMassLoadingContext in class org.hibernate.search.mapper.pojo.massindexing.impl.PojoMassIndexingEntityLoadingRunnable.LoadingContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tSet<PojoRawTypeIdentifier<? extends E>> to PojoMassLoadingContext in method public parent() : PojoMassLoadingContext from class org.hibernate.search.mapper.pojo.massindexing.impl.PojoMassIndexingEntityLoadingRunnable.LoadingContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_METHOD",
@@ -2236,17 +2236,17 @@
         {
           "type": "MOVE_OPERATION",
           "description": "Move Method\tpublic typeIdentifier() : PojoRawTypeIdentifier<E> from class org.hibernate.search.mapper.pojo.standalone.loading.impl.LoadingTypeContext to public typeIdentifier() : PojoRawTypeIdentifier<E> from class org.hibernate.search.mapper.pojo.standalone.work.impl.SearchIndexingPlanTypeContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "PULL_UP_OPERATION",
           "description": "Pull Up Method\tpublic equals(obj Object) : boolean from class org.hibernate.search.mapper.orm.loading.spi.HibernateOrmEntityLoadingStrategy to public equals(obj Object) : boolean from class org.hibernate.search.mapper.pojo.loading.spi.PojoMassLoadingStrategy",
-          "validation": true
+          "validation": false
         },
         {
           "type": "PULL_UP_OPERATION",
           "description": "Pull Up Method\tpublic hashCode() : int from class org.hibernate.search.mapper.orm.loading.spi.HibernateOrmEntityLoadingStrategy to public hashCode() : int from class org.hibernate.search.mapper.pojo.loading.spi.PojoMassLoadingStrategy",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_AND_INLINE_OPERATION",
@@ -2318,7 +2318,7 @@
         {
           "type": "MOVE_OPERATION",
           "description": "Move Method\tpublic typeIdentifier() : PojoRawTypeIdentifier<E> from class org.hibernate.search.mapper.pojo.massindexing.impl.PojoMassIndexingIndexedTypeContext to public typeIdentifier() : PojoRawTypeIdentifier<E> from class org.hibernate.search.mapper.pojo.standalone.work.impl.SearchIndexingPlanTypeContext",
-          "validation": false
+          "validation": true
         },
         {
           "type": "MOVE_OPERATION",

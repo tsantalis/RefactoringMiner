@@ -437,7 +437,7 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/apache/iceberg.git, fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b, iceberg-fac03ea3c0d8555d85b1e85c8e9f6ce178bc4e9b-migrate-param.txt",
             ////TestNG to JUnit 5
             "https://github.com/OpenGamma/Strata.git, 1dd64e965041a1e3fb81adf8ce9156c451d8252b, Strata-1dd64e965041a1e3fb81adf8ce9156c451d8252b-migrate-param.txt",
-            //"https://github.com/OpenGamma/Strata.git, b2b9b629685ebc7e89e9a1667de88f2e878d5fc4, Strata-b2b9b629685ebc7e89e9a1667de88f2e878d5fc4.txt", //TODO: Too slow and fails without any error message
+            "https://github.com/OpenGamma/Strata.git, b2b9b629685ebc7e89e9a1667de88f2e878d5fc4, Strata-b2b9b629685ebc7e89e9a1667de88f2e878d5fc4.txt", //TODO: Too slow and fails without any error message
             "https://github.com/OpenGamma/Strata.git, e007f826c49075500def8638de8367960c054c19, Strata-e007f826c49075500def8638de8367960c054c19-migrate-param.txt",
             "https://github.com/zanata/zanata-platform.git, 0297e0513ac1f487f1570b1cc38979a73ac97da8, zanata-platform-0297e0513ac1f487f1570b1cc38979a73ac97da8-migrate-param.txt",
     })

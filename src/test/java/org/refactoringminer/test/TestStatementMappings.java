@@ -1,6 +1,5 @@
 package org.refactoringminer.test;
 
-import static org.refactoringminer.astDiff.utils.URLHelper.nthIndexOf;
 import static org.refactoringminer.test.TestJavadocDiff.generateClassDiff;
 
 import java.io.File;
@@ -20,7 +19,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.refactoringminer.api.ModelDiffRefactoringHandler;
 import org.refactoringminer.api.Refactoring;
-import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
@@ -977,18 +975,22 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
-	@Test
-	public void testJUnit3MigrationMappings() throws Exception {
+	@ParameterizedTest
+	@CsvSource({
+			"https://github.com/MrSorrow/spring-framework.git, d5ee787e1e6653257720afe31ee3f8819cd4605c, spring-framework-d5ee787e1e6653257720afe31ee3f8819cd4605c.txt",
+			"https://github.com/OpenGamma/Strata.git, b2b9b629685ebc7e89e9a1667de88f2e878d5fc4, Strata-b2b9b629685ebc7e89e9a1667de88f2e878d5fc4-migration.txt"
+	})
+	public void testJUnit3MigrationMappings(String url, String commitId, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/MrSorrow/spring-framework.git", "d5ee787e1e6653257720afe31ee3f8819cd4605c", new File(REPOS));
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI(url, commitId, new File(REPOS));
 		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
 		for(UMLClassDiff classDiff : commonClassDiff) {
 			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
 				mapperInfo(mapper, actual);
 			}
 		}
-		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "spring-framework-d5ee787e1e6653257720afe31ee3f8819cd4605c.txt"));
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

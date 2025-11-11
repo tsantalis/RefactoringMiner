@@ -2873,6 +2873,8 @@ public class ReplacementAlgorithm {
 							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).startsWith("0")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("isOne") &&
 							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).startsWith("1")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && (invocationCoveringTheEntireStatement2.getName().equals("containsExactly") || invocationCoveringTheEntireStatement2.getName().equals("containsOnly")) &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains(".of(")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isEmpty") &&
 							invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.arguments().get(1).contains("empty()")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertThat") && invocationCoveringTheEntireStatement2.getName().equals("isFalse") &&
@@ -2999,6 +3001,8 @@ public class ReplacementAlgorithm {
 							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).startsWith("0")) ||
 					(invocationCoveringTheEntireStatement2.getName().equals("assertEquals") && invocationCoveringTheEntireStatement1.getName().equals("isOne") &&
 							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).startsWith("1")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertEquals") && (invocationCoveringTheEntireStatement1.getName().equals("containsExactly") || invocationCoveringTheEntireStatement1.getName().equals("containsOnly")) &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains(".of(")) ||
 					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isEmpty") &&
 							invocationCoveringTheEntireStatement2.arguments().size() > 1 && invocationCoveringTheEntireStatement2.arguments().get(1).contains("empty()")) ||
 					(invocationCoveringTheEntireStatement2.getName().equals("assertThat") && invocationCoveringTheEntireStatement1.getName().equals("isFalse") &&

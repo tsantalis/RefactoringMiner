@@ -18,7 +18,7 @@ Table of Contents
          * [Refactoring-aware tooltips](#refactoring-aware-tooltips)
          * [Refactoring listing with links to diffs](#refactoring-listing-with-links-to-diffs)
          * [Single Page View](#single-page-view)
-         * [Embedded GitHub Code Review Comments](#embedded-gitHub-code-review-comments)
+         * [Embedded GitHub Code Review Comments](#embedded-github-code-review-comments)
          * [Diff for code moved between different files](#diff-for-code-moved-between-different-files)
          * [On-demand diff generation](#on-demand-diff-generation)
          * [Javadoc and comment reformatting](#javadoc-and-comment-reformatting)
@@ -223,6 +223,8 @@ Currently, it supports the detection of the following refactorings:
 101. Try With Resources
 102. Replace Conditional With Ternary
 103. Assert Timeout
+104. Replace Conditional with Assumption
+105. Extract Fixture
 
 # Supported Refactoring Types
 
@@ -342,11 +344,13 @@ Currently, it supports the detection of the following refactorings:
 </details>
 
 <details>
-<summary>Test-specific (3)</summary>
+<summary>Test-specific (5)</summary>
 
 	1. Parameterize Test (JUnit 5 @ParameterizedTest with @ValueSource)
 	2. Assert Throws
 	3. Assert Timeout
+	4. Replace Conditional with Assumption
+	5. Extract Fixture
 </details>
 
 # Contributors
@@ -503,12 +507,13 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Split Method`
 * `Replace Anonymous With Class`
 * `Move Code`
+* `Split Class`
 
-As of **November 11, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 13, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3432  | 48  | 92  | 0.986  | 0.974|
+|**Total**|3434  | 47  | 91  | 0.986  | 0.974|
 |Extract Method|371  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -530,10 +535,10 @@ As of **November 11, 2025** the precision and recall of RefactoringMiner on this
 |Extract And Move Method|123  |  2  |  5  | 0.984  | 0.961|
 |Move And Inline Method|29  |  1  |  6  | 0.967  | 0.829|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|290  |  1  |  9  | 0.997  | 0.970|
+|Extract Variable|290  |  1  |  8  | 0.997  | 0.973|
 |Extract Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|127  |  0  | 12  | 1.000  | 0.914|
-|Rename Variable|304  |  6  |  8  | 0.981  | 0.974|
+|Rename Variable|305  |  5  |  8  | 0.984  | 0.974|
 |Rename Attribute|107  |  4  |  8  | 0.964  | 0.930|
 |Replace Variable With Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|30  |  0  |  0  | 1.000  | 1.000|
@@ -542,6 +547,7 @@ As of **November 11, 2025** the precision and recall of RefactoringMiner on this
 |Change Attribute Type|164  |  2  |  3  | 0.988  | 0.982|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|
+|Split Class| 1  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 8  |  0  |  0  | 1.000  | 1.000|
 |Move Code|12  |  0  |  0  | 1.000  | 1.000|

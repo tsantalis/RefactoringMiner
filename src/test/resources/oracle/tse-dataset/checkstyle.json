@@ -929,7 +929,7 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tembeddedExpressionEnd : DetailAstImpl to stringTemplateMiddle : DetailAstImpl in method private buildStringTemplateMiddle(ctx JavaLanguageParser.StringTemplateMiddleContext) : DetailAstImpl from class com.puppycrawl.tools.checkstyle.JavaAstVisitor",
-          "validation": false
+          "validation": true
         }
       ]
     },
@@ -1047,7 +1047,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tfilePath : File in method public testWithCheckNotHavingTreeWalkerAsParent() : void from class com.puppycrawl.tools.checkstyle.TreeWalkerTest",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": []

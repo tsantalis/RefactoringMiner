@@ -401,6 +401,44 @@ public class UMLModelDiff {
 		return null;
 	}
 
+	private Set<UMLClass> getRemovedUMLClassWithAttribute(String attributeName) {
+		Set<UMLClass> classes = new LinkedHashSet<>();
+		for(UMLClass umlClass : removedClasses) {
+			for(UMLAttribute attribute : umlClass.getAttributes()) {
+				if(attribute.getName().equals(attributeName)) {
+					classes.add(umlClass);
+					break;
+				}
+			}
+			for(UMLAttribute attribute : umlClass.getEnumConstants()) {
+				if(attribute.getName().equals(attributeName)) {
+					classes.add(umlClass);
+					break;
+				}
+			}
+		}
+		return classes;
+	}
+
+	private Set<UMLClass> getAddedUMLClassWithAttribute(String attributeName) {
+		Set<UMLClass> classes = new LinkedHashSet<>();
+		for(UMLClass umlClass : addedClasses) {
+			for(UMLAttribute attribute : umlClass.getAttributes()) {
+				if(attribute.getName().equals(attributeName)) {
+					classes.add(umlClass);
+					break;
+				}
+			}
+			for(UMLAttribute attribute : umlClass.getEnumConstants()) {
+				if(attribute.getName().equals(attributeName)) {
+					classes.add(umlClass);
+					break;
+				}
+			}
+		}
+		return classes;
+	}
+
 	private UMLClassBaseDiff getUMLClassDiffWithAttribute(Replacement pattern) {
 		String before = new String(pattern.getBefore());
 		String after = new String(pattern.getAfter());
@@ -3737,9 +3775,24 @@ public class UMLModelDiff {
 				}
 			}
 		}
+		Map<Pair<UMLClass, UMLClass>, Set<CandidateAttributeRefactoring>> inferredClassRenames = new LinkedHashMap<>();
 		for(Replacement pattern : renameMap.keySet()) {
 			UMLClassBaseDiff diff = getUMLClassDiffWithAttribute(pattern);
 			Set<CandidateAttributeRefactoring> set = renameMap.get(pattern);
+			if(diff == null) {
+				Set<UMLClass> removedClassesWithAttribute = getRemovedUMLClassWithAttribute(pattern.getBefore());
+				Set<UMLClass> addedClassesWithAttribute = getAddedUMLClassWithAttribute(pattern.getAfter());
+				if(removedClassesWithAttribute.size() == 1 && addedClassesWithAttribute.size() == 1) {
+					Pair<UMLClass, UMLClass> pair = Pair.of(removedClassesWithAttribute.iterator().next(), addedClassesWithAttribute.iterator().next());
+					if(inferredClassRenames.containsKey(pair)) {
+						inferredClassRenames.get(pair).addAll(set);
+					}
+					else {
+						Set<CandidateAttributeRefactoring> newSet = new LinkedHashSet<>(set);
+						inferredClassRenames.put(pair, newSet);
+					}
+				}
+			}
 			String before = new String(pattern.getBefore());
 			String after = new String(pattern.getAfter());
 			if(before.contains(".") && after.contains(".")) {
@@ -3948,6 +4001,121 @@ public class UMLModelDiff {
 								}
 							}
 						}
+					}
+				}
+			}
+		}
+		if(!partialModel()) {
+			for(Pair<UMLClass, UMLClass> pair : inferredClassRenames.keySet()) {
+				UMLClass parentClass = pair.getLeft();
+				UMLClass childClass = pair.getRight();
+				Set<CandidateAttributeRefactoring> set = inferredClassRenames.get(pair);
+				if(set.size() > 1) {
+					if(!parentClass.getNonQualifiedName().equals(childClass.getNonQualifiedName())) {
+						int totalOperations = parentClass.getOperations().size() + childClass.getOperations().size();
+						int totalAttributes = parentClass.getAttributes().size() + childClass.getAttributes().size();
+						MatchResult matchResult = new MatchResult(0, set.size(), 0, totalOperations, totalAttributes, true);
+						UMLClassRenameDiff renameDiff = new UMLClassRenameDiff(parentClass, childClass, this, matchResult);
+						renameDiff.process();
+						refactorings.addAll(renameDiff.getRefactorings());
+						classRenameDiffList.add(renameDiff);
+						Refactoring refactoring = null;
+						if(renameDiff.samePackage())
+							refactoring = new RenameClassRefactoring(renameDiff.getOriginalClass(), renameDiff.getRenamedClass());
+						else
+							refactoring = new MoveAndRenameClassRefactoring(renameDiff.getOriginalClass(), renameDiff.getRenamedClass());
+						refactorings.add(refactoring);
+						removedClasses.remove(parentClass);
+						addedClasses.remove(childClass);
+						for(CandidateAttributeRefactoring candidate : set) {
+							UMLAttribute a1 = parentClass.attributeWithName(candidate.getOriginalVariableName());
+							UMLAttribute a2 = childClass.attributeWithName(candidate.getRenamedVariableName());
+							if(a1 instanceof UMLEnumConstant && a2 instanceof UMLEnumConstant) {
+								UMLEnumConstantDiff enumConstantDiff = new UMLEnumConstantDiff((UMLEnumConstant)a1, (UMLEnumConstant)a2, renameDiff, this);
+								if(!renameDiff.getEnumConstantDiffList().contains(enumConstantDiff)) {
+									renameDiff.getEnumConstantDiffList().add(enumConstantDiff);
+								}
+								Set<Refactoring> enumConstantDiffRefactorings = enumConstantDiff.getRefactorings(set);
+								if(!refactorings.containsAll(enumConstantDiffRefactorings)) {
+									refactorings.addAll(enumConstantDiffRefactorings);
+								}
+							}
+							else {
+								UMLAttributeDiff attributeDiff = new UMLAttributeDiff(a1, a2, renameDiff, this);
+								if(!renameDiff.getAttributeDiffList().contains(attributeDiff)) {
+									renameDiff.getAttributeDiffList().add(attributeDiff);
+								}
+								Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
+								if(!refactorings.containsAll(attributeDiffRefactorings)) {
+									refactorings.addAll(attributeDiffRefactorings);
+								}
+							}
+						}
+						//eliminate inner classes being reported as moved
+						List<MoveClassRefactoring> toBeRemoved = new ArrayList<MoveClassRefactoring>();
+						for(Refactoring r : refactorings) {
+							if(r instanceof MoveClassRefactoring) {
+								MoveClassRefactoring moveClass = (MoveClassRefactoring)r;
+								if(moveClass.getOriginalClassName().startsWith(renameDiff.getOriginalClassName() + ".") &&
+										moveClass.getMovedClassName().startsWith(renameDiff.getNextClassName() + ".")) {
+									toBeRemoved.add(moveClass);
+								}
+							}
+						}
+						this.refactorings.removeAll(toBeRemoved);
+					}
+					else {
+						int totalOperations = parentClass.getOperations().size() + childClass.getOperations().size();
+						int totalAttributes = parentClass.getAttributes().size() + childClass.getAttributes().size();
+						MatchResult matchResult = new MatchResult(0, set.size(), 0, totalOperations, totalAttributes, true);
+						UMLClassMoveDiff moveDiff = new UMLClassMoveDiff(parentClass, childClass, this, matchResult);
+						moveDiff.process();
+						refactorings.addAll(moveDiff.getRefactorings());
+						classMoveDiffList.add(moveDiff);
+						UMLClassBaseDiff parentClassDiff = getUMLClassDiff(parentClass.getPackageName());
+						boolean parentClassIsMoved = parentClassDiff instanceof UMLClassMoveDiff m && m.getNextClassName().equals(childClass.getPackageName());
+						if(!parentClassIsMoved) {
+							Refactoring refactoring = new MoveClassRefactoring(moveDiff.getOriginalClass(), moveDiff.getMovedClass());
+							refactorings.add(refactoring);
+						}
+						removedClasses.remove(parentClass);
+						addedClasses.remove(childClass);
+						for(CandidateAttributeRefactoring candidate : set) {
+							UMLAttribute a1 = parentClass.attributeWithName(candidate.getOriginalVariableName());
+							UMLAttribute a2 = childClass.attributeWithName(candidate.getRenamedVariableName());
+							if(a1 instanceof UMLEnumConstant && a2 instanceof UMLEnumConstant) {
+								UMLEnumConstantDiff enumConstantDiff = new UMLEnumConstantDiff((UMLEnumConstant)a1, (UMLEnumConstant)a2, moveDiff, this);
+								if(!moveDiff.getEnumConstantDiffList().contains(enumConstantDiff)) {
+									moveDiff.getEnumConstantDiffList().add(enumConstantDiff);
+								}
+								Set<Refactoring> enumConstantDiffRefactorings = enumConstantDiff.getRefactorings(set);
+								if(!refactorings.containsAll(enumConstantDiffRefactorings)) {
+									refactorings.addAll(enumConstantDiffRefactorings);
+								}
+							}
+							else {
+								UMLAttributeDiff attributeDiff = new UMLAttributeDiff(a1, a2, moveDiff, this);
+								if(!moveDiff.getAttributeDiffList().contains(attributeDiff)) {
+									moveDiff.getAttributeDiffList().add(attributeDiff);
+								}
+								Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
+								if(!refactorings.containsAll(attributeDiffRefactorings)) {
+									refactorings.addAll(attributeDiffRefactorings);
+								}
+							}
+						}
+						//eliminate inner classes being reported as moved
+						List<MoveClassRefactoring> toBeRemoved = new ArrayList<MoveClassRefactoring>();
+						for(Refactoring r : refactorings) {
+							if(r instanceof MoveClassRefactoring) {
+								MoveClassRefactoring moveClass = (MoveClassRefactoring)r;
+								if(moveClass.getOriginalClassName().startsWith(moveDiff.getOriginalClassName() + ".") &&
+										moveClass.getMovedClassName().startsWith(moveDiff.getNextClassName() + ".")) {
+									toBeRemoved.add(moveClass);
+								}
+							}
+						}
+						this.refactorings.removeAll(toBeRemoved);
 					}
 				}
 			}

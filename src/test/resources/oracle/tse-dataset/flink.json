@@ -85,7 +85,7 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic available(record R, key K) : boolean renamed to public occupy(record R, key K) : boolean in class org.apache.flink.runtime.asyncprocessing.KeyAccountingUnit",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_ATTRIBUTE",
@@ -107,7 +107,7 @@
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tvoid to boolean in method public occupy(record R, key K) : boolean from class org.apache.flink.runtime.asyncprocessing.KeyAccountingUnit",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",

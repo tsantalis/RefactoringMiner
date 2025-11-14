@@ -392,6 +392,21 @@
           "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
           "description": "Replace Variable With Attribute\tchosenFiles : var to myChosenFiles : VirtualFile[] in method public choose(project Project, toSelect VirtualFile...) : VirtualFile @NotNull [] from class com.intellij.openapi.fileChooser.impl.NewFileChooserDialogImpl",
           "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tWINDOWS : Type to NEW : Type in class com.intellij.openapi.fileChooser.impl.FileChooserUsageCollector.Type",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tNEW : Type to OTHER : Type in class com.intellij.openapi.fileChooser.impl.FileChooserUsageCollector.Type",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tMAC : Type to NATIVE : Type in class com.intellij.openapi.fileChooser.impl.FileChooserUsageCollector.Type",
+          "validation": true
         }
       ]
     },

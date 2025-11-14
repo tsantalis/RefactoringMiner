@@ -666,6 +666,18 @@ public abstract class UMLAbstractClass {
 		return false;
 	}
 
+	public UMLAttribute attributeWithName(String attributeName) {
+		for(UMLAttribute originalAttribute : attributes) {
+			if(originalAttribute.getName().equals(attributeName))
+				return originalAttribute;
+		}
+		for(UMLAttribute originalAttribute : enumConstants) {
+			if(originalAttribute.getName().equals(attributeName))
+				return originalAttribute;
+		}
+		return null;
+	}
+
 	public MatchResult hasAttributesAndOperationsWithCommonNames(UMLAbstractClass umlClass) {
 		List<UMLOperation> commonOperations = new ArrayList<UMLOperation>();
 		List<UMLOperation> identicalOperations = new ArrayList<UMLOperation>();

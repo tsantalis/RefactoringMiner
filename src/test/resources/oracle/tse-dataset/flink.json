@@ -1225,7 +1225,7 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tsink : FileSystemOutputFormat<Row> in method private createSink(override boolean, partition boolean, dynamicGrouped boolean, staticPartitions LinkedHashMap<String,String>, sinkRef AtomicReference<FileSystemOutputFormat<Row>>) : OneInputStreamOperatorTestHarness<Row,Object> from class org.apache.flink.connector.file.table.FileSystemOutputFormatTest",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
@@ -1257,6 +1257,11 @@
         {
           "type": "INLINE_OPERATION",
           "description": "Inline Method\tprivate writeUnorderedRecords(testHarness OneInputStreamOperatorTestHarness<Row,Object>) : void inlined to private checkWriteAndCommit(override boolean, partitioned boolean, dynamicGrouped boolean, staticPartitions LinkedHashMap<String,String>, inputSupplier Supplier<List<StreamRecord<Row>>>, outputSupplier Supplier<?>) : void in class org.apache.flink.connector.file.table.FileSystemOutputFormatTest",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createTestHarness(outputFormat FileSystemOutputFormat<Row>) : OneInputStreamOperatorTestHarness<Row,Object> extracted from private createSink(override boolean, partition boolean, dynamicGrouped boolean, staticPartitions LinkedHashMap<String,String>, sinkRef AtomicReference<FileSystemOutputFormat<Row>>) : OneInputStreamOperatorTestHarness<Row,Object> in class org.apache.flink.connector.file.table.FileSystemOutputFormatTest",
           "validation": true
         }
       ]

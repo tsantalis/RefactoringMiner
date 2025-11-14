@@ -1487,6 +1487,7 @@ public class ReplacementAlgorithm {
 			s1 = ReplacementUtil.performReplacement(s1, s2, replacement.getBefore(), replacement.getAfter());
 			//find method invocation replacements within method invocation replacements, the boolean value indicates if the remaining part of the original replacement is identical or not
 			Map<Replacement, Boolean> nestedReplacementMap = replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), methodInvocations1, methodInvocations2, methodInvocationMap1, methodInvocationMap2);
+			nestedReplacementMap.putAll(replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), creations1, creations2, creationMap1, creationMap2));
 			if(!nestedReplacementMap.isEmpty()) {
 				if(!nestedReplacementMap.values().contains(false)) {
 					replacementsToBeRemoved.add(replacement);

@@ -1034,6 +1034,11 @@
           "type": "MOVE_CODE",
           "description": "Move Code\tfrom public Parser(byteBufferPool ByteBufferPool, listener Listener, maxDynamicTableSize int, maxHeaderSize int, rateControl RateControl) to public init(listener Listener) : void in class org.eclipse.jetty.http2.parser.Parser",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tpublic setTableCapacity(tableCapacity int) : void extracted from public encodeMaxDynamicTableSize(buffer ByteBuffer, maxDynamicTableSize int) : void in class org.eclipse.jetty.http2.hpack.HpackEncoder",
+          "validation": true
         }
       ]
     },

@@ -3820,7 +3820,25 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					List<ExtractOperationRefactoring> refs = detection.check(addedOperation);
 					for(ExtractOperationRefactoring refactoring : refs) {
 						UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
-						if(operationBodyMapper.exactMatches() > 1) {
+						boolean objectCreation = false;
+						for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+							AbstractCall call1 = mapping.getFragment1().creationCoveringEntireFragment();
+							AbstractCall call2 = mapping.getFragment2().creationCoveringEntireFragment();
+							if(call1 != null && call2 != null && call1.identicalName(call2)) {
+								objectCreation = true;
+								break;
+							}
+						}
+						boolean duplicate = false;
+						for(Refactoring r : refactorings) {
+							if(r instanceof ExtractOperationRefactoring) {
+								ExtractOperationRefactoring ex = (ExtractOperationRefactoring)r;
+								if(ex.getBodyMapper().getMappings().equals(refactoring.getBodyMapper().getMappings())) {
+									duplicate = true;
+								}
+							}
+						}
+						if(!duplicate && (operationBodyMapper.exactMatches() > 1 || objectCreation)) {
 							refactorings.add(refactoring);
 							extractedOperationMappers.add(operationBodyMapper);
 							mapper.addChildMapper(operationBodyMapper);

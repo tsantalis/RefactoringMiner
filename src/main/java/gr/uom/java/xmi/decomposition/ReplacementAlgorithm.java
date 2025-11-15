@@ -2980,6 +2980,19 @@ public class ReplacementAlgorithm {
 											return replacementInfo.getReplacements();
 										}
 									}
+									else {
+										for(AbstractCodeFragment fragment2 : replacementInfo.getStatements2()) {
+											VariableDeclaration variableDeclaration = fragment2.getVariableDeclaration(arguments.get(0));
+											if(variableDeclaration != null && variableDeclaration.getInitializer() != null &&
+													variableDeclaration.getInitializer().getString().equals(arg)) {
+												Replacement replacement = new MethodInvocationReplacement(
+														invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
+														invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
+												replacementInfo.addReplacement(replacement);
+												return replacementInfo.getReplacements();
+											}
+										}
+									}
 								}
 							}
 						}

@@ -105,6 +105,7 @@ public class UMLModelDiff {
 	private Map<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>> mergeMap = new LinkedHashMap<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>>();
 	private List<UMLCommentListDiff> commentsMovedBetweenClasses = new ArrayList<UMLCommentListDiff>();
 	private Map<MethodInvocationReplacement, UMLOperationBodyMapper> consistentMethodInvocationRenames = new LinkedHashMap<>();
+	private List<UMLClassMoveDiff> classMoveDiffListToBePostProcessed = new ArrayList<>();
 
 	public UMLModelDiff(UMLModel parentModel, UMLModel childModel) {
 		this.parentModel = parentModel;
@@ -778,6 +779,11 @@ public class UMLModelDiff {
 							UMLClassMoveDiff classMoveDiff = new UMLClassMoveDiff(removedClass, addedClass, this, matchResult);
 							diffSet.add(classMoveDiff);
 						}
+						else {
+							UMLClassMoveDiff classMoveDiff = new UMLClassMoveDiff(removedClass, addedClass, this, matchResult);
+							if(!classMoveDiffListToBePostProcessed.contains(classMoveDiff))
+								classMoveDiffListToBePostProcessed.add(classMoveDiff);
+						}
 					}
 				}
 				if(!diffSet.isEmpty()) {
@@ -840,6 +846,11 @@ public class UMLModelDiff {
 						if(!conflictingMoveOfTopLevelClass(removedClass, addedClass)) {
 							UMLClassMoveDiff classMoveDiff = new UMLClassMoveDiff(removedClass, addedClass, this, matchResult);
 							diffSet.add(classMoveDiff);
+						}
+						else {
+							UMLClassMoveDiff classMoveDiff = new UMLClassMoveDiff(removedClass, addedClass, this, matchResult);
+							if(!classMoveDiffListToBePostProcessed.contains(classMoveDiff))
+								classMoveDiffListToBePostProcessed.add(classMoveDiff);
 						}
 					}
 				}
@@ -4363,6 +4374,63 @@ public class UMLModelDiff {
 						}
 					}
 				}
+			}
+		}
+		//check the presence of the same class being moved to multiple targets
+		Map<String, Set<String>> moveTargetMap = new LinkedHashMap<>();
+		for(Refactoring r : refactorings) {
+			if(r instanceof PackageLevelRefactoring pack) {
+				UMLClass originalClass = pack.getOriginalClass();
+				UMLClass movedClass = pack.getMovedClass();
+				if(!originalClass.isTopLevel() && !movedClass.isTopLevel()) {
+					String outerOriginalClass = originalClass.getPackageName();
+					String outerMovedClass = movedClass.getPackageName();
+					String topOriginalClass = outerOriginalClass.contains(".") ? outerOriginalClass.substring(0, outerOriginalClass.lastIndexOf(".")) : outerOriginalClass;
+					String topMovedClass = outerMovedClass.contains(".") ? outerMovedClass.substring(0, outerMovedClass.lastIndexOf(".")) : outerMovedClass;
+					if(moveTargetMap.containsKey(outerOriginalClass)) {
+						moveTargetMap.get(outerOriginalClass).add(outerMovedClass);
+					}
+					else if(moveTargetMap.containsKey(topOriginalClass)) {
+						moveTargetMap.get(topOriginalClass).add(topMovedClass);
+					}
+					else {
+						Set<String> set = new LinkedHashSet<>();
+						set.add(outerMovedClass);
+						moveTargetMap.put(outerOriginalClass, set);
+					}
+				}
+			}
+		}
+		for(UMLClassMoveDiff moveDiff : classMoveDiffListToBePostProcessed) {
+			boolean proceed = false;
+			UMLClass originalClass = moveDiff.getOriginalClass();
+			UMLClass movedClass = moveDiff.getMovedClass();
+			if(!originalClass.isTopLevel() && !movedClass.isTopLevel()) {
+				String outerOriginalClass = originalClass.getPackageName();
+				if(moveTargetMap.containsKey(outerOriginalClass) && moveTargetMap.get(outerOriginalClass).size() > 1) {
+					proceed = true;
+				}
+			}
+			if(!classMoveDiffList.contains(moveDiff) && proceed) {
+				moveDiff.process();
+				refactorings.addAll(moveDiff.getRefactorings());
+				classMoveDiffList.add(moveDiff);
+				Refactoring refactoring = new MoveClassRefactoring(moveDiff.getOriginalClass(), moveDiff.getMovedClass());
+				refactorings.add(refactoring);
+				removedClasses.remove(moveDiff.getOriginalClass());
+				addedClasses.remove(moveDiff.getMovedClass());
+				//eliminate inner classes being reported as moved
+				List<MoveClassRefactoring> toBeRemoved = new ArrayList<MoveClassRefactoring>();
+				for(Refactoring r : refactorings) {
+					if(r instanceof MoveClassRefactoring) {
+						MoveClassRefactoring moveClass = (MoveClassRefactoring)r;
+						if(moveClass.getOriginalClassName().startsWith(moveDiff.getOriginalClassName() + ".") &&
+								moveClass.getMovedClassName().startsWith(moveDiff.getNextClassName() + ".")) {
+							toBeRemoved.add(moveClass);
+						}
+					}
+				}
+				this.refactorings.removeAll(toBeRemoved);
 			}
 		}
 		//match any remaining interface methods with changes in signature

@@ -4463,6 +4463,78 @@ public class UMLModelDiff {
 				}
 			}
 		}
+		List<UMLOperation> deletedOperations = getRemovedOperationsInCommonMovedRenamedClasses();
+		List<Refactoring> inferredMoveOperationRefactorings = new ArrayList<>();
+		for(Refactoring r : refactorings) {
+			if(r instanceof MoveOperationRefactoring move) {
+				UMLClassBaseDiff classDiff = getUMLClassDiff(move.getOriginalOperation().getClassName());
+				if(classDiff != null) {
+					List<UMLOperation> operations = classDiff.getOriginalClass().getOperations();
+					int index1 = operations.indexOf(move.getOriginalOperation());
+					if(index1 != -1) {
+						if(index1 > 0) {
+							UMLOperation previous = operations.get(index1-1);
+							if(deletedOperations.contains(previous)) {
+								UMLClass addedClass = getAddedClass(move.getMovedOperation().getClassName());
+								if(addedClass != null) {
+									int index2 = addedClass.getOperations().indexOf(move.getMovedOperation());
+									if(index2 != -1 && index2 > 0) {
+										UMLOperation previousMoved = addedClass.getOperations().get(index2-1);
+										if(previous.equalParameterTypes(previousMoved) && previous.isConstructor() == previousMoved.isConstructor() && previous.getParameterTypeList().size() > 0 &&
+												!refactoringListContainsAnotherMoveRefactoringWithTheSameRemovedOperation(previous) &&
+												!refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(previousMoved)) {
+											UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(previous, previousMoved, classDiff);
+											MoveOperationRefactoring ref = null;
+											if(r.getRefactoringType().equals(RefactoringType.PULL_UP_OPERATION))
+												ref = new PullUpOperationRefactoring(operationBodyMapper);
+											else if(r.getRefactoringType().equals(RefactoringType.PUSH_DOWN_OPERATION))
+												ref = new PushDownOperationRefactoring(operationBodyMapper);
+											else
+												ref = new MoveOperationRefactoring(operationBodyMapper);
+											inferredMoveOperationRefactorings.add(ref);
+											UMLOperationDiff operationSignatureDiff = operationBodyMapper.getOperationSignatureDiff().get();
+											Set<Refactoring> signatureRefactorings = operationSignatureDiff.getRefactorings();
+											inferredMoveOperationRefactorings.addAll(signatureRefactorings);
+											classDiff.getRemovedOperations().remove(previous);
+										}
+									}
+								}
+							}
+						}
+						if(index1 < operations.size()-1) {
+							UMLOperation next = operations.get(index1+1);
+							if(deletedOperations.contains(next)) {
+								UMLClass addedClass = getAddedClass(move.getMovedOperation().getClassName());
+								if(addedClass != null) {
+									int index2 = addedClass.getOperations().indexOf(move.getMovedOperation());
+									if(index2 != -1 && index2 < addedClass.getOperations().size()-1) {
+										UMLOperation nextMoved = addedClass.getOperations().get(index2+1);
+										if(next.equalParameterTypes(nextMoved) && next.isConstructor() == nextMoved.isConstructor() && next.getParameterTypeList().size() > 0 &&
+												!refactoringListContainsAnotherMoveRefactoringWithTheSameRemovedOperation(next) &&
+												!refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(nextMoved)) {
+											UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(next, nextMoved, classDiff);
+											MoveOperationRefactoring ref = null;
+											if(r.getRefactoringType().equals(RefactoringType.PULL_UP_OPERATION))
+												ref = new PullUpOperationRefactoring(operationBodyMapper);
+											else if(r.getRefactoringType().equals(RefactoringType.PUSH_DOWN_OPERATION))
+												ref = new PushDownOperationRefactoring(operationBodyMapper);
+											else
+												ref = new MoveOperationRefactoring(operationBodyMapper);
+											inferredMoveOperationRefactorings.add(ref);
+											UMLOperationDiff operationSignatureDiff = operationBodyMapper.getOperationSignatureDiff().get();
+											Set<Refactoring> signatureRefactorings = operationSignatureDiff.getRefactorings();
+											inferredMoveOperationRefactorings.addAll(signatureRefactorings);
+											classDiff.getRemovedOperations().remove(next);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		refactorings.addAll(inferredMoveOperationRefactorings);
 		return filterOutDuplicateRefactorings(refactorings);
 	}
 

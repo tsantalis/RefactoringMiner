@@ -509,11 +509,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Move Code`
 * `Split Class`
 
-As of **November 15, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 16, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3448  | 44  | 83  | 0.987  | 0.976|
+|**Total**|3451  | 44  | 80  | 0.987  | 0.977|
 |Extract Method|373  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -521,8 +521,8 @@ As of **November 15, 2025** the precision and recall of RefactoringMiner on this
 |Rename Method|299  |  7  |  5  | 0.977  | 0.984|
 |Inline Method|68  |  3  |  2  | 0.958  | 0.971|
 |Move Method|266  |  1  |  0  | 0.996  | 1.000|
-|Move And Rename Method|24  |  4  |  1  | 0.857  | 0.960|
-|Pull Up Method|45  |  0  |  1  | 1.000  | 0.978|
+|Move And Rename Method|25  |  4  |  0  | 0.862  | 1.000|
+|Pull Up Method|46  |  0  |  0  | 1.000  | 1.000|
 |Move Class|144  |  2  |  1  | 0.986  | 0.993|
 |Move And Rename Class|28  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|12  |  0  |  0  | 1.000  | 1.000|
@@ -542,7 +542,7 @@ As of **November 15, 2025** the precision and recall of RefactoringMiner on this
 |Rename Attribute|112  |  4  |  6  | 0.966  | 0.949|
 |Replace Variable With Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|30  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|167  |  1  |  7  | 0.994  | 0.960|
+|Change Return Type|168  |  1  |  6  | 0.994  | 0.966|
 |Change Variable Type|376  |  7  |  4  | 0.982  | 0.989|
 |Change Attribute Type|164  |  2  |  3  | 0.988  | 0.982|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|

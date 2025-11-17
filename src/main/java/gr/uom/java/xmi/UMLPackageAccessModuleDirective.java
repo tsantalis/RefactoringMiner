@@ -73,4 +73,23 @@ public class UMLPackageAccessModuleDirective extends UMLAbstractModuleDirective 
 		return super.equals(obj) && Objects.equals(exports, other.exports) && Objects.equals(opens, other.opens);
 	}
 
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		if(opens) {
+			sb.append("opens ");
+		}
+		else if(exports) {
+			sb.append("exports ");
+		}
+		sb.append(getName().getString());
+		sb.append(" to ");
+		int i = 0;
+		for(LeafExpression module : modules) {
+			sb.append(module.getString());
+			if(i < modules.size() - 1)
+				sb.append(", ");
+			i++;
+		}
+		return sb.toString();
+	}
 }

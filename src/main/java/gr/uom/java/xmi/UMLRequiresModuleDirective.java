@@ -31,4 +31,20 @@ public class UMLRequiresModuleDirective extends UMLAbstractModuleDirective {
 	public boolean equalModifiers(UMLRequiresModuleDirective other) {
 		return this.modifiers.equals(other.modifiers);
 	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("requires ");
+		int i = 0;
+		for(UMLModuleModifier modifier : modifiers) {
+			sb.append(modifier);
+			if(i < modifiers.size() - 1)
+				sb.append(", ");
+			else
+				sb.append(" ");
+			i++;
+		}
+		sb.append(getName().getString());
+		return sb.toString();
+	}
 }

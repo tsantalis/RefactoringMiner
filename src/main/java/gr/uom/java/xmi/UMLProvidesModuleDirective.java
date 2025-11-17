@@ -17,7 +17,6 @@ public class UMLProvidesModuleDirective extends UMLAbstractModuleDirective {
 		super(new LeafExpression(cu, sourceFolder, filePath, directive.getName(), CodeElementType.DIRECTIVE_NAME, null));
 		this.implementations = new ArrayList<>();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, directive, CodeElementType.PROVIDES_DIRECTIVE);
-		
 		List<Name> implementations = directive.implementations();
 		for(Name impl : implementations) {
 			LeafExpression expr = new LeafExpression(cu, sourceFolder, filePath, impl, CodeElementType.IMPLEMENTATION_NAME, null);
@@ -35,5 +34,20 @@ public class UMLProvidesModuleDirective extends UMLAbstractModuleDirective {
 
 	public boolean equalImplementations(UMLProvidesModuleDirective other) {
 		return this.getImplementationsAsStrings().equals(other.getImplementationsAsStrings());
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("provides ");
+		sb.append(getName().getString());
+		sb.append(" with ");
+		int i = 0;
+		for(LeafExpression implementation : implementations) {
+			sb.append(implementation.getString());
+			if(i < implementations.size() - 1)
+				sb.append(", ");
+			i++;
+		}
+		return sb.toString();
 	}
 }

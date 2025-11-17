@@ -15,7 +15,7 @@ public class ModuleDeclarationMatcher implements TreeMatcher {
         Tree srcModuleDeclaration = findModuleDeclaration(srcTree);
         Tree dstModuleDeclaration = findModuleDeclaration(dstTree);
         if (srcModuleDeclaration != null && dstModuleDeclaration != null) {
-            mappingStore.addMappingRecursively(srcModuleDeclaration,dstModuleDeclaration);
+            mappingStore.addMapping(srcModuleDeclaration,dstModuleDeclaration);
             matchModuleNames(mappingStore, srcModuleDeclaration, dstModuleDeclaration);
         }
     }

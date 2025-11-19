@@ -31,10 +31,13 @@ public class UMLAnnotationListDiff {
 			}
 			if(!found) {
 				for(UMLAnnotation annotation2 : annotations2) {
-					if(annotation1.getTypeName().equals(annotation2.getTypeName())) {
+					if(annotation1.getTypeName().equals(annotation2.getTypeName()) && !alreadyMatchedAnnotation2(annotation2, matchedAnnotations)) {
 						matchedAnnotations.add(Pair.of(annotation1, annotation2));
 						found = true;
 						break;
+					}
+					if(matchedAnnotations.contains(Pair.of(annotation1, annotation2))) {
+						found = true;
 					}
 				}
 			}
@@ -53,10 +56,13 @@ public class UMLAnnotationListDiff {
 			}
 			if(!found) {
 				for(UMLAnnotation annotation1 : annotations1) {
-					if(annotation1.getTypeName().equals(annotation2.getTypeName())) {
+					if(annotation1.getTypeName().equals(annotation2.getTypeName()) && !alreadyMatchedAnnotation1(annotation1, matchedAnnotations)) {
 						matchedAnnotations.add(Pair.of(annotation1, annotation2));
 						found = true;
 						break;
+					}
+					if(matchedAnnotations.contains(Pair.of(annotation1, annotation2))) {
+						found = true;
 					}
 				}
 			}
@@ -73,6 +79,24 @@ public class UMLAnnotationListDiff {
 				commonAnnotations.add(pair);
 			}
 		}
+	}
+
+	private static boolean alreadyMatchedAnnotation1(UMLAnnotation annotation1, Set<Pair<UMLAnnotation, UMLAnnotation>> matchedAnnotations) {
+		for(Pair<UMLAnnotation, UMLAnnotation> pair : matchedAnnotations) {
+			if(pair.getLeft().equals(annotation1)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean alreadyMatchedAnnotation2(UMLAnnotation annotation2, Set<Pair<UMLAnnotation, UMLAnnotation>> matchedAnnotations) {
+		for(Pair<UMLAnnotation, UMLAnnotation> pair : matchedAnnotations) {
+			if(pair.getRight().equals(annotation2)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public Set<UMLAnnotation> getRemovedAnnotations() {

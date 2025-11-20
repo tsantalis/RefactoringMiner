@@ -6342,6 +6342,9 @@ public class UMLModelDiff {
 						}
 					}
 				}
+				if(invocation1.isSuperCall() && invocation2.isSuperCall()) {
+					return false;
+				}
 			}
 			AbstractCodeFragment fragment1 = mappingList.get(0).getFragment1();
 			AbstractCodeFragment fragment2 = mappingList.get(0).getFragment2();

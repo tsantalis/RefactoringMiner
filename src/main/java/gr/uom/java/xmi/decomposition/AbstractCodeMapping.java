@@ -1030,6 +1030,9 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							if(statement.getVariableDeclarations().size() > 0 && !statement.getVariableDeclarations().get(0).getScope().subsumes(getFragment2().getLocationInfo())) {
 								skip = true;
 							}
+							if(declaration.isParameter() && replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
+								skip = true;
+							}
 							if(!declarationMappingFound && !skip) {
 								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 								List<LeafExpression> subExpressions = getFragment1().findExpression(replacement.getBefore());

@@ -9409,6 +9409,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			boolean passDueToIfBecomingElseIf = ifBecomingElseIf && mappingSet.size() == parentMap.size();
 			boolean elseCondition = false;
+			if(!parentMap.values().contains(mappingSet.first())) {
+				return Set.of(mappingSet.first());
+			}
 			if(parentMap.size() == grandParentMap.size()) {
 				elseCondition = true;
 			}

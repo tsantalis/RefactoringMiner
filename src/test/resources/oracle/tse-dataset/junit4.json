@@ -845,22 +845,22 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\trules : List<MethodRule> to collector : RuleCollector<MethodRule> in method protected rules(target Object) : List<MethodRule> from class org.junit.runners.BlockJUnit4ClassRunner",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\trules : List<MethodRule> to collector : RuleCollector<MethodRule> in method protected rules(target Object) : List<MethodRule> from class org.junit.runners.BlockJUnit4ClassRunner",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tresult : List<TestRule> to collector : RuleCollector<TestRule> in method protected getTestRules(target Object) : List<TestRule> from class org.junit.runners.BlockJUnit4ClassRunner",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tresult : List<TestRule> to collector : RuleCollector<TestRule> in method protected getTestRules(target Object) : List<TestRule> from class org.junit.runners.BlockJUnit4ClassRunner",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [

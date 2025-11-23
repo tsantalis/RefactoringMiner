@@ -1,6 +1,6 @@
 ![Alt](https://repobeats.axiom.co/api/embed/aaedbff1e1adfcefc54fff9dbdac2f5384cbcf87.svg "Repobeats analytics image")
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner)
+[![Maven Central](https://maven-badges.sml.io/maven-central/com.github.tsantalis/refactoring-miner/badge.svg)](https://maven-badges.sml.io/maven-central/com.github.tsantalis/refactoring-miner)
 [![Docker Pulls](https://img.shields.io/docker/pulls/tsantalis/refactoringminer)](https://hub.docker.com/r/tsantalis/refactoringminer)
 [![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/lnloiaibmonmmpnfibfjjlfcddoppmgd)](https://chrome.google.com/webstore/detail/refactoring-aware-commit/lnloiaibmonmmpnfibfjjlfcddoppmgd)
 [![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/lnloiaibmonmmpnfibfjjlfcddoppmgd)](https://chrome.google.com/webstore/detail/refactoring-aware-commit/lnloiaibmonmmpnfibfjjlfcddoppmgd)
@@ -576,7 +576,7 @@ The available test suites are:
 * [src/test/java/org/refactoringminer/astDiff/tests/SpecificCasesTest](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/astDiff/tests/SpecificCasesTest.java): Tests the AST node mapping accuracy of RefactoringMiner on some specific cases
 
 # How to use RefactoringMiner as a maven dependency
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner)
+[![Maven Central](https://maven-badges.sml.io/maven-central/com.github.tsantalis/refactoring-miner/badge.svg)](https://maven-badges.sml.io/maven-central/com.github.tsantalis/refactoring-miner)
 
 Since version 2.0, RefactoringMiner is available in the [Maven Central Repository](https://mvnrepository.com/artifact/com.github.tsantalis/refactoring-miner).
 In order to use RefactoringMiner as a maven dependency in your project, add the following snippet to your project's build configuration file:
@@ -586,12 +586,12 @@ In order to use RefactoringMiner as a maven dependency in your project, add the 
     <dependency>
       <groupId>com.github.tsantalis</groupId>
       <artifactId>refactoring-miner</artifactId>
-      <version>3.0.11</version>
+      <version>3.0.12</version>
     </dependency>
 
 **build.gradle**
 
-    implementation 'com.github.tsantalis:refactoring-miner:3.0.11'
+    implementation 'com.github.tsantalis:refactoring-miner:3.0.12'
 
 # How to use RefactoringMiner as a docker image
 <a href="https://hub.docker.com/r/tsantalis/refactoringminer"><img src="https://img.shields.io/badge/dockerhub-images-important.svg?logo=Docker"></a>

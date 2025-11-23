@@ -1608,12 +1608,16 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	private static final String GITHUB_URL = "https://github.com/";
+	private static final String GITLAB_URL = "https://gitlab.com/";
 	private static final String BITBUCKET_URL = "https://bitbucket.org/";
 
 	private static String extractRepositoryName(String cloneURL) {
 		int hostLength = 0;
 		if(cloneURL.startsWith(GITHUB_URL)) {
 			hostLength = GITHUB_URL.length();
+		}
+		else if(cloneURL.startsWith(GITLAB_URL)) {
+			hostLength = GITLAB_URL.length();
 		}
 		else if(cloneURL.startsWith(BITBUCKET_URL)) {
 			hostLength = BITBUCKET_URL.length();
@@ -1641,6 +1645,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		if(cloneURL.startsWith(GITHUB_URL)) {
 			commitResource = "/pull/";
 		}
+		else if(cloneURL.startsWith(GITLAB_URL)) {
+			commitResource = "/merge_requests/";
+		}
 		else if(cloneURL.startsWith(BITBUCKET_URL)) {
 			commitResource = "/pull-requests/";
 		}
@@ -1657,7 +1664,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			indexOfDotGit = cloneURL.length() - 1;
 		}
 		String commitResource = "/";
-		if(cloneURL.startsWith(GITHUB_URL)) {
+		if(cloneURL.startsWith(GITHUB_URL) || cloneURL.startsWith(GITLAB_URL)) {
 			commitResource = "/commit/";
 		}
 		else if(cloneURL.startsWith(BITBUCKET_URL)) {
@@ -1676,7 +1683,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			indexOfDotGit = cloneURL.length() - 1;
 		}
 		String downloadResource = "/";
-		if(cloneURL.startsWith(GITHUB_URL)) {
+		if(cloneURL.startsWith(GITHUB_URL) || cloneURL.startsWith(GITLAB_URL)) {
 			downloadResource = "/archive/";
 		}
 		else if(cloneURL.startsWith(BITBUCKET_URL)) {

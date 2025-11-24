@@ -178,8 +178,10 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                         Tree srcVariableDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, variableDeclaration.getLocationInfo());
                         if (srcVariableDeclaration != null) {
                             List<Tree> srcChildrenList = srcVariableDeclaration.getChildren();
-                            Tree srcVarName = srcChildrenList.get(srcChildrenList.size() - 1);
-                            mappingStore.addMapping(srcVarName, dstVarName);
+                            if (srcChildrenList.size() > 0) {
+                                Tree srcVarName = srcChildrenList.get(srcChildrenList.size() - 1);
+                                mappingStore.addMapping(srcVarName, dstVarName);
+                            }
                         }
                     }
                 }

@@ -4186,7 +4186,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			else if(call.getName().equals("assertTimeout")) {
 				assertTimeout1++;
 			}
-			else if(call.getName().startsWith("assume")) {
+			else if(call.isAssumeCall()) {
 				assume1++;
 			}
 		}
@@ -4208,7 +4208,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			else if(call.getName().equals(JAVA.ASSERT_THAT_THROWN_BY)) {
 				populate(call, assertThatThrownByCalls, assertThatThrownByMappings);
 			}
-			else if(call.getName().startsWith("assume")) {
+			else if(call.isAssumeCall()) {
 				populate(call, assumeCalls, assumeMappings);
 			}
 		}
@@ -4222,18 +4222,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<AbstractCall> assertCalls,
 			BiFunction<Set<AbstractCodeMapping>, AbstractCall, AssertionRefactoring> assertionRefProvider) {
 		if(assertCountBefore < assertCalls.size()) {
-			for(AbstractCall assertThrowsCall : assertCalls) {
-				Set<AbstractCodeMapping> set = assertMappings.get(assertThrowsCall.actualString());
+			for(AbstractCall assertCall : assertCalls) {
+				Set<AbstractCodeMapping> set = assertMappings.get(assertCall.actualString());
 				if(set != null && set.size() > 0) {
 					AbstractCodeMapping firstMapping = set.iterator().next();
 					AbstractCall call2 = firstMapping.getFragment2().invocationCoveringEntireFragment();
-					if(call2 != null && call2.equals(assertThrowsCall)) {
+					if(call2 != null && call2.equals(assertCall)) {
 						AbstractCall call1 = firstMapping.getFragment1().invocationCoveringEntireFragment();
-						if(call1 != null && call1.equalArguments(call2) && !(call1.isAssertCall() && call1.getName().substring("assert".length()).equals(assertThrowsCall.getName().substring("assume".length())))) {
+						if(call1 != null && call1.equalArguments(call2) && !isAssumeRefactoring(call1, call2)) {
 							continue;
 						}
 					}
-					AssertionRefactoring ref = assertionRefProvider.apply(set, assertThrowsCall);
+					AssertionRefactoring ref = assertionRefProvider.apply(set, assertCall);
 					refactorings.add(ref);
 					if(ref instanceof AssertThrowsRefactoring assertThrows) {
 						handleAdditionalAssertThrowMappings(firstMapping, assertThrows);
@@ -4241,6 +4241,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private static boolean isAssumeRefactoring(AbstractCall call1, AbstractCall call2) {
+		return call2.isAssumeCall() && call1.isAssertCall() && removePrefix(call1).equals(removePrefix(call2));
+	}
+
+	private static String removePrefix(AbstractCall call1) {
+		if (call1.isAssertCall()) return call1.getName().substring("assert".length());
+		if (call1.isAssumeCall()) return call1.getName().substring("assume".length());
+		return call1.getName();
 	}
 
 	private void populate(AbstractCall call, List<AbstractCall> calls, Map<String, Set<AbstractCodeMapping>> codeMappings) {

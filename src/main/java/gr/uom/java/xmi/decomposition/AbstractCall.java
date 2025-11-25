@@ -48,7 +48,11 @@ public abstract class AbstractCall extends LeafExpression {
 		
 	}
 
-	public LeafExpression asLeafExpression() {
+    boolean isAssumeCall() {
+		return getName().startsWith("assume");
+	}
+
+    public LeafExpression asLeafExpression() {
 		return new LeafExpression(getString(), getLocationInfo());
 	}
 

@@ -654,6 +654,11 @@
           "type": "MOVE_CODE",
           "description": "Move Code\tfrom protected getLeaderReducer(reduceContext AggregationReduceContext, size int) : AggregatorReducer to public InternalHistogram(in StreamInput) in class org.elasticsearch.search.aggregations.bucket.histogram.InternalHistogram",
           "validation": true
+        },
+        {
+          "type": "MERGE_VARIABLE",
+          "description": "Merge Variable\t[docCount : long, aggs : InternalAggregations] to reducer : BucketReducer<Bucket> in method private reduceBucket(buckets List<Bucket>, context AggregationReduceContext) : Bucket from class org.elasticsearch.search.aggregations.bucket.histogram.InternalVariableWidthHistogram",
+          "validation": true
         }
       ]
     },
@@ -1116,6 +1121,11 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tmergeWithObject : RootObjectMapper in method public merge(mergeWith Mapper, parentMergeContext MapperMergeContext) : RootObjectMapper from class org.elasticsearch.index.mapper.RootObjectMapper",
+          "validation": true
+        },
+        {
+          "type": "MERGE_VARIABLE",
+          "description": "Merge Variable\t[mergeWith : ObjectMapper, reason : MergeReason] to mergeWithObject : PassThroughObjectMapper in method public merge(mergeWith Mapper, parentBuilderContext MapperMergeContext) : PassThroughObjectMapper from class org.elasticsearch.index.mapper.PassThroughObjectMapper",
           "validation": true
         }
       ]

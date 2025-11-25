@@ -52,13 +52,13 @@ public class TestRelatedStatementMappingsTest {
             // line range:131-131==line range:138-138
             //"https://github.com/MrSorrow/spring-framework.git,d5ee787e1e6653257720afe31ee3f8819cd4605c",
             
-            //"https://github.com/antlibs/ant-contrib.git,3975cfdae22ddd462f034d79f51d35e159cdd3d4",
+            "https://github.com/antlibs/ant-contrib.git,3975cfdae22ddd462f034d79f51d35e159cdd3d4",
             // Inline variant where if-body ends with return (not detected because condition is inverted!)
             "https://github.com/MrSorrow/spring-framework.git,f47bbb0d9e8023590c0fd965acb009719aea6b67",
             "https://github.com/apache/directory-kerby.git,efc2eed5b0ddb889e39049bc64628772034f91a3",
             //"https://github.com/arangodb/arangodb-java-driver-async.git,01dc48162eac4368161fcbf370827d693a4b0355",
-            //"https://github.com/google/guice.git,690e189a7d6830fb61c10fdc46a8985eac0a7d3a",
-            //"https://github.com/neo4j-attic/graphdb.git,cd634d05df324d52ec24620ffb8c9ae04c662be2",
+            "https://github.com/google/guice.git,690e189a7d6830fb61c10fdc46a8985eac0a7d3a",
+            "https://github.com/neo4j-attic/graphdb.git,cd634d05df324d52ec24620ffb8c9ae04c662be2",
             // Extract Precondition and extract test utility method
             //"https://github.com/ViktorC/PP4J.git,12a40d99481208f74d4d6f796513a107d9f3b2bf",
             // assert -> assume

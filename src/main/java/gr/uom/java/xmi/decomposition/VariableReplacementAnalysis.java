@@ -3010,6 +3010,11 @@ public class VariableReplacementAnalysis {
 				}
 			}
 		}
+		for(VariableDeclaration addedVariable : addedVariables) {
+			if(addedVariable.getVariableName().equals(replacement.getAfter())) {
+				return new SimpleEntry<>(addedVariable, operation2);
+			}
+		}
 		for(VariableDeclaration parameter : operation2.getParameterDeclarationList()) {
 			if(parameter.getVariableName().equals(replacement.getAfter())) {
 				return new SimpleEntry<>(parameter, operation2);

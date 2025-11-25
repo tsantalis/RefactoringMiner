@@ -62,8 +62,8 @@ public class TestRelatedStatementMappingsTest {
             // Extract Precondition and extract test utility method
             //"https://github.com/ViktorC/PP4J.git,12a40d99481208f74d4d6f796513a107d9f3b2bf",
             // assert -> assume
-            //"https://github.com/ViktorC/PP4J.git,12a40d99481208f74d4d6f796513a107d9f3b2bf",
-            //"https://github.com/google/guice.git,690e189a7d6830fb61c10fdc46a8985eac0a7d3a",
+            "https://github.com/ViktorC/PP4J.git,12a40d99481208f74d4d6f796513a107d9f3b2bf",
+            "https://github.com/google/guice.git,690e189a7d6830fb61c10fdc46a8985eac0a7d3a",
             // Reuses test utility method from another class (BaseTest) + Inline variant where if-body ends with return
             //"https://github.com/arangodb/arangodb-java-driver-async.git,01dc48162eac4368161fcbf370827d693a4b0355",
             //"https://github.com/arangodb/arangodb-java-driver-async.git,87412560daaa588b49aa5d9e8526d709d830fbb7",

@@ -4229,7 +4229,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					AbstractCall call2 = firstMapping.getFragment2().invocationCoveringEntireFragment();
 					if(call2 != null && call2.equals(assertThrowsCall)) {
 						AbstractCall call1 = firstMapping.getFragment1().invocationCoveringEntireFragment();
-						if(call1 != null && call1.equalArguments(call2)) {
+						if(call1 != null && call1.equalArguments(call2) && !(call1.isAssertCall() && call1.getName().substring("assert".length()).equals(assertThrowsCall.getName().substring("assume".length())))) {
 							continue;
 						}
 					}

@@ -1342,6 +1342,11 @@
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tCharSequence to boolean in method package needsInputCleaning(input CharSequence) : boolean from class org.apache.lucene.analysis.hunspell.Dictionary",
           "validation": false
+        },
+        {
+          "type": "MERGE_VARIABLE",
+          "description": "Merge Variable\t[line : String, sep : int] to beforeSep : String in method private writeNormalizedWordEntry(reuse StringBuilder, writer ByteSequencesWriter, line String) : void from class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
         }
       ]
     }

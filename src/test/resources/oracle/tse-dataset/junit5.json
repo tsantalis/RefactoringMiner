@@ -188,6 +188,11 @@
           "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
           "description": "Replace Variable With Attribute\tlogger : Logger to LOGGER : Logger in method private collectTypes(scanResult ScanResult) : SortedSet<ClassInfo> from class org.junit.api.tools.ApiReportGenerator",
           "validation": true
+        },
+        {
+          "type": "MERGE_VARIABLE",
+          "description": "Merge Variable\t[packageName : String, typeName : String] to declaration : Declaration in method protected printDeclarationTableRow(declaration Declaration, out PrintWriter) : void from class org.junit.api.tools.AsciidocApiReportWriter",
+          "validation": true
         }
       ]
     },

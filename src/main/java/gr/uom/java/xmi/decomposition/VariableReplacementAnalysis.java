@@ -3233,12 +3233,14 @@ public class VariableReplacementAnalysis {
 	}
 
 	private boolean potentialParameterRename(Replacement replacement, Set<AbstractCodeMapping> set) {
-		int index1 = operation1.getParameterNameList().indexOf(replacement.getBefore());
+		List<String> parameterNameList1 = operation1.getParameterNameList();
+		int index1 = parameterNameList1.indexOf(replacement.getBefore());
 		if(index1 == -1 && callSiteOperation != null && !mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
 			//inline method scenario
 			index1 = callSiteOperation.getParameterNameList().indexOf(replacement.getBefore());
 		}
-		int index2 = operation2.getParameterNameList().indexOf(replacement.getAfter());
+		List<String> parameterNameList2 = operation2.getParameterNameList();
+		int index2 = parameterNameList2.indexOf(replacement.getAfter());
 		if(index2 == -1 && callSiteOperation != null && mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && !mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
 			//extract method scenario
 			index2 = callSiteOperation.getParameterNameList().indexOf(replacement.getAfter());
@@ -3249,7 +3251,8 @@ public class VariableReplacementAnalysis {
 		if(fieldAssignmentWithPreviouslyExistingParameter(set)) {
 			return false;
 		}
-		return index1 >= 0 && index1 == index2;
+		boolean lastParameter = index1 == parameterNameList1.size()-1 && index2 == parameterNameList2.size()-1;
+		return index1 >= 0 && (index1 == index2 || lastParameter);
 	}
 
 	private boolean matchedEnhancedForLoopFormalParameter(VariableDeclaration v1, VariableDeclaration v2) {

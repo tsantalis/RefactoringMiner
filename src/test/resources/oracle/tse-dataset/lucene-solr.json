@@ -1266,6 +1266,11 @@
           "type": "MOVE_OPERATION",
           "description": "Move Method\tprivate acceptCase(originalCase WordCase, entryId int, word char[], offset int, length int) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer to private acceptCase(originalCase WordCase, entryId int, root CharsRef) : boolean from class org.apache.lucene.analysis.hunspell.Hunspell",
           "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[word : char[], offset : int, length : int] to root : CharsRef in method private acceptCase(originalCase WordCase, entryId int, root CharsRef) : boolean from class org.apache.lucene.analysis.hunspell.Hunspell",
+          "validation": true
         }
       ]
     },

@@ -380,11 +380,11 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **November 14, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 26, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12543  | 13  | 219  | 0.999  | 0.983|
+|**Total**|12555  | 13  | 219  | 0.999  | 0.983|
 |Extract Method|1019  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
@@ -415,7 +415,7 @@ As of **November 14, 2025** the precision and recall of RefactoringMiner on this
 |Inline Variable|147  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|346  |  2  | 11  | 0.994  | 0.969|
-|Rename Parameter|494  |  2  | 24  | 0.996  | 0.954|
+|Rename Parameter|503  |  2  | 24  | 0.996  | 0.954|
 |Rename Attribute|146  |  0  |  9  | 1.000  | 0.942|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
@@ -425,11 +425,11 @@ As of **November 14, 2025** the precision and recall of RefactoringMiner on this
 |Replace Variable With Attribute|124  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|28  |  0  |  1  | 1.000  | 0.966|
 |Parameterize Variable|110  |  0  |  0  | 1.000  | 1.000|
-|Localize Parameter|26  |  0  |  0  | 1.000  | 1.000|
+|Localize Parameter|27  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|25  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|433  |  0  | 12  | 1.000  | 0.973|
 |Change Variable Type|816  |  1  |  7  | 0.999  | 0.991|
-|Change Parameter Type|651  |  1  | 10  | 0.998  | 0.985|
+|Change Parameter Type|655  |  1  | 10  | 0.998  | 0.985|
 |Change Attribute Type|244  |  0  |  8  | 1.000  | 0.968|
 |Add Method Annotation|330  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|97  |  0  |  0  | 1.000  | 1.000|
@@ -443,8 +443,8 @@ As of **November 14, 2025** the precision and recall of RefactoringMiner on this
 |Add Parameter Annotation|34  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|850  |  1  |  1  | 0.999  | 0.999|
-|Remove Parameter|318  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|849  |  1  |  1  | 0.999  | 0.999|
+|Remove Parameter|317  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 2  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 4  |  0  |  0  | 1.000  | 1.000|

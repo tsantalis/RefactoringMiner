@@ -2369,6 +2369,16 @@
           "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
           "description": "Replace Variable With Attribute\tfailureCollector : RootFailureCollector to failureCollector : RootFailureCollector in method public finalizeIntegration() : SearchIntegration from class org.hibernate.search.engine.common.impl.SearchIntegrationPartialBuildStateImpl.SearchIntegrationFinalizerImpl",
           "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[sessionContext : LoadingSessionContext, cacheLookupStrategy : EntityLoadingCacheLookupStrategy, loadingOptions : MutableEntityLoadingOptions] to loadingContext : HibernateOrmSelectionLoadingContext in method public createEntityLoader(targetEntityTypeContexts Set<? extends PojoLoadingTypeContext<? extends E>>, loadingContext HibernateOrmSelectionLoadingContext) : PojoSelectionEntityLoader<E> from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmNonEntityIdPropertyEntityLoadingStrategy",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[sessionContext : LoadingSessionContext, cacheLookupStrategy : EntityLoadingCacheLookupStrategy, loadingOptions : MutableEntityLoadingOptions] to loadingContext : HibernateOrmSelectionLoadingContext in method public createEntityLoader(targetEntityTypeContexts Set<? extends PojoLoadingTypeContext<? extends E>>, loadingContext HibernateOrmSelectionLoadingContext) : PojoSelectionEntityLoader<E> from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmEntityIdEntityLoadingStrategy",
+          "validation": true
         }
       ]
     },
@@ -2489,6 +2499,36 @@
         {
           "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
           "description": "Replace Attribute With Variable\trootEntityMappingType : EntityMappingType to rootEntityMappingType : EntityMappingType in method private doCreate(entityMappingType EntityMappingType, sessionContext LoadingSessionContext, cacheLookupStrategy EntityLoadingCacheLookupStrategy, loadingOptions MutableEntityLoadingOptions) : PojoSelectionEntityLoader<?> from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmEntityIdEntityLoadingStrategy",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[sessionFactory : SessionFactoryImplementor, entityMappingType : EntityMappingType] to rootEntityName : String in method private HibernateOrmNonEntityIdPropertyEntityLoadingStrategy(rootEntityName String, entityName String, queryFactory TypeQueryFactory<E,I>, documentIdSourcePropertyName String, documentIdSourceHandle ValueReadHandle<? extends I>) from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmNonEntityIdPropertyEntityLoadingStrategy",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[sessionFactory : SessionFactoryImplementor, rootEntityMappingType : EntityMappingType] to rootEntityName : String in method package HibernateOrmEntityIdEntityLoadingStrategy(rootEntityClass Class<E>, rootEntityName String, queryFactory TypeQueryFactory<E,I>) from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmEntityIdEntityLoadingStrategy",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[sessionFactory : SessionFactoryImplementor, entityMappingType : EntityMappingType, documentIdSourcePropertyName : String] to documentIdSourceProperty : DocumentIdSourceProperty<I> in method public create(persistentClass PersistentClass, documentIdSourceProperty DocumentIdSourceProperty<I>) : HibernateOrmEntityLoadingStrategy<?,? super I> from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmNonEntityIdPropertyEntityLoadingStrategy",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[sessionFactory : SessionFactoryImplementor, rootEntityMappingType : EntityMappingType] to rootEntityName : String in method package AbstractHibernateOrmLoadingStrategy(rootEntityName String, queryFactory TypeQueryFactory<E,I>) from class org.hibernate.search.mapper.orm.loading.impl.AbstractHibernateOrmLoadingStrategy",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[jpaEntityName : String, hibernateOrmEntityName : String] to persistentClass : PersistentClass in method package Builder(typeModel PojoRawTypeModel<E>, persistentClass PersistentClass) from class org.hibernate.search.mapper.orm.mapping.impl.HibernateOrmContainedTypeContext.Builder",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[jpaEntityName : String, hibernateOrmEntityName : String] to persistentClass : PersistentClass in method package Builder(typeModel PojoRawTypeModel<E>, persistentClass PersistentClass) from class org.hibernate.search.mapper.orm.mapping.impl.HibernateOrmIndexedTypeContext.Builder",
           "validation": true
         }
       ]
@@ -2695,7 +2735,7 @@
         {
           "type": "MOVE_AND_RENAME_OPERATION",
           "description": "Move And Rename Method\tpackage closeOnFailure() : void from class org.hibernate.search.mapper.pojo.mapping.building.impl.PojoIndexedTypeManagerBuilder to protected doCloseOnFailure(closer Closer<RuntimeException>) : void from class org.hibernate.search.mapper.pojo.mapping.impl.PojoIndexedTypeManager.Builder",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_ATTRIBUTE_TYPE",
@@ -2715,6 +2755,16 @@
         {
           "type": "MOVE_AND_RENAME_ATTRIBUTE",
           "description": "Move And Rename Attribute\tprivate preBuiltIndexingProcessor : PojoIndexingProcessor<E> renamed to private indexingProcessor : PojoIndexingProcessor<E> and moved from class org.hibernate.search.mapper.pojo.mapping.building.impl.PojoIndexedTypeManagerBuilder to class org.hibernate.search.mapper.pojo.mapping.impl.PojoIndexedTypeManager.Builder",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[singleConcreteTypeInEntityHierarchy : boolean, identifierMapping : IdentifierMappingImplementor<I,E>, pathOrdinals : PojoPathOrdinals, reindexingResolver : PojoImplicitReindexingResolver<E>] to identityMappingCollector : PojoRootIdentityMappingCollector<E> in method package Builder(typeModel PojoRawTypeModel<E>, entityName String, identityMappingCollector PojoRootIdentityMappingCollector<E>, extendedMappingCollector PojoIndexedTypeExtendedMappingCollector, routingBridge BoundRoutingBridge<E>, indexingProcessorBuilder PojoIndexingProcessorOriginalTypeNodeBuilder<E>, indexManagerBuilder MappedIndexManagerBuilder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoIndexedTypeManager.Builder",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[singleConcreteTypeInEntityHierarchy : boolean, identifierMapping : IdentifierMappingImplementor<I,E>, pathOrdinals : PojoPathOrdinals, reindexingResolver : PojoImplicitReindexingResolver<E>] to identityMappingCollector : PojoRootIdentityMappingCollector<E> in method package Builder(typeModel PojoRawTypeModel<E>, entityName String, identityMappingCollector PojoRootIdentityMappingCollector<E>, extendedMappingCollector PojoContainedTypeExtendedMappingCollector) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoContainedTypeManager.Builder",
           "validation": true
         }
       ]

@@ -508,12 +508,14 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Replace Anonymous With Class`
 * `Move Code`
 * `Split Class`
+* `Merge Variable`
+* `Merge Parameter`
 
-As of **November 25, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 26, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3455  | 44  | 76  | 0.987  | 0.978|
+|**Total**|3467  | 43  | 76  | 0.988  | 0.979|
 |Extract Method|373  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -521,7 +523,7 @@ As of **November 25, 2025** the precision and recall of RefactoringMiner on this
 |Rename Method|299  |  7  |  5  | 0.977  | 0.984|
 |Inline Method|68  |  3  |  2  | 0.958  | 0.971|
 |Move Method|266  |  1  |  0  | 0.996  | 1.000|
-|Move And Rename Method|25  |  4  |  0  | 0.862  | 1.000|
+|Move And Rename Method|26  |  3  |  0  | 0.897  | 1.000|
 |Pull Up Method|46  |  0  |  0  | 1.000  | 1.000|
 |Move Class|144  |  2  |  1  | 0.986  | 0.993|
 |Move And Rename Class|28  |  0  |  0  | 1.000  | 1.000|
@@ -541,6 +543,7 @@ As of **November 25, 2025** the precision and recall of RefactoringMiner on this
 |Rename Variable|305  |  5  |  6  | 0.984  | 0.981|
 |Rename Attribute|112  |  4  |  6  | 0.966  | 0.949|
 |Merge Variable| 4  |  0  |  0  | 1.000  | 1.000|
+|Merge Parameter|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|30  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|168  |  1  |  6  | 0.994  | 0.966|

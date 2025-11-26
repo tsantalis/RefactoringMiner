@@ -3882,6 +3882,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private List<UMLOperationBodyMapper> checkForExtractedOperations() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperationBodyMapper> extractedOperationMappers = new ArrayList<UMLOperationBodyMapper>();
+		Set<UMLOperationBodyMapper> nestedFunctionMappers = new LinkedHashSet<>();
 		List<UMLOperation> outerClassAddedOperations = new ArrayList<>();
 		if(modelDiff != null && getNextClassName().contains(".")) {
 			String outerClassName = getNextClassName().substring(0, getNextClassName().lastIndexOf("."));
@@ -3946,6 +3947,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 						refactorings.add(refactoring);
 						UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
+						if(operationBodyMapper.getOperation1() != null &&
+								operationBodyMapper.getOperation1().getNestedOperations().size() > 0 &&
+								operationBodyMapper.getOperation2() != null &&
+								mapper.getOperation2().getNestedOperations().size() < operationBodyMapper.getOperation1().getNestedOperations().size() &&
+								addedOperation.getNestedOperations().size() > 0) {
+							nestedFunctionMappers.addAll(processNestedOperations(operationBodyMapper.getOperation1(), addedOperation));
+						}
 						extractedOperationMappers.add(operationBodyMapper);
 						mapper.addChildMapper(operationBodyMapper);
 						if(mapper.getChildMappers().size() == 1 && mapper.getContainer1().getJavadoc() != null && mapper.getContainer2().getJavadoc() != null) {
@@ -3957,6 +3965,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+		operationBodyMapperList.addAll(nestedFunctionMappers);
 		if(extractedOperationMappers.size() > 0) {
 			MappingOptimizer optimizer = new MappingOptimizer(this);
 			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
@@ -3976,6 +3985,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		addedOperations.removeAll(operationsToBeRemoved);
 		extractedOperationMappers.removeAll(zeroMappingMappers);
 		return extractedOperationMappers;
+	}
+
+	private Set<UMLOperationBodyMapper> processNestedOperations(UMLOperation operation1, UMLOperation operation2) throws RefactoringMinerTimedOutException {
+		Set<UMLOperationBodyMapper> nestedMappers = new LinkedHashSet<>();
+		for(UMLOperation operation : operation1.getNestedOperations()) {
+			UMLOperation operationWithTheSameSignature = operation2.nestedOperationWithTheSameSignatureIgnoringChangedTypes(operation);
+			if(removedOperations.contains(operation) && operationWithTheSameSignature != null && !mapperListContainsOperation(operation, operationWithTheSameSignature)) {
+				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation, operationWithTheSameSignature, this);
+				nestedMappers.add(mapper);
+			}
+		}
+		return nestedMappers;
 	}
 
 	public boolean isEmpty() {

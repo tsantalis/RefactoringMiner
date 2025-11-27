@@ -2034,6 +2034,8 @@ public class VariableReplacementAnalysis {
 	private Map<Replacement, Set<AbstractCodeMapping>> getReplacementOccurrenceMap(ReplacementType type) {
 		Map<Replacement, Set<AbstractCodeMapping>> map = new LinkedHashMap<Replacement, Set<AbstractCodeMapping>>();
 		for(AbstractCodeMapping mapping : mappings) {
+			List<LeafExpression> variables1 = mapping.getFragment1().getVariables();
+			List<LeafExpression> variables2 = mapping.getFragment2().getVariables();
 			for(Replacement replacement : mapping.getReplacements()) {
 				if(replacement.getType().equals(type) && !returnVariableMapping(mapping, replacement) &&
 						!containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(mapping.getReplacements()) &&
@@ -2069,6 +2071,15 @@ public class VariableReplacementAnalysis {
 					AbstractCall invocation1 = methodInvocationReplacement.getInvokedOperationBefore();
 					AbstractCall invocation2 = methodInvocationReplacement.getInvokedOperationAfter();
 					if(invocation1.getName().equals(invocation2.getName()) && invocation1.arguments().size() == invocation2.arguments().size()) {
+						Set<String> argumentIntersection = invocation1.argumentIntersection(invocation2);
+						int argumentsInSamePosition = 0;
+						for(String arg : argumentIntersection) {
+							int index1 = invocation1.arguments().indexOf(arg);
+							int index2 = invocation2.arguments().indexOf(arg);
+							if(index1 == index2) {
+								argumentsInSamePosition++;
+							}
+						}
 						for(int i=0; i<invocation1.arguments().size(); i++) {
 							String argument1 = invocation1.arguments().get(i);
 							String argument2 = invocation2.arguments().get(i);
@@ -2100,6 +2111,21 @@ public class VariableReplacementAnalysis {
 									String attribute1 = PrefixSuffixUtils.normalize(first1);
 									String attribute2 = PrefixSuffixUtils.normalize(first2);
 									Replacement variableReplacement = new Replacement(attribute1, attribute2, ReplacementType.VARIABLE_NAME);
+									if(map.containsKey(variableReplacement)) {
+										map.get(variableReplacement).add(mapping);
+									}
+									else {
+										Set<AbstractCodeMapping> list = new LinkedHashSet<AbstractCodeMapping>();
+										list.add(mapping);
+										map.put(variableReplacement, list);
+									}
+								}
+								else if(argumentsInSamePosition == invocation1.arguments().size()-1 &&
+										tokens1.size() == 1 && tokens2.size() == 1 && !first1.equals(first2) &&
+										!first1.contains(".") && !first2.contains(".") &&
+										variables1.stream().anyMatch(variable -> variable.getString().equals(first1)) &&
+										variables2.stream().anyMatch(variable -> variable.getString().equals(first2))) {
+									Replacement variableReplacement = new Replacement(first1, first2, ReplacementType.VARIABLE_NAME);
 									if(map.containsKey(variableReplacement)) {
 										map.get(variableReplacement).add(mapping);
 									}

@@ -297,7 +297,7 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\ttypeToOverride : ResolvableType to testClass : Class<?> in method private parseField(field Field, testClass Class<?>, metadataSet Set<OverrideMetadata>) : void from class org.springframework.test.context.bean.override.BeanOverrideParsingUtils",
-          "validation": false
+          "validation": true
         },
         {
           "type": "MOVE_OPERATION",

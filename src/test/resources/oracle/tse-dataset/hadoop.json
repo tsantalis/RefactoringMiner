@@ -1790,6 +1790,11 @@
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic getExternalData(conf Configuration) : Path extracted from public getLandsatCSVPath(conf Configuration) : Path in class org.apache.hadoop.fs.s3a.S3ATestUtils & moved to class org.apache.hadoop.fs.s3a.test.PublicDatasetTestUtils",
           "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcsvFile : String to filename : String in method public requireDefaultExternalDataFile(conf Configuration) : String from class org.apache.hadoop.fs.s3a.test.PublicDatasetTestUtils",
+          "validation": true
         }
       ]
     },

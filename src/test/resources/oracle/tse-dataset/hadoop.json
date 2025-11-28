@@ -1689,6 +1689,11 @@
           "type": "MOVE_RENAME_ATTRIBUTE",
           "description": "Move And Rename Attribute\tprivate retryCount : int renamed to private maxRetryCount : int and moved from class org.apache.hadoop.fs.azurebfs.services.ExponentialRetryPolicy to class org.apache.hadoop.fs.azurebfs.services.AbfsRetryPolicy",
           "validation": true
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpackage getRetryCount() : int from class org.apache.hadoop.fs.azurebfs.services.ExponentialRetryPolicy to protected getMaxRetryCount() : int from class org.apache.hadoop.fs.azurebfs.services.AbfsRetryPolicy",
+          "validation": true
         }
       ]
     },

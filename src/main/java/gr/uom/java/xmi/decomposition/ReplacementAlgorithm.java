@@ -858,7 +858,7 @@ public class ReplacementAlgorithm {
 					if(distanceRaw >= 0 && (distanceRaw < replacementInfo.getRawDistance() || allowReplacementIncreasingDistance)) {
 						minDistance = distanceRaw;
 						Replacement replacement = null;
-						if(variables1.contains(s1) && variables2.contains(s2) && variablesStartWithSameCase(s1, s2, replacementInfo)) {
+						if(variables1.contains(s1) && variables2.contains(s2) && variablesStartWithSameCase(s1, s2, container1, container2, replacementInfo)) {
 							replacement = new Replacement(s1, s2, ReplacementType.VARIABLE_NAME);
 							if(s1.startsWith("(") && s2.startsWith("(") && s1.contains(")") && s2.contains(")")) {
 								String prefix1 = s1.substring(0, s1.indexOf(")")+1);
@@ -5339,9 +5339,12 @@ public class ReplacementAlgorithm {
 		return replacements;
 	}
 
-	private static boolean variablesStartWithSameCase(String s1, String s2, ReplacementInfo replacementInfo) {
+	private static boolean variablesStartWithSameCase(String s1, String s2, VariableDeclarationContainer container1, VariableDeclarationContainer container2, ReplacementInfo replacementInfo) {
 		if(s1.length() > 0 && s2.length() > 0) {
-			if((s1.contains(".") || s2.contains(".")) && !s1.contains("."+s2) && !s2.contains("."+s1) && (replacementInfo.getArgumentizedString1().equals(JAVA.RETURN_SPACE + s1 + JAVA.STATEMENT_TERMINATION) ||
+			StatementObject statement1 = container1.singleReturnStatement();
+			StatementObject statement2 = container2.singleReturnStatement();
+			boolean bothSingleReturnStatement = statement1 != null && statement2 != null;
+			if((s1.contains(".") || s2.contains(".")) && !s1.contains("."+s2) && !s2.contains("."+s1) && !bothSingleReturnStatement && (replacementInfo.getArgumentizedString1().equals(JAVA.RETURN_SPACE + s1 + JAVA.STATEMENT_TERMINATION) ||
 					replacementInfo.getArgumentizedString2().equals(JAVA.RETURN_SPACE + s2 + JAVA.STATEMENT_TERMINATION))) {
 				return false;
 			}

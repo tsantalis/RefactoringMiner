@@ -1691,7 +1691,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				if(token1.equals(token2)) {
 					matchingTokens++;
 				}
-				else if(token1.contains(".") && token2.contains(".")) {
+				else if(token1.contains(".") && token2.contains(".") && !(token1.contains("(") && token2.contains("("))) {
 					String prefix1 = token1.substring(0, token1.indexOf("."));
 					String prefix2 = token2.substring(0, token2.indexOf("."));
 					if(prefix1.equals(prefix2)) {

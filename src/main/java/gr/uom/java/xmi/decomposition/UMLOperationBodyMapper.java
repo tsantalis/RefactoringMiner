@@ -8211,7 +8211,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		for(AbstractCodeFragment leaf : leaves1) {
 			if(!leaf.equals(leaf1)) {
-				if(leaf.getVariables().size() == 2 && leaf.getString().equals(leaf.getVariables().get(0).getString() + LANG.ASSIGNMENT + leaf.getVariables().get(1).getString() + LANG.STATEMENT_TERMINATION)) {
+				if(leaf.getVariables().size() == 2 && leaf.getString().equals(leaf.getVariables().get(0).getString() + JAVA.ASSIGNMENT + leaf.getVariables().get(1).getString() + JAVA.STATEMENT_TERMINATION)) {
 					continue;
 				}
 				int mappingsBefore = mappings.size();

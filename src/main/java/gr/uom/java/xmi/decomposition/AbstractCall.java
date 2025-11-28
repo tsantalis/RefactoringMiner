@@ -192,10 +192,10 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
-	public boolean identicalExpression(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
+	public boolean identicalExpression(AbstractCall call, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap) {
 		return identicalExpression(call) ||
-		identicalExpressionAfterTypeReplacements(call, replacements, parameterToArgumentMap) ||
-		identicalExpressionAfterArgumentAddition(call, replacements);
+		identicalExpressionAfterTypeReplacements(call, replacementInfo, parameterToArgumentMap) ||
+		identicalExpressionAfterArgumentAddition(call, replacementInfo);
 	}
 
 	public boolean identicalExpression(AbstractCall call) {
@@ -204,11 +204,11 @@ public abstract class AbstractCall extends LeafExpression {
 				(getExpression() == null && call.getExpression() == null);
 	}
 
-	private boolean identicalExpressionAfterArgumentAddition(AbstractCall call, Set<Replacement> replacements) {
+	private boolean identicalExpressionAfterArgumentAddition(AbstractCall call, ReplacementInfo replacementInfo) {
 		if(getExpression() != null && call.getExpression() != null) {
 			int methodInvocationReplacements = 0;
 			int argumentAdditionReplacements = 0;
-			for(Replacement replacement : replacements) {
+			for(Replacement replacement : replacementInfo.getReplacements()) {
 				if(replacement instanceof MethodInvocationReplacement) {
 					if(getExpression().contains(replacement.getBefore()) && call.getExpression().contains(replacement.getAfter())) {
 						methodInvocationReplacements++;
@@ -231,12 +231,12 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
-	private boolean identicalExpressionAfterTypeReplacements(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
+	private boolean identicalExpressionAfterTypeReplacements(AbstractCall call, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap) {
 		if(getExpression() != null && call.getExpression() != null) {
 			String expression1 = getExpression();
 			String expression2 = call.getExpression();
 			String expression1AfterReplacements = new String(expression1);
-			for(Replacement replacement : replacements) {
+			for(Replacement replacement : replacementInfo.getReplacements()) {
 				if(replacement.getType().equals(ReplacementType.TYPE) ||
 						//allow only class names corresponding to static calls
 						(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && expressionCondition(expression1, expression2, parameterToArgumentMap))) {
@@ -620,7 +620,7 @@ public abstract class AbstractCall extends LeafExpression {
 			}
 		}
 		return ((getExpression() != null && call.getExpression() != null) || matchPairOfRemovedAddedOperationsWithIdenticalBody) &&
-				identicalExpression(call, replacements, parameterToArgumentMap) &&
+				identicalExpression(call, replacementInfo, parameterToArgumentMap) &&
 				!identicalName(call) &&
 				(equalArguments(call) || reorderedArguments(call) || (allArgumentsReplaced && compatibleName(call, distance)) || (identicalOrReplacedArguments && !allArgumentsReplaced) || argumentsWithVariableDeclarationMapping ||
 				(nameMatch && argumentIntersection(call).size() > 0));
@@ -700,7 +700,7 @@ public abstract class AbstractCall extends LeafExpression {
 				(equalArguments(call) || reorderedArguments(call));
 	}
 
-	public boolean renamedWithIdenticalExpressionAndDifferentArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, double distance, List<UMLOperationBodyMapper> lambdaMappers) {
+	public boolean renamedWithIdenticalExpressionAndDifferentArguments(AbstractCall call, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap, double distance, List<UMLOperationBodyMapper> lambdaMappers) {
 		boolean allExactLambdaMappers = lambdaMappers.size() > 0;
 		for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
 			if(!lambdaMapper.allMappingsAreExactMatches()) {
@@ -709,7 +709,7 @@ public abstract class AbstractCall extends LeafExpression {
 			}
 		}
 		return getExpression() != null && call.getExpression() != null &&
-				identicalExpression(call, replacements, parameterToArgumentMap) &&
+				identicalExpression(call, replacementInfo, parameterToArgumentMap) &&
 				(normalizedNameDistance(call) <= distance || allExactLambdaMappers || (this.methodNameContainsArgumentName() && call.methodNameContainsArgumentName()) || argumentIntersectionContainsClassInstanceCreation(call)) &&
 				!equalArguments(call) &&
 				!this.argumentContainsAnonymousClassDeclaration() && !call.argumentContainsAnonymousClassDeclaration() &&
@@ -834,25 +834,25 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
-	private boolean onlyArgumentsChanged(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, boolean varArgsParameter) {
-		return identicalExpression(call, replacements, parameterToArgumentMap) &&
+	private boolean onlyArgumentsChanged(AbstractCall call, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap, boolean varArgsParameter) {
+		return identicalExpression(call, replacementInfo, parameterToArgumentMap) &&
 				identicalName(call) &&
 				!equalArguments(call) &&
 				(arguments().size() != call.arguments().size() || varArgsParameter);
 	}
 
-	public boolean identicalWithOnlyChangesInAnonymousClassArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
-		return identicalExpression(call, replacements, parameterToArgumentMap) &&
+	public boolean identicalWithOnlyChangesInAnonymousClassArguments(AbstractCall call, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap) {
+		return identicalExpression(call, replacementInfo, parameterToArgumentMap) &&
 				identicalName(call) && !equalArguments(call) &&
 				arguments().size() == call.arguments().size() &&
 				equalArgumentsExceptForAnonymousClassArguments(call);
 	}
 
-	public boolean identicalWithMergedArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, boolean varArgsParameter) {
-		if(onlyArgumentsChanged(call, replacements, parameterToArgumentMap, varArgsParameter)) {
+	public boolean identicalWithMergedArguments(AbstractCall call, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap, boolean varArgsParameter) {
+		if(onlyArgumentsChanged(call, replacementInfo, parameterToArgumentMap, varArgsParameter)) {
 			List<String> updatedArguments1 = new ArrayList<String>(this.arguments);
 			Map<String, Set<Replacement>> commonVariableReplacementMap = new LinkedHashMap<String, Set<Replacement>>();
-			for(Replacement replacement : replacements) {
+			for(Replacement replacement : replacementInfo.getReplacements()) {
 				if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
 					String key = replacement.getAfter();
 					if(commonVariableReplacementMap.containsKey(key)) {
@@ -878,13 +878,13 @@ public abstract class AbstractCall extends LeafExpression {
 				for(String key : commonVariableReplacementMap.keySet()) {
 					Set<Replacement> r = commonVariableReplacementMap.get(key);
 					if(r.size() > 1) {
-						replacements.removeAll(r);
+						replacementInfo.removeReplacements(r);
 						Set<String> mergedVariables = new LinkedHashSet<String>();
 						for(Replacement replacement : r) {
 							mergedVariables.add(replacement.getBefore());
 						}
 						MergeVariableReplacement merge = new MergeVariableReplacement(mergedVariables, key);
-						replacements.add(merge);
+						replacementInfo.addReplacement(merge);
 					}
 				}
 				return true;
@@ -893,9 +893,9 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
-	public boolean identicalWithDifferentNumberOfArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, boolean varArgsParameter) {
-		if(onlyArgumentsChanged(call, replacements, parameterToArgumentMap, varArgsParameter)) {
-			int argumentIntersectionSize = argumentIntersectionSize(call, replacements, parameterToArgumentMap);
+	public boolean identicalWithDifferentNumberOfArguments(AbstractCall call, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap, boolean varArgsParameter) {
+		if(onlyArgumentsChanged(call, replacementInfo, parameterToArgumentMap, varArgsParameter)) {
+			int argumentIntersectionSize = argumentIntersectionSize(call, replacementInfo.getReplacements(), parameterToArgumentMap);
 			if(argumentIntersectionSize > 0 || arguments().size() == 0 || call.arguments().size() == 0) {
 				return true;
 			}
@@ -998,8 +998,8 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
-	public boolean identicalWithInlinedStatements(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, List<AbstractCodeFragment> statements) {
-		if(identicalExpression(call, replacements, parameterToArgumentMap) && identicalName(call)) {
+	public boolean identicalWithInlinedStatements(AbstractCall call, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap, List<AbstractCodeFragment> statements) {
+		if(identicalExpression(call, replacementInfo, parameterToArgumentMap) && identicalName(call)) {
 			if(this.arguments.size() == call.arguments.size()) {
 				Set<Replacement> newReplacements = new LinkedHashSet<Replacement>();
 				Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
@@ -1059,13 +1059,13 @@ public abstract class AbstractCall extends LeafExpression {
 					}
 				}
 				for(Replacement r : newReplacements) {
-					if(!replacements.contains(r)) {
-						replacements.add(r);
+					if(!replacementInfo.getReplacements().contains(r)) {
+						replacementInfo.addReplacement(r);
 					}
 				}
 				if(additionallyMatchedStatements1.size() > 0) {
 					CompositeReplacement r = new CompositeReplacement(this.actualString(), call.actualString(), additionallyMatchedStatements1, Collections.emptySet());
-					replacements.add(r);
+					replacementInfo.addReplacement(r);
 				}
 				return true;
 			}
@@ -1105,8 +1105,8 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
-	public boolean identical(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, List<UMLOperationBodyMapper> lambdaMappers) {
-		return identicalExpression(call, replacements, parameterToArgumentMap) &&
+	public boolean identical(AbstractCall call, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap, List<UMLOperationBodyMapper> lambdaMappers) {
+		return identicalExpression(call, replacementInfo, parameterToArgumentMap) &&
 				identicalName(call) &&
 				(equalArguments(call) || onlyLambdaArgumentsDiffer(call, lambdaMappers));
 	}

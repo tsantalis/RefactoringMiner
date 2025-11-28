@@ -6,20 +6,21 @@ import narrator.graph.Node;
 import narrator.graph.NodeType;
 import org.jgrapht.Graph;
 
-import java.util.*;
-
 public class SuccessivePattern extends TraversalPattern {
-    private Node getHead() {
-        Graph<Node, Edge> graph = getGraph();
+    Node cachedHead;
 
-        Set<Node> nodes = graph.vertexSet();
-        for (Node node : nodes) {
-            if (graph.incomingEdgesOf(node).isEmpty()) {
-                return node;
+    private Node getHead() {
+        if (cachedHead == null) {
+            Graph<Node, Edge> graph = getGraph();
+            for (Node node : graph.vertexSet()) {
+                if (graph.incomingEdgesOf(node).isEmpty()) {
+                    cachedHead = node;
+                    break;
+                }
             }
         }
 
-        return null;
+        return cachedHead;
     }
 
     @Override

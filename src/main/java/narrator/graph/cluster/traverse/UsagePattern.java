@@ -49,12 +49,13 @@ public class UsagePattern extends TraversalPattern {
 
     @Override
     public Node getLead() {
-        List<Node> nodes = useNodes.stream().toList();
+        if (cachedLead == null) {
+            List<Node> nodes = useNodes.stream().toList();
+            int randomIndex = new Random().nextInt(nodes.size());
+            cachedLead = nodes.get(randomIndex);
+        }
 
-        Random random = new Random();
-        int randomIndex = random.nextInt(nodes.size());
-
-        return nodes.get(randomIndex);
+        return cachedLead;
     }
 
     @Override

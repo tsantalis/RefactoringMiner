@@ -41,12 +41,16 @@ public class TraversalComponent extends TraversalPattern {
 
     @Override
     public Node getLead() {
-        Set<Node> nodes = getGraph().vertexSet();
-        if (!nodes.isEmpty()) {
-            return nodes.iterator().next();
+        if (cachedLead == null) {
+            Set<Node> nodes = getGraph().vertexSet();
+            if (!nodes.isEmpty()) {
+                cachedLead = nodes.iterator().next();
+            } else {
+                cachedLead = components.get(0).getLead();
+            }
         }
 
-        return components.get(0).getLead();
+        return cachedLead;
     }
 
     @Override

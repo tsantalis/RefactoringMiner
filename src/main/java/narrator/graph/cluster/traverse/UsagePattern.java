@@ -69,13 +69,21 @@ public class UsagePattern extends TraversalPattern {
 
     @Override
     public boolean containsNode(Node node) {
+        return this.containsNode(node, new HashSet<>());
+    }
+
+    private boolean containsNode(Node node, Set<UsagePattern> visited) {
+        if (!visited.add(this)) {
+            return false;
+        }
+
         boolean isRootNode = getGraph().vertexSet().stream().anyMatch(rootNode -> rootNode.equals(node));
         if (isRootNode) {
             return true;
         }
 
         for (UsagePattern requirement : requirements.values()) {
-            if (requirement.containsNode(node)) {
+            if (requirement.containsNode(node, visited)) {
                 return true;
             }
         }
@@ -85,9 +93,17 @@ public class UsagePattern extends TraversalPattern {
 
     @Override
     public Set<Node> vertexSet() {
+        return this.vertexSet(new HashSet<>());
+    }
+
+    private Set<Node> vertexSet(Set<UsagePattern> visited) {
+        if (!visited.add(this)) {
+            return new HashSet<>();
+        }
+
         Set<Node> result = new HashSet<>(getGraph().vertexSet());
         for (UsagePattern requirement : requirements.values()) {
-            result.addAll(requirement.vertexSet());
+            result.addAll(requirement.vertexSet(visited));
         }
         return result;
     }

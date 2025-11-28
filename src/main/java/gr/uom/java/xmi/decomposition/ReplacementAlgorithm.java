@@ -2043,7 +2043,7 @@ public class ReplacementAlgorithm {
 		if(assignmentInvocationCoveringTheEntireStatement1 != null && assignmentInvocationCoveringTheEntireStatement2 != null) {
 			for(String key1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
-					if(invocation1.identical(assignmentInvocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, replacementInfo.getLambdaMappers()) &&
+					if(invocation1.identical(assignmentInvocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, replacementInfo.getLambdaMappers()) &&
 							(!containsInArguments(assignmentInvocationCoveringTheEntireStatement1, key1) || operationBodyMapper.parentMapperContainsMapping(statement1))) {
 						if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo) &&
 								!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
@@ -2260,7 +2260,7 @@ public class ReplacementAlgorithm {
 		}
 		//method invocation is identical if arguments are replaced
 		if(assignmentInvocationCoveringTheEntireStatement1 != null && assignmentInvocationCoveringTheEntireStatement2 != null &&
-				assignmentInvocationCoveringTheEntireStatement1.identicalExpression(assignmentInvocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) &&
+				assignmentInvocationCoveringTheEntireStatement1.identicalExpression(assignmentInvocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap) &&
 				assignmentInvocationCoveringTheEntireStatement1.identicalName(assignmentInvocationCoveringTheEntireStatement2) ) {
 			for(String key : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key)) {
@@ -2280,7 +2280,7 @@ public class ReplacementAlgorithm {
 		}
 		//method invocation is identical if arguments are wrapped or concatenated
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.identicalExpression(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) &&
+				invocationCoveringTheEntireStatement1.identicalExpression(invocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap) &&
 				invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2) ) {
 			for(String key : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key)) {
@@ -2435,7 +2435,7 @@ public class ReplacementAlgorithm {
 		}
 		//method invocation has been renamed and arguments changed, but the expressions are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndDifferentArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, replacementInfo.getLambdaMappers())) {
+				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndDifferentArguments(invocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, replacementInfo.getLambdaMappers())) {
 			ReplacementType type = invocationCoveringTheEntireStatement1.getName().equals(invocationCoveringTheEntireStatement2.getName()) ? ReplacementType.METHOD_INVOCATION_ARGUMENT : ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT;
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 					invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, type);
@@ -2494,7 +2494,7 @@ public class ReplacementAlgorithm {
 			}
 			for(String methodInvocation1 : methodInvocations1) {
 				for(AbstractCall operationInvocation1 : methodInvocationMap1.get(methodInvocation1)) {
-					if(operationInvocation1.renamedWithIdenticalExpressionAndDifferentArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, replacementInfo.getLambdaMappers()) &&
+					if(operationInvocation1.renamedWithIdenticalExpressionAndDifferentArguments(invocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, replacementInfo.getLambdaMappers()) &&
 							!isExpressionOfAnotherMethodInvocation(operationInvocation1, methodInvocationMap1) &&
 							!variableDeclarationMatchedWithNonVariableDeclaration) {
 						ReplacementType type = operationInvocation1.getName().equals(invocationCoveringTheEntireStatement2.getName()) ? ReplacementType.METHOD_INVOCATION_ARGUMENT : ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT;
@@ -2509,10 +2509,10 @@ public class ReplacementAlgorithm {
 		//method invocation has only changes in the arguments (different number of arguments)
 		boolean varArgsParameter = container1.hasVarargsParameter() || container2.hasVarargsParameter();
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
-			if(invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, varArgsParameter)) {
+			if(invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, varArgsParameter)) {
 				return replacementInfo.getReplacements();
 			}
-			else if(invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, varArgsParameter)) {
+			else if(invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, varArgsParameter)) {
 				Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 						invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_ARGUMENT);
 				replacementInfo.addReplacement(replacement);
@@ -2536,10 +2536,10 @@ public class ReplacementAlgorithm {
 		if(!methodInvocations1.isEmpty() && invocationCoveringTheEntireStatement2 != null) {
 			for(String methodInvocation1 : methodInvocations1) {
 				for(AbstractCall operationInvocation1 : methodInvocationMap1.get(methodInvocation1)) {
-					if(operationInvocation1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, varArgsParameter)) {
+					if(operationInvocation1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, varArgsParameter)) {
 						return replacementInfo.getReplacements();
 					}
-					else if(operationInvocation1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, varArgsParameter)) {
+					else if(operationInvocation1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, varArgsParameter)) {
 						Replacement replacement = new MethodInvocationReplacement(operationInvocation1.actualString(),
 								invocationCoveringTheEntireStatement2.actualString(), operationInvocation1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_ARGUMENT);
 						replacementInfo.addReplacement(replacement);
@@ -3316,7 +3316,7 @@ public class ReplacementAlgorithm {
 							for(AbstractCodeFragment codeFragment : replacementInfo.getStatements2()) { 
 								AbstractCall invocation = codeFragment.invocationCoveringEntireFragment(); 
 								if(invocation != null) { 
-									if(invocation.identical(invocation1, replacementInfo.getReplacements(), parameterToArgumentMap, replacementInfo.getLambdaMappers())) { 
+									if(invocation.identical(invocation1, replacementInfo, parameterToArgumentMap, replacementInfo.getLambdaMappers())) { 
 										additionallyMatchedStatements2.add(codeFragment); 
 									} 
 									if((invocation.getExpression() != null && invocation.getExpression().equals(invocation1.actualString())) ||
@@ -3380,7 +3380,7 @@ public class ReplacementAlgorithm {
 							for(AbstractCodeFragment codeFragment : replacementInfo.getStatements1()) {
 								AbstractCall invocation = codeFragment.invocationCoveringEntireFragment();
 								if(invocation != null) {
-									if(invocation.identical(invocation2, replacementInfo.getReplacements(), parameterToArgumentMap, replacementInfo.getLambdaMappers())) {
+									if(invocation.identical(invocation2, replacementInfo, parameterToArgumentMap, replacementInfo.getLambdaMappers())) {
 										additionallyMatchedStatements1.add(codeFragment);
 									}
 									if((invocation.getExpression() != null && invocation.getExpression().equals(invocation2.actualString())) ||
@@ -3425,7 +3425,7 @@ public class ReplacementAlgorithm {
 		}
 		//object creation is identical
 		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null &&
-				creationCoveringTheEntireStatement1.identical(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, replacementInfo.getLambdaMappers())) {
+				creationCoveringTheEntireStatement1.identical(creationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, replacementInfo.getLambdaMappers())) {
 			boolean identicalArrayInitializer = true;
 			if(creationCoveringTheEntireStatement1.isArray() && creationCoveringTheEntireStatement2.isArray()) {
 				identicalArrayInitializer = creationCoveringTheEntireStatement1.identicalArrayInitializer(creationCoveringTheEntireStatement2);
@@ -3506,7 +3506,7 @@ public class ReplacementAlgorithm {
 		}
 		//object creation has only changes in the arguments
 		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null) {
-			if(creationCoveringTheEntireStatement1.identicalWithMergedArguments(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, varArgsParameter)) {
+			if(creationCoveringTheEntireStatement1.identicalWithMergedArguments(creationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, varArgsParameter)) {
 				return replacementInfo.getReplacements();
 			}
 			else if(creationCoveringTheEntireStatement1.reorderedArguments(creationCoveringTheEntireStatement2)) {
@@ -3515,7 +3515,7 @@ public class ReplacementAlgorithm {
 				replacementInfo.addReplacement(replacement);
 				return replacementInfo.getReplacements();
 			}
-			else if(creationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, varArgsParameter)) {
+			else if(creationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(creationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, varArgsParameter)) {
 				Replacement replacement = new ObjectCreationReplacement(creationCoveringTheEntireStatement1.actualString(),
 						creationCoveringTheEntireStatement2.actualString(), creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);
 				replacementInfo.addReplacement(replacement);
@@ -3539,7 +3539,7 @@ public class ReplacementAlgorithm {
 		//check if the argument lists are identical after replacements
 		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null &&
 				creationCoveringTheEntireStatement1.identicalName(creationCoveringTheEntireStatement2) &&
-				creationCoveringTheEntireStatement1.identicalExpression(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) &&
+				creationCoveringTheEntireStatement1.identicalExpression(creationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap) &&
 				!creationCoveringTheEntireStatement1.allArgumentsReplaced(creationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
 			if(creationCoveringTheEntireStatement1.isArray() && creationCoveringTheEntireStatement2.isArray() && s1.contains("[") && s2.contains("[") &&
 					s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).equals(s2.substring(s2.indexOf("[")+1, s2.lastIndexOf("]"))) &&
@@ -3585,7 +3585,7 @@ public class ReplacementAlgorithm {
 		if(!creations1.isEmpty() && creationCoveringTheEntireStatement2 != null) {
 			for(String creation1 : creations1) {
 				for(AbstractCall objectCreation1 : creationMap1.get(creation1)) {
-					if(objectCreation1.identicalWithMergedArguments(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, varArgsParameter)) {
+					if(objectCreation1.identicalWithMergedArguments(creationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, varArgsParameter)) {
 						return replacementInfo.getReplacements();
 					}
 					else if(objectCreation1.reorderedArguments(creationCoveringTheEntireStatement2)) {
@@ -3594,7 +3594,7 @@ public class ReplacementAlgorithm {
 						replacementInfo.addReplacement(replacement);
 						return replacementInfo.getReplacements();
 					}
-					else if(objectCreation1.identicalWithDifferentNumberOfArguments(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, varArgsParameter)) {
+					else if(objectCreation1.identicalWithDifferentNumberOfArguments(creationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, varArgsParameter)) {
 						Replacement replacement = new ObjectCreationReplacement(objectCreation1.actualString(),
 								creationCoveringTheEntireStatement2.actualString(), objectCreation1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);
 						replacementInfo.addReplacement(replacement);
@@ -3615,7 +3615,7 @@ public class ReplacementAlgorithm {
 					}
 					//check if the argument lists are identical after replacements
 					if(objectCreation1.identicalName(creationCoveringTheEntireStatement2) &&
-							objectCreation1.identicalExpression(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
+							objectCreation1.identicalExpression(creationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap)) {
 						if(objectCreation1 instanceof ObjectCreation && ((ObjectCreation)objectCreation1).isArray() && creationCoveringTheEntireStatement2.isArray() && s1.contains("[") && s2.contains("[") &&
 								s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).equals(s2.substring(s2.indexOf("[")+1, s2.lastIndexOf("]"))) &&
 								s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).length() > 0) {
@@ -5759,7 +5759,7 @@ public class ReplacementAlgorithm {
 						if(invocation2 != null) {
 							for(String key1 : methodInvocationMap1.keySet()) {
 								for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
-									if(invocation1.identical(invocation2, replacementInfo.getReplacements(), parameterToArgumentMap, Collections.emptyList())) {
+									if(invocation1.identical(invocation2, replacementInfo, parameterToArgumentMap, Collections.emptyList())) {
 										Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
 												invocation2.actualString(), invocation1, invocation2, ReplacementType.METHOD_INVOCATION_WRAPPED_IN_ANONYMOUS_CLASS_DECLARATION);
 										replacementInfo.addReplacement(replacement);
@@ -5784,8 +5784,8 @@ public class ReplacementAlgorithm {
 						if(invocation1 != null) {
 							for(String key2 : methodInvocationMap2.keySet()) {
 								for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
-									if(invocation1.identical(invocation2, replacementInfo.getReplacements(), parameterToArgumentMap, Collections.emptyList()) ||
-											invocation1.identicalWithInlinedStatements(invocation2, replacementInfo.getReplacements(), parameterToArgumentMap, statements)) {
+									if(invocation1.identical(invocation2, replacementInfo, parameterToArgumentMap, Collections.emptyList()) ||
+											invocation1.identicalWithInlinedStatements(invocation2, replacementInfo, parameterToArgumentMap, statements)) {
 										Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
 												invocation2.actualString(), invocation1, invocation2, ReplacementType.METHOD_INVOCATION_WRAPPED_IN_ANONYMOUS_CLASS_DECLARATION);
 										replacementInfo.addReplacement(replacement);
@@ -6085,10 +6085,10 @@ public class ReplacementAlgorithm {
 				extractedToVariable(statementWithoutAnonymous1, statementWithoutAnonymous2, statement1, statement2, replacementInfo) ||
 				(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				(onlyDifferentInvoker(statementWithoutAnonymous1, statementWithoutAnonymous2, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
-				invocationCoveringTheEntireStatement1.identical(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, lambdaMappers) ||
-				invocationCoveringTheEntireStatement1.identicalWithOnlyChangesInAnonymousClassArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) ||
-				invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, varArgsParameter) ||
-				invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, varArgsParameter) ||
+				invocationCoveringTheEntireStatement1.identical(invocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, lambdaMappers) ||
+				invocationCoveringTheEntireStatement1.identicalWithOnlyChangesInAnonymousClassArguments(invocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap) ||
+				invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, varArgsParameter) ||
+				invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, varArgsParameter) ||
 				invocationCoveringTheEntireStatement1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2()) != null ||
 				(invocationCoveringTheEntireStatement1 instanceof ObjectCreation && invocationCoveringTheEntireStatement2 instanceof ObjectCreation && invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2))))) {
 			UMLAnonymousClass anonymousClass1 = operationBodyMapper.findAnonymousClass1(anonymousClassDeclaration1);

@@ -70,6 +70,8 @@ public class VariableReplacementAnalysis {
 	private List<CompositeStatementObject> nonMappedInnerNodesT2;
 	private VariableDeclarationContainer operation1;
 	private VariableDeclarationContainer operation2;
+	private List<String> parameterNameList1;
+	private List<String> parameterNameList2;
 	private List<UMLOperationBodyMapper> childMappers;
 	private Set<Refactoring> refactorings;
 	private VariableDeclarationContainer callSiteOperation;
@@ -104,6 +106,8 @@ public class VariableReplacementAnalysis {
 		this.nonMappedInnerNodesT2 = mapper.getNonMappedInnerNodesT2();
 		this.operation1 = mapper.getContainer1();
 		this.operation2 = mapper.getContainer2();
+		this.parameterNameList1 = mapper.getParameterNameList1();
+		this.parameterNameList2 = mapper.getParameterNameList2();
 		this.aliasedVariablesInOriginalMethod = operation1.aliasedVariables();
 		this.aliasedVariablesInNextMethod = operation2.aliasedVariables();
 		this.childMappers = new ArrayList<UMLOperationBodyMapper>();
@@ -1351,10 +1355,8 @@ public class VariableReplacementAnalysis {
 					SplitVariableReplacement split = (SplitVariableReplacement)replacement;
 					Set<String> splitVariables = split.getSplitVariables();
 					int splitVariablesAppearingAsParametersInBothMethods = 0;
-					List<String> parameterNames1 = operation1.getParameterNameList();
-					List<String> parameterNames2 = operation2.getParameterNameList();
 					for(String variable : splitVariables) {
-						if(parameterNames1.contains(variable) && parameterNames2.contains(variable)) {
+						if(parameterNameList1.contains(variable) && parameterNameList2.contains(variable)) {
 							splitVariablesAppearingAsParametersInBothMethods++;
 						}
 					}
@@ -1405,7 +1407,7 @@ public class VariableReplacementAnalysis {
 			}
 		}
 		for(AbstractCodeFragment statement : nonMappedLeavesT1) {
-			for(String parameterName : operation2.getParameterNameList()) {
+			for(String parameterName : parameterNameList2) {
 				VariableDeclaration variableDeclaration = statement.getVariableDeclaration(parameterName);
 				if(variableDeclaration != null) {
 					AbstractExpression initializer = variableDeclaration.getInitializer();
@@ -1526,10 +1528,8 @@ public class VariableReplacementAnalysis {
 					MergeVariableReplacement merge = (MergeVariableReplacement)replacement;
 					Set<String> mergedVariables = merge.getMergedVariables();
 					int mergedVariablesAppearingAsParametersInBothMethods = 0;
-					List<String> parameterNames1 = operation1.getParameterNameList();
-					List<String> parameterNames2 = operation2.getParameterNameList();
 					for(String variable : mergedVariables) {
-						if(parameterNames1.contains(variable) && parameterNames2.contains(variable)) {
+						if(parameterNameList1.contains(variable) && parameterNameList2.contains(variable)) {
 							mergedVariablesAppearingAsParametersInBothMethods++;
 						}
 					}
@@ -1618,7 +1618,7 @@ public class VariableReplacementAnalysis {
 		}
 		for(AbstractCodeFragment statement : nonMappedLeavesT2) {
 			boolean matchingParameterFound = false;
-			for(String parameterName : operation1.getParameterNameList()) {
+			for(String parameterName : parameterNameList1) {
 				VariableDeclaration variableDeclaration = statement.getVariableDeclaration(parameterName);
 				if(variableDeclaration != null) {
 					matchingParameterFound = true;
@@ -1836,7 +1836,7 @@ public class VariableReplacementAnalysis {
 				finalConsistentRenames.put(replacement, set);
 			}
 			if(v1 != null && !v1.getKey().isParameter() && v2 != null && v2.getKey().isParameter() && consistencyCheck(v1.getKey(), v2.getKey(), set) &&
-					!operation1.getParameterNameList().contains(v2.getKey().getVariableName())) {
+					!parameterNameList1.contains(v2.getKey().getVariableName())) {
 				finalConsistentRenames.put(replacement, set);
 			}
 		}
@@ -2019,7 +2019,7 @@ public class VariableReplacementAnalysis {
 			if(fragment1.contains(JAVA.ASSIGNMENT) && fragment1.endsWith(JAVA.STATEMENT_TERMINATION) && fragment2.contains(JAVA.ASSIGNMENT) && fragment2.endsWith(JAVA.STATEMENT_TERMINATION)) {
 				String value1 = fragment1.substring(fragment1.indexOf(JAVA.ASSIGNMENT)+1, fragment1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 				String value2 = fragment2.substring(fragment2.indexOf(JAVA.ASSIGNMENT)+1, fragment2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
-				if(operation1.getParameterNameList().contains(value1) && operation2.getParameterNameList().contains(value1) && operationDiff != null) {
+				if(parameterNameList1.contains(value1) && parameterNameList2.contains(value1) && operationDiff != null) {
 					for(VariableDeclaration addedParameter : operationDiff.getAddedParameters()) {
 						if(addedParameter.getVariableName().equals(value2)) {
 							return true;
@@ -3259,13 +3259,11 @@ public class VariableReplacementAnalysis {
 	}
 
 	private boolean potentialParameterRename(Replacement replacement, Set<AbstractCodeMapping> set) {
-		List<String> parameterNameList1 = operation1.getParameterNameList();
 		int index1 = parameterNameList1.indexOf(replacement.getBefore());
 		if(index1 == -1 && callSiteOperation != null && !mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
 			//inline method scenario
 			index1 = callSiteOperation.getParameterNameList().indexOf(replacement.getBefore());
 		}
-		List<String> parameterNameList2 = operation2.getParameterNameList();
 		int index2 = parameterNameList2.indexOf(replacement.getAfter());
 		if(index2 == -1 && callSiteOperation != null && mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && !mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
 			//extract method scenario

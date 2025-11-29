@@ -1676,13 +1676,13 @@ public abstract class UMLAbstractClassDiff {
 				allVariables2.addAll(nestedMapper.getContainer2().getAllVariables());
 			}
 			boolean variables1contains = (allVariables1.contains(pattern.getBefore()) &&
-					!mapper.getContainer1().getParameterNameList().contains(pattern.getBefore())) ||
+					!mapper.getParameterNameList1().contains(pattern.getBefore())) ||
 					allVariables1.contains(JAVA.THIS_DOT+pattern.getBefore());
 			if(!variables1contains && topLevelClassName != null) {
 				variables1contains = allVariables1.contains(topLevelClassName + "." + JAVA.THIS_DOT+pattern.getBefore());
 			}
 			boolean variables2Contains = (allVariables2.contains(pattern.getAfter()) &&
-					!mapper.getContainer2().getParameterNameList().contains(pattern.getAfter())) ||
+					!mapper.getParameterNameList2().contains(pattern.getAfter())) ||
 					allVariables2.contains(JAVA.THIS_DOT+pattern.getAfter());
 			if(!variables2Contains && topLevelClassName != null) {
 				variables2Contains = allVariables2.contains(topLevelClassName + "." + JAVA.THIS_DOT+pattern.getAfter());

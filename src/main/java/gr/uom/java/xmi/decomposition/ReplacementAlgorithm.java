@@ -84,7 +84,8 @@ public class ReplacementAlgorithm {
 		UMLAbstractClassDiff classDiff = operationBodyMapper.getClassDiff();
 		UMLModelDiff modelDiff = operationBodyMapper.getModelDiff();
 		Optional<UMLOperationDiff> operationSignatureDiff = operationBodyMapper.getOperationSignatureDiff();
-		
+		List<String> parameterNameList1 = operationBodyMapper.getParameterNameList1();
+		List<String> parameterNameList2 = operationBodyMapper.getParameterNameList2();
 		List<VariableDeclaration> variableDeclarations1 = new ArrayList<VariableDeclaration>(statement1.getVariableDeclarations());
 		List<VariableDeclaration> variableDeclarations2 = new ArrayList<VariableDeclaration>(statement2.getVariableDeclarations());
 		VariableDeclaration variableDeclarationWithArrayInitializer1 = declarationWithArrayInitializer(variableDeclarations1);
@@ -197,8 +198,6 @@ public class ReplacementAlgorithm {
 				Set<String> callChainIntersection = inv1.callChainIntersection(inv2);
 				int size = callChainIntersection.size();
 				double ratio = (double)size/(double)inv2.numberOfSubExpressions();
-				List<String> parameterNameList1 = container1.getParameterNameList();
-				List<String> parameterNameList2 = container2.getParameterNameList();
 				String argumentizedInv1Expression = inv1.getExpression();
 				if(parameterNameList1.size() == parameterNameList2.size() && inv1.getExpression() != null && parameterNameList1.size() == 1) {
 					argumentizedInv1Expression = ReplacementUtil.performReplacement(argumentizedInv1Expression, parameterNameList1.get(0), parameterNameList2.get(0));
@@ -1544,7 +1543,7 @@ public class ReplacementAlgorithm {
 				(invocationCoveringTheEntireStatement1 == null && invocationCoveringTheEntireStatement2 == null && creationCoveringTheEntireStatement1 == null && creationCoveringTheEntireStatement2 == null && wrapInMethodCall(s1, s2, methodInvocationMap1, replacementInfo)) ||
 				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper))) ||
 				equalAfterArgumentMerge(s1, s2, replacementInfo) ||
-				equalAfterNewArgumentAdditions(s1, s2, replacementInfo, container1, container2, operationSignatureDiff, classDiff) ||
+				equalAfterNewArgumentAdditions(s1, s2, replacementInfo, operationBodyMapper) ||
 				(validStatementForConcatComparison(statement1, statement2) && commonConcat(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper));
 		if(isEqualWithReplacement) {
 			if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
@@ -1658,7 +1657,7 @@ public class ReplacementAlgorithm {
 					}
 				}
 				for(Replacement replacement : replacementsInsideAnonymous) {
-					equalAfterNewArgumentAdditions(replacement.getBefore(), replacement.getAfter(), replacementInfo, container1, container2, operationSignatureDiff, classDiff);
+					equalAfterNewArgumentAdditions(replacement.getBefore(), replacement.getAfter(), replacementInfo, operationBodyMapper);
 				}
 			}
 			processAnonymousAndLambdas(statement1, statement2, parameterToArgumentMap, replacementInfo,
@@ -2215,8 +2214,8 @@ public class ReplacementAlgorithm {
 			}
 			String expression1 = assignmentInvocationCoveringTheEntireStatement1.getExpression();
 			String expression2 = assignmentInvocationCoveringTheEntireStatement2.getExpression();
-			boolean addedParameter = expression1 == null && expression2 != null && container1 != null && container2 != null && container2.getParameterNameList().contains(expression2) && !container1.getParameterNameList().contains(expression2);
-			boolean removedParameter = expression1 != null && expression2 == null && container1 != null && container2 != null && container1.getParameterNameList().contains(expression1) && !container2.getParameterNameList().contains(expression1);
+			boolean addedParameter = expression1 == null && expression2 != null && container1 != null && container2 != null && parameterNameList2.contains(expression2) && !parameterNameList1.contains(expression2);
+			boolean removedParameter = expression1 != null && expression2 == null && container1 != null && container2 != null && parameterNameList1.contains(expression1) && !parameterNameList2.contains(expression1);
 			boolean staticVSNonStatic = (expression1 == null && expression2 != null && container1 != null && container1.getClassName().endsWith("." + expression2)) ||
 					(expression1 != null && expression2 == null && container2 != null && container2.getClassName().endsWith("." + expression1));
 			if(!staticVSNonStatic && modelDiff != null) {
@@ -4517,8 +4516,8 @@ public class ReplacementAlgorithm {
 				parameterTypeList1.size() > 0 && parameterTypeList2.size() > 0) {
 			boolean parameterTypeCompatible = parameterTypeList1.containsAll(parameterTypeList2) ||
 					parameterTypeList2.containsAll(parameterTypeList1);
-			List<String> parameterNameList1 = operationBodyMapper.getOperation1().getParameterNameList();
-			List<String> parameterNameList2 = operationBodyMapper.getOperation2().getParameterNameList();
+			List<String> parameterNameList1 = operationBodyMapper.getParameterNameList1();
+			List<String> parameterNameList2 = operationBodyMapper.getParameterNameList2();
 			boolean parameterNameCompatible = parameterNameList1.containsAll(parameterNameList2) ||
 					parameterNameList2.containsAll(parameterNameList1);
 			Set<UMLType> typeIntersection = new LinkedHashSet<UMLType>(parameterTypeList1);

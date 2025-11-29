@@ -165,8 +165,8 @@ public class StringBasedHeuristics {
 					return true;
 				}
 			}
-			List<String> parameterNameList1 = container1.getParameterNameList();
-			List<String> parameterNameList2 = container2.getParameterNameList();
+			List<String> parameterNameList1 = mapper.getParameterNameList1();
+			List<String> parameterNameList2 = mapper.getParameterNameList2();
 			if(diff1.isEmpty() && parameterNameList2.contains(diff2)) {
 				boolean skip = false;
 				for(Replacement r : info.getReplacements()) {
@@ -895,7 +895,14 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean equalAfterNewArgumentAdditions(String s1, String s2, ReplacementInfo replacementInfo,
-			VariableDeclarationContainer container1, VariableDeclarationContainer container2, Optional<UMLOperationDiff> operationSignatureDiff, UMLAbstractClassDiff classDiff) {
+			UMLOperationBodyMapper operationBodyMapper) {
+		VariableDeclarationContainer container1 = operationBodyMapper.getContainer1();
+		VariableDeclarationContainer container2 = operationBodyMapper.getContainer2();
+		List<String> parameterNameList1 = operationBodyMapper.getParameterNameList1();
+		List<String> parameterNameList2 = operationBodyMapper.getParameterNameList2();
+		UMLAbstractClassDiff classDiff = operationBodyMapper.getClassDiff();
+		Optional<UMLOperationDiff> operationSignatureDiff = operationBodyMapper.getOperationSignatureDiff();
+		
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty() && !commonPrefix.equals(JAVA.RETURN_SPACE)) {
@@ -941,7 +948,7 @@ public class StringBasedHeuristics {
 			}
 			//if there is a variable replacement diff1 should be empty, otherwise diff1 should include a single variable
 			if(diff1.isEmpty() ||
-					(container1.getParameterNameList().contains(diff1) && !container2.getParameterNameList().contains(diff1) && !containsMethodSignatureOfAnonymousClass(diff2)) ||
+					(parameterNameList1.contains(diff1) && !parameterNameList2.contains(diff1) && !containsMethodSignatureOfAnonymousClass(diff2)) ||
 					(classDiff != null && classDiff.getOriginalClass().containsAttributeWithName(diff1) && !classDiff.getNextClass().containsAttributeWithName(diff1) && !containsMethodSignatureOfAnonymousClass(diff2))) {
 				List<VariableDeclaration> matchingAddedParameters = new ArrayList<VariableDeclaration>();
 				List<VariableDeclaration> addedParameters = operationSignatureDiff.isPresent() ? operationSignatureDiff.get().getAddedParameters() : Collections.emptyList();
@@ -1007,7 +1014,7 @@ public class StringBasedHeuristics {
 							return true;
 						}
 					}
-					if(container1.getParameterNameList().contains(diff1)) {
+					if(parameterNameList1.contains(diff1)) {
 						Set<String> splitVariables = new LinkedHashSet<String>();
 						StringBuilder concat = new StringBuilder();
 						int counter = 0;
@@ -2204,7 +2211,7 @@ public class StringBasedHeuristics {
 			if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor() && mapper.getClassDiff() != null) {
 				for(UMLAttribute removedAttribute : mapper.getClassDiff().getOriginalClass().getAttributes()) {
 					if(variableName1.equals(removedAttribute.getName()) || variableName1.equals(JAVA.THIS_DOT + removedAttribute.getName())) {
-						for(String parameterName : mapper.getContainer1().getParameterNameList()) {
+						for(String parameterName : mapper.getParameterNameList1()) {
 							if(assignment1.equals(parameterName) || assignment1.contains(parameterName + ".")) {
 								fieldInitializationWithParemeter1 = true;
 								break;
@@ -2217,7 +2224,7 @@ public class StringBasedHeuristics {
 				}
 				for(UMLAttribute addedAttribute : mapper.getClassDiff().getNextClass().getAttributes()) {
 					if((variableName2.equals(addedAttribute.getName()) || variableName2.equals(JAVA.THIS_DOT + addedAttribute.getName()))) {
-						for(String parameterName : mapper.getContainer2().getParameterNameList()) {
+						for(String parameterName : mapper.getParameterNameList2()) {
 							if(assignment2.equals(parameterName) || assignment2.contains(parameterName + ".")) {
 								fieldInitializationWithParemeter2 = true;
 								break;

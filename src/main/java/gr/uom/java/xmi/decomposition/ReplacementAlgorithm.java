@@ -2263,7 +2263,7 @@ public class ReplacementAlgorithm {
 				assignmentInvocationCoveringTheEntireStatement1.identicalName(assignmentInvocationCoveringTheEntireStatement2) ) {
 			for(String key : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key)) {
-					if(invocation2.arguments().size() > 0 && assignmentInvocationCoveringTheEntireStatement1.identicalOrReplacedArguments(invocation2, replacementInfo, parameterToArgumentMap)) {
+					if(invocation2.arguments().size() > 0 && (assignmentInvocationCoveringTheEntireStatement1.identicalOrReplacedArguments(invocation2, replacementInfo, parameterToArgumentMap) || assignmentInvocationCoveringTheEntireStatement1.arguments().size() == 0)) {
 						return replacementInfo.getReplacements();
 					}
 				}

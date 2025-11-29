@@ -10375,7 +10375,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		ReplacementInfo replacementInfo = new ReplacementInfo(
 				preprocessInput1(leaf1, leaf2),
 				preprocessInput2(leaf1, leaf2),
-				l1, l2);
+				l1, l2,
+				parameterNameList1,
+				parameterNameList2);
 		return replacementInfo;
 	}
 
@@ -10742,13 +10744,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		private List<? extends AbstractCodeFragment> statements1;
 		private List<? extends AbstractCodeFragment> statements2;
 		private List<UMLOperationBodyMapper> lambdaMappers;
+		private List<String> parameterNameList1;
+		private List<String> parameterNameList2;
 		
 		public ReplacementInfo(String argumentizedString1, String argumentizedString2,
-				List<? extends AbstractCodeFragment> statements1, List<? extends AbstractCodeFragment> statements2) {
+				List<? extends AbstractCodeFragment> statements1, List<? extends AbstractCodeFragment> statements2,
+				List<String> parameterNameList1, List<String> parameterNameList2) {
 			this.argumentizedString1 = argumentizedString1;
 			this.argumentizedString2 = argumentizedString2;
 			this.statements1 = statements1;
 			this.statements2 = statements2;
+			this.parameterNameList1 = parameterNameList1;
+			this.parameterNameList2 = parameterNameList2;
 			this.rawDistance = StringDistance.editDistance(argumentizedString1, argumentizedString2);
 			this.replacements = new LinkedHashSet<Replacement>();
 			this.subExpressionMappings = new ArrayList<LeafMapping>();
@@ -10765,6 +10772,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		public List<? extends AbstractCodeFragment> getStatements2() {
 			return statements2;
+		}
+		public List<String> getParameterNameList1() {
+			return parameterNameList1;
+		}
+		public List<String> getParameterNameList2() {
+			return parameterNameList2;
 		}
 		public void setArgumentizedString1(String string) {
 			this.argumentizedString1 = string;

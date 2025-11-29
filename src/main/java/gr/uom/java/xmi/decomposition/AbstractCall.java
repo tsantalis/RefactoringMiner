@@ -239,7 +239,7 @@ public abstract class AbstractCall extends LeafExpression {
 			for(Replacement replacement : replacementInfo.getReplacements()) {
 				if(replacement.getType().equals(ReplacementType.TYPE) ||
 						//allow only class names corresponding to static calls
-						(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && expressionCondition(expression1, expression2, parameterToArgumentMap))) {
+						(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && expressionCondition(expression1, expression2, replacementInfo, parameterToArgumentMap))) {
 					if(replacement.getBefore().equals(expression1) && (replacement.getAfter().equals(expression2) ||
 							(parameterToArgumentMap.containsKey(expression2) && replacement.getAfter().equals(parameterToArgumentMap.get(expression2))))) {
 						return true;
@@ -277,11 +277,16 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
-	private boolean expressionCondition(String expression1, String expression2, Map<String, String> parameterToArgumentMap) {
+	private boolean expressionCondition(String expression1, String expression2, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap) {
 		if(Character.isUpperCase(expression1.charAt(0)) && Character.isUpperCase(expression2.charAt(0))) {
 			return true;
 		}
 		else if(Character.isUpperCase(expression1.charAt(0)) && !Character.isUpperCase(expression2.charAt(0)) && parameterToArgumentMap.containsKey(expression2)) {
+			return true;
+		}
+		int index1 = replacementInfo.getParameterNameList1().indexOf(expression1);
+		int index2 = replacementInfo.getParameterNameList2().indexOf(expression2);
+		if(index1 == index2 && index1 != -1) {
 			return true;
 		}
 		return false;

@@ -1129,8 +1129,8 @@ public abstract class UMLAbstractClass {
 				UMLComment comment2 = comments2.get(i);
 				if(comment1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK_COMMENT) &&
 						comment2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK_COMMENT) &&
-						comment1.getText().contains("\n") && comment2.getText().contains("\n")) {
-					if(comment1.getText().equals(comment2.getText())) {
+						comment1.getFullText().contains("\n") && comment2.getFullText().contains("\n")) {
+					if(comment1.getFullText().equals(comment2.getFullText())) {
 						identicalComments++;
 					}
 					multiLineComments++;

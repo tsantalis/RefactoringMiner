@@ -6,6 +6,14 @@ public class ClassRenameComparator implements Comparator<UMLClassRenameDiff> {
 
 	@Override
 	public int compare(UMLClassRenameDiff o1, UMLClassRenameDiff o2) {
+		boolean identicalComments1 = o1.getOriginalClass().identicalMultiLineBlockComments(o1.getNextClass());
+		boolean identicalComments2 = o2.getOriginalClass().identicalMultiLineBlockComments(o2.getNextClass());
+		if(identicalComments1 && !identicalComments2) {
+			return -1;
+		}
+		else if(!identicalComments1 && identicalComments2) {
+			return 1;
+		}
 		int matchedMembers1 = o1.getMatchResult().getMatchedOperations() + o1.getMatchResult().getMatchedAttributes();
 		int matchedMembers2 = o2.getMatchResult().getMatchedOperations() + o2.getMatchResult().getMatchedAttributes();
 		if(matchedMembers1 != matchedMembers2) {

@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.refactoringminer.util.PrefixSuffixUtils;
 
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLClassMatcher.MatchResult;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -1102,7 +1103,7 @@ public abstract class UMLAbstractClass {
 		}
 	}
 
-	public boolean identicalComments(UMLAbstractClass umlClass) {
+	private boolean identicalComments(UMLAbstractClass umlClass) {
 		List<UMLComment> comments1 = this.getComments();
 		List<UMLComment> comments2 = umlClass.getComments();
 		if(comments1.size() == comments2.size() && comments1.size() > 0) {
@@ -1113,6 +1114,29 @@ public abstract class UMLAbstractClass {
 				}
 			}
 			return identicalComments == comments1.size();
+		}
+		return false;
+	}
+
+	public boolean identicalMultiLineBlockComments(UMLAbstractClass umlClass) {
+		List<UMLComment> comments1 = this.getComments();
+		List<UMLComment> comments2 = umlClass.getComments();
+		if(comments1.size() == comments2.size() && comments1.size() > 0) {
+			int identicalComments = 0;
+			int multiLineComments = 0;
+			for(int i=0; i<comments1.size(); i++) {
+				UMLComment comment1 = comments1.get(i);
+				UMLComment comment2 = comments2.get(i);
+				if(comment1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK_COMMENT) &&
+						comment2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK_COMMENT) &&
+						comment1.getText().contains("\n") && comment2.getText().contains("\n")) {
+					if(comment1.getText().equals(comment2.getText())) {
+						identicalComments++;
+					}
+					multiLineComments++;
+				}
+			}
+			return identicalComments == multiLineComments && multiLineComments > 0;
 		}
 		return false;
 	}

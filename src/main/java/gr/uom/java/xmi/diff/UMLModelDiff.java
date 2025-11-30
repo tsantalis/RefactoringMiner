@@ -1136,7 +1136,26 @@ public class UMLModelDiff {
 				TreeSet<UMLClassRenameDiff> union = new TreeSet<>();
 				union.addAll(diffSet);
 				union.addAll(renameDiffSet);
-				if(matcher instanceof UMLClassMatcher.RelaxedRename) {
+				boolean renameMatcherWithFalseMatchResult = false;
+				if(matcher instanceof UMLClassMatcher.Rename) {
+					int falseMatch = 0;
+					MatchResult previousMatchResult = null;
+					for(UMLClassRenameDiff renameDiff : diffSet) {
+						if(previousMatchResult == null) {
+							previousMatchResult = renameDiff.getMatchResult();
+						}
+						else if(previousMatchResult.equals(renameDiff.getMatchResult())) {
+							continue;
+						}
+						if(!renameDiff.getMatchResult().isMatch()) {
+							falseMatch++;
+						}
+					}
+					if(falseMatch == diffSet.size() && diffSet.size() > 1) {
+						renameMatcherWithFalseMatchResult = true;
+					}
+				}
+				if(matcher instanceof UMLClassMatcher.RelaxedRename || renameMatcherWithFalseMatchResult) {
 					if(sameRenamedClass(union) && !inheritanceRelationshipBetweenMergedClasses(union) && !partialModel()) {
 						UMLClassMergeDiff mergeDiff = new UMLClassMergeDiff(union);
 						classMergeDiffList.add(mergeDiff);
@@ -1303,6 +1322,13 @@ public class UMLModelDiff {
 					if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName())) {
 						diffSet.add(classRenameDiff);
 					}
+				}
+			}
+			else if(matchResult.getMatchedAttributes() > 0 && matchResult.getMatchedOperations() > 0 && removedClass.identicalComments(addedClass) &&
+					!conflictingMoveOfTopLevelClass(removedClass, addedClass) && !innerClassWithTheSameName(removedClass, addedClass)) {
+				UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
+				if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName())) {
+					diffSet.add(classRenameDiff);
 				}
 			}
 		}

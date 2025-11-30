@@ -1,5 +1,7 @@
 package gr.uom.java.xmi;
 
+import java.util.Objects;
+
 public interface UMLClassMatcher {
 
 	public class MatchResult {
@@ -47,6 +49,26 @@ public interface UMLClassMatcher {
 
 		private void setMatch(boolean match) {
 			this.match = match;
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(identicalBodyOperations, match, matchedAttributes, matchedOperations, totalAttributes,
+					totalOperations);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			MatchResult other = (MatchResult) obj;
+			return identicalBodyOperations == other.identicalBodyOperations && match == other.match
+					&& matchedAttributes == other.matchedAttributes && matchedOperations == other.matchedOperations
+					&& totalAttributes == other.totalAttributes && totalOperations == other.totalOperations;
 		}
 	}
 

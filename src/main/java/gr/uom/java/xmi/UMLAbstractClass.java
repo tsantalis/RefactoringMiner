@@ -1102,7 +1102,7 @@ public abstract class UMLAbstractClass {
 		}
 	}
 
-	private boolean identicalComments(UMLAbstractClass umlClass) {
+	public boolean identicalComments(UMLAbstractClass umlClass) {
 		List<UMLComment> comments1 = this.getComments();
 		List<UMLComment> comments2 = umlClass.getComments();
 		if(comments1.size() == comments2.size() && comments1.size() > 0) {

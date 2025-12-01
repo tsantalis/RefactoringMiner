@@ -2138,6 +2138,17 @@ public class VariableReplacementAnalysis {
 							}
 						}
 					}
+					else if(replacement.getType().equals(ReplacementType.METHOD_INVOCATION_NAME)) {
+						Replacement variableReplacement = new Replacement(replacement.getBefore(), replacement.getAfter(), ReplacementType.VARIABLE_NAME);
+						if(map.containsKey(variableReplacement)) {
+							map.get(variableReplacement).add(mapping);
+						}
+						else {
+							Set<AbstractCodeMapping> list = new LinkedHashSet<AbstractCodeMapping>();
+							list.add(mapping);
+							map.put(variableReplacement, list);
+						}
+					}
 				}
 				else if(replacement instanceof VariableReplacementWithMethodInvocation) {
 					VariableReplacementWithMethodInvocation variableReplacedWithMethod = (VariableReplacementWithMethodInvocation)replacement;
@@ -2255,7 +2266,7 @@ public class VariableReplacementAnalysis {
 		Map<Replacement, Set<AbstractCodeMapping>> map = new LinkedHashMap<Replacement, Set<AbstractCodeMapping>>();
 		for(AbstractCodeMapping mapping : mappings) {
 			for(Replacement replacement : mapping.getReplacements()) {
-				if((replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.VARIABLE_DECLARATION)) && !returnVariableMapping(mapping, replacement) &&
+				if((replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.VARIABLE_DECLARATION) || replacement.getType().equals(ReplacementType.METHOD_INVOCATION_NAME)) && !returnVariableMapping(mapping, replacement) &&
 						!containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(mapping.getReplacements()) &&
 						replacementNotInsideMethodSignatureOfAnonymousClass(mapping, replacement)) {
 					String before = new String(replacement.getBefore());

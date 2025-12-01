@@ -731,6 +731,10 @@ public abstract class AbstractCall extends LeafExpression {
 	private boolean commonTokens(AbstractCall call) {
 		String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(this.getName());
 		String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(call.getName());
+		if(tokens1.length == 1 && tokens2.length == 1 && tokens1[0].contains("_") && tokens2[0].contains("_")) {
+			tokens1 = this.getName().split("_");
+			tokens2 = call.getName().split("_");
+		}
 		int commonTokens = 0;
 		for(String token1 : tokens1) {
 			for(String token2 : tokens2) {

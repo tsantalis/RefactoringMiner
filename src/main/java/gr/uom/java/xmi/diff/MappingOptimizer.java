@@ -22,6 +22,7 @@ import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObjectMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
+import gr.uom.java.xmi.decomposition.StringBasedHeuristics;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
@@ -633,7 +634,9 @@ public class MappingOptimizer {
 		int matches = 0;
 		boolean identicalMapping = false;
 		for(AbstractCodeMapping mapping : mappings) {
-			if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+			String s1 = mapping.getFragment1().getString();
+			String s2 = mapping.getFragment2().getString();
+			if(s1.equals(s2) || StringBasedHeuristics.differOnlyInThis(s1, s2)) {
 				identicalMapping = true;
 			}
 			for(AbstractCall operationInvocation : operationInvocations) {

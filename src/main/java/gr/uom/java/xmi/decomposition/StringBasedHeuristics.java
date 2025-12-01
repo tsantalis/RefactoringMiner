@@ -575,7 +575,7 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	protected static boolean differOnlyInThis(String s1, String s2) {
+	public static boolean differOnlyInThis(String s1, String s2) {
 		if(differOnlyInPrefix(s1, s2, "", JAVA.THIS_DOT)) {
 			return true;
 		}
@@ -592,6 +592,12 @@ public class StringBasedHeuristics {
 				return true;
 			}
 			else if(diff2.isEmpty() && diff1.equals(JAVA.THIS_DOT)) {
+				return true;
+			}
+			if(diff1.isEmpty() && diff2.equals(JAVA.THIS_DOT + "_")) {
+				return true;
+			}
+			else if(diff2.isEmpty() && diff1.equals(JAVA.THIS_DOT + "_")) {
 				return true;
 			}
 			else if(diff1.isEmpty() && diff2.equals("!= null")) {

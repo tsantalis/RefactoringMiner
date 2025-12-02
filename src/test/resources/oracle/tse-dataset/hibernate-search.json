@@ -3037,6 +3037,11 @@
           "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
           "description": "Replace Attribute With Variable\tindexedBySuperType : Map<PojoRawTypeIdentifier<?>,Set<? extends PojoIndexedTypeManager<?,?>>> to indexedBySuperTypeClassContent : Map<Class<?>,Set<PojoIndexedTypeManager<?,?>>> in method private PojoTypeManagerContainer(builder Builder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer",
           "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttargetedTypeContexts : Set<PojoScopeIndexedTypeContext<?,? extends E>> to targetedTypeContexts : Set<? extends PojoScopeIndexedTypeContext<?,? extends E>> in method public create(mappingContext PojoScopeMappingContext, typeContextProvider PojoScopeTypeContextProvider, targetedTypeContexts Set<? extends PojoScopeIndexedTypeContext<?,? extends E>>, indexedTypeExtendedContextProvider PojoScopeTypeExtendedContextProvider<E,C>) : PojoScopeDelegate<R,E,C> from class org.hibernate.search.mapper.pojo.scope.impl.PojoScopeDelegateImpl",
+          "validation": true
         }
       ]
     },

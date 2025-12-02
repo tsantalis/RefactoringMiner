@@ -2636,6 +2636,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					removedOperation.testMethodCheck(addedOperation)) {
 				mapperSet.add(operationBodyMapper);
 			}
+			else if(absoluteDifferenceInPosition == 0 && !removedOperation.isConstructor() && !addedOperation.isConstructor() &&
+					removedOperation.getName().equals(addedOperation.getName()) && operationBodyMapper.exactMatches() > 0) {
+				mapperSet.add(operationBodyMapper);
+			}
 			else {
 				String originalClassName = getOriginalClassName();
 				String nextClassName = getNextClassName();

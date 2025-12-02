@@ -54,6 +54,19 @@ public class StringBasedHeuristics {
 	protected static final Pattern SPLIT_COMMA_PATTERN = Pattern.compile("(\\s)*(\\,)(\\s)*");
 	protected static final Pattern SPLIT_TAB_PATTERN = Pattern.compile("(\\s)*(\\\\t)(\\s)*");
 
+	protected static boolean partiallyUndoParameterToArgumentMap(String s1, String s2, Map<String, String> parameterToArgumentMap) {
+		for(String key : parameterToArgumentMap.keySet()) {
+			String value = parameterToArgumentMap.get(key);
+			if(s2.contains(value)) {
+				String tmp = ReplacementUtil.performReplacement(s2, value, key);
+				if(tmp.equals(s1)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	protected static boolean containsMethodSignatureOfAnonymousClass(String s) {
 		String[] lines = s.split("\\n");
 		if(s.contains(JAVA.LAMBDA_ARROW)) {

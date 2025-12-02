@@ -55,7 +55,6 @@ import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
-import gr.uom.java.xmi.diff.UMLOperationDiff;
 
 public class ReplacementAlgorithm {
 	private static final int MAXIMUM_NUMBER_OF_COMPARED_STRINGS = 100;
@@ -83,7 +82,6 @@ public class ReplacementAlgorithm {
 		Set<AbstractCodeMapping> mappings = operationBodyMapper.getMappings();
 		UMLAbstractClassDiff classDiff = operationBodyMapper.getClassDiff();
 		UMLModelDiff modelDiff = operationBodyMapper.getModelDiff();
-		Optional<UMLOperationDiff> operationSignatureDiff = operationBodyMapper.getOperationSignatureDiff();
 		List<String> parameterNameList1 = operationBodyMapper.getParameterNameList1();
 		List<String> parameterNameList2 = operationBodyMapper.getParameterNameList2();
 		List<VariableDeclaration> variableDeclarations1 = new ArrayList<VariableDeclaration>(statement1.getVariableDeclarations());
@@ -1544,7 +1542,8 @@ public class ReplacementAlgorithm {
 				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper))) ||
 				equalAfterArgumentMerge(s1, s2, replacementInfo) ||
 				equalAfterNewArgumentAdditions(s1, s2, replacementInfo, operationBodyMapper) ||
-				(validStatementForConcatComparison(statement1, statement2) && commonConcat(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper));
+				(validStatementForConcatComparison(statement1, statement2) && commonConcat(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper)) ||
+				partiallyUndoParameterToArgumentMap(s1, s2, parameterToArgumentMap);
 		if(isEqualWithReplacement) {
 			if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
 				List<Replacement> typeReplacements = replacementInfo.getReplacements(ReplacementType.TYPE);

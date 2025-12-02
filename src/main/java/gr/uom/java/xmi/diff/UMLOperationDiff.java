@@ -193,6 +193,7 @@ public class UMLOperationDiff {
 		//third round match parameters with different type and name
 		List<VariableDeclaration> removedParametersWithoutReturnType = removedOperation.getParameterDeclarationList();
 		List<VariableDeclaration> addedParametersWithoutReturnType = addedOperation.getParameterDeclarationList();
+		//this condition allows only for one unmatched parameter
 		if(matchedParameterCount == removedParametersWithoutReturnType.size()-1 && matchedParameterCount == addedParametersWithoutReturnType.size()-1) {
 			for(Iterator<VariableDeclaration> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
 				VariableDeclaration removedParameter = removedParameterIterator.next();
@@ -213,6 +214,47 @@ public class UMLOperationDiff {
 				}
 			}
 		}
+		else {
+			for(Iterator<VariableDeclaration> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
+				VariableDeclaration removedParameter = removedParameterIterator.next();
+				int indexOfRemovedParameter = indexOfParameter(removedParametersWithoutReturnType, removedParameter);
+				for(Iterator<VariableDeclaration> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
+					VariableDeclaration addedParameter = addedParameterIterator.next();
+					int indexOfAddedParameter = indexOfParameter(addedParametersWithoutReturnType, addedParameter);
+					if(indexOfRemovedParameter == indexOfAddedParameter &&
+							commonTokens(removedParameter.getVariableName(), addedParameter.getVariableName())) {
+						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings, classDiff);
+						if(!parameterDiff.isEmpty()) {
+							parameterDiffList.add(parameterDiff);
+						}
+						addedParameterIterator.remove();
+						removedParameterIterator.remove();
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	private static boolean commonTokens(String name1, String name2) {
+		String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(name1);
+		String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(name2);
+		if(tokens1.length == 1 && tokens2.length == 1 && tokens1[0].contains("_") && tokens2[0].contains("_")) {
+			tokens1 = name1.split("_");
+			tokens2 = name2.split("_");
+		}
+		int commonTokens = 0;
+		for(String token1 : tokens1) {
+			for(String token2 : tokens2) {
+				if(token1.equals(token2)) {
+					commonTokens++;
+				}
+			}
+		}
+		if(commonTokens == Math.min(tokens1.length, tokens2.length)) {
+			return true;
+		}
+		return false;
 	}
 
 	private boolean usedParameters(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation,

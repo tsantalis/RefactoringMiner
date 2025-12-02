@@ -261,13 +261,17 @@ public abstract class UMLAbstractClass {
 	}
 
 	public boolean importsType(String targetClass) {
+		if(targetClass.contains(".__module__")) {
+			targetClass = targetClass.replace(".__module__", "");
+		}
 		if(targetClass.startsWith(getPackageName()))
 			return true;
 		for(UMLImport imported : getImportedTypes()) {
 			//importedType.startsWith(targetClass) -> special handling for import static
 			//importedType.equals(targetClassPackage) -> special handling for import with asterisk (*) wildcard
 			String importedType = imported.getName();
-			if(importedType.equals(targetClass) || importedType.startsWith(targetClass)) {
+			if(importedType.equals(targetClass) || importedType.startsWith(targetClass) ||
+					importedType.endsWith("." + targetClass) || importedType.contains("." + targetClass)) {
 				return true;
 			}
 			if(targetClass.contains(".")) {

@@ -1488,6 +1488,21 @@ public class UMLModelDiff {
 							if(rep1.containsAll(rep2) || rep2.containsAll(rep1)) {
 								matchingStatements += Math.min(rep1.size(), rep2.size());
 							}
+							else if(rep1.size() == rep2.size()) {
+								List<AbstractStatement> statements1 = op1.getBody().getCompositeStatement().getAllStatements();
+								List<AbstractStatement> statements2 = op2.getBody().getCompositeStatement().getAllStatements();
+								if(statements1.size() == statements2.size()) {
+									for(int j=0; j<statements1.size(); j++) {
+										AbstractStatement statement1 = statements1.get(j);
+										AbstractStatement statement2 = statements2.get(j);
+										String actualSignature1 = statement1.getActualSignature();
+										String actualSignature2 = statement2.getActualSignature();
+										if(actualSignature1 != null && actualSignature2 != null && actualSignature1.equals(actualSignature2)) {
+											matchingStatements++;
+										}
+									}
+								}
+							}
 							List<AnonymousClassDeclarationObject> anonymousList1 =  op1.getBody().getAllAnonymousClassDeclarations();
 							List<AnonymousClassDeclarationObject> anonymousList2 =  op2.getBody().getAllAnonymousClassDeclarations();
 							int identicalAnonymousDeclarations = 0;

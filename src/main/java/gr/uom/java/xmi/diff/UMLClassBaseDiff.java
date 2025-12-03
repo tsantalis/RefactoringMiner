@@ -32,10 +32,12 @@ import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLClassMatcher.MatchResult;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLClassMatcher;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLInitializer;
@@ -1748,6 +1750,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							}
 							this.addOperationBodyMapper(bestMapper);
 							consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
+							processNestedTypeDeclarationStatements(removedOperation, addedOperation);
 						}
 					}
 					else {
@@ -2052,6 +2055,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								}
 								this.addOperationBodyMapper(bestMapper);
 								consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
+								processNestedTypeDeclarationStatements(removedOperation, addedOperation);
 							}
 						}
 					}
@@ -2112,6 +2116,54 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								break;
 							}
 						}
+					}
+				}
+			}
+		}
+	}
+
+	private void processNestedTypeDeclarationStatements(UMLOperation removedOperation, UMLOperation addedOperation) {
+		if(modelDiff != null) {
+			List<UMLClass> nestedRemovedTypeDeclarations = new ArrayList<>();
+			for(UMLClass removedClass : modelDiff.getRemovedClasses()) {
+				if(removedOperation.getLocationInfo().subsumes(removedClass.getLocationInfo())) {
+					nestedRemovedTypeDeclarations.add(removedClass);
+				}
+			}
+			List<UMLClass> nestedAddedTypeDeclarations = new ArrayList<>();
+			for(UMLClass addedClass : modelDiff.getAddedClasses()) {
+				if(addedOperation.getLocationInfo().subsumes(addedClass.getLocationInfo())) {
+					nestedAddedTypeDeclarations.add(addedClass);
+				}
+			}
+			List<UMLClassMoveDiff> possiblyIncorrect = new ArrayList<>();
+			for(UMLClassMoveDiff moveDiff : modelDiff.getClassMoveDiffList()) {
+				UMLClass removedClass = moveDiff.getOriginalClass();
+				UMLClass addedClass = moveDiff.getNextClass();
+				if(removedOperation.getLocationInfo().subsumes(removedClass.getLocationInfo()) &&
+						!addedOperation.getLocationInfo().subsumes(addedClass.getLocationInfo())) {
+					nestedRemovedTypeDeclarations.add(removedClass);
+					possiblyIncorrect.add(moveDiff);
+				}
+				if(addedOperation.getLocationInfo().subsumes(addedClass.getLocationInfo()) &&
+						!removedOperation.getLocationInfo().subsumes(removedClass.getLocationInfo())) {
+					nestedAddedTypeDeclarations.add(addedClass);
+					possiblyIncorrect.add(moveDiff);
+				}
+			}
+			if(nestedRemovedTypeDeclarations.size() == nestedAddedTypeDeclarations.size()) {
+				for(int i=0; i<nestedRemovedTypeDeclarations.size(); i++) {
+					UMLClass removedClass = nestedRemovedTypeDeclarations.get(i);
+					UMLClass addedClass = nestedAddedTypeDeclarations.get(i);
+					if(removedClass.getNonQualifiedName().equals(addedClass.getNonQualifiedName())) {
+						MatchResult matchResult = new UMLClassMatcher.Move().match(removedClass, addedClass);
+						UMLClassMoveDiff newMoveDiff = new UMLClassMoveDiff(removedClass, addedClass, modelDiff, matchResult);
+						for(UMLClassMoveDiff oldMoveDiff : possiblyIncorrect) {
+							if(oldMoveDiff.getOriginalClass().equals(removedClass) || oldMoveDiff.getNextClass().equals(addedClass)) {
+								modelDiff.getClassMoveDiffList().remove(oldMoveDiff);
+							}
+						}
+						modelDiff.getClassMoveDiffList().add(newMoveDiff);
 					}
 				}
 			}

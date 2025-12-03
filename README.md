@@ -511,11 +511,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Merge Variable`
 * `Merge Parameter`
 
-As of **December 2, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **December 3, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3471  | 42  | 76  | 0.988  | 0.979|
+|**Total**|3471  | 41  | 76  | 0.988  | 0.979|
 |Extract Method|373  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -525,7 +525,7 @@ As of **December 2, 2025** the precision and recall of RefactoringMiner on this 
 |Move Method|266  |  1  |  0  | 0.996  | 1.000|
 |Move And Rename Method|26  |  3  |  0  | 0.897  | 1.000|
 |Pull Up Method|47  |  0  |  0  | 1.000  | 1.000|
-|Move Class|144  |  2  |  1  | 0.986  | 0.993|
+|Move Class|144  |  1  |  1  | 0.993  | 0.993|
 |Move And Rename Class|28  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|12  |  0  |  0  | 1.000  | 1.000|
 |Push Down Attribute| 6  |  0  |  0  | 1.000  | 1.000|

@@ -468,7 +468,24 @@ public class VariableReplacementAnalysis {
 			for(VariableDeclaration removedVariable : removedVariables) {
 				if(!removedVariablesToBeRemoved.contains(removedVariable) && removedVariable.isParameter()) {
 					for(VariableDeclaration addedVariable : addedVariables) {
-						if(!addedVariablesToBeRemoved.contains(addedVariable) && !removedVariablesToBeRemoved.contains(removedVariable) && addedVariable.isParameter()) {
+						if(!addedVariablesToBeRemoved.contains(addedVariable) && !removedVariablesToBeRemoved.contains(removedVariable) && (addedVariable.isParameter() || (operation1.getParameterDeclarationList().contains(removedVariable) && !operation1.getParameterTypeList().equals(operation2.getParameterTypeList())))) {
+							Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
+							if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && equalType(removedVariable, addedVariable)) {
+								removedVariablesToBeRemoved.add(removedVariable);
+								addedVariablesToBeRemoved.add(addedVariable);
+								matchedVariables.add(pair);
+								getVariableRefactorings(removedVariable, addedVariable, operation1, operation2, Collections.emptySet(), null);
+							}
+						}
+					}
+				}
+			}
+		}
+		else if(removedVariables.size() >= addedVariables.size()) {
+			for(VariableDeclaration addedVariable : addedVariables) {
+				if(!addedVariablesToBeRemoved.contains(addedVariable) && addedVariable.isParameter()) {
+					for(VariableDeclaration removedVariable : removedVariables) {
+						if(!addedVariablesToBeRemoved.contains(addedVariable) && !removedVariablesToBeRemoved.contains(removedVariable) && (removedVariable.isParameter() || (operation2.getParameterDeclarationList().contains(addedVariable) && !operation1.getParameterTypeList().equals(operation2.getParameterTypeList())))) {
 							Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
 							if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && equalType(removedVariable, addedVariable)) {
 								removedVariablesToBeRemoved.add(removedVariable);
@@ -504,6 +521,10 @@ public class VariableReplacementAnalysis {
 
 	private boolean equalType(VariableDeclaration removedVariable, VariableDeclaration addedVariable) {
 		if(addedVariable.equalType(removedVariable)) {
+			return true;
+		}
+		else if((addedVariable.getType() != null && addedVariable.getType().getClassType().equals("Object")) || 
+				(removedVariable.getType() != null && removedVariable.getType().getClassType().equals("Object"))) {
 			return true;
 		}
 		if(classDiff instanceof UMLClassBaseDiff) {

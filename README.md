@@ -380,7 +380,7 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **December 2, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **December 3, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
@@ -425,7 +425,7 @@ As of **December 2, 2025** the precision and recall of RefactoringMiner on this 
 |Replace Variable With Attribute|124  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|28  |  0  |  1  | 1.000  | 0.966|
 |Parameterize Variable|112  |  0  |  0  | 1.000  | 1.000|
-|Localize Parameter|27  |  0  |  0  | 1.000  | 1.000|
+|Localize Parameter|31  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|25  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|435  |  0  | 12  | 1.000  | 0.973|
 |Change Variable Type|817  |  1  |  7  | 0.999  | 0.992|
@@ -444,7 +444,7 @@ As of **December 2, 2025** the precision and recall of RefactoringMiner on this 
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter|851  |  1  |  1  | 0.999  | 0.999|
-|Remove Parameter|328  |  0  |  0  | 1.000  | 1.000|
+|Remove Parameter|324  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 2  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 4  |  0  |  0  | 1.000  | 1.000|

@@ -4297,17 +4297,22 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			for(UMLOperation removedOperation : removedOperations) {
 				if(removedOperation.stringRepresentation().equals(nextOperationStringRepresentation) && !containCallToOperation(removedOperation, originalOperation)) {
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, nextOperation, this);
-					this.addOperationBodyMapper(operationBodyMapper);
-					if(!removedOperation.getName().equals(nextOperation.getName()) &&
-							!(removedOperation.isConstructor() && nextOperation.isConstructor())) {
-						RenameOperationRefactoring rename = new RenameOperationRefactoring(operationBodyMapper, new HashSet<MethodInvocationReplacement>());
-						refactorings.add(rename);
+					List<AbstractCodeMapping> exactMatchListWithoutMatchesInNestedContainers = operationBodyMapper.getExactMatchesWithoutMatchesInNestedContainers();
+					int exactMatchesWithoutMatchesInNestedContainers = exactMatchListWithoutMatchesInNestedContainers.size();
+					boolean skip = operationBodyMapper.getMappings().size() == 1 && exactMatchesWithoutMatchesInNestedContainers == 1 && exactMatchListWithoutMatchesInNestedContainers.get(0).getFragment1().throwsNewException();
+					if(!skip) {
+						this.addOperationBodyMapper(operationBodyMapper);
+						if(!removedOperation.getName().equals(nextOperation.getName()) &&
+								!(removedOperation.isConstructor() && nextOperation.isConstructor())) {
+							RenameOperationRefactoring rename = new RenameOperationRefactoring(operationBodyMapper, new HashSet<MethodInvocationReplacement>());
+							refactorings.add(rename);
+						}
+						removedOperationsToBeRemoved.add(removedOperation);
+						if(!removedOperations.contains(originalOperation)) {
+							removedOperations.add(originalOperation);
+						}
+						return true;
 					}
-					removedOperationsToBeRemoved.add(removedOperation);
-					if(!removedOperations.contains(originalOperation)) {
-						removedOperations.add(originalOperation);
-					}
-					return true;
 				}
 			}
 		}
@@ -4315,17 +4320,22 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			for(UMLOperation addedOperation : addedOperations) {
 				if(addedOperation.stringRepresentation().equals(originalOperationStringRepresentation) && !containCallToOperation(addedOperation, nextOperation)) {
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(originalOperation, addedOperation, this);
-					this.addOperationBodyMapper(operationBodyMapper);
-					if(!originalOperation.getName().equals(addedOperation.getName()) &&
-							!(originalOperation.isConstructor() && addedOperation.isConstructor())) {
-						RenameOperationRefactoring rename = new RenameOperationRefactoring(operationBodyMapper, new HashSet<MethodInvocationReplacement>());
-						refactorings.add(rename);
+					List<AbstractCodeMapping> exactMatchListWithoutMatchesInNestedContainers = operationBodyMapper.getExactMatchesWithoutMatchesInNestedContainers();
+					int exactMatchesWithoutMatchesInNestedContainers = exactMatchListWithoutMatchesInNestedContainers.size();
+					boolean skip = operationBodyMapper.getMappings().size() == 1 && exactMatchesWithoutMatchesInNestedContainers == 1 && exactMatchListWithoutMatchesInNestedContainers.get(0).getFragment1().throwsNewException();
+					if(!skip) {
+						this.addOperationBodyMapper(operationBodyMapper);
+						if(!originalOperation.getName().equals(addedOperation.getName()) &&
+								!(originalOperation.isConstructor() && addedOperation.isConstructor())) {
+							RenameOperationRefactoring rename = new RenameOperationRefactoring(operationBodyMapper, new HashSet<MethodInvocationReplacement>());
+							refactorings.add(rename);
+						}
+						addedOperationsToBeRemoved.add(addedOperation);
+						if(!addedOperations.contains(nextOperation)) {
+							addedOperations.add(nextOperation);
+						}
+						return true;
 					}
-					addedOperationsToBeRemoved.add(addedOperation);
-					if(!addedOperations.contains(nextOperation)) {
-						addedOperations.add(nextOperation);
-					}
-					return true;
 				}
 			}
 		}

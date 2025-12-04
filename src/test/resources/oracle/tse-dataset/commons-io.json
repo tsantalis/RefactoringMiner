@@ -596,7 +596,123 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tstream : OutputStream to stream : BrokenOutputStream in method public testWriteByteArray(clazz Class<Throwable>) : void from class org.apache.commons.io.output.BrokenOutputStreamTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tstream : OutputStream to stream : BrokenOutputStream in method public testClose(clazz Class<Throwable>) : void from class org.apache.commons.io.output.BrokenOutputStreamTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tstream : OutputStream to stream : BrokenOutputStream in method public testFlush(clazz Class<Throwable>) : void from class org.apache.commons.io.output.BrokenOutputStreamTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tstream : OutputStream to stream : BrokenOutputStream in method public testWriteByteArrayIndexed(clazz Class<Throwable>) : void from class org.apache.commons.io.output.BrokenOutputStreamTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tstream : OutputStream to stream : BrokenOutputStream in method public testWriteInt(clazz Class<Throwable>) : void from class org.apache.commons.io.output.BrokenOutputStreamTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenWriter : Writer to brokenWriter : BrokenWriter in method public testWriteString(clazz Class<Throwable>) : void from class org.apache.commons.io.output.BrokenWriterTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenWriter : Writer to brokenWriter : BrokenWriter in method public testWriteCharArrayIndexed(clazz Class<Throwable>) : void from class org.apache.commons.io.output.BrokenWriterTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenWriter : Writer to brokenWriter : BrokenWriter in method public testFlush(clazz Class<Throwable>) : void from class org.apache.commons.io.output.BrokenWriterTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenWriter : Writer to brokenWriter : BrokenWriter in method public testWriteStringIndexed(clazz Class<Throwable>) : void from class org.apache.commons.io.output.BrokenWriterTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenWriter : Writer to brokenWriter : BrokenWriter in method public testClose(clazz Class<Throwable>) : void from class org.apache.commons.io.output.BrokenWriterTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenWriter : Writer to brokenWriter : BrokenWriter in method public testAppendChar(clazz Class<Exception>) : void from class org.apache.commons.io.output.BrokenWriterTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenWriter : Writer to brokenWriter : BrokenWriter in method public testWriteCharArray(clazz Class<Throwable>) : void from class org.apache.commons.io.output.BrokenWriterTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenWriter : Writer to brokenWriter : BrokenWriter in method public testWriteInt(clazz Class<Throwable>) : void from class org.apache.commons.io.output.BrokenWriterTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenWriter : Writer to brokenWriter : BrokenWriter in method public testAppendCharSequence(clazz Class<Throwable>) : void from class org.apache.commons.io.output.BrokenWriterTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenWriter : Writer to brokenWriter : BrokenWriter in method public testAppendCharSequenceIndexed(clazz Class<Throwable>) : void from class org.apache.commons.io.output.BrokenWriterTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenReader : Reader to brokenReader : BrokenReader in method public testReady(clazz Class<Throwable>) : void from class org.apache.commons.io.input.BrokenReaderTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenReader : Reader to brokenReader : BrokenReader in method public testMark(clazz Class<Throwable>) : void from class org.apache.commons.io.input.BrokenReaderTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenReader : Reader to brokenReader : BrokenReader in method public testReadCharArray(clazz Class<Throwable>) : void from class org.apache.commons.io.input.BrokenReaderTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenReader : Reader to brokenReader : BrokenReader in method public testRead(clazz Class<Throwable>) : void from class org.apache.commons.io.input.BrokenReaderTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenReader : Reader to brokenReader : BrokenReader in method public testClose(clazz Class<Exception>) : void from class org.apache.commons.io.input.BrokenReaderTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenReader : Reader to brokenReader : BrokenReader in method public testReadCharArrayIndexed(clazz Class<Throwable>) : void from class org.apache.commons.io.input.BrokenReaderTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenReader : Reader to brokenReader : BrokenReader in method public testSkip(clazz Class<Throwable>) : void from class org.apache.commons.io.input.BrokenReaderTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbrokenReader : Reader to brokenReader : BrokenReader in method public testReset(clazz Class<Throwable>) : void from class org.apache.commons.io.input.BrokenReaderTest",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/apache/commons-io.git",
@@ -712,7 +828,33 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tstream : InputStream to stream : BrokenInputStream in method public testAvailable(clazz Class<Exception>) : void from class org.apache.commons.io.input.BrokenInputStreamTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tstream : InputStream to stream : BrokenInputStream in method public testRead(clazz Class<Exception>) : void from class org.apache.commons.io.input.BrokenInputStreamTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tstream : InputStream to stream : BrokenInputStream in method public testReset(clazz Class<Exception>) : void from class org.apache.commons.io.input.BrokenInputStreamTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tstream : InputStream to stream : BrokenInputStream in method public testClose(clazz Class<Exception>) : void from class org.apache.commons.io.input.BrokenInputStreamTest",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tstream : InputStream to stream : BrokenInputStream in method public testSkip(clazz Class<Exception>) : void from class org.apache.commons.io.input.BrokenInputStreamTest",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/apache/commons-io.git",

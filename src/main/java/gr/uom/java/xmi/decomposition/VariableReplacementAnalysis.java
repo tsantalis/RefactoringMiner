@@ -22,6 +22,7 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
@@ -523,8 +524,7 @@ public class VariableReplacementAnalysis {
 		if(addedVariable.equalType(removedVariable)) {
 			return true;
 		}
-		else if((addedVariable.getType() != null && addedVariable.getType().getClassType().equals("Object")) || 
-				(removedVariable.getType() != null && removedVariable.getType().getClassType().equals("Object"))) {
+		else if(addedVariable.getType() instanceof LeafType type2 && removedVariable.getType() instanceof LeafType type1 && type1.compatibleTypes(type2)) {
 			return true;
 		}
 		if(classDiff instanceof UMLClassBaseDiff) {
@@ -1979,11 +1979,14 @@ public class VariableReplacementAnalysis {
 			String typeArguments1 = variableDeclaration1.getType().typeArgumentsToString();
 			String typeArguments2 = variableDeclaration2.getType().typeArgumentsToString();
 			if(!equalType(variableDeclaration2, variableDeclaration1) || !variableDeclaration1.equalQualifiedType(variableDeclaration2) || !typeArguments1.equals(typeArguments2)) {
-				ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
-				if(ref != null) {
-					refactoring.addRelatedRefactoring(ref);
+				boolean skip = variableDeclaration1.isParameter() && variableDeclaration2.isParameter() && !operation1.getParameterDeclarationList().contains(variableDeclaration1) && !operation2.getParameterDeclarationList().contains(variableDeclaration2);
+				if(!skip) {
+					ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
+					if(ref != null) {
+						refactoring.addRelatedRefactoring(ref);
+					}
+					refactorings.add(refactoring);
 				}
-				refactorings.add(refactoring);
 			}
 		}
 		UMLAnnotationListDiff annotationListDiff = new UMLAnnotationListDiff(variableDeclaration1.getAnnotations(), variableDeclaration2.getAnnotations());

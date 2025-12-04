@@ -175,7 +175,11 @@ public class CompositeStatementObject extends AbstractStatement {
 						if(parameterDeclaration.isFinal()) {
 							sb.append("final").append(" ");
 						}
-						sb.append(parameterDeclaration.getVariableName()).append(": ");
+						sb.append(parameterDeclaration.getVariableName());
+						if(i == variableDeclarations.size()-1)
+							sb.append(": ");
+						else
+							sb.append(","); // for with multiple variables
 					}
 				}
 				else {
@@ -215,7 +219,11 @@ public class CompositeStatementObject extends AbstractStatement {
 							sb.append("final").append(" ");
 						}
 						sb.append(parameterDeclaration.getType()).append(" ");
-						sb.append(parameterDeclaration.getVariableName()).append(": ");
+						sb.append(parameterDeclaration.getVariableName());
+						if(i == variableDeclarations.size()-1)
+							sb.append(": ");
+						else
+							sb.append(","); // for with multiple variables
 					}
 				}
 				else {

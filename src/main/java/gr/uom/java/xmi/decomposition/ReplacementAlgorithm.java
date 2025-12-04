@@ -1902,6 +1902,21 @@ public class ReplacementAlgorithm {
 					enhancedForExpression2.getString().startsWith(enhancedForExpression1.getString() + ".")) {
 				return replacementInfo.getReplacements();
 			}
+			if(for1.getVariableDeclarations().size() != for2.getVariableDeclarations().size()) {
+				int matchingVariableDeclarations = 0;
+				for(VariableDeclaration v1 : for1.getVariableDeclarations()) {
+					for(VariableDeclaration v2 : for2.getVariableDeclarations()) {
+						if(v1.equalType(v2) && v1.getVariableName().equals(v2.getVariableName())) {
+							matchingVariableDeclarations++;
+						}
+					}
+				}
+				if(matchingVariableDeclarations > 0 && 
+						(enhancedForExpression2.getString().contains(enhancedForExpression1.getString()) ||
+						enhancedForExpression1.getString().contains(enhancedForExpression2.getString()))) {
+					return replacementInfo.getReplacements();
+				}
+			}
 		}
 		//match while with enhanced for
 		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) &&

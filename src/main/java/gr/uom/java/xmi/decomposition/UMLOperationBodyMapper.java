@@ -945,9 +945,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(mapping instanceof CompositeStatementObjectMapping && !mapping.getFragment1().equalFragment(mapping.getFragment2()) && !mapping.isIdenticalWithExtractedVariable() && !mapping.isIdenticalWithInlinedVariable()) {
 					CompositeStatementObject composite = (CompositeStatementObject)mapping.getFragment1();
 					for(AbstractExpression expression : composite.getExpressions()) {
-						if(expression.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT_PARAMETER_NAME) &&
-								mapping.getFragment1().getVariableDeclarations().toString().equals(mapping.getFragment2().getVariableDeclarations().toString())) {
-							continue;
+						if(expression.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT_PARAMETER_NAME)) {
+							boolean matchFound = false;
+							VariableDeclaration v1 = mapping.getFragment1().getVariableDeclaration(expression.getString());
+							if(v1 != null) {
+								for(VariableDeclaration vd2 : mapping.getFragment2().getVariableDeclarations()) {
+									if(vd2.getVariableName().equals(v1.getVariableName())) {
+										matchFound = true;
+									}
+								}
+							}
+							if(matchFound) {
+								continue;
+							}
 						}
 						AbstractCall call1 = expression.invocationCoveringEntireFragment();
 						if(call1 != null) {

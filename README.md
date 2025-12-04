@@ -384,7 +384,7 @@ As of **December 3, 2025** the precision and recall of RefactoringMiner on this 
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12579  | 13  | 219  | 0.999  | 0.983|
+|**Total**|12584  | 13  | 215  | 0.999  | 0.983|
 |Extract Method|1019  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
@@ -422,15 +422,15 @@ As of **December 3, 2025** the precision and recall of RefactoringMiner on this 
 |Merge Attribute| 5  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 7  |  0  |  0  | 1.000  | 1.000|
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
-|Replace Variable With Attribute|124  |  0  |  0  | 1.000  | 1.000|
-|Replace Attribute With Variable|28  |  0  |  1  | 1.000  | 0.966|
+|Replace Variable With Attribute|125  |  0  |  0  | 1.000  | 1.000|
+|Replace Attribute With Variable|32  |  0  |  1  | 1.000  | 0.970|
 |Parameterize Variable|112  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|31  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|25  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|435  |  0  | 12  | 1.000  | 0.973|
 |Change Variable Type|817  |  1  |  7  | 0.999  | 0.992|
 |Change Parameter Type|657  |  1  | 10  | 0.998  | 0.985|
-|Change Attribute Type|244  |  0  |  8  | 1.000  | 0.968|
+|Change Attribute Type|244  |  0  |  4  | 1.000  | 0.984|
 |Add Method Annotation|331  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|98  |  0  |  0  | 1.000  | 1.000|
 |Modify Method Annotation|29  |  0  |  0  | 1.000  | 1.000|
@@ -515,7 +515,7 @@ As of **December 3, 2025** the precision and recall of RefactoringMiner on this 
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3471  | 41  | 76  | 0.988  | 0.979|
+|**Total**|3499  | 41  | 76  | 0.988  | 0.979|
 |Extract Method|373  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -545,7 +545,7 @@ As of **December 3, 2025** the precision and recall of RefactoringMiner on this 
 |Merge Variable| 4  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute|11  |  0  |  0  | 1.000  | 1.000|
-|Replace Attribute With Variable|30  |  0  |  0  | 1.000  | 1.000|
+|Replace Attribute With Variable|58  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|168  |  1  |  6  | 0.994  | 0.966|
 |Change Variable Type|378  |  6  |  2  | 0.984  | 0.995|
 |Change Attribute Type|164  |  2  |  3  | 0.988  | 0.982|

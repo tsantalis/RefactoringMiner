@@ -2315,18 +2315,47 @@ public class VariableReplacementAnalysis {
 				}
 			}
 			if(mapping.getReplacements().isEmpty() && mapping.getFragment1().getVariableDeclarations().size() > 0 && mapping.getFragment2().getVariableDeclarations().size() > 0) {
-				VariableDeclaration v1 = mapping.getFragment1().getVariableDeclarations().get(0);
-				VariableDeclaration v2 = mapping.getFragment2().getVariableDeclarations().get(0);
-				if(!v1.getVariableName().equals(v2.getVariableName())) {
-					VariableDeclarationReplacement r = new VariableDeclarationReplacement(v1, v2, operation1, operation2);
-					mapping.addReplacement(r.getVariableNameReplacement());
-					if(map.containsKey(r)) {
-						map.get(r).add(mapping);
+				if(mapping.getFragment1().getVariableDeclarations().size() == 1 && mapping.getFragment2().getVariableDeclarations().size() == 1) {
+					VariableDeclaration v1 = mapping.getFragment1().getVariableDeclarations().get(0);
+					VariableDeclaration v2 = mapping.getFragment2().getVariableDeclarations().get(0);
+					if(!v1.getVariableName().equals(v2.getVariableName())) {
+						VariableDeclarationReplacement r = new VariableDeclarationReplacement(v1, v2, operation1, operation2);
+						mapping.addReplacement(r.getVariableNameReplacement());
+						if(map.containsKey(r)) {
+							map.get(r).add(mapping);
+						}
+						else {
+							Set<AbstractCodeMapping> list = new LinkedHashSet<AbstractCodeMapping>();
+							list.add(mapping);
+							map.put(r, list);
+						}
 					}
-					else {
-						Set<AbstractCodeMapping> list = new LinkedHashSet<AbstractCodeMapping>();
-						list.add(mapping);
-						map.put(r, list);
+				}
+				else {
+					VariableDeclaration v1 = mapping.getFragment1().getVariableDeclarations().get(0);
+					VariableDeclaration v2 = mapping.getFragment2().getVariableDeclarations().get(0);
+					boolean matchFound = false;
+					for(VariableDeclaration vd2 : mapping.getFragment2().getVariableDeclarations()) {
+						if(vd2.getVariableName().equals(v1.getVariableName())) {
+							matchFound = true;
+						}
+					}
+					for(VariableDeclaration vd1 : mapping.getFragment1().getVariableDeclarations()) {
+						if(vd1.getVariableName().equals(v2.getVariableName())) {
+							matchFound = true;
+						}
+					}
+					if(!matchFound && !v1.getVariableName().equals(v2.getVariableName())) {
+						VariableDeclarationReplacement r = new VariableDeclarationReplacement(v1, v2, operation1, operation2);
+						mapping.addReplacement(r.getVariableNameReplacement());
+						if(map.containsKey(r)) {
+							map.get(r).add(mapping);
+						}
+						else {
+							Set<AbstractCodeMapping> list = new LinkedHashSet<AbstractCodeMapping>();
+							list.add(mapping);
+							map.put(r, list);
+						}
 					}
 				}
 			}

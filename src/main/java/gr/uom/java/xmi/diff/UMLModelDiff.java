@@ -4401,13 +4401,24 @@ public class UMLModelDiff {
 								refactorings.remove(moveRef);
 							}
 							//eliminate inner classes being reported as moved
-							List<MoveClassRefactoring> toBeRemoved = new ArrayList<MoveClassRefactoring>();
+							List<Refactoring> toBeRemoved = new ArrayList<Refactoring>();
 							for(Refactoring r : refactorings) {
 								if(r instanceof MoveClassRefactoring) {
 									MoveClassRefactoring moveClass = (MoveClassRefactoring)r;
 									if(moveClass.getOriginalClassName().startsWith(moveDiff.getOriginalClassName() + ".") &&
 											moveClass.getMovedClassName().startsWith(moveDiff.getNextClassName() + ".")) {
 										toBeRemoved.add(moveClass);
+									}
+								}
+								else if(r instanceof MoveOperationRefactoring) {
+									MoveOperationRefactoring moveOperation = (MoveOperationRefactoring)r;
+									if(moveDiff.getMovedClass().getOperations().contains(moveOperation.getMovedOperation())) {
+										for(UMLOperationBodyMapper mapper : moveDiff.getOperationBodyMapperList()) {
+											if(mapper.getContainer2().equals(moveOperation.getMovedOperation())) {
+												toBeRemoved.add(moveOperation);
+												break;
+											}
+										}
 									}
 								}
 							}

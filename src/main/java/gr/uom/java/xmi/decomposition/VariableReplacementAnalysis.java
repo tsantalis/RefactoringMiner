@@ -1727,21 +1727,26 @@ public class VariableReplacementAnalysis {
 			}
 			boolean singleVariableDeclarationPass = singleVariableDeclarations.isEmpty() || singleVariableDeclarations.size() + nestedVariablesUnderSingleVariableDeclaration == mergedVariables.size();
 			SimpleEntry<VariableDeclaration,VariableDeclarationContainer> newVariable = getVariableDeclaration2(merge);
+			Set<AbstractCodeMapping> references = mergeMap.get(merge);
 			if(mergedVariables.size() > 1 && mergedVariables.size() == merge.getMergedVariables().size() && newVariable != null && singleVariableDeclarationPass) {
 				VariableDeclarationContainer operationBefore = mergedVariableOperations.iterator().next();
-				MergeVariableRefactoring refactoring = new MergeVariableRefactoring(mergedVariables, newVariable.getKey(), operationBefore, newVariable.getValue(), mergeMap.get(merge), insideExtractedOrInlinedMethod);
-				if(!existsConflictingInlineVariableRefactoring(refactoring) && !existsConflictingParameterRenameInOperationDiff(refactoring, variableInvocationExpressionMap)) {
-					for(VariableDeclaration removedVariable : removedVariables) {
-						VariableDeclaration addedVariable = newVariable.getKey();
-						if(removedVariable.getVariableName().equals(addedVariable.getVariableName()) && equalType(addedVariable, removedVariable)) {
-							Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(removedVariable, addedVariable, mappings, classDiff, modelDiff);
-							matchedVariables.add(Pair.of(removedVariable, addedVariable));
-							getVariableRefactorings(removedVariable, addedVariable, operationBefore, newVariable.getValue(), variableReferences, null);
-							break;
-						}
+				Set<VariableDeclaration> foundVariableDeclarationsFromReferences = new LinkedHashSet<>();
+				for(AbstractCodeMapping reference : references) {
+					VariableDeclaration v = reference.getFragment2().getVariableDeclaration(newVariable.getKey().getVariableName());
+					CompositeStatementObject parent = reference.getFragment2().getParent();
+					while(v == null && parent != null) {
+						v = parent.getVariableDeclaration(newVariable.getKey().getVariableName());
+						parent = parent.getParent();
 					}
-					for(VariableDeclaration addedVariable : addedVariables) {
-						for(VariableDeclaration removedVariable : mergedVariables) {
+					if(v != null) {
+						foundVariableDeclarationsFromReferences.add(v);
+					}
+				}
+				if(foundVariableDeclarationsFromReferences.size() <= 1) {
+					MergeVariableRefactoring refactoring = new MergeVariableRefactoring(mergedVariables, newVariable.getKey(), operationBefore, newVariable.getValue(), references, insideExtractedOrInlinedMethod);
+					if(!existsConflictingInlineVariableRefactoring(refactoring) && !existsConflictingParameterRenameInOperationDiff(refactoring, variableInvocationExpressionMap)) {
+						for(VariableDeclaration removedVariable : removedVariables) {
+							VariableDeclaration addedVariable = newVariable.getKey();
 							if(removedVariable.getVariableName().equals(addedVariable.getVariableName()) && equalType(addedVariable, removedVariable)) {
 								Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(removedVariable, addedVariable, mappings, classDiff, modelDiff);
 								matchedVariables.add(Pair.of(removedVariable, addedVariable));
@@ -1749,40 +1754,50 @@ public class VariableReplacementAnalysis {
 								break;
 							}
 						}
-					}
-					variableMerges.add(refactoring);
-					removedVariables.removeAll(mergedVariables);
-					addedVariables.remove(newVariable.getKey());
-					VariableDeclaration firstMergedVariable = null;
-					boolean allMergedVariablesHaveEqualAnnotations = true;
-					for(VariableDeclaration mergedVariable : mergedVariables) {
-						if(firstMergedVariable == null) {
-							firstMergedVariable = mergedVariable;
+						for(VariableDeclaration addedVariable : addedVariables) {
+							for(VariableDeclaration removedVariable : mergedVariables) {
+								if(removedVariable.getVariableName().equals(addedVariable.getVariableName()) && equalType(addedVariable, removedVariable)) {
+									Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(removedVariable, addedVariable, mappings, classDiff, modelDiff);
+									matchedVariables.add(Pair.of(removedVariable, addedVariable));
+									getVariableRefactorings(removedVariable, addedVariable, operationBefore, newVariable.getValue(), variableReferences, null);
+									break;
+								}
+							}
 						}
-						else if(!firstMergedVariable.getAnnotations().equals(mergedVariable.getAnnotations())) {
-							allMergedVariablesHaveEqualAnnotations = false;
-							break;
+						variableMerges.add(refactoring);
+						removedVariables.removeAll(mergedVariables);
+						addedVariables.remove(newVariable.getKey());
+						VariableDeclaration firstMergedVariable = null;
+						boolean allMergedVariablesHaveEqualAnnotations = true;
+						for(VariableDeclaration mergedVariable : mergedVariables) {
+							if(firstMergedVariable == null) {
+								firstMergedVariable = mergedVariable;
+							}
+							else if(!firstMergedVariable.getAnnotations().equals(mergedVariable.getAnnotations())) {
+								allMergedVariablesHaveEqualAnnotations = false;
+								break;
+							}
 						}
-					}
-					if(allMergedVariablesHaveEqualAnnotations) {
-						UMLAnnotationListDiff annotationListDiff = new UMLAnnotationListDiff(firstMergedVariable.getAnnotations(), newVariable.getKey().getAnnotations());
-						for(UMLAnnotation annotation : annotationListDiff.getAddedAnnotations()) {
-							AddVariableAnnotationRefactoring ref = new AddVariableAnnotationRefactoring(annotation, firstMergedVariable, newVariable.getKey(), operationBefore, newVariable.getValue(), insideExtractedOrInlinedMethod);
-							refactorings.add(ref);
-						}
-						for(UMLAnnotation annotation : annotationListDiff.getRemovedAnnotations()) {
-							RemoveVariableAnnotationRefactoring ref = new RemoveVariableAnnotationRefactoring(annotation, firstMergedVariable, newVariable.getKey(), operationBefore, newVariable.getValue(), insideExtractedOrInlinedMethod);
-							refactorings.add(ref);
-						}
-						for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffs()) {
-							ModifyVariableAnnotationRefactoring ref = new ModifyVariableAnnotationRefactoring(annotationDiff.getRemovedAnnotation(), annotationDiff.getAddedAnnotation(), firstMergedVariable, newVariable.getKey(), operationBefore, newVariable.getValue(), insideExtractedOrInlinedMethod);
-							refactorings.add(ref);
+						if(allMergedVariablesHaveEqualAnnotations) {
+							UMLAnnotationListDiff annotationListDiff = new UMLAnnotationListDiff(firstMergedVariable.getAnnotations(), newVariable.getKey().getAnnotations());
+							for(UMLAnnotation annotation : annotationListDiff.getAddedAnnotations()) {
+								AddVariableAnnotationRefactoring ref = new AddVariableAnnotationRefactoring(annotation, firstMergedVariable, newVariable.getKey(), operationBefore, newVariable.getValue(), insideExtractedOrInlinedMethod);
+								refactorings.add(ref);
+							}
+							for(UMLAnnotation annotation : annotationListDiff.getRemovedAnnotations()) {
+								RemoveVariableAnnotationRefactoring ref = new RemoveVariableAnnotationRefactoring(annotation, firstMergedVariable, newVariable.getKey(), operationBefore, newVariable.getValue(), insideExtractedOrInlinedMethod);
+								refactorings.add(ref);
+							}
+							for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffs()) {
+								ModifyVariableAnnotationRefactoring ref = new ModifyVariableAnnotationRefactoring(annotationDiff.getRemovedAnnotation(), annotationDiff.getAddedAnnotation(), firstMergedVariable, newVariable.getKey(), operationBefore, newVariable.getValue(), insideExtractedOrInlinedMethod);
+								refactorings.add(ref);
+							}
 						}
 					}
 				}
 			}
 			else {
-				CandidateMergeVariableRefactoring candidate = new CandidateMergeVariableRefactoring(merge.getMergedVariables(), merge.getAfter(), operation1, operation2, mergeMap.get(merge));
+				CandidateMergeVariableRefactoring candidate = new CandidateMergeVariableRefactoring(merge.getMergedVariables(), merge.getAfter(), operation1, operation2, references);
 				candidateAttributeMerges.add(candidate);
 			}
 		}
@@ -3339,7 +3354,17 @@ public class VariableReplacementAnalysis {
 		if(fieldAssignmentWithPreviouslyExistingParameter(set)) {
 			return false;
 		}
-		boolean lastParameter = index1 == parameterNameList1.size()-1 && index2 == parameterNameList2.size()-1;
+		boolean lastParameter = index1 != -1 && index1 == parameterNameList1.size()-1 && index2 == parameterNameList2.size()-1;
+		if(lastParameter && index1 < index2) {
+			UMLType type1 = operation1.getParameterTypeList().get(index1);
+			UMLType type2 = operation2.getParameterTypeList().get(index1);
+			if(type1.equals(type2)) {
+				UMLType type3 = operation2.getParameterTypeList().get(index2);
+				if(!type1.equals(type3)) {
+					lastParameter = false;
+				}
+			}
+		}
 		return index1 >= 0 && (index1 == index2 || lastParameter);
 	}
 

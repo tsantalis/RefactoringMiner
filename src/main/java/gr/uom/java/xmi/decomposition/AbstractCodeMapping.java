@@ -1176,8 +1176,12 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					if(indexOfArgument1 != -1 && (callBefore.arguments().size() == callAfter.arguments().size() ||
 							indexOfArgument1 < Math.min(callBefore.arguments().size(), callAfter.arguments().size())) &&
 							!callBefore.arguments().contains(callAfter.arguments().get(indexOfArgument1))) {
-						before = variableName;
-						after = callAfter.arguments().get(indexOfArgument1);
+						boolean matchesAddedOperation = classDiff != null && classDiff.matchesOperation(callAfter, classDiff.getAddedOperations(), operation2) != null;
+						boolean matchesRemovedOperation = classDiff != null && classDiff.matchesOperation(callBefore, classDiff.getRemovedOperations(), operation1) != null;
+						if(matchesAddedOperation == matchesRemovedOperation) {
+							before = variableName;
+							after = callAfter.arguments().get(indexOfArgument1);
+						}
 					}
 					if(callBefore.identicalName(callAfter) && callBefore.equalArguments(callAfter) && !callBefore.identicalExpression(callAfter) &&
 							callBefore.getExpression() != null && callAfter.getExpression() != null) {

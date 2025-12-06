@@ -1532,7 +1532,7 @@ public class ReplacementAlgorithm {
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
 		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + JAVA.STATEMENT_TERMINATION).equals(s2) || (s2 + JAVA.STATEMENT_TERMINATION).equals(s1) || ("final " + s1 + JAVA.STATEMENT_TERMINATION).equals(s2) || ("final " + s2 + JAVA.STATEMENT_TERMINATION).equals(s1) || replacementInfo.getArgumentizedString1().equals(replacementInfo.getArgumentizedString2()) || equalAfterParenthesisElimination(s1, s2) ||
-				multiAssignmentWithReorderedVariables(s1, s2) ||
+				multiAssignmentWithReorderedVariables(s1, s2) || arrayAccessDimensionChange(statement1.getString(), statement2.getString()) ||
 				differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(s1, s2, methodInvocationMap1, methodInvocationMap2, statement1, statement2, variableDeclarations1, variableDeclarations2, replacementInfo, operationBodyMapper) ||
 				differOnlyInFinalModifier(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || differOnlyInThis(s1, s2) || differOnlyInThrow(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo, statement1, container2, operationBodyMapper) || differOnlyInDefaultInitializer(s1, s2, variableDeclarations1, variableDeclarations2) ||
 				differOnlyInPatternInstanceExpressions(s1, s2, statement1, statement2, replacementInfo) ||

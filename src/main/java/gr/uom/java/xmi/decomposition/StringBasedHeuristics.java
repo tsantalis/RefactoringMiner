@@ -67,6 +67,24 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
+	protected static boolean arrayAccessDimensionChange(String s1, String s2) {
+		if(s1.endsWith(JAVA.STATEMENT_TERMINATION) && s2.endsWith(JAVA.STATEMENT_TERMINATION)) {
+			String prefix1 = s1.substring(0, s1.length()-JAVA.STATEMENT_TERMINATION.length());
+			String prefix2 = s2.substring(0, s2.length()-JAVA.STATEMENT_TERMINATION.length());
+			if(s2.startsWith(prefix1) && !prefix1.equals("return")) {
+				String suffix2 = prefix2.substring(prefix1.length());
+				if(suffix2.length() > 0 && suffix2.startsWith("[") && suffix2.endsWith("]"))
+					return true;
+			}
+			if(s1.startsWith(prefix2) && !prefix2.equals("return")) {
+				String suffix1 = prefix1.substring(prefix2.length());
+				if(suffix1.length() > 0 && suffix1.startsWith("[") && suffix1.endsWith("]"))
+					return true;
+			}
+		}
+		return false;
+	}
+
 	protected static boolean containsMethodSignatureOfAnonymousClass(String s) {
 		String[] lines = s.split("\\n");
 		if(s.contains(JAVA.LAMBDA_ARROW)) {

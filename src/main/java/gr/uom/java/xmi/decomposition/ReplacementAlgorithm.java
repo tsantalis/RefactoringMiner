@@ -3483,7 +3483,10 @@ public class ReplacementAlgorithm {
 		}
 		//object creation has identical arguments, but different type
 		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null &&
-				creationCoveringTheEntireStatement1.arguments().size() > 0 && creationCoveringTheEntireStatement1.equalArguments(creationCoveringTheEntireStatement2)) {
+				(
+				(creationCoveringTheEntireStatement1.arguments().size() > 0 && creationCoveringTheEntireStatement1.equalArguments(creationCoveringTheEntireStatement2)) ||
+				(creationCoveringTheEntireStatement1.arguments().size() == 0 && creationCoveringTheEntireStatement2.arguments().size() == 0 && sameTypeChangeInUnmatchedStatements(creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, replacementInfo))
+				)) {
 			Replacement replacement = new ObjectCreationReplacement(creationCoveringTheEntireStatement1.getName(),
 					creationCoveringTheEntireStatement2.getName(), creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION);
 			replacementInfo.addReplacement(replacement);
@@ -4503,6 +4506,36 @@ public class ReplacementAlgorithm {
 			}
 		}
 		return null;
+	}
+
+	private static boolean sameTypeChangeInUnmatchedStatements(ObjectCreation creationCoveringTheEntireStatement1, ObjectCreation creationCoveringTheEntireStatement2, ReplacementInfo info) {
+		if(creationCoveringTheEntireStatement1.isArray() && creationCoveringTheEntireStatement1.getAnonymousClassDeclaration() != null) {
+			return false;
+		}
+		if(creationCoveringTheEntireStatement2.isArray() && creationCoveringTheEntireStatement2.getAnonymousClassDeclaration() != null) {
+			return false;
+		}
+		boolean match1 = false;
+		for(AbstractCodeFragment fragment1 : info.getStatements1()) {
+			AbstractCall call = fragment1.creationCoveringEntireFragment();
+			if(call != null) {
+				if(call.identicalName(creationCoveringTheEntireStatement1)) {
+					match1 = true;
+					break;
+				}
+			}
+		}
+		boolean match2 = false;
+		for(AbstractCodeFragment fragment2 : info.getStatements2()) {
+			AbstractCall call = fragment2.creationCoveringEntireFragment();
+			if(call != null) {
+				if(call.identicalName(creationCoveringTheEntireStatement2)) {
+					match2 = true;
+					break;
+				}
+			}
+		}
+		return match1 && match2;
 	}
 
 	private static boolean compatibleExceptionType(ObjectCreation creationCoveringTheEntireStatement1, ObjectCreation creationCoveringTheEntireStatement2) {

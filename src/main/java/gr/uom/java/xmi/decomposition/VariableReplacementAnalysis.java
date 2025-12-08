@@ -1930,7 +1930,7 @@ public class VariableReplacementAnalysis {
 					if(v1 != null && v2 == null && v1.getValue().isConstructor()) {
 						skip = true;
 					}
-					if(!skip) {
+					if(!skip && !conflictWithChildMapperRefactoring(candidate)) {
 						this.candidateAttributeRenames.add(candidate);
 					}
 				}
@@ -1947,6 +1947,26 @@ public class VariableReplacementAnalysis {
 				}
 			}
 		}
+	}
+
+	private boolean conflictWithChildMapperRefactoring(CandidateAttributeRefactoring candidate) {
+		for(UMLOperationBodyMapper childMapper : mapper.getChildMappers()) {
+			if(childMapper.isMoveCode()) {
+				for(Refactoring r : childMapper.getRefactoringsAfterPostProcessing()) {
+					if(r instanceof RenameVariableRefactoring rename) {
+						if(candidate.getRenamedVariableDeclaration() != null && rename.getRenamedVariable().getVariableName().equals(candidate.getRenamedVariableDeclaration().getVariableName())) {
+							if(!candidate.getOriginalVariableName().equals(rename.getOriginalVariable().getVariableName()))
+								return true;
+						}
+						else if(candidate.getOriginalVariableDeclaration() != null && rename.getOriginalVariable().getVariableName().equals(candidate.getOriginalVariableDeclaration().getVariableName())) {
+							if(!candidate.getRenamedVariableName().equals(rename.getRenamedVariable().getVariableName()))
+								return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private void getVariableRefactorings(VariableDeclaration variableDeclaration1,

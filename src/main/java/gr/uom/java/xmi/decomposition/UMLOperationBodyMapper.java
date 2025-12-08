@@ -131,6 +131,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private List<Set<AbstractCodeMapping>> internalParameterizeTestMultiMappings = new ArrayList<Set<AbstractCodeMapping>>();
 	private boolean nested;
 	private boolean lambdaBodyMapper;
+	private boolean moveCode;
 	private boolean anonymousCollapse;
 	private AbstractCall operationInvocation;
 	private Map<String, String> parameterToArgumentMap1;
@@ -153,6 +154,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public boolean isNested() {
 		return nested;
+	}
+
+	public boolean isMoveCode() {
+		return moveCode;
 	}
 
 	public boolean isAnonymousCollapse() {
@@ -192,6 +197,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
 		this.parameterNameList1 = container1.getParameterNameList();
 		this.parameterNameList2 = container2.getParameterNameList();
+		this.moveCode = true;
 		List<AbstractCodeFragment> leaves1 = new ArrayList<>(mapper1.getNonMappedLeavesT1());
 		for(AbstractCodeMapping mapping : mapper1.getMappings()) {
 			if(mapping instanceof LeafMapping && !mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
@@ -232,6 +238,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
 		this.parameterNameList1 = container1.getParameterNameList();
 		this.parameterNameList2 = container2.getParameterNameList();
+		this.moveCode = true;
 		OperationBody body1 = removedOperation.getBody();
 		if(body1 != null) {
 			List<AbstractCodeFragment> leaves1 = new ArrayList<>(body1.getCompositeStatement().getLeaves());
@@ -267,6 +274,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
 		this.parameterNameList1 = container1.getParameterNameList();
 		this.parameterNameList2 = container2.getParameterNameList();
+		this.moveCode = true;
 		OperationBody body2 = addedOperation.getBody();
 		if(body2 != null) {
 			List<AbstractCodeFragment> leaves1 = new ArrayList<>(mapper1.getNonMappedLeavesT1());

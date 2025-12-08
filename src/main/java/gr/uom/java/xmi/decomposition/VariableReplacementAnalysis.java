@@ -94,6 +94,7 @@ public class VariableReplacementAnalysis {
 	private Set<CandidateMergeVariableRefactoring> candidateAttributeMerges = new LinkedHashSet<CandidateMergeVariableRefactoring>();
 	private Set<CandidateSplitVariableRefactoring> candidateAttributeSplits = new LinkedHashSet<CandidateSplitVariableRefactoring>();
 	private boolean insideExtractedOrInlinedMethod = false;
+	private boolean moveCode = false;
 	private Map<String, Set<String>> aliasedVariablesInOriginalMethod;
 	private Map<String, Set<String>> aliasedVariablesInNextMethod;
 
@@ -125,6 +126,9 @@ public class VariableReplacementAnalysis {
 		//when the containers of the parent mapper are the same with those of the child mapper, then the child mapper is a nested lambda expression mapper
 		if(parentMapper != null && !(parentMapper.getContainer1().equals(mapper.getContainer1()) && parentMapper.getContainer2().equals(mapper.getContainer2()))) {
 			this.insideExtractedOrInlinedMethod = true;
+		}
+		if(mapper.isMoveCode()) {
+			this.moveCode = true;
 		}
 		if(parentMapper != null) {
 			this.removedVariables.addAll(operation1.getBody() != null ? operation1.getBody().getAllVariableDeclarations() : Collections.emptySet());
@@ -3316,6 +3320,9 @@ public class VariableReplacementAnalysis {
 	}
 
 	private boolean existsConflictingParameter(RenameVariableRefactoring ref) {
+		if(moveCode) {
+			return false;
+		}
 		VariableDeclaration renamedVariable = ref.getRenamedVariable();
 		if(renamedVariable.isParameter()) {
 			for(VariableDeclaration parameter : operation1.getParameterDeclarationList()) {

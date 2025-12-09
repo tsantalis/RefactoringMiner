@@ -1988,6 +1988,13 @@ public class ReplacementAlgorithm {
 							unmatchedStatementsTry1.add(tryStatement1);
 						}
 					}
+					for(AbstractCodeFragment fragment : replacementInfo.getStatements1()) {
+						if(fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_STATEMENT)) {
+							if(!matchedChildStatements1.contains(fragment)) {
+								unmatchedStatementsTry1.add((AbstractStatement) fragment);
+							}
+						}
+					}
 					List<AbstractExpression> unmatchedExpressionsTry2 = new ArrayList<>();
 					for(AbstractExpression tryExpression2 : try2.getExpressions()) {
 						unmatchedExpressionsTry2.add(tryExpression2);

@@ -4353,7 +4353,7 @@ Mapping state for Move Method refactoring purity:
         for (AbstractCodeMapping mapping : bodyMapper.getMappings()) {
             if (mapping.getFragment2().getString().contains(variableDeclaration.getVariableName())) {
                 existFlag = true;
-                if (variableDeclaration.getInitializer() == null || variableDeclaration.getInitializer().getExpression().equals("null")
+                if (variableDeclaration.getInitializer() == null || variableDeclaration.getInitializer().getExpression().equals(JAVA.NULL)
                 || variableDeclaration.getInitializer().getExpression().equals("0"))
                     checkFlag = checkMappingReplacements(mapping, variableDeclaration, refactorings);
                 if (!checkFlag) {

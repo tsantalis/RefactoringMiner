@@ -2,10 +2,10 @@ package gr.uom.java.xmi;
 
 public enum Constants {
 	JAVA(";\n", "return ", "return;\n", "return true;\n", "return false;\n", "return null;\n", "return this;\n", "=", "break;\n", "continue;\n",
-			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", " ? ", " : ", "assertThrows", "assertThatThrownBy", " && ", " || "),
+			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", " ? ", " : ", "assertThrows", "assertThatThrownBy", " && ", " || ", "null", "true", "false"),
 	
 	PYTHON("\n", "return ", "return\n", "return true\n", "return false\n", "return None\n", "return self\n", "=", "break\n", "continue\n",
-			" -> ", "::", " + ", "raise ", "case ", "try", "{", "}", "{", "}", "self", "self.", " if ", " else ", "assertRaises", "assertRaises", " and ", " or ");
+			" -> ", "::", " + ", "raise ", "case ", "try", "{", "}", "{", "}", "self", "self.", " if ", " else ", "assertRaises", "assertRaises", " and ", " or ", "None", "True", "False");
 	
 	public final String STATEMENT_TERMINATION;
 	public final String RETURN_SPACE;
@@ -35,6 +35,9 @@ public enum Constants {
 	public final String ASSERT_THAT_THROWN_BY;
 	public final String AND;
 	public final String OR;
+	public final String NULL;
+	public final String TRUE;
+	public final String FALSE;
 	
 	Constants(
 			String STATEMENT_TERMINATION,
@@ -64,7 +67,10 @@ public enum Constants {
 			String ASSERT_THROWS,
 			String ASSERT_THAT_THROWN_BY,
 			String AND,
-			String OR) {
+			String OR,
+			String NULL,
+			String TRUE,
+			String FALSE) {
 		this.STATEMENT_TERMINATION = STATEMENT_TERMINATION;
 		this.RETURN_SPACE = RETURN_SPACE;
 		this.RETURN_STATEMENT = RETURN_STATEMENT;
@@ -93,5 +99,8 @@ public enum Constants {
 		this.ASSERT_THAT_THROWN_BY = ASSERT_THAT_THROWN_BY;
 		this.AND = AND;
 		this.OR = OR;
+		this.NULL = NULL;
+		this.TRUE = TRUE;
+		this.FALSE = FALSE;
 	}
 }

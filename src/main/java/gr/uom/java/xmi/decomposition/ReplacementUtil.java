@@ -2,6 +2,8 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.containsMethodSignatureOfAnonymousClass;
 
 public class ReplacementUtil {
@@ -213,6 +215,6 @@ public class ReplacementUtil {
 	}
 
 	public static boolean isDefaultValue(String argument) {
-		return argument.equals("null") || argument.equals("0") || argument.equals("1") || argument.equals("false") || argument.equals("true");
+		return argument.equals(JAVA.NULL) || argument.equals("0") || argument.equals("1") || argument.equals(JAVA.FALSE) || argument.equals(JAVA.TRUE);
 	}
 }

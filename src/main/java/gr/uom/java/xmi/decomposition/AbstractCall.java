@@ -1214,7 +1214,7 @@ public abstract class AbstractCall extends LeafExpression {
 		if(statement.endsWith(JAVA.STATEMENT_TERMINATION)) {
 			int index = 0;
 			for(String argument : arguments()) {
-				if(argument.equals("true") || argument.equals("false") || argument.equals("null")) {
+				if(argument.equals(JAVA.TRUE) || argument.equals(JAVA.FALSE) || argument.equals(JAVA.NULL)) {
 					return -1;
 				}
 				if(equalsIgnoringExtraParenthesis(argument, statement.substring(0, statement.length()-JAVA.STATEMENT_TERMINATION.length()))) {
@@ -1231,7 +1231,7 @@ public abstract class AbstractCall extends LeafExpression {
 			//statement is actually an expression
 			int index = 0;
 			for(String argument : arguments()) {
-				if(argument.equals("true") || argument.equals("false") || argument.equals("null")) {
+				if(argument.equals(JAVA.TRUE) || argument.equals(JAVA.FALSE) || argument.equals(JAVA.NULL)) {
 					return -1;
 				}
 				if(equalsIgnoringExtraParenthesis(argument, expression)) {
@@ -1247,7 +1247,7 @@ public abstract class AbstractCall extends LeafExpression {
 		if(statement.startsWith(JAVA.RETURN_SPACE)) {
 			int index = 0;
 			for(String argument : arguments()) {
-				if(argument.equals("true") || argument.equals("false") || argument.equals("null")) {
+				if(argument.equals(JAVA.TRUE) || argument.equals(JAVA.FALSE) || argument.equals(JAVA.NULL)) {
 					return -1;
 				}
 				if(equalsIgnoringExtraParenthesis(argument, statement.substring(JAVA.RETURN_SPACE.length(), statement.length()-JAVA.STATEMENT_TERMINATION.length()))) {
@@ -1263,7 +1263,7 @@ public abstract class AbstractCall extends LeafExpression {
 		if(statement.startsWith(JAVA.THROW_SPACE)) {
 			int index = 0;
 			for(String argument : arguments()) {
-				if(argument.equals("true") || argument.equals("false") || argument.equals("null")) {
+				if(argument.equals(JAVA.TRUE) || argument.equals(JAVA.FALSE) || argument.equals(JAVA.NULL)) {
 					return -1;
 				}
 				if(equalsIgnoringExtraParenthesis(argument, statement.substring(JAVA.THROW_SPACE.length(), statement.length()-JAVA.STATEMENT_TERMINATION.length()))) {
@@ -1280,7 +1280,7 @@ public abstract class AbstractCall extends LeafExpression {
 			String removeThrowFromStatement = statement.substring(JAVA.THROW_SPACE.length(), statement.length()-JAVA.STATEMENT_TERMINATION.length());
 			int index = 0;
 			for(String argument : arguments()) {
-				if(argument.equals("true") || argument.equals("false") || argument.equals("null")) {
+				if(argument.equals(JAVA.TRUE) || argument.equals(JAVA.FALSE) || argument.equals(JAVA.NULL)) {
 					return -1;
 				}
 				if(argument.startsWith("()" + JAVA.LAMBDA_ARROW))

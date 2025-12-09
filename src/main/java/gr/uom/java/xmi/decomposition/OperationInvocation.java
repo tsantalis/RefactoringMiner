@@ -297,10 +297,10 @@ public class OperationInvocation extends AbstractCall {
     		else if(arg.endsWith(".class")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("Class"));
     		}
-    		else if(arg.equals("true")) {
+    		else if(arg.equals(JAVA.TRUE)) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("boolean"));
     		}
-    		else if(arg.equals("false")) {
+    		else if(arg.equals(JAVA.FALSE)) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("boolean"));
     		}
     		else if(arg.startsWith("new ") && arg.contains("(") && openingParenthesisBeforeSquareBracket) {

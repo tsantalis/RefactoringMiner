@@ -1083,7 +1083,7 @@ public class ReplacementAlgorithm {
 		if((statement1.getNullLiterals().isEmpty() && !statement2.getNullLiterals().isEmpty()) ||
 				bothContainNullInDifferentIndexes(invocationCoveringTheEntireStatement1 != null ? invocationCoveringTheEntireStatement1 : creationCoveringTheEntireStatement1,
 						invocationCoveringTheEntireStatement2 != null ? invocationCoveringTheEntireStatement2 : creationCoveringTheEntireStatement2)) {
-			Set<String> nullLiterals2 = Set.of("null");
+			Set<String> nullLiterals2 = Set.of(JAVA.NULL);
 			for(String parameter : parameterToArgumentMap.keySet()) { 
 				String argument = parameterToArgumentMap.get(parameter); 
 				if(!parameter.equals(argument) && variables1.contains(parameter)) {
@@ -1116,7 +1116,7 @@ public class ReplacementAlgorithm {
 		if((!statement1.getNullLiterals().isEmpty() && statement2.getNullLiterals().isEmpty()) ||
 				bothContainNullInDifferentIndexes(invocationCoveringTheEntireStatement1 != null ? invocationCoveringTheEntireStatement1 : creationCoveringTheEntireStatement1,
 						invocationCoveringTheEntireStatement2 != null ? invocationCoveringTheEntireStatement2 : creationCoveringTheEntireStatement2)) {
-			Set<String> nullLiterals1 = Set.of("null");
+			Set<String> nullLiterals1 = Set.of(JAVA.NULL);
 			for(String parameter : parameterToArgumentMap.keySet()) { 
 				String argument = parameterToArgumentMap.get(parameter); 
 				if(!parameter.equals(argument) && variables2.contains(parameter)) {
@@ -1156,7 +1156,7 @@ public class ReplacementAlgorithm {
 		if(statement1.getTernaryOperatorExpressions().isEmpty() && !statement2.getTernaryOperatorExpressions().isEmpty()) {
 			if(!statement1.getNullLiterals().isEmpty()) {
 				Set<String> nullLiterals1 = new LinkedHashSet<String>();
-				nullLiterals1.add("null");
+				nullLiterals1.add(JAVA.NULL);
 				Set<String> ternaryExpressions2 = new LinkedHashSet<String>();
 				for(TernaryOperatorExpression ternary : statement2.getTernaryOperatorExpressions()) {
 					ternaryExpressions2.add(ternary.getExpression());	
@@ -1193,7 +1193,7 @@ public class ReplacementAlgorithm {
 		else if(!statement1.getTernaryOperatorExpressions().isEmpty() && statement2.getTernaryOperatorExpressions().isEmpty()) {
 			if(!statement2.getNullLiterals().isEmpty()) {
 				Set<String> nullLiterals2 = new LinkedHashSet<String>();
-				nullLiterals2.add("null");
+				nullLiterals2.add(JAVA.NULL);
 				Set<String> ternaryExpressions1 = new LinkedHashSet<String>();
 				for(TernaryOperatorExpression ternary : statement1.getTernaryOperatorExpressions()) {
 					ternaryExpressions1.add(ternary.getExpression());	
@@ -3221,7 +3221,7 @@ public class ReplacementAlgorithm {
 			}
 			//assertEquals() to assertNull() conversion
 			if(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("assertNull")) {
-				if(invocationCoveringTheEntireStatement1.arguments().size() == 2 && invocationCoveringTheEntireStatement1.arguments().contains("null") && invocationCoveringTheEntireStatement2.arguments().size() == 1) {
+				if(invocationCoveringTheEntireStatement1.arguments().size() == 2 && invocationCoveringTheEntireStatement1.arguments().contains(JAVA.NULL) && invocationCoveringTheEntireStatement2.arguments().size() == 1) {
 					String assertNullArgument = invocationCoveringTheEntireStatement2.arguments().get(0);
 					if(invocationCoveringTheEntireStatement1.arguments().contains(assertNullArgument)) {
 						Replacement replacement = new MethodInvocationReplacement(
@@ -5606,9 +5606,9 @@ public class ReplacementAlgorithm {
 	}
 
 	private static boolean bothContainNullInDifferentIndexes(AbstractCall call1, AbstractCall call2) {
-		if(call1 != null && call2 != null && call1.arguments().contains("null") && call2.arguments().contains("null")) {
-			int index1 = call1.arguments().indexOf("null");
-			int index2 = call2.arguments().indexOf("null");
+		if(call1 != null && call2 != null && call1.arguments().contains(JAVA.NULL) && call2.arguments().contains(JAVA.NULL)) {
+			int index1 = call1.arguments().indexOf(JAVA.NULL);
+			int index2 = call2.arguments().indexOf(JAVA.NULL);
 			return index1 != index2;
 		}
 		return false;

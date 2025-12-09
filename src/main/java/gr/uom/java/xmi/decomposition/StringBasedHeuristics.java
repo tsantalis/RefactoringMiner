@@ -662,16 +662,16 @@ public class StringBasedHeuristics {
 					tmpS2.append(", ");
 				}
 				if(variableDeclaration1.getInitializer() == null && variableDeclaration2.getInitializer() != null &&
-						(variableDeclaration2.getInitializer().getExpression().equals("null") ||
+						(variableDeclaration2.getInitializer().getExpression().equals(JAVA.NULL) ||
 						variableDeclaration2.getInitializer().getExpression().equals("0") ||
-						variableDeclaration2.getInitializer().getExpression().equals("false") ||
+						variableDeclaration2.getInitializer().getExpression().equals(JAVA.FALSE) ||
 						numberLiteralInitializer(variableDeclaration2))) {
 					defaultInitializers++;
 				}
 				else if(variableDeclaration2.getInitializer() == null && variableDeclaration1.getInitializer() != null &&
-						(variableDeclaration1.getInitializer().getExpression().equals("null") ||
+						(variableDeclaration1.getInitializer().getExpression().equals(JAVA.NULL) ||
 						variableDeclaration1.getInitializer().getExpression().equals("0") ||
-						variableDeclaration1.getInitializer().getExpression().equals("false") ||
+						variableDeclaration1.getInitializer().getExpression().equals(JAVA.FALSE) ||
 						numberLiteralInitializer(variableDeclaration1))) {
 					defaultInitializers++;
 				}
@@ -2632,7 +2632,7 @@ public class StringBasedHeuristics {
 				nullInitializer = true;
 			}
 			else if(initializer1 != null && initializer2 != null) {
-				nullInitializer = initializer1.getExpression().equals("null") || initializer2.getExpression().equals("null");
+				nullInitializer = initializer1.getExpression().equals(JAVA.NULL) || initializer2.getExpression().equals(JAVA.NULL);
 				if(initializer1.getCreations().size() == 1 && initializer2.getCreations().size() == 1) {
 					AbstractCall creation1 = initializer1.getCreations().get(0);
 					AbstractCall creation2 = initializer2.getCreations().get(0);
@@ -4028,7 +4028,7 @@ public class StringBasedHeuristics {
 	private static boolean pass(List<String> subConditionsAsList1, List<String> subConditionsAsList2, Set<String> intersection,
 			int matches) {
 		boolean pass = false;
-		if(matches == 1 && intersection.size() == 1 && intersection.iterator().next().endsWith("null")) {
+		if(matches == 1 && intersection.size() == 1 && intersection.iterator().next().endsWith(JAVA.NULL)) {
 			pass = matches == Math.min(subConditionsAsList1.size(), subConditionsAsList2.size());
 		}
 		else {

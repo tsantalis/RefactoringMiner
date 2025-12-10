@@ -34,7 +34,7 @@ public class UMLAdapterUtil {
             }
         }
         // Try module imports (import module) -> module.Name
-        for (UMLImport imp : imports) {
+        /*for (UMLImport imp : imports) {
             if (!imp.isOnDemand()) {
                 String impName = imp.getName();
                 if (impName != null && !impName.contains(".")) {
@@ -42,7 +42,7 @@ public class UMLAdapterUtil {
                     return impName + "." + name;
                 }
             }
-        }
+        }*/
         // Fallback to current package qualification if available
         if (currentPackage != null && !currentPackage.isEmpty()) {
             return currentPackage + "." + name;

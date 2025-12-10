@@ -33,8 +33,9 @@ Table of Contents
    * [Supported Refactoring Types](#supported-refactoring-types)
    * [Contributors](#contributors)
    * [Current precision and recall](#current-precision-and-recall)
-      * [Benchmark 1](#benchmark-1)
-      * [Benchmark 2](#benchmark-2) 
+      * [Java Benchmark 1](#java-benchmark-1)
+      * [Java Benchmark 2](#java-benchmark-2)
+      * [Python Benchmark](#python-benchmark) 
    * [How to build RefactoringMiner](#how-to-build-refactoringminer)
    * [How to test RefactoringMiner](#how-to-test-refactoringminer)
    * [How to use RefactoringMiner as a maven dependency](#how-to-use-refactoringminer-as-a-maven-dependency)
@@ -377,7 +378,7 @@ Currently, it supports the detection of the following refactorings:
 
 # Current precision and recall
 
-## Benchmark 1
+## Java Benchmark 1
 **Source**: Nikolaos Tsantalis, Ameya Ketkar, and Danny Dig, "RefactoringMiner 2.0," IEEE Transactions on Software Engineering, vol. 48, no. 3, pp. 930-950, March 2022.
 
 **Properties**: 547 commits from 188 open-source projects
@@ -494,7 +495,7 @@ As of **December 3, 2025** the precision and recall of RefactoringMiner on this 
 |Replace Conditional With Ternary| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Fixture| 3  |  0  |  0  | 1.000  | 1.000|
 
-## Benchmark 2
+## Java Benchmark 2
 **Source**: Bo Liu, Hui Liu, Nan Niu, Yuxia Zhang, Guangjie Li, He Jiang, and Yanjie Jiang, "An Automated Approach to Discovering Software Refactorings by Comparing Successive Versions," IEEE Transactions on Software Engineering, 2025.
 
 **Properties**: 400 commits from 20 open-source projects (20 commits per project)
@@ -562,6 +563,85 @@ As of **December 3, 2025** the precision and recall of RefactoringMiner on this 
 |Merge Method| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 8  |  0  |  0  | 1.000  | 1.000|
 |Move Code|12  |  0  |  0  | 1.000  | 1.000|
+
+## Python Benchmark
+**Source**: Hassan Atwi, Bin Lin, Nikolaos Tsantalis, Yutaro Kashiwa, Yasutaka Kamei, Naoyasu Ubayashi, Gabriele Bavota, and Michele Lanza, "PyRef: Refactoring Detection in Python Projects," 21st IEEE International Working Conference on Source Code Analysis and Manipulation (SCAM'2021), Engineering Track, Luxembourg City, Luxembourg, September 27-28, 2021.
+
+**Properties**: 160 commits from 3 open-source projects
+
+**Commit dates**: January 2013 - October 2020
+
+**Files**: [python-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/python-dataset/data.json)
+
+The original benchmark has been re-validated by Nikolaos Tsantalis. The validation process is still in progress.
+Moreover, the benchmark has been extended with valid instances for the following refactoring types:
+* `Rename Class`
+* `Move Class`
+* `Move And Rename Class`
+* `Rename Attribute`
+* `Move Attribute`
+* `Push Down Attribute`
+* `Move And Rename Method`
+* `Extract Class`
+* `Extract Superclass`
+* `Extract Subclass`
+* `Extract And Move Method`
+* `Rename Variable`
+* `Extract Variable`
+* `Inline Variable`
+* `Replace Variable With Attribute`
+* `Replace Attribute With Variable`
+* `Parameterize Variable`
+* `Localize Parameter`
+* `Parameterize Attribute`
+* `Change Variable Type`
+* `Add Method Annotation`
+* `Remove Method Annotation`
+* `Add Class Annotation`
+* `Reorder Parameter`
+* `Split Conditional`
+* `Move Code`
+
+As of December 10, 2025 the precision and recall of RefactoringMiner on this benchmark is:
+
+| Refactoring Type | TP | FP | FN | Precision | Recall |
+|:-----------------------|-----------:|--------:|--------:|--------:|--------:|
+|**Total**|881  |  6  |  2  | 0.993  | 0.998|
+|Extract Method|32  |  0  |  0  | 1.000  | 1.000|
+|Rename Class|12  |  0  |  0  | 1.000  | 1.000|
+|Move Attribute| 3  |  0  |  0  | 1.000  | 1.000|
+|Rename Method|127  |  0  |  1  | 1.000  | 0.992|
+|Inline Method| 5  |  0  |  0  | 1.000  | 1.000|
+|Move Method|14  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Method| 9  |  0  |  0  | 1.000  | 1.000|
+|Pull Up Method| 1  |  0  |  0  | 1.000  | 1.000|
+|Move Class|11  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Class| 8  |  0  |  0  | 1.000  | 1.000|
+|Push Down Attribute| 1  |  0  |  0  | 1.000  | 1.000|
+|Push Down Method| 3  |  0  |  0  | 1.000  | 1.000|
+|Extract Superclass| 1  |  0  |  0  | 1.000  | 1.000|
+|Extract Subclass| 2  |  0  |  0  | 1.000  | 1.000|
+|Extract Class| 2  |  0  |  0  | 1.000  | 1.000|
+|Extract And Move Method| 9  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|49  |  1  |  0  | 0.980  | 1.000|
+|Inline Variable|13  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable|101  |  1  |  0  | 0.990  | 1.000|
+|Rename Parameter|121  |  1  |  0  | 0.992  | 1.000|
+|Rename Attribute|19  |  0  |  0  | 1.000  | 1.000|
+|Replace Variable With Attribute| 1  |  0  |  0  | 1.000  | 1.000|
+|Replace Attribute With Variable| 1  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Variable| 7  |  0  |  0  | 1.000  | 1.000|
+|Localize Parameter| 7  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
+|Change Variable Type|25  |  3  |  0  | 0.893  | 1.000|
+|Add Method Annotation|26  |  0  |  0  | 1.000  | 1.000|
+|Remove Method Annotation|18  |  0  |  0  | 1.000  | 1.000|
+|Add Class Annotation| 1  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|173  |  0  |  1  | 1.000  | 0.994|
+|Remove Parameter|54  |  0  |  0  | 1.000  | 1.000|
+|Reorder Parameter|15  |  0  |  0  | 1.000  | 1.000|
+|Split Conditional| 3  |  0  |  0  | 1.000  | 1.000|
+|Move Code| 6  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 Since release 3.0.0, RefactoringMiner requires **Java 17** or newer and **Gradle 7.4** or newer.

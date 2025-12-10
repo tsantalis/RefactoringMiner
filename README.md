@@ -602,42 +602,42 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Split Conditional`
 * `Move Code`
 
-As of December 10, 2025 the precision and recall of RefactoringMiner on this benchmark is:
+As of **December 10, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|881  |  6  |  2  | 0.993  | 0.998|
+|**Total**|896  |  6  |  2  | 0.993  | 0.998|
 |Extract Method|32  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|12  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|127  |  0  |  1  | 1.000  | 0.992|
-|Inline Method| 5  |  0  |  0  | 1.000  | 1.000|
+|Inline Method| 6  |  0  |  0  | 1.000  | 1.000|
 |Move Method|14  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Method| 9  |  0  |  0  | 1.000  | 1.000|
-|Pull Up Method| 1  |  0  |  0  | 1.000  | 1.000|
+|Pull Up Method| 5  |  0  |  0  | 1.000  | 1.000|
 |Move Class|11  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Push Down Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method| 3  |  0  |  0  | 1.000  | 1.000|
-|Extract Superclass| 1  |  0  |  0  | 1.000  | 1.000|
+|Extract Superclass| 3  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 2  |  0  |  0  | 1.000  | 1.000|
 |Extract Class| 2  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method| 9  |  0  |  0  | 1.000  | 1.000|
+|Extract And Move Method|10  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|49  |  1  |  0  | 0.980  | 1.000|
-|Inline Variable|13  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|101  |  1  |  0  | 0.990  | 1.000|
+|Inline Variable|14  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable|102  |  1  |  0  | 0.990  | 1.000|
 |Rename Parameter|121  |  1  |  0  | 0.992  | 1.000|
 |Rename Attribute|19  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable| 1  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Variable| 7  |  0  |  0  | 1.000  | 1.000|
-|Localize Parameter| 7  |  0  |  0  | 1.000  | 1.000|
+|Localize Parameter| 8  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Variable Type|25  |  3  |  0  | 0.893  | 1.000|
 |Add Method Annotation|26  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|18  |  0  |  0  | 1.000  | 1.000|
 |Add Class Annotation| 1  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|173  |  0  |  1  | 1.000  | 0.994|
+|Add Parameter|177  |  0  |  1  | 1.000  | 0.994|
 |Remove Parameter|54  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter|15  |  0  |  0  | 1.000  | 1.000|
 |Split Conditional| 3  |  0  |  0  | 1.000  | 1.000|

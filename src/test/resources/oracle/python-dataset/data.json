@@ -1984,6 +1984,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass samplespace.ScalarSampleSpace from class samplespace.SampleSpace",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -7711,6 +7718,122 @@
     }, {
         "type": "Move Class",
         "description": "Move Class utils.padding_related.__module__ moved to utils.transformer_utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160010,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "e217947a9e34adc009913fe9f1a8d94e9fbab80d",
+    "url": "https://github.com/asyml/texar/commit/e217947a9e34adc009913fe9f1a8d94e9fbab80d",
+    "author": "ZhitingHu",
+    "time": "7/24/17 01:50 AM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter decoder_state_size in method public __init__(decoder_state_size, name) from class modules.connectors.connectors.ForwardConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter decoder_state_size in method public __init__(decoder_state_size, name, hparams) from class modules.connectors.connector_base.ConnectorBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter class_name in method public get_instance(class_name, args, module_paths) from class core.utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter module_paths in method public get_instance(class_name, args, module_paths) from class core.utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Localize Parameter",
+        "description": "Localize Parameter class_module to class_ in method public get_instance(class_name, args, module_paths) from class core.utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable dpt_hparams to d_hp in method public get_rnn_cell(cell_hparams) from class core.layers.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable cell_class in method public get_rnn_cell(cell_hparams) from class core.layers.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method public connect(encoder_outputs, args, kwargs) inlined to protected _build(args, kwargs) in class modules.connectors.connector_base.ConnectorBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160011,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "e988614f1001348df71190d222faf02224c4e5aa",
+    "url": "https://github.com/asyml/texar/commit/e988614f1001348df71190d222faf02224c4e5aa",
+    "author": "ZhitingHu",
+    "time": "9/23/17 05:37 PM",
+    "refactorings": [{
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public default_hparams() from class modules.encoders.rnn_encoders.ForwardRNNEncoder to public default_hparams() from class modules.encoders.rnn_encoders.RNNEncoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public embedding() from class modules.encoders.rnn_encoders.ForwardRNNEncoder to public embedding() from class modules.encoders.rnn_encoders.RNNEncoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public cell() from class modules.encoders.rnn_encoders.ForwardRNNEncoder to public cell() from class modules.encoders.rnn_encoders.RNNEncoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public state_size() from class modules.encoders.rnn_encoders.ForwardRNNEncoder to public state_size() from class modules.encoders.rnn_encoders.RNNEncoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public __init__(cell, embedding, embedding_trainable, vocab_size, hparams, name) extracted from public __init__(cell, embedding, embedding_trainable, vocab_size, hparams, name) in class modules.encoders.rnn_encoders.ForwardRNNEncoder & moved to class modules.encoders.rnn_encoders.RNNEncoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass modules.encoders.rnn_encoders.RNNEncoderBase from classes [modules.encoders.rnn_encoders.ForwardRNNEncoder]",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

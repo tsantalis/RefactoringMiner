@@ -2,11 +2,16 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.List;
 
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
 public abstract class AbstractStatement extends AbstractCodeFragment {
 	private CompositeStatementObject parent;
 	protected String actualSignature;
+
+	public AbstractStatement(LocationInfo location) {
+		super(location);
+	}
 
 	public String getActualSignature() {
 		return actualSignature;

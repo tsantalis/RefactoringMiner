@@ -126,40 +126,40 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
     private boolean isAcceptable(Tree src, Tree dst) {
         if (ONLY_JAVA_DOCS)
         {
-            if (src.getType().name.equals(Constants.JAVA_DOC))
+            if (src.getType().name.equals(Constants.get().JAVA_DOC))
                 return true;
             return false;
         }
         boolean ret;
-        if (src.getType().name.equals(Constants.JAVA_DOC))
+        if (src.getType().name.equals(Constants.get().JAVA_DOC))
             return true;
         else {
-            if (TreeUtilFunctions.isStatement(src.getType().name) && !src.getType().name.equals(Constants.BLOCK))
-                if (src.getType().name.equals(Constants.RETURN_STATEMENT) && src.getMetrics().height <= 2)
+            if (TreeUtilFunctions.isStatement(src.getType().name) && !src.getType().name.equals(Constants.get().BLOCK))
+                if (src.getType().name.equals(Constants.get().RETURN_STATEMENT) && src.getMetrics().height <= 2)
                     ret =  false;
                 else
                     ret =  true;
-            else if (src.getType().name.equals(Constants.METHOD_INVOCATION)) {
-                if (!src.getParent().getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER) &&
-                        dst.getParent().getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER)) ret = false;
-                else if (src.getParent().getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER) &&
-                        !dst.getParent().getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER)) ret = true;
+            else if (src.getType().name.equals(Constants.get().METHOD_INVOCATION)) {
+                if (!src.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION_RECEIVER) &&
+                        dst.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION_RECEIVER)) ret = false;
+                else if (src.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION_RECEIVER) &&
+                        !dst.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION_RECEIVER)) ret = true;
                 else{
                     ret = true;
                 }
-            } else if (src.getType().name.equals(Constants.METHOD_INVOCATION_ARGUMENTS))
+            } else if (src.getType().name.equals(Constants.get().METHOD_INVOCATION_ARGUMENTS))
                 ret = true;
-            else if (src.getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER))
+            else if (src.getType().name.equals(Constants.get().METHOD_INVOCATION_RECEIVER))
                 ret =  true;
-            else if (src.getType().name.equals(Constants.INFIX_EXPRESSION))
+            else if (src.getType().name.equals(Constants.get().INFIX_EXPRESSION))
                 ret =  true;
-            else if (src.getType().name.equals(Constants.CLASS_INSTANCE_CREATION))
+            else if (src.getType().name.equals(Constants.get().CLASS_INSTANCE_CREATION))
                 ret =  true;
-            else if (src.getType().name.equals(Constants.IMPORT_DECLARATION))
+            else if (src.getType().name.equals(Constants.get().IMPORT_DECLARATION))
                 ret = true;
-            else if (TreeUtilFunctions.isPartOf(src, Constants.JAVA_DOC))
+            else if (TreeUtilFunctions.isPartOf(src, Constants.get().JAVA_DOC))
                 ret = true;
-            else if(src.getType().name.equals(Constants.LINE_COMMENT) || src.getType().name.equals(Constants.BLOCK_COMMENT))
+            else if(src.getType().name.equals(Constants.get().LINE_COMMENT) || src.getType().name.equals(Constants.get().BLOCK_COMMENT))
                 ret = true;
             else {
                 ret = false;
@@ -173,13 +173,13 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
     }
 
     private boolean notBelongingToMethodWithTestAnnotation(Tree src) {
-        Tree methodDecl = TreeUtilFunctions.getParentUntilType(src, Constants.METHOD_DECLARATION);
+        Tree methodDecl = TreeUtilFunctions.getParentUntilType(src, Constants.get().METHOD_DECLARATION);
         if (methodDecl == null) return true;
         for (Tree child : methodDecl.getChildren()) {
-            if (child.getType().name.equals(Constants.MARKER_ANNOTATION))
+            if (child.getType().name.equals(Constants.get().MARKER_ANNOTATION))
             {
                 if (!child.getChildren().isEmpty() &&
-                        child.getChild(0).getType().name.equals(Constants.SIMPLE_NAME) &&
+                        child.getChild(0).getType().name.equals(Constants.get().SIMPLE_NAME) &&
                         child.getChild(0).getLabel().equals("Test"))
                 {
                     return false;
@@ -191,14 +191,14 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
 
     private static boolean tinyTrees(Tree src, MultiMappingStore multiMappings, int minP) {
         if (src.getMetrics().height <= minP){
-            if (src.getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER))
+            if (src.getType().name.equals(Constants.get().METHOD_INVOCATION_RECEIVER))
                 return true;
-            if (src.getType().name.equals(Constants.METHOD_INVOCATION_ARGUMENTS))
+            if (src.getType().name.equals(Constants.get().METHOD_INVOCATION_ARGUMENTS))
                 return true;
-            if (src.getType().name.equals(Constants.SIMPLE_TYPE ))
+            if (src.getType().name.equals(Constants.get().SIMPLE_TYPE ))
                 return true;
         }
-        if (src.getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER)) {
+        if (src.getType().name.equals(Constants.get().METHOD_INVOCATION_RECEIVER)) {
             return true;
         }
         return false;

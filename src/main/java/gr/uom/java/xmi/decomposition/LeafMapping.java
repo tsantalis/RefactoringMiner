@@ -1,6 +1,5 @@
 package gr.uom.java.xmi.decomposition;
 
-import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONDITIONAL_PATTERN;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.subConditionIntersection;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.hasElseBranch;
@@ -909,13 +908,13 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		}
 	}
 
-	private static boolean isFieldAssignment(AbstractCodeFragment fragment) {
+	private boolean isFieldAssignment(AbstractCodeFragment fragment) {
 		String statement = fragment.getString();
-		if(statement.contains(JAVA.ASSIGNMENT)) {
+		if(statement.contains(LANG.ASSIGNMENT)) {
 			List<LeafExpression> variables = fragment.getVariables();
 			if(variables.size() > 0) {
 				String variable = variables.get(0).getString();
-				if(statement.startsWith(variable + JAVA.ASSIGNMENT) && variable.startsWith(JAVA.THIS_DOT)) {
+				if(statement.startsWith(variable + LANG.ASSIGNMENT) && variable.startsWith(LANG.THIS_DOT)) {
 					return true;
 				}
 			}
@@ -1030,7 +1029,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		if(parent1 != null && parent2 != null) {
 			if(parent1.getLocationInfo().getCodeElementType().equals(parent2.getLocationInfo().getCodeElementType()) &&
 					!parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
-				if(parent1.getString().equals(parent2.getString()) && !parent1.getString().equals(JAVA.TRY)) {
+				if(parent1.getString().equals(parent2.getString()) && !parent1.getString().equals(LANG.TRY)) {
 					return true;
 				}
 				return getFragment1().getDepth() == getFragment2().getDepth() && getFragment1().getIndex() == getFragment2().getIndex();
@@ -1304,13 +1303,13 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		}
 		else if(parent1 == null && parent2 != null) {
 			String s2 = parent2.getString();
-			int distance = StringDistance.editDistance(JAVA.OPEN_BLOCK, s2);
+			int distance = StringDistance.editDistance(LANG.OPEN_BLOCK, s2);
 			double normalized = (double)distance/(double)Math.max(1, s2.length());
 			return normalized;
 		}
 		else if(parent1 != null && parent2 == null) {
 			String s1 = parent1.getString();
-			int distance = StringDistance.editDistance(s1, JAVA.OPEN_BLOCK);
+			int distance = StringDistance.editDistance(s1, LANG.OPEN_BLOCK);
 			double normalized = (double)distance/(double)Math.max(s1.length(), 1);
 			return normalized;
 		}

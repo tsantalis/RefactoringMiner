@@ -102,6 +102,7 @@ public class Visitor extends ASTVisitor {
 	private List<LeafExpression> patternInstanceofExpressions = new ArrayList<>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
+	private List<ComprehensionExpression> comprehensions = new ArrayList<ComprehensionExpression>();
 	private DefaultMutableTreeNode root = new DefaultMutableTreeNode();
 	private DefaultMutableTreeNode current = root;
 	private Map<String, Set<VariableDeclaration>> activeVariableDeclarations; 
@@ -279,6 +280,7 @@ public class Visitor extends ASTVisitor {
 			this.ternaryOperatorExpressions.removeAll(anonymous.getTernaryOperatorExpressions());
 			this.anonymousClassDeclarations.removeAll(anonymous.getAnonymousClassDeclarations());
 			this.lambdas.removeAll(anonymous.getLambdas());
+			this.comprehensions.removeAll(anonymous.getComprehensions());
 			removeLast(this.arrayAccesses, anonymous.getArrayAccesses());
 		}
 	}
@@ -954,6 +956,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<LambdaExpressionObject> getLambdas() {
 		return lambdas;
+	}
+
+	public List<ComprehensionExpression> getComprehensions() {
+		return comprehensions;
 	}
 
 	private static boolean invalidArrayAccess(ArrayAccess e) {

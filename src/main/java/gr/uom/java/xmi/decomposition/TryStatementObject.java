@@ -6,11 +6,18 @@ import java.util.List;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Statement;
 
+import extension.ast.node.LangASTNode;
+import extension.ast.node.unit.LangCompilationUnit;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 
 public class TryStatementObject extends CompositeStatementObject {
 	private List<CompositeStatementObject> catchClauses;
 	private CompositeStatementObject finallyClause;
+
+	public TryStatementObject(LangCompilationUnit cu, String sourceFolder, String filePath, LangASTNode statement, int depth, String fileContent) {
+		super(cu, sourceFolder, filePath, statement, depth, CodeElementType.TRY_STATEMENT, fileContent);
+		this.catchClauses = new ArrayList<CompositeStatementObject>();
+	}
 
 	public TryStatementObject(CompilationUnit cu, String sourceFolder, String filePath, Statement statement, int depth, String javaFileContent) {
 		super(cu, sourceFolder, filePath, statement, depth, CodeElementType.TRY_STATEMENT, javaFileContent);

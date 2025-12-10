@@ -3,6 +3,7 @@ package org.refactoringminer.astDiff.matchers.wrappers;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.*;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
@@ -70,30 +71,116 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         CompositeStatementObjectMapping compositeStatementObjectMapping = (CompositeStatementObjectMapping) abstractCodeMapping;
         Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,compositeStatementObjectMapping.getFragment1().getLocationInfo());
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,compositeStatementObjectMapping.getFragment2().getLocationInfo());
-        //if (srcStatementNode.getMetrics().hash == dstStatementNode.getMetrics().hash)
-        //{
-        //	mappingStore.addMappingRecursively(srcStatementNode, dstStatementNode);
-        //}
-        //else
+        //handle case where the parent block has only a single statement and the locationInfo of compositeStatement is identical with the parent block locationInfo in Python
+        //the solution uses reflection to obtain the value of Constants value from the CodeElementType constant name
+        if (srcStatementNode.getType().name.equals(Constants.get().CLASS_BLOCK) && !compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+            String astTypeName = compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().name();
+            try {
+                java.lang.reflect.Field publicField = Constants.class.getField(astTypeName);
+                String value = (String) publicField.get(Constants.get());
+                Tree tmp = TreeUtilFunctions.findByLocationInfo(srcTree,compositeStatementObjectMapping.getFragment1().getLocationInfo(), value);
+                if(tmp != null)
+                    srcStatementNode = tmp;
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+                //e.printStackTrace();
+            }
+        }
+        if (dstStatementNode.getType().name.equals(Constants.get().CLASS_BLOCK) && !compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+            String astTypeName = compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().name();
+            try {
+                java.lang.reflect.Field publicField = Constants.class.getField(astTypeName);
+                String value = (String) publicField.get(Constants.get());
+                Tree tmp = TreeUtilFunctions.findByLocationInfo(dstTree,compositeStatementObjectMapping.getFragment2().getLocationInfo(), value);
+                if(tmp != null)
+                    dstStatementNode = tmp;
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+                //e.printStackTrace();
+            }
+        }
         {
             if (srcStatementNode == null || dstStatementNode == null)
                 return;
             if (srcStatementNode.getType().name.equals(dstStatementNode.getType().name))
                 mappingStore.addMapping(srcStatementNode,dstStatementNode);
-            if ((srcStatementNode.getType().name.equals(Constants.TRY_STATEMENT) && dstStatementNode.getType().name.equals(Constants.TRY_STATEMENT)) ||
-                    (srcStatementNode.getType().name.equals(Constants.CATCH_CLAUSE) && dstStatementNode.getType().name.equals(Constants.CATCH_CLAUSE))) {
+            if (srcStatementNode.getType().name.equals(Constants.get().IF_STATEMENT) && dstStatementNode.getType().name.equals(Constants.get().IF_STATEMENT)) {
+                Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().ELSE_IF);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                    Pair<Tree, Tree> elifs = Helpers.findPairOfType(matched.first,matched.second, Constants.get().ELIF_KEYWORD);
+                    if (elifs != null) {
+                        mappingStore.addMapping(elifs.first,elifs.second);
+                    }
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().ELSE);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                    Pair<Tree, Tree> elses = Helpers.findPairOfType(matched.first,matched.second, Constants.get().ELSE_KEYWORD);
+                    if (elses != null) {
+                        mappingStore.addMapping(elses.first,elses.second);
+                    }
+                }
+                new CompositeMatcher(abstractCodeMapping).match(srcStatementNode,dstStatementNode,mappingStore);
+            }
+            else if (srcStatementNode.getType().name.equals(Constants.get().WHILE_STATEMENT) && dstStatementNode.getType().name.equals(Constants.get().WHILE_STATEMENT)) {
+                Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().WHILE_KEYWORD);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                new CompositeMatcher(abstractCodeMapping).match(srcStatementNode,dstStatementNode,mappingStore);
+            }
+            else if ((srcStatementNode.getType().name.equals(Constants.get().TRY_STATEMENT) && dstStatementNode.getType().name.equals(Constants.get().TRY_STATEMENT)) ||
+                    (srcStatementNode.getType().name.equals(Constants.get().CATCH_CLAUSE) && dstStatementNode.getType().name.equals(Constants.get().CATCH_CLAUSE))) {
                 matchBlocks(srcStatementNode, dstStatementNode, mappingStore);
                 new CompositeMatcher(abstractCodeMapping).match(srcStatementNode,dstStatementNode,mappingStore);
-            } else if (!srcStatementNode.getType().name.equals(Constants.BLOCK) && !dstStatementNode.getType().name.equals(Constants.BLOCK)) {
+            } else if (!srcStatementNode.getType().name.equals(Constants.get().BLOCK) && !dstStatementNode.getType().name.equals(Constants.get().BLOCK)) {
                 new CompositeMatcher(abstractCodeMapping).match(srcStatementNode, dstStatementNode, mappingStore);
             }
         }
     }
+
     private void matchBlocks(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore) {
-        String searchingType = Constants.BLOCK;
+        String searchingType = Constants.get().BLOCK;
         Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, searchingType);
         if (matched != null)
             mappingStore.addMapping(matched.first,matched.second);
+        if (matched == null) {
+            Pair<Tree, Tree> blocks = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().CLASS_BLOCK);
+            if (blocks != null) {
+                mappingStore.addMapping(blocks.first,blocks.second);
+            }
+            Pair<Tree, Tree> trys = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().TRY_KEYWORD);
+            if (trys != null) {
+                mappingStore.addMapping(trys.first,trys.second);
+            }
+            Pair<Tree, Tree> catches = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().CATCH_CLAUSE);
+            if (catches != null) {
+                mappingStore.addMapping(catches.first,catches.second);
+                Pair<Tree, Tree> exceptions = Helpers.findPairOfType(catches.first,catches.second, Constants.get().SIMPLE_NAME);
+                if (exceptions != null) {
+                    mappingStore.addMapping(exceptions.first,exceptions.second);
+                }
+                Pair<Tree, Tree> attributeExceptions = Helpers.findPairOfType(catches.first,catches.second, Constants.get().ATTRIBUTE_EXCEPTION);
+                if (attributeExceptions != null) {
+                    mappingStore.addMappingRecursively(attributeExceptions.first,attributeExceptions.second);
+                }
+                Pair<Tree, Tree> catch_blocks = Helpers.findPairOfType(catches.first,catches.second, Constants.get().CLASS_BLOCK);
+                if (catch_blocks != null) {
+                    mappingStore.addMapping(catch_blocks.first,catch_blocks.second);
+                }
+            }
+            Pair<Tree, Tree> finallys = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().FINALLY_CLAUSE);
+            if (finallys != null) {
+                mappingStore.addMapping(finallys.first,finallys.second);
+                Pair<Tree, Tree> finally_keywords = Helpers.findPairOfType(finallys.first,finallys.second, Constants.get().FINALLY_KEYWORD);
+                if (finally_keywords != null) {
+                    mappingStore.addMapping(finally_keywords.first,finally_keywords.second);
+                }
+                Pair<Tree, Tree> finally_blocks = Helpers.findPairOfType(finallys.first,finallys.second, Constants.get().CLASS_BLOCK);
+                if (finally_blocks != null) {
+                    mappingStore.addMapping(finally_blocks.first,finally_blocks.second);
+                }
+            }
+        }
     }
 
     private void processLeafMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore, boolean isPartOfExtractedMethod) {
@@ -105,7 +192,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             return;
         }
         if (srcStatementNode.getType().name.equals(dstStatementNode.getType().name))
-            mappingStore.addMapping(srcStatementNode, dstStatementNode);
+            if(srcStatementNode.isIsomorphicTo(dstStatementNode) && srcTree.getType().name.equals(Constants.get().MODULE))
+                mappingStore.addMappingRecursively(srcStatementNode, dstStatementNode);
+            else
+                mappingStore.addMapping(srcStatementNode, dstStatementNode);
 
         boolean _abstractExp = abstractCodeMapping.getFragment1() instanceof AbstractExpression || abstractCodeMapping.getFragment2() instanceof AbstractExpression;
         boolean _leafExp = abstractCodeMapping.getFragment1() instanceof LeafExpression || abstractCodeMapping.getFragment2() instanceof LeafExpression;
@@ -127,7 +217,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             additionallyMatchedStatements(srcTree, dstTree, srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
         }
         optimizeVariableDeclarations(abstractCodeMapping);
-        if (!isPartOfExtractedMethod && srcStatementNode.getType().name.equals(Constants.RETURN_STATEMENT) && dstStatementNode.getType().name.equals(Constants.RETURN_STATEMENT)) {
+        if (!isPartOfExtractedMethod && srcStatementNode.getType().name.equals(Constants.get().RETURN_STATEMENT) && dstStatementNode.getType().name.equals(Constants.get().RETURN_STATEMENT)) {
             optimizationData.getSubtreeMappings().addMapping(srcStatementNode,dstStatementNode);
         }
         if (!abstractCodeMapping.getRefactorings().isEmpty()) {

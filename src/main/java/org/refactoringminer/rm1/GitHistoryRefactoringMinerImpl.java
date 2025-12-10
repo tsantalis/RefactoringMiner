@@ -72,6 +72,7 @@ import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.astDiff.matchers.ProjectASTDiffer;
 import org.refactoringminer.util.GitServiceImpl;
+import org.refactoringminer.util.PathFileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -366,7 +367,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 								fileContentsBefore.put(pathString, writer.toString());
 							}
 						}
-						if(pathString.endsWith(".java") && pathString.contains("/")) {
+						if(PathFileUtils.isSupportedFile(pathString) && pathString.contains("/")) {
 							String directory = pathString.substring(0, pathString.lastIndexOf("/"));
 							repositoryDirectoriesBefore.add(directory);
 							//include sub-directories
@@ -392,7 +393,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						IOUtils.copy(loader.openStream(), writer);
 						fileContentsCurrent.put(pathString, writer.toString());
 					}
-					if(pathString.endsWith(".java") && pathString.contains("/")) {
+					if(PathFileUtils.isSupportedFile(pathString) && pathString.contains("/")) {
 						String directory = pathString.substring(0, pathString.lastIndexOf("/"));
 						repositoryDirectoriesCurrent.add(directory);
 						//include sub-directories
@@ -423,7 +424,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					IOUtils.copy(loader.openStream(), writer);
 					fileContents.put(pathString, writer.toString());
 				}
-				if(pathString.endsWith(".java") && pathString.contains("/")) {
+				if(PathFileUtils.isSupportedFile(pathString) && pathString.contains("/")) {
 					String directory = pathString.substring(0, pathString.lastIndexOf("/"));
 					repositoryDirectories.add(directory);
 					//include sub-directories
@@ -458,7 +459,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					File currentFilePath = new File(rootFolder, repoName + "-" + commit.getId().getName() + "/" + pathString);
 					FileUtils.writeStringToFile(currentFilePath, fileContent);
 				}
-				if(pathString.endsWith(".java") && pathString.contains("/")) {
+				if(PathFileUtils.isSupportedFile(pathString) && pathString.contains("/")) {
 					String directory = pathString.substring(0, pathString.lastIndexOf("/"));
 					repositoryDirectories.add(directory);
 					//include sub-directories
@@ -672,7 +673,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			List<String> filesCurrent = new ArrayList<String>();
 			Map<String, String> renamedFilesHint = new HashMap<String, String>();
 			for (GHCommit.File commitFile : commitFiles) {
-				if (commitFile.getFileName().endsWith(".java")) {
+				if (PathFileUtils.isSupportedFile(commitFile.getFileName())) {
 					if (commitFile.getStatus().equals("modified")) {
 						filesBefore.add(commitFile.getFileName());
 						filesCurrent.add(commitFile.getFileName());
@@ -800,7 +801,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	private static List<String> getJavaFilePaths(File folder) throws IOException {
 		Stream<Path> walk = Files.walk(Paths.get(folder.toURI()));
 		List<String> paths = walk.map(x -> x.toString())
-				.filter(f -> f.endsWith(".java"))
+				.filter(f -> PathFileUtils.isSupportedFile(f))
 				.map(x -> x.substring(folder.getPath().length()+1).replaceAll(systemFileSeparator, "/"))
 				.collect(Collectors.toList());
 		walk.close();
@@ -881,7 +882,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				else if(previousFile.isFile() && nextFile.isFile()) {
 					String previousFileName = previousFile.getName();
 					String nextFileName = nextFile.getName();
-					if(previousFileName.endsWith(".java") && nextFileName.endsWith(".java")) {
+					if(PathFileUtils.isSupportedFile(previousFileName) && PathFileUtils.isSupportedFile(nextFileName)) {
 						Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
 						Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
 						Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
@@ -1065,7 +1066,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		int count = 1;
 		for (GHCommit.File commitFile : commitFiles) {
 			String fileName = commitFile.getFileName();
-			if (commitFile.getFileName().endsWith(".java")) {
+			if (PathFileUtils.isSupportedFile(commitFile.getFileName())) {
 				commitFileNames.add(fileName);
 				logger.info(String.format("Processing file: " + fileName));
 				//sleep every 20 files to avoid HTTP 403 error
@@ -1385,7 +1386,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		ExecutorService pool = Executors.newFixedThreadPool(commitFiles.size());
 		for (GHCommit.File commitFile : commitFiles) {
 			String fileName = commitFile.getFileName();
-			if (commitFile.getFileName().endsWith(".java")) {
+			if (PathFileUtils.isSupportedFile(commitFile.getFileName())) {
 				commitFileNames.add(fileName);
 				if (commitFile.getStatus().equals("modified")) {
 					Runnable r = () -> {
@@ -1584,7 +1585,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			if(asTree != null) {
 				allRepositoryDirectories(asTree, path, repositoryDirectories);
 			}
-			else if(path.endsWith(".java")) {
+			else if(PathFileUtils.isSupportedFile(path)) {
 				repositoryDirectories.add(path.substring(0, path.lastIndexOf("/")));
 			}
 		}
@@ -1854,7 +1855,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		int count = 1;
 		for(GHPullRequestFileDetail commitFile : files) {
 			String fileName = commitFile.getFilename();
-			if (commitFile.getFilename().endsWith(".java")) {
+			if (PathFileUtils.isSupportedFile(commitFile.getFilename())) {
 				commitFileNames.add(fileName);
 				logger.info(String.format("Processing file: " + fileName));
 				//sleep every 100 files to avoid HTTP 403 error
@@ -2135,7 +2136,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				else if(previousFile.isFile() && nextFile.isFile()) {
 					String previousFileName = previousFile.getName();
 					String nextFileName = nextFile.getName();
-					if(previousFileName.endsWith(".java") && nextFileName.endsWith(".java")) {
+					if(PathFileUtils.isSupportedFile(previousFileName) && PathFileUtils.isSupportedFile(nextFileName)) {
 						Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
 						Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
 						Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
@@ -2256,7 +2257,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			ExecutorService pool = Executors.newFixedThreadPool(commitFiles.size());
 			for (GHCommit.File commitFile : commitFiles) {
 				String fileName = commitFile.getFileName();
-				if (commitFile.getFileName().endsWith(".java")) {
+				if (PathFileUtils.isSupportedFile(commitFile.getFileName())) {
 					commitFileNames.add(fileName);
 					if (commitFile.getStatus().equals("modified")) {
 						Runnable r = () -> {

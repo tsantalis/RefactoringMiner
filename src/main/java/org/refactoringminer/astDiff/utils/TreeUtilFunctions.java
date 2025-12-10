@@ -30,6 +30,9 @@ public class TreeUtilFunctions {
 		if (locationInfo == null) return null;
 		int start_offset = locationInfo.getStartOffset();
 		int end_offset = locationInfo.getEndOffset();
+		if(end_offset == tree.getEndPos() + 1) {
+			end_offset = tree.getEndPos();
+		}
 		if (tree.getPos() > start_offset || tree.getEndPos() < end_offset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo) : null;
 		return findByLocationInfoNoLookAhead(tree, locationInfo);
 	}
@@ -37,9 +40,12 @@ public class TreeUtilFunctions {
 	public static Tree findByLocationInfoNoLookAhead(Tree tree, LocationInfo locationInfo) {
 		int start_offset = locationInfo.getStartOffset();
 		int end_offset = locationInfo.getEndOffset();
+		if(end_offset == tree.getEndPos() + 1) {
+			end_offset = tree.getEndPos();
+		}
 		Tree treeBetweenPositions = getTreeBetweenPositions(tree, start_offset, end_offset);
 		if (treeBetweenPositions == null) return null;
-		if (isFromType(treeBetweenPositions, Constants.METHOD_INVOCATION_ARGUMENTS))
+		if (isFromType(treeBetweenPositions, Constants.get().METHOD_INVOCATION_ARGUMENTS))
 		{
 			if (treeBetweenPositions.getChildren().size() > 0 )
 			{
@@ -58,10 +64,18 @@ public class TreeUtilFunctions {
 	}
 
 	public static Tree findByLocationInfo(Tree tree, LocationInfo locationInfo, String... type){
-        if (locationInfo == null) return null;
+		if (locationInfo == null) return null;
 		int startoffset = locationInfo.getStartOffset();
 		int endoffset = locationInfo.getEndOffset();
-        if (tree.getPos() > startoffset || tree.getEndPos() < endoffset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo) : null;
+		if(endoffset == tree.getEndPos() + 1) {
+			endoffset = tree.getEndPos();
+		}
+		// TODO hack until we fix the module offsets
+		if (type[0].equals(Constants.get().MODULE)) {
+			startoffset = 0;
+			endoffset = tree.getEndPos();
+		}
+		if (tree.getPos() > startoffset || tree.getEndPos() < endoffset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo) : null;
 		return getTreeBetweenPositions(tree, startoffset, endoffset,type);
 	}
 
@@ -75,9 +89,14 @@ public class TreeUtilFunctions {
 
 	public static Tree getTreeBetweenPositions(Tree tree, int position, int endPosition,String... type) {
 		for (Tree t: tree.preOrder()) {
-			if (t.getPos() >= position && t.getEndPos() <= endPosition)
+			if (t.getPos() >= position && t.getEndPos() <= endPosition) {
 				if (isFromType(t, type))
 					return t;
+				else if (t.getType().name.equals(Constants.get().CLASS_KEYWORD) && type[0].equals(Constants.get().TYPE_DECLARATION) &&
+						t.getParent() != null && t.getParent().getType().name.equals(Constants.get().TYPE_DECLARATION)) {
+					return t.getParent();
+				}
+			}
 		}
 		return null;
 	}
@@ -123,11 +142,11 @@ public class TreeUtilFunctions {
 	}
 
 	public static Tree deepCopyWithMapPruning(Tree tree, Map<Tree,Tree> cpyMap) {
-		if (isFromType(tree, Constants.BLOCK))
+		if (isFromType(tree, Constants.get().BLOCK))
 			if (tree.getChildren().size() != 0) return null;
 		Tree copy = makeDefaultTree(tree);
 		cpyMap.put(copy,tree);
-		if (isFromType(tree, Constants.ANONYMOUS_CLASS_DECLARATION)) return copy;
+		if (isFromType(tree, Constants.get().ANONYMOUS_CLASS_DECLARATION)) return copy;
 		for (Tree child : tree.getChildren()) {
 			Tree childCopy = deepCopyWithMapPruning(child,cpyMap);
 			if (childCopy != null)
@@ -224,37 +243,38 @@ public class TreeUtilFunctions {
 	}
 
 	public static boolean isStatement(String type){
-		switch (type){
-			case Constants.ASSERT_STATEMENT: //Leaf
-			case Constants.BLOCK: // Composite
-			case Constants.BREAK_STATEMENT: //Leaf
-			case Constants.CONSTRUCTOR_INVOCATION: //leaf
-			case Constants.CONTINUE_STATEMENT: //leaf
-			case Constants.DO_STATEMENT: //composite
-			case Constants.EMPTY_STATEMENT: //leaf
-			case Constants.ENHANCED_FOR_STATEMENT: //composite
-			case Constants.EXPRESSION_STATEMENT: //leaf
-			case Constants.FOR_STATEMENT: //composite
-			case Constants.IF_STATEMENT: //composite
-			case Constants.LABELED_STATEMENT: //composite
-			case Constants.RETURN_STATEMENT: //leaf
-			case Constants.SUPER_CONSTRUCTOR_INVOCATION: //leaf
-			case Constants.SWITCH_CASE: //leaf
-			case Constants.SWITCH_STATEMENT: //composite
-			case Constants.SYNCHRONIZED_STATEMENT: //composite
-			case Constants.THROW_STATEMENT://leaf
-			case Constants.TRY_STATEMENT: //composite
-			case Constants.TYPE_DECLARATION_STATEMENT: //composite!!!!!!
-			case Constants.VARIABLE_DECLARATION_STATEMENT: //leaf
-			case Constants.WHILE_STATEMENT: //composite
-				return true;
-			default:
-				return false;
-		}   //Update the jdt version (website)
+		final Constants constants = Constants.get();
+		if (
+			type.equals(constants.ASSERT_STATEMENT) || //Leaf
+			type.equals(constants.BLOCK) || // Composite
+			type.equals(constants.BREAK_STATEMENT) || //Leaf
+			type.equals(constants.CONSTRUCTOR_INVOCATION) || //leaf
+			type.equals(constants.CONTINUE_STATEMENT) || //leaf
+			type.equals(constants.DO_STATEMENT) || //composite
+			type.equals(constants.EMPTY_STATEMENT) || //leaf
+			type.equals(constants.ENHANCED_FOR_STATEMENT) || //composite
+			type.equals(constants.EXPRESSION_STATEMENT) || //leaf
+			type.equals(constants.FOR_STATEMENT) || //composite
+			type.equals(constants.IF_STATEMENT) || //composite
+			type.equals(constants.LABELED_STATEMENT) || //composite
+			type.equals(constants.RETURN_STATEMENT) || //leaf
+			type.equals(constants.SUPER_CONSTRUCTOR_INVOCATION) || //leaf
+			type.equals(constants.SWITCH_CASE) || //leaf
+			type.equals(constants.SWITCH_STATEMENT) || //composite
+			type.equals(constants.SYNCHRONIZED_STATEMENT) || //composite
+			type.equals(constants.THROW_STATEMENT) ||//leaf
+			type.equals(constants.TRY_STATEMENT) || //composite
+			type.equals(constants.TYPE_DECLARATION_STATEMENT) || //composite!!!!!!
+			type.equals(constants.VARIABLE_DECLARATION_STATEMENT) || //leaf
+			type.equals(constants.WHILE_STATEMENT) //composite
+			)
+			return true;
+		else
+			return false;
 	}
 
 	public static boolean isPartOfJavadoc(Tree srcSubTree) {
-		if (isFromType(srcSubTree, Constants.JAVA_DOC))
+		if (isFromType(srcSubTree, Constants.get().JAVA_DOC))
 			return true;
 		if (srcSubTree.getParent() == null) return false;
 		return isPartOfJavadoc(srcSubTree.getParent());
@@ -265,7 +285,7 @@ public class TreeUtilFunctions {
 		boolean _seen = false;
 		List<Tree> refs = new ArrayList<>();
 		for (Tree tree : inputTree.preOrder()) {
-			if (isFromType(tree, Constants.SIMPLE_NAME) && tree.getLabel().equals(variableName))
+			if (isFromType(tree, Constants.get().SIMPLE_NAME) && tree.getLabel().equals(variableName))
 			{
 				refs.add(tree);
 				_seen = true;

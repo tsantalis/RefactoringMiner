@@ -18,7 +18,7 @@ public class PackageDeclarationMatcher implements TreeMatcher {
             mappingStore.addMappingRecursively(srcPackageDeclaration,dstPackageDeclaration);
     }
     private Tree findPackageDeclaration(Tree inputTree) {
-        String searchingType = Constants.PACKAGE_DECLARATION;
+        String searchingType = Constants.get().PACKAGE_DECLARATION;
         if (!inputTree.getChildren().isEmpty()) {
             List<Tree> children = inputTree.getChildren();
             for(Tree child: children) {

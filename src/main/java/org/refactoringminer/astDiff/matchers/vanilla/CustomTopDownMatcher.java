@@ -18,7 +18,7 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 	protected void retainBestMapping(List<Mapping> mappingList, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
 		List<Mapping> verifiedList = new ArrayList<>();
 		for (Mapping mapping : mappingList) {
-			if (TreeUtilFunctions.areBothFromThisType(mapping, Constants.SIMPLE_NAME) || TreeUtilFunctions.areBothFromThisType(mapping, Constants.QUALIFIED_NAME)) {
+			if (TreeUtilFunctions.areBothFromThisType(mapping, Constants.get().SIMPLE_NAME) || TreeUtilFunctions.areBothFromThisType(mapping, Constants.get().QUALIFIED_NAME)) {
 				if (isAcceptableMatch(mapping))
 					verifiedList.add(mapping);
 			}
@@ -37,27 +37,27 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 			return false;
 		if (isPartOfConditional(second) && getIndexInConditional(second) == 0 && !isPartOfConditional(first))
 			return false;
-		return (!mapping.first.getParent().getType().name.equals(Constants.METHOD_INVOCATION)
+		return (!mapping.first.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION)
 				||
-				mapping.second.getParent().getType().name.equals(Constants.METHOD_INVOCATION)) &&
-				(!mapping.second.getParent().getType().name.equals(Constants.METHOD_INVOCATION)
+				mapping.second.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION)) &&
+				(!mapping.second.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION)
 						||
-						mapping.first.getParent().getType().name.equals(Constants.METHOD_INVOCATION));
+						mapping.first.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION));
 	}
 
 	private static boolean isOnlyOneMethodInvocation(Tree input1, Tree input2) {
 		if (input1 == null || input2 == null) return false;
 		if (input1.getParent() == null || input2.getParent() == null) return false;
-		if (input1.getParent().getType().name.equals(Constants.METHOD_INVOCATION) && !(input2.getParent().getType().name.equals(Constants.METHOD_INVOCATION) || input2.getParent().getType().name.equals(Constants.EXPRESSION_METHOD_REFERENCE)))
+		if (input1.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION) && !(input2.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION) || input2.getParent().getType().name.equals(Constants.get().EXPRESSION_METHOD_REFERENCE)))
 			return true;
-		else if (!(input1.getParent().getType().name.equals(Constants.METHOD_INVOCATION) || input1.getParent().getType().name.equals(Constants.EXPRESSION_METHOD_REFERENCE)) && input2.getParent().getType().name.equals(Constants.METHOD_INVOCATION))
+		else if (!(input1.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION) || input1.getParent().getType().name.equals(Constants.get().EXPRESSION_METHOD_REFERENCE)) && input2.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION))
 			return true;
 		return false;
 
 	}
 
 	private static boolean isPartOfConditional(Tree input) {
-		if (input.getType().name.equals(Constants.CONDITIONAL_EXPRESSION))
+		if (input.getType().name.equals(Constants.get().CONDITIONAL_EXPRESSION))
 			return true;
 		else {
 			Tree parent = input.getParent();
@@ -75,7 +75,7 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 
 	private static int getIndexInConditional(Tree input1) {
 		int input1Index = 0;
-		while (!input1.getParent().getType().name.equals(Constants.CONDITIONAL_EXPRESSION))
+		while (!input1.getParent().getType().name.equals(Constants.get().CONDITIONAL_EXPRESSION))
 			input1 = input1.getParent();
 		int input2Index = 0;
 		input1Index = input1.positionInParent();
@@ -175,10 +175,10 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 			Tree asrc = mapping.first;
 			Tree adst = mapping.second;
 			if (
-					(asrc.getType().name.equals(Constants.STRING_LITERAL) && adst.getType().name.equals(Constants.STRING_LITERAL))
-					 || (asrc.getType().name.equals(Constants.NUMBER_LITERAL) && adst.getType().name.equals(Constants.NUMBER_LITERAL))
-					 || (asrc.getType().name.equals(Constants.PREFIX_EXPRESSION) && adst.getType().name.equals(Constants.PREFIX_EXPRESSION))
-					 || (asrc.getType().name.equals(Constants.BOOLEAN_LITERAL) && adst.getType().name.equals(Constants.BOOLEAN_LITERAL))
+					(asrc.getType().name.equals(Constants.get().STRING_LITERAL) && adst.getType().name.equals(Constants.get().STRING_LITERAL))
+					 || (asrc.getType().name.equals(Constants.get().NUMBER_LITERAL) && adst.getType().name.equals(Constants.get().NUMBER_LITERAL))
+					 || (asrc.getType().name.equals(Constants.get().PREFIX_EXPRESSION) && adst.getType().name.equals(Constants.get().PREFIX_EXPRESSION))
+					 || (asrc.getType().name.equals(Constants.get().BOOLEAN_LITERAL) && adst.getType().name.equals(Constants.get().BOOLEAN_LITERAL))
 				) {
 				if (asrc.getParent() != null && adst.getParent() != null) {
 					int i = asrc.positionInParent();

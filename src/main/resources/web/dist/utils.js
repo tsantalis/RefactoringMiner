@@ -19,10 +19,14 @@ function getEditorOptions(config, text) {
 }
 function getLanguage(config) {
     let extension = config.file.split('.').pop().toLowerCase();
-    if (extension === "java")
-        return "java";
-    else
-        return undefined;
+    switch (extension) {
+        case "java":
+            return "java";
+        case "py":
+            return "python";
+        default:
+            return undefined;
+    }
 }
 function getEditColor(edit) {
     let color = 'black';

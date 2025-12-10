@@ -213,14 +213,14 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 boolean eligible = true;
                 switch (renameVariableRefactoring.getRefactoringType()) {
                     case REPLACE_VARIABLE_WITH_ATTRIBUTE:
-                        srcInput = TreeUtilFunctions.getParentUntilType(srcInput, Constants.VARIABLE_DECLARATION_STATEMENT);
-                        dstInput = TreeUtilFunctions.getParentUntilType(dstInput,Constants.FIELD_DECLARATION);
+                        srcInput = TreeUtilFunctions.getParentUntilType(srcInput, Constants.get().VARIABLE_DECLARATION_STATEMENT);
+                        dstInput = TreeUtilFunctions.getParentUntilType(dstInput,Constants.get().FIELD_DECLARATION);
                         if (mappingStore.isSrcMapped(srcInput) || mappingStore.isDstMapped(dstInput))
                             continue;
                         break;
                     case REPLACE_ATTRIBUTE_WITH_VARIABLE:
-                        srcInput = TreeUtilFunctions.getParentUntilType(srcInput,Constants.FIELD_DECLARATION);
-                        dstInput = TreeUtilFunctions.getParentUntilType(dstInput,Constants.VARIABLE_DECLARATION_STATEMENT);
+                        srcInput = TreeUtilFunctions.getParentUntilType(srcInput,Constants.get().FIELD_DECLARATION);
+                        dstInput = TreeUtilFunctions.getParentUntilType(dstInput,Constants.get().VARIABLE_DECLARATION_STATEMENT);
                         if (mappingStore.isSrcMapped(srcInput) || mappingStore.isDstMapped(dstInput))
                             continue;
                         break;
@@ -317,8 +317,8 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                         if (belongToDifferentFiles(subExpressionMapping.getFragment1(), renameAttributeRefactoring.getOriginalAttribute()) ||
                                 belongToDifferentFiles(subExpressionMapping.getFragment2(), renameAttributeRefactoring.getRenamedAttribute()))
                             continue;
-                        Tree srcSimpleName = TreeUtilFunctions.findByLocationInfo(srcTree, subExpressionMapping.getFragment1().getLocationInfo(), Constants.SIMPLE_NAME);
-                        Tree dstSimpleName = TreeUtilFunctions.findByLocationInfo(dstTree, subExpressionMapping.getFragment2().getLocationInfo(), Constants.SIMPLE_NAME);
+                        Tree srcSimpleName = TreeUtilFunctions.findByLocationInfo(srcTree, subExpressionMapping.getFragment1().getLocationInfo(), Constants.get().SIMPLE_NAME);
+                        Tree dstSimpleName = TreeUtilFunctions.findByLocationInfo(dstTree, subExpressionMapping.getFragment2().getLocationInfo(), Constants.get().SIMPLE_NAME);
                         if (srcSimpleName != null && dstSimpleName != null)
                             optimizationData.getSubtreeMappings().addMapping(srcSimpleName,dstSimpleName);
                     }

@@ -1,7 +1,5 @@
 package gr.uom.java.xmi.diff;
 
-import static gr.uom.java.xmi.Constants.JAVA;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -17,6 +15,7 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -44,8 +43,10 @@ public class ExtractOperationDetection {
 	private Map<CallTreeNode, CallTree> callTreeMap = new LinkedHashMap<CallTreeNode, CallTree>();
 	private Map<UMLOperation, List<AbstractCall>> callCountMap = null;
 	private List<UMLOperation> potentiallyMovedOperations = new ArrayList<UMLOperation>();
+	private final Constants LANG;
 
 	public ExtractOperationDetection(UMLOperationBodyMapper mapper, List<UMLOperation> addedOperations, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff, boolean invocationsFromOtherMappers) {
+		this.LANG = mapper.LANG;
 		this.mapper = mapper;
 		this.addedOperations = addedOperations;
 		this.classDiff = classDiff;
@@ -230,7 +231,7 @@ public class ExtractOperationDetection {
 				List<String> arguments = invocation.arguments();
 				int occurrences = 0;
 				for(String argument : arguments) {
-					if(argument.startsWith(JAVA.THIS_DOT) && !allVariables.contains(argument)) {
+					if(argument.startsWith(LANG.THIS_DOT) && !allVariables.contains(argument)) {
 						String substringAfterThis = argument.substring(5);
 						occurrences += Collections.frequency(allVariables, substringAfterThis);
 					}
@@ -274,7 +275,7 @@ public class ExtractOperationDetection {
 		StatementObject singleReturnStatement = addedOperation.singleReturnStatement();
 		if(operationBodyMapper != null && (operationBodyMapper.getMappings().isEmpty() || containsRefactoringWithIdenticalMappings(refactorings, operationBodyMapper)) && singleReturnStatement != null) {
 			String s = singleReturnStatement.getString();
-			String expression = s.substring(JAVA.RETURN_SPACE.length(), s.length()-JAVA.STATEMENT_TERMINATION.length());
+			String expression = s.substring(LANG.RETURN_SPACE.length(), s.length()-LANG.STATEMENT_TERMINATION.length());
 			for(AbstractCodeMapping mapping : mapper.getMappings()) {
 				for(Replacement r : mapping.getReplacements()) {
 					if(r.getAfter().contains(addedOperation.getName() + "(")) {
@@ -603,7 +604,7 @@ public class ExtractOperationDetection {
 			if(variableDeclarations.size() > 0) {
 				for(VariableDeclaration variableDeclaration : variableDeclarations) {
 					for(AbstractCodeFragment leaf2 : operationBodyMapper.getNonMappedLeavesT2()) {
-						if(leaf2.countableStatement() && leaf2.getString().equals(JAVA.RETURN_SPACE + variableDeclaration.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
+						if(leaf2.countableStatement() && leaf2.getString().equals(LANG.RETURN_SPACE + variableDeclaration.getVariableName() + LANG.STATEMENT_TERMINATION)) {
 							nonMappedElementsT2--;
 							break;
 						}
@@ -660,8 +661,8 @@ public class ExtractOperationDetection {
 					beforeAfterContains++;
 				}
 			}
-			if(mappings == 0 && mapping.getFragment1().getString().equals(JAVA.RETURN_THIS) && !mapping.getFragment2().getString().equals(JAVA.RETURN_THIS) &&
-					mapping.getFragment2().getString().startsWith(JAVA.RETURN_SPACE) && mapping.getFragment2().getString().endsWith("this;\n")) {
+			if(mappings == 0 && mapping.getFragment1().getString().equals(LANG.RETURN_THIS) && !mapping.getFragment2().getString().equals(LANG.RETURN_THIS) &&
+					mapping.getFragment2().getString().startsWith(LANG.RETURN_SPACE) && mapping.getFragment2().getString().endsWith("this;\n")) {
 				mappings++;
 			}
 			if(beforeAfterContains == mapping.getReplacements().size()) {
@@ -688,14 +689,14 @@ public class ExtractOperationDetection {
 		List<CompositeStatementObject> nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>(operationBodyMapper.getNonMappedInnerNodesT2());
 		ListIterator<CompositeStatementObject> iterator = nonMappedInnerNodesT2.listIterator();
 		while(iterator.hasNext()) {
-			if(iterator.next().getString().equals(JAVA.OPEN_BLOCK)) {
+			if(iterator.next().getString().equals(LANG.OPEN_BLOCK)) {
 				iterator.remove();
 			}
 		}
 		List<AbstractCodeFragment> nonMappedLeavesT2 = operationBodyMapper.getNonMappedLeavesT2();
 		return totalMappings.size() == 1 && totalMappings.get(0).containsReplacement(ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION) &&
 				nonMappedInnerNodesT2.size() == 1 && nonMappedInnerNodesT2.get(0).toString().startsWith("if") &&
-				nonMappedLeavesT2.size() == 1 && nonMappedLeavesT2.get(0).toString().startsWith(JAVA.RETURN_SPACE);
+				nonMappedLeavesT2.size() == 1 && nonMappedLeavesT2.get(0).toString().startsWith(LANG.RETURN_SPACE);
 	}
 
 	private UMLOperation findDelegateMethod(VariableDeclarationContainer originalOperation, UMLOperation addedOperation, AbstractCall addedOperationInvocation) {

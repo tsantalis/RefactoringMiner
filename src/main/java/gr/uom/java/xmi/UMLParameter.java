@@ -3,6 +3,8 @@ package gr.uom.java.xmi;
 import java.io.Serializable;
 import java.util.List;
 
+import org.refactoringminer.util.PathFileUtils;
+
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class UMLParameter implements Serializable, VariableDeclarationProvider {
@@ -99,8 +101,11 @@ public class UMLParameter implements Serializable, VariableDeclarationProvider {
 		if(kind.equals("return"))
 			return type.toString();
 		else {
-			if(varargs) {
+			if(varargs && PathFileUtils.isJavaFile(getVariableDeclaration().getLocationInfo().getFilePath())) {
 				return name + " " + type.toString().substring(0, type.toString().lastIndexOf("[]")) + "...";
+			}
+			else if(varargs && PathFileUtils.isPythonFile(getVariableDeclaration().getLocationInfo().getFilePath())) {
+				return name.equals("kwargs") ? "**" : "*" + name + type.toString();
 			}
 			else {
 				return name + " " + type;
@@ -112,8 +117,11 @@ public class UMLParameter implements Serializable, VariableDeclarationProvider {
 		if(kind.equals("return"))
 			return type.toQualifiedString();
 		else {
-			if(varargs) {
+			if(varargs && PathFileUtils.isJavaFile(getVariableDeclaration().getLocationInfo().getFilePath())) {
 				return name + " " + type.toQualifiedString().substring(0, type.toQualifiedString().lastIndexOf("[]")) + "...";
+			}
+			else if(varargs && PathFileUtils.isPythonFile(getVariableDeclaration().getLocationInfo().getFilePath())) {
+				return name.equals("kwargs") ? "**" : "*" + name + type.toQualifiedString();
 			}
 			else {
 				return name + " " + type.toQualifiedString();

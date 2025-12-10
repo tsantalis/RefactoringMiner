@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
@@ -17,8 +18,6 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
 import java.util.AbstractMap.SimpleEntry;
-
-import static gr.uom.java.xmi.Constants.JAVA;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -768,11 +767,12 @@ public class UMLOperationDiff {
 
 	private void checkForSplitMergeParameterBasedOnAttributeAssignments(Set<Refactoring> refactorings) {
 		if(classDiff != null) {
+			Constants LANG = classDiff.LANG;
 			List<AbstractCodeFragment> removedOperationLeaves = removedOperation.getBody() != null ? removedOperation.getBody().getCompositeStatement().getLeaves() : Collections.emptyList();
 			Map<VariableDeclaration, AbstractCodeFragment> removedFieldAssignmentMap = new LinkedHashMap<>();
 			for(VariableDeclaration removedParameter : removedParameters) {
 				for(AbstractCodeFragment leaf : removedOperationLeaves) {
-					if(leaf.getString().equals(JAVA.THIS_DOT + removedParameter.getVariableName() + JAVA.ASSIGNMENT + removedParameter.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
+					if(leaf.getString().equals(LANG.THIS_DOT + removedParameter.getVariableName() + LANG.ASSIGNMENT + removedParameter.getVariableName() + LANG.STATEMENT_TERMINATION)) {
 						removedFieldAssignmentMap.put(removedParameter.getVariableDeclaration(), leaf);
 						break;
 					}
@@ -782,7 +782,7 @@ public class UMLOperationDiff {
 			Map<VariableDeclaration, AbstractCodeFragment> addedFieldAssignmentMap = new LinkedHashMap<>();
 			for(VariableDeclaration addedParameter : addedParameters) {
 				for(AbstractCodeFragment leaf : addedOperationLeaves) {
-					if(leaf.getString().equals(JAVA.THIS_DOT + addedParameter.getVariableName() + JAVA.ASSIGNMENT + addedParameter.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
+					if(leaf.getString().equals(LANG.THIS_DOT + addedParameter.getVariableName() + LANG.ASSIGNMENT + addedParameter.getVariableName() + LANG.STATEMENT_TERMINATION)) {
 						addedFieldAssignmentMap.put(addedParameter.getVariableDeclaration(), leaf);
 						break;
 					}

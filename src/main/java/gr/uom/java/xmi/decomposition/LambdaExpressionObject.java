@@ -1,7 +1,5 @@
 package gr.uom.java.xmi.decomposition;
 
-import static gr.uom.java.xmi.Constants.JAVA;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -22,7 +20,16 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeMethodReference;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.YieldStatement;
+import org.refactoringminer.util.PathFileUtils;
 
+import extension.ast.node.LangASTNode;
+import extension.ast.node.declaration.LangSingleVariableDeclaration;
+import extension.ast.node.expression.LangExpression;
+import extension.ast.node.expression.LangLambdaExpression;
+import extension.ast.node.statement.LangBlock;
+import extension.ast.node.unit.LangCompilationUnit;
+import extension.ast.visitor.LangVisitor;
+import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
@@ -43,6 +50,31 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	private VariableDeclarationContainer owner;
 	private String asString;
 	
+	public LambdaExpressionObject(LangCompilationUnit cu, String sourceFolder, String filePath, LangLambdaExpression lambda, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this.owner = owner;
+		this.asString = LangVisitor.stringify(lambda);
+		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, lambda, CodeElementType.LAMBDA_EXPRESSION);
+		for (LangASTNode param : lambda.getParameters()) {
+			if(param instanceof LangSingleVariableDeclaration) {
+				VariableDeclaration parameter = new VariableDeclaration(cu, sourceFolder, filePath, (LangSingleVariableDeclaration)param, this, activeVariableDeclarations, fileContent);
+				parameters.add(parameter);
+				UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", ((LangSingleVariableDeclaration)param).isVarArgs());
+				umlParameter.setVariableDeclaration(parameter);
+				umlParameters.add(umlParameter);
+			}
+		}
+		if(lambda.getBody() instanceof LangBlock) {
+			this.body = new OperationBody(cu, sourceFolder, filePath, (LangBlock)lambda.getBody(), this, activeVariableDeclarations, fileContent);
+		}
+		else if(lambda.getBody() instanceof LangExpression) {
+			this.expression = new AbstractExpression(cu, sourceFolder, filePath, (LangExpression)lambda.getBody(), CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, fileContent);
+			this.expression.setLambdaOwner(this);
+			for(VariableDeclaration parameter : parameters) {
+				parameter.addStatementInScope(expression, false);
+			}
+		}
+	}
+
 	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, LambdaExpression lambda, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
 		this.owner = owner;
 		this.asString = lambda.toString();
@@ -212,6 +244,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	}
 
 	public String toString() {
+		Constants LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		StringBuilder sb = new StringBuilder();
 		if(hasParentheses) {
 			sb.append("(");
@@ -225,7 +258,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			sb.append(")");
 		}
 		if(parameters.size() > 0 || hasParentheses) {
-			sb.append(JAVA.LAMBDA_ARROW);
+			sb.append(LANG.LAMBDA_ARROW);
 		}
 		if(expression != null) {
 			sb.append(expression.getString());

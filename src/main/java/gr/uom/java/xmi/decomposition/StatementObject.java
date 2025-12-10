@@ -16,16 +16,17 @@ import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
+import extension.ast.node.LangASTNode;
+import extension.ast.node.unit.LangCompilationUnit;
+import extension.ast.visitor.LangVisitor;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
-import gr.uom.java.xmi.diff.CodeRange;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
 public class StatementObject extends AbstractStatement {
 	
 	private String statement;
-	private LocationInfo locationInfo;
 	private List<LeafExpression> variables;
 	private List<String> types;
 	private List<VariableDeclaration> variableDeclarations;
@@ -53,10 +54,56 @@ public class StatementObject extends AbstractStatement {
 	private List<LeafExpression> patternInstanceofExpressions;
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
 	private List<LambdaExpressionObject> lambdas;
-	
+	private List<ComprehensionExpression> comprehensions;
+
+	public StatementObject(LangCompilationUnit cu, String sourceFolder, String filePath,
+			LangASTNode statement, int depth, CodeElementType codeElementType,
+			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		super(new LocationInfo(cu, sourceFolder, filePath, statement, codeElementType));
+		LangVisitor visitor = new LangVisitor(cu, sourceFolder, filePath, container, activeVariableDeclarations, fileContent);
+		statement.accept(visitor);
+
+		// Initialize collections
+		this.variables = visitor.getVariables();
+		this.types = visitor.getTypes();
+		this.variableDeclarations = visitor.getVariableDeclarations();
+		this.methodInvocations = visitor.getMethodInvocations();
+		this.anonymousClassDeclarations = visitor.getAnonymousClassDeclarations();
+		this.textBlocks = visitor.getTextBlocks();
+		this.stringLiterals = visitor.getStringLiterals();
+		this.charLiterals = visitor.getCharLiterals();
+		this.numberLiterals = visitor.getNumberLiterals();
+		this.nullLiterals = visitor.getNullLiterals();
+		this.booleanLiterals = visitor.getBooleanLiterals();
+		this.typeLiterals = visitor.getTypeLiterals();
+		this.creations = visitor.getCreations();
+		this.infixExpressions = visitor.getInfixExpressions();
+		this.assignments = visitor.getAssignments();
+		this.infixOperators = visitor.getInfixOperators();
+		this.arrayAccesses = visitor.getArrayAccesses();
+		this.prefixExpressions = visitor.getPrefixExpressions();
+		this.postfixExpressions = visitor.getPostfixExpressions();
+		this.thisExpressions = visitor.getThisExpressions();
+		this.arguments = visitor.getArguments();
+		this.parenthesizedExpressions = visitor.getParenthesizedExpressions();
+		this.castExpressions = visitor.getCastExpressions();
+		this.instanceofExpressions = visitor.getInstanceofExpressions();
+		this.patternInstanceofExpressions = visitor.getPatternInstanceofExpressions();
+		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
+		this.lambdas = visitor.getLambdas();
+		this.comprehensions = visitor.getComprehensions();
+		this.statement = LangVisitor.stringify(statement);
+		int start = statement.getStartChar();
+		int end = start + statement.getLength();
+		if(end > fileContent.length()) {
+			end = fileContent.length();
+		}
+		this.actualSignature = fileContent.substring(start, end);
+		setDepth(depth);
+	}
+
 	public StatementObject(CompilationUnit cu, String sourceFolder, String filePath, Statement statement, int depth, CodeElementType codeElementType, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
-		super();
-		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, statement, codeElementType);
+		super(new LocationInfo(cu, sourceFolder, filePath, statement, codeElementType));
 		Visitor visitor = new Visitor(cu, sourceFolder, filePath, container, activeVariableDeclarations, javaFileContent);
 		statement.accept(visitor);
 		this.variables = visitor.getVariables();
@@ -86,6 +133,7 @@ public class StatementObject extends AbstractStatement {
 		this.patternInstanceofExpressions = visitor.getPatternInstanceofExpressions();
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
+		this.comprehensions = visitor.getComprehensions();
 		int start = statement.getStartPosition();
 		int end = start + statement.getLength();
 		if(this.anonymousClassDeclarations.isEmpty()) {
@@ -309,6 +357,11 @@ public class StatementObject extends AbstractStatement {
 	}
 
 	@Override
+	public List<ComprehensionExpression> getComprehensions() {
+		return comprehensions;
+	}
+
+	@Override
 	public int statementCount() {
 		return 1;
 	}
@@ -316,14 +369,6 @@ public class StatementObject extends AbstractStatement {
 	@Override
 	public int statementCountIncludingBlocks() {
 		return 1;
-	}
-
-	public LocationInfo getLocationInfo() {
-		return locationInfo;
-	}
-
-	public CodeRange codeRange() {
-		return locationInfo.codeRange();
 	}
 
 	public VariableDeclaration getVariableDeclaration(String variableName) {

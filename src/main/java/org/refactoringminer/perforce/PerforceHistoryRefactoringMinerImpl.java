@@ -21,6 +21,7 @@ import org.refactoringminer.astDiff.matchers.ProjectASTDiffer;
 import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
+import org.refactoringminer.util.PathFileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -207,7 +208,7 @@ public class PerforceHistoryRefactoringMinerImpl implements PerforceHistoryRefac
     }
 
     private static boolean isJavaFile(String path) {
-        return path.toLowerCase().endsWith(".java");
+        return PathFileUtils.isSupportedFile(path.toLowerCase());
     }
 
     @Override

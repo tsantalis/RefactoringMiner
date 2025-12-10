@@ -38,10 +38,12 @@ public class CommentMatcher extends OptimizationAwareMatcher {
                             matchAndUpdateOptimizationStore(src, dst, mappingStore);
                 }
                 else {
-                    Tree srcComment = TreeUtilFunctions.findByLocationInfo(src, commonComment.getLeft().getLocationInfo(), Constants.LINE_COMMENT, Constants.BLOCK_COMMENT);
-                    Tree dstComment = TreeUtilFunctions.findByLocationInfo(dst, commonComment.getRight().getLocationInfo(), Constants.LINE_COMMENT, Constants.BLOCK_COMMENT);
+                    Tree srcComment = TreeUtilFunctions.findByLocationInfo(src, commonComment.getLeft().getLocationInfo(), Constants.get().LINE_COMMENT, Constants.get().BLOCK_COMMENT);
+                    Tree dstComment = TreeUtilFunctions.findByLocationInfo(dst, commonComment.getRight().getLocationInfo(), Constants.get().LINE_COMMENT, Constants.get().BLOCK_COMMENT);
                     if (srcComment != null && dstComment != null) {
                         mappingStore.addMapping(srcComment, dstComment);
+                        if (TreeUtilFunctions.areBothFromThisType(srcComment.getParent(), dstComment.getParent(), Constants.get().EXPRESSION_STATEMENT))
+                            mappingStore.addMapping(srcComment.getParent(), dstComment.getParent());
                     }
                 }
             }

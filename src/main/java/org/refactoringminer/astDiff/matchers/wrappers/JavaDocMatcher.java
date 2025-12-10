@@ -94,15 +94,15 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
                                 optimizationData.getSubtreeMappings().addMappingRecursively(srcTag,dstTag);
                             else {
                                 optimizationData.getSubtreeMappings().addMapping(srcTag, dstTag);
-                                Tree srcTagName = findFirstByType(srcTag, Constants.TAG_NAME);
-                                Tree dstTagName = findFirstByType(dstTag, Constants.TAG_NAME);
+                                Tree srcTagName = findFirstByType(srcTag, Constants.get().TAG_NAME);
+                                Tree dstTagName = findFirstByType(dstTag, Constants.get().TAG_NAME);
                                 if (srcTagName != null && dstTagName != null) {
                                     if (srcTagName.isIsoStructuralTo(dstTagName))
                                         optimizationData.getSubtreeMappings().addMapping(srcTagName, dstTagName);
                                 }
                                 else if (diff.getCommonTags().size() == 1)  {
-                                    Tree srcTxtElement = findFirstByType(srcTag, Constants.TEXT_ELEMENT);
-                                    Tree dstTextElement = findFirstByType(dstTag, Constants.TEXT_ELEMENT);
+                                    Tree srcTxtElement = findFirstByType(srcTag, Constants.get().TEXT_ELEMENT);
+                                    Tree dstTextElement = findFirstByType(dstTag, Constants.get().TEXT_ELEMENT);
                                     if (srcTxtElement != null && dstTextElement != null) {
                                         if (srcTxtElement.isIsoStructuralTo(dstTextElement))
                                             optimizationData.getSubtreeMappings().addMapping(srcTxtElement, dstTextElement);
@@ -131,19 +131,19 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
                             Tree srcTxt = null;
                             Tree dstTxt = null;
                             boolean matchParents = false;
-                            if (isFromType(src, Constants.TAG_ELEMENT) && isFromType(dst, Constants.TEXT_ELEMENT)) {
+                            if (isFromType(src, Constants.get().TAG_ELEMENT) && isFromType(dst, Constants.get().TEXT_ELEMENT)) {
                                 srcTxt = src.getChild(0);
                                 dstTxt = dst;
-                            } else if (isFromType(src, Constants.TEXT_ELEMENT) && isFromType(dst, Constants.TAG_ELEMENT)) {
+                            } else if (isFromType(src, Constants.get().TEXT_ELEMENT) && isFromType(dst, Constants.get().TAG_ELEMENT)) {
                                 srcTxt = src;
                                 dstTxt = dst.getChild(0);
                             }
-                            else if (areBothFromThisType(src, dst, Constants.TEXT_ELEMENT)){
+                            else if (areBothFromThisType(src, dst, Constants.get().TEXT_ELEMENT)){
                                 srcTxt = src;
                                 dstTxt = dst;
                                 matchParents = true;
                             }
-                            else if (areBothFromThisType(src, dst, Constants.SIMPLE_NAME))
+                            else if (areBothFromThisType(src, dst, Constants.get().SIMPLE_NAME))
                             {
                                 optimizationData.getSubtreeMappings().addMapping(src, dst);
                             }
@@ -153,7 +153,7 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
                                 {
                                     Tree srcTxtParent = srcTxt.getParent();
                                     Tree dstTxtParent = dstTxt.getParent();
-                                    if (areBothFromThisType(srcTxtParent, dstTxtParent, Constants.TAG_ELEMENT))
+                                    if (areBothFromThisType(srcTxtParent, dstTxtParent, Constants.get().TAG_ELEMENT))
                                         if (!mappingStore.isSrcMapped(srcTxtParent) && !mappingStore.isDstMapped(dstTxtParent))
                                             optimizationData.getSubtreeMappings().addMapping(srcTxtParent, dstTxtParent);
                                 }

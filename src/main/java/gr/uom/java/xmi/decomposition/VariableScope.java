@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import extension.ast.node.unit.LangCompilationUnit;
 import gr.uom.java.xmi.LocationInfo;
 
 public class VariableScope {
@@ -17,7 +18,30 @@ public class VariableScope {
 	private int endColumn;
 	private Set<AbstractCodeFragment> statementsInScopeUsingVariable = new LinkedHashSet<>();
 	private String parentSignature = "";
-	
+
+	public VariableScope(
+			LangCompilationUnit cu,
+			String filePath, int startOffset, int endOffset
+	) {
+		this.filePath = filePath;
+		this.startOffset = startOffset;
+		this.endOffset = endOffset;
+		/*
+		this.startLine = cu.getStartLine();
+		this.endLine = cu.getEndLine();
+		this.startColumn = cu.getStartColumn();
+		this.endColumn = cu.getEndColumn();
+		//lines are 1-based
+		//columns are 0-based
+		if(this.startColumn > 0) {
+			this.startColumn += 1;
+		}
+		if(this.endColumn > 0) {
+			this.endColumn += 1;
+		}
+		*/
+	}
+
 	public VariableScope(CompilationUnit cu, String filePath, int startOffset, int endOffset) {
 		//ASTNode parent = node.getParent();
 		this.filePath = filePath;
@@ -87,9 +111,14 @@ public class VariableScope {
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(startLine).append(":").append(startColumn);
-		sb.append("-");
-		sb.append(endLine).append(":").append(endColumn);
+		if(startLine != 0 && endLine != 0) {
+			sb.append(startLine).append(":").append(startColumn);
+			sb.append("-");
+			sb.append(endLine).append(":").append(endColumn);
+		}
+		else {
+			sb.append(startOffset).append("-").append(endOffset);
+		}
 		return sb.toString();
 	}
 

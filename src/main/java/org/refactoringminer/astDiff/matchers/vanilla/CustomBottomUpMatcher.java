@@ -63,11 +63,11 @@ public class CustomBottomUpMatcher implements Matcher {
 
 	private static boolean checkInfixExpression(MappingStore mappings, Tree t, Tree best) {
 		boolean checkOperatorOfInfixExpression = true;
-		if (t.getType().name.equals(Constants.INFIX_EXPRESSION))
+		if (t.getType().name.equals(Constants.get().INFIX_EXPRESSION))
 		{
 			checkOperatorOfInfixExpression = false;
-			Tree a = TreeUtilFunctions.findChildByType(t, Constants.INFIX_EXPRESSION_OPERATOR);
-			Tree b = TreeUtilFunctions.findChildByType(best, Constants.INFIX_EXPRESSION_OPERATOR);
+			Tree a = TreeUtilFunctions.findChildByType(t, Constants.get().INFIX_EXPRESSION_OPERATOR);
+			Tree b = TreeUtilFunctions.findChildByType(best, Constants.get().INFIX_EXPRESSION_OPERATOR);
 			if (mappings.getDstForSrc(a) == b) checkOperatorOfInfixExpression = true;
 		}
 		return checkOperatorOfInfixExpression;

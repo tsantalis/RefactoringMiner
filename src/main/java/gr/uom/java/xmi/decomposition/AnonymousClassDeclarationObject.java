@@ -44,6 +44,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	private List<LeafExpression> patternInstanceofExpressions = new ArrayList<>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
+	private List<ComprehensionExpression> comprehensions = new ArrayList<ComprehensionExpression>();
 	
 	public AnonymousClassDeclarationObject(CompilationUnit cu, String sourceFolder, String filePath, AnonymousClassDeclaration anonymous) {
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, anonymous, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
@@ -182,6 +183,10 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 
 	public List<LambdaExpressionObject> getLambdas() {
 		return lambdas;
+	}
+
+	public List<ComprehensionExpression> getComprehensions() {
+		return comprehensions;
 	}
 
 	public CodeRange codeRange() {

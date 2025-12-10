@@ -1,6 +1,7 @@
 package gui.webdiff.tree;
 
 import org.refactoringminer.astDiff.models.ASTDiff;
+import org.refactoringminer.util.PathFileUtils;
 
 import com.github.gumtreediff.utils.Pair;
 
@@ -38,7 +39,7 @@ public class TreeViewGenerator {
                 TreeNodeInfo parentNodeInfo = (TreeNodeInfo) parent.getUserObject();
                 if(!parentNodeInfo.getName().equals(token)) {
                     TreeNodeInfo nodeInfo = new TreeNodeInfo(token, pathToNode);
-                    if(token.endsWith(".java")) {
+                    if(PathFileUtils.isSupportedFile(token)) {
                     	nodeInfo.setSrcFilePath(pair.first);
                     }
                     DefaultMutableTreeNode newChild = new DefaultMutableTreeNode(nodeInfo);
@@ -96,7 +97,7 @@ public class TreeViewGenerator {
                 setIdAccordingly(treeNode);
                 TreeNodeInfo treeNodeInfo = (TreeNodeInfo) treeNode.getUserObject();
                 String nodeName = treeNodeInfo.getName();
-                if(!nodeName.endsWith(".java")) {
+                if(!PathFileUtils.isSupportedFile(nodeName)) {
                     if(oldNode.isRoot()) {
                         TreeNodeInfo newNodeInfo = new TreeNodeInfo(nodeName, nodeName);
                         newNode.setUserObject(newNodeInfo);

@@ -1,7 +1,5 @@
 package gr.uom.java.xmi.decomposition;
 
-import static gr.uom.java.xmi.Constants.JAVA;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +8,7 @@ import org.eclipse.jdt.core.dom.Type;
 
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.StringDistance;
 
@@ -27,8 +26,8 @@ public class CreationReference extends AbstractCall {
 		}
 	}
 
-	private CreationReference() {
-		super();
+	private CreationReference(LocationInfo locationInfo) {
+		super(locationInfo);
 	}
 
 	public String getName() {
@@ -40,9 +39,8 @@ public class CreationReference extends AbstractCall {
 	}
 
 	public CreationReference update(String oldExpression, String newExpression) {
-		CreationReference newObjectCreation = new CreationReference();
+		CreationReference newObjectCreation = new CreationReference(this.locationInfo);
 		newObjectCreation.type = this.type;
-		newObjectCreation.locationInfo = this.locationInfo;
 		update(newObjectCreation, oldExpression, newExpression);
 		return newObjectCreation;
 	}
@@ -93,7 +91,7 @@ public class CreationReference extends AbstractCall {
 
 	public String actualString() {
 		StringBuilder sb = new StringBuilder();
-        sb.append(getName()).append(JAVA.METHOD_REFERENCE).append("new");
+        sb.append(getName()).append(LANG.METHOD_REFERENCE).append("new");
         return sb.toString();
 	}
 }

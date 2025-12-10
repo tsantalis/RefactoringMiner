@@ -3,6 +3,7 @@ package gr.uom.java.xmi;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 import static org.eclipse.jdt.core.JavaCore.VERSION_21;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
@@ -71,11 +72,13 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
 import com.github.gumtreediff.tree.TreeContext;
 
+import extension.umladapter.UMLModelAdapter;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import org.refactoringminer.astDiff.visitors.JdtWithCommentsVisitor;
+import org.refactoringminer.util.PathFileUtils;
 
 public class UMLModelASTReader {
 	private boolean VISIT_JDT_COMMENTS = Boolean.parseBoolean(System.getProperty("rm.jdt.comments", "true"));
@@ -93,9 +96,24 @@ public class UMLModelASTReader {
 	private static final Pattern LEAD_WHITE_SPACE_JAVADOC = Pattern.compile("^\s+\\*", Pattern.MULTILINE);
 	private UMLModel umlModel;
 
-	public UMLModelASTReader(Map<String, String> javaFileContents, Set<String> repositoryDirectories, boolean astDiff) {
-		this.umlModel = new UMLModel(repositoryDirectories);
-		processJavaFileContents(javaFileContents, astDiff);
+	public UMLModelASTReader(Map<String, String> fileContents, Set<String> repositoryDirectories, boolean astDiff) {
+		boolean hasLangSupportedFiles = fileContents.keySet().stream()
+				.anyMatch(PathFileUtils::isLangSupportedFile);
+
+		if (hasLangSupportedFiles) {
+			try {
+				this.umlModel = new UMLModelAdapter(fileContents, astDiff).getUMLModel();
+			} catch (IOException e) {
+				System.err.println("Error processing language-supported files: " + e.getMessage());
+				// Fall back to Java-only processing
+				this.umlModel = new UMLModel(repositoryDirectories);
+				processJavaFileContents(fileContents, astDiff);
+			}
+		} else {
+			// Only Java files
+			this.umlModel = new UMLModel(repositoryDirectories);
+			processJavaFileContents(fileContents, astDiff);
+		}
 	}
 
 	public static ASTNode processBlock(String methodBody) {

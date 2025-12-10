@@ -50,6 +50,6 @@ public class TestPythonDatasetRefactorings {
 					.or(Refactorings.ParameterizeVariable.getValue());
 		TestBuilder test = new TestBuilder(detector, REPOS, types);
 		RefactoringPopulator.preparePythonRefactorings(test, types);
-		test.assertExpectationsWithGitHubAPI(896, 6, 2);
+		test.assertExpectationsWithGitHubAPI(900, 6, 2);
 	}
 }

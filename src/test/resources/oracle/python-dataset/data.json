@@ -2237,7 +2237,7 @@
     "sha1": "18fc0b2ade215c6c1d8a497944188619aa135d28",
     "url": "https://github.com/dit/dit/commit/18fc0b2ade215c6c1d8a497944188619aa135d28",
     "author": "chebee7i",
-    "time": "117/14 5:35 PM",
+    "time": "11/7/14 5:35 PM",
     "refactorings": [{
         "type": "Add Parameter",
         "description": "Add Parameter shape in method public perturb_support(pmf, eps, shape, prng) from class math.pmfops.__module__",
@@ -7834,6 +7834,52 @@
     }, {
         "type": "Extract Superclass",
         "description": "Extract Superclass modules.encoders.rnn_encoders.RNNEncoderBase from classes [modules.encoders.rnn_encoders.ForwardRNNEncoder]",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160012,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "ea6058d72f9eda3e79a1627b63b0ed6148fffbeb",
+    "url": "https://github.com/asyml/texar/commit/ea6058d72f9eda3e79a1627b63b0ed6148fffbeb",
+    "author": "zcyang",
+    "time": "8/23/18 09:56 AM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter mode in method protected _embed_fn(memory, soft_memory, mode) from class modules.memory.memory_network.MemNetBase.get_default_embed_fn",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter mode in method protected _build(query, memory, soft_memory, mode, kwargs) from class modules.memory.memory_network.MemNetRNNLike",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160013,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "ebec93d0b005e2bbb51892a52604b70537d01a2d",
+    "url": "https://github.com/asyml/texar/commit/ebec93d0b005e2bbb51892a52604b70537d01a2d",
+    "author": "ZhitingHu",
+    "time": "5/29/18 11:36 PM",
+    "refactorings": [{
+        "type": "Rename Variable",
+        "description": "Rename Variable outputs to cell_outputs in method protected _build(inputs, sequence_length, initial_state, time_major, mode, return_cell_output, kwargs) from class modules.encoders.rnn_encoders.UnidirectionalRNNEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter return_cell_output in method protected _build(inputs, sequence_length, initial_state, time_major, mode, return_cell_output, kwargs) from class modules.encoders.rnn_encoders.UnidirectionalRNNEncoder",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

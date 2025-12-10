@@ -644,8 +644,8 @@ As of **December 10, 2025** the precision and recall of RefactoringMiner on this
 |Move Code| 6  |  0  |  0  | 1.000  | 1.000|
 
 **Important notes**:
-Commit https://github.com/asyml/texar/commit/36f4b18340e2974cfee80e5c347bf7ae7459ab88 has been skipped due to a parsing error
-missing comma after parameter `w_ppl=1.` of function `append` examples/tsf/stats.py
+Commit [asyml/texar@36f4b18](https://github.com/asyml/texar/commit/36f4b18340e2974cfee80e5c347bf7ae7459ab88) has been skipped due to a parsing error,
+i.e., a missing comma after parameter `w_ppl=1.` of function `append` in file `examples/tsf/stats.py`
 ```python
 def append(self, loss, g, ppl, d, d0, d1,
              w_loss=1., w_g=1., w_ppl=1. w_d=1, w_d0=1., w_d1=1.):

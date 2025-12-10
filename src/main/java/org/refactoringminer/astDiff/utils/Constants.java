@@ -1,108 +1,178 @@
 package org.refactoringminer.astDiff.utils;
 
-import com.github.gumtreediff.tree.Type;
-
-import static com.github.gumtreediff.tree.TypeSet.type;
+import org.refactoringminer.util.PathFileUtils;
 
 public class Constants {
+	private static String filePath;
+	private static Constants singleton;
 
-	// AST node type labels
-	public static final String ASSIGNMENT = "Assignment";
-	public static final String METHOD_INVOCATION = "MethodInvocation";
-	public static final String METHOD_DECLARATION = "MethodDeclaration";
-	public static final String ANNOTATION_TYPE_MEMBER_DECLARATION = "AnnotationTypeMemberDeclaration";
-	public static final String TRY_STATEMENT = "TryStatement";
-	public static final String CATCH_CLAUSE = "CatchClause";
-	public static final String BLOCK = "Block";
-	public static final String VARIABLE_DECLARATION_FRAGMENT = "VariableDeclarationFragment";
-	public static final String FIELD_DECLARATION = "FieldDeclaration";
-	public static final String ACCESS_MODIFIER = "AccessModifier";
-	public static final String PACKAGE_DECLARATION = "PackageDeclaration";
-	public static final String MODULE_DECLARATION = "ModuleDeclaration";
-	public static final String ANONYMOUS_CLASS_DECLARATION = "AnonymousClassDeclaration";
-	public static final String LABELED_STATEMENT = "LabeledStatement";
-	public static final String SIMPLE_NAME = "SimpleName";
-	public static final String VARIABLE_DECLARATION_STATEMENT = "VariableDeclarationStatement";
-	public static final String EXPRESSION_STATEMENT = "ExpressionStatement";
-	public static final String MODIFIER = "Modifier";
-	public static final String IMPORT_DECLARATION = "ImportDeclaration";
-	public static final String PRIMITIVE_TYPE = "PrimitiveType";
-	public static final String TYPE_DECLARATION = "TypeDeclaration";
-	public static final String ENUM_DECLARATION = "EnumDeclaration";
-	public static final String RECORD_DECLARATION = "RecordDeclaration";
-	public static final String ANNOTATION_TYPE_DECLARATION = "AnnotationTypeDeclaration";
-	public static final String ENUM_CONSTANT_DECLARATION = "EnumConstantDeclaration";
-	public static final String TYPE_DECLARATION_STATEMENT = "TypeDeclarationStatement";
-	public static final String RECORD_COMPONENT = "SingleVariableDeclaration";
+	public static void setFilePath(String filePath) {
+		Constants.filePath = filePath;
+		singleton = new Constants(filePath);
+	}
 
-	// AST node property labels
-	public static final String ASSIGNMENT_OPERATOR = "ASSIGNMENT_OPERATOR";
-	public static final String TYPE_DECLARATION_KIND = "TYPE_DECLARATION_KIND";
+	public static Constants get() {
+		if(singleton == null) {
+			singleton = new Constants(filePath);
+		}
+		return singleton;
+	}
 
-	// Keyword labels
-	public static final String TRANSIENT = "transient";
-	public static final String VOLATILE = "volatile";
-	public static final String SYNCHRONIZED = "synchronized";
-	public static final String ABSTRACT = "abstract";
-	public static final String NATIVE = "native";
-	public static final String FINAL = "final";
-	public static final String STATIC = "static";
-	public static final String SEALED = "sealed";
-	public static final String DEFAULT = "default";
-	public static final String STRICTFP = "strictfp";
-	public static final String EQUAL_OPERATOR = "=";
+	private Constants(String filePath) {
+		if(PathFileUtils.isPythonFile(filePath)) {
+			METHOD_DECLARATION = "function_definition";
+			SIMPLE_NAME = "identifier";
+			IMPORT_DECLARATION = "import_statement";
+			TYPE_DECLARATION = "class_definition";
+			TYPE_DECLARATION_KIND = "class";
+			BLOCK_COMMENT = "string";
+            EXPRESSION_STATEMENT = "expression_statement";
+            TRY_STATEMENT = "try_statement";
+            CATCH_CLAUSE = "except_clause";
+            IF_STATEMENT = "if_statement";
+            WHILE_STATEMENT = "while_statement";
+            FOR_STATEMENT = "for_statement";
+            ENHANCED_FOR_STATEMENT = "for_statement";
+		}
+		else {
+			// Java values as default
+			METHOD_DECLARATION = "MethodDeclaration";
+			SIMPLE_NAME = "SimpleName";
+			IMPORT_DECLARATION = "ImportDeclaration";
+			TYPE_DECLARATION = "TypeDeclaration";
+			TYPE_DECLARATION_KIND = "TYPE_DECLARATION_KIND";
+			BLOCK_COMMENT = "BlockComment";
+            EXPRESSION_STATEMENT = "ExpressionStatement";
+            TRY_STATEMENT = "TryStatement";
+            CATCH_CLAUSE = "CatchClause";
+            IF_STATEMENT = "IfStatement";
+            WHILE_STATEMENT = "WhileStatement";
+            FOR_STATEMENT = "ForStatement";
+            ENHANCED_FOR_STATEMENT = "EnhancedForStatement";
+		}
+	}
 
-	public static final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
-	public static final String METHOD_INVOCATION_RECEIVER = "METHOD_INVOCATION_RECEIVER";
+    // AST node type labels
+    public final String ASSIGNMENT = "Assignment";
+    public final String METHOD_INVOCATION = "MethodInvocation";
+    public final String METHOD_DECLARATION;
+    public final String ANNOTATION_TYPE_MEMBER_DECLARATION = "AnnotationTypeMemberDeclaration";
+    public final String TRY_STATEMENT;
+    public final String CATCH_CLAUSE;
+    public final String BLOCK = "Block";
+    public final String VARIABLE_DECLARATION_FRAGMENT = "VariableDeclarationFragment";
+    public final String FIELD_DECLARATION = "FieldDeclaration";
+    public final String ACCESS_MODIFIER = "AccessModifier";
+    public final String PACKAGE_DECLARATION = "PackageDeclaration";
+    public final String MODULE_DECLARATION = "ModuleDeclaration";
+    public final String ANONYMOUS_CLASS_DECLARATION = "AnonymousClassDeclaration";
+    public final String LABELED_STATEMENT = "LabeledStatement";
+    public final String SIMPLE_NAME;
+    public final String VARIABLE_DECLARATION_STATEMENT = "VariableDeclarationStatement";
+    public final String EXPRESSION_STATEMENT;
+    public final String MODIFIER = "Modifier";
+    public final String IMPORT_DECLARATION;
+    public final String PRIMITIVE_TYPE = "PrimitiveType";
+    public final String TYPE_DECLARATION;
+    public final String ENUM_DECLARATION = "EnumDeclaration";
+    public final String RECORD_DECLARATION = "RecordDeclaration";
+    public final String ANNOTATION_TYPE_DECLARATION = "AnnotationTypeDeclaration";
+    public final String ENUM_CONSTANT_DECLARATION = "EnumConstantDeclaration";
+    public final String TYPE_DECLARATION_STATEMENT = "TypeDeclarationStatement";
+    public final String RECORD_COMPONENT = "SingleVariableDeclaration";
 
-	public static final String ASSERT_STATEMENT = "AssertStatement";
-	public static final String BREAK_STATEMENT = "BreakStatement";
-	public static final String CONSTRUCTOR_INVOCATION = "ConstructorInvocation";
-	public static final String CONTINUE_STATEMENT = "ContinueStatement";
-	public static final String DO_STATEMENT = "DoStatement";
-	public static final String EMPTY_STATEMENT = "EmptyStatement";
-	public static final String ENHANCED_FOR_STATEMENT = "EnhancedForStatement";
-	public static final String FOR_STATEMENT = "ForStatement";
-	public static final String IF_STATEMENT = "IfStatement";
-	public static final String RETURN_STATEMENT = "ReturnStatement";
-	public static final String SUPER_CONSTRUCTOR_INVOCATION = "SuperConstructorInvocation";
-	public static final String SWITCH_CASE = "SwitchCase";
-	public static final String SWITCH_STATEMENT = "SwitchStatement";
-	public static final String SYNCHRONIZED_STATEMENT = "SynchronizedStatement";
-	public static final String THROW_STATEMENT = "ThrowStatement";
-	public static final String WHILE_STATEMENT = "WhileStatement";
-	public static final String CONDITIONAL_EXPRESSION = "ConditionalExpression";
+    // AST node property labels
+    public final String ASSIGNMENT_OPERATOR = "ASSIGNMENT_OPERATOR";
+    public final String TYPE_DECLARATION_KIND;
 
-	public static final String INFIX_EXPRESSION = "InfixExpression";
-	public static final String INFIX_EXPRESSION_OPERATOR = "INFIX_EXPRESSION_OPERATOR";
+    // Keyword labels
+    public final String TRANSIENT = "transient";
+    public final String VOLATILE = "volatile";
+    public final String SYNCHRONIZED = "synchronized";
+    public final String ABSTRACT = "abstract";
+    public final String NATIVE = "native";
+    public final String FINAL = "final";
+    public final String STATIC = "static";
+    public final String SEALED = "sealed";
+    public final String DEFAULT = "default";
+    public final String STRICTFP = "strictfp";
+    public final String EQUAL_OPERATOR = "=";
 
-	public static final String STRING_LITERAL = "StringLiteral";
-	public static final String NUMBER_LITERAL = "NumberLiteral";
-	public static final String BOOLEAN_LITERAL = "BooleanLiteral";
+    public final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
+    public final String METHOD_INVOCATION_RECEIVER = "METHOD_INVOCATION_RECEIVER";
 
-	public static final String SINGLE_MEMBER_ANNOTATION = "SingleMemberAnnotation"; //@type(Expression), for instance
-	public static final String MARKER_ANNOTATION = "MarkerAnnotation"; //@Deprecated for instance
-	public static final String NORMAL_ANNOTATION = "NormalAnnotation"; //@Author("John Doe", "") for instance
+    public final String ASSERT_STATEMENT = "AssertStatement";
+    public final String BREAK_STATEMENT = "BreakStatement";
+    public final String CONSTRUCTOR_INVOCATION = "ConstructorInvocation";
+    public final String CONTINUE_STATEMENT = "ContinueStatement";
+    public final String DO_STATEMENT = "DoStatement";
+    public final String EMPTY_STATEMENT = "EmptyStatement";
+    public final String ENHANCED_FOR_STATEMENT;
+    public final String FOR_STATEMENT;
+    public final String IF_STATEMENT;
+    public final String RETURN_STATEMENT = "ReturnStatement";
+    public final String SUPER_CONSTRUCTOR_INVOCATION = "SuperConstructorInvocation";
+    public final String SWITCH_CASE = "SwitchCase";
+    public final String SWITCH_STATEMENT = "SwitchStatement";
+    public final String SYNCHRONIZED_STATEMENT = "SynchronizedStatement";
+    public final String THROW_STATEMENT = "ThrowStatement";
+    public final String WHILE_STATEMENT;
+    public final String CONDITIONAL_EXPRESSION = "ConditionalExpression";
 
-	public static final String COMPILATION_UNIT = "CompilationUnit";
+    public final String INFIX_EXPRESSION = "InfixExpression";
+    public final String INFIX_EXPRESSION_OPERATOR = "INFIX_EXPRESSION_OPERATOR";
 
-	public static final String JAVA_DOC = "Javadoc";
-	public static final String TEXT_ELEMENT = "TextElement";
-	public static final String TAG_ELEMENT = "TagElement";
-	public static final String TAG_NAME = "TAG_NAME";
+    public final String STRING_LITERAL = "StringLiteral";
+    public final String NUMBER_LITERAL = "NumberLiteral";
+    public final String BOOLEAN_LITERAL = "BooleanLiteral";
 
-	public static final String SIMPLE_TYPE = "SimpleType";
-	public static final String EXPRESSION_METHOD_REFERENCE = "ExpressionMethodReference";
-	public static final String PREFIX_EXPRESSION = "PrefixExpression";
-	public static final String INITIALIZER = "Initializer";
-	public static final String QUALIFIED_NAME = "QualifiedName";
-	public static final String CLASS_INSTANCE_CREATION = "ClassInstanceCreation";
+    public final String SINGLE_MEMBER_ANNOTATION = "SingleMemberAnnotation"; //@type(Expression), for instance
+    public final String MARKER_ANNOTATION = "MarkerAnnotation"; //@Deprecated for instance
+    public final String NORMAL_ANNOTATION = "NormalAnnotation"; //@Author("John Doe", "") for instance
 
-	public static final String LINE_COMMENT = "LineComment";
-	public static final String BLOCK_COMMENT = "BlockComment";
+    public final String COMPILATION_UNIT = "CompilationUnit";
 
-    public static final String TYPE_INHERITANCE_KEYWORD = "TYPE_INHERITANCE_KEYWORD";
-    public static final String PERMITS_KEYWORD = "PERMITS_KEYWORD";
-    public static final String THROWS_KEYWORD = "THROWS_KEYWORD";
+    public final String JAVA_DOC = "Javadoc";
+    public final String TEXT_ELEMENT = "TextElement";
+    public final String TAG_ELEMENT = "TagElement";
+    public final String TAG_NAME = "TAG_NAME";
 
+    public final String SIMPLE_TYPE = "SimpleType";
+    public final String EXPRESSION_METHOD_REFERENCE = "ExpressionMethodReference";
+    public final String PREFIX_EXPRESSION = "PrefixExpression";
+    public final String INITIALIZER = "Initializer";
+    public final String QUALIFIED_NAME = "QualifiedName";
+    public final String CLASS_INSTANCE_CREATION = "ClassInstanceCreation";
+
+    public final String LINE_COMMENT = "LineComment";
+    public final String BLOCK_COMMENT;
+
+    public final String TYPE_INHERITANCE_KEYWORD = "TYPE_INHERITANCE_KEYWORD";
+    public final String PERMITS_KEYWORD = "PERMITS_KEYWORD";
+    public final String THROWS_KEYWORD = "THROWS_KEYWORD";
+
+
+    //Python Specific
+    public final String ARGUMENT_LIST = "argument_list";
+    public final String CLASS_BLOCK = "block"; // Pouria: Might be merged with Block, I have no clue about python
+    public final String CLASS_KEYWORD = "class";
+    public final String TRY_KEYWORD = "try";
+    public final String EXCEPT_KEYWORD = "except";
+    public final String ATTRIBUTE_EXCEPTION = "attribute";
+    public final String FINALLY_CLAUSE = "finally_clause";
+    public final String FINALLY_KEYWORD = "finally";
+    public final String MODULE = "module"; // This is the root of all trees in Python
+    public final String DECORATED_METHOD = "decorated_definition";
+    public final String IMPORT_FROM_STATEMENT = "import_from_statement";
+    public final String FUTURE_IMPORT_STATEMENT = "future_import_statement";
+    public final String RELATIVE_IMPORT = "relative_import";
+    public final String FROM_KEYWORD = "from";
+    public final String LINE_CONTINUATION = "line_continuation";
+    public final String FUTURE = "__future__";
+    public final String RELATIVE_IMPORT_DOTTED_NAME = "dotted_name";
+    public final String ELSE_IF = "elif_clause";
+    public final String ELSE = "else_clause";
+    public final String ELIF_KEYWORD = "elif";
+    public final String ELSE_KEYWORD = "else";
+    public final String WHILE_KEYWORD = "while";
 }

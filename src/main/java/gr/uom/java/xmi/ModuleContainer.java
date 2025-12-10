@@ -1,7 +1,5 @@
 package gr.uom.java.xmi;
 
-import static gr.uom.java.xmi.Constants.JAVA;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -9,6 +7,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -119,6 +119,7 @@ public class ModuleContainer implements VariableDeclarationContainer {
 
 	@Override
 	public List<AbstractCall> getAllOperationInvocations() {
+		Constants LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		List<AbstractCall> list = new ArrayList<>();
 		for(AbstractStatement statement : statementList) {
 			if(statement instanceof CompositeStatementObject) {
@@ -129,7 +130,7 @@ public class ModuleContainer implements VariableDeclarationContainer {
 				StatementObject statementObject = (StatementObject)statement;
 				list.addAll(statementObject.getMethodInvocations());
 				for(LambdaExpressionObject lambda : statementObject.getLambdas()) {
-					if(lambda.getString().contains(JAVA.LAMBDA_ARROW)) {
+					if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
 						list.addAll(lambda.getAllOperationInvocations());
 					}
 				}

@@ -1,6 +1,5 @@
 package gr.uom.java.xmi.decomposition;
 
-import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
 import java.util.ArrayList;
@@ -12,6 +11,7 @@ import org.eclipse.jdt.core.dom.SuperMethodReference;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeMethodReference;
 
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.UMLType;
@@ -82,15 +82,14 @@ public class MethodReference extends AbstractCall {
 		return normalized;
 	}
 
-	private MethodReference() {
-		super();
+	private MethodReference(LocationInfo locationInfo) {
+		super(locationInfo);
 	}
 
 	@Override
 	public AbstractCall update(String oldExpression, String newExpression) {
-		MethodReference newReference = new MethodReference();
+		MethodReference newReference = new MethodReference(this.locationInfo);
 		newReference.methodName = this.methodName;
-		newReference.locationInfo = this.locationInfo;
 		update(newReference, oldExpression, newExpression);
 		return newReference;
 	}
@@ -134,7 +133,7 @@ public class MethodReference extends AbstractCall {
     public String actualString() {
 		StringBuilder sb = new StringBuilder();
 		if(expression != null) {
-			sb.append(expression).append(JAVA.METHOD_REFERENCE);
+			sb.append(expression).append(LANG.METHOD_REFERENCE);
 		}
 		sb.append(getName());
 		return sb.toString();

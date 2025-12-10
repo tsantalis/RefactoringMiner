@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLClass;
@@ -9,7 +10,6 @@ import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
-import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.containsMethodSignatureOfAnonymousClass;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
@@ -43,6 +43,15 @@ import org.eclipse.jdt.core.dom.Type;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
+import extension.ast.node.LangASTNode;
+import extension.ast.node.expression.LangAssignment;
+import extension.ast.node.expression.LangFieldAccess;
+import extension.ast.node.expression.LangInfixExpression;
+import extension.ast.node.expression.LangMethodInvocation;
+import extension.ast.node.expression.LangSimpleName;
+import extension.ast.node.unit.LangCompilationUnit;
+import extension.ast.visitor.LangVisitor;
+
 public class OperationInvocation extends AbstractCall {
 	private String methodName;
 	private List<String> subExpressions = new ArrayList<String>();
@@ -51,7 +60,7 @@ public class OperationInvocation extends AbstractCall {
     private static Map<String, List<String>> PRIMITIVE_TYPE_WIDENING_MAP;
     private static Map<String, List<String>> PRIMITIVE_TYPE_NARROWING_MAP;
     private static List<String> PRIMITIVE_TYPE_LIST;
-    private static final Pattern LAMBDA_ARROW = Pattern.compile(JAVA.LAMBDA_ARROW);
+    private final Pattern LAMBDA_ARROW = Pattern.compile(LANG.LAMBDA_ARROW);
 
     static {
     	PRIMITIVE_TYPE_LIST = new ArrayList<>(Arrays.asList("byte", "short", "int", "long", "float", "double", "char", "boolean"));
@@ -107,7 +116,93 @@ public class OperationInvocation extends AbstractCall {
 			processExpression(invocation.getExpression(), this.subExpressions);
 		}
 	}
-	
+
+	public OperationInvocation(LangCompilationUnit cu, String sourceFolder, String filePath, LangMethodInvocation methodInvocation, VariableDeclarationContainer container, String fileContent) {
+		super(cu, sourceFolder, filePath, methodInvocation, CodeElementType.METHOD_INVOCATION, container);
+		this.methodName = "closure";
+		if (methodInvocation.getExpression() instanceof LangSimpleName simpleName) {
+			this.methodName = simpleName.getIdentifier();
+		} else if (methodInvocation.getExpression() instanceof LangFieldAccess fieldAccess) {
+			this.methodName = fieldAccess.getName().getIdentifier();
+			this.expression = LangVisitor.stringify(fieldAccess.getExpression()); // "self"
+			if (fieldAccess.getExpression() instanceof LangSimpleName simpleName) {
+				// CORRECT: Set expression to just the object part
+				this.expression = simpleName.getIdentifier(); // "self"
+				// The method name is already set via this.methodName = methodInvocation.extractMethodName()
+			}
+		}
+		// FIX: Handle null arguments list
+		if (methodInvocation.getArguments() != null) {
+			this.numberOfArguments = methodInvocation.getArguments().size();
+		} else {
+			this.numberOfArguments = 0;
+		}
+		this.arguments = new ArrayList<>();
+		if (methodInvocation.getArguments() != null) {
+			for (LangASTNode argument : methodInvocation.getArguments()) {
+				String argString = LangVisitor.stringify(argument);
+				this.arguments.add(argString);
+			}
+		}
+		if (methodInvocation.getExpression() != null) {
+			processExpression(methodInvocation.getExpression(), this.subExpressions);
+		}
+	}
+
+	private void processExpression(LangASTNode node, List<String> subExpressions) {
+		if (node instanceof LangMethodInvocation methodInvocation) {
+			LangASTNode expr = methodInvocation.getExpression();
+			if (expr != null) {
+				String exprAsString = null;
+				if(expr instanceof LangFieldAccess fieldAccess) {
+					exprAsString = LangVisitor.stringify(fieldAccess.getExpression());
+				}
+				else {
+					exprAsString = LangVisitor.stringify(methodInvocation);
+				}
+				String invocationAsString = LangVisitor.stringify(methodInvocation);
+
+				// The suffix is the part after the receiver, including the operator (like ".add(x,y)")
+				if (invocationAsString.length() > exprAsString.length() + 1) {
+					String suffix = invocationAsString.substring(exprAsString.length() + 1);
+					subExpressions.add(0, suffix);
+				} else {
+					subExpressions.add(0, invocationAsString);
+				}
+
+				// Process the expression, but handle field access specially
+				processExpression(expr, subExpressions);
+			} else {
+				subExpressions.add(0, LangVisitor.stringify(methodInvocation));
+			}
+		}
+		else if (node instanceof LangFieldAccess fieldAccess) {
+			// For "self.add", add just "self" as a variable, not "self.add"
+			LangASTNode expression = fieldAccess.getExpression();
+			if (expression != null) {
+				processExpression(expression, subExpressions);
+			}
+			// Don't add the field access itself - we already handled the method call above
+		}
+		else if (node instanceof LangSimpleName simpleName) {
+			// Add simple names as variables (like "self", "x", "y")
+			// add only if next character is "." and not if next character is "("
+			String parentAsString = LangVisitor.stringify(node.getParent());
+			if(parentAsString.contains(simpleName.getIdentifier() + ".") && !parentAsString.contains(simpleName.getIdentifier() + "(")) {
+				subExpressions.add(0, simpleName.getIdentifier());
+			}
+		}
+		else if (node instanceof LangAssignment assignment) {
+			processExpression(assignment.getLeftSide(), subExpressions);
+			processExpression(assignment.getRightSide(), subExpressions);
+		}
+		else if (node instanceof LangInfixExpression infixExpr) {
+			processExpression(infixExpr.getLeft(), subExpressions);
+			processExpression(infixExpr.getRight(), subExpressions);
+		}
+		// TODO: Add other node types as needed...
+	}
+
 	private void processExpression(Expression expression, List<String> subExpressions) {
 		if(expression instanceof MethodInvocation) {
 			MethodInvocation invocation = (MethodInvocation)expression;
@@ -175,7 +270,7 @@ public class OperationInvocation extends AbstractCall {
 
 	public OperationInvocation(CompilationUnit cu, String sourceFolder, String filePath, ConstructorInvocation invocation, VariableDeclarationContainer container) {
 		super(cu, sourceFolder, filePath, invocation, CodeElementType.CONSTRUCTOR_INVOCATION, container);
-		this.methodName = JAVA.THIS;
+		this.methodName = LANG.THIS;
 		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
 		List<Expression> args = invocation.arguments();
@@ -184,14 +279,13 @@ public class OperationInvocation extends AbstractCall {
 		}
 	}
 
-	private OperationInvocation() {
-		super();
+	private OperationInvocation(LocationInfo locationInfo) {
+		super(locationInfo);
 	}
 
 	public OperationInvocation update(String oldExpression, String newExpression) {
-		OperationInvocation newOperationInvocation = new OperationInvocation();
+		OperationInvocation newOperationInvocation = new OperationInvocation(this.locationInfo);
 		newOperationInvocation.methodName = this.methodName;
-		newOperationInvocation.locationInfo = this.locationInfo;
 		update(newOperationInvocation, oldExpression, newExpression);
 		newOperationInvocation.subExpressions = new ArrayList<String>();
 		for(String argument : this.subExpressions) {
@@ -220,7 +314,7 @@ public class OperationInvocation extends AbstractCall {
     public boolean matchesOperation(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation,
     		UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
     	boolean constructorCall = false;
-    	if(this.methodName.equals(JAVA.THIS) && operation.getClassName().equals(callerOperation.getClassName()) && operation.getName().equals(callerOperation.getName())) {
+    	if(this.methodName.equals(LANG.THIS) && operation.getClassName().equals(callerOperation.getClassName()) && operation.getName().equals(callerOperation.getName())) {
     		constructorCall = true;
     	}
     	if(!this.methodName.equals(operation.getName()) && !constructorCall) {
@@ -297,10 +391,10 @@ public class OperationInvocation extends AbstractCall {
     		else if(arg.endsWith(".class")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("Class"));
     		}
-    		else if(arg.equals(JAVA.TRUE)) {
+    		else if(arg.equals(LANG.TRUE)) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("boolean"));
     		}
-    		else if(arg.equals(JAVA.FALSE)) {
+    		else if(arg.equals(LANG.FALSE)) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("boolean"));
     		}
     		else if(arg.startsWith("new ") && arg.contains("(") && openingParenthesisBeforeSquareBracket) {
@@ -319,7 +413,7 @@ public class OperationInvocation extends AbstractCall {
     			}
     			inferredArgumentTypes.add(UMLType.extractTypeObject(type));
     		}
-    		else if(indexOfOpeningParenthesis == 0 && arg.contains(")") && !arg.contains(JAVA.LAMBDA_ARROW) && !arg.contains(JAVA.METHOD_REFERENCE) && arg.indexOf(")") < arg.length()) {
+    		else if(indexOfOpeningParenthesis == 0 && arg.contains(")") && !arg.contains(LANG.LAMBDA_ARROW) && !arg.contains(LANG.METHOD_REFERENCE) && arg.indexOf(")") < arg.length()) {
     			String cast = arg.substring(indexOfOpeningParenthesis + 1, arg.indexOf(")"));
     			if(cast.charAt(0) != '(') {
     				inferredArgumentTypes.add(UMLType.extractTypeObject(cast));
@@ -331,7 +425,7 @@ public class OperationInvocation extends AbstractCall {
     		else if(arg.endsWith(".getClassLoader()")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("ClassLoader"));
     		}
-    		else if(arg.contains(JAVA.STRING_CONCATENATION) && !containsMethodSignatureOfAnonymousClass(arg)) {
+    		else if(arg.contains(LANG.STRING_CONCATENATION) && !containsMethodSignatureOfAnonymousClass(arg, LANG)) {
     			String[] tokens = SPLIT_CONCAT_STRING_PATTERN.split(arg);
     			if(tokens[0].startsWith("\"") && tokens[0].endsWith("\"")) {
     				inferredArgumentTypes.add(UMLType.extractTypeObject("String"));
@@ -738,13 +832,13 @@ public class OperationInvocation extends AbstractCall {
     	return intersection;
     }
 
-	private static boolean differInThisDot(String subExpression1, String subExpression2) {
+	private boolean differInThisDot(String subExpression1, String subExpression2) {
 		if(subExpression1.length() < subExpression2.length()) {
 			String modified = subExpression1;
 			String previousCommonPrefix = "";
 			String commonPrefix = null;
 			while((commonPrefix = PrefixSuffixUtils.longestCommonPrefix(modified, subExpression2)).length() > previousCommonPrefix.length()) {
-				modified = commonPrefix + JAVA.THIS_DOT + modified.substring(commonPrefix.length(), modified.length());
+				modified = commonPrefix + LANG.THIS_DOT + modified.substring(commonPrefix.length(), modified.length());
 				if(modified.equals(subExpression2)) {
 					return true;
 				}
@@ -756,7 +850,7 @@ public class OperationInvocation extends AbstractCall {
 			String previousCommonPrefix = "";
 			String commonPrefix = null;
 			while((commonPrefix = PrefixSuffixUtils.longestCommonPrefix(modified, subExpression1)).length() > previousCommonPrefix.length()) {
-				modified = commonPrefix + JAVA.THIS_DOT + modified.substring(commonPrefix.length(), modified.length());
+				modified = commonPrefix + LANG.THIS_DOT + modified.substring(commonPrefix.length(), modified.length());
 				if(modified.equals(subExpression1)) {
 					return true;
 				}

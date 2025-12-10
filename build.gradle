@@ -68,6 +68,7 @@ tasks.processTestResources {
     }
 }
 dependencies {
+    implementation 'org.antlr:antlr4-runtime:4.13.2'
     implementation 'org.eclipse.jgit:org.eclipse.jgit:6.10.1.202505221210-r'
     implementation 'org.slf4j:slf4j-api:2.0.17'
     runtimeOnly 'ch.qos.logback:logback-classic:1.5.21'
@@ -77,6 +78,9 @@ dependencies {
     implementation 'io.github.java-diff-utils:java-diff-utils:4.16'
     implementation 'com.github.gumtreediff:core:3.0.0'
     implementation 'com.github.gumtreediff:gen.jdt:3.0.0'
+    implementation('com.github.gumtreediff:gen.treesitter-ng:4.0.0-beta3') {
+        exclude group: 'com.github.gumtreediff', module: 'core'
+    }
     implementation 'org.jcommander:jcommander:2.0'
     implementation 'org.jsoup:jsoup:1.21.2'
     implementation 'com.perforce:p4java:2025.1.2785811'

@@ -22,8 +22,8 @@ public class IgnoringCommentsLeafMatcher extends LeafMatcher {
         }
     }
     public static boolean isPartOfComments(Tree tree) {
-        return TreeUtilFunctions.getParentUntilType(tree, Constants.LINE_COMMENT) != null ||
-               TreeUtilFunctions.getParentUntilType(tree, Constants.JAVA_DOC) != null ||
-               TreeUtilFunctions.getParentUntilType(tree, Constants.BLOCK_COMMENT) != null;
+        return TreeUtilFunctions.getParentUntilType(tree, Constants.get().LINE_COMMENT) != null ||
+               TreeUtilFunctions.getParentUntilType(tree, Constants.get().JAVA_DOC) != null ||
+               TreeUtilFunctions.getParentUntilType(tree, Constants.get().BLOCK_COMMENT) != null;
     }
 }

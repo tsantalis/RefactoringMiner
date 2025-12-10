@@ -10,8 +10,6 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
 
-import static gr.uom.java.xmi.Constants.JAVA;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+
+import org.refactoringminer.util.PathFileUtils;
 
 public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, VariableDeclarationProvider, VariableDeclarationContainer {
 	private LocationInfo locationInfo;
@@ -190,11 +190,12 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	}
 
 	public List<AbstractCall> getAllOperationInvocations() {
+		Constants LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		AbstractExpression initializer = variableDeclaration.getInitializer();
 		if(initializer != null) {
 			List<AbstractCall> list = new ArrayList<>(initializer.getMethodInvocations());
 			for(LambdaExpressionObject lambda : initializer.getLambdas()) {
-				if(lambda.getString().contains(JAVA.LAMBDA_ARROW)) {
+				if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
 					list.addAll(lambda.getAllOperationInvocations());
 				}
 			}
@@ -406,6 +407,11 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		Constants LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		if(LANG.equals(Constants.PYTHON) && type.getClassType().equals("Object")) {
+			sb.append(name);
+			return sb.toString();
+		}
 		sb.append(visibility);
 		sb.append(" ");
 		sb.append(name);
@@ -416,6 +422,11 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 
 	public String toQualifiedString() {
 		StringBuilder sb = new StringBuilder();
+		Constants LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		if(LANG.equals(Constants.PYTHON) && type.getClassType().equals("Object")) {
+			sb.append(name);
+			return sb.toString();
+		}
 		if(!(this instanceof UMLEnumConstant)) {
 			sb.append(visibility);
 			sb.append(" ");

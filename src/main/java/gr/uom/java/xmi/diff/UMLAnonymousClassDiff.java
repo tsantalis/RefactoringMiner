@@ -1,7 +1,5 @@
 package gr.uom.java.xmi.diff;
 
-import static gr.uom.java.xmi.Constants.JAVA;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -216,8 +214,8 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 							if(!operation1.getName().equals(operation2.getName()) && mappings == 1) {
 								for(AbstractCodeMapping mapping : mapper.getMappings()) {
 									String statement = mapping.getFragment1().getString();
-									if(statement.equals(JAVA.RETURN_TRUE) || statement.equals(JAVA.RETURN_FALSE) || 
-											statement.equals(JAVA.RETURN_THIS) || statement.equals(JAVA.RETURN_NULL) || statement.equals(JAVA.RETURN_STATEMENT)) {
+									if(statement.equals(LANG.RETURN_TRUE) || statement.equals(LANG.RETURN_FALSE) || 
+											statement.equals(LANG.RETURN_THIS) || statement.equals(LANG.RETURN_NULL) || statement.equals(LANG.RETURN_STATEMENT)) {
 										mappings--;
 									}
 								}

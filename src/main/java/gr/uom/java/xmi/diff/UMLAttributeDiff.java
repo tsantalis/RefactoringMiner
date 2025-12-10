@@ -1,7 +1,5 @@
 package gr.uom.java.xmi.diff;
 
-import static gr.uom.java.xmi.Constants.JAVA;
-
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -11,7 +9,9 @@ import java.util.function.Function;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
+import org.refactoringminer.util.PathFileUtils;
 
+import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
@@ -86,10 +86,11 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 	}
 
 	private UMLOperation findMethod(List<UMLOperation> operations, UMLAttribute attribute, Function<UMLOperation, Boolean> condition) {
+		Constants LANG = PathFileUtils.getLang(attribute.getLocationInfo().getFilePath());
 		for(UMLOperation operation : operations) {
 			if(!operation.isConstructor() && !operation.hasOverrideAnnotation() && condition.apply(operation)) {
 				List<String> variables = operation.getAllVariables();
-				if(variables.contains(attribute.getName()) || variables.contains(JAVA.THIS_DOT + attribute.getName())) {
+				if(variables.contains(attribute.getName()) || variables.contains(LANG.THIS_DOT + attribute.getName())) {
 					return operation;
 				}
 			}

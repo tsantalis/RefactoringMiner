@@ -19,6 +19,7 @@ import org.eclipse.jdt.core.dom.QualifiedType;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.UnionType;
 import org.eclipse.jdt.core.dom.WildcardType;
+import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.ListCompositeType.Kind;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -59,20 +60,23 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 	}
 
 	public String typeArgumentsToString() {
+		boolean isPython = locationInfo != null && PathFileUtils.isPythonFile(locationInfo.getFilePath());
+		String openingTag = isPython ? "[" : "<";
+		String closingTag = isPython ? "]" : ">";
 		StringBuilder sb = new StringBuilder();
 		if(typeArguments.isEmpty()) {
 			if(parameterized) {
-				sb.append("<>");
+				sb.append(openingTag + closingTag);
 			}
 		}
 		else {
-			sb.append("<");
+			sb.append(openingTag);
 			for(int i = 0; i < typeArguments.size(); i++) {
 				sb.append(typeArguments.get(i).toQualifiedString());
 				if(i < typeArguments.size() - 1)
 					sb.append(",");
 			}
-			sb.append(">");
+			sb.append(closingTag);
 		}
 		return sb.toString();
 	}
@@ -196,7 +200,19 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		return normalized;
 	}
 
+	/**
+	 * This method should be used only to generate fake types that do not correspond to an actual program element in the source code.
+	 * In contrast to {@link #extractTypeObject(CompilationUnit, String, String, Type, int, String)}, this method does not create a LocationInfo.
+	 * @param qualifiedName
+	 * @return
+	 */
 	public static LeafType extractTypeObject(String qualifiedName) {
+		String openingTag = "<";
+		String closingTag = ">";
+		return extractTypeObject(qualifiedName, openingTag, closingTag, null);
+	}
+
+	public static LeafType extractTypeObject(String qualifiedName, String openingTag, String closingTag, LocationInfo location) {
 		int arrayDimension = 0;
 		boolean parameterized = false;
 		List<UMLType> typeArgumentDecomposition = new ArrayList<UMLType>();
@@ -206,9 +222,9 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 				arrayDimension++;
 			}
 		}
-		if(qualifiedName.contains("<") && qualifiedName.contains(">") &&
-				!closingTagBeforeOpeningTag(qualifiedName.substring(qualifiedName.indexOf("<")+1, qualifiedName.lastIndexOf(">")))) {
-			String typeArguments = qualifiedName.substring(qualifiedName.indexOf("<")+1, qualifiedName.lastIndexOf(">"));
+		if(qualifiedName.contains(openingTag) && qualifiedName.contains(closingTag) &&
+				!closingTagBeforeOpeningTag(qualifiedName.substring(qualifiedName.indexOf(openingTag)+1, qualifiedName.lastIndexOf(closingTag)), openingTag, closingTag)) {
+			String typeArguments = qualifiedName.substring(qualifiedName.indexOf(openingTag)+1, qualifiedName.lastIndexOf(closingTag));
 			parameterized = true;
 			StringBuilder sb = new StringBuilder();
 			for(int i=0; i<typeArguments.length(); i++) {
@@ -217,8 +233,8 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 					sb.append(charAt);
 				}
 				else {
-					if(sb.length() > 0 && equalOpeningClosingTags(sb.toString())) {
-						typeArgumentDecomposition.add(extractTypeObject(sb.toString()));
+					if(sb.length() > 0 && equalOpeningClosingTags(sb.toString(), openingTag, closingTag)) {
+						typeArgumentDecomposition.add(extractTypeObject(sb.toString(), openingTag, closingTag, location));
 						sb = new StringBuilder();
 					}
 					else {
@@ -227,37 +243,48 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 				}
 			}
 			if(sb.length() > 0) {
-				typeArgumentDecomposition.add(extractTypeObject(sb.toString()));
+				typeArgumentDecomposition.add(extractTypeObject(sb.toString(), openingTag, closingTag, location));
 			}
-			qualifiedName = qualifiedName.substring(0, qualifiedName.indexOf("<"));
+			qualifiedName = qualifiedName.substring(0, qualifiedName.indexOf(openingTag));
 		}
 		UMLType typeObject = new LeafType(qualifiedName);
 		typeObject.arrayDimension = arrayDimension;
 		typeObject.typeArguments = typeArgumentDecomposition;
 		typeObject.parameterized = parameterized;
+		typeObject.locationInfo = location;
 		return (LeafType)typeObject;
 	}
 
-	private static boolean closingTagBeforeOpeningTag(String typeArguments) {
-		int indexOfOpeningTag = typeArguments.indexOf("<");
-		int indexOfClosingTag = typeArguments.lastIndexOf(">");
+	private static boolean closingTagBeforeOpeningTag(String typeArguments, String openingTag, String closingTag) {
+		int indexOfOpeningTag = typeArguments.indexOf(openingTag);
+		int indexOfClosingTag = typeArguments.lastIndexOf(closingTag);
 		return indexOfClosingTag < indexOfOpeningTag;
 	}
 
-	private static boolean equalOpeningClosingTags(String typeArguments) {
+	private static boolean equalOpeningClosingTags(String typeArguments, String openingTag, String closingTag) {
 		int openingTags = 0;
 		int closingTags = 0;
 		for(int i=0; i<typeArguments.length(); i++) {
-			if(typeArguments.charAt(i) == '>') {
+			if(String.valueOf(typeArguments.charAt(i)).equals(openingTag)) {
 				openingTags++;
 			}
-			else if(typeArguments.charAt(i) == '<') {
+			else if(String.valueOf(typeArguments.charAt(i)).equals(closingTag)) {
 				closingTags++;
 			}
 		}
 		return openingTags == closingTags;
 	}
 
+	/**
+	 * Use this method to generate a type for a Java program element present in the source code.
+	 * @param cu
+	 * @param sourceFolder
+	 * @param filePath
+	 * @param type
+	 * @param extraDimensions
+	 * @param javaFileContent
+	 * @return
+	 */
 	public static UMLType extractTypeObject(CompilationUnit cu, String sourceFolder, String filePath, Type type, int extraDimensions, String javaFileContent) {
 		UMLType umlType = extractTypeObject(cu, sourceFolder, filePath, type, javaFileContent);
 		umlType.locationInfo = new LocationInfo(cu, sourceFolder, filePath, type, CodeElementType.TYPE);

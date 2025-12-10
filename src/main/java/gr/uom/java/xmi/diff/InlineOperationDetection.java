@@ -1,7 +1,5 @@
 package gr.uom.java.xmi.diff;
 
-import static gr.uom.java.xmi.Constants.JAVA;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -11,6 +9,7 @@ import java.util.Set;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -38,8 +37,10 @@ public class InlineOperationDetection {
 	private List<AbstractCall> operationInvocations;
 	private Map<CallTreeNode, CallTree> callTreeMap = new LinkedHashMap<CallTreeNode, CallTree>();
 	private Map<UMLOperation, List<AbstractCall>> callCountMap = null;
+	private final Constants LANG;
 	
 	public InlineOperationDetection(UMLOperationBodyMapper mapper, List<UMLOperation> removedOperations, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
+		this.LANG = mapper.LANG;
 		this.mapper = mapper;
 		this.removedOperations = removedOperations;
 		this.classDiff = classDiff;
@@ -133,7 +134,7 @@ public class InlineOperationDetection {
 		StatementObject singleReturnStatement = removedOperation.singleReturnStatement();
 		if(operationBodyMapper != null && (operationBodyMapper.getMappings().isEmpty() || containsRefactoringWithIdenticalMappings(refactorings, operationBodyMapper)) && singleReturnStatement != null) {
 			String s = singleReturnStatement.getString();
-			String expression = s.substring(JAVA.RETURN_SPACE.length(), s.length()-JAVA.STATEMENT_TERMINATION.length());
+			String expression = s.substring(LANG.RETURN_SPACE.length(), s.length()-LANG.STATEMENT_TERMINATION.length());
 			for(AbstractCodeMapping mapping : mapper.getMappings()) {
 				for(Replacement r : mapping.getReplacements()) {
 					if(r.getBefore().contains(removedOperation.getName() + "(")) {
@@ -312,7 +313,7 @@ public class InlineOperationDetection {
 				StatementObject statement = (StatementObject)statements.get(0);
 				if(statement.getVariables().size() == 1) {
 					String variable = statement.getVariables().get(0).getString();
-					if(statement.getString().equals(JAVA.RETURN_SPACE + variable + JAVA.STATEMENT_TERMINATION)) {
+					if(statement.getString().equals(LANG.RETURN_SPACE + variable + LANG.STATEMENT_TERMINATION)) {
 						return false;
 					}
 				}
@@ -333,7 +334,7 @@ public class InlineOperationDetection {
 			if(variableDeclarations.size() > 0) {
 				for(VariableDeclaration variableDeclaration : variableDeclarations) {
 					for(AbstractCodeFragment leaf1 : operationBodyMapper.getNonMappedLeavesT1()) {
-						if(leaf1.countableStatement() && leaf1.getString().equals(JAVA.RETURN_SPACE + variableDeclaration.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
+						if(leaf1.countableStatement() && leaf1.getString().equals(LANG.RETURN_SPACE + variableDeclaration.getVariableName() + LANG.STATEMENT_TERMINATION)) {
 							nonMappedElementsT1--;
 							break;
 						}
@@ -355,7 +356,7 @@ public class InlineOperationDetection {
 		}
 		for(VariableDeclaration variableDeclaration : operationBodyMapper.getContainer1().getParameterDeclarationList()) {
 			for(AbstractCodeFragment leaf1 : operationBodyMapper.getNonMappedLeavesT1()) {
-				if(leaf1.countableStatement() && leaf1.getString().equals(JAVA.RETURN_SPACE + variableDeclaration.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
+				if(leaf1.countableStatement() && leaf1.getString().equals(LANG.RETURN_SPACE + variableDeclaration.getVariableName() + LANG.STATEMENT_TERMINATION)) {
 					nonMappedElementsT1--;
 					break;
 				}

@@ -3,7 +3,8 @@ package gr.uom.java.xmi.decomposition;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static gr.uom.java.xmi.Constants.JAVA;
+import gr.uom.java.xmi.Constants;
+
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.containsMethodSignatureOfAnonymousClass;
 
 public class ReplacementUtil {
@@ -98,7 +99,7 @@ public class ReplacementUtil {
 		return temp;
 	}
 
-	public static String performReplacement(String completeString1, String completeString2, String subString1, String subString2) {	
+	public static String performReplacement(String completeString1, String completeString2, String subString1, String subString2, Constants LANG) {	
 		String temp = new String(completeString1);
 		boolean replacementOccurred = false;
 		for(String character : SPECIAL_CHARACTERS) {
@@ -122,7 +123,7 @@ public class ReplacementUtil {
 				temp = sb.toString();
 			}
 		}
-		if(!replacementOccurred && !containsMethodSignatureOfAnonymousClass(completeString1) && !containsMethodSignatureOfAnonymousClass(completeString2)) {
+		if(!replacementOccurred && !containsMethodSignatureOfAnonymousClass(completeString1, LANG) && !containsMethodSignatureOfAnonymousClass(completeString2, LANG)) {
 			for(String character : SPECIAL_CHARACTERS) {
 				if(temp.contains(character + subString1) && completeString2.contains(character + subString2)) {
 					StringBuffer sb = new StringBuffer();
@@ -214,7 +215,7 @@ public class ReplacementUtil {
 		return matches == compatibleMatches;
 	}
 
-	public static boolean isDefaultValue(String argument) {
-		return argument.equals(JAVA.NULL) || argument.equals("0") || argument.equals("1") || argument.equals(JAVA.FALSE) || argument.equals(JAVA.TRUE);
+	public static boolean isDefaultValue(String argument, Constants LANG) {
+		return argument.equals(LANG.NULL) || argument.equals("0") || argument.equals("1") || argument.equals(LANG.FALSE) || argument.equals(LANG.TRUE);
 	}
 }

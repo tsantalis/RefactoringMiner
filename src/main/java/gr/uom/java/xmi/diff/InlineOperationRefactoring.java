@@ -1,6 +1,5 @@
 package gr.uom.java.xmi.diff;
 
-import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.ReplacementUtil.isDefaultValue;
 
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
@@ -39,9 +39,11 @@ public class InlineOperationRefactoring implements Refactoring {
 	private UMLOperationBodyMapper bodyMapper;
 	private Map<String, String> parameterToArgumentMap;
 	private List<AbstractCodeMapping> argumentMappings;
+	private final Constants LANG;
 	
 	public InlineOperationRefactoring(UMLOperationBodyMapper bodyMapper, VariableDeclarationContainer targetOperationBeforeInline,
 			List<AbstractCall> operationInvocations) {
+		this.LANG = bodyMapper.LANG;
 		this.bodyMapper = bodyMapper;
 		this.inlinedOperation = bodyMapper.getOperation1();
 		this.targetOperationAfterInline = bodyMapper.getContainer2();
@@ -165,7 +167,7 @@ public class InlineOperationRefactoring implements Refactoring {
 					if(replacementFound != null) {
 						argumentMatchFound = processArgument(mapping, call, argument);
 					}
-					else if(!isDefaultValue(argument)) {
+					else if(!isDefaultValue(argument, LANG)) {
 						argumentMatchFound = processArgument(mapping, call, argument);
 					}
 				}
@@ -173,7 +175,7 @@ public class InlineOperationRefactoring implements Refactoring {
 		}
 		if(!argumentMatchFound) {
 			for(Replacement replacement : mapping.getReplacements()) {
-				if(replacement.getBefore().equals(replacement.getAfter()) || replacement.getBefore().equals(JAVA.THIS_DOT + replacement.getAfter()) || replacement.getAfter().equals(JAVA.THIS_DOT + replacement.getBefore())) {
+				if(replacement.getBefore().equals(replacement.getAfter()) || replacement.getBefore().equals(LANG.THIS_DOT + replacement.getAfter()) || replacement.getAfter().equals(LANG.THIS_DOT + replacement.getBefore())) {
 					List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(replacement.getAfter());
 					if(expressions2.size() > 0) {
 						List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
@@ -228,8 +230,8 @@ public class InlineOperationRefactoring implements Refactoring {
 			creation2 = mapping.getFragment2().assignmentCreationCoveringEntireStatement();
 		}
 		List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(argument);
-		if(expressions2.isEmpty() && argument.contains(JAVA.LAMBDA_ARROW)) {
-			String actualArgument = argument.substring(argument.indexOf(JAVA.LAMBDA_ARROW) + JAVA.LAMBDA_ARROW.length());
+		if(expressions2.isEmpty() && argument.contains(LANG.LAMBDA_ARROW)) {
+			String actualArgument = argument.substring(argument.indexOf(LANG.LAMBDA_ARROW) + LANG.LAMBDA_ARROW.length());
 			expressions2 = mapping.getFragment2().findExpression(actualArgument);
 		}
 		if(expressions2.size() > 0) {

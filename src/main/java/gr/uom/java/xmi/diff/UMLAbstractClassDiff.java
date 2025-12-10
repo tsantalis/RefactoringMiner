@@ -1,7 +1,5 @@
 package gr.uom.java.xmi.diff;
 
-import static gr.uom.java.xmi.Constants.JAVA;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,8 +15,10 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.util.PathFileUtils;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
+import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
@@ -76,8 +76,10 @@ public abstract class UMLAbstractClassDiff {
 	private UMLTypeListDiff permittedTypeListDiff;
 	private UMLCommentListDiff commentListDiff;
 	private static final List<String> collectionAPINames = List.of("get", "add", "contains", "put", "putAll", "addAll", "equals");
+	public final Constants LANG;
 	
 	public UMLAbstractClassDiff(UMLAbstractClass originalClass, UMLAbstractClass nextClass, UMLModelDiff modelDiff) {
+		this.LANG = PathFileUtils.getLang(originalClass.getLocationInfo().getFilePath());
 		this.addedOperations = new ArrayList<UMLOperation>();
 		this.removedOperations = new ArrayList<UMLOperation>();
 		this.addedInitializers = new ArrayList<UMLInitializer>();
@@ -895,7 +897,7 @@ public abstract class UMLAbstractClassDiff {
 		if(modelDiff != null) {
 			for(AbstractCall addedOperationInvocation : addedOperationInvocations) {
 				String expression = addedOperationInvocation.getExpression();
-				if(expression != null && !expression.equals(JAVA.THIS) &&
+				if(expression != null && !expression.equals(LANG.THIS) &&
 						!intersection.contains(addedOperationInvocation) && !matchedOperationInvocations.contains(addedOperationInvocation)) {
 					UMLOperation operation = modelDiff.findOperationInAddedClasses(addedOperationInvocation, addedOperation, this);
 					if(operation != null) {
@@ -979,12 +981,22 @@ public abstract class UMLAbstractClassDiff {
 			Set<VariableDeclaration> mergedVariables = new LinkedHashSet<VariableDeclaration>();
 			for(String mergedVariable : merge.getMergedVariables()) {
 				UMLAttribute a1 = findAttributeInOriginalClass(mergedVariable);
+				if(a1 == null) {
+					a1 = findAttributeInOriginalClass(PrefixSuffixUtils.normalize(mergedVariable, LANG));
+				}
 				if(a1 != null) {
 					mergedAttributes.add(a1);
 					mergedVariables.add(a1.getVariableDeclaration());
 				}
 			}
-			UMLAttribute a2 = findAttributeInNextClass(merge.getAfter());
+			String after = merge.getAfter();
+			if(merge.getAfter().contains("[")) {
+				after = merge.getAfter().substring(0, merge.getAfter().indexOf("["));
+			}
+			UMLAttribute a2 = findAttributeInNextClass(after);
+			if(a2 == null) {
+				a2 = findAttributeInNextClass(PrefixSuffixUtils.normalize(after, LANG));
+			}
 			Set<CandidateMergeVariableRefactoring> set = mergeMap.get(merge);
 			for(CandidateMergeVariableRefactoring candidate : set) {
 				if(mergedVariables.size() > 1 && mergedVariables.size() == merge.getMergedVariables().size() && a2 != null &&
@@ -1038,14 +1050,22 @@ public abstract class UMLAbstractClassDiff {
 				aliasedAttributesInOriginalClass, aliasedAttributesInNextClass, renameMap);
 		allConsistentRenames.removeAll(allInconsistentRenames);
 		for(Replacement pattern : allConsistentRenames) {
-			UMLAttribute a1 = findAttributeInOriginalClass(pattern.getBefore());
-			UMLAttribute a2 = findAttributeInNextClass(pattern.getAfter());
+			String before = pattern.getBefore();
+			String after = pattern.getAfter();
+			if(after.contains(".") && after.startsWith(LANG.THIS_DOT)) {
+				after = after.substring(after.lastIndexOf(".") + 1, after.length());
+			}
+			if(before.contains(".") && before.startsWith(LANG.THIS_DOT)) {
+				before = before.substring(before.lastIndexOf(".") + 1, before.length());
+			}
+			UMLAttribute a1 = findAttributeInOriginalClass(before);
+			UMLAttribute a2 = findAttributeInNextClass(after);
 			Set<CandidateAttributeRefactoring> set = renameMap.get(pattern);
 			for(CandidateAttributeRefactoring candidate : set) {
 				if(candidate.getOriginalVariableDeclaration() == null && candidate.getRenamedVariableDeclaration() == null) {
 					if(a1 != null && a2 != null) {
-						if((!originalClass.containsAttributeWithName(pattern.getAfter()) || cyclicRename(renameMap, pattern)) &&
-								(!nextClass.containsAttributeWithName(pattern.getBefore()) || cyclicRename(renameMap, pattern)) &&
+						if((!originalClass.containsAttributeWithName(after) || cyclicRename(renameMap, pattern)) &&
+								(!nextClass.containsAttributeWithName(before) || cyclicRename(renameMap, pattern)) &&
 								!inconsistentAttributeRename(pattern, aliasedAttributesInOriginalClass, aliasedAttributesInNextClass) &&
 								!attributeMerged(a1, a2, refactorings) && !attributeSplit(a1, a2, refactorings) && !attributeWithConflictingRename(a1, a2, originalRefactorings)) {
 							if(a1 instanceof UMLEnumConstant && a2 instanceof UMLEnumConstant) {
@@ -1247,8 +1267,8 @@ public abstract class UMLAbstractClassDiff {
 		}
 		for(CandidateAttributeRefactoring candidate : mapper.getCandidateAttributeRenames()) {
 			if(!multipleExtractedMethodInvocationsWithDifferentAttributesAsArguments(candidate, refactorings)) {
-				String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
-				String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
+				String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG);
+				String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG);
 				if(before.contains(".") && after.contains(".")) {
 					String prefix1 = before.substring(0, before.lastIndexOf(".") + 1);
 					String prefix2 = after.substring(0, after.lastIndexOf(".") + 1);
@@ -1273,9 +1293,9 @@ public abstract class UMLAbstractClassDiff {
 			if(movedAttributes != candidate.getMergedVariables().size()) {
 				Set<String> before = new LinkedHashSet<String>();
 				for(String mergedVariable : candidate.getMergedVariables()) {
-					before.add(PrefixSuffixUtils.normalize(mergedVariable));
+					before.add(PrefixSuffixUtils.normalize(mergedVariable, LANG));
 				}
-				String after = PrefixSuffixUtils.normalize(candidate.getNewVariable());
+				String after = PrefixSuffixUtils.normalize(candidate.getNewVariable(), LANG);
 				MergeVariableReplacement merge = new MergeVariableReplacement(before, after);
 				processMerge(mergeMap, merge, candidate);
 			}
@@ -1283,9 +1303,9 @@ public abstract class UMLAbstractClassDiff {
 		for(CandidateSplitVariableRefactoring candidate : mapper.getCandidateAttributeSplits()) {
 			Set<String> after = new LinkedHashSet<String>();
 			for(String splitVariable : candidate.getSplitVariables()) {
-				after.add(PrefixSuffixUtils.normalize(splitVariable));
+				after.add(PrefixSuffixUtils.normalize(splitVariable, LANG));
 			}
-			String before = PrefixSuffixUtils.normalize(candidate.getOldVariable());
+			String before = PrefixSuffixUtils.normalize(candidate.getOldVariable(), LANG);
 			SplitVariableReplacement split = new SplitVariableReplacement(before, after);
 			processSplit(splitMap, split, candidate);
 		}
@@ -1294,7 +1314,7 @@ public abstract class UMLAbstractClassDiff {
 	public int movedAttributeCount(CandidateMergeVariableRefactoring candidate) {
 		UMLAttribute addedAttribute = null;
 		for(UMLAttribute attribute : addedAttributes) {
-			if(attribute.getName().equals(PrefixSuffixUtils.normalize(candidate.getNewVariable()))) {
+			if(attribute.getName().equals(PrefixSuffixUtils.normalize(candidate.getNewVariable(), LANG))) {
 				addedAttribute = attribute;
 				break;
 			}
@@ -1306,7 +1326,7 @@ public abstract class UMLAbstractClassDiff {
 				for(String mergedVariable : candidate.getMergedVariables()) {
 					UMLAttribute removedAttribute = null;
 					for(UMLAttribute attribute : removedAttributes) {
-						if(attribute.getName().equals(PrefixSuffixUtils.normalize(mergedVariable))) {
+						if(attribute.getName().equals(PrefixSuffixUtils.normalize(mergedVariable, LANG))) {
 							removedAttribute = attribute;
 							break;
 						}
@@ -1362,8 +1382,8 @@ public abstract class UMLAbstractClassDiff {
 		for(Replacement replacement : map.keySet()) {
 			Set<CandidateAttributeRefactoring> candidates = map.get(replacement);
 			for(CandidateAttributeRefactoring candidate : candidates) {
-				String originalAttributeName = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
-				String renamedAttributeName = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
+				String originalAttributeName = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG);
+				String renamedAttributeName = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG);
 				UMLOperationBodyMapper candidateMapper = null;
 				for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 					if(mapper.getMappings().containsAll(candidate.getReferences())) {
@@ -1389,8 +1409,8 @@ public abstract class UMLAbstractClassDiff {
 								}
 								else {
 									for(AbstractCodeFragment statement : candidateMapper.getNonMappedLeavesT1()) {
-										if(statement.getString().startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) ||
-												statement.getString().startsWith(JAVA.THIS_DOT + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
+										if(statement.getString().startsWith(variableDeclaration.getVariableName() + LANG.ASSIGNMENT) ||
+												statement.getString().startsWith(LANG.THIS_DOT + variableDeclaration.getVariableName() + LANG.ASSIGNMENT)) {
 											nonMatchingVariableNames.add(variableDeclaration.getVariableName());
 											break;
 										}
@@ -1435,8 +1455,8 @@ public abstract class UMLAbstractClassDiff {
 								}
 								else {
 									for(AbstractCodeFragment statement : candidateMapper.getNonMappedLeavesT2()) {
-										if(statement.getString().startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) ||
-												statement.getString().startsWith(JAVA.THIS_DOT + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
+										if(statement.getString().startsWith(variableDeclaration.getVariableName() + LANG.ASSIGNMENT) ||
+												statement.getString().startsWith(LANG.THIS_DOT + variableDeclaration.getVariableName() + LANG.ASSIGNMENT)) {
 											nonMatchingVariableNames.add(variableDeclaration.getVariableName());
 											break;
 										}
@@ -1677,15 +1697,15 @@ public abstract class UMLAbstractClassDiff {
 			}
 			boolean variables1contains = (allVariables1.contains(pattern.getBefore()) &&
 					!mapper.getParameterNameList1().contains(pattern.getBefore())) ||
-					allVariables1.contains(JAVA.THIS_DOT+pattern.getBefore());
+					allVariables1.contains(LANG.THIS_DOT+pattern.getBefore());
 			if(!variables1contains && topLevelClassName != null) {
-				variables1contains = allVariables1.contains(topLevelClassName + "." + JAVA.THIS_DOT+pattern.getBefore());
+				variables1contains = allVariables1.contains(topLevelClassName + "." + LANG.THIS_DOT+pattern.getBefore());
 			}
 			boolean variables2Contains = (allVariables2.contains(pattern.getAfter()) &&
 					!mapper.getParameterNameList2().contains(pattern.getAfter())) ||
-					allVariables2.contains(JAVA.THIS_DOT+pattern.getAfter());
+					allVariables2.contains(LANG.THIS_DOT+pattern.getAfter());
 			if(!variables2Contains && topLevelClassName != null) {
-				variables2Contains = allVariables2.contains(topLevelClassName + "." + JAVA.THIS_DOT+pattern.getAfter());
+				variables2Contains = allVariables2.contains(topLevelClassName + "." + LANG.THIS_DOT+pattern.getAfter());
 			}
 			if(variables1contains && !variables2Contains) {
 				boolean skip = false;
@@ -1694,9 +1714,20 @@ public abstract class UMLAbstractClassDiff {
 						for(UMLOperation addedOperation : addedOperations) {
 							if(call.matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
 								List<String> addedOperationVariables = addedOperation.getAllVariables();
-								if(addedOperationVariables.contains(pattern.getAfter())) {
+								if(addedOperationVariables.contains(pattern.getAfter()) || addedOperationVariables.contains(LANG.THIS_DOT + pattern.getAfter())) {
 									skip = true;
 									break;
+								}
+							}
+						}
+						for(UMLOperationBodyMapper mapper2 : operationBodyMapperList) {
+							if(!mapper.equals(mapper2)) {
+								if(call.matchesOperation(mapper2.getContainer2(), mapper.getContainer2(), this, modelDiff)) {
+									List<String> addedOperationVariables = mapper2.getContainer2().getAllVariables();
+									if(addedOperationVariables.contains(pattern.getAfter()) || addedOperationVariables.contains(LANG.THIS_DOT + pattern.getAfter())) {
+										skip = true;
+										break;
+									}
 								}
 							}
 						}
@@ -1717,9 +1748,20 @@ public abstract class UMLAbstractClassDiff {
 						for(UMLOperation removedOperation : removedOperations) {
 							if(call.matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff)) {
 								List<String> removedOperationVariables = removedOperation.getAllVariables();
-								if(removedOperationVariables.contains(pattern.getBefore())) {
+								if(removedOperationVariables.contains(pattern.getBefore()) || removedOperationVariables.contains(LANG.THIS_DOT + pattern.getBefore())) {
 									skip = true;
 									break;
+								}
+							}
+						}
+						for(UMLOperationBodyMapper mapper2 : operationBodyMapperList) {
+							if(!mapper.equals(mapper2)) {
+								if(call.matchesOperation(mapper2.getContainer1(), mapper.getContainer1(), this, modelDiff)) {
+									List<String> removedOperationVariables = mapper2.getContainer1().getAllVariables();
+									if(removedOperationVariables.contains(pattern.getBefore()) || removedOperationVariables.contains(LANG.THIS_DOT + pattern.getBefore())) {
+										skip = true;
+										break;
+									}
 								}
 							}
 						}

@@ -4,6 +4,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLParameter;
@@ -178,7 +179,8 @@ public class UMLParameterDiff {
 				refactorings.add(addParameter);
 			}
 		}
-		if((isTypeChanged() || isQualifiedTypeChanged() || isVarArgsChanged()) && !inconsistentReplacement(originalVariable, newVariable)) {
+		boolean varArgsChangedJava = isVarArgsChanged() && PathFileUtils.isJavaFile(removedParameter.getLocationInfo().getFilePath());
+		if((isTypeChanged() || isQualifiedTypeChanged() || varArgsChangedJava) && !inconsistentReplacement(originalVariable, newVariable)) {
 			ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references, false);
 			if(renameRefactoring != null) {
 				refactoring.addRelatedRefactoring(renameRefactoring);

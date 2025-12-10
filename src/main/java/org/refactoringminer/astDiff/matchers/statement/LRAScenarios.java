@@ -13,15 +13,15 @@ import java.util.function.BiPredicate;
 
 public enum LRAScenarios {
     VARIABLE_DECLARATION_STATEMENT(
-            (src, dst) ->  TreeUtilFunctions.areBothFromThisType(src, dst, Constants.VARIABLE_DECLARATION_STATEMENT)) {
+            (src, dst) ->  TreeUtilFunctions.areBothFromThisType(src, dst, Constants.get().VARIABLE_DECLARATION_STATEMENT)) {
         @Override
         List<Pair<Tree, Tree>> makePairs(Tree src, Tree dst, MappingStore match ) {
             List<Pair<Tree,Tree>> pairs = new ArrayList<>();
-            Tree srcVarDeclFragment = TreeUtilFunctions.findChildByType(src, Constants.VARIABLE_DECLARATION_FRAGMENT);
+            Tree srcVarDeclFragment = TreeUtilFunctions.findChildByType(src, Constants.get().VARIABLE_DECLARATION_FRAGMENT);
             if (srcVarDeclFragment == null) return pairs;
             int indexOfSrcVarDeclFragment = srcVarDeclFragment.positionInParent();
 
-            Tree dstVarDeclFragment = TreeUtilFunctions.findChildByType(dst, Constants.VARIABLE_DECLARATION_FRAGMENT);
+            Tree dstVarDeclFragment = TreeUtilFunctions.findChildByType(dst, Constants.get().VARIABLE_DECLARATION_FRAGMENT);
             if (dstVarDeclFragment == null) return pairs;
             int indexOfDstVarDeclFragment = dstVarDeclFragment.positionInParent();
 
@@ -39,11 +39,11 @@ public enum LRAScenarios {
         }
     },
     ExpressionStatementWithAssignment(
-            (src, dst) ->  TreeUtilFunctions.areBothFromThisType(src, dst, Constants.EXPRESSION_STATEMENT)
+            (src, dst) ->  TreeUtilFunctions.areBothFromThisType(src, dst, Constants.get().EXPRESSION_STATEMENT)
             //And both having first child (if they have)
             && (!src.getChildren().isEmpty() && !dst.getChildren().isEmpty())
             //and che first child be the assignment
-            && (TreeUtilFunctions.areBothFromThisType(src.getChild(0), dst.getChild(0), Constants.ASSIGNMENT))
+            && (TreeUtilFunctions.areBothFromThisType(src.getChild(0), dst.getChild(0), Constants.get().ASSIGNMENT))
     ) {
         @Override
         List<Pair<Tree, Tree>> makePairs(Tree src, Tree dst, MappingStore match) {

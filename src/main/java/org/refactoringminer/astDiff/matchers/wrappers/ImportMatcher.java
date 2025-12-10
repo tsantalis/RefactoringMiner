@@ -5,6 +5,7 @@ import gr.uom.java.xmi.UMLImport;
 import gr.uom.java.xmi.diff.UMLImportListDiff;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.astDiff.utils.Constants;
+import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
@@ -32,8 +33,10 @@ public class ImportMatcher implements TreeMatcher {
             for (org.apache.commons.lang3.tuple.Pair<UMLImport, UMLImport> pair : commonImports) {
                 Tree srcImportStatement = TreeUtilFunctions.findByLocationInfo(srcTree, pair.getLeft().getLocationInfo());
                 Tree dstImportStatement = TreeUtilFunctions.findByLocationInfo(dstTree, pair.getRight().getLocationInfo());
-                if (srcImportStatement != null && dstImportStatement != null)
+                if (srcImportStatement != null && dstImportStatement != null) {
                     mappingStore.addMappingRecursively(srcImportStatement, dstImportStatement);
+                    handleParent(mappingStore, srcImportStatement, dstImportStatement);
+                }
             }
         }
         //Grouped Imports
@@ -62,8 +65,55 @@ public class ImportMatcher implements TreeMatcher {
         for(org.apache.commons.lang3.tuple.Pair<UMLImport, UMLImport> pair : importDiffList.getChangedImports()) {
             Tree srcImportStatement = TreeUtilFunctions.findByLocationInfo(srcTree, pair.getLeft().getLocationInfo());
             Tree dstImportStatement = TreeUtilFunctions.findByLocationInfo(dstTree, pair.getRight().getLocationInfo());
-            if (srcImportStatement != null && dstImportStatement != null)
+            if (srcImportStatement != null && dstImportStatement != null) {
                 mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
+                handleParent(mappingStore, srcImportStatement, dstImportStatement);
+            }
+        }
+    }
+
+    private void handleParent(ExtendedMultiMappingStore mappingStore, Tree srcImportStatement, Tree dstImportStatement) {
+        //python handling
+        if (srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
+                srcImportStatement.getParent().getType().name.equals(Constants.get().IMPORT_FROM_STATEMENT) &&
+                dstImportStatement.getParent().getType().name.equals(Constants.get().IMPORT_FROM_STATEMENT)) {
+            mappingStore.addMapping(srcImportStatement.getParent(), dstImportStatement.getParent());
+            com.github.gumtreediff.utils.Pair<Tree, Tree> froms = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), Constants.get().FROM_KEYWORD);
+            if (froms != null) {
+                mappingStore.addMapping(froms.first,froms.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> relatives = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), Constants.get().RELATIVE_IMPORT);
+            if (relatives != null) {
+                mappingStore.addMappingRecursively(relatives.first,relatives.second);
+            }
+            else {
+                relatives = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), Constants.get().RELATIVE_IMPORT_DOTTED_NAME);
+                if (relatives != null) {
+                    mappingStore.addMappingRecursively(relatives.first,relatives.second);
+                }
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> lineContinuations = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), Constants.get().LINE_CONTINUATION);
+            if (lineContinuations != null) {
+                mappingStore.addMappingRecursively(lineContinuations.first,lineContinuations.second);
+            }
+        }
+        else if (srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
+                srcImportStatement.getParent().getType().name.equals(Constants.get().IMPORT_DECLARATION) &&
+                dstImportStatement.getParent().getType().name.equals(Constants.get().IMPORT_DECLARATION)) {
+            mappingStore.addMapping(srcImportStatement.getParent(), dstImportStatement.getParent());
+        }
+        else if(srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
+                srcImportStatement.getParent().getType().name.equals(Constants.get().FUTURE_IMPORT_STATEMENT) &&
+                dstImportStatement.getParent().getType().name.equals(Constants.get().FUTURE_IMPORT_STATEMENT)) {
+            mappingStore.addMapping(srcImportStatement.getParent(), dstImportStatement.getParent());
+            com.github.gumtreediff.utils.Pair<Tree, Tree> froms = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), Constants.get().FROM_KEYWORD);
+            if (froms != null) {
+                mappingStore.addMapping(froms.first,froms.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> relatives = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), Constants.get().FUTURE);
+            if (relatives != null) {
+                mappingStore.addMappingRecursively(relatives.first,relatives.second);
+            }
         }
     }
 }

@@ -1070,15 +1070,33 @@ public abstract class UMLAbstractClass {
 		}
 		List<UMLAttribute> commonAttributes = new ArrayList<UMLAttribute>();
 		int totalAttributes = 0;
+		int allAttributes = 0;
+		int identicalAllAttributes = 0;
 		for(UMLAttribute attribute : attributes) {
 			totalAttributes++;
 			if(umlClass.containsAttributeWithTheSameNameIgnoringChangedType(attribute)) {
+				if(attribute.getName().equals("__all__")) {
+					allAttributes++;
+				}
 				commonAttributes.add(attribute);
 			}
 		}
 		for(UMLAttribute attribute : umlClass.attributes) {
 			totalAttributes++;
 			if(this.containsAttributeWithTheSameNameIgnoringChangedType(attribute)) {
+				if(attribute.getName().equals("__all__")) {
+					for(UMLAttribute a : commonAttributes) {
+						AbstractExpression initializer1 = a.getVariableDeclaration().getInitializer();
+						AbstractExpression initializer2 = attribute.getVariableDeclaration().getInitializer();
+						if(initializer1 != null &&
+								initializer2 != null &&
+								initializer1.getString().equals(initializer2.getString())) {
+							identicalAllAttributes+=2;
+							break;
+						}
+					}
+					allAttributes++;
+				}
 				commonAttributes.add(attribute);
 			}
 		}
@@ -1100,6 +1118,9 @@ public abstract class UMLAbstractClass {
 			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
 		}
 		if(commonOperations.size() == totalOperations && commonAttributes.size() == totalAttributes) {
+			if(allAttributes == totalAttributes && identicalAllAttributes != allAttributes && totalOperations == 0) {
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
+			}
 			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
 		}
 		else {

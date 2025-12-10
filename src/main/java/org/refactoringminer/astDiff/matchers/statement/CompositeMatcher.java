@@ -34,7 +34,7 @@ public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 
 	@Override
 	public void match(Tree src, Tree dst, ExtendedMultiMappingStore mappingStore) {
-		String labeled = Constants.LABELED_STATEMENT;
+		String labeled = Constants.get().LABELED_STATEMENT;
 		if (src.getType().name.equals(labeled) && dst.getType().name.equals(labeled))
 			mappingStore.addMapping(src.getChild(0),dst.getChild(0));
 		else
@@ -56,7 +56,7 @@ public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 
 	private void postOptimizationForComposites(Tree srcFakeTree, Tree dstFakeTree, ExtendedMultiMappingStore mappingStore) {
 		if (srcFakeTree.isIsoStructuralTo(dstFakeTree)) return;
-		if (srcFakeTree.getType().name.equals(Constants.IF_STATEMENT) && dstFakeTree.getType().name.equals(Constants.IF_STATEMENT)) {
+		if (srcFakeTree.getType().name.equals(Constants.get().IF_STATEMENT) && dstFakeTree.getType().name.equals(Constants.get().IF_STATEMENT)) {
 			findSoloMappedSimpleNameInCondition(srcFakeTree,dstFakeTree,mappingStore);
 
 		}
@@ -65,12 +65,12 @@ public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 	private void findSoloMappedSimpleNameInCondition(Tree srcFakeTree, Tree dstFakeTree, ExtendedMultiMappingStore mappingStore) {
 		List<Mapping> candidates = new ArrayList<>();
 		for (Mapping mapping : mappingStore) {
-			if (mapping.first.getType().name.equals(Constants.SIMPLE_NAME)) {
+			if (mapping.first.getType().name.equals(Constants.get().SIMPLE_NAME)) {
 				Tree p1 = getInfixParent(mapping.first);
 				Tree p2 = getInfixParent(mapping.first);
 				if (p1 == null || p2 == null) return;
-				if (p1.getType().name.equals(Constants.SIMPLE_NAME)) continue;
-				if (p2.getType().name.equals(Constants.SIMPLE_NAME)) continue;
+				if (p1.getType().name.equals(Constants.get().SIMPLE_NAME)) continue;
+				if (p2.getType().name.equals(Constants.get().SIMPLE_NAME)) continue;
 
 				int m1 = 0;
 				int m2 = 0;
@@ -94,7 +94,7 @@ public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 		Tree curr = input;
 		while (curr.getParent() != null && !TreeUtilFunctions.isStatement(curr.getParent().getType().name)){
 			if (curr.getParent() == null) return null;
-			if (curr.getParent().getType().name.equals(Constants.INFIX_EXPRESSION))
+			if (curr.getParent().getType().name.equals(Constants.get().INFIX_EXPRESSION))
 				return curr;
 			curr = curr.getParent();
 		}
@@ -110,7 +110,7 @@ public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 			Tree expCopy =  TreeUtilFunctions.deepCopyWithMap(expTree,cpyMap);
 			cpy.addChild(expCopy);
 		}
-		if (tree.getType().name.equals(Constants.FOR_STATEMENT)) return cpy;
+		if (tree.getType().name.equals(Constants.get().FOR_STATEMENT)) return cpy;
 		for (VariableDeclaration variableDeclaration : fragment.getVariableDeclarations()) {
 			Tree varTree = TreeUtilFunctions.findByLocationInfo(tree, variableDeclaration.getLocationInfo());
 			if (varTree == null) continue;

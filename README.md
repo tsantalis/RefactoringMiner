@@ -568,7 +568,7 @@ As of **December 3, 2025** the precision and recall of RefactoringMiner on this 
 ## Python Benchmark
 **Source**: Hassan Atwi, Bin Lin, Nikolaos Tsantalis, Yutaro Kashiwa, Yasutaka Kamei, Naoyasu Ubayashi, Gabriele Bavota, and Michele Lanza, "PyRef: Refactoring Detection in Python Projects," 21st IEEE International Working Conference on Source Code Analysis and Manipulation (SCAM'2021), Engineering Track, Luxembourg City, Luxembourg, September 27-28, 2021.
 
-**Properties**: 165 commits from 3 open-source projects
+**Properties**: 166 commits from 3 open-source projects
 
 **Commit dates**: January 2013 - October 2020
 
@@ -607,7 +607,7 @@ As of **December 11, 2025** the precision and recall of RefactoringMiner on this
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|906  |  6  |  2  | 0.993  | 0.998|
+|**Total**|907  |  6  |  2  | 0.993  | 0.998|
 |Extract Method|32  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|12  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 3  |  0  |  0  | 1.000  | 1.000|
@@ -639,7 +639,7 @@ As of **December 11, 2025** the precision and recall of RefactoringMiner on this
 |Remove Method Annotation|18  |  0  |  0  | 1.000  | 1.000|
 |Add Class Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter|180  |  0  |  1  | 1.000  | 0.994|
-|Remove Parameter|55  |  0  |  0  | 1.000  | 1.000|
+|Remove Parameter|56  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter|15  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Conditional| 4  |  0  |  0  | 1.000  | 1.000|

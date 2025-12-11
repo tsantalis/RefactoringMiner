@@ -4275,13 +4275,6 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
-    }, {
-        "type": "Move Class",
-        "description": "Move Class transformer.__module__ moved to transformer.transformer.__module__",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -7931,6 +7924,22 @@
     }, {
         "type": "Encapsulate Attribute",
         "description": "Encapsulate Attribute _vocab_size from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160015,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "f50baed6c1fd2d22a849f909241223053ad396eb",
+    "url": "https://github.com/asyml/texar/commit/f50baed6c1fd2d22a849f909241223053ad396eb",
+    "author": "ZhitingHu",
+    "time": "10/7/17 09:54 PM",
+    "refactorings": [{
+        "type": "Remove Parameter",
+        "description": "Remove Parameter embedding_trainable in method public __init__(cell, embedding, embedding_trainable, vocab_size, hparams) from class modules.decoders.rnn_decoders.BasicRNNDecoder",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

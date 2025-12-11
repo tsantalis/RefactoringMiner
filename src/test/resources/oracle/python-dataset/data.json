@@ -7886,4 +7886,55 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160014,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "edcb42e678e63cd4ef9be891f3e61a9fb3370147",
+    "url": "https://github.com/asyml/texar/commit/edcb42e678e63cd4ef9be891f3e61a9fb3370147",
+    "author": "ZhitingHu",
+    "time": "10/7/17 07:40 PM",
+    "refactorings": [{
+        "type": "Inline Variable",
+        "description": "Inline Variable opt_kwargs in method public get_optimizer(hparams) from class core.optimization.__module__",
+        "comment": "<p>inlined to the same variable (multiple assignments become one)</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable cell_kwargs in method public get_rnn_cell(hparams) from class core.layers.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable kwargs in method public get_embedding(hparams, init_values, vocab_size, variable_scope) from class core.layers.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter embedding_trainable in method public __init__(cell, embedding, embedding_trainable, vocab_size, hparams) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Split Conditional",
+        "description": "Split Conditional if(embedding is None && vocab_size is None) to [if(vocab_size is None), if(self._hparams.embedding_enabled is false || embedding is None)] in method public __init__(cell, embedding, vocab_size, hparams) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Encapsulate Attribute",
+        "description": "Encapsulate Attribute _vocab_size from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

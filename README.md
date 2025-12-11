@@ -363,6 +363,7 @@ Currently, it supports the detection of the following refactorings:
 
 # Contributors
 * [Nikolaos Tsantalis](https://github.com/tsantalis): Core + APIs
+* [Dimitris Kalaitzidis](https://github.com/dkalaitz): Lang AST infrastructure for multi-language extension
 * [Danilo Ferreira e Silva](https://github.com/danilofes): Git repository mining infrastructure + APIs
 * [Pouria Alikhani Fard](https://github.com/pouryafard75): [AST diff](https://github.com/pouryafard75/RM-ASTDiff) + [AST diff benchmark](https://github.com/pouryafard75/DiffBenchmark)
 * [Victor Veloso](https://github.com/victorgveloso/): [Test-specific refactoring detection](https://github.com/victorgveloso/RefactoringMiner)

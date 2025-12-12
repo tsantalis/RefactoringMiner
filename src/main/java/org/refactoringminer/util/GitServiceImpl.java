@@ -2,6 +2,7 @@ package org.refactoringminer.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -55,20 +56,14 @@ public class GitServiceImpl implements GitService {
 
 	@Override
 	public Repository cloneIfNotExists(String projectPath, String cloneUrl, String username, String token) throws Exception {
-		File folder = new File(projectPath);
+		Path path = Path.of(projectPath);
+		File folder = path.toFile();
 		Repository repository;
-		if (folder.exists()) {
-			String[] contents = folder.list();
-			boolean dotGitFound = false;
-			for(String content : contents) {
-				if(content.equals(".git")) {
-					dotGitFound = true;
-					break;
-				}
-			}
+		if (folder.exists() && folder.list().length > 0) {
+			File index = path.resolve(".git").toFile();
 			RepositoryBuilder builder = new RepositoryBuilder();
 			repository = builder
-					.setGitDir(dotGitFound ? new File(folder, ".git") : folder)
+					.setGitDir(index.exists() ? index : folder)
 					.readEnvironment()
 					.findGitDir()
 					.build();

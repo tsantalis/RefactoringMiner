@@ -2,7 +2,9 @@ package org.refactoringminer.api;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
+import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -34,7 +36,9 @@ public interface GitService {
 	 * @throws Exception propagated from JGit library.
 	 */
 	Repository cloneIfNotExists(String folder, String cloneUrl, String username, String token) throws Exception;
-	
+
+	Repository cloneIfNotExists(String projectPath, String cloneUrl, Function<CloneCommand, CloneCommand> extraSettings) throws Exception;
+
 	Repository openRepository(String folder) throws Exception;
 
 	int countCommits(Repository repository, String branch) throws Exception;

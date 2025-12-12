@@ -10,7 +10,6 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.annotation.MarkerAnnotation;
 import gr.uom.java.xmi.annotation.SingleMemberAnnotation;
 
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 

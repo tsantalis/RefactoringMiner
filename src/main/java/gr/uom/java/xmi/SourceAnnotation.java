@@ -18,7 +18,9 @@ public abstract class SourceAnnotation {
             NullAndEmptySourceAnnotation.ANNOTATION_TYPENAME, NullAndEmptySourceAnnotation::new,
             EmptySourceAnnotation.ANNOTATION_TYPENAME, EmptySourceAnnotation::new,
             NullSourceAnnotation.ANNOTATION_TYPENAME, NullSourceAnnotation::new,
-            MethodSourceAnnotation.ANNOTATION_TYPENAME, MethodSourceAnnotation::new
+            MethodSourceAnnotation.ANNOTATION_TYPENAME, MethodSourceAnnotation::new,
+            ParametersAnnotation.ANNOTATION_TYPENAME, ParametersAnnotation::new,
+            ParametersAnnotation.QUALIFIED_ANNOTATION_TYPENAME, ParametersAnnotation::new
     );
     protected List<List<String>> testParameters;
     protected List<List<LeafExpression>> testParameterLeafExpressions;

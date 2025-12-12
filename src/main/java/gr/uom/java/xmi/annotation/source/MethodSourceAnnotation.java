@@ -10,6 +10,7 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.annotation.MarkerAnnotation;
 import gr.uom.java.xmi.annotation.SingleMemberAnnotation;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -85,14 +86,24 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
         if(annotation.isMarkerAnnotation()) {
             return Collections.singletonList(annotatedOperation.getName());
         }
+        else if (annotation.isNormalAnnotation()) {
+            ArrayList<String> values = new ArrayList<>();
+            for (AbstractExpression value : annotation.getMemberValuePairs().values()) {
+                values.addAll(extractLiteralFromValue(value));
+            }
+            return values;
+        }
         else {
-            AbstractExpression expr = annotation.getValue();
-            if(expr.getTypeLiterals().size() > 0) {
-                return Collections.singletonList(expr.getTypeLiterals().get(0).getString());
-            }
-            else if (expr.getStringLiterals().size() > 0) {
-                return Collections.singletonList(expr.getStringLiterals().get(0).getString().replace("\"", ""));
-            }
+            return extractLiteralFromValue(annotation.getValue());
+        }
+    }
+
+    private static List<String> extractLiteralFromValue(AbstractExpression expr) {
+        if(expr.getTypeLiterals().size() > 0) {
+            return Collections.singletonList(expr.getTypeLiterals().get(0).getString());
+        }
+        else if (expr.getStringLiterals().size() > 0) {
+            return Collections.singletonList(expr.getStringLiterals().get(0).getString().replace("\"", ""));
         }
         return Collections.emptyList();
     }

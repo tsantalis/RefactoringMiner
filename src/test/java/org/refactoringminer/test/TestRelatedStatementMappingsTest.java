@@ -2,6 +2,11 @@ package org.refactoringminer.test;
 
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
+import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLModel;
+import gr.uom.java.xmi.UMLModelASTReader;
+import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.annotation.source.MethodSourceAnnotation;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
@@ -12,6 +17,8 @@ import gr.uom.java.xmi.diff.*;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -421,6 +428,34 @@ public class TestRelatedStatementMappingsTest {
         });
     }
 
+    @Test
+    public void testMethodSourceCanBeNormal() {
+        var code = """
+            // Snippet based on https://github.com/latexdraw/latexdraw/commit/c59783b31840b3686c20df44034181ff2d627444
+            package net.sf.latexdraw.parser.pst;
+            import org.junit.jupiter.params.ParameterizedTest;
+            import org.junit.jupiter.params.provider.MethodSource;
+            import net.sf.latexdraw.util.Tuple;
+            public class TestParsingShape extends TestPSTParser {
+                @ParameterizedTest
+                @MethodSource(value = "cmds")
+                void testParamGradangle(final Tuple<String, String> cmd) {
+                	parser(cmd.a + "[fillstyle=gradient, gradangle=2.34]" + cmd.b);
+                	final Shape sh = getShapeAt(0);
+                	assumeTrue(sh.isInteriorStylable());
+                	assertEquals(Math.toRadians(2.34), sh.getGradAngle(), 0.00001);
+                }
+            }    
+        """;
+        UMLModelASTReader reader = new UMLModelASTReader(Map.of("src/test/java/net/sf/latexdraw/parser/pst/TestParsingShape.java", code), Set.of("src/test/java/net/sf/latexdraw/parser/pst/TestParsingShape.java"), true);
+        UMLClass umlClass = reader.getUmlModel().getClassList().get(0);
+        UMLOperation umlOperation = umlClass.getOperations().get(0);
+        UMLAnnotation umlAnnotation = umlOperation.getAnnotations().get(1);
+        Assume.assumeTrue(umlAnnotation.isNormalAnnotation() && umlAnnotation.getTypeName().equals("MethodSource"));
+        Assertions.assertDoesNotThrow(() -> new MethodSourceAnnotation(umlAnnotation, umlOperation, umlClass));
+    }
+
+
 
     @ParameterizedTest
     @CsvSource({
@@ -436,6 +471,7 @@ public class TestRelatedStatementMappingsTest {
             "https://github.com/OpenGamma/Strata.git, b2b9b629685ebc7e89e9a1667de88f2e878d5fc4, Strata-b2b9b629685ebc7e89e9a1667de88f2e878d5fc4.txt", //TODO: Too slow and fails without any error message
             "https://github.com/OpenGamma/Strata.git, e007f826c49075500def8638de8367960c054c19, Strata-e007f826c49075500def8638de8367960c054c19-migrate-param.txt",
             "https://github.com/zanata/zanata-platform.git, 0297e0513ac1f487f1570b1cc38979a73ac97da8, zanata-platform-0297e0513ac1f487f1570b1cc38979a73ac97da8-migrate-param.txt",
+            "https://github.com/latexdraw/latexdraw.git, c59783b31840b3686c20df44034181ff2d627444, latexdraw-c59783b31840b3686c20df44034181ff2d627444.txt"
     })
     public void testParameterizedTestMigrationMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {

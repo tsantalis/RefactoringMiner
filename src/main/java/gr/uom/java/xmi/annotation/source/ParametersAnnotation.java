@@ -21,7 +21,7 @@ public class ParametersAnnotation extends SourceAnnotation {
 	public static final String QUALIFIED_ANNOTATION_TYPENAME = "Parameterized.Parameters";
 
 	public ParametersAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
-		super(annotation, ANNOTATION_TYPENAME);
+		super(annotation, annotation.getTypeName().equals(QUALIFIED_ANNOTATION_TYPENAME) ? QUALIFIED_ANNOTATION_TYPENAME : ANNOTATION_TYPENAME);
 		Optional<VariableDeclaration> returnedVarCandidates = operation.getBody().getAllVariableDeclarations().stream().filter(v -> operation.getReturnParameter().getType().equals(v.getType())).findAny();
         String strLiterals;
         if (returnedVarCandidates.isPresent()) {

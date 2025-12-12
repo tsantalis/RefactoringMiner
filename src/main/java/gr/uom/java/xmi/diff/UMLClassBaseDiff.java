@@ -2002,6 +2002,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
 								UMLOperation removedOperation = mapper.getOperation1();
 								removedOperations.remove(removedOperation);
+								//check for JUnit migration from @Parameterized.Parameters to @ParameterizedTest
+								for(UMLOperation removed : removedOperations) {
+									if(removed.hasParametersAnnotation()) {
+										List<List<LeafExpression>> parameters2 = getParameterValuesAsLeafExpressions(addedOperation);
+										List<List<LeafExpression>> parameters1 = getParameterValuesAsLeafExpressions(removed);
+										//TODO extract parameter values from method with @Parameterized.Parameters annotation
+									}
+								}
 							}
 							if(overallMaxMatchingTestParameters > -1) {
 								addedOperationIterator.remove();

@@ -1331,6 +1331,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable upper in method protected _downsample_componentL1(pmf, i, op, locs) from class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

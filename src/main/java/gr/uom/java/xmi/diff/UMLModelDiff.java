@@ -2867,7 +2867,7 @@ public class UMLModelDiff {
 				}
 				if(matchedOperation == null && !operation.hasEmptyBody()) {
 					matchedOperation = umlClass.operationWithIdenticalBody(operation);
-					if(matchedOperation != null) {
+					if(matchedOperation != null && matchedOperation.singleThrowStatement() == null) {
 						commonOperations.put(operation, matchedOperation);
 					}
 				}

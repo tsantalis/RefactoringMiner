@@ -4485,7 +4485,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					!mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
 				count++;
 			}
-			else if(mapping.getFragment1().getString().startsWith(LANG.THROW_SPACE + "new") && mapping.getFragment2().getString().startsWith(LANG.THROW_SPACE + "new") &&
+			else if(mapping.getFragment1().throwsNewException() && mapping.getFragment2().throwsNewException() &&
 					!mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
 				count++;
 			}

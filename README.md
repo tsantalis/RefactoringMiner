@@ -568,7 +568,7 @@ As of **December 3, 2025** the precision and recall of RefactoringMiner on this 
 ## Python Benchmark
 **Source**: Hassan Atwi, Bin Lin, Nikolaos Tsantalis, Yutaro Kashiwa, Yasutaka Kamei, Naoyasu Ubayashi, Gabriele Bavota, and Michele Lanza, "PyRef: Refactoring Detection in Python Projects," 21st IEEE International Working Conference on Source Code Analysis and Manipulation (SCAM'2021), Engineering Track, Luxembourg City, Luxembourg, September 27-28, 2021.
 
-**Properties**: 166 commits from 3 open-source projects
+**Properties**: 167 commits from 3 open-source projects
 
 **Commit dates**: January 2013 - October 2020
 
@@ -581,6 +581,7 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Move And Rename Class`
 * `Rename Attribute`
 * `Move Attribute`
+* `Pull Up Attribute`
 * `Push Down Attribute`
 * `Move And Rename Method`
 * `Extract Class`
@@ -602,33 +603,35 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Reorder Parameter`
 * `Split Conditional`
 * `Move Code`
+* `Encapsulate Attribute`
 
-As of **December 11, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **December 13, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|907  |  6  |  2  | 0.993  | 0.998|
+|**Total**|927  |  6  |  2  | 0.994  | 0.998|
 |Extract Method|32  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|12  |  0  |  0  | 1.000  | 1.000|
-|Move Attribute| 3  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|127  |  0  |  1  | 1.000  | 0.992|
+|Move Attribute| 5  |  0  |  0  | 1.000  | 1.000|
+|Rename Method|128  |  0  |  1  | 1.000  | 0.992|
 |Inline Method| 6  |  0  |  0  | 1.000  | 1.000|
 |Move Method|14  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Method| 9  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Method| 5  |  0  |  0  | 1.000  | 1.000|
-|Move Class|11  |  0  |  0  | 1.000  | 1.000|
-|Move And Rename Class| 8  |  0  |  0  | 1.000  | 1.000|
+|Move Class|13  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Class|10  |  0  |  0  | 1.000  | 1.000|
+|Pull Up Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Push Down Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method| 3  |  0  |  0  | 1.000  | 1.000|
 |Extract Superclass| 3  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 2  |  0  |  0  | 1.000  | 1.000|
-|Extract Class| 2  |  0  |  0  | 1.000  | 1.000|
+|Extract Class| 3  |  0  |  0  | 1.000  | 1.000|
 |Extract And Move Method|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|49  |  1  |  0  | 0.980  | 1.000|
-|Inline Variable|17  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|103  |  1  |  0  | 0.990  | 1.000|
-|Rename Parameter|121  |  1  |  0  | 0.992  | 1.000|
-|Rename Attribute|19  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|50  |  1  |  0  | 0.980  | 1.000|
+|Inline Variable|18  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable|104  |  1  |  0  | 0.990  | 1.000|
+|Rename Parameter|123  |  1  |  0  | 0.992  | 1.000|
+|Rename Attribute|23  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable| 1  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Variable| 7  |  0  |  0  | 1.000  | 1.000|
@@ -638,9 +641,9 @@ As of **December 11, 2025** the precision and recall of RefactoringMiner on this
 |Add Method Annotation|26  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|18  |  0  |  0  | 1.000  | 1.000|
 |Add Class Annotation| 1  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|180  |  0  |  1  | 1.000  | 0.994|
+|Add Parameter|181  |  0  |  1  | 1.000  | 0.995|
 |Remove Parameter|56  |  0  |  0  | 1.000  | 1.000|
-|Reorder Parameter|15  |  0  |  0  | 1.000  | 1.000|
+|Reorder Parameter|16  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Conditional| 4  |  0  |  0  | 1.000  | 1.000|
 |Move Code| 6  |  0  |  0  | 1.000  | 1.000|

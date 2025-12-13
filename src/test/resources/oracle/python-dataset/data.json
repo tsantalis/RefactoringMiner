@@ -7960,4 +7960,146 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160016,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "f5a2b259b26bc173bf854cf5c8f306a1c21f15fe",
+    "url": "https://github.com/asyml/texar/commit/f5a2b259b26bc173bf854cf5c8f306a1c21f15fe",
+    "author": null,
+    "time": "11/29/17 09:39 AM",
+    "refactorings": [{
+        "type": "Rename Parameter",
+        "description": "Rename Parameter q_value to qvalue in method public l2_loss(qvalue, action_input, y_input, kwargs) from class losses.dqn_losses.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class modules.q_networks.q_networks_base.QNetworksBase moved and renamed to modules.q_networks.q_network_base.QNetworkBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class modules.replay_memories.replay_memory_base.ReplayMemoryBase moved to core.replay_memories.ReplayMemoryBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class modules.replay_memories.deque_replay_memory.DequeReplayMemory moved to core.replay_memories.DequeReplayMemory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute max_size to capacity in class core.replay_memories.DequeReplayMemory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class models.deep_q_network.DeepQNetwork moved and renamed to agents.nature_dqn_agent.NatureDQNAgent",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Reorder Parameter",
+        "description": "Reorder Parameter [next_observation, action, reward, is_terminal] to [action, reward, is_terminal, next_observation] in method public perceive(action, reward, is_terminal, next_observation) from class agents.nature_dqn_agent.NatureDQNAgent",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable new_state in method public perceive(next_observation, action, reward, is_terminal) from class models.deep_q_network.DeepQNetwork",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter state_dimension to state_shape in method public __init__(actions, state_shape, hparams) from class agents.nature_dqn_agent.NatureDQNAgent",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public train_network() renamed to public train_qnet() in class agents.nature_dqn_agent.NatureDQNAgent",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable mini_batch to minibatch in method public train_qnet() from class agents.nature_dqn_agent.NatureDQNAgent",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter state in method public get_action(state, action_mask) from class agents.nature_dqn_agent.NatureDQNAgent",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute state_dimension to state_shape in class agents.nature_dqn_agent.NatureDQNAgent",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute explore_steps to exploration in class agents.nature_dqn_agent.NatureDQNAgent",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute observe_steps to observation_steps in class agents.nature_dqn_agent.NatureDQNAgent",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute current_state from class models.deep_q_network.DeepQNetwork to current_state from class agents.agent_base.AgentBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute initial_epsilon from class models.deep_q_network.DeepQNetwork to initial_epsilon from class core.explorations.EpsilonDecayExploration",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute final_epsilon from class models.deep_q_network.DeepQNetwork to final_epsilon from class core.explorations.EpsilonDecayExploration",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class core.explorations.EpsilonDecayExploration from class models.deep_q_network.DeepQNetwork",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

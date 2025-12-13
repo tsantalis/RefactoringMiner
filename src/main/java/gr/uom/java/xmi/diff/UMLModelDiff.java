@@ -7703,6 +7703,11 @@ public class UMLModelDiff {
 
 	private boolean movedAndRenamedMethodSignature(UMLOperation removedOperation, UMLOperation addedOperation, UMLOperationBodyMapper mapper, boolean multipleMappers) {
 		Constants LANG = PathFileUtils.getLang(mapper.getContainer1().getLocationInfo().getFilePath());
+		List<AbstractCodeMapping> exactMatchListWithoutMatchesInNestedContainers = mapper.getExactMatchesWithoutMatchesInNestedContainers();
+		int exactMatchesWithoutMatchesInNestedContainers = exactMatchListWithoutMatchesInNestedContainers.size();
+		if(mapper.getMappings().size() == 1 && exactMatchesWithoutMatchesInNestedContainers == 1 && exactMatchListWithoutMatchesInNestedContainers.get(0).getFragment1().throwsNewException()) {
+			return false;
+		}
 		UMLClassBaseDiff addedOperationClassDiff = getUMLClassDiff(addedOperation.getClassName());
 		if(addedOperationClassDiff != null) {
 			for(Refactoring r : addedOperationClassDiff.getRefactoringsBeforePostProcessing()) {

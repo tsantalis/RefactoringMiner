@@ -488,7 +488,7 @@ public class PyASTFlattener implements LangASTFlattener {
 
     @Override
     public void visit(LangThrowStatement langThrowStatement) {
-        builder.append("throw ");
+        builder.append("raise ");
         langThrowStatement.getExpressions().forEach(expr -> expr.accept(this));
         builder.append("\n");
     }

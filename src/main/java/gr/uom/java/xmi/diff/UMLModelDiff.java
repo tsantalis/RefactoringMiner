@@ -7846,6 +7846,13 @@ public class UMLModelDiff {
 				return false;
 			}
 		}
+		if(removedOperation.isConstructor() && addedOperation.isConstructor()) {
+			UMLAbstractClass class1 = findClassInParentModel(removedOperation.getClassName());
+			UMLAbstractClass class2 = findClassInChildModel(addedOperation.getClassName());
+			boolean commonSuperclass = class1 != null && class2 != null && class1.getSuperclass().equals(class2.getSuperclass());
+			if(!commonSuperclass)
+				return false;
+		}
 		boolean equalReturnTypeAndTypeParameter = (addedOperation.equalReturnParameter(removedOperation) || addedOperation.equalReturnParameterWithPluralClassType(removedOperation)) &&
 						addedOperation.getTypeParameters().equals(removedOperation.getTypeParameters());
 		boolean allMappingsAreIdentical = mapper.allMappingsAreIdentical() && !removedOperation.isGetter() && !addedOperation.isGetter();

@@ -56,6 +56,7 @@ import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.MethodReference;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.StatementObject;
@@ -2007,7 +2008,22 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 									if(removed.hasParametersAnnotation()) {
 										List<List<LeafExpression>> parameters2 = getParameterValuesAsLeafExpressions(addedOperation);
 										List<List<LeafExpression>> parameters1 = getParameterValuesAsLeafExpressions(removed);
-										//TODO extract parameter values from method with @Parameterized.Parameters annotation
+										if(parameters1.size() == parameters2.size()) {
+											for(int i=0; i<parameters1.size(); i++) {
+												List<LeafExpression> expressions1 = parameters1.get(i);
+												List<LeafExpression> expressions2 = parameters2.get(i);
+												if(expressions1.size() == expressions2.size()) {
+													for(int j=0; j<expressions1.size(); j++) {
+														LeafExpression expression1 = expressions1.get(j);
+														LeafExpression expression2 = expressions2.get(j);
+														if(expression1.getString().equals(expression2.getString())) {
+															LeafMapping leafMapping = new LeafMapping(expression1, expression2, removed, addedOperation);
+															mapper.addMapping(leafMapping);
+														}
+													}
+												}
+											}
+										}
 									}
 								}
 							}

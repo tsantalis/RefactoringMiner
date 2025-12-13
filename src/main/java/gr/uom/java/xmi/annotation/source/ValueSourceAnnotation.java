@@ -46,7 +46,8 @@ public class ValueSourceAnnotation extends SourceAnnotation implements NormalAnn
         Set<String> providedKeys = memberValuePairs.keySet();
         for (String key : providedKeys) {
             AbstractExpression annotationParameterValue = memberValuePairs.get(key);
-            for (LeafExpression literal : extractLiterals(annotationParameterValue, key)) {
+            List<LeafExpression> literals = extractLiterals(annotationParameterValue, key);
+            for (LeafExpression literal : literals) {
                 testParameters.add(Collections.singletonList(sanitizeLiteral(literal.getString())));
                 testParameterLeafExpressions.add(Collections.singletonList(literal));
             }

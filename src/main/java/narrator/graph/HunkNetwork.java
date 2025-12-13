@@ -28,20 +28,38 @@ public class HunkNetwork {
     private final float distanceThreshold = 0;
     private Map<String, String> srcContents;
     private Map<String, String> dstContents;
-    Map<String, TreeContext> childContexts;
+    Map<String, TreeContext> srcContexts;
+    Map<String, TreeContext> dstContexts;
 
     public HunkNetwork(UMLModelDiff modelDiff, Map<String, String> srcContents, Map<String, String> dstContents,
-                       Map<String, TreeContext> childContexts) {
+                       Map<String, TreeContext> srcContexts, Map<String, TreeContext> dstContexts) {
         graph = GraphTypeBuilder.<Node, Edge>directed().allowingMultipleEdges(true).allowingSelfLoops(true).edgeClass(Edge.class).weighted(true).buildGraph();
         nodeMap = new HashMap<>();
         this.modelDiff = modelDiff;
         this.model = modelDiff.getChildModel();
         this.srcContents = srcContents;
         this.dstContents = dstContents;
-        this.childContexts = childContexts;
+        this.srcContexts = srcContexts;
+        this.dstContexts = dstContexts;
     }
 
-    public void importHunks(String path, String srcPath, Set<Tree> additions, MappingStore mappings) {
+    private String getPath(Tree tree) {
+        Tree root = TreeUtilFunctions.getParentUntilType(tree, Constants.COMPILATION_UNIT);
+
+        Optional<Map.Entry<String, TreeContext>> srcContext = srcContexts.entrySet().stream().filter(entry -> entry.getValue().getRoot().equals(root)).findFirst();
+        if (srcContext.isPresent()) {
+            return srcContext.get().getKey();
+        }
+
+        Optional<Map.Entry<String, TreeContext>> dstContext = dstContexts.entrySet().stream().filter(entry -> entry.getValue().getRoot().equals(root)).findFirst();
+        if (dstContext.isPresent()) {
+            return dstContext.get().getKey();
+        }
+
+        return null;
+    }
+
+    public void importHunks(Set<Tree> additions, MappingStore mappings) {
         HashMap<Tree, Set<Tree>> additionsChildren = new HashMap<>();
         for (Tree subject : additions) {
             boolean isParent = true;
@@ -77,9 +95,10 @@ public class HunkNetwork {
         for (Map.Entry<Tree, Set<Tree>> additionChildren : additionsChildren.entrySet()) {
             Tree parent = additionChildren.getKey();
 
-            Node node = new Node(dstContents.get(path), path, parent);
+            String parentPath = getPath(parent);
+            Node node = new Node(dstContents.get(parentPath), parentPath, parent);
 
-            if (mappings != null && srcPath != null) {
+            if (mappings != null) {
                 List<Tree> trees = new ArrayList<>(parent.getDescendants());
                 trees.add(parent);
                 List<Tree> srcs = trees.stream().map(mappings::getSrcForDst).filter(Objects::nonNull).toList();
@@ -101,7 +120,10 @@ public class HunkNetwork {
 
                 if (!uniqueSrcs.isEmpty()) {
                     uniqueSrcs.sort(Comparator.comparingInt(Tree::getPos));
-                    node.setSrcs(uniqueSrcs.stream().map(src -> new Node(srcContents.get(srcPath), srcPath, src)).toList());
+                    node.setSrcs(uniqueSrcs.stream().map(src -> {
+                        String srcPath = getPath(src);
+                        return new Node(srcContents.get(srcPath), srcPath, src);
+                    }).toList());
                     node.setDsts(uniqueSrcs.stream().map(mappings::getDstForSrc).filter(Objects::nonNull).toList());
                 }
             }
@@ -382,7 +404,7 @@ public class HunkNetwork {
 
                     LocationInfo locationInfo = declaration.getLocationInfo();
                     String path = locationInfo.getFilePath();
-                    Tree tree = TreeUtilFunctions.findByLocationInfo(childContexts.get(path).getRoot(), locationInfo);
+                    Tree tree = TreeUtilFunctions.findByLocationInfo(dstContexts.get(path).getRoot(), locationInfo);
                     if (nodeMap.containsKey(Node.formatId(path, tree))) {
                         continue;
                     }
@@ -431,7 +453,7 @@ public class HunkNetwork {
         // declaration change without any usage change
         if (result.isEmpty()) {
             List<LocationInfo> changedFilesUseStatementsLocation =
-                    accessFragments.stream().map(LocationInfoProvider::getLocationInfo).filter(locationInfo -> childContexts.containsKey(locationInfo.getFilePath())).toList();
+                    accessFragments.stream().map(LocationInfoProvider::getLocationInfo).filter(locationInfo -> dstContexts.containsKey(locationInfo.getFilePath())).toList();
             if (changedFilesUseStatementsLocation.isEmpty()) {
                 return result;
             }
@@ -439,7 +461,7 @@ public class HunkNetwork {
             LocationInfo closestLocationInfo = findClosestLocationInfo(declarationLocation,
                     changedFilesUseStatementsLocation);
             String path = closestLocationInfo.getFilePath();
-            Tree tree = TreeUtilFunctions.findByLocationInfo(childContexts.get(path).getRoot(), closestLocationInfo);
+            Tree tree = TreeUtilFunctions.findByLocationInfo(dstContexts.get(path).getRoot(), closestLocationInfo);
             Node node = addTreeNode(path, tree, NodeType.EXTENSION);
 
             result.add(node);

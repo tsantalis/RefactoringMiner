@@ -32,26 +32,26 @@ public class Driver {
     }
 
     private static Graph<Node, Edge> getGraph(ProjectASTDiff projectASTDiff) {
-        Map<String, TreeContext> childContextMap = projectASTDiff.getChildContextMap();
-
-        Map<String, String> dstContentsMap = projectASTDiff.getFileContentsAfter();
-        Map<String, String> srcContentsMap = projectASTDiff.getFileContentsBefore();
-        HunkNetwork network = new HunkNetwork(projectASTDiff.getModelDiff(), srcContentsMap, dstContentsMap,
-                childContextMap);
+        Map<String, TreeContext> srcContexts = projectASTDiff.getParentContextMap();
+        Map<String, TreeContext> dstContexts = projectASTDiff.getChildContextMap();
+        Map<String, String> srcContents = projectASTDiff.getFileContentsBefore();
+        Map<String, String> dstContents = projectASTDiff.getFileContentsAfter();
+        HunkNetwork network = new HunkNetwork(projectASTDiff.getModelDiff(), srcContents, dstContents,
+                srcContexts, dstContexts);
 
         Set<ASTDiff> diffSet = projectASTDiff.getDiffSet();
 
         for (ASTDiff diff : diffSet) {
-            network.importHunks(diff.getDstPath(), diff.getSrcPath(), diff.getAddedDstTrees(),
+            network.importHunks(diff.getAddedDstTrees(),
                     diff.getAllMappings().getMonoMappingStore());
         }
 
         List<String> diffDestinationPaths = diffSet.stream().map(ASTDiff::getDstPath).toList();
         List<String> addedPaths =
-                childContextMap.keySet().stream().filter(path -> !diffDestinationPaths.contains(path)).toList();
+                dstContexts.keySet().stream().filter(path -> !diffDestinationPaths.contains(path)).toList();
         addedPaths.forEach(path -> {
-            Tree addedTree = childContextMap.get(path).getRoot();
-            network.importHunks(path, null, new HashSet<>(addedTree.getChildren()), null);
+            Tree addedTree = dstContexts.get(path).getRoot();
+            network.importHunks(new HashSet<>(addedTree.getChildren()), null);
         });
 
         network.process();

@@ -5,7 +5,7 @@ public enum Constants {
 			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", " ? ", " : ", "assertThrows", "assertThatThrownBy", " && ", " || ", "null", "true", "false"),
 	
 	PYTHON("\n", "return ", "return\n", "return true\n", "return false\n", "return None\n", "return self\n", "=", "break\n", "continue\n",
-			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "self", "self.", " if ", " else ", "assertRaises", "assertRaises", " and ", " or ", "None", "True", "False");
+			" -> ", "::", " + ", "raise ", "case ", "try", "{", "}", "{", "}", "self", "self.", " if ", " else ", "assertRaises", "assertRaises", " and ", " or ", "None", "True", "False");
 	
 	public final String STATEMENT_TERMINATION;
 	public final String RETURN_SPACE;

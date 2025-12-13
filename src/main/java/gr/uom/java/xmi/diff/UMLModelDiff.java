@@ -7705,7 +7705,8 @@ public class UMLModelDiff {
 		Constants LANG = PathFileUtils.getLang(mapper.getContainer1().getLocationInfo().getFilePath());
 		List<AbstractCodeMapping> exactMatchListWithoutMatchesInNestedContainers = mapper.getExactMatchesWithoutMatchesInNestedContainers();
 		int exactMatchesWithoutMatchesInNestedContainers = exactMatchListWithoutMatchesInNestedContainers.size();
-		if(mapper.getMappings().size() == 1 && exactMatchesWithoutMatchesInNestedContainers == 1 && exactMatchListWithoutMatchesInNestedContainers.get(0).getFragment1().throwsNewException()) {
+		if(!removedOperation.getName().equals(addedOperation.getName()) &&
+				mapper.getMappings().size() == 1 && exactMatchesWithoutMatchesInNestedContainers == 1 && exactMatchListWithoutMatchesInNestedContainers.get(0).getFragment1().throwsNewException()) {
 			return false;
 		}
 		UMLClassBaseDiff addedOperationClassDiff = getUMLClassDiff(addedOperation.getClassName());

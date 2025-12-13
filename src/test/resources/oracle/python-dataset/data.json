@@ -8102,4 +8102,148 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160018,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "f7900df34f14144ae13c1e27bbe39d3d84887f87",
+    "url": "https://github.com/asyml/texar/commit/f7900df34f14144ae13c1e27bbe39d3d84887f87",
+    "author": "haoransh",
+    "time": "3/24/19 10:00 PM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter sequence_length in method protected _build(positions, sequence_length) from class modules.embedders.position_embedders.SinusoidsPositionEmbedder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160019,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "f86ceee1b4a5cfa7ddc728eabcffc6327e853af3",
+    "url": "https://github.com/asyml/texar/commit/f86ceee1b4a5cfa7ddc728eabcffc6327e853af3",
+    "author": "ZhitingHu",
+    "time": "3/25/18 07:51 PM",
+    "refactorings": [{
+        "type": "Extract Variable",
+        "description": "Extract Variable max_l in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable max_decoding_length_train to max_l_train in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable max_decoding_length_infer to max_l_infer in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter max_decoding_length in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter output_time_major in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter decoding_strategy in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter inputs in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter sequence_length in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter input_time_major in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter embedding in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter start_tokens in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter end_token in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter softmax_temperature in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter mode in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter kwargs in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Reorder Parameter",
+        "description": "Reorder Parameter [helper, initial_state] to [initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs] in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method protected _test_outputs(decoder, outputs, final_state, sequence_lengths, test_mode) extracted from public test_decode_train() in class modules.decoders.rnn_decoders_test.BasicRNNDecoderTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

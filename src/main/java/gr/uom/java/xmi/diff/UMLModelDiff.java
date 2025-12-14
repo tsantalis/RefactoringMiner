@@ -7626,13 +7626,27 @@ public class UMLModelDiff {
 		if(operation1 != null && operation2 != null && operation1.getJavadoc() != null && operation2.getJavadoc() != null && operation1.getJavadoc().equalText(operation2.getJavadoc())) {
 			identicalJavadoc = true;
 		}
+		boolean matchingClassName = false;
+		if(operationBodyMapper.getContainer1().isConstructor() && operationBodyMapper.getContainer2().isConstructor()) {
+			String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(operationBodyMapper.getContainer1().getClassName());
+			String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(operationBodyMapper.getContainer2().getClassName());
+			int commonTokens = 0;
+			for(String token1 : tokens1) {
+				for(String token2 : tokens2) {
+					if(token1.equals(token2)) {
+						commonTokens++;
+					}
+				}
+			}
+			matchingClassName = commonTokens >= Math.max(tokens1.length, tokens2.length)/2;
+		}
 		return (mappings > nonMappedElementsT1-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable &&
 				mappings > nonMappedElementsT2-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable) ||
 				(mappings > 10 && mappings >= nonMappedElementsT1-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable &&
 						mappings >= nonMappedElementsT2-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable) ||
 				(nonMappedElementsT1-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable <= 0 && mappings > Math.floor(nonMappedElementsT2/2.0)) ||
 				(nonMappedElementsT2-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable <= 0 && mappings > Math.floor(nonMappedElementsT1/2.0)) ||
-				(mappings > Math.floor(nonMappedElementsT2/2.0) && mappings > Math.floor(nonMappedElementsT1/2.0) && identicalJavadoc);
+				(mappings > Math.floor(nonMappedElementsT2/2.0) && mappings > Math.floor(nonMappedElementsT1/2.0) && (identicalJavadoc || matchingClassName));
 	}
 
 	private boolean matchingName(VariableDeclaration v1, UMLAttribute attribute) {

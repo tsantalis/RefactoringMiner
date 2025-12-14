@@ -1112,7 +1112,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
 						parentRawFile = IOUtils.toString(parentRawFileInputStream);
 					}
-					filesBefore.put(fileName, parentRawFile);
+					if(!filesBefore.containsKey(fileName))
+						filesBefore.put(fileName, parentRawFile);
 					filesCurrent.put(fileName, currentRawFile);
 				}
 				catch(IOException e) {
@@ -1189,7 +1190,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
 						parentRawFile = IOUtils.toString(parentRawFileInputStream);
 					}
-					filesBefore.put(previousFilename, parentRawFile);
+					if(!filesBefore.containsKey(previousFilename))
+						filesBefore.put(previousFilename, parentRawFile);
 					filesCurrent.put(fileName, currentRawFile);
 					renamedFilesHint.put(previousFilename, fileName);
 					if(previousFilename.contains("/")) {

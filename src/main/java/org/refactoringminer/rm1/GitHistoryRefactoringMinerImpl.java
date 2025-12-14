@@ -1838,9 +1838,6 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	public ProjectASTDiff diffAtPullRequest(String cloneURL, int pullRequestId, int timeout) throws Exception {
 		GHRepository repository = getGitHubRepository(cloneURL);
 		GHPullRequest pullRequest = repository.getPullRequest(pullRequestId);
-		//List<GHPullRequestFileDetail> files = new GHRepositoryWrapper(repository).listPullRequestFiles(pullRequest);
-		PagedIterable<GHPullRequestFileDetail> files = pullRequest.listFiles();
-		int changedFiles = pullRequest.getChangedFiles();
 		Map<String, String> filesBefore = new ConcurrentHashMap<String, String>();
 		Map<String, String> filesCurrent = new ConcurrentHashMap<String, String>();
 		Map<String, String> renamedFilesHint = new ConcurrentHashMap<String, String>();
@@ -1848,29 +1845,42 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		Set<String> repositoryDirectoriesCurrent = ConcurrentHashMap.newKeySet();
 		Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();
 		List<String> commitFileNames = new ArrayList<>();
-		if(changedFiles == 0) {
-			changedFiles = 10;
-		}
-		ExecutorService pool = Executors.newFixedThreadPool(changedFiles);
-		int count = 1;
-		for(GHPullRequestFileDetail commitFile : files) {
-			String fileName = commitFile.getFilename();
-			if (PathFileUtils.isSupportedFile(commitFile.getFilename())) {
-				commitFileNames.add(fileName);
-				logger.info(String.format("Processing file: " + fileName));
-				//sleep every 100 files to avoid HTTP 403 error
-				if (count % 100 == 0) {
-					Thread.sleep(500);
+		if(repository.isPrivate()) {
+			PagedIterable<GHPullRequestCommitDetail> commits = pullRequest.listCommits();
+			for(GHPullRequestCommitDetail commit : commits) {
+				if(commit.getParents().length > 1) {
+					//skip merge commits
+					continue;
 				}
-				multiThreadedFetch(filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore,
-						repositoryDirectoriesCurrent, deletedAndRenamedFileParentDirectories, commitFileNames, pool,
-						commitFile, fileName);
-				count++;
+				populateWithGitHubAPI(cloneURL, commit.getSha(), commitFileNames, filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
 			}
 		}
-		pool.shutdown();
-		pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
-		
+		else {
+			PagedIterable<GHPullRequestFileDetail> files = pullRequest.listFiles();
+			int changedFiles = pullRequest.getChangedFiles();
+			if(changedFiles == 0) {
+				changedFiles = 10;
+			}
+			ExecutorService pool = Executors.newFixedThreadPool(changedFiles);
+			int count = 1;
+			for(GHPullRequestFileDetail commitFile : files) {
+				String fileName = commitFile.getFilename();
+				if (PathFileUtils.isSupportedFile(commitFile.getFilename())) {
+					commitFileNames.add(fileName);
+					logger.info(String.format("Processing file: " + fileName));
+					//sleep every 100 files to avoid HTTP 403 error
+					if (count % 100 == 0) {
+						Thread.sleep(500);
+					}
+					multiThreadedFetch(filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore,
+							repositoryDirectoriesCurrent, deletedAndRenamedFileParentDirectories, commitFileNames, pool,
+							commitFile, fileName);
+					count++;
+				}
+			}
+			pool.shutdown();
+			pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+		}
 		Set<ProjectASTDiff> diffs = new HashSet<>();
 		ExecutorService service = Executors.newSingleThreadExecutor();
 		Future<?> f = null;

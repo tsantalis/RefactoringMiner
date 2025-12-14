@@ -8610,4 +8610,127 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160027,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "089fb944936cdd72258e9c21eb9b8c98e78acbf5",
+    "url": "https://github.com/asyml/texar/commit/089fb944936cdd72258e9c21eb9b8c98e78acbf5",
+    "author": "ZhitingHu",
+    "time": "3/29/18 05:27 PM",
+    "refactorings": [{
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable learning_rate to learning_rate in method public get_train_op(loss, variables, learning_rate, global_step, increment_global_step, hparams) from class core.optimization.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter impute_finished in method protected _build(initial_state, max_decoding_length, impute_finished, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160028,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "0a07243d64cf7b6770ead65b748f64c1117982c7",
+    "url": "https://github.com/asyml/texar/commit/0a07243d64cf7b6770ead65b748f64c1117982c7",
+    "author": "ZhitingHu",
+    "time": "11/25/17 05:28 PM",
+    "refactorings": [{
+        "type": "Encapsulate Attribute",
+        "description": "Encapsulate Attribute _padding_token from class data.vocabulary.Vocab",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public test_vocab_load() renamed to public test_vocab_construction() in class data.vocabulary_test.VocabularyTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class data.databases.data_providers.PairedDataProvider renamed to data.databases.data_providers.ParallelDataProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter datasets in method public __init__(datasets, reader_kwargs, dtypes, shuffle, num_epochs, common_queue_capacity, common_queue_min, seed, scope) from class data.databases.data_providers.ParallelDataProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter reader_kwargs in method public __init__(datasets, reader_kwargs, dtypes, shuffle, num_epochs, common_queue_capacity, common_queue_min, seed, scope) from class data.databases.data_providers.ParallelDataProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter dtypes in method public __init__(datasets, reader_kwargs, dtypes, shuffle, num_epochs, common_queue_capacity, common_queue_min, seed, scope) from class data.databases.data_providers.ParallelDataProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter dataset1 in method public __init__(dataset1, dataset2, reader_kwargs1, reader_kwargs2, shuffle, num_epochs, common_queue_capacity, common_queue_min, seed, scope) from class data.databases.data_providers.PairedDataProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter dataset2 in method public __init__(dataset1, dataset2, reader_kwargs1, reader_kwargs2, shuffle, num_epochs, common_queue_capacity, common_queue_min, seed, scope) from class data.databases.data_providers.PairedDataProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter reader_kwargs1 in method public __init__(dataset1, dataset2, reader_kwargs1, reader_kwargs2, shuffle, num_epochs, common_queue_capacity, common_queue_min, seed, scope) from class data.databases.data_providers.PairedDataProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter reader_kwargs2 in method public __init__(dataset1, dataset2, reader_kwargs1, reader_kwargs2, shuffle, num_epochs, common_queue_capacity, common_queue_min, seed, scope) from class data.databases.data_providers.PairedDataProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable data1 to data in method public __init__(datasets, reader_kwargs, dtypes, shuffle, num_epochs, common_queue_capacity, common_queue_min, seed, scope) from class data.databases.data_providers.ParallelDataProvider",
+        "comment": "<p>data2 is also renamed to data</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable data1 to data_list in method public __init__(datasets, reader_kwargs, dtypes, shuffle, num_epochs, common_queue_capacity, common_queue_min, seed, scope) from class data.databases.data_providers.ParallelDataProvider",
+        "comment": "<p>data2 is also merged to data_list<br />data1, data2 = random_shuffle_queue.dequeue()<br />data_list = random_shuffle_queue.dequeue()</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable items1 to items in method public __init__(datasets, reader_kwargs, dtypes, shuffle, num_epochs, common_queue_capacity, common_queue_min, seed, scope) from class data.databases.data_providers.ParallelDataProvider",
+        "comment": "<p>items2 is also renamed to items</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }],
+    "refDiffExecutionTime": 0
 }]

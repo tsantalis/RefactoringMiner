@@ -8497,4 +8497,117 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160023,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "fde48c9344f2aca76ca21e8b42efeb8d911ba7c8",
+    "url": "https://github.com/asyml/texar/commit/fde48c9344f2aca76ca21e8b42efeb8d911ba7c8",
+    "author": "ZhitingHu",
+    "time": "7/10/18 11:50 PM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter sequence_length in method protected _build(inputs, sequence_length, dtype, time_major, mode) from class modules.classifiers.conv_classifiers.Conv1DClassifier",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter dtype in method protected _build(inputs, sequence_length, dtype, time_major, mode) from class modules.classifiers.conv_classifiers.Conv1DClassifier",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter time_major in method protected _build(inputs, sequence_length, dtype, time_major, mode) from class modules.classifiers.conv_classifiers.Conv1DClassifier",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable activation to activation_fn in method protected _build_dense_hparams() from class modules.networks.conv_networks.Conv1DNetwork",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable activation_fn in method protected _build_conv1d_hparams(pool_hparams) from class modules.networks.conv_networks.Conv1DNetwork",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter kwargs in method public get_activation_fn(fn_name, kwargs) from class core.layers.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160024,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "ff0f55dae8cc957ded0eac9680600437fa84714a",
+    "url": "https://github.com/asyml/texar/commit/ff0f55dae8cc957ded0eac9680600437fa84714a",
+    "author": "XuezheMax",
+    "time": "8/16/18 05:43 PM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter min_occur in method public create_vocabs(train_path, normalize_digits, min_occur) from class sequence_tagging.conll_reader.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160025,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "ff107ccfe3d954dc72512c8c9cdf14f547c08d8f",
+    "url": "https://github.com/asyml/texar/commit/ff107ccfe3d954dc72512c8c9cdf14f547c08d8f",
+    "author": "ZhitingHu",
+    "time": "5/17/18 02:59 PM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter encoder_major_hparams in method public __init__(encoder_major, encoder_minor, hparams, encoder_major_hparams, encoder_minor_hparams) from class modules.encoders.hierarchical_encoders_new.HierarchicalRNNEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter encoder_minor_hparams in method public __init__(encoder_major, encoder_minor, hparams, encoder_major_hparams, encoder_minor_hparams) from class modules.encoders.hierarchical_encoders_new.HierarchicalRNNEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160026,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "007e42b10375ee767cd3c1c33860cb8f13fb6e52",
+    "url": "https://github.com/asyml/texar/commit/007e42b10375ee767cd3c1c33860cb8f13fb6e52",
+    "author": "ZhitingHu",
+    "time": "2/2/18 05:06 AM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter use_embedding in method protected _build(inputs, sequence_length, initial_state, use_embedding, kwargs) from class modules.encoders.rnn_encoders.UnidirectionalRNNEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter use_embedding in method protected _build(inputs, sequence_length, initial_state_fw, initial_state_bw, use_embedding, kwargs) from class modules.encoders.rnn_encoders.BidirectionalRNNEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

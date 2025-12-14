@@ -8404,4 +8404,97 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160022,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "fb7b2f8211510c71dc9de1c48d842254c06a075d",
+    "url": "https://github.com/asyml/texar/commit/fb7b2f8211510c71dc9de1c48d842254c06a075d",
+    "author": "ZhitingHu",
+    "time": "3/19/18 02:57 PM",
+    "refactorings": [{
+        "type": "Inline Variable",
+        "description": "Inline Variable other_trans_hparams in method protected _process_dataset() from class data.data.mono_text_data.MonoTextData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public text_tensor_name() renamed to public text_name() in class data.data.mono_text_data.MonoTextData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public length_tensor_name() renamed to public length_name() in class data.data.mono_text_data.MonoTextData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public text_id_tensor_name() renamed to public text_id_name() in class data.data.mono_text_data.MonoTextData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public text_tensor_name() renamed to public target_text_name() in class data.data.paired_text_data.PairedTextData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public length_tensor_name() renamed to public target_length_name() in class data.data.paired_text_data.PairedTextData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public text_id_tensor_name() renamed to public target_text_id_name() in class data.data.paired_text_data.PairedTextData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @property in method public embedding_init_value() from class data.data.paired_text_data.PairedTextData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter name_prefix in method public make_combined_transformation(tran_fns, name_prefix, args, kwargs) from class data.data.data_utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable tgt_hparams to tgt_proc_hparams in method protected _process_dataset(dataset) from class data.data.paired_text_data.PairedTextData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method protected _make_other_transformations(other_trans_hparams, text_data) extracted from protected _process_dataset() in class data.data.mono_text_data.MonoTextData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable other_trans_hparams to other_trans_hparams in method protected _make_other_transformations(other_trans_hparams, text_data) from class data.data.mono_text_data.MonoTextData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

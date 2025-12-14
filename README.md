@@ -568,7 +568,7 @@ As of **December 3, 2025** the precision and recall of RefactoringMiner on this 
 ## Python Benchmark
 **Source**: Hassan Atwi, Bin Lin, Nikolaos Tsantalis, Yutaro Kashiwa, Yasutaka Kamei, Naoyasu Ubayashi, Gabriele Bavota, and Michele Lanza, "PyRef: Refactoring Detection in Python Projects," 21st IEEE International Working Conference on Source Code Analysis and Manipulation (SCAM'2021), Engineering Track, Luxembourg City, Luxembourg, September 27-28, 2021.
 
-**Properties**: 171 commits from 3 open-source projects
+**Properties**: 172 commits from 3 open-source projects
 
 **Commit dates**: January 2013 - October 2020
 
@@ -605,15 +605,15 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Move Code`
 * `Encapsulate Attribute`
 
-As of **December 13, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **December 14, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|965  |  6  |  2  | 0.994  | 0.998|
-|Extract Method|33  |  0  |  0  | 1.000  | 1.000|
+|**Total**|977  |  6  |  2  | 0.994  | 0.998|
+|Extract Method|34  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|12  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 5  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|128  |  0  |  1  | 1.000  | 0.992|
+|Rename Method|134  |  0  |  1  | 1.000  | 0.993|
 |Inline Method| 6  |  0  |  0  | 1.000  | 1.000|
 |Move Method|14  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Method| 9  |  0  |  0  | 1.000  | 1.000|
@@ -628,20 +628,20 @@ As of **December 13, 2025** the precision and recall of RefactoringMiner on this
 |Extract Class| 3  |  0  |  0  | 1.000  | 1.000|
 |Extract And Move Method|10  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|51  |  1  |  0  | 0.981  | 1.000|
-|Inline Variable|18  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|110  |  1  |  0  | 0.991  | 1.000|
+|Inline Variable|19  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable|111  |  1  |  0  | 0.991  | 1.000|
 |Rename Parameter|128  |  1  |  0  | 0.992  | 1.000|
 |Rename Attribute|24  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable| 1  |  0  |  0  | 1.000  | 1.000|
-|Parameterize Variable| 7  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Variable| 8  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter| 8  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Variable Type|25  |  3  |  0  | 0.893  | 1.000|
 |Add Method Annotation|26  |  0  |  0  | 1.000  | 1.000|
-|Remove Method Annotation|18  |  0  |  0  | 1.000  | 1.000|
+|Remove Method Annotation|19  |  0  |  0  | 1.000  | 1.000|
 |Add Class Annotation| 1  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|196  |  0  |  1  | 1.000  | 0.995|
+|Add Parameter|197  |  0  |  1  | 1.000  | 0.995|
 |Remove Parameter|64  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter|17  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute| 1  |  0  |  0  | 1.000  | 1.000|

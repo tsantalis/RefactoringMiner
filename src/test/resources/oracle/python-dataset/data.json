@@ -8246,4 +8246,162 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160020,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "f9bcfc0c35aecbe611f7b1e46f768cd3b157a879",
+    "url": "https://github.com/asyml/texar/commit/f9bcfc0c35aecbe611f7b1e46f768cd3b157a879",
+    "author": null,
+    "time": "8/5/18 03:28 PM",
+    "refactorings": [{
+        "type": "Remove Parameter",
+        "description": "Remove Parameter target_vocab in method public __init__(source_vocab, target_vocab, source_embedder, target_embedder, encoder, decoder, connector, hparams) from class models.seq2seq.seq2seq_base.Seq2seqBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter source_embedder in method public __init__(source_vocab, target_vocab, source_embedder, target_embedder, encoder, decoder, connector, hparams) from class models.seq2seq.seq2seq_base.Seq2seqBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter target_embedder in method public __init__(source_vocab, target_vocab, source_embedder, target_embedder, encoder, decoder, connector, hparams) from class models.seq2seq.seq2seq_base.Seq2seqBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter encoder in method public __init__(source_vocab, target_vocab, source_embedder, target_embedder, encoder, decoder, connector, hparams) from class models.seq2seq.seq2seq_base.Seq2seqBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter decoder in method public __init__(source_vocab, target_vocab, source_embedder, target_embedder, encoder, decoder, connector, hparams) from class models.seq2seq.seq2seq_base.Seq2seqBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter connector in method public __init__(source_vocab, target_vocab, source_embedder, target_embedder, encoder, decoder, connector, hparams) from class models.seq2seq.seq2seq_base.Seq2seqBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter source_vocab to data_hparams in method public __init__(data_hparams, hparams) from class models.seq2seq.seq2seq_base.Seq2seqBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter data_hparams in method public __init__(data_hparams, hparams) from class models.seq2seq.basic_seq2seq.BasicSeq2seq",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute _hparams to _model_hparams in class run.executor.Executor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter max_steps in method protected _get_train_spec(max_steps) from class run.executor.Executor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter train_steps in method public __init__(model, hparams, data_hparams, config, train_steps, eval_steps, train_hooks, eval_hooks, session_config) from class run.executor.Executor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter eval_steps in method public __init__(model, hparams, data_hparams, config, train_steps, eval_steps, train_hooks, eval_hooks, session_config) from class run.executor.Executor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter hparams to model_hparams in method public __init__(model, data_hparams, config, model_hparams, train_hooks, eval_hooks, session_config) from class run.executor.Executor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160021,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "fae63f0cd82ccb45efb47bf4af09830e44e29920",
+    "url": "https://github.com/asyml/texar/commit/fae63f0cd82ccb45efb47bf4af09830e44e29920",
+    "author": "ZhitingHu",
+    "time": "9/17/17 08:38 PM",
+    "refactorings": [{
+        "type": "Rename Parameter",
+        "description": "Rename Parameter encoder_state to inputs in method protected _build(inputs) from class modules.connectors.connectors.ForwardConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter encoder_result to inputs in method protected _build(inputs) from class modules.connectors.connectors.MLPTransformConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter encoder_result to inputs in method protected _build(inputs) from class modules.connectors.connectors.StochasticConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable decoder_state to output in method protected _build(inputs) from class modules.connectors.connectors.MLPTransformConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable encoder_mu to input_mu in method protected _build(inputs) from class modules.connectors.connectors.StochasticConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable encoder_log_var to input_log_var in method protected _build(inputs) from class modules.connectors.connectors.StochasticConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable decoder_state to output in method protected _build(inputs) from class modules.connectors.connectors.StochasticConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

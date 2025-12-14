@@ -568,7 +568,7 @@ As of **December 3, 2025** the precision and recall of RefactoringMiner on this 
 ## Python Benchmark
 **Source**: Hassan Atwi, Bin Lin, Nikolaos Tsantalis, Yutaro Kashiwa, Yasutaka Kamei, Naoyasu Ubayashi, Gabriele Bavota, and Michele Lanza, "PyRef: Refactoring Detection in Python Projects," 21st IEEE International Working Conference on Source Code Analysis and Manipulation (SCAM'2021), Engineering Track, Luxembourg City, Luxembourg, September 27-28, 2021.
 
-**Properties**: 169 commits from 3 open-source projects
+**Properties**: 171 commits from 3 open-source projects
 
 **Commit dates**: January 2013 - October 2020
 
@@ -609,7 +609,7 @@ As of **December 13, 2025** the precision and recall of RefactoringMiner on this
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|945  |  6  |  2  | 0.994  | 0.998|
+|**Total**|965  |  6  |  2  | 0.994  | 0.998|
 |Extract Method|33  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|12  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 5  |  0  |  0  | 1.000  | 1.000|
@@ -629,9 +629,9 @@ As of **December 13, 2025** the precision and recall of RefactoringMiner on this
 |Extract And Move Method|10  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|51  |  1  |  0  | 0.981  | 1.000|
 |Inline Variable|18  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|106  |  1  |  0  | 0.991  | 1.000|
-|Rename Parameter|123  |  1  |  0  | 0.992  | 1.000|
-|Rename Attribute|23  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable|110  |  1  |  0  | 0.991  | 1.000|
+|Rename Parameter|128  |  1  |  0  | 0.992  | 1.000|
+|Rename Attribute|24  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable| 1  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Variable| 7  |  0  |  0  | 1.000  | 1.000|
@@ -641,8 +641,8 @@ As of **December 13, 2025** the precision and recall of RefactoringMiner on this
 |Add Method Annotation|26  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|18  |  0  |  0  | 1.000  | 1.000|
 |Add Class Annotation| 1  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|194  |  0  |  1  | 1.000  | 0.995|
-|Remove Parameter|56  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|196  |  0  |  1  | 1.000  | 0.995|
+|Remove Parameter|64  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter|17  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Conditional| 4  |  0  |  0  | 1.000  | 1.000|

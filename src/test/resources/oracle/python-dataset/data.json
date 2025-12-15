@@ -9029,4 +9029,103 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160037,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "3d93e8bf15bb7f6f2e9b4b36c290e9c3490ce796",
+    "url": "https://github.com/asyml/texar/commit/3d93e8bf15bb7f6f2e9b4b36c290e9c3490ce796",
+    "author": "zcyang",
+    "time": "2/22/18 09:36 PM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter rho_lm in method public eval_step(sess, batch, rho_f, rho_r, rho_lm, rho_rec, gamma) from class models.tsf.tsf_classifier_att_lm_rec.TSFClassifierAttLMRec",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter rho_rec in method public eval_step(sess, batch, rho_f, rho_r, rho_lm, rho_rec, gamma) from class models.tsf.tsf_classifier_att_lm_rec.TSFClassifierAttLMRec",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160038,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "406f63d3c86d9f81931da80c7e0595518b42132f",
+    "url": "https://github.com/asyml/texar/commit/406f63d3c86d9f81931da80c7e0595518b42132f",
+    "author": "ZhitingHu",
+    "time": "8/22/17 04:52 PM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public variables() renamed to public trainable_variables() in class modules.module_base.ModuleBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute _variables to _trainable_variables in class modules.module_base.ModuleBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160039,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "41ba77ab8f310473ccc1b8b1c8845e43d74fd12e",
+    "url": "https://github.com/asyml/texar/commit/41ba77ab8f310473ccc1b8b1c8845e43d74fd12e",
+    "author": "zcyang",
+    "time": "1/4/18 12:13 PM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter mask in method public call(query, keys, values, values_length, mask) from class models.tsf.attention.AttentionLayer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter mask in method public __init__(vocab_size, attention_keys, attention_values, attention_values_length, attention_layer, cell, mask, hparams) from class models.tsf.attention_decoder.AttentionDecoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160040,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "42efaa53edce9b84a98fef1fce24502e6d2ba941",
+    "url": "https://github.com/asyml/texar/commit/42efaa53edce9b84a98fef1fce24502e6d2ba941",
+    "author": null,
+    "time": "12/8/17 01:13 PM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter subscope in method public get_embedding(hparams, init_values, vocab_size, variable_scope, subscope) from class core.layers.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Code",
+        "description": "Move Code from protected _build(inputs, kwargs) to public __init__(embedding, vocab_size, hparams) in class modules.encoders.transformer_encoders.TransformerEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Code",
+        "description": "Move Code from protected _build(inputs, encoder_output) to public __init__(embedding, vocab_size, hparams) in class modules.decoders.transformer_decoders.TransformerDecoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

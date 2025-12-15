@@ -7756,7 +7756,14 @@ public class UMLModelDiff {
 		for(AbstractCodeMapping mapping : mapper.getMappings()) {
 			if(mapping instanceof LeafMapping && mapping.isExact() && !mapping.getFragment1().getString().startsWith(LANG.RETURN_SPACE)
 					&& !(mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression)) {
-				exactLeafMappings++;
+				boolean pipelineRef = false;
+				for(Refactoring r : mapping.getRefactorings()) {
+					if(r.getRefactoringType().equals(RefactoringType.REPLACE_LOOP_WITH_PIPELINE) || r.getRefactoringType().equals(RefactoringType.REPLACE_PIPELINE_WITH_LOOP))
+						pipelineRef = true;
+				}
+				if(!pipelineRef) {
+					exactLeafMappings++;
+				}
 			}
 		}
 		double normalizedEditDistance = mapper.normalizedEditDistance();

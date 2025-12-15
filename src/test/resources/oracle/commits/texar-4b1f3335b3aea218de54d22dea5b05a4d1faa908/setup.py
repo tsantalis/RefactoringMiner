@@ -15,7 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     platforms='any',
 
-    install_requires=['tensorflow==1.1.0'],
+    install_requires=['tensorflow==2.12.1'],
 
     classifiers=[
         'Intended Audience :: Developers',

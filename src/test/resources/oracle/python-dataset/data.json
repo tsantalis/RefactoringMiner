@@ -9128,4 +9128,143 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160041,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "49d7dd085555a2335c4a3d639b639f5e39637971",
+    "url": "https://github.com/asyml/texar/commit/49d7dd085555a2335c4a3d639b639f5e39637971",
+    "author": "ZhitingHu",
+    "time": "10/18/17 01:47 PM",
+    "refactorings": [{
+        "type": "Rename Variable",
+        "description": "Rename Variable dist_instance to dstr in method protected _build(distribution, distribution_type, distribution_kwargs, transform, num_samples) from class modules.connectors.connectors.ReparameterizedStochasticConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter decoder_state_size to output_size in method public __init__(output_size, hparams) from class modules.connectors.connectors.ReparameterizedStochasticConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter batch_size to num_samples in method protected _build(distribution, distribution_type, distribution_kwargs, transform, num_samples) from class modules.connectors.connectors.ReparameterizedStochasticConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter trans to transform in method protected _build(distribution, distribution_type, distribution_kwargs, transform, num_samples) from class modules.connectors.connectors.ReparameterizedStochasticConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter distribution_type in method protected _build(distribution, distribution_type, distribution_kwargs, transform, num_samples) from class modules.connectors.connectors.ReparameterizedStochasticConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter distribution_kwargs in method protected _build(distribution, distribution_type, distribution_kwargs, transform, num_samples) from class modules.connectors.connectors.ReparameterizedStochasticConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter ds_name in method protected _build(distribution, batch_size, trans, ds_name, kwargs) from class modules.connectors.connectors.ReparameterizedStochasticConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter kwargs in method protected _build(distribution, batch_size, trans, ds_name, kwargs) from class modules.connectors.connectors.ReparameterizedStochasticConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter decoder_state_size to output_size in method public __init__(output_size, hparams) from class modules.connectors.connector_base.ConnectorBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute _decoder_state_size to _output_size in class modules.connectors.connector_base.ConnectorBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160042,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "632596ae718297a6c36bf87c8303298d672fd851",
+    "url": "https://github.com/asyml/texar/commit/632596ae718297a6c36bf87c8303298d672fd851",
+    "author": "ZhitingHu",
+    "time": "3/23/18 09:31 PM",
+    "refactorings": [{
+        "type": "Extract Method",
+        "description": "Extract Method public is_train_mode(mode) extracted from public switch_dropout(dropout_keep_prob, mode) in class utils.utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160043,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "6426fc937946517f208e0b8525d7f85afb952cef",
+    "url": "https://github.com/asyml/texar/commit/6426fc937946517f208e0b8525d7f85afb952cef",
+    "author": null,
+    "time": "1/26/18 04:23 AM",
+    "refactorings": [{
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected _rnn_output_size() from class modules.decoders.rnn_decoders.BasicRNNDecoder to protected _rnn_output_size() from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable prob_fn in method public __init__(memory, memory_sequence_length, cell_input_fn, cell, embedding, vocab_size, output_layer, hparams) from class modules.decoders.rnn_decoders.AttentionRNNDecoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable atten_cell_kwargs to attn_cell_kwargs in method public __init__(memory, memory_sequence_length, cell_input_fn, cell, embedding, vocab_size, output_layer, hparams) from class modules.decoders.rnn_decoders.AttentionRNNDecoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter output_layer in method public __init__(memory, memory_sequence_length, cell_input_fn, cell, embedding, vocab_size, output_layer, hparams) from class modules.decoders.rnn_decoders.AttentionRNNDecoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable state_size in method public output_size() from class modules.decoders.rnn_decoders.AttentionRNNDecoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

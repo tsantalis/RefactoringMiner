@@ -1,0 +1,143 @@
+#
+"""
+Unit tests for connectors.
+"""
+
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
+import tensorflow as tf
+import tensorflow.contrib.distributions as tfds
+from tensorflow.python.util import nest    # pylint: disable=E0611
+
+from txtgen.core import layers
+from txtgen.modules.connectors.connectors import ConstantConnector
+from txtgen.modules.connectors.connectors import ReparameterizedStochasticConnector
+from txtgen.modules.connectors.connectors import StochasticConnector
+from txtgen.modules.connectors.connectors import ConcatConnector
+
+# pylint: disable=too-many-locals
+
+class TestConnectors(tf.test.TestCase):
+    """Tests various connectors.
+    """
+
+    def setUp(self):
+        tf.test.TestCase.setUp(self)
+        self._batch_size = 100
+
+        self._decoder_cell = layers.get_rnn_cell(
+            layers.default_rnn_cell_hparams())
+
+    def test_constant_connector(self):
+        """Tests the logic of
+        :class:`~txtgen.modules.connectors.ConstantConnector`.
+        """
+        connector = ConstantConnector(self._decoder_cell.state_size)
+
+        decoder_initial_state_0 = connector(self._batch_size)
+        decoder_initial_state_1 = connector(self._batch_size, value=1.)
+        nest.assert_same_structure(decoder_initial_state_0,
+                                   self._decoder_cell.state_size)
+        nest.assert_same_structure(decoder_initial_state_1,
+                                   self._decoder_cell.state_size)
+
+        with self.test_session() as sess:
+            sess.run(tf.global_variables_initializer())
+            s_0, s_1 = sess.run(
+                [decoder_initial_state_0, decoder_initial_state_1])
+            self.assertEqual(nest.flatten(s_0)[0][0, 0], 0.)
+            self.assertEqual(nest.flatten(s_1)[0][0, 0], 1.)
+
+    def test_forward_connector(self):
+        """Tests the logic of
+        :class:`~txtgen.modules.connectors.ForwardConnector`.
+        """
+        # TODO(zhiting)
+        pass
+
+    def test_mlp_transform_connector(self):
+        """Tests the logic of
+        :class:`~txtgen.modules.connectors.MLPTransformConnector`.
+        """
+        # TODO(zhiting)
+        pass
+
+    def test_reparameterized_stochastic_connector(self):
+        """Tests the logic of
+        :class:`~txtgen.modules.connectors.ReparameterizedStochasticConnector`.
+        """
+        state_size = (10, 10)
+        variable_size = 100
+
+        # pylint: disable=invalid-name
+        mu = tf.zeros([self._batch_size,variable_size])
+        var = tf.ones([self._batch_size,variable_size])
+        gauss_ds = tfds.MultivariateNormalDiag(loc=mu, scale_diag=var)
+        gauss_connector = ReparameterizedStochasticConnector(state_size)
+
+        sample1 = gauss_connector(gauss_ds)
+        sample2 = gauss_connector(ds_name="MultivariateNormalDiag", loc=mu, scale_diag=var)
+
+        with self.test_session() as sess:
+            sess.run(tf.global_variables_initializer())
+            sample_output1, sample_output2 = sess.run([sample1, sample2])
+
+            # check the same size
+            self.assertEqual(sample_output1[0].shape, tf.TensorShape([self._batch_size, state_size[0]]))
+            self.assertEqual(sample_output2[0].shape, tf.TensorShape([self._batch_size, state_size[0]]))
+
+            # sample_mu = np.mean(sample_outputs, axis=0)
+            # # pylint: disable=no-member
+            # sample_var = np.var(sample_outputs, axis=0)
+
+            ## check if the value is approximated N(0, 1)
+            # for i in range(variable_size):
+               # self.assertAlmostEqual(0, sample_mu[i], delta=0.2)
+               # self.assertAlmostEqual(1, sample_var[i], delta=0.2)
+
+    def test_concat_connector(self): # pylint: disable=too-many-locals
+        """Tests the logic of
+        :class:`~txtgen.modules.connectors.ConcatConnector`.
+        """
+        gauss_size = 5
+        constant_size = 7
+        variable_size = 13
+
+        decoder_size1 = 16
+        decoder_size2 = (16, 32)
+
+        gauss_connector = StochasticConnector(3)
+        categorical_connector = StochasticConnector(3)
+        constant_connector = ConstantConnector(constant_size)
+        concat_connector1 = ConcatConnector(decoder_size1)
+        concat_connector2 = ConcatConnector(decoder_size2)
+
+        # pylint: disable=invalid-name
+        mu = tf.zeros([self._batch_size, gauss_size])
+        var = tf.ones([self._batch_size, gauss_size])
+        categorical_prob = tf.constant([[0.1, 0.2, 0.7] for _ in xrange(self._batch_size)])
+        categorical_ds = tfds.Categorical(probs = categorical_prob)
+        gauss_ds = tfds.MultivariateNormalDiag(loc = mu, scale_diag = var)
+
+        gauss_state = gauss_connector(gauss_ds)
+        categorical_state = categorical_connector(categorical_ds)
+        constant_state = constant_connector(self._batch_size, value=1.)
+        with tf.Session() as debug_sess:
+            debug_cater = debug_sess.run(categorical_state)
+
+        state1 = concat_connector1([gauss_state, categorical_state, constant_state])
+        state2 = concat_connector2([gauss_state, categorical_state, constant_state])
+
+        with self.test_session() as sess:
+            sess.run(tf.global_variables_initializer())
+            [output1, output2] = sess.run([state1, state2])
+
+            # check the same size
+            self.assertEqual(output1.shape[1], decoder_size1)
+            self.assertEqual(output2[1].shape[1], decoder_size2[1])
+
+if __name__ == "__main__":
+    tf.test.main()

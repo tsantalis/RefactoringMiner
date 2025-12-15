@@ -9267,4 +9267,64 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160044,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "6753612fae020893134e643e8c5fecaef059a964",
+    "url": "https://github.com/asyml/texar/commit/6753612fae020893134e643e8c5fecaef059a964",
+    "author": "ZhitingHu",
+    "time": "2/2/18 07:44 AM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public sequence_embedding_soft_mix(soft_sequence, embedding) renamed to public soft_sequence_embedding(soft_sequence, embedding) in class core.utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160045,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "6cb36d56d73901c2a8379ae7133a0add10f677d9",
+    "url": "https://github.com/asyml/texar/commit/6cb36d56d73901c2a8379ae7133a0add10f677d9",
+    "author": "ZhitingHu",
+    "time": "3/22/18 08:41 PM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter discard_did in method protected _run_and_test(hparams, discard_did) from class data.data.multi_aligned_data_test.MultiAlignedDataTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter discard_src in method protected _run_and_test(hparams, proc_shr, length_inc, discard_src) from class data.data.paired_text_data_test.PairedTextDataTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method protected _make_length_fn() renamed to protected _make_bucket_length_fn() in class data.data.mono_text_data.MonoTextData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method protected _make_length_fn() renamed to protected _make_bucket_length_fn() in class data.data.paired_text_data.PairedTextData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method protected _make_length_fn() renamed to protected _make_bucket_length_fn() in class data.data.multi_aligned_data.MultiAlignedData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

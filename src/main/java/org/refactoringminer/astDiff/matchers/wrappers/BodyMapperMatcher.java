@@ -192,7 +192,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             return;
         }
         if (srcStatementNode.getType().name.equals(dstStatementNode.getType().name))
-            if(srcStatementNode.isIsomorphicTo(dstStatementNode) && srcTree.getType().name.equals(Constants.get().MODULE))
+            if(srcStatementNode.isIsoStructuralTo(dstStatementNode) && srcTree.getType().name.equals(Constants.get().MODULE))
                 mappingStore.addMappingRecursively(srcStatementNode, dstStatementNode);
             else
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);

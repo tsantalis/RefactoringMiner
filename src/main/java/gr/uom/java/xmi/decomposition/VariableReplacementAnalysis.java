@@ -1430,6 +1430,31 @@ public class VariableReplacementAnalysis {
 						}
 					}
 				}
+				else if(replacement instanceof MethodInvocationReplacement) {
+					MethodInvocationReplacement invocationReplacement = (MethodInvocationReplacement)replacement;
+					AbstractCall invocationBefore = invocationReplacement.getInvokedOperationBefore();
+					AbstractCall invocationAfter = invocationReplacement.getInvokedOperationAfter();
+					if(invocationBefore.identicalName(invocationAfter) && invocationBefore.identicalExpression(invocationAfter) && !invocationBefore.equalArguments(invocationAfter) &&
+							!invocationBefore.getName().equals("of")) { // calls like List.of() or Option.of() are likely to have added argument without split
+						Set<String> argumentIntersection = new LinkedHashSet<String>(invocationBefore.arguments());
+						argumentIntersection.retainAll(invocationAfter.arguments());
+						Set<String> arguments1WithoutCommon = new LinkedHashSet<String>(invocationBefore.arguments());
+						arguments1WithoutCommon.removeAll(argumentIntersection);
+						Set<String> arguments2WithoutCommon = new LinkedHashSet<String>(invocationAfter.arguments());
+						arguments2WithoutCommon.removeAll(argumentIntersection);
+						if(arguments2WithoutCommon.size() > arguments1WithoutCommon.size() && arguments1WithoutCommon.size() == 1) {
+							SplitVariableReplacement split = new SplitVariableReplacement(arguments1WithoutCommon.iterator().next(), arguments2WithoutCommon);
+							if(splitMap.containsKey(split)) {
+								splitMap.get(split).add(mapping);
+							}
+							else {
+								Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
+								mappings.add(mapping);
+								splitMap.put(split, mappings);
+							}
+						}
+					}
+				}
 			}
 		}
 		Map<String, Set<VariableDeclaration>> arrayAccessMap = new LinkedHashMap<>();

@@ -2191,13 +2191,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					AbstractCodeFragment streamAPICallStatement = null;
 					List<AbstractCall> streamAPICalls = null;
 					for(AbstractCodeFragment leaf1 : streamAPIStatements1) {
-						if(leaves1.contains(leaf1)) {
-							boolean matchingLambda = nestedLambdaExpressionMatch(leaf1.getLambdas(), fragment1);
-							if(matchingLambda) {
-								streamAPICallStatement = leaf1;
-								streamAPICalls = streamAPICalls(leaf1);
-								break;
-							}
+						boolean matchingLambda = nestedLambdaExpressionMatch(leaf1.getLambdas(), fragment1);
+						if(leaves1.contains(leaf1) || matchingLambda) {
+							streamAPICallStatement = leaf1;
+							streamAPICalls = streamAPICalls(leaf1);
+							break;
 						}
 					}
 					if(streamAPICallStatement != null && streamAPICalls != null) {
@@ -2240,6 +2238,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 													additionallyMatchedStatements2.add(comp);
 													composite = comp;
 													break;
+												}
+											}
+										}
+									}
+								}
+							}
+							else if(streamAPICall.getName().equals("map")) {
+								for(AbstractCodeFragment leaf2 : leaves2) {
+									for(AbstractCall invocation2 : leaf2.getMethodInvocations()) {
+										for(LambdaExpressionObject lambda : streamAPICallStatement.getLambdas()) {
+											if(streamAPICall.getLocationInfo().subsumes(lambda.getLocationInfo())) {
+												for(AbstractCall invocation1 : lambda.getAllOperationInvocations()) {
+													if(invocation1.getName().equals(invocation2.getName())) {
+														additionallyMatchedStatements2.add(leaf2);
+													}
 												}
 											}
 										}
@@ -2305,10 +2318,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						CompositeReplacement replacement = new CompositeReplacement(streamAPICallStatement.getString(), composite.getString(), additionallyMatchedStatements1, additionallyMatchedStatements2);
 						Set<Replacement> replacements = new LinkedHashSet<>();
 						replacements.add(replacement);
-						LeafMapping newMapping = createLeafMapping(streamAPICallStatement, composite, new LinkedHashMap<String, String>(), false);
-						newMapping.addReplacements(replacements);
-						TreeSet<LeafMapping> mappingSet = new TreeSet<>();
-						mappingSet.add(newMapping);
+						List<LeafMapping> mappingSet = new ArrayList<>();
+						for(AbstractCodeFragment f : additionallyMatchedStatements2) {
+							if(f.getVariableDeclarations().size() == 0 || f instanceof CompositeStatementObject) {
+								LeafMapping newMapping = createLeafMapping(streamAPICallStatement, f, new LinkedHashMap<String, String>(), false);
+								newMapping.addReplacements(replacements);
+								mappingSet.add(newMapping);
+							}
+						}
 						for(VariableDeclaration lambdaParameter : lambdaParameters) {
 							for(VariableDeclaration compositeParameter : composite.getVariableDeclarations()) {
 								if(lambdaParameter.getVariableName().equals(compositeParameter.getVariableName())) {
@@ -2337,15 +2354,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						boolean allAdditionalMatchedStatementsInParentMapper = count == additionallyMatchedStatements1.size();
 						if(!allAdditionalMatchedStatementsInParentMapper) {
 							ReplacePipelineWithLoopRefactoring ref = new ReplacePipelineWithLoopRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, container1, container2);
-							newMapping.addRefactoring(ref);
+							mappingSet.get(0).addRefactoring(ref);
 							for(AbstractCodeMapping m : this.mappings) {
 								if(composite.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) && streamAPICallStatement.getLocationInfo().subsumes(m.getFragment1().getLocationInfo())) {
 									ref.addNestedStatementMapping(m);
 								}
 							}
 						}
-						addToMappings(newMapping, mappingSet);
-						leaves1.remove(newMapping.getFragment1());
+						for(LeafMapping newMapping : mappingSet) {
+							addToMappings(newMapping, new TreeSet<>(mappingSet));
+							leaves1.remove(newMapping.getFragment1());
+						}
 						innerNodeIterator2.remove();
 					}
 				}

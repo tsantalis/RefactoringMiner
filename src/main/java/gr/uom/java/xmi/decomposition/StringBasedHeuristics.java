@@ -3232,7 +3232,7 @@ public class StringBasedHeuristics {
 			String AND = LANG.AND.strip();
 			String OR = LANG.OR.strip();
 			boolean containLogicalOperator = s1.contains(OR) || s1.contains(AND) || s2.contains(OR) || s2.contains(AND);
-			boolean containsNotOperator = s1.contains(LANG.NOT) != s2.contains(LANG.NOT);
+			boolean containsNotOperator = (s1.contains(LANG.NOT) || s1.contains("!")) != (s2.contains(LANG.NOT) || s2.contains("!"));
 			if(containLogicalOperator || ternaryConditions || containsNotOperator) {
 				List<String> subConditionsAsList1 = new ArrayList<String>();
 				List<String> subConditionsAsList2 = new ArrayList<String>();

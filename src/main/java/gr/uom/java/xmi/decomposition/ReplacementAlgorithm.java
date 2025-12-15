@@ -1610,7 +1610,7 @@ public class ReplacementAlgorithm {
 				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo, LANG) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2, variableDeclarations1, variableDeclarations2, LANG) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString(), variableDeclarations1, variableDeclarations2, LANG) ||
 				(invocationCoveringTheEntireStatement1 == null && invocationCoveringTheEntireStatement2 == null && creationCoveringTheEntireStatement1 == null && creationCoveringTheEntireStatement2 == null && wrapInMethodCall(s1, s2, methodInvocationMap1, replacementInfo)) ||
-				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper))) ||
+				(containsValidOperatorReplacements(replacementInfo, LANG) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper))) ||
 				equalAfterArgumentMerge(s1, s2, replacementInfo, LANG) ||
 				equalAfterNewArgumentAdditions(s1, s2, replacementInfo, operationBodyMapper) ||
 				(validStatementForConcatComparison(statement1, statement2) && commonConcat(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper)) ||
@@ -1734,14 +1734,16 @@ public class ReplacementAlgorithm {
 					assignmentInvocationCoveringTheEntireStatement1 != null ? assignmentInvocationCoveringTheEntireStatement1 : assignmentCreationCoveringTheEntireStatement1,
 					assignmentInvocationCoveringTheEntireStatement2 != null ? assignmentInvocationCoveringTheEntireStatement2 : assignmentCreationCoveringTheEntireStatement2,
 					methodInvocationMap1, methodInvocationMap2,	anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, operationBodyMapper);
-			if(s1.equals(s2) && replacementInfo.containsOnlyReplacement(ReplacementType.INFIX_OPERATOR) && containsValidOperatorReplacements(replacementInfo)) {
+			if(s1.equals(s2) && replacementInfo.containsOnlyReplacement(ReplacementType.INFIX_OPERATOR) && containsValidOperatorReplacements(replacementInfo, LANG)) {
+				String AND = LANG.AND.strip();
+				String OR = LANG.OR.strip();
 				List<Replacement> operatorReplacements = replacementInfo.getReplacements(ReplacementType.INFIX_OPERATOR);
 				boolean booleanOperatorReversed = false;
 				for(Replacement r : operatorReplacements) {
-					if(r.getBefore().equals("&&") && r.getAfter().equals("||")) {
+					if(r.getBefore().equals(AND) && r.getAfter().equals(OR)) {
 						booleanOperatorReversed = true;
 					}
-					else if(r.getBefore().equals("||") && r.getAfter().equals("&&")) {
+					else if(r.getBefore().equals(OR) && r.getAfter().equals(AND)) {
 						booleanOperatorReversed = true;
 					}
 					else if(r.getBefore().equals("==") && r.getAfter().equals("!=")) {

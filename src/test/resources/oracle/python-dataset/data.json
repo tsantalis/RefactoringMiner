@@ -8726,4 +8726,124 @@
         "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160029,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "0b93811a3ed5b8098190ada79695b86397372e8b",
+    "url": "https://github.com/asyml/texar/commit/0b93811a3ed5b8098190ada79695b86397372e8b",
+    "author": "ZhitingHu",
+    "time": "8/30/17 09:24 PM",
+    "refactorings": [{
+        "type": "Extract Method",
+        "description": "Extract Method public get_class(class_name, module_paths) extracted from public get_instance(class_name, args, module_paths) in class core.utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160030,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "15c89efc11b4e7ad9789f264fb53e327fb72f25d",
+    "url": "https://github.com/asyml/texar/commit/15c89efc11b4e7ad9789f264fb53e327fb72f25d",
+    "author": null,
+    "time": "12/23/17 12:03 PM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter queries_valid_length in method public multihead_attention(queries, keys, queries_valid_length, keys_valid_length, num_units, num_heads, dropout_rate, causality, scope) from class core.layers.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter keys_valid_length in method public multihead_attention(queries, keys, queries_valid_length, keys_valid_length, num_units, num_heads, dropout_rate, causality, scope) from class core.layers.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter inputs_length in method protected _build(inputs, inputs_length, kwargs) from class modules.encoders.transformer_encoders.TransformerEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter src_length in method protected _build(inputs, encoder_output, src_length, tgt_length) from class modules.decoders.transformer_decoders.TransformerDecoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter tgt_length in method protected _build(inputs, encoder_output, src_length, tgt_length) from class modules.decoders.transformer_decoders.TransformerDecoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160031,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "1629d23ed2688462f9a539b1142cb5088270bef5",
+    "url": "https://github.com/asyml/texar/commit/1629d23ed2688462f9a539b1142cb5088270bef5",
+    "author": "zcyang",
+    "time": "2/4/18 02:00 PM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter rho_lm in method public eval_step(sess, batch, rho_f, rho_r, rho_lm, gamma) from class models.tsf.tsf_classifier_lm.TSFClassifierLM",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160032,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "1c499b27e225d0c3b8634347c1bb924e26842cd1",
+    "url": "https://github.com/asyml/texar/commit/1c499b27e225d0c3b8634347c1bb924e26842cd1",
+    "author": "ZhitingHu",
+    "time": "9/16/17 03:49 PM",
+    "refactorings": [{
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute _vocab_size from class modules.decoders.rnn_decoders.BasicRNNDecoder to _vocab_size from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter start_token to start_tokens in method public make_helper(helper_type, inputs, sequence_length, embedding, start_tokens, end_token, kwargs) from class modules.decoders.rnn_decoder_helpers.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter embedding in method public __init__(cell, embedding, embedding_trainable, vocab_size, hparams, name) from class modules.decoders.rnn_decoders.BasicRNNDecoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter embedding_trainable in method public __init__(cell, embedding, embedding_trainable, vocab_size, hparams, name) from class modules.decoders.rnn_decoders.BasicRNNDecoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Reorder Parameter",
+        "description": "Reorder Parameter [vocab_size, cell, hparams, name] to [cell, embedding, embedding_trainable, vocab_size, hparams, name] in method public __init__(cell, embedding, embedding_trainable, vocab_size, hparams, name) from class modules.decoders.rnn_decoders.BasicRNNDecoder",
+        "comment": "<p>Two parameters&nbsp;embedding,&nbsp;embedding_trainable were added, cell moved from second to first position</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }],
+    "refDiffExecutionTime": 0
 }]

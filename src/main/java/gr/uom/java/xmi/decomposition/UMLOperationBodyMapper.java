@@ -2531,6 +2531,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										}
 									}
 								}
+								else if(streamAPICall.getName().equals("map")) {
+									for(AbstractCodeFragment leaf1 : leaves1) {
+										for(AbstractCall invocation1 : leaf1.getMethodInvocations()) {
+											for(LambdaExpressionObject lambda : streamAPICallStatement.getLambdas()) {
+												if(streamAPICall.getLocationInfo().subsumes(lambda.getLocationInfo())) {
+													for(AbstractCall invocation2 : lambda.getAllOperationInvocations()) {
+														if(invocation1.getName().equals(invocation2.getName())) {
+															additionallyMatchedStatements1.add(leaf1);
+														}
+													}
+												}
+											}
+										}
+									}
+								}
 								else if(streamAPICall.getName().equals("stream")) {
 									if(!additionallyMatchedStatements1.contains(composite)) {
 										for(AbstractExpression expression : composite.getExpressions()) {
@@ -2561,12 +2576,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							CompositeReplacement replacement = new CompositeReplacement(composite.getString(), streamAPICallStatement.getString(), additionallyMatchedStatements1, additionallyMatchedStatements2);
 							Set<Replacement> replacements = new LinkedHashSet<>();
 							replacements.add(replacement);
-							LeafMapping newMapping = createLeafMapping(composite, streamAPICallStatement, new LinkedHashMap<String, String>(), false);
-							newMapping.addReplacements(replacements);
-							TreeSet<LeafMapping> mappingSet = new TreeSet<>();
-							mappingSet.add(newMapping);
 							if(!additionallyMatchedStatements1.contains(composite)) {
 								additionallyMatchedStatements1.add(composite);
+							}
+							List<LeafMapping> mappingSet = new ArrayList<>();
+							for(AbstractCodeFragment f : additionallyMatchedStatements1) {
+								if(f.getVariableDeclarations().size() == 0 || f instanceof CompositeStatementObject) {
+									LeafMapping newMapping = createLeafMapping(f, streamAPICallStatement, new LinkedHashMap<String, String>(), false);
+									newMapping.addReplacements(replacements);
+									mappingSet.add(newMapping);
+								}
 							}
 							for(VariableDeclaration lambdaParameter : lambdaParameters) {
 								for(VariableDeclaration compositeParameter : composite.getVariableDeclarations()) {
@@ -2594,9 +2613,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									ref.addNestedStatementMapping(m);
 								}
 							}
-							newMapping.addRefactoring(ref);
-							addToMappings(newMapping, mappingSet);
-							leaves2.remove(newMapping.getFragment2());
+							mappingSet.get(0).addRefactoring(ref);
+							for(LeafMapping newMapping : mappingSet) {
+								addToMappings(newMapping, new TreeSet<>(mappingSet));
+								leaves2.remove(newMapping.getFragment2());
+							}
 						}
 					}
 				}

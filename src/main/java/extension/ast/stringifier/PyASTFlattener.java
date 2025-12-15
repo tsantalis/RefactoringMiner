@@ -1,6 +1,7 @@
 package extension.ast.stringifier;
 
 import extension.ast.node.LangASTNode;
+import extension.ast.node.OperatorEnum;
 import extension.ast.node.declaration.LangMethodDeclaration;
 import extension.ast.node.declaration.LangSingleVariableDeclaration;
 import extension.ast.node.declaration.LangTypeDeclaration;
@@ -366,6 +367,9 @@ public class PyASTFlattener implements LangASTFlattener {
     @Override
     public void visit(LangPrefixExpression langPrefixExpression) {
         builder.append(langPrefixExpression.getOperator().getSymbol());
+        if(langPrefixExpression.getOperator().equals(OperatorEnum.NOT)) {
+        	builder.append(" ");
+        }
         langPrefixExpression.getOperand().accept(this);
     }
 

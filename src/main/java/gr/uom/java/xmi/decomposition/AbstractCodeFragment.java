@@ -487,7 +487,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		String statement = getString();
 		for(AbstractCall invocation : getMethodInvocations()) {
 			String methodInvocation = invocation.getString();
-			if((methodInvocation + LANG.STATEMENT_TERMINATION).equals(statement) || methodInvocation.equals(statement) || ("!" + methodInvocation).equals(statement)) {
+			if((methodInvocation + LANG.STATEMENT_TERMINATION).equals(statement) || methodInvocation.equals(statement) || (LANG.NOT + methodInvocation).equals(statement)) {
 				invocation.coverage = StatementCoverageType.ONLY_CALL;
 				return invocation;
 			}
@@ -545,7 +545,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		String statement = getString();
 		for(TernaryOperatorExpression ternary : getTernaryOperatorExpressions()) {
 			String methodInvocation = ternary.getString();
-			if((methodInvocation + LANG.STATEMENT_TERMINATION).equals(statement) || methodInvocation.equals(statement) || ("!" + methodInvocation).equals(statement)) {
+			if((methodInvocation + LANG.STATEMENT_TERMINATION).equals(statement) || methodInvocation.equals(statement) || (LANG.NOT + methodInvocation).equals(statement)) {
 				return ternary;
 			}
 			else if((LANG.RETURN_SPACE + methodInvocation + LANG.STATEMENT_TERMINATION).equals(statement)) {
@@ -569,7 +569,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		String statement = getString();
 		for(ComprehensionExpression comprehension : getComprehensions()) {
 			String methodInvocation = comprehension.getString();
-			if((methodInvocation + LANG.STATEMENT_TERMINATION).equals(statement) || methodInvocation.equals(statement) || ("!" + methodInvocation).equals(statement)) {
+			if((methodInvocation + LANG.STATEMENT_TERMINATION).equals(statement) || methodInvocation.equals(statement) || (LANG.NOT + methodInvocation).equals(statement)) {
 				return comprehension;
 			}
 			else if((LANG.RETURN_SPACE + methodInvocation + LANG.STATEMENT_TERMINATION).equals(statement)) {

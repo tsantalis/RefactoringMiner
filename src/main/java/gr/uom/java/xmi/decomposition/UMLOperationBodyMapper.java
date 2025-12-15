@@ -7982,7 +7982,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(comp1.getExpressions().size() == 1 && comp2.getExpressions().size() == 1) {
 					AbstractExpression expr1 = comp1.getExpressions().get(0);
 					AbstractExpression expr2 = comp2.getExpressions().get(0);
-					if(expr1.toString().equals("!" + expr2.toString()) || expr2.toString().equals("!" + expr1.toString())) {
+					if(expr1.toString().equals(LANG.NOT + expr2.toString()) || expr2.toString().equals(LANG.NOT + expr1.toString())) {
 						return new TreeSet<LeafMapping>();
 					}
 				}
@@ -8000,7 +8000,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(comp1.getExpressions().size() == 1 && comp2.getExpressions().size() == 1) {
 					AbstractExpression expr1 = comp1.getExpressions().get(0);
 					AbstractExpression expr2 = comp2.getExpressions().get(0);
-					if(expr1.toString().equals("!" + expr2.toString()) || expr2.toString().equals("!" + expr1.toString())) {
+					if(expr1.toString().equals(LANG.NOT + expr2.toString()) || expr2.toString().equals(LANG.NOT + expr1.toString())) {
 						return new TreeSet<LeafMapping>();
 					}
 				}

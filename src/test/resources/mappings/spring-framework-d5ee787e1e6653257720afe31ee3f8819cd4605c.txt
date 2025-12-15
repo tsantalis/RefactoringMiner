@@ -18460,6 +18460,7 @@ line range:76-76==line range:82-82
 line range:77-77==line range:83-83
 private checkContainsAll(expected Map, actual Map<String,Object>) : void -> private checkContainsAll(expected Map, actual Map<String,Object>) : void
 line range:283-283==line range:285-285
+line range:283-283==line range:284-286
 line range:280-284==line range:284-286
 public testRenderWithoutStaticAttributes() : void -> public renderWithoutStaticAttributes() : void
 line range:49-49==line range:53-53
@@ -18624,6 +18625,7 @@ line range:73-73==line range:80-80
 line range:78-78==line range:84-84
 line range:79-79==line range:85-85
 line range:83-83==line range:88-88
+line range:83-83==line range:87-89
 line range:82-84==line range:87-89
 public testAlwaysInclude() : void -> public alwaysInclude() : void
 line range:96-96==line range:94-94
@@ -18632,6 +18634,7 @@ line range:106-106==line range:102-102
 line range:101-101==line range:97-97
 line range:102-102==line range:98-98
 line range:105-105==line range:101-101
+line range:110-110==line range:104-104
 line range:110-110==line range:104-104
 line range:109-111==line range:104-104
 public testIncludeOnAttribute() : void -> public includeOnAttribute() : void
@@ -18642,6 +18645,7 @@ line range:134-134==line range:117-117
 line range:130-130==line range:113-113
 line range:133-133==line range:116-116
 line range:138-138==line range:119-119
+line range:138-138==line range:119-119
 line range:137-139==line range:119-119
 public testIncludeOnCommitted() : void -> public includeOnCommitted() : void
 line range:151-151==line range:124-124
@@ -18651,6 +18655,7 @@ line range:157-157==line range:128-128
 line range:163-163==line range:133-133
 line range:159-159==line range:129-129
 line range:162-162==line range:132-132
+line range:167-167==line range:135-135
 line range:167-167==line range:135-135
 line range:166-168==line range:135-135
 protected getCache() : boolean -> protected getCache() : boolean

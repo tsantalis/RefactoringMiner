@@ -2,6 +2,7 @@ public visit(n AnnotationDeclaration, arg A) : void -> public visit(n Annotation
 line range:46-46==line range:43-43
 line range:44-44==line range:45-45
 line range:49-49==line range:42-42
+line range:49-49==line range:42-42
 line range:48-50==line range:42-42
 public visit(n AnnotationMemberDeclaration, arg A) : void -> public visit(n AnnotationMemberDeclaration, arg A) : void
 line range:58-58==line range:52-52
@@ -16,9 +17,11 @@ line range:74-74==line range:66-66
 line range:73-73==line range:69-69
 line range:76-76==line range:68-68
 line range:79-79==line range:67-67
+line range:76-76==line range:68-68
 line range:75-77==line range:68-68
 public visit(n ArrayInitializerExpr, arg A) : void -> public visit(n ArrayInitializerExpr, arg A) : void
 line range:85-85==line range:75-75
+line range:88-88==line range:74-74
 line range:88-88==line range:74-74
 line range:87-89==line range:74-74
 public visit(n AssertStmt, arg A) : void -> public visit(n AssertStmt, arg A) : void
@@ -36,6 +39,7 @@ line range:111-111==line range:96-96
 public visit(n BlockComment, arg A) : void -> public visit(n BlockComment, arg A) : void
 public visit(n BlockStmt, arg A) : void -> public visit(n BlockStmt, arg A) : void
 line range:122-122==line range:107-107
+line range:125-125==line range:106-106
 line range:125-125==line range:106-106
 line range:124-126==line range:106-106
 public visit(n BooleanLiteralExpr, arg A) : void -> public visit(n BooleanLiteralExpr, arg A) : void
@@ -64,9 +68,13 @@ line range:172-172==line range:150-150
 line range:175-175==line range:148-148
 line range:178-178==line range:149-149
 line range:181-181==line range:151-151
+line range:172-172==line range:150-150
 line range:171-173==line range:150-150
+line range:175-175==line range:148-148
 line range:174-176==line range:148-148
+line range:178-178==line range:149-149
 line range:177-179==line range:149-149
+line range:181-181==line range:151-151
 line range:180-182==line range:151-151
 public visit(n ClassOrInterfaceType, arg A) : void -> public visit(n ClassOrInterfaceType, arg A) : void
 line range:187-187==line range:163-163
@@ -79,7 +87,9 @@ line range:201-201==line range:171-171
 line range:203-203==line range:169-169
 line range:207-207==line range:168-168
 line range:212-212==line range:170-170
+line range:207-207==line range:168-168
 line range:206-208==line range:168-168
+line range:212-212==line range:170-170
 line range:211-213==line range:170-170
 public visit(n ConditionalExpr, arg A) : void -> public visit(n ConditionalExpr, arg A) : void
 line range:220-220==line range:176-176
@@ -93,8 +103,11 @@ line range:227-227==line range:190-190
 line range:231-231==line range:188-188
 line range:237-237==line range:186-186
 line range:242-242==line range:187-187
+line range:231-231==line range:188-188
 line range:230-232==line range:188-188
+line range:237-237==line range:186-186
 line range:236-238==line range:186-186
+line range:242-242==line range:187-187
 line range:241-243==line range:187-187
 public visit(n ContinueStmt, arg A) : void -> public visit(n ContinueStmt, arg A) : void
 line range:251-251==line range:195-195
@@ -117,7 +130,9 @@ public visit(n EnumConstantDeclaration, arg A) : void -> public visit(n EnumCons
 line range:285-285==line range:234-234
 line range:289-289==line range:230-230
 line range:294-294==line range:231-231
+line range:289-289==line range:230-230
 line range:288-290==line range:230-230
+line range:294-294==line range:231-231
 line range:293-295==line range:231-231
 public visit(n EnumDeclaration, arg A) : void -> public visit(n EnumDeclaration, arg A) : void
 line range:303-303==line range:242-242
@@ -125,8 +140,11 @@ line range:301-301==line range:244-244
 line range:306-306==line range:240-240
 line range:311-311==line range:239-239
 line range:316-316==line range:241-241
+line range:306-306==line range:240-240
 line range:305-307==line range:240-240
+line range:311-311==line range:239-239
 line range:310-312==line range:239-239
+line range:316-316==line range:241-241
 line range:315-317==line range:241-241
 public visit(n ExplicitConstructorInvocationStmt, arg A) : void -> public visit(n ExplicitConstructorInvocationStmt, arg A) : void
 line range:323-323==line range:252-252
@@ -146,6 +164,7 @@ line range:349-349==line range:264-264
 public visit(n FieldDeclaration, arg A) : void -> public visit(n FieldDeclaration, arg A) : void
 line range:355-355==line range:273-273
 line range:358-358==line range:271-271
+line range:358-358==line range:271-271
 line range:357-359==line range:271-271
 public visit(n ForeachStmt, arg A) : void -> public visit(n ForeachStmt, arg A) : void
 line range:365-365==line range:280-280
@@ -158,7 +177,9 @@ line range:372-372==line range:290-290
 line range:375-375==line range:288-288
 line range:379-379==line range:287-287
 line range:383-383==line range:289-289
+line range:375-375==line range:288-288
 line range:374-376==line range:288-288
+line range:383-383==line range:289-289
 line range:382-384==line range:289-289
 public visit(n IfStmt, arg A) : void -> public visit(n IfStmt, arg A) : void
 line range:392-392==line range:295-295
@@ -204,14 +225,18 @@ line range:473-473==line range:371-371
 line range:480-480==line range:368-368
 line range:485-485==line range:369-369
 line range:489-489==line range:366-366
+line range:473-473==line range:371-371
 line range:472-474==line range:371-371
+line range:480-480==line range:368-368
 line range:479-481==line range:368-368
+line range:485-485==line range:369-369
 line range:484-486==line range:369-369
 public visit(n NameExpr, arg A) : void -> public visit(n NameExpr, arg A) : void
 line range:495-495==line range:379-379
 public visit(n NormalAnnotationExpr, arg A) : void -> public visit(n NormalAnnotationExpr, arg A) : void
 line range:501-501==line range:385-385
 line range:500-500==line range:386-386
+line range:504-504==line range:384-384
 line range:504-504==line range:384-384
 line range:503-505==line range:384-384
 public visit(n NullLiteralExpr, arg A) : void -> public visit(n NullLiteralExpr, arg A) : void
@@ -251,9 +276,11 @@ line range:584-584==line range:446-446
 public visit(n IntersectionType, arg A) : void -> public visit(n IntersectionType, arg A) : void
 line range:590-590==line range:454-454
 line range:593-593==line range:452-452
+line range:593-593==line range:452-452
 line range:592-594==line range:452-452
 public visit(n UnionType, arg A) : void -> public visit(n UnionType, arg A) : void
 line range:599-599==line range:461-461
+line range:602-602==line range:459-459
 line range:602-602==line range:459-459
 line range:601-603==line range:459-459
 public visit(n ReturnStmt, arg A) : void -> public visit(n ReturnStmt, arg A) : void
@@ -272,10 +299,12 @@ public visit(n SwitchEntryStmt, arg A) : void -> public visit(n SwitchEntryStmt,
 line range:636-636==line range:492-492
 line range:638-638==line range:490-490
 line range:642-642==line range:491-491
+line range:642-642==line range:491-491
 line range:641-643==line range:491-491
 public visit(n SwitchStmt, arg A) : void -> public visit(n SwitchStmt, arg A) : void
 line range:650-650==line range:498-498
 line range:649-649==line range:499-499
+line range:653-653==line range:497-497
 line range:653-653==line range:497-497
 line range:652-654==line range:497-497
 public visit(n SynchronizedStmt, arg A) : void -> public visit(n SynchronizedStmt, arg A) : void
@@ -294,13 +323,16 @@ line range:684-684==line range:525-525
 line range:688-688==line range:526-526
 line range:691-691==line range:523-523
 line range:694-694==line range:524-524
+line range:684-684==line range:525-525
 line range:683-685==line range:525-525
+line range:691-691==line range:523-523
 line range:690-692==line range:523-523
 public visit(n LocalClassDeclarationStmt, arg A) : void -> public visit(n LocalClassDeclarationStmt, arg A) : void
 line range:701-701==line range:532-532
 line range:700-700==line range:533-533
 public visit(n TypeParameter, arg A) : void -> public visit(n TypeParameter, arg A) : void
 line range:706-706==line range:541-541
+line range:709-709==line range:539-539
 line range:709-709==line range:539-539
 line range:708-710==line range:539-539
 public visit(n UnaryExpr, arg A) : void -> public visit(n UnaryExpr, arg A) : void
@@ -310,6 +342,7 @@ public visit(n UnknownType, arg A) : void -> public visit(n UnknownType, arg A) 
 line range:722-722==line range:553-553
 public visit(n VariableDeclarationExpr, arg A) : void -> public visit(n VariableDeclarationExpr, arg A) : void
 line range:727-727==line range:560-560
+line range:730-730==line range:559-559
 line range:730-730==line range:559-559
 line range:729-731==line range:559-559
 public visit(n VariableDeclarator, arg A) : void -> public visit(n VariableDeclarator, arg A) : void
@@ -330,6 +363,7 @@ line range:766-766==line range:587-587
 public visit(n LambdaExpr, arg A) : void -> public visit(n LambdaExpr, arg A) : void
 line range:779-779==line range:594-594
 line range:772-772==line range:596-596
+line range:775-775==line range:595-595
 line range:775-775==line range:595-595
 line range:774-776==line range:595-595
 public visit(n MethodReferenceExpr, arg A) : void -> public visit(n MethodReferenceExpr, arg A) : void

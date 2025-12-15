@@ -8846,4 +8846,85 @@
         "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160033,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "28a5c5a4c091cd22e4aa893e45440ea59376e575",
+    "url": "https://github.com/asyml/texar/commit/28a5c5a4c091cd22e4aa893e45440ea59376e575",
+    "author": "ZhitingHu",
+    "time": "9/1/17 11:22 PM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter allow_new_hparam in method public __init__(hparams, default_hparams, allow_new_hparam) from class hyperparams.HParams",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter allow_new_hparam in method protected _parse(hparams, default_hparams, allow_new_hparam) from class hyperparams.HParams",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Attribute With Variable",
+        "description": "Replace Attribute With Variable _hparams to parsed_hparams in method public __init__(hparams, default_hparams, allow_new_hparam) from class hyperparams.HParams",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method protected _parse_value(name, value) extracted from public __setattr__(name, value) in class hyperparams.HParams",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method protected _parse_value(name, value) extracted from public add_hparam(name, value) in class hyperparams.HParams",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable num_threads in method public __call__() from class data.database.TextDataBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable capacity in method public __call__() from class data.database.TextDataBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Encapsulate Attribute",
+        "description": "Encapsulate Attribute _dataset from class data.database.TextDataBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160034,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "297047cae73728e5f391b558b64aaa94e2a5c323",
+    "url": "https://github.com/asyml/texar/commit/297047cae73728e5f391b558b64aaa94e2a5c323",
+    "author": "ZhitingHu",
+    "time": "3/21/18 02:22 AM",
+    "refactorings": [{
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected _shuffle_dataset(dataset, hparams, dataset_files) from class data.data.text_data_base.TextDataBase to protected _shuffle_dataset(dataset, hparams, dataset_files) from class data.data.data_base.DataBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

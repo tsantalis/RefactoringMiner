@@ -4009,14 +4009,14 @@
         "validators": null
     }, {
         "type": "Split Conditional",
-        "description": "Split Conditional if(dropout_layer && st != \"item_type\") to [if(dropout_layer), if(st != \"item_type\")] in method protected _build(positions, sequence_length, mode, kwargs) from class modules.embedders.position_embedders.PositionEmbedder",
+        "description": "Split Conditional if(dropout_layer and st != \"item_type\") to [if(dropout_layer), if(st != \"item_type\")] in method protected _build(positions, sequence_length, mode, kwargs) from class modules.embedders.position_embedders.PositionEmbedder",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Split Conditional",
-        "description": "Split Conditional if(dropout_layer && self._hparams.dropout_strategy != \"item_type\") to [if(dropout_layer), if(self._hparams.dropout_strategy != \"item_type\")] in method protected _build(ids, soft_ids, mode, kwargs) from class modules.embedders.embedders.WordEmbedder",
+        "description": "Split Conditional if(dropout_layer and self._hparams.dropout_strategy != \"item_type\") to [if(dropout_layer), if(self._hparams.dropout_strategy != \"item_type\")] in method protected _build(ids, soft_ids, mode, kwargs) from class modules.embedders.embedders.WordEmbedder",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -4483,7 +4483,7 @@
         "validators": null
     }, {
         "type": "Split Conditional",
-        "description": "Split Conditional if(dropout_layer && self._hparams.dropout_strategy != \"item_type\") to [if(positions is None && st == \"item\"), if(dropout_layer && st != \"item_type\")] in method protected _build(positions, sequence_length, mode, kwargs) from class modules.embedders.position_embedders.PositionEmbedder",
+        "description": "Split Conditional if(dropout_layer and self._hparams.dropout_strategy != \"item_type\") to [if(positions is None and st == \"item\"), if(dropout_layer and st != \"item_type\")] in method protected _build(positions, sequence_length, mode, kwargs) from class modules.embedders.position_embedders.PositionEmbedder",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -7930,7 +7930,7 @@
         "validators": null
     }, {
         "type": "Split Conditional",
-        "description": "Split Conditional if(embedding is None && vocab_size is None) to [if(vocab_size is None), if(self._hparams.embedding_enabled is false || embedding is None)] in method public __init__(cell, embedding, vocab_size, hparams) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
+        "description": "Split Conditional if(embedding is None and vocab_size is None) to [if(vocab_size is None), if(self._hparams.embedding_enabled is false or embedding is None)] in method public __init__(cell, embedding, vocab_size, hparams) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -8714,13 +8714,6 @@
         "type": "Rename Variable",
         "description": "Rename Variable data1 to data in method public __init__(datasets, reader_kwargs, dtypes, shuffle, num_epochs, common_queue_capacity, common_queue_min, seed, scope) from class data.databases.data_providers.ParallelDataProvider",
         "comment": "<p>data2 is also renamed to data</p>",
-        "validation": "CTP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Nikos"
-    }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable data1 to data_list in method public __init__(datasets, reader_kwargs, dtypes, shuffle, num_epochs, common_queue_capacity, common_queue_min, seed, scope) from class data.databases.data_providers.ParallelDataProvider",
-        "comment": "<p>data2 is also merged to data_list<br />data1, data2 = random_shuffle_queue.dequeue()<br />data_list = random_shuffle_queue.dequeue()</p>",
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"

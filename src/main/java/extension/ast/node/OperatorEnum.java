@@ -75,12 +75,6 @@ public enum OperatorEnum {
     }
 
     public String getJavaSymbol() {
-        if (symbol.equals(AND.symbol)) {
-            return "&&";
-        }
-        else if (symbol.equals(OR.symbol)) {
-            return "||";
-        }
         return symbol;
     }
 

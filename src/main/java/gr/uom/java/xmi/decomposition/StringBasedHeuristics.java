@@ -49,7 +49,8 @@ import gr.uom.java.xmi.diff.UMLOperationDiff;
 import gr.uom.java.xmi.diff.UMLParameterDiff;
 
 public class StringBasedHeuristics {
-	protected static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("( \\|\\| )|( && )|( \\? )|( : )");
+	protected static final Pattern SPLIT_CONDITIONAL_PATTERN_JAVA = Pattern.compile("( \\|\\| )|( && )|( \\? )|( : )");
+	protected static final Pattern SPLIT_CONDITIONAL_PATTERN_PYTHON = Pattern.compile("( or )|( and )|( if )|( else )");
 	protected static final Pattern SPLIT_CONCAT_STRING_PATTERN = Pattern.compile("(\\s)*( \\+ )(\\s)*");
 	protected static final Pattern SPLIT_COMMA_PATTERN = Pattern.compile("(\\s)*(\\,)(\\s)*");
 	protected static final Pattern SPLIT_TAB_PATTERN = Pattern.compile("(\\s)*(\\\\t)(\\s)*");
@@ -1422,16 +1423,18 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	protected static boolean containsValidOperatorReplacements(ReplacementInfo replacementInfo) {
+	protected static boolean containsValidOperatorReplacements(ReplacementInfo replacementInfo, Constants LANG) {
+		String AND = LANG.AND.strip();
+		String OR = LANG.OR.strip();
 		List<Replacement> operatorReplacements = replacementInfo.getReplacements(ReplacementType.INFIX_OPERATOR);
 		for(Replacement replacement : operatorReplacements) {
 			if(replacement.getBefore().equals("==") && !replacement.getAfter().equals("!="))
 				return false;
 			if(replacement.getBefore().equals("!=") && !replacement.getAfter().equals("=="))
 				return false;
-			if(replacement.getBefore().equals("&&") && !replacement.getAfter().equals("||"))
+			if(replacement.getBefore().equals(AND) && !replacement.getAfter().equals(OR))
 				return false;
-			if(replacement.getBefore().equals("||") && !replacement.getAfter().equals("&&"))
+			if(replacement.getBefore().equals(OR) && !replacement.getAfter().equals(AND))
 				return false;
 		}
 		return true;
@@ -3156,6 +3159,7 @@ public class StringBasedHeuristics {
 
 	protected static boolean commonConditional(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo info, AbstractCodeFragment statement1, AbstractCodeFragment statement2, UMLOperationBodyMapper mapper) {
 		Constants LANG = mapper.LANG;
+		Pattern SPLIT_CONDITIONAL_PATTERN = LANG.equals(Constants.PYTHON) ? SPLIT_CONDITIONAL_PATTERN_PYTHON : SPLIT_CONDITIONAL_PATTERN_JAVA;
 		Set<Replacement> initialReplacements = info.getReplacements();
 		Set<Refactoring> refactorings = mapper.getRefactoringsAfterPostProcessing();
 		VariableDeclarationContainer container1 = mapper.getContainer1();
@@ -3225,7 +3229,9 @@ public class StringBasedHeuristics {
 				}
 				ternaryConditions = statement1.getTernaryOperatorExpressions().size() != statement2.getTernaryOperatorExpressions().size() && compatibleVariableDeclarations;
 			}
-			boolean containLogicalOperator = s1.contains("||") || s1.contains("&&") || s2.contains("||") || s2.contains("&&");
+			String AND = LANG.AND.strip();
+			String OR = LANG.OR.strip();
+			boolean containLogicalOperator = s1.contains(OR) || s1.contains(AND) || s2.contains(OR) || s2.contains(AND);
 			boolean containsNotOperator = s1.contains(LANG.NOT) != s2.contains(LANG.NOT);
 			if(containLogicalOperator || ternaryConditions || containsNotOperator) {
 				List<String> subConditionsAsList1 = new ArrayList<String>();
@@ -3789,10 +3795,10 @@ public class StringBasedHeuristics {
 					List<Replacement> operatorReplacements = info.getReplacements(ReplacementType.INFIX_OPERATOR);
 					boolean booleanOperatorReversed = false;
 					for(Replacement r : operatorReplacements) {
-						if(r.getBefore().equals("&&") && r.getAfter().equals("||")) {
+						if(r.getBefore().equals(AND) && r.getAfter().equals(OR)) {
 							booleanOperatorReversed = true;
 						}
-						else if(r.getBefore().equals("||") && r.getAfter().equals("&&")) {
+						else if(r.getBefore().equals(OR) && r.getAfter().equals(AND)) {
 							booleanOperatorReversed = true;
 						}
 						else if(r.getBefore().equals("==") && r.getAfter().equals("!=")) {
@@ -3940,6 +3946,7 @@ public class StringBasedHeuristics {
 			Map<String, List<LeafExpression>> subConditionMap2, Map<String, List<LeafExpression>> subConditionMap,
 			Set<String> intersection, Set<String> intersection2, Set<CompositeStatementObject> ifNodes1,
 			Set<CompositeStatementObject> ifNodes2, ReplacementInfo info, Map<String, String> parameterToArgumentMap, Constants LANG) {
+		Pattern SPLIT_CONDITIONAL_PATTERN = LANG.equals(Constants.PYTHON) ? SPLIT_CONDITIONAL_PATTERN_PYTHON : SPLIT_CONDITIONAL_PATTERN_JAVA;
 		boolean mergeConditional = false;
 		for(CompositeStatementObject ifNode1 : ifNodes1) {
 			List<AbstractExpression> expressions1 = ifNode1.getExpressions();
@@ -4175,6 +4182,7 @@ public class StringBasedHeuristics {
 
 	private static boolean sequentiallyMergedConditionals(Set<AbstractCodeFragment> mergedConditionals, AbstractCodeFragment statement2, Set<AbstractCodeMapping> mappings) {
 		Constants LANG = PathFileUtils.getLang(statement2.getLocationInfo().getFilePath());
+		Pattern SPLIT_CONDITIONAL_PATTERN = LANG.equals(Constants.PYTHON) ? SPLIT_CONDITIONAL_PATTERN_PYTHON : SPLIT_CONDITIONAL_PATTERN_JAVA;
 		for(AbstractCodeMapping mapping : mappings) {
 			int nestedFragment1 = 0;
 			for(AbstractCodeFragment mergedConditional : mergedConditionals) {
@@ -4287,6 +4295,7 @@ public class StringBasedHeuristics {
 
 	private static boolean sequentiallySplitConditionals(AbstractCodeFragment statement1, Set<AbstractCodeFragment> splitConditionals, Set<AbstractCodeMapping> mappings) {
 		Constants LANG = PathFileUtils.getLang(statement1.getLocationInfo().getFilePath());
+		Pattern SPLIT_CONDITIONAL_PATTERN = LANG.equals(Constants.PYTHON) ? SPLIT_CONDITIONAL_PATTERN_PYTHON : SPLIT_CONDITIONAL_PATTERN_JAVA;
 		for(AbstractCodeMapping mapping : mappings) {
 			int nestedFragment2 = 0;
 			for(AbstractCodeFragment splitConditional : splitConditionals) {

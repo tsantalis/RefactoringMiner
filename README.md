@@ -604,8 +604,9 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Split Conditional`
 * `Move Code`
 * `Encapsulate Attribute`
+* `Invert Condition`
 
-As of **December 14, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **December 15, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
@@ -629,7 +630,7 @@ As of **December 14, 2025** the precision and recall of RefactoringMiner on this
 |Extract And Move Method|10  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|52  |  1  |  0  | 0.981  | 1.000|
 |Inline Variable|19  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|115  |  1  |  0  | 0.991  | 1.000|
+|Rename Variable|114  |  1  |  0  | 0.991  | 1.000|
 |Rename Parameter|128  |  1  |  0  | 0.992  | 1.000|
 |Rename Attribute|24  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute| 1  |  0  |  0  | 1.000  | 1.000|
@@ -646,6 +647,7 @@ As of **December 14, 2025** the precision and recall of RefactoringMiner on this
 |Reorder Parameter|17  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute| 2  |  0  |  0  | 1.000  | 1.000|
 |Split Conditional| 4  |  0  |  0  | 1.000  | 1.000|
+|Invert Condition| 1  |  0  |  0  | 1.000  | 1.000|
 |Move Code| 6  |  0  |  0  | 1.000  | 1.000|
 
 **Important notes**:

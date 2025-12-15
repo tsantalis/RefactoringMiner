@@ -568,7 +568,7 @@ As of **December 3, 2025** the precision and recall of RefactoringMiner on this 
 ## Python Benchmark
 **Source**: Hassan Atwi, Bin Lin, Nikolaos Tsantalis, Yutaro Kashiwa, Yasutaka Kamei, Naoyasu Ubayashi, Gabriele Bavota, and Michele Lanza, "PyRef: Refactoring Detection in Python Projects," 21st IEEE International Working Conference on Source Code Analysis and Manipulation (SCAM'2021), Engineering Track, Luxembourg City, Luxembourg, September 27-28, 2021.
 
-**Properties**: 178 commits from 3 open-source projects
+**Properties**: 182 commits from 3 open-source projects
 
 **Commit dates**: January 2013 - October 2020
 
@@ -610,8 +610,8 @@ As of **December 15, 2025** the precision and recall of RefactoringMiner on this
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1003  |  6  |  2  | 0.994  | 0.998|
-|Extract Method|34  |  0  |  0  | 1.000  | 1.000|
+|**Total**|1015  |  6  |  2  | 0.994  | 0.998|
+|Extract Method|35  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|13  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 5  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|135  |  0  |  1  | 1.000  | 0.993|
@@ -621,7 +621,7 @@ As of **December 15, 2025** the precision and recall of RefactoringMiner on this
 |Pull Up Method| 5  |  0  |  0  | 1.000  | 1.000|
 |Move Class|13  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Class|10  |  0  |  0  | 1.000  | 1.000|
-|Pull Up Attribute| 1  |  0  |  0  | 1.000  | 1.000|
+|Pull Up Attribute| 2  |  0  |  0  | 1.000  | 1.000|
 |Push Down Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method| 3  |  0  |  0  | 1.000  | 1.000|
 |Extract Superclass| 3  |  0  |  0  | 1.000  | 1.000|
@@ -631,7 +631,7 @@ As of **December 15, 2025** the precision and recall of RefactoringMiner on this
 |Extract Variable|52  |  1  |  0  | 0.981  | 1.000|
 |Inline Variable|19  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|114  |  1  |  0  | 0.991  | 1.000|
-|Rename Parameter|128  |  1  |  0  | 0.992  | 1.000|
+|Rename Parameter|129  |  1  |  0  | 0.992  | 1.000|
 |Rename Attribute|24  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable| 1  |  0  |  0  | 1.000  | 1.000|
@@ -642,9 +642,9 @@ As of **December 15, 2025** the precision and recall of RefactoringMiner on this
 |Add Method Annotation|26  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|19  |  0  |  0  | 1.000  | 1.000|
 |Add Class Annotation| 1  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|210  |  0  |  1  | 1.000  | 0.995|
+|Add Parameter|218  |  0  |  1  | 1.000  | 0.995|
 |Remove Parameter|68  |  0  |  0  | 1.000  | 1.000|
-|Reorder Parameter|17  |  0  |  0  | 1.000  | 1.000|
+|Reorder Parameter|18  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute| 2  |  0  |  0  | 1.000  | 1.000|
 |Split Conditional| 4  |  0  |  0  | 1.000  | 1.000|
 |Invert Condition| 1  |  0  |  0  | 1.000  | 1.000|

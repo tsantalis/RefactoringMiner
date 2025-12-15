@@ -50,9 +50,10 @@ public class TestPythonDatasetRefactorings {
 					.or(Refactorings.ParameterizeAttribute.getValue())
 					.or(Refactorings.ParameterizeVariable.getValue())
 					.or(Refactorings.EncapsulateAttribute.getValue())
-					.or(Refactorings.InvertCondition.getValue());
+					.or(Refactorings.InvertCondition.getValue())
+					.or(Refactorings.SplitParameter.getValue());
 		TestBuilder test = new TestBuilder(detector, REPOS, types);
 		RefactoringPopulator.preparePythonRefactorings(test, types);
-		test.assertExpectationsWithGitHubAPI(1024, 6, 2);
+		test.assertExpectationsWithGitHubAPI(1036, 6, 2);
 	}
 }

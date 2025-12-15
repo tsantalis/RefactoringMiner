@@ -8927,4 +8927,106 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160035,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "348fe606caf81291f9122e3d0cd68868009e181d",
+    "url": "https://github.com/asyml/texar/commit/348fe606caf81291f9122e3d0cd68868009e181d",
+    "author": null,
+    "time": "1/3/18 11:32 PM",
+    "refactorings": [{
+        "type": "Rename Parameter",
+        "description": "Rename Parameter action to action_id in method public perceive(action_id, reward, is_terminal, next_observation) from class agents.agent_base.AgentBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute actions from class agents.dqn_agent.DQNAgent to actions from class agents.agent_base.AgentBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute state_shape from class agents.dqn_agent.DQNAgent to state_shape from class agents.agent_base.AgentBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter actions in method public __init__(actions, state_shape, hparams) from class agents.agent_base.AgentBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter state_shape in method public __init__(actions, state_shape, hparams) from class agents.agent_base.AgentBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type agent : DQNAgent to agent : PGAgent in module cartpole.__module__ from class cartpole.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable action to action_id in module cartpole.__module__ from class cartpole.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160036,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "39ce9959f9219487dadf5d6d6b585970bfea9996",
+    "url": "https://github.com/asyml/texar/commit/39ce9959f9219487dadf5d6d6b585970bfea9996",
+    "author": "zcyang",
+    "time": "12/23/17 02:56 PM",
+    "refactorings": [{
+        "type": "Remove Parameter",
+        "description": "Remove Parameter rho in method public train_d_step(sess, batch, rho, gamma) from class models.tsf.tsf_classifier.TSFClassifier",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter gamma in method public train_d_step(sess, batch, rho, gamma) from class models.tsf.tsf_classifier.TSFClassifier",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Split Parameter",
+        "description": "Split Parameter rho to [rho_f, rho_r] in method public train_g_step(sess, batch, rho_f, rho_r, gamma) from class models.tsf.tsf_classifier.TSFClassifier",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Split Parameter",
+        "description": "Split Parameter rho to [rho_f, rho_r] in method public train_ae_step(sess, batch, rho_f, rho_r, gamma) from class models.tsf.tsf_classifier.TSFClassifier",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Split Parameter",
+        "description": "Split Parameter rho to [rho_f, rho_r] in method public eval_step(sess, batch, rho_f, rho_r, gamma) from class models.tsf.tsf_classifier.TSFClassifier",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

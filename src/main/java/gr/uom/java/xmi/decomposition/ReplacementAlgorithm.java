@@ -1020,10 +1020,10 @@ public class ReplacementAlgorithm {
 		
 		findReplacements(variables1, prefixExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PREFIX_EXPRESSION, container1, container2, classDiff);
 		findReplacements(prefixExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PREFIX_EXPRESSION, container1, container2, classDiff);
-		if(prefixExpressions1.size() == 1 && prefixExpressions1.iterator().next().startsWith("!") && booleanLiterals1.isEmpty()) {
+		if(prefixExpressions1.size() == 1 && prefixExpressions1.iterator().next().startsWith(LANG.NOT) && booleanLiterals1.isEmpty()) {
 			findReplacements(prefixExpressions1, booleanLiterals2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_PREFIX_EXPRESSION, container1, container2, classDiff);
 		}
-		if(prefixExpressions2.size() == 1 && prefixExpressions2.iterator().next().startsWith("!") && booleanLiterals2.isEmpty()) {
+		if(prefixExpressions2.size() == 1 && prefixExpressions2.iterator().next().startsWith(LANG.NOT) && booleanLiterals2.isEmpty()) {
 			findReplacements(booleanLiterals1, prefixExpressions2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_PREFIX_EXPRESSION, container1, container2, classDiff);
 		}
 		if(statement2.getThisExpressions().size() > 0 && !statement2.getString().equals(LANG.RETURN_THIS)) {
@@ -1403,7 +1403,7 @@ public class ReplacementAlgorithm {
 						}
 						else if(statement1.getString().contains(checkIfNull)) {
 							Set<String> set1 = Set.of(checkIfNull);
-							Set<String> set2 = Set.of("!" + call.actualString());
+							Set<String> set2 = Set.of(LANG.NOT + call.actualString());
 							findReplacements(set1, set2, replacementInfo, ReplacementType.NULL_LITERAL_CHECK_REPLACED_WITH_OPTIONAL_IS_PRESENT_CHECK, container1, container2, classDiff);
 						}
 					}
@@ -1412,7 +1412,7 @@ public class ReplacementAlgorithm {
 						String checkIfNotNull = call.getExpression() + " != null";
 						if(statement1.getString().contains(checkIfNotNull)) {
 							Set<String> set1 = Set.of(checkIfNotNull);
-							Set<String> set2 = Set.of("!" + call.actualString());
+							Set<String> set2 = Set.of(LANG.NOT + call.actualString());
 							findReplacements(set1, set2, replacementInfo, ReplacementType.NULL_LITERAL_CHECK_REPLACED_WITH_OPTIONAL_IS_EMPTY_CHECK, container1, container2, classDiff);
 						}
 						else if(statement1.getString().contains(checkIfNull)) {

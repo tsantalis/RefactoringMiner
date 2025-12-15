@@ -1072,7 +1072,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			for(String s : subConditions2) {
 				subConditionsAsList2.add(s.trim());
 			}
-			Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2);
+			Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2, LANG);
 			int increment = 0;
 			for(String s1 : subConditions1) {
 				if(!intersection.contains(s1) && s1.contains(".")) {

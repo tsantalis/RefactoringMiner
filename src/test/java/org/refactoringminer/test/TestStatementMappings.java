@@ -1664,10 +1664,30 @@ public class TestStatementMappings {
 	}
 
 	@Test
+	public void testInvertCondition() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/dbeaver/dbeaver.git", "ceb0404f542a2cf76cdea9c6edb73aeadfa8db95", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				for(UMLAnonymousClassDiff anonymousDiff : mapper.getAnonymousClassDiffs()) {
+					for(UMLOperationBodyMapper anonymousMapper :  anonymousDiff.getOperationBodyMapperList()) {
+						if(anonymousMapper.getContainer1().getName().equals("doSetValue") && anonymousMapper.getContainer2().getName().equals("doSetValue"))
+							mapperInfo(anonymousMapper, actual);
+					}
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "dbeaver-ceb0404f542a2cf76cdea9c6edb73aeadfa8db95.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testStreamAPIReverseMigration() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("github.com/skylot/jadx.git", "6b4976c5930deb17dd6956eca2c18598adb6c418", new File(REPOS));
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/skylot/jadx.git", "6b4976c5930deb17dd6956eca2c18598adb6c418", new File(REPOS));
 		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
 		for(UMLClassDiff classDiff : commonClassDiff) {
 			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {

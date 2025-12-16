@@ -389,17 +389,17 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **December 3, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **December 16, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12584  | 13  | 215  | 0.999  | 0.983|
+|**Total**|12600  | 13  | 215  | 0.999  | 0.983|
 |Extract Method|1019  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
 |Move And Rename Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|395  |  2  | 20  | 0.995  | 0.952|
+|Rename Method|394  |  2  | 20  | 0.995  | 0.952|
 |Inline Method|119  |  0  |  1  | 1.000  | 0.992|
 |Move Method|388  |  3  |  5  | 0.992  | 0.987|
 |Move And Rename Method|130  |  0  |  4  | 1.000  | 0.970|
@@ -484,11 +484,11 @@ As of **December 3, 2025** the precision and recall of RefactoringMiner on this 
 |Merge Class| 5  |  0  |  0  | 1.000  | 1.000|
 |Split Class| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Conditional|19  |  0  |  0  | 1.000  | 1.000|
-|Invert Condition|33  |  0  |  0  | 1.000  | 1.000|
+|Invert Condition|49  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional|14  |  0  |  0  | 1.000  | 1.000|
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
-|Split Method| 5  |  0  |  0  | 1.000  | 1.000|
+|Split Method| 6  |  0  |  0  | 1.000  | 1.000|
 |Move Code|24  |  0  |  0  | 1.000  | 1.000|
 |Assert Throws|14  |  0  |  0  | 1.000  | 1.000|
 |Try With Resources| 4  |  0  |  0  | 1.000  | 1.000|

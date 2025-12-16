@@ -5158,6 +5158,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Invert Condition",
+        "description": "Invert Condition if(not isinstance(self._hparams.other_conv_kwargs,dict)) to if(isinstance(other_kwargs,HParams)) in method protected _build_conv1d_hparams(pool_hparams) from class modules.encoders.conv_encoders.Conv1DEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Invert Condition",
+        "description": "Invert Condition if(not isinstance(self._hparams.other_pool_kwargs,dict)) to if(isinstance(other_kwargs,HParams)) in method protected _build_pool_hparams() from class modules.encoders.conv_encoders.Conv1DEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Invert Condition",
+        "description": "Invert Condition if(not isinstance(self._hparams.other_dense_kwargs,dict)) to if(isinstance(other_kwargs,HParams)) in method protected _build_dense_hparams() from class modules.encoders.conv_encoders.Conv1DEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -7251,6 +7272,13 @@
     }, {
         "type": "Remove Parameter",
         "description": "Remove Parameter num_classes in method public __init__(cell, cell_dropout_mode, num_classes, output_layer, hparams) from class modules.classifiers.rnn_classifiers.UnidirectionalRNNClassifier",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Invert Condition",
+        "description": "Invert Condition if(not isinstance(output_layer,(list, tuple))) to if(isinstance(output_layer,(list, tuple))) in method protected _forward_output_layers(inputs, output_layer, time_major, hparams, mode, sequence_length) from class modules.encoders.rnn_encoders.__module__",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

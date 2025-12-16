@@ -613,6 +613,11 @@
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tarrayAccess : PsiArrayAccessExpression in method private canBeMutated(expr PsiExpression) : boolean from class com.siyeh.ig.psiutils.ExpressionUtils",
           "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(!(e instanceof PsiReferenceExpression ref)) to if(parent instanceof PsiReferenceExpression refParent) in method private canBeMutated(expr PsiExpression) : boolean from class com.siyeh.ig.psiutils.ExpressionUtils",
+          "validation": true
         }
       ]
     },
@@ -643,6 +648,16 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tretrievable : RetrievableIcon to o : RetrievableIcon in method private is(icon Icon, expected Icon) : boolean from class com.intellij.ide.scopeView.ScopeViewTreeModel",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(!(icon instanceof RowIcon)) to if(icon instanceof RowIcon) in method private doComputeIconNow(element PsiElement, flags int) : Icon from class com.intellij.psi.impl.ElementBase",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(icon == null) to if(icon != null) in method private doComputeIconNow(element PsiElement, flags int) : Icon from class com.intellij.psi.impl.ElementBase",
           "validation": true
         }
       ]

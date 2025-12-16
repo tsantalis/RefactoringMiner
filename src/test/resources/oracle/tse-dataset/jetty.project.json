@@ -133,6 +133,16 @@
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tcomment : String in method public getSessionCookie(session HttpSession, contextPath String, requestIsSecure boolean) : HttpCookie from class org.eclipse.jetty.server.session.SessionHandler",
           "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(comment != null) to if(comment == null) in method public getSameSiteFromComment(comment String) : SameSite from class org.eclipse.jetty.http.HttpCookie",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(isUsingCookies()) to if(!isUsingCookies()) in method public getSessionCookie(session HttpSession, contextPath String, requestIsSecure boolean) : HttpCookie from class org.eclipse.jetty.server.session.SessionHandler",
+          "validation": true
         }
       ]
     },

@@ -431,6 +431,46 @@
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tobjectToTest : Object in method public append(fieldName String, lhs Object, rhs Object) : DiffBuilder<T> from class org.apache.commons.lang3.builder.DiffBuilder",
           "validation": false
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(lhs != rhs) to return equals || lhs == rhs ? this : add(fieldName,() -> Boolean.valueOf(lhs),() -> Boolean.valueOf(rhs),Boolean.class); in method public append(fieldName String, lhs boolean, rhs boolean) : DiffBuilder<T> from class org.apache.commons.lang3.builder.DiffBuilder",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(lhs != rhs) to return equals || lhs == rhs ? this : add(fieldName,() -> Long.valueOf(lhs),() -> Long.valueOf(rhs),Long.class); in method public append(fieldName String, lhs long, rhs long) : DiffBuilder<T> from class org.apache.commons.lang3.builder.DiffBuilder",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(lhs != rhs) to return equals || lhs == rhs ? this : add(fieldName,() -> Short.valueOf(lhs),() -> Short.valueOf(rhs),Short.class); in method public append(fieldName String, lhs short, rhs short) : DiffBuilder<T> from class org.apache.commons.lang3.builder.DiffBuilder",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(lhs != rhs) to return equals || lhs == rhs ? this : add(fieldName,() -> Byte.valueOf(lhs),() -> Byte.valueOf(rhs),Byte.class); in method public append(fieldName String, lhs byte, rhs byte) : DiffBuilder<T> from class org.apache.commons.lang3.builder.DiffBuilder",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(lhs != rhs) to return equals || lhs == rhs ? this : add(fieldName,() -> Character.valueOf(lhs),() -> Character.valueOf(rhs),Character.class); in method public append(fieldName String, lhs char, rhs char) : DiffBuilder<T> from class org.apache.commons.lang3.builder.DiffBuilder",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(lhs != rhs) to return equals || lhs == rhs ? this : add(fieldName,() -> Integer.valueOf(lhs),() -> Integer.valueOf(rhs),Integer.class); in method public append(fieldName String, lhs int, rhs int) : DiffBuilder<T> from class org.apache.commons.lang3.builder.DiffBuilder",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(Float.floatToIntBits(lhs) != Float.floatToIntBits(rhs)) to return equals || Float.floatToIntBits(lhs) == Float.floatToIntBits(rhs) ? this : add(fieldName,() -> Float.valueOf(lhs),() -> Float.valueOf(rhs),Float.class); in method public append(fieldName String, lhs float, rhs float) : DiffBuilder<T> from class org.apache.commons.lang3.builder.DiffBuilder",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(Double.doubleToLongBits(lhs) != Double.doubleToLongBits(rhs)) to return equals || Double.doubleToLongBits(lhs) == Double.doubleToLongBits(rhs) ? this : add(fieldName,() -> Double.valueOf(lhs),() -> Double.valueOf(rhs),Double.class); in method public append(fieldName String, lhs double, rhs double) : DiffBuilder<T> from class org.apache.commons.lang3.builder.DiffBuilder",
+          "validation": true
         }
       ]
     },

@@ -408,6 +408,11 @@
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tdeclaringClass : Class<?> in method public createMetadata(field Field, overrideAnnotation Annotation, typeToOverride ResolvableType) : OverrideMetadata from class org.springframework.test.context.bean.override.convention.TestBeanOverrideProcessor",
           "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(overrideAnnotation instanceof TestBean testBeanAnnotation) to if(!(overrideAnnotation instanceof TestBean testBeanAnnotation)) in method public createMetadata(overrideAnnotation Annotation, testClass Class<?>, field Field) : TestBeanOverrideMetadata from class org.springframework.test.context.bean.override.convention.TestBeanOverrideProcessor",
+          "validation": true
         }
       ]
     },
@@ -1170,6 +1175,11 @@
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tbd3 : RootBeanDefinition in method package genericMatchingWithFullTypeDifferentiation(factoryClass Class<?>) : void from class org.springframework.beans.factory.support.BeanFactoryGenericsTests",
           "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(!isFactoryDereference) to if(isFactoryDereference) in method protected isTypeMatch(name String, typeToMatch ResolvableType, allowFactoryBeanInit boolean) : boolean from class org.springframework.beans.factory.support.AbstractBeanFactory",
+          "validation": true
         }
       ]
     },
@@ -1612,6 +1622,11 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\thint : TypeHint in method public withMemberCategories(memberCategories MemberCategory...) : Predicate<RuntimeHints> from class org.springframework.aot.hint.predicate.ReflectionHintsPredicates.TypeHintPredicate",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\treturn this.declaringClass == null || this.declaringClass.equals(declaringClass); to this.declaringClass != null && !this.declaringClass.equals(targetClassName) in method public toInvokeCodeBlock(argumentCodeGenerator ArgumentCodeGenerator, targetClassName ClassName) : CodeBlock from class org.springframework.aot.generate.DefaultMethodReference",
           "validation": true
         }
       ]

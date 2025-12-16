@@ -611,6 +611,11 @@
           "type": "MOVE_AND_INLINE_OPERATION",
           "description": "Move And Inline Method\tpublic isOut(invocation Invocation) : boolean moved from class org.mockito.internal.invocation.InvocationsFinder.RemoveNotMatching to class org.mockito.internal.invocation.InvocationsFinder & inlined to public findAllMatchingUnverifiedChunks(invocations List<Invocation>, wanted MatchableInvocation, orderingContext InOrderContext) : List<Invocation>",
           "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\treturn s.wasUsed(); to !stubbing.wasUsed() in method public printInvocations(mock Object) : String from class org.mockito.internal.debugging.InvocationsPrinter",
+          "validation": true
         }
       ]
     },

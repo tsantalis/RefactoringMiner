@@ -2597,8 +2597,18 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean operatorExpressionWithEverythingReplaced(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
-			ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap) {
+			ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap, Set<Refactoring> newRefactorings, boolean lambdaBodyMapper) {
 		Constants LANG = PathFileUtils.getLang(statement1.getLocationInfo().getFilePath());
+		if(!lambdaBodyMapper) {
+			for(Refactoring r : newRefactorings) {
+				if(r instanceof InvertConditionRefactoring invert) {
+					if(invert.getOriginalConditional().getLocationInfo().subsumes(statement1.getLocationInfo()) &&
+							invert.getInvertedConditional().getLocationInfo().equals(statement2.getLocationInfo())) {
+						return false;
+					}
+				}
+			}
+		}
 		String string1 = statement1.getString();
 		String string2 = statement2.getString();
 		if(containsMethodSignatureOfAnonymousClass(string1, LANG) && string1.contains("\n")) {

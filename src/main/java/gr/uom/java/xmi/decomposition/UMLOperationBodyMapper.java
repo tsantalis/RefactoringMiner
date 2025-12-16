@@ -158,6 +158,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return nested;
 	}
 
+	public boolean isLambdaBodyMapper() {
+		return lambdaBodyMapper;
+	}
+
 	public boolean isMoveCode() {
 		return moveCode;
 	}
@@ -5832,10 +5836,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(!mappingSet.isEmpty()) {
 						if(!duplicateMappingInParentMapper(mappingSet)) {
 							CompositeStatementObjectMapping oneTryBlockNestedUnderTheOther = oneTryBlockNestedUnderTheOther(mappingSet);
+							//checkForOtherPossibleMatchesForFragment2(innerNodes1, innerNodes2, statement1, mappingSet, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration);
 							CompositeStatementObjectMapping minStatementMapping = oneTryBlockNestedUnderTheOther != null ? oneTryBlockNestedUnderTheOther : mappingSet.first();
 							addMapping(minStatementMapping);
 							innerNodes2.remove(minStatementMapping.getFragment2());
 							innerNodeIterator1.remove();
+							Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<>();
+							for(CompositeStatementObjectMapping mapping : mappingSet) {
+								if(!mapping.equals(minStatementMapping)) {
+									for(Refactoring r : this.refactorings) {
+										if(r instanceof InvertConditionRefactoring invert) {
+											if(invert.getOriginalConditional().equals(mapping.getFragment1()) && invert.getInvertedConditional().equals(mapping.getFragment2())) {
+												refactoringsToBeRemoved.add(invert);
+											}
+										}
+									}
+								}
+							}
+							this.refactorings.removeAll(refactoringsToBeRemoved);
 						}
 					}
 				}
@@ -6220,6 +6238,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								addMapping(minStatementMapping);
 								innerNodes1.remove(minStatementMapping.getFragment1());
 								innerNodeIterator2.remove();
+								Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<>();
+								for(CompositeStatementObjectMapping mapping : mappingSet) {
+									if(!mapping.equals(minStatementMapping)) {
+										for(Refactoring r : this.refactorings) {
+											if(r instanceof InvertConditionRefactoring invert) {
+												if(invert.getOriginalConditional().equals(mapping.getFragment1()) && invert.getInvertedConditional().equals(mapping.getFragment2())) {
+													refactoringsToBeRemoved.add(invert);
+												}
+											}
+										}
+									}
+								}
+								this.refactorings.removeAll(refactoringsToBeRemoved);
 							}
 						}
 					}
@@ -8299,7 +8330,93 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 	}
-
+/*
+	private void checkForOtherPossibleMatchesForFragment2(List<CompositeStatementObject> leaves1,
+			List<CompositeStatementObject> leaves2, CompositeStatementObject leaf1, TreeSet<CompositeStatementObjectMapping> mappingSet,
+			Map<String, String> parameterToArgumentMap, List<UMLOperation> removedOperations, List<UMLOperation> addedOperations, boolean tryWithResourceMigration) throws RefactoringMinerTimedOutException {
+		CompositeStatementObjectMapping first = mappingSet.first();
+		CompositeStatementObject leaf2 = (CompositeStatementObject) first.getFragment2();
+		if(parentMapper != null && parentMapper.alreadyMatched2(leaf2)) {
+			return;
+		}
+		for(CompositeStatementObject leaf : leaves1) {
+			if(!leaf.equals(leaf1)) {
+				int mappingsBefore = mappings.size();
+				int refactoringsBefore = refactorings.size();
+				ReplacementInfo replacementInfo = initializeReplacementInfo(leaf, leaf2, leaves1, leaves2);
+				Set<Replacement> replacements = findReplacementsWithExactMatching(leaf, leaf2, parameterToArgumentMap, replacementInfo, true, this);
+				if (replacements != null) {
+					int matchingMappings = 0;
+					for(CompositeStatementObjectMapping m : mappingSet) {
+						int matchingReplacements = 0;
+						int min = Math.min(replacements.size(), m.getReplacements().size());
+						Iterator<Replacement> iterator1 = replacements.iterator();
+						Iterator<Replacement> iterator2 = m.getReplacements().iterator();
+						int counter = 0;
+						while(iterator1.hasNext() && counter < min) {
+							Replacement r1 = iterator1.next();
+							Replacement r2 = iterator2.next();
+							if(r1.getBefore().equals(r2.getBefore()) || r1.getAfter().equals(r2.getAfter())) {
+								matchingReplacements++;
+							}
+							else if(r1 instanceof MethodInvocationReplacement && r2 instanceof MethodInvocationReplacement) {
+								MethodInvocationReplacement mir1 = (MethodInvocationReplacement)r1;
+								MethodInvocationReplacement mir2 = (MethodInvocationReplacement)r2;
+								if((mir1.getInvokedOperationBefore().getName().equals(mir2.getInvokedOperationBefore().getName()) &&
+										mir1.getInvokedOperationBefore().equalArguments(mir2.getInvokedOperationBefore())) ||
+										(mir1.getInvokedOperationAfter().getName().equals(mir2.getInvokedOperationAfter().getName()) &&
+											mir1.getInvokedOperationAfter().equalArguments(mir2.getInvokedOperationAfter()))) {
+									matchingReplacements++;
+								}
+							}
+							counter++;
+						}
+						if(matchingReplacements == replacements.size() || (matchingReplacements > 0 && matchingReplacements == min)) {
+							matchingMappings++;
+						}
+					}
+					boolean matchWithLessReplacements = mappingSet.size() == 1 && replacements.size() < mappingSet.first().getReplacements().size();
+					boolean ownedByLambdaWithMultipleCallsToExtractedMethod = leaf.ownedByLambda() && callsToExtractedMethod > 1;
+					boolean patternInstanceConversion = replacementInfo.containsOnlyReplacement(ReplacementType.PATTERN_INSTANCE);
+					if(matchingMappings == mappingSet.size() || patternInstanceConversion || matchWithLessReplacements || ownedByLambdaWithMultipleCallsToExtractedMethod) {
+						double score = computeScore(leaf, leaf2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
+						CompositeStatementObjectMapping mapping = createCompositeMapping(leaf, leaf2, parameterToArgumentMap, score);
+						mapping.addReplacements(replacements);
+						mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
+						mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
+						extractInlineVariableAnalysis(leaves1, leaves2, leaf, leaf2, mapping, replacementInfo);
+						mappingSet.add(mapping);
+					}
+					else {
+						List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
+						for(int i = mappingsBefore; i < mappings.size(); i++) {
+							this.mappings.remove(mappings.get(i));
+						}
+					}
+				}
+				else {
+					//removed any nested mappings
+					List<AbstractCodeMapping> orderedMappings = new ArrayList<AbstractCodeMapping>(mappings);
+					for(int i=orderedMappings.size()-1; i>=0 && i>=mappingsBefore; i--) {
+						AbstractCodeMapping m = orderedMappings.get(i);
+						if(leaf.getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) && leaf2.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) &&
+								replacementInfo.lambdaMapperContainsMapping(m)) {
+							removeMapping(m);
+						}
+						else {
+							break;
+						}
+					}
+					List<Refactoring> orderedRefactorings = new ArrayList<>(refactorings);
+					for(int i=orderedRefactorings.size()-1; i>=0 && i>=refactoringsBefore; i--) {
+						Refactoring r = orderedRefactorings.get(i);
+						refactorings.remove(r);
+					}
+				}
+			}
+		}
+	}
+*/
 	private void checkForOtherPossibleMatchesForFragment2(List<? extends AbstractCodeFragment> leaves1,
 			List<? extends AbstractCodeFragment> leaves2, AbstractCodeFragment leaf1, TreeSet<LeafMapping> mappingSet,
 			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions)

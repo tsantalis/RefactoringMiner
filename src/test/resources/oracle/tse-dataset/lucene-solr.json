@@ -1246,6 +1246,16 @@
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tcFlag : char in method private isRootCompatibleWithContext(context WordContext, lastAffix int, entryId int) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer",
           "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(!dictionary.hasFlag(entryId,cFlag) && !isFlagAppendedByAffix(affix,cFlag) && !dictionary.hasFlag(entryId,dictionary.compoundFlag) && !isFlagAppendedByAffix(affix,dictionary.compoundFlag)) to return dictionary.hasFlag(entryId,cFlag) || isFlagAppendedByAffix(lastAffix,cFlag) || dictionary.hasFlag(entryId,dictionary.compoundFlag) || isFlagAppendedByAffix(lastAffix,dictionary.compoundFlag); in method private isRootCompatibleWithContext(context WordContext, lastAffix int, entryId int) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(!dictionary.hasFlag(entryId,dictionary.compoundFlag) && !dictionary.hasFlag(entryId,context.requiredFlag(dictionary))) to return dictionary.hasFlag(entryId,cFlag) || isFlagAppendedByAffix(lastAffix,cFlag) || dictionary.hasFlag(entryId,dictionary.compoundFlag) || isFlagAppendedByAffix(lastAffix,dictionary.compoundFlag); in method private isRootCompatibleWithContext(context WordContext, lastAffix int, entryId int) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer",
+          "validation": true
         }
       ]
     },

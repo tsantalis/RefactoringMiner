@@ -1602,6 +1602,7 @@ public class ReplacementAlgorithm {
 		}
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
+		int refactoringsBefore = operationBodyMapper.getRefactoringsAfterPostProcessing().size();
 		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + LANG.STATEMENT_TERMINATION).equals(s2) || (s2 + LANG.STATEMENT_TERMINATION).equals(s1) || ("final " + s1 + LANG.STATEMENT_TERMINATION).equals(s2) || ("final " + s2 + LANG.STATEMENT_TERMINATION).equals(s1) || replacementInfo.getArgumentizedString1().equals(replacementInfo.getArgumentizedString2()) || equalAfterParenthesisElimination(s1, s2, LANG) ||
 				multiAssignmentWithReorderedVariables(s1, s2, LANG) || arrayAccessDimensionChange(statement1.getString(), statement2.getString(), LANG) ||
 				differOnlyInFinalModifier(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || differOnlyInThis(s1, s2, LANG) || differOnlyInThrow(s1, s2, LANG) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo, statement1, container2, operationBodyMapper) || differOnlyInDefaultInitializer(s1, s2, variableDeclarations1, variableDeclarations2) ||
@@ -1615,6 +1616,14 @@ public class ReplacementAlgorithm {
 				equalAfterNewArgumentAdditions(s1, s2, replacementInfo, operationBodyMapper) ||
 				(validStatementForConcatComparison(statement1, statement2) && commonConcat(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper)) ||
 				partiallyUndoParameterToArgumentMap(s1, s2, parameterToArgumentMap);
+		int refactoringsAfter = operationBodyMapper.getRefactoringsAfterPostProcessing().size();
+		List<Refactoring> orderedRefactorings = new ArrayList<>(operationBodyMapper.getRefactoringsAfterPostProcessing());
+		Set<Refactoring> newRefactorings = new LinkedHashSet<>();
+		if(refactoringsAfter > refactoringsBefore) {
+			for(int i=refactoringsAfter-1; i>=0 && i>=refactoringsBefore; i--) {
+				newRefactorings.add(orderedRefactorings.get(i));
+			}
+		}
 		if(isEqualWithReplacement) {
 			if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
 				List<Replacement> typeReplacements = replacementInfo.getReplacements(ReplacementType.TYPE);
@@ -1687,7 +1696,7 @@ public class ReplacementAlgorithm {
 			if(classInstanceCreationWithEverythingReplaced(statement1, statement2, replacementInfo, parameterToArgumentMap)) {
 				return null;
 			}
-			if(operatorExpressionWithEverythingReplaced(statement1, statement2, replacementInfo, parameterToArgumentMap)) {
+			if(operatorExpressionWithEverythingReplaced(statement1, statement2, replacementInfo, parameterToArgumentMap, newRefactorings, operationBodyMapper.isLambdaBodyMapper())) {
 				return null;
 			}
 			if(thisConstructorCallWithEverythingReplaced(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacementInfo)) {

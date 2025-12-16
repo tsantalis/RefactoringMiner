@@ -519,12 +519,13 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Split Class`
 * `Merge Variable`
 * `Merge Parameter`
+* `Invert Condition`
 
-As of **December 3, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **December 16, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3499  | 41  | 76  | 0.988  | 0.979|
+|**Total**|3522  | 41  | 76  | 0.988  | 0.979|
 |Extract Method|373  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -561,6 +562,7 @@ As of **December 3, 2025** the precision and recall of RefactoringMiner on this 
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|
 |Split Class| 1  |  0  |  0  | 1.000  | 1.000|
+|Invert Condition|23  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 8  |  0  |  0  | 1.000  | 1.000|
 |Move Code|12  |  0  |  0  | 1.000  | 1.000|

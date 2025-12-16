@@ -174,7 +174,13 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(arguments.size() == 1) to if(arguments.size() != 1) in method public visit(node ASTConstructorCall, data Object) : Object from class net.sourceforge.pmd.lang.java.rule.performance.BigIntegerInstantiationRule",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/pmd/pmd.git",
@@ -771,7 +777,13 @@
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic ruleSetApplies(ruleSet RuleSet, fileId FileId) : boolean extracted from public applies(file TextFile) : boolean in class net.sourceforge.pmd.lang.rule.internal.RuleSets & moved to class net.sourceforge.pmd.lang.rule.InternalApiBridge",
           "validation": true
-        }]
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(!RuleSet.applies(rule,currentLangVer)) to return RuleSet.applies(rule,languageVersion); in method public ruleSetApplies(rule Rule, languageVersion LanguageVersion) : boolean from class net.sourceforge.pmd.lang.rule.InternalApiBridge",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/pmd/pmd.git",

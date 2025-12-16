@@ -570,7 +570,7 @@ As of **December 16, 2025** the precision and recall of RefactoringMiner on this
 ## Python Benchmark
 **Source**: Hassan Atwi, Bin Lin, Nikolaos Tsantalis, Yutaro Kashiwa, Yasutaka Kamei, Naoyasu Ubayashi, Gabriele Bavota, and Michele Lanza, "PyRef: Refactoring Detection in Python Projects," 21st IEEE International Working Conference on Source Code Analysis and Manipulation (SCAM'2021), Engineering Track, Luxembourg City, Luxembourg, September 27-28, 2021.
 
-**Properties**: 195 commits from 3 open-source projects
+**Properties**: 199 commits from 3 open-source projects
 
 **Commit dates**: January 2013 - October 2020
 
@@ -609,17 +609,17 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Invert Condition`
 * `Split Parameter`
 
-As of **December 15, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **December 16, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1067  |  6  |  2  | 0.994  | 0.998|
+|**Total**|1093  |  6  |  2  | 0.995  | 0.998|
 |Extract Method|38  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|13  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 5  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|140  |  0  |  1  | 1.000  | 0.993|
 |Inline Method| 6  |  0  |  0  | 1.000  | 1.000|
-|Move Method|14  |  0  |  0  | 1.000  | 1.000|
+|Move Method|21  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Method| 9  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Method| 7  |  0  |  0  | 1.000  | 1.000|
 |Move Class|13  |  0  |  0  | 1.000  | 1.000|
@@ -631,22 +631,22 @@ As of **December 15, 2025** the precision and recall of RefactoringMiner on this
 |Extract Subclass| 2  |  0  |  0  | 1.000  | 1.000|
 |Extract Class| 3  |  0  |  0  | 1.000  | 1.000|
 |Extract And Move Method|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|55  |  1  |  0  | 0.982  | 1.000|
-|Inline Variable|20  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|56  |  1  |  0  | 0.982  | 1.000|
+|Inline Variable|21  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|117  |  1  |  0  | 0.992  | 1.000|
-|Rename Parameter|134  |  1  |  0  | 0.993  | 1.000|
-|Rename Attribute|26  |  0  |  0  | 1.000  | 1.000|
+|Rename Parameter|138  |  1  |  0  | 0.993  | 1.000|
+|Rename Attribute|27  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 3  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable| 2  |  0  |  0  | 1.000  | 1.000|
-|Parameterize Variable| 9  |  0  |  0  | 1.000  | 1.000|
-|Localize Parameter| 8  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Variable|11  |  0  |  0  | 1.000  | 1.000|
+|Localize Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Variable Type|26  |  3  |  0  | 0.897  | 1.000|
 |Add Method Annotation|26  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|19  |  0  |  0  | 1.000  | 1.000|
 |Add Class Annotation| 1  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|232  |  0  |  1  | 1.000  | 0.996|
+|Add Parameter|241  |  0  |  1  | 1.000  | 0.996|
 |Remove Parameter|72  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter|18  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute| 3  |  0  |  0  | 1.000  | 1.000|

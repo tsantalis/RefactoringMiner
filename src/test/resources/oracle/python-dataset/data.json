@@ -9508,4 +9508,69 @@
         "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160049,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "895b71719b3f1e2fadff01112a30f7ad4d52c17e",
+    "url": "https://github.com/asyml/texar/commit/895b71719b3f1e2fadff01112a30f7ad4d52c17e",
+    "author": "zcyang",
+    "time": "12/9/17 04:14 PM",
+    "refactorings": [{
+        "type": "Move Method",
+        "description": "Move Method public load_data(path) from class tsf.data_utils.__module__ to public load_data(path) from class tsf.utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public data_to_id(data, word2id) from class tsf.data_utils.__module__ to public data_to_id(data, word2id) from class tsf.utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public makeup(_x, n) from class tsf.tsf_utils.__module__ to public makeup(_x, n) from class tsf.utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public strip_eos(sents) from class tsf.tsf_utils.__module__ to public strip_eos(sents) from class tsf.utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public logits2word(logits, id2word) from class tsf.tsf_utils.__module__ to public logits2word(logits, id2word) from class tsf.utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public write_sent(sents, path) from class tsf.tsf_utils.__module__ to public write_sent(sents, path) from class tsf.utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public reorder(order, _x) from class tsf.tsf_utils.__module__ to public reorder(order, _x) from class tsf.utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter self in method public default_hparams(self) from class tsf.trainer_base.TrainerBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

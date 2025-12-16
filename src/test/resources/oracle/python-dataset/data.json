@@ -9378,4 +9378,134 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160047,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "7fa43b2b41419d18632be582e3eda50413185415",
+    "url": "https://github.com/asyml/texar/commit/7fa43b2b41419d18632be582e3eda50413185415",
+    "author": "ZhitingHu",
+    "time": "3/23/18 06:08 PM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter dtype in method protected _mask_sequences(sequence, sequence_length, dtype, time_major) from class losses.mle_losses.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter average_across_batch in method public sequence_sparse_softmax_cross_entropy(labels, logits, sequence_length, average_across_batch, average_across_timesteps, sum_over_batch, sum_over_timesteps, time_major, name) from class losses.mle_losses.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter average_across_timesteps in method public sequence_sparse_softmax_cross_entropy(labels, logits, sequence_length, average_across_batch, average_across_timesteps, sum_over_batch, sum_over_timesteps, time_major, name) from class losses.mle_losses.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter sum_over_batch in method public sequence_sparse_softmax_cross_entropy(labels, logits, sequence_length, average_across_batch, average_across_timesteps, sum_over_batch, sum_over_timesteps, time_major, name) from class losses.mle_losses.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter sum_over_timesteps in method public sequence_sparse_softmax_cross_entropy(labels, logits, sequence_length, average_across_batch, average_across_timesteps, sum_over_batch, sum_over_timesteps, time_major, name) from class losses.mle_losses.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160048,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "80e9e26deca028ef6b1b51c307b61bb305dc9b1c",
+    "url": "https://github.com/asyml/texar/commit/80e9e26deca028ef6b1b51c307b61bb305dc9b1c",
+    "author": "ZhitingHu",
+    "time": "9/5/17 01:17 AM",
+    "refactorings": [{
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable word_vecs to word_vecs in method public load_word2vec(filename, vocab, word_vecs) from class data.embedding.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable word_vecs to word_vecs in method public load_glove(filename, vocab, word_vecs) from class data.embedding.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable vector_size in method public load_glove(filename, vocab) from class data.embedding.__module__",
+        "comment": "<p>inlined from <br />vector_size = len(vec)</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Localize Parameter",
+        "description": "Localize Parameter read_fn to read_fn in method public __init__(vocab, hparams) from class data.embedding.Embedding",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter args to kwargs in method public get_instance(class_name, kwargs, module_paths) from class core.utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter embedding in method public __init__(cell, embedding, embedding_trainable, vocab_size, hparams, name) from class modules.encoders.rnn_encoders.ForwardRNNEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter embedding_trainable in method public __init__(cell, embedding, embedding_trainable, vocab_size, hparams, name) from class modules.encoders.rnn_encoders.ForwardRNNEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter vocab_size in method public __init__(cell, embedding, embedding_trainable, vocab_size, hparams, name) from class modules.encoders.rnn_encoders.ForwardRNNEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable embedded_inputs in method protected _build(inputs, kwargs) from class modules.encoders.rnn_encoders.ForwardRNNEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute _read_fn to _hparams : HParams in class data.embedding.Embedding",
+        "comment": "<p>Seems like _filename and _read_fn are merged to _hparams</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter filename to hparams in method public __init__(vocab, hparams) from class data.embedding.Embedding",
+        "comment": "<p>Seems like _filename and _read_fn are merged to _hparams</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }],
+    "refDiffExecutionTime": 0
 }]

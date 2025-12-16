@@ -5161,24 +5161,24 @@
     }, {
         "type": "Invert Condition",
         "description": "Invert Condition if(not isinstance(self._hparams.other_conv_kwargs,dict)) to if(isinstance(other_kwargs,HParams)) in method protected _build_conv1d_hparams(pool_hparams) from class modules.encoders.conv_encoders.Conv1DEncoder",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>multi-mapping</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Invert Condition",
         "description": "Invert Condition if(not isinstance(self._hparams.other_pool_kwargs,dict)) to if(isinstance(other_kwargs,HParams)) in method protected _build_pool_hparams() from class modules.encoders.conv_encoders.Conv1DEncoder",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>multi-mapping</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Invert Condition",
         "description": "Invert Condition if(not isinstance(self._hparams.other_dense_kwargs,dict)) to if(isinstance(other_kwargs,HParams)) in method protected _build_dense_hparams() from class modules.encoders.conv_encoders.Conv1DEncoder",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>multi-mapping</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -7279,10 +7279,10 @@
     }, {
         "type": "Invert Condition",
         "description": "Invert Condition if(not isinstance(output_layer,(list, tuple))) to if(isinstance(output_layer,(list, tuple))) in method protected _forward_output_layers(inputs, output_layer, time_major, hparams, mode, sequence_length) from class modules.encoders.rnn_encoders.__module__",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>multi-mapping</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -9349,6 +9349,29 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method protected _make_length_fn() renamed to protected _make_bucket_length_fn() in class data.data.multi_aligned_data.MultiAlignedData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160046,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "7d45b77b3f6d41a7e920afad6113b00c315b7cc8",
+    "url": "https://github.com/asyml/texar/commit/7d45b77b3f6d41a7e920afad6113b00c315b7cc8",
+    "author": "XuezheMax",
+    "time": "10/8/17 06:30 PM",
+    "refactorings": [{
+        "type": "Rename Parameter",
+        "description": "Rename Parameter policy to sample_fn in method public reinforce_loss(sample_fn, reward_global, reward_local, num_samples) from class losses.rl_lossess.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter policy to sample_fn in method public reinforce_loss_with_MCtree(sample_fn, reward_global, reward_local, num_samples) from class losses.rl_lossess.__module__",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

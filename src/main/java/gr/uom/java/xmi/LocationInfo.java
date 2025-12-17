@@ -53,7 +53,8 @@ public class LocationInfo {
 		}
 	}
 
-	public LocationInfo(KtFile ktFile, String filePath, KtElement node, CodeElementType codeElementType) {
+	public LocationInfo(KtFile ktFile, String sourceFolder, String filePath, KtElement node, CodeElementType codeElementType) {
+		this.sourceFolder = sourceFolder;
 		this.filePath = filePath;
 		this.codeElementType = codeElementType;
 		TextRange range = node.getTextRange();

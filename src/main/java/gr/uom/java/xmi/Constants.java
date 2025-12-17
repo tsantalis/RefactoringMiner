@@ -5,7 +5,10 @@ public enum Constants {
 			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", " ? ", " : ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "null", "true", "false"),
 	
 	PYTHON("\n", "return ", "return\n", "return true\n", "return false\n", "return None\n", "return self\n", "=", "break\n", "continue\n",
-			" -> ", "::", " + ", "raise ", "case ", "try", "{", "}", "{", "}", "self", "self.", " if ", " else ", "assertRaises", "assertRaises", " and ", " or ", "not ", "None", "True", "False");
+			" -> ", "::", " + ", "raise ", "case ", "try", "{", "}", "{", "}", "self", "self.", " if ", " else ", "assertRaises", "assertRaises", " and ", " or ", "not ", "None", "True", "False"),
+	
+	KOTLIN("\n", "return ", "return\n", "return true\n", "return false\n", "return null\n", "return this\n", "=", "break\n", "continue\n",
+			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", " if ", " else ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "null", "true", "false");
 	
 	public final String STATEMENT_TERMINATION;
 	public final String RETURN_SPACE;

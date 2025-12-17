@@ -15,8 +15,8 @@ import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import java.io.File;
 import java.util.Set;
 
-import static gr.uom.java.xmi.UMLModelASTReader.getCompilationUnit;
-import static gr.uom.java.xmi.UMLModelASTReader.getMaxRecommendedVersionFromProblems;
+import static gr.uom.java.xmi.JavaFileProcessor.getCompilationUnit;
+import static gr.uom.java.xmi.JavaFileProcessor.getMaxRecommendedVersionFromProblems;
 
 public class UtilMethods {
     public static final String DIFF_DATA_PATH = "src/test/resources/astDiff/";

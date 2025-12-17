@@ -25,10 +25,12 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
+import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.SourceAnnotation;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.Constants;
+import gr.uom.java.xmi.JavaFileProcessor;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -43,7 +45,6 @@ import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLJavadoc;
 import gr.uom.java.xmi.UMLModel;
-import gr.uom.java.xmi.UMLModelASTReader;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
@@ -2532,12 +2533,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								bodyEndOffset >= 0 && comment.charAt(bodyEndOffset) == '}') {
 							// +1 to include the closing curly bracket
 							String methodBody = comment.substring(bodyStartOffset, bodyEndOffset + 1);
-							ASTNode methodBodyBlock = UMLModelASTReader.processBlock(methodBody);
-							if(methodBodyBlock != null) {
-								int methodBodyHashCode = stringify(methodBodyBlock).hashCode();
-								if(methodBodyHashCode == removedOperation.getBodyHashCode()) {
-									commentedOut = true;
-									break;
+							if(PathFileUtils.isJavaFile(nextClassComment.getLocationInfo().getFilePath())) {
+								ASTNode methodBodyBlock = JavaFileProcessor.processBlock(methodBody);
+								if(methodBodyBlock != null) {
+									int methodBodyHashCode = stringify(methodBodyBlock).hashCode();
+									if(methodBodyHashCode == removedOperation.getBodyHashCode()) {
+										commentedOut = true;
+										break;
+									}
 								}
 							}
 						}

@@ -13,7 +13,7 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.UMLAnnotation;
 
-import static gr.uom.java.xmi.UMLModelASTReader.processBlock;
+import static gr.uom.java.xmi.JavaFileProcessor.processBlock;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.findReplacementsWithExactMatching;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.isForEach;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.processLambdas;

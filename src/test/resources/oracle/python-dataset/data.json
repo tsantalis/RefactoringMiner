@@ -9573,4 +9573,92 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160050,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "956c005ec7eb252af12328c74d224f4770b5ac08",
+    "url": "https://github.com/asyml/texar/commit/956c005ec7eb252af12328c74d224f4770b5ac08",
+    "author": "zcyang",
+    "time": "1/3/18 03:37 PM",
+    "refactorings": [{
+        "type": "Rename Variable",
+        "description": "Rename Variable alpha to scores in method public visualize_step(sess, batch, gamma) from class models.tsf.classifier.Classifier",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable alpha to scores in method public eval_model(model, sess, vocab, x, y) from class tsf.classifier_trainer.ClassifierTrainer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter use_embedding in method public __init__(hparams, use_embedding) from class modules.encoders.conv1d_discriminator.CNN",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter gamma in method protected _build(inputs, gamma) from class modules.encoders.conv1d_discriminator.CNN",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160051,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "9a80ea5944ab0b7911228d529ba7d0dad4443481",
+    "url": "https://github.com/asyml/texar/commit/9a80ea5944ab0b7911228d529ba7d0dad4443481",
+    "author": "zcyang",
+    "time": "12/23/17 11:04 PM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter af in method public append(loss, g, ppl, df, dr, ds, af, ar, as_, w_loss, w_g, w_ppl, w_df, w_dr, w_ds, w_af, w_ar, w_as) from class tsf.stats.TSFClassifierStats",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter ar in method public append(loss, g, ppl, df, dr, ds, af, ar, as_, w_loss, w_g, w_ppl, w_df, w_dr, w_ds, w_af, w_ar, w_as) from class tsf.stats.TSFClassifierStats",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter as_ in method public append(loss, g, ppl, df, dr, ds, af, ar, as_, w_loss, w_g, w_ppl, w_df, w_dr, w_ds, w_af, w_ar, w_as) from class tsf.stats.TSFClassifierStats",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter w_af in method public append(loss, g, ppl, df, dr, ds, af, ar, as_, w_loss, w_g, w_ppl, w_df, w_dr, w_ds, w_af, w_ar, w_as) from class tsf.stats.TSFClassifierStats",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter w_ar in method public append(loss, g, ppl, df, dr, ds, af, ar, as_, w_loss, w_g, w_ppl, w_df, w_dr, w_ds, w_af, w_ar, w_as) from class tsf.stats.TSFClassifierStats",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter w_as in method public append(loss, g, ppl, df, dr, ds, af, ar, as_, w_loss, w_g, w_ppl, w_df, w_dr, w_ds, w_af, w_ar, w_as) from class tsf.stats.TSFClassifierStats",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

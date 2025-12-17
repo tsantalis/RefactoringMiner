@@ -6,6 +6,12 @@ import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
+import org.jetbrains.kotlin.cli.jvm.compiler.EnvironmentConfigFiles;
+import org.jetbrains.kotlin.cli.jvm.compiler.KotlinCoreEnvironment;
+import org.jetbrains.kotlin.com.intellij.openapi.util.Disposer;
+import org.jetbrains.kotlin.com.intellij.psi.PsiFileFactory;
+import org.jetbrains.kotlin.com.intellij.psi.impl.PsiFileFactoryImpl;
+import org.jetbrains.kotlin.config.CompilerConfiguration;
 
 import extension.umladapter.UMLModelAdapter;
 import org.refactoringminer.util.PathFileUtils;
@@ -41,6 +47,13 @@ public class UMLModelASTReader {
 	private void processJavaFileContents(Map<String, String> javaFileContents, boolean astDiff) {
 		// create a single ASTParser instance for all Java files (performance)
 		ASTParser parser = ASTParser.newParser(AST.getJLSLatest());
+		// create a single environment instance for all Kotlin files (performance)
+		KotlinCoreEnvironment environment = KotlinCoreEnvironment.createForProduction(
+				Disposer.newDisposable(),
+				new CompilerConfiguration(),
+				EnvironmentConfigFiles.JVM_CONFIG_FILES
+				);
+		PsiFileFactoryImpl factory = (PsiFileFactoryImpl) PsiFileFactory.getInstance(environment.getProject());
 		for(String filePath : javaFileContents.keySet()) {
 			String javaFileContent = javaFileContents.get(filePath);
 			if(PathFileUtils.isJavaFile(filePath)) {
@@ -48,7 +61,8 @@ public class UMLModelASTReader {
 				processor.processJavaFile(filePath, javaFileContent, astDiff, parser);
 			}
 			else if(PathFileUtils.isKotlinFile(filePath)) {
-				// TODO
+				KotlinFileProcessor processor = new KotlinFileProcessor(umlModel);
+				processor.processKotlinFile(filePath, javaFileContent, astDiff, factory);
 			}
 		}
 	}

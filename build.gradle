@@ -69,6 +69,7 @@ tasks.processTestResources {
 }
 dependencies {
     implementation 'org.antlr:antlr4-runtime:4.13.2'
+    implementation 'org.jetbrains.kotlin:kotlin-compiler-embeddable:2.2.21'
     implementation 'org.eclipse.jgit:org.eclipse.jgit:6.10.1.202505221210-r'
     implementation 'org.slf4j:slf4j-api:2.0.17'
     runtimeOnly 'ch.qos.logback:logback-classic:1.5.21'

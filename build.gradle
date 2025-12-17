@@ -167,6 +167,7 @@ tasks.withType(Sign) {
 
 def jarName = project.hasProperty('jarName') ? project.jarName : 'RM-fat.jar'
 shadowJar {
+    zip64 = true
     manifest {
         attributes 'Main-Class': 'org.refactoringminer.RefactoringMiner'
     }

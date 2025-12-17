@@ -30,6 +30,13 @@ public class Node {
         nodeObj.addProperty("nodeType", nodeType.name());
         nodeObj.addProperty("astType", tree.getType().name);
 
+        List<String> descendantSimpleNames = getDescendantSimpleNames();
+        JsonArray descendantSimpleNamesArr = new JsonArray();
+        for (String descendantSimpleName : descendantSimpleNames) {
+            descendantSimpleNamesArr.add(descendantSimpleName);
+        }
+        nodeObj.add("descendantSimpleNames", descendantSimpleNamesArr);
+
         if (!identifiers.isEmpty()) {
             JsonArray identifiersArr = new JsonArray();
             for (String identifier : identifiers) {
@@ -140,7 +147,9 @@ public class Node {
         this.dsts = dsts;
     }
 
-    public void setDstExceptions(Set<Tree> dstExceptions) {this.dstExceptions = dstExceptions;}
+    public void setDstExceptions(Set<Tree> dstExceptions) {
+        this.dstExceptions = dstExceptions;
+    }
 
     public static String formatId(String path, Tree tree) {
         return String.format("%s-%s-%s-%s", path, tree.getPos(), tree.getEndPos(), tree.getType().name);
@@ -242,5 +251,11 @@ public class Node {
         }
 
         return new Pair<>(left, right);
+    }
+
+    private List<String> getDescendantSimpleNames() {
+        List<Tree> trees = new ArrayList<>(this.tree.getDescendants());
+        trees.add(tree);
+        return trees.stream().filter(tree -> tree.getType().name.equals(Constants.SIMPLE_NAME)).map(tree -> fileContent.substring(tree.getPos(), tree.getEndPos())).toList();
     }
 }

@@ -485,8 +485,8 @@
           "validation": false
         },
         {
-          "type": "CHANGE_VARIABLE_TYPE",
-          "description": "Change Variable Type\toutputList : List<CombinedFileRange> to input : List<? extends FileRange> in method private assertOrderedDisjoint(input List<? extends FileRange>, chunkSize int, minimumSeek int) : void from class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tpath : Path to vectorPath : Path in method public setup() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
           "validation": true
         }
       ]
@@ -944,6 +944,11 @@
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tbase : long in method public test_045_vectoredIOHugeFile() : void from class org.apache.hadoop.fs.s3a.scale.AbstractSTestS3AHugeFiles",
           "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tvectorPath : Path to path : Path in method public setup() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
+          "validation": true
         }
       ]
     },
@@ -1322,8 +1327,8 @@
           "validation": true
         },
         {
-          "type": "CHANGE_VARIABLE_TYPE",
-          "description": "Change Variable Type\toutputList : List<CombinedFileRange> to input : List<? extends FileRange> in method private assertOrderedDisjoint(input List<? extends FileRange>, chunkSize int, minimumSeek int) : void from class org.apache.hadoop.fs.impl.TestVectoredReadUtils",
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tpath : Path to vectorPath : Path in method public setup() : void from class org.apache.hadoop.fs.contract.AbstractContractVectoredReadTest",
           "validation": true
         }
       ]
@@ -1502,7 +1507,7 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tbuf : byte to buf : byte[] in method private copyFileToStream(out OutputStream, localfile File, infile FileInputStream, throttler DataTransferThrottler, canceler Canceler, bufferSize int) : void from class org.apache.hadoop.hdfs.server.namenode.TransferFsImage",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": []
@@ -1661,7 +1666,7 @@
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tExponentialRetryPolicy to AbfsRetryPolicy in method public getRetryPolicy(failureReason String) : AbfsRetryPolicy from class org.apache.hadoop.fs.azurebfs.services.AbfsClient",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_VARIABLE",
@@ -1678,11 +1683,16 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpackage getRetryPolicy() : ExponentialRetryPolicy renamed to package getExponentialRetryPolicy() : ExponentialRetryPolicy in class org.apache.hadoop.fs.azurebfs.services.AbfsClient",
-          "validation": false
+          "validation": true
         },
         {
           "type": "MOVE_RENAME_ATTRIBUTE",
           "description": "Move And Rename Attribute\tprivate retryCount : int renamed to private maxRetryCount : int and moved from class org.apache.hadoop.fs.azurebfs.services.ExponentialRetryPolicy to class org.apache.hadoop.fs.azurebfs.services.AbfsRetryPolicy",
+          "validation": true
+        },
+        {
+          "type": "PULL_UP_OPERATION",
+          "description": "Pull Up Method\tpackage getRetryCount() : int from class org.apache.hadoop.fs.azurebfs.services.ExponentialRetryPolicy to protected getMaxRetryCount() : int from class org.apache.hadoop.fs.azurebfs.services.AbfsRetryPolicy",
           "validation": true
         }
       ]
@@ -1769,7 +1779,7 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate externalBucket() : String extracted from public testLandsatBucketRequireUnencrypted() : void in class org.apache.hadoop.fs.s3a.s3guard.ITestS3GuardTool",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
@@ -1784,6 +1794,11 @@
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic getExternalData(conf Configuration) : Path extracted from public getLandsatCSVPath(conf Configuration) : Path in class org.apache.hadoop.fs.s3a.S3ATestUtils & moved to class org.apache.hadoop.fs.s3a.test.PublicDatasetTestUtils",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tcsvFile : String to filename : String in method public requireDefaultExternalDataFile(conf Configuration) : String from class org.apache.hadoop.fs.s3a.test.PublicDatasetTestUtils",
           "validation": true
         }
       ]
@@ -1848,7 +1863,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tendpointEndsWithCentral : boolean in method private configureEndpointAndRegion(builder BuilderT, parameters S3ClientCreationParameters, conf Configuration) : void from class org.apache.hadoop.fs.s3a.DefaultS3ClientFactory",
-          "validation": true
+          "validation": false
         }
       ]
     }

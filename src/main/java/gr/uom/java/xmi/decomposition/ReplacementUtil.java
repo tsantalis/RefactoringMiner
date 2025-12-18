@@ -2,6 +2,9 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import gr.uom.java.xmi.Constants;
+
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.containsMethodSignatureOfAnonymousClass;
 
 public class ReplacementUtil {
@@ -96,7 +99,7 @@ public class ReplacementUtil {
 		return temp;
 	}
 
-	public static String performReplacement(String completeString1, String completeString2, String subString1, String subString2) {	
+	public static String performReplacement(String completeString1, String completeString2, String subString1, String subString2, Constants LANG) {	
 		String temp = new String(completeString1);
 		boolean replacementOccurred = false;
 		for(String character : SPECIAL_CHARACTERS) {
@@ -111,7 +114,7 @@ public class ReplacementUtil {
 					int start2 = m2.start();
 					String characterBeforeMatch1 = start1 == 0 ? "" : String.valueOf(temp.charAt(start1 - 1));
 					String characterBeforeMatch2 = start2 == 0 ? "" : String.valueOf(completeString2.charAt(start2 - 1));
-					if(compatibleCharacterBeforeMatch(characterBeforeMatch1, characterBeforeMatch2)) {
+					if(compatibleCharacterBeforeMatch(characterBeforeMatch1, characterBeforeMatch2, LANG)) {
 						m1.appendReplacement(sb, Matcher.quoteReplacement(subString2 + character));
 						replacementOccurred = true;
 					}
@@ -120,7 +123,7 @@ public class ReplacementUtil {
 				temp = sb.toString();
 			}
 		}
-		if(!replacementOccurred && !containsMethodSignatureOfAnonymousClass(completeString1) && !containsMethodSignatureOfAnonymousClass(completeString2)) {
+		if(!replacementOccurred && !containsMethodSignatureOfAnonymousClass(completeString1, LANG) && !containsMethodSignatureOfAnonymousClass(completeString2, LANG)) {
 			for(String character : SPECIAL_CHARACTERS) {
 				if(temp.contains(character + subString1) && completeString2.contains(character + subString2)) {
 					StringBuffer sb = new StringBuffer();
@@ -147,7 +150,7 @@ public class ReplacementUtil {
 		return temp;
 	}
 
-	private static boolean compatibleCharacterBeforeMatch(String characterBefore1, String characterBefore2) {
+	private static boolean compatibleCharacterBeforeMatch(String characterBefore1, String characterBefore2, Constants LANG) {
 		if(characterBefore1 != null && characterBefore2 != null) {
 			if(characterBefore1.equals(characterBefore2))
 				return true;
@@ -159,7 +162,7 @@ public class ReplacementUtil {
 				return true;
 			if(characterBefore1.equals("") && characterBefore2.equals(" "))
 				return true;
-			if(characterBefore1.equals("") && characterBefore2.equals("!"))
+			if(characterBefore1.equals("") && characterBefore2.equals(LANG.NOT))
 				return true;
 		}
 		return false;
@@ -212,7 +215,7 @@ public class ReplacementUtil {
 		return matches == compatibleMatches;
 	}
 
-	public static boolean isDefaultValue(String argument) {
-		return argument.equals("null") || argument.equals("0") || argument.equals("1") || argument.equals("false") || argument.equals("true");
+	public static boolean isDefaultValue(String argument, Constants LANG) {
+		return argument.equals(LANG.NULL) || argument.equals("0") || argument.equals("1") || argument.equals(LANG.FALSE) || argument.equals(LANG.TRUE);
 	}
 }

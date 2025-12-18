@@ -15,7 +15,7 @@ public class ModuleDeclarationMatcher implements TreeMatcher {
         Tree srcModuleDeclaration = findModuleDeclaration(srcTree);
         Tree dstModuleDeclaration = findModuleDeclaration(dstTree);
         if (srcModuleDeclaration != null && dstModuleDeclaration != null) {
-            mappingStore.addMappingRecursively(srcModuleDeclaration,dstModuleDeclaration);
+            mappingStore.addMapping(srcModuleDeclaration,dstModuleDeclaration);
             matchModuleNames(mappingStore, srcModuleDeclaration, dstModuleDeclaration);
         }
     }
@@ -34,7 +34,7 @@ public class ModuleDeclarationMatcher implements TreeMatcher {
     }
 
     private Tree findModuleDeclaration(Tree inputTree) {
-        String searchingType = Constants.MODULE_DECLARATION;
+        String searchingType = Constants.get().MODULE_DECLARATION;
         if (!inputTree.getChildren().isEmpty()) {
             List<Tree> children = inputTree.getChildren();
             for(Tree child: children) {

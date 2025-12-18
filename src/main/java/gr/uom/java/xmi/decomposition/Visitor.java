@@ -63,6 +63,7 @@ import org.eclipse.jdt.core.dom.TypeLiteral;
 import org.eclipse.jdt.core.dom.TypeMethodReference;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.WildcardType;
+import org.eclipse.jdt.core.dom.YieldStatement;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -101,6 +102,7 @@ public class Visitor extends ASTVisitor {
 	private List<LeafExpression> patternInstanceofExpressions = new ArrayList<>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
+	private List<ComprehensionExpression> comprehensions = new ArrayList<ComprehensionExpression>();
 	private DefaultMutableTreeNode root = new DefaultMutableTreeNode();
 	private DefaultMutableTreeNode current = root;
 	private Map<String, Set<VariableDeclaration>> activeVariableDeclarations; 
@@ -278,6 +280,7 @@ public class Visitor extends ASTVisitor {
 			this.ternaryOperatorExpressions.removeAll(anonymous.getTernaryOperatorExpressions());
 			this.anonymousClassDeclarations.removeAll(anonymous.getAnonymousClassDeclarations());
 			this.lambdas.removeAll(anonymous.getLambdas());
+			this.comprehensions.removeAll(anonymous.getComprehensions());
 			removeLast(this.arrayAccesses, anonymous.getArrayAccesses());
 		}
 	}
@@ -825,6 +828,14 @@ public class Visitor extends ASTVisitor {
 					anonymous.getLambdas().add(lambda);
 				}
 			}
+			else if(statement instanceof YieldStatement) {
+				LambdaExpressionObject lambda = new LambdaExpressionObject(cu, sourceFolder, filePath, statement, container, activeVariableDeclarations, javaFileContent);
+				lambdas.add(lambda);
+				if(current.getUserObject() != null) {
+					AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+					anonymous.getLambdas().add(lambda);
+				}
+			}
 		}
 		return super.visit(node);
 	}
@@ -945,6 +956,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<LambdaExpressionObject> getLambdas() {
 		return lambdas;
+	}
+
+	public List<ComprehensionExpression> getComprehensions() {
+		return comprehensions;
 	}
 
 	private static boolean invalidArrayAccess(ArrayAccess e) {

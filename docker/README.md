@@ -53,10 +53,14 @@ Note: Ensure your Docker setup includes access to virtual file shares, particula
 You can execute RefactoringMiner's container on a GitHub Pull Request as follows:
 
 ```
-docker run -p 6789:6789  -v c:\users\user\rmc:/diff tsantalis/refactoringminer diff --url https://github.com/JabRef/jabref/pull/11845
+docker run -p 6789:6789 -v c:\users\user\rmc:/diff tsantalis/refactoringminer diff --url https://github.com/JabRef/jabref/pull/11845
 ```
 In `rmc` there is a file `github-oauth.properties` where you should edit to enter your personal GitHub OAuth token.
 
     OAuthToken=ghp_Tz...
 
+Alternatively, you can execute the container by passing `OAuthToken` as an environment variable as follows:
+```
+docker run -p 6789:6789 -e OAuthToken=ghp_Tz... tsantalis/refactoringminer diff --url https://github.com/JabRef/jabref/pull/14138
+```
 This is a [generated classic personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic)

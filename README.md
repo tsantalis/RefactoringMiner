@@ -1,14 +1,21 @@
 ![Alt](https://repobeats.axiom.co/api/embed/aaedbff1e1adfcefc54fff9dbdac2f5384cbcf87.svg "Repobeats analytics image")
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner)
+[![Maven Central Version](https://img.shields.io/maven-central/v/com.github.tsantalis/refactoring-miner)](https://mvnrepository.com/artifact/com.github.tsantalis/refactoring-miner)
 [![Docker Pulls](https://img.shields.io/docker/pulls/tsantalis/refactoringminer)](https://hub.docker.com/r/tsantalis/refactoringminer)
 [![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/lnloiaibmonmmpnfibfjjlfcddoppmgd)](https://chrome.google.com/webstore/detail/refactoring-aware-commit/lnloiaibmonmmpnfibfjjlfcddoppmgd)
 [![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/lnloiaibmonmmpnfibfjjlfcddoppmgd)](https://chrome.google.com/webstore/detail/refactoring-aware-commit/lnloiaibmonmmpnfibfjjlfcddoppmgd)
 [![Tests](https://github.com/tsantalis/RefactoringMiner/actions/workflows/gradle.yml/badge.svg?branch=master)](https://github.com/tsantalis/RefactoringMiner/actions/workflows/gradle.yml)
 [![Test Results](https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2Ftsantalis%2F19fb416d06d1b4d40820e0209540f6c0%2Fraw%2FRefactoringMiner-junit-tests.json)](https://github.com/tsantalis/RefactoringMiner/actions/workflows/gradle.yml)
 
-### Open source projects using our diff tool for code reviews:
-[<img src="https://www.jabref.org/_nuxt/jabref.4Rtv1swz.svg" alt="JabRef" width="20"/>](https://github.com/JabRef/jabref)
+### Programming languages supported by RefactoringMiner:
+| Language | Refactoring detection | AST diff generation |
+|:-----------------------|-----------:|--------:|
+|<img src="https://upload.wikimedia.org/wikipedia/en/3/30/Java_programming_language_logo.svg" alt="Java" height="60"/> | ✅ | ✅ |
+|<img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Python_logo_and_wordmark.svg" alt="Python" width="100"/> | ✅ | ✅ |
+
+
+### Open source projects using RefactoringMiner diff tool for code reviews:
+[<img src="https://www.jabref.org/_nuxt/jabref.4Rtv1swz.svg" alt="JabRef" width="30"/>](https://github.com/JabRef/jabref)
 
 Table of Contents
 =================
@@ -18,7 +25,7 @@ Table of Contents
          * [Refactoring-aware tooltips](#refactoring-aware-tooltips)
          * [Refactoring listing with links to diffs](#refactoring-listing-with-links-to-diffs)
          * [Single Page View](#single-page-view)
-         * [Embedded GitHub Code Review Comments](#embedded-gitHub-code-review-comments)
+         * [Embedded GitHub Code Review Comments](#embedded-github-code-review-comments)
          * [Diff for code moved between different files](#diff-for-code-moved-between-different-files)
          * [On-demand diff generation](#on-demand-diff-generation)
          * [Javadoc and comment reformatting](#javadoc-and-comment-reformatting)
@@ -26,8 +33,9 @@ Table of Contents
    * [Supported Refactoring Types](#supported-refactoring-types)
    * [Contributors](#contributors)
    * [Current precision and recall](#current-precision-and-recall)
-      * [Benchmark 1](#benchmark-1)
-      * [Benchmark 2](#benchmark-2) 
+      * [Java Benchmark 1](#java-benchmark-1)
+      * [Java Benchmark 2](#java-benchmark-2)
+      * [Python Benchmark](#python-benchmark) 
    * [How to build RefactoringMiner](#how-to-build-refactoringminer)
    * [How to test RefactoringMiner](#how-to-test-refactoringminer)
    * [How to use RefactoringMiner as a maven dependency](#how-to-use-refactoringminer-as-a-maven-dependency)
@@ -223,6 +231,8 @@ Currently, it supports the detection of the following refactorings:
 101. Try With Resources
 102. Replace Conditional With Ternary
 103. Assert Timeout
+104. Replace Conditional with Assumption
+105. Extract Fixture
 
 # Supported Refactoring Types
 
@@ -342,15 +352,18 @@ Currently, it supports the detection of the following refactorings:
 </details>
 
 <details>
-<summary>Test-specific (3)</summary>
+<summary>Test-specific (5)</summary>
 
 	1. Parameterize Test (JUnit 5 @ParameterizedTest with @ValueSource)
 	2. Assert Throws
 	3. Assert Timeout
+	4. Replace Conditional with Assumption
+	5. Extract Fixture
 </details>
 
 # Contributors
 * [Nikolaos Tsantalis](https://github.com/tsantalis): Core + APIs
+* [Dimitris Kalaitzidis](https://github.com/dkalaitz): Lang AST infrastructure for multi-language extension
 * [Danilo Ferreira e Silva](https://github.com/danilofes): Git repository mining infrastructure + APIs
 * [Pouria Alikhani Fard](https://github.com/pouryafard75): [AST diff](https://github.com/pouryafard75/RM-ASTDiff) + [AST diff benchmark](https://github.com/pouryafard75/DiffBenchmark)
 * [Victor Veloso](https://github.com/victorgveloso/): [Test-specific refactoring detection](https://github.com/victorgveloso/RefactoringMiner)
@@ -366,7 +379,7 @@ Currently, it supports the detection of the following refactorings:
 
 # Current precision and recall
 
-## Benchmark 1
+## Java Benchmark 1
 **Source**: Nikolaos Tsantalis, Ameya Ketkar, and Danny Dig, "RefactoringMiner 2.0," IEEE Transactions on Software Engineering, vol. 48, no. 3, pp. 930-950, March 2022.
 
 **Properties**: 547 commits from 188 open-source projects
@@ -376,60 +389,59 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **August 26, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **December 16, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12459  | 15  | 221  | 0.999  | 0.983|
-|Extract Method|1010  |  1  | 21  | 0.999  | 0.980|
+|**Total**|12600  | 13  | 215  | 0.999  | 0.983|
+|Extract Method|1019  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
-|Move And Rename Attribute|17  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|396  |  2  | 20  | 0.995  | 0.952|
-|Inline Method|118  |  0  |  1  | 1.000  | 0.992|
+|Rename Method|394  |  2  | 20  | 0.995  | 0.952|
+|Inline Method|119  |  0  |  1  | 1.000  | 0.992|
 |Move Method|388  |  3  |  5  | 0.992  | 0.987|
-|Move And Rename Method|132  |  0  |  4  | 1.000  | 0.971|
+|Move And Rename Method|130  |  0  |  4  | 1.000  | 0.970|
 |Pull Up Method|285  |  0  |  5  | 1.000  | 0.983|
 |Move Class|1095  |  0  |  4  | 1.000  | 0.996|
 |Move And Rename Class|38  |  0  |  1  | 1.000  | 0.974|
 |Move Source Folder| 3  |  0  |  0  | 1.000  | 1.000|
-|Pull Up Attribute|139  |  0  |  1  | 1.000  | 0.993|
+|Pull Up Attribute|145  |  0  |  1  | 1.000  | 0.993|
 |Push Down Attribute|35  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method|46  |  0  |  0  | 1.000  | 1.000|
 |Extract Interface|22  |  0  |  0  | 1.000  | 1.000|
 |Extract Superclass|74  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|108  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|123  |  0  | 61  | 1.000  | 0.668|
-|Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
+|Extract And Move Method|127  |  0  | 60  | 1.000  | 0.679|
+|Move And Inline Method|12  |  0  |  4  | 1.000  | 0.750|
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|307  |  0  |  0  | 1.000  | 1.000|
-|Extract Attribute|25  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|120  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|325  |  0  |  0  | 1.000  | 1.000|
+|Extract Attribute|26  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|147  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|332  |  3  | 11  | 0.991  | 0.968|
-|Rename Parameter|493  |  2  | 24  | 0.996  | 0.954|
+|Rename Variable|346  |  2  | 11  | 0.994  | 0.969|
+|Rename Parameter|505  |  2  | 24  | 0.996  | 0.955|
 |Rename Attribute|146  |  0  |  9  | 1.000  | 0.942|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
 |Merge Attribute| 5  |  0  |  0  | 1.000  | 1.000|
-|Split Variable| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 7  |  0  |  0  | 1.000  | 1.000|
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
-|Replace Variable With Attribute|123  |  0  |  0  | 1.000  | 1.000|
-|Replace Attribute With Variable|29  |  0  |  1  | 1.000  | 0.967|
-|Parameterize Variable|110  |  0  |  0  | 1.000  | 1.000|
-|Localize Parameter|26  |  0  |  0  | 1.000  | 1.000|
-|Parameterize Attribute|23  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|436  |  0  | 12  | 1.000  | 0.973|
-|Change Variable Type|810  |  2  |  7  | 0.998  | 0.991|
-|Change Parameter Type|654  |  1  | 10  | 0.998  | 0.985|
-|Change Attribute Type|244  |  0  |  8  | 1.000  | 0.968|
-|Add Method Annotation|334  |  0  |  0  | 1.000  | 1.000|
-|Remove Method Annotation|97  |  0  |  0  | 1.000  | 1.000|
+|Replace Variable With Attribute|125  |  0  |  0  | 1.000  | 1.000|
+|Replace Attribute With Variable|32  |  0  |  1  | 1.000  | 0.970|
+|Parameterize Variable|112  |  0  |  0  | 1.000  | 1.000|
+|Localize Parameter|31  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Attribute|25  |  0  |  0  | 1.000  | 1.000|
+|Change Return Type|435  |  0  | 12  | 1.000  | 0.973|
+|Change Variable Type|817  |  1  |  7  | 0.999  | 0.992|
+|Change Parameter Type|657  |  1  | 10  | 0.998  | 0.985|
+|Change Attribute Type|244  |  0  |  4  | 1.000  | 0.984|
+|Add Method Annotation|331  |  0  |  0  | 1.000  | 1.000|
+|Remove Method Annotation|98  |  0  |  0  | 1.000  | 1.000|
 |Modify Method Annotation|29  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Annotation|62  |  0  |  1  | 1.000  | 0.984|
 |Remove Attribute Annotation|18  |  0  |  0  | 1.000  | 1.000|
@@ -440,13 +452,13 @@ As of **August 26, 2025** the precision and recall of RefactoringMiner on this b
 |Add Parameter Annotation|34  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|852  |  1  |  1  | 0.999  | 0.999|
-|Remove Parameter|318  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|851  |  1  |  1  | 0.999  | 0.999|
+|Remove Parameter|324  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
-|Add Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
+|Add Variable Annotation| 2  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 4  |  0  |  0  | 1.000  | 1.000|
-|Add Thrown Exception Type|41  |  0  |  0  | 1.000  | 1.000|
-|Remove Thrown Exception Type|270  |  0  |  0  | 1.000  | 1.000|
+|Add Thrown Exception Type|40  |  0  |  0  | 1.000  | 1.000|
+|Remove Thrown Exception Type|271  |  0  |  0  | 1.000  | 1.000|
 |Change Thrown Exception Type| 9  |  0  |  0  | 1.000  | 1.000|
 |Change Method Access Modifier|334  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Access Modifier|232  |  0  |  0  | 1.000  | 1.000|
@@ -456,8 +468,8 @@ As of **August 26, 2025** the precision and recall of RefactoringMiner on this b
 |Add Attribute Modifier|142  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Modifier|143  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Modifier|135  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter Modifier|132  |  0  |  0  | 1.000  | 1.000|
-|Remove Variable Modifier|62  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter Modifier|133  |  0  |  0  | 1.000  | 1.000|
+|Remove Variable Modifier|67  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Modifier|39  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier|78  |  0  |  0  | 1.000  | 1.000|
 |Add Class Modifier|37  |  0  |  0  | 1.000  | 1.000|
@@ -472,18 +484,19 @@ As of **August 26, 2025** the precision and recall of RefactoringMiner on this b
 |Merge Class| 5  |  0  |  0  | 1.000  | 1.000|
 |Split Class| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Conditional|19  |  0  |  0  | 1.000  | 1.000|
-|Invert Condition|33  |  0  |  0  | 1.000  | 1.000|
+|Invert Condition|49  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional|14  |  0  |  0  | 1.000  | 1.000|
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
-|Split Method| 5  |  0  |  0  | 1.000  | 1.000|
-|Move Code|16  |  0  |  0  | 1.000  | 1.000|
+|Split Method| 6  |  0  |  0  | 1.000  | 1.000|
+|Move Code|24  |  0  |  0  | 1.000  | 1.000|
 |Assert Throws|14  |  0  |  0  | 1.000  | 1.000|
 |Try With Resources| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Generic With Diamond|77  |  0  |  0  | 1.000  | 1.000|
 |Replace Conditional With Ternary| 8  |  0  |  0  | 1.000  | 1.000|
+|Extract Fixture| 3  |  0  |  0  | 1.000  | 1.000|
 
-## Benchmark 2
+## Java Benchmark 2
 **Source**: Bo Liu, Hui Liu, Nan Niu, Yuxia Zhang, Guangjie Li, He Jiang, and Yanjie Jiang, "An Automated Approach to Discovering Software Refactorings by Comparing Successive Versions," IEEE Transactions on Software Engineering, 2025.
 
 **Properties**: 400 commits from 20 open-source projects (20 commits per project)
@@ -493,44 +506,162 @@ As of **August 26, 2025** the precision and recall of RefactoringMiner on this b
 **Files**: [tse-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/tse-dataset)
 
 The original benchmark has been re-validated and corrected by Nikolaos Tsantalis. The validation process is still in progress.
-As of **September 3, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+Moreover, the benchmark has been extended with valid instances for the following refactoring types:
+* `Replace Variable With Attribute`
+* `Replace Attribute With Variable`
+* `Extract Attribute`
+* `Change Type Declaration Kind`
+* `Replace Pipeline With Loop`
+* `Merge Method`
+* `Split Method`
+* `Replace Anonymous With Class`
+* `Move Code`
+* `Split Class`
+* `Merge Variable`
+* `Merge Parameter`
+* `Invert Condition`
+
+As of **December 16, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3247  | 116  | 203  | 0.966  | 0.941|
-|Extract Method|362  |  4  | 11  | 0.989  | 0.971|
-|Rename Class|231  |  1  |  2  | 0.996  | 0.991|
+|**Total**|3522  | 41  | 76  | 0.988  | 0.979|
+|Extract Method|373  |  1  |  4  | 0.997  | 0.989|
+|Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
-|Move And Rename Attribute| 5  |  0  |  3  | 1.000  | 0.625|
-|Rename Method|290  | 14  | 11  | 0.954  | 0.963|
-|Inline Method|69  |  5  |  2  | 0.932  | 0.972|
-|Move Method|262  |  4  |  2  | 0.985  | 0.992|
-|Move And Rename Method|24  |  4  |  6  | 0.857  | 0.800|
-|Pull Up Method|45  |  1  |  5  | 0.978  | 0.900|
-|Move Class|141  |  4  |  2  | 0.972  | 0.986|
-|Move And Rename Class|28  |  0  |  1  | 1.000  | 0.966|
-|Pull Up Attribute|11  |  0  |  1  | 1.000  | 0.917|
+|Move And Rename Attribute| 7  |  0  |  1  | 1.000  | 0.875|
+|Rename Method|299  |  7  |  5  | 0.977  | 0.984|
+|Inline Method|68  |  3  |  2  | 0.958  | 0.971|
+|Move Method|266  |  1  |  0  | 0.996  | 1.000|
+|Move And Rename Method|26  |  3  |  0  | 0.897  | 1.000|
+|Pull Up Method|47  |  0  |  0  | 1.000  | 1.000|
+|Move Class|144  |  1  |  1  | 0.993  | 0.993|
+|Move And Rename Class|28  |  0  |  0  | 1.000  | 1.000|
+|Pull Up Attribute|12  |  0  |  0  | 1.000  | 1.000|
 |Push Down Attribute| 6  |  0  |  0  | 1.000  | 1.000|
-|Push Down Method|22  |  0  |  1  | 1.000  | 0.957|
+|Push Down Method|22  |  0  |  0  | 1.000  | 1.000|
 |Extract Interface|16  |  2  |  0  | 0.889  | 1.000|
-|Extract Superclass| 7  |  1  |  0  | 0.875  | 1.000|
+|Extract Superclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
-|Extract Class|44  |  1  |  5  | 0.978  | 0.898|
-|Extract And Move Method|106  | 13  | 18  | 0.891  | 0.855|
-|Move And Inline Method|26  |  1  | 12  | 0.963  | 0.684|
+|Extract Class|45  |  1  |  4  | 0.978  | 0.918|
+|Extract And Move Method|123  |  2  |  5  | 0.984  | 0.961|
+|Move And Inline Method|29  |  1  |  6  | 0.967  | 0.829|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|259  |  8  | 28  | 0.970  | 0.902|
+|Extract Variable|292  |  1  |  6  | 0.997  | 0.980|
 |Extract Attribute| 3  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|99  |  6  | 27  | 0.943  | 0.786|
-|Rename Variable|290  | 17  | 15  | 0.945  | 0.951|
-|Rename Attribute|104  |  5  | 12  | 0.954  | 0.897|
-|Change Return Type|162  |  5  | 17  | 0.970  | 0.905|
-|Change Variable Type|374  | 17  | 10  | 0.957  | 0.974|
-|Change Attribute Type|163  |  3  |  5  | 0.982  | 0.970|
+|Inline Variable|127  |  0  | 11  | 1.000  | 0.920|
+|Rename Variable|306  |  5  |  6  | 0.984  | 0.981|
+|Rename Attribute|112  |  4  |  6  | 0.966  | 0.949|
+|Merge Variable| 4  |  0  |  0  | 1.000  | 1.000|
+|Merge Parameter|11  |  0  |  0  | 1.000  | 1.000|
+|Replace Variable With Attribute|11  |  0  |  0  | 1.000  | 1.000|
+|Replace Attribute With Variable|58  |  0  |  0  | 1.000  | 1.000|
+|Change Return Type|168  |  1  |  6  | 0.994  | 0.966|
+|Change Variable Type|378  |  6  |  2  | 0.984  | 0.995|
+|Change Attribute Type|164  |  2  |  3  | 0.988  | 0.982|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|
+|Split Class| 1  |  0  |  0  | 1.000  | 1.000|
+|Invert Condition|23  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 1  |  0  |  0  | 1.000  | 1.000|
-|Split Method| 6  |  0  |  0  | 1.000  | 1.000|
+|Split Method| 8  |  0  |  0  | 1.000  | 1.000|
+|Move Code|12  |  0  |  0  | 1.000  | 1.000|
+
+## Python Benchmark
+**Source**: Hassan Atwi, Bin Lin, Nikolaos Tsantalis, Yutaro Kashiwa, Yasutaka Kamei, Naoyasu Ubayashi, Gabriele Bavota, and Michele Lanza, "PyRef: Refactoring Detection in Python Projects," 21st IEEE International Working Conference on Source Code Analysis and Manipulation (SCAM'2021), Engineering Track, Luxembourg City, Luxembourg, September 27-28, 2021.
+
+**Properties**: 201 commits from 3 open-source projects
+
+**Commit dates**: January 2013 - October 2020
+
+**Files**: [python-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/python-dataset/data.json)
+
+The original benchmark has been re-validated by Nikolaos Tsantalis. The validation process is still in progress.
+Moreover, the benchmark has been extended with valid instances for the following refactoring types:
+* `Rename Class`
+* `Move Class`
+* `Move And Rename Class`
+* `Rename Attribute`
+* `Move Attribute`
+* `Pull Up Attribute`
+* `Push Down Attribute`
+* `Move And Rename Method`
+* `Extract Class`
+* `Extract Superclass`
+* `Extract Subclass`
+* `Extract And Move Method`
+* `Rename Variable`
+* `Extract Variable`
+* `Inline Variable`
+* `Replace Variable With Attribute`
+* `Replace Attribute With Variable`
+* `Parameterize Variable`
+* `Localize Parameter`
+* `Parameterize Attribute`
+* `Change Variable Type`
+* `Add Method Annotation`
+* `Remove Method Annotation`
+* `Add Class Annotation`
+* `Reorder Parameter`
+* `Split Conditional`
+* `Move Code`
+* `Encapsulate Attribute`
+* `Invert Condition`
+* `Split Parameter`
+
+As of **December 17, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+
+| Refactoring Type | TP | FP | FN | Precision | Recall |
+|:-----------------------|-----------:|--------:|--------:|--------:|--------:|
+|**Total**|1103  |  6  |  2  | 0.995  | 0.998|
+|Extract Method|38  |  0  |  0  | 1.000  | 1.000|
+|Rename Class|13  |  0  |  0  | 1.000  | 1.000|
+|Move Attribute| 5  |  0  |  0  | 1.000  | 1.000|
+|Rename Method|140  |  0  |  1  | 1.000  | 0.993|
+|Inline Method| 6  |  0  |  0  | 1.000  | 1.000|
+|Move Method|21  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Method| 9  |  0  |  0  | 1.000  | 1.000|
+|Pull Up Method| 7  |  0  |  0  | 1.000  | 1.000|
+|Move Class|13  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Class|10  |  0  |  0  | 1.000  | 1.000|
+|Pull Up Attribute| 4  |  0  |  0  | 1.000  | 1.000|
+|Push Down Attribute| 1  |  0  |  0  | 1.000  | 1.000|
+|Push Down Method| 3  |  0  |  0  | 1.000  | 1.000|
+|Extract Superclass| 3  |  0  |  0  | 1.000  | 1.000|
+|Extract Subclass| 2  |  0  |  0  | 1.000  | 1.000|
+|Extract Class| 3  |  0  |  0  | 1.000  | 1.000|
+|Extract And Move Method|10  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|56  |  1  |  0  | 0.982  | 1.000|
+|Inline Variable|21  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable|119  |  1  |  0  | 0.992  | 1.000|
+|Rename Parameter|138  |  1  |  0  | 0.993  | 1.000|
+|Rename Attribute|27  |  0  |  0  | 1.000  | 1.000|
+|Split Parameter| 3  |  0  |  0  | 1.000  | 1.000|
+|Replace Variable With Attribute| 1  |  0  |  0  | 1.000  | 1.000|
+|Replace Attribute With Variable| 2  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Variable|11  |  0  |  0  | 1.000  | 1.000|
+|Localize Parameter| 9  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
+|Change Variable Type|26  |  3  |  0  | 0.897  | 1.000|
+|Add Method Annotation|26  |  0  |  0  | 1.000  | 1.000|
+|Remove Method Annotation|19  |  0  |  0  | 1.000  | 1.000|
+|Add Class Annotation| 1  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|248  |  0  |  1  | 1.000  | 0.996|
+|Remove Parameter|73  |  0  |  0  | 1.000  | 1.000|
+|Reorder Parameter|18  |  0  |  0  | 1.000  | 1.000|
+|Encapsulate Attribute| 3  |  0  |  0  | 1.000  | 1.000|
+|Split Conditional| 4  |  0  |  0  | 1.000  | 1.000|
+|Invert Condition| 1  |  0  |  0  | 1.000  | 1.000|
+|Move Code| 8  |  0  |  0  | 1.000  | 1.000|
+
+**Important notes**:
+Commit [asyml/texar@36f4b18](https://github.com/asyml/texar/commit/36f4b18340e2974cfee80e5c347bf7ae7459ab88) has been skipped due to a parsing error,
+i.e., a missing comma after parameter `w_ppl=1.` of function `append` in file `examples/tsf/stats.py`
+```python
+def append(self, loss, g, ppl, d, d0, d1,
+             w_loss=1., w_g=1., w_ppl=1. w_d=1, w_d0=1., w_d1=1.):
+```
+Python commits may not always be syntactically valid, leading to parsing errors. Make sure to consult the `System.error` logs printed by the tool for parsing errors, as commits with parsing errors may include incorrect refactoring information.
 
 # How to build RefactoringMiner
 Since release 3.0.0, RefactoringMiner requires **Java 17** or newer and **Gradle 7.4** or newer.
@@ -556,7 +687,7 @@ The available test suites are:
 * [src/test/java/org/refactoringminer/astDiff/tests/SpecificCasesTest](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/astDiff/tests/SpecificCasesTest.java): Tests the AST node mapping accuracy of RefactoringMiner on some specific cases
 
 # How to use RefactoringMiner as a maven dependency
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner)
+[![Maven Central Version](https://img.shields.io/maven-central/v/com.github.tsantalis/refactoring-miner)](https://mvnrepository.com/artifact/com.github.tsantalis/refactoring-miner)
 
 Since version 2.0, RefactoringMiner is available in the [Maven Central Repository](https://mvnrepository.com/artifact/com.github.tsantalis/refactoring-miner).
 In order to use RefactoringMiner as a maven dependency in your project, add the following snippet to your project's build configuration file:
@@ -566,12 +697,12 @@ In order to use RefactoringMiner as a maven dependency in your project, add the 
     <dependency>
       <groupId>com.github.tsantalis</groupId>
       <artifactId>refactoring-miner</artifactId>
-      <version>3.0.11</version>
+      <version>3.0.12</version>
     </dependency>
 
 **build.gradle**
 
-    implementation 'com.github.tsantalis:refactoring-miner:3.0.11'
+    implementation 'com.github.tsantalis:refactoring-miner:3.0.12'
 
 # How to use RefactoringMiner as a docker image
 <a href="https://hub.docker.com/r/tsantalis/refactoringminer"><img src="https://img.shields.io/badge/dockerhub-images-important.svg?logo=Docker"></a>

@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -16,7 +15,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class AssertTimeoutRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
+public class AssertTimeoutRefactoring implements MethodLevelRefactoring, LeafMappingProvider, AssertionRefactoring {
 	private Set<AbstractCodeMapping> assertTimeoutMappings;
 	private AbstractCall assertTimeoutCall;
 	private VariableDeclarationContainer operationBefore;
@@ -50,11 +49,11 @@ public class AssertTimeoutRefactoring implements MethodLevelRefactoring, LeafMap
 		return subExpressionMappings;
 	}
 
-	public Set<AbstractCodeMapping> getAssertTimeoutMappings() {
+	public Set<AbstractCodeMapping> getMappings() {
 		return assertTimeoutMappings;
 	}
 
-	public AbstractCall getAssertTimeoutCall() {
+	public AbstractCall getCall() {
 		return assertTimeoutCall;
 	}
 

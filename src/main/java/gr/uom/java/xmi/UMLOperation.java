@@ -17,8 +17,6 @@ import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLTypeParameterDiff;
 import gr.uom.java.xmi.diff.UMLTypeParameterListDiff;
 
-import static gr.uom.java.xmi.Constants.JAVA;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +28,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.refactoringminer.util.AstUtils;
+import org.refactoringminer.util.PathFileUtils;
 
 public class UMLOperation implements Comparable<UMLOperation>, Serializable, VariableDeclarationContainer {
 	private LocationInfo locationInfo;
@@ -57,6 +56,9 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private List<UMLComment> comments;
 	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
 	private String actualSignature;
+	private List<UMLOperation> nestedOperations;
+	private final Constants LANG;
+	private boolean importsTestCase;
 	
 	public UMLOperation(String name, LocationInfo locationInfo) {
 		this.locationInfo = locationInfo;
@@ -68,7 +70,48 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
         this.annotations = new ArrayList<UMLAnnotation>();
         this.modifiers = new ArrayList<UMLModifier>();
         this.comments = new ArrayList<UMLComment>();
+        this.nestedOperations = new ArrayList<UMLOperation>();
+        this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
     }
+
+	public void addNestedOperation(UMLOperation operation) {
+		nestedOperations.add(operation);
+	}
+
+	public List<UMLOperation> getNestedOperations() {
+		return nestedOperations;
+	}
+
+	public UMLOperation nestedOperationWithTheSameSignatureIgnoringChangedTypes(UMLOperation operation) {
+		List<UMLOperation> matchingOperations = new ArrayList<UMLOperation>();
+		for(UMLOperation originalOperation : nestedOperations) {
+			boolean matchesOperation = originalOperation.isNative() ?
+				originalOperation.equalSignatureIgnoringChangedTypes(operation) :
+				originalOperation.equalSignatureWithIdenticalNameIgnoringChangedTypes(operation);
+			if(matchesOperation) {
+				boolean originalOperationEmptyBody = originalOperation.getBody() == null || originalOperation.hasEmptyBody();
+				boolean operationEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
+				if(originalOperationEmptyBody == operationEmptyBody)
+					matchingOperations.add(originalOperation);
+			}
+		}
+		if(matchingOperations.size() == 1) {
+			return matchingOperations.get(0);
+		}
+		else if(matchingOperations.size() > 1) {
+			int minDistance = StringDistance.editDistance(matchingOperations.get(0).toString(), operation.toString());
+			UMLOperation matchingOperation = matchingOperations.get(0);
+			for(int i=1; i<matchingOperations.size(); i++) {
+				int distance = StringDistance.editDistance(matchingOperations.get(i).toString(), operation.toString());
+				if(distance < minDistance) {
+					minDistance = distance;
+					matchingOperation = matchingOperations.get(i);
+				}
+			}
+			return matchingOperation;
+		}
+		return null;
+	}
 
 	public String getActualSignature() {
 		return actualSignature;
@@ -208,6 +251,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public OperationBody getBody() {
 		return operationBody;
+	}
+
+	public void setImportsTestCase(boolean importsTestCase) {
+		this.importsTestCase = importsTestCase;
 	}
 
 	public AbstractExpression getDefaultExpression() {
@@ -414,15 +461,6 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return anonymousClassList;
 	}
 
-	public UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration) {
-		for(UMLAnonymousClass anonymousClass : this.getAnonymousClassList()) {
-			if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration.getLocationInfo())) {
-				return anonymousClass;
-			}
-		}
-		return null;
-	}
-
 	public UMLParameter getReturnParameter() {
 		for(UMLParameter parameter : parameters) {
 			if(parameter.getKind().equals("return"))
@@ -431,11 +469,34 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return null;
 	}
 
+	public boolean compatibleReturnParameter(UMLOperation operation) {
+		UMLParameter thisReturnParameter = this.getReturnParameter();
+		UMLParameter otherReturnParameter = operation.getReturnParameter();
+		if(thisReturnParameter != null && otherReturnParameter != null &&
+				thisReturnParameter.getType() != null && otherReturnParameter.getType() != null)
+			return thisReturnParameter.getType().compatibleTypes(otherReturnParameter.getType());
+		else if(thisReturnParameter == null && otherReturnParameter == null)
+			return true;
+		else
+			return false;
+	}
+
 	public boolean equalReturnParameter(UMLOperation operation) {
 		UMLParameter thisReturnParameter = this.getReturnParameter();
 		UMLParameter otherReturnParameter = operation.getReturnParameter();
 		if(thisReturnParameter != null && otherReturnParameter != null)
 			return thisReturnParameter.equals(otherReturnParameter);
+		else if(thisReturnParameter == null && otherReturnParameter == null)
+			return true;
+		else
+			return false;
+	}
+
+	public boolean equalReturnParameterWithPluralClassType(UMLOperation operation) {
+		UMLParameter thisReturnParameter = this.getReturnParameter();
+		UMLParameter otherReturnParameter = operation.getReturnParameter();
+		if(thisReturnParameter != null && otherReturnParameter != null)
+			return thisReturnParameter.getType().pluralClassType(otherReturnParameter.getType());
 		else if(thisReturnParameter == null && otherReturnParameter == null)
 			return true;
 		else
@@ -703,7 +764,20 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
 			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
 				StatementObject statement = (StatementObject)statements.get(0);
-				if(statement.getString().startsWith(JAVA.RETURN_SPACE)) {
+				if(statement.getString().startsWith(LANG.RETURN_SPACE)) {
+					return statement;
+				}
+			}
+		}
+		return null;
+	}
+
+	public StatementObject singleThrowStatement() {
+		if(getBody() != null) {
+			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
+			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
+				StatementObject statement = (StatementObject)statements.get(0);
+				if(statement.getString().startsWith(LANG.THROW_SPACE)) {
 					return statement;
 				}
 			}
@@ -718,7 +792,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				StatementObject statement = (StatementObject)statements.get(0);
 				for(AbstractCall operationInvocation : statement.getMethodInvocations()) {
 					if(operationInvocation.matchesOperation(this, this, null, null) ||
-							(operationInvocation.getName().equals(this.getName()) && (operationInvocation.getExpression() == null || operationInvocation.getExpression().endsWith("this")))) {
+							(operationInvocation.getName().equals(this.getName()) && (operationInvocation.getExpression() == null || operationInvocation.getExpression().endsWith(LANG.THIS)))) {
 						return operationInvocation;
 					}
 				}
@@ -755,7 +829,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			List<UMLParameter> parameters = getParametersWithoutReturnType();
 			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
 				StatementObject statement = (StatementObject)statements.get(0);
-				if(statement.getString().startsWith(JAVA.RETURN_SPACE)) {
+				if(statement.getString().startsWith(LANG.RETURN_SPACE)) {
 					boolean parameterUsed = false;
 					for(UMLParameter parameter : parameters) {
 						for(LeafExpression variableExpression : statement.getVariables()) {
@@ -767,13 +841,13 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 					}
 					for(LeafExpression variableExpression : statement.getVariables()) {
 						String variable = variableExpression.getString();
-						if(statement.getString().equals(JAVA.RETURN_SPACE + variable + JAVA.STATEMENT_TERMINATION) && (parameters.size() == 0 || !parameterUsed)) {
+						if(statement.getString().equals(LANG.RETURN_SPACE + variable + LANG.STATEMENT_TERMINATION) && (parameters.size() == 0 || !parameterUsed)) {
 							return true;
 						}
-						else if(statement.getString().equals(JAVA.RETURN_SPACE + variable + ".keySet()" + JAVA.STATEMENT_TERMINATION) && (parameters.size() == 0 || !parameterUsed)) {
+						else if(statement.getString().equals(LANG.RETURN_SPACE + variable + ".keySet()" + LANG.STATEMENT_TERMINATION) && (parameters.size() == 0 || !parameterUsed)) {
 							return true;
 						}
-						else if(statement.getString().equals(JAVA.RETURN_SPACE + variable + ".values()" + JAVA.STATEMENT_TERMINATION) && (parameters.size() == 0 || !parameterUsed)) {
+						else if(statement.getString().equals(LANG.RETURN_SPACE + variable + ".values()" + LANG.STATEMENT_TERMINATION) && (parameters.size() == 0 || !parameterUsed)) {
 							return true;
 						}
 					}
@@ -782,10 +856,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 							returnParameter != null && returnParameter.getType().getClassType().equals("boolean")) {
 						return true;
 					}
-					if(parameterUsed && statement.getString().equals(JAVA.RETURN_SPACE + parameters.get(0).getName() + JAVA.STATEMENT_TERMINATION)) {
+					if(parameterUsed && statement.getString().equals(LANG.RETURN_SPACE + parameters.get(0).getName() + LANG.STATEMENT_TERMINATION)) {
 						return true;
 					}
-					if(statement.getString().equals(JAVA.RETURN_NULL)) {
+					if(statement.getString().equals(LANG.RETURN_NULL)) {
 						return true;
 					}
 				}
@@ -802,7 +876,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				StatementObject statement = (StatementObject)statements.get(0);
 				for(LeafExpression variableExpression : statement.getVariables()) {
 					String variable = variableExpression.getString();
-					if(statement.getString().equals(variable + JAVA.ASSIGNMENT + parameterNames.get(0) + JAVA.STATEMENT_TERMINATION)) {
+					if(statement.getString().equals(variable + LANG.ASSIGNMENT + parameterNames.get(0) + LANG.STATEMENT_TERMINATION)) {
 						return true;
 					}
 				}
@@ -812,13 +886,13 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				boolean setterAssignment = false;
 				for(LeafExpression variableExpression : statement.getVariables()) {
 					String variable = variableExpression.getString();
-					if(statement.getString().equals(variable + JAVA.ASSIGNMENT + parameterNames.get(0) + JAVA.STATEMENT_TERMINATION)) {
+					if(statement.getString().equals(variable + LANG.ASSIGNMENT + parameterNames.get(0) + LANG.STATEMENT_TERMINATION)) {
 						setterAssignment = true;
 					}
 				}
 				if(setterAssignment && statements.get(1) instanceof StatementObject) {
 					StatementObject statement2 = (StatementObject)statements.get(1);
-					if(statement2.getString().equals(JAVA.RETURN_THIS)) {
+					if(statement2.getString().equals(LANG.RETURN_THIS)) {
 						return true;
 					}
 				}
@@ -836,9 +910,9 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				if(statement instanceof StatementObject) {
 					for(LeafExpression variableExpression : statement.getVariables()) {
 						String variable = variableExpression.getString();
-						if(statement.getString().startsWith(variable + JAVA.ASSIGNMENT)) {
+						if(statement.getString().startsWith(variable + LANG.ASSIGNMENT)) {
 							for(String parameterName : parameterNames) {
-								if(statement.getString().equals(variable + JAVA.ASSIGNMENT + parameterName + JAVA.STATEMENT_TERMINATION)) {
+								if(statement.getString().equals(variable + LANG.ASSIGNMENT + parameterName + LANG.STATEMENT_TERMINATION)) {
 									matchCount++;
 									break;
 								}
@@ -864,7 +938,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	public boolean equalsIgnoringParentClassTypeParameterChange(UMLOperation operation, UMLTypeParameterListDiff typeParameterListDiff) {
-		if(this.className.equals(operation.className) && this.name.equals(operation.name) &&
+		if(this.name.equals(operation.name) &&
 				this.isAbstract == operation.isAbstract && equalTypeParameters(operation)) {
 			Set<UMLTypeParameterDiff> set = typeParameterListDiff.getTypeParameterDiffs();
 			UMLParameter thisReturnParameter = this.getReturnParameter();
@@ -898,8 +972,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	public boolean equalsIgnoringAbstraction(UMLOperation operation) {
-		return this.className.equals(operation.className) &&
-				this.name.equals(operation.name) &&
+		return this.name.equals(operation.name) &&
 				equalReturnParameter(operation) &&
 				this.getParameterTypeList().equals(operation.getParameterTypeList()) &&
 				equalTypeParameters(operation);
@@ -908,8 +981,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	public boolean equalsIgnoringVisibility(UMLOperation operation) {
 		boolean thisEmptyBody = this.getBody() == null || this.hasEmptyBody();
 		boolean otherEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
-		return this.className.equals(operation.className) &&
-				this.name.equals(operation.name) &&
+		return this.name.equals(operation.name) &&
 				this.isAbstract == operation.isAbstract &&
 				thisEmptyBody == otherEmptyBody &&
 				equalReturnParameter(operation) &&
@@ -920,8 +992,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	public boolean equalsIgnoringNameCase(UMLOperation operation) {
 		boolean thisEmptyBody = this.getBody() == null || this.hasEmptyBody();
 		boolean otherEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
-		return this.className.equals(operation.className) &&
-				this.name.equalsIgnoreCase(operation.name) &&
+		return this.name.equalsIgnoreCase(operation.name) &&
 				this.visibility.equals(operation.visibility) &&
 				this.isAbstract == operation.isAbstract &&
 				thisEmptyBody == otherEmptyBody &&
@@ -953,8 +1024,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	public boolean equalsIgnoringTypeParameters(UMLOperation operation) {
 		boolean thisEmptyBody = this.getBody() == null || this.hasEmptyBody();
 		boolean otherEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
-		return this.className.equals(operation.className) &&
-			this.name.equals(operation.name) &&
+		return this.name.equals(operation.name) &&
 			this.visibility.equals(operation.visibility) &&
 			this.isAbstract == operation.isAbstract &&
 			thisEmptyBody == otherEmptyBody &&
@@ -1021,13 +1091,16 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		for(int i=0; i<parameters.size(); i++) {
 			UMLParameter parameter = parameters.get(i);
 			if(parameter.getKind().equals("in")) {
-				sb.append(parameter);
+				if(LANG.equals(Constants.PYTHON))
+					sb.append(parameter.getName());
+				else
+					sb.append(parameter);
 				if(i < parameters.size()-1)
 					sb.append(", ");
 			}
 		}
 		sb.append(")");
-		if(returnParameter != null) {
+		if(returnParameter != null && !LANG.equals(Constants.PYTHON)) {
 			sb.append(" : ");
 			sb.append(returnParameter.toString());
 		}
@@ -1050,13 +1123,16 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		for(int i=0; i<parameters.size(); i++) {
 			UMLParameter parameter = parameters.get(i);
 			if(parameter.getKind().equals("in")) {
-				sb.append(parameter.toQualifiedString());
+				if(LANG.equals(Constants.PYTHON))
+					sb.append(parameter.getName());
+				else
+					sb.append(parameter.toQualifiedString());
 				if(i < parameters.size()-1)
 					sb.append(", ");
 			}
 		}
 		sb.append(")");
-		if(returnParameter != null) {
+		if(returnParameter != null && !LANG.equals(Constants.PYTHON)) {
 			sb.append(" : ");
 			sb.append(returnParameter.toQualifiedString());
 		}
@@ -1097,9 +1173,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	public boolean testMethodCheck(UMLOperation operation) { 
-		if(this.hasTestAnnotation() && !operation.hasTestAnnotation() && !operation.hasParameterizedTestAnnotation() && !operation.containsAssertion())
+		boolean thisIsTestCase = this.hasTestAnnotation() || (this.importsTestCase && this.name.startsWith("test"));
+		boolean otherIsTestCase = operation.hasTestAnnotation() || (operation.importsTestCase && operation.getName().startsWith("test"));
+		if(thisIsTestCase && !otherIsTestCase && !operation.hasParameterizedTestAnnotation() && !operation.containsAssertion())
 			return false;
-		if(!this.hasTestAnnotation() && !this.hasParameterizedTestAnnotation() && !this.containsAssertion() && operation.hasTestAnnotation())
+		if(!thisIsTestCase && !this.hasParameterizedTestAnnotation() && !this.containsAssertion() && otherIsTestCase)
 			return false;
 		return true;
 	}

@@ -27,6 +27,7 @@ import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
+import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import gr.uom.java.xmi.diff.UMLClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
@@ -156,7 +157,8 @@ public class TestJavadocDiff {
 		"https://github.com/eclipse-vertx/vert.x.git, 32a8c9086040fd6d6fa11a214570ee4f75a4301f, io.vertx.core.http.impl.HttpServerImpl.ServerHandler, vertx-32a8c9086040fd6d6fa11a214570ee4f75a4301f-comments.txt",
 		"https://github.com/eclipse-jgit/jgit.git, 5d8a9f6f3f43ac43c6b1c48cdfad55e545171ea3, org.eclipse.jgit.internal.storage.pack.PackWriter, jgit-5d8a9f6f3f43ac43c6b1c48cdfad55e545171ea3-comments.txt",
 		"https://github.com/hibernate/hibernate-orm.git, 025b3cc14180d0459856bc45a6cac7acce3e1265, org.hibernate.cfg.AnnotationBinder, hibernate-orm-025b3cc14180d0459856bc45a6cac7acce3e1265-comments.txt",
-		"https://github.com/eclipse-jgit/jgit.git, 8ac65d33ed7a94f77cb066271669feebf9b882fc, org.eclipse.jgit.storage.pack.PackWriter, jgit-8ac65d33ed7a94f77cb066271669feebf9b882fc-comments.txt"
+		"https://github.com/eclipse-jgit/jgit.git, 8ac65d33ed7a94f77cb066271669feebf9b882fc, org.eclipse.jgit.storage.pack.PackWriter, jgit-8ac65d33ed7a94f77cb066271669feebf9b882fc-comments.txt",
+		"https://github.com/elastic/elasticsearch.git, de171b8f88bc1084a00df54f4e9d4fc37a2d41c1, org.elasticsearch.aggregations.bucket.histogram.InternalAutoDateHistogram, elasticsearch-de171b8f88bc1084a00df54f4e9d4fc37a2d41c1-comments.txt"
 	})
 	public void testMethodCommentMultiMappings(String url, String commitId, String className, String testResultFileName) throws Exception {
 		final List<String> actual = new ArrayList<>();
@@ -298,6 +300,11 @@ public class TestJavadocDiff {
 		for(Pair<UMLComment, UMLComment> mapping : bodyMapper.getCommentListDiff().getCommonComments()) {
 			String line = mapping.getLeft().getLocationInfo() + "==" + mapping.getRight().getLocationInfo();
 			actual.add(line);
+		}
+		for(UMLAnonymousClassDiff anonymousDiff : bodyMapper.getAnonymousClassDiffs()) {
+			for(UMLOperationBodyMapper anonymousMapper : anonymousDiff.getOperationBodyMapperList()) {
+				commentInfo(anonymousMapper, actual);
+			}
 		}
 	}
 

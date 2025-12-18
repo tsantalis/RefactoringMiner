@@ -1,8 +1,8 @@
 package gr.uom.java.xmi.annotation.source;
 
 import gr.uom.java.xmi.SourceAnnotation;
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
-import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.LeafExpression;
@@ -13,7 +13,7 @@ import java.util.*;
 public class ValueSourceAnnotation extends SourceAnnotation implements NormalAnnotation {
     public static final String ANNOTATION_TYPENAME = "ValueSource";
     private final Map<String, AbstractExpression> memberValuePairs;
-    private final List<List<String>> testParameters;
+
     private Set<String> numberKeys = Set.of(
             "bytes",
             "doubles",
@@ -40,22 +40,18 @@ public class ValueSourceAnnotation extends SourceAnnotation implements NormalAnn
         return Collections.emptyList();
     }
 
-    public ValueSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLModel model) {
+    public ValueSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
         super(annotation, ANNOTATION_TYPENAME);
         memberValuePairs = annotation.getMemberValuePairs();
         Set<String> providedKeys = memberValuePairs.keySet();
-        testParameters = new ArrayList<>();
         for (String key : providedKeys) {
             AbstractExpression annotationParameterValue = memberValuePairs.get(key);
-            for (LeafExpression literal : extractLiterals(annotationParameterValue, key)) {
+            List<LeafExpression> literals = extractLiterals(annotationParameterValue, key);
+            for (LeafExpression literal : literals) {
                 testParameters.add(Collections.singletonList(sanitizeLiteral(literal.getString())));
+                testParameterLeafExpressions.add(Collections.singletonList(literal));
             }
         }
 
-    }
-
-    @Override
-    public List<List<String>> getTestParameters() {
-        return testParameters;
     }
 }

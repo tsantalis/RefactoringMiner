@@ -95,7 +95,17 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tgroup : Group to TYPE_POPUP_GROUP : int in method public readExternal(element Element) : void from class com.intellij.ide.ui.customization.ActionUrl",
-          "validation": false
+          "validation": true
+        },
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tgroup : Group to TYPE_POPUP_GROUP : int in method public readExternal(element Element) : void from class com.intellij.ide.ui.customization.ActionUrl",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\turl : ActionUrl in method public copy() : ActionUrl from class com.intellij.ide.ui.customization.ActionUrl",
+          "validation": true
         }
       ]
     },
@@ -211,7 +221,13 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom private runReadWrites(test Method, readIterations int, writeIterations int) : void to private runReadWrites(readIterations int, writeIterations int) : void in class com.intellij.openapi.application.impl.ApplicationImplTest",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/JetBrains/intellij-community.git",
@@ -371,6 +387,26 @@
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tframeConsumer : Consumer<Frame> in method public MacFileSaverDialog(descriptor FileSaverDescriptor, parent Component) from class com.intellij.ui.mac.MacFileSaverDialog",
           "validation": true
+        },
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tchosenFiles : var to myChosenFiles : VirtualFile[] in method public choose(project Project, toSelect VirtualFile...) : VirtualFile @NotNull [] from class com.intellij.openapi.fileChooser.impl.NewFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tWINDOWS : Type to NEW : Type in class com.intellij.openapi.fileChooser.impl.FileChooserUsageCollector.Type",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tNEW : Type to OTHER : Type in class com.intellij.openapi.fileChooser.impl.FileChooserUsageCollector.Type",
+          "validation": true
+        },
+        {
+          "type": "RENAME_ATTRIBUTE",
+          "description": "Rename Attribute\tMAC : Type to NATIVE : Type in class com.intellij.openapi.fileChooser.impl.FileChooserUsageCollector.Type",
+          "validation": true
         }
       ]
     },
@@ -475,7 +511,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tsetter : KmPropertyAccessorAttributes in method private getSetterVisibility(prop KmProperty) : Visibility from class org.jetbrains.jps.dependency.java.KotlinMeta.KmPropertiesDiff",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": []
@@ -557,7 +593,33 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tforEach : PsiForeachStatement in method private canBeMutated(expr PsiExpression) : boolean from class com.siyeh.ig.psiutils.ExpressionUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcall : PsiMethodCallExpression in method private canBeMutated(expr PsiExpression) : boolean from class com.siyeh.ig.psiutils.ExpressionUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\trefParent : PsiReferenceExpression in method private canBeMutated(expr PsiExpression) : boolean from class com.siyeh.ig.psiutils.ExpressionUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tarrayAccess : PsiArrayAccessExpression in method private canBeMutated(expr PsiExpression) : boolean from class com.siyeh.ig.psiutils.ExpressionUtils",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(!(e instanceof PsiReferenceExpression ref)) to if(parent instanceof PsiReferenceExpression refParent) in method private canBeMutated(expr PsiExpression) : boolean from class com.siyeh.ig.psiutils.ExpressionUtils",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/JetBrains/intellij-community.git",
@@ -586,6 +648,16 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tretrievable : RetrievableIcon to o : RetrievableIcon in method private is(icon Icon, expected Icon) : boolean from class com.intellij.ide.scopeView.ScopeViewTreeModel",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(!(icon instanceof RowIcon)) to if(icon instanceof RowIcon) in method private doComputeIconNow(element PsiElement, flags int) : Icon from class com.intellij.psi.impl.ElementBase",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(icon == null) to if(icon != null) in method private doComputeIconNow(element PsiElement, flags int) : Icon from class com.intellij.psi.impl.ElementBase",
           "validation": true
         }
       ]

@@ -1,7 +1,5 @@
 package gr.uom.java.xmi.decomposition;
 
-import static gr.uom.java.xmi.Constants.JAVA;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,8 +13,10 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.util.PathFileUtils;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
+import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
@@ -49,17 +49,49 @@ import gr.uom.java.xmi.diff.UMLOperationDiff;
 import gr.uom.java.xmi.diff.UMLParameterDiff;
 
 public class StringBasedHeuristics {
-	protected static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("( \\|\\| )|( && )|( \\? )|( : )");
+	protected static final Pattern SPLIT_CONDITIONAL_PATTERN_JAVA = Pattern.compile("( \\|\\| )|( && )|( \\? )|( : )");
+	protected static final Pattern SPLIT_CONDITIONAL_PATTERN_PYTHON = Pattern.compile("( or )|( and )|( if )|( else )");
 	protected static final Pattern SPLIT_CONCAT_STRING_PATTERN = Pattern.compile("(\\s)*( \\+ )(\\s)*");
 	protected static final Pattern SPLIT_COMMA_PATTERN = Pattern.compile("(\\s)*(\\,)(\\s)*");
 	protected static final Pattern SPLIT_TAB_PATTERN = Pattern.compile("(\\s)*(\\\\t)(\\s)*");
 
-	protected static boolean containsMethodSignatureOfAnonymousClass(String s) {
+	protected static boolean partiallyUndoParameterToArgumentMap(String s1, String s2, Map<String, String> parameterToArgumentMap) {
+		for(String key : parameterToArgumentMap.keySet()) {
+			String value = parameterToArgumentMap.get(key);
+			if(s2.contains(value)) {
+				String tmp = ReplacementUtil.performReplacement(s2, value, key);
+				if(tmp.equals(s1)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	protected static boolean arrayAccessDimensionChange(String s1, String s2, Constants LANG) {
+		if(s1.endsWith(LANG.STATEMENT_TERMINATION) && s2.endsWith(LANG.STATEMENT_TERMINATION)) {
+			String prefix1 = s1.substring(0, s1.length()-LANG.STATEMENT_TERMINATION.length());
+			String prefix2 = s2.substring(0, s2.length()-LANG.STATEMENT_TERMINATION.length());
+			if(s2.startsWith(prefix1) && !prefix1.equals("return")) {
+				String suffix2 = prefix2.substring(prefix1.length());
+				if(suffix2.length() > 0 && suffix2.startsWith("[") && suffix2.endsWith("]"))
+					return true;
+			}
+			if(s1.startsWith(prefix2) && !prefix2.equals("return")) {
+				String suffix1 = prefix1.substring(prefix2.length());
+				if(suffix1.length() > 0 && suffix1.startsWith("[") && suffix1.endsWith("]"))
+					return true;
+			}
+		}
+		return false;
+	}
+
+	protected static boolean containsMethodSignatureOfAnonymousClass(String s, Constants LANG) {
 		String[] lines = s.split("\\n");
-		if(s.contains(JAVA.LAMBDA_ARROW)) {
+		if(s.contains(LANG.LAMBDA_ARROW)) {
 			if(lines.length > 1)
 				return true;
-			else if(lines.length == 1 && s.endsWith(JAVA.STATEMENT_TERMINATION))
+			else if(lines.length == 1 && s.endsWith(LANG.STATEMENT_TERMINATION))
 				return true;
 		}
 		for(String line : lines) {
@@ -124,16 +156,17 @@ public class StringBasedHeuristics {
 		return identicalMethodCalls == arguments1.size() && arguments1.size() > 0;
 	}
 
-	protected static boolean equalAfterParenthesisElimination(String s1, String s2) {
+	protected static boolean equalAfterParenthesisElimination(String s1, String s2, Constants LANG) {
 		String updatedS1 = s1.replace("(", "");
 		updatedS1 = updatedS1.replace(")", "");
 		String updatedS2 = s2.replace("(", "");
 		updatedS2 = updatedS2.replace(")", "");
-		return updatedS1.equals(updatedS2) || updatedS1.equals(JAVA.RETURN_SPACE + updatedS2) || updatedS2.equals(JAVA.RETURN_SPACE + updatedS1);
+		return updatedS1.equals(updatedS2) || updatedS1.equals(LANG.RETURN_SPACE + updatedS2) || updatedS2.equals(LANG.RETURN_SPACE + updatedS1);
 	}
 
 	protected static boolean differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(String s1, String s2, Map<String, List<AbstractCall>> methodInvocationMap1, Map<String, List<AbstractCall>> methodInvocationMap2,
 			AbstractCodeFragment fragment1, AbstractCodeFragment fragment2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo info, UMLOperationBodyMapper mapper) {
+		Constants LANG = mapper.LANG;
 		VariableDeclarationContainer container1 = mapper.getContainer1();
 		VariableDeclarationContainer container2 = mapper.getContainer2();
 		List<LeafExpression> infixExpressions1 = fragment1.getInfixExpressions();
@@ -147,10 +180,10 @@ public class StringBasedHeuristics {
 			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
 			int endIndexS2 = s2.lastIndexOf(commonSuffix);
 			String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
-			if(diff1.isEmpty() && diff2.equals(JAVA.THIS_DOT)) {
+			if(diff1.isEmpty() && diff2.equals(LANG.THIS_DOT)) {
 				return true;
 			}
-			else if(diff2.isEmpty() && diff1.equals(JAVA.THIS_DOT)) {
+			else if(diff2.isEmpty() && diff1.equals(LANG.THIS_DOT)) {
 				return true;
 			}
 			if(!diff1.isEmpty() && StringDistance.isNumeric(diff1) && !diff2.isEmpty() && StringDistance.isNumeric(diff2) &&
@@ -165,8 +198,8 @@ public class StringBasedHeuristics {
 					return true;
 				}
 			}
-			List<String> parameterNameList1 = container1.getParameterNameList();
-			List<String> parameterNameList2 = container2.getParameterNameList();
+			List<String> parameterNameList1 = mapper.getParameterNameList1();
+			List<String> parameterNameList2 = mapper.getParameterNameList2();
 			if(diff1.isEmpty() && parameterNameList2.contains(diff2)) {
 				boolean skip = false;
 				for(Replacement r : info.getReplacements()) {
@@ -187,10 +220,10 @@ public class StringBasedHeuristics {
 				if(!skip)
 					return true;
 			}
-			if(diff1.isEmpty() && (diff2.equals("+") || diff2.equals("-")) && commonSuffix.startsWith(JAVA.ASSIGNMENT)) {
+			if(diff1.isEmpty() && (diff2.equals("+") || diff2.equals("-")) && commonSuffix.startsWith(LANG.ASSIGNMENT)) {
 				return true;
 			}
-			else if(diff2.isEmpty() && (diff1.equals("+") || diff1.equals("-")) && commonSuffix.startsWith(JAVA.ASSIGNMENT)) {
+			else if(diff2.isEmpty() && (diff1.equals("+") || diff1.equals("-")) && commonSuffix.startsWith(LANG.ASSIGNMENT)) {
 				return true;
 			}
 			if(!diff1.isEmpty() && !diff2.isEmpty() && diff1.equals("/") && diff2.equals("*")) {
@@ -217,7 +250,7 @@ public class StringBasedHeuristics {
 							for(AbstractCodeFragment statement2 : info.getStatements2()) {
 								if(statement2.getVariableDeclarations().size() > 0) {
 									VariableDeclaration variableDeclaration = statement2.getVariableDeclarations().get(0);
-									if(e2.startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) && variableDeclaration.getType() != null && e1.startsWith(variableDeclaration.getType() + " " + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
+									if(e2.startsWith(variableDeclaration.getVariableName() + LANG.ASSIGNMENT) && variableDeclaration.getType() != null && e1.startsWith(variableDeclaration.getType() + " " + variableDeclaration.getVariableName() + LANG.ASSIGNMENT)) {
 										matchingVariableDeclarations2.add(statement2);
 									}
 								}
@@ -228,7 +261,7 @@ public class StringBasedHeuristics {
 							for(AbstractCodeFragment statement1 : info.getStatements1()) {
 								if(statement1.getVariableDeclarations().size() > 0) {
 									VariableDeclaration variableDeclaration = statement1.getVariableDeclarations().get(0);
-									if(e1.startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) && variableDeclaration.getType() != null && e2.startsWith(variableDeclaration.getType() + " " + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
+									if(e1.startsWith(variableDeclaration.getVariableName() + LANG.ASSIGNMENT) && variableDeclaration.getType() != null && e2.startsWith(variableDeclaration.getType() + " " + variableDeclaration.getVariableName() + LANG.ASSIGNMENT)) {
 										matchingVariableDeclarations1.add(statement1);
 									}
 								}
@@ -294,7 +327,7 @@ public class StringBasedHeuristics {
 			}
 			if(cast(diff1, diff2)) {
 				for(Replacement r : info.getReplacements()) {
-					if(r.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS) && s2.startsWith(r.getAfter() + JAVA.ASSIGNMENT)) {
+					if(r.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS) && s2.startsWith(r.getAfter() + LANG.ASSIGNMENT)) {
 						if(variableDeclarations1.size() == 0 && !r.getBefore().contains("[") && !r.getBefore().contains("]")) {
 							if(r.getAfter().contains("[") && r.getAfter().contains("]") && variableDeclarations2.size() == 0) {
 								String arrayName = r.getAfter().substring(0, r.getAfter().indexOf("["));
@@ -321,7 +354,7 @@ public class StringBasedHeuristics {
 			}
 			if(cast(diff2, diff1)) {
 				for(Replacement r : info.getReplacements()) {
-					if(r.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS) && s2.startsWith(r.getAfter() + JAVA.ASSIGNMENT)) {
+					if(r.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS) && s2.startsWith(r.getAfter() + LANG.ASSIGNMENT)) {
 						if(variableDeclarations1.size() == 0 && !r.getBefore().contains("[") && !r.getBefore().contains("]")) {
 							if(r.getAfter().contains("[") && r.getAfter().contains("]") && variableDeclarations2.size() == 0) {
 								String arrayName = r.getAfter().substring(0, r.getAfter().indexOf("["));
@@ -347,7 +380,7 @@ public class StringBasedHeuristics {
 				return true;
 			}
 			if(diff1.isEmpty()) {
-				if(diff2.equals("!") || diff2.equals("~")) {
+				if(diff2.equals(LANG.NOT) || diff2.equals("~")) {
 					Replacement r = new Replacement(s1, s2, ReplacementType.INVERT_CONDITIONAL);
 					info.addReplacement(r);
 					return true;
@@ -356,7 +389,7 @@ public class StringBasedHeuristics {
 					for(LeafExpression infixExpression : infixExpressions2) {
 						String infix = infixExpression.getString();
 						if(!infix.equals(diff2) && (infix.startsWith(diff2) || infix.endsWith(diff2))) {
-							if(!variableDeclarationNameReplaced(variableDeclarations1, variableDeclarations2, info.getReplacements()) && !returnExpressionReplaced(s1, s2, info.getReplacements())) {
+							if(!variableDeclarationNameReplaced(variableDeclarations1, variableDeclarations2, info.getReplacements()) && !returnExpressionReplaced(s1, s2, info.getReplacements(), LANG)) {
 								return true;
 							}
 						}
@@ -376,7 +409,7 @@ public class StringBasedHeuristics {
 				}
 			}
 			if(diff2.isEmpty()) {
-				if(diff1.equals("!") || diff1.equals("~")) {
+				if(diff1.equals(LANG.NOT) || diff1.equals("~")) {
 					Replacement r = new Replacement(s1, s2, ReplacementType.INVERT_CONDITIONAL);
 					info.addReplacement(r);
 					return true;
@@ -385,7 +418,7 @@ public class StringBasedHeuristics {
 					for(LeafExpression infixExpression : infixExpressions1) {
 						String infix = infixExpression.getString();
 						if(!infix.equals(diff1) && (infix.startsWith(diff1) || infix.endsWith(diff1))) {
-							if(!variableDeclarationNameReplaced(variableDeclarations1, variableDeclarations2, info.getReplacements()) && !returnExpressionReplaced(s1, s2, info.getReplacements())) {
+							if(!variableDeclarationNameReplaced(variableDeclarations1, variableDeclarations2, info.getReplacements()) && !returnExpressionReplaced(s1, s2, info.getReplacements(), LANG)) {
 								return true;
 							}
 						}
@@ -395,8 +428,8 @@ public class StringBasedHeuristics {
 			for(String key1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
 					if(invocation1.actualString().equals(diff1) && invocation1.arguments().contains(diff2) &&
-							(invocation1.arguments().size() == 1 || (diff2.contains(JAVA.TERNARY_CONDITION) && diff2.contains(JAVA.TERNARY_ELSE)))) {
-						if(!variableDeclarationNameReplaced(variableDeclarations1, variableDeclarations2, info.getReplacements()) && !returnExpressionReplaced(s1, s2, info.getReplacements())) {
+							(invocation1.arguments().size() == 1 || (diff2.contains(LANG.TERNARY_CONDITION) && diff2.contains(LANG.TERNARY_ELSE)))) {
+						if(!variableDeclarationNameReplaced(variableDeclarations1, variableDeclarations2, info.getReplacements()) && !returnExpressionReplaced(s1, s2, info.getReplacements(), LANG)) {
 							Replacement r = new VariableReplacementWithMethodInvocation(diff1, diff2, invocation1, Direction.INVOCATION_TO_VARIABLE);
 							info.addReplacement(r);
 							return true;
@@ -407,8 +440,8 @@ public class StringBasedHeuristics {
 			for(String key2 : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
 					if(invocation2.actualString().equals(diff2) && invocation2.arguments().contains(diff1) &&
-							(invocation2.arguments().size() == 1 || (diff1.contains(JAVA.TERNARY_CONDITION) && diff1.contains(JAVA.TERNARY_ELSE)))) {
-						if(!variableDeclarationNameReplaced(variableDeclarations1, variableDeclarations2, info.getReplacements()) && !returnExpressionReplaced(s1, s2, info.getReplacements())) {
+							(invocation2.arguments().size() == 1 || (diff1.contains(LANG.TERNARY_CONDITION) && diff1.contains(LANG.TERNARY_ELSE)))) {
+						if(!variableDeclarationNameReplaced(variableDeclarations1, variableDeclarations2, info.getReplacements()) && !returnExpressionReplaced(s1, s2, info.getReplacements(), LANG)) {
 							Replacement r = new VariableReplacementWithMethodInvocation(diff1, diff2, invocation2, Direction.VARIABLE_TO_INVOCATION);
 							info.addReplacement(r);
 							return true;
@@ -455,10 +488,10 @@ public class StringBasedHeuristics {
 		return count;
 	}
 
-	private static boolean returnExpressionReplaced(String s1, String s2, Set<Replacement> replacements) {
-		if(s1.startsWith(JAVA.RETURN_SPACE) && s2.startsWith(JAVA.RETURN_SPACE)) {
+	private static boolean returnExpressionReplaced(String s1, String s2, Set<Replacement> replacements, Constants LANG) {
+		if(s1.startsWith(LANG.RETURN_SPACE) && s2.startsWith(LANG.RETURN_SPACE)) {
 			for(Replacement r : replacements) {
-				if(s1.equals(JAVA.RETURN_SPACE + r.getAfter() + JAVA.STATEMENT_TERMINATION) || s2.equals(JAVA.RETURN_SPACE + r.getAfter() + JAVA.STATEMENT_TERMINATION)) {
+				if(s1.equals(LANG.RETURN_SPACE + r.getAfter() + LANG.STATEMENT_TERMINATION) || s2.equals(LANG.RETURN_SPACE + r.getAfter() + LANG.STATEMENT_TERMINATION)) {
 					return true;
 				}
 			}
@@ -483,8 +516,8 @@ public class StringBasedHeuristics {
 		return (diff1.isEmpty() && diff2.startsWith("(") && diff2.endsWith(")")) || diff2.equals("(" + diff1 + ")");
 	}
 
-	protected static boolean differOnlyInThrow(String s1, String s2) {
-		return differOnlyInPrefix(s1, s2, "", JAVA.THROW_SPACE);
+	protected static boolean differOnlyInThrow(String s1, String s2, Constants LANG) {
+		return differOnlyInPrefix(s1, s2, "", LANG.THROW_SPACE);
 	}
 
 	protected static boolean differOnlyInFinalModifier(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {
@@ -493,6 +526,26 @@ public class StringBasedHeuristics {
 				variableDeclarationDifferInFinalModifer(s1, s2, variableDeclarations1, variableDeclarations2) ||
 				catchDifferInFinalModifierAndExceptionName(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				enhancedForDifferInFinalModifierAndFormalParameterName(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo);
+	}
+
+	protected static boolean differOnlyInPatternInstanceExpressions(String s1, String s2, AbstractCodeFragment statement1, AbstractCodeFragment statement2, ReplacementInfo replacementInfo) {
+		if(statement1.getInstanceofExpressions().size() > 0 && statement2.getPatternInstanceofExpressions().size() > 0 &&
+				statement1.getInstanceofExpressions().size() == statement2.getPatternInstanceofExpressions().size()) {
+			String tmp = new String(s1);
+			Set<Replacement> replacements = new LinkedHashSet<>();
+			for(int i=0; i<statement1.getInstanceofExpressions().size(); i++) {
+				LeafExpression expr1 = statement1.getInstanceofExpressions().get(i);
+				LeafExpression expr2 = statement2.getPatternInstanceofExpressions().get(i);
+				tmp = ReplacementUtil.performReplacement(tmp, expr1.getString(), expr2.getString());
+				Replacement r = new Replacement(expr1.getString(), expr2.getString(), ReplacementType.PATTERN_INSTANCE);
+				replacements.add(r);
+			}
+			if(tmp.equals(s2)) {
+				replacementInfo.addReplacements(replacements);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static boolean variableDeclarationDifferInFinalModifer(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2) {
@@ -555,8 +608,8 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	protected static boolean differOnlyInThis(String s1, String s2) {
-		if(differOnlyInPrefix(s1, s2, "", JAVA.THIS_DOT)) {
+	public static boolean differOnlyInThis(String s1, String s2, Constants LANG) {
+		if(differOnlyInPrefix(s1, s2, "", LANG.THIS_DOT)) {
 			return true;
 		}
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
@@ -568,10 +621,16 @@ public class StringBasedHeuristics {
 			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
 			int endIndexS2 = s2.lastIndexOf(commonSuffix);
 			String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
-			if(diff1.isEmpty() && diff2.equals(JAVA.THIS_DOT)) {
+			if(diff1.isEmpty() && diff2.equals(LANG.THIS_DOT)) {
 				return true;
 			}
-			else if(diff2.isEmpty() && diff1.equals(JAVA.THIS_DOT)) {
+			else if(diff2.isEmpty() && diff1.equals(LANG.THIS_DOT)) {
+				return true;
+			}
+			if(diff1.isEmpty() && diff2.equals(LANG.THIS_DOT + "_")) {
+				return true;
+			}
+			else if(diff2.isEmpty() && diff1.equals(LANG.THIS_DOT + "_")) {
 				return true;
 			}
 			else if(diff1.isEmpty() && diff2.equals("!= null")) {
@@ -592,6 +651,7 @@ public class StringBasedHeuristics {
 
 	protected static boolean differOnlyInDefaultInitializer(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2) {
 		if(variableDeclarations1.size() > 0 && variableDeclarations1.toString().equals(variableDeclarations2.toString())) {
+			Constants LANG = PathFileUtils.getLang(variableDeclarations1.get(0).getLocationInfo().getFilePath());
 			StringBuilder tmpS1 = new StringBuilder();
 			StringBuilder tmpS2 = new StringBuilder();
 			int defaultInitializers = 0;
@@ -605,22 +665,22 @@ public class StringBasedHeuristics {
 					tmpS2.append(", ");
 				}
 				if(variableDeclaration1.getInitializer() == null && variableDeclaration2.getInitializer() != null &&
-						(variableDeclaration2.getInitializer().getExpression().equals("null") ||
+						(variableDeclaration2.getInitializer().getExpression().equals(LANG.NULL) ||
 						variableDeclaration2.getInitializer().getExpression().equals("0") ||
-						variableDeclaration2.getInitializer().getExpression().equals("false") ||
+						variableDeclaration2.getInitializer().getExpression().equals(LANG.FALSE) ||
 						numberLiteralInitializer(variableDeclaration2))) {
 					defaultInitializers++;
 				}
 				else if(variableDeclaration2.getInitializer() == null && variableDeclaration1.getInitializer() != null &&
-						(variableDeclaration1.getInitializer().getExpression().equals("null") ||
+						(variableDeclaration1.getInitializer().getExpression().equals(LANG.NULL) ||
 						variableDeclaration1.getInitializer().getExpression().equals("0") ||
-						variableDeclaration1.getInitializer().getExpression().equals("false") ||
+						variableDeclaration1.getInitializer().getExpression().equals(LANG.FALSE) ||
 						numberLiteralInitializer(variableDeclaration1))) {
 					defaultInitializers++;
 				}
 			}
-			tmpS1.append(JAVA.STATEMENT_TERMINATION);
-			tmpS2.append(JAVA.STATEMENT_TERMINATION);
+			tmpS1.append(LANG.STATEMENT_TERMINATION);
+			tmpS2.append(LANG.STATEMENT_TERMINATION);
 			if(s1.equals(tmpS1.toString()) && s2.equals(tmpS2.toString()) && defaultInitializers == variableDeclarations1.size()) {
 				return true;
 			}
@@ -633,12 +693,13 @@ public class StringBasedHeuristics {
 	}
 
 	private static String variableDeclarationAsString(VariableDeclaration variableDeclaration) {
+		Constants LANG = PathFileUtils.getLang(variableDeclaration.getLocationInfo().getFilePath());
 		StringBuilder sb = new StringBuilder();
 		sb.append(variableDeclaration.getType());
 		sb.append(" ");
 		sb.append(variableDeclaration.getVariableName());
 		if(variableDeclaration.getInitializer() != null) {
-			sb.append(JAVA.ASSIGNMENT).append(variableDeclaration.getInitializer());
+			sb.append(LANG.ASSIGNMENT).append(variableDeclaration.getInitializer());
 		}
 		return sb.toString();
 	}
@@ -716,7 +777,8 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	protected static boolean oneIsVariableDeclarationTheOtherIsVariableAssignment(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {
+	protected static boolean oneIsVariableDeclarationTheOtherIsVariableAssignment(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2,
+			ReplacementInfo replacementInfo, Constants LANG) {
 		if(variableDeclarations1.size() > 0 && variableDeclarations2.size() > 0) {
 			String name1 = variableDeclarations1.get(0).getVariableName();
 			String name2 = variableDeclarations2.get(0).getVariableName();
@@ -727,7 +789,7 @@ public class StringBasedHeuristics {
 			}
 		}
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
-		if(s1.contains(JAVA.ASSIGNMENT) && s2.contains(JAVA.ASSIGNMENT)) {
+		if(s1.contains(LANG.ASSIGNMENT) && s2.contains(LANG.ASSIGNMENT)) {
 			if(s1.equals(commonSuffix) || s2.equals(commonSuffix)) {
 				if(replacementInfo.getReplacements().size() == 2) {
 					StringBuilder sb = new StringBuilder();
@@ -735,10 +797,10 @@ public class StringBasedHeuristics {
 					for(Replacement r : replacementInfo.getReplacements()) {
 						sb.append(r.getAfter());
 						if(counter == 0) {
-							sb.append(JAVA.ASSIGNMENT);
+							sb.append(LANG.ASSIGNMENT);
 						}
 						else if(counter == 1) {
-							sb.append(JAVA.STATEMENT_TERMINATION);
+							sb.append(LANG.STATEMENT_TERMINATION);
 						}
 						counter++;
 					}
@@ -809,7 +871,7 @@ public class StringBasedHeuristics {
 				}
 				return true;
 			}
-			if(commonSuffix.contains(JAVA.ASSIGNMENT) && replacementInfo.getReplacements().size() == 0) {
+			if(commonSuffix.contains(LANG.ASSIGNMENT) && replacementInfo.getReplacements().size() == 0) {
 				for(AbstractCodeFragment fragment1 : replacementInfo.getStatements1()) {
 					for(VariableDeclaration variableDeclaration : fragment1.getVariableDeclarations()) {
 						if(s1.equals(variableDeclaration.getVariableName() + "." + commonSuffix)) {
@@ -849,25 +911,25 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	protected static boolean oneIsVariableDeclarationTheOtherIsReturnStatement(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2) {
+	protected static boolean oneIsVariableDeclarationTheOtherIsReturnStatement(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, Constants LANG) {
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonSuffix.equals("null;\n") && !commonSuffix.equals("true;\n") && !commonSuffix.equals("false;\n") && !commonSuffix.equals("0;\n")) {
-			if(s1.startsWith(JAVA.RETURN_SPACE) && s1.substring(JAVA.RETURN_SPACE.length(), s1.length()).equals(commonSuffix) &&
-					s2.contains(JAVA.ASSIGNMENT) && s2.substring(s2.indexOf(JAVA.ASSIGNMENT)+1, s2.length()).equals(commonSuffix)) {
+			if(s1.startsWith(LANG.RETURN_SPACE) && s1.substring(LANG.RETURN_SPACE.length(), s1.length()).equals(commonSuffix) &&
+					s2.contains(LANG.ASSIGNMENT) && s2.substring(s2.indexOf(LANG.ASSIGNMENT)+1, s2.length()).equals(commonSuffix)) {
 				return true;
 			}
-			if(s2.startsWith(JAVA.RETURN_SPACE) && s2.substring(JAVA.RETURN_SPACE.length(), s2.length()).equals(commonSuffix) &&
-					s1.contains(JAVA.ASSIGNMENT) && s1.substring(s1.indexOf(JAVA.ASSIGNMENT)+1, s1.length()).equals(commonSuffix)) {
+			if(s2.startsWith(LANG.RETURN_SPACE) && s2.substring(LANG.RETURN_SPACE.length(), s2.length()).equals(commonSuffix) &&
+					s1.contains(LANG.ASSIGNMENT) && s1.substring(s1.indexOf(LANG.ASSIGNMENT)+1, s1.length()).equals(commonSuffix)) {
 				return true;
 			}
 		}
 		if(variableDeclarations1.size() == 0 && variableDeclarations2.size() == 0 && commonSuffix.equals("0;\n")) {
-			if(s1.startsWith(JAVA.RETURN_SPACE) && s1.substring(JAVA.RETURN_SPACE.length(), s1.length()).equals(commonSuffix) &&
-					s2.contains(JAVA.ASSIGNMENT) && s2.substring(s2.indexOf(JAVA.ASSIGNMENT)+1, s2.length()).equals(commonSuffix)) {
+			if(s1.startsWith(LANG.RETURN_SPACE) && s1.substring(LANG.RETURN_SPACE.length(), s1.length()).equals(commonSuffix) &&
+					s2.contains(LANG.ASSIGNMENT) && s2.substring(s2.indexOf(LANG.ASSIGNMENT)+1, s2.length()).equals(commonSuffix)) {
 				return true;
 			}
-			if(s2.startsWith(JAVA.RETURN_SPACE) && s2.substring(JAVA.RETURN_SPACE.length(), s2.length()).equals(commonSuffix) &&
-					s1.contains(JAVA.ASSIGNMENT) && s1.substring(s1.indexOf(JAVA.ASSIGNMENT)+1, s1.length()).equals(commonSuffix)) {
+			if(s2.startsWith(LANG.RETURN_SPACE) && s2.substring(LANG.RETURN_SPACE.length(), s2.length()).equals(commonSuffix) &&
+					s1.contains(LANG.ASSIGNMENT) && s1.substring(s1.indexOf(LANG.ASSIGNMENT)+1, s1.length()).equals(commonSuffix)) {
 				return true;
 			}
 		}
@@ -875,10 +937,18 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean equalAfterNewArgumentAdditions(String s1, String s2, ReplacementInfo replacementInfo,
-			VariableDeclarationContainer container1, VariableDeclarationContainer container2, Optional<UMLOperationDiff> operationSignatureDiff, UMLAbstractClassDiff classDiff) {
+			UMLOperationBodyMapper operationBodyMapper) {
+		VariableDeclarationContainer container1 = operationBodyMapper.getContainer1();
+		VariableDeclarationContainer container2 = operationBodyMapper.getContainer2();
+		List<String> parameterNameList1 = operationBodyMapper.getParameterNameList1();
+		List<String> parameterNameList2 = operationBodyMapper.getParameterNameList2();
+		UMLAbstractClassDiff classDiff = operationBodyMapper.getClassDiff();
+		Optional<UMLOperationDiff> operationSignatureDiff = operationBodyMapper.getOperationSignatureDiff();
+		
+		Constants LANG = PathFileUtils.getLang(container1.getLocationInfo().getFilePath());
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
-		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty() && !commonPrefix.equals(JAVA.RETURN_SPACE)) {
+		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty() && !commonPrefix.equals(LANG.RETURN_SPACE)) {
 			int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
 			int endIndexS1 = s1.lastIndexOf(commonSuffix);
 			String diff1 = beginIndexS1 > endIndexS1 ? "" :	s1.substring(beginIndexS1, endIndexS1);
@@ -921,8 +991,8 @@ public class StringBasedHeuristics {
 			}
 			//if there is a variable replacement diff1 should be empty, otherwise diff1 should include a single variable
 			if(diff1.isEmpty() ||
-					(container1.getParameterNameList().contains(diff1) && !container2.getParameterNameList().contains(diff1) && !containsMethodSignatureOfAnonymousClass(diff2)) ||
-					(classDiff != null && classDiff.getOriginalClass().containsAttributeWithName(diff1) && !classDiff.getNextClass().containsAttributeWithName(diff1) && !containsMethodSignatureOfAnonymousClass(diff2))) {
+					(parameterNameList1.contains(diff1) && !parameterNameList2.contains(diff1) && !containsMethodSignatureOfAnonymousClass(diff2, LANG)) ||
+					(classDiff != null && classDiff.getOriginalClass().containsAttributeWithName(diff1) && !classDiff.getNextClass().containsAttributeWithName(diff1) && !containsMethodSignatureOfAnonymousClass(diff2, LANG))) {
 				List<VariableDeclaration> matchingAddedParameters = new ArrayList<VariableDeclaration>();
 				List<VariableDeclaration> addedParameters = operationSignatureDiff.isPresent() ? operationSignatureDiff.get().getAddedParameters() : Collections.emptyList();
 				for(VariableDeclaration addedParameter : addedParameters) {
@@ -962,7 +1032,8 @@ public class StringBasedHeuristics {
 							counter++;
 						}
 						SplitVariableReplacement split = new SplitVariableReplacement(matchingReplacement.getBefore(), splitVariables);
-						if(!split.getSplitVariables().contains(split.getBefore()) && concat.toString().equals(diff2)) {
+						boolean skip = splitVariables.size() == 1 && splitVariables.contains(diff2);
+						if(!split.getSplitVariables().contains(split.getBefore()) && concat.toString().equals(diff2) && !skip) {
 							replacementInfo.getReplacements().remove(matchingReplacement);
 							replacementInfo.getReplacements().add(split);
 							return true;
@@ -986,7 +1057,7 @@ public class StringBasedHeuristics {
 							return true;
 						}
 					}
-					if(container1.getParameterNameList().contains(diff1)) {
+					if(parameterNameList1.contains(diff1)) {
 						Set<String> splitVariables = new LinkedHashSet<String>();
 						StringBuilder concat = new StringBuilder();
 						int counter = 0;
@@ -1037,7 +1108,8 @@ public class StringBasedHeuristics {
 								counter++;
 							}
 							SplitVariableReplacement split = new SplitVariableReplacement(matchingReplacement.getBefore(), splitVariables);
-							if(!split.getSplitVariables().contains(split.getBefore()) && concat.toString().equals(diff2)) {
+							boolean skip = splitVariables.size() == 1 && splitVariables.contains(diff2);
+							if(!split.getSplitVariables().contains(split.getBefore()) && concat.toString().equals(diff2) && !skip) {
 								replacementInfo.getReplacements().remove(matchingReplacement);
 								replacementInfo.getReplacements().add(split);
 								return true;
@@ -1123,7 +1195,8 @@ public class StringBasedHeuristics {
 							counter++;
 						}
 						SplitVariableReplacement split = new SplitVariableReplacement(matchingReplacement.getBefore(), splitVariables);
-						if(!split.getSplitVariables().contains(split.getBefore()) && concat.toString().equals(diff2)) {
+						boolean skip = splitVariables.size() == 1 && splitVariables.contains(diff2);
+						if(!split.getSplitVariables().contains(split.getBefore()) && concat.toString().equals(diff2) && !skip) {
 							replacementInfo.getReplacements().remove(matchingReplacement);
 							replacementInfo.getReplacements().add(split);
 							return true;
@@ -1171,7 +1244,7 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	protected static boolean equalAfterArgumentMerge(String s1, String s2, ReplacementInfo replacementInfo) {
+	protected static boolean equalAfterArgumentMerge(String s1, String s2, ReplacementInfo replacementInfo, Constants LANG) {
 		Map<String, Set<Replacement>> commonVariableReplacementMap = new LinkedHashMap<String, Set<Replacement>>();
 		boolean mergeFound = false;
 		for(Replacement replacement : replacementInfo.getReplacements()) {
@@ -1198,6 +1271,45 @@ public class StringBasedHeuristics {
 					mergeFound = true;
 				}
 			}
+			else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS)) {
+				String key = replacement.getAfter();
+				int index = s1.indexOf(key);
+				if(index != -1) {
+					if(!s1.endsWith(key) && s1.charAt(index+key.length()) == ',') {
+						s1 = s1.substring(0, index) + s1.substring(index+key.length()+1, s1.length());
+					}
+					else if(index > 0 && s1.charAt(index-1) == ',') {
+						s1 = s1.substring(0, index-1) + s1.substring(index+key.length(), s1.length());
+					}
+					String reservedTokens1 = ReplacementUtil.keepReservedTokens(s1);
+					String reservedTokens2 = ReplacementUtil.keepReservedTokens(s2);
+					boolean containsArrayAccess2 = reservedTokens2.contains("([])") || reservedTokens2.contains("(.[])");
+					boolean containsArrayAccess1 = reservedTokens1.contains("([])") || reservedTokens1.contains("(.[])") || reservedTokens1.contains("[]");
+					if(containsArrayAccess2 && !containsArrayAccess1 &&
+							reservedTokens1.contains("(") && reservedTokens1.contains(")")) {
+						Set<Replacement> replacements = new LinkedHashSet<Replacement>();
+						replacements.add(replacement);
+						commonVariableReplacementMap.put(key, replacements);
+						int indexOfOpen = s1.indexOf("(");
+						int lastIndexOfClose = s1.lastIndexOf(")");
+						if(indexOfOpen != -1 && lastIndexOfClose != -1 && indexOfOpen < s1.length()-1 && indexOfOpen < lastIndexOfClose) {
+							String args = s1.substring(indexOfOpen + 1, lastIndexOfClose);
+							if(args.contains(",")) {
+								String[] arguments = args.split(",");
+								for(String arg : arguments) {
+									Replacement r = new Replacement(arg, key, replacement.getType());
+									replacements.add(r);
+								}
+							}
+							else {
+								Replacement r = new Replacement(args, key, replacement.getType());
+								replacements.add(r);
+							}
+							mergeFound = true;
+						}
+					}
+				}
+			}
 			else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION)) {
 				String key = replacement.getAfter();
 				int index = s1.indexOf(key);
@@ -1210,9 +1322,9 @@ public class StringBasedHeuristics {
 							Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 							replacements.add(replacement);
 							commonVariableReplacementMap.put(key, replacements);
-							if(s1.contains(JAVA.ASSIGNMENT) && !s2.contains(JAVA.ASSIGNMENT) && !s1.startsWith(JAVA.RETURN_SPACE) && s2.startsWith(JAVA.RETURN_SPACE)) {
-								s1 = s1.substring(s1.indexOf(JAVA.ASSIGNMENT) + 1);
-								s2 = s2.substring(JAVA.RETURN_SPACE.length());
+							if(s1.contains(LANG.ASSIGNMENT) && !s2.contains(LANG.ASSIGNMENT) && !s1.startsWith(LANG.RETURN_SPACE) && s2.startsWith(LANG.RETURN_SPACE)) {
+								s1 = s1.substring(s1.indexOf(LANG.ASSIGNMENT) + 1);
+								s2 = s2.substring(LANG.RETURN_SPACE.length());
 							}
 							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 							String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
@@ -1239,9 +1351,9 @@ public class StringBasedHeuristics {
 							Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 							replacements.add(replacement);
 							commonVariableReplacementMap.put(key, replacements);
-							if(s1.contains(JAVA.ASSIGNMENT) && !s2.contains(JAVA.ASSIGNMENT) && !s1.startsWith(JAVA.RETURN_SPACE) && s2.startsWith(JAVA.RETURN_SPACE)) {
-								s1 = s1.substring(s1.indexOf(JAVA.ASSIGNMENT) + 1);
-								s2 = s2.substring(JAVA.RETURN_SPACE.length());
+							if(s1.contains(LANG.ASSIGNMENT) && !s2.contains(LANG.ASSIGNMENT) && !s1.startsWith(LANG.RETURN_SPACE) && s2.startsWith(LANG.RETURN_SPACE)) {
+								s1 = s1.substring(s1.indexOf(LANG.ASSIGNMENT) + 1);
+								s2 = s2.substring(LANG.RETURN_SPACE.length());
 							}
 							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 							String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
@@ -1294,38 +1406,42 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean validStatementForConcatComparison(AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
+		Constants LANG = PathFileUtils.getLang(statement1.getLocationInfo().getFilePath());
 		List<VariableDeclaration> variableDeclarations1 = statement1.getVariableDeclarations();
 		List<VariableDeclaration> variableDeclarations2 = statement2.getVariableDeclarations();
 		if(variableDeclarations1.size() == variableDeclarations2.size()) {
 			return true;
 		}
 		else {
-			if(variableDeclarations1.size() > 0 && variableDeclarations2.size() == 0 && statement2.getString().startsWith(JAVA.RETURN_SPACE)) {
+			if(variableDeclarations1.size() > 0 && variableDeclarations2.size() == 0 && statement2.getString().startsWith(LANG.RETURN_SPACE)) {
 				return true;
 			}
-			else if(variableDeclarations1.size() == 0 && variableDeclarations2.size() > 0 && statement1.getString().startsWith(JAVA.RETURN_SPACE)) {
+			else if(variableDeclarations1.size() == 0 && variableDeclarations2.size() > 0 && statement1.getString().startsWith(LANG.RETURN_SPACE)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	protected static boolean containsValidOperatorReplacements(ReplacementInfo replacementInfo) {
+	protected static boolean containsValidOperatorReplacements(ReplacementInfo replacementInfo, Constants LANG) {
+		String AND = LANG.AND.strip();
+		String OR = LANG.OR.strip();
 		List<Replacement> operatorReplacements = replacementInfo.getReplacements(ReplacementType.INFIX_OPERATOR);
 		for(Replacement replacement : operatorReplacements) {
 			if(replacement.getBefore().equals("==") && !replacement.getAfter().equals("!="))
 				return false;
 			if(replacement.getBefore().equals("!=") && !replacement.getAfter().equals("=="))
 				return false;
-			if(replacement.getBefore().equals("&&") && !replacement.getAfter().equals("||"))
+			if(replacement.getBefore().equals(AND) && !replacement.getAfter().equals(OR))
 				return false;
-			if(replacement.getBefore().equals("||") && !replacement.getAfter().equals("&&"))
+			if(replacement.getBefore().equals(OR) && !replacement.getAfter().equals(AND))
 				return false;
 		}
 		return true;
 	}
 
 	protected static boolean commonConcat(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo info, AbstractCodeFragment statement1, AbstractCodeFragment statement2, UMLOperationBodyMapper mapper) {
+		Constants LANG = mapper.LANG;
 		VariableDeclarationContainer container1 = mapper.getContainer1();
 		VariableDeclarationContainer container2 = mapper.getContainer2();
 		AbstractCall call1 = statement1.creationCoveringEntireFragment();
@@ -1334,14 +1450,14 @@ public class StringBasedHeuristics {
 		ObjectCreation creationCoveringTheEntireStatement2 = call2 instanceof ObjectCreation ? (ObjectCreation)call2 : null;
 		boolean arrayCreation1 = creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.isArray();
 		boolean arrayCreation2 = creationCoveringTheEntireStatement2 != null && creationCoveringTheEntireStatement2.isArray();
-		if(!arrayCreation1 && !arrayCreation2 && !containsMethodSignatureOfAnonymousClass(s1) && !containsMethodSignatureOfAnonymousClass(s2)) {
-			if(s1.contains(JAVA.STRING_CONCATENATION) && s2.contains(JAVA.STRING_CONCATENATION) && statement1.getTextBlocks().size() == 0 && statement2.getTextBlocks().size() > 0) {
+		if(!arrayCreation1 && !arrayCreation2 && !containsMethodSignatureOfAnonymousClass(s1, LANG) && !containsMethodSignatureOfAnonymousClass(s2, LANG)) {
+			if(s1.contains(LANG.STRING_CONCATENATION) && s2.contains(LANG.STRING_CONCATENATION) && statement1.getTextBlocks().size() == 0 && statement2.getTextBlocks().size() > 0) {
 				boolean result = stringConcatTextBlock(s1, s2, info, statement1, statement2, container1, container2);
 				if(result) {
 					return true;
 				}
 			}
-			else if(s1.contains(JAVA.STRING_CONCATENATION) && s2.contains(JAVA.STRING_CONCATENATION)) {
+			else if(s1.contains(LANG.STRING_CONCATENATION) && s2.contains(LANG.STRING_CONCATENATION)) {
 				Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s1)));
 				Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s2)));
 				Set<String> intersection = new LinkedHashSet<String>();
@@ -1350,10 +1466,10 @@ public class StringBasedHeuristics {
 						if(token1.equals(token2)) {
 							intersection.add(token1);
 						}
-						else if(token1.equals(token2 + JAVA.STATEMENT_TERMINATION)) {
+						else if(token1.equals(token2 + LANG.STATEMENT_TERMINATION)) {
 							intersection.add(token2);
 						}
-						else if(token2.equals(token1 + JAVA.STATEMENT_TERMINATION)) {
+						else if(token2.equals(token1 + LANG.STATEMENT_TERMINATION)) {
 							intersection.add(token1);
 						}
 						else if(token2.endsWith("+=" + token1)) {
@@ -1362,10 +1478,10 @@ public class StringBasedHeuristics {
 						else if(token1.endsWith("+=" + token2)) {
 							intersection.add(token2);
 						}
-						else if(token1.endsWith(")" + JAVA.STATEMENT_TERMINATION) && token2.endsWith(JAVA.STATEMENT_TERMINATION)) {
+						else if(token1.endsWith(")" + LANG.STATEMENT_TERMINATION) && token2.endsWith(LANG.STATEMENT_TERMINATION)) {
 							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(token1, token2);
-							int suffixLength = JAVA.STATEMENT_TERMINATION.length()+1;
-							if(commonPrefix.length() == token1.length()-suffixLength && commonPrefix.length() == token2.length()-JAVA.STATEMENT_TERMINATION.length()) {
+							int suffixLength = LANG.STATEMENT_TERMINATION.length()+1;
+							if(commonPrefix.length() == token1.length()-suffixLength && commonPrefix.length() == token2.length()-LANG.STATEMENT_TERMINATION.length()) {
 								intersection.add(commonPrefix);
 							}
 						}
@@ -1375,10 +1491,10 @@ public class StringBasedHeuristics {
 						else if(token2.endsWith("," + token1)) {
 							intersection.add(token1);
 						}
-						else if(token1.endsWith(token2 + ")" + JAVA.STATEMENT_TERMINATION)) {
+						else if(token1.endsWith(token2 + ")" + LANG.STATEMENT_TERMINATION)) {
 							intersection.add(token2);
 						}
-						else if(token2.endsWith(token1 + ")" + JAVA.STATEMENT_TERMINATION)) {
+						else if(token2.endsWith(token1 + ")" + LANG.STATEMENT_TERMINATION)) {
 							intersection.add(token1);
 						}
 					}
@@ -1398,8 +1514,8 @@ public class StringBasedHeuristics {
 				}
 				Set<LeafMapping> subExpressionMappings = new LinkedHashSet<LeafMapping>();
 				for(String key : filteredIntersection) {
-					if(key.endsWith(JAVA.STATEMENT_TERMINATION)) {
-						key = key.substring(0, key.length()-JAVA.STATEMENT_TERMINATION.length());
+					if(key.endsWith(LANG.STATEMENT_TERMINATION)) {
+						key = key.substring(0, key.length()-LANG.STATEMENT_TERMINATION.length());
 					}
 					List<LeafExpression> expressions1 = statement1.findExpression(key);
 					List<LeafExpression> expressions2 = statement2.findExpression(key);
@@ -1417,8 +1533,8 @@ public class StringBasedHeuristics {
 							StatementObject returnedStatement = null;
 							if((returnedStatement = operation.singleReturnStatement()) != null && call.matchesOperation(operation, mapper.getContainer1(), mapper.getClassDiff(), mapper.getModelDiff())) {
 								String string = returnedStatement.getString();
-								String returnedExpression = string.substring(JAVA.RETURN_SPACE.length(), string.length()-JAVA.STATEMENT_TERMINATION.length());
-								if(statement1.getString().contains(returnedExpression + JAVA.STRING_CONCATENATION) || statement1.getString().contains(JAVA.STRING_CONCATENATION + returnedExpression)) {
+								String returnedExpression = string.substring(LANG.RETURN_SPACE.length(), string.length()-LANG.STATEMENT_TERMINATION.length());
+								if(statement1.getString().contains(returnedExpression + LANG.STRING_CONCATENATION) || statement1.getString().contains(LANG.STRING_CONCATENATION + returnedExpression)) {
 									size++;
 									break;
 								}
@@ -1454,13 +1570,13 @@ public class StringBasedHeuristics {
 					return true;
 				}
 			}
-			else if(s1.contains(JAVA.STRING_CONCATENATION) && !s2.contains(JAVA.STRING_CONCATENATION) && statement1.getTextBlocks().size() == 0 && statement2.getTextBlocks().size() > 0) {
+			else if(s1.contains(LANG.STRING_CONCATENATION) && !s2.contains(LANG.STRING_CONCATENATION) && statement1.getTextBlocks().size() == 0 && statement2.getTextBlocks().size() > 0) {
 				boolean result = stringConcatTextBlock(s1, s2, info, statement1, statement2, container1, container2);
 				if(result) {
 					return true;
 				}
 			}
-			else if(s1.contains(JAVA.STRING_CONCATENATION) && !s2.contains(JAVA.STRING_CONCATENATION) && noCommaS1(s1, statement1, statement2) && s2.contains(",")) {
+			else if(s1.contains(LANG.STRING_CONCATENATION) && !s2.contains(LANG.STRING_CONCATENATION) && noCommaS1(s1, statement1, statement2) && s2.contains(",")) {
 				List<String> tokens1 = Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s1));
 				List<String> tokens2 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s2));
 				List<String> commonTokens = new ArrayList<>();
@@ -1532,7 +1648,7 @@ public class StringBasedHeuristics {
 					}
 				}
 			}
-			else if((s1.contains(JAVA.STRING_CONCATENATION) ^ s2.contains(JAVA.STRING_CONCATENATION)) && s1.contains(",") && s2.contains(",")) {
+			else if((s1.contains(LANG.STRING_CONCATENATION) ^ s2.contains(LANG.STRING_CONCATENATION)) && s1.contains(",") && s2.contains(",")) {
 				List<String> tokens1 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s1));
 				List<String> tokens2 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s2));
 				List<String> commonTokens = new ArrayList<>();
@@ -1651,8 +1767,8 @@ public class StringBasedHeuristics {
 						declarationWithArrayInitializer(variableDeclarations1) == null &&
 						declarationWithArrayInitializer(variableDeclarations2) == null) ||
 						(variables1.size() > 0 && variables2.size() > 0 &&
-						statement1.getString().startsWith(variables1.get(0).getString() + JAVA.ASSIGNMENT) &&
-						statement2.getString().startsWith(variables2.get(0).getString() + JAVA.ASSIGNMENT) &&
+						statement1.getString().startsWith(variables1.get(0).getString() + LANG.ASSIGNMENT) &&
+						statement2.getString().startsWith(variables2.get(0).getString() + LANG.ASSIGNMENT) &&
 						variables1.get(0).getString().equals(variables2.get(0).getString()))) {
 					List<String> tokens1 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s1.substring(s1.indexOf("(") + 1, s1.lastIndexOf(")"))));
 					int count = 0;
@@ -1722,7 +1838,7 @@ public class StringBasedHeuristics {
 					if(arg1.equals(arg2)) {
 						equalArguments++;
 					}
-					else if(!arg1.contains(JAVA.STRING_CONCATENATION) && arg2.contains(JAVA.STRING_CONCATENATION)) {
+					else if(!arg1.contains(LANG.STRING_CONCATENATION) && arg2.contains(LANG.STRING_CONCATENATION)) {
 						boolean tokenMatchesArgument = false;
 						Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(arg2)));
 						StringBuilder sb = new StringBuilder();
@@ -1756,7 +1872,7 @@ public class StringBasedHeuristics {
 							concatenatedArguments++;
 						}
 					}
-					else if(!arg2.contains(JAVA.STRING_CONCATENATION) && arg1.contains(JAVA.STRING_CONCATENATION)) {
+					else if(!arg2.contains(LANG.STRING_CONCATENATION) && arg1.contains(LANG.STRING_CONCATENATION)) {
 						boolean tokenMatchesArgument = false;
 						Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(arg1)));
 						StringBuilder sb = new StringBuilder();
@@ -1979,6 +2095,7 @@ public class StringBasedHeuristics {
 				invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2) &&
 				invocationCoveringTheEntireStatement1.getExpression() != null &&
 				invocationCoveringTheEntireStatement2.getExpression() != null) {
+			Constants LANG = PathFileUtils.getLang(invocationCoveringTheEntireStatement1.getLocationInfo().getFilePath());
 			List<String> arguments1 = invocationCoveringTheEntireStatement1.arguments();
 			List<String> arguments2 = invocationCoveringTheEntireStatement2.arguments();
 			String expression1 = invocationCoveringTheEntireStatement1.getExpression();
@@ -1987,7 +2104,7 @@ public class StringBasedHeuristics {
 			int replacedArguments = 0;
 			boolean expressionReplaced = false;
 			for(Replacement replacement : replacementInfo.getReplacements()) {
-				if(replacement.getBefore().contains(JAVA.LAMBDA_ARROW) != replacement.getAfter().contains(JAVA.LAMBDA_ARROW)) {
+				if(replacement.getBefore().contains(LANG.LAMBDA_ARROW) != replacement.getAfter().contains(LANG.LAMBDA_ARROW)) {
 					if(arguments1.contains(replacement.getBefore()) && arguments2.contains(replacement.getAfter())) {
 						replacedArguments++;
 					}
@@ -2005,20 +2122,39 @@ public class StringBasedHeuristics {
 
 	protected static boolean thisConstructorCallWithEverythingReplaced(AbstractCall invocationCoveringTheEntireStatement1, AbstractCall invocationCoveringTheEntireStatement2,
 			ReplacementInfo replacementInfo) {
-		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.getName().equals("this") && invocationCoveringTheEntireStatement2.getName().equals("this")) {
-			List<String> arguments1 = invocationCoveringTheEntireStatement1.arguments();
-			List<String> arguments2 = invocationCoveringTheEntireStatement2.arguments();
-			Set<String> argumentIntersection = invocationCoveringTheEntireStatement1.argumentIntersection(invocationCoveringTheEntireStatement2);
-			int minArguments = Math.min(arguments1.size(), arguments2.size());
-			int replacedArguments = 0;
-			for(Replacement replacement : replacementInfo.getReplacements()) {
-				if(arguments1.contains(replacement.getBefore()) && arguments2.contains(replacement.getAfter())) {
-					replacedArguments++;
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
+			Constants LANG = PathFileUtils.getLang(invocationCoveringTheEntireStatement1.getLocationInfo().getFilePath());
+			if(invocationCoveringTheEntireStatement1.getName().equals(LANG.THIS) && invocationCoveringTheEntireStatement2.getName().equals(LANG.THIS)) {
+				List<String> arguments1 = invocationCoveringTheEntireStatement1.arguments();
+				List<String> arguments2 = invocationCoveringTheEntireStatement2.arguments();
+				Set<String> argumentIntersection = invocationCoveringTheEntireStatement1.argumentIntersection(invocationCoveringTheEntireStatement2);
+				int minArguments = Math.min(arguments1.size(), arguments2.size());
+				int replacedArguments = 0;
+				for(Replacement replacement : replacementInfo.getReplacements()) {
+					if(arguments1.contains(replacement.getBefore()) && arguments2.contains(replacement.getAfter())) {
+						replacedArguments++;
+					}
+				}
+				if(replacedArguments == minArguments || replacedArguments > argumentIntersection.size()) {
+					return true;
 				}
 			}
-			if(replacedArguments == minArguments || replacedArguments > argumentIntersection.size()) {
-				return true;
+		}
+		return false;
+	}
+
+	protected static boolean multiAssignmentWithReorderedVariables(String string1, String string2, Constants LANG) {
+		if(string1.contains(LANG.ASSIGNMENT) && string2.contains(LANG.ASSIGNMENT)) {
+			String assignment1 = string1.substring(string1.indexOf(LANG.ASSIGNMENT)+1, string1.length());
+			String assignment2 = string2.substring(string2.indexOf(LANG.ASSIGNMENT)+1, string2.length());
+			if(assignment1.equals(assignment2)) {
+				String assignedVariables1 = string1.substring(0, string1.indexOf(LANG.ASSIGNMENT));
+				String assignedVariables2 = string2.substring(0, string2.indexOf(LANG.ASSIGNMENT));
+				List<String> variables1 = Arrays.asList(SPLIT_COMMA_PATTERN.split(assignedVariables1));
+				List<String> variables2 = Arrays.asList(SPLIT_COMMA_PATTERN.split(assignedVariables2));
+				if(variables1.size() > 1 && variables1.containsAll(variables2) && variables2.containsAll(variables1)) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -2026,18 +2162,19 @@ public class StringBasedHeuristics {
 
 	protected static boolean classInstanceCreationWithEverythingReplaced(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap) {
+		Constants LANG = PathFileUtils.getLang(statement1.getLocationInfo().getFilePath());
 		String string1 = statement1.getString();
 		String string2 = statement2.getString();
-		if(containsMethodSignatureOfAnonymousClass(string1) && string1.contains("\n")) {
+		if(containsMethodSignatureOfAnonymousClass(string1, LANG) && string1.contains("\n")) {
 			string1 = string1.substring(0, string1.indexOf("\n"));
 		}
-		if(containsMethodSignatureOfAnonymousClass(string2) && string2.contains("\n")) {
+		if(containsMethodSignatureOfAnonymousClass(string2, LANG) && string2.contains("\n")) {
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
-		if(string1.contains(JAVA.ASSIGNMENT) && string1.endsWith(JAVA.STATEMENT_TERMINATION) && string2.startsWith(JAVA.RETURN_SPACE) && string2.endsWith(JAVA.STATEMENT_TERMINATION)) {
+		if(string1.contains(LANG.ASSIGNMENT) && string1.endsWith(LANG.STATEMENT_TERMINATION) && string2.startsWith(LANG.RETURN_SPACE) && string2.endsWith(LANG.STATEMENT_TERMINATION)) {
 			boolean typeReplacement = false, compatibleTypes = false, classInstanceCreationReplacement = false;
-			String assignment1 = string1.substring(string1.indexOf(JAVA.ASSIGNMENT)+1, string1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
-			String assignment2 = string2.substring(JAVA.RETURN_SPACE.length(), string2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String assignment1 = string1.substring(string1.indexOf(LANG.ASSIGNMENT)+1, string1.lastIndexOf(LANG.STATEMENT_TERMINATION));
+			String assignment2 = string2.substring(LANG.RETURN_SPACE.length(), string2.lastIndexOf(LANG.STATEMENT_TERMINATION));
 			UMLType type1 = null, type2 = null;
 			ObjectCreation objectCreation1 = null, objectCreation2 = null;
 			Map<String, String> argumentToParameterMap = new LinkedHashMap<String, String>();
@@ -2086,10 +2223,10 @@ public class StringBasedHeuristics {
 				return true;
 			}
 		}
-		else if(string1.startsWith(JAVA.RETURN_SPACE) && string1.endsWith(JAVA.STATEMENT_TERMINATION) && string2.contains(JAVA.ASSIGNMENT) && string2.endsWith(JAVA.STATEMENT_TERMINATION)) {
+		else if(string1.startsWith(LANG.RETURN_SPACE) && string1.endsWith(LANG.STATEMENT_TERMINATION) && string2.contains(LANG.ASSIGNMENT) && string2.endsWith(LANG.STATEMENT_TERMINATION)) {
 			boolean typeReplacement = false, compatibleTypes = false, classInstanceCreationReplacement = false;
-			String assignment1 = string1.substring(JAVA.RETURN_SPACE.length(), string1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
-			String assignment2 = string2.substring(string2.indexOf(JAVA.ASSIGNMENT)+1, string2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String assignment1 = string1.substring(LANG.RETURN_SPACE.length(), string1.lastIndexOf(LANG.STATEMENT_TERMINATION));
+			String assignment2 = string2.substring(string2.indexOf(LANG.ASSIGNMENT)+1, string2.lastIndexOf(LANG.STATEMENT_TERMINATION));
 			UMLType type1 = null, type2 = null;
 			ObjectCreation objectCreation1 = null, objectCreation2 = null;
 			Map<String, String> argumentToParameterMap = new LinkedHashMap<String, String>();
@@ -2143,28 +2280,29 @@ public class StringBasedHeuristics {
 
 	protected static boolean variableAssignmentWithEverythingReplaced(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			ReplacementInfo replacementInfo, UMLOperationBodyMapper mapper) {
+		Constants LANG = mapper.LANG;
 		String string1 = statement1.getString();
 		String string2 = statement2.getString();
-		boolean containsMethodSignatureOfAnonymousClass1 = containsMethodSignatureOfAnonymousClass(string1);
+		boolean containsMethodSignatureOfAnonymousClass1 = containsMethodSignatureOfAnonymousClass(string1, LANG);
 		if(containsMethodSignatureOfAnonymousClass1 && string1.contains("\n")) {
 			string1 = string1.substring(0, string1.indexOf("\n"));
 		}
-		boolean containsMethodSignatureOfAnonymousClass2 = containsMethodSignatureOfAnonymousClass(string2);
+		boolean containsMethodSignatureOfAnonymousClass2 = containsMethodSignatureOfAnonymousClass(string2, LANG);
 		if(containsMethodSignatureOfAnonymousClass2 && string2.contains("\n")) {
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
-		if(string1.contains(JAVA.ASSIGNMENT) && string1.endsWith(JAVA.STATEMENT_TERMINATION) && string2.contains(JAVA.ASSIGNMENT) && string2.endsWith(JAVA.STATEMENT_TERMINATION)) {
+		if(string1.contains(LANG.ASSIGNMENT) && string1.endsWith(LANG.STATEMENT_TERMINATION) && string2.contains(LANG.ASSIGNMENT) && string2.endsWith(LANG.STATEMENT_TERMINATION)) {
 			boolean typeReplacement = false, compatibleTypes = false, variableRename = false, classInstanceCreationReplacement = false, equalArguments = false, rightHandSideReplacement = false;
-			String variableName1 = string1.substring(0, string1.indexOf(JAVA.ASSIGNMENT));
-			String variableName2 = string2.substring(0, string2.indexOf(JAVA.ASSIGNMENT));
-			String assignment1 = string1.substring(string1.indexOf(JAVA.ASSIGNMENT)+1, string1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
-			String assignment2 = string2.substring(string2.indexOf(JAVA.ASSIGNMENT)+1, string2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String variableName1 = string1.substring(0, string1.indexOf(LANG.ASSIGNMENT));
+			String variableName2 = string2.substring(0, string2.indexOf(LANG.ASSIGNMENT));
+			String assignment1 = string1.substring(string1.indexOf(LANG.ASSIGNMENT)+1, string1.lastIndexOf(LANG.STATEMENT_TERMINATION));
+			String assignment2 = string2.substring(string2.indexOf(LANG.ASSIGNMENT)+1, string2.lastIndexOf(LANG.STATEMENT_TERMINATION));
 			boolean fieldInitializationWithParemeter1 = false;
 			boolean fieldInitializationWithParemeter2 = false;
 			if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor() && mapper.getClassDiff() != null) {
 				for(UMLAttribute removedAttribute : mapper.getClassDiff().getOriginalClass().getAttributes()) {
-					if(variableName1.equals(removedAttribute.getName()) || variableName1.equals(JAVA.THIS_DOT + removedAttribute.getName())) {
-						for(String parameterName : mapper.getContainer1().getParameterNameList()) {
+					if(variableName1.equals(removedAttribute.getName()) || variableName1.equals(LANG.THIS_DOT + removedAttribute.getName())) {
+						for(String parameterName : mapper.getParameterNameList1()) {
 							if(assignment1.equals(parameterName) || assignment1.contains(parameterName + ".")) {
 								fieldInitializationWithParemeter1 = true;
 								break;
@@ -2176,8 +2314,8 @@ public class StringBasedHeuristics {
 					}
 				}
 				for(UMLAttribute addedAttribute : mapper.getClassDiff().getNextClass().getAttributes()) {
-					if((variableName2.equals(addedAttribute.getName()) || variableName2.equals(JAVA.THIS_DOT + addedAttribute.getName()))) {
-						for(String parameterName : mapper.getContainer2().getParameterNameList()) {
+					if((variableName2.equals(addedAttribute.getName()) || variableName2.equals(LANG.THIS_DOT + addedAttribute.getName()))) {
+						for(String parameterName : mapper.getParameterNameList2()) {
 							if(assignment2.equals(parameterName) || assignment2.contains(parameterName + ".")) {
 								fieldInitializationWithParemeter2 = true;
 								break;
@@ -2227,9 +2365,9 @@ public class StringBasedHeuristics {
 						classInstanceCreationReplacement = true;
 				}
 				else if((replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS)) &&
-						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals(JAVA.THIS_DOT + replacement.getBefore())) &&
-						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter()) || variableName2.equals(JAVA.THIS_DOT + replacement.getAfter())) &&
-						!variableName1.equals(JAVA.THIS_DOT + variableName2) && !variableName2.equals(JAVA.THIS_DOT + variableName1))
+						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals(LANG.THIS_DOT + replacement.getBefore())) &&
+						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter()) || variableName2.equals(LANG.THIS_DOT + replacement.getAfter())) &&
+						!variableName1.equals(LANG.THIS_DOT + variableName2) && !variableName2.equals(LANG.THIS_DOT + variableName1))
 					variableRename = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
 						assignment1.equals(replacement.getBefore()) && assignment2.equals(replacement.getAfter()) &&
@@ -2237,6 +2375,10 @@ public class StringBasedHeuristics {
 						zeroCallsToExtractedMethodsOrParentMapperWithNonIdenticalSignature(mapper))
 					rightHandSideReplacement = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_NULL_LITERAL) &&
+						assignment1.equals(replacement.getBefore()) &&
+						assignment2.equals(replacement.getAfter()))
+					rightHandSideReplacement = true;
+				else if(replacement.getType().equals(ReplacementType.INFIX_EXPRESSION) &&
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()))
 					rightHandSideReplacement = true;
@@ -2274,6 +2416,13 @@ public class StringBasedHeuristics {
 				equalArguments = inv1.equalArguments(inv2) && inv1.arguments().size() > 0;
 			}
 			if(typeReplacement && !compatibleTypes && variableRename && classInstanceCreationReplacement && !equalArguments) {
+				return true;
+			}
+			if(statement1.getVariableDeclarations().size() != statement2.getVariableDeclarations().size() && variableRename && !compatibleTypes &&
+					ReplacementUtil.isDefaultValue(assignment1, LANG) && ReplacementUtil.isDefaultValue(assignment2, LANG)) {
+				return true;
+			}
+			if(statement1.getVariableDeclarations().size() == 0 && statement2.getVariableDeclarations().size() == 0 && variableRename && variableName1.startsWith("_") != variableName2.startsWith("_")) {
 				return true;
 			}
 			if(variableRename && rightHandSideReplacement) {
@@ -2321,17 +2470,17 @@ public class StringBasedHeuristics {
 				return true;
 			}
 		}
-		else if(string1.contains(JAVA.ASSIGNMENT) && statement1.getString().endsWith(JAVA.STATEMENT_TERMINATION) && string2.contains(JAVA.ASSIGNMENT) && statement2.getString().endsWith(JAVA.STATEMENT_TERMINATION) && containsMethodSignatureOfAnonymousClass1 != containsMethodSignatureOfAnonymousClass2) {
+		else if(string1.contains(LANG.ASSIGNMENT) && statement1.getString().endsWith(LANG.STATEMENT_TERMINATION) && string2.contains(LANG.ASSIGNMENT) && statement2.getString().endsWith(LANG.STATEMENT_TERMINATION) && containsMethodSignatureOfAnonymousClass1 != containsMethodSignatureOfAnonymousClass2) {
 			boolean variableRename = false, rightHandSideReplacement = false;
-			String variableName1 = string1.substring(0, string1.indexOf(JAVA.ASSIGNMENT));
-			String variableName2 = string2.substring(0, string2.indexOf(JAVA.ASSIGNMENT));
-			String assignment1 = statement1.getString().substring(statement1.getString().indexOf(JAVA.ASSIGNMENT)+1, statement1.getString().lastIndexOf(JAVA.STATEMENT_TERMINATION));
-			String assignment2 = statement2.getString().substring(statement2.getString().indexOf(JAVA.ASSIGNMENT)+1, statement2.getString().lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String variableName1 = string1.substring(0, string1.indexOf(LANG.ASSIGNMENT));
+			String variableName2 = string2.substring(0, string2.indexOf(LANG.ASSIGNMENT));
+			String assignment1 = statement1.getString().substring(statement1.getString().indexOf(LANG.ASSIGNMENT)+1, statement1.getString().lastIndexOf(LANG.STATEMENT_TERMINATION));
+			String assignment2 = statement2.getString().substring(statement2.getString().indexOf(LANG.ASSIGNMENT)+1, statement2.getString().lastIndexOf(LANG.STATEMENT_TERMINATION));
 			for(Replacement replacement : replacementInfo.getReplacements()) {
 				if((replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS)) &&
-						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals(JAVA.THIS_DOT + replacement.getBefore())) &&
-						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter()) || variableName2.equals(JAVA.THIS_DOT + replacement.getAfter())) &&
-						!variableName1.equals(JAVA.THIS_DOT + variableName2) && !variableName2.equals(JAVA.THIS_DOT + variableName1))
+						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals(LANG.THIS_DOT + replacement.getBefore())) &&
+						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter()) || variableName2.equals(LANG.THIS_DOT + replacement.getAfter())) &&
+						!variableName1.equals(LANG.THIS_DOT + variableName2) && !variableName2.equals(LANG.THIS_DOT + variableName1))
 					variableRename = true;
 				else if(assignment1.equals(replacement.getBefore()) && assignment2.equals(replacement.getAfter()))
 					rightHandSideReplacement = true;
@@ -2448,13 +2597,24 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean operatorExpressionWithEverythingReplaced(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
-			ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap) {
+			ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap, Set<Refactoring> newRefactorings, boolean lambdaBodyMapper) {
+		Constants LANG = PathFileUtils.getLang(statement1.getLocationInfo().getFilePath());
+		if(!lambdaBodyMapper) {
+			for(Refactoring r : newRefactorings) {
+				if(r instanceof InvertConditionRefactoring invert) {
+					if(invert.getOriginalConditional().getLocationInfo().subsumes(statement1.getLocationInfo()) &&
+							invert.getInvertedConditional().getLocationInfo().equals(statement2.getLocationInfo())) {
+						return false;
+					}
+				}
+			}
+		}
 		String string1 = statement1.getString();
 		String string2 = statement2.getString();
-		if(containsMethodSignatureOfAnonymousClass(string1) && string1.contains("\n")) {
+		if(containsMethodSignatureOfAnonymousClass(string1, LANG) && string1.contains("\n")) {
 			string1 = string1.substring(0, string1.indexOf("\n"));
 		}
-		if(containsMethodSignatureOfAnonymousClass(string2) && string2.contains("\n")) {
+		if(containsMethodSignatureOfAnonymousClass(string2, LANG) && string2.contains("\n")) {
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
 		List<String> operators1 = statement1.getInfixOperators();
@@ -2516,8 +2676,8 @@ public class StringBasedHeuristics {
 					stringAfter.append(replacement.getAfter());
 				}
 			}
-			if(statement1.getString().startsWith(JAVA.RETURN_SPACE) && statement2.getString().startsWith(JAVA.RETURN_SPACE)) {
-				return statement1.getString().equals(JAVA.RETURN_SPACE + stringBefore + JAVA.STATEMENT_TERMINATION) && statement2.getString().equals(JAVA.RETURN_SPACE + stringAfter + JAVA.STATEMENT_TERMINATION);
+			if(statement1.getString().startsWith(LANG.RETURN_SPACE) && statement2.getString().startsWith(LANG.RETURN_SPACE)) {
+				return statement1.getString().equals(LANG.RETURN_SPACE + stringBefore + LANG.STATEMENT_TERMINATION) && statement2.getString().equals(LANG.RETURN_SPACE + stringAfter + LANG.STATEMENT_TERMINATION);
 			}
 			else if(statement1.getString().startsWith("if(") && statement2.getString().startsWith("if(")) {
 				return statement1.getString().equals("if(" + stringBefore + ")") && statement2.getString().equals("if(" + stringAfter + ")");
@@ -2530,7 +2690,7 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean variableDeclarationsWithEverythingReplaced(List<VariableDeclaration> variableDeclarations1,
-			List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {
+			List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo, Constants LANG) {
 		if(variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1) {
 			boolean typeReplacement = false, variableRename = false, initializerReplacement = false, nullInitializer = false, zeroArgumentClassInstantiation = false, classInstantiationArgumentReplacement = false;
 			UMLType type1 = variableDeclarations1.get(0).getType();
@@ -2541,7 +2701,7 @@ public class StringBasedHeuristics {
 				nullInitializer = true;
 			}
 			else if(initializer1 != null && initializer2 != null) {
-				nullInitializer = initializer1.getExpression().equals("null") || initializer2.getExpression().equals("null");
+				nullInitializer = initializer1.getExpression().equals(LANG.NULL) || initializer2.getExpression().equals(LANG.NULL);
 				if(initializer1.getCreations().size() == 1 && initializer2.getCreations().size() == 1) {
 					AbstractCall creation1 = initializer1.getCreations().get(0);
 					AbstractCall creation2 = initializer2.getCreations().get(0);
@@ -2577,6 +2737,13 @@ public class StringBasedHeuristics {
 				else if(initializer1 != null && initializer1.getExpression().equals(replacement.getBefore()) &&
 						initializer2 != null && initializer2.getExpression().equals(replacement.getAfter())) {
 					initializerReplacement = true;
+				}
+			}
+			if(LANG.equals(Constants.PYTHON) && variableRename && (initializerReplacement || nullInitializer || zeroArgumentClassInstantiation || classInstantiationArgumentReplacement)) {
+				boolean thisInitializer = initializer1 != null && initializer1.getExpression().startsWith(LANG.THIS_DOT) &&
+						initializer2 != null && initializer2.getExpression().startsWith(LANG.THIS_DOT);
+				if(!thisInitializer) {
+					return true;
 				}
 			}
 			if(typeReplacement && !type1.compatibleTypes(type2) && variableRename && (initializerReplacement || nullInitializer || zeroArgumentClassInstantiation || classInstantiationArgumentReplacement)) {
@@ -2660,6 +2827,7 @@ public class StringBasedHeuristics {
 
 	protected static boolean onlyDifferentInvoker(String s1, String s2,
 			AbstractCall invocationCoveringTheEntireStatement1, AbstractCall invocationCoveringTheEntireStatement2) {
+		Constants LANG = PathFileUtils.getLang(invocationCoveringTheEntireStatement1.getLocationInfo().getFilePath());
 		if(invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2)) {
 			if(invocationCoveringTheEntireStatement1.getExpression() == null && invocationCoveringTheEntireStatement2.getExpression() != null) {
 				int index = s1.indexOf(invocationCoveringTheEntireStatement1.getName());
@@ -2676,7 +2844,7 @@ public class StringBasedHeuristics {
 				}
 			}
 			else if(invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() != null) {
-				String s1AfterReplacement = ReplacementUtil.performReplacement(s1, s2, invocationCoveringTheEntireStatement1.getExpression(), invocationCoveringTheEntireStatement2.getExpression());
+				String s1AfterReplacement = ReplacementUtil.performReplacement(s1, s2, invocationCoveringTheEntireStatement1.getExpression(), invocationCoveringTheEntireStatement2.getExpression(), LANG);
 				if(s1AfterReplacement.equals(s2)) {
 					return true;
 				}
@@ -2686,13 +2854,14 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean extractedToVariable(String s1, String s2, AbstractCodeFragment statement1, AbstractCodeFragment statement2, ReplacementInfo info) {
+		Constants LANG = PathFileUtils.getLang(statement1.getLocationInfo().getFilePath());
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonSuffix.isEmpty() && commonSuffix.startsWith("new ")) {
 			if(statement2.getVariableDeclarations().size() > 0 && statement1.getVariableDeclarations().size() == 0) {
 				String prefix1 = s1.substring(0, s1.indexOf(commonSuffix));
 				if(!prefix1.isEmpty()) {
-					if(prefix1.startsWith(JAVA.RETURN_SPACE)) {
-						prefix1 = prefix1.substring(JAVA.RETURN_SPACE.length());
+					if(prefix1.startsWith(LANG.RETURN_SPACE)) {
+						prefix1 = prefix1.substring(LANG.RETURN_SPACE.length());
 					}
 					for(AbstractCodeFragment fragment2 : info.getStatements2()) {
 						if(fragment2.getString().contains(prefix1) && fragment2.getString().contains(statement2.getVariableDeclarations().get(0).getVariableName())) {
@@ -2705,7 +2874,7 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	protected static boolean identicalAfterVariableAndTypeReplacements(String s1, String s2, Set<Replacement> replacements) {
+	protected static boolean identicalAfterVariableAndTypeReplacements(String s1, String s2, Set<Replacement> replacements, Constants LANG) {
 		String s1AfterReplacements = new String(s1);
 		for(Replacement replacement : replacements) {
 			String before = replacement.getBefore();
@@ -2713,12 +2882,12 @@ public class StringBasedHeuristics {
 			if(before.contains("\n") && after.contains("\n")) {
 				before = before.substring(0, before.indexOf("\n"));
 				after = after.substring(0, after.indexOf("\n"));
-				if(before.endsWith(JAVA.OPEN_BLOCK) && after.endsWith(JAVA.OPEN_BLOCK)) {
+				if(before.endsWith(LANG.OPEN_BLOCK) && after.endsWith(LANG.OPEN_BLOCK)) {
 					before = before.substring(0, before.length()-1);
 					after = after.substring(0, after.length()-1);
 				}
 			}
-			s1AfterReplacements = ReplacementUtil.performReplacement(s1AfterReplacements, s2, before, after);
+			s1AfterReplacements = ReplacementUtil.performReplacement(s1AfterReplacements, s2, before, after, LANG);
 		}
 		if(s1AfterReplacements.equals(s2)) {
 			return true;
@@ -2728,15 +2897,16 @@ public class StringBasedHeuristics {
 
 	protected static VariableDeclaration declarationWithArrayInitializer(List<VariableDeclaration> declarations) {
 		for(VariableDeclaration declaration : declarations) {
+			Constants LANG = PathFileUtils.getLang(declaration.getLocationInfo().getFilePath());
 			AbstractExpression initializer = declaration.getInitializer();
-			if(initializer != null && initializer.getString().startsWith(JAVA.OPEN_ARRAY_INITIALIZER) && initializer.getString().endsWith(JAVA.CLOSE_ARRAY_INITIALIZER)) {
+			if(initializer != null && initializer.getString().startsWith(LANG.OPEN_ARRAY_INITIALIZER) && initializer.getString().endsWith(LANG.CLOSE_ARRAY_INITIALIZER)) {
 				return declaration;
 			}
 		}
 		return null;
 	}
 
-	protected static Set<String> subConditionIntersection(List<String> subConditionsAsList1, List<String> subConditionsAsList2) {
+	protected static Set<String> subConditionIntersection(List<String> subConditionsAsList1, List<String> subConditionsAsList2, Constants LANG) {
 		Set<String> intersection = new LinkedHashSet<String>();
 		for(String c1 : subConditionsAsList1) {
 			for(String c2 : subConditionsAsList2) {
@@ -2752,7 +2922,7 @@ public class StringBasedHeuristics {
 					intersection.add(c2);
 					break;
 				}
-				else if(c1.equals("!" + c2) || c1.equals("!(" + c2 + ")")) {
+				else if(c1.equals(LANG.NOT + c2) || c1.equals(LANG.NOT + "(" + c2 + ")")) {
 					intersection.add(c2);
 					break;
 				}
@@ -2764,7 +2934,7 @@ public class StringBasedHeuristics {
 					intersection.add(c1);
 					break;
 				}
-				else if(c2.equals("!" + c1) || c2.equals("!(" + c1 + ")")) {
+				else if(c2.equals(LANG.NOT + c1) || c2.equals(LANG.NOT + "(" + c1 + ")")) {
 					intersection.add(c1);
 					break;
 				}
@@ -2810,10 +2980,10 @@ public class StringBasedHeuristics {
 							pass = true;
 						}
 						else {
-							if(arg1.startsWith("!")) {
+							if(arg1.startsWith(LANG.NOT)) {
 								arg1 = arg1.substring(1);
 							}
-							if(prefix2.startsWith("!")) {
+							if(prefix2.startsWith(LANG.NOT)) {
 								prefix2 = prefix2.substring(1);
 							}
 							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(arg1, prefix2);
@@ -2833,10 +3003,10 @@ public class StringBasedHeuristics {
 							pass = true;
 						}
 						else {
-							if(arg2.startsWith("!")) {
+							if(arg2.startsWith(LANG.NOT)) {
 								arg2 = arg2.substring(1);
 							}
-							if(prefix1.startsWith("!")) {
+							if(prefix1.startsWith(LANG.NOT)) {
 								prefix1 = prefix1.substring(1);
 							}
 							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(arg2, prefix1);
@@ -2856,17 +3026,17 @@ public class StringBasedHeuristics {
 		return intersection;
 	}
 
-	private static int checkForInvertedConditionals(List<String> subConditionsAsList1, List<String> subConditionsAsList2, ReplacementInfo info) {
+	private static int checkForInvertedConditionals(List<String> subConditionsAsList1, List<String> subConditionsAsList2, ReplacementInfo info, Constants LANG) {
 		int invertedConditionals = 0;
 		for(String subCondition1 : subConditionsAsList1) {
 			for(String subCondition2 : subConditionsAsList2) {
-				if(subCondition1.equals("!" + subCondition2) || subCondition1.equals("!(" + subCondition2 + ")")) {
+				if(subCondition1.equals(LANG.NOT + subCondition2) || subCondition1.equals(LANG.NOT + "(" + subCondition2 + ")")) {
 					Replacement r2 = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
 					info.addReplacement(r2);
 					invertedConditionals++;
 					break;
 				}
-				if(subCondition2.equals("!" + subCondition1) || subCondition2.equals("!(" + subCondition1 + ")")) {
+				if(subCondition2.equals(LANG.NOT + subCondition1) || subCondition2.equals(LANG.NOT + "(" + subCondition1 + ")")) {
 					Replacement r2 = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
 					info.addReplacement(r2);
 					invertedConditionals++;
@@ -2931,11 +3101,11 @@ public class StringBasedHeuristics {
 					if(arg2.equals(prefix1)) {
 						if(!arg1.equals(prefix2)) {
 							int invertCount = 0;
-							if(arg1.startsWith("!")) {
+							if(arg1.startsWith(LANG.NOT)) {
 								arg1 = arg1.substring(1);
 								invertCount++;
 							}
-							if(prefix2.startsWith("!")) {
+							if(prefix2.startsWith(LANG.NOT)) {
 								prefix2 = prefix2.substring(1);
 								invertCount++;
 							}
@@ -2952,11 +3122,11 @@ public class StringBasedHeuristics {
 					if(arg1.equals(prefix2)) {
 						if(!arg2.equals(prefix1)) {
 							int invertCount = 0;
-							if(arg2.startsWith("!")) {
+							if(arg2.startsWith(LANG.NOT)) {
 								arg2 = arg2.substring(1);
 								invertCount++;
 							}
-							if(prefix1.startsWith("!")) {
+							if(prefix1.startsWith(LANG.NOT)) {
 								prefix1 = prefix1.substring(1);
 								invertCount++;
 							}
@@ -2976,7 +3146,7 @@ public class StringBasedHeuristics {
 		return invertedConditionals;
 	}
 
-	private static String prepareConditional(String s) {
+	private static String prepareConditional(String s, Constants LANG) {
 		String conditional = s;
 		if(s.startsWith("if(") && s.endsWith(")")) {
 			conditional = s.substring(3, s.length()-1);
@@ -2987,17 +3157,19 @@ public class StringBasedHeuristics {
 		if(s.startsWith("while(") && s.endsWith(")")) {
 			conditional = s.substring(6, s.length()-1);
 		}
-		if(s.startsWith(JAVA.RETURN_SPACE) && s.endsWith(JAVA.STATEMENT_TERMINATION)) {
-			conditional = s.substring(JAVA.RETURN_SPACE.length(), s.length()-JAVA.STATEMENT_TERMINATION.length());
+		if(s.startsWith(LANG.RETURN_SPACE) && s.endsWith(LANG.STATEMENT_TERMINATION)) {
+			conditional = s.substring(LANG.RETURN_SPACE.length(), s.length()-LANG.STATEMENT_TERMINATION.length());
 		}
-		int indexOfEquals = s.indexOf(JAVA.ASSIGNMENT);
-		if(indexOfEquals > -1 && s.charAt(indexOfEquals+1) != '=' && s.charAt(indexOfEquals-1) != '!' && s.endsWith(JAVA.STATEMENT_TERMINATION)) {
-			conditional = s.substring(indexOfEquals+1, s.length()-JAVA.STATEMENT_TERMINATION.length());
+		int indexOfEquals = s.indexOf(LANG.ASSIGNMENT);
+		if(indexOfEquals > -1 && s.charAt(indexOfEquals+1) != '=' && s.charAt(indexOfEquals-1) != '!' && s.endsWith(LANG.STATEMENT_TERMINATION)) {
+			conditional = s.substring(indexOfEquals+1, s.length()-LANG.STATEMENT_TERMINATION.length());
 		}
 		return conditional;
 	}
 
 	protected static boolean commonConditional(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo info, AbstractCodeFragment statement1, AbstractCodeFragment statement2, UMLOperationBodyMapper mapper) {
+		Constants LANG = mapper.LANG;
+		Pattern SPLIT_CONDITIONAL_PATTERN = LANG.equals(Constants.PYTHON) ? SPLIT_CONDITIONAL_PATTERN_PYTHON : SPLIT_CONDITIONAL_PATTERN_JAVA;
 		Set<Replacement> initialReplacements = info.getReplacements();
 		Set<Refactoring> refactorings = mapper.getRefactoringsAfterPostProcessing();
 		VariableDeclarationContainer container1 = mapper.getContainer1();
@@ -3010,7 +3182,7 @@ public class StringBasedHeuristics {
 		ObjectCreation creationCoveringTheEntireStatement2 = call2 instanceof ObjectCreation ? (ObjectCreation)call2 : null;
 		boolean arrayCreation1 = creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.isArray();
 		boolean arrayCreation2 = creationCoveringTheEntireStatement2 != null && creationCoveringTheEntireStatement2.isArray();
-		if(!arrayCreation1 && !arrayCreation2 && !containsMethodSignatureOfAnonymousClass(s1) && !containsMethodSignatureOfAnonymousClass(s2)) {
+		if(!arrayCreation1 && !arrayCreation2 && !containsMethodSignatureOfAnonymousClass(s1, LANG) && !containsMethodSignatureOfAnonymousClass(s2, LANG)) {
 			List<String> ternaryConditionals1 = new ArrayList<>();
 			for(TernaryOperatorExpression ternary : statement1.getTernaryOperatorExpressions()) {
 				String condition = ternary.getCondition().getString();
@@ -3040,7 +3212,7 @@ public class StringBasedHeuristics {
 			}
 			boolean containsTernaryOperatorReplacement = false;
 			for(Replacement replacement : info.getReplacements()) {
-				if(replacement.getAfter().contains(JAVA.TERNARY_CONDITION) && replacement.getAfter().contains(JAVA.TERNARY_ELSE)) {
+				if(replacement.getAfter().contains(LANG.TERNARY_CONDITION) && replacement.getAfter().contains(LANG.TERNARY_ELSE)) {
 					containsTernaryOperatorReplacement = true;
 				}
 			}
@@ -3051,12 +3223,12 @@ public class StringBasedHeuristics {
 				List<VariableDeclaration> v2 = statement2.getVariableDeclarations();
 				boolean compatibleVariableDeclarations = false;
 				if(v1.size() > 0 && v2.size() == 0) {
-					if(statement2.getString().startsWith(v1.get(0).getVariableName() + JAVA.ASSIGNMENT)) {
+					if(statement2.getString().startsWith(v1.get(0).getVariableName() + LANG.ASSIGNMENT)) {
 						compatibleVariableDeclarations = true;
 					}
 				}
 				else if(v1.size() == 0 && v2.size() > 0) {
-					if(statement1.getString().startsWith(v2.get(0).getVariableName() + JAVA.ASSIGNMENT)) {
+					if(statement1.getString().startsWith(v2.get(0).getVariableName() + LANG.ASSIGNMENT)) {
 						compatibleVariableDeclarations = true;
 					}
 				}
@@ -3067,8 +3239,10 @@ public class StringBasedHeuristics {
 				}
 				ternaryConditions = statement1.getTernaryOperatorExpressions().size() != statement2.getTernaryOperatorExpressions().size() && compatibleVariableDeclarations;
 			}
-			boolean containLogicalOperator = s1.contains("||") || s1.contains("&&") || s2.contains("||") || s2.contains("&&");
-			boolean containsNotOperator = s1.contains("!") != s2.contains("!");
+			String AND = LANG.AND.strip();
+			String OR = LANG.OR.strip();
+			boolean containLogicalOperator = s1.contains(OR) || s1.contains(AND) || s2.contains(OR) || s2.contains(AND);
+			boolean containsNotOperator = (s1.contains(LANG.NOT) || s1.contains("!")) != (s2.contains(LANG.NOT) || s2.contains("!"));
 			if(containLogicalOperator || ternaryConditions || containsNotOperator) {
 				List<String> subConditionsAsList1 = new ArrayList<String>();
 				List<String> subConditionsAsList2 = new ArrayList<String>();
@@ -3077,7 +3251,7 @@ public class StringBasedHeuristics {
 				Map<String, List<LeafExpression>> subConditionMap = null;
 				if(ternaryConditions && (!containLogicalOperator || statement1 instanceof AbstractExpression)) {
 					if((ternaryConditionals1.isEmpty() && ternaryConditionals2.size() > 0) || statement1.getTernaryOperatorExpressions().size() < statement2.getTernaryOperatorExpressions().size()) {
-						String conditional1 = prepareConditional(s1);
+						String conditional1 = prepareConditional(s1, LANG);
 						if(statement1.getTernaryOperatorExpressions().size() > 0) {
 							List<LeafExpression> leafExpressions = statement1.findExpression(conditional1);
 							if(leafExpressions.size() > 0) {
@@ -3096,7 +3270,7 @@ public class StringBasedHeuristics {
 						}
 						if(statement1.getTernaryOperatorExpressions().size() > 0) {
 							for(TernaryOperatorExpression expr2 : statement2.getTernaryOperatorExpressions()) {
-								String conditional2 = prepareConditional(expr2.getString());
+								String conditional2 = prepareConditional(expr2.getString(), LANG);
 								List<LeafExpression> leafExpressions = statement2.findExpression(conditional2);
 								if(leafExpressions.size() > 0) {
 									subConditionMap2.put(conditional2, leafExpressions);
@@ -3105,7 +3279,7 @@ public class StringBasedHeuristics {
 							}
 						}
 						for(String ternaryConditional : ternaryConditionals2) {
-							String conditional2 = prepareConditional(ternaryConditional);
+							String conditional2 = prepareConditional(ternaryConditional, LANG);
 							String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
 							for(String s : subConditions2) {
 								String trimmed = s.trim();
@@ -3143,7 +3317,7 @@ public class StringBasedHeuristics {
 					else if((ternaryConditionals2.isEmpty() && ternaryConditionals1.size() > 0) || statement1.getTernaryOperatorExpressions().size() > statement2.getTernaryOperatorExpressions().size()) {
 						if(statement2.getTernaryOperatorExpressions().size() > 0) {
 							for(TernaryOperatorExpression expr1 : statement1.getTernaryOperatorExpressions()) {
-								String conditional1 = prepareConditional(expr1.getString());
+								String conditional1 = prepareConditional(expr1.getString(), LANG);
 								List<LeafExpression> leafExpressions = statement1.findExpression(conditional1);
 								if(leafExpressions.size() > 0) {
 									subConditionMap1.put(conditional1, leafExpressions);
@@ -3152,7 +3326,7 @@ public class StringBasedHeuristics {
 							}
 						}
 						for(String ternaryConditional : ternaryConditionals1) {
-							String conditional1 = prepareConditional(ternaryConditional);
+							String conditional1 = prepareConditional(ternaryConditional, LANG);
 							String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
 							for(String s : subConditions1) {
 								String trimmed = s.trim();
@@ -3186,7 +3360,7 @@ public class StringBasedHeuristics {
 								}
 							}
 						}
-						String conditional2 = prepareConditional(s2);
+						String conditional2 = prepareConditional(s2, LANG);
 						if(statement2.getTernaryOperatorExpressions().size() > 0) {
 							List<LeafExpression> leafExpressions = statement2.findExpression(conditional2);
 							if(leafExpressions.size() > 0) {
@@ -3206,8 +3380,8 @@ public class StringBasedHeuristics {
 					}
 				}
 				else {
-					String conditional1 = prepareConditional(s1);
-					String conditional2 = prepareConditional(s2);
+					String conditional1 = prepareConditional(s1, LANG);
+					String conditional2 = prepareConditional(s2, LANG);
 					String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
 					String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
 					for(String s : subConditions1) {
@@ -3227,16 +3401,16 @@ public class StringBasedHeuristics {
 						}
 					}
 				}
-				Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2);
+				Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2, LANG);
 				Set<String> intersection2 = null;
-				int matches = matchCount(intersection, info, statement1, statement2);
-				boolean pass = pass(subConditionsAsList1, subConditionsAsList2, intersection, matches);
+				int matches = matchCount(intersection, info, statement1, statement2, LANG);
+				boolean pass = pass(subConditionsAsList1, subConditionsAsList2, intersection, matches, LANG);
 				int invertedConditionals = 0;
 				boolean booleanReturn = statement1.isLastStatementWithBooleanReturn() || statement2.isLastStatementWithBooleanReturn();
 				if((pass && info.getReplacements(ReplacementType.TYPE).isEmpty() && validMethodInvocationReplacement(info)) || booleanReturn) {
 					IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONDITIONAL);
 					if(!booleanReturn) {
-						createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, r);
+						createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, r, LANG);
 						info.addReplacement(r);
 					}
 					if(statement1.getVariableDeclarations().size() == 1 && statement2.getVariableDeclarations().size() == 1) {
@@ -3327,14 +3501,14 @@ public class StringBasedHeuristics {
 										subConditionMap.put(trimmed, leafExpressions);
 									}
 								}
-								intersection2 = subConditionIntersection(subConditionsAsList1, subConditionsAsList);
+								intersection2 = subConditionIntersection(subConditionsAsList1, subConditionsAsList, LANG);
 								if(intersection2.isEmpty()) {
 									for(AbstractCodeFragment f2 : info.getStatements2()) {
 										if(f2.getVariableDeclarations().size() > 0) {
 											for(String subCondition : new ArrayList<>(subConditionsAsList)) {
 												VariableDeclaration variableDeclaration = f2.getVariableDeclarations().get(0);
 												if(subCondition.equals(variableDeclaration.getVariableName()) ||
-														subCondition.equals("!" + variableDeclaration.getVariableName())) {
+														subCondition.equals(LANG.NOT + variableDeclaration.getVariableName())) {
 													if(variableDeclaration.getInitializer() != null && !statement2.getString().contains(variableDeclaration.getVariableName())) {
 														String cond = variableDeclaration.getInitializer().getString();
 														String[] subCond = SPLIT_CONDITIONAL_PATTERN.split(cond);
@@ -3347,7 +3521,7 @@ public class StringBasedHeuristics {
 															}
 														}
 														List<LeafExpression> leafExpressions2 = null;
-														if(subCondition.startsWith("!")) {
+														if(subCondition.startsWith(LANG.NOT)) {
 															leafExpressions2 = ifExpression2.findExpression(subCondition.substring(1));
 															leafExpressions2.addAll(ifExpression2.findExpression(subCondition));
 														}
@@ -3359,8 +3533,8 @@ public class StringBasedHeuristics {
 															for(CompositeStatementObject ifNode1 : ifNodes1) {
 																leafExpressions1.addAll(ifNode1.findExpression(cond));
 																//add possible parent prefix expressions
-																leafExpressions1.addAll(ifNode1.findExpression("!" + cond));
-																leafExpressions1.addAll(ifNode1.findExpression("!(" + cond + ")"));
+																leafExpressions1.addAll(ifNode1.findExpression(LANG.NOT + cond));
+																leafExpressions1.addAll(ifNode1.findExpression(LANG.NOT + "(" + cond + ")"));
 															}
 															if(leafExpressions1.isEmpty()) {
 																String newCond = cond;
@@ -3377,8 +3551,8 @@ public class StringBasedHeuristics {
 																for(CompositeStatementObject ifNode1 : ifNodes1) {
 																	leafExpressions1.addAll(ifNode1.findExpression(newCond));
 																	//add possible parent prefix expressions
-																	leafExpressions1.addAll(ifNode1.findExpression("!" + newCond));
-																	leafExpressions1.addAll(ifNode1.findExpression("!(" + newCond + ")"));
+																	leafExpressions1.addAll(ifNode1.findExpression(LANG.NOT + newCond));
+																	leafExpressions1.addAll(ifNode1.findExpression(LANG.NOT + "(" + newCond + ")"));
 																}
 															}
 															if(leafExpressions1.size() == leafExpressions2.size()) {
@@ -3400,22 +3574,22 @@ public class StringBasedHeuristics {
 											}
 										}
 									}
-									intersection2 = subConditionIntersection(subConditionsAsList1, subConditionsAsList);
+									intersection2 = subConditionIntersection(subConditionsAsList1, subConditionsAsList, LANG);
 								}
-								int matches2 = matchCount(intersection2, info, statement1, statement2);
-								boolean pass2 = pass(subConditionsAsList1, subConditionsAsList, intersection2, matches2);
+								int matches2 = matchCount(intersection2, info, statement1, statement2, LANG);
+								boolean pass2 = pass(subConditionsAsList1, subConditionsAsList, intersection2, matches2, LANG);
 								if(pass2 && !intersection.containsAll(intersection2)) {
 									Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
 									additionallyMatchedStatements2.add(ifNode2);
 									CompositeReplacement composite = new CompositeReplacement(statement1.getString(), ifNode2.getString(), new LinkedHashSet<>(), additionallyMatchedStatements2);
 									info.addReplacement(composite);
 									splitConditional = true;
-									invertedConditionals = checkForInvertedConditionals(subConditionsAsList1, subConditionsAsList, info);
+									invertedConditionals = checkForInvertedConditionals(subConditionsAsList1, subConditionsAsList, info, LANG);
 								}
 								else if(statement1 instanceof CompositeStatementObject) {
 									CompositeStatementObject composite1 = (CompositeStatementObject)statement1;
 									for(AbstractExpression expression : composite1.getExpressions()) {
-										String originalConditional1 = prepareConditional(expression.getString());
+										String originalConditional1 = prepareConditional(expression.getString(), LANG);
 										String[] originalSubConditions1 = SPLIT_CONDITIONAL_PATTERN.split(originalConditional1);
 										List<String> originalSubConditionsAsList1 = new ArrayList<String>();
 										for(String s : originalSubConditions1) {
@@ -3557,8 +3731,8 @@ public class StringBasedHeuristics {
 								refactorings.removeAll(refactoringsToBeRemoved);
 								if(!splitConditionalConflict) {
 									refactorings.add(split);
-									createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, split);
-									createLeafMappings(container1, container2, subConditionMap1, subConditionMap, intersection2, split);
+									createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, split, LANG);
+									createLeafMappings(container1, container2, subConditionMap1, subConditionMap, intersection2, split, LANG);
 									for(LeafMapping leafMapping : inferredLeafMappings) {
 										split.addSubExpressionMapping(leafMapping);
 									}
@@ -3567,12 +3741,12 @@ public class StringBasedHeuristics {
 						}
 						checkForMergeConditionals(statement1, statement2, mapper, refactorings, container1, container2,
 								mappings, subConditionsAsList2, subConditionMap1, subConditionMap2, subConditionMap,
-								intersection, intersection2, ifNodes1, ifNodes2, info, parameterToArgumentMap);
+								intersection, intersection2, ifNodes1, ifNodes2, info, parameterToArgumentMap, LANG);
 					}
 					else if(ifNodes1.size() > ifNodes2.size()) {
 						checkForMergeConditionals(statement1, statement2, mapper, refactorings, container1, container2,
 								mappings, subConditionsAsList2, subConditionMap1, subConditionMap2, subConditionMap,
-								intersection, intersection2, ifNodes1, ifNodes2, info, parameterToArgumentMap);
+								intersection, intersection2, ifNodes1, ifNodes2, info, parameterToArgumentMap, LANG);
 						if(ternaryConditionals2.size() > 0 && ternaryConditionals1.size() == 0) {
 							for(CompositeStatementObject comp1 : ifNodes1) {
 								List<AbstractCodeFragment> leaves1 = comp1.getLeaves();
@@ -3593,7 +3767,7 @@ public class StringBasedHeuristics {
 						}
 					}
 				}
-				invertedConditionals = checkForInvertedConditionals(subConditionsAsList1, subConditionsAsList2, info);
+				invertedConditionals = checkForInvertedConditionals(subConditionsAsList1, subConditionsAsList2, info, LANG);
 				boolean onlyInfixOperatorReplacementsFound = false;
 				if(matches == 0 && invertedConditionals == 0 && intersection.size() > 0) {
 					int count = 0;
@@ -3627,14 +3801,14 @@ public class StringBasedHeuristics {
 						onlyInfixOperatorReplacementsFound = true;
 					}
 				}
-				if((invertedConditionals > 0 || matches > 0 || onlyInfixOperatorReplacementsFound) && info.getReplacements(ReplacementType.TYPE).isEmpty() && validMethodInvocationReplacement(info) && !includesLocalVariable(statement1, statement2, intersection, container1, container2)) {
+				if((invertedConditionals > 0 || matches > 0 || onlyInfixOperatorReplacementsFound) && info.getReplacements(ReplacementType.TYPE).isEmpty() && validMethodInvocationReplacement(info) && !includesLocalVariable(statement1, statement2, intersection, container1, container2, LANG)) {
 					List<Replacement> operatorReplacements = info.getReplacements(ReplacementType.INFIX_OPERATOR);
 					boolean booleanOperatorReversed = false;
 					for(Replacement r : operatorReplacements) {
-						if(r.getBefore().equals("&&") && r.getAfter().equals("||")) {
+						if(r.getBefore().equals(AND) && r.getAfter().equals(OR)) {
 							booleanOperatorReversed = true;
 						}
-						else if(r.getBefore().equals("||") && r.getAfter().equals("&&")) {
+						else if(r.getBefore().equals(OR) && r.getAfter().equals(AND)) {
 							booleanOperatorReversed = true;
 						}
 						else if(r.getBefore().equals("==") && r.getAfter().equals("!=")) {
@@ -3687,12 +3861,12 @@ public class StringBasedHeuristics {
 									r.addSubExpressionMapping(leafMapping);
 									info.addReplacement(r);
 								}
-								if(statement1.getString().contains("!" + invocation1.actualString()) && !statement2.getString().contains("!" + invocation2.actualString())) {
-									Replacement r2 = new Replacement("!" + invocation1.actualString(), invocation2.actualString(), ReplacementType.INVERT_CONDITIONAL);
+								if(statement1.getString().contains(LANG.NOT + invocation1.actualString()) && !statement2.getString().contains(LANG.NOT + invocation2.actualString())) {
+									Replacement r2 = new Replacement(LANG.NOT + invocation1.actualString(), invocation2.actualString(), ReplacementType.INVERT_CONDITIONAL);
 									info.addReplacement(r2);
 								}
-								else if(!statement1.getString().contains("!" + invocation1.actualString()) && statement2.getString().contains("!" + invocation2.actualString())) {
-									Replacement r2 = new Replacement(invocation1.actualString(), "!" + invocation2.actualString(), ReplacementType.INVERT_CONDITIONAL);
+								else if(!statement1.getString().contains(LANG.NOT + invocation1.actualString()) && statement2.getString().contains(LANG.NOT + invocation2.actualString())) {
+									Replacement r2 = new Replacement(invocation1.actualString(), LANG.NOT + invocation2.actualString(), ReplacementType.INVERT_CONDITIONAL);
 									info.addReplacement(r2);
 								}
 								return true;
@@ -3781,7 +3955,8 @@ public class StringBasedHeuristics {
 			List<String> subConditionsAsList2, Map<String, List<LeafExpression>> subConditionMap1,
 			Map<String, List<LeafExpression>> subConditionMap2, Map<String, List<LeafExpression>> subConditionMap,
 			Set<String> intersection, Set<String> intersection2, Set<CompositeStatementObject> ifNodes1,
-			Set<CompositeStatementObject> ifNodes2, ReplacementInfo info, Map<String, String> parameterToArgumentMap) {
+			Set<CompositeStatementObject> ifNodes2, ReplacementInfo info, Map<String, String> parameterToArgumentMap, Constants LANG) {
+		Pattern SPLIT_CONDITIONAL_PATTERN = LANG.equals(Constants.PYTHON) ? SPLIT_CONDITIONAL_PATTERN_PYTHON : SPLIT_CONDITIONAL_PATTERN_JAVA;
 		boolean mergeConditional = false;
 		for(CompositeStatementObject ifNode1 : ifNodes1) {
 			List<AbstractExpression> expressions1 = ifNode1.getExpressions();
@@ -3805,9 +3980,9 @@ public class StringBasedHeuristics {
 						subConditionMap.put(temp1, leafExpressions);
 					}
 				}
-				intersection2 = subConditionIntersection(subConditionsAsList, subConditionsAsList2);
-				int matches2 = matchCount(intersection2, info, statement1, statement2);
-				boolean pass2 = pass(subConditionsAsList, subConditionsAsList2, intersection2, matches2);
+				intersection2 = subConditionIntersection(subConditionsAsList, subConditionsAsList2, LANG);
+				int matches2 = matchCount(intersection2, info, statement1, statement2, LANG);
+				boolean pass2 = pass(subConditionsAsList, subConditionsAsList2, intersection2, matches2, LANG);
 				if(pass2 && !intersection.containsAll(intersection2)) {
 					Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
 					additionallyMatchedStatements1.add(ifNode1);
@@ -3849,8 +4024,8 @@ public class StringBasedHeuristics {
 				refactorings.removeAll(refactoringsToBeRemoved);
 				if(!mergeConditionalsConflict) {
 					refactorings.add(merge);
-					createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, merge);
-					createLeafMappings(container1, container2, subConditionMap, subConditionMap2, intersection2, merge);
+					createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, merge, LANG);
+					createLeafMappings(container1, container2, subConditionMap, subConditionMap2, intersection2, merge, LANG);
 					mapper.createMultiMappingsForDuplicatedStatements(mergedConditionals, statement2, parameterToArgumentMap);
 				}
 			}
@@ -3859,19 +4034,19 @@ public class StringBasedHeuristics {
 
 	private static void createLeafMappings(VariableDeclarationContainer container1,
 			VariableDeclarationContainer container2, Map<String, List<LeafExpression>> subConditionMap1,
-			Map<String, List<LeafExpression>> subConditionMap2, Set<String> intersection, LeafMappingProvider provider) {
+			Map<String, List<LeafExpression>> subConditionMap2, Set<String> intersection, LeafMappingProvider provider, Constants LANG) {
 		for(String key : intersection) {
 			List<LeafExpression> leaf1 = subConditionMap1.get(key);
 			if(leaf1 == null)
-				leaf1 = subConditionMap1.get("!" + key);
+				leaf1 = subConditionMap1.get(LANG.NOT + key);
 			if(leaf1 == null)
-				leaf1 = subConditionMap1.get("!(" + key + ")");
+				leaf1 = subConditionMap1.get(LANG.NOT + "(" + key + ")");
 			
 			List<LeafExpression> leaf2 = subConditionMap2.get(key);
 			if(leaf2 == null)
-				leaf2 = subConditionMap2.get("!" + key);
+				leaf2 = subConditionMap2.get(LANG.NOT + key);
 			if(leaf2 == null)
-				leaf2 = subConditionMap2.get("!(" + key + ")");
+				leaf2 = subConditionMap2.get(LANG.NOT + "(" + key + ")");
 			//only for leaf2
 			if(leaf2 == null && key.contains("==")) {
 				String prefix = key.substring(0, key.indexOf("=="));
@@ -3894,7 +4069,7 @@ public class StringBasedHeuristics {
 		}
 	}
 
-	private static int matchCount(Set<String> intersection, ReplacementInfo info, AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
+	private static int matchCount(Set<String> intersection, ReplacementInfo info, AbstractCodeFragment statement1, AbstractCodeFragment statement2, Constants LANG) {
 		int matches = 0;
 		if(!intersection.isEmpty()) {
 			for(String element : intersection) {
@@ -3908,7 +4083,7 @@ public class StringBasedHeuristics {
 						replacementFound = true;
 						break;
 					}
-					if(element.equals("!" + r.getAfter())) {
+					if(element.equals(LANG.NOT + r.getAfter())) {
 						replacementFound = true;
 						break;
 					}
@@ -3935,9 +4110,9 @@ public class StringBasedHeuristics {
 	}
 
 	private static boolean pass(List<String> subConditionsAsList1, List<String> subConditionsAsList2, Set<String> intersection,
-			int matches) {
+			int matches, Constants LANG) {
 		boolean pass = false;
-		if(matches == 1 && intersection.size() == 1 && intersection.iterator().next().endsWith("null")) {
+		if(matches == 1 && intersection.size() == 1 && intersection.iterator().next().endsWith(LANG.NULL)) {
 			pass = matches == Math.min(subConditionsAsList1.size(), subConditionsAsList2.size());
 		}
 		else {
@@ -3946,10 +4121,10 @@ public class StringBasedHeuristics {
 		return pass;
 	}
 
-	private static boolean includesLocalVariable(AbstractCodeFragment statement1, AbstractCodeFragment statement2, Set<String> intersection, VariableDeclarationContainer container1, VariableDeclarationContainer container2) {
+	private static boolean includesLocalVariable(AbstractCodeFragment statement1, AbstractCodeFragment statement2, Set<String> intersection, VariableDeclarationContainer container1, VariableDeclarationContainer container2, Constants LANG) {
 		if(statement1 instanceof AbstractExpression && statement2.getTernaryOperatorExpressions().size() == 0) {
 			for(String commonString : intersection) {
-				if((statement1.getString().equals(commonString) || statement1.getString().equals("!" + commonString)) &&
+				if((statement1.getString().equals(commonString) || statement1.getString().equals(LANG.NOT + commonString)) &&
 						container1.getVariableDeclaration(commonString) != null) {
 					return true;
 				}
@@ -3957,7 +4132,7 @@ public class StringBasedHeuristics {
 		}
 		if(statement2 instanceof AbstractExpression && statement1.getTernaryOperatorExpressions().size() == 0) {
 			for(String commonString : intersection) {
-				if((statement2.getString().equals(commonString) || statement2.getString().equals("!" + commonString)) &&
+				if((statement2.getString().equals(commonString) || statement2.getString().equals(LANG.NOT + commonString)) &&
 						container2.getVariableDeclaration(commonString) != null) {
 					return true;
 				}
@@ -4016,6 +4191,8 @@ public class StringBasedHeuristics {
 	}
 
 	private static boolean sequentiallyMergedConditionals(Set<AbstractCodeFragment> mergedConditionals, AbstractCodeFragment statement2, Set<AbstractCodeMapping> mappings) {
+		Constants LANG = PathFileUtils.getLang(statement2.getLocationInfo().getFilePath());
+		Pattern SPLIT_CONDITIONAL_PATTERN = LANG.equals(Constants.PYTHON) ? SPLIT_CONDITIONAL_PATTERN_PYTHON : SPLIT_CONDITIONAL_PATTERN_JAVA;
 		for(AbstractCodeMapping mapping : mappings) {
 			int nestedFragment1 = 0;
 			for(AbstractCodeFragment mergedConditional : mergedConditionals) {
@@ -4043,7 +4220,7 @@ public class StringBasedHeuristics {
 		if(statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
 			List<String> subConditionsAsList2 = new ArrayList<String>();
 			CompositeStatementObject comp2 = (CompositeStatementObject)statement2;
-			String conditional2 = prepareConditional(comp2.getExpressions().get(0).getString());
+			String conditional2 = prepareConditional(comp2.getExpressions().get(0).getString(), LANG);
 			String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
 			for(String s : subConditions2) {
 				subConditionsAsList2.add(s.trim());
@@ -4053,13 +4230,13 @@ public class StringBasedHeuristics {
 				List<String> subConditionsAsList1 = new ArrayList<String>();
 				if(mergedConditional.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
 					CompositeStatementObject comp1 = (CompositeStatementObject)mergedConditional;
-					String conditional1 = prepareConditional(comp1.getExpressions().get(0).getString());
+					String conditional1 = prepareConditional(comp1.getExpressions().get(0).getString(), LANG);
 					String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
 					for(String s : subConditions1) {
 						subConditionsAsList1.add(s.trim());
 					}
 				}
-				Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2);
+				Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2, LANG);
 				int invertedConditions = 0;
 				for(String intersectionElement : intersection) {
 					if(!subConditionsAsList2.contains(intersectionElement)) {
@@ -4072,7 +4249,7 @@ public class StringBasedHeuristics {
 			}
 			if(invertedMergedConditionals == mergedConditionals.size()) {
 				for(AbstractCodeFragment leaf : comp2.getLeaves()) {
-					if((leaf.isKeyword() || leaf.getString().equals(JAVA.RETURN_FALSE) || leaf.getString().equals(JAVA.RETURN_TRUE)) &&
+					if((leaf.isKeyword() || leaf.getString().equals(LANG.RETURN_FALSE) || leaf.getString().equals(LANG.RETURN_TRUE)) &&
 							(statement2.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement2.getLocationInfo().before(leaf.getLocationInfo()))) {
 						return true;
 					}
@@ -4086,6 +4263,7 @@ public class StringBasedHeuristics {
 	}
 
 	private static boolean sequentiallyMergedConditional(AbstractCodeFragment mergedConditional, AbstractCodeFragment statement1, AbstractCodeFragment statement2, Set<AbstractCodeMapping> mappings) {
+		Constants LANG = PathFileUtils.getLang(statement1.getLocationInfo().getFilePath());
 		for(AbstractCodeMapping mapping : mappings) {
 			boolean nestedFragment1 = false;
 			if(mergedConditional.getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo())) {
@@ -4094,7 +4272,7 @@ public class StringBasedHeuristics {
 			else if(mergedConditional instanceof CompositeStatementObject) {
 				CompositeStatementObject composite = (CompositeStatementObject)mergedConditional;
 				for(AbstractCodeFragment leaf : composite.getLeaves()) {
-					if((leaf.isKeyword() || leaf.getString().equals(JAVA.RETURN_FALSE) || leaf.getString().equals(JAVA.RETURN_TRUE)) &&
+					if((leaf.isKeyword() || leaf.getString().equals(LANG.RETURN_FALSE) || leaf.getString().equals(LANG.RETURN_TRUE)) &&
 							(statement1.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement1.getLocationInfo().before(leaf.getLocationInfo()))) {
 						nestedFragment1 = true;
 						break;
@@ -4108,7 +4286,7 @@ public class StringBasedHeuristics {
 			else if(statement2 instanceof CompositeStatementObject) {
 				CompositeStatementObject composite = (CompositeStatementObject)statement2;
 				for(AbstractCodeFragment leaf : composite.getLeaves()) {
-					if((leaf.isKeyword() || leaf.getString().equals(JAVA.RETURN_FALSE) || leaf.getString().equals(JAVA.RETURN_TRUE)) &&
+					if((leaf.isKeyword() || leaf.getString().equals(LANG.RETURN_FALSE) || leaf.getString().equals(LANG.RETURN_TRUE)) &&
 							(statement2.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement2.getLocationInfo().before(leaf.getLocationInfo()))) {
 						nestedFragment2 = true;
 						break;
@@ -4126,6 +4304,8 @@ public class StringBasedHeuristics {
 	}
 
 	private static boolean sequentiallySplitConditionals(AbstractCodeFragment statement1, Set<AbstractCodeFragment> splitConditionals, Set<AbstractCodeMapping> mappings) {
+		Constants LANG = PathFileUtils.getLang(statement1.getLocationInfo().getFilePath());
+		Pattern SPLIT_CONDITIONAL_PATTERN = LANG.equals(Constants.PYTHON) ? SPLIT_CONDITIONAL_PATTERN_PYTHON : SPLIT_CONDITIONAL_PATTERN_JAVA;
 		for(AbstractCodeMapping mapping : mappings) {
 			int nestedFragment2 = 0;
 			for(AbstractCodeFragment splitConditional : splitConditionals) {
@@ -4153,7 +4333,7 @@ public class StringBasedHeuristics {
 		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
 			List<String> subConditionsAsList1 = new ArrayList<String>();
 			CompositeStatementObject comp1 = (CompositeStatementObject)statement1;
-			String conditional1 = prepareConditional(comp1.getExpressions().get(0).getString());
+			String conditional1 = prepareConditional(comp1.getExpressions().get(0).getString(), LANG);
 			String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
 			for(String s : subConditions1) {
 				subConditionsAsList1.add(s.trim());
@@ -4163,13 +4343,13 @@ public class StringBasedHeuristics {
 				List<String> subConditionsAsList2 = new ArrayList<String>();
 				if(splitConditional.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
 					CompositeStatementObject comp2 = (CompositeStatementObject)splitConditional;
-					String conditional2 = prepareConditional(comp2.getExpressions().get(0).getString());
+					String conditional2 = prepareConditional(comp2.getExpressions().get(0).getString(), LANG);
 					String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
 					for(String s : subConditions2) {
 						subConditionsAsList2.add(s.trim());
 					}
 				}
-				Set<String> intersection = subConditionIntersection(subConditionsAsList2, subConditionsAsList1);
+				Set<String> intersection = subConditionIntersection(subConditionsAsList2, subConditionsAsList1, LANG);
 				int invertedConditions = 0;
 				for(String intersectionElement : intersection) {
 					if(!subConditionsAsList1.contains(intersectionElement)) {
@@ -4182,7 +4362,7 @@ public class StringBasedHeuristics {
 			}
 			if(invertedSplitConditionals == splitConditionals.size()) {
 				for(AbstractCodeFragment leaf : comp1.getLeaves()) {
-					if((leaf.isKeyword() || leaf.getString().equals(JAVA.RETURN_FALSE) || leaf.getString().equals(JAVA.RETURN_TRUE)) &&
+					if((leaf.isKeyword() || leaf.getString().equals(LANG.RETURN_FALSE) || leaf.getString().equals(LANG.RETURN_TRUE)) &&
 							(statement1.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement1.getLocationInfo().before(leaf.getLocationInfo()))) {
 						return true;
 					}
@@ -4196,6 +4376,7 @@ public class StringBasedHeuristics {
 	}
 
 	private static boolean sequentiallySplitConditional(AbstractCodeFragment statement1, AbstractCodeFragment splitConditional, AbstractCodeFragment statement2, Set<AbstractCodeMapping> mappings) {
+		Constants LANG = PathFileUtils.getLang(statement1.getLocationInfo().getFilePath());
 		for(AbstractCodeMapping mapping : mappings) {
 			boolean nestedFragment2 = false;
 			if(splitConditional.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo())) {
@@ -4204,7 +4385,7 @@ public class StringBasedHeuristics {
 			else if(splitConditional instanceof CompositeStatementObject) {
 				CompositeStatementObject composite = (CompositeStatementObject)splitConditional;
 				for(AbstractCodeFragment leaf : composite.getLeaves()) {
-					if((leaf.isKeyword() || leaf.getString().equals(JAVA.RETURN_FALSE) || leaf.getString().equals(JAVA.RETURN_TRUE)) &&
+					if((leaf.isKeyword() || leaf.getString().equals(LANG.RETURN_FALSE) || leaf.getString().equals(LANG.RETURN_TRUE)) &&
 							(statement2.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement2.getLocationInfo().before(leaf.getLocationInfo()))) {
 						nestedFragment2 = true;
 						break;
@@ -4218,7 +4399,7 @@ public class StringBasedHeuristics {
 			else if(statement1 instanceof CompositeStatementObject) {
 				CompositeStatementObject composite = (CompositeStatementObject)statement1;
 				for(AbstractCodeFragment leaf : composite.getLeaves()) {
-					if((leaf.isKeyword() || leaf.getString().equals(JAVA.RETURN_FALSE) || leaf.getString().equals(JAVA.RETURN_TRUE)) &&
+					if((leaf.isKeyword() || leaf.getString().equals(LANG.RETURN_FALSE) || leaf.getString().equals(LANG.RETURN_TRUE)) &&
 							(statement1.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement1.getLocationInfo().before(leaf.getLocationInfo()))) {
 						nestedFragment1 = true;
 						break;

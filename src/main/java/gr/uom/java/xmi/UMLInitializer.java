@@ -11,7 +11,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import gr.uom.java.xmi.decomposition.AbstractCall;
-import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -68,36 +67,6 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	}
 
 	@Override
-	public List<VariableDeclaration> getParameterDeclarationList() {
-		return Collections.emptyList();
-	}
-
-	@Override
-	public List<UMLType> getParameterTypeList() {
-		return Collections.emptyList();
-	}
-
-	@Override
-	public List<String> getParameterNameList() {
-		return Collections.emptyList();
-	}
-
-	@Override
-	public List<UMLParameter> getParametersWithoutReturnType() {
-		return Collections.emptyList();
-	}
-
-	@Override
-	public int getNumberOfNonVarargsParameters() {
-		return 0;
-	}
-
-	@Override
-	public boolean hasVarargsParameter() {
-		return false;
-	}
-
-	@Override
 	public OperationBody getBody() {
 		return body;
 	}
@@ -115,30 +84,6 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	}
 
 	@Override
-	public boolean isGetter() {
-		return false;
-	}
-
-	@Override
-	public boolean isSetter() {
-		return false;
-	}
-
-	@Override
-	public boolean isConstructor() {
-		return false;
-	}
-
-	@Override
-	public AbstractCall isDelegate() {
-		return null;
-	}
-
-	@Override
-	public AbstractCall singleStatementCallingMethod() {
-		return null;
-	}
-
 	public Optional<UMLAnonymousClass> getAnonymousClassContainer() {
 		return anonymousClassContainer;
 	}
@@ -221,55 +166,5 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 			}
 		}
 		return variableDeclarationMap;
-	}
-
-	@Override
-	public UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration) {
-		for(UMLAnonymousClass anonymousClass : this.getAnonymousClassList()) {
-			if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration.getLocationInfo())) {
-				return anonymousClass;
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public boolean hasTestAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasParameterizedTestAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasSetUpAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasTearDownAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasDeprecatedAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean isRecursive() {
-		return false;
-	}
-
-	@Override
-	public boolean isMain() {
-		return false;
-	}
-
-	@Override
-	public List<UMLAnnotation> getAnnotations() {
-		return Collections.emptyList();
 	}
 }

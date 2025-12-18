@@ -63,7 +63,18 @@
           "validation": false
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tresolver : Supplier<?> in method private hasResolver(parameterName String) : boolean from class org.hibernate.internal.FilterImpl",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tbootstrapContext : BootstrapContext in method private resolveParamResolver(paramDef ParamDef, context MetadataBuildingContext) : ManagedBean<? extends Supplier<?>> from class org.hibernate.boot.model.internal.FilterDefBinder",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/hibernate/hibernate-orm.git",
@@ -81,8 +92,8 @@
           "validation": true
         },
         {
-          "type": "MOVE_RENAME_ATTRIBUTE",
-          "description": "Move And Rename Attribute\tprivate returnType : String renamed to package fullReturnType : String and moved from class org.hibernate.processor.annotation.CriteriaDeleteMethod to class org.hibernate.processor.annotation.AbstractQueryMethod",
+          "type": "PULL_UP_ATTRIBUTE",
+          "description": "Pull Up Attribute\tprivate returnType : String from class org.hibernate.processor.annotation.CriteriaDeleteMethod to package fullReturnType : String from class org.hibernate.processor.annotation.AbstractQueryMethod",
           "validation": true
         }
       ],
@@ -227,12 +238,12 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate isLegalAssignment(param SqmParameter<?>, argType String, queryParamType String) : boolean extracted from private checkParameter(param SqmParameter<?>, paramNames List<String>, paramTypes List<String>, method ExecutableElement, mirror AnnotationMirror, value AnnotationValue) : void in class org.hibernate.processor.annotation.AnnotationMetaEntity",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate isLegalAssignment(param SqmParameter<?>, argType String, queryParamType String) : boolean extracted from private checkParameter(param SqmParameter<?>, paramNames List<String>, paramTypes List<String>, method ExecutableElement, mirror AnnotationMirror, value AnnotationValue) : void in class org.hibernate.processor.annotation.AnnotationMetaEntity",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
@@ -382,12 +393,12 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tvalue : Object to name : AnnotationValue in method private entityName(resultType DeclaredType, annotation AnnotationMirror) : String from class org.hibernate.processor.annotation.AnnotationMetaEntity",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tvalue : Object to name : AnnotationValue in method private entityName(resultType DeclaredType, annotation AnnotationMirror) : String from class org.hibernate.processor.annotation.AnnotationMetaEntity",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_VARIABLE",
@@ -456,7 +467,7 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tprivate getPossibleEnumValues(expressionContext HqlParser.ExpressionContext) : Map<Class<?>,Enum<?>> renamed to private getPossibleEnumTypes(expressionContext HqlParser.ExpressionContext) : Set<String> in class org.hibernate.query.hql.internal.SemanticQueryBuilder",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
@@ -481,7 +492,7 @@
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tMap<Class<?>,Enum<?>> to Set<String> in method private getPossibleEnumTypes(expressionContext HqlParser.ExpressionContext) : Set<String> from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",
@@ -539,6 +550,11 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tenumValue : Enum<?> to enumValue : String in method private resolveEnumShorthandLiteral(expressionContext HqlParser.ExpressionContext, enumValue String, enumType String, enumTypes Set<String>) : SqmExpression<?> from class org.hibernate.query.hql.internal.SemanticQueryBuilder",
+          "validation": true
+        },
+        {
+          "type": "SPLIT_METHOD",
+          "description": "Split Method\tprivate getPossibleEnumValues(expressionContext HqlParser.ExpressionContext) : Map<Class<?>,Enum<?>> to [private getPossibleEnumTypes(expressionContext HqlParser.ExpressionContext) : Set<String>, private getPossibleEnumValue(expressionContext HqlParser.ExpressionContext) : String] in class org.hibernate.query.hql.internal.SemanticQueryBuilder",
           "validation": true
         }
       ]

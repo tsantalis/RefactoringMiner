@@ -9,15 +9,31 @@
         {
           "type": "RENAME_ATTRIBUTE",
           "description": "Rename Attribute\ttmp : long[] to scratch : ThreadLocal<long[]> in class org.elasticsearch.index.codec.ForUtil",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_ATTRIBUTE_TYPE",
           "description": "Change Attribute Type\ttmp : long[] to scratch : ThreadLocal<long[]> in class org.elasticsearch.index.codec.ForUtil",
-          "validation": true
+          "validation": false
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\ttmp : long[] to tmp : long[] in method public decodeTo32(bitsPerValue int, in DataInput, longs long[]) : void from class org.elasticsearch.index.codec.ForUtil",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\ttmp : long[] to tmp : long[] in method public encode(longs long[], bitsPerValue int, out DataOutput) : void from class org.elasticsearch.index.codec.ForUtil",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\ttmp : long[] to tmp : long[] in method public decode(bitsPerValue int, in DataInput, longs long[]) : void from class org.elasticsearch.index.codec.ForUtil",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/elastic/elasticsearch.git",
@@ -628,6 +644,21 @@
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\treducedBuckets : List<Bucket> to reducedBuckets : List<InternalIpPrefix.Bucket> in method public get() : InternalAggregation from class org.elasticsearch.search.aggregations.bucket.prefix.InternalIpPrefix.getLeaderReducer.new AggregatorReducer",
           "validation": true
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom protected getLeaderReducer(reduceContext AggregationReduceContext, size int) : AggregatorReducer to public InternalDateHistogram(in StreamInput) in class org.elasticsearch.search.aggregations.bucket.histogram.InternalDateHistogram",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom protected getLeaderReducer(reduceContext AggregationReduceContext, size int) : AggregatorReducer to public InternalHistogram(in StreamInput) in class org.elasticsearch.search.aggregations.bucket.histogram.InternalHistogram",
+          "validation": true
+        },
+        {
+          "type": "MERGE_VARIABLE",
+          "description": "Merge Variable\t[docCount : long, aggs : InternalAggregations] to reducer : BucketReducer<Bucket> in method private reduceBucket(buckets List<Bucket>, context AggregationReduceContext) : Bucket from class org.elasticsearch.search.aggregations.bucket.histogram.InternalVariableWidthHistogram",
+          "validation": true
         }
       ]
     },
@@ -770,7 +801,13 @@
           "validation": false
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tresolution : Expression.TypeResolution in method public testEvaluate() : void from class org.elasticsearch.xpack.esql.expression.function.AbstractFunctionTestCase",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/elastic/elasticsearch.git",
@@ -1084,6 +1121,11 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tmergeWithObject : RootObjectMapper in method public merge(mergeWith Mapper, parentMergeContext MapperMergeContext) : RootObjectMapper from class org.elasticsearch.index.mapper.RootObjectMapper",
+          "validation": true
+        },
+        {
+          "type": "MERGE_VARIABLE",
+          "description": "Merge Variable\t[mergeWith : ObjectMapper, reason : MergeReason] to mergeWithObject : PassThroughObjectMapper in method public merge(mergeWith Mapper, parentBuilderContext MapperMergeContext) : PassThroughObjectMapper from class org.elasticsearch.index.mapper.PassThroughObjectMapper",
           "validation": true
         }
       ]

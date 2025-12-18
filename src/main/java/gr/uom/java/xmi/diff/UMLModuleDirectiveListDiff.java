@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,6 +33,33 @@ public class UMLModuleDirectiveListDiff {
 				}
 				removedDirectives.remove(oldDirective);
 				addedDirectives.remove(newDirective);
+			}
+		}
+		//handle directives with changes in names
+		List<UMLAbstractModuleDirective> remainingRemoved = new ArrayList<>(this.removedDirectives);
+		List<UMLAbstractModuleDirective> remainingAdded = new ArrayList<>(this.addedDirectives);
+		if(remainingRemoved.size() == remainingAdded.size()) {
+			for(UMLAbstractModuleDirective oldDirective : remainingRemoved) {
+				List<String> tokens1 = Arrays.asList(oldDirective.getName().getString().split("\\."));
+				int j=0;
+				int maxIntersectionSize = 0;
+				int maxIntersectionIndex = -1;
+				for(UMLAbstractModuleDirective newDirective : remainingAdded) {
+					List<String> tokens2 = Arrays.asList(newDirective.getName().getString().split("\\."));
+					Set<String> intersection = new LinkedHashSet<>(tokens1);
+					intersection.retainAll(tokens2);
+					if(intersection.size() > maxIntersectionSize) {
+						maxIntersectionIndex = j;
+						maxIntersectionSize = intersection.size();
+					}
+					j++;
+				}
+				if(maxIntersectionSize > 1 && maxIntersectionIndex != -1) {
+					UMLAbstractModuleDirective newDirective = remainingAdded.get(maxIntersectionIndex);
+					changedDirectives.add(Pair.of(oldDirective, newDirective));
+					removedDirectives.remove(oldDirective);
+					addedDirectives.remove(newDirective);
+				}
 			}
 		}
 	}

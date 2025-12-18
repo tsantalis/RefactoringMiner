@@ -36,6 +36,7 @@ import gr.uom.java.xmi.diff.RenameClassRefactoring;
 import gr.uom.java.xmi.diff.RenameOperationRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithClassRefactoring;
+import gr.uom.java.xmi.diff.ReplaceAnonymousWithLambdaRefactoring;
 import gr.uom.java.xmi.diff.ReplaceConditionalWithTernaryRefactoring;
 import gr.uom.java.xmi.diff.SplitConditionalRefactoring;
 import gr.uom.java.xmi.diff.SplitOperationRefactoring;
@@ -298,8 +299,13 @@ public class MonacoCore {
     private boolean isInterfile(ASTDiff astDiff, Tree t, Tree dst) {
         //find the most parent of t and dst
         //if they are not same as the astdiff src,dst return false
-        Tree t_outerP = TreeUtilFunctions.getParentUntilType(t, Constants.COMPILATION_UNIT);
-        Tree dst_outerP = TreeUtilFunctions.getParentUntilType(dst, Constants.COMPILATION_UNIT);
+    	Constants.setFilePath(astDiff.getSrcPath());
+        Tree t_outerP = TreeUtilFunctions.getParentUntilType(t, Constants.get().COMPILATION_UNIT);
+        Tree dst_outerP = TreeUtilFunctions.getParentUntilType(dst, Constants.get().COMPILATION_UNIT);
+        if(t_outerP == null && dst_outerP == null) {
+            t_outerP = TreeUtilFunctions.getParentUntilType(t, Constants.get().MODULE);
+            dst_outerP = TreeUtilFunctions.getParentUntilType(dst, Constants.get().MODULE);
+        }
         if (t_outerP == null || dst_outerP == null) {
             return false;
         }
@@ -627,6 +633,15 @@ public class MonacoCore {
 						tooltips.add(tooltipRight);
 					}
 				}
+    		}
+    		else if(r instanceof ReplaceAnonymousWithLambdaRefactoring) {
+				ReplaceAnonymousWithLambdaRefactoring replace = (ReplaceAnonymousWithLambdaRefactoring)r;
+				UMLOperationBodyMapper bodyMapper = replace.getBodyMapper();
+				String tooltipLeft = "anonymous extracted to lambda";
+				String tooltipRight = "lambda extracted from anonymous";
+				String tooltip = generateTooltip(t, c, bodyMapper, tooltipLeft, tooltipRight);
+				if(tooltip != null)
+					tooltips.add(tooltip);
     		}
     		else if(r instanceof ExtractVariableRefactoring) {
     			ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;

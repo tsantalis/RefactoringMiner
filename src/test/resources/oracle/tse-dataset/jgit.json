@@ -144,11 +144,17 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tcleanupHook : Thread in method package lock() : boolean from class org.eclipse.jgit.internal.storage.file.GC.PidLock",
-          "validation": false
+          "validation": true
         }
       ],
       "ourApproach": [],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tcleanupHook : Thread to cleanupHook : Thread in method package lock() : boolean from class org.eclipse.jgit.internal.storage.file.GC.PidLock",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/eclipse-jgit/jgit.git",
@@ -228,6 +234,11 @@
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tpath : String in method public checkout(entry DirCacheEntry, metadata CheckoutMetadata, reader ObjectReader, gitPath String) : void from class org.eclipse.jgit.dircache.Checkout",
           "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\topt : WorkingTreeOptions in method public checkoutEntry(repo Repository, entry DirCacheEntry, or ObjectReader, deleteRecursive boolean, checkoutMetadata CheckoutMetadata, options WorkingTreeOptions) : void from class org.eclipse.jgit.dircache.DirCacheCheckout",
+          "validation": true
         }
       ]
     },
@@ -259,7 +270,13 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic clear() : void extracted from public close() : void in class org.eclipse.jgit.internal.storage.file.Pack & moved to class org.eclipse.jgit.internal.util.Optionally.Hard",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/eclipse-jgit/jgit.git",
@@ -484,6 +501,11 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tcommit : RevCommit to msg : String in method public testNoFooters_ShortBodyWithLF() : void from class org.eclipse.jgit.revwalk.FooterLineTest",
           "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tsrc : List<FooterLine> in method public getFooterLines(keyName FooterKey) : List<String> from class org.eclipse.jgit.revwalk.RevCommit",
+          "validation": true
         }
       ]
     },
@@ -497,7 +519,7 @@
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic renamed(entry DiffEntry, commit RevCommit) : void extracted from private updateFollowFilter(trees ObjectId[], cfg DiffConfig) : void in class org.eclipse.jgit.revwalk.TreeRevFilter & moved to class org.eclipse.jgit.revwalk.RenameCallback",
-          "validation": false
+          "validation": true
         }
       ]
     },
@@ -576,7 +598,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tcnt : int in method package PackReverseIndexComputed(packIndex PackIndex) from class org.eclipse.jgit.internal.storage.file.PackReverseIndexComputed",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
@@ -602,7 +624,7 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tval : Map.Entry<PublicKey,String> to val : KeyAgentIdentity in method protected initializeAgentIdentities(session ClientSession) : Iterable<KeyAgentIdentity> from class org.eclipse.jgit.internal.transport.sshd.JGitPublicKeyAuthentication.KeyIterator",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_VARIABLE",
@@ -640,6 +662,11 @@
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tresult : KeyAgentIdentity in method public next() : KeyAgentIdentity from class org.eclipse.jgit.internal.transport.sshd.JGitPublicKeyAuthentication.KeyIterator.getAgentIdentities.new Iterator<>",
           "validation": false
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tagent : SshAgent to allAgentKeys : Iterable<KeyAgentIdentity> in method protected initializeAgentIdentities(session ClientSession) : Iterable<KeyAgentIdentity> from class org.eclipse.jgit.internal.transport.sshd.JGitPublicKeyAuthentication.KeyIterator",
+          "validation": true
         }
       ]
     },
@@ -888,13 +915,23 @@
         {
           "type": "PULL_UP_ATTRIBUTE",
           "description": "Pull Up Attribute\tprivate homeDir : File from class org.eclipse.jgit.junit.ssh.SshTestHarness to private homeDir : File from class org.eclipse.jgit.junit.LocalDiskRepositoryTestCase",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
         {
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tprivate homeDir : File from class org.eclipse.jgit.junit.ssh.SshTestHarness to private homeDir : File from class org.eclipse.jgit.junit.LocalDiskRepositoryTestCase",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom public shutdownServer() : void in class org.eclipse.jgit.junit.ssh.SshTestHarness to public tearDown() : void in class org.eclipse.jgit.junit.LocalDiskRepositoryTestCase",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom public setUp() : void in class org.eclipse.jgit.junit.ssh.SshTestHarness to public setUp() : void in class org.eclipse.jgit.junit.LocalDiskRepositoryTestCase",
           "validation": true
         }
       ]
@@ -975,7 +1012,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\torigSize : int in method public testGetRefs_LooseSorting_Bug_348834() : void from class org.eclipse.jgit.internal.storage.file.RefDirectoryTest",
-          "validation": false
+          "validation": true
         }
       ],
       "baseline": []

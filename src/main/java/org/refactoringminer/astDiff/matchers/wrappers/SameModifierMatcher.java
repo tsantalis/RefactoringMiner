@@ -20,7 +20,7 @@ public class SameModifierMatcher implements TreeMatcher {
         matchModifier(srcTree,dstTree, modifier, mappingStore);
     }
     public static void matchModifier(Tree srcTypeDeclaration, Tree dstTypeDeclaration, String modifier, ExtendedMultiMappingStore mappingStore) {
-        String type = Constants.MODIFIER;
+        String type = Constants.get().MODIFIER;
         Tree srcTree = TreeUtilFunctions.findChildByTypeAndLabel(srcTypeDeclaration,type,modifier);
         Tree dstTree = TreeUtilFunctions.findChildByTypeAndLabel(dstTypeDeclaration,type,modifier);
         if (srcTree != null && dstTree != null){

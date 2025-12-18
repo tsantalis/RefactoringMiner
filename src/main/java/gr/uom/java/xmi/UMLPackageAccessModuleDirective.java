@@ -2,6 +2,7 @@ package gr.uom.java.xmi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -53,5 +54,42 @@ public class UMLPackageAccessModuleDirective extends UMLAbstractModuleDirective 
 
 	public boolean equalModules(UMLPackageAccessModuleDirective other) {
 		return this.getModulesAsStrings().equals(other.getModulesAsStrings());
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode() + Objects.hash(exports, opens);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UMLPackageAccessModuleDirective other = (UMLPackageAccessModuleDirective) obj;
+		return super.equals(obj) && Objects.equals(exports, other.exports) && Objects.equals(opens, other.opens);
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		if(opens) {
+			sb.append("opens ");
+		}
+		else if(exports) {
+			sb.append("exports ");
+		}
+		sb.append(getName().getString());
+		sb.append(" to ");
+		int i = 0;
+		for(LeafExpression module : modules) {
+			sb.append(module.getString());
+			if(i < modules.size() - 1)
+				sb.append(", ");
+			i++;
+		}
+		return sb.toString();
 	}
 }

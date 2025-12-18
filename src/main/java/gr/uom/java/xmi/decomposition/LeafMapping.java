@@ -1,7 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
-import static gr.uom.java.xmi.Constants.JAVA;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONDITIONAL_PATTERN;
+import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONDITIONAL_PATTERN_JAVA;
+import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONDITIONAL_PATTERN_PYTHON;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.subConditionIntersection;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.hasElseBranch;
 import static gr.uom.java.xmi.decomposition.UMLOperationBodyMapper.extractCommentsWithinStatement;
@@ -12,6 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.refactoringminer.api.RefactoringType;
@@ -20,6 +21,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
+import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLComment;
@@ -132,7 +134,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				if(this.identicalPreviousAndNextStatement && !o.identicalPreviousAndNextStatement) {
 					return -1;
 				}
-				else if(!this.identicalPreviousAndNextStatement && o.identicalPreviousAndNextStatement) {
+				else if(!this.identicalPreviousAndNextStatement && o.identicalPreviousAndNextStatement && !this.isSwappedVariableDeclaration() && !o.isSwappedVariableDeclaration()) {
 					return 1;
 				}
 				if(this.identicalPreviousStatement && !o.identicalPreviousStatement) {
@@ -305,7 +307,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				int identicalTypeIntersection1 = 0;
 				for(String type1 : this.getFragment1().getTypes()) {
 					for(String type2 : this.getFragment2().getTypes()) {
-						if(type1.equals(type2) || type1.endsWith(type2) || type2.endsWith(type1)) {
+						if(type1.equals(type2) || type1.endsWith(type2) || type2.endsWith(type1) || type2.startsWith(type1) || type2.contains(type1)) {
 							typeIntersection1++;
 						}
 						if(type1.equals(type2)) {
@@ -317,7 +319,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				int identicalTypeIntersection2 = 0;
 				for(String type1 : o.getFragment1().getTypes()) {
 					for(String type2 : o.getFragment2().getTypes()) {
-						if(type1.equals(type2) || type1.endsWith(type2) || type2.endsWith(type1)) {
+						if(type1.equals(type2) || type1.endsWith(type2) || type2.endsWith(type1) || type2.startsWith(type1) || type2.contains(type1)) {
 							typeIntersection2++;
 						}
 						if(type1.equals(type2)) {
@@ -331,9 +333,9 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				else if(typeIntersection2 > 0 && typeIntersection1 == 0 && this.getFragment1().getTypes().size() > 0 && this.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 == 0 && identicalTypeIntersection2 == 0) {
 					return 1;
 				}
-				//if(this.getFragment1().getVariableDeclarations().size() == this.getFragment2().getVariableDeclarations().size() && typeIntersection1 > 0 && typeIntersection2 == 0 && o.getFragment1().getTypes().size() > 0 && o.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 >= 0 && identicalTypeIntersection2 == 0) {
-				//	return -1;
-				//}
+				if(this.getFragment1().getVariableDeclarations().size() == this.getFragment2().getVariableDeclarations().size() && typeIntersection1 > 0 && typeIntersection2 == 0 && o.getFragment1().getTypes().size() > 0 && o.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 >= 0 && identicalTypeIntersection2 == 0) {
+					return -1;
+				}
 				if(o.getFragment1().getVariableDeclarations().size() == o.getFragment2().getVariableDeclarations().size() && typeIntersection2 > 0 && typeIntersection1 == 0 && this.getFragment1().getTypes().size() > 0 && this.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 == 0 && identicalTypeIntersection2 >= 0) {
 					return 1;
 				}
@@ -909,13 +911,13 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		}
 	}
 
-	private static boolean isFieldAssignment(AbstractCodeFragment fragment) {
+	private boolean isFieldAssignment(AbstractCodeFragment fragment) {
 		String statement = fragment.getString();
-		if(statement.contains(JAVA.ASSIGNMENT)) {
+		if(statement.contains(LANG.ASSIGNMENT)) {
 			List<LeafExpression> variables = fragment.getVariables();
 			if(variables.size() > 0) {
 				String variable = variables.get(0).getString();
-				if(statement.startsWith(variable + JAVA.ASSIGNMENT) && variable.startsWith(JAVA.THIS_DOT)) {
+				if(statement.startsWith(variable + LANG.ASSIGNMENT) && variable.startsWith(LANG.THIS_DOT)) {
 					return true;
 				}
 			}
@@ -1030,7 +1032,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		if(parent1 != null && parent2 != null) {
 			if(parent1.getLocationInfo().getCodeElementType().equals(parent2.getLocationInfo().getCodeElementType()) &&
 					!parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
-				if(parent1.getString().equals(parent2.getString()) && !parent1.getString().equals(JAVA.TRY)) {
+				if(parent1.getString().equals(parent2.getString()) && !parent1.getString().equals(LANG.TRY)) {
 					return true;
 				}
 				return getFragment1().getDepth() == getFragment2().getDepth() && getFragment1().getIndex() == getFragment2().getIndex();
@@ -1052,6 +1054,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 	}
 
 	private int commonConditionalsInParent() {
+		Pattern SPLIT_CONDITIONAL_PATTERN = LANG.equals(Constants.PYTHON) ? SPLIT_CONDITIONAL_PATTERN_PYTHON : SPLIT_CONDITIONAL_PATTERN_JAVA;
 		CompositeStatementObject parent1 = getFragment1().getParent();
 		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 			parent1 = parent1.getParent();
@@ -1073,7 +1076,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			for(String s : subConditions2) {
 				subConditionsAsList2.add(s.trim());
 			}
-			Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2);
+			Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2, LANG);
 			int increment = 0;
 			for(String s1 : subConditions1) {
 				if(!intersection.contains(s1) && s1.contains(".")) {
@@ -1304,13 +1307,13 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		}
 		else if(parent1 == null && parent2 != null) {
 			String s2 = parent2.getString();
-			int distance = StringDistance.editDistance(JAVA.OPEN_BLOCK, s2);
+			int distance = StringDistance.editDistance(LANG.OPEN_BLOCK, s2);
 			double normalized = (double)distance/(double)Math.max(1, s2.length());
 			return normalized;
 		}
 		else if(parent1 != null && parent2 == null) {
 			String s1 = parent1.getString();
-			int distance = StringDistance.editDistance(s1, JAVA.OPEN_BLOCK);
+			int distance = StringDistance.editDistance(s1, LANG.OPEN_BLOCK);
 			double normalized = (double)distance/(double)Math.max(s1.length(), 1);
 			return normalized;
 		}

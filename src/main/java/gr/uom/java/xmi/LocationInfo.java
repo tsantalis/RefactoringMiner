@@ -4,7 +4,15 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.jetbrains.kotlin.com.intellij.openapi.editor.Document;
+import org.jetbrains.kotlin.com.intellij.openapi.util.TextRange;
+import org.jetbrains.kotlin.com.intellij.openapi.util.text.StringUtil;
+import org.jetbrains.kotlin.com.intellij.psi.FileViewProvider;
+import org.jetbrains.kotlin.psi.KtElement;
+import org.jetbrains.kotlin.psi.KtFile;
 
+import extension.ast.node.LangASTNode;
+import extension.ast.node.unit.LangCompilationUnit;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.diff.CodeRange;
 
@@ -20,7 +28,56 @@ public class LocationInfo {
 	private int endColumn;
 	private int compilationUnitLength;
 	private CodeElementType codeElementType;
-	
+
+	public LocationInfo(LangCompilationUnit cu, String sourceFolder, String filePath, LangASTNode node, CodeElementType codeElementType) {
+		this.sourceFolder = sourceFolder;
+		this.filePath = filePath;
+		this.codeElementType = codeElementType;
+		this.startOffset = node.getStartChar();
+		this.length = node.getLength();
+		this.endOffset = startOffset + length;
+
+		//lines are 1-based
+		this.startLine = cu.getStartLine();
+		this.endLine = cu.getEndLine();
+		//columns are 0-based
+		this.startColumn = cu.getStartColumn();
+		//convert to 1-based
+		if(this.startColumn > 0) {
+			this.startColumn += 1;
+		}
+		this.endColumn = cu.getEndColumn();
+		//convert to 1-based
+		if(this.endColumn > 0) {
+			this.endColumn += 1;
+		}
+	}
+
+	public LocationInfo(KtFile ktFile, String sourceFolder, String filePath, KtElement node, CodeElementType codeElementType) {
+		this.sourceFolder = sourceFolder;
+		this.filePath = filePath;
+		this.codeElementType = codeElementType;
+		TextRange range = node.getTextRange();
+		this.startOffset = range.getStartOffset();
+		this.length = range.getLength();
+		this.endOffset = range.getEndOffset();
+
+		FileViewProvider fileViewProvider = ktFile.getViewProvider();
+		Document document = fileViewProvider.getDocument();
+
+		if (document != null) {
+			this.startLine = document.getLineNumber(startOffset) + 1;
+			this.endLine = document.getLineNumber(endOffset) + 1;
+			this.startColumn = StringUtil.offsetToLineColumn(document.getCharsSequence(), startOffset).column + 1;
+			this.endColumn = StringUtil.offsetToLineColumn(document.getCharsSequence(), endOffset).column + 1;
+		} else {
+			this.startLine = 0;
+			this.endLine = 0;
+			this.startColumn = 0;
+			this.endColumn = 0;
+		}
+	}
+
 	public LocationInfo(CompilationUnit cu, String sourceFolder, String filePath, ASTNode node, CodeElementType codeElementType) {
 		this.sourceFolder = sourceFolder;
 		this.filePath = filePath;
@@ -55,6 +112,19 @@ public class LocationInfo {
 		if(this.compilationUnitLength == -1) {
 			this.compilationUnitLength = cu.getLineNumber(cuEndOffset-1);
 		}
+	}
+
+	public LocationInfo(String sourceFolder, String filePath, LangASTNode node, CodeElementType codeElementType) {
+		this.sourceFolder = sourceFolder;
+		this.filePath = filePath;
+		this.codeElementType = codeElementType;
+		this.startOffset = node.getStartChar(); // Character offset (start)
+		this.length = node.getLength();
+		this.endOffset = node.getEndChar();     // Character offset (end)
+		this.startLine = node.getStartLine();   // 1-based
+		this.endLine = node.getEndLine();   	// 1-based
+		this.startColumn = 1;
+		this.endColumn = 1;
 	}
 
 	public String getSourceFolder() {
@@ -223,6 +293,14 @@ public class LocationInfo {
 		METHOD_INVOCATION,
 		SUPER_METHOD_INVOCATION,
 		TERNARY_OPERATOR,
+		COMPREHENSION,
+		COMPREHENSION_EXPRESSION,
+		COMPREHENSION_KEY_EXPRESSION,
+		COMPREHENSION_VALUE_EXPRESSION,
+		COMPREHENSION_CLAUSE,
+		COMPREHENSION_CLAUSE_TARGET,
+		COMPREHENSION_CLAUSE_ITERABLE,
+		COMPREHENSION_CLAUSE_FILTER,
 		TERNARY_OPERATOR_CONDITION,
 		TERNARY_OPERATOR_THEN_EXPRESSION,
 		TERNARY_OPERATOR_ELSE_EXPRESSION,
@@ -261,6 +339,7 @@ public class LocationInfo {
 		EMPTY_STATEMENT,
 		BLOCK("{"),
 		FINALLY_BLOCK("finally"),
+		WITH_STATEMENT("with"),
 		TYPE,
 		LIST_OF_STATEMENTS,
 		ANNOTATION,
@@ -284,7 +363,8 @@ public class LocationInfo {
 		MODULE_DECLARATION,
 		REQUIRES_DIRECTIVE, PROVIDES_DIRECTIVE, USES_DIRECTIVE, EXPORTS_DIRECTIVE, OPENS_DIRECTIVE,
 		DIRECTIVE_NAME,
-		IMPLEMENTATION_NAME;
+		IMPLEMENTATION_NAME,
+		YIELD_EXPRESSION;
 		
 		private String name;
 		

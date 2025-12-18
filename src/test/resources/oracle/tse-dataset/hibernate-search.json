@@ -43,6 +43,11 @@
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tCollector to HibernateSearchQueryTimeout in method public queryTimeout() : HibernateSearchQueryTimeout from class org.hibernate.search.backend.lucene.search.extraction.impl.HibernateSearchMultiCollectorManager",
           "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tpossiblyWrappedCollector : Collector to collector : Collector in method public reduce(collectors Collection<Collector>) : MultiCollectedResults from class org.hibernate.search.backend.lucene.search.extraction.impl.HibernateSearchMultiCollectorManager.HibernateSearchMultiCollectorManagerMulti",
+          "validation": true
         }
       ]
     },
@@ -121,7 +126,7 @@
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tprotected addMatchAllForBoolMustNotOnly(query Query) : Query extracted from protected buildQuery() : Query in class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneQueryStringPredicate.Builder & moved to class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneCommonQueryStringPredicate.Builder",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_VARIABLE",
@@ -148,32 +153,32 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tcodec : LuceneFieldCodec<?> to builder : var in method protected newFieldQuery(analyzer Analyzer, field String, queryText String, quoted boolean) : Query from class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneQueryStringPredicate.HibernateSearchMultiFieldQueryParser",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tcodec : LuceneFieldCodec<?> to builder : var in method protected newFieldQuery(analyzer Analyzer, field String, queryText String, quoted boolean) : Query from class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneQueryStringPredicate.HibernateSearchMultiFieldQueryParser",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tcodec : LuceneFieldCodec<?> to builder : var in method protected newRangeQuery(field String, part1 String, part2 String, startInclusive boolean, endInclusive boolean) : Query from class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneQueryStringPredicate.HibernateSearchMultiFieldQueryParser",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tcodec : LuceneFieldCodec<?> to builder : var in method protected newRangeQuery(field String, part1 String, part2 String, startInclusive boolean, endInclusive boolean) : Query from class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneQueryStringPredicate.HibernateSearchMultiFieldQueryParser",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tcodec : LuceneFieldCodec<?> to builder : var in method protected createFieldQuery(analyzer Analyzer, operator BooleanClause.Occur, field String, queryText String, quoted boolean, phraseSlop int) : Query from class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneSimpleQueryStringPredicate.HibernateSearchSimpleQueryParser",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tcodec : LuceneFieldCodec<?> to builder : var in method protected createFieldQuery(analyzer Analyzer, operator BooleanClause.Occur, field String, queryText String, quoted boolean, phraseSlop int) : Query from class org.hibernate.search.backend.lucene.search.predicate.impl.LuceneSimpleQueryStringPredicate.HibernateSearchSimpleQueryParser",
-          "validation": false
+          "validation": true
         },
         {
           "type": "MOVE_AND_RENAME_OPERATION",
@@ -702,7 +707,13 @@
           "validation": false
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom package stopWhileOutboxEventsIsBeingProcessed() : void to package stopWhileOutboxEventsIsBeingProcessed() : void in class org.hibernate.search.integrationtest.mapper.orm.outboxpolling.automaticindexing.OutboxPollingAutomaticIndexingLifecycleIT",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/hibernate/hibernate-search.git",
@@ -746,6 +757,11 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\trootEntityMappingType : var to commonSuperType : EntityMappingType in method public createQueryLoader(sessionFactory SessionFactoryImplementor, typeContexts Set<? extends PojoLoadingTypeContext<? extends E>>, conditionalExpressions List<ConditionalExpression>, order String) : HibernateOrmQueryLoader<E,I> from class org.hibernate.search.mapper.orm.loading.impl.AbstractHibernateOrmLoadingStrategy",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tqueryFactory : TypeQueryFactory<E,I> to actualQueryFactory : TypeQueryFactory<E,I> in method public createQueryLoader(sessionFactory SessionFactoryImplementor, typeContexts Set<? extends PojoLoadingTypeContext<? extends E>>, conditionalExpressions List<ConditionalExpression>, order String) : HibernateOrmQueryLoader<E,I> from class org.hibernate.search.mapper.orm.loading.impl.AbstractHibernateOrmLoadingStrategy",
           "validation": true
         }
       ]
@@ -817,6 +833,16 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\ttenantIdentifier : String in method public tenantFilterOrNull() : Query from class org.hibernate.search.backend.lucene.search.predicate.impl.PredicateRequestContext.FullPredicateRequestContext",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tfilters : JsonArray in method protected prepareFilter(context PredicateRequestContext) : JsonObject from class org.hibernate.search.backend.elasticsearch.search.predicate.impl.ElasticsearchKnnPredicate",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tluceneQuery : Query to luceneQuery : Query in method public build() : LuceneSearchQuery<H> from class org.hibernate.search.backend.lucene.search.query.impl.LuceneSearchQueryBuilder",
           "validation": true
         }
       ]
@@ -903,6 +929,11 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic root() : PredicateRequestContext renamed to public withoutSession() : PredicateRequestContext in class org.hibernate.search.backend.lucene.search.predicate.impl.PredicateRequestContext",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tjsonPredicate : JsonObject to jsonPredicate : JsonObject in method public build() : ElasticsearchSearchQuery<H> from class org.hibernate.search.backend.elasticsearch.search.query.impl.ElasticsearchSearchQueryBuilder",
           "validation": true
         }
       ]
@@ -1080,12 +1111,12 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic getCollectorsForAllMatchingDocs() : CollectorSet renamed to public collectedMultiResults() : MultiCollectedResults in class org.hibernate.search.backend.lucene.search.extraction.impl.LuceneCollectors",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tCollectorSet to MultiCollectedResults in method public collectedMultiResults() : MultiCollectedResults from class org.hibernate.search.backend.lucene.search.extraction.impl.LuceneCollectors",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_METHOD",
@@ -1154,7 +1185,7 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tcomposed : Collector in method public build() : CollectorSet from class org.hibernate.search.backend.lucene.search.extraction.impl.CollectorSet.Builder",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_ATTRIBUTE",
@@ -1581,6 +1612,16 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tc : null to ctx : null in method package inheritance_explicitName() : void from class org.hibernate.search.integrationtest.mapper.pojo.loading.EntityLoadingBinderInheritanceIT",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic clear() : void extracted from public close() : void in class org.hibernate.search.integrationtest.java.modules.pojo.standalone.elasticsearch.service.AuthorService & moved to class org.hibernate.search.integrationtest.java.modules.pojo.standalone.elasticsearch.service.SimulatedDatastore",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic clear() : void extracted from public close() : void in class org.hibernate.search.integrationtest.java.modules.pojo.standalone.lucene.service.AuthorService & moved to class org.hibernate.search.integrationtest.java.modules.pojo.standalone.lucene.service.SimulatedDatastore",
+          "validation": true
         }
       ]
     },
@@ -1731,6 +1772,11 @@
         {
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tprivate documentIdSourceProperty : PojoPropertyModel<?> from class org.hibernate.search.mapper.pojo.identity.impl.PojoRootIdentityMappingCollector to public documentIdSourceProperty : Optional<PojoPropertyModel<I>> from class org.hibernate.search.mapper.pojo.identity.impl.BoundIdentifierMapping",
+          "validation": true
+        },
+        {
+          "type": "INLINE_VARIABLE",
+          "description": "Inline Variable\tsearchMapping : CloseableSearchMapping in method package setup() : void from class org.hibernate.search.documentation.mapper.pojo.standalone.loading.StandalonePojoSelectionLoadingIT",
           "validation": true
         }
       ]
@@ -2130,32 +2176,32 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic includedTypes() : Set<PojoRawTypeIdentifier<? extends E>> renamed to public parent() : PojoMassLoadingContext in class org.hibernate.search.mapper.pojo.loading.spi.PojoMassIdentifierLoadingContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tSet<PojoRawTypeIdentifier<? extends E>> to PojoMassLoadingContext in method public parent() : PojoMassLoadingContext from class org.hibernate.search.mapper.pojo.loading.spi.PojoMassIdentifierLoadingContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_AND_RENAME_OPERATION",
           "description": "Move And Rename Method\tprivate createQueryLoader(sessionFactory SessionFactoryImplementor, typeContexts List<LoadingTypeContext<? extends E>>) : HibernateOrmQueryLoader<E,I> from class org.hibernate.search.mapper.orm.massindexing.impl.HibernateOrmMassIndexingContext.HibernateOrmMassIndexingLoadingStrategy to private conditionalExpressions(expectedTypes Set<? extends PojoLoadingTypeContext<? extends E>>, context HibernateOrmMassLoadingContext) : List<ConditionalExpression> from class org.hibernate.search.mapper.orm.loading.impl.AbstractHibernateOrmLoadingStrategy",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tHibernateOrmQueryLoader<E,I> to List<ConditionalExpression> in method private conditionalExpressions(expectedTypes Set<? extends PojoLoadingTypeContext<? extends E>>, context HibernateOrmMassLoadingContext) : List<ConditionalExpression> from class org.hibernate.search.mapper.orm.loading.impl.AbstractHibernateOrmLoadingStrategy",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic includedTypes() : Set<PojoRawTypeIdentifier<? extends E>> renamed to public parent() : PojoMassLoadingContext in class org.hibernate.search.mapper.pojo.massindexing.impl.PojoMassIndexingEntityLoadingRunnable.LoadingContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tSet<PojoRawTypeIdentifier<? extends E>> to PojoMassLoadingContext in method public parent() : PojoMassLoadingContext from class org.hibernate.search.mapper.pojo.massindexing.impl.PojoMassIndexingEntityLoadingRunnable.LoadingContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_METHOD",
@@ -2175,12 +2221,12 @@
         {
           "type": "MOVE_AND_RENAME_OPERATION",
           "description": "Move And Rename Method\tpublic loadingStrategy(expectedType PojoRawTypeIdentifier<T>) : PojoMassIndexingLoadingStrategy<? super T,?> from class org.hibernate.search.mapper.pojo.massindexing.spi.PojoMassIndexingContext to public massLoadingStrategy() : PojoMassLoadingStrategy<? super E,?> from class org.hibernate.search.mapper.pojo.loading.spi.PojoLoadingTypeContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tPojoMassIndexingLoadingStrategy<? super T,?> to PojoMassLoadingStrategy<? super E,?> in method public massLoadingStrategy() : PojoMassLoadingStrategy<? super E,?> from class org.hibernate.search.mapper.pojo.loading.spi.PojoLoadingTypeContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "PULL_UP_OPERATION",
@@ -2190,17 +2236,17 @@
         {
           "type": "MOVE_OPERATION",
           "description": "Move Method\tpublic typeIdentifier() : PojoRawTypeIdentifier<E> from class org.hibernate.search.mapper.pojo.standalone.loading.impl.LoadingTypeContext to public typeIdentifier() : PojoRawTypeIdentifier<E> from class org.hibernate.search.mapper.pojo.standalone.work.impl.SearchIndexingPlanTypeContext",
-          "validation": true
+          "validation": false
         },
         {
           "type": "PULL_UP_OPERATION",
           "description": "Pull Up Method\tpublic equals(obj Object) : boolean from class org.hibernate.search.mapper.orm.loading.spi.HibernateOrmEntityLoadingStrategy to public equals(obj Object) : boolean from class org.hibernate.search.mapper.pojo.loading.spi.PojoMassLoadingStrategy",
-          "validation": true
+          "validation": false
         },
         {
           "type": "PULL_UP_OPERATION",
           "description": "Pull Up Method\tpublic hashCode() : int from class org.hibernate.search.mapper.orm.loading.spi.HibernateOrmEntityLoadingStrategy to public hashCode() : int from class org.hibernate.search.mapper.pojo.loading.spi.PojoMassLoadingStrategy",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_AND_INLINE_OPERATION",
@@ -2272,7 +2318,7 @@
         {
           "type": "MOVE_OPERATION",
           "description": "Move Method\tpublic typeIdentifier() : PojoRawTypeIdentifier<E> from class org.hibernate.search.mapper.pojo.massindexing.impl.PojoMassIndexingIndexedTypeContext to public typeIdentifier() : PojoRawTypeIdentifier<E> from class org.hibernate.search.mapper.pojo.standalone.work.impl.SearchIndexingPlanTypeContext",
-          "validation": false
+          "validation": true
         },
         {
           "type": "MOVE_OPERATION",
@@ -2317,6 +2363,21 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tstrategyOptional : Optional<MassLoadingStrategy<? super T,?>> to strategy : PojoMassLoadingStrategy<? super E,?> in method private single(mappingContext PojoMassIndexingMappingContext, typeContextProvider PojoMassIndexingTypeContextProvider, typeContext PojoMassIndexingIndexedTypeContext<E>, loadingContext PojoMassLoadingContext) : PojoMassIndexingIndexedTypeGroup<? super E> from class org.hibernate.search.mapper.pojo.massindexing.impl.PojoMassIndexingIndexedTypeGroup",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tfailureCollector : RootFailureCollector to failureCollector : RootFailureCollector in method public finalizeIntegration() : SearchIntegration from class org.hibernate.search.engine.common.impl.SearchIntegrationPartialBuildStateImpl.SearchIntegrationFinalizerImpl",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[sessionContext : LoadingSessionContext, cacheLookupStrategy : EntityLoadingCacheLookupStrategy, loadingOptions : MutableEntityLoadingOptions] to loadingContext : HibernateOrmSelectionLoadingContext in method public createEntityLoader(targetEntityTypeContexts Set<? extends PojoLoadingTypeContext<? extends E>>, loadingContext HibernateOrmSelectionLoadingContext) : PojoSelectionEntityLoader<E> from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmNonEntityIdPropertyEntityLoadingStrategy",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[sessionContext : LoadingSessionContext, cacheLookupStrategy : EntityLoadingCacheLookupStrategy, loadingOptions : MutableEntityLoadingOptions] to loadingContext : HibernateOrmSelectionLoadingContext in method public createEntityLoader(targetEntityTypeContexts Set<? extends PojoLoadingTypeContext<? extends E>>, loadingContext HibernateOrmSelectionLoadingContext) : PojoSelectionEntityLoader<E> from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmEntityIdEntityLoadingStrategy",
           "validation": true
         }
       ]
@@ -2433,6 +2494,41 @@
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tHibernateOrmEntityLoadingStrategy<?,?> to HibernateOrmEntityLoadingStrategy<?,? super I> in method public create(persistentClass PersistentClass, documentIdSourceProperty DocumentIdSourceProperty<I>) : HibernateOrmEntityLoadingStrategy<?,? super I> from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmNonEntityIdPropertyEntityLoadingStrategy",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\trootEntityMappingType : EntityMappingType to rootEntityMappingType : EntityMappingType in method private doCreate(entityMappingType EntityMappingType, sessionContext LoadingSessionContext, cacheLookupStrategy EntityLoadingCacheLookupStrategy, loadingOptions MutableEntityLoadingOptions) : PojoSelectionEntityLoader<?> from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmEntityIdEntityLoadingStrategy",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[sessionFactory : SessionFactoryImplementor, entityMappingType : EntityMappingType] to rootEntityName : String in method private HibernateOrmNonEntityIdPropertyEntityLoadingStrategy(rootEntityName String, entityName String, queryFactory TypeQueryFactory<E,I>, documentIdSourcePropertyName String, documentIdSourceHandle ValueReadHandle<? extends I>) from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmNonEntityIdPropertyEntityLoadingStrategy",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[sessionFactory : SessionFactoryImplementor, rootEntityMappingType : EntityMappingType] to rootEntityName : String in method package HibernateOrmEntityIdEntityLoadingStrategy(rootEntityClass Class<E>, rootEntityName String, queryFactory TypeQueryFactory<E,I>) from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmEntityIdEntityLoadingStrategy",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[sessionFactory : SessionFactoryImplementor, entityMappingType : EntityMappingType, documentIdSourcePropertyName : String] to documentIdSourceProperty : DocumentIdSourceProperty<I> in method public create(persistentClass PersistentClass, documentIdSourceProperty DocumentIdSourceProperty<I>) : HibernateOrmEntityLoadingStrategy<?,? super I> from class org.hibernate.search.mapper.orm.loading.impl.HibernateOrmNonEntityIdPropertyEntityLoadingStrategy",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[sessionFactory : SessionFactoryImplementor, rootEntityMappingType : EntityMappingType] to rootEntityName : String in method package AbstractHibernateOrmLoadingStrategy(rootEntityName String, queryFactory TypeQueryFactory<E,I>) from class org.hibernate.search.mapper.orm.loading.impl.AbstractHibernateOrmLoadingStrategy",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[jpaEntityName : String, hibernateOrmEntityName : String] to persistentClass : PersistentClass in method package Builder(typeModel PojoRawTypeModel<E>, persistentClass PersistentClass) from class org.hibernate.search.mapper.orm.mapping.impl.HibernateOrmContainedTypeContext.Builder",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[jpaEntityName : String, hibernateOrmEntityName : String] to persistentClass : PersistentClass in method package Builder(typeModel PojoRawTypeModel<E>, persistentClass PersistentClass) from class org.hibernate.search.mapper.orm.mapping.impl.HibernateOrmIndexedTypeContext.Builder",
           "validation": true
         }
       ]
@@ -2618,7 +2714,7 @@
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
-          "description": "Change Variable Type\ttypeManager : PojoContainedTypeManager<?,?> to typeManagerBuilder : PojoIndexedTypeManager.Builder<?> in method private PojoTypeManagerContainer(builder Builder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer",
+          "description": "Change Variable Type\ttypeManager : PojoContainedTypeManager<?,?> to typeManagerBuilder : PojoContainedTypeManager.Builder<?> in method private PojoTypeManagerContainer(builder Builder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer",
           "validation": true
         },
         {
@@ -2628,7 +2724,7 @@
         },
         {
           "type": "RENAME_VARIABLE",
-          "description": "Rename Variable\ttypeManager : PojoContainedTypeManager<?,?> to typeManagerBuilder : PojoIndexedTypeManager.Builder<?> in method private PojoTypeManagerContainer(builder Builder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer",
+          "description": "Rename Variable\ttypeManager : PojoContainedTypeManager<?,?> to typeManagerBuilder : PojoContainedTypeManager.Builder<?> in method private PojoTypeManagerContainer(builder Builder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer",
           "validation": true
         },
         {
@@ -2639,11 +2735,36 @@
         {
           "type": "MOVE_AND_RENAME_OPERATION",
           "description": "Move And Rename Method\tpackage closeOnFailure() : void from class org.hibernate.search.mapper.pojo.mapping.building.impl.PojoIndexedTypeManagerBuilder to protected doCloseOnFailure(closer Closer<RuntimeException>) : void from class org.hibernate.search.mapper.pojo.mapping.impl.PojoIndexedTypeManager.Builder",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_ATTRIBUTE_TYPE",
           "description": "Change Attribute Type\tidentifierMapping : IdentifierMappingImplementor<I,E> to identifierMapping : IdentifierMappingImplementor<?,E> in class org.hibernate.search.mapper.pojo.mapping.impl.AbstractPojoTypeManager.Builder",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\ttypeManagerContainerBuilder : PojoTypeManagerContainer.Builder to typeManagerContainerBuilder : PojoTypeManagerContainer.Builder in method public prepareBuild() : MPBS from class org.hibernate.search.mapper.pojo.mapping.building.impl.PojoMapper",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_RENAME_ATTRIBUTE",
+          "description": "Move And Rename Attribute\tprivate processorBuilder : PojoIndexingProcessorOriginalTypeNodeBuilder<E> renamed to private indexingProcessorBuilder : PojoIndexingProcessorOriginalTypeNodeBuilder<E> and moved from class org.hibernate.search.mapper.pojo.mapping.building.impl.PojoIndexedTypeManagerBuilder to class org.hibernate.search.mapper.pojo.mapping.impl.PojoIndexedTypeManager.Builder",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_RENAME_ATTRIBUTE",
+          "description": "Move And Rename Attribute\tprivate preBuiltIndexingProcessor : PojoIndexingProcessor<E> renamed to private indexingProcessor : PojoIndexingProcessor<E> and moved from class org.hibernate.search.mapper.pojo.mapping.building.impl.PojoIndexedTypeManagerBuilder to class org.hibernate.search.mapper.pojo.mapping.impl.PojoIndexedTypeManager.Builder",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[singleConcreteTypeInEntityHierarchy : boolean, identifierMapping : IdentifierMappingImplementor<I,E>, pathOrdinals : PojoPathOrdinals, reindexingResolver : PojoImplicitReindexingResolver<E>] to identityMappingCollector : PojoRootIdentityMappingCollector<E> in method package Builder(typeModel PojoRawTypeModel<E>, entityName String, identityMappingCollector PojoRootIdentityMappingCollector<E>, extendedMappingCollector PojoIndexedTypeExtendedMappingCollector, routingBridge BoundRoutingBridge<E>, indexingProcessorBuilder PojoIndexingProcessorOriginalTypeNodeBuilder<E>, indexManagerBuilder MappedIndexManagerBuilder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoIndexedTypeManager.Builder",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[singleConcreteTypeInEntityHierarchy : boolean, identifierMapping : IdentifierMappingImplementor<I,E>, pathOrdinals : PojoPathOrdinals, reindexingResolver : PojoImplicitReindexingResolver<E>] to identityMappingCollector : PojoRootIdentityMappingCollector<E> in method package Builder(typeModel PojoRawTypeModel<E>, entityName String, identityMappingCollector PojoRootIdentityMappingCollector<E>, extendedMappingCollector PojoContainedTypeExtendedMappingCollector) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoContainedTypeManager.Builder",
           "validation": true
         }
       ]
@@ -2788,17 +2909,17 @@
         {
           "type": "RENAME_ATTRIBUTE",
           "description": "Rename Attribute\tallByNonInterfaceSuperType : Map<PojoRawTypeIdentifier<?>,Set<AbstractPojoTypeManager<?,?>>> to bySuperType : Map<PojoRawTypeIdentifier<?>,Set<AbstractPojoTypeManager<?,?>>> in class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer.Builder",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_AND_RENAME_OPERATION",
           "description": "Move And Rename Method\tpublic typeIdentifierResolver() : HibernateOrmRawTypeIdentifierResolver from class org.hibernate.search.mapper.orm.model.impl.HibernateOrmRuntimeIntrospectorTypeContextProvider to public typeIdentifierBySecondaryEntityName() : KeyValueProvider<String,PojoRawTypeIdentifier<?>> from class org.hibernate.search.mapper.pojo.mapping.spi.PojoRawTypeIdentifierResolver",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tHibernateOrmRawTypeIdentifierResolver to KeyValueProvider<String,PojoRawTypeIdentifier<?>> in method public typeIdentifierBySecondaryEntityName() : KeyValueProvider<String,PojoRawTypeIdentifier<?>> from class org.hibernate.search.mapper.pojo.mapping.spi.PojoRawTypeIdentifierResolver",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_METHOD",
@@ -2813,7 +2934,7 @@
         {
           "type": "PUSH_DOWN_OPERATION",
           "description": "Push Down Method\tpublic typeIdentifierByEntityName() : KeyValueProvider<String,PojoRawTypeIdentifier<?>> from class org.hibernate.search.mapper.pojo.work.impl.PojoWorkTypeContextProvider to public nonInterfaceSuperTypeIdentifierByEntityName() : KeyValueProvider<String,PojoRawTypeIdentifier<?>> from class org.hibernate.search.mapper.pojo.scope.impl.PojoScopeTypeContextProvider",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",
@@ -2848,17 +2969,17 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tallNonInterfaceSuperTypesClassesContent : Set<Class<?>> to indexedBySuperTypeClassContent : Map<Class<?>,Set<PojoIndexedTypeManager<?,?>>> in method private PojoTypeManagerContainer(builder Builder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tallNonInterfaceSuperTypesClassesContent : Set<Class<?>> to indexedBySuperTypeClassContent : Map<Class<?>,Set<PojoIndexedTypeManager<?,?>>> in method private PojoTypeManagerContainer(builder Builder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tindexedBySuperTypeContent : Map<PojoRawTypeIdentifier<?>,Set<PojoIndexedTypeManager<?,?>>> in method private PojoTypeManagerContainer(builder Builder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_VARIABLE",
@@ -2910,6 +3031,16 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic invalidScopeTarget(nonIndexedTypes Collection<PojoRawTypeIdentifier<?>>, validSuperTypes Collection<PojoRawTypeIdentifier<?>>) : SearchException renamed to public invalidIndexedSuperTypes(nonIndexedTypes Collection<PojoRawTypeIdentifier<?>>, validSuperTypes Collection<PojoRawTypeIdentifier<?>>) : SearchException in class org.hibernate.search.mapper.pojo.logging.impl.Log",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tindexedBySuperType : Map<PojoRawTypeIdentifier<?>,Set<? extends PojoIndexedTypeManager<?,?>>> to indexedBySuperTypeClassContent : Map<Class<?>,Set<PojoIndexedTypeManager<?,?>>> in method private PojoTypeManagerContainer(builder Builder) from class org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttargetedTypeContexts : Set<PojoScopeIndexedTypeContext<?,? extends E>> to targetedTypeContexts : Set<? extends PojoScopeIndexedTypeContext<?,? extends E>> in method public create(mappingContext PojoScopeMappingContext, typeContextProvider PojoScopeTypeContextProvider, targetedTypeContexts Set<? extends PojoScopeIndexedTypeContext<?,? extends E>>, indexedTypeExtendedContextProvider PojoScopeTypeExtendedContextProvider<E,C>) : PojoScopeDelegate<R,E,C> from class org.hibernate.search.mapper.pojo.scope.impl.PojoScopeDelegateImpl",
           "validation": true
         }
       ]

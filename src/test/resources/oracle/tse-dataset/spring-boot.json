@@ -168,6 +168,11 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tfile : Path to argFile : ArgFile in method package create(content CharSequence) : ArgFile from class org.springframework.boot.maven.AbstractRunMojo.ArgFile",
           "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tfile : Path to argFile : ArgFile in method package create(content CharSequence) : ArgFile from class org.springframework.boot.maven.AbstractRunMojo.ArgFile",
+          "validation": true
         }
       ]
     },
@@ -207,12 +212,12 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tresolvedGenerics : Class<?>[] to generics : Class<?>[] in method private get(factory ConnectionDetailsFactory<S,D>) : Registration<S,D> from class org.springframework.boot.autoconfigure.service.connection.ConnectionDetailsFactories.Registration",
-          "validation": false
+          "validation": true
         },
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tresult : Object in method protected bindAggregate(name ConfigurationPropertyName, target Bindable<?>, elementBinder AggregateElementBinder) : Object from class org.springframework.boot.context.properties.bind.MapBinder",
-          "validation": false
+          "validation": true
         }
       ]
     },
@@ -226,7 +231,7 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprivate configureGenerateAntoraPlaybookTask(project Project, generateAntoraPlaybookTask GenerateAntoraPlaybook) : void extracted from private apply(project Project, antoraPlugin AntoraPlugin) : void in class org.springframework.boot.build.AntoraConventions",
-          "validation": false
+          "validation": true
         }
       ]
     },
@@ -282,7 +287,18 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tenvironment : MockEnvironment to environment : MockEnvironment in method package setup() : void from class org.springframework.boot.context.config.ConfigDataEnvironmentContributorsTests",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tbinder : Binder to binder : Binder in method package setup() : void from class org.springframework.boot.context.config.ConfigDataEnvironmentContributorsTests",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/spring-projects/spring-boot.git",
@@ -302,7 +318,7 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tbom : Object to bom : BomExtension in method private extractVersionProperties(projectPath String) : void from class org.springframework.boot.build.constraints.ExtractVersionConstraints",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_RETURN_TYPE",
@@ -346,6 +362,11 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tasciidoctorPlugin : null to antoraPlugin : null in method package apply(project Project) : void from class org.springframework.boot.build.AntoraConventions",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tbomExtension : BomExtension to bom : BomExtension in method private extractVersionProperties(projectPath String) : void from class org.springframework.boot.build.constraints.ExtractVersionConstraints",
           "validation": true
         }
       ]
@@ -448,6 +469,21 @@
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tentry : ZipEntry to entry : JarEntry in method private withJarEntries(file File, callback ThrowingConsumer) : void from class org.springframework.boot.jarmode.tools.ExtractCommand",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getCreationTime(entry JarEntry) : FileTime extracted from private extractEntry(zip ZipInputStream, entry ZipEntry, file File) : void in class org.springframework.boot.jarmode.tools.ExtractCommand",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getLastAccessTime(entry JarEntry) : FileTime extracted from private extractEntry(zip ZipInputStream, entry ZipEntry, file File) : void in class org.springframework.boot.jarmode.tools.ExtractCommand",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate getLastModifiedTime(entry JarEntry) : FileTime extracted from private extractEntry(zip ZipInputStream, entry ZipEntry, file File) : void in class org.springframework.boot.jarmode.tools.ExtractCommand",
+          "validation": true
         }
       ]
     },
@@ -461,7 +497,12 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpackage afterAll() : void renamed to package afterEach() : void in class org.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinHttpClientSenderTests",
-          "validation": false
+          "validation": true
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom package beforeAll() : void to package beforeEach() : void in class org.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinHttpClientSenderTests",
+          "validation": true
         }
       ]
     },
@@ -475,7 +516,7 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tdialectType : Class<?> in method public jdbcDialect(operations NamedParameterJdbcOperations) : Dialect from class org.springframework.boot.autoconfigure.data.jdbc.JdbcRepositoriesAutoConfiguration.SpringBootJdbcConfiguration",
-          "validation": false
+          "validation": true
         }
       ]
     },
@@ -871,17 +912,42 @@
         {
           "type": "MOVE_OPERATION",
           "description": "Move Method\tpublic run(mode String, args String[]) : void from class org.springframework.boot.jarmode.layertools.LayerToolsJarMode to public run(mode String, args String[]) : void from class org.springframework.boot.jarmode.tools.ToolsJarMode",
-          "validation": false
+          "validation": true
         },
         {
           "type": "MOVE_OPERATION",
           "description": "Move Method\tpackage getCommands(context Context) : List<Command> from class org.springframework.boot.jarmode.layertools.LayerToolsJarMode.Runner to package getCommands(context Context) : List<Command> from class org.springframework.boot.jarmode.tools.LayerToolsJarMode",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic getLayer(entry ZipEntry) : String renamed to public getApplicationLayerName() : String in class org.springframework.boot.jarmode.tools.Layers",
           "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tfile : File in method private checkJarCompatibility() : void from class org.springframework.boot.jarmode.tools.ExtractCommand",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tzip : ZipInputStream to stream : ZipInputStream in method private checkJarCompatibility() : void from class org.springframework.boot.jarmode.tools.ExtractCommand",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\tjarFile : File to jarFile : File in method package setup() : void from class org.springframework.boot.jarmode.tools.ListCommandTests",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(this.valueDescription != null) to if(this.valueDescription == null) in method private claimArg(args Deque<String>) : String from class org.springframework.boot.jarmode.tools.Command.Option",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(command != null) to if(command == null) in method package run(out PrintStream, parameters List<String>) : void from class org.springframework.boot.jarmode.tools.HelpCommand",
+          "validation": true
         }
       ]
     },
@@ -936,7 +1002,7 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpackage applicationNameLoggingWhenDisabled(output CapturedOutput) : void renamed to package applicationNameLoggingToFileWhenDisabled() : void in class org.springframework.boot.logging.log4j2.Log4J2LoggingSystemTests",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_VARIABLE",
@@ -960,7 +1026,7 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tgenerics : Class<?>[] to resolvedGenerics : Class<?>[] in method private resolveGenerics(type ResolvableType) : Class<?>[] from class org.springframework.boot.autoconfigure.service.connection.ConnectionDetailsFactories.Registration",
-          "validation": false
+          "validation": true
         }
       ]
     },

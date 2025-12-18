@@ -1,2 +1,8 @@
 org.apache.flink.util.TimeUtilsPrettyPrintingTest -> org.apache.flink.util.TimeUtilsPrettyPrintingTest
 @RunWith(Parameterized.class)==null
+public testFormatting() : void -> package testFormatting(duration Duration, expectedString String) : void
+null==@ParameterizedTest
+public testFormatting() : void -> package testFormatting(duration Duration, expectedString String) : void
+null==@MethodSource("testDurationAndExpectedString")
+public testFormatting() : void -> package testFormatting(duration Duration, expectedString String) : void
+@Test==null

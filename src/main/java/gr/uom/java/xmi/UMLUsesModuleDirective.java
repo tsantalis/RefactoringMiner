@@ -13,4 +13,10 @@ public class UMLUsesModuleDirective extends UMLAbstractModuleDirective {
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, directive, CodeElementType.USES_DIRECTIVE);
 	}
 
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("uses ");
+		sb.append(getName().getString());
+		return sb.toString();
+	}
 }

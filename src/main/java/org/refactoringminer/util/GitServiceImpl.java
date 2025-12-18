@@ -2,16 +2,19 @@ package org.refactoringminer.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.eclipse.jgit.api.CheckoutCommand;
+import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.diff.DiffAlgorithm;
 import org.eclipse.jgit.diff.DiffEntry;
@@ -55,42 +58,32 @@ public class GitServiceImpl implements GitService {
 
 	@Override
 	public Repository cloneIfNotExists(String projectPath, String cloneUrl, String username, String token) throws Exception {
-		File folder = new File(projectPath);
-		Repository repository;
-		if (folder.exists()) {
-			String[] contents = folder.list();
-			boolean dotGitFound = false;
-			for(String content : contents) {
-				if(content.equals(".git")) {
-					dotGitFound = true;
-					break;
-				}
-			}
+		if (username != null && token != null) {
+			return cloneIfNotExists(projectPath, cloneUrl, clone -> clone.setCredentialsProvider(new UsernamePasswordCredentialsProvider(username, token)));
+		}
+		return cloneIfNotExists(projectPath, cloneUrl, clone -> clone);
+	}
+
+	@Override
+	public Repository cloneIfNotExists(String projectPath, String cloneUrl, Function<CloneCommand, CloneCommand> customSettings) throws Exception {
+		Path path = Path.of(projectPath);
+		File folder = path.toFile();
+		if (folder.exists() && folder.list().length > 0) {
+			File index = path.resolve(".git").toFile();
 			RepositoryBuilder builder = new RepositoryBuilder();
-			repository = builder
-					.setGitDir(dotGitFound ? new File(folder, ".git") : folder)
+			return builder
+					.setGitDir(index.exists() ? index : folder)
 					.readEnvironment()
 					.findGitDir()
 					.build();
-			
-			//logger.info("Project {} is already cloned, current branch is {}", cloneUrl, repository.getBranch());
-			
-		} else {
-			logger.info("Cloning {} ...", cloneUrl);
-			CredentialsProvider credentialsProvider = null;
-			if (username != null && token != null){
-				credentialsProvider = new UsernamePasswordCredentialsProvider(username, token);
-			}
-			Git git = Git.cloneRepository()
-					.setDirectory(folder)
-					.setURI(cloneUrl)
-					.setCloneAllBranches(true)
-					.setCredentialsProvider(credentialsProvider)
-					.call();
-			repository = git.getRepository();
-			//logger.info("Done cloning {}, current branch is {}", cloneUrl, repository.getBranch());
 		}
-		return repository;
+		logger.info("Cloning {} ...", cloneUrl);
+		Git git = customSettings.apply(Git.cloneRepository()
+						.setDirectory(folder)
+						.setURI(cloneUrl)
+						.setCloneAllBranches(true))
+				.call();
+		return git.getRepository();
 	}
 
 	@Override
@@ -351,7 +344,7 @@ public class GitServiceImpl implements GitService {
 	}
 
 	private boolean isJavafile(String path) {
-		return path.endsWith(".java");
+		return PathFileUtils.isSupportedFile(path);
 	}
 
 	@Override

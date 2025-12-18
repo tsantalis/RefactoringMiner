@@ -229,12 +229,12 @@
         {
           "type": "MOVE_CLASS",
           "description": "Move Class\tjapa.bdd.samples.JavaConcepts.JavaConcepts.X moved to japa.bdd.samples.JavaConceptsInnerClasses.JavaConceptsInnerClasses.X",
-          "validation": false
+          "validation": true
         },
         {
           "type": "MOVE_CLASS",
           "description": "Move Class\tjapa.bdd.samples.JavaConcepts.JavaConcepts.Y moved to japa.bdd.samples.JavaConceptsInnerClasses.JavaConceptsInnerClasses.Y",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_ATTRIBUTE_TYPE",
@@ -408,7 +408,7 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\ti : int to currentTextElementIndex : int in method private findIndexOfCorrespondingNodeTextElement(elements List<CsmElement>, nodeText NodeText) : List<Integer> from class com.github.javaparser.printer.lexicalpreservation.ReshuffledDiffElementExtractor",
-          "validation": false
+          "validation": true
         }
       ]
     },
@@ -548,7 +548,7 @@
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic isAssignableBy(type ResolvedType) : boolean extracted from public isAssignableBy(type ResolvedType) : boolean in class com.github.javaparser.symbolsolver.javassistmodel.JavassistClassDeclaration & moved to class com.github.javaparser.symbolsolver.javassistmodel.JavassistTypeDeclarationAdapter",
-          "validation": true
+          "validation": false
         }
       ]
     },

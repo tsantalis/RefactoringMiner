@@ -42,6 +42,7 @@ import java.util.HashSet;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,6 +58,10 @@ class TestParameterizeTestRefactoring {
             result.add(r);
         }
         return result;
+    }
+    @SafeVarargs
+    private static List<RefactoringType> combine(List<RefactoringType>... lists) {
+        return Arrays.stream(lists).flatMap(List::stream).collect(Collectors.toList());
     }
     private static Collection<Arguments> testParameterizeTest() {
         List<Arguments> arguments = new ArrayList<>();
@@ -99,7 +104,7 @@ class TestParameterizeTestRefactoring {
             }
             arguments.add(Arguments.of(Map.of("src/test/java/com/test/TestClass.java", originalCodeBuilder.build()),
                     Map.of("src/test/java/com/test/TestClass.java", newCodeBuilder.build()),
-                    Set.of("."), repeat(RefactoringType.PARAMETERIZE_TEST, 6)));
+                    Set.of("."), combine(repeat(RefactoringType.PARAMETERIZE_TEST, 6),repeat(RefactoringType.PARAMETERIZE_VARIABLE, 6))));
         }
         Function<String, String> enumDeclaration = (String methoDeclaration) -> String.format("public enum TestEnum {TEST1, TEST2, TEST3, TEST4, TEST5;\n%s}",methoDeclaration);
         {
@@ -424,10 +429,10 @@ class TestParameterizeTestRefactoring {
         void setUp() throws RefactoringMinerTimedOutException {
             String originalSourceCode = new TestSrcCodeBuilder().testMethod("testMethod_A")
                     .statement("assertNotEquals(\"A\", null);")
-                    .statement("assertNotEquals(\"B\", null);")
+                    .statement("assertEquals(\"B\", null);")
                     .testMethod("testMethod_B")
                     .statement("assertNotEquals(\"C\", null);")
-                    .statement("assertNotEquals(\"D\", null);")
+                    .statement("assertEquals(\"D\", null);")
                     .build();
             Path csvPath = dir.resolve("file.csv");
             String newSourceCode = new TestSrcCodeBuilder().testMethod("testMethod")
@@ -436,7 +441,7 @@ class TestParameterizeTestRefactoring {
                     .parameter("String param1")
                     .parameter("String param2")
                     .statement("assertNotEquals(param1, null);")
-                    .statement("assertNotEquals(param2, null);")
+                    .statement("assertEquals(param2, null);")
                     .build();
             try {
                 FileWriter fileWriter = new FileWriter(csvPath.toFile());

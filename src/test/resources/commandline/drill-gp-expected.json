@@ -2625,6 +2625,66 @@
 },
 {
 	"type": "Extract Method",
+	"description": "Extract Method public getAvailableEndpointsUUID() : Map<String,DrillbitEndpoint> extracted from public getAvailableEndpoints() : Collection<DrillbitEndpoint> in class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 238,
+		"endLine": 241,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public getAvailableEndpoints() : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 240,
+		"endLine": 240,
+		"startColumn": 5,
+		"endColumn": 27,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 242,
+		"endLine": 245,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public getAvailableEndpointsUUID() : Map<String,DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 244,
+		"endLine": 244,
+		"startColumn": 5,
+		"endColumn": 30,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 237,
+		"endLine": 240,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public getAvailableEndpoints() : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 239,
+		"endLine": 239,
+		"startColumn": 12,
+		"endColumn": 39,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "getAvailableEndpointsUUID()"
+}]
+},
+{
+	"type": "Extract Method",
 	"description": "Extract Method public mode(mode PersistentStoreMode) : StoreConfigBuilder<V> extracted from public blob() : StoreConfigBuilder<V> in class org.apache.drill.exec.store.sys.PersistentStoreConfig.StoreConfigBuilder",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
@@ -4431,6 +4491,48 @@
 },
 {
 	"type": "Change Return Type",
+	"description": "Change Return Type NodeResource to NodeResources in method public create(cpu long, memory long) : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
+		"startLine": 70,
+		"endLine": 70,
+		"startColumn": 17,
+		"endColumn": 29,
+		"codeElementType": "TYPE",
+		"description": "original return type",
+		"codeElement": "NodeResource"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
+		"startLine": 70,
+		"endLine": 72,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public create(cpu long, memory long) : NodeResource"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 147,
+		"endLine": 147,
+		"startColumn": 17,
+		"endColumn": 30,
+		"codeElementType": "TYPE",
+		"description": "changed return type",
+		"codeElement": "NodeResources"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 147,
+		"endLine": 149,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed return type",
+		"codeElement": "public create(cpu long, memory long) : NodeResources"
+}]
+},
+{
+	"type": "Change Return Type",
 	"description": "Change Return Type int to long in method public getNumVirtualCpu() : long from class org.apache.drill.exec.resourcemgr.NodeResources",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
@@ -5336,6 +5438,30 @@
 		"codeElementType": "METHOD_DECLARATION",
 		"description": "moved method declaration",
 		"codeElement": "public create(cpu long) : NodeResources"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public create(cpu long, memory long) : NodeResource from class org.apache.drill.exec.planner.cost.NodeResource to public create(cpu long, memory long) : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
+		"startLine": 70,
+		"endLine": 72,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public create(cpu long, memory long) : NodeResource"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 147,
+		"endLine": 149,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public create(cpu long, memory long) : NodeResources"
 }]
 },
 {
@@ -9152,6 +9278,366 @@
 }]
 },
 {
+	"type": "Extract Fixture",
+	"description": "Extract Fixture public setupForAllTests() : void extracted from public TestSingleMajorFragmentWithGroupByProjectAndScan() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 214,
+		"endLine": 226,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration",
+		"codeElement": "public TestSingleMajorFragmentWithGroupByProjectAndScan() : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 216,
+		"endLine": 216,
+		"startColumn": 5,
+		"endColumn": 86,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 205,
+		"endLine": 208,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration",
+		"codeElement": "public setupForAllTests() : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 207,
+		"endLine": 207,
+		"startColumn": 5,
+		"endColumn": 56,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Extract Fixture",
+	"description": "Extract Fixture public setupForAllTests() : void extracted from public TestSingleMajorFragmentWithProjectAndScan() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 199,
+		"endLine": 211,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration",
+		"codeElement": "public TestSingleMajorFragmentWithProjectAndScan() : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 201,
+		"endLine": 201,
+		"startColumn": 5,
+		"endColumn": 86,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 205,
+		"endLine": 208,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration",
+		"codeElement": "public setupForAllTests() : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 207,
+		"endLine": 207,
+		"startColumn": 5,
+		"endColumn": 56,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Extract Fixture",
+	"description": "Extract Fixture public setupForAllTests() : void extracted from public TestTwoMajorFragmentWithSortyProjectAndScan() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 229,
+		"endLine": 241,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration",
+		"codeElement": "public TestTwoMajorFragmentWithSortyProjectAndScan() : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 231,
+		"endLine": 231,
+		"startColumn": 5,
+		"endColumn": 86,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 205,
+		"endLine": 208,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration",
+		"codeElement": "public setupForAllTests() : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 207,
+		"endLine": 207,
+		"startColumn": 5,
+		"endColumn": 56,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Extract Fixture",
+	"description": "Extract Fixture public setupForEachTest() : void extracted from public TestSingleMajorFragmentWithGroupByProjectAndScan() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 214,
+		"endLine": 226,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration",
+		"codeElement": "public TestSingleMajorFragmentWithGroupByProjectAndScan() : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 218,
+		"endLine": 218,
+		"startColumn": 99,
+		"endColumn": 100,
+		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 219,
+		"endLine": 219,
+		"startColumn": 83,
+		"endColumn": 105,
+		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 217,
+		"endLine": 219,
+		"startColumn": 5,
+		"endColumn": 108,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 210,
+		"endLine": 215,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration",
+		"codeElement": "public setupForEachTest() : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 213,
+		"endLine": 213,
+		"startColumn": 81,
+		"endColumn": 100,
+		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 214,
+		"endLine": 214,
+		"startColumn": 12,
+		"endColumn": 34,
+		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 213,
+		"endLine": 214,
+		"startColumn": 5,
+		"endColumn": 37,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Extract Fixture",
+	"description": "Extract Fixture public setupForEachTest() : void extracted from public TestSingleMajorFragmentWithProjectAndScan() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 199,
+		"endLine": 211,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration",
+		"codeElement": "public TestSingleMajorFragmentWithProjectAndScan() : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 203,
+		"endLine": 203,
+		"startColumn": 99,
+		"endColumn": 100,
+		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 204,
+		"endLine": 204,
+		"startColumn": 82,
+		"endColumn": 104,
+		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 202,
+		"endLine": 204,
+		"startColumn": 5,
+		"endColumn": 107,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 210,
+		"endLine": 215,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration",
+		"codeElement": "public setupForEachTest() : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 213,
+		"endLine": 213,
+		"startColumn": 81,
+		"endColumn": 100,
+		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 214,
+		"endLine": 214,
+		"startColumn": 12,
+		"endColumn": 34,
+		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 213,
+		"endLine": 214,
+		"startColumn": 5,
+		"endColumn": 37,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Extract Fixture",
+	"description": "Extract Fixture public setupForEachTest() : void extracted from public TestTwoMajorFragmentWithSortyProjectAndScan() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 229,
+		"endLine": 241,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration",
+		"codeElement": "public TestTwoMajorFragmentWithSortyProjectAndScan() : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 233,
+		"endLine": 233,
+		"startColumn": 99,
+		"endColumn": 100,
+		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 234,
+		"endLine": 234,
+		"startColumn": 82,
+		"endColumn": 104,
+		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 232,
+		"endLine": 234,
+		"startColumn": 5,
+		"endColumn": 107,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 210,
+		"endLine": 215,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration",
+		"codeElement": "public setupForEachTest() : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 213,
+		"endLine": 213,
+		"startColumn": 81,
+		"endColumn": 100,
+		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 214,
+		"endLine": 214,
+		"startColumn": 12,
+		"endColumn": 34,
+		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 213,
+		"endLine": 214,
+		"startColumn": 5,
+		"endColumn": 37,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}]
+},
+{
 	"type": "Extract Variable",
 	"description": "Extract Variable drillEndpointNode : DrillNode in method public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
 	"leftSideLocations": [{
@@ -9814,366 +10300,6 @@
 		"endColumn": 8,
 		"codeElementType": "IF_STATEMENT",
 		"description": "statement referencing the renamed variable",
-		"codeElement": null
-}]
-},
-{
-	"type": "Move Code",
-	"description": "Move Code from public TestSingleMajorFragmentWithGroupByProjectAndScan() : void to public setupForAllTests() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 214,
-		"endLine": 226,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "source method declaration",
-		"codeElement": "public TestSingleMajorFragmentWithGroupByProjectAndScan() : void"
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 216,
-		"endLine": 216,
-		"startColumn": 5,
-		"endColumn": 86,
-		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
-		"description": "moved code from source method declaration",
-		"codeElement": null
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 205,
-		"endLine": 208,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "target method declaration",
-		"codeElement": "public setupForAllTests() : void"
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 207,
-		"endLine": 207,
-		"startColumn": 5,
-		"endColumn": 56,
-		"codeElementType": "EXPRESSION_STATEMENT",
-		"description": "moved code to target method declaration",
-		"codeElement": null
-}]
-},
-{
-	"type": "Move Code",
-	"description": "Move Code from public TestSingleMajorFragmentWithGroupByProjectAndScan() : void to public setupForEachTest() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 214,
-		"endLine": 226,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "source method declaration",
-		"codeElement": "public TestSingleMajorFragmentWithGroupByProjectAndScan() : void"
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 218,
-		"endLine": 218,
-		"startColumn": 99,
-		"endColumn": 100,
-		"codeElementType": "LAMBDA_EXPRESSION_BODY",
-		"description": "moved code from source method declaration",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 219,
-		"endLine": 219,
-		"startColumn": 83,
-		"endColumn": 105,
-		"codeElementType": "LAMBDA_EXPRESSION_BODY",
-		"description": "moved code from source method declaration",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 217,
-		"endLine": 219,
-		"startColumn": 5,
-		"endColumn": 108,
-		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
-		"description": "moved code from source method declaration",
-		"codeElement": null
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 210,
-		"endLine": 215,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "target method declaration",
-		"codeElement": "public setupForEachTest() : void"
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 213,
-		"endLine": 213,
-		"startColumn": 81,
-		"endColumn": 100,
-		"codeElementType": "LAMBDA_EXPRESSION_BODY",
-		"description": "moved code to target method declaration",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 214,
-		"endLine": 214,
-		"startColumn": 12,
-		"endColumn": 34,
-		"codeElementType": "LAMBDA_EXPRESSION_BODY",
-		"description": "moved code to target method declaration",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 213,
-		"endLine": 214,
-		"startColumn": 5,
-		"endColumn": 37,
-		"codeElementType": "EXPRESSION_STATEMENT",
-		"description": "moved code to target method declaration",
-		"codeElement": null
-}]
-},
-{
-	"type": "Move Code",
-	"description": "Move Code from public TestSingleMajorFragmentWithProjectAndScan() : void to public setupForAllTests() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 199,
-		"endLine": 211,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "source method declaration",
-		"codeElement": "public TestSingleMajorFragmentWithProjectAndScan() : void"
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 201,
-		"endLine": 201,
-		"startColumn": 5,
-		"endColumn": 86,
-		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
-		"description": "moved code from source method declaration",
-		"codeElement": null
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 205,
-		"endLine": 208,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "target method declaration",
-		"codeElement": "public setupForAllTests() : void"
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 207,
-		"endLine": 207,
-		"startColumn": 5,
-		"endColumn": 56,
-		"codeElementType": "EXPRESSION_STATEMENT",
-		"description": "moved code to target method declaration",
-		"codeElement": null
-}]
-},
-{
-	"type": "Move Code",
-	"description": "Move Code from public TestSingleMajorFragmentWithProjectAndScan() : void to public setupForEachTest() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 199,
-		"endLine": 211,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "source method declaration",
-		"codeElement": "public TestSingleMajorFragmentWithProjectAndScan() : void"
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 203,
-		"endLine": 203,
-		"startColumn": 99,
-		"endColumn": 100,
-		"codeElementType": "LAMBDA_EXPRESSION_BODY",
-		"description": "moved code from source method declaration",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 204,
-		"endLine": 204,
-		"startColumn": 82,
-		"endColumn": 104,
-		"codeElementType": "LAMBDA_EXPRESSION_BODY",
-		"description": "moved code from source method declaration",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 202,
-		"endLine": 204,
-		"startColumn": 5,
-		"endColumn": 107,
-		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
-		"description": "moved code from source method declaration",
-		"codeElement": null
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 210,
-		"endLine": 215,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "target method declaration",
-		"codeElement": "public setupForEachTest() : void"
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 213,
-		"endLine": 213,
-		"startColumn": 81,
-		"endColumn": 100,
-		"codeElementType": "LAMBDA_EXPRESSION_BODY",
-		"description": "moved code to target method declaration",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 214,
-		"endLine": 214,
-		"startColumn": 12,
-		"endColumn": 34,
-		"codeElementType": "LAMBDA_EXPRESSION_BODY",
-		"description": "moved code to target method declaration",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 213,
-		"endLine": 214,
-		"startColumn": 5,
-		"endColumn": 37,
-		"codeElementType": "EXPRESSION_STATEMENT",
-		"description": "moved code to target method declaration",
-		"codeElement": null
-}]
-},
-{
-	"type": "Move Code",
-	"description": "Move Code from public TestTwoMajorFragmentWithSortyProjectAndScan() : void to public setupForAllTests() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 229,
-		"endLine": 241,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "source method declaration",
-		"codeElement": "public TestTwoMajorFragmentWithSortyProjectAndScan() : void"
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 231,
-		"endLine": 231,
-		"startColumn": 5,
-		"endColumn": 86,
-		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
-		"description": "moved code from source method declaration",
-		"codeElement": null
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 205,
-		"endLine": 208,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "target method declaration",
-		"codeElement": "public setupForAllTests() : void"
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 207,
-		"endLine": 207,
-		"startColumn": 5,
-		"endColumn": 56,
-		"codeElementType": "EXPRESSION_STATEMENT",
-		"description": "moved code to target method declaration",
-		"codeElement": null
-}]
-},
-{
-	"type": "Move Code",
-	"description": "Move Code from public TestTwoMajorFragmentWithSortyProjectAndScan() : void to public setupForEachTest() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 229,
-		"endLine": 241,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "source method declaration",
-		"codeElement": "public TestTwoMajorFragmentWithSortyProjectAndScan() : void"
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 233,
-		"endLine": 233,
-		"startColumn": 99,
-		"endColumn": 100,
-		"codeElementType": "LAMBDA_EXPRESSION_BODY",
-		"description": "moved code from source method declaration",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 234,
-		"endLine": 234,
-		"startColumn": 82,
-		"endColumn": 104,
-		"codeElementType": "LAMBDA_EXPRESSION_BODY",
-		"description": "moved code from source method declaration",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 232,
-		"endLine": 234,
-		"startColumn": 5,
-		"endColumn": 107,
-		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
-		"description": "moved code from source method declaration",
-		"codeElement": null
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 210,
-		"endLine": 215,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "target method declaration",
-		"codeElement": "public setupForEachTest() : void"
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 213,
-		"endLine": 213,
-		"startColumn": 81,
-		"endColumn": 100,
-		"codeElementType": "LAMBDA_EXPRESSION_BODY",
-		"description": "moved code to target method declaration",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 214,
-		"endLine": 214,
-		"startColumn": 12,
-		"endColumn": 34,
-		"codeElementType": "LAMBDA_EXPRESSION_BODY",
-		"description": "moved code to target method declaration",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
-		"startLine": 213,
-		"endLine": 214,
-		"startColumn": 5,
-		"endColumn": 37,
-		"codeElementType": "EXPRESSION_STATEMENT",
-		"description": "moved code to target method declaration",
 		"codeElement": null
 }]
 },
@@ -12819,6 +12945,132 @@
 },
 {
 	"type": "Replace Variable With Attribute",
+	"description": "Replace Variable With Attribute onlineEndpoints : Map<DrillbitEndpoint,String> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public setupForEachTest() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 201,
+		"endLine": 201,
+		"startColumn": 35,
+		"endColumn": 85,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 202,
+		"endLine": 204,
+		"startColumn": 5,
+		"endColumn": 107,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 92,
+		"endLine": 92,
+		"startColumn": 48,
+		"endColumn": 63,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 213,
+		"endLine": 214,
+		"startColumn": 5,
+		"endColumn": 37,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}]
+},
+{
+	"type": "Replace Variable With Attribute",
+	"description": "Replace Variable With Attribute onlineEndpoints : Map<DrillbitEndpoint,String> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public setupForEachTest() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 216,
+		"endLine": 216,
+		"startColumn": 35,
+		"endColumn": 85,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 217,
+		"endLine": 219,
+		"startColumn": 5,
+		"endColumn": 108,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 92,
+		"endLine": 92,
+		"startColumn": 48,
+		"endColumn": 63,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 213,
+		"endLine": 214,
+		"startColumn": 5,
+		"endColumn": 37,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}]
+},
+{
+	"type": "Replace Variable With Attribute",
+	"description": "Replace Variable With Attribute onlineEndpoints : Map<DrillbitEndpoint,String> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public setupForEachTest() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 231,
+		"endLine": 231,
+		"startColumn": 35,
+		"endColumn": 85,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 232,
+		"endLine": 234,
+		"startColumn": 5,
+		"endColumn": 107,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 92,
+		"endLine": 92,
+		"startColumn": 48,
+		"endColumn": 63,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 213,
+		"endLine": 214,
+		"startColumn": 5,
+		"endColumn": 37,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}]
+},
+{
+	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute queryId : UserBitShared.QueryId to queryIdString : String in method public reserveResources() : boolean from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
@@ -12855,6 +13107,186 @@
 		"startColumn": 11,
 		"endColumn": 83,
 		"codeElementType": "THROW_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}]
+},
+{
+	"type": "Replace Variable With Attribute",
+	"description": "Replace Variable With Attribute resources : Map<DrillbitEndpoint,NodeResources> to resources : Map<DrillNode,NodeResources> in method public TestSingleMajorFragmentWithGroupByProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 217,
+		"endLine": 219,
+		"startColumn": 42,
+		"endColumn": 107,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "resources : Map<DrillbitEndpoint,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 223,
+		"endLine": 223,
+		"startColumn": 5,
+		"endColumn": 145,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 225,
+		"endLine": 225,
+		"startColumn": 5,
+		"endColumn": 138,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 93,
+		"endLine": 93,
+		"startColumn": 41,
+		"endColumn": 50,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "resources : Map<DrillNode,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 233,
+		"endLine": 233,
+		"startColumn": 5,
+		"endColumn": 145,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 235,
+		"endLine": 235,
+		"startColumn": 5,
+		"endColumn": 138,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}]
+},
+{
+	"type": "Replace Variable With Attribute",
+	"description": "Replace Variable With Attribute resources : Map<DrillbitEndpoint,NodeResources> to resources : Map<DrillNode,NodeResources> in method public TestSingleMajorFragmentWithProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 202,
+		"endLine": 204,
+		"startColumn": 42,
+		"endColumn": 106,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "resources : Map<DrillbitEndpoint,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 208,
+		"endLine": 208,
+		"startColumn": 5,
+		"endColumn": 145,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 210,
+		"endLine": 210,
+		"startColumn": 5,
+		"endColumn": 134,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 93,
+		"endLine": 93,
+		"startColumn": 41,
+		"endColumn": 50,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "resources : Map<DrillNode,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 222,
+		"endLine": 222,
+		"startColumn": 5,
+		"endColumn": 145,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 224,
+		"endLine": 224,
+		"startColumn": 5,
+		"endColumn": 134,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}]
+},
+{
+	"type": "Replace Variable With Attribute",
+	"description": "Replace Variable With Attribute resources : Map<DrillbitEndpoint,NodeResources> to resources : Map<DrillNode,NodeResources> in method public TestTwoMajorFragmentWithSortyProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 232,
+		"endLine": 234,
+		"startColumn": 42,
+		"endColumn": 106,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "resources : Map<DrillbitEndpoint,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 238,
+		"endLine": 238,
+		"startColumn": 5,
+		"endColumn": 126,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 240,
+		"endLine": 240,
+		"startColumn": 5,
+		"endColumn": 138,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 93,
+		"endLine": 93,
+		"startColumn": 41,
+		"endColumn": 50,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "resources : Map<DrillNode,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 244,
+		"endLine": 245,
+		"startColumn": 5,
+		"endColumn": 21,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 247,
+		"endLine": 247,
+		"startColumn": 5,
+		"endColumn": 138,
+		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement referencing the renamed variable",
 		"codeElement": null
 }]
@@ -13233,6 +13665,15 @@
 	"description": "Extract Variable bufferedOperatorsMemoryLimit : Long in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 192,
+		"endLine": 195,
+		"startColumn": 9,
+		"endColumn": 41,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 194,
 		"endLine": 194,
 		"startColumn": 11,
@@ -13250,6 +13691,15 @@
 		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
 		"description": "extracted variable declaration",
 		"codeElement": "bufferedOperatorsMemoryLimit : Long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 218,
+		"endLine": 223,
+		"startColumn": 9,
+		"endColumn": 41,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 220,
@@ -14310,7 +14760,7 @@
 },
 {
 	"type": "Rename Attribute",
-	"description": "Rename Attribute endpointUUID_ : Object to assignedEndpointUUID_ : Object in class org.apache.drill.exec.proto.BitControl.PlanFragment",
+	"description": "Rename Attribute endpointUUID_ : java.lang.Object to assignedEndpointUUID_ : java.lang.Object in class org.apache.drill.exec.proto.BitControl.PlanFragment",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 5068,
@@ -14334,7 +14784,7 @@
 },
 {
 	"type": "Rename Attribute",
-	"description": "Rename Attribute endpointUUID_ : Object to assignedEndpointUUID_ : Object in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"description": "Rename Attribute endpointUUID_ : java.lang.Object to assignedEndpointUUID_ : java.lang.Object in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 7130,

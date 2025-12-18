@@ -394,7 +394,7 @@
         {
           "type": "MOVE_AND_INLINE_OPERATION",
           "description": "Move And Inline Method\tprotected testDecoder() : void moved from class okhttp3.internal.http2.HpackDecodeTestBase to class okhttp3.internal.http2.HpackDecodeInteropTest & inlined to public testGoodDecoderInterop(story Story) : void",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_VARIABLE",
@@ -658,6 +658,11 @@
           "type": "INLINE_OPERATION",
           "description": "Inline Method\tprivate remapResponse(response Response) : Response inlined to public intercept(chain Chain) : Response in class okhttp3.URLConnectionTest.LegacyRedirectInterceptor",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcode : int in method public intercept(chain Chain) : Response from class okhttp3.URLConnectionTest.LegacyRedirectInterceptor",
+          "validation": true
         }
       ]
     },
@@ -822,6 +827,11 @@
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tcodePoint : int to s : String in method public canonicalize(s String) : String from class okhttp3.UrlComponentEncodingTester.Component",
           "validation": false
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom public test(component Component) : UrlComponentEncodingTester to private testUri(codePoint int, codePointString String, encoding Encoding, component Component) : void in class okhttp3.UrlComponentEncodingTester",
+          "validation": true
         }
       ]
     },
@@ -846,6 +856,11 @@
         {
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tprivate logger : Logger from class okhttp3.CallTest to private logger : Logger from class okhttp3.TestLogHandler",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tlogs : TestLogHandler to testLogHandler : TestLogHandler in method public throwingOnFailLogs() : void from class okhttp3.internal.ws.WebSocketHttpTest",
           "validation": true
         }
       ]

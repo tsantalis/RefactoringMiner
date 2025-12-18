@@ -10,8 +10,6 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
 
-import static gr.uom.java.xmi.Constants.JAVA;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+
+import org.refactoringminer.util.PathFileUtils;
 
 public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, VariableDeclarationProvider, VariableDeclarationContainer {
 	private LocationInfo locationInfo;
@@ -76,35 +76,6 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return anonymousClassContainer != null && anonymousClassContainer.isPresent();
 	}
 
-	public boolean isGetter() {
-		return false;
-	}
-
-	public boolean isSetter() {
-		return false;
-	}
-
-	public boolean isConstructor() {
-		return false;
-	}
-
-	public AbstractCall isDelegate() {
-		return null;
-	}
-
-	@Override
-	public AbstractCall singleStatementCallingMethod() {
-		return null;
-	}
-
-	public boolean isRecursive() {
-		return false;
-	}
-
-	public boolean isMain() {
-		return false;
-	}
-
 	public Optional<UMLAnonymousClass> getAnonymousClassContainer() {
 		return anonymousClassContainer;
 	}
@@ -119,15 +90,6 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 
 	public List<UMLAnonymousClass> getAnonymousClassList() {
 		return anonymousClassList;
-	}
-
-	public UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration) {
-		for(UMLAnonymousClass anonymousClass : this.getAnonymousClassList()) {
-			if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration.getLocationInfo())) {
-				return anonymousClass;
-			}
-		}
-		return null;
 	}
 
 	public List<VariableDeclaration> getParameterDeclarationList() {
@@ -228,11 +190,12 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	}
 
 	public List<AbstractCall> getAllOperationInvocations() {
+		Constants LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		AbstractExpression initializer = variableDeclaration.getInitializer();
 		if(initializer != null) {
 			List<AbstractCall> list = new ArrayList<>(initializer.getMethodInvocations());
 			for(LambdaExpressionObject lambda : initializer.getLambdas()) {
-				if(lambda.getString().contains(JAVA.LAMBDA_ARROW)) {
+				if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
 					list.addAll(lambda.getAllOperationInvocations());
 				}
 			}
@@ -279,31 +242,6 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 			}
 		}
 		return variableDeclarationMap;
-	}
-
-	@Override
-	public boolean hasTestAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasParameterizedTestAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasSetUpAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasTearDownAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasDeprecatedAnnotation() {
-		return false;
 	}
 
 	public Visibility getVisibility() {
@@ -438,6 +376,10 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return false;
 	}
 
+	public boolean equalsIgnoringNameCase(UMLAttribute attribute) {
+		return this.name.equalsIgnoreCase(attribute.name) && this.type.equals(attribute.type);
+	}
+
 	public CodeRange codeRange() {
 		LocationInfo info = getLocationInfo();
 		return info.codeRange();
@@ -465,6 +407,11 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		Constants LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		if(LANG.equals(Constants.PYTHON) && type.getClassType().equals("Object")) {
+			sb.append(name);
+			return sb.toString();
+		}
 		sb.append(visibility);
 		sb.append(" ");
 		sb.append(name);
@@ -475,6 +422,11 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 
 	public String toQualifiedString() {
 		StringBuilder sb = new StringBuilder();
+		Constants LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		if(LANG.equals(Constants.PYTHON) && type.getClassType().equals("Object")) {
+			sb.append(name);
+			return sb.toString();
+		}
 		if(!(this instanceof UMLEnumConstant)) {
 			sb.append(visibility);
 			sb.append(" ");

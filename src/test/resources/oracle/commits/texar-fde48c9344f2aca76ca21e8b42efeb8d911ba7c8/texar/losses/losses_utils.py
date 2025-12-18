@@ -1,0 +1,178 @@
+#
+"""
+Various utilities for losses.
+"""
+
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+import tensorflow as tf
+from tensorflow.python.ops import rnn          # pylint: disable=E0611
+
+from texar.utils.shapes import mask_sequences
+
+# pylint: disable=invalid-name, not-context-manager, protected-access,
+# pylint: disable=too-many-arguments
+
+__all__ = [
+    "mask_and_reduce",
+    "reduce_batch_time",
+    "reduce_dimensions"
+]
+
+def mask_and_reduce(sequence,
+                    sequence_length,
+                    rank=2,
+                    average_across_batch=True,
+                    average_across_timesteps=False,
+                    average_across_remaining=False,
+                    sum_over_batch=False,
+                    sum_over_timesteps=True,
+                    sum_over_remaining=True,
+                    dtype=None,
+                    time_major=False):
+    """Masks out sequence entries that are beyond the respective sequence
+    lengths, and reduces (average or sum) away dimensions.
+
+    This is a combined function of :func:`~texar.utils.shapes.mask_sequences`
+    and :func:`~texar.losses.losses_utils.reduce_batch_time`.
+
+    Args:
+        sequence: A Tensor of sequence values.
+
+            If `time_major=False` (default), this must be a Tensor of shape:
+                `[batch_size, max_time, d_2, ..., d_rank]`, where the rank of
+                the Tensor is specified with :attr:`rank`.
+
+            If `time_major=True`, this must be a Tensor of shape:
+                `[max_time, batch_size, d_2, ..., d_rank].`
+        sequence_length: A Tensor of shape `[batch_size]`. Time steps beyond
+            the respective sequence lengths will be made zero.
+        average_across_timesteps (bool): If set, average the sequence across
+            the time dimension. Must not set :attr:`average_across_timesteps`
+            and :attr:`sum_over_timesteps` at the same time.
+        average_across_batch (bool): If set, average the sequence across the
+            batch dimension. Must not set :attr:`average_across_batch`'
+            and :attr:`sum_over_batch` at the same time.
+        average_across_remaining (bool): If set, average the sequence across the
+            remaining dimensions. Must not set :attr:`average_across_remaining`'
+            and :attr:`sum_over_remaining` at the same time.
+        sum_over_timesteps (bool): If set, sum the loss across the
+            time dimension. Must not set :attr:`average_across_timesteps`
+            and :attr:`sum_over_timesteps` at the same time.
+        sum_over_batch (bool): If set, sum the loss across the
+            batch dimension. Must not set :attr:`average_across_batch`
+            and :attr:`sum_over_batch` at the same time.
+        sum_over_remaining (bool): If set, sum the loss across the
+            remaining dimension. Must not set :attr:`average_across_remaining`
+            and :attr:`sum_over_remaining` at the same time.
+        rank (int): The rank of :attr:`sequence`. Default is 2, i.e.,
+            :attr:`sequence` is a 2D Tensor consisting of batch and time
+            dimensions.
+        time_major (bool): The shape format of the inputs. If `True`,
+            :attr:`sequence` must have shape `[max_time, batch_size, ...]`.
+            If `False` (default), :attr:`sequence` must have
+            shape `[batch_size, max_time, ...]`.
+        dtype (dtype): Type of :attr:`sequence`. If `None`, infer from
+            :attr:`sequence` automatically.
+    """
+    if time_major:
+        sequence = rnn._transpose_batch_time(sequence)
+
+    sequence = mask_sequences(sequence, sequence_length, dtype=dtype,
+                              time_major=False, tensor_rank=rank)
+
+    if rank > 2:
+        if average_across_remaining and sum_over_remaining:
+            raise ValueError("Only one of `average_across_remaining` and "
+                             "`sum_over_remaining` can be set.")
+        if average_across_remaining:
+            sequence = tf.reduce_mean(sequence, axis=range(2, rank))
+        elif sum_over_remaining:
+            sequence = tf.reduce_sum(sequence, axis=range(2, rank))
+
+    sequence = reduce_batch_time(sequence,
+                                 sequence_length,
+                                 average_across_batch,
+                                 average_across_timesteps,
+                                 sum_over_batch,
+                                 sum_over_timesteps)
+
+    reduce_time = average_across_timesteps or sum_over_timesteps
+    reduce_batch = average_across_batch or sum_over_batch
+    if not reduce_time and not reduce_batch and time_major:
+        sequence = rnn._transpose_batch_time(sequence)
+
+    return sequence
+
+
+def reduce_batch_time(sequence,
+                      sequence_length,
+                      average_across_batch=True,
+                      average_across_timesteps=False,
+                      sum_over_batch=False,
+                      sum_over_timesteps=True):
+    """Average or sum over the respective dimensions of :attr:`sequence`, which
+    is of shape `[batch_size, max_time, ...]`.
+    """
+    if average_across_timesteps and sum_over_timesteps:
+        raise ValueError("Only one of `average_across_timesteps` and "
+                         "`sum_over_timesteps` can be set.")
+    if average_across_batch and sum_over_batch:
+        raise ValueError("Only one of `average_across_batch` and "
+                         "`sum_over_batch` can be set.")
+    reduce_time = average_across_timesteps or sum_over_timesteps
+    reduce_batch = average_across_batch or sum_over_batch
+    if reduce_time:
+        sequence = tf.reduce_sum(sequence, axis=[1])
+    if average_across_timesteps:
+        sequence = sequence / tf.to_float(sequence_length)
+    if reduce_batch:
+        sequence = tf.reduce_sum(sequence, axis=[0])
+    if average_across_batch:
+        sequence = sequence / tf.to_float(tf.shape(sequence_length)[0])
+    return sequence
+
+
+def reduce_dimensions(tensor, average_axes=None, sum_axes=None, keepdims=None):
+    """Average or sum over the respective dimensions of :attr:`tensor`.
+
+    :attr:`average_axes` and :attr:`sum_axes` must be mutually exclusive. That
+    is, elements in :attr:`average_axes` must not be contained in
+    :attr:`sum_axes`, and vice versa.
+
+    Args:
+        tensor: A tensor to reduce.
+        average_axes (optional): A (list of) `int` that indicates the
+            dimensions to reduce by taking average.
+        sum_axes (optional): A (list of) `int` that indicates the
+            dimensions to reduce by taking sum.
+        keepdims (optional): If `True`, retains reduced dimensions with
+            length 1.
+    """
+    reduced_axes = []
+    if average_axes is not None and len(average_axes) > 0:
+        tensor = tf.reduce_mean(tensor, axis=average_axes, keepdims=True)
+
+        if not isinstance(average_axes, (list, tuple)):
+            average_axes = [average_axes]
+        reduced_axes += average_axes
+
+    if sum_axes is not None and len(sum_axes) > 0:
+        tensor = tf.reduce_sum(tensor, axis=sum_axes, keepdims=True)
+
+        if not isinstance(sum_axes, (list, tuple)):
+            sum_axes = [sum_axes]
+        reduced_axes += sum_axes
+
+        if average_axes is not None:
+            if len(reduced_axes) != len(average_axes) + len(sum_axes):
+                raise ValueError('`average_axes` and `sum_axes` must not have '
+                                 'overlapped elements.')
+
+    if not keepdims:
+        tensor = tf.squeeze(tensor, axis=reduced_axes)
+
+    return tensor
+

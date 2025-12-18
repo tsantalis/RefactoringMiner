@@ -72,6 +72,7 @@ import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.astDiff.matchers.ProjectASTDiffer;
 import org.refactoringminer.util.GitServiceImpl;
+import org.refactoringminer.util.PathFileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -366,7 +367,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 								fileContentsBefore.put(pathString, writer.toString());
 							}
 						}
-						if(pathString.endsWith(".java") && pathString.contains("/")) {
+						if(PathFileUtils.isSupportedFile(pathString) && pathString.contains("/")) {
 							String directory = pathString.substring(0, pathString.lastIndexOf("/"));
 							repositoryDirectoriesBefore.add(directory);
 							//include sub-directories
@@ -392,7 +393,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						IOUtils.copy(loader.openStream(), writer);
 						fileContentsCurrent.put(pathString, writer.toString());
 					}
-					if(pathString.endsWith(".java") && pathString.contains("/")) {
+					if(PathFileUtils.isSupportedFile(pathString) && pathString.contains("/")) {
 						String directory = pathString.substring(0, pathString.lastIndexOf("/"));
 						repositoryDirectoriesCurrent.add(directory);
 						//include sub-directories
@@ -423,7 +424,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					IOUtils.copy(loader.openStream(), writer);
 					fileContents.put(pathString, writer.toString());
 				}
-				if(pathString.endsWith(".java") && pathString.contains("/")) {
+				if(PathFileUtils.isSupportedFile(pathString) && pathString.contains("/")) {
 					String directory = pathString.substring(0, pathString.lastIndexOf("/"));
 					repositoryDirectories.add(directory);
 					//include sub-directories
@@ -458,7 +459,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					File currentFilePath = new File(rootFolder, repoName + "-" + commit.getId().getName() + "/" + pathString);
 					FileUtils.writeStringToFile(currentFilePath, fileContent);
 				}
-				if(pathString.endsWith(".java") && pathString.contains("/")) {
+				if(PathFileUtils.isSupportedFile(pathString) && pathString.contains("/")) {
 					String directory = pathString.substring(0, pathString.lastIndexOf("/"));
 					repositoryDirectories.add(directory);
 					//include sub-directories
@@ -672,7 +673,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			List<String> filesCurrent = new ArrayList<String>();
 			Map<String, String> renamedFilesHint = new HashMap<String, String>();
 			for (GHCommit.File commitFile : commitFiles) {
-				if (commitFile.getFileName().endsWith(".java")) {
+				if (PathFileUtils.isSupportedFile(commitFile.getFileName())) {
 					if (commitFile.getStatus().equals("modified")) {
 						filesBefore.add(commitFile.getFileName());
 						filesCurrent.add(commitFile.getFileName());
@@ -800,7 +801,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	private static List<String> getJavaFilePaths(File folder) throws IOException {
 		Stream<Path> walk = Files.walk(Paths.get(folder.toURI()));
 		List<String> paths = walk.map(x -> x.toString())
-				.filter(f -> f.endsWith(".java"))
+				.filter(f -> PathFileUtils.isSupportedFile(f))
 				.map(x -> x.substring(folder.getPath().length()+1).replaceAll(systemFileSeparator, "/"))
 				.collect(Collectors.toList());
 		walk.close();
@@ -881,7 +882,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				else if(previousFile.isFile() && nextFile.isFile()) {
 					String previousFileName = previousFile.getName();
 					String nextFileName = nextFile.getName();
-					if(previousFileName.endsWith(".java") && nextFileName.endsWith(".java")) {
+					if(PathFileUtils.isSupportedFile(previousFileName) && PathFileUtils.isSupportedFile(nextFileName)) {
 						Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
 						Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
 						Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
@@ -1065,7 +1066,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		int count = 1;
 		for (GHCommit.File commitFile : commitFiles) {
 			String fileName = commitFile.getFileName();
-			if (commitFile.getFileName().endsWith(".java")) {
+			if (PathFileUtils.isSupportedFile(commitFile.getFileName())) {
 				commitFileNames.add(fileName);
 				logger.info(String.format("Processing file: " + fileName));
 				//sleep every 20 files to avoid HTTP 403 error
@@ -1111,7 +1112,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
 						parentRawFile = IOUtils.toString(parentRawFileInputStream);
 					}
-					filesBefore.put(fileName, parentRawFile);
+					if(!filesBefore.containsKey(fileName))
+						filesBefore.put(fileName, parentRawFile);
 					filesCurrent.put(fileName, currentRawFile);
 				}
 				catch(IOException e) {
@@ -1188,7 +1190,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
 						parentRawFile = IOUtils.toString(parentRawFileInputStream);
 					}
-					filesBefore.put(previousFilename, parentRawFile);
+					if(!filesBefore.containsKey(previousFilename))
+						filesBefore.put(previousFilename, parentRawFile);
 					filesCurrent.put(fileName, currentRawFile);
 					renamedFilesHint.put(previousFilename, fileName);
 					if(previousFilename.contains("/")) {
@@ -1385,7 +1388,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		ExecutorService pool = Executors.newFixedThreadPool(commitFiles.size());
 		for (GHCommit.File commitFile : commitFiles) {
 			String fileName = commitFile.getFileName();
-			if (commitFile.getFileName().endsWith(".java")) {
+			if (PathFileUtils.isSupportedFile(commitFile.getFileName())) {
 				commitFileNames.add(fileName);
 				if (commitFile.getStatus().equals("modified")) {
 					Runnable r = () -> {
@@ -1584,7 +1587,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			if(asTree != null) {
 				allRepositoryDirectories(asTree, path, repositoryDirectories);
 			}
-			else if(path.endsWith(".java")) {
+			else if(PathFileUtils.isSupportedFile(path)) {
 				repositoryDirectories.add(path.substring(0, path.lastIndexOf("/")));
 			}
 		}
@@ -1608,12 +1611,16 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	private static final String GITHUB_URL = "https://github.com/";
+	private static final String GITLAB_URL = "https://gitlab.com/";
 	private static final String BITBUCKET_URL = "https://bitbucket.org/";
 
 	private static String extractRepositoryName(String cloneURL) {
 		int hostLength = 0;
 		if(cloneURL.startsWith(GITHUB_URL)) {
 			hostLength = GITHUB_URL.length();
+		}
+		else if(cloneURL.startsWith(GITLAB_URL)) {
+			hostLength = GITLAB_URL.length();
 		}
 		else if(cloneURL.startsWith(BITBUCKET_URL)) {
 			hostLength = BITBUCKET_URL.length();
@@ -1641,6 +1648,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		if(cloneURL.startsWith(GITHUB_URL)) {
 			commitResource = "/pull/";
 		}
+		else if(cloneURL.startsWith(GITLAB_URL)) {
+			commitResource = "/merge_requests/";
+		}
 		else if(cloneURL.startsWith(BITBUCKET_URL)) {
 			commitResource = "/pull-requests/";
 		}
@@ -1657,7 +1667,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			indexOfDotGit = cloneURL.length() - 1;
 		}
 		String commitResource = "/";
-		if(cloneURL.startsWith(GITHUB_URL)) {
+		if(cloneURL.startsWith(GITHUB_URL) || cloneURL.startsWith(GITLAB_URL)) {
 			commitResource = "/commit/";
 		}
 		else if(cloneURL.startsWith(BITBUCKET_URL)) {
@@ -1676,7 +1686,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			indexOfDotGit = cloneURL.length() - 1;
 		}
 		String downloadResource = "/";
-		if(cloneURL.startsWith(GITHUB_URL)) {
+		if(cloneURL.startsWith(GITHUB_URL) || cloneURL.startsWith(GITLAB_URL)) {
 			downloadResource = "/archive/";
 		}
 		else if(cloneURL.startsWith(BITBUCKET_URL)) {
@@ -1830,9 +1840,6 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	public ProjectASTDiff diffAtPullRequest(String cloneURL, int pullRequestId, int timeout) throws Exception {
 		GHRepository repository = getGitHubRepository(cloneURL);
 		GHPullRequest pullRequest = repository.getPullRequest(pullRequestId);
-		//List<GHPullRequestFileDetail> files = new GHRepositoryWrapper(repository).listPullRequestFiles(pullRequest);
-		PagedIterable<GHPullRequestFileDetail> files = pullRequest.listFiles();
-		int changedFiles = pullRequest.getChangedFiles();
 		Map<String, String> filesBefore = new ConcurrentHashMap<String, String>();
 		Map<String, String> filesCurrent = new ConcurrentHashMap<String, String>();
 		Map<String, String> renamedFilesHint = new ConcurrentHashMap<String, String>();
@@ -1840,29 +1847,42 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		Set<String> repositoryDirectoriesCurrent = ConcurrentHashMap.newKeySet();
 		Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();
 		List<String> commitFileNames = new ArrayList<>();
-		if(changedFiles == 0) {
-			changedFiles = 10;
-		}
-		ExecutorService pool = Executors.newFixedThreadPool(changedFiles);
-		int count = 1;
-		for(GHPullRequestFileDetail commitFile : files) {
-			String fileName = commitFile.getFilename();
-			if (commitFile.getFilename().endsWith(".java")) {
-				commitFileNames.add(fileName);
-				logger.info(String.format("Processing file: " + fileName));
-				//sleep every 100 files to avoid HTTP 403 error
-				if (count % 100 == 0) {
-					Thread.sleep(500);
+		if(repository.isPrivate()) {
+			PagedIterable<GHPullRequestCommitDetail> commits = pullRequest.listCommits();
+			for(GHPullRequestCommitDetail commit : commits) {
+				if(commit.getParents().length > 1) {
+					//skip merge commits
+					continue;
 				}
-				multiThreadedFetch(filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore,
-						repositoryDirectoriesCurrent, deletedAndRenamedFileParentDirectories, commitFileNames, pool,
-						commitFile, fileName);
-				count++;
+				populateWithGitHubAPI(cloneURL, commit.getSha(), commitFileNames, filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
 			}
 		}
-		pool.shutdown();
-		pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
-		
+		else {
+			PagedIterable<GHPullRequestFileDetail> files = pullRequest.listFiles();
+			int changedFiles = pullRequest.getChangedFiles();
+			if(changedFiles == 0) {
+				changedFiles = 10;
+			}
+			ExecutorService pool = Executors.newFixedThreadPool(changedFiles);
+			int count = 1;
+			for(GHPullRequestFileDetail commitFile : files) {
+				String fileName = commitFile.getFilename();
+				if (PathFileUtils.isSupportedFile(commitFile.getFilename())) {
+					commitFileNames.add(fileName);
+					logger.info(String.format("Processing file: " + fileName));
+					//sleep every 100 files to avoid HTTP 403 error
+					if (count % 100 == 0) {
+						Thread.sleep(500);
+					}
+					multiThreadedFetch(filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore,
+							repositoryDirectoriesCurrent, deletedAndRenamedFileParentDirectories, commitFileNames, pool,
+							commitFile, fileName);
+					count++;
+				}
+			}
+			pool.shutdown();
+			pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+		}
 		Set<ProjectASTDiff> diffs = new HashSet<>();
 		ExecutorService service = Executors.newSingleThreadExecutor();
 		Future<?> f = null;
@@ -2128,7 +2148,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				else if(previousFile.isFile() && nextFile.isFile()) {
 					String previousFileName = previousFile.getName();
 					String nextFileName = nextFile.getName();
-					if(previousFileName.endsWith(".java") && nextFileName.endsWith(".java")) {
+					if(PathFileUtils.isSupportedFile(previousFileName) && PathFileUtils.isSupportedFile(nextFileName)) {
 						Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
 						Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
 						Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
@@ -2249,7 +2269,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			ExecutorService pool = Executors.newFixedThreadPool(commitFiles.size());
 			for (GHCommit.File commitFile : commitFiles) {
 				String fileName = commitFile.getFileName();
-				if (commitFile.getFileName().endsWith(".java")) {
+				if (PathFileUtils.isSupportedFile(commitFile.getFileName())) {
 					commitFileNames.add(fileName);
 					if (commitFile.getStatus().equals("modified")) {
 						Runnable r = () -> {

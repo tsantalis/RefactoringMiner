@@ -14,6 +14,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
+import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
 public class ReplaceAnonymousWithLambdaRefactoring implements MethodLevelRefactoring {
 	private UMLAnonymousClass anonymousClass;
@@ -23,17 +24,19 @@ public class ReplaceAnonymousWithLambdaRefactoring implements MethodLevelRefacto
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
 	private Set<AbstractCodeMapping> mappings;
+	private UMLOperationBodyMapper bodyMapper;
 
 	public ReplaceAnonymousWithLambdaRefactoring(UMLAnonymousClass anonymousClass, LambdaExpressionObject lambda,
 			AbstractCodeFragment anonymousOwner, AbstractCodeFragment lambdaOwner,
-			VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter, Set<AbstractCodeMapping> mappings) {
+			VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter, UMLOperationBodyMapper mapper) {
 		this.anonymousClass = anonymousClass;
 		this.lambda = lambda;
 		this.anonymousOwner = anonymousOwner;
 		this.lambdaOwner = lambdaOwner;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
-		this.mappings = mappings;
+		this.mappings = mapper.getMappings();
+		this.bodyMapper = mapper;
 	}
 
 	public UMLAnonymousClass getAnonymousClass() {
@@ -62,6 +65,10 @@ public class ReplaceAnonymousWithLambdaRefactoring implements MethodLevelRefacto
 
 	public Set<AbstractCodeMapping> getMappings() {
 		return mappings;
+	}
+
+	public UMLOperationBodyMapper getBodyMapper() {
+		return bodyMapper;
 	}
 
 	@Override

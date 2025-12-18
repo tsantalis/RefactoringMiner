@@ -1,14 +1,11 @@
 package gr.uom.java.xmi.decomposition;
 
-import static gr.uom.java.xmi.Constants.JAVA;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.Block;
@@ -22,15 +19,23 @@ import org.eclipse.jdt.core.dom.SuperMethodReference;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeMethodReference;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.YieldStatement;
+import org.refactoringminer.util.PathFileUtils;
 
+import extension.ast.node.LangASTNode;
+import extension.ast.node.declaration.LangSingleVariableDeclaration;
+import extension.ast.node.expression.LangExpression;
+import extension.ast.node.expression.LangLambdaExpression;
+import extension.ast.node.statement.LangBlock;
+import extension.ast.node.unit.LangCompilationUnit;
+import extension.ast.visitor.LangVisitor;
+import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.LocationInfoProvider;
-import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLComment;
-import gr.uom.java.xmi.UMLJavadoc;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -45,6 +50,31 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	private VariableDeclarationContainer owner;
 	private String asString;
 	
+	public LambdaExpressionObject(LangCompilationUnit cu, String sourceFolder, String filePath, LangLambdaExpression lambda, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this.owner = owner;
+		this.asString = LangVisitor.stringify(lambda);
+		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, lambda, CodeElementType.LAMBDA_EXPRESSION);
+		for (LangASTNode param : lambda.getParameters()) {
+			if(param instanceof LangSingleVariableDeclaration) {
+				VariableDeclaration parameter = new VariableDeclaration(cu, sourceFolder, filePath, (LangSingleVariableDeclaration)param, this, activeVariableDeclarations, fileContent);
+				parameters.add(parameter);
+				UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", ((LangSingleVariableDeclaration)param).isVarArgs());
+				umlParameter.setVariableDeclaration(parameter);
+				umlParameters.add(umlParameter);
+			}
+		}
+		if(lambda.getBody() instanceof LangBlock) {
+			this.body = new OperationBody(cu, sourceFolder, filePath, (LangBlock)lambda.getBody(), this, activeVariableDeclarations, fileContent);
+		}
+		else if(lambda.getBody() instanceof LangExpression) {
+			this.expression = new AbstractExpression(cu, sourceFolder, filePath, (LangExpression)lambda.getBody(), CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, fileContent);
+			this.expression.setLambdaOwner(this);
+			for(VariableDeclaration parameter : parameters) {
+				parameter.addStatementInScope(expression, false);
+			}
+		}
+	}
+
 	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, LambdaExpression lambda, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
 		this.owner = owner;
 		this.asString = lambda.toString();
@@ -89,6 +119,12 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, switchCaseBody, CodeElementType.LAMBDA_EXPRESSION);
 		if(switchCaseBody instanceof Block) {
 			this.body = new OperationBody(cu, sourceFolder, filePath, (Block)switchCaseBody, this, activeVariableDeclarations, javaFileContent);
+		}
+		else if(switchCaseBody instanceof YieldStatement) {
+			this.owner = owner;
+			this.asString = ((YieldStatement)switchCaseBody).getExpression().toString();
+			this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, ((YieldStatement)switchCaseBody).getExpression(), CodeElementType.YIELD_EXPRESSION);
+			this.expression = new AbstractExpression(cu, sourceFolder, filePath, ((YieldStatement)switchCaseBody).getExpression(), CodeElementType.LAMBDA_EXPRESSION, this, activeVariableDeclarations, javaFileContent);
 		}
 		else {
 			//TODO find a way to support switch-case with a single statement
@@ -208,6 +244,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	}
 
 	public String toString() {
+		Constants LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		StringBuilder sb = new StringBuilder();
 		if(hasParentheses) {
 			sb.append("(");
@@ -221,7 +258,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			sb.append(")");
 		}
 		if(parameters.size() > 0 || hasParentheses) {
-			sb.append(JAVA.LAMBDA_ARROW);
+			sb.append(LANG.LAMBDA_ARROW);
 		}
 		if(expression != null) {
 			sb.append(expression.getString());
@@ -378,100 +415,5 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			}
 		}
 		return variableDeclarationMap;
-	}
-
-	@Override
-	public UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration) {
-		for(UMLAnonymousClass anonymousClass : this.getAnonymousClassList()) {
-			if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration.getLocationInfo())) {
-				return anonymousClass;
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public boolean hasTestAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasParameterizedTestAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasSetUpAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasTearDownAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean hasDeprecatedAnnotation() {
-		return false;
-	}
-
-	@Override
-	public boolean isDeclaredInAnonymousClass() {
-		return false;
-	}
-
-	@Override
-	public Optional<UMLAnonymousClass> getAnonymousClassContainer() {
-		return Optional.empty();
-	}
-
-	@Override
-	public boolean isGetter() {
-		return false;
-	}
-
-	@Override
-	public boolean isSetter() {
-		return false;
-	}
-
-	@Override
-	public boolean isConstructor() {
-		return false;
-	}
-
-	@Override
-	public AbstractCall isDelegate() {
-		return null;
-	}
-
-	@Override
-	public AbstractCall singleStatementCallingMethod() {
-		return null;
-	}
-
-	@Override
-	public boolean isRecursive() {
-		return false;
-	}
-
-	@Override
-	public boolean isMain() {
-		return false;
-	}
-
-	@Override
-	public boolean isStatic() {
-		return false;
-	}
-
-	@Override
-	public UMLJavadoc getJavadoc() {
-		return null;
-	}
-
-	@Override
-	public List<UMLAnnotation> getAnnotations() {
-		return Collections.emptyList();
 	}
 }

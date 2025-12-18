@@ -3,6 +3,8 @@ package gr.uom.java.xmi.decomposition;
 import java.util.Map;
 import java.util.Set;
 
+import extension.ast.node.expression.LangTernaryExpression;
+import extension.ast.node.unit.LangCompilationUnit;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
 
@@ -16,6 +18,18 @@ public class TernaryOperatorExpression extends LeafExpression {
 	private AbstractExpression condition;
 	private AbstractExpression thenExpression;
 	private AbstractCodeFragment elseExpression;
+
+    public TernaryOperatorExpression(LangCompilationUnit cu, String sourceFolder, String filePath, LangTernaryExpression expression, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
+        super(cu, sourceFolder, filePath, expression, CodeElementType.TERNARY_OPERATOR, container);
+        this.condition = new AbstractExpression(cu, sourceFolder, filePath, expression.getCondition(), CodeElementType.TERNARY_OPERATOR_CONDITION, container, activeVariableDeclarations, javaFileContent);
+        this.thenExpression = new AbstractExpression(cu, sourceFolder, filePath, expression.getThenExpression(), CodeElementType.TERNARY_OPERATOR_THEN_EXPRESSION, container, activeVariableDeclarations, javaFileContent);
+        if(expression.getElseExpression() instanceof LangTernaryExpression) {
+            this.elseExpression = new TernaryOperatorExpression(cu, sourceFolder, filePath, (LangTernaryExpression) expression.getElseExpression(), container, activeVariableDeclarations, javaFileContent);
+        }
+        else {
+            this.elseExpression = new AbstractExpression(cu, sourceFolder, filePath, expression.getElseExpression(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION, container, activeVariableDeclarations, javaFileContent);
+        }
+    }
 
 	public TernaryOperatorExpression(CompilationUnit cu, String sourceFolder, String filePath, ConditionalExpression expression, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
 		super(cu, sourceFolder, filePath, expression, CodeElementType.TERNARY_OPERATOR, container);

@@ -9,43 +9,40 @@ import java.util.Objects;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import extension.ast.node.LangASTNode;
+import extension.ast.node.unit.LangCompilationUnit;
+import extension.ast.visitor.LangVisitor;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
-import gr.uom.java.xmi.diff.CodeRange;
 
 public class LeafExpression extends AbstractCodeFragment {
 	private String string;
-	protected LocationInfo locationInfo;
 	protected VariableDeclarationContainer container;
 
+	public LeafExpression(LangCompilationUnit cu, String sourceFolder, String filePath, LangASTNode expression, CodeElementType codeElementType, VariableDeclarationContainer container) {
+		super(new LocationInfo(cu, sourceFolder, filePath, expression, codeElementType));
+		this.string = LangVisitor.stringify(expression);
+		this.container = container;
+	}
+
 	public LeafExpression(CompilationUnit cu, String sourceFolder, String filePath, ASTNode expression, CodeElementType codeElementType, VariableDeclarationContainer container) {
-    	this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, expression, codeElementType);
+    	super(new LocationInfo(cu, sourceFolder, filePath, expression, codeElementType));
     	this.string = stringify(expression);
     	this.container = container;
 	}
 
 	public LeafExpression(String string, LocationInfo locationInfo) {
+		super(locationInfo);
 		this.string = string;
-		this.locationInfo = locationInfo;
 	}
 
-	protected LeafExpression() {
-		
+	protected LeafExpression(LocationInfo locationInfo) {
+		super(locationInfo);
 	}
 
 	public VariableDeclarationContainer getContainer() {
 		return container;
-	}
-
-	@Override
-	public LocationInfo getLocationInfo() {
-		return locationInfo;
-	}
-
-	@Override
-	public CodeRange codeRange() {
-		return locationInfo.codeRange();
 	}
 
 	@Override
@@ -190,6 +187,11 @@ public class LeafExpression extends AbstractCodeFragment {
 
 	@Override
 	public List<LambdaExpressionObject> getLambdas() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<ComprehensionExpression> getComprehensions() {
 		return Collections.emptyList();
 	}
 

@@ -174,7 +174,13 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(arguments.size() == 1) to if(arguments.size() != 1) in method public visit(node ASTConstructorCall, data Object) : Object from class net.sourceforge.pmd.lang.java.rule.performance.BigIntegerInstantiationRule",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/pmd/pmd.git",
@@ -284,18 +290,23 @@
         {
           "type": "PULL_UP_OPERATION",
           "description": "Pull Up Method\tpublic isStatic() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration to public isStatic() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTExecutableDeclaration",
-          "validation": true
+          "validation": false
         },
         {
           "type": "PULL_UP_OPERATION",
           "description": "Pull Up Method\tpublic isFinal() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration to public isFinal() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTExecutableDeclaration",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
         {
           "type": "MOVE_OPERATION",
           "description": "Move Method\tpublic isFinal() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration to public isFinal() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTExecutableDeclaration",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic isStatic() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration to public isStatic() : boolean from class net.sourceforge.pmd.lang.java.ast.ASTExecutableDeclaration",
           "validation": true
         }
       ]
@@ -451,7 +462,7 @@
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic withReporter(ruleSetLoader RuleSetLoader, reporter PmdReporter) : RuleSetLoader extracted from private loadRuleSetByFileName(ruleSetFileName String) : RuleSet in class net.sourceforge.pmd.lang.rule.AbstractRuleSetFactoryTest & moved to class net.sourceforge.pmd.lang.rule.InternalApiBridge",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
@@ -493,7 +504,13 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tcanBePreview : boolean to wasStandardized : boolean in method public errorMessage(jdk int, preview boolean) : String from class net.sourceforge.pmd.lang.java.ast.internal.LanguageLevelChecker.PreviewFeature",
+          "validation": false
+        }
+      ]
     },
     {
       "repository": "https://github.com/pmd/pmd.git",
@@ -572,7 +589,7 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpackage testQuery() : void renamed to package testQuery1() : void in class net.sourceforge.pmd.lang.apex.ast.ASTSoqlExpressionTest",
-          "validation": false
+          "validation": true
         }
       ],
       "ourApproach": [],
@@ -615,7 +632,7 @@
         {
           "type": "EXTRACT_SUPERCLASS",
           "description": "Extract Superclass\tnet.sourceforge.pmd.properties.InternalApiBridge.InternalPropertySerializer from classes [net.sourceforge.pmd.properties.ValueSyntax]",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_VARIABLE",
@@ -742,12 +759,12 @@
         {
           "type": "MOVE_AND_INLINE_OPERATION",
           "description": "Move And Inline Method\tpublic applies(file TextFile) : boolean moved from class net.sourceforge.pmd.lang.rule.RuleSet to class net.sourceforge.pmd.RuleSets & inlined to public applies(file TextFile) : boolean",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_AND_INLINE_OPERATION",
           "description": "Move And Inline Method\tpublic applies(file TextFile) : boolean moved from class net.sourceforge.pmd.lang.rule.RuleSet to class net.sourceforge.pmd.lang.rule.internal.RuleSets & inlined to public applies(file TextFile) : boolean",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
@@ -760,7 +777,13 @@
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic ruleSetApplies(ruleSet RuleSet, fileId FileId) : boolean extracted from public applies(file TextFile) : boolean in class net.sourceforge.pmd.lang.rule.internal.RuleSets & moved to class net.sourceforge.pmd.lang.rule.InternalApiBridge",
           "validation": true
-        }]
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(!RuleSet.applies(rule,currentLangVer)) to return RuleSet.applies(rule,languageVersion); in method public ruleSetApplies(rule Rule, languageVersion LanguageVersion) : boolean from class net.sourceforge.pmd.lang.rule.InternalApiBridge",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/pmd/pmd.git",
@@ -782,7 +805,7 @@
         {
           "type": "EXTRACT_OPERATION",
           "description": "Extract Method\tprotected newRuleViolation(rule Rule, location FileLocation, message String) : RuleViolation extracted from protected newRuleViolation(beginLine int, beginColumn int, endLine int, endColumn int, rule Rule) : RuleViolation in class net.sourceforge.pmd.renderers.AbstractRendererTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",

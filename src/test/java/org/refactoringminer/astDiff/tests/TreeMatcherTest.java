@@ -47,6 +47,7 @@ public class TreeMatcherTest {
     @MethodSource("initData")
     public void testMappings(Tree srcTree, Tree dstTree, String expectedMappings, String folderPath)
     {
+        org.refactoringminer.astDiff.utils.Constants.setFilePath(".java");
         ExtendedMultiMappingStore mappings = new ExtendedMultiMappingStore(srcTree,dstTree);
         new LeafMatcher().match(srcTree,dstTree,mappings);
         try {

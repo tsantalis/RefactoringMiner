@@ -2,7 +2,14 @@ package gr.uom.java.xmi;
 
 public enum Constants {
 	JAVA(";\n", "return ", "return;\n", "return true;\n", "return false;\n", "return null;\n", "return this;\n", "=", "break;\n", "continue;\n",
-			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this.", " ? ", " : ");
+			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", " ? ", " : ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "null", "true", "false"),
+	
+	PYTHON("\n", "return ", "return\n", "return true\n", "return false\n", "return None\n", "return self\n", "=", "break\n", "continue\n",
+			" -> ", "::", " + ", "raise ", "case ", "try", "{", "}", "{", "}", "self", "self.", " if ", " else ", "assertRaises", "assertRaises", " and ", " or ", "not ", "None", "True", "False"),
+	
+	KOTLIN("\n", "return ", "return\n", "return true\n", "return false\n", "return null\n", "return this\n", "=", "break\n", "continue\n",
+			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", " if ", " else ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "null", "true", "false");
+	
 	public final String STATEMENT_TERMINATION;
 	public final String RETURN_SPACE;
 	public final String RETURN_STATEMENT;
@@ -23,9 +30,18 @@ public enum Constants {
 	public final String CLOSE_BLOCK;
 	public final String OPEN_ARRAY_INITIALIZER;
 	public final String CLOSE_ARRAY_INITIALIZER;
+	public final String THIS;
 	public final String THIS_DOT;
 	public final String TERNARY_CONDITION;
 	public final String TERNARY_ELSE;
+	public final String ASSERT_THROWS;
+	public final String ASSERT_THAT_THROWN_BY;
+	public final String AND;
+	public final String OR;
+	public final String NOT;
+	public final String NULL;
+	public final String TRUE;
+	public final String FALSE;
 	
 	Constants(
 			String STATEMENT_TERMINATION,
@@ -48,9 +64,18 @@ public enum Constants {
 			String CLOSE_BLOCK,
 			String OPEN_ARRAY_INITIALIZER,
 			String CLOSE_ARRAY_INITIALIZER,
+			String THIS,
 			String THIS_DOT,
 			String TERNARY_CONDITION,
-			String TERNARY_ELSE) {
+			String TERNARY_ELSE,
+			String ASSERT_THROWS,
+			String ASSERT_THAT_THROWN_BY,
+			String AND,
+			String OR,
+			String NOT,
+			String NULL,
+			String TRUE,
+			String FALSE) {
 		this.STATEMENT_TERMINATION = STATEMENT_TERMINATION;
 		this.RETURN_SPACE = RETURN_SPACE;
 		this.RETURN_STATEMENT = RETURN_STATEMENT;
@@ -71,8 +96,17 @@ public enum Constants {
 		this.CLOSE_BLOCK = CLOSE_BLOCK;
 		this.OPEN_ARRAY_INITIALIZER = OPEN_ARRAY_INITIALIZER;
 		this.CLOSE_ARRAY_INITIALIZER = CLOSE_ARRAY_INITIALIZER;
+		this.THIS = THIS;
 		this.THIS_DOT = THIS_DOT;
 		this.TERNARY_CONDITION = TERNARY_CONDITION;
 		this.TERNARY_ELSE = TERNARY_ELSE;
+		this.ASSERT_THROWS = ASSERT_THROWS;
+		this.ASSERT_THAT_THROWN_BY = ASSERT_THAT_THROWN_BY;
+		this.AND = AND;
+		this.OR = OR;
+		this.NOT = NOT;
+		this.NULL = NULL;
+		this.TRUE = TRUE;
+		this.FALSE = FALSE;
 	}
 }

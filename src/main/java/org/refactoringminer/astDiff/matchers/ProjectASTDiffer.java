@@ -165,6 +165,7 @@ public class ProjectASTDiffer
 
 	private void makeASTDiff(List<? extends UMLAbstractClassDiff> umlClassBaseDiffList, boolean mergeFlag){
 		for (UMLAbstractClassDiff classDiff : umlClassBaseDiffList) {
+			org.refactoringminer.astDiff.utils.Constants.setFilePath(classDiff.getOriginalClass().getLocationInfo().getFilePath());
 			Collection<ASTDiff> appends = findAppends(projectASTDiff.getDiffSet(), classDiff.getOriginalClass().getSourceFile(), classDiff.getNextClass().getSourceFile(), false);
 			boolean decision = (!appends.isEmpty()) || mergeFlag;
 			ASTDiff classASTDiff = process(classDiff, findTreeContexts(modelDiff, classDiff), decision, appends);
@@ -181,6 +182,7 @@ public class ProjectASTDiffer
 
 	private void makeASTDiffForPackageInfos(List<UMLPackageInfoDiff> umlPackageInfoDiffList, boolean mergeFlag){
 		for (UMLPackageInfoDiff packageInfoDiff : umlPackageInfoDiffList) {
+			org.refactoringminer.astDiff.utils.Constants.setFilePath(packageInfoDiff.getOriginalPackageInfo().getLocationInfo().getFilePath());
 			Collection<ASTDiff> appends = findAppends(projectASTDiff.getDiffSet(), packageInfoDiff.getOriginalPackageInfo().getLocationInfo().getFilePath(), packageInfoDiff.getNextPackageInfo().getLocationInfo().getFilePath(), false);
 			boolean decision = (!appends.isEmpty()) || mergeFlag;
 			ASTDiff packageInfoASTDiff = process(packageInfoDiff, findTreeContexts(modelDiff, packageInfoDiff), decision, appends);
@@ -197,6 +199,7 @@ public class ProjectASTDiffer
 
 	private void makeASTDiffForModuleInfos(List<UMLModuleDiff> umlModuleDiffList, boolean mergeFlag){
 		for (UMLModuleDiff moduleDiff : umlModuleDiffList) {
+			org.refactoringminer.astDiff.utils.Constants.setFilePath(moduleDiff.getOriginalModule().getLocationInfo().getFilePath());
 			Collection<ASTDiff> appends = findAppends(projectASTDiff.getDiffSet(), moduleDiff.getOriginalModule().getLocationInfo().getFilePath(), moduleDiff.getNextModule().getLocationInfo().getFilePath(), false);
 			boolean decision = (!appends.isEmpty()) || mergeFlag;
 			ASTDiff moduleASTDiff = process(moduleDiff, findTreeContexts(modelDiff, moduleDiff), decision, appends);

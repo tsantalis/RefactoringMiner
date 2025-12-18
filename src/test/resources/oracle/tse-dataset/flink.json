@@ -85,7 +85,7 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic available(record R, key K) : boolean renamed to public occupy(record R, key K) : boolean in class org.apache.flink.runtime.asyncprocessing.KeyAccountingUnit",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_ATTRIBUTE",
@@ -107,7 +107,7 @@
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tvoid to boolean in method public occupy(record R, key K) : boolean from class org.apache.flink.runtime.asyncprocessing.KeyAccountingUnit",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
@@ -137,7 +137,7 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tstateFuture : StateFutureImpl<Void> to stateFuture : InternalStateFuture<OUT> in method public handleRequest(state State, type StateRequestType, payload IN) : InternalStateFuture<OUT> from class org.apache.flink.runtime.asyncprocessing.AsyncExecutionController",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
@@ -147,7 +147,7 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tstateFuture : StateFutureImpl<Integer> to stateFuture : InternalStateFuture<OUT> in method public handleRequest(state State, type StateRequestType, payload IN) : InternalStateFuture<OUT> from class org.apache.flink.runtime.asyncprocessing.AsyncExecutionController",
-          "validation": true
+          "validation": false
         }
       ]
     },
@@ -232,7 +232,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tloggingEventsLocal : ConcurrentLinkedQueue<LogEvent> in method public beforeEach(context ExtensionContext) : void from class org.apache.flink.testutils.logging.LoggerAuditingExtension",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
@@ -591,12 +591,12 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tprotected startSchedulingInternal() : void renamed to public init(executionGraph ExecutionGraph, mainThreadExecutor ComponentMainThreadExecutor, metricGroup MetricGroup) : void in class org.apache.flink.runtime.scheduler.adaptivebatch.DefaultSpeculativeExecutionHandler",
-          "validation": false
+          "validation": true
         },
         {
           "type": "INLINE_OPERATION",
           "description": "Inline Method\tprivate registerMetrics(metricGroup MetricGroup) : void inlined to public init(executionGraph ExecutionGraph, mainThreadExecutor ComponentMainThreadExecutor, metricGroup MetricGroup) : void in class org.apache.flink.runtime.scheduler.adaptivebatch.DefaultSpeculativeExecutionHandler",
-          "validation": false
+          "validation": true
         },
         {
           "type": "RENAME_METHOD",
@@ -1225,7 +1225,7 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tsink : FileSystemOutputFormat<Row> in method private createSink(override boolean, partition boolean, dynamicGrouped boolean, staticPartitions LinkedHashMap<String,String>, sinkRef AtomicReference<FileSystemOutputFormat<Row>>) : OneInputStreamOperatorTestHarness<Row,Object> from class org.apache.flink.connector.file.table.FileSystemOutputFormatTest",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
@@ -1260,8 +1260,8 @@
           "validation": true
         },
         {
-          "type": "RENAME_ATTRIBUTE",
-          "description": "Rename Attribute\ttmpPath : Path to stagingBaseDir : Path in class org.apache.flink.connector.file.table.FileSystemOutputFormatTest",
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate createTestHarness(outputFormat FileSystemOutputFormat<Row>) : OneInputStreamOperatorTestHarness<Row,Object> extracted from private createSink(override boolean, partition boolean, dynamicGrouped boolean, staticPartitions LinkedHashMap<String,String>, sinkRef AtomicReference<FileSystemOutputFormat<Row>>) : OneInputStreamOperatorTestHarness<Row,Object> in class org.apache.flink.connector.file.table.FileSystemOutputFormatTest",
           "validation": true
         }
       ]
@@ -1353,12 +1353,12 @@
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic builder() : TestingBufferPool.Builder extracted from package testOnUpstreamBlockedAndResumed() : void in class org.apache.flink.runtime.io.network.partition.consumer.RemoteInputChannelTest & moved to class org.apache.flink.runtime.io.network.buffer.TestingBufferPool",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic builder() : TestingBufferPool.Builder extracted from package testRequestBuffer() : void in class org.apache.flink.runtime.io.network.partition.consumer.RemoteInputChannelTest & moved to class org.apache.flink.runtime.io.network.buffer.TestingBufferPool",
-          "validation": false
+          "validation": true
         },
         {
           "type": "EXTRACT_VARIABLE",
@@ -1452,7 +1452,7 @@
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tsegments : Collection<MemorySegment> to segments : List<MemorySegment> in method package requestExclusiveBuffers() : void from class org.apache.flink.runtime.io.network.partition.consumer.BufferManager",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [

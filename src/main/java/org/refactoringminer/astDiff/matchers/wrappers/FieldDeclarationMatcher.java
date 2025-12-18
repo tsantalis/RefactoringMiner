@@ -48,20 +48,20 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         Tree srcAttr = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo());
         Tree dstAttr = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo());
         if (srcAttr == null || dstAttr == null) return;
-        Tree srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, Constants.FIELD_DECLARATION);
-        Tree dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, Constants.FIELD_DECLARATION);
+        Tree srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, Constants.get().FIELD_DECLARATION);
+        Tree dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, Constants.get().FIELD_DECLARATION);
         if (srcFieldDeclaration == null) {
-            srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, Constants.ENUM_CONSTANT_DECLARATION);
+            srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, Constants.get().ENUM_CONSTANT_DECLARATION);
         }
         if (dstFieldDeclaration == null) {
-            dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, Constants.ENUM_CONSTANT_DECLARATION);
+            dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, Constants.get().ENUM_CONSTANT_DECLARATION);
         }
         //handle Record Components (SingleVariableDeclaration)
         if (srcFieldDeclaration == null) {
-            srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, Constants.RECORD_COMPONENT);
+            srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, Constants.get().RECORD_COMPONENT);
         }
         if (dstFieldDeclaration == null) {
-            dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, Constants.RECORD_COMPONENT);
+            dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, Constants.get().RECORD_COMPONENT);
         }
         //				|| srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
         new CommentMatcher(optimizationData, umlCommentListDiff).match(srcTree, dstTree, mappingStore);
@@ -108,13 +108,13 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         if (srcFieldDeclaration == null || dstFieldDeclaration == null) return;
         matchModifiersForField(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute.getVisibility().toString(),dstUMLAttribute.getVisibility().toString(),mappingStore);
         if (srcUMLAttribute.isFinal() && dstUMLAttribute.isFinal())
-            matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.FINAL,mappingStore);
+            matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.get().FINAL,mappingStore);
         if (srcUMLAttribute.isVolatile() && dstUMLAttribute.isVolatile())
-            matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.VOLATILE,mappingStore);
+            matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.get().VOLATILE,mappingStore);
         if (srcUMLAttribute.isStatic() && dstUMLAttribute.isStatic())
-            matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.STATIC,mappingStore);
+            matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.get().STATIC,mappingStore);
         if (srcUMLAttribute.isTransient() && dstUMLAttribute.isTransient())
-            matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.TRANSIENT,mappingStore);
+            matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.get().TRANSIENT,mappingStore);
     }
 
     private void matchFieldAnnotations(Tree srcFieldDeclaration, Tree dstFieldDeclaration, ExtendedMultiMappingStore mappingStore) {
@@ -122,9 +122,9 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         Pair<Tree, Tree> srcAndDst = TreeUtilFunctions.populateLeftAndRightBasedOnTheFirstChildOfType(
                 srcFieldDeclaration, dstFieldDeclaration,
                 new String[]{
-                        Constants.MARKER_ANNOTATION,
-                        Constants.SINGLE_MEMBER_ANNOTATION,
-                        Constants.NORMAL_ANNOTATION,
+                        Constants.get().MARKER_ANNOTATION,
+                        Constants.get().SINGLE_MEMBER_ANNOTATION,
+                        Constants.get().NORMAL_ANNOTATION,
                 }
         );
         new LeafMatcher().match(srcAndDst.getLeft(), srcAndDst.getRight(), mappingStore);
@@ -149,7 +149,7 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             for (Tree child : anyFieldDeclaration.getChildren()) {
                 if (child.getLabel().equals(label))
                     return child;
-                if (child.getType().name.equals(Constants.VARIABLE_DECLARATION_FRAGMENT))
+                if (child.getType().name.equals(Constants.get().VARIABLE_DECLARATION_FRAGMENT))
                     break;
             }
         }

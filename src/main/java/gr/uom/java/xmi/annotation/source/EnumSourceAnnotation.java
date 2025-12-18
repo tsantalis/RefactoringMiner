@@ -13,17 +13,9 @@ import java.util.List;
 
 public class EnumSourceAnnotation extends SourceAnnotation implements SingleMemberAnnotation, MarkerAnnotation, NormalAnnotation {
     public static final String ANNOTATION_TYPENAME = "EnumSource";
-    private List<List<String>> testParameters = new ArrayList<>();
 
-    public EnumSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLModel model) {
+    public EnumSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass enumClassDeclaration) {
         super(annotation, ANNOTATION_TYPENAME);
-        String enumClassLiteral;
-        if (annotation.isMarkerAnnotation()) {
-            enumClassLiteral = sanitizeLiteral(getFirstParameterType(operation));
-        } else {
-            enumClassLiteral = sanitizeLiteral(getValue().get(0));
-        }
-        UMLClass enumClassDeclaration = findEnumDeclaration(model, enumClassLiteral);
         if (annotation.isNormalAnnotation() && annotation.getMemberValuePairs().containsKey("names")) {
             if (annotation.getMemberValuePairs().containsKey("mode")) {
                 String mode = annotation.getMemberValuePairs().get("mode").getString();
@@ -58,20 +50,6 @@ public class EnumSourceAnnotation extends SourceAnnotation implements SingleMemb
         return includedValues;
     }
 
-    private static UMLClass findEnumDeclaration(UMLModel model, String enumClassLiteral) {
-        UMLClass enumClassDeclaration = null;
-        for (UMLClass aClass : model.getClassList()) {
-            if (aClass.getName().contains(enumClassLiteral)) {
-                enumClassDeclaration = aClass;
-            }
-        }
-        return enumClassDeclaration;
-    }
-
-    private static String getFirstParameterType(UMLOperation operation) {
-        return operation.getParametersWithoutReturnType().get(0).getType().getClassType();
-    }
-
     @Override
     public List<String> getValue() {
         assert !annotation.isMarkerAnnotation() : "getValue() is not supported by marker EnumSource annotation";
@@ -79,10 +57,5 @@ public class EnumSourceAnnotation extends SourceAnnotation implements SingleMemb
         List<LeafExpression> typeLiterals = value.getTypeLiterals();
         assert typeLiterals.size() == 1;
         return Collections.singletonList(typeLiterals.get(0).getString());
-    }
-
-    @Override
-    public List<List<String>> getTestParameters() {
-        return testParameters;
     }
 }

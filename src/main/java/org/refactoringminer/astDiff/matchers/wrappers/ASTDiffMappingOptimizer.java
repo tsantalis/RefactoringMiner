@@ -50,8 +50,8 @@ public class ASTDiffMappingOptimizer extends OptimizationAwareMatcher{
                 //Handles all string-literal cases (intra and inter file)
                 Tree srcTotal = parentContextMap.get(lastStepMapping.getFragment1().getLocationInfo().getFilePath()).getRoot();
                 Tree dstTotal = childContextMap.get(lastStepMapping.getFragment2().getLocationInfo().getFilePath()).getRoot();
-                Tree srcStringLiteral = TreeUtilFunctions.findByLocationInfo(srcTotal, lastStepMapping.getFragment1().getLocationInfo(), Constants.STRING_LITERAL);
-                Tree dstStringLiteral = TreeUtilFunctions.findByLocationInfo(dstTotal, lastStepMapping.getFragment2().getLocationInfo(), Constants.STRING_LITERAL);
+                Tree srcStringLiteral = TreeUtilFunctions.findByLocationInfo(srcTotal, lastStepMapping.getFragment1().getLocationInfo(), Constants.get().STRING_LITERAL);
+                Tree dstStringLiteral = TreeUtilFunctions.findByLocationInfo(dstTotal, lastStepMapping.getFragment2().getLocationInfo(), Constants.get().STRING_LITERAL);
                 if (srcStringLiteral != null && dstStringLiteral != null) {
                     input.getAllMappings().addMapping(srcStringLiteral, dstStringLiteral);
                 }

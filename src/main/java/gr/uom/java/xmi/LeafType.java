@@ -124,6 +124,14 @@ public class LeafType extends UMLType implements Cloneable {
 		return false;
 	}
 
+	public boolean pluralClassType(UMLType type) {
+		if(this.getClass() == type.getClass()) {
+			LeafType leafType = (LeafType)type;
+			return this.nonQualifiedClassType.equals(leafType.nonQualifiedClassType + "s") || leafType.nonQualifiedClassType.equals(this.nonQualifiedClassType + "s");
+		}
+		return false;
+	}
+
 	private boolean commonTokenInClassType(LeafType type) {
 		Set<String> excludedTokens = new HashSet<>();
 		excludedTokens.add("Psi");

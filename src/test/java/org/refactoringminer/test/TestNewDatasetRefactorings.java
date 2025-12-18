@@ -45,9 +45,16 @@ public class TestNewDatasetRefactorings {
 				.or(Refactorings.SplitMethod.getValue())
 				.or(Refactorings.MergeMethod.getValue())
 				.or(Refactorings.ReplaceAnonymousWithClass.getValue())
-				.or(Refactorings.ReplacePipelineWithLoop.getValue());
+				.or(Refactorings.ReplacePipelineWithLoop.getValue())
+				.or(Refactorings.ReplaceVariableWithAttribute.getValue())
+				.or(Refactorings.ReplaceAttributeWithVariable.getValue())
+				.or(Refactorings.MoveCode.getValue())
+				.or(Refactorings.SplitClass.getValue())
+				.or(Refactorings.MergeVariable.getValue())
+				.or(Refactorings.MergeParameter.getValue())
+				.or(Refactorings.InvertCondition.getValue());
 		TestBuilder test = new TestBuilder(detector, REPOS, types);
 		RefactoringPopulator.feedTSERefactoringInstances(test);
-		test.assertExpectationsWithGitHubAPI(3247, 116, 203);
+		test.assertExpectationsWithGitHubAPI(3522, 41, 76);
 	}
 }

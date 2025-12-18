@@ -16,7 +16,7 @@ import gr.uom.java.xmi.diff.RenameClassRefactoring;
 import gr.uom.java.xmi.diff.RenameOperationRefactoring;
 import org.refactoringminer.util.RefactoringRelationship;
 
-public class RefactoringCollector extends RefactoringHandler {
+public class RefactoringCollector implements RefactoringHandler {
   private final RefactoringSet rs;
   private Exception ex = null;
   public RefactoringCollector(String cloneUrl, String commitId) {

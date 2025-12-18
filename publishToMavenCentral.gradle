@@ -1,0 +1,155 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'eclipse'
+    id 'maven-publish'
+    id 'signing'
+    id 'idea'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'com.vanniktech.maven.publish' version '0.35.0'
+}
+
+group = "com.github.tsantalis"
+version = project.hasProperty('buildVersion') ?
+        project.buildVersion
+        : '3.0.13'
+
+applicationName = rootProject.name
+mainClassName = "org.refactoringminer.RefactoringMiner"
+
+idea {
+    module {
+        excludeDirs.add(file("src-test/data/astDiff/"))
+        excludeDirs.add(file("tmp"))
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
+    afterTest { descriptor, result ->
+        if (result.resultType == TestResult.ResultType.FAILURE) {
+            println "\n$descriptor.className [$descriptor.classDisplayName] > $descriptor.name [$descriptor.displayName]: $result.resultType"
+        }
+    }
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    jvmArgs '-Xmx4096M', '-Xms1024M' /* In case of heap-space error*/
+    if (project.hasProperty('notoken')) {
+        exclude '**/GHRepositoryWrapperTest.*'
+        exclude '**/TestCommandLine.*'
+        print 'Skipping tests that require a GitHub token'
+    }
+}
+// Improve testResourceProcessing time by ~10 seconds
+// Solution found in https://github.com/gradle/gradle/issues/1643#issuecomment-589864718
+tasks.processTestResources {
+    // Solution to slow testResourceProcessing (optimization)
+    eachFile { details ->
+        def targetFile = new File(destinationDir, details.path)
+        if (details.file.lastModified() == targetFile.lastModified()
+                && details.file.length() == targetFile.length()) {
+            exclude()
+        }
+    }
+
+    // Retain timestamps from source files
+    def copyDetails = []
+    eachFile { copyDetails << it }  // Collect copy details
+
+    doLast {
+        copyDetails.forEach { details ->
+            def target = new File(destinationDir, details.path)
+            if (target.exists()) {
+                target.setLastModified(details.lastModified)
+            }
+        }
+    }
+}
+dependencies {
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:6.10.1.202505221210-r'
+    implementation 'org.slf4j:slf4j-api:2.0.17'
+    runtimeOnly 'ch.qos.logback:logback-classic:1.5.21'
+    implementation 'org.eclipse.jdt:org.eclipse.jdt.core:3.39.0'
+    implementation 'org.apache.commons:commons-text:1.14.0'
+    implementation 'org.kohsuke:github-api:1.330'
+    implementation 'io.github.java-diff-utils:java-diff-utils:4.16'
+    implementation 'com.github.gumtreediff:core:3.0.0'
+    implementation 'com.github.gumtreediff:gen.jdt:3.0.0'
+    implementation 'org.jcommander:jcommander:2.0'
+    implementation 'org.jsoup:jsoup:1.21.2'
+    implementation 'com.perforce:p4java:2025.1.2785811'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.0'
+    testImplementation 'net.joshka:junit-json-params:5.9.2-r0'
+    testImplementation 'org.skyscreamer:jsonassert:1.5.1'
+    testImplementation 'org.glassfish:javax.json:1.1.4'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation 'it.unimi.dsi:fastutil:8.5.18'
+    implementation 'com.sparkjava:spark-core:2.9.4'
+    implementation('org.rendersnake:rendersnake:1.9.0') {
+        exclude group: 'javax.servlet', module: 'servlet-api'
+    }
+}
+
+java {
+    //withJavadocJar()
+    withSourcesJar()
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
+mavenPublishing {
+  publishToMavenCentral()
+
+  signAllPublications()
+}
+
+mavenPublishing {
+  coordinates("com.github.tsantalis", "refactoring-miner", "3.0.13")
+
+  pom {
+    name = "Refactoring Miner"
+    description = 'RefactoringMiner is a library/API written in Java that can detect refactorings applied in the history of a Java project.'
+    url = 'https://github.com/tsantalis/RefactoringMiner'
+    licenses {
+      license {
+        name = 'The MIT License (MIT)'
+        url = 'http://opensource.org/licenses/MIT'
+      }
+    }
+    developers {
+      developer {
+        id = 'tsantalis'
+        name = 'Nikolaos Tsantalis'
+        email = 'tsantalis@gmail.com'
+      }
+    }
+    scm {
+      connection = 'scm:git:git@github.com:tsantalis/RefactoringMiner.git'
+      developerConnection = 'scm:git:git@github.com:tsantalis/RefactoringMiner.git'
+      url = 'https://github.com/tsantalis/RefactoringMiner/tree/master'
+    }
+  }
+}
+
+tasks.withType(Sign) {
+    onlyIf { isReleaseVersion }
+}
+
+def jarName = project.hasProperty('jarName') ? project.jarName : 'RM-fat.jar'
+shadowJar {
+    manifest {
+        attributes 'Main-Class': 'org.refactoringminer.RefactoringMiner'
+    }
+    archiveFileName = jarName
+}

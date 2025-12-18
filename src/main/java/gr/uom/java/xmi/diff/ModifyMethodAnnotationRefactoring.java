@@ -12,7 +12,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
-public class ModifyMethodAnnotationRefactoring implements MethodLevelRefactoring {
+public class ModifyMethodAnnotationRefactoring implements MethodLevelRefactoring, ModifyAnnotationRefactoring {
 	private UMLAnnotation annotationBefore;
 	private UMLAnnotation annotationAfter;
 	private VariableDeclarationContainer operationBefore;
@@ -26,18 +26,22 @@ public class ModifyMethodAnnotationRefactoring implements MethodLevelRefactoring
 		this.operationAfter = operationAfter;
 	}
 
+	@Override
 	public UMLAnnotation getAnnotationBefore() {
 		return annotationBefore;
 	}
 
+	@Override
 	public UMLAnnotation getAnnotationAfter() {
 		return annotationAfter;
 	}
 
+	@Override
 	public VariableDeclarationContainer getOperationBefore() {
 		return operationBefore;
 	}
 
+	@Override
 	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
 	}

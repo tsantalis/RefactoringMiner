@@ -1,6 +1,7 @@
 package gr.uom.java.xmi;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,9 @@ import org.eclipse.jdt.core.dom.MemberValuePair;
 import org.eclipse.jdt.core.dom.NormalAnnotation;
 import org.eclipse.jdt.core.dom.SingleMemberAnnotation;
 
+import extension.ast.node.LangASTNode;
+import extension.ast.node.metadata.LangAnnotation;
+import extension.ast.node.unit.LangCompilationUnit;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.diff.CodeRange;
@@ -20,6 +24,7 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 	private String typeName;
 	private AbstractExpression value;
 	private Map<String, AbstractExpression> memberValuePairs = new LinkedHashMap<>();
+	private List<AbstractExpression> arguments = new ArrayList<>();
 	
 	public UMLAnnotation(CompilationUnit cu, String sourceFolder, String filePath, Annotation annotation, String javaFileContent) {
 		this.typeName = annotation.getTypeName().getFullyQualifiedName();
@@ -38,6 +43,46 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 		}
 	}
 
+	public UMLAnnotation(LangCompilationUnit cu, String sourceFolder, String filePath, LangAnnotation annotation, String fileContent) {
+		this.typeName = annotation.getName().getIdentifier();
+		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, annotation, CodeElementType.ANNOTATION);
+
+		// Handle single-member annotations (e.g., @decorator(value))
+		if (annotation.isSingleMemberAnnotation()) {
+			this.value = new AbstractExpression(cu, sourceFolder, filePath,
+					annotation.getValue(), CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, null, new LinkedHashMap<>(), fileContent);
+		}
+		// Handle normal annotations with named parameters (e.g., @dataclass(frozen=True, order=False))
+		else if (annotation.isNormalAnnotation()) {
+			Map<String, LangASTNode> langPairs = annotation.getMemberValuePairs();
+			for (Map.Entry<String, LangASTNode> entry : langPairs.entrySet()) {
+				AbstractExpression value = new AbstractExpression(cu, sourceFolder, filePath,
+						entry.getValue(), CodeElementType.NORMAL_ANNOTATION_MEMBER_VALUE_PAIR, null, new LinkedHashMap<>(), fileContent);
+				memberValuePairs.put(entry.getKey(), value);
+			}
+		}
+		// Handle positional arguments (e.g., @lru_cache(128))
+		else if (!annotation.getArguments().isEmpty()) {
+			// For now, treat the first argument as the primary value
+			// This matches common Python decorator patterns like @lru_cache(128)
+			if (annotation.getArguments().size() == 1) {
+				this.value = new AbstractExpression(cu, sourceFolder, filePath,
+						annotation.getArguments().get(0), CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, null, new LinkedHashMap<>(), fileContent);
+			}
+			// For multiple positional arguments, we could store them as indexed pairs
+			// e.g., "0" -> first_arg, "1" -> second_arg, etc.
+			else {
+				for (int i = 0; i < annotation.getArguments().size(); i++) {
+					LangASTNode node = annotation.getArguments().get(i);
+					AbstractExpression value = new AbstractExpression(cu, sourceFolder, filePath,
+							node, CodeElementType.NORMAL_ANNOTATION_MEMBER_VALUE_PAIR, null, new LinkedHashMap<>(), fileContent);
+					arguments.add(value);
+				}
+			}
+		}
+		// Marker annotation - no additional processing needed
+	}
+
 	public String getTypeName() {
 		return typeName;
 	}
@@ -51,7 +96,7 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 	}
 
 	public boolean isMarkerAnnotation() {
-		return value == null && memberValuePairs.isEmpty();
+		return value == null && memberValuePairs.isEmpty() && arguments.isEmpty();
 	}
 	
 	public boolean isSingleMemberAnnotation() {
@@ -59,7 +104,7 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 	}
 
  	public boolean isNormalAnnotation() {
- 		return memberValuePairs.size() > 0;
+ 		return memberValuePairs.size() > 0 || arguments.size() > 0;
  	}
  
 	public String toString() {
@@ -76,6 +121,17 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 			for(String key : memberValuePairs.keySet()) {
 				sb.append(key).append(" = ").append(memberValuePairs.get(key).getExpression());
 				if(i < memberValuePairs.size() - 1)
+					sb.append(", ");
+				i++;
+			}
+			sb.append(")");
+		}
+		if(!arguments.isEmpty()) {
+			sb.append("(");
+			int i = 0;
+			for(AbstractExpression argument : arguments) {
+				sb.append(argument.getExpression());
+				if(i < arguments.size() - 1)
 					sb.append(", ");
 				i++;
 			}
@@ -99,6 +155,7 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((memberValuePairs == null) ? 0 : memberValuePairsHashCode());
+		result = prime * result + ((arguments == null) ? 0 : argumentHashCode());
 		result = prime * result + ((typeName == null) ? 0 : typeName.hashCode());
 		result = prime * result + ((value == null) ? 0 : value.getExpression().hashCode());
 		return result;
@@ -118,6 +175,11 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 				return false;
 		} else if (!this.memberValuePairsEquals(other))
 			return false;
+		if (arguments == null) {
+			if (other.arguments != null)
+				return false;
+		} else if (!this.argumentEquals(other))
+			return false;
 		if (typeName == null) {
 			if (other.typeName != null)
 				return false;
@@ -133,6 +195,30 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 				return false;
 		}
 		return true;
+	}
+
+	private boolean argumentEquals(UMLAnnotation other) {
+		int thisSize = this.arguments.size();
+		int otherSize = other.arguments.size();
+		if(thisSize != otherSize) {
+			return false;
+		}
+		for(int i=0; i<this.arguments.size(); i++) {
+			AbstractExpression thisValue = this.arguments.get(i);
+			AbstractExpression otherValue = other.arguments.get(i);
+			if(!thisValue.getExpression().equals(otherValue.getExpression())) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private int argumentHashCode() {
+		int hashCode = 1;
+		for (AbstractExpression e : arguments) {
+		    hashCode = 31 * hashCode + (e == null ? 0 : e.getString().hashCode());
+		}
+		return hashCode;
 	}
 
 	private boolean memberValuePairsEquals(UMLAnnotation other) {

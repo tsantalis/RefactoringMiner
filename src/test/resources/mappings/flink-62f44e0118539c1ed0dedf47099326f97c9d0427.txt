@@ -3157,6 +3157,7 @@ line range:224-224==line range:229-229
 line range:225-225==line range:230-230
 line range:227-227==line range:232-232
 line range:230-230==line range:235-235
+line range:234-234==line range:239-239
 line range:229-231==line range:234-236
 line range:233-235==line range:238-240
 line range:229-231==line range:234-236
@@ -9837,6 +9838,8 @@ line range:52-52==line range:50-50
 line range:54-54==line range:52-52
 line range:58-58==line range:56-56
 line range:56-56==line range:54-54
+line range:59-59==line range:57-57
+line range:60-61==line range:58-59
 public testBasicProperties() : void -> package testBasicProperties() : void
 line range:66-67==line range:64-65
 line range:69-69==line range:67-67
@@ -10474,6 +10477,8 @@ line range:528-537==line range:519-528
 line range:486-538==line range:476-529
 line range:530-536==line range:521-527
 line range:529-537==line range:520-528
+public parameters() : Boolean[] -> private parameters() : Collection<Boolean>
+line range:102-102==line range:96-96
 private performCheck(resultFuture Future<SnapshotResult<T>>, jmState StateObjectCollection<T>, tmState StateObjectCollection<T>) : void -> private performCheck(resultFuture Future<SnapshotResult<T>>, jmState StateObjectCollection<T>, tmState StateObjectCollection<T>) : void
 line range:273-273==line range:272-272
 line range:275-275==line range:274-274
@@ -11137,6 +11142,8 @@ line range:1453-1455==line range:1442-1444
 line range:1456-1458==line range:1445-1447
 line range:1459-1461==line range:1448-1450
 line range:1477-1479==line range:1467-1469
+public parameters() : Boolean[] -> private parameters() : Collection<Boolean>
+line range:155-155==line range:148-148
 public DuplicatingInput(owner AbstractStreamOperatorV2<String>, inputId int) -> public DuplicatingInput(owner AbstractStreamOperatorV2<String>, inputId int)
 line range:511-511==line range:504-504
 public processElement(element StreamRecord<String>) : void -> public processElement(element StreamRecord<String>) : void
@@ -14807,9 +14814,14 @@ line range:99-99==line range:95-95
 line range:102-102==line range:98-98
 line range:109-114==line range:105-110
 line range:120-120==line range:116-116
+line range:104-104==line range:100-100
 line range:105-105==line range:101-101
 line range:107-107==line range:103-103
+line range:116-116==line range:112-112
+line range:117-117==line range:113-113
 line range:118-118==line range:114-114
+line range:122-122==line range:118-118
+line range:123-123==line range:119-119
 line range:124-124==line range:120-120
 line range:126-126==line range:122-122
 line range:101-127==line range:97-123
@@ -14879,6 +14891,7 @@ line range:64-71==line range:63-70
 line range:67-69==line range:66-68
 line range:69-71==line range:68-70
 line range:63-72==line range:62-71
+line range:76-76==line range:75-75
 public cancelShouldAlsoCancelPendingSynchronousCheckpoint() : void -> package cancelShouldAlsoCancelPendingSynchronousCheckpoint() : void
 line range:81-81==line range:81-81
 line range:84-84==line range:84-84

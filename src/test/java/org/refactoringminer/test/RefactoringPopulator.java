@@ -136,7 +136,9 @@ public class RefactoringPopulator {
 		TryWithResources(new BigInteger("2535301200456458802993406410752")),
 		ReplaceConditionalWithTernary(new BigInteger("5070602400912917605986812821504")),
 		AssertTimeout(new BigInteger("10141204801825835211973625643008")),
-		All(new BigInteger("20282409603651670423947251286015"));
+		ReplaceConditionalWithAssumption(new BigInteger("20282409603651670423947251286016")),
+		ExtractFixture(new BigInteger("40564819207303340847894502572032")),
+		All(new BigInteger("81129638414606681695789005144063"));
 
 		private BigInteger value;
 
@@ -154,6 +156,16 @@ public class RefactoringPopulator {
 
 		if ((systemsFlag & Systems.FSE.getValue()) > 0) {
 			prepareFSERefactorings(test, refactoringsFlag);
+		}
+	}
+
+	public static void preparePythonRefactorings(TestBuilder test, BigInteger flag)
+			throws IOException {
+		List<Root> roots = getPythonRefactorings(flag);
+		
+		for (Root root : roots) {
+			test.project(root.repository, "master").atCommit(root.sha1)
+					.containsOnly(extractRefactorings(root.refactorings));
 		}
 	}
 
@@ -247,6 +259,10 @@ public class RefactoringPopulator {
 
 	public static List<Root> getFSERefactorings(BigInteger flag) throws IOException {
 		return getRefactorings(flag, "data.json");
+	}
+
+	public static List<Root> getPythonRefactorings(BigInteger flag) throws IOException {
+		return getRefactorings(flag, "python-dataset/data.json");
 	}
 
 	public static List<Root> getRefactorings(BigInteger flag, String fileName) throws IOException {

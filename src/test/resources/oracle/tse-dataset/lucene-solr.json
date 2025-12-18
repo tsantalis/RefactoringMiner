@@ -275,6 +275,16 @@
           "type": "MOVE_OPERATION",
           "description": "Move Method\tpackage escapeDash(re String) : String from class org.apache.lucene.analysis.hunspell.Dictionary to private escapeDash(re String) : String from class org.apache.lucene.analysis.hunspell.AffixCondition",
           "validation": true
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom private parseAffix(affixes TreeMap<String,List<Integer>>, secondStageFlags Set<Character>, header String, reader LineNumberReader, isSuffix boolean, seenPatterns Map<String,Integer>, seenStrips Map<String,Integer>, flags FlagEnumerator) : void in class org.apache.lucene.analysis.hunspell.Dictionary to public compile(kind AffixKind, strip String, condition String, line String) : AffixCondition in class org.apache.lucene.analysis.hunspell.AffixCondition",
+          "validation": true
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom private parseAffix(affixes TreeMap<String,List<Integer>>, secondStageFlags Set<Character>, header String, reader LineNumberReader, isSuffix boolean, seenPatterns Map<String,Integer>, seenStrips Map<String,Integer>, flags FlagEnumerator) : void in class org.apache.lucene.analysis.hunspell.Dictionary to private skipCharPattern(condition String, pos int) : int in class org.apache.lucene.analysis.hunspell.AffixCondition",
+          "validation": true
         }
       ]
     },
@@ -309,6 +319,11 @@
         {
           "type": "REPLACE_PIPELINE_WITH_LOOP",
           "description": "Replace Pipeline With Loop\tList<String> adjusted=result.stream().map(s -> capitalizeAfterSpace(word,s)).collect(Collectors.toList()); with for(candidate: result) in method package suggest(word String, wordCase WordCase) : boolean from class org.apache.lucene.analysis.hunspell.ModifyingSuggester",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",
+          "description": "Replace Attribute With Variable\thasGoodSuggestions : boolean to hasGoodSuggestions : boolean in method private tryVariationsOf(word String) : boolean from class org.apache.lucene.analysis.hunspell.ModifyingSuggester",
           "validation": true
         }
       ]
@@ -496,12 +511,12 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tkey : null to prefixLength : null in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tids : null to prefixId : null in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
-          "validation": true
+          "validation": false
         }
       ]
     },
@@ -1225,7 +1240,22 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tresult : boolean to found : boolean in method private checkLastCompoundPart(wordChars char[], start int, length int, words List<IntsRef>) : boolean from class org.apache.lucene.analysis.hunspell.Hunspell",
-          "validation": false
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\tcFlag : char in method private isRootCompatibleWithContext(context WordContext, lastAffix int, entryId int) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(!dictionary.hasFlag(entryId,cFlag) && !isFlagAppendedByAffix(affix,cFlag) && !dictionary.hasFlag(entryId,dictionary.compoundFlag) && !isFlagAppendedByAffix(affix,dictionary.compoundFlag)) to return dictionary.hasFlag(entryId,cFlag) || isFlagAppendedByAffix(lastAffix,cFlag) || dictionary.hasFlag(entryId,dictionary.compoundFlag) || isFlagAppendedByAffix(lastAffix,dictionary.compoundFlag); in method private isRootCompatibleWithContext(context WordContext, lastAffix int, entryId int) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer",
+          "validation": true
+        },
+        {
+          "type": "INVERT_CONDITION",
+          "description": "Invert Condition\tif(!dictionary.hasFlag(entryId,dictionary.compoundFlag) && !dictionary.hasFlag(entryId,context.requiredFlag(dictionary))) to return dictionary.hasFlag(entryId,cFlag) || isFlagAppendedByAffix(lastAffix,cFlag) || dictionary.hasFlag(entryId,dictionary.compoundFlag) || isFlagAppendedByAffix(lastAffix,dictionary.compoundFlag); in method private isRootCompatibleWithContext(context WordContext, lastAffix int, entryId int) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer",
+          "validation": true
         }
       ]
     },
@@ -1245,6 +1275,11 @@
         {
           "type": "MOVE_OPERATION",
           "description": "Move Method\tprivate acceptCase(originalCase WordCase, entryId int, word char[], offset int, length int) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer to private acceptCase(originalCase WordCase, entryId int, root CharsRef) : boolean from class org.apache.lucene.analysis.hunspell.Hunspell",
+          "validation": true
+        },
+        {
+          "type": "MERGE_PARAMETER",
+          "description": "Merge Parameter\t[word : char[], offset : int, length : int] to root : CharsRef in method private acceptCase(originalCase WordCase, entryId int, root CharsRef) : boolean from class org.apache.lucene.analysis.hunspell.Hunspell",
           "validation": true
         }
       ]
@@ -1322,6 +1357,11 @@
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tCharSequence to boolean in method package needsInputCleaning(input CharSequence) : boolean from class org.apache.lucene.analysis.hunspell.Dictionary",
           "validation": false
+        },
+        {
+          "type": "MERGE_VARIABLE",
+          "description": "Merge Variable\t[line : String, sep : int] to beforeSep : String in method private writeNormalizedWordEntry(reuse StringBuilder, writer ByteSequencesWriter, line String) : void from class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
         }
       ]
     }

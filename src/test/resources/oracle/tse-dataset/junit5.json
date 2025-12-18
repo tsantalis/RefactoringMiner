@@ -178,6 +178,21 @@
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\ttypes : List<Class<?>> to types : var in method private collectTypes(scanResult ScanResult) : SortedSet<ClassInfo> from class org.junit.api.tools.ApiReportGenerator",
           "validation": true
+        },
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tEOL : String to EOL : String in method private collectTypes(scanResult ScanResult) : SortedSet<ClassInfo> from class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
+          "description": "Replace Variable With Attribute\tlogger : Logger to LOGGER : Logger in method private collectTypes(scanResult ScanResult) : SortedSet<ClassInfo> from class org.junit.api.tools.ApiReportGenerator",
+          "validation": true
+        },
+        {
+          "type": "MERGE_VARIABLE",
+          "description": "Merge Variable\t[packageName : String, typeName : String] to declaration : Declaration in method protected printDeclarationTableRow(declaration Declaration, out PrintWriter) : void from class org.junit.api.tools.AsciidocApiReportWriter",
+          "validation": true
         }
       ]
     },
@@ -1418,6 +1433,16 @@
           "type": "CHANGE_ATTRIBUTE_TYPE",
           "description": "Change Attribute Type\tfield : String to field : AutoCloseable in class org.junit.jupiter.engine.extension.AutoCloseTests.NullCloseableFieldTestCase",
           "validation": false
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tprivate getQualifiedFieldName(field Field) : String renamed to private getQualifiedName(field Field) : String in class org.junit.jupiter.engine.extension.AutoCloseExtension",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttypeName : String in method private getQualifiedName(field Field) : String from class org.junit.jupiter.engine.extension.AutoCloseExtension",
+          "validation": true
         }
       ]
     },
@@ -2196,6 +2221,11 @@
         {
           "type": "MOVE_AND_RENAME_OPERATION",
           "description": "Move And Rename Method\tpackage selectMethodByClassAndMethodNameWithParameterTypes() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests to package selectMethodByClassAndMethodName() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
+          "validation": false
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttestClass : var in method package selectMethodWithParametersByMethodReference() : void from class org.junit.platform.engine.discovery.DiscoverySelectorsTests.SelectMethodTests",
           "validation": true
         }
       ]

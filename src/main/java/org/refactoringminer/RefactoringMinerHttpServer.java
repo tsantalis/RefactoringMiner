@@ -1,7 +1,6 @@
 package org.refactoringminer;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
@@ -18,12 +17,10 @@ import java.util.concurrent.TimeUnit;
 
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.Refactoring;
-import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 public class RefactoringMinerHttpServer {
@@ -37,15 +34,7 @@ public class RefactoringMinerHttpServer {
 		
 		InetSocketAddress inetSocketAddress = new InetSocketAddress(InetAddress.getByName(hostName), port);
 		HttpServer server = HttpServer.create(inetSocketAddress, 0);
-		server.createContext("/RefactoringMiner", new MyHandler());
-		server.setExecutor(new ThreadPoolExecutor(4, 8, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(100)));
-		server.start();
-		System.out.println(InetAddress.getLocalHost());
-	}
-
-	static class MyHandler implements HttpHandler {
-		@Override
-		public void handle(HttpExchange exchange) throws IOException {
+		server.createContext("/RefactoringMiner", (HttpExchange exchange) -> {
 			printRequestInfo(exchange);
 			URI requestURI = exchange.getRequestURI();
 			String query = requestURI.getQuery();
@@ -61,12 +50,7 @@ public class RefactoringMinerHttpServer {
 			if (!oAuthToken.isEmpty()) {
 				miner.connectToGitHub(oAuthToken);
 			}
-			miner.detectAtCommit(gitURL, commitId, new RefactoringHandler() {
-				@Override
-				public void handle(String commitId, List<Refactoring> refactorings) {
-					detectedRefactorings.addAll(refactorings);
-				}
-			}, timeout);
+			miner.detectAtCommit(gitURL, commitId, (commitId1, refactorings) -> detectedRefactorings.addAll(refactorings), timeout);
 
 			String response = JSON(gitURL, commitId, detectedRefactorings);
 			System.out.println(response);
@@ -75,7 +59,10 @@ public class RefactoringMinerHttpServer {
 			OutputStream os = exchange.getResponseBody();
 			os.write(response.getBytes());
 			os.close();
-		}
+		});
+		server.setExecutor(new ThreadPoolExecutor(4, 8, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<>(100)));
+		server.start();
+		System.out.println(InetAddress.getLocalHost());
 	}
 
 	private static Map<String, String> queryToMap(String query) {

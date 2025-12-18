@@ -44,7 +44,7 @@ public class HunkNetwork {
     }
 
     private String getPath(Tree tree) {
-        Tree root = TreeUtilFunctions.getParentUntilType(tree, Constants.COMPILATION_UNIT);
+        Tree root = TreeUtilFunctions.getParentUntilType(tree, Constants.get().COMPILATION_UNIT);
 
         Optional<Map.Entry<String, TreeContext>> srcContext = srcContexts.entrySet().stream().filter(entry -> entry.getValue().getRoot().equals(root)).findFirst();
         if (srcContext.isPresent()) {
@@ -213,7 +213,7 @@ public class HunkNetwork {
 
             Tree tree = node.getTree();
 
-            if (tree.getType().name.equals(Constants.EMPTY_STATEMENT)) {
+            if (tree.getType().name.equals(Constants.get().EMPTY_STATEMENT)) {
                 node.setActive(false);
                 continue;
             }
@@ -227,13 +227,18 @@ public class HunkNetwork {
             List<Tree> variableDeclarations = new ArrayList<>();
             for (Tree subTree : subTrees) {
                 String subTreeType = subTree.getType().name;
-                switch (subTreeType) {
-                    case Constants.METHOD_DECLARATION -> methodDeclarations.add(subTree);
-                    case Constants.FIELD_DECLARATION -> fieldDeclarations.add(subTree);
-                    // TODO: investigation: it is only for "Enhanced For" and other parameters will be in variable
-                    //  declarations array
-                    case Constants.RECORD_COMPONENT -> parameterDeclarations.add(subTree);
-                    case Constants.VARIABLE_DECLARATION_STATEMENT -> variableDeclarations.add(subTree);
+                if (subTreeType.equals(Constants.get().METHOD_DECLARATION)) {
+                    methodDeclarations.add(subTree);
+                }
+                if (subTreeType.equals(Constants.get().FIELD_DECLARATION)) {
+                    fieldDeclarations.add(subTree);
+                }
+                // TODO: investigation: it is only for "Enhanced For" and other parameters will be in variable declarations array
+                if (subTreeType.equals(Constants.get().RECORD_COMPONENT)) {
+                    parameterDeclarations.add(subTree);
+                }
+                if (subTreeType.equals(Constants.get().VARIABLE_DECLARATION_STATEMENT)) {
+                    variableDeclarations.add(subTree);
                 }
             }
             if (methodDeclarations.isEmpty() && fieldDeclarations.isEmpty() && parameterDeclarations.isEmpty() && variableDeclarations.isEmpty()) {
@@ -276,7 +281,7 @@ public class HunkNetwork {
 
             for (Tree variableDeclaration : variableDeclarations) {
                 Tree variableDeclarationFragment = TreeUtilFunctions.findChildByType(variableDeclaration,
-                        Constants.VARIABLE_DECLARATION_FRAGMENT);
+                        Constants.get().VARIABLE_DECLARATION_FRAGMENT);
                 if (variableDeclarationFragment == null) {
                     continue;
                 }
@@ -298,13 +303,13 @@ public class HunkNetwork {
             subTrees.add(tree);
 
             List<Tree> classInstanceCreations =
-                    subTrees.stream().filter(subTree -> subTree.getType().name.equals(Constants.CLASS_INSTANCE_CREATION)).toList();
+                    subTrees.stream().filter(subTree -> subTree.getType().name.equals(Constants.get().CLASS_INSTANCE_CREATION)).toList();
             for (Tree classInstanceCreation : classInstanceCreations) {
-                Tree classType = TreeUtilFunctions.findChildByType(classInstanceCreation, Constants.SIMPLE_TYPE);
+                Tree classType = TreeUtilFunctions.findChildByType(classInstanceCreation, Constants.get().SIMPLE_TYPE);
                 if (classType == null) {
                     continue;
                 }
-                Tree className = TreeUtilFunctions.findChildByType(classType, Constants.SIMPLE_NAME);
+                Tree className = TreeUtilFunctions.findChildByType(classType, Constants.get().SIMPLE_NAME);
                 if (className == null) {
                     continue;
                 }
@@ -331,11 +336,11 @@ public class HunkNetwork {
     }
 
     private UMLClass getUMLClass(Node node) {
-        Tree hunkParentType = TreeUtilFunctions.getParentUntilType(node.getTree(), Constants.TYPE_DECLARATION);
+        Tree hunkParentType = TreeUtilFunctions.getParentUntilType(node.getTree(), Constants.get().TYPE_DECLARATION);
         if (hunkParentType == null) { // there is no need to process def-use when it is out of type
             return null;
         }
-        Tree parentTypeName = TreeUtilFunctions.findChildByType(hunkParentType, Constants.SIMPLE_NAME);
+        Tree parentTypeName = TreeUtilFunctions.findChildByType(hunkParentType, Constants.get().SIMPLE_NAME);
         if (parentTypeName == null) {
             return null;
         }
@@ -362,7 +367,7 @@ public class HunkNetwork {
     private void addVariableDeclarationEdges(Node node, Node variableDeclarationNode) {
         Tree variableDeclarationTree = variableDeclarationNode.getTree();
 
-        Tree methodRoot = TreeUtilFunctions.getParentUntilType(variableDeclarationTree, Constants.METHOD_DECLARATION);
+        Tree methodRoot = TreeUtilFunctions.getParentUntilType(variableDeclarationTree, Constants.get().METHOD_DECLARATION);
         if (methodRoot == null) { // https://github.com/elastic/elasticsearch/commit/e0a458441cff9a4242cd93f4c02f06d72f2d63c4#diff-9b7bef16de393901cd8c75e73d2fb03afb90a10f1de191b7174275bbd8e71bd8L38
             return;
         }
@@ -578,7 +583,7 @@ public class HunkNetwork {
             String type = node.getTree().getType().name;
 
             //            UmlClass.getImportedTypes();
-            if (type.equals(Constants.IMPORT_DECLARATION) || type.equals(Constants.PACKAGE_DECLARATION)) {
+            if (type.equals(Constants.get().IMPORT_DECLARATION) || type.equals(Constants.get().PACKAGE_DECLARATION)) {
                 node.setActive(false);
             }
         }

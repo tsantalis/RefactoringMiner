@@ -45,8 +45,8 @@ public class TraversalEngine {
     }
 
     private final List<String> unacceptedSuccessiveNodes = new ArrayList<>() {{
-        add(Constants.TYPE_DECLARATION);
-        add(Constants.METHOD_DECLARATION);
+        add(Constants.get().TYPE_DECLARATION);
+        add(Constants.get().METHOD_DECLARATION);
     }};
 
     private void addSuccessiveComponents() {
@@ -57,8 +57,8 @@ public class TraversalEngine {
         for (Node acceptedNode : acceptedNodes) {
             List<Edge> edges =
                     graph.edgesOf(acceptedNode).stream().filter(edge -> edge.getType().equals(EdgeType.SUCCESSION))
-                    // TODO: should we support succession for non-changes?
-                    .filter(edge -> graph.getEdgeTarget(edge).isBase() && graph.getEdgeSource(edge).isBase()).toList();
+                            // TODO: should we support succession for non-changes?
+                            .filter(edge -> graph.getEdgeTarget(edge).isBase() && graph.getEdgeSource(edge).isBase()).toList();
             for (Edge edge : edges) {
                 SuccessivePattern successivePattern = new SuccessivePattern();
 

@@ -20,6 +20,20 @@ public class Node {
     private List<Tree> dsts = null;
     private Set<Tree> dstExceptions = null;
     private Set<String> identifiers = new HashSet<>();
+    private Constants constants;
+
+    public Node(String fileContent, String path, Tree tree) {
+        this.id = formatId(path, tree);
+        this.fileContent = fileContent;
+        this.path = path;
+        this.tree = tree;
+        this.nodeType = NodeType.BASE;
+    }
+
+    public Node(String fileContent, String path, Tree tree, NodeType nodeType) {
+        this(fileContent, path, tree);
+        this.nodeType = nodeType;
+    }
 
     public JsonObject stringify() {
         JsonObject nodeObj = new JsonObject();
@@ -155,19 +169,6 @@ public class Node {
         return String.format("%s-%s-%s-%s", path, tree.getPos(), tree.getEndPos(), tree.getType().name);
     }
 
-    public Node(String fileContent, String path, Tree tree) {
-        this.id = formatId(path, tree);
-        this.fileContent = fileContent;
-        this.path = path;
-        this.tree = tree;
-        this.nodeType = NodeType.BASE;
-    }
-
-    public Node(String fileContent, String path, Tree tree, NodeType nodeType) {
-        this(fileContent, path, tree);
-        this.nodeType = nodeType;
-    }
-
     public String getId() {
         return id;
     }
@@ -195,14 +196,14 @@ public class Node {
     public String getContent() {
         if (isContext()) {
             String type = tree.getType().name;
-            if (type.equals(Constants.TYPE_DECLARATION) || type.equals(Constants.METHOD_DECLARATION) || type.equals(Constants.ENUM_DECLARATION) || type.equals(Constants.RECORD_DECLARATION)) {
-                Tree name = TreeUtilFunctions.findChildByType(tree, Constants.SIMPLE_NAME);
+            if (type.equals(Constants.get().TYPE_DECLARATION) || type.equals(Constants.get().METHOD_DECLARATION) || type.equals(Constants.get().ENUM_DECLARATION) || type.equals(Constants.get().RECORD_DECLARATION)) {
+                Tree name = TreeUtilFunctions.findChildByType(tree, Constants.get().SIMPLE_NAME);
                 if (name != null) {
                     return name.getLabel();
                 }
             }
 
-            if (type.equals(Constants.COMPILATION_UNIT)) {
+            if (type.equals(Constants.get().COMPILATION_UNIT)) {
                 return path;
             }
         }
@@ -256,6 +257,6 @@ public class Node {
     private List<String> getDescendantSimpleNames() {
         List<Tree> trees = new ArrayList<>(this.tree.getDescendants());
         trees.add(tree);
-        return trees.stream().filter(tree -> tree.getType().name.equals(Constants.SIMPLE_NAME)).map(tree -> fileContent.substring(tree.getPos(), tree.getEndPos())).toList();
+        return trees.stream().filter(tree -> tree.getType().name.equals(Constants.get().SIMPLE_NAME)).map(tree -> fileContent.substring(tree.getPos(), tree.getEndPos())).toList();
     }
 }

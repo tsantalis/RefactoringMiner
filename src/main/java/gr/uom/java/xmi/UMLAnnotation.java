@@ -11,6 +11,8 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MemberValuePair;
 import org.eclipse.jdt.core.dom.NormalAnnotation;
 import org.eclipse.jdt.core.dom.SingleMemberAnnotation;
+import org.jetbrains.kotlin.psi.KtAnnotationEntry;
+import org.jetbrains.kotlin.psi.KtFile;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.metadata.LangAnnotation;
@@ -41,6 +43,11 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 				memberValuePairs.put(pair.getName().getIdentifier(), value);
 			}
 		}
+	}
+
+	public UMLAnnotation(KtFile ktFile, String sourceFolder, String filePath, KtAnnotationEntry annotationEntry) {
+		this.typeName = annotationEntry.getShortName().asString();
+		this.locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, annotationEntry, CodeElementType.ANNOTATION);
 	}
 
 	public UMLAnnotation(LangCompilationUnit cu, String sourceFolder, String filePath, LangAnnotation annotation, String fileContent) {

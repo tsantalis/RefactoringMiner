@@ -14,8 +14,10 @@ import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtImportDirective;
 import org.jetbrains.kotlin.psi.KtImportList;
 import org.jetbrains.kotlin.psi.KtNamedDeclaration;
+import org.jetbrains.kotlin.psi.KtNamedFunction;
 import org.jetbrains.kotlin.psi.KtObjectDeclaration;
 import org.jetbrains.kotlin.psi.KtPackageDirective;
+import org.jetbrains.kotlin.psi.KtProperty;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 
@@ -30,7 +32,7 @@ public class KotlinFileProcessor {
 		PsiFile psiFile = factory.createFileFromText(filePath, KotlinLanguage.INSTANCE, fileContent);
 		KtFile ktFile = (KtFile)psiFile;
 		
-		String packageName = null;
+		String packageName = "";
 		String sourceFolder = "";
 		UMLPackage umlPackage = null;
 		KtPackageDirective packageDirective = ktFile.getPackageDirective();
@@ -42,27 +44,6 @@ public class KotlinFileProcessor {
 			}
 			LocationInfo packageLocationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, packageDirective, CodeElementType.PACKAGE_DECLARATION);
 			umlPackage = new UMLPackage(packageName, packageLocationInfo);
-		}
-		else {
-			packageName = "";
-			//find first type declaration
-			KtNamedDeclaration firstType = null;
-			for(PsiElement psiElement : ktFile.getChildren()) {
-				if(psiElement instanceof KtClass ktClass) {
-					firstType = ktClass;
-					break;
-				}
-				else if(psiElement instanceof KtObjectDeclaration ktObject) {
-					firstType = ktObject;
-					break;
-				}
-			}
-			if(firstType != null) {
-				int index = filePath.indexOf(firstType.getName());
-				if(index != -1) {
-					sourceFolder = filePath.substring(0, index);
-				}
-			}
 		}
 		
 		List<UMLImport> importedTypes = new ArrayList<UMLImport>();
@@ -78,6 +59,29 @@ public class KotlinFileProcessor {
 					importedTypes.add(imported);
 				}
 			}
+		}
+		List<KtNamedFunction> topLevelFunctions = new ArrayList<>();
+		List<KtProperty> topLevelProperties = new ArrayList<>();
+		for (PsiElement psiElement : ktFile.getChildren()) {
+			if (psiElement instanceof KtObjectDeclaration objectDeclaration) {
+				// TODO process object declaration
+			}
+			else if (psiElement instanceof KtClass ktClass) {
+				if (ktClass.isEnum()) {
+					// TODO process enum declaration
+				} else {
+					// TODO process class declaration
+				}
+			}
+			else if (psiElement instanceof KtNamedFunction function) {
+				topLevelFunctions.add(function);
+			}
+			else if (psiElement instanceof KtProperty property) {
+				topLevelProperties.add(property);
+			}
+		}
+		if (topLevelFunctions.size() > 0 || topLevelProperties.size() > 0) {
+			// TODO introduce module class
 		}
 	}
 

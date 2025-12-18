@@ -20,7 +20,6 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.UnionType;
 import org.eclipse.jdt.core.dom.WildcardType;
 import org.jetbrains.kotlin.com.intellij.psi.PsiElement;
-import org.jetbrains.kotlin.psi.KtAnnotation;
 import org.jetbrains.kotlin.psi.KtAnnotationEntry;
 import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtFile;
@@ -490,12 +489,11 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 
 	private static void processAnnotations(KtFile ktFile, String sourceFolder, String filePath, String fileContent, KtTypeReference typeReference, UMLType umlType) {
 		KtModifierList modifierList = typeReference.getModifierList();
-		for (PsiElement modifier : modifierList.getChildren()) {
-			if (modifier instanceof KtAnnotation annotation) {
-				// TODO add UMLAnnotation constructor
-			}
-			else if (modifier instanceof KtAnnotationEntry annotationEntry) {
-				umlType.annotations.add(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
+		if(modifierList != null) {
+			for (PsiElement modifier : modifierList.getChildren()) {
+				if (modifier instanceof KtAnnotationEntry annotationEntry) {
+					umlType.annotations.add(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
+				}
 			}
 		}
 	}

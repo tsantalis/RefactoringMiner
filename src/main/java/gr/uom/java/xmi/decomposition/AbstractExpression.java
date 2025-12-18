@@ -9,6 +9,8 @@ import java.util.Set;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
+import org.jetbrains.kotlin.psi.KtElement;
+import org.jetbrains.kotlin.psi.KtFile;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
@@ -88,10 +90,10 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.lambdaOwner = null;
 	}
 
-    public AbstractExpression(CompilationUnit cu, String sourceFolder, String filePath, Expression expression, CodeElementType codeElementType, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
-    	super(new LocationInfo(cu, sourceFolder, filePath, expression, codeElementType));
-    	Visitor visitor = new Visitor(cu, sourceFolder, filePath, container, activeVariableDeclarations, javaFileContent);
-    	expression.accept(visitor);
+	public AbstractExpression(CompilationUnit cu, String sourceFolder, String filePath, Expression expression, CodeElementType codeElementType, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
+		super(new LocationInfo(cu, sourceFolder, filePath, expression, codeElementType));
+		Visitor visitor = new Visitor(cu, sourceFolder, filePath, container, activeVariableDeclarations, javaFileContent);
+		expression.accept(visitor);
 		this.variables = visitor.getVariables();
 		this.types = visitor.getTypes();
 		this.variableDeclarations = visitor.getVariableDeclarations();
@@ -121,9 +123,47 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.lambdas = visitor.getLambdas();
 		this.comprehensions = visitor.getComprehensions();
 		this.expression = stringify(expression);
-    	this.owner = null;
-    	this.lambdaOwner = null;
-    }
+		this.owner = null;
+		this.lambdaOwner = null;
+	}
+
+	public AbstractExpression(KtFile cu, String sourceFolder, String filePath, KtElement expression, CodeElementType codeElementType, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
+		super(new LocationInfo(cu, sourceFolder, filePath, expression, codeElementType));
+		KotlinVisitor visitor = new KotlinVisitor(cu, sourceFolder, filePath, container, activeVariableDeclarations, javaFileContent);
+		expression.accept(visitor);
+		this.variables = visitor.getVariables();
+		this.types = visitor.getTypes();
+		this.variableDeclarations = visitor.getVariableDeclarations();
+		this.methodInvocations = visitor.getMethodInvocations();
+		this.anonymousClassDeclarations = visitor.getAnonymousClassDeclarations();
+		this.textBlocks = visitor.getTextBlocks();
+		this.stringLiterals = visitor.getStringLiterals();
+		this.charLiterals = visitor.getCharLiterals();
+		this.numberLiterals = visitor.getNumberLiterals();
+		this.nullLiterals = visitor.getNullLiterals();
+		this.booleanLiterals = visitor.getBooleanLiterals();
+		this.typeLiterals = visitor.getTypeLiterals();
+		this.creations = visitor.getCreations();
+		this.infixExpressions = visitor.getInfixExpressions();
+		this.assignments = visitor.getAssignments();
+		this.infixOperators = visitor.getInfixOperators();
+		this.arrayAccesses = visitor.getArrayAccesses();
+		this.prefixExpressions = visitor.getPrefixExpressions();
+		this.postfixExpressions = visitor.getPostfixExpressions();
+		this.thisExpressions = visitor.getThisExpressions();
+		this.arguments = visitor.getArguments();
+		this.parenthesizedExpressions = visitor.getParenthesizedExpressions();
+		this.castExpressions = visitor.getCastExpressions();
+		this.instanceofExpressions = visitor.getInstanceofExpressions();
+		this.patternInstanceofExpressions = visitor.getPatternInstanceofExpressions();
+		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
+		this.lambdas = visitor.getLambdas();
+		this.comprehensions = visitor.getComprehensions();
+		// TODO pretty-print with stringify
+		this.expression = expression.getText();
+		this.owner = null;
+		this.lambdaOwner = null;
+	}
 
     public void setOwner(CompositeStatementObject owner) {
     	this.owner = owner;

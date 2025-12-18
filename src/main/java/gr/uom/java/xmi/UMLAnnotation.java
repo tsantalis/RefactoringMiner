@@ -51,10 +51,8 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 		this.typeName = annotationEntry.getShortName().asString();
 		this.locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, annotationEntry, CodeElementType.ANNOTATION);
 		for(ValueArgument argument : annotationEntry.getValueArguments()) {
-			// TODO
-			// AbstractExpression expression = new AbstractExpression(ktFile, sourceFolder, filePath, argument, CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, null, new LinkedHashMap<>(), fileContent);
-			// this.arguments.add(expression);
-			break;
+			AbstractExpression expression = new AbstractExpression(ktFile, sourceFolder, filePath, (KtValueArgument)argument, CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, null, new LinkedHashMap<>(), fileContent);
+			this.arguments.add(expression);
 		}
 	}
 

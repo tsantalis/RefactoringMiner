@@ -8,6 +8,8 @@ import java.util.Objects;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.jetbrains.kotlin.psi.KtElement;
+import org.jetbrains.kotlin.psi.KtFile;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
@@ -27,9 +29,16 @@ public class LeafExpression extends AbstractCodeFragment {
 	}
 
 	public LeafExpression(CompilationUnit cu, String sourceFolder, String filePath, ASTNode expression, CodeElementType codeElementType, VariableDeclarationContainer container) {
-    	super(new LocationInfo(cu, sourceFolder, filePath, expression, codeElementType));
-    	this.string = stringify(expression);
-    	this.container = container;
+		super(new LocationInfo(cu, sourceFolder, filePath, expression, codeElementType));
+		this.string = stringify(expression);
+		this.container = container;
+	}
+
+	public LeafExpression(KtFile cu, String sourceFolder, String filePath, KtElement expression, CodeElementType codeElementType, VariableDeclarationContainer container) {
+		super(new LocationInfo(cu, sourceFolder, filePath, expression, codeElementType));
+		// TODO pretty-print with stringify
+		this.string = expression.getText();
+		this.container = container;
 	}
 
 	public LeafExpression(String string, LocationInfo locationInfo) {

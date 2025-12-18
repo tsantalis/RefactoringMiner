@@ -976,7 +976,7 @@ public class Visitor extends ASTVisitor {
 
 	public static String stringify(ASTNode node) {
 		ASTFlattener printer = new ASTFlattener();
-        node.accept(printer);
-        return printer.getResult();
+		node.accept(printer);
+		return printer.getResult();
 	}
 }

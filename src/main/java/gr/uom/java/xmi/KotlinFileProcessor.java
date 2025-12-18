@@ -3,14 +3,18 @@ package gr.uom.java.xmi;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jetbrains.kotlin.com.intellij.psi.PsiElement;
 import org.jetbrains.kotlin.com.intellij.psi.PsiFile;
 import org.jetbrains.kotlin.com.intellij.psi.impl.PsiFileFactoryImpl;
 import org.jetbrains.kotlin.idea.KotlinLanguage;
 import org.jetbrains.kotlin.name.FqName;
+import org.jetbrains.kotlin.psi.KtClass;
 import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtImportDirective;
 import org.jetbrains.kotlin.psi.KtImportList;
+import org.jetbrains.kotlin.psi.KtNamedDeclaration;
+import org.jetbrains.kotlin.psi.KtObjectDeclaration;
 import org.jetbrains.kotlin.psi.KtPackageDirective;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -26,14 +30,38 @@ public class KotlinFileProcessor {
 		PsiFile psiFile = factory.createFileFromText(filePath, KotlinLanguage.INSTANCE, fileContent);
 		KtFile ktFile = (KtFile)psiFile;
 		
-		String packageName = "";
+		String packageName = null;
 		String sourceFolder = "";
+		UMLPackage umlPackage = null;
 		KtPackageDirective packageDirective = ktFile.getPackageDirective();
 		if(packageDirective != null) {
 			packageName = packageDirective.getQualifiedName();
 			int index = filePath.indexOf(packageName.replace('.', '/'));
 			if(index != -1) {
 				sourceFolder = filePath.substring(0, index);
+			}
+			LocationInfo packageLocationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, packageDirective, CodeElementType.PACKAGE_DECLARATION);
+			umlPackage = new UMLPackage(packageName, packageLocationInfo);
+		}
+		else {
+			packageName = "";
+			//find first type declaration
+			KtNamedDeclaration firstType = null;
+			for(PsiElement psiElement : ktFile.getChildren()) {
+				if(psiElement instanceof KtClass ktClass) {
+					firstType = ktClass;
+					break;
+				}
+				else if(psiElement instanceof KtObjectDeclaration ktObject) {
+					firstType = ktObject;
+					break;
+				}
+			}
+			if(firstType != null) {
+				int index = filePath.indexOf(firstType.getName());
+				if(index != -1) {
+					sourceFolder = filePath.substring(0, index);
+				}
 			}
 		}
 		

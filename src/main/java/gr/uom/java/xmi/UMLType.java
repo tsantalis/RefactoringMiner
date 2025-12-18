@@ -436,8 +436,8 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		return false;
 	}
 
-	public static UMLType extractTypeObject(KtFile ktFile, String sourceFolder, String filePath, KtElement type, int extraDimensions) {
-		UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, type);
+	public static UMLType extractTypeObject(KtFile ktFile, String sourceFolder, String filePath, String fileContent, KtElement type, int extraDimensions) {
+		UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, type);
 		if (!(umlType instanceof InferredType)) {
 			umlType.locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, type, CodeElementType.TYPE);
 			umlType.arrayDimension += extraDimensions;
@@ -445,13 +445,13 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		return umlType;
 	}
 
-	private static UMLType extractTypeObject(KtFile ktFile, String sourceFolder, String filePath, KtElement type) {
+	private static UMLType extractTypeObject(KtFile ktFile, String sourceFolder, String filePath, String fileContent, KtElement type) {
 		if (type == null) {
 			return new InferredType();
 		} else if (type instanceof KtUserType userType) {
 			KtUserType qualifier = userType.getQualifier();
 			if (qualifier != null) {
-				UMLType left = extractTypeObject(ktFile, sourceFolder, filePath, qualifier);
+				UMLType left = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, qualifier);
 				LeafType rightType = extractTypeObject(userType.getReferencedName());
 				return new CompositeType(left, rightType);
 			} else return extractTypeObject(userType.getReferencedName());
@@ -459,43 +459,43 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 			KtTypeElement element = typeReference.getTypeElement();
 			if (element instanceof KtFunctionType functionType) {
 				KtTypeReference returnTypeReference = functionType.getReturnTypeReference();
-				UMLType returnType = returnTypeReference == null ? null : extractTypeObject(ktFile, sourceFolder, filePath, returnTypeReference);
+				UMLType returnType = returnTypeReference == null ? null : extractTypeObject(ktFile, sourceFolder, filePath, fileContent, returnTypeReference);
 				KtTypeReference receiverTypeReference = functionType.getReceiverTypeReference();
-				UMLType receiverType = receiverTypeReference == null ? null : extractTypeObject(ktFile, sourceFolder, filePath, receiverTypeReference);
+				UMLType receiverType = receiverTypeReference == null ? null : extractTypeObject(ktFile, sourceFolder, filePath, fileContent, receiverTypeReference);
 				List<UMLType> parameterTypeList = new ArrayList<>();
 				if (functionType.getParameterList() != null) {
 					List<KtParameter> parameterList = functionType.getParameterList().getParameters();
 					for (KtParameter ktParameter : parameterList) {
 						KtTypeReference parameterTypeReference = ktParameter.getTypeReference();
-						UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, parameterTypeReference);
+						UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, parameterTypeReference);
 						parameterTypeList.add(umlType);
 					}
 				}
 				FunctionType umlType = new FunctionType(receiverType, returnType, parameterTypeList);
-				processAnnotations(ktFile, sourceFolder, filePath, typeReference, umlType);
+				processAnnotations(ktFile, sourceFolder, filePath, fileContent, typeReference, umlType);
 				return umlType;
 			} else if(element instanceof KtUserType userType) {
-				UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, userType);
-				processAnnotations(ktFile, sourceFolder, filePath, typeReference, umlType);
+				UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, userType);
+				processAnnotations(ktFile, sourceFolder, filePath, fileContent, typeReference, umlType);
 				return umlType;
 			} else if(element instanceof KtNullableType nullableType) {
-				UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, nullableType.getInnerType());
+				UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, nullableType.getInnerType());
 				umlType.nullable = true;
-				processAnnotations(ktFile, sourceFolder, filePath, typeReference, umlType);
+				processAnnotations(ktFile, sourceFolder, filePath, fileContent, typeReference, umlType);
 				return umlType;
 			}
 		}
 		return null;
 	}
 
-	private static void processAnnotations(KtFile ktFile, String sourceFolder, String filePath, KtTypeReference typeReference, UMLType umlType) {
+	private static void processAnnotations(KtFile ktFile, String sourceFolder, String filePath, String fileContent, KtTypeReference typeReference, UMLType umlType) {
 		KtModifierList modifierList = typeReference.getModifierList();
 		for (PsiElement modifier : modifierList.getChildren()) {
 			if (modifier instanceof KtAnnotation annotation) {
 				// TODO add UMLAnnotation constructor
 			}
 			else if (modifier instanceof KtAnnotationEntry annotationEntry) {
-				umlType.annotations.add(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry));
+				umlType.annotations.add(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
 			}
 		}
 	}

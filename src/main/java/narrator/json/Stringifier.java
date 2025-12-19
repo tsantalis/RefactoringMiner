@@ -2,22 +2,27 @@ package narrator.json;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import narrator.graph.*;
-import narrator.graph.cluster.traverse.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import narrator.graph.Edge;
+import narrator.graph.EdgeType;
+import narrator.graph.Node;
+import narrator.graph.NodeType;
+import narrator.graph.cluster.traverse.TraversalComponent;
+import narrator.graph.cluster.traverse.TraversalPattern;
+import narrator.graph.cluster.traverse.UsagePattern;
 import org.jgrapht.Graph;
 
-import java.util.*;
-
 public class Stringifier {
+
     public static JsonObject graph(Graph<Node, Edge> graph) {
         Set<Node> nodes = graph.vertexSet();
 
         Map<String, PreprocessedNode> preprocessedNodes = new HashMap<>();
         for (Node node : nodes) {
-            if (!node.isActive()) {
-                continue;
-            }
-
             String id = node.getId();
             preprocessedNodes.put(id, new PreprocessedNode(node.stringify(), new HashSet<>()));
         }
@@ -25,13 +30,14 @@ public class Stringifier {
         JsonArray edgesArray = new JsonArray();
         for (Node source : nodes) {
             for (Node target : nodes) {
-                if (source.equals(target) || !source.isActive() || !target.isActive()) {
+                if (source.equals(target)) {
                     continue;
                 }
 
                 Set<Edge> edges = graph.getAllEdges(source, target);
                 for (Edge edge : edges) {
-                    edgesArray.add(stringifyEdge(source.getId(), target.getId(), edge.getType().name()));
+                    edgesArray.add(
+                            stringifyEdge(source.getId(), target.getId(), edge.getType().name()));
                 }
             }
         }
@@ -43,25 +49,28 @@ public class Stringifier {
         return graphObj;
     }
 
-    private static void stringifyComponentGraph(TraversalPattern traversalComponent, String aggregatorId, Map<String,
-            PreprocessedNode> preprocessedNodes, JsonArray edges) {
+    private static void stringifyComponentGraph(TraversalPattern traversalComponent,
+            String aggregatorId, Map<String,
+                    PreprocessedNode> preprocessedNodes, JsonArray edges) {
         Map<Node, UsagePattern> requirements = new HashMap<>();
         if (traversalComponent instanceof UsagePattern) {
             requirements.putAll(((UsagePattern) traversalComponent).getRequirements());
         }
 
         Graph<Node, Edge> graph = traversalComponent.getGraph();
-        List<Node> nodes = graph.vertexSet().stream().filter(Node::isActive).toList();
+        Set<Node> nodes = graph.vertexSet();
 
         for (Node node : nodes) {
             if (requirements.containsKey(node)) {
-                stringifyTraversalComponent(requirements.get(node), aggregatorId, preprocessedNodes, edges);
+                stringifyTraversalComponent(requirements.get(node), aggregatorId, preprocessedNodes,
+                        edges);
                 continue;
             }
 
             String nodeId = node.getId();
             if (!preprocessedNodes.containsKey(nodeId)) {
-                preprocessedNodes.put(nodeId, new PreprocessedNode(node.stringify(), new HashSet<>()));
+                preprocessedNodes.put(nodeId,
+                        new PreprocessedNode(node.stringify(), new HashSet<>()));
             }
             preprocessedNodes.get(nodeId).aggregatorIds.add(aggregatorId);
         }
@@ -88,15 +97,16 @@ public class Stringifier {
                     if (isDuplicateEdge(edges, sourceId, targetId, edge.getType().name())) {
                         continue;
                     }
-                    
+
                     edges.add(stringifyEdge(sourceId, targetId, edge.getType().name()));
                 }
             }
         }
     }
 
-    private static JsonObject stringifyTraversalComponents(List<TraversalPattern> traversalComponents,
-                                                           String aggregatorId) {
+    private static JsonObject stringifyTraversalComponents(
+            List<TraversalPattern> traversalComponents,
+            String aggregatorId) {
         Map<String, PreprocessedNode> preprocessedNodes = new HashMap<>();
         JsonArray edges = new JsonArray();
 
@@ -111,33 +121,38 @@ public class Stringifier {
         return graphObj;
     }
 
-    private static void stringifyTraversalComponent(TraversalPattern traversalComponent, String aggregatorId,
-                                                    Map<String, PreprocessedNode> preprocessedNodes, JsonArray edges) {
+    private static void stringifyTraversalComponent(TraversalPattern traversalComponent,
+            String aggregatorId,
+            Map<String, PreprocessedNode> preprocessedNodes, JsonArray edges) {
         String traversalComponentId = traversalComponent.getId();
 
         PreprocessedNode preprocessedNode = preprocessedNodes.get(traversalComponentId);
         if (preprocessedNode != null) {
             if (!preprocessedNode.aggregatorIds.contains(aggregatorId)) {
-                edges.add(stringifyEdge(aggregatorId, traversalComponentId, EdgeType.EXPANSION.name()));
+                edges.add(stringifyEdge(aggregatorId, traversalComponentId,
+                        EdgeType.EXPANSION.name()));
             }
             preprocessedNode.aggregatorIds.add(aggregatorId);
             return;
         }
 
         edges.add(stringifyEdge(aggregatorId, traversalComponentId, EdgeType.EXPANSION.name()));
-        preprocessedNodes.put(traversalComponentId, new PreprocessedNode(traversalComponent.stringify(),
-                new HashSet<>()));
+        preprocessedNodes.put(traversalComponentId,
+                new PreprocessedNode(traversalComponent.stringify(),
+                        new HashSet<>()));
         preprocessedNodes.get(traversalComponentId).aggregatorIds.add(aggregatorId);
 
         if (traversalComponent instanceof TraversalComponent) {
             for (TraversalPattern component : ((TraversalComponent) traversalComponent).getComponents()) {
-                stringifyTraversalComponent(component, traversalComponentId, preprocessedNodes, edges);
+                stringifyTraversalComponent(component, traversalComponentId, preprocessedNodes,
+                        edges);
             }
         } else {
             Node lead = traversalComponent.getLead();
             edges.add(stringifyEdge(traversalComponentId, lead.getId(), EdgeType.EXPANSION.name()));
 
-            stringifyComponentGraph(traversalComponent, traversalComponentId, preprocessedNodes, edges);
+            stringifyComponentGraph(traversalComponent, traversalComponentId, preprocessedNodes,
+                    edges);
         }
     }
 
@@ -167,7 +182,8 @@ public class Stringifier {
             String clusterId = String.format("cluster-%d", i);
 
             List<TraversalPattern> clusterComponents = clustersComponents.get(i - 1);
-            JsonObject stringifiedCluster = stringifyTraversalComponents(clusterComponents, clusterId);
+            JsonObject stringifiedCluster = stringifyTraversalComponents(clusterComponents,
+                    clusterId);
             nodesArray.addAll(stringifiedCluster.getAsJsonArray("nodes"));
             edgesArray.addAll(stringifiedCluster.getAsJsonArray("edges"));
 
@@ -204,15 +220,19 @@ public class Stringifier {
         return edgeObj;
     }
 
-    private static boolean isDuplicateEdge(JsonArray edges, String sourceId, String targetId, String type) {
+    private static boolean isDuplicateEdge(JsonArray edges, String sourceId, String targetId,
+            String type) {
         return edges.asList().stream().anyMatch(edge -> {
             JsonObject edgeObj = edge.getAsJsonObject();
-            return edgeObj.get("sourceId").getAsString().equals(sourceId) && edgeObj.get("targetId").getAsString().equals(targetId) && edgeObj.get("type").getAsString().equals(type);
+            return edgeObj.get("sourceId").getAsString().equals(sourceId) && edgeObj.get("targetId")
+                    .getAsString().equals(targetId) && edgeObj.get("type").getAsString()
+                    .equals(type);
         });
     }
 }
 
 class PreprocessedNode {
+
     JsonObject node;
     Set<String> aggregatorIds;
 

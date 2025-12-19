@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import narrator.apted.costmodel.StringUnitCostModel;
 import narrator.apted.distance.APTED;
 import org.jgrapht.Graph;
@@ -40,6 +41,7 @@ public class HunkNetwork {
     private final float distanceThreshold = 0;
     private final Map<String, String> srcContents;
     private final Map<String, String> dstContents;
+    private final Set<String> invalidTypes;
     Map<String, TreeContext> srcContexts;
     Map<String, TreeContext> dstContexts;
 
@@ -54,6 +56,12 @@ public class HunkNetwork {
         this.dstContents = dstContents;
         this.srcContexts = srcContexts;
         this.dstContexts = dstContexts;
+
+        this.invalidTypes = new HashSet<>() {{
+            add(Constants.get().EMPTY_STATEMENT);
+            add(Constants.get().IMPORT_DECLARATION);
+            add(Constants.get().PACKAGE_DECLARATION);
+        }};
     }
 
     private Pair<String, String> localizeTree(Tree tree) {
@@ -79,11 +87,15 @@ public class HunkNetwork {
     }
 
     public void importHunks(Set<Tree> additions, MappingStore mappings) {
+        Set<Tree> validAdditions = additions.stream()
+                .filter(addition -> !this.invalidTypes.contains(addition.getType().name)).collect(
+                        Collectors.toSet());
+
         HashMap<Tree, Set<Tree>> additionsChildren = new HashMap<>();
-        for (Tree subject : additions) {
+        for (Tree subject : validAdditions) {
             boolean isParent = true;
 
-            for (Tree object : additions) {
+            for (Tree object : validAdditions) {
                 if (subject.equals(object)) {
                     continue;
                 }
@@ -100,7 +112,7 @@ public class HunkNetwork {
             }
         }
         for (Tree parent : additionsChildren.keySet()) {
-            for (Tree addition : additions) {
+            for (Tree addition : validAdditions) {
                 if (parent.equals(addition)) {
                     continue;
                 }
@@ -236,7 +248,6 @@ public class HunkNetwork {
         System.out.println(
                 graph.edgeSet().stream().filter(edge -> edge.getType() == EdgeType.DEF_USE)
                         .toList());
-        processOutOfClasses();
         processSimilarity();
         processSuccession();
     }
@@ -249,11 +260,6 @@ public class HunkNetwork {
             }
 
             Tree tree = node.getTree();
-
-            if (tree.getType().name.equals(Constants.get().EMPTY_STATEMENT)) {
-                node.setActive(false);
-                continue;
-            }
 
             List<Tree> subTrees = new ArrayList<>(tree.getDescendants());
             subTrees.add(tree);
@@ -642,27 +648,6 @@ public class HunkNetwork {
         }
 
         return result;
-    }
-
-    private void processOutOfClasses() {
-        Set<Node> nodes = graph.vertexSet();
-
-        for (Node node : nodes) {
-            String type = node.getTree().getType().name;
-
-            //            UmlClass.getImportedTypes();
-            if (type.equals(Constants.get().IMPORT_DECLARATION) || type.equals(
-                    Constants.get().PACKAGE_DECLARATION)) {
-                node.setActive(false);
-            }
-        }
-
-        //            UmlClass.getPackageDeclaration()
-        //            UmlClass.getPackageDeclarationJavadoc()
-        //            UmlClass.getPackageDeclarationComments()
-
-        //            UmlClass.getJavadoc();
-        //            UmlClass.getComments();
     }
 
     private void processSuccession() {

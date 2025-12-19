@@ -1,17 +1,18 @@
 package narrator.graph.cluster;
 
-import com.google.gson.JsonObject;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import narrator.graph.Edge;
 import narrator.graph.Node;
 import org.jgrapht.Graph;
 
-import java.util.*;
-import java.util.stream.Stream;
-
 public class Clusterer {
-    private Graph<Node, Edge> graph;
-    private HashMap<String, Cluster> clusters;
-    private HashMap<Node, String> nodeToCluster;
+
+    private final Graph<Node, Edge> graph;
+    private final HashMap<String, Cluster> clusters;
+    private final HashMap<Node, String> nodeToCluster;
 
     public Clusterer(Graph<Node, Edge> graph) {
         this.graph = graph;
@@ -26,12 +27,8 @@ public class Clusterer {
 
         int clusterIndex = 0;
         for (Node source : nodes) {
-            if (!source.isActive()) {
-                continue;
-            }
-
             for (Node target : nodes) {
-                if (source.equals(target) || !target.isActive()) {
+                if (source.equals(target)) {
                     continue;
                 }
 
@@ -72,7 +69,7 @@ public class Clusterer {
         }
 
         for (Node node : graph.vertexSet()) {
-            if (node.isActive() && !nodeToCluster.containsKey(node)) {
+            if (!nodeToCluster.containsKey(node)) {
                 clusters.put(String.valueOf(clusterIndex), new Cluster(node));
                 nodeToCluster.put(node, String.valueOf(clusterIndex));
                 clusterIndex++;
@@ -85,7 +82,8 @@ public class Clusterer {
             return;
         }
 
-        List<Node> sourceClusterNodes = nodeToCluster.entrySet().stream().filter(entry -> entry.getValue().equals(source)).map(Map.Entry::getKey).toList();
+        List<Node> sourceClusterNodes = nodeToCluster.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(source)).map(Map.Entry::getKey).toList();
         for (Node node : sourceClusterNodes) {
             nodeToCluster.put(node, target);
         }

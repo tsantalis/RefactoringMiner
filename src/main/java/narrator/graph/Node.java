@@ -4,23 +4,24 @@ import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
-import java.util.*;
-
 public class Node {
+
     private final String id;
     private final String path;
     private final String fileContent;
-    private boolean active = true;
     private final Tree tree;
+    private final Set<String> identifiers = new HashSet<>();
     private NodeType nodeType;
     private List<Node> srcs = null;
     private List<Tree> dsts = null;
     private Set<Tree> dstExceptions = null;
-    private Set<String> identifiers = new HashSet<>();
-    private Constants constants;
 
     public Node(String fileContent, String path, Tree tree) {
         this.id = formatId(path, tree);
@@ -33,6 +34,11 @@ public class Node {
     public Node(String fileContent, String path, Tree tree, NodeType nodeType) {
         this(fileContent, path, tree);
         this.nodeType = nodeType;
+    }
+
+    public static String formatId(String path, Tree tree) {
+        return String.format("%s-%s-%s-%s", path, tree.getPos(), tree.getEndPos(),
+                tree.getType().name);
     }
 
     public JsonObject stringify() {
@@ -60,7 +66,8 @@ public class Node {
             nodeObj.add("identifiers", identifiersArr);
         }
 
-        Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> lineRange = TreeUtilFunctions.getLineRange(this.tree,
+        Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> lineRange = TreeUtilFunctions.getLineRange(
+                this.tree,
                 this.fileContent);
         Pair<Integer, Integer> startLineRange = lineRange.first;
         nodeObj.addProperty("startLine", startLineRange.first);
@@ -80,8 +87,9 @@ public class Node {
 
                 JsonArray contextsArr = new JsonArray();
                 List<Node> contexts =
-                        Context.get(src.getTree()).stream().map(context -> new Node(src.getFileContent(),
-                                src.getPath(), context.first, context.second)).toList();
+                        Context.get(src.getTree()).stream()
+                                .map(context -> new Node(src.getFileContent(),
+                                        src.getPath(), context.first, context.second)).toList();
                 contexts.forEach(context -> {
                     JsonObject contextObj = new JsonObject();
                     contextObj.addProperty("content", context.getContent());
@@ -99,7 +107,8 @@ public class Node {
                 Pair<Integer, Integer> srcEndRange = srcLineRange.second;
                 srcObj.addProperty("endLine", srcEndRange.first);
                 srcObj.addProperty("endLineOffset", srcEndRange.second);
-                srcObj.addProperty("length", src.getTree().getEndPos() - src.getTree().getPos() + 1);
+                srcObj.addProperty("length",
+                        src.getTree().getEndPos() - src.getTree().getPos() + 1);
 
                 srcsArr.add(srcObj);
             }
@@ -165,10 +174,6 @@ public class Node {
         this.dstExceptions = dstExceptions;
     }
 
-    public static String formatId(String path, Tree tree) {
-        return String.format("%s-%s-%s-%s", path, tree.getPos(), tree.getEndPos(), tree.getType().name);
-    }
-
     public String getId() {
         return id;
     }
@@ -178,7 +183,8 @@ public class Node {
     }
 
     public boolean isContext() {
-        return nodeType.equals(NodeType.LOCATION_CONTEXT) || nodeType.equals(NodeType.SEMANTIC_CONTEXT);
+        return nodeType.equals(NodeType.LOCATION_CONTEXT) || nodeType.equals(
+                NodeType.SEMANTIC_CONTEXT);
     }
 
     public boolean isExtension() {
@@ -196,7 +202,10 @@ public class Node {
     public String getContent() {
         if (isContext()) {
             String type = tree.getType().name;
-            if (type.equals(Constants.get().TYPE_DECLARATION) || type.equals(Constants.get().METHOD_DECLARATION) || type.equals(Constants.get().ENUM_DECLARATION) || type.equals(Constants.get().RECORD_DECLARATION)) {
+            if (type.equals(Constants.get().TYPE_DECLARATION) || type.equals(
+                    Constants.get().METHOD_DECLARATION) || type.equals(
+                    Constants.get().ENUM_DECLARATION) || type.equals(
+                    Constants.get().RECORD_DECLARATION)) {
                 Tree name = TreeUtilFunctions.findChildByType(tree, Constants.get().SIMPLE_NAME);
                 if (name != null) {
                     return name.getLabel();
@@ -213,14 +222,6 @@ public class Node {
 
     public String getFileContent() {
         return fileContent;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public boolean isActive() {
-        return active;
     }
 
     public String getPath() {
@@ -245,10 +246,12 @@ public class Node {
 
         Node left = null, right = null;
         if (nodeIndex > 0) {
-            left = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex - 1), NodeType.SEMANTIC_CONTEXT);
+            left = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex - 1),
+                    NodeType.SEMANTIC_CONTEXT);
         }
         if (nodeIndex < parentChildren.size() - 1) {
-            right = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex + 1), NodeType.SEMANTIC_CONTEXT);
+            right = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex + 1),
+                    NodeType.SEMANTIC_CONTEXT);
         }
 
         return new Pair<>(left, right);
@@ -257,6 +260,9 @@ public class Node {
     private List<String> getDescendantSimpleNames() {
         List<Tree> trees = new ArrayList<>(this.tree.getDescendants());
         trees.add(tree);
-        return trees.stream().filter(tree -> tree.getType().name.equals(Constants.get().SIMPLE_NAME)).map(tree -> fileContent.substring(tree.getPos(), tree.getEndPos())).toList();
+        List<Tree> simpleNameTrees = trees.stream()
+                .filter(tree -> tree.getType().name.equals(Constants.get().SIMPLE_NAME)).toList();
+        return simpleNameTrees.stream()
+                .map(tree -> fileContent.substring(tree.getPos(), tree.getEndPos())).toList();
     }
 }

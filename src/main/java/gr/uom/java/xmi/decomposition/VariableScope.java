@@ -4,6 +4,10 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.jetbrains.kotlin.com.intellij.openapi.editor.Document;
+import org.jetbrains.kotlin.com.intellij.openapi.util.text.StringUtil;
+import org.jetbrains.kotlin.com.intellij.psi.FileViewProvider;
+import org.jetbrains.kotlin.psi.KtFile;
 
 import extension.ast.node.unit.LangCompilationUnit;
 import gr.uom.java.xmi.LocationInfo;
@@ -43,12 +47,9 @@ public class VariableScope {
 	}
 
 	public VariableScope(CompilationUnit cu, String filePath, int startOffset, int endOffset) {
-		//ASTNode parent = node.getParent();
 		this.filePath = filePath;
 		this.startOffset = startOffset;
 		this.endOffset = endOffset;
-		//this.startOffset = node.getStartPosition();
-		//this.endOffset = parent.getStartPosition() + parent.getLength();
 		
 		//lines are 1-based
 		this.startLine = cu.getLineNumber(startOffset);
@@ -63,6 +64,27 @@ public class VariableScope {
 		//convert to 1-based
 		if(this.endColumn > 0) {
 			this.endColumn += 1;
+		}
+	}
+
+	public VariableScope(KtFile ktFile, String filePath, int startOffset, int endOffset) {
+		this.filePath = filePath;
+		this.startOffset = startOffset;
+		this.endOffset = endOffset;
+		
+		FileViewProvider fileViewProvider = ktFile.getViewProvider();
+		Document document = fileViewProvider.getDocument();
+
+		if (document != null) {
+			this.startLine = document.getLineNumber(startOffset) + 1;
+			this.endLine = document.getLineNumber(endOffset) + 1;
+			this.startColumn = StringUtil.offsetToLineColumn(document.getCharsSequence(), startOffset).column + 1;
+			this.endColumn = StringUtil.offsetToLineColumn(document.getCharsSequence(), endOffset).column + 1;
+		} else {
+			this.startLine = 0;
+			this.endLine = 0;
+			this.startColumn = 0;
+			this.endColumn = 0;
 		}
 	}
 

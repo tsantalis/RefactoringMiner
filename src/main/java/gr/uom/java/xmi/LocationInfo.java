@@ -8,6 +8,7 @@ import org.jetbrains.kotlin.com.intellij.openapi.editor.Document;
 import org.jetbrains.kotlin.com.intellij.openapi.util.TextRange;
 import org.jetbrains.kotlin.com.intellij.openapi.util.text.StringUtil;
 import org.jetbrains.kotlin.com.intellij.psi.FileViewProvider;
+import org.jetbrains.kotlin.com.intellij.psi.PsiElement;
 import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtFile;
 
@@ -54,6 +55,31 @@ public class LocationInfo {
 	}
 
 	public LocationInfo(KtFile ktFile, String sourceFolder, String filePath, KtElement node, CodeElementType codeElementType) {
+		this.sourceFolder = sourceFolder;
+		this.filePath = filePath;
+		this.codeElementType = codeElementType;
+		TextRange range = node.getTextRange();
+		this.startOffset = range.getStartOffset();
+		this.length = range.getLength();
+		this.endOffset = range.getEndOffset();
+
+		FileViewProvider fileViewProvider = ktFile.getViewProvider();
+		Document document = fileViewProvider.getDocument();
+
+		if (document != null) {
+			this.startLine = document.getLineNumber(startOffset) + 1;
+			this.endLine = document.getLineNumber(endOffset) + 1;
+			this.startColumn = StringUtil.offsetToLineColumn(document.getCharsSequence(), startOffset).column + 1;
+			this.endColumn = StringUtil.offsetToLineColumn(document.getCharsSequence(), endOffset).column + 1;
+		} else {
+			this.startLine = 0;
+			this.endLine = 0;
+			this.startColumn = 0;
+			this.endColumn = 0;
+		}
+	}
+
+	public LocationInfo(KtFile ktFile, String sourceFolder, String filePath, PsiElement node, CodeElementType codeElementType) {
 		this.sourceFolder = sourceFolder;
 		this.filePath = filePath;
 		this.codeElementType = codeElementType;

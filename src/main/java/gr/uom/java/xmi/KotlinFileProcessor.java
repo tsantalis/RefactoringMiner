@@ -1,6 +1,12 @@
 package gr.uom.java.xmi;
 
+import static org.jetbrains.kotlin.lexer.KtTokens.INTERNAL_KEYWORD;
+import static org.jetbrains.kotlin.lexer.KtTokens.PRIVATE_KEYWORD;
+import static org.jetbrains.kotlin.lexer.KtTokens.PROTECTED_KEYWORD;
+import static org.jetbrains.kotlin.lexer.KtTokens.PUBLIC_KEYWORD;
+
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.jetbrains.kotlin.com.intellij.psi.PsiElement;
@@ -13,13 +19,15 @@ import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtImportDirective;
 import org.jetbrains.kotlin.psi.KtImportList;
-import org.jetbrains.kotlin.psi.KtNamedDeclaration;
+import org.jetbrains.kotlin.psi.KtModifierList;
 import org.jetbrains.kotlin.psi.KtNamedFunction;
 import org.jetbrains.kotlin.psi.KtObjectDeclaration;
 import org.jetbrains.kotlin.psi.KtPackageDirective;
 import org.jetbrains.kotlin.psi.KtProperty;
+import org.jetbrains.kotlin.psi.KtTypeReference;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class KotlinFileProcessor {
 	private UMLModel umlModel;
@@ -81,8 +89,52 @@ public class KotlinFileProcessor {
 			}
 		}
 		if (topLevelFunctions.size() > 0 || topLevelProperties.size() > 0) {
-			// TODO introduce module class
+			LocationInfo locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, ktFile, CodeElementType.TYPE_DECLARATION);
+			String baseFileName = ktFile.getName();
+			if (baseFileName.endsWith(".kt")) {
+				baseFileName = baseFileName.substring(0, baseFileName.length() - 3);
+			}
+			String moduleName = packageName + baseFileName;
+			UMLClass moduleClass = new UMLClass(moduleName, "module", locationInfo, true, importedTypes);
+			moduleClass.setModule(true);
+			moduleClass.setPackageDeclaration(umlPackage);
+			
+			for(KtProperty property : topLevelProperties) {
+				UMLAttribute attribute = processFieldDeclaration(ktFile, property, sourceFolder, filePath, fileContent, locationInfo);
+				attribute.setClassName(moduleClass.getName());
+				moduleClass.addAttribute(attribute);
+			}
+			for(KtNamedFunction function : topLevelFunctions) {
+				// TODO process function declaration
+			}
+			umlModel.addClass(moduleClass);
 		}
+	}
+
+	private UMLAttribute processFieldDeclaration(KtFile ktFile, KtProperty property, String sourceFolder, String filePath, String fileContent, LocationInfo parentLocationInfo) {
+		KtTypeReference type = property.getTypeReference();
+		UMLType typeObject = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, type, 0);
+		LocationInfo locationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, property, CodeElementType.FIELD_DECLARATION);
+		UMLAttribute umlAttribute = new UMLAttribute(property.getName(), typeObject, locationInfo);
+		VariableDeclaration variableDeclaration = new VariableDeclaration(ktFile, sourceFolder, filePath, property, umlAttribute, new LinkedHashMap<>(), fileContent, parentLocationInfo);
+		variableDeclaration.setAttribute(true);
+		umlAttribute.setVariableDeclaration(variableDeclaration);
+		
+		KtModifierList modifierList = property.getModifierList();
+		// default visibility in Kotlin is public
+		umlAttribute.setVisibility(Visibility.PUBLIC);
+		if(modifierList != null) {
+			if (modifierList.hasModifier(PUBLIC_KEYWORD)) {
+				umlAttribute.setVisibility(Visibility.PUBLIC);
+			} else if (modifierList.hasModifier(PROTECTED_KEYWORD)) {
+				umlAttribute.setVisibility(Visibility.PROTECTED);
+			} else if (modifierList.hasModifier(PRIVATE_KEYWORD)) {
+				umlAttribute.setVisibility(Visibility.PRIVATE);
+			} else if (modifierList.hasModifier(INTERNAL_KEYWORD)) {
+				umlAttribute.setVisibility(Visibility.INTERNAL);
+			}
+		}
+		return umlAttribute;
 	}
 
 	private LocationInfo generateLocationInfo(KtFile ktFile,

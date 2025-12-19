@@ -32,6 +32,7 @@ import org.jetbrains.kotlin.com.intellij.psi.PsiElement;
 import org.jetbrains.kotlin.psi.KtAnnotationEntry;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtModifierList;
+import org.jetbrains.kotlin.psi.KtParameter;
 import org.jetbrains.kotlin.psi.KtProperty;
 import org.jetbrains.kotlin.psi.KtTypeReference;
 
@@ -728,14 +729,25 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			if (modifierList.hasModifier(PUBLIC_KEYWORD)) {
 				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PUBLIC_KEYWORD));
 				modifiers.add(modifier);
-			} else if (modifierList.hasModifier(PROTECTED_KEYWORD)) {
+			}
+			if (modifierList.hasModifier(PROTECTED_KEYWORD)) {
 				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PROTECTED_KEYWORD));
 				modifiers.add(modifier);
-			} else if (modifierList.hasModifier(PRIVATE_KEYWORD)) {
+			}
+			if (modifierList.hasModifier(PRIVATE_KEYWORD)) {
 				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PRIVATE_KEYWORD));
 				modifiers.add(modifier);
-			} else if (modifierList.hasModifier(INTERNAL_KEYWORD)) {
+			}
+			if (modifierList.hasModifier(INTERNAL_KEYWORD)) {
 				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(INTERNAL_KEYWORD));
+				modifiers.add(modifier);
+			}
+			if (modifierList.hasModifier(OPEN_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(OPEN_KEYWORD));
+				modifiers.add(modifier);
+			}
+			if (modifierList.hasModifier(OVERRIDE_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(OVERRIDE_KEYWORD));
 				modifiers.add(modifier);
 			}
 		}
@@ -744,5 +756,29 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		KtTypeReference type = property.getTypeReference();
 		this.type = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, type, 0);
 		this.scope = new VariableScope(ktFile, filePath, parentLocation.getStartOffset(), parentLocation.getEndOffset());
+	}
+
+	public VariableDeclaration(KtFile ktFile, String sourceFolder, String filePath, KtParameter parameter, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, parameter, CodeElementType.SINGLE_VARIABLE_DECLARATION);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		KtModifierList modifierList = parameter.getModifierList();
+		if(modifierList != null) {
+			for (PsiElement modifier : modifierList.getChildren()) {
+				if (modifier instanceof KtAnnotationEntry annotationEntry) {
+					annotations.add(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
+				}
+			}
+		}
+		this.variableName = parameter.getName();
+		this.initializer = parameter.getDefaultValue() != null ? new AbstractExpression(ktFile, sourceFolder, filePath, parameter.getDefaultValue(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent) : null;
+		KtTypeReference type = parameter.getTypeReference();
+		this.type = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, type, 0);
+		this.varargsParameter = parameter.isVarArg();
+		if(parameter.isVarArg()) {
+			this.type.setVarargs();
+		}
+		this.scope = new VariableScope(ktFile, filePath, this.locationInfo.getStartOffset(), container.getLocationInfo().getEndOffset());
 	}
 }

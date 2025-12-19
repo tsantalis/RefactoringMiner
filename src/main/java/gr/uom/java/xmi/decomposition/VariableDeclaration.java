@@ -28,6 +28,14 @@ import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
+import org.jetbrains.kotlin.com.intellij.psi.PsiElement;
+import org.jetbrains.kotlin.psi.KtAnnotationEntry;
+import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.psi.KtModifierList;
+import org.jetbrains.kotlin.psi.KtProperty;
+import org.jetbrains.kotlin.psi.KtTypeReference;
+
+import static org.jetbrains.kotlin.lexer.KtTokens.*;
 import org.refactoringminer.util.PathFileUtils;
 
 import extension.ast.node.LangASTNode;
@@ -254,8 +262,8 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 
 		StringBuilder signature = new StringBuilder();
-        signature.append(variableName);
-        if (!type.toString().equals("Object")) {
+		signature.append(variableName);
+		if (!type.toString().equals("Object")) {
 			signature.append(": ").append(type.toString());
 		}
 		this.actualSignature = signature.toString();
@@ -703,5 +711,38 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public Set<AbstractCodeFragment> getStatementsInScopeUsingVariable() {
 		return scope.getStatementsInScopeUsingVariable();
+	}
+
+	public VariableDeclaration(KtFile ktFile, String sourceFolder, String filePath, KtProperty property, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, LocationInfo parentLocation) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, property, CodeElementType.FIELD_DECLARATION);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		KtModifierList modifierList = property.getModifierList();
+		if(modifierList != null) {
+			for (PsiElement modifier : modifierList.getChildren()) {
+				if (modifier instanceof KtAnnotationEntry annotationEntry) {
+					annotations.add(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
+				}
+			}
+			if (modifierList.hasModifier(PUBLIC_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PUBLIC_KEYWORD));
+				modifiers.add(modifier);
+			} else if (modifierList.hasModifier(PROTECTED_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PROTECTED_KEYWORD));
+				modifiers.add(modifier);
+			} else if (modifierList.hasModifier(PRIVATE_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PRIVATE_KEYWORD));
+				modifiers.add(modifier);
+			} else if (modifierList.hasModifier(INTERNAL_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(INTERNAL_KEYWORD));
+				modifiers.add(modifier);
+			}
+		}
+		this.variableName = property.getName();
+		this.initializer = property.getInitializer() != null ? new AbstractExpression(ktFile, sourceFolder, filePath, property.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent) : null;
+		KtTypeReference type = property.getTypeReference();
+		this.type = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, type, 0);
+		this.scope = new VariableScope(ktFile, filePath, parentLocation.getStartOffset(), parentLocation.getEndOffset());
 	}
 }

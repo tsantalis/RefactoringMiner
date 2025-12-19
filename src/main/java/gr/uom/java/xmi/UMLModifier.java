@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Modifier;
+import org.jetbrains.kotlin.com.intellij.psi.PsiElement;
+import org.jetbrains.kotlin.psi.KtFile;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
@@ -22,6 +24,11 @@ public class UMLModifier implements Serializable, LocationInfoProvider {
 	public UMLModifier(LangCompilationUnit cu, String sourceFolder, String filePath, String keyword, LangASTNode astNode) {
 		this.keyword = keyword;
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, astNode, CodeElementType.MODIFIER);
+	}
+	
+	public UMLModifier(KtFile cu, String sourceFolder, String filePath, PsiElement modifier) {
+		this.keyword = modifier.getText();
+		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, modifier, CodeElementType.MODIFIER);
 	}
 
 	public String getKeyword() {

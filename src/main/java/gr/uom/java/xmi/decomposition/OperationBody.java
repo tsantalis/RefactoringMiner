@@ -39,14 +39,17 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.jdt.core.dom.YieldStatement;
 import org.jetbrains.kotlin.psi.KtBlockExpression;
+import org.jetbrains.kotlin.psi.KtCatchClause;
 import org.jetbrains.kotlin.psi.KtDestructuringDeclaration;
 import org.jetbrains.kotlin.psi.KtDestructuringDeclarationEntry;
 import org.jetbrains.kotlin.psi.KtDoWhileExpression;
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.psi.KtFinallySection;
 import org.jetbrains.kotlin.psi.KtForExpression;
 import org.jetbrains.kotlin.psi.KtIfExpression;
 import org.jetbrains.kotlin.psi.KtParameter;
+import org.jetbrains.kotlin.psi.KtTryExpression;
 import org.jetbrains.kotlin.psi.KtWhileExpression;
 
 import extension.ast.node.LangASTNode;
@@ -1084,6 +1087,56 @@ public class OperationBody {
 			addAllInActiveVariableDeclarations(variableDeclarations);
 			processStatement(ktFile, sourceFolder, filePath, child, forStatement.getBody(), fileContent);
 			removeAllFromActiveVariableDeclarations(variableDeclarations);
+		}
+		else if(statement instanceof KtTryExpression tryStatement) {
+			TryStatementObject child = new TryStatementObject(ktFile, sourceFolder, filePath, tryStatement, parent.getDepth()+1, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
+			addAllInActiveVariableDeclarations(variableDeclarations);
+			KtBlockExpression tryBlock = tryStatement.getTryBlock();
+			for(KtExpression blockStatement : tryBlock.getStatements()) {
+				processStatement(ktFile, sourceFolder, filePath, child, blockStatement, fileContent);
+			}
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
+			List<KtCatchClause> catchClauses = tryStatement.getCatchClauses();
+			for(KtCatchClause catchClause : catchClauses) {
+				KtExpression catchClauseBody = catchClause.getCatchBody();
+				CompositeStatementObject catchClauseStatementObject = new CompositeStatementObject(ktFile, sourceFolder, filePath, catchClause, parent.getDepth()+1, CodeElementType.CATCH_CLAUSE, fileContent);
+				child.addCatchClause(catchClauseStatementObject);
+				parent.addStatement(catchClauseStatementObject);
+				catchClauseStatementObject.setTryContainer(child);
+				KtParameter variableDeclaration = catchClause.getCatchParameter();
+				VariableDeclaration vd = new VariableDeclaration(ktFile, sourceFolder, filePath, variableDeclaration, container, activeVariableDeclarations, fileContent, catchClauseStatementObject.getLocationInfo());
+				catchClauseStatementObject.addVariableDeclaration(vd);
+				AbstractExpression variableDeclarationName = new AbstractExpression(ktFile, sourceFolder, filePath, variableDeclaration, CodeElementType.CATCH_CLAUSE_EXCEPTION_NAME, container, activeVariableDeclarations, fileContent);
+				catchClauseStatementObject.addExpression(variableDeclarationName);
+				if(variableDeclaration.getDefaultValue() != null) {
+					AbstractExpression variableDeclarationInitializer = new AbstractExpression(ktFile, sourceFolder, filePath, variableDeclaration.getDefaultValue(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent);
+					catchClauseStatementObject.addExpression(variableDeclarationInitializer);
+				}
+				addStatementInVariableScopes(catchClauseStatementObject);
+				List<VariableDeclaration> catchClauseVariableDeclarations = catchClauseStatementObject.getVariableDeclarations();
+				addAllInActiveVariableDeclarations(catchClauseVariableDeclarations);
+				if(catchClauseBody instanceof KtBlockExpression catchBlock) {
+					for(KtExpression blockStatement : catchBlock.getStatements()) {
+						processStatement(ktFile, sourceFolder, filePath, catchClauseStatementObject, blockStatement, fileContent);
+					}
+				}
+				removeAllFromActiveVariableDeclarations(catchClauseVariableDeclarations);
+			}
+			KtFinallySection finallyBlock = tryStatement.getFinallyBlock();
+			if(finallyBlock != null) {
+				CompositeStatementObject finallyClauseStatementObject = new CompositeStatementObject(ktFile, sourceFolder, filePath, finallyBlock, parent.getDepth()+1, CodeElementType.FINALLY_BLOCK, fileContent);
+				child.setFinallyClause(finallyClauseStatementObject);
+				parent.addStatement(finallyClauseStatementObject);
+				finallyClauseStatementObject.setTryContainer(child);
+				addStatementInVariableScopes(finallyClauseStatementObject);
+				KtBlockExpression finalExpression = finallyBlock.getFinalExpression();
+				for(KtExpression blockStatement : finalExpression.getStatements()) {
+					processStatement(ktFile, sourceFolder, filePath, finallyClauseStatementObject, blockStatement, fileContent);
+				}
+			}
 		}
 	}
 }

@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Statement;
+import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.psi.KtTryExpression;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
@@ -20,6 +22,11 @@ public class TryStatementObject extends CompositeStatementObject {
 	}
 
 	public TryStatementObject(CompilationUnit cu, String sourceFolder, String filePath, Statement statement, int depth, String javaFileContent) {
+		super(cu, sourceFolder, filePath, statement, depth, CodeElementType.TRY_STATEMENT, javaFileContent);
+		this.catchClauses = new ArrayList<CompositeStatementObject>();
+	}
+
+	public TryStatementObject(KtFile cu, String sourceFolder, String filePath, KtTryExpression statement, int depth, String javaFileContent) {
 		super(cu, sourceFolder, filePath, statement, depth, CodeElementType.TRY_STATEMENT, javaFileContent);
 		this.catchClauses = new ArrayList<CompositeStatementObject>();
 	}

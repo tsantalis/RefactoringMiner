@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.jetbrains.kotlin.psi.KtExpression;
+import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtFile;
 
 import extension.ast.node.LangASTNode;
@@ -102,7 +102,7 @@ public class CompositeStatementObject extends AbstractStatement {
 		}
 	}
 
-	public CompositeStatementObject(KtFile ktFile, String sourceFolder, String filePath, KtExpression statement, int depth, CodeElementType codeElementType, String fileContent) {
+	public CompositeStatementObject(KtFile ktFile, String sourceFolder, String filePath, KtElement statement, int depth, CodeElementType codeElementType, String fileContent) {
 		super(new LocationInfo(ktFile, sourceFolder, filePath, statement, codeElementType));
 		this.setDepth(depth);
 		this.statementList = new ArrayList<AbstractStatement>();

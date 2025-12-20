@@ -335,7 +335,8 @@ public class HunkNetwork {
                 node.addIdentifier(umlAttribute.getVariableDeclaration().getVariableName());
 
                 List<Node> useNodes = findAccessNodes(umlAttribute.getLocationInfo(),
-                        node.getNodeType().equals(NodeType.DELETION) ? null
+                        node.getNodeType().equals(NodeType.DELETION)
+                                ? modelDiff.findFieldAccessesInParentModel(umlAttribute)
                                 : modelDiff.findFieldAccessesInChildModel(umlAttribute));
                 for (Node useNode : useNodes) {
                     addEdge(node, useNode, EdgeType.DEF_USE);
@@ -483,7 +484,9 @@ public class HunkNetwork {
 
                 List<AbstractCall> variableInitInvocations = variableInitStatement.getMethodInvocations();
                 for (AbstractCall methodInvocation : variableInitInvocations) {
-                    UMLOperation declaration = node.getNodeType().equals(NodeType.DELETION) ? null
+                    UMLOperation declaration = node.getNodeType().equals(NodeType.DELETION)
+                            ? modelDiff.findDeclarationsInParentModel(umlOperation,
+                            methodInvocation)
                             : modelDiff.findDeclarationsInChildModel(umlOperation,
                                     methodInvocation);
                     if (declaration == null) {
@@ -599,7 +602,8 @@ public class HunkNetwork {
     }
 
     private List<Node> findInvocationNodes(Node node, UMLOperation operation) {
-        List<AbstractCall> invocations = node.getNodeType().equals(NodeType.DELETION) ? null
+        List<AbstractCall> invocations = node.getNodeType().equals(NodeType.DELETION)
+                ? modelDiff.findInvocationsInParentModel(operation)
                 : modelDiff.findInvocationsInChildModel(operation);
 
         List<Node> result = new ArrayList<>();

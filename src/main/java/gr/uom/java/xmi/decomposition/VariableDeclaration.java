@@ -30,6 +30,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.jetbrains.kotlin.com.intellij.psi.PsiElement;
 import org.jetbrains.kotlin.psi.KtAnnotationEntry;
+import org.jetbrains.kotlin.psi.KtDestructuringDeclarationEntry;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtModifierList;
 import org.jetbrains.kotlin.psi.KtParameter;
@@ -758,7 +759,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.scope = new VariableScope(ktFile, filePath, parentLocation.getStartOffset(), parentLocation.getEndOffset());
 	}
 
-	public VariableDeclaration(KtFile ktFile, String sourceFolder, String filePath, KtParameter parameter, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+	public VariableDeclaration(KtFile ktFile, String sourceFolder, String filePath, KtParameter parameter, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, LocationInfo parentLocation) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
 		this.locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, parameter, CodeElementType.SINGLE_VARIABLE_DECLARATION);
@@ -779,6 +780,26 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		if(parameter.isVarArg()) {
 			this.type.setVarargs();
 		}
-		this.scope = new VariableScope(ktFile, filePath, this.locationInfo.getStartOffset(), container.getLocationInfo().getEndOffset());
+		this.scope = new VariableScope(ktFile, filePath, this.locationInfo.getStartOffset(), parentLocation.getEndOffset());
+	}
+
+	public VariableDeclaration(KtFile ktFile, String sourceFolder, String filePath, KtDestructuringDeclarationEntry parameter, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, LocationInfo parentLocation) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, parameter, CodeElementType.SINGLE_VARIABLE_DECLARATION);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		KtModifierList modifierList = parameter.getModifierList();
+		if(modifierList != null) {
+			for (PsiElement modifier : modifierList.getChildren()) {
+				if (modifier instanceof KtAnnotationEntry annotationEntry) {
+					annotations.add(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
+				}
+			}
+		}
+		this.variableName = parameter.getName();
+		this.initializer = parameter.getInitializer() != null ? new AbstractExpression(ktFile, sourceFolder, filePath, parameter.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent) : null;
+		KtTypeReference type = parameter.getTypeReference();
+		this.type = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, type, 0);
+		this.scope = new VariableScope(ktFile, filePath, this.locationInfo.getStartOffset(), parentLocation.getEndOffset());
 	}
 }

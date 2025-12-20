@@ -9,6 +9,7 @@ import static org.jetbrains.kotlin.lexer.KtTokens.OVERRIDE_KEYWORD;
 import static org.jetbrains.kotlin.lexer.KtTokens.ABSTRACT_KEYWORD;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -38,6 +39,7 @@ import org.jetbrains.kotlin.psi.KtTypeReference;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
+import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class KotlinFileProcessor {
@@ -210,7 +212,7 @@ public class KotlinFileProcessor {
 			}
 			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarArg());
 			VariableDeclaration variableDeclaration =
-					new VariableDeclaration(ktFile, sourceFolder, filePath, parameter, umlOperation, new LinkedHashMap<>(), fileContent);
+					new VariableDeclaration(ktFile, sourceFolder, filePath, parameter, umlOperation, new LinkedHashMap<>(), fileContent, umlOperation.getLocationInfo());
 			variableDeclaration.setParameter(true);
 			umlParameter.setVariableDeclaration(variableDeclaration);
 			umlOperation.addParameter(umlParameter);
@@ -230,6 +232,10 @@ public class KotlinFileProcessor {
 			}
 			AbstractExpression defaultExpression = new AbstractExpression(ktFile, sourceFolder, filePath, functionInitializer, CodeElementType.FUNCTION_INITIALIZER_EXPRESSION, umlOperation, activeVariableDeclarations, fileContent);
 			umlOperation.setDefaultExpression(defaultExpression);
+		}
+		if (function.getBodyBlockExpression() != null) {
+			// TODO pass list of attributes
+			OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, function.getBodyBlockExpression(), umlOperation, Collections.emptyList(), fileContent);
 		}
 		return umlOperation;
 	}

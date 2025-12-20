@@ -38,6 +38,16 @@ import org.eclipse.jdt.core.dom.TryStatement;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.jdt.core.dom.YieldStatement;
+import org.jetbrains.kotlin.psi.KtBlockExpression;
+import org.jetbrains.kotlin.psi.KtDestructuringDeclaration;
+import org.jetbrains.kotlin.psi.KtDestructuringDeclarationEntry;
+import org.jetbrains.kotlin.psi.KtDoWhileExpression;
+import org.jetbrains.kotlin.psi.KtExpression;
+import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.psi.KtForExpression;
+import org.jetbrains.kotlin.psi.KtIfExpression;
+import org.jetbrains.kotlin.psi.KtParameter;
+import org.jetbrains.kotlin.psi.KtWhileExpression;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.declaration.LangMethodDeclaration;
@@ -967,5 +977,113 @@ public class OperationBody {
 			stringRepresentation = compositeStatement.stringRepresentation();
 		}
 		return stringRepresentation;
+	}
+
+	public OperationBody(KtFile ktFile, String sourceFolder, String filePath, KtBlockExpression methodBody, VariableDeclarationContainer container, List<UMLAttribute> attributes, String fileContent) {
+		this.compositeStatement = new CompositeStatementObject(ktFile, sourceFolder, filePath, methodBody, 0, CodeElementType.BLOCK, fileContent);
+		this.compositeStatement.setOwner(container);
+		this.comments = container.getComments();
+		this.container = container;
+		// TODO replace with stringify
+		this.bodyHashCode = methodBody.getText().hashCode();
+		this.activeVariableDeclarations = new HashMap<String, Set<VariableDeclaration>>();
+		for(UMLAttribute attribute : attributes) {
+			addInActiveVariableDeclarations(attribute.getVariableDeclaration());
+		}
+		addAllInActiveVariableDeclarations(container != null ? container.getParameterDeclarationList() : Collections.emptyList());
+		if(container.isDeclaredInAnonymousClass()) {
+			UMLAnonymousClass anonymousClassContainer = container.getAnonymousClassContainer().get();
+			for(VariableDeclarationContainer parentContainer : anonymousClassContainer.getParentContainers()) {
+				for(VariableDeclaration parameterDeclaration : parentContainer.getParameterDeclarationList()) {
+					if(parameterDeclaration.isFinal()) {
+						addInActiveVariableDeclarations(parameterDeclaration);
+					}
+				}
+			}
+		}
+		List<KtExpression> statements = methodBody.getStatements();
+		for(KtExpression statement : statements) {
+			processStatement(ktFile, sourceFolder, filePath, compositeStatement, statement, fileContent);
+		}
+		for(AbstractCall invocation : getAllOperationInvocations()) {
+			if(invocation.isAssertion()) {
+				containsAssertion = true;
+				break;
+			}
+		}
+		this.activeVariableDeclarations = null;
+	}
+
+	private void processStatement(KtFile ktFile, String sourceFolder, String filePath, CompositeStatementObject parent, KtExpression statement, String fileContent) {
+		if(statement instanceof KtBlockExpression block) {
+			List<KtExpression> blockStatements = block.getStatements();
+			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, block, parent.getDepth()+1, CodeElementType.BLOCK, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+			for(KtExpression blockStatement : blockStatements) {
+				processStatement(ktFile, sourceFolder, filePath, child, blockStatement, fileContent);
+			}
+		}
+		else if(statement instanceof KtIfExpression ifStatement) {
+			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, ifStatement, parent.getDepth()+1, CodeElementType.IF_STATEMENT, fileContent);
+			parent.addStatement(child);
+			AbstractExpression abstractExpression = new AbstractExpression(ktFile, sourceFolder, filePath, ifStatement.getCondition(), CodeElementType.IF_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent);
+			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
+			processStatement(ktFile, sourceFolder, filePath, child, ifStatement.getThen(), fileContent);
+			if(ifStatement.getElse() != null) {
+				processStatement(ktFile, sourceFolder, filePath, child, ifStatement.getElse(), fileContent);
+			}
+		}
+		else if(statement instanceof KtWhileExpression whileStatement) {
+			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, whileStatement, parent.getDepth()+1, CodeElementType.WHILE_STATEMENT, fileContent);
+			parent.addStatement(child);
+			AbstractExpression abstractExpression = new AbstractExpression(ktFile, sourceFolder, filePath, whileStatement.getCondition(), CodeElementType.WHILE_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent);
+			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
+			processStatement(ktFile, sourceFolder, filePath, child, whileStatement.getBody(), fileContent);
+		}
+		else if(statement instanceof KtDoWhileExpression doStatement) {
+			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, doStatement, parent.getDepth()+1, CodeElementType.DO_STATEMENT, fileContent);
+			parent.addStatement(child);
+			AbstractExpression abstractExpression = new AbstractExpression(ktFile, sourceFolder, filePath, doStatement.getCondition(), CodeElementType.DO_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent);
+			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
+			processStatement(ktFile, sourceFolder, filePath, child, doStatement.getBody(), fileContent);
+		}
+		else if(statement instanceof KtForExpression forStatement) {
+			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, forStatement, parent.getDepth()+1, CodeElementType.ENHANCED_FOR_STATEMENT, fileContent);
+			parent.addStatement(child);
+			KtParameter loopParameter = forStatement.getLoopParameter();
+			KtDestructuringDeclaration destructuringDeclaration = forStatement.getDestructuringDeclaration();
+			if (destructuringDeclaration != null) {
+				AbstractExpression variableDeclarationName = new AbstractExpression(ktFile, sourceFolder, filePath, destructuringDeclaration, CodeElementType.ENHANCED_FOR_STATEMENT_PARAMETER_NAME, container, activeVariableDeclarations, fileContent);
+				child.addExpression(variableDeclarationName);
+				List<KtDestructuringDeclarationEntry> entries = destructuringDeclaration.getEntries();
+				for (KtDestructuringDeclarationEntry entry : entries) {
+					VariableDeclaration vd = new VariableDeclaration(ktFile, sourceFolder, filePath, entry, container, activeVariableDeclarations, fileContent, child.getLocationInfo());
+					child.addVariableDeclaration(vd);
+				}
+			}
+			else if (loopParameter != null) {
+				VariableDeclaration vd = new VariableDeclaration(ktFile, sourceFolder, filePath, loopParameter, container, activeVariableDeclarations, fileContent, child.getLocationInfo());
+				child.addVariableDeclaration(vd);
+				AbstractExpression variableDeclarationName = new AbstractExpression(ktFile, sourceFolder, filePath, loopParameter, CodeElementType.ENHANCED_FOR_STATEMENT_PARAMETER_NAME, container, activeVariableDeclarations, fileContent);
+				child.addExpression(variableDeclarationName);
+				if(loopParameter.getDefaultValue() != null) {
+					AbstractExpression variableDeclarationInitializer = new AbstractExpression(ktFile, sourceFolder, filePath, loopParameter.getDefaultValue(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent);
+					child.addExpression(variableDeclarationInitializer);
+				}
+			}
+			if (forStatement.getLoopRange() != null) {
+				AbstractExpression abstractExpression = new AbstractExpression(ktFile, sourceFolder, filePath, forStatement.getLoopRange(), CodeElementType.ENHANCED_FOR_STATEMENT_EXPRESSION, container, activeVariableDeclarations, fileContent);
+				child.addExpression(abstractExpression);
+			}
+			addStatementInVariableScopes(child);
+			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
+			addAllInActiveVariableDeclarations(variableDeclarations);
+			processStatement(ktFile, sourceFolder, filePath, child, forStatement.getBody(), fileContent);
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
+		}
 	}
 }

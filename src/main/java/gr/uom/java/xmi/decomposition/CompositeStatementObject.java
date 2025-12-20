@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.jetbrains.kotlin.psi.KtExpression;
+import org.jetbrains.kotlin.psi.KtFile;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
@@ -74,7 +76,11 @@ public class CompositeStatementObject extends AbstractStatement {
 		this.variableDeclarations = new ArrayList<VariableDeclaration>();
 		int start = statement.getStartPosition();
 		int end = start + statement.getLength();
-		String whole = javaFileContent.substring(start, end);
+		computeActualSignature(javaFileContent, start, end);
+	}
+
+	private void computeActualSignature(String fileContent, int start, int end) {
+		String whole = fileContent.substring(start, end);
 		if(whole.contains("{")) {
 			this.actualSignature = whole.substring(0, whole.indexOf("{") + 1);
 		}
@@ -93,6 +99,15 @@ public class CompositeStatementObject extends AbstractStatement {
 			else
 				this.actualSignature = whole;
 		}
+	}
+
+	public CompositeStatementObject(KtFile ktFile, String sourceFolder, String filePath, KtExpression statement, int depth, CodeElementType codeElementType, String fileContent) {
+		super(new LocationInfo(ktFile, sourceFolder, filePath, statement, codeElementType));
+		this.setDepth(depth);
+		this.statementList = new ArrayList<AbstractStatement>();
+		this.expressionList = new ArrayList<AbstractExpression>();
+		this.variableDeclarations = new ArrayList<VariableDeclaration>();
+		computeActualSignature(fileContent, this.locationInfo.getStartOffset(), this.locationInfo.getEndOffset());
 	}
 
 	public void setOwner(VariableDeclarationContainer container) {

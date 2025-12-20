@@ -1057,7 +1057,7 @@ public class OperationBody {
 			KtParameter loopParameter = forStatement.getLoopParameter();
 			KtDestructuringDeclaration destructuringDeclaration = forStatement.getDestructuringDeclaration();
 			if (destructuringDeclaration != null) {
-				AbstractExpression variableDeclarationName = new AbstractExpression(ktFile, sourceFolder, filePath, destructuringDeclaration, CodeElementType.ENHANCED_FOR_STATEMENT_PARAMETER_NAME, container, activeVariableDeclarations, fileContent);
+				AbstractExpression variableDeclarationName = new AbstractExpression(ktFile, sourceFolder, filePath, destructuringDeclaration, CodeElementType.ENHANCED_FOR_STATEMENT_DESTRUCTURING_DECLARATION, container, activeVariableDeclarations, fileContent);
 				child.addExpression(variableDeclarationName);
 				List<KtDestructuringDeclarationEntry> entries = destructuringDeclaration.getEntries();
 				for (KtDestructuringDeclarationEntry entry : entries) {

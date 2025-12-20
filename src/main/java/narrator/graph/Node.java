@@ -5,9 +5,11 @@ import com.github.gumtreediff.utils.Pair;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.annotation.Nullable;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
@@ -17,28 +19,33 @@ public class Node {
     private final String path;
     private final String fileContent;
     private final Tree tree;
+    @Nullable
+    private final HashMap<Tree, Tree> moveTrees;
+    @Nullable
+    private final Set<Tree> subTrees;
     private final Set<String> identifiers = new HashSet<>();
-    private NodeType nodeType;
-    private List<Node> srcs = null;
-    private List<Tree> dsts = null;
-    private Set<Tree> dstExceptions = null;
+    private final NodeType nodeType;
 
-    public Node(String fileContent, String path, Tree tree) {
+    public Node(String fileContent, String path, Tree tree, @Nullable Set<Tree> subTrees,
+            @Nullable HashMap<Tree, Tree> moveTrees,
+            NodeType nodeType) {
         this.id = formatId(path, tree);
         this.fileContent = fileContent;
         this.path = path;
         this.tree = tree;
-        this.nodeType = NodeType.BASE;
-    }
-
-    public Node(String fileContent, String path, Tree tree, NodeType nodeType) {
-        this(fileContent, path, tree);
+        this.subTrees = subTrees;
+        this.moveTrees = moveTrees;
         this.nodeType = nodeType;
     }
 
     public static String formatId(String path, Tree tree) {
         return String.format("%s-%s-%s-%s", path, tree.getPos(), tree.getEndPos(),
                 tree.getType().name);
+    }
+
+    @Nullable
+    public HashMap<Tree, Tree> getMoveTrees() {
+        return moveTrees;
     }
 
     public JsonObject stringify() {
@@ -77,82 +84,44 @@ public class Node {
         nodeObj.addProperty("endLineOffset", endLineRange.second);
         nodeObj.addProperty("length", this.tree.getEndPos() - this.tree.getPos() + 1);
 
-        if (srcs != null) {
-            JsonArray srcsArr = new JsonArray();
-            for (Node src : srcs) {
-                JsonObject srcObj = new JsonObject();
-                srcObj.addProperty("path", src.getPath());
-                srcObj.addProperty("content", src.getContent());
-                srcObj.addProperty("astType", src.tree.getType().name);
-
-                JsonArray contextsArr = new JsonArray();
-                List<Node> contexts =
-                        Context.get(src.getTree()).stream()
-                                .map(context -> new Node(src.getFileContent(),
-                                        src.getPath(), context.first, context.second)).toList();
-                contexts.forEach(context -> {
-                    JsonObject contextObj = new JsonObject();
-                    contextObj.addProperty("content", context.getContent());
-                    contextObj.addProperty("nodeType", context.nodeType.name());
-
-                    contextsArr.add(contextObj);
-                });
-                srcObj.add("contexts", contextsArr);
-
-                Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> srcLineRange =
-                        TreeUtilFunctions.getLineRange(src.getTree(), src.getFileContent());
-                Pair<Integer, Integer> srcStartRange = srcLineRange.first;
-                srcObj.addProperty("startLine", srcStartRange.first);
-                srcObj.addProperty("startLineOffset", srcStartRange.second);
-                Pair<Integer, Integer> srcEndRange = srcLineRange.second;
-                srcObj.addProperty("endLine", srcEndRange.first);
-                srcObj.addProperty("endLineOffset", srcEndRange.second);
-                srcObj.addProperty("length",
-                        src.getTree().getEndPos() - src.getTree().getPos() + 1);
-
-                srcsArr.add(srcObj);
-            }
-            nodeObj.add("srcs", srcsArr);
-        }
-
-        if (dsts != null) {
-            JsonArray dstsArr = new JsonArray();
-            for (Tree dst : dsts) {
-                JsonObject dstObj = new JsonObject();
+        if (moveTrees != null) {
+            JsonArray movesArr = new JsonArray();
+            for (Tree move : moveTrees.keySet()) {
+                JsonObject moveObj = new JsonObject();
 
                 Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> dstLineRange =
-                        TreeUtilFunctions.getLineRange(dst, this.fileContent);
+                        TreeUtilFunctions.getLineRange(move, this.fileContent);
                 Pair<Integer, Integer> startDstRange = dstLineRange.first;
-                dstObj.addProperty("startLine", startDstRange.first);
-                dstObj.addProperty("startLineOffset", startDstRange.second);
+                moveObj.addProperty("startLine", startDstRange.first);
+                moveObj.addProperty("startLineOffset", startDstRange.second);
                 Pair<Integer, Integer> endDstRange = dstLineRange.second;
-                dstObj.addProperty("endLine", endDstRange.first);
-                dstObj.addProperty("endLineOffset", endDstRange.second);
-                dstObj.addProperty("length", dst.getEndPos() - dst.getPos() + 1);
+                moveObj.addProperty("endLine", endDstRange.first);
+                moveObj.addProperty("endLineOffset", endDstRange.second);
+                moveObj.addProperty("length", move.getEndPos() - move.getPos() + 1);
 
-                dstsArr.add(dstObj);
+                movesArr.add(moveObj);
             }
-            nodeObj.add("dsts", dstsArr);
+            nodeObj.add("moves", movesArr);
         }
 
-        if (dstExceptions != null) {
-            JsonArray exceptionsArr = new JsonArray();
-            for (Tree exception : dstExceptions) {
+        if (subTrees != null) {
+            JsonArray subsArr = new JsonArray();
+            for (Tree subTree : subTrees) {
                 JsonObject exceptionObj = new JsonObject();
 
                 Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> exceptionLineRange =
-                        TreeUtilFunctions.getLineRange(exception, this.fileContent);
+                        TreeUtilFunctions.getLineRange(subTree, this.fileContent);
                 Pair<Integer, Integer> startExceptionRange = exceptionLineRange.first;
                 exceptionObj.addProperty("startLine", startExceptionRange.first);
                 exceptionObj.addProperty("startLineOffset", startExceptionRange.second);
                 Pair<Integer, Integer> endExceptionRange = exceptionLineRange.second;
                 exceptionObj.addProperty("endLine", endExceptionRange.first);
                 exceptionObj.addProperty("endLineOffset", endExceptionRange.second);
-                exceptionObj.addProperty("length", exception.getEndPos() - exception.getPos() + 1);
+                exceptionObj.addProperty("length", subTree.getEndPos() - subTree.getPos() + 1);
 
-                exceptionsArr.add(exceptionObj);
+                subsArr.add(exceptionObj);
             }
-            nodeObj.add("dstExceptions", exceptionsArr);
+            nodeObj.add("subs", subsArr);
         }
 
         return nodeObj;
@@ -162,24 +131,12 @@ public class Node {
         this.identifiers.add(identifier);
     }
 
-    public void setSrcs(List<Node> srcs) {
-        this.srcs = srcs;
-    }
-
-    public void setDsts(List<Tree> dsts) {
-        this.dsts = dsts;
-    }
-
-    public void setDstExceptions(Set<Tree> dstExceptions) {
-        this.dstExceptions = dstExceptions;
-    }
-
     public String getId() {
         return id;
     }
 
     public boolean isBase() {
-        return nodeType.equals(NodeType.BASE);
+        return nodeType.equals(NodeType.ADDITION) || nodeType.equals(NodeType.DELETION);
     }
 
     public boolean isContext() {
@@ -246,12 +203,12 @@ public class Node {
 
         Node left = null, right = null;
         if (nodeIndex > 0) {
-            left = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex - 1),
-                    NodeType.SEMANTIC_CONTEXT);
+            left = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex - 1), null,
+                    null, NodeType.SEMANTIC_CONTEXT);
         }
         if (nodeIndex < parentChildren.size() - 1) {
-            right = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex + 1),
-                    NodeType.SEMANTIC_CONTEXT);
+            right = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex + 1), null,
+                    null, NodeType.SEMANTIC_CONTEXT);
         }
 
         return new Pair<>(left, right);

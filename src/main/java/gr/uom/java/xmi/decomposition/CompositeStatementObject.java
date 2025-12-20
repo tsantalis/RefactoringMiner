@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.psi.KtFile;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
+import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -228,10 +229,13 @@ public class CompositeStatementObject extends AbstractStatement {
 						}
 						sb.append(parameterDeclaration.getVariableName());
 						if(i == variableDeclarations.size()-1)
-							sb.append(": ");
+							sb.append(LANG.equals(Constants.JAVA) ? ": " : " in ");
 						else
 							sb.append(","); // for with multiple variables
 					}
+				}
+				else if(expression.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT_DESTRUCTURING_DECLARATION)) {
+					sb.append(expression.toString()).append(" in ");
 				}
 				else {
 					sb.append(expression.toString()).append("; ");
@@ -272,10 +276,13 @@ public class CompositeStatementObject extends AbstractStatement {
 						sb.append(parameterDeclaration.getType()).append(" ");
 						sb.append(parameterDeclaration.getVariableName());
 						if(i == variableDeclarations.size()-1)
-							sb.append(": ");
+							sb.append(LANG.equals(Constants.JAVA) ? ": " : " in ");
 						else
 							sb.append(","); // for with multiple variables
 					}
+				}
+				else if(expression.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT_DESTRUCTURING_DECLARATION)) {
+					sb.append(expression.toString()).append(" in ");
 				}
 				else {
 					sb.append(expression.toString()).append("; ");

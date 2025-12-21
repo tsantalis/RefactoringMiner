@@ -5,7 +5,6 @@ import com.github.gumtreediff.utils.Pair;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,14 +19,14 @@ public class Node {
     private final String fileContent;
     private final Tree tree;
     @Nullable
-    private final HashMap<Tree, Tree> moveTrees;
+    private final Set<Tree> moveTrees;
     @Nullable
     private final Set<Tree> subTrees;
     private final Set<String> identifiers = new HashSet<>();
     private final NodeType nodeType;
 
     public Node(String fileContent, String path, Tree tree, @Nullable Set<Tree> subTrees,
-            @Nullable HashMap<Tree, Tree> moveTrees,
+            @Nullable Set<Tree> moveTrees,
             NodeType nodeType) {
         this.id = formatId(path, tree);
         this.fileContent = fileContent;
@@ -44,7 +43,7 @@ public class Node {
     }
 
     @Nullable
-    public HashMap<Tree, Tree> getMoveTrees() {
+    public Set<Tree> getMoveTrees() {
         return moveTrees;
     }
 
@@ -86,7 +85,7 @@ public class Node {
 
         if (moveTrees != null) {
             JsonArray movesArr = new JsonArray();
-            for (Tree move : moveTrees.keySet()) {
+            for (Tree move : moveTrees) {
                 JsonObject moveObj = new JsonObject();
 
                 Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> dstLineRange =

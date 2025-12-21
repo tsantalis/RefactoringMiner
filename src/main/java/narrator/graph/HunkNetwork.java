@@ -18,7 +18,6 @@ import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -43,9 +42,14 @@ public class HunkNetwork {
     private final float distanceThreshold = 0;
     private final Map<String, String> srcContents;
     private final Map<String, String> dstContents;
-    private final Set<String> invalidTypes;
-    Map<String, TreeContext> srcContexts;
-    Map<String, TreeContext> dstContexts;
+    private final Set<String> invalidTypes = new HashSet<>() {{
+        add(Constants.get().EMPTY_STATEMENT);
+        add(Constants.get().IMPORT_DECLARATION);
+        add(Constants.get().PACKAGE_DECLARATION);
+    }};
+    private final Map<String, TreeContext> srcContexts;
+    private final Map<String, TreeContext> dstContexts;
+    private final Map<Node, ASTDiff> nodesDiff = new HashMap<>();
 
     public HunkNetwork(UMLModelDiff modelDiff, Map<String, String> srcContents,
             Map<String, String> dstContents,
@@ -58,12 +62,6 @@ public class HunkNetwork {
         this.dstContents = dstContents;
         this.srcContexts = srcContexts;
         this.dstContexts = dstContexts;
-
-        this.invalidTypes = new HashSet<>() {{
-            add(Constants.get().EMPTY_STATEMENT);
-            add(Constants.get().IMPORT_DECLARATION);
-            add(Constants.get().PACKAGE_DECLARATION);
-        }};
     }
 
     private Pair<String, String> localizeTree(Tree tree) {
@@ -88,8 +86,8 @@ public class HunkNetwork {
         return (srcDst.equals("src") ? srcContents : dstContents).get(path);
     }
 
-    private void importTrees(HashMap<Tree, Set<Tree>> trees, Set<Tree> allMoves,
-            NodeType nodeType, MappingStore mappingStore) {
+    private List<Node> importTrees(HashMap<Tree, Set<Tree>> trees, Set<Tree> allMoves,
+            NodeType nodeType) {
         HashMap<Tree, Set<Tree>> treesMoves = new HashMap<>();
         for (Tree tree : trees.keySet()) {
             Set<Tree> treeMoves = new HashSet<>();
@@ -98,35 +96,30 @@ public class HunkNetwork {
 
             treesMoves.put(tree, treeMoves);
         }
-        trees.entrySet().stream().map(entry -> {
+        return trees.entrySet().stream().map(entry -> {
             Tree tree = entry.getKey();
             Set<Tree> subTrees = entry.getValue();
-
-            HashMap<Tree, Tree> moveTrees = new HashMap<>();
-            for (Tree treeMove : treesMoves.get(tree)) {
-                moveTrees.put(treeMove,
-                        nodeType.equals(NodeType.DELETION) ? mappingStore.getDstForSrc(treeMove)
-                                : mappingStore.getSrcForDst(treeMove));
-            }
-
+            Set<Tree> moveTrees = treesMoves.get(tree);
             Pair<String, String> treeLocation = localizeTree(tree);
             return new Node(getContent(treeLocation.first, treeLocation.second),
                     treeLocation.second, tree, subTrees, moveTrees, nodeType);
-        }).forEach(this::addNode);
+        }).map(this::addNode).toList();
     }
 
     public void importDiff(ASTDiff diff) {
         TreeClassifier classifier = diff.createRootNodesClassifier();
-
-        importTrees(aggregateTrees(
+        List<Node> additionNodes = importTrees(aggregateTrees(
                         getValidTrees(classifier.getDeletedSrcs())), classifier.getMovedSrcs(),
-                NodeType.DELETION, diff.getAllMappings().getMonoMappingStore());
-        importTrees(aggregateTrees(
+                NodeType.DELETION);
+        for (Node node : additionNodes) {
+            nodesDiff.put(node, diff);
+        }
+        List<Node> deletionNodes = importTrees(aggregateTrees(
                         getValidTrees(classifier.getInsertedDsts())), classifier.getMovedDsts(),
-                NodeType.ADDITION, diff.getAllMappings().getMonoMappingStore());
-
-        System.out.println("hello");
-
+                NodeType.ADDITION);
+        for (Node node : deletionNodes) {
+            nodesDiff.put(node, diff);
+        }
         // TODO: added and deleted files
 //        List<String> diffDestinationPaths = diffSet.stream().map(ASTDiff::getDstPath).toList();
 //        List<String> addedPaths =
@@ -261,17 +254,20 @@ public class HunkNetwork {
         List<Node> nodes = new ArrayList<>(graph.vertexSet());
         List<Node> moveIncludingNodes = nodes.stream().filter(node -> node.getMoveTrees() != null)
                 .toList();
-        for (Node subject : moveIncludingNodes) {
-            for (Node object : moveIncludingNodes) {
-                if (!(subject.getNodeType().equals(NodeType.DELETION) && object.getNodeType()
-                        .equals(NodeType.ADDITION))) {
-                    continue;
-                }
+        List<Node> deletionNodes = moveIncludingNodes.stream()
+                .filter(node -> node.getNodeType().equals(NodeType.ADDITION)).toList();
+        List<Node> additionNodes = moveIncludingNodes.stream()
+                .filter(node -> node.getNodeType().equals(NodeType.DELETION)).toList();
+        
+        for (Node deletionNode : deletionNodes) {
+            MappingStore mappingStore = nodesDiff.get(deletionNode).getAllMappings()
+                    .getMonoMappingStore();
+            List<Tree> deletionMovesDst = deletionNode.getMoveTrees().stream()
+                    .map(mappingStore::getDstForSrc).toList();
 
-                Collection<Tree> subjectDstMoves = subject.getMoveTrees().values();
-                Set<Tree> objectSrcMoves = object.getMoveTrees().keySet();
-                if (subjectDstMoves.stream().anyMatch(objectSrcMoves::contains)) {
-                    addEdge(subject, object, EdgeType.Move);
+            for (Node additionNode : additionNodes) {
+                if (additionNode.getMoveTrees().stream().anyMatch(deletionMovesDst::contains)) {
+                    addEdge(deletionNode, additionNode, EdgeType.Move);
                 }
             }
         }

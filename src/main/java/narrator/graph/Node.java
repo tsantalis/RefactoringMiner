@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.Nullable;
+import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
@@ -24,10 +25,10 @@ public class Node {
     private final Set<Tree> subTrees;
     private final Set<String> identifiers = new HashSet<>();
     private final NodeType nodeType;
+    private final ASTDiff diff;
 
     public Node(String fileContent, String path, Tree tree, @Nullable Set<Tree> subTrees,
-            @Nullable Set<Tree> moveTrees,
-            NodeType nodeType) {
+            @Nullable Set<Tree> moveTrees, NodeType nodeType, ASTDiff diff) {
         this.id = formatId(path, tree);
         this.fileContent = fileContent;
         this.path = path;
@@ -35,6 +36,7 @@ public class Node {
         this.subTrees = subTrees;
         this.moveTrees = moveTrees;
         this.nodeType = nodeType;
+        this.diff = diff;
     }
 
     public static String formatId(String path, Tree tree) {
@@ -45,6 +47,10 @@ public class Node {
     @Nullable
     public Set<Tree> getMoveTrees() {
         return moveTrees;
+    }
+
+    public ASTDiff getDiff() {
+        return diff;
     }
 
     public JsonObject stringify() {
@@ -203,11 +209,11 @@ public class Node {
         Node left = null, right = null;
         if (nodeIndex > 0) {
             left = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex - 1), null,
-                    null, NodeType.SEMANTIC_CONTEXT);
+                    null, NodeType.SEMANTIC_CONTEXT, diff);
         }
         if (nodeIndex < parentChildren.size() - 1) {
             right = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex + 1), null,
-                    null, NodeType.SEMANTIC_CONTEXT);
+                    null, NodeType.SEMANTIC_CONTEXT, diff);
         }
 
         return new Pair<>(left, right);

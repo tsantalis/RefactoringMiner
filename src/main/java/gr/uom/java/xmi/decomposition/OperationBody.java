@@ -39,7 +39,9 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.jdt.core.dom.YieldStatement;
 import org.jetbrains.kotlin.psi.KtBlockExpression;
+import org.jetbrains.kotlin.psi.KtBreakExpression;
 import org.jetbrains.kotlin.psi.KtCatchClause;
+import org.jetbrains.kotlin.psi.KtContinueExpression;
 import org.jetbrains.kotlin.psi.KtDestructuringDeclaration;
 import org.jetbrains.kotlin.psi.KtDestructuringDeclarationEntry;
 import org.jetbrains.kotlin.psi.KtDoWhileExpression;
@@ -48,8 +50,12 @@ import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtFinallySection;
 import org.jetbrains.kotlin.psi.KtForExpression;
 import org.jetbrains.kotlin.psi.KtIfExpression;
+import org.jetbrains.kotlin.psi.KtLabeledExpression;
 import org.jetbrains.kotlin.psi.KtParameter;
+import org.jetbrains.kotlin.psi.KtReturnExpression;
+import org.jetbrains.kotlin.psi.KtThrowExpression;
 import org.jetbrains.kotlin.psi.KtTryExpression;
+import org.jetbrains.kotlin.psi.KtWhenExpression;
 import org.jetbrains.kotlin.psi.KtWhileExpression;
 
 import extension.ast.node.LangASTNode;
@@ -1017,6 +1023,38 @@ public class OperationBody {
 		this.activeVariableDeclarations = null;
 	}
 
+	public OperationBody(KtFile ktFile, String sourceFolder, String filePath, KtBlockExpression methodBody, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this.compositeStatement = new CompositeStatementObject(ktFile, sourceFolder, filePath, methodBody, 0, CodeElementType.BLOCK, fileContent);
+		this.compositeStatement.setOwner(container);
+		this.comments = container.getComments();
+		this.container = container;
+		// TODO replace with stringify
+		this.bodyHashCode = methodBody.getText().hashCode();
+		this.activeVariableDeclarations = new HashMap<>(activeVariableDeclarations);
+		addAllInActiveVariableDeclarations(container != null ? container.getParameterDeclarationList() : Collections.emptyList());
+		if(container.isDeclaredInAnonymousClass()) {
+			UMLAnonymousClass anonymousClassContainer = container.getAnonymousClassContainer().get();
+			for(VariableDeclarationContainer parentContainer : anonymousClassContainer.getParentContainers()) {
+				for(VariableDeclaration parameterDeclaration : parentContainer.getParameterDeclarationList()) {
+					if(parameterDeclaration.isFinal()) {
+						addInActiveVariableDeclarations(parameterDeclaration);
+					}
+				}
+			}
+		}
+		List<KtExpression> statements = methodBody.getStatements();
+		for(KtExpression statement : statements) {
+			processStatement(ktFile, sourceFolder, filePath, compositeStatement, statement, fileContent);
+		}
+		for(AbstractCall invocation : getAllOperationInvocations()) {
+			if(invocation.isAssertion()) {
+				containsAssertion = true;
+				break;
+			}
+		}
+		this.activeVariableDeclarations = null;
+	}
+
 	private void processStatement(KtFile ktFile, String sourceFolder, String filePath, CompositeStatementObject parent, KtExpression statement, String fileContent) {
 		if(statement instanceof KtBlockExpression block) {
 			List<KtExpression> blockStatements = block.getStatements();
@@ -1137,6 +1175,65 @@ public class OperationBody {
 					processStatement(ktFile, sourceFolder, filePath, finallyClauseStatementObject, blockStatement, fileContent);
 				}
 			}
+		}
+		else if(statement instanceof KtWhenExpression whenStatement) {
+			
+		}
+		else if(statement instanceof KtLabeledExpression labeledStatement) {
+			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, labeledStatement, parent.getDepth()+1, CodeElementType.LABELED_STATEMENT.setName(labeledStatement.getLabelName()), fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+			if(labeledStatement.getBaseExpression() != null) {
+				processStatement(ktFile, sourceFolder, filePath, child, labeledStatement.getBaseExpression(), fileContent);
+			}
+		}
+		else if(statement instanceof KtReturnExpression returnStatement) {
+			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, returnStatement, parent.getDepth()+1, CodeElementType.RETURN_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+		}
+		else if(statement instanceof KtThrowExpression throwStatement) {
+			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, throwStatement, parent.getDepth()+1, CodeElementType.THROW_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+		}
+		else if(statement instanceof KtBreakExpression breakStatement) {
+			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, breakStatement, parent.getDepth()+1, CodeElementType.BREAK_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+		}
+		else if(statement instanceof KtContinueExpression continueStatement) {
+			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, continueStatement, parent.getDepth()+1, CodeElementType.CONTINUE_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+		}
+		/*else if(statement instanceof KtDotQualifiedExpression dotQualifiedExpression) {
+			KtExpression receiver = dotQualifiedExpression.getReceiverExpression();
+			KtExpression selector = dotQualifiedExpression.getSelectorExpression();
+			boolean withLock = false;
+			if(selector instanceof KtCallExpression callExpression) {
+				KtExpression calleeExpression = callExpression.getCalleeExpression();
+				if(calleeExpression instanceof KtNameReferenceExpression nameReference) {
+					String referencedName = nameReference.getReferencedName();
+					if(referencedName.equals("withLock")) {
+						withLock = true;
+						List<KtLambdaArgument> lambdaArguments = callExpression.getLambdaArguments();
+						for(KtLambdaArgument lambdaArgument : lambdaArguments) {
+							KtLambdaExpression lambda = lambdaArgument.getLambdaExpression();
+						}
+					}
+				}
+			}
+			if(!withLock) {
+				StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, statement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);
+				parent.addStatement(child);
+				addStatementInVariableScopes(child);
+			}
+		}*/
+		else {
+			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, statement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
 		}
 	}
 }

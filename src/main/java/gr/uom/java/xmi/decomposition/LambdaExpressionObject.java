@@ -20,6 +20,9 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeMethodReference;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.YieldStatement;
+import org.jetbrains.kotlin.psi.KtBlockExpression;
+import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.psi.KtLambdaExpression;
 import org.refactoringminer.util.PathFileUtils;
 
 import extension.ast.node.LangASTNode;
@@ -153,7 +156,18 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, reference, CodeElementType.METHOD_REFERENCE);
 		this.expression = new AbstractExpression(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, javaFileContent);
 	}
-	
+
+	public LambdaExpressionObject(KtFile ktFile, String sourceFolder, String filePath, KtLambdaExpression lambda, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this.owner = owner;
+		this.asString = lambda.getText();
+		this.locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, lambda, CodeElementType.LAMBDA_EXPRESSION);
+		// TODO process parameters
+		KtBlockExpression lambdaBody = lambda.getBodyExpression();
+		if(lambdaBody != null) {
+			this.body = new OperationBody(ktFile, sourceFolder, filePath, lambdaBody, this, activeVariableDeclarations, fileContent);
+		}
+	}
+
 	public VariableDeclarationContainer getOwner() {
 		return owner;
 	}

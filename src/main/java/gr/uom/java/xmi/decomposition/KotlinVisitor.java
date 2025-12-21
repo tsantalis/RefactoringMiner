@@ -9,6 +9,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.psi.KtLambdaExpression;
 import org.jetbrains.kotlin.psi.KtStringTemplateExpression;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.jetbrains.kotlin.psi.KtVisitor;
@@ -61,6 +62,15 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 		this.container = container;
 		this.activeVariableDeclarations = activeVariableDeclarations;
 		this.fileContent = fileContent;
+	}
+
+	@Override
+	public Object visitExpression(KtExpression expression, Object data) {
+		if (expression instanceof KtLambdaExpression lambdaExpression) {
+			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, sourceFolder, filePath, lambdaExpression, container, activeVariableDeclarations, fileContent);
+			lambdas.add(lambda);
+		}
+		return super.visitExpression(expression, data);
 	}
 
 	@Override

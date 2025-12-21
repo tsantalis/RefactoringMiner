@@ -184,7 +184,8 @@ public class HunkNetwork {
         return result;
     }
 
-    private Node addTreeNode(Tree tree, NodeType nodeType) {
+    // TODO: Extension nodes may be the same in src and dst
+    private Node addExtensionNode(Tree tree) {
         Pair<String, String> treeLocation = localizeTree(tree);
         String path = treeLocation.second;
 
@@ -194,7 +195,7 @@ public class HunkNetwork {
         }
 
         Node node = new Node(getContent(treeLocation.first, treeLocation.second), path, tree,
-                null, null, nodeType);
+                null, null, NodeType.EXTENSION);
         return addNode(node);
     }
 
@@ -501,7 +502,7 @@ public class HunkNetwork {
                         continue;
                     }
 
-                    Node declarationNode = addTreeNode(tree, NodeType.EXTENSION);
+                    Node declarationNode = addExtensionNode(tree);
                     addEdge(declarationNode, node, EdgeType.DEF_USE);
                 }
             }
@@ -560,7 +561,7 @@ public class HunkNetwork {
             String path = closestLocationInfo.getFilePath();
             Tree tree = TreeUtilFunctions.findByLocationInfo(dstContexts.get(path).getRoot(),
                     closestLocationInfo);
-            Node node = addTreeNode(tree, NodeType.EXTENSION);
+            Node node = addExtensionNode(tree);
 
             result.add(node);
         }

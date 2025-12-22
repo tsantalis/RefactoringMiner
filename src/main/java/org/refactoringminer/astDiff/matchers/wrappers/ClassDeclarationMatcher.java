@@ -109,10 +109,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             .match(srcTree, dstTree, mappingStore);
         }
         processClassAnnotations(srcTypeDeclaration,dstTypeDeclaration,classDiff.getAnnotationListDiff(),mappingStore);
-        processClassBlock(srcTypeDeclaration, dstTypeDeclaration, classDiff, mappingStore);
+        processClassBlock(srcTypeDeclaration, dstTypeDeclaration, mappingStore);
     }
 
-    private void processClassBlock(Tree srcTypeDeclaration, Tree dstTypeDeclaration, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
+    private void processClassBlock(Tree srcTypeDeclaration, Tree dstTypeDeclaration, ExtendedMultiMappingStore mappingStore) {
         Tree srcBlock = TreeUtilFunctions.findFirstByType(srcTypeDeclaration, Constants.get().CLASS_BLOCK);
         Tree dstBlock = TreeUtilFunctions.findFirstByType(dstTypeDeclaration, Constants.get().CLASS_BLOCK);
         if (srcBlock == null || dstBlock == null) return;

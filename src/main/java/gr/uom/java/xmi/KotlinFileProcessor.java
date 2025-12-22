@@ -2,6 +2,7 @@ package gr.uom.java.xmi;
 
 import static org.jetbrains.kotlin.lexer.KtTokens.*;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -31,6 +32,9 @@ import org.jetbrains.kotlin.psi.KtProperty;
 import org.jetbrains.kotlin.psi.KtTypeParameter;
 import org.jetbrains.kotlin.psi.KtTypeReference;
 
+import com.github.gumtreediff.gen.treesitterng.KotlinTreeSitterNgTreeGenerator;
+import com.github.gumtreediff.tree.TreeContext;
+
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.OperationBody;
@@ -46,6 +50,16 @@ public class KotlinFileProcessor {
 	public void processKotlinFile(String filePath, String fileContent, boolean astDiff, PsiFileFactoryImpl factory) {
 		PsiFile psiFile = factory.createFileFromText(filePath, KotlinLanguage.INSTANCE, fileContent);
 		KtFile ktFile = (KtFile)psiFile;
+		if (astDiff) {
+			ByteArrayInputStream is = new ByteArrayInputStream(fileContent.getBytes());
+			try {
+				TreeContext treeContext = new KotlinTreeSitterNgTreeGenerator().generateFrom().stream(is);
+				this.umlModel.getTreeContextMap().put(filePath, treeContext);
+			}
+			catch(Exception e) {
+
+			}
+		}
 		
 		String packageName = "";
 		String sourceFolder = "";

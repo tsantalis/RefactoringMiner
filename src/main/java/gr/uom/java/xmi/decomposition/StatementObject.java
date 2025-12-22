@@ -248,6 +248,9 @@ public class StatementObject extends AbstractStatement {
 		this.comprehensions = visitor.getComprehensions();
 		// TODO pretty-print with stringify
 		this.statement = statement.getText();
+		if(!this.statement.endsWith("\n")) {
+			this.statement += "\n";
+		}
 		int start = getLocationInfo().getStartOffset();
 		int end = getLocationInfo().getEndOffset();
 		this.actualSignature = fileContent.substring(start, end);

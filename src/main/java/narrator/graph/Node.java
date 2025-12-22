@@ -60,7 +60,6 @@ public class Node {
         nodeObj.addProperty("path", path);
         nodeObj.addProperty("content", getContent());
         nodeObj.addProperty("nodeType", nodeType.name());
-        nodeObj.addProperty("astType", tree.getType().name);
 
         List<String> descendantSimpleNames = getDescendantSimpleNames();
         JsonArray descendantSimpleNamesArr = new JsonArray();

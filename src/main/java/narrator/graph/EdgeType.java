@@ -1,7 +1,7 @@
 package narrator.graph;
 
 public enum EdgeType {
-    Move("move"),
+    MAPPING("mapping"),
     DEF_USE("def_use"),
     SIMILARITY("similarity"),
     SUCCESSION("succession"),

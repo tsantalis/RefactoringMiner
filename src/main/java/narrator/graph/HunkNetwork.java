@@ -84,26 +84,6 @@ public class HunkNetwork {
         return (srcDst.equals("src") ? srcContents : dstContents).get(path);
     }
 
-    private List<Node> importTrees(HashMap<Tree, Set<Tree>> trees, Set<Tree> allMoves,
-            NodeType nodeType, ASTDiff diff) {
-        HashMap<Tree, Set<Tree>> treesMoves = new HashMap<>();
-        for (Tree tree : trees.keySet()) {
-            Set<Tree> treeMoves = new HashSet<>();
-            allMoves.stream().filter(move -> tree.getPos() <= move.getPos()
-                    && move.getEndPos() <= tree.getEndPos()).forEach(treeMoves::add);
-
-            treesMoves.put(tree, treeMoves);
-        }
-        return trees.entrySet().stream().map(entry -> {
-            Tree tree = entry.getKey();
-            Set<Tree> subTrees = entry.getValue();
-            Set<Tree> moveTrees = treesMoves.get(tree);
-            Pair<String, String> treeLocation = localizeTree(tree);
-            return new Node(getContent(treeLocation.first, treeLocation.second),
-                    treeLocation.second, tree, subTrees, moveTrees, nodeType, diff);
-        }).map(this::addNode).toList();
-    }
-
     public void importDiff(ASTDiff diff) {
         TreeClassifier classifier = diff.createRootNodesClassifier();
         importTrees(aggregateTrees(getValidTrees(classifier.getDeletedSrcs())),
@@ -121,6 +101,26 @@ public class HunkNetwork {
 //        });
 
         // TODO: pure moves
+    }
+
+    private void importTrees(HashMap<Tree, Set<Tree>> trees, Set<Tree> allMoves,
+            NodeType nodeType, ASTDiff diff) {
+        HashMap<Tree, Set<Tree>> treesMoves = new HashMap<>();
+        for (Tree tree : trees.keySet()) {
+            Set<Tree> treeMoves = new HashSet<>();
+            allMoves.stream().filter(move -> tree.getPos() <= move.getPos()
+                    && move.getEndPos() <= tree.getEndPos()).forEach(treeMoves::add);
+
+            treesMoves.put(tree, treeMoves);
+        }
+        trees.entrySet().stream().map(entry -> {
+            Tree tree = entry.getKey();
+            Set<Tree> subTrees = entry.getValue();
+            Set<Tree> moveTrees = treesMoves.get(tree);
+            Pair<String, String> treeLocation = localizeTree(tree);
+            return new Node(getContent(treeLocation.first, treeLocation.second),
+                    treeLocation.second, tree, subTrees, moveTrees, nodeType, diff);
+        }).forEach(this::addNode);
     }
 
     private Set<Tree> getValidTrees(Set<Tree> trees) {
@@ -238,6 +238,7 @@ public class HunkNetwork {
         processClassInstanceCreations();
         processSimilarity();
         processSuccession();
+        processSingularity();
     }
 
     private void processMoves() {
@@ -257,7 +258,7 @@ public class HunkNetwork {
 
             for (Node additionNode : additionNodes) {
                 if (additionNode.getMoveTrees().stream().anyMatch(deletionMovesDst::contains)) {
-                    addEdge(deletionNode, additionNode, EdgeType.Move);
+                    addEdge(deletionNode, additionNode, EdgeType.MAPPING);
                 }
             }
         }
@@ -707,6 +708,22 @@ public class HunkNetwork {
                     addEdge(subject, object, EdgeType.SIMILARITY);
                 }
             }
+        }
+    }
+
+    // TODO: pure moves can be handled here
+    public void processSingularity() {
+        Set<Node> nodes = graph.vertexSet();
+        for (Node subject : nodes) {
+            Tree tree = subject.getTree();
+            MappingStore mappingStore = subject.getDiff().getAllMappings().getMonoMappingStore();
+
+            Tree dst = mappingStore.getDstForSrc(tree);
+            if (dst == null) {
+                continue;
+            }
+            nodes.stream().filter(node -> node.getTree().equals(dst))
+                    .forEach(node -> addEdge(subject, node, EdgeType.MAPPING));
         }
     }
 }

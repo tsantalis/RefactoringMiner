@@ -1154,8 +1154,21 @@ public class OperationInvocation extends AbstractCall {
 			if(receiver != null) {
 				// TODO replace with stringify
 				this.expression = receiver.getText();
-				//processExpression(receiver, this.subExpressions);
+				processExpression(receiver, this.subExpressions);
 			}
+		}
+	}
+
+	private void processExpression(KtExpression expression, List<String> subExpressions) {
+		if(expression instanceof KtDotQualifiedExpression dotQualified) {
+			String expressionAsString = dotQualified.getReceiverExpression().getText();
+			String invocationAsString = expression.getText();
+			String suffix = invocationAsString.substring(expressionAsString.length() + 1, invocationAsString.length());
+			subExpressions.add(0, suffix);
+			processExpression(dotQualified.getReceiverExpression(), subExpressions);
+		}
+		else if(expression instanceof KtNameReferenceExpression nameReference) {
+			subExpressions.add(0, nameReference.getText());
 		}
 	}
 }

@@ -1059,6 +1059,20 @@ public class OperationBody {
 	}
 
 	private void processStatement(KtFile ktFile, String sourceFolder, String filePath, CompositeStatementObject parent, KtExpression statement, String fileContent) {
+		for(UMLComment comment : comments) {
+			if(comment.getParent() != null && comment.getParent().equals(parent))
+				continue;
+			if(parent.getLocationInfo().subsumes(comment.getLocationInfo())) {
+				if(comment.getParent() != null) {
+					if(!parent.getLocationInfo().subsumes(comment.getParent().getLocationInfo())) {
+						comment.setParent(parent);
+					}
+				}
+				else {
+					comment.setParent(parent);
+				}
+			}
+		}
 		if(statement instanceof KtBlockExpression block) {
 			List<KtExpression> blockStatements = block.getStatements();
 			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, block, parent.getDepth()+1, CodeElementType.BLOCK, fileContent);

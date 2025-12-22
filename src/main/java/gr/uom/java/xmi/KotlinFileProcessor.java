@@ -7,11 +7,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.jetbrains.kotlin.com.intellij.psi.PsiComment;
 import org.jetbrains.kotlin.com.intellij.psi.PsiElement;
 import org.jetbrains.kotlin.com.intellij.psi.PsiFile;
+import org.jetbrains.kotlin.com.intellij.psi.PsiRecursiveElementVisitor;
 import org.jetbrains.kotlin.com.intellij.psi.impl.PsiFileFactoryImpl;
 import org.jetbrains.kotlin.idea.KotlinLanguage;
 import org.jetbrains.kotlin.name.FqName;
@@ -46,6 +49,56 @@ public class KotlinFileProcessor {
 
 	public KotlinFileProcessor(UMLModel umlModel) {
 		this.umlModel = umlModel;
+	}
+
+	private List<UMLComment> extractInternalComments(KtFile cu, String sourceFolder, String sourceFile, String javaFileContent) {
+		List<PsiComment> astComments = new ArrayList<>();
+		cu.accept(new PsiRecursiveElementVisitor() {
+			@Override
+			public void visitElement(PsiElement element) {
+				super.visitElement(element);
+				if (element instanceof PsiComment comment) {
+					astComments.add(comment);
+				}
+			}
+		});
+		List<UMLComment> comments = new ArrayList<UMLComment>();
+		for(PsiComment comment : astComments) {
+			LocationInfo locationInfo = null;
+			if(comment.getText().startsWith("//")) {
+				locationInfo = new LocationInfo(cu, sourceFolder, sourceFile, comment, CodeElementType.LINE_COMMENT);
+			}
+			else if(comment.getText().startsWith("/*")) {
+				locationInfo = new LocationInfo(cu, sourceFolder, sourceFile, comment, CodeElementType.BLOCK_COMMENT);
+			}
+			if(locationInfo != null) {
+				int start = locationInfo.getStartOffset();
+				int end = locationInfo.getEndOffset();
+				String text = javaFileContent.substring(start, end);
+				UMLComment umlComment = new UMLComment(text, locationInfo);
+				comments.add(umlComment);
+			}
+		}
+		return comments;
+	}
+
+	private void distributeComments(List<UMLComment> compilationUnitComments, LocationInfo codeElementLocationInfo, List<UMLComment> codeElementComments) {
+		ListIterator<UMLComment> listIterator = compilationUnitComments.listIterator(compilationUnitComments.size());
+		while(listIterator.hasPrevious()) {
+			UMLComment comment = listIterator.previous();
+			LocationInfo commentLocationInfo = comment.getLocationInfo();
+			if(codeElementLocationInfo.subsumes(commentLocationInfo) ||
+					codeElementLocationInfo.sameLine(commentLocationInfo) ||
+					(commentLocationInfo.startsAtTheEndLineOf(codeElementLocationInfo) && !codeElementLocationInfo.getCodeElementType().equals(CodeElementType.ANONYMOUS_CLASS_DECLARATION)) ||
+					(codeElementLocationInfo.nextLine(commentLocationInfo) && !codeElementLocationInfo.getCodeElementType().equals(CodeElementType.ANONYMOUS_CLASS_DECLARATION)) ||
+					(codeElementComments.size() > 0 && codeElementComments.get(0).getLocationInfo().nextLine(commentLocationInfo))) {
+				codeElementComments.add(0, comment);
+			}
+			if(commentLocationInfo.nextLine(codeElementLocationInfo) || commentLocationInfo.rightAfterNextLine(codeElementLocationInfo)) {
+				comment.addPreviousLocation(codeElementLocationInfo);
+			}
+		}
+		compilationUnitComments.removeAll(codeElementComments);
 	}
 
 	public void processKotlinFile(String filePath, String fileContent, boolean astDiff, PsiFileFactoryImpl factory) {
@@ -90,6 +143,8 @@ public class KotlinFileProcessor {
 				}
 			}
 		}
+		List<UMLComment> comments = extractInternalComments(ktFile, sourceFolder, filePath, fileContent);
+		this.umlModel.getCommentMap().put(filePath, comments);
 		List<KtNamedFunction> topLevelFunctions = new ArrayList<>();
 		List<KtProperty> topLevelProperties = new ArrayList<>();
 		for (PsiElement psiElement : ktFile.getChildren()) {
@@ -100,7 +155,7 @@ public class KotlinFileProcessor {
 				if (ktClass.isEnum()) {
 					// TODO process enum declaration
 				} else {
-					UMLClass umlClass = processClassDeclaration(ktFile, ktClass, umlPackage, packageName, sourceFolder, filePath, fileContent, importedTypes);
+					UMLClass umlClass = processClassDeclaration(ktFile, ktClass, umlPackage, packageName, sourceFolder, filePath, fileContent, importedTypes, comments);
 					umlModel.addClass(umlClass);
 				}
 			}
@@ -124,20 +179,21 @@ public class KotlinFileProcessor {
 			moduleClass.setVisibility(Visibility.PUBLIC);
 			
 			for(KtProperty property : topLevelProperties) {
-				UMLAttribute attribute = processFieldDeclaration(ktFile, property, sourceFolder, filePath, fileContent, locationInfo);
+				UMLAttribute attribute = processFieldDeclaration(ktFile, property, sourceFolder, filePath, fileContent, comments, locationInfo);
 				attribute.setClassName(moduleClass.getName());
 				moduleClass.addAttribute(attribute);
 			}
 			for(KtNamedFunction function : topLevelFunctions) {
-				UMLOperation operation = processFunctionDeclaration(ktFile, function, sourceFolder, filePath, fileContent, moduleClass.getAttributes());
+				UMLOperation operation = processFunctionDeclaration(ktFile, function, sourceFolder, filePath, fileContent, moduleClass.getAttributes(), comments);
 				operation.setClassName(moduleClass.getName());
 				moduleClass.addOperation(operation);
 			}
+			distributeComments(comments, locationInfo, moduleClass.getComments());
 			umlModel.addClass(moduleClass);
 		}
 	}
 
-	private UMLClass processClassDeclaration(KtFile ktFile, KtClass ktClass, UMLPackage umlPackage, String packageName, String sourceFolder, String filePath, String fileContent, List<UMLImport> importedTypes) {
+	private UMLClass processClassDeclaration(KtFile ktFile, KtClass ktClass, UMLPackage umlPackage, String packageName, String sourceFolder, String filePath, String fileContent, List<UMLImport> importedTypes, List<UMLComment> comments) {
 		LocationInfo locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, ktClass, CodeElementType.TYPE_DECLARATION);
 		UMLClass umlClass = new UMLClass(packageName, ktClass.getName(), locationInfo, true, importedTypes);
 		umlClass.setPackageDeclaration(umlPackage);
@@ -206,34 +262,37 @@ public class KotlinFileProcessor {
 		KtClassBody classBody = ktClass.getBody();
 		if(classBody != null) {
 			for(KtProperty property : classBody.getProperties()) {
-				UMLAttribute attribute = processFieldDeclaration(ktFile, property, sourceFolder, filePath, fileContent, locationInfo);
+				UMLAttribute attribute = processFieldDeclaration(ktFile, property, sourceFolder, filePath, fileContent, comments, locationInfo);
 				attribute.setClassName(umlClass.getName());
 				umlClass.addAttribute(attribute);
 			}
 			for(KtAnonymousInitializer initializer : classBody.getAnonymousInitializers()) {
-				UMLInitializer umlInitializer = processInitializer(ktFile, initializer, sourceFolder, filePath, fileContent, umlClass.getAttributes(), umlClass.getNonQualifiedName());
+				UMLInitializer umlInitializer = processInitializer(ktFile, initializer, sourceFolder, filePath, fileContent, umlClass.getAttributes(), comments, umlClass.getNonQualifiedName());
 				umlInitializer.setClassName(umlClass.getName());
 				umlClass.addInitializer(umlInitializer);
 			}
 			for(KtNamedFunction function : classBody.getFunctions()) {
-				UMLOperation operation = processFunctionDeclaration(ktFile, function, sourceFolder, filePath, fileContent, umlClass.getAttributes());
+				UMLOperation operation = processFunctionDeclaration(ktFile, function, sourceFolder, filePath, fileContent, umlClass.getAttributes(), comments);
 				operation.setClassName(umlClass.getName());
 				umlClass.addOperation(operation);
 			}
 		}
+		distributeComments(comments, locationInfo, umlClass.getComments());
 		return umlClass;
 	}
 
-	private UMLInitializer processInitializer(KtFile ktFile, KtAnonymousInitializer initializer, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, String name) {
+	private UMLInitializer processInitializer(KtFile ktFile, KtAnonymousInitializer initializer, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments, String name) {
 		LocationInfo locationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, initializer, CodeElementType.INITIALIZER);
 		UMLInitializer umlInitializer = new UMLInitializer(name, locationInfo);
+		distributeComments(comments, locationInfo, umlInitializer.getComments());
 		return umlInitializer;
 	}
 
-	private UMLOperation processFunctionDeclaration(KtFile ktFile, KtNamedFunction function, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes) {
+	private UMLOperation processFunctionDeclaration(KtFile ktFile, KtNamedFunction function, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments) {
 		String methodName = function.getName();
 		LocationInfo locationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, function, CodeElementType.METHOD_DECLARATION);
 		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo);
+		distributeComments(comments, locationInfo, umlOperation.getComments());
 		
 		KtModifierList modifierList = function.getModifierList();
 		// default visibility in Kotlin is public
@@ -343,7 +402,7 @@ public class KotlinFileProcessor {
 		return umlOperation;
 	}
 
-	private UMLAttribute processFieldDeclaration(KtFile ktFile, KtProperty property, String sourceFolder, String filePath, String fileContent, LocationInfo parentLocationInfo) {
+	private UMLAttribute processFieldDeclaration(KtFile ktFile, KtProperty property, String sourceFolder, String filePath, String fileContent, List<UMLComment> comments, LocationInfo parentLocationInfo) {
 		KtTypeReference type = property.getTypeReference();
 		UMLType typeObject = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, type, 0);
 		LocationInfo locationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, property, CodeElementType.FIELD_DECLARATION);
@@ -351,6 +410,7 @@ public class KotlinFileProcessor {
 		VariableDeclaration variableDeclaration = new VariableDeclaration(ktFile, sourceFolder, filePath, property, umlAttribute, new LinkedHashMap<>(), fileContent, parentLocationInfo);
 		variableDeclaration.setAttribute(true);
 		umlAttribute.setVariableDeclaration(variableDeclaration);
+		distributeComments(comments, locationInfo, umlAttribute.getComments());
 		
 		KtModifierList modifierList = property.getModifierList();
 		// default visibility in Kotlin is public

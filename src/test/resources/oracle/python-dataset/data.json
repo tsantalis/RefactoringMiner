@@ -2197,6 +2197,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method protected _get_u_bound() extracted from public __init__(dist, rv_x, rv_y, rv_z, rv_mode, bound_u, bound_v) in class multivariate.secret_key_agreement.necessary_intrinsic_mutual_information.NecessaryIntrinsicMutualInformation & moved to class multivariate.secret_key_agreement.skar_lower_bounds.NecessaryIntrinsicMutualInformation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method protected _get_v_bound() extracted from public __init__(dist, rv_x, rv_y, rv_z, rv_mode, bound_u, bound_v) in class multivariate.secret_key_agreement.necessary_intrinsic_mutual_information.NecessaryIntrinsicMutualInformation & moved to class multivariate.secret_key_agreement.skar_lower_bounds.NecessaryIntrinsicMutualInformation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -8124,6 +8138,20 @@
     }, {
         "type": "Extract Class",
         "description": "Extract Class core.explorations.EpsilonDecayExploration from class models.deep_q_network.DeepQNetwork",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public __init__(hparams) extracted from public __init__(actions, state_dimension, hparams) in class models.deep_q_network.DeepQNetwork & moved to class agents.agent_base.AgentBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass agents.agent_base.AgentBase from class models.deep_q_network.DeepQNetwork",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

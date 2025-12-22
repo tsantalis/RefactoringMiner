@@ -24,6 +24,7 @@ import org.jetbrains.kotlin.psi.KtAnnotationEntry;
 import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtFunctionType;
+import org.jetbrains.kotlin.psi.KtIntersectionType;
 import org.jetbrains.kotlin.psi.KtModifierList;
 import org.jetbrains.kotlin.psi.KtNullableType;
 import org.jetbrains.kotlin.psi.KtParameter;
@@ -483,6 +484,12 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 				umlType.nullable = true;
 				processAnnotations(ktFile, sourceFolder, filePath, fileContent, typeReference, umlType);
 				return umlType;
+			} else if (element instanceof KtIntersectionType intersectionType) {
+				List<UMLType> umlTypes = new ArrayList<UMLType>();
+				umlTypes.add(extractTypeObject(ktFile, sourceFolder, filePath, fileContent, intersectionType.getLeftTypeRef()));
+				umlTypes.add(extractTypeObject(ktFile, sourceFolder, filePath, fileContent, intersectionType.getRightTypeRef()));
+				ListCompositeType listCompositeType = new ListCompositeType(umlTypes, Kind.INTERSECTION);
+				return listCompositeType;
 			}
 		} else if (type instanceof KtTypeProjection typeProjection) {
 			UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeProjection.getTypeReference());

@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.com.intellij.psi.impl.PsiFileFactoryImpl;
 import org.jetbrains.kotlin.idea.KotlinLanguage;
 import org.jetbrains.kotlin.name.FqName;
 import org.jetbrains.kotlin.psi.KtAnnotationEntry;
+import org.jetbrains.kotlin.psi.KtAnonymousInitializer;
 import org.jetbrains.kotlin.psi.KtClass;
 import org.jetbrains.kotlin.psi.KtClassBody;
 import org.jetbrains.kotlin.psi.KtElement;
@@ -209,6 +210,11 @@ public class KotlinFileProcessor {
 				attribute.setClassName(umlClass.getName());
 				umlClass.addAttribute(attribute);
 			}
+			for(KtAnonymousInitializer initializer : classBody.getAnonymousInitializers()) {
+				UMLInitializer umlInitializer = processInitializer(ktFile, initializer, sourceFolder, filePath, fileContent, umlClass.getAttributes(), umlClass.getNonQualifiedName());
+				umlInitializer.setClassName(umlClass.getName());
+				umlClass.addInitializer(umlInitializer);
+			}
 			for(KtNamedFunction function : classBody.getFunctions()) {
 				UMLOperation operation = processFunctionDeclaration(ktFile, function, sourceFolder, filePath, fileContent, umlClass.getAttributes());
 				operation.setClassName(umlClass.getName());
@@ -216,6 +222,12 @@ public class KotlinFileProcessor {
 			}
 		}
 		return umlClass;
+	}
+
+	private UMLInitializer processInitializer(KtFile ktFile, KtAnonymousInitializer initializer, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, String name) {
+		LocationInfo locationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, initializer, CodeElementType.INITIALIZER);
+		UMLInitializer umlInitializer = new UMLInitializer(name, locationInfo);
+		return umlInitializer;
 	}
 
 	private UMLOperation processFunctionDeclaration(KtFile ktFile, KtNamedFunction function, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes) {

@@ -205,12 +205,17 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 	}
 
 	private void processBinaryExpression(KtBinaryExpression expression, Object data) {
-		LeafExpression infix = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.INFIX_EXPRESSION, container);
-		infixExpressions.add(infix);
 		IElementType operationToken = expression.getOperationToken();
-		if (operationToken instanceof KtSingleValueToken singleValueToken) {
-			if (!operationToken.toString().equals("EQ"))
+		if(operationToken.toString().equals("EQ")) {
+			LeafExpression assignment = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.ASSIGNMENT, container);
+			assignments.add(assignment);
+		}
+		else {
+			LeafExpression infix = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.INFIX_EXPRESSION, container);
+			infixExpressions.add(infix);
+			if (operationToken instanceof KtSingleValueToken singleValueToken) {
 				this.infixOperators.add(singleValueToken.getValue());
+			}
 		}
 		if (expression.getLeft() != null)
 			this.visitExpression(expression.getLeft(), data);

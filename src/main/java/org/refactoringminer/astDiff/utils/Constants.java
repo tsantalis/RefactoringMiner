@@ -38,10 +38,10 @@ public class Constants {
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
 			METHOD_DECLARATION = "function_declaration";
-			SIMPLE_NAME = "identifier"; // TODO update value
+			SIMPLE_NAME = "simple_identifier";
 			IMPORT_DECLARATION = "import_statement"; // TODO update value
 			TYPE_DECLARATION = "class_declaration";
-			TYPE_DECLARATION_KIND = "class"; // TODO update value
+			TYPE_DECLARATION_KIND = "type_keyword";
 			BLOCK_COMMENT = "string"; // TODO update value
 			EXPRESSION_STATEMENT = "expression_statement"; // TODO update value
 			TRY_STATEMENT = "try_statement"; // TODO update value
@@ -197,4 +197,7 @@ public class Constants {
     //Kotlin Specific
     public final String FUNCTION_BODY = "function_body";
     public final String SOURCE_FILE = "source_file"; // This is the root of all trees in Kotlin
+    public final String TYPE_IDENTIFIER = "type_identifier";
+    public final String FUNCTION_KEYWORD = "function_keyword";
+    public final String FUNCTION_PARAMETERS = "function_value_parameters";
 }

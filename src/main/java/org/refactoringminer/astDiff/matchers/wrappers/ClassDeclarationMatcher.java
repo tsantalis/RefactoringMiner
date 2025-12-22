@@ -74,6 +74,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
 
         List<String> searchingTypes = new ArrayList<>();
         searchingTypes.add(Constants.get().SIMPLE_NAME);
+        searchingTypes.add(Constants.get().TYPE_IDENTIFIER);
         searchingTypes.add(Constants.get().TYPE_DECLARATION_KIND);
         for (String type : searchingTypes) {
             Pair<Tree,Tree> matched = findPairOfType(srcTypeDeclaration,dstTypeDeclaration,type);

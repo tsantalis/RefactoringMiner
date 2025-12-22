@@ -28,6 +28,7 @@ import org.jetbrains.kotlin.psi.KtModifierList;
 import org.jetbrains.kotlin.psi.KtNullableType;
 import org.jetbrains.kotlin.psi.KtParameter;
 import org.jetbrains.kotlin.psi.KtTypeElement;
+import org.jetbrains.kotlin.psi.KtTypeProjection;
 import org.jetbrains.kotlin.psi.KtTypeReference;
 import org.jetbrains.kotlin.psi.KtUserType;
 import org.refactoringminer.util.PathFileUtils;
@@ -483,6 +484,9 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 				processAnnotations(ktFile, sourceFolder, filePath, fileContent, typeReference, umlType);
 				return umlType;
 			}
+		} else if (type instanceof KtTypeProjection typeProjection) {
+			UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeProjection.getTypeReference());
+			return umlType;
 		}
 		return null;
 	}

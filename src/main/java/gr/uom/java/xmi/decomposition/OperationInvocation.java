@@ -40,6 +40,13 @@ import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 import org.eclipse.jdt.core.dom.Type;
+import org.jetbrains.kotlin.psi.KtCallExpression;
+import org.jetbrains.kotlin.psi.KtDotQualifiedExpression;
+import org.jetbrains.kotlin.psi.KtExpression;
+import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.psi.KtNameReferenceExpression;
+import org.jetbrains.kotlin.psi.KtTypeProjection;
+import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
@@ -1123,5 +1130,32 @@ public class OperationInvocation extends AbstractCall {
 			}
 		}
 		return null;
+	}
+
+	public OperationInvocation(KtFile cu, String sourceFolder, String filePath, KtCallExpression invocation, VariableDeclarationContainer container, String fileContent) {
+		super(cu, sourceFolder, filePath, invocation, CodeElementType.METHOD_INVOCATION, container);
+		KtExpression calleeExpression = invocation.getCalleeExpression();
+		if(calleeExpression instanceof KtNameReferenceExpression nameReference) {
+			this.methodName = nameReference.getReferencedName();
+		}
+		this.numberOfArguments = invocation.getValueArguments().size();
+		this.arguments = new ArrayList<String>();
+		List<KtTypeProjection> typeArgs = invocation.getTypeArguments();
+		for(KtTypeProjection typeArg : typeArgs) {
+			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, fileContent, typeArg, 0));
+		}
+		List<KtValueArgument> args = invocation.getValueArguments();
+		for(KtValueArgument argument : args) {
+			// TODO replace with stringify
+			this.arguments.add(argument.getText());
+		}
+		if(invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression) {
+			KtExpression receiver = dotQualifiedExpression.getReceiverExpression();
+			if(receiver != null) {
+				// TODO replace with stringify
+				this.expression = receiver.getText();
+				//processExpression(receiver, this.subExpressions);
+			}
+		}
 	}
 }

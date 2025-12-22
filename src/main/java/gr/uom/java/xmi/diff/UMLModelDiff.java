@@ -2725,6 +2725,17 @@ public class UMLModelDiff {
 		return removedOperations;
 	}
 
+	private List<UMLOperationBodyMapper> getOperationBodyMappersInCommonAndRenamedClasses() {
+		List<UMLOperationBodyMapper> mappers = new ArrayList<UMLOperationBodyMapper>();
+		for(UMLClassDiff classDiff : commonClassDiffList) {
+			mappers.addAll(classDiff.getOperationBodyMapperList());
+		}
+		for(UMLClassRenameDiff classDiff : classRenameDiffList) {
+			mappers.addAll(classDiff.getOperationBodyMapperList());
+		}
+		return mappers;
+	}
+
 	private List<UMLOperationBodyMapper> getOperationBodyMappersInCommonClasses() {
 		List<UMLOperationBodyMapper> mappers = new ArrayList<UMLOperationBodyMapper>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
@@ -4211,7 +4222,8 @@ public class UMLModelDiff {
 		List<UMLOperation> allOperationsInAddedClasses = getOperationsInAddedClasses();
 		checkForExtractedAndMovedLambdas(getOperationBodyMappersInMovedAndRenamedClasses(), allOperationsInAddedClasses);
 		if(allOperationsInAddedClasses.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
-			checkForExtractedAndMovedOperations(getOperationBodyMappersInCommonClasses(), allOperationsInAddedClasses);
+			processedOperationPairs.clear();
+			checkForExtractedAndMovedOperations(getOperationBodyMappersInCommonAndRenamedClasses(), allOperationsInAddedClasses);
 			processedOperationPairs.clear();
 			checkForExtractedAndMovedOperations(getOperationBodyMappersInMovedClasses(), allOperationsInAddedClasses);
 		}

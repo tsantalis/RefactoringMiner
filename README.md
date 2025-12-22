@@ -389,11 +389,11 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **December 16, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **December 22, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12600  | 13  | 215  | 0.999  | 0.983|
+|**Total**|12601  | 13  | 215  | 0.999  | 0.983|
 |Extract Method|1019  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
@@ -414,7 +414,7 @@ As of **December 16, 2025** the precision and recall of RefactoringMiner on this
 |Extract Superclass|74  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|108  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|127  |  0  | 60  | 1.000  | 0.679|
+|Extract And Move Method|128  |  0  | 60  | 1.000  | 0.681|
 |Move And Inline Method|12  |  0  |  4  | 1.000  | 0.750|
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
@@ -521,11 +521,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Merge Parameter`
 * `Invert Condition`
 
-As of **December 16, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **December 22, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3522  | 41  | 76  | 0.988  | 0.979|
+|**Total**|3527  | 41  | 76  | 0.989  | 0.979|
 |Extract Method|373  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -544,7 +544,7 @@ As of **December 16, 2025** the precision and recall of RefactoringMiner on this
 |Extract Superclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|45  |  1  |  4  | 0.978  | 0.918|
-|Extract And Move Method|123  |  2  |  5  | 0.984  | 0.961|
+|Extract And Move Method|128  |  2  |  5  | 0.985  | 0.962|
 |Move And Inline Method|29  |  1  |  6  | 0.967  | 0.829|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|292  |  1  |  6  | 0.997  | 0.980|

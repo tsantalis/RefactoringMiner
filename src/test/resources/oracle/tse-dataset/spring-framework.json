@@ -413,6 +413,31 @@
           "type": "INVERT_CONDITION",
           "description": "Invert Condition\tif(overrideAnnotation instanceof TestBean testBeanAnnotation) to if(!(overrideAnnotation instanceof TestBean testBeanAnnotation)) in method public createMetadata(overrideAnnotation Annotation, testClass Class<?>, field Field) : TestBeanOverrideMetadata from class org.springframework.test.context.bean.override.convention.TestBeanOverrideProcessor",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic markWrapEarly(metadata OverrideMetadata, beanName String) : void extracted from private registerWrapEarly(metadata OverrideMetadata) : void in class org.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor & moved to class org.springframework.test.context.bean.override.BeanOverrideRegistrar",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpackage registerNameForMetadata(metadata OverrideMetadata, beanName String) : void extracted from private registerReplaceDefinition(registry BeanDefinitionRegistry, overrideMetadata OverrideMetadata, enforceExistingDefinition boolean) : void in class org.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor & moved to class org.springframework.test.context.bean.override.BeanOverrideRegistrar",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpackage registerNameForMetadata(metadata OverrideMetadata, beanName String) : void extracted from private registerWrapEarly(metadata OverrideMetadata) : void in class org.springframework.test.context.bean.override.BeanOverrideBeanPostProcessor & moved to class org.springframework.test.context.bean.override.BeanOverrideRegistrar",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpackage parse(clazz Class<?>) : Set<OverrideMetadata> extracted from package findsOnField() : void in class org.springframework.test.context.bean.override.BeanOverrideParserTests & moved to class org.springframework.test.context.bean.override.BeanOverrideParsingUtils",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpackage parse(clazz Class<?>) : Set<OverrideMetadata> extracted from package allowsMultipleProcessorsOnDifferentElements() : void in class org.springframework.test.context.bean.override.BeanOverrideParserTests & moved to class org.springframework.test.context.bean.override.BeanOverrideParsingUtils",
+          "validation": true
         }
       ]
     },

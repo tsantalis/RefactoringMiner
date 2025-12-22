@@ -42,6 +42,14 @@ public class MethodMatcher extends BodyMapperMatcher{
 
     }
 
+    private void processFunctionBody(Tree srcFunctionDeclaration, Tree dstFunctionDeclaration, ExtendedMultiMappingStore mappingStore) {
+        Tree srcBlock = TreeUtilFunctions.findFirstByType(srcFunctionDeclaration, Constants.get().FUNCTION_BODY);
+        Tree dstBlock = TreeUtilFunctions.findFirstByType(dstFunctionDeclaration, Constants.get().FUNCTION_BODY);
+        if (srcBlock == null || dstBlock == null) return;
+        mappingStore.addMapping(srcBlock, dstBlock);
+
+    }
+
     private void processMethod(Tree srcTree, Tree dstTree, UMLOperationBodyMapper umlOperationBodyMapper, ExtendedMultiMappingStore mappingStore) {
         Tree srcOperationNode;
         Tree dstOperationNode;
@@ -67,6 +75,7 @@ public class MethodMatcher extends BodyMapperMatcher{
             new JavaDocMatcher(optimizationData, umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc(), umlOperationBodyMapper.getJavadocDiff())
                     .match(srcOperationNode, dstOperationNode, mappingStore);
             mappingStore.addMapping(srcOperationNode, dstOperationNode);
+            processFunctionBody(srcOperationNode, dstOperationNode, mappingStore);
             }
         } else {
             //Static Initializers

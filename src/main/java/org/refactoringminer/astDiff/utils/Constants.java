@@ -20,35 +20,53 @@ public class Constants {
 
 	private Constants(String filePath) {
 		if(PathFileUtils.isPythonFile(filePath)) {
+			CLASS_BLOCK = "block";
 			METHOD_DECLARATION = "function_definition";
 			SIMPLE_NAME = "identifier";
 			IMPORT_DECLARATION = "import_statement";
 			TYPE_DECLARATION = "class_definition";
 			TYPE_DECLARATION_KIND = "class";
 			BLOCK_COMMENT = "string";
-            EXPRESSION_STATEMENT = "expression_statement";
-            TRY_STATEMENT = "try_statement";
-            CATCH_CLAUSE = "except_clause";
-            IF_STATEMENT = "if_statement";
-            WHILE_STATEMENT = "while_statement";
-            FOR_STATEMENT = "for_statement";
-            ENHANCED_FOR_STATEMENT = "for_statement";
+			EXPRESSION_STATEMENT = "expression_statement";
+			TRY_STATEMENT = "try_statement";
+			CATCH_CLAUSE = "except_clause";
+			IF_STATEMENT = "if_statement";
+			WHILE_STATEMENT = "while_statement";
+			FOR_STATEMENT = "for_statement";
+			ENHANCED_FOR_STATEMENT = "for_statement";
+		}
+		else if(PathFileUtils.isKotlinFile(filePath)) {
+			CLASS_BLOCK = "type_body";
+			METHOD_DECLARATION = "function_declaration";
+			SIMPLE_NAME = "identifier"; // TODO update value
+			IMPORT_DECLARATION = "import_statement"; // TODO update value
+			TYPE_DECLARATION = "class_declaration";
+			TYPE_DECLARATION_KIND = "class"; // TODO update value
+			BLOCK_COMMENT = "string"; // TODO update value
+			EXPRESSION_STATEMENT = "expression_statement"; // TODO update value
+			TRY_STATEMENT = "try_statement"; // TODO update value
+			CATCH_CLAUSE = "except_clause"; // TODO update value
+			IF_STATEMENT = "if_statement"; // TODO update value
+			WHILE_STATEMENT = "while_statement"; // TODO update value
+			FOR_STATEMENT = "for_statement"; // TODO update value
+			ENHANCED_FOR_STATEMENT = "for_statement"; // TODO update value
 		}
 		else {
 			// Java values as default
+			CLASS_BLOCK = "";
 			METHOD_DECLARATION = "MethodDeclaration";
 			SIMPLE_NAME = "SimpleName";
 			IMPORT_DECLARATION = "ImportDeclaration";
 			TYPE_DECLARATION = "TypeDeclaration";
 			TYPE_DECLARATION_KIND = "TYPE_DECLARATION_KIND";
 			BLOCK_COMMENT = "BlockComment";
-            EXPRESSION_STATEMENT = "ExpressionStatement";
-            TRY_STATEMENT = "TryStatement";
-            CATCH_CLAUSE = "CatchClause";
-            IF_STATEMENT = "IfStatement";
-            WHILE_STATEMENT = "WhileStatement";
-            FOR_STATEMENT = "ForStatement";
-            ENHANCED_FOR_STATEMENT = "EnhancedForStatement";
+			EXPRESSION_STATEMENT = "ExpressionStatement";
+			TRY_STATEMENT = "TryStatement";
+			CATCH_CLAUSE = "CatchClause";
+			IF_STATEMENT = "IfStatement";
+			WHILE_STATEMENT = "WhileStatement";
+			FOR_STATEMENT = "ForStatement";
+			ENHANCED_FOR_STATEMENT = "EnhancedForStatement";
 		}
 	}
 
@@ -154,7 +172,7 @@ public class Constants {
 
     //Python Specific
     public final String ARGUMENT_LIST = "argument_list";
-    public final String CLASS_BLOCK = "block"; // Pouria: Might be merged with Block, I have no clue about python
+    public final String CLASS_BLOCK;// = "block"; // Pouria: Might be merged with Block, I have no clue about python
     public final String CLASS_KEYWORD = "class";
     public final String TRY_KEYWORD = "try";
     public final String EXCEPT_KEYWORD = "except";
@@ -175,4 +193,8 @@ public class Constants {
     public final String ELIF_KEYWORD = "elif";
     public final String ELSE_KEYWORD = "else";
     public final String WHILE_KEYWORD = "while";
+    
+    //Kotlin Specific
+    public final String FUNCTION_BODY = "function_body";
+    public final String SOURCE_FILE = "source_file"; // This is the root of all trees in Kotlin
 }

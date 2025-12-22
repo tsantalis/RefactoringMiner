@@ -264,6 +264,10 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
             t1_p = TreeUtilFunctions.getParentUntilType(t1, Constants.get().MODULE);
             t2_p = TreeUtilFunctions.getParentUntilType(t2, Constants.get().MODULE);
         }
+        if(t1_p == null && t2_p == null) {
+            t1_p = TreeUtilFunctions.getParentUntilType(t1, Constants.get().SOURCE_FILE);
+            t2_p = TreeUtilFunctions.getParentUntilType(t2, Constants.get().SOURCE_FILE);
+        }
         return Objects.equals(t1_p, t2_p);
     }
 }

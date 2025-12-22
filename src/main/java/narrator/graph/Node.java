@@ -189,10 +189,10 @@ public class Node {
         return path;
     }
 
-    public Pair<Node, Node> getSiblings() {
+    public Tree getRight() {
         Tree parent = tree.getParent();
         if (parent == null) {
-            return new Pair<>(null, null);
+            return null;
         }
 
         List<Tree> parentChildren = tree.getParent().getChildren();
@@ -205,17 +205,7 @@ public class Node {
             }
         }
 
-        Node left = null, right = null;
-        if (nodeIndex > 0) {
-            left = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex - 1), null,
-                    null, NodeType.SEMANTIC_CONTEXT, diff);
-        }
-        if (nodeIndex < parentChildren.size() - 1) {
-            right = new Node(this.fileContent, this.path, parentChildren.get(nodeIndex + 1), null,
-                    null, NodeType.SEMANTIC_CONTEXT, diff);
-        }
-
-        return new Pair<>(left, right);
+        return nodeIndex < parentChildren.size() - 1 ? parentChildren.get(nodeIndex + 1) : null;
     }
 
     private List<String> getDescendantSimpleNames() {

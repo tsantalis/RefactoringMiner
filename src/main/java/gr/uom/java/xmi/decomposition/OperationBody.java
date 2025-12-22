@@ -51,10 +51,13 @@ import org.jetbrains.kotlin.psi.KtFinallySection;
 import org.jetbrains.kotlin.psi.KtForExpression;
 import org.jetbrains.kotlin.psi.KtIfExpression;
 import org.jetbrains.kotlin.psi.KtLabeledExpression;
+import org.jetbrains.kotlin.psi.KtNameReferenceExpression;
 import org.jetbrains.kotlin.psi.KtParameter;
+import org.jetbrains.kotlin.psi.KtProperty;
 import org.jetbrains.kotlin.psi.KtReturnExpression;
 import org.jetbrains.kotlin.psi.KtThrowExpression;
 import org.jetbrains.kotlin.psi.KtTryExpression;
+import org.jetbrains.kotlin.psi.KtVariableDeclaration;
 import org.jetbrains.kotlin.psi.KtWhenExpression;
 import org.jetbrains.kotlin.psi.KtWhileExpression;
 
@@ -1207,30 +1210,17 @@ public class OperationBody {
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 		}
-		/*else if(statement instanceof KtDotQualifiedExpression dotQualifiedExpression) {
-			KtExpression receiver = dotQualifiedExpression.getReceiverExpression();
-			KtExpression selector = dotQualifiedExpression.getSelectorExpression();
-			boolean withLock = false;
-			if(selector instanceof KtCallExpression callExpression) {
-				KtExpression calleeExpression = callExpression.getCalleeExpression();
-				if(calleeExpression instanceof KtNameReferenceExpression nameReference) {
-					String referencedName = nameReference.getReferencedName();
-					if(referencedName.equals("withLock")) {
-						withLock = true;
-						List<KtLambdaArgument> lambdaArguments = callExpression.getLambdaArguments();
-						for(KtLambdaArgument lambdaArgument : lambdaArguments) {
-							KtLambdaExpression lambda = lambdaArgument.getLambdaExpression();
-						}
-					}
-				}
-			}
-			if(!withLock) {
-				StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, statement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);
-				parent.addStatement(child);
-				addStatementInVariableScopes(child);
-			}
-		}*/
-		else {
+		else if(statement instanceof KtVariableDeclaration variableDeclaration) {
+			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, variableDeclaration, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			VariableDeclaration vd = variableDeclaration instanceof KtProperty ?
+					new VariableDeclaration(ktFile, sourceFolder, filePath, (KtProperty)variableDeclaration, container, activeVariableDeclarations, fileContent, parent.getLocationInfo()) :
+					new VariableDeclaration(ktFile, sourceFolder, filePath, (KtDestructuringDeclarationEntry)variableDeclaration, container, activeVariableDeclarations, fileContent, parent.getLocationInfo());
+			child.getVariableDeclarations().add(vd);
+			addStatementInVariableScopes(child);
+			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
+		}
+		else if(!(statement instanceof KtNameReferenceExpression)) {
 			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, statement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);

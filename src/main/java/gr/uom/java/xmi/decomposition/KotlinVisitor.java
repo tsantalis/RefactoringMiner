@@ -7,12 +7,30 @@ import java.util.Set;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import org.jetbrains.kotlin.com.intellij.psi.stubs.IStubElementType;
+import org.jetbrains.kotlin.com.intellij.psi.tree.IElementType;
+import org.jetbrains.kotlin.lexer.KtSingleValueToken;
+import org.jetbrains.kotlin.psi.KtArrayAccessExpression;
+import org.jetbrains.kotlin.psi.KtBinaryExpression;
+import org.jetbrains.kotlin.psi.KtCallExpression;
+import org.jetbrains.kotlin.psi.KtConstantExpression;
+import org.jetbrains.kotlin.psi.KtDotQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtLambdaExpression;
+import org.jetbrains.kotlin.psi.KtNameReferenceExpression;
+import org.jetbrains.kotlin.psi.KtParenthesizedExpression;
+import org.jetbrains.kotlin.psi.KtPostfixExpression;
+import org.jetbrains.kotlin.psi.KtPrefixExpression;
+import org.jetbrains.kotlin.psi.KtProperty;
+import org.jetbrains.kotlin.psi.KtReferenceExpression;
+import org.jetbrains.kotlin.psi.KtReturnExpression;
+import org.jetbrains.kotlin.psi.KtSafeQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtStringTemplateExpression;
+import org.jetbrains.kotlin.psi.KtThisExpression;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.jetbrains.kotlin.psi.KtVisitor;
+import static org.jetbrains.kotlin.psi.stubs.elements.KtStubElementTypes.*;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -66,21 +84,171 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 
 	@Override
 	public Object visitExpression(KtExpression expression, Object data) {
-		if (expression instanceof KtLambdaExpression lambdaExpression) {
-			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, sourceFolder, filePath, lambdaExpression, container, activeVariableDeclarations, fileContent);
-			lambdas.add(lambda);
+		if (expression instanceof KtBinaryExpression binaryExpression) {
+			this.processBinaryExpression(binaryExpression, data);
+		} else if (expression instanceof KtReturnExpression) {
+			this.processReturnExpression((KtReturnExpression) expression, data);
+		} else if (expression instanceof KtDotQualifiedExpression dotQualifiedExpression) {
+			this.processDotQualifiedExpression(dotQualifiedExpression, data);
+		} else if (expression instanceof KtCallExpression callExpression) {
+			this.processCallExpression(callExpression, data);
+		} else if (expression instanceof KtPrefixExpression prefixExpression) {
+			this.processPrefixExpression(prefixExpression, data);
+		} else if (expression instanceof KtPostfixExpression postfixExpression) {
+			this.processPostfixExpression(postfixExpression, data);
+		} else if (expression instanceof KtThisExpression thisExpression) {
+			this.processThisExpression(thisExpression);
+		} else if (expression instanceof KtConstantExpression constantExpression) {
+			this.processConstantExpression(constantExpression);
+		} else if (expression instanceof KtNameReferenceExpression nameReferenceExpression) {
+			this.processReferenceExpression(nameReferenceExpression);
+		} else if (expression instanceof KtParenthesizedExpression parenthesizedExpression) {
+			this.processParenthesizedExpression(parenthesizedExpression, data);
+		} else if (expression instanceof KtStringTemplateExpression stringTemplate) {
+			this.processStringTemplateExpression(stringTemplate);
+		} else if (expression instanceof KtArrayAccessExpression arrayAccess) {
+			this.processArrayAccess(arrayAccess, data);
+		} else if (expression instanceof KtSafeQualifiedExpression qualifiedExpression) {
+			this.processSafeQualifiedExpression(qualifiedExpression, data);
+		} else if (expression instanceof KtLambdaExpression lambdaExpression) {
+			this.processLambdaExpression(lambdaExpression, data);
+		} else if (expression instanceof KtProperty property) {
+			this.processPropertyExpression(property, data);
 		}
 		return super.visitExpression(expression, data);
 	}
 
-	@Override
-	public Object visitArgument(KtValueArgument argument, Object data) {
-		KtExpression argumentExpression = argument.getArgumentExpression();
-		if(argumentExpression instanceof KtStringTemplateExpression stringTemplate) {
-			LeafExpression leafExpression = new LeafExpression(cu, sourceFolder, filePath, stringTemplate, CodeElementType.STRING_LITERAL, container);
-			stringLiterals.add(leafExpression);
+	private void processPropertyExpression(KtProperty ktProperty, Object data) {
+		if (ktProperty.getInitializer() != null)
+			this.visitExpression(ktProperty.getInitializer(), data);
+		if (ktProperty.getDelegateExpression() != null)
+			this.visitExpression(ktProperty.getDelegateExpression(), data);
+	}
+
+	private void processStringTemplateExpression(KtStringTemplateExpression expression) {
+		LeafExpression literal = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.STRING_LITERAL, container);
+		stringLiterals.add(literal);
+	}
+
+	private void processArrayAccess(KtArrayAccessExpression expression, Object data) {
+		LeafExpression arrayAccess = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.ARRAY_ACCESS, container);
+		arrayAccesses.add(arrayAccess);
+		KtExpression arrayExpression = expression.getArrayExpression();
+		if (arrayExpression != null) {
+			this.visitExpression(arrayExpression, data);
 		}
-		return super.visitArgument(argument, data);
+		for(KtExpression index : expression.getIndexExpressions()) {
+			this.visitExpression(index, data);
+		}
+	}
+
+	private void processReferenceExpression(KtReferenceExpression expression) {
+		if (expression instanceof KtNameReferenceExpression && !(expression.getParent() instanceof KtCallExpression)) {
+			LeafExpression name = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.SIMPLE_NAME, container);
+			variables.add(name);
+		}
+	}
+
+	private void processCallExpression(KtCallExpression expression, Object data) {
+		List<KtValueArgument> arguments = expression.getValueArguments();
+		for (KtValueArgument argument : arguments) {
+			processArgument(argument, data);
+		}
+		OperationInvocation invocation = new OperationInvocation(cu, sourceFolder, filePath, expression, container, fileContent);
+		methodInvocations.add(invocation);
+		if(expression.getCalleeExpression() != null) {
+			this.visitExpression(expression.getCalleeExpression(), data);
+		}
+	}
+
+	private void processArgument(KtValueArgument argument, Object data) {
+		KtExpression argumentExpression = argument.getArgumentExpression();
+		this.visitExpression(argumentExpression, data);
+	}
+
+	private void processThisExpression(KtThisExpression expression) {
+		//if(!(expression.getParent() instanceof FieldAccess)) {
+			LeafExpression thisExpression = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.THIS_EXPRESSION, container);
+			thisExpressions.add(thisExpression);
+		//}
+	}
+
+	private void processConstantExpression(KtConstantExpression expression) {
+		IStubElementType elementType = expression.getElementType();
+		if (elementType == BOOLEAN_CONSTANT) {
+			LeafExpression literal = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.BOOLEAN_LITERAL, container);
+			booleanLiterals.add(literal);
+		} else if (elementType == NULL) {
+			LeafExpression literal = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.NULL_LITERAL, container);
+			nullLiterals.add(literal);
+		} else if (elementType == INTEGER_CONSTANT || elementType == FLOAT_CONSTANT) {
+			LeafExpression literal = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.NUMBER_LITERAL, container);
+			numberLiterals.add(literal);
+		} else if (elementType == STRING_TEMPLATE) {
+			LeafExpression literal = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.STRING_LITERAL, container);
+			stringLiterals.add(literal);
+		}
+	}
+
+	private void processReturnExpression(KtReturnExpression expression, Object data) {
+		if (expression.getReturnedExpression() != null)
+			this.visitExpression(expression.getReturnedExpression(), data);
+	}
+
+	private void processParenthesizedExpression(KtParenthesizedExpression expression, Object data) {
+		LeafExpression parenthesized = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.PARENTHESIZED_EXPRESSION, container);
+		parenthesizedExpressions.add(parenthesized);
+		KtExpression ktExpression = expression.getExpression();
+		if (ktExpression != null) {
+			this.visitExpression(ktExpression, data);
+		}
+	}
+
+	private void processBinaryExpression(KtBinaryExpression expression, Object data) {
+		LeafExpression infix = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.INFIX_EXPRESSION, container);
+		infixExpressions.add(infix);
+		IElementType operationToken = expression.getOperationToken();
+		if (operationToken instanceof KtSingleValueToken singleValueToken) {
+			if (!operationToken.toString().equals("EQ"))
+				this.infixOperators.add(singleValueToken.getValue());
+		}
+		if (expression.getLeft() != null)
+			this.visitExpression(expression.getLeft(), data);
+		if (expression.getRight() != null)
+			this.visitExpression(expression.getRight(), data);
+	}
+
+	private void processDotQualifiedExpression(KtDotQualifiedExpression expression, Object data) {
+		this.visitExpression(expression.getReceiverExpression(), data);
+		if (expression.getSelectorExpression() != null)
+			this.visitExpression(expression.getSelectorExpression(), data);
+	}
+
+	private void processSafeQualifiedExpression(KtSafeQualifiedExpression safeQualifiedExpression, Object data) {
+		if (safeQualifiedExpression.getSelectorExpression() != null)
+			this.visitExpression(safeQualifiedExpression.getSelectorExpression(), data);
+		this.visitExpression(safeQualifiedExpression.getReceiverExpression(), data);
+	}
+
+	private void processLambdaExpression(KtLambdaExpression expression, Object data) {
+		LambdaExpressionObject lambda = new LambdaExpressionObject(cu, sourceFolder, filePath, expression, container, activeVariableDeclarations, fileContent);
+		lambdas.add(lambda);
+		if (expression.getBodyExpression() != null)
+			this.visitExpression(expression.getBodyExpression(), data);
+	}
+
+	private void processPrefixExpression(KtPrefixExpression expression, Object data) {
+		LeafExpression prefix = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.PREFIX_EXPRESSION, container);
+		prefixExpressions.add(prefix);
+		if (expression.getBaseExpression() != null)
+			this.visitExpression(expression.getBaseExpression(), data);
+	}
+
+	private void processPostfixExpression(KtPostfixExpression expression, Object data) {
+		LeafExpression postfix = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.POSTFIX_EXPRESSION, container);
+		postfixExpressions.add(postfix);
+		if (expression.getBaseExpression() != null)
+			this.visitExpression(expression.getBaseExpression(), data);
 	}
 
 	public List<AbstractCall> getMethodInvocations() {

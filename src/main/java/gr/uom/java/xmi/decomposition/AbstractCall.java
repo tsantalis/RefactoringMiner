@@ -11,6 +11,8 @@ import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.jetbrains.kotlin.psi.KtCallExpression;
+import org.jetbrains.kotlin.psi.KtFile;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
@@ -50,15 +52,19 @@ public abstract class AbstractCall extends LeafExpression {
 		super(cu, sourceFolder, filePath, expression, codeElementType, container);
 	}
 
+	public AbstractCall(KtFile cu, String sourceFolder, String filePath, KtCallExpression expression, CodeElementType codeElementType, VariableDeclarationContainer container) {
+		super(cu, sourceFolder, filePath, expression, codeElementType, container);
+	}
+
 	protected AbstractCall(LocationInfo locationInfo) {
 		super(locationInfo);
 	}
 
-    boolean isAssumeCall() {
+	boolean isAssumeCall() {
 		return getName().startsWith("assume");
 	}
 
-    public LeafExpression asLeafExpression() {
+	public LeafExpression asLeafExpression() {
 		return new LeafExpression(getString(), getLocationInfo());
 	}
 

@@ -128,6 +128,7 @@ public class MethodMatcher extends BodyMapperMatcher{
         searchingTypes.add(Constants.get().FUNCTION_BODY);
         searchingTypes.add(Constants.get().FUNCTION_KEYWORD);
         searchingTypes.add(Constants.get().FUNCTION_PARAMETERS);
+        searchingTypes.add(Constants.get().MODIFIERS);
         for (String type : searchingTypes) {
             com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,type);
             if (matched != null)
@@ -156,8 +157,6 @@ public class MethodMatcher extends BodyMapperMatcher{
             Tree tree2 = TreeUtilFunctions.findChildByTypeAndLabel(dstOperationNode, Constants.get().MODIFIER, v2);
             if (tree1 != null && tree2 != null) {
                 mappingStore.addMappingRecursively(tree1,tree2);
-                if (tree1.getParent().getType().name.equals(Constants.get().MODIFIERS) && tree2.getParent().getType().name.equals(Constants.get().MODIFIERS))
-                    mappingStore.addMapping(tree1.getParent(), tree2.getParent());
             }
         }
     }

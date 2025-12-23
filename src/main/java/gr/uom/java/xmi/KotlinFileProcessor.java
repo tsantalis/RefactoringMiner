@@ -39,6 +39,7 @@ import org.jetbrains.kotlin.psi.KtObjectDeclaration;
 import org.jetbrains.kotlin.psi.KtPackageDirective;
 import org.jetbrains.kotlin.psi.KtParameter;
 import org.jetbrains.kotlin.psi.KtProperty;
+import org.jetbrains.kotlin.psi.KtSecondaryConstructor;
 import org.jetbrains.kotlin.psi.KtTypeParameter;
 import org.jetbrains.kotlin.psi.KtTypeReference;
 
@@ -364,6 +365,36 @@ public class KotlinFileProcessor {
 				UMLInitializer umlInitializer = processInitializer(ktFile, initializer, sourceFolder, filePath, fileContent, umlClass.getAttributes(), comments, umlClass.getNonQualifiedName());
 				umlInitializer.setClassName(umlClass.getName());
 				umlClass.addInitializer(umlInitializer);
+			}
+			for(KtSecondaryConstructor constructor : classBody.getSecondaryConstructors$psi_api()) {
+				LocationInfo constructorLocationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, constructor, CodeElementType.METHOD_DECLARATION);
+				UMLOperation umlConstructor = new UMLOperation(ktClass.getName(), constructorLocationInfo);
+				umlConstructor.setConstructor(true);
+				umlConstructor.setVisibility(Visibility.PUBLIC);
+				UMLJavadoc constructorJavadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, constructor.getDocComment());
+				umlConstructor.setJavadoc(constructorJavadoc);
+				distributeComments(comments, locationInfo, umlConstructor.getComments());
+				List<KtParameter> parameters = constructor.getValueParameters();
+				for (KtParameter parameter : parameters) {
+					KtTypeReference typeReference = parameter.getTypeReference();
+					String parameterName = parameter.getName();
+					UMLType type = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeReference, 0);
+					if (parameter.isVarArg()) {
+						type.setVarargs();
+					}
+					UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarArg());
+					VariableDeclaration variableDeclaration =
+							new VariableDeclaration(ktFile, sourceFolder, filePath, parameter, umlConstructor, new LinkedHashMap<>(), fileContent, umlConstructor.getLocationInfo());
+					variableDeclaration.setParameter(true);
+					umlParameter.setVariableDeclaration(variableDeclaration);
+					umlConstructor.addParameter(umlParameter);
+				}
+				if (constructor.getBodyBlockExpression() != null) {
+					OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, constructor.getBodyBlockExpression(), umlConstructor, umlClass.getAttributes(), fileContent);
+					umlConstructor.setBody(operationBody);
+				}
+				umlConstructor.setClassName(umlClass.getName());
+				umlClass.addOperation(umlConstructor);
 			}
 			for(KtNamedFunction function : classBody.getFunctions()) {
 				UMLOperation operation = processFunctionDeclaration(ktFile, function, sourceFolder, filePath, fileContent, umlClass.getAttributes(), comments);

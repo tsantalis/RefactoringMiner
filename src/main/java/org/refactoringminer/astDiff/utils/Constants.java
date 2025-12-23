@@ -128,6 +128,7 @@ public class Constants {
     public final String STRICTFP = "strictfp";
     public final String INLINE = "inline";
     public final String EQUAL_OPERATOR = "=";
+    public final String ANNOTATION = "annotation";
 
     public final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
     public final String METHOD_INVOCATION_RECEIVER = "METHOD_INVOCATION_RECEIVER";

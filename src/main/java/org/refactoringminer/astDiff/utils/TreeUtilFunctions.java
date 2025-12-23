@@ -130,9 +130,9 @@ public class TreeUtilFunctions {
 				if (isFromType(child, type) && child.getLabel().equals(label))
 					return child;
 				if (child.getType().name.equals(Constants.get().MODIFIERS)) {
-					for (Tree gnandChild : child.getChildren()) {
-						if (isFromType(gnandChild, type) && gnandChild.getChild(0).getLabel().equals(label))
-							return gnandChild;
+					for (Tree grandChild : child.getChildren()) {
+						if (isFromType(grandChild, type) && grandChild.getChild(0).getLabel().equals(label))
+							return grandChild;
 					}
 				}
 			}

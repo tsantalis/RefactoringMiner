@@ -127,6 +127,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		else {
 			this.packageDeclarationJavadocDiff = Optional.empty();
 		}
+		if(originalClass.getPrimaryConstructor().isPresent() && nextClass.getPrimaryConstructor().isPresent()) {
+			
+		}
 		processImports();
 	}
 

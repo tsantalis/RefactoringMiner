@@ -34,9 +34,6 @@ import org.refactoringminer.api.Refactoring;
 public class UMLOperationDiff {
 	private VariableDeclarationContainer removedOperation;
 	private VariableDeclarationContainer addedOperation;
-	private List<VariableDeclaration> addedParameters = new ArrayList<VariableDeclaration>();
-	private List<VariableDeclaration> removedParameters = new ArrayList<VariableDeclaration>();
-	private List<UMLParameterDiff> parameterDiffList = new ArrayList<UMLParameterDiff>();
 	private boolean visibilityChanged;
 	private boolean abstractionChanged;
 	private boolean finalChanged;
@@ -45,7 +42,6 @@ public class UMLOperationDiff {
 	private boolean returnTypeChanged;
 	private boolean qualifiedReturnTypeChanged;
 	private boolean operationRenamed;
-	private boolean parametersReordered;
 	private Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
 	private Set<Pair<VariableDeclaration, VariableDeclaration>> matchedVariables = new LinkedHashSet<>();
 	private Set<Refactoring> refactorings = new LinkedHashSet<>();
@@ -57,6 +53,7 @@ public class UMLOperationDiff {
 	private List<UMLType> removedExceptionTypes = new ArrayList<UMLType>();
 	private Set<Pair<UMLType, UMLType>> commonExceptionTypes = new LinkedHashSet<Pair<UMLType, UMLType>>();
 	private SimpleEntry<Set<UMLType>, Set<UMLType>> changedExceptionTypes;
+	private UMLParameterListDiff parameterListDiff;
 	
 	public UMLOperationDiff(UMLOperation removedOperation, UMLOperation addedOperation, UMLAbstractClassDiff classDiff) {
 		this.classDiff = classDiff;
@@ -73,7 +70,8 @@ public class UMLOperationDiff {
 	private void process(LambdaExpressionObject removedLambda, LambdaExpressionObject addedLambda) {
 		this.removedOperation = removedLambda;
 		this.addedOperation = addedLambda;
-		processParameters(removedLambda, addedLambda);
+		this.parameterListDiff = new UMLParameterListDiff(removedLambda, addedLambda, mappings, refactorings, classDiff);
+		//processParameters(removedLambda, addedLambda);
 	}
 
 	private void process(UMLOperation removedOperation, UMLOperation addedOperation) {
@@ -105,183 +103,7 @@ public class UMLOperationDiff {
 		processThrownExceptionTypes(removedOperation.getThrownExceptionTypes(), addedOperation.getThrownExceptionTypes());
 		this.annotationListDiff = new UMLAnnotationListDiff(removedOperation.getAnnotations(), addedOperation.getAnnotations());
 		this.typeParameterListDiff = new UMLTypeParameterListDiff(removedOperation.getTypeParameters(), addedOperation.getTypeParameters());
-		processParameters(removedOperation, addedOperation);
-	}
-
-	private void processParameters(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation) {
-		List<SimpleEntry<VariableDeclaration, VariableDeclaration>> matchedParameters = updateAddedRemovedParameters(removedOperation, addedOperation);
-		for(SimpleEntry<VariableDeclaration, VariableDeclaration> matchedParameter : matchedParameters) {
-			VariableDeclaration parameter1 = matchedParameter.getKey();
-			VariableDeclaration parameter2 = matchedParameter.getValue();
-			UMLParameterDiff parameterDiff = new UMLParameterDiff(parameter1, parameter2, removedOperation, addedOperation, mappings, refactorings, classDiff);
-			if(!parameterDiff.isEmpty()) {
-				parameterDiffList.add(parameterDiff);
-			}
-		}
-		int matchedParameterCount = matchedParameters.size()/2;
-		List<String> parameterNames1 = new ArrayList<>(removedOperation.getParameterNameList());
-		for(VariableDeclaration removedParameter : removedParameters) {
-			parameterNames1.remove(removedParameter.getVariableName());
-		}
-		List<String> parameterNames2 = new ArrayList<>(addedOperation.getParameterNameList());
-		for(VariableDeclaration addedParameter : addedParameters) {
-			parameterNames2.remove(addedParameter.getVariableName());
-		}
-		if(matchedParameterCount == parameterNames1.size() && matchedParameterCount == parameterNames2.size() &&
-				parameterNames1.size() == parameterNames2.size() && parameterNames1.size() > 1 && !parameterNames1.equals(parameterNames2)) {
-			parametersReordered = true;
-		}
-		//first round match parameters with the same name
-		for(Iterator<VariableDeclaration> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
-			VariableDeclaration removedParameter = removedParameterIterator.next();
-			for(Iterator<VariableDeclaration> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
-				VariableDeclaration addedParameter = addedParameterIterator.next();
-				if(removedParameter.getVariableName().equals(addedParameter.getVariableName())) {
-					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings, classDiff);
-					if(!parameterDiff.isEmpty()) {
-						parameterDiffList.add(parameterDiff);
-					}
-					addedParameterIterator.remove();
-					removedParameterIterator.remove();
-					break;
-				}
-			}
-		}
-		//second round match parameters with the same type
-		for(Iterator<VariableDeclaration> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
-			VariableDeclaration removedParameter = removedParameterIterator.next();
-			for(Iterator<VariableDeclaration> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
-				VariableDeclaration addedParameter = addedParameterIterator.next();
-				if(removedParameter.equalQualifiedType(addedParameter)) {
-					if(!existsAnotherAddedParameterWithTheSameType(addedParameter)) {
-						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings, classDiff);
-						if(!parameterDiff.isEmpty()) {
-							parameterDiffList.add(parameterDiff);
-						}
-						addedParameterIterator.remove();
-						removedParameterIterator.remove();
-						break;
-					}
-					else if(removedParameters.size() == addedParameters.size()) {
-						boolean matched = false;
-						for(AbstractCodeMapping mapping : mappings) {
-							Set<Replacement> replacements = mapping.getReplacements();
-							for(Replacement r : replacements) {
-								if(r.getType().equals(ReplacementType.VARIABLE_NAME) && r.getBefore().equals(removedParameter.getVariableName()) && r.getAfter().equals(addedParameter.getVariableName())) {
-									UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings, classDiff);
-									if(!parameterDiff.isEmpty()) {
-										parameterDiffList.add(parameterDiff);
-									}
-									addedParameterIterator.remove();
-									removedParameterIterator.remove();
-									matched = true;
-									break;
-								}
-							}
-							if(matched) {
-								break;
-							}
-						}
-						if(matched) {
-							break;
-						}
-					}
-				}
-			}
-		}
-		//third round match parameters with different type and name
-		List<VariableDeclaration> removedParametersWithoutReturnType = removedOperation.getParameterDeclarationList();
-		List<VariableDeclaration> addedParametersWithoutReturnType = addedOperation.getParameterDeclarationList();
-		//this condition allows only for one unmatched parameter
-		if(matchedParameterCount == removedParametersWithoutReturnType.size()-1 && matchedParameterCount == addedParametersWithoutReturnType.size()-1) {
-			for(Iterator<VariableDeclaration> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
-				VariableDeclaration removedParameter = removedParameterIterator.next();
-				int indexOfRemovedParameter = indexOfParameter(removedParametersWithoutReturnType, removedParameter);
-				for(Iterator<VariableDeclaration> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
-					VariableDeclaration addedParameter = addedParameterIterator.next();
-					int indexOfAddedParameter = indexOfParameter(addedParametersWithoutReturnType, addedParameter);
-					if(indexOfRemovedParameter == indexOfAddedParameter &&
-							usedParameters(removedOperation, addedOperation, removedParameter, addedParameter)) {
-						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings, classDiff);
-						if(!parameterDiff.isEmpty()) {
-							parameterDiffList.add(parameterDiff);
-						}
-						addedParameterIterator.remove();
-						removedParameterIterator.remove();
-						break;
-					}
-				}
-			}
-		}
-		else {
-			for(Iterator<VariableDeclaration> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
-				VariableDeclaration removedParameter = removedParameterIterator.next();
-				int indexOfRemovedParameter = indexOfParameter(removedParametersWithoutReturnType, removedParameter);
-				for(Iterator<VariableDeclaration> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
-					VariableDeclaration addedParameter = addedParameterIterator.next();
-					int indexOfAddedParameter = indexOfParameter(addedParametersWithoutReturnType, addedParameter);
-					if(indexOfRemovedParameter == indexOfAddedParameter &&
-							commonTokens(removedParameter.getVariableName(), addedParameter.getVariableName())) {
-						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings, classDiff);
-						if(!parameterDiff.isEmpty()) {
-							parameterDiffList.add(parameterDiff);
-						}
-						addedParameterIterator.remove();
-						removedParameterIterator.remove();
-						break;
-					}
-				}
-			}
-		}
-	}
-
-	private static boolean commonTokens(String name1, String name2) {
-		String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(name1);
-		String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(name2);
-		if(tokens1.length == 1 && tokens2.length == 1 && tokens1[0].contains("_") && tokens2[0].contains("_")) {
-			tokens1 = name1.split("_");
-			tokens2 = name2.split("_");
-		}
-		int commonTokens = 0;
-		for(String token1 : tokens1) {
-			for(String token2 : tokens2) {
-				if(token1.equals(token2)) {
-					commonTokens++;
-				}
-			}
-		}
-		if(commonTokens == Math.min(tokens1.length, tokens2.length)) {
-			return true;
-		}
-		return false;
-	}
-
-	private boolean usedParameters(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation,
-			VariableDeclaration removedParameter, VariableDeclaration addedParameter) {
-		List<String> removedOperationVariables = removedOperation.getAllVariables();
-		List<String> addedOperationVariables = addedOperation.getAllVariables();
-		if(removedOperationVariables.contains(removedParameter.getVariableName()) ==
-				addedOperationVariables.contains(addedParameter.getVariableName())) {
-			if(!removedOperation.isConstructor() && !addedOperation.isConstructor()) {
-				return !removedOperationVariables.contains(addedParameter.getVariableName()) &&
-						!addedOperationVariables.contains(removedParameter.getVariableName());
-			}
-			else {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private int indexOfParameter(List<VariableDeclaration> parameters, VariableDeclaration parameter) {
-		int index = 0;
-		for(VariableDeclaration p : parameters) {
-			if(p.equalType(parameter) && p.getVariableName().equals(parameter.getVariableName())) {
-				return index;
-			}
-			index++;
-		}
-		return -1;
+		this.parameterListDiff = new UMLParameterListDiff(removedOperation, addedOperation, mappings, refactorings, classDiff);
 	}
 
 	public UMLOperationDiff(UMLOperationBodyMapper mapper) {
@@ -368,52 +190,8 @@ public class UMLOperationDiff {
 		}
 	}
 
-	private boolean existsAnotherAddedParameterWithTheSameType(VariableDeclaration parameter) {
-		if(removedOperation.hasTwoParametersWithTheSameType() && addedOperation.hasTwoParametersWithTheSameType()) {
-			return false;
-		}
-		for(VariableDeclaration addedParameter : addedParameters) {
-			if(!addedParameter.getVariableName().equals(parameter.getVariableName()) &&
-					addedParameter.equalQualifiedType(parameter)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private List<SimpleEntry<VariableDeclaration, VariableDeclaration>> updateAddedRemovedParameters(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation) {
-		List<SimpleEntry<VariableDeclaration, VariableDeclaration>> matchedParameters = new ArrayList<SimpleEntry<VariableDeclaration, VariableDeclaration>>();
-		for(VariableDeclaration parameter1 : removedOperation.getParameterDeclarationList()) {
-			boolean found = false;
-			for(VariableDeclaration parameter2 : addedOperation.getParameterDeclarationList()) {
-				if(parameter1.equalType(parameter2) && parameter1.getVariableName().equals(parameter2.getVariableName())) {
-					matchedParameters.add(new SimpleEntry<VariableDeclaration, VariableDeclaration>(parameter1, parameter2));
-					found = true;
-					break;
-				}
-			}
-			if(!found) {
-				this.removedParameters.add(parameter1);
-			}
-		}
-		for(VariableDeclaration parameter1 : addedOperation.getParameterDeclarationList()) {
-			boolean found = false;
-			for(VariableDeclaration parameter2 : removedOperation.getParameterDeclarationList()) {
-				if(parameter1.equalType(parameter2) && parameter1.getVariableName().equals(parameter2.getVariableName())) {
-					matchedParameters.add(new SimpleEntry<VariableDeclaration, VariableDeclaration>(parameter2, parameter1));
-					found = true;
-					break;
-				}
-			}
-			if(!found) {
-				this.addedParameters.add(parameter1);
-			}
-		}
-		return matchedParameters;
-	}
-
 	public List<UMLParameterDiff> getParameterDiffList() {
-		return parameterDiffList;
+		return parameterListDiff.getParameterDiffList();
 	}
 
 	public VariableDeclarationContainer getRemovedOperation() {
@@ -425,11 +203,11 @@ public class UMLOperationDiff {
 	}
 
 	public List<VariableDeclaration> getAddedParameters() {
-		return addedParameters;
+		return parameterListDiff.getAddedParameters();
 	}
 
 	public List<VariableDeclaration> getRemovedParameters() {
-		return removedParameters;
+		return parameterListDiff.getRemovedParameters();
 	}
 
 	public boolean isOperationRenamed() {
@@ -465,7 +243,7 @@ public class UMLOperationDiff {
 	}
 
 	public boolean isParametersReordered() {
-		return parametersReordered;
+		return parameterListDiff.isParametersReordered();
 	}
 
 	public Set<Pair<VariableDeclaration, VariableDeclaration>> getMatchedVariables() {
@@ -497,7 +275,7 @@ public class UMLOperationDiff {
 	}
 
 	public boolean isEmpty() {
-		return addedParameters.isEmpty() && removedParameters.isEmpty() && parameterDiffList.isEmpty() &&
+		return getAddedParameters().isEmpty() && getRemovedParameters().isEmpty() && getParameterDiffList().isEmpty() &&
 		!visibilityChanged && !abstractionChanged && !finalChanged && !staticChanged && !synchronizedChanged && !returnTypeChanged && !operationRenamed && annotationListDiff.isEmpty() && typeParameterListDiff.isEmpty();
 	}
 
@@ -518,13 +296,13 @@ public class UMLOperationDiff {
 			if(returnTypeChanged || qualifiedReturnTypeChanged)
 				sb.append("\t").append("return type changed from " + removed.getReturnParameter() + " to " + added.getReturnParameter()).append("\n");
 		}
-		for(VariableDeclaration umlParameter : removedParameters) {
+		for(VariableDeclaration umlParameter : getRemovedParameters()) {
 			sb.append("\t").append("parameter " + umlParameter + " removed").append("\n");
 		}
-		for(VariableDeclaration umlParameter : addedParameters) {
+		for(VariableDeclaration umlParameter : getAddedParameters()) {
 			sb.append("\t").append("parameter " + umlParameter + " added").append("\n");
 		}
-		for(UMLParameterDiff parameterDiff : parameterDiffList) {
+		for(UMLParameterDiff parameterDiff : getParameterDiffList()) {
 			sb.append(parameterDiff);
 		}
 		if(annotationListDiff != null) {
@@ -630,10 +408,10 @@ public class UMLOperationDiff {
 				exactMappings++;
 			}
 		}
-		if(removedParameters.isEmpty() || exactMappings > 0 ||
+		if(getRemovedParameters().isEmpty() || exactMappings > 0 ||
 				(mappings.size() > 0 && removedOperation.isConstructor() && addedOperation.isConstructor()) ||
 				removedOperation.identicalComments(addedOperation)) {
-			for(VariableDeclaration umlParameter : addedParameters) {
+			for(VariableDeclaration umlParameter : getAddedParameters()) {
 				boolean conflictFound = false;
 				for(Refactoring refactoring : this.refactorings) {
 					if(refactoring instanceof RenameVariableRefactoring) {
@@ -657,10 +435,10 @@ public class UMLOperationDiff {
 				}
 			}
 		}
-		if(addedParameters.isEmpty() || exactMappings > 0 ||
+		if(getAddedParameters().isEmpty() || exactMappings > 0 ||
 				(mappings.size() > 0 && removedOperation.isConstructor() && addedOperation.isConstructor()) ||
 				removedOperation.identicalComments(addedOperation)) {
-			for(VariableDeclaration umlParameter : removedParameters) {
+			for(VariableDeclaration umlParameter : getRemovedParameters()) {
 				boolean conflictFound = false;
 				for(Refactoring refactoring : this.refactorings) {
 					if(refactoring instanceof RenameVariableRefactoring) {
@@ -684,7 +462,7 @@ public class UMLOperationDiff {
 				}
 			}
 		}
-		if(parametersReordered) {
+		if(isParametersReordered()) {
 			ReorderParameterRefactoring refactoring = new ReorderParameterRefactoring(removedOperation, addedOperation);
 			refactorings.add(refactoring);
 		}
@@ -770,7 +548,7 @@ public class UMLOperationDiff {
 			Constants LANG = classDiff.LANG;
 			List<AbstractCodeFragment> removedOperationLeaves = removedOperation.getBody() != null ? removedOperation.getBody().getCompositeStatement().getLeaves() : Collections.emptyList();
 			Map<VariableDeclaration, AbstractCodeFragment> removedFieldAssignmentMap = new LinkedHashMap<>();
-			for(VariableDeclaration removedParameter : removedParameters) {
+			for(VariableDeclaration removedParameter : getRemovedParameters()) {
 				for(AbstractCodeFragment leaf : removedOperationLeaves) {
 					if(leaf.getString().equals(LANG.THIS_DOT + removedParameter.getVariableName() + LANG.ASSIGNMENT + removedParameter.getVariableName() + LANG.STATEMENT_TERMINATION)) {
 						removedFieldAssignmentMap.put(removedParameter.getVariableDeclaration(), leaf);
@@ -780,7 +558,7 @@ public class UMLOperationDiff {
 			}
 			List<AbstractCodeFragment> addedOperationLeaves = addedOperation.getBody() != null ? addedOperation.getBody().getCompositeStatement().getLeaves() : Collections.emptyList();
 			Map<VariableDeclaration, AbstractCodeFragment> addedFieldAssignmentMap = new LinkedHashMap<>();
-			for(VariableDeclaration addedParameter : addedParameters) {
+			for(VariableDeclaration addedParameter : getAddedParameters()) {
 				for(AbstractCodeFragment leaf : addedOperationLeaves) {
 					if(leaf.getString().equals(LANG.THIS_DOT + addedParameter.getVariableName() + LANG.ASSIGNMENT + addedParameter.getVariableName() + LANG.STATEMENT_TERMINATION)) {
 						addedFieldAssignmentMap.put(addedParameter.getVariableDeclaration(), leaf);
@@ -816,7 +594,7 @@ public class UMLOperationDiff {
 				}
 				if(removedFieldAssignmentMap.size() == 1 && addedFieldAssignmentMap.size() > 1) {
 					int count = 0;
-					for(VariableDeclaration removedParameter : removedParameters) {
+					for(VariableDeclaration removedParameter : getRemovedParameters()) {
 						for(VariableDeclaration addedParameter : addedFieldAssignmentMap.keySet()) {
 							if(removedParameter.getVariableName().startsWith(addedParameter.getVariableName())) {
 								count++;
@@ -832,7 +610,7 @@ public class UMLOperationDiff {
 				}
 				if(removedFieldAssignmentMap.size() > 1 && addedFieldAssignmentMap.size() == 1) {
 					int count = 0;
-					for(VariableDeclaration addedParameter : addedParameters) {
+					for(VariableDeclaration addedParameter : getAddedParameters()) {
 						for(VariableDeclaration removedParameter : removedFieldAssignmentMap.keySet()) {
 							if(addedParameter.getVariableName().startsWith(removedParameter.getVariableName())) {
 								count++;
@@ -851,13 +629,13 @@ public class UMLOperationDiff {
 	}
 
 	private void cleanUpParameters(Map<VariableDeclaration, AbstractCodeFragment> removedFieldAssignmentMap, Map<VariableDeclaration, AbstractCodeFragment> addedFieldAssignmentMap) {
-		for(Iterator<VariableDeclaration> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
+		for(Iterator<VariableDeclaration> removedParameterIterator = getRemovedParameters().iterator(); removedParameterIterator.hasNext();) {
 			VariableDeclaration removedParameter = removedParameterIterator.next();
 			if(removedFieldAssignmentMap.keySet().contains(removedParameter.getVariableDeclaration())) {
 				removedParameterIterator.remove();
 			}
 		}
-		for(Iterator<VariableDeclaration> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
+		for(Iterator<VariableDeclaration> addedParameterIterator = getAddedParameters().iterator(); addedParameterIterator.hasNext();) {
 			VariableDeclaration addedParameter = addedParameterIterator.next();
 			if(addedFieldAssignmentMap.keySet().contains(addedParameter.getVariableDeclaration())) {
 				addedParameterIterator.remove();

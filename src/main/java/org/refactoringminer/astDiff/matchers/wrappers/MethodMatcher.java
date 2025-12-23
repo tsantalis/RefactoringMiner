@@ -152,8 +152,11 @@ public class MethodMatcher extends BodyMapperMatcher{
             String v2 = umlOperationBodyMapper.getOperation2().getVisibility().toString();
             Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcOperationNode, Constants.get().MODIFIER, v1);
             Tree tree2 = TreeUtilFunctions.findChildByTypeAndLabel(dstOperationNode, Constants.get().MODIFIER, v2);
-            if (tree1 != null && tree2 != null)
+            if (tree1 != null && tree2 != null) {
                 mappingStore.addMappingRecursively(tree1,tree2);
+                if (tree1.getParent().getType().name.equals(Constants.get().MODIFIERS) && tree2.getParent().getType().name.equals(Constants.get().MODIFIERS))
+                    mappingStore.addMapping(tree1.getParent(), tree2.getParent());
+            }
         }
     }
 
@@ -197,9 +200,9 @@ public class MethodMatcher extends BodyMapperMatcher{
             }
         }
         VariableDeclarationContainer removedOperation = umlOperationDiff.getRemovedOperation();
-		VariableDeclarationContainer addedOperation = umlOperationDiff.getAddedOperation();
-		if (removedOperation instanceof UMLOperation && ((UMLOperation)removedOperation).getReturnParameter() != null &&
-				addedOperation instanceof UMLOperation && ((UMLOperation)addedOperation).getReturnParameter() != null ) {
+        VariableDeclarationContainer addedOperation = umlOperationDiff.getAddedOperation();
+        if (removedOperation instanceof UMLOperation && ((UMLOperation)removedOperation).getReturnParameter() != null &&
+                addedOperation instanceof UMLOperation && ((UMLOperation)addedOperation).getReturnParameter() != null ) {
             LocationInfo srcLocationInfo = ((UMLOperation)removedOperation).getReturnParameter().getType().getLocationInfo();
             LocationInfo dstLocationInfo = ((UMLOperation)addedOperation).getReturnParameter().getType().getLocationInfo();
             Tree srcNode =TreeUtilFunctions.findByLocationInfo(srcTree, srcLocationInfo);

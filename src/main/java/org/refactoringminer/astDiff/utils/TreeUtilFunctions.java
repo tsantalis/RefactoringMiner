@@ -129,6 +129,12 @@ public class TreeUtilFunctions {
 			for (Tree child: tree.getChildren()) {
 				if (isFromType(child, type) && child.getLabel().equals(label))
 					return child;
+				if (child.getType().name.equals(Constants.get().MODIFIERS)) {
+					for (Tree gnandChild : child.getChildren()) {
+						if (isFromType(gnandChild, type) && gnandChild.getChild(0).getLabel().equals(label))
+							return gnandChild;
+					}
+				}
 			}
 		}
 		return null;

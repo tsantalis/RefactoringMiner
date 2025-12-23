@@ -37,6 +37,7 @@ public class Constants {
 			ENHANCED_FOR_STATEMENT = "for_statement";
 			PACKAGE_DECLARATION = "";
 			FIELD_DECLARATION = "";
+			MODIFIER = "";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -56,6 +57,7 @@ public class Constants {
 			ENHANCED_FOR_STATEMENT = "for_statement"; // TODO update value
 			PACKAGE_DECLARATION = "package_header";
 			FIELD_DECLARATION = "property_declaration";
+			MODIFIER = "visibility_modifier";
 		}
 		else {
 			// Java values as default
@@ -76,6 +78,7 @@ public class Constants {
 			ENHANCED_FOR_STATEMENT = "EnhancedForStatement";
 			PACKAGE_DECLARATION = "PackageDeclaration";
 			FIELD_DECLARATION = "FieldDeclaration";
+			MODIFIER = "Modifier";
 		}
 	}
 
@@ -97,7 +100,7 @@ public class Constants {
     public final String SIMPLE_NAME;
     public final String VARIABLE_DECLARATION_STATEMENT = "VariableDeclarationStatement";
     public final String EXPRESSION_STATEMENT;
-    public final String MODIFIER = "Modifier";
+    public final String MODIFIER;
     public final String IMPORT_DECLARATION;
     public final String PRIMITIVE_TYPE = "PrimitiveType";
     public final String TYPE_DECLARATION;
@@ -211,4 +214,5 @@ public class Constants {
     public final String FUNCTION_PARAMETERS = "function_value_parameters";
     public final String STATEMENTS = "statements"; // This is a node that wraps each leaf statement in Kotlin
     public final String IMPORT_LIST = "import_list";
+    public final String MODIFIERS = "modifiers"; // This is a node that wraps all modifiers
 }

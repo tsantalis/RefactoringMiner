@@ -306,6 +306,10 @@ public class MonacoCore {
             t_outerP = TreeUtilFunctions.getParentUntilType(t, Constants.get().MODULE);
             dst_outerP = TreeUtilFunctions.getParentUntilType(dst, Constants.get().MODULE);
         }
+        if(t_outerP == null && dst_outerP == null) {
+            t_outerP = TreeUtilFunctions.getParentUntilType(t, Constants.get().SOURCE_FILE);
+            dst_outerP = TreeUtilFunctions.getParentUntilType(dst, Constants.get().SOURCE_FILE);
+        }
         if (t_outerP == null || dst_outerP == null) {
             return false;
         }

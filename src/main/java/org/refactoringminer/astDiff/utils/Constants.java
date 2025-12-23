@@ -215,4 +215,5 @@ public class Constants {
     public final String STATEMENTS = "statements"; // This is a node that wraps each leaf statement in Kotlin
     public final String IMPORT_LIST = "import_list";
     public final String MODIFIERS = "modifiers"; // This is a node that wraps all modifiers
+    public final String TYPE_PARAMETERS = "type_parameters";
 }

@@ -97,6 +97,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             Tree srcTypeParam = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, commonTypeParamSet.getLeft().getLocationInfo());
             Tree dstTypeParam = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, commonTypeParamSet.getRight().getLocationInfo());
             mappingStore.addMappingRecursively(srcTypeParam,dstTypeParam);
+            if (srcTypeParam.getParent().getType().name.equals(Constants.get().TYPE_PARAMETERS) && dstTypeParam.getParent().getType().name.equals(Constants.get().TYPE_PARAMETERS)) {
+                mappingStore.addMapping(srcTypeParam.getParent(), dstTypeParam.getParent());
+            }
         }
         processSuperClasses(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processClassImplementedInterfaces(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);

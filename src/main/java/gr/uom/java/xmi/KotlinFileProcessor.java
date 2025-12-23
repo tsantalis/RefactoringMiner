@@ -315,6 +315,44 @@ public class KotlinFileProcessor {
 				umlClass.addModifier(modifier);
 			}
 		}
+		List<KtTypeParameter> typeParameters = ktClass.getTypeParameters();
+		for (KtTypeParameter typeParameter : typeParameters) {
+			LocationInfo typeParameterLocation = generateLocationInfo(ktFile, sourceFolder, filePath, typeParameter, CodeElementType.TYPE_PARAMETER);
+			UMLTypeParameter umlTypeParameter = new UMLTypeParameter(typeParameter.getName(), typeParameterLocation);
+			KtTypeReference typeBounds = typeParameter.getExtendsBound();
+			if (typeBounds != null) {
+				umlTypeParameter.addTypeBound(
+						UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeBounds, 0));
+			}
+			KtModifierList typeParameterModifiers = typeParameter.getModifierList();
+			if (typeParameterModifiers != null) {
+				for (PsiElement modifier : typeParameterModifiers.getChildren()) {
+					if (modifier instanceof KtAnnotationEntry annotationEntry) {
+						umlTypeParameter.addAnnotation(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
+					}
+				}
+			}
+			umlClass.addTypeParameter(umlTypeParameter);
+		}
+		if(ktClass.getPrimaryConstructor() != null) {
+			LocationInfo primaryConstructorLocation = generateLocationInfo(ktFile, sourceFolder, filePath, ktClass.getPrimaryConstructor(), CodeElementType.PRIMARY_CONSTRUCTOR);
+			PrimaryConstructor primaryConstructor = new PrimaryConstructor(primaryConstructorLocation, ktClass.getName(), umlClass.getName());
+			for(KtParameter parameter : ktClass.getPrimaryConstructorParameters()) {
+				KtTypeReference typeReference = parameter.getTypeReference();
+				String parameterName = parameter.getName();
+				UMLType type = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeReference, 0);
+				if (parameter.isVarArg()) {
+					type.setVarargs();
+				}
+				UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarArg());
+				VariableDeclaration variableDeclaration =
+						new VariableDeclaration(ktFile, sourceFolder, filePath, parameter, primaryConstructor, new LinkedHashMap<>(), fileContent, umlClass.getLocationInfo());
+				variableDeclaration.setParameter(true);
+				umlParameter.setVariableDeclaration(variableDeclaration);
+				primaryConstructor.addParameter(umlParameter);
+			}
+			umlClass.setPrimaryConstructorParameter(primaryConstructor);
+		}
 		KtClassBody classBody = ktClass.getBody();
 		if(classBody != null) {
 			for(KtProperty property : classBody.getProperties()) {

@@ -1,0 +1,17 @@
+[{
+    "id": 1,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "720da617c258cac1e2a341f6e72aa6dd93ca771e",
+    "url": "https://github.com/android/architecture-samples/commit/720da617c258cac1e2a341f6e72aa6dd93ca771e",
+    "author": "JoseAlcerreca",
+    "time": "5/28/19 01:17 PM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public drawNavigationFromTasksToStatistics() renamed to public drawerNavigationFromTasksToStatistics() in class com.example.android.architecture.blueprints.todoapp.tasks.AppNavigationTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}]

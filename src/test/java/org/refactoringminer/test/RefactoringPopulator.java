@@ -159,6 +159,16 @@ public class RefactoringPopulator {
 		}
 	}
 
+	public static void prepareKotlinRefactorings(TestBuilder test, BigInteger flag)
+			throws IOException {
+		List<Root> roots = getKotlinRefactorings(flag);
+		
+		for (Root root : roots) {
+			test.project(root.repository, "master").atCommit(root.sha1)
+					.containsOnly(extractRefactorings(root.refactorings));
+		}
+	}
+
 	public static void preparePythonRefactorings(TestBuilder test, BigInteger flag)
 			throws IOException {
 		List<Root> roots = getPythonRefactorings(flag);
@@ -263,6 +273,10 @@ public class RefactoringPopulator {
 
 	public static List<Root> getPythonRefactorings(BigInteger flag) throws IOException {
 		return getRefactorings(flag, "python-dataset/data.json");
+	}
+
+	public static List<Root> getKotlinRefactorings(BigInteger flag) throws IOException {
+		return getRefactorings(flag, "kotlin-dataset/data.json");
 	}
 
 	public static List<Root> getRefactorings(BigInteger flag, String fileName) throws IOException {

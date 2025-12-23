@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.jetbrains.kotlin.com.intellij.psi.PsiComment;
@@ -18,6 +20,7 @@ import org.jetbrains.kotlin.com.intellij.psi.PsiFile;
 import org.jetbrains.kotlin.com.intellij.psi.PsiRecursiveElementVisitor;
 import org.jetbrains.kotlin.com.intellij.psi.impl.PsiFileFactoryImpl;
 import org.jetbrains.kotlin.idea.KotlinLanguage;
+import org.jetbrains.kotlin.kdoc.psi.api.KDoc;
 import org.jetbrains.kotlin.name.FqName;
 import org.jetbrains.kotlin.psi.KtAnnotationEntry;
 import org.jetbrains.kotlin.psi.KtAnonymousInitializer;
@@ -47,6 +50,7 @@ import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class KotlinFileProcessor {
+	private static final Pattern LEAD_WHITE_SPACE_JAVADOC = Pattern.compile("^\s+\\*", Pattern.MULTILINE);
 	private UMLModel umlModel;
 
 	public KotlinFileProcessor(UMLModel umlModel) {
@@ -101,6 +105,30 @@ public class KotlinFileProcessor {
 			}
 		}
 		compilationUnitComments.removeAll(codeElementComments);
+	}
+
+	private UMLJavadoc generateDocComment(KtFile cu, String sourceFolder, String filePath, String fileContent, KDoc javaDoc) {
+		UMLJavadoc doc = null;
+		if (javaDoc != null) {
+			LocationInfo locationInfo = new LocationInfo(cu, sourceFolder, filePath, javaDoc, CodeElementType.JAVADOC);
+			int start = locationInfo.getStartOffset();
+			int end = locationInfo.getEndOffset();
+			String text = fileContent.substring(start, end);
+			Matcher matcher = LEAD_WHITE_SPACE_JAVADOC.matcher(text); 
+			StringBuilder sb = new StringBuilder(); 
+			while (matcher.find()) { 
+				matcher.appendReplacement(sb, " \\*"); 
+			} 
+			matcher.appendTail(sb); 
+			String trimLeadWhiteSpace = sb.toString();
+			doc = new UMLJavadoc(trimLeadWhiteSpace, locationInfo);
+			//KDocSection tag = javaDoc.getDefaultSection();
+			//LocationInfo tagLocationInfo = new LocationInfo(cu, sourceFolder, filePath, tag, CodeElementType.TAG_ELEMENT);
+			//UMLTagElement tagElement = new UMLTagElement(tag.getName(), tagLocationInfo);
+			// TODO process contents
+			//doc.addTag(tagElement);
+		}
+		return doc;
 	}
 
 	public void processKotlinFile(String filePath, String fileContent, boolean astDiff, PsiFileFactoryImpl factory) {
@@ -198,6 +226,8 @@ public class KotlinFileProcessor {
 	private UMLClass processClassDeclaration(KtFile ktFile, KtClass ktClass, UMLPackage umlPackage, String packageName, String sourceFolder, String filePath, String fileContent, List<UMLImport> importedTypes, List<UMLComment> comments) {
 		LocationInfo locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, ktClass, CodeElementType.TYPE_DECLARATION);
 		UMLClass umlClass = new UMLClass(packageName, ktClass.getName(), locationInfo, true, importedTypes);
+		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, ktClass.getDocComment());
+		umlClass.setJavadoc(javadoc);
 		LocationInfo lastImportLocationInfo = importedTypes.size() > 0 ? importedTypes.get(importedTypes.size()-1).getLocationInfo() : null;
 		if(ktFile.getName().endsWith(ktClass.getName() + ".kt")) {
 			umlClass.setPackageDeclaration(umlPackage);
@@ -309,6 +339,8 @@ public class KotlinFileProcessor {
 	private UMLInitializer processInitializer(KtFile ktFile, KtAnonymousInitializer initializer, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments, String name) {
 		LocationInfo locationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, initializer, CodeElementType.INITIALIZER);
 		UMLInitializer umlInitializer = new UMLInitializer(name, locationInfo);
+		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, initializer.getDocComment());
+		umlInitializer.setJavadoc(javadoc);
 		distributeComments(comments, locationInfo, umlInitializer.getComments());
 		return umlInitializer;
 	}
@@ -317,6 +349,8 @@ public class KotlinFileProcessor {
 		String methodName = function.getName();
 		LocationInfo locationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, function, CodeElementType.METHOD_DECLARATION);
 		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo);
+		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, function.getDocComment());
+		umlOperation.setJavadoc(javadoc);
 		distributeComments(comments, locationInfo, umlOperation.getComments());
 		
 		KtModifierList modifierList = function.getModifierList();
@@ -435,6 +469,8 @@ public class KotlinFileProcessor {
 		VariableDeclaration variableDeclaration = new VariableDeclaration(ktFile, sourceFolder, filePath, property, umlAttribute, new LinkedHashMap<>(), fileContent, parentLocationInfo);
 		variableDeclaration.setAttribute(true);
 		umlAttribute.setVariableDeclaration(variableDeclaration);
+		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, property.getDocComment());
+		umlAttribute.setJavadoc(javadoc);
 		distributeComments(comments, locationInfo, umlAttribute.getComments());
 		
 		KtModifierList modifierList = property.getModifierList();

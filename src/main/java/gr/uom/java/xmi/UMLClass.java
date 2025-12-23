@@ -26,6 +26,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean isLocal;
 	private boolean isModule;
     private List<UMLTypeParameter> typeParameters;
+    private Optional<PrimaryConstructor> primaryConstructor;
     private UMLJavadoc javadoc;
     private Optional<UMLPackage> packageDeclaration;
     private UMLJavadoc packageDeclarationJavadoc;
@@ -72,6 +73,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.isInterface = false;
         this.topLevel = topLevel;
         this.typeParameters = new ArrayList<UMLTypeParameter>();
+        this.primaryConstructor = Optional.empty();
         this.packageDeclarationComments = new ArrayList<UMLComment>();
         this.packageDeclaration = Optional.empty();
     }
@@ -97,31 +99,39 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		this.actualSignature = actualSignature;
 	}
 
-    public List<UMLTypeParameter> getTypeParameters() {
+	public List<UMLTypeParameter> getTypeParameters() {
 		return typeParameters;
 	}
 
-    public List<String> getTypeParameterNames() {
-    	List<String> typeParameterNames = new ArrayList<String>();
+	public List<String> getTypeParameterNames() {
+		List<String> typeParameterNames = new ArrayList<String>();
 		for(UMLTypeParameter typeParameter : typeParameters) {
 			typeParameterNames.add(typeParameter.getName());
 		}
 		return typeParameterNames;
 	}
 
-	public void addTypeParameter(UMLTypeParameter typeParameter) {
-    	typeParameters.add(typeParameter);
-    }
+	public void setPrimaryConstructorParameter(PrimaryConstructor primary) {
+		primaryConstructor = Optional.of(primary);
+	}
 
-    public String getSourceFolder() {
+	public Optional<PrimaryConstructor> getPrimaryConstructor() {
+		return primaryConstructor;
+	}
+
+	public void addTypeParameter(UMLTypeParameter typeParameter) {
+		typeParameters.add(typeParameter);
+	}
+
+	public String getSourceFolder() {
 		return sourceFolder;
 	}
 
-    public String getName() {
-    	return this.qualifiedName;
-    }
+	public String getName() {
+		return this.qualifiedName;
+	}
 
-    public boolean isTopLevel() {
+	public boolean isTopLevel() {
 		return topLevel;
 	}
 

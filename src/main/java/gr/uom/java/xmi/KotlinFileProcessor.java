@@ -348,7 +348,15 @@ public class KotlinFileProcessor {
 				UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarArg());
 				VariableDeclaration variableDeclaration =
 						new VariableDeclaration(ktFile, sourceFolder, filePath, parameter, primaryConstructor, new LinkedHashMap<>(), fileContent, umlClass.getLocationInfo());
-				variableDeclaration.setParameter(true);
+				if(parameter.hasValOrVar()) {
+					variableDeclaration.setAttribute(true);
+					UMLAttribute attribute = new UMLAttribute(parameterName, type, variableDeclaration.getLocationInfo());
+					attribute.setVariableDeclaration(variableDeclaration);
+					umlClass.addAttribute(attribute);
+				}
+				else {
+					variableDeclaration.setParameter(true);
+				}
 				umlParameter.setVariableDeclaration(variableDeclaration);
 				primaryConstructor.addParameter(umlParameter);
 			}
@@ -385,7 +393,15 @@ public class KotlinFileProcessor {
 					UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarArg());
 					VariableDeclaration variableDeclaration =
 							new VariableDeclaration(ktFile, sourceFolder, filePath, parameter, umlConstructor, new LinkedHashMap<>(), fileContent, umlConstructor.getLocationInfo());
-					variableDeclaration.setParameter(true);
+					if(parameter.hasValOrVar()) {
+						variableDeclaration.setAttribute(true);
+						UMLAttribute attribute = new UMLAttribute(parameterName, type, variableDeclaration.getLocationInfo());
+						attribute.setVariableDeclaration(variableDeclaration);
+						umlClass.addAttribute(attribute);
+					}
+					else {
+						variableDeclaration.setParameter(true);
+					}
 					umlParameter.setVariableDeclaration(variableDeclaration);
 					umlConstructor.addParameter(umlParameter);
 				}

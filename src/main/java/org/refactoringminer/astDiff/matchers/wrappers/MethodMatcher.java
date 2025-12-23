@@ -168,6 +168,9 @@ public class MethodMatcher extends BodyMapperMatcher{
             Tree srcTypeParam = TreeUtilFunctions.findByLocationInfo(srcTree, commonTypeParamSet.getLeft().getLocationInfo());
             Tree dstTypeParam = TreeUtilFunctions.findByLocationInfo(dstTree, commonTypeParamSet.getRight().getLocationInfo());
             mappingStore.addMappingRecursively(srcTypeParam,dstTypeParam);
+            if (srcTypeParam.getParent().getType().name.equals(Constants.get().TYPE_PARAMETERS) && dstTypeParam.getParent().getType().name.equals(Constants.get().TYPE_PARAMETERS)) {
+                mappingStore.addMapping(srcTypeParam.getParent(), dstTypeParam.getParent());
+            }
         }
         for (org.apache.commons.lang3.tuple.Pair<UMLAnnotation, UMLAnnotation>  umlAnnotationUMLAnnotationPair : umlOperationDiff.getAnnotationListDiff().getCommonAnnotations()) {
             Tree srcClassAnnotationTree = TreeUtilFunctions.findByLocationInfo(srcTree , umlAnnotationUMLAnnotationPair.getLeft().getLocationInfo());

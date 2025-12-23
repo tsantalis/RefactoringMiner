@@ -89,18 +89,23 @@ public class MethodMatcher extends BodyMapperMatcher{
                     mappingStore.addMapping(srcOperationNode, dstOperationNode);
                     //static keyword
                     if (umlOperationBodyMapper.getContainer1() instanceof UMLInitializer && umlOperationBodyMapper.getContainer2() instanceof UMLInitializer) {
-                    	UMLInitializer initializer1 = (UMLInitializer)umlOperationBodyMapper.getContainer1();
+                        UMLInitializer initializer1 = (UMLInitializer)umlOperationBodyMapper.getContainer1();
                         UMLInitializer initializer2 = (UMLInitializer)umlOperationBodyMapper.getContainer2();
-                    	if (initializer1.isStatic() && initializer2.isStatic()) {
+                        Tree srcInitKeyword = TreeUtilFunctions.findChildByType(srcOperationNode, Constants.get().INIT_KEYWORD);
+                        Tree dstInitKeyword = TreeUtilFunctions.findChildByType(dstOperationNode, Constants.get().INIT_KEYWORD);
+                        if (srcInitKeyword != null && dstInitKeyword != null) {
+                            mappingStore.addMapping(srcInitKeyword, dstInitKeyword);
+                        }
+                        if (initializer1.isStatic() && initializer2.isStatic()) {
                             Tree srcModifier = TreeUtilFunctions.findChildByType(srcOperationNode, Constants.get().MODIFIER);
                             Tree dstModifier = TreeUtilFunctions.findChildByType(dstOperationNode, Constants.get().MODIFIER);
                             if (srcModifier != null && dstModifier != null)
                                 mappingStore.addMapping(srcModifier, dstModifier);
                         }
                         if (initializer1.getJavadoc() != null && initializer2.getJavadoc() != null) {
-                        	//Javadoc
-                        	new JavaDocMatcher(optimizationData, initializer1.getJavadoc(), initializer2.getJavadoc(), umlOperationBodyMapper.getJavadocDiff())
-                        			.match(srcOperationNode, dstOperationNode, mappingStore);
+                            //Javadoc
+                            new JavaDocMatcher(optimizationData, initializer1.getJavadoc(), initializer2.getJavadoc(), umlOperationBodyMapper.getJavadocDiff())
+                                    .match(srcOperationNode, dstOperationNode, mappingStore);
                         }
                     }
                 }

@@ -24,6 +24,7 @@ import org.jetbrains.kotlin.kdoc.psi.api.KDoc;
 import org.jetbrains.kotlin.name.FqName;
 import org.jetbrains.kotlin.psi.KtAnnotationEntry;
 import org.jetbrains.kotlin.psi.KtAnonymousInitializer;
+import org.jetbrains.kotlin.psi.KtBlockExpression;
 import org.jetbrains.kotlin.psi.KtClass;
 import org.jetbrains.kotlin.psi.KtClassBody;
 import org.jetbrains.kotlin.psi.KtDeclaration;
@@ -342,6 +343,12 @@ public class KotlinFileProcessor {
 		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, initializer.getDocComment());
 		umlInitializer.setJavadoc(javadoc);
 		distributeComments(comments, locationInfo, umlInitializer.getComments());
+		if (initializer.getBody() != null) {
+			if(initializer.getBody() instanceof KtBlockExpression block) {
+				OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, block, umlInitializer, attributes, fileContent);
+				umlInitializer.setBody(operationBody);
+			}
+		}
 		return umlInitializer;
 	}
 
@@ -389,6 +396,11 @@ public class KotlinFileProcessor {
 			if (modifierList.hasModifier(OVERRIDE_KEYWORD)) {
 				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(OVERRIDE_KEYWORD));
 				umlOperation.addModifier(modifier);
+			}
+			if (modifierList.hasModifier(INLINE_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(INLINE_KEYWORD));
+				umlOperation.addModifier(modifier);
+				umlOperation.setInline(true);
 			}
 			if (modifierList.hasModifier(ABSTRACT_KEYWORD)) {
 				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(ABSTRACT_KEYWORD));

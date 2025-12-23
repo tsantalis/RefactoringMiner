@@ -126,6 +126,7 @@ public class Constants {
     public final String SEALED = "sealed";
     public final String DEFAULT = "default";
     public final String STRICTFP = "strictfp";
+    public final String INLINE = "inline";
     public final String EQUAL_OPERATOR = "=";
 
     public final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";

@@ -26,7 +26,8 @@ public class Constants {
 			IMPORT_DECLARATION = "import_statement";
 			TYPE_DECLARATION = "class_definition";
 			TYPE_DECLARATION_KIND = "class";
-			BLOCK_COMMENT = "string";
+			BLOCK_COMMENT = "string"; // TODO this is a text-block comment style, Python does not support Java-like multi-line comment
+			LINE_COMMENT = "line_comment"; // TODO validate when Python comments get supported
 			EXPRESSION_STATEMENT = "expression_statement";
 			TRY_STATEMENT = "try_statement";
 			CATCH_CLAUSE = "except_clause";
@@ -42,7 +43,8 @@ public class Constants {
 			IMPORT_DECLARATION = "import_statement"; // TODO update value
 			TYPE_DECLARATION = "class_declaration";
 			TYPE_DECLARATION_KIND = "type_keyword";
-			BLOCK_COMMENT = "string"; // TODO update value
+			BLOCK_COMMENT = "multiline_comment";
+			LINE_COMMENT = "line_comment";
 			EXPRESSION_STATEMENT = "expression_statement"; // TODO update value
 			TRY_STATEMENT = "try_statement"; // TODO update value
 			CATCH_CLAUSE = "except_clause"; // TODO update value
@@ -60,6 +62,7 @@ public class Constants {
 			TYPE_DECLARATION = "TypeDeclaration";
 			TYPE_DECLARATION_KIND = "TYPE_DECLARATION_KIND";
 			BLOCK_COMMENT = "BlockComment";
+			LINE_COMMENT = "LineComment";
 			EXPRESSION_STATEMENT = "ExpressionStatement";
 			TRY_STATEMENT = "TryStatement";
 			CATCH_CLAUSE = "CatchClause";
@@ -162,7 +165,7 @@ public class Constants {
     public final String QUALIFIED_NAME = "QualifiedName";
     public final String CLASS_INSTANCE_CREATION = "ClassInstanceCreation";
 
-    public final String LINE_COMMENT = "LineComment";
+    public final String LINE_COMMENT;
     public final String BLOCK_COMMENT;
 
     public final String TYPE_INHERITANCE_KEYWORD = "TYPE_INHERITANCE_KEYWORD";

@@ -248,9 +248,9 @@ public class HunkNetwork {
         List<Node> moveIncludingNodes = nodes.stream().filter(node -> node.getMoveTrees() != null)
                 .toList();
         List<Node> deletionNodes = moveIncludingNodes.stream()
-                .filter(node -> node.getNodeType().equals(NodeType.ADDITION)).toList();
-        List<Node> additionNodes = moveIncludingNodes.stream()
                 .filter(node -> node.getNodeType().equals(NodeType.DELETION)).toList();
+        List<Node> additionNodes = moveIncludingNodes.stream()
+                .filter(node -> node.getNodeType().equals(NodeType.ADDITION)).toList();
 
         for (Node deletionNode : deletionNodes) {
             MappingStore mappingStore = deletionNode.getDiff().getAllMappings()

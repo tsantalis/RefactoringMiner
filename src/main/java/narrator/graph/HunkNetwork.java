@@ -164,7 +164,8 @@ public class HunkNetwork {
             Set<Tree> moveTrees = treesMoves.get(tree);
             Pair<String, String> treeLocation = localizeTree(tree);
             return new Node(getContent(treeLocation.first, treeLocation.second),
-                    treeLocation.second, tree, subTrees, moveTrees, nodeType, diff);
+                    treeLocation.second, tree, subTrees.isEmpty() ? null : subTrees,
+                    moveTrees.isEmpty() ? null : moveTrees, nodeType, diff);
         }).forEach(this::addNode);
     }
 

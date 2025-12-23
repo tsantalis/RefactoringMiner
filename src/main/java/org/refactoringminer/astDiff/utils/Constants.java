@@ -36,6 +36,7 @@ public class Constants {
 			FOR_STATEMENT = "for_statement";
 			ENHANCED_FOR_STATEMENT = "for_statement";
 			PACKAGE_DECLARATION = "";
+			FIELD_DECLARATION = "";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -54,6 +55,7 @@ public class Constants {
 			FOR_STATEMENT = "for_statement"; // TODO update value
 			ENHANCED_FOR_STATEMENT = "for_statement"; // TODO update value
 			PACKAGE_DECLARATION = "package_header";
+			FIELD_DECLARATION = "property_declaration";
 		}
 		else {
 			// Java values as default
@@ -73,6 +75,7 @@ public class Constants {
 			FOR_STATEMENT = "ForStatement";
 			ENHANCED_FOR_STATEMENT = "EnhancedForStatement";
 			PACKAGE_DECLARATION = "PackageDeclaration";
+			FIELD_DECLARATION = "FieldDeclaration";
 		}
 	}
 
@@ -85,7 +88,7 @@ public class Constants {
     public final String CATCH_CLAUSE;
     public final String BLOCK = "Block";
     public final String VARIABLE_DECLARATION_FRAGMENT = "VariableDeclarationFragment";
-    public final String FIELD_DECLARATION = "FieldDeclaration";
+    public final String FIELD_DECLARATION;
     public final String ACCESS_MODIFIER = "AccessModifier";
     public final String PACKAGE_DECLARATION;
     public final String MODULE_DECLARATION = "ModuleDeclaration";

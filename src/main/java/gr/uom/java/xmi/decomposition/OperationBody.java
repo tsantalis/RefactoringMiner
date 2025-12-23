@@ -644,6 +644,10 @@ public class OperationBody {
 		else if(statement instanceof LangDelStatement) {
 			// The del statement in Python is used to delete objects, including variables, items within data structures (like lists and dictionaries), and slices of arrays. 
 			// It effectively removes references to objects from a given scope or container.
+			LangDelStatement delStatement = (LangDelStatement)statement;
+			StatementObject child = new StatementObject(cu, sourceFolder, filePath, delStatement, parent.getDepth()+1, CodeElementType.DEL_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof LangAsyncStatement) {
 			// In Python, the async statement (keyword) is used to define asynchronous functions, also known as coroutines. 

@@ -415,6 +415,10 @@ public class KotlinFileProcessor {
 			}
 			umlOperation.addTypeParameter(umlTypeParameter);
 		}
+		if (function.getReceiverTypeReference() != null) {
+			UMLType type = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, function.getReceiverTypeReference(), 0);
+			umlOperation.setReceiverTypeReference(type);
+		}
 		if (function.hasDeclaredReturnType()) {
 			KtTypeReference returnTypeReference = function.getTypeReference();
 			if (returnTypeReference != null) {

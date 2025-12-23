@@ -217,6 +217,19 @@ public class MethodMatcher extends BodyMapperMatcher{
                 new LeafMatcher().match(srcNode,dstNode,mappingStore);
             }
         }
+        if (removedOperation instanceof UMLOperation leftOperation && addedOperation instanceof UMLOperation rightOperation &&
+                leftOperation.getReceiverTypeReference() != null && rightOperation.getReceiverTypeReference() != null) {
+            LocationInfo srcLocationInfo = leftOperation.getReceiverTypeReference().getLocationInfo();
+            LocationInfo dstLocationInfo = rightOperation.getReceiverTypeReference().getLocationInfo();
+            Tree srcNode =TreeUtilFunctions.findByLocationInfo(srcTree, srcLocationInfo);
+            Tree dstNode =TreeUtilFunctions.findByLocationInfo(dstTree, dstLocationInfo);
+            if (srcNode == null || dstNode == null) return;
+            if (srcNode.isIsoStructuralTo(dstNode))
+                mappingStore.addMappingRecursively(srcNode,dstNode);
+            else {
+                new LeafMatcher().match(srcNode,dstNode,mappingStore);
+            }
+        }
     }
 
     private void matchThrowKeyword(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {

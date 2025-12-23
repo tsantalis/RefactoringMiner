@@ -50,6 +50,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private List<UMLAnonymousClass> anonymousClassList;
 	private List<UMLTypeParameter> typeParameters;
 	private List<UMLType> thrownExceptionTypes;
+	private UMLType receiverTypeReference;
 	private UMLJavadoc javadoc;
 	private List<UMLAnnotation> annotations;
 	private List<UMLModifier> modifiers;
@@ -346,6 +347,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			}
 		}
 		return false;
+	}
+
+	public UMLType getReceiverTypeReference() {
+		return receiverTypeReference;
+	}
+
+	public void setReceiverTypeReference(UMLType receiverTypeReference) {
+		this.receiverTypeReference = receiverTypeReference;
 	}
 
 	public UMLJavadoc getJavadoc() {

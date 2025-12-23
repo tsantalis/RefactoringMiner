@@ -115,5 +115,10 @@ public class ImportMatcher implements TreeMatcher {
                 mappingStore.addMappingRecursively(relatives.first,relatives.second);
             }
         }
+        else if (srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
+                srcImportStatement.getParent().getType().name.equals(Constants.get().IMPORT_LIST) &&
+                dstImportStatement.getParent().getType().name.equals(Constants.get().IMPORT_LIST)) {
+            mappingStore.addMapping(srcImportStatement.getParent(), dstImportStatement.getParent());
+        }
     }
 }

@@ -210,4 +210,5 @@ public class Constants {
     public final String FUNCTION_KEYWORD = "function_keyword";
     public final String FUNCTION_PARAMETERS = "function_value_parameters";
     public final String STATEMENTS = "statements"; // This is a node that wraps each leaf statement in Kotlin
+    public final String IMPORT_LIST = "import_list";
 }

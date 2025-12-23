@@ -162,6 +162,8 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (srcSubTree == null || dstSubTree == null) return;
         if (srcSubTree.isIsoStructuralTo(dstSubTree))
             mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
+        if (srcSubTree.getParent().getType().name.equals(Constants.get().MODIFIERS) && dstSubTree.getParent().getType().name.equals(Constants.get().MODIFIERS))
+            mappingStore.addMapping(srcSubTree.getParent(), dstSubTree.getParent());
     }
     private void processSuperClasses(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
         UMLType srcParentUML = classDiff.getOldSuperclass();

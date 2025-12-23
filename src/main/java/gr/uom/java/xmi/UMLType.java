@@ -453,9 +453,22 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 			KtUserType qualifier = userType.getQualifier();
 			if (qualifier != null) {
 				UMLType left = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, qualifier);
-				LeafType rightType = extractTypeObject(userType.getReferencedName());
-				return new CompositeType(left, rightType);
-			} else return extractTypeObject(userType.getReferencedName());
+				UMLType rightType = extractTypeObject(userType.getReferencedName());
+				for (KtTypeProjection typeProjection : userType.getTypeArguments()) {
+					UMLType projection = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeProjection);
+					rightType.typeArguments.add(projection);
+					rightType.parameterized = true;
+				}
+				return new CompositeType(left, (LeafType) rightType);
+			} else {
+				UMLType leafType = extractTypeObject(userType.getReferencedName());
+				for (KtTypeProjection typeProjection : userType.getTypeArguments()) {
+					UMLType projection = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeProjection);
+					leafType.typeArguments.add(projection);
+					leafType.parameterized = true;
+				}
+				return leafType;
+			}
 		} else if (type instanceof KtTypeReference typeReference) {
 			KtTypeElement element = typeReference.getTypeElement();
 			if (element instanceof KtFunctionType functionType) {

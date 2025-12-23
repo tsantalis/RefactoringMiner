@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.jetbrains.kotlin.com.intellij.psi.PsiComment;
 import org.jetbrains.kotlin.com.intellij.psi.PsiElement;
@@ -22,6 +23,7 @@ import org.jetbrains.kotlin.psi.KtAnnotationEntry;
 import org.jetbrains.kotlin.psi.KtAnonymousInitializer;
 import org.jetbrains.kotlin.psi.KtClass;
 import org.jetbrains.kotlin.psi.KtClassBody;
+import org.jetbrains.kotlin.psi.KtDeclaration;
 import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
@@ -196,7 +198,30 @@ public class KotlinFileProcessor {
 	private UMLClass processClassDeclaration(KtFile ktFile, KtClass ktClass, UMLPackage umlPackage, String packageName, String sourceFolder, String filePath, String fileContent, List<UMLImport> importedTypes, List<UMLComment> comments) {
 		LocationInfo locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, ktClass, CodeElementType.TYPE_DECLARATION);
 		UMLClass umlClass = new UMLClass(packageName, ktClass.getName(), locationInfo, true, importedTypes);
-		umlClass.setPackageDeclaration(umlPackage);
+		LocationInfo lastImportLocationInfo = importedTypes.size() > 0 ? importedTypes.get(importedTypes.size()-1).getLocationInfo() : null;
+		if(ktFile.getName().endsWith(ktClass.getName() + ".kt")) {
+			umlClass.setPackageDeclaration(umlPackage);
+			List<KtDeclaration> declarations = ktFile.getDeclarations().stream()
+					.filter(type -> type instanceof KtClass)
+					.collect(Collectors.toList());
+			boolean isFirstType = declarations.get(0).equals(ktClass);
+			boolean isLastType = declarations.get(declarations.size()-1).equals(ktClass);
+			for(UMLComment comment : comments) {
+				if(umlPackage != null && umlPackage.getLocationInfo().before(comment.getLocationInfo()) && isFirstType && comment.getLocationInfo().before(locationInfo)) {
+					if(lastImportLocationInfo != null && lastImportLocationInfo.before(comment.getLocationInfo()) && !lastImportLocationInfo.sameLine(comment.getLocationInfo()))
+						umlClass.getComments().add(comment);
+				}
+				if(comment.getLocationInfo().before(locationInfo) && !locationInfo.nextLine(comment.getLocationInfo())) {
+					umlClass.getPackageDeclarationComments().add(comment);
+				}
+				else if(isLastType && locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
+					umlClass.getPackageDeclarationComments().add(comment);
+				}
+			}
+			comments.removeAll(umlClass.getPackageDeclarationComments());
+			comments.removeAll(umlClass.getComments());
+		}
+		
 		umlClass.setVisibility(Visibility.PUBLIC);
 		KtModifierList modifierList = ktClass.getModifierList();
 		// default visibility in Kotlin is public

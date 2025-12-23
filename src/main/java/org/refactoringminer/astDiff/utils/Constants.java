@@ -26,7 +26,7 @@ public class Constants {
 			IMPORT_DECLARATION = "import_statement";
 			TYPE_DECLARATION = "class_definition";
 			TYPE_DECLARATION_KIND = "class";
-			BLOCK_COMMENT = "string"; // TODO this is a text-block comment style, Python does not support Java-like multi-line comment
+			BLOCK_COMMENT = "string"; // this is a text-block comment style, Python does not support Java-like multi-line comment
 			LINE_COMMENT = "line_comment"; // TODO validate when Python comments get supported
 			EXPRESSION_STATEMENT = "expression_statement";
 			TRY_STATEMENT = "try_statement";
@@ -35,12 +35,13 @@ public class Constants {
 			WHILE_STATEMENT = "while_statement";
 			FOR_STATEMENT = "for_statement";
 			ENHANCED_FOR_STATEMENT = "for_statement";
+			PACKAGE_DECLARATION = "";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
 			METHOD_DECLARATION = "function_declaration";
 			SIMPLE_NAME = "simple_identifier";
-			IMPORT_DECLARATION = "import_statement"; // TODO update value
+			IMPORT_DECLARATION = "import_header";
 			TYPE_DECLARATION = "class_declaration";
 			TYPE_DECLARATION_KIND = "type_keyword";
 			BLOCK_COMMENT = "multiline_comment";
@@ -52,6 +53,7 @@ public class Constants {
 			WHILE_STATEMENT = "while_statement"; // TODO update value
 			FOR_STATEMENT = "for_statement"; // TODO update value
 			ENHANCED_FOR_STATEMENT = "for_statement"; // TODO update value
+			PACKAGE_DECLARATION = "package_header";
 		}
 		else {
 			// Java values as default
@@ -70,6 +72,7 @@ public class Constants {
 			WHILE_STATEMENT = "WhileStatement";
 			FOR_STATEMENT = "ForStatement";
 			ENHANCED_FOR_STATEMENT = "EnhancedForStatement";
+			PACKAGE_DECLARATION = "PackageDeclaration";
 		}
 	}
 
@@ -84,7 +87,7 @@ public class Constants {
     public final String VARIABLE_DECLARATION_FRAGMENT = "VariableDeclarationFragment";
     public final String FIELD_DECLARATION = "FieldDeclaration";
     public final String ACCESS_MODIFIER = "AccessModifier";
-    public final String PACKAGE_DECLARATION = "PackageDeclaration";
+    public final String PACKAGE_DECLARATION;
     public final String MODULE_DECLARATION = "ModuleDeclaration";
     public final String ANONYMOUS_CLASS_DECLARATION = "AnonymousClassDeclaration";
     public final String LABELED_STATEMENT = "LabeledStatement";

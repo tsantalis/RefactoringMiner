@@ -68,8 +68,8 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (dstOperationNode != null && dstOperationNode.getParent() != null && dstOperationNode.getParent().getType().name.equals(Constants.get().DECORATED_METHOD)) {
                 dstOperationNode = dstOperationNode.getParent();
             }
-            if (srcOperationNode == null || !(srcOperationNode.getType().name.equals(Constants.get().METHOD_DECLARATION) || srcOperationNode.getType().name.equals(Constants.get().DECORATED_METHOD) || srcOperationNode.getType().name.equals(Constants.get().ANNOTATION_TYPE_MEMBER_DECLARATION))) return;
-            if (dstOperationNode == null || !(dstOperationNode.getType().name.equals(Constants.get().METHOD_DECLARATION) || dstOperationNode.getType().name.equals(Constants.get().DECORATED_METHOD) || dstOperationNode.getType().name.equals(Constants.get().ANNOTATION_TYPE_MEMBER_DECLARATION))) return;
+            if (srcOperationNode == null || !(srcOperationNode.getType().name.equals(Constants.get().METHOD_DECLARATION) || srcOperationNode.getType().name.equals(Constants.get().SECONDARY_CONSTRUCTOR) || srcOperationNode.getType().name.equals(Constants.get().DECORATED_METHOD) || srcOperationNode.getType().name.equals(Constants.get().ANNOTATION_TYPE_MEMBER_DECLARATION))) return;
+            if (dstOperationNode == null || !(dstOperationNode.getType().name.equals(Constants.get().METHOD_DECLARATION) || dstOperationNode.getType().name.equals(Constants.get().SECONDARY_CONSTRUCTOR) || dstOperationNode.getType().name.equals(Constants.get().DECORATED_METHOD) || dstOperationNode.getType().name.equals(Constants.get().ANNOTATION_TYPE_MEMBER_DECLARATION))) return;
             new JavaDocMatcher(optimizationData, umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc(), umlOperationBodyMapper.getJavadocDiff())
                     .match(srcOperationNode, dstOperationNode, mappingStore);
             mappingStore.addMapping(srcOperationNode, dstOperationNode);
@@ -132,6 +132,7 @@ public class MethodMatcher extends BodyMapperMatcher{
         searchingTypes.add(Constants.get().BLOCK);
         searchingTypes.add(Constants.get().FUNCTION_BODY);
         searchingTypes.add(Constants.get().FUNCTION_KEYWORD);
+        searchingTypes.add(Constants.get().CONSTRUCTOR_KEYWORD);
         searchingTypes.add(Constants.get().FUNCTION_PARAMETERS);
         searchingTypes.add(Constants.get().MODIFIERS);
         for (String type : searchingTypes) {

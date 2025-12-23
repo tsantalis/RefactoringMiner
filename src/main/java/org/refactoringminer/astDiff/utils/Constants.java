@@ -216,10 +216,12 @@ public class Constants {
     public final String SOURCE_FILE = "source_file"; // This is the root of all trees in Kotlin
     public final String TYPE_IDENTIFIER = "type_identifier";
     public final String FUNCTION_KEYWORD = "function_keyword";
+    public final String CONSTRUCTOR_KEYWORD = "constructor_keyword";
     public final String FUNCTION_PARAMETERS = "function_value_parameters";
     public final String STATEMENTS = "statements"; // This is a node that wraps each leaf statement in Kotlin
     public final String IMPORT_LIST = "import_list";
     public final String MODIFIERS = "modifiers"; // This is a node that wraps all modifiers
     public final String TYPE_PARAMETERS = "type_parameters";
     public final String INIT_KEYWORD = "initializer_keyword";
+    public final String SECONDARY_CONSTRUCTOR = "secondary_constructor";
 }

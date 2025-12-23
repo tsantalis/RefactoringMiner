@@ -38,6 +38,7 @@ public class Constants {
 			PACKAGE_DECLARATION = "";
 			FIELD_DECLARATION = "";
 			MODIFIER = "";
+			INITIALIZER = "";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -58,6 +59,7 @@ public class Constants {
 			PACKAGE_DECLARATION = "package_header";
 			FIELD_DECLARATION = "property_declaration";
 			MODIFIER = "visibility_modifier";
+			INITIALIZER = "anonymous_initializer";
 		}
 		else {
 			// Java values as default
@@ -79,6 +81,7 @@ public class Constants {
 			PACKAGE_DECLARATION = "PackageDeclaration";
 			FIELD_DECLARATION = "FieldDeclaration";
 			MODIFIER = "Modifier";
+			INITIALIZER = "Initializer";
 		}
 	}
 
@@ -172,7 +175,7 @@ public class Constants {
     public final String SIMPLE_TYPE = "SimpleType";
     public final String EXPRESSION_METHOD_REFERENCE = "ExpressionMethodReference";
     public final String PREFIX_EXPRESSION = "PrefixExpression";
-    public final String INITIALIZER = "Initializer";
+    public final String INITIALIZER;
     public final String QUALIFIED_NAME = "QualifiedName";
     public final String CLASS_INSTANCE_CREATION = "ClassInstanceCreation";
 
@@ -218,4 +221,5 @@ public class Constants {
     public final String IMPORT_LIST = "import_list";
     public final String MODIFIERS = "modifiers"; // This is a node that wraps all modifiers
     public final String TYPE_PARAMETERS = "type_parameters";
+    public final String INIT_KEYWORD = "initializer_keyword";
 }

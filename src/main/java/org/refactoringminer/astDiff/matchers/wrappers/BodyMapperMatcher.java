@@ -186,7 +186,13 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
     private void processLeafMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore, boolean isPartOfExtractedMethod) {
         LeafMapping leafMapping = (LeafMapping) abstractCodeMapping;
         Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,leafMapping.getFragment1().getLocationInfo());
+        if(srcStatementNode.getType().name.equals(Constants.get().STATEMENTS)) {
+            srcStatementNode = srcStatementNode.getChild(0);
+        }
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo());
+        if(dstStatementNode.getType().name.equals(Constants.get().STATEMENTS)) {
+            dstStatementNode = dstStatementNode.getChild(0);
+        }
         if (srcStatementNode == null || dstStatementNode == null) {
             System.err.println("Tree not found for " + abstractCodeMapping);
             return;
@@ -197,6 +203,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             else
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
 
+        if(srcStatementNode.getParent().getType().name.equals(Constants.get().STATEMENTS) && dstStatementNode.getParent().getType().name.equals(Constants.get().STATEMENTS)) {
+            mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
+        }
         boolean _abstractExp = abstractCodeMapping.getFragment1() instanceof AbstractExpression || abstractCodeMapping.getFragment2() instanceof AbstractExpression;
         boolean _leafExp = abstractCodeMapping.getFragment1() instanceof LeafExpression || abstractCodeMapping.getFragment2() instanceof LeafExpression;
         boolean _abstractExpWithNonCompositeOwner = _abstractExp;

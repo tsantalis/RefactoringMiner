@@ -406,14 +406,23 @@ public class KotlinFileProcessor {
 			umlClass.setPrimaryConstructorParameter(primaryConstructor);
 		}
 		List<KtSuperTypeListEntry> superTypeListEntries = ktClass.getSuperTypeListEntries();
+		int index = 0;
 		for (KtSuperTypeListEntry superTypeListEntry : superTypeListEntries) {
 			UMLType umlType = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent,
 					superTypeListEntry.getTypeReference(), 0);
-			UMLGeneralization umlGeneralization = new UMLGeneralization(umlClass, umlType.getClassType());
-			umlClass.setSuperclass(umlType);
-			umlModel.addGeneralization(umlGeneralization);
+			if(index == 0) {
+				UMLGeneralization umlGeneralization = new UMLGeneralization(umlClass, umlType.getClassType());
+				umlClass.setSuperclass(umlType);
+				umlModel.addGeneralization(umlGeneralization);
+			}
+			else {
+				UMLRealization umlRealization = new UMLRealization(umlClass, umlType.getClassType());
+				umlClass.addImplementedInterface(umlType);
+				umlModel.addRealization(umlRealization);
+			}
 			AbstractExpression callEntry = new AbstractExpression(ktFile, sourceFolder, filePath, superTypeListEntry, CodeElementType.SUPER_TYPE_CALL_ENTRY, umlClass.getPrimaryConstructor().get(), activeVariableDeclarations, fileContent);
 			umlClass.addSuperTypeCallEntry(callEntry);
+			index++;
 		}
 		KtClassBody classBody = ktClass.getBody();
 		if(classBody != null) {

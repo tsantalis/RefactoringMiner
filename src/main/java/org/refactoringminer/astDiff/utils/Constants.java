@@ -224,4 +224,5 @@ public class Constants {
     public final String TYPE_PARAMETERS = "type_parameters";
     public final String INIT_KEYWORD = "initializer_keyword";
     public final String SECONDARY_CONSTRUCTOR = "secondary_constructor";
+    public final String PRIMARY_CONSTRUCTOR = "primary_constructor";
 }

@@ -6,6 +6,7 @@ import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.UMLTypeParameter;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLAnnotationListDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import org.refactoringminer.astDiff.models.OptimizationData;
@@ -16,6 +17,7 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.refactoringminer.astDiff.utils.Helpers.findPairOfType;
 
@@ -103,6 +105,19 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 mappingStore.addMapping(srcTypeParam.getParent(), dstTypeParam.getParent());
             }
         }
+        
+        if (classDiff.getPrimaryConstructorParameterListDiff().isPresent()) {
+            Set<org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration>> pairs = classDiff.getPrimaryConstructorParameterListDiff().get().getCommonParameters();
+            for (org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration> pair : pairs) {
+                processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, pair.getLeft(), pair.getRight());
+            }
+            Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree, classDiff.getOriginalClass().getPrimaryConstructor().get().getLocationInfo());
+            Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, classDiff.getNextClass().getPrimaryConstructor().get().getLocationInfo());
+            if (srcSubTree != null && dstSubTree != null) {
+                mappingStore.addMapping(srcSubTree, dstSubTree);
+            }
+        }
+        
         processSuperClasses(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processClassImplementedInterfaces(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processClassPermittedTypes(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);

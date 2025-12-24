@@ -351,6 +351,7 @@ public class KotlinFileProcessor {
 				if(parameter.hasValOrVar()) {
 					variableDeclaration.setAttribute(true);
 					UMLAttribute umlAttribute = new UMLAttribute(parameterName, type, variableDeclaration.getLocationInfo());
+					umlAttribute.setVisibility(Visibility.PUBLIC);
 					KtModifierList parameterModifierList = parameter.getModifierList();
 					if(parameterModifierList != null) {
 						if (parameterModifierList.hasModifier(PUBLIC_KEYWORD)) {

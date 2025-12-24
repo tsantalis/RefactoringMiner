@@ -14,4 +14,27 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 2,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "8e1e0527a0d043b41da58925a39fb8e03d62829a",
+    "url": "https://github.com/android/architecture-samples/commit/8e1e0527a0d043b41da58925a39fb8e03d62829a",
+    "author": "manuelvicnt",
+    "time": "3/15/22 06:35 AM",
+    "refactorings": [{
+        "type": "Rename Class",
+        "description": "Rename Class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest renamed to com.example.android.architecture.blueprints.todoapp.tasks.TasksScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private launchScreen() extracted from public clickAddTaskButton_navigateToAddEditFragment() in class com.example.android.architecture.blueprints.todoapp.tasks.TasksScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

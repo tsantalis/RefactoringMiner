@@ -27,6 +27,7 @@ import org.jetbrains.kotlin.psi.KtReferenceExpression;
 import org.jetbrains.kotlin.psi.KtReturnExpression;
 import org.jetbrains.kotlin.psi.KtSafeQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtStringTemplateExpression;
+import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry;
 import org.jetbrains.kotlin.psi.KtThisExpression;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.jetbrains.kotlin.psi.KtVisitor;
@@ -116,6 +117,12 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 			this.processPropertyExpression(property, data);
 		}
 		return super.visitExpression(expression, data);
+	}
+
+	public Object visitSuperTypeCallEntry(KtSuperTypeCallEntry entry, Object data) {
+		ObjectCreation invocation = new ObjectCreation(cu, sourceFolder, filePath, entry, container, fileContent);
+		creations.add(invocation);
+		return super.visitSuperTypeCallEntry(entry, data);
 	}
 
 	private void processPropertyExpression(KtProperty ktProperty, Object data) {

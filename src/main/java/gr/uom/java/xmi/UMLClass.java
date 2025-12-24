@@ -1,5 +1,6 @@
 package gr.uom.java.xmi;
 
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
@@ -21,12 +22,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean isInterface;
 	private boolean isEnum;
 	private boolean isAnnotation;
+	private boolean isData;
 	private boolean isRecord;
 	private boolean topLevel;
 	private boolean isLocal;
 	private boolean isModule;
     private List<UMLTypeParameter> typeParameters;
     private Optional<PrimaryConstructor> primaryConstructor;
+    private List<AbstractExpression> superTypeCallEntries;
     private UMLJavadoc javadoc;
     private Optional<UMLPackage> packageDeclaration;
     private UMLJavadoc packageDeclarationJavadoc;
@@ -74,6 +77,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.topLevel = topLevel;
         this.typeParameters = new ArrayList<UMLTypeParameter>();
         this.primaryConstructor = Optional.empty();
+        this.superTypeCallEntries = new ArrayList<>();
         this.packageDeclarationComments = new ArrayList<UMLComment>();
         this.packageDeclaration = Optional.empty();
     }
@@ -109,6 +113,10 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 			typeParameterNames.add(typeParameter.getName());
 		}
 		return typeParameterNames;
+	}
+
+	public void addSuperTypeCallEntry(AbstractExpression expr) {
+		this.superTypeCallEntries.add(expr);
 	}
 
 	public void setPrimaryConstructorParameter(PrimaryConstructor primary) {
@@ -209,6 +217,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void setRecord(boolean isRecord) {
 		this.isRecord = isRecord;
+	}
+
+	public boolean isData() {
+		return isData;
+	}
+
+	public void setData(boolean isData) {
+		this.isData = isData;
 	}
 
 	public boolean isInterface() {

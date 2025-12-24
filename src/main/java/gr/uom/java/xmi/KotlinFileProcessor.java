@@ -40,6 +40,7 @@ import org.jetbrains.kotlin.psi.KtPackageDirective;
 import org.jetbrains.kotlin.psi.KtParameter;
 import org.jetbrains.kotlin.psi.KtProperty;
 import org.jetbrains.kotlin.psi.KtSecondaryConstructor;
+import org.jetbrains.kotlin.psi.KtSuperTypeListEntry;
 import org.jetbrains.kotlin.psi.KtTypeParameter;
 import org.jetbrains.kotlin.psi.KtTypeReference;
 
@@ -184,12 +185,8 @@ public class KotlinFileProcessor {
 				// TODO process object declaration
 			}
 			else if (psiElement instanceof KtClass ktClass) {
-				if (ktClass.isEnum()) {
-					// TODO process enum declaration
-				} else {
-					UMLClass umlClass = processClassDeclaration(ktFile, ktClass, umlPackage, packageName, sourceFolder, filePath, fileContent, importedTypes, comments);
-					umlModel.addClass(umlClass);
-				}
+				UMLClass umlClass = processClassDeclaration(ktFile, ktClass, umlPackage, packageName, sourceFolder, filePath, fileContent, importedTypes, comments);
+				umlModel.addClass(umlClass);
 			}
 			else if (psiElement instanceof KtNamedFunction function) {
 				topLevelFunctions.add(function);
@@ -230,6 +227,30 @@ public class KotlinFileProcessor {
 		UMLClass umlClass = new UMLClass(packageName, ktClass.getName(), locationInfo, true, importedTypes);
 		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, ktClass.getDocComment());
 		umlClass.setJavadoc(javadoc);
+		if(ktClass.isInterface()) {
+			umlClass.setInterface(true);
+		}
+		if(ktClass.isEnum()) {
+			umlClass.setEnum(true);
+		}
+		if(ktClass.isAnnotation()) {
+			umlClass.setAnnotation(true);
+		}
+		if(ktClass.isData()) {
+			umlClass.setData(true);
+		}
+		if(ktClass.isSealed()) {
+			umlClass.setSealed(true);
+		}
+		if(ktClass.isLocal()) {
+			umlClass.setLocal(true);
+		}
+		if(ktClass.isInner()) {
+			umlClass.setTopLevel(false);
+		}
+		else {
+			umlClass.setTopLevel(true);
+		}
 		LocationInfo lastImportLocationInfo = importedTypes.size() > 0 ? importedTypes.get(importedTypes.size()-1).getLocationInfo() : null;
 		if(ktFile.getName().endsWith(ktClass.getName() + ".kt")) {
 			umlClass.setPackageDeclaration(umlPackage);
@@ -335,6 +356,7 @@ public class KotlinFileProcessor {
 			}
 			umlClass.addTypeParameter(umlTypeParameter);
 		}
+		Map<String, Set<VariableDeclaration>> activeVariableDeclarations = new LinkedHashMap<>();
 		if(ktClass.getPrimaryConstructor() != null) {
 			LocationInfo primaryConstructorLocation = generateLocationInfo(ktFile, sourceFolder, filePath, ktClass.getPrimaryConstructor(), CodeElementType.PRIMARY_CONSTRUCTOR);
 			PrimaryConstructor primaryConstructor = new PrimaryConstructor(primaryConstructorLocation, ktClass.getName(), umlClass.getName());
@@ -348,6 +370,14 @@ public class KotlinFileProcessor {
 				UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarArg());
 				VariableDeclaration variableDeclaration =
 						new VariableDeclaration(ktFile, sourceFolder, filePath, parameter, primaryConstructor, new LinkedHashMap<>(), fileContent, umlClass.getLocationInfo());
+				if(activeVariableDeclarations.containsKey(variableDeclaration.getVariableName())) {
+					activeVariableDeclarations.get(variableDeclaration.getVariableName()).add(variableDeclaration);
+				}
+				else {
+					Set<VariableDeclaration> set = new HashSet<VariableDeclaration>();
+					set.add(variableDeclaration);
+					activeVariableDeclarations.put(variableDeclaration.getVariableName(), set);
+				}
 				if(parameter.hasValOrVar()) {
 					variableDeclaration.setAttribute(true);
 					UMLAttribute umlAttribute = new UMLAttribute(parameterName, type, variableDeclaration.getLocationInfo());
@@ -374,6 +404,16 @@ public class KotlinFileProcessor {
 				primaryConstructor.addParameter(umlParameter);
 			}
 			umlClass.setPrimaryConstructorParameter(primaryConstructor);
+		}
+		List<KtSuperTypeListEntry> superTypeListEntries = ktClass.getSuperTypeListEntries();
+		for (KtSuperTypeListEntry superTypeListEntry : superTypeListEntries) {
+			UMLType umlType = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent,
+					superTypeListEntry.getTypeReference(), 0);
+			UMLGeneralization umlGeneralization = new UMLGeneralization(umlClass, umlType.getClassType());
+			umlClass.setSuperclass(umlType);
+			umlModel.addGeneralization(umlGeneralization);
+			AbstractExpression callEntry = new AbstractExpression(ktFile, sourceFolder, filePath, superTypeListEntry, CodeElementType.SUPER_TYPE_CALL_ENTRY, umlClass.getPrimaryConstructor().get(), activeVariableDeclarations, fileContent);
+			umlClass.addSuperTypeCallEntry(callEntry);
 		}
 		KtClassBody classBody = ktClass.getBody();
 		if(classBody != null) {
@@ -443,6 +483,9 @@ public class KotlinFileProcessor {
 				operation.setClassName(umlClass.getName());
 				umlClass.addOperation(operation);
 			}
+			// TODO
+			//classBody.getEnumEntries();
+			//classBody.getAllCompanionObjects();
 		}
 		distributeComments(comments, locationInfo, umlClass.getComments());
 		return umlClass;

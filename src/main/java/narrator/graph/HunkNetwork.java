@@ -95,16 +95,6 @@ public class HunkNetwork {
                 classifier.getMovedSrcs(), NodeType.DELETION, NodeType.SRC_MOVE, diff);
         importTrees(aggregateTrees(getValidTrees(classifier.getInsertedDsts())),
                 classifier.getMovedDsts(), NodeType.ADDITION, NodeType.DST_MOVE, diff);
-
-        // TODO: added and deleted files
-//        List<String> diffDestinationPaths = diffSet.stream().map(ASTDiff::getDstPath).toList();
-//        List<String> addedPaths =
-//                dstContexts.keySet().stream().filter(path -> !diffDestinationPaths.contains(path))
-//                        .toList();
-//        addedPaths.forEach(path -> {
-//            Tree addedTree = dstContexts.get(path).getRoot();
-//            network.importHunks(new HashSet<>(addedTree.getChildren()), null);
-//        });
     }
 
     private Set<Tree> getValidTrees(Set<Tree> trees) {
@@ -247,6 +237,8 @@ public class HunkNetwork {
     }
 
     public void process() {
+        processAddedDeletedFiles();
+
         processMoves();
         processDefUse();
         // TODO: how does it contribute to usage pattern if it is connected to a context class?
@@ -254,6 +246,25 @@ public class HunkNetwork {
         processSimilarity();
         processSuccession();
         processSingularity();
+    }
+
+    // TODO: find a diff-based import of added and deleted files
+    private void processAddedDeletedFiles() {
+        List<ASTDiff> importedDiffs = graph.vertexSet().stream().map(Node::getDiff).toList();
+        Set<String> srcFiles = importedDiffs.stream().map(ASTDiff::getSrcPath)
+                .collect(Collectors.toSet());
+        List<String> deletedFiles = srcContexts.keySet().stream()
+                .filter(path -> !srcFiles.contains(path))
+//                .map(path -> srcContexts.get(path).getRoot())
+                .toList();
+        Set<String> dstFiles = importedDiffs.stream().map(ASTDiff::getDstPath)
+                .collect(Collectors.toSet());
+        List<String> addedFiles = dstContexts.keySet().stream()
+                .filter(path -> !dstFiles.contains(path))
+//                .map(path -> dstContexts.get(path).getRoot())
+                .toList();
+        System.out.println(addedFiles);
+        System.out.println(deletedFiles);
     }
 
     private void processMoves() {

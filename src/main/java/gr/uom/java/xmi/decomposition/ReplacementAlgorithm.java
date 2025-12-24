@@ -6142,19 +6142,22 @@ public class ReplacementAlgorithm {
 
 	private static boolean isPartOfLambdaMovedToParentMapper(UMLOperationBodyMapper lambdaMapper) {
 		UMLOperationBodyMapper parentMapper = lambdaMapper.getParentMapper();
-		List<AbstractCodeFragment> leaves2 = parentMapper.getContainer2().getBody().getCompositeStatement().getLeaves();
-		Set<AbstractCodeFragment> matched = new LinkedHashSet<>();
-		for(AbstractCodeFragment fragment1 : lambdaMapper.getNonMappedLeavesT1()) {
-			for(AbstractCodeFragment fragment2 : leaves2) {
-				if(!parentMapper.alreadyMatched2(fragment2)) {
-					if(fragment1.getString().equals(fragment2.getString())) {
-						matched.add(fragment1);
-						break;
+		if(parentMapper.getContainer2().getBody() != null) {
+			List<AbstractCodeFragment> leaves2 = parentMapper.getContainer2().getBody().getCompositeStatement().getLeaves();
+			Set<AbstractCodeFragment> matched = new LinkedHashSet<>();
+			for(AbstractCodeFragment fragment1 : lambdaMapper.getNonMappedLeavesT1()) {
+				for(AbstractCodeFragment fragment2 : leaves2) {
+					if(!parentMapper.alreadyMatched2(fragment2)) {
+						if(fragment1.getString().equals(fragment2.getString())) {
+							matched.add(fragment1);
+							break;
+						}
 					}
 				}
 			}
+			return matched.size() > 0;
 		}
-		return matched.size() > 0;
+		return false;
 	}
 
 	protected static boolean isForEach(String name) {

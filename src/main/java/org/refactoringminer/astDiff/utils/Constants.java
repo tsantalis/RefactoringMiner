@@ -39,6 +39,7 @@ public class Constants {
 			FIELD_DECLARATION = "";
 			MODIFIER = "";
 			INITIALIZER = "";
+			CONSTRUCTOR_INVOCATION = "";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -60,6 +61,7 @@ public class Constants {
 			FIELD_DECLARATION = "property_declaration";
 			MODIFIER = "visibility_modifier";
 			INITIALIZER = "anonymous_initializer";
+			CONSTRUCTOR_INVOCATION = "constructor_invocation";
 		}
 		else {
 			// Java values as default
@@ -82,6 +84,7 @@ public class Constants {
 			FIELD_DECLARATION = "FieldDeclaration";
 			MODIFIER = "Modifier";
 			INITIALIZER = "Initializer";
+			CONSTRUCTOR_INVOCATION = "ConstructorInvocation";
 		}
 	}
 
@@ -132,13 +135,14 @@ public class Constants {
     public final String INLINE = "inline";
     public final String EQUAL_OPERATOR = "=";
     public final String ANNOTATION = "annotation";
+    public final String OPEN = "open";
 
     public final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
     public final String METHOD_INVOCATION_RECEIVER = "METHOD_INVOCATION_RECEIVER";
 
     public final String ASSERT_STATEMENT = "AssertStatement";
     public final String BREAK_STATEMENT = "BreakStatement";
-    public final String CONSTRUCTOR_INVOCATION = "ConstructorInvocation";
+    public final String CONSTRUCTOR_INVOCATION;
     public final String CONTINUE_STATEMENT = "ContinueStatement";
     public final String DO_STATEMENT = "DoStatement";
     public final String EMPTY_STATEMENT = "EmptyStatement";
@@ -225,4 +229,5 @@ public class Constants {
     public final String INIT_KEYWORD = "initializer_keyword";
     public final String SECONDARY_CONSTRUCTOR = "secondary_constructor";
     public final String PRIMARY_CONSTRUCTOR = "primary_constructor";
+    public final String DELEGATION_SPECIFIER = "delegation_specifier";
 }

@@ -95,6 +95,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (classDiff.getOriginalClass().isStrictfp() && classDiff.getNextClass().isStrictfp())
             new SameModifierMatcher(Constants.get().STRICTFP).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
         new SameModifierMatcher(Constants.get().ANNOTATION).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
+        new SameModifierMatcher(Constants.get().OPEN).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
 
         if (classDiff.getTypeParameterDiffList() != null)
         for (org.apache.commons.lang3.tuple.Pair<UMLTypeParameter, UMLTypeParameter> commonTypeParamSet : classDiff.getTypeParameterDiffList().getCommonTypeParameters()) {
@@ -197,12 +198,17 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (srcSubTree == null || dstSubTree == null) return;
         Tree src_argumentList = srcSubTree.getParent();
         Tree dst_argumentList = dstSubTree.getParent();
-        if (src_argumentList != null && dst_argumentList != null && src_argumentList.getType().name.equals(Constants.get().ARGUMENT_LIST)
-                && dst_argumentList.getType().name.equals(Constants.get().ARGUMENT_LIST))
+        if (src_argumentList != null && dst_argumentList != null &&
+                (src_argumentList.getType().name.equals(Constants.get().ARGUMENT_LIST) || src_argumentList.getType().name.equals(Constants.get().CONSTRUCTOR_INVOCATION)) &&
+                (dst_argumentList.getType().name.equals(Constants.get().ARGUMENT_LIST) || dst_argumentList.getType().name.equals(Constants.get().CONSTRUCTOR_INVOCATION))) {
             if(src_argumentList.isIsomorphicTo(dst_argumentList))
                 mappingStore.addMappingRecursively(src_argumentList,dst_argumentList);
             else
                 mappingStore.addMapping(src_argumentList,dst_argumentList);
+        }
+        if (src_argumentList.getParent().getType().name.equals(Constants.get().DELEGATION_SPECIFIER) && dst_argumentList.getParent().getType().name.equals(Constants.get().DELEGATION_SPECIFIER)) {
+            mappingStore.addMapping(src_argumentList.getParent(),dst_argumentList.getParent());
+        }
     }
 
     private void processClassAnnotations(Tree srcTree, Tree dstTree, UMLAnnotationListDiff annotationListDiff, ExtendedMultiMappingStore mappingStore) {

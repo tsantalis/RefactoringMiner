@@ -2,10 +2,12 @@ package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.AbstractMap.SimpleEntry;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 
 import gr.uom.java.xmi.LeafType;
@@ -19,6 +21,7 @@ public class UMLParameterListDiff {
 	private List<VariableDeclaration> addedParameters = new ArrayList<VariableDeclaration>();
 	private List<VariableDeclaration> removedParameters = new ArrayList<VariableDeclaration>();
 	private List<UMLParameterDiff> parameterDiffList = new ArrayList<UMLParameterDiff>();
+	private Set<Pair<VariableDeclaration, VariableDeclaration>> commonParameters = new LinkedHashSet<>();
 	private boolean parametersReordered;
 	private Set<AbstractCodeMapping> mappings;
 	private Set<Refactoring> refactorings;
@@ -40,6 +43,9 @@ public class UMLParameterListDiff {
 			UMLParameterDiff parameterDiff = new UMLParameterDiff(parameter1, parameter2, removedOperation, addedOperation, mappings, refactorings, classDiff);
 			if(!parameterDiff.isEmpty()) {
 				parameterDiffList.add(parameterDiff);
+			}
+			else {
+				commonParameters.add(Pair.of(parameter1, parameter2));
 			}
 		}
 		int matchedParameterCount = matchedParameters.size()/2;
@@ -262,6 +268,10 @@ public class UMLParameterListDiff {
 
 	public List<UMLParameterDiff> getParameterDiffList() {
 		return parameterDiffList;
+	}
+
+	public Set<Pair<VariableDeclaration, VariableDeclaration>> getCommonParameters() {
+		return commonParameters;
 	}
 
 	public boolean isParametersReordered() {

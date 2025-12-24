@@ -350,9 +350,21 @@ public class KotlinFileProcessor {
 						new VariableDeclaration(ktFile, sourceFolder, filePath, parameter, primaryConstructor, new LinkedHashMap<>(), fileContent, umlClass.getLocationInfo());
 				if(parameter.hasValOrVar()) {
 					variableDeclaration.setAttribute(true);
-					UMLAttribute attribute = new UMLAttribute(parameterName, type, variableDeclaration.getLocationInfo());
-					attribute.setVariableDeclaration(variableDeclaration);
-					umlClass.addAttribute(attribute);
+					UMLAttribute umlAttribute = new UMLAttribute(parameterName, type, variableDeclaration.getLocationInfo());
+					KtModifierList parameterModifierList = parameter.getModifierList();
+					if(parameterModifierList != null) {
+						if (parameterModifierList.hasModifier(PUBLIC_KEYWORD)) {
+							umlAttribute.setVisibility(Visibility.PUBLIC);
+						} else if (parameterModifierList.hasModifier(PROTECTED_KEYWORD)) {
+							umlAttribute.setVisibility(Visibility.PROTECTED);
+						} else if (parameterModifierList.hasModifier(PRIVATE_KEYWORD)) {
+							umlAttribute.setVisibility(Visibility.PRIVATE);
+						} else if (parameterModifierList.hasModifier(INTERNAL_KEYWORD)) {
+							umlAttribute.setVisibility(Visibility.INTERNAL);
+						}
+					}
+					umlAttribute.setVariableDeclaration(variableDeclaration);
+					umlClass.addAttribute(umlAttribute);
 				}
 				else {
 					variableDeclaration.setParameter(true);
@@ -395,9 +407,22 @@ public class KotlinFileProcessor {
 							new VariableDeclaration(ktFile, sourceFolder, filePath, parameter, umlConstructor, new LinkedHashMap<>(), fileContent, umlConstructor.getLocationInfo());
 					if(parameter.hasValOrVar()) {
 						variableDeclaration.setAttribute(true);
-						UMLAttribute attribute = new UMLAttribute(parameterName, type, variableDeclaration.getLocationInfo());
-						attribute.setVariableDeclaration(variableDeclaration);
-						umlClass.addAttribute(attribute);
+						UMLAttribute umlAttribute = new UMLAttribute(parameterName, type, variableDeclaration.getLocationInfo());
+						umlAttribute.setVisibility(Visibility.PUBLIC);
+						KtModifierList parameterModifierList = parameter.getModifierList();
+						if(parameterModifierList != null) {
+							if (parameterModifierList.hasModifier(PUBLIC_KEYWORD)) {
+								umlAttribute.setVisibility(Visibility.PUBLIC);
+							} else if (parameterModifierList.hasModifier(PROTECTED_KEYWORD)) {
+								umlAttribute.setVisibility(Visibility.PROTECTED);
+							} else if (parameterModifierList.hasModifier(PRIVATE_KEYWORD)) {
+								umlAttribute.setVisibility(Visibility.PRIVATE);
+							} else if (parameterModifierList.hasModifier(INTERNAL_KEYWORD)) {
+								umlAttribute.setVisibility(Visibility.INTERNAL);
+							}
+						}
+						umlAttribute.setVariableDeclaration(variableDeclaration);
+						umlClass.addAttribute(umlAttribute);
 					}
 					else {
 						variableDeclaration.setParameter(true);

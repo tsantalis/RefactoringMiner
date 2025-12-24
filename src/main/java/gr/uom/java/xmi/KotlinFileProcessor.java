@@ -395,6 +395,7 @@ public class KotlinFileProcessor {
 						}
 					}
 					umlAttribute.setVariableDeclaration(variableDeclaration);
+					umlAttribute.setClassName(umlClass.getName());
 					umlClass.addAttribute(umlAttribute);
 				}
 				else {
@@ -420,7 +421,8 @@ public class KotlinFileProcessor {
 				umlClass.addImplementedInterface(umlType);
 				umlModel.addRealization(umlRealization);
 			}
-			AbstractExpression callEntry = new AbstractExpression(ktFile, sourceFolder, filePath, superTypeListEntry, CodeElementType.SUPER_TYPE_CALL_ENTRY, umlClass.getPrimaryConstructor().get(), activeVariableDeclarations, fileContent);
+			AbstractExpression callEntry = new AbstractExpression(ktFile, sourceFolder, filePath, superTypeListEntry, CodeElementType.SUPER_TYPE_CALL_ENTRY,
+					umlClass.getPrimaryConstructor().isPresent() ? umlClass.getPrimaryConstructor().get() : null, activeVariableDeclarations, fileContent);
 			umlClass.addSuperTypeCallEntry(callEntry);
 			index++;
 		}
@@ -472,6 +474,7 @@ public class KotlinFileProcessor {
 							}
 						}
 						umlAttribute.setVariableDeclaration(variableDeclaration);
+						umlAttribute.setClassName(umlClass.getName());
 						umlClass.addAttribute(umlAttribute);
 					}
 					else {
@@ -526,6 +529,7 @@ public class KotlinFileProcessor {
 		KtModifierList modifierList = function.getModifierList();
 		// default visibility in Kotlin is public
 		umlOperation.setVisibility(Visibility.PUBLIC);
+		int startSignatureOffset = -1;
 		if(modifierList != null) {
 			for (PsiElement modifier : modifierList.getChildren()) {
 				if (modifier instanceof KtAnnotationEntry annotationEntry) {
@@ -536,44 +540,71 @@ public class KotlinFileProcessor {
 				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PUBLIC_KEYWORD));
 				umlOperation.addModifier(modifier);
 				umlOperation.setVisibility(Visibility.PUBLIC);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
 			}
 			if (modifierList.hasModifier(PROTECTED_KEYWORD)) {
 				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PROTECTED_KEYWORD));
 				umlOperation.addModifier(modifier);
 				umlOperation.setVisibility(Visibility.PROTECTED);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
 			}
 			if (modifierList.hasModifier(PRIVATE_KEYWORD)) {
 				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PRIVATE_KEYWORD));
 				umlOperation.addModifier(modifier);
 				umlOperation.setVisibility(Visibility.PRIVATE);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
 			}
 			if (modifierList.hasModifier(INTERNAL_KEYWORD)) {
 				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(INTERNAL_KEYWORD));
 				umlOperation.addModifier(modifier);
 				umlOperation.setVisibility(Visibility.INTERNAL);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
 			}
 			if (modifierList.hasModifier(OPEN_KEYWORD)) {
 				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(OPEN_KEYWORD));
 				umlOperation.addModifier(modifier);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
 			}
 			if (modifierList.hasModifier(OVERRIDE_KEYWORD)) {
 				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(OVERRIDE_KEYWORD));
 				umlOperation.addModifier(modifier);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
 			}
 			if (modifierList.hasModifier(INLINE_KEYWORD)) {
 				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(INLINE_KEYWORD));
 				umlOperation.addModifier(modifier);
 				umlOperation.setInline(true);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
 			}
 			if (modifierList.hasModifier(ABSTRACT_KEYWORD)) {
 				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(ABSTRACT_KEYWORD));
 				umlOperation.addModifier(modifier);
 				umlOperation.setAbstract(true);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
 			}
 		}
 		List<KtTypeParameter> typeParameters = function.getTypeParameters();
 		for (KtTypeParameter typeParameter : typeParameters) {
 			LocationInfo typeParameterLocation = generateLocationInfo(ktFile, sourceFolder, filePath, typeParameter, CodeElementType.TYPE_PARAMETER);
+			if(startSignatureOffset == -1) {
+				startSignatureOffset = typeParameterLocation.getStartOffset();
+			}
 			UMLTypeParameter umlTypeParameter = new UMLTypeParameter(typeParameter.getName(), typeParameterLocation);
 			KtTypeReference typeBounds = typeParameter.getExtendsBound();
 			if (typeBounds != null) {
@@ -592,7 +623,13 @@ public class KotlinFileProcessor {
 		}
 		if (function.getReceiverTypeReference() != null) {
 			UMLType type = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, function.getReceiverTypeReference(), 0);
+			if(startSignatureOffset == -1) {
+				startSignatureOffset = type.getLocationInfo().getStartOffset();
+			}
 			umlOperation.setReceiverTypeReference(type);
+		}
+		if(startSignatureOffset == -1) {
+			startSignatureOffset = function.getNameIdentifier().getTextRange().getStartOffset();
 		}
 		if (function.hasDeclaredReturnType()) {
 			KtTypeReference returnTypeReference = function.getTypeReference();
@@ -637,6 +674,11 @@ public class KotlinFileProcessor {
 			OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, function.getBodyBlockExpression(), umlOperation, attributes, fileContent);
 			umlOperation.setBody(operationBody);
 		}
+		int endSignatureOffset = function.getBodyBlockExpression() != null ?
+				umlOperation.getBody().getCompositeStatement().getLocationInfo().getStartOffset() + 1 :
+					function.getTextRange().getEndOffset();
+		String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
+		umlOperation.setActualSignature(text);
 		return umlOperation;
 	}
 

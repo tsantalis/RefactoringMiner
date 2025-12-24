@@ -73,7 +73,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,compositeStatementObjectMapping.getFragment2().getLocationInfo());
         //handle case where the parent block has only a single statement and the locationInfo of compositeStatement is identical with the parent block locationInfo in Python
         //the solution uses reflection to obtain the value of Constants value from the CodeElementType constant name
-        if (srcStatementNode.getType().name.equals(Constants.get().CLASS_BLOCK) && !compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+        if (srcStatementNode != null && srcStatementNode.getType().name.equals(Constants.get().CLASS_BLOCK) && !compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
             String astTypeName = compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().name();
             try {
                 java.lang.reflect.Field publicField = Constants.class.getField(astTypeName);
@@ -85,7 +85,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 //e.printStackTrace();
             }
         }
-        if (dstStatementNode.getType().name.equals(Constants.get().CLASS_BLOCK) && !compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+        if (dstStatementNode != null && dstStatementNode.getType().name.equals(Constants.get().CLASS_BLOCK) && !compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
             String astTypeName = compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().name();
             try {
                 java.lang.reflect.Field publicField = Constants.class.getField(astTypeName);

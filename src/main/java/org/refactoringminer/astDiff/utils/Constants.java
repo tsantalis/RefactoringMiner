@@ -133,6 +133,7 @@ public class Constants {
     public final String DEFAULT = "default";
     public final String STRICTFP = "strictfp";
     public final String INLINE = "inline";
+    public final String OVERRIDE = "override";
     public final String EQUAL_OPERATOR = "=";
     public final String ANNOTATION = "annotation";
     public final String OPEN = "open";
@@ -230,4 +231,5 @@ public class Constants {
     public final String SECONDARY_CONSTRUCTOR = "secondary_constructor";
     public final String PRIMARY_CONSTRUCTOR = "primary_constructor";
     public final String DELEGATION_SPECIFIER = "delegation_specifier";
+    public final String AFFECTATION_OPERATOR = "affectation_operator";
 }

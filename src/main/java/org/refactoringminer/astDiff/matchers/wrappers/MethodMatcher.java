@@ -113,6 +113,14 @@ public class MethodMatcher extends BodyMapperMatcher{
         }
         if (srcOperationNode != null && dstOperationNode != null) {
             processMethodSignature(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
+            if(umlOperationBodyMapper.getOperation1() != null && umlOperationBodyMapper.getOperation1().getDefaultExpression() != null &&
+                    umlOperationBodyMapper.getOperation2() != null && umlOperationBodyMapper.getOperation2().getDefaultExpression() != null) {
+                Tree srcOperationFunctionBody = srcOperationNode.getChild(srcOperationNode.getChildren().size()-1);
+                Tree dstOperationFunctionBody = dstOperationNode.getChild(dstOperationNode.getChildren().size()-1);
+                Tree srcAffectationKeyword = TreeUtilFunctions.findChildByType(srcOperationFunctionBody, Constants.get().AFFECTATION_OPERATOR);
+                Tree dstAffectationKeyword = TreeUtilFunctions.findChildByType(dstOperationFunctionBody, Constants.get().AFFECTATION_OPERATOR);
+                mappingStore.addMapping(srcAffectationKeyword, dstAffectationKeyword);
+            }
             new BodyMapperMatcher(optimizationData, umlOperationBodyMapper, isPartOfExtractedMethod).match(srcOperationNode, dstOperationNode, mappingStore);
             processOperationDiff(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
             processMethodParameters(srcOperationNode, dstOperationNode, umlOperationBodyMapper.getMatchedVariables(), mappingStore);
@@ -157,6 +165,7 @@ public class MethodMatcher extends BodyMapperMatcher{
                 new SameModifierMatcher(Constants.get().STRICTFP).match(srcOperationNode,dstOperationNode,mappingStore);
             if (umlOperationBodyMapper.getOperation1().isInline() && umlOperationBodyMapper.getOperation2().isInline())
                 new SameModifierMatcher(Constants.get().INLINE).match(srcOperationNode,dstOperationNode,mappingStore);
+            new SameModifierMatcher(Constants.get().OVERRIDE).match(srcOperationNode,dstOperationNode,mappingStore);
             String v1 = umlOperationBodyMapper.getOperation1().getVisibility().toString();
             String v2 = umlOperationBodyMapper.getOperation2().getVisibility().toString();
             Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcOperationNode, Constants.get().MODIFIER, v1);

@@ -95,6 +95,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (classDiff.getOriginalClass().isStrictfp() && classDiff.getNextClass().isStrictfp())
             new SameModifierMatcher(Constants.get().STRICTFP).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
         new SameModifierMatcher(Constants.get().ANNOTATION).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
+        new SameModifierMatcher(Constants.get().ENUM).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
         new SameModifierMatcher(Constants.get().OPEN).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
 
         if (classDiff.getTypeParameterDiffList() != null)

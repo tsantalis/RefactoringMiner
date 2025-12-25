@@ -232,6 +232,7 @@ public class KotlinFileProcessor {
 		LocationInfo locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, ktClass, CodeElementType.OBJECT_DECLARATION);
 		String name = ktClass.getName() != null ? ktClass.getName() : "Companion";
 		UMLClass umlClass = new UMLClass(packageName, name, locationInfo, ktClass.isTopLevel(), importedTypes);
+		umlClass.setObject(true);
 		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, ktClass.getDocComment());
 		umlClass.setJavadoc(javadoc);
 		KtModifierList modifierList = ktClass.getModifierList();

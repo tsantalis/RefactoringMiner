@@ -138,6 +138,7 @@ public class Constants {
     public final String ANNOTATION = "annotation";
     public final String ENUM = "enum";
     public final String OPEN = "open";
+    public final String COMPANION = "companion";
 
     public final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
     public final String METHOD_INVOCATION_RECEIVER = "METHOD_INVOCATION_RECEIVER";
@@ -233,4 +234,6 @@ public class Constants {
     public final String PRIMARY_CONSTRUCTOR = "primary_constructor";
     public final String DELEGATION_SPECIFIER = "delegation_specifier";
     public final String AFFECTATION_OPERATOR = "affectation_operator";
+    public final String COMPANION_OBJECT = "companion_object";
+    public final String OBJECT_DECLARATION = "object_declaration";
 }

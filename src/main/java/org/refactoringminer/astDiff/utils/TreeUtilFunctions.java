@@ -138,6 +138,9 @@ public class TreeUtilFunctions {
 				else if (child.getType().name.endsWith("_modifier") && child.getLabel().equals(label)) {
 					return child;
 				}
+				else if(child.getType().name.equals(label) && child.getLabel().equals(label)) {
+					return child;
+				}
 			}
 		}
 		return null;

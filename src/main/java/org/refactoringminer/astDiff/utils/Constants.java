@@ -136,6 +136,7 @@ public class Constants {
     public final String OVERRIDE = "override";
     public final String EQUAL_OPERATOR = "=";
     public final String ANNOTATION = "annotation";
+    public final String ENUM = "enum";
     public final String OPEN = "open";
 
     public final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";

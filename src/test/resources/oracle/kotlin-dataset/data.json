@@ -37,4 +37,76 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 3,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "82503b7ecc3fca5110bdd6eb824b7a029de2ad7f",
+    "url": "https://github.com/android/architecture-samples/commit/82503b7ecc3fca5110bdd6eb824b7a029de2ad7f",
+    "author": "dmeng",
+    "time": "4/23/19 12:17 PM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public clickAddTaskButton_opensAddTaskUi() renamed to public createTask() in class com.example.android.architecture.blueprints.todoapp.tasks.TasksScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @SmallTest in class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksDaoTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @MediumTest in class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @SmallTest in class com.example.android.architecture.blueprints.todoapp.tasks.TasksSingleScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Class Annotation",
+        "description": "Remove Class Annotation @Ignore(\"blocked on robolectric/4862\") in class com.example.android.architecture.blueprints.todoapp.tasks.TasksSingleScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Ignore(\"blocked on robolectric/4862\") in method public displayActiveTask() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksSingleScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Ignore(\"blocked on robolectric/4862\") in method public displayCompletedTask() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksSingleScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Ignore(\"blocked on robolectric/4862\") in method public deleteOneTest() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksSingleScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Ignore(\"blocked on robolectric/4862\") in method public deleteOneOfTwoTests() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksSingleScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

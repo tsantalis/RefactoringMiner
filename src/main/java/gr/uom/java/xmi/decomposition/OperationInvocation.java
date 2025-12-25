@@ -1133,7 +1133,7 @@ public class OperationInvocation extends AbstractCall {
 	}
 
 	public OperationInvocation(KtFile cu, String sourceFolder, String filePath, KtCallExpression invocation, VariableDeclarationContainer container, String fileContent) {
-		super(cu, sourceFolder, filePath, invocation, CodeElementType.METHOD_INVOCATION, container);
+		super(cu, sourceFolder, filePath, input(invocation), CodeElementType.METHOD_INVOCATION, container);
 		KtExpression calleeExpression = invocation.getCalleeExpression();
 		if(calleeExpression instanceof KtNameReferenceExpression nameReference) {
 			this.methodName = nameReference.getReferencedName();
@@ -1157,6 +1157,10 @@ public class OperationInvocation extends AbstractCall {
 				processExpression(receiver, this.subExpressions);
 			}
 		}
+	}
+
+	private static KtExpression input(KtCallExpression invocation) {
+		return invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression ? dotQualifiedExpression : invocation;
 	}
 
 	private void processExpression(KtExpression expression, List<String> subExpressions) {

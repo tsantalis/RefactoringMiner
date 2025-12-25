@@ -4,6 +4,7 @@ import static org.jetbrains.kotlin.lexer.KtTokens.*;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -186,7 +187,8 @@ public class KotlinFileProcessor {
 		List<KtProperty> topLevelProperties = new ArrayList<>();
 		for (PsiElement psiElement : ktFile.getChildren()) {
 			if (psiElement instanceof KtObjectDeclaration objectDeclaration) {
-				// TODO process object declaration
+				UMLClass companionObject = processObjectDeclaration(ktFile, objectDeclaration, packageName, sourceFolder, filePath, fileContent, importedTypes, comments, Collections.emptyList());
+				umlModel.addClass(companionObject);
 			}
 			else if (psiElement instanceof KtClass ktClass) {
 				UMLClass umlClass = processClassDeclaration(ktFile, ktClass, umlPackage, packageName, sourceFolder, filePath, fileContent, importedTypes, comments);
@@ -226,9 +228,37 @@ public class KotlinFileProcessor {
 		}
 	}
 
+	private UMLClass processObjectDeclaration(KtFile ktFile, KtObjectDeclaration ktClass, String packageName, String sourceFolder, String filePath, String fileContent, List<UMLImport> importedTypes, List<UMLComment> comments, List<UMLAttribute> attributes) {
+		LocationInfo locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, ktClass, CodeElementType.OBJECT_DECLARATION);
+		String name = ktClass.getName() != null ? ktClass.getName() : "Companion";
+		UMLClass umlClass = new UMLClass(packageName, name, locationInfo, ktClass.isTopLevel(), importedTypes);
+		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, ktClass.getDocComment());
+		umlClass.setJavadoc(javadoc);
+		KtModifierList modifierList = ktClass.getModifierList();
+		processClassModifiers(ktFile, sourceFolder, filePath, fileContent, umlClass, modifierList);
+		List<KtTypeParameter> typeParameters = ktClass.getTypeParameters();
+		processTypeParameters(ktFile, sourceFolder, filePath, fileContent, umlClass, typeParameters);
+		Map<String, Set<VariableDeclaration>> activeVariableDeclarations = new LinkedHashMap<>();
+		for(UMLAttribute attribute : attributes) {
+			VariableDeclaration variableDeclaration = attribute.getVariableDeclaration();
+			if(activeVariableDeclarations.containsKey(variableDeclaration.getVariableName())) {
+				activeVariableDeclarations.get(variableDeclaration.getVariableName()).add(variableDeclaration);
+			}
+			else {
+				Set<VariableDeclaration> set = new HashSet<VariableDeclaration>();
+				set.add(variableDeclaration);
+				activeVariableDeclarations.put(variableDeclaration.getVariableName(), set);
+			}
+		}
+		KtClassBody classBody = ktClass.getBody();
+		processClassBody(ktFile, sourceFolder, filePath, fileContent, importedTypes, comments, umlClass, activeVariableDeclarations, classBody);
+		distributeComments(comments, locationInfo, umlClass.getComments());
+		return umlClass;
+	}
+
 	private UMLClass processClassDeclaration(KtFile ktFile, KtClass ktClass, UMLPackage umlPackage, String packageName, String sourceFolder, String filePath, String fileContent, List<UMLImport> importedTypes, List<UMLComment> comments) {
 		LocationInfo locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, ktClass, CodeElementType.TYPE_DECLARATION);
-		UMLClass umlClass = new UMLClass(packageName, ktClass.getName(), locationInfo, true, importedTypes);
+		UMLClass umlClass = new UMLClass(packageName, ktClass.getName(), locationInfo, ktClass.isTopLevel(), importedTypes);
 		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, ktClass.getDocComment());
 		umlClass.setJavadoc(javadoc);
 		if(ktClass.isInterface()) {
@@ -279,87 +309,10 @@ public class KotlinFileProcessor {
 			comments.removeAll(umlClass.getComments());
 		}
 		
-		umlClass.setVisibility(Visibility.PUBLIC);
 		KtModifierList modifierList = ktClass.getModifierList();
-		// default visibility in Kotlin is public
-		umlClass.setVisibility(Visibility.PUBLIC);
-		if(modifierList != null) {
-			for (PsiElement modifier : modifierList.getChildren()) {
-				if (modifier instanceof KtAnnotationEntry annotationEntry) {
-					umlClass.addAnnotation(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
-				}
-			}
-			if (modifierList.hasModifier(PUBLIC_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PUBLIC_KEYWORD));
-				umlClass.addModifier(modifier);
-				umlClass.setVisibility(Visibility.PUBLIC);
-			}
-			if (modifierList.hasModifier(PROTECTED_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PROTECTED_KEYWORD));
-				umlClass.addModifier(modifier);
-				umlClass.setVisibility(Visibility.PROTECTED);
-			}
-			if (modifierList.hasModifier(PRIVATE_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PRIVATE_KEYWORD));
-				umlClass.addModifier(modifier);
-				umlClass.setVisibility(Visibility.PRIVATE);
-			}
-			if (modifierList.hasModifier(INTERNAL_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(INTERNAL_KEYWORD));
-				umlClass.addModifier(modifier);
-				umlClass.setVisibility(Visibility.INTERNAL);
-			}
-			if (modifierList.hasModifier(OPEN_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(OPEN_KEYWORD));
-				umlClass.addModifier(modifier);
-			}
-			if (modifierList.hasModifier(FINAL_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(FINAL_KEYWORD));
-				umlClass.addModifier(modifier);
-				umlClass.setFinal(true);
-			}
-			if (modifierList.hasModifier(ABSTRACT_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(ABSTRACT_KEYWORD));
-				umlClass.addModifier(modifier);
-				umlClass.setAbstract(true);
-			}
-			if (modifierList.hasModifier(SEALED_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(SEALED_KEYWORD));
-				umlClass.addModifier(modifier);
-				umlClass.setSealed(true);
-			}
-			if (modifierList.hasModifier(DATA_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(DATA_KEYWORD));
-				umlClass.addModifier(modifier);
-			}
-			if (modifierList.hasModifier(INNER_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(INNER_KEYWORD));
-				umlClass.addModifier(modifier);
-			}
-			if (modifierList.hasModifier(COMPANION_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(COMPANION_KEYWORD));
-				umlClass.addModifier(modifier);
-			}
-		}
+		processClassModifiers(ktFile, sourceFolder, filePath, fileContent, umlClass, modifierList);
 		List<KtTypeParameter> typeParameters = ktClass.getTypeParameters();
-		for (KtTypeParameter typeParameter : typeParameters) {
-			LocationInfo typeParameterLocation = generateLocationInfo(ktFile, sourceFolder, filePath, typeParameter, CodeElementType.TYPE_PARAMETER);
-			UMLTypeParameter umlTypeParameter = new UMLTypeParameter(typeParameter.getName(), typeParameterLocation);
-			KtTypeReference typeBounds = typeParameter.getExtendsBound();
-			if (typeBounds != null) {
-				umlTypeParameter.addTypeBound(
-						UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeBounds, 0));
-			}
-			KtModifierList typeParameterModifiers = typeParameter.getModifierList();
-			if (typeParameterModifiers != null) {
-				for (PsiElement modifier : typeParameterModifiers.getChildren()) {
-					if (modifier instanceof KtAnnotationEntry annotationEntry) {
-						umlTypeParameter.addAnnotation(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
-					}
-				}
-			}
-			umlClass.addTypeParameter(umlTypeParameter);
-		}
+		processTypeParameters(ktFile, sourceFolder, filePath, fileContent, umlClass, typeParameters);
 		Map<String, Set<VariableDeclaration>> activeVariableDeclarations = new LinkedHashMap<>();
 		if(ktClass.getPrimaryConstructor() != null) {
 			LocationInfo primaryConstructorLocation = generateLocationInfo(ktFile, sourceFolder, filePath, ktClass.getPrimaryConstructor(), CodeElementType.PRIMARY_CONSTRUCTOR);
@@ -431,9 +384,17 @@ public class KotlinFileProcessor {
 			index++;
 		}
 		KtClassBody classBody = ktClass.getBody();
+		processClassBody(ktFile, sourceFolder, filePath, fileContent, importedTypes, comments, umlClass, activeVariableDeclarations, classBody);
+		distributeComments(comments, locationInfo, umlClass.getComments());
+		return umlClass;
+	}
+
+	private void processClassBody(KtFile ktFile, String sourceFolder, String filePath, String fileContent,
+			List<UMLImport> importedTypes, List<UMLComment> comments, UMLClass umlClass,
+			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, KtClassBody classBody) {
 		if(classBody != null) {
 			for(KtProperty property : classBody.getProperties()) {
-				UMLAttribute attribute = processFieldDeclaration(ktFile, property, sourceFolder, filePath, fileContent, comments, locationInfo);
+				UMLAttribute attribute = processFieldDeclaration(ktFile, property, sourceFolder, filePath, fileContent, comments, umlClass.getLocationInfo());
 				attribute.setClassName(umlClass.getName());
 				umlClass.addAttribute(attribute);
 			}
@@ -444,7 +405,7 @@ public class KotlinFileProcessor {
 			}
 			for(KtSecondaryConstructor constructor : classBody.getSecondaryConstructors$psi_api()) {
 				LocationInfo constructorLocationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, constructor, CodeElementType.METHOD_DECLARATION);
-				UMLOperation umlConstructor = new UMLOperation(ktClass.getName(), constructorLocationInfo);
+				UMLOperation umlConstructor = new UMLOperation(umlClass.getNonQualifiedName(), constructorLocationInfo);
 				umlConstructor.setConstructor(true);
 				umlConstructor.setVisibility(Visibility.PUBLIC);
 				UMLJavadoc constructorJavadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, constructor.getDocComment());
@@ -527,10 +488,97 @@ public class KotlinFileProcessor {
 				operation.setClassName(umlClass.getName());
 				umlClass.addOperation(operation);
 			}
-			//classBody.getAllCompanionObjects();
+			for(KtObjectDeclaration companion : classBody.getAllCompanionObjects()) {
+				UMLClass companionObject = processObjectDeclaration(ktFile, companion, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments, umlClass.getAttributes());
+				umlModel.addClass(companionObject);
+			}
 		}
-		distributeComments(comments, locationInfo, umlClass.getComments());
-		return umlClass;
+	}
+
+	private void processTypeParameters(KtFile ktFile, String sourceFolder, String filePath, String fileContent,
+			UMLClass umlClass, List<KtTypeParameter> typeParameters) {
+		for (KtTypeParameter typeParameter : typeParameters) {
+			LocationInfo typeParameterLocation = generateLocationInfo(ktFile, sourceFolder, filePath, typeParameter, CodeElementType.TYPE_PARAMETER);
+			UMLTypeParameter umlTypeParameter = new UMLTypeParameter(typeParameter.getName(), typeParameterLocation);
+			KtTypeReference typeBounds = typeParameter.getExtendsBound();
+			if (typeBounds != null) {
+				umlTypeParameter.addTypeBound(
+						UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeBounds, 0));
+			}
+			KtModifierList typeParameterModifiers = typeParameter.getModifierList();
+			if (typeParameterModifiers != null) {
+				for (PsiElement modifier : typeParameterModifiers.getChildren()) {
+					if (modifier instanceof KtAnnotationEntry annotationEntry) {
+						umlTypeParameter.addAnnotation(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
+					}
+				}
+			}
+			umlClass.addTypeParameter(umlTypeParameter);
+		}
+	}
+
+	private void processClassModifiers(KtFile ktFile, String sourceFolder, String filePath, String fileContent,
+			UMLClass umlClass, KtModifierList modifierList) {
+		// default visibility in Kotlin is public
+		umlClass.setVisibility(Visibility.PUBLIC);
+		if(modifierList != null) {
+			for (PsiElement modifier : modifierList.getChildren()) {
+				if (modifier instanceof KtAnnotationEntry annotationEntry) {
+					umlClass.addAnnotation(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
+				}
+			}
+			if (modifierList.hasModifier(PUBLIC_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PUBLIC_KEYWORD));
+				umlClass.addModifier(modifier);
+				umlClass.setVisibility(Visibility.PUBLIC);
+			}
+			if (modifierList.hasModifier(PROTECTED_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PROTECTED_KEYWORD));
+				umlClass.addModifier(modifier);
+				umlClass.setVisibility(Visibility.PROTECTED);
+			}
+			if (modifierList.hasModifier(PRIVATE_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PRIVATE_KEYWORD));
+				umlClass.addModifier(modifier);
+				umlClass.setVisibility(Visibility.PRIVATE);
+			}
+			if (modifierList.hasModifier(INTERNAL_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(INTERNAL_KEYWORD));
+				umlClass.addModifier(modifier);
+				umlClass.setVisibility(Visibility.INTERNAL);
+			}
+			if (modifierList.hasModifier(OPEN_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(OPEN_KEYWORD));
+				umlClass.addModifier(modifier);
+			}
+			if (modifierList.hasModifier(FINAL_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(FINAL_KEYWORD));
+				umlClass.addModifier(modifier);
+				umlClass.setFinal(true);
+			}
+			if (modifierList.hasModifier(ABSTRACT_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(ABSTRACT_KEYWORD));
+				umlClass.addModifier(modifier);
+				umlClass.setAbstract(true);
+			}
+			if (modifierList.hasModifier(SEALED_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(SEALED_KEYWORD));
+				umlClass.addModifier(modifier);
+				umlClass.setSealed(true);
+			}
+			if (modifierList.hasModifier(DATA_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(DATA_KEYWORD));
+				umlClass.addModifier(modifier);
+			}
+			if (modifierList.hasModifier(INNER_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(INNER_KEYWORD));
+				umlClass.addModifier(modifier);
+			}
+			if (modifierList.hasModifier(COMPANION_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(COMPANION_KEYWORD));
+				umlClass.addModifier(modifier);
+			}
+		}
 	}
 
 	private UMLInitializer processInitializer(KtFile ktFile, KtAnonymousInitializer initializer, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments, String name) {

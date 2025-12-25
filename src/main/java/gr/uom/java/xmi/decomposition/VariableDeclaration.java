@@ -30,7 +30,10 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.jetbrains.kotlin.com.intellij.psi.PsiElement;
 import org.jetbrains.kotlin.psi.KtAnnotationEntry;
+import org.jetbrains.kotlin.psi.KtClass;
+import org.jetbrains.kotlin.psi.KtClassBody;
 import org.jetbrains.kotlin.psi.KtDestructuringDeclarationEntry;
+import org.jetbrains.kotlin.psi.KtEnumEntry;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtModifierList;
 import org.jetbrains.kotlin.psi.KtParameter;
@@ -800,6 +803,26 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.initializer = parameter.getInitializer() != null ? new AbstractExpression(ktFile, sourceFolder, filePath, parameter.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent) : null;
 		KtTypeReference type = parameter.getTypeReference();
 		this.type = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, type, 0);
+		this.scope = new VariableScope(ktFile, filePath, this.locationInfo.getStartOffset(), parentLocation.getEndOffset());
+	}
+
+	public VariableDeclaration(KtFile ktFile, String sourceFolder, String filePath, KtEnumEntry enumConstant, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, LocationInfo parentLocation) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, enumConstant, CodeElementType.ENUM_CONSTANT_DECLARATION);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		KtModifierList modifierList = enumConstant.getModifierList();
+		if(modifierList != null) {
+			for (PsiElement modifier : modifierList.getChildren()) {
+				if (modifier instanceof KtAnnotationEntry annotationEntry) {
+					annotations.add(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
+				}
+			}
+		}
+		this.variableName = enumConstant.getName();
+		if(enumConstant.getParent() instanceof KtClassBody classBody && classBody.getParent() instanceof KtClass enumClass) {
+			this.type = UMLType.extractTypeObject(enumClass.getName());
+		}
 		this.scope = new VariableScope(ktFile, filePath, this.locationInfo.getStartOffset(), parentLocation.getEndOffset());
 	}
 }

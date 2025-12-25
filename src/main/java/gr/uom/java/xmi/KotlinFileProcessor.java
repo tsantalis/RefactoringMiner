@@ -29,10 +29,12 @@ import org.jetbrains.kotlin.psi.KtClass;
 import org.jetbrains.kotlin.psi.KtClassBody;
 import org.jetbrains.kotlin.psi.KtDeclaration;
 import org.jetbrains.kotlin.psi.KtElement;
+import org.jetbrains.kotlin.psi.KtEnumEntry;
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtImportDirective;
 import org.jetbrains.kotlin.psi.KtImportList;
+import org.jetbrains.kotlin.psi.KtInitializerList;
 import org.jetbrains.kotlin.psi.KtModifierList;
 import org.jetbrains.kotlin.psi.KtNamedFunction;
 import org.jetbrains.kotlin.psi.KtObjectDeclaration;
@@ -43,6 +45,8 @@ import org.jetbrains.kotlin.psi.KtSecondaryConstructor;
 import org.jetbrains.kotlin.psi.KtSuperTypeListEntry;
 import org.jetbrains.kotlin.psi.KtTypeParameter;
 import org.jetbrains.kotlin.psi.KtTypeReference;
+import org.jetbrains.kotlin.psi.KtValueArgument;
+import org.jetbrains.kotlin.psi.KtValueArgumentList;
 
 import com.github.gumtreediff.gen.treesitterng.KotlinTreeSitterNgTreeGenerator;
 import com.github.gumtreediff.tree.TreeContext;
@@ -445,7 +449,7 @@ public class KotlinFileProcessor {
 				umlConstructor.setVisibility(Visibility.PUBLIC);
 				UMLJavadoc constructorJavadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, constructor.getDocComment());
 				umlConstructor.setJavadoc(constructorJavadoc);
-				distributeComments(comments, locationInfo, umlConstructor.getComments());
+				distributeComments(comments, constructorLocationInfo, umlConstructor.getComments());
 				List<KtParameter> parameters = constructor.getValueParameters();
 				for (KtParameter parameter : parameters) {
 					KtTypeReference typeReference = parameter.getTypeReference();
@@ -456,7 +460,7 @@ public class KotlinFileProcessor {
 					}
 					UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarArg());
 					VariableDeclaration variableDeclaration =
-							new VariableDeclaration(ktFile, sourceFolder, filePath, parameter, umlConstructor, new LinkedHashMap<>(), fileContent, umlConstructor.getLocationInfo());
+							new VariableDeclaration(ktFile, sourceFolder, filePath, parameter, umlConstructor, activeVariableDeclarations, fileContent, umlConstructor.getLocationInfo());
 					if(parameter.hasValOrVar()) {
 						variableDeclaration.setAttribute(true);
 						UMLAttribute umlAttribute = new UMLAttribute(parameterName, type, variableDeclaration.getLocationInfo());
@@ -490,13 +494,39 @@ public class KotlinFileProcessor {
 				umlConstructor.setClassName(umlClass.getName());
 				umlClass.addOperation(umlConstructor);
 			}
+			for(KtEnumEntry entry : classBody.getEnumEntries()) {
+				UMLJavadoc entryJavadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, entry.getDocComment());
+				LocationInfo entryLocationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, entry, CodeElementType.ENUM_CONSTANT_DECLARATION);
+				UMLEnumConstant enumConstant = new UMLEnumConstant(entry.getName(), UMLType.extractTypeObject(umlClass.getName()), entryLocationInfo);
+				VariableDeclaration variableDeclaration = new VariableDeclaration(ktFile, sourceFolder, filePath, entry, activeVariableDeclarations, fileContent, umlClass.getLocationInfo());
+				enumConstant.setVariableDeclaration(variableDeclaration);
+				enumConstant.setJavadoc(entryJavadoc);
+				distributeComments(comments, entryLocationInfo, enumConstant.getComments());
+				enumConstant.setFinal(true);
+				enumConstant.setStatic(true);
+				enumConstant.setVisibility(Visibility.PUBLIC);
+				KtInitializerList initializerList = entry.getInitializerList();
+				if(initializerList != null) {
+					for(KtSuperTypeListEntry argument : initializerList.getInitializers()) {
+						for(PsiElement element : argument.getChildren()) {
+							if(element instanceof KtValueArgumentList argumentList) {
+								for(KtValueArgument valueArgument : argumentList.getArguments()) {
+									enumConstant.addArgument(valueArgument.getText());
+								}
+							}
+							
+						}
+						
+					}
+				}
+				enumConstant.setClassName(umlClass.getName());
+				umlClass.addEnumConstant(enumConstant);
+			}
 			for(KtNamedFunction function : classBody.getFunctions()) {
 				UMLOperation operation = processFunctionDeclaration(ktFile, function, sourceFolder, filePath, fileContent, umlClass.getAttributes(), comments);
 				operation.setClassName(umlClass.getName());
 				umlClass.addOperation(operation);
 			}
-			// TODO
-			//classBody.getEnumEntries();
 			//classBody.getAllCompanionObjects();
 		}
 		distributeComments(comments, locationInfo, umlClass.getComments());

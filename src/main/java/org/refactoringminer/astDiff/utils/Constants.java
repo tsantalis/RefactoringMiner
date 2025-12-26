@@ -236,4 +236,8 @@ public class Constants {
     public final String AFFECTATION_OPERATOR = "affectation_operator";
     public final String COMPANION_OBJECT = "companion_object";
     public final String OBJECT_DECLARATION = "object_declaration";
+    public final String WHEN_ENTRY = "when_entry";
+    public final String ARROW = "arrow";
+    public final String WHEN_EXPRESSION = "when_expression";
+    public final String WHEN_SUBJECT = "when_subject";
 }

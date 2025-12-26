@@ -121,6 +121,20 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 }
                 new CompositeMatcher(abstractCodeMapping).match(srcStatementNode,dstStatementNode,mappingStore);
             }
+            else if (srcStatementNode.getType().name.equals(Constants.get().WHEN_ENTRY) && dstStatementNode.getType().name.equals(Constants.get().WHEN_ENTRY)) {
+            	Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().ARROW);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                new CompositeMatcher(abstractCodeMapping).match(srcStatementNode,dstStatementNode,mappingStore);
+            }
+            else if (srcStatementNode.getType().name.equals(Constants.get().WHEN_EXPRESSION) && dstStatementNode.getType().name.equals(Constants.get().WHEN_EXPRESSION)) {
+            	Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().WHEN_SUBJECT);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                new CompositeMatcher(abstractCodeMapping).match(srcStatementNode,dstStatementNode,mappingStore);
+            }
             else if (srcStatementNode.getType().name.equals(Constants.get().WHILE_STATEMENT) && dstStatementNode.getType().name.equals(Constants.get().WHILE_STATEMENT)) {
                 Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().WHILE_KEYWORD);
                 if (matched != null) {

@@ -100,8 +100,20 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         {
             if (srcStatementNode == null || dstStatementNode == null)
                 return;
-            if (srcStatementNode.getType().name.equals(dstStatementNode.getType().name))
+            if (srcStatementNode.getType().name.equals(dstStatementNode.getType().name)) {
                 mappingStore.addMapping(srcStatementNode,dstStatementNode);
+                if(srcStatementNode.getType().name.equals(Constants.get().STATEMENTS) && dstStatementNode.getType().name.equals(Constants.get().STATEMENTS)) {
+                	Tree srcFirstChild = srcStatementNode.getChild(0);
+					Tree dstFirstChild = dstStatementNode.getChild(0);
+					mappingStore.addMapping(srcFirstChild, dstFirstChild);
+                	if (srcFirstChild.getType().name.equals(Constants.get().WHEN_EXPRESSION) && dstFirstChild.getType().name.equals(Constants.get().WHEN_EXPRESSION)) {
+                    	Pair<Tree, Tree> matched = Helpers.findPairOfType(srcFirstChild,dstFirstChild, Constants.get().WHEN_SUBJECT);
+                        if (matched != null) {
+                            mappingStore.addMapping(matched.first,matched.second);
+                        }
+                	}
+                }
+            }
             if (srcStatementNode.getType().name.equals(Constants.get().IF_STATEMENT) && dstStatementNode.getType().name.equals(Constants.get().IF_STATEMENT)) {
                 Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().ELSE_IF);
                 if (matched != null) {

@@ -58,6 +58,8 @@ import org.jetbrains.kotlin.psi.KtReturnExpression;
 import org.jetbrains.kotlin.psi.KtThrowExpression;
 import org.jetbrains.kotlin.psi.KtTryExpression;
 import org.jetbrains.kotlin.psi.KtVariableDeclaration;
+import org.jetbrains.kotlin.psi.KtWhenCondition;
+import org.jetbrains.kotlin.psi.KtWhenEntry;
 import org.jetbrains.kotlin.psi.KtWhenExpression;
 import org.jetbrains.kotlin.psi.KtWhileExpression;
 
@@ -1198,7 +1200,44 @@ public class OperationBody {
 			}
 		}
 		else if(statement instanceof KtWhenExpression whenStatement) {
-			
+			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, whenStatement, parent.getDepth()+1, CodeElementType.WHEN_STATEMENT, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+			KtExpression subjectExpression = whenStatement.getSubjectExpression();
+			if(subjectExpression != null) {
+				AbstractExpression expr = new AbstractExpression(ktFile, sourceFolder, filePath, subjectExpression, CodeElementType.WHEN_SUBJECT_EXPRESSION, container, activeVariableDeclarations, fileContent);
+				child.addExpression(expr);
+			}
+			for(KtWhenEntry whenEntry : whenStatement.getEntries()) {
+				CompositeStatementObject grandChild = new CompositeStatementObject(ktFile, sourceFolder, filePath, whenEntry, parent.getDepth()+1, CodeElementType.WHEN_ENTRY, fileContent);
+				KtWhenCondition[] whenConditions = whenEntry.getConditions();
+				for(KtWhenCondition whenCondition : whenConditions) {
+					AbstractExpression expr = new AbstractExpression(ktFile, sourceFolder, filePath, whenCondition, CodeElementType.WHEN_ENTRY_CONDITION, container, activeVariableDeclarations, fileContent);
+					grandChild.addExpression(expr);
+				}
+				KtExpression expression = whenEntry.getExpression();
+				if(expression != null) {
+					if(expression instanceof KtBlockExpression bodyExpression) {
+						processStatement(ktFile, sourceFolder, filePath, grandChild, bodyExpression, fileContent);
+					}
+					else {
+						AbstractExpression expr = new AbstractExpression(ktFile, sourceFolder, filePath, expression, CodeElementType.WHEN_ENTRY_EXPRESSION, container, activeVariableDeclarations, fileContent);
+						grandChild.addExpression(expr);
+					}
+				}
+				child.addStatement(grandChild);
+				addStatementInVariableScopes(grandChild);
+			}
+			KtExpression elseExpression = whenStatement.getElseExpression();
+			if(elseExpression != null) {
+				if(elseExpression instanceof KtBlockExpression bodyExpression) {
+					processStatement(ktFile, sourceFolder, filePath, child, bodyExpression, fileContent);
+				}
+				else {
+					AbstractExpression expr = new AbstractExpression(ktFile, sourceFolder, filePath, elseExpression, CodeElementType.WHEN_ELSE_EXPRESSION, container, activeVariableDeclarations, fileContent);
+					child.addExpression(expr);
+				}
+			}
 		}
 		else if(statement instanceof KtLabeledExpression labeledStatement) {
 			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, labeledStatement, parent.getDepth()+1, CodeElementType.LABELED_STATEMENT.setName(labeledStatement.getLabelName()), fileContent);

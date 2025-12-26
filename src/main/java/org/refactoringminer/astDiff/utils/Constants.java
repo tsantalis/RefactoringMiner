@@ -55,8 +55,8 @@ public class Constants {
 			CATCH_CLAUSE = "except_clause"; // TODO update value
 			IF_STATEMENT = "if_statement"; // TODO update value
 			WHILE_STATEMENT = "while_statement"; // TODO update value
-			FOR_STATEMENT = "for_statement"; // TODO update value
-			ENHANCED_FOR_STATEMENT = "for_statement"; // TODO update value
+			FOR_STATEMENT = "for_statement";
+			ENHANCED_FOR_STATEMENT = "for_statement";
 			PACKAGE_DECLARATION = "package_header";
 			FIELD_DECLARATION = "property_declaration";
 			MODIFIER = "visibility_modifier";
@@ -240,4 +240,5 @@ public class Constants {
     public final String ARROW = "arrow";
     public final String WHEN_EXPRESSION = "when_expression";
     public final String WHEN_SUBJECT = "when_subject";
+    public final String COLLECTION_ITERATED = "collection_iterated"; // in keyword in for loop
 }

@@ -270,6 +270,16 @@ public class MethodMatcher extends BodyMapperMatcher{
                     new LeafMatcher().match(leftTree,rightTree,mappingStore);
                     mappingStore.addMapping(leftTree,rightTree);
                 }
+                if(leftTree.getType().name.equals(Constants.get().PARAMETER_MODIFIERS) && rightTree.getType().name.equals(Constants.get().PARAMETER_MODIFIERS)) {
+                	Tree leftParameter = TreeUtilFunctions.findByLocationInfo(leftTree.getParent(), leftVarDecl.getLocationInfo(), Constants.get().PARAMETER);
+                	Tree rightParameter = TreeUtilFunctions.findByLocationInfo(rightTree.getParent(), rightVarDecl.getLocationInfo(), Constants.get().PARAMETER);
+                	if (TreeUtilFunctions.isIsomorphicTo(leftParameter, rightParameter))
+                        mappingStore.addMappingRecursively(leftParameter, rightParameter);
+                    else {
+                        new LeafMatcher().match(leftParameter,rightParameter,mappingStore);
+                        mappingStore.addMapping(leftParameter,rightParameter);
+                    }
+                }
             }
         }
     }

@@ -241,4 +241,6 @@ public class Constants {
     public final String WHEN_EXPRESSION = "when_expression";
     public final String WHEN_SUBJECT = "when_subject";
     public final String COLLECTION_ITERATED = "collection_iterated"; // in keyword in for loop
+    public final String PARAMETER_MODIFIERS = "parameter_modifiers";
+    public final String PARAMETER = "parameter";
 }

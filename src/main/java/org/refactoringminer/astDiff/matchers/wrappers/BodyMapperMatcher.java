@@ -228,9 +228,15 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         if(srcStatementNode.getType().name.equals(Constants.get().STATEMENTS)) {
             srcStatementNode = srcStatementNode.getChild(0);
         }
+        else if(srcStatementNode.getType().name.equals(Constants.get().PROPERY_DECLARATION_KEYWORD)) {
+            srcStatementNode = srcStatementNode.getParent();
+        }
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo());
         if(dstStatementNode.getType().name.equals(Constants.get().STATEMENTS)) {
             dstStatementNode = dstStatementNode.getChild(0);
+        }
+        else if(dstStatementNode.getType().name.equals(Constants.get().PROPERY_DECLARATION_KEYWORD)) {
+            dstStatementNode = dstStatementNode.getParent();
         }
         if (srcStatementNode == null || dstStatementNode == null) {
             System.err.println("Tree not found for " + abstractCodeMapping);

@@ -10502,6 +10502,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		if(parentMapper != null) {
+			for(AbstractCodeMapping mapping : parentMapper.mappings) {
+				if(mapping.getFragment1().equals(minStatementMapping.getFragment1()) ||
+						mapping.getFragment2().equals(minStatementMapping.getFragment2())) {
+					if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString()))
+					conflictingMappingFound = true;
+					break;
+				}
+			}
+		}
 		AbstractCodeFragment fragment1 = minStatementMapping.getFragment1();
 		boolean ownedByLambda1 = fragment1.ownedByLambda();
 		AbstractCodeFragment fragment2 = minStatementMapping.getFragment2();

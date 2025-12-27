@@ -245,4 +245,5 @@ public class Constants {
     public final String PARAMETER = "parameter";
     public final String GETTER = "getter";
     public final String SETTER = "setter";
+    public final String PROPERY_DECLARATION_KEYWORD = "property_declaration_keyword";
 }

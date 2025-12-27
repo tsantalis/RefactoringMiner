@@ -243,4 +243,6 @@ public class Constants {
     public final String COLLECTION_ITERATED = "collection_iterated"; // in keyword in for loop
     public final String PARAMETER_MODIFIERS = "parameter_modifiers";
     public final String PARAMETER = "parameter";
+    public final String GETTER = "getter";
+    public final String SETTER = "setter";
 }

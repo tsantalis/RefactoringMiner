@@ -42,6 +42,7 @@ import org.jetbrains.kotlin.psi.KtObjectDeclaration;
 import org.jetbrains.kotlin.psi.KtPackageDirective;
 import org.jetbrains.kotlin.psi.KtParameter;
 import org.jetbrains.kotlin.psi.KtProperty;
+import org.jetbrains.kotlin.psi.KtPropertyAccessor;
 import org.jetbrains.kotlin.psi.KtSecondaryConstructor;
 import org.jetbrains.kotlin.psi.KtSuperTypeListEntry;
 import org.jetbrains.kotlin.psi.KtTypeParameter;
@@ -218,6 +219,10 @@ public class KotlinFileProcessor {
 			for(KtProperty property : topLevelProperties) {
 				UMLAttribute attribute = processFieldDeclaration(ktFile, property, sourceFolder, filePath, fileContent, comments, locationInfo);
 				attribute.setClassName(moduleClass.getName());
+				if(attribute.getCustomGetter().isPresent())
+					attribute.getCustomGetter().get().setClassName(moduleClass.getName());
+				if(attribute.getCustomSetter().isPresent())
+					attribute.getCustomSetter().get().setClassName(moduleClass.getName());
 				moduleClass.addAttribute(attribute);
 			}
 			for(KtNamedFunction function : topLevelFunctions) {
@@ -399,6 +404,10 @@ public class KotlinFileProcessor {
 			for(KtProperty property : classBody.getProperties()) {
 				UMLAttribute attribute = processFieldDeclaration(ktFile, property, sourceFolder, filePath, fileContent, comments, umlClass.getLocationInfo());
 				attribute.setClassName(umlClass.getName());
+				if(attribute.getCustomGetter().isPresent())
+					attribute.getCustomGetter().get().setClassName(umlClass.getName());
+				if(attribute.getCustomSetter().isPresent())
+					attribute.getCustomSetter().get().setClassName(umlClass.getName());
 				umlClass.addAttribute(attribute);
 			}
 			for(KtAnonymousInitializer initializer : classBody.getAnonymousInitializers()) {
@@ -789,7 +798,78 @@ public class KotlinFileProcessor {
 				umlAttribute.setVisibility(Visibility.INTERNAL);
 			}
 		}
+		// by ...
+		KtExpression delegateExpression = property.getDelegateExpression();
+		if (delegateExpression != null) {
+			
+		}
+		KtPropertyAccessor getter = property.getGetter();
+		if (getter != null) {
+			UMLOperation operation = processPropertyAccessor(ktFile, getter, sourceFolder, filePath, fileContent, Collections.emptyList(), comments);
+			umlAttribute.setCustomGetter(operation);
+		}
+		KtPropertyAccessor setter = property.getSetter();
+		if (setter != null) {
+			UMLOperation operation = processPropertyAccessor(ktFile, setter, sourceFolder, filePath, fileContent, Collections.emptyList(), comments);
+			umlAttribute.setCustomSetter(operation);
+		}
 		return umlAttribute;
+	}
+
+	private UMLOperation processPropertyAccessor(KtFile ktFile, KtPropertyAccessor function, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments) {
+		String methodName = "";
+		if(function.isGetter())
+			methodName = "get";
+		else if(function.isSetter())
+			methodName = "set";
+		LocationInfo locationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, function, CodeElementType.METHOD_DECLARATION);
+		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo);
+		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, function.getDocComment());
+		umlOperation.setJavadoc(javadoc);
+		distributeComments(comments, locationInfo, umlOperation.getComments());
+		umlOperation.setVisibility(Visibility.PUBLIC);
+		int startSignatureOffset = locationInfo.getStartOffset();
+		List<KtParameter> parameters = function.getValueParameters();
+		for (KtParameter parameter : parameters) {
+			KtTypeReference typeReference = parameter.getTypeReference();
+			String parameterName = parameter.getName();
+			UMLType type = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeReference, 0);
+			if (parameter.isVarArg()) {
+				type.setVarargs();
+			}
+			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarArg());
+			VariableDeclaration variableDeclaration =
+					new VariableDeclaration(ktFile, sourceFolder, filePath, parameter, umlOperation, new LinkedHashMap<>(), fileContent, umlOperation.getLocationInfo());
+			variableDeclaration.setParameter(true);
+			umlParameter.setVariableDeclaration(variableDeclaration);
+			umlOperation.addParameter(umlParameter);
+		}
+		KtExpression functionInitializer = function.getInitializer();
+		if (functionInitializer != null) {
+			Map<String, Set<VariableDeclaration>> activeVariableDeclarations = new LinkedHashMap<>();
+			for(VariableDeclaration v : umlOperation.getParameterDeclarationList()) {
+				if(activeVariableDeclarations.containsKey(v.getVariableName())) {
+					activeVariableDeclarations.get(v.getVariableName()).add(v);
+				}
+				else {
+					Set<VariableDeclaration> set = new HashSet<VariableDeclaration>();
+					set.add(v);
+					activeVariableDeclarations.put(v.getVariableName(), set);
+				}
+			}
+			AbstractExpression defaultExpression = new AbstractExpression(ktFile, sourceFolder, filePath, functionInitializer, CodeElementType.FUNCTION_INITIALIZER_EXPRESSION, umlOperation, activeVariableDeclarations, fileContent);
+			umlOperation.setDefaultExpression(defaultExpression);
+		}
+		if (function.getBodyBlockExpression() != null) {
+			OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, function.getBodyBlockExpression(), umlOperation, attributes, fileContent);
+			umlOperation.setBody(operationBody);
+		}
+		int endSignatureOffset = function.getBodyBlockExpression() != null ?
+				umlOperation.getBody().getCompositeStatement().getLocationInfo().getStartOffset() + 1 :
+					function.getTextRange().getEndOffset();
+		String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
+		umlOperation.setActualSignature(text);
+		return umlOperation;
 	}
 
 	private LocationInfo generateLocationInfo(KtFile ktFile,

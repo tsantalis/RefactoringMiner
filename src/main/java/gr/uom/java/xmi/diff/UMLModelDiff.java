@@ -3970,6 +3970,10 @@ public class UMLModelDiff {
 									if(!movedAttributeDiffList.contains(attributeDiff) && !a1.getClassName().equals(a2.getClassName())) {
 										movedAttributeDiffList.add(attributeDiff);
 									}
+									if(a1.getClassName().equals(a2.getClassName()) && diff.getOriginalClassName().equals(a1.getClassName()) &&
+											!diff.getAttributeDiffList().contains(attributeDiff)) {
+										diff.getAttributeDiffList().add(attributeDiff);
+									}
 									Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
 									if(!refactorings.containsAll(attributeDiffRefactorings)) {
 										refactorings.addAll(attributeDiffRefactorings);

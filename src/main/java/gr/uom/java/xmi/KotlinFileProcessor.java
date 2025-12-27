@@ -258,6 +258,8 @@ public class KotlinFileProcessor {
 				activeVariableDeclarations.put(variableDeclaration.getVariableName(), set);
 			}
 		}
+		List<KtSuperTypeListEntry> superTypeListEntries = ktClass.getSuperTypeListEntries();
+		processSuperTypeListEntries(ktFile, sourceFolder, filePath, fileContent, umlClass, activeVariableDeclarations, superTypeListEntries);
 		KtClassBody classBody = ktClass.getBody();
 		processClassBody(ktFile, sourceFolder, filePath, fileContent, importedTypes, comments, umlClass, activeVariableDeclarations, classBody);
 		distributeComments(comments, locationInfo, umlClass.getComments());
@@ -372,6 +374,16 @@ public class KotlinFileProcessor {
 			umlClass.setPrimaryConstructorParameter(primaryConstructor);
 		}
 		List<KtSuperTypeListEntry> superTypeListEntries = ktClass.getSuperTypeListEntries();
+		processSuperTypeListEntries(ktFile, sourceFolder, filePath, fileContent, umlClass, activeVariableDeclarations, superTypeListEntries);
+		KtClassBody classBody = ktClass.getBody();
+		processClassBody(ktFile, sourceFolder, filePath, fileContent, importedTypes, comments, umlClass, activeVariableDeclarations, classBody);
+		distributeComments(comments, locationInfo, umlClass.getComments());
+		return umlClass;
+	}
+
+	private void processSuperTypeListEntries(KtFile ktFile, String sourceFolder, String filePath, String fileContent,
+			UMLClass umlClass, Map<String, Set<VariableDeclaration>> activeVariableDeclarations,
+			List<KtSuperTypeListEntry> superTypeListEntries) {
 		int index = 0;
 		for (KtSuperTypeListEntry superTypeListEntry : superTypeListEntries) {
 			UMLType umlType = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent,
@@ -391,10 +403,6 @@ public class KotlinFileProcessor {
 			umlClass.addSuperTypeCallEntry(callEntry);
 			index++;
 		}
-		KtClassBody classBody = ktClass.getBody();
-		processClassBody(ktFile, sourceFolder, filePath, fileContent, importedTypes, comments, umlClass, activeVariableDeclarations, classBody);
-		distributeComments(comments, locationInfo, umlClass.getComments());
-		return umlClass;
 	}
 
 	private void processClassBody(KtFile ktFile, String sourceFolder, String filePath, String fileContent,

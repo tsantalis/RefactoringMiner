@@ -39,6 +39,8 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	private UMLJavadoc javadoc;
 	private List<UMLComment> comments;
 	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
+	private Optional<UMLOperation> customGetter;
+	private Optional<UMLOperation> customSetter;
 
 	public UMLAttribute(String name, UMLType type, LocationInfo locationInfo) {
 		this.locationInfo = locationInfo;
@@ -46,6 +48,24 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		this.type = type;
 		this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
 		this.comments = new ArrayList<UMLComment>();
+		this.customGetter = Optional.empty();
+		this.customSetter = Optional.empty();
+	}
+
+	public void setCustomGetter(UMLOperation getter) {
+		this.customGetter = Optional.of(getter);
+	}
+
+	public void setCustomSetter(UMLOperation setter) {
+		this.customSetter = Optional.of(setter);
+	}
+
+	public Optional<UMLOperation> getCustomGetter() {
+		return customGetter;
+	}
+
+	public Optional<UMLOperation> getCustomSetter() {
+		return customSetter;
 	}
 
 	public LocationInfo getFieldDeclarationLocationInfo() {

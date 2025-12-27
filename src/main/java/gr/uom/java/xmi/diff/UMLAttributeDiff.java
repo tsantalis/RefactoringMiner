@@ -189,6 +189,14 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 				}
 			}
 		}
+		if(removedAttribute.getCustomGetter().isPresent() && addedAttribute.getCustomGetter().isPresent()) {
+			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedAttribute.getCustomGetter().get(), addedAttribute.getCustomGetter().get(), classDiff);
+			this.operationBodyMapperList.add(mapper);
+		}
+		if(removedAttribute.getCustomSetter().isPresent() && addedAttribute.getCustomSetter().isPresent()) {
+			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedAttribute.getCustomSetter().get(), addedAttribute.getCustomSetter().get(), classDiff);
+			this.operationBodyMapperList.add(mapper);
+		}
 	}
 
 	public UMLAttribute getRemovedAttribute() {

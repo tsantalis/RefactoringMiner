@@ -1,10 +1,11 @@
 package narrator.graph.cluster.traverse;
 
 import com.google.gson.JsonObject;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import narrator.graph.Node;
 import narrator.graph.NodeType;
-
-import java.util.*;
 
 /*
  * EXTENSION:
@@ -13,8 +14,9 @@ import java.util.*;
  * */
 
 public class UsagePattern extends TraversalPattern {
+
+    private final HashMap<Node, UsagePattern> requirements = new HashMap<>();
     Set<Node> useNodes = new HashSet<>();
-    private HashMap<Node, UsagePattern> requirements = new HashMap<>();
     private Node ringNode;
 
     UsagePattern(Node node) {
@@ -50,9 +52,7 @@ public class UsagePattern extends TraversalPattern {
     @Override
     public Node getLead() {
         if (cachedLead == null) {
-            List<Node> nodes = useNodes.stream().toList();
-            int randomIndex = new Random().nextInt(nodes.size());
-            cachedLead = nodes.get(randomIndex);
+            cachedLead = useNodes.iterator().next();
         }
 
         return cachedLead;
@@ -77,7 +77,8 @@ public class UsagePattern extends TraversalPattern {
             return false;
         }
 
-        boolean isRootNode = getGraph().vertexSet().stream().anyMatch(rootNode -> rootNode.equals(node));
+        boolean isRootNode = getGraph().vertexSet().stream()
+                .anyMatch(rootNode -> rootNode.equals(node));
         if (isRootNode) {
             return true;
         }

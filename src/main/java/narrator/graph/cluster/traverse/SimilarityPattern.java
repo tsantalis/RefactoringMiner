@@ -1,14 +1,14 @@
 package narrator.graph.cluster.traverse;
 
 import com.google.gson.JsonObject;
+import java.util.Set;
 import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.Node;
 import narrator.graph.NodeType;
 
-import java.util.*;
-
 public class SimilarityPattern extends TraversalPattern {
+
     Set<Node> similarNodes;
 
     SimilarityPattern(Set<Node> similarNodes) {
@@ -31,9 +31,7 @@ public class SimilarityPattern extends TraversalPattern {
     @Override
     public Node getLead() {
         if (cachedLead == null) {
-            List<Node> nodes = similarNodes.stream().toList();
-            int randomIndex = new Random().nextInt(nodes.size());
-            cachedLead = nodes.get(randomIndex);
+            cachedLead = similarNodes.iterator().next();
         }
 
         return cachedLead;

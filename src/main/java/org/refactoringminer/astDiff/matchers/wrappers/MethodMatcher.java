@@ -280,6 +280,16 @@ public class MethodMatcher extends BodyMapperMatcher{
                         mappingStore.addMapping(leftParameter,rightParameter);
                     }
                 }
+                if(leftVarDecl.getInitializer() != null && rightVarDecl.getInitializer() != null) {
+                	Tree leftInitializerTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getInitializer().getLocationInfo());
+                    Tree rightInitializerTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightVarDecl.getInitializer().getLocationInfo());
+                    if (TreeUtilFunctions.isIsomorphicTo(leftInitializerTree, rightInitializerTree))
+                        mappingStore.addMappingRecursively(leftInitializerTree, rightInitializerTree);
+                    else {
+                        new LeafMatcher().match(leftInitializerTree, rightInitializerTree,mappingStore);
+                        mappingStore.addMapping(leftInitializerTree, rightInitializerTree);
+                    }
+                }
             }
         }
     }

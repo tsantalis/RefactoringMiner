@@ -45,6 +45,7 @@ import org.jetbrains.kotlin.psi.KtDotQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtNameReferenceExpression;
+import org.jetbrains.kotlin.psi.KtSafeQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtTypeProjection;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.refactoringminer.api.Refactoring;
@@ -1157,10 +1158,22 @@ public class OperationInvocation extends AbstractCall {
 				processExpression(receiver, this.subExpressions);
 			}
 		}
+		else if(invocation.getParent() instanceof KtSafeQualifiedExpression safeQualifiedExpression) {
+			KtExpression receiver = safeQualifiedExpression.getReceiverExpression();
+			if(receiver != null) {
+				// TODO replace with stringify
+				this.expression = receiver.getText();
+				processExpression(receiver, this.subExpressions);
+			}
+		}
 	}
 
 	private static KtExpression input(KtCallExpression invocation) {
-		return invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression ? dotQualifiedExpression : invocation;
+		if(invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression)
+			return dotQualifiedExpression;
+		if(invocation.getParent() instanceof KtSafeQualifiedExpression safeQualifiedExpression)
+			return safeQualifiedExpression;
+		return invocation;
 	}
 
 	private void processExpression(KtExpression expression, List<String> subExpressions) {

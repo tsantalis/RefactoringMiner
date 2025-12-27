@@ -207,8 +207,10 @@ public class KotlinFileProcessor {
 			if (baseFileName.endsWith(".kt")) {
 				baseFileName = baseFileName.substring(0, baseFileName.length() - 3);
 			}
-			String moduleName = packageName + baseFileName;
-			UMLClass moduleClass = new UMLClass(moduleName, "module", locationInfo, true, importedTypes);
+			if (baseFileName.contains("/")) {
+				baseFileName = baseFileName.substring(baseFileName.lastIndexOf("/")+1, baseFileName.length());
+			}
+			UMLClass moduleClass = new UMLClass(packageName, baseFileName, locationInfo, true, importedTypes);
 			moduleClass.setModule(true);
 			moduleClass.setPackageDeclaration(umlPackage);
 			moduleClass.setVisibility(Visibility.PUBLIC);

@@ -10502,13 +10502,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		if(parentMapper != null) {
+		if(parentMapper != null && lambdaBodyMapper) {
 			for(AbstractCodeMapping mapping : parentMapper.mappings) {
 				if(mapping.getFragment1().equals(minStatementMapping.getFragment1()) ||
 						mapping.getFragment2().equals(minStatementMapping.getFragment2())) {
-					if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString()))
-					conflictingMappingFound = true;
-					break;
+					if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+						conflictingMappingFound = true;
+						break;
+					}
 				}
 			}
 		}

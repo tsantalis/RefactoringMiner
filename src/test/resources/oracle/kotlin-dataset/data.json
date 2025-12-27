@@ -109,4 +109,83 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 4,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "0aba5dc1240238fa8ed32bb745db6b5a61671466",
+    "url": "https://github.com/android/architecture-samples/commit/0aba5dc1240238fa8ed32bb745db6b5a61671466",
+    "author": "ceruleanotter",
+    "time": "7/11/19 12:55 PM",
+    "refactorings": [{
+        "type": "Rename Attribute",
+        "description": "Rename Attribute statisticsViewModel : Inferred to viewModel : Inferred in class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public getVmFactory() : ViewModelFactory renamed to public getViewModelFactory() : ViewModelFactory in class com.example.android.architecture.blueprints.todoapp.util.FragmentExt",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute snackbarMessage : LiveData<Event<Int>> to snackbarText : LiveData<Event<Int>> in class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute _taskUpdated : Inferred to _taskUpdatedEvent : Inferred in class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute snackbarMessage : LiveData<Event<Int>> to snackbarText : LiveData<Event<Int>> in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute _deleteTaskCommand : Inferred to _deleteTaskEvent : Inferred in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute _editTaskCommand : Inferred to _editTaskEvent : Inferred in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute snackbarMessage : LiveData<Event<Int>> to snackbarText : LiveData<Event<Int>> in class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute deleteTaskCommand : LiveData<Event<Unit>> to deleteTaskEvent : LiveData<Event<Unit>> in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute editTaskCommand : LiveData<Event<Unit>> to editTaskEvent : LiveData<Event<Unit>> in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

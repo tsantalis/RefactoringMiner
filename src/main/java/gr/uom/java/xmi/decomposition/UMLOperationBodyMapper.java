@@ -1418,6 +1418,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			leaves2.add(defaultExpression2);
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
 		}
+		if(defaultExpression1 != null && body2 != null) {
+			List<AbstractExpression> leaves1 = new ArrayList<AbstractExpression>();
+			leaves1.add(defaultExpression1);
+			CompositeStatementObject composite2 = body2.getCompositeStatement();
+			List<AbstractCodeFragment> leaves2 = composite2.getLeaves();
+			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+		}
+		else if(defaultExpression2 != null && body1 != null) {
+			CompositeStatementObject composite1 = body1.getCompositeStatement();
+			List<AbstractCodeFragment> leaves1 = composite1.getLeaves();
+			List<AbstractExpression> leaves2 = new ArrayList<AbstractExpression>();
+			leaves2.add(defaultExpression2);
+			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+		}
 		if(operation1.getJavadoc() != null && operation2.getJavadoc() != null) {
 			this.operationSignatureDiff = new UMLOperationDiff(this);
 			UMLJavadocDiff diff = new UMLJavadocDiff(operation1.getJavadoc(), operation2.getJavadoc(), operationSignatureDiff);

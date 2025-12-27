@@ -134,6 +134,7 @@ public class Constants {
     public final String STRICTFP = "strictfp";
     public final String INLINE = "inline";
     public final String OVERRIDE = "override";
+    public final String SUSPEND = "suspend";
     public final String EQUAL_OPERATOR = "=";
     public final String ANNOTATION = "annotation";
     public final String ENUM = "enum";

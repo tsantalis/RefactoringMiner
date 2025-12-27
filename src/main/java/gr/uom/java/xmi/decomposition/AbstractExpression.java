@@ -227,6 +227,20 @@ public class AbstractExpression extends AbstractCodeFragment {
 		return list;
 	}
 
+	public List<AbstractCall> getAllCreations() {
+		List<AbstractCall> list = new ArrayList<>();
+		list.addAll(getCreations());
+		for(LambdaExpressionObject lambda : this.getLambdas()) {
+			if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
+				list.addAll(lambda.getAllCreations());
+			}
+		}
+		for(AnonymousClassDeclarationObject anonymous : this.getAnonymousClassDeclarations()) {
+			list.addAll(anonymous.getCreations());
+		}
+		return list;
+	}
+
 	@Override
 	public List<AbstractCall> getMethodInvocations() {
 		return methodInvocations;

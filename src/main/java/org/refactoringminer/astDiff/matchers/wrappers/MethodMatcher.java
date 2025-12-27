@@ -283,11 +283,21 @@ public class MethodMatcher extends BodyMapperMatcher{
                 if(leftVarDecl.getInitializer() != null && rightVarDecl.getInitializer() != null) {
                 	Tree leftInitializerTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getInitializer().getLocationInfo());
                     Tree rightInitializerTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightVarDecl.getInitializer().getLocationInfo());
+                    if (leftInitializerTree == null || rightInitializerTree == null) return;
                     if (TreeUtilFunctions.isIsomorphicTo(leftInitializerTree, rightInitializerTree))
                         mappingStore.addMappingRecursively(leftInitializerTree, rightInitializerTree);
                     else {
                         new LeafMatcher().match(leftInitializerTree, rightInitializerTree,mappingStore);
                         mappingStore.addMapping(leftInitializerTree, rightInitializerTree);
+                    }
+                    int leftPosition = leftInitializerTree.positionInParent();
+                    int rightPosition = rightInitializerTree.positionInParent();
+                    if(leftPosition > 0 && rightPosition > 0) {
+                    	Tree previousLeft = leftInitializerTree.getParent().getChild(leftPosition-1);
+                    	Tree previousRight = rightInitializerTree.getParent().getChild(rightPosition-1);
+                    	if(previousLeft.getType().name.equals(Constants.get().AFFECTATION_OPERATOR) && previousRight.getType().name.equals(Constants.get().AFFECTATION_OPERATOR)) {
+                    		mappingStore.addMapping(previousLeft, previousRight);
+                    	}
                     }
                 }
             }

@@ -188,7 +188,7 @@ public class KotlinFileProcessor {
 		List<KtProperty> topLevelProperties = new ArrayList<>();
 		for (PsiElement psiElement : ktFile.getChildren()) {
 			if (psiElement instanceof KtObjectDeclaration objectDeclaration) {
-				UMLClass companionObject = processObjectDeclaration(ktFile, objectDeclaration, packageName, sourceFolder, filePath, fileContent, importedTypes, comments, Collections.emptyList());
+				UMLClass companionObject = processObjectDeclaration(ktFile, objectDeclaration, umlPackage, packageName, sourceFolder, filePath, fileContent, importedTypes, comments, Collections.emptyList());
 				umlModel.addClass(companionObject);
 			}
 			else if (psiElement instanceof KtClass ktClass) {
@@ -235,13 +235,37 @@ public class KotlinFileProcessor {
 		}
 	}
 
-	private UMLClass processObjectDeclaration(KtFile ktFile, KtObjectDeclaration ktClass, String packageName, String sourceFolder, String filePath, String fileContent, List<UMLImport> importedTypes, List<UMLComment> comments, List<UMLAttribute> attributes) {
+	private UMLClass processObjectDeclaration(KtFile ktFile, KtObjectDeclaration ktClass, UMLPackage umlPackage, String packageName, String sourceFolder, String filePath, String fileContent, List<UMLImport> importedTypes, List<UMLComment> comments, List<UMLAttribute> attributes) {
 		LocationInfo locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, ktClass, CodeElementType.OBJECT_DECLARATION);
 		String name = ktClass.getName() != null ? ktClass.getName() : "Companion";
 		UMLClass umlClass = new UMLClass(packageName, name, locationInfo, ktClass.isTopLevel(), importedTypes);
 		umlClass.setObject(true);
 		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, ktClass.getDocComment());
 		umlClass.setJavadoc(javadoc);
+		LocationInfo lastImportLocationInfo = importedTypes.size() > 0 ? importedTypes.get(importedTypes.size()-1).getLocationInfo() : null;
+		if(ktFile.getName().endsWith(ktClass.getName() + ".kt")) {
+			umlClass.setPackageDeclaration(umlPackage);
+			List<KtDeclaration> declarations = ktFile.getDeclarations().stream()
+					.filter(type -> type instanceof KtClass || type instanceof KtObjectDeclaration)
+					.collect(Collectors.toList());
+			boolean isFirstType = declarations.get(0).equals(ktClass);
+			boolean isLastType = declarations.get(declarations.size()-1).equals(ktClass);
+			for(UMLComment comment : comments) {
+				if(umlPackage != null && umlPackage.getLocationInfo().before(comment.getLocationInfo()) && isFirstType && comment.getLocationInfo().before(locationInfo)) {
+					if(lastImportLocationInfo != null && lastImportLocationInfo.before(comment.getLocationInfo()) && !lastImportLocationInfo.sameLine(comment.getLocationInfo()))
+						umlClass.getComments().add(comment);
+				}
+				if(comment.getLocationInfo().before(locationInfo) && !locationInfo.nextLine(comment.getLocationInfo())) {
+					umlClass.getPackageDeclarationComments().add(comment);
+				}
+				else if(isLastType && locationInfo.getEndLine() < comment.getLocationInfo().getStartLine()) {
+					umlClass.getPackageDeclarationComments().add(comment);
+				}
+			}
+			comments.removeAll(umlClass.getPackageDeclarationComments());
+			comments.removeAll(umlClass.getComments());
+		}
+		
 		KtModifierList modifierList = ktClass.getModifierList();
 		processClassModifiers(ktFile, sourceFolder, filePath, fileContent, umlClass, modifierList);
 		List<KtTypeParameter> typeParameters = ktClass.getTypeParameters();
@@ -299,7 +323,7 @@ public class KotlinFileProcessor {
 		if(ktFile.getName().endsWith(ktClass.getName() + ".kt")) {
 			umlClass.setPackageDeclaration(umlPackage);
 			List<KtDeclaration> declarations = ktFile.getDeclarations().stream()
-					.filter(type -> type instanceof KtClass)
+					.filter(type -> type instanceof KtClass || type instanceof KtObjectDeclaration)
 					.collect(Collectors.toList());
 			boolean isFirstType = declarations.get(0).equals(ktClass);
 			boolean isLastType = declarations.get(declarations.size()-1).equals(ktClass);
@@ -509,7 +533,7 @@ public class KotlinFileProcessor {
 				umlClass.addOperation(operation);
 			}
 			for(KtObjectDeclaration companion : classBody.getAllCompanionObjects()) {
-				UMLClass companionObject = processObjectDeclaration(ktFile, companion, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments, umlClass.getAttributes());
+				UMLClass companionObject = processObjectDeclaration(ktFile, companion, null, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments, umlClass.getAttributes());
 				umlModel.addClass(companionObject);
 			}
 		}

@@ -381,12 +381,16 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	public List<AbstractCall> getAllOperationInvocations() {
 		if(operationBody != null)
 			return operationBody.getAllOperationInvocations();
+		if(defaultExpression != null)
+			return defaultExpression.getAllOperationInvocations();
 		return Collections.emptyList();
 	}
 
 	public List<AbstractCall> getAllCreations() {
 		if(operationBody != null)
 			return operationBody.getAllCreations();
+		if(defaultExpression != null)
+			return defaultExpression.getAllCreations();
 		return Collections.emptyList();
 	}
 

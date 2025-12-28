@@ -267,6 +267,48 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter ioDispatcher : CoroutineDispatcher in method TasksLocalDataSource(tasksDao TasksDao, ioDispatcher CoroutineDispatcher) from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter ioDispatcher : CoroutineDispatcher in method DefaultTasksRepository(tasksRemoteDataSource TasksDataSource, tasksLocalDataSource TasksDataSource, ioDispatcher CoroutineDispatcher) from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type task : Task to taskId : String in method public completeTask(taskId String) from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": "<p>Inline Method public completeTask(task Task) inlined to public completeTask(taskId String)</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter task : Task to taskId : String in method public completeTask(taskId String) from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": "<p>Inline Method public completeTask(task Task) inlined to public completeTask(taskId String)</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type task : Task to taskId : String in method public activateTask(taskId String) from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": "<p>Inline Method public activateTask(task Task) inlined to public activateTask(taskId String)</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter task : Task to taskId : String in method public activateTask(taskId String) from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": "<p>Inline Method public activateTask(task Task) inlined to public activateTask(taskId String)</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }]

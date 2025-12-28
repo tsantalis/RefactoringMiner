@@ -129,8 +129,16 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			this.packageDeclarationJavadocDiff = Optional.empty();
 		}
 		if(originalClass.getPrimaryConstructor().isPresent() && nextClass.getPrimaryConstructor().isPresent()) {
-			this.primaryConstructorParameterListDiff = Optional.of(
-					new UMLParameterListDiff(originalClass.getPrimaryConstructor().get(), nextClass.getPrimaryConstructor().get(), Collections.emptySet(), Collections.emptySet(), this));
+			UMLParameterListDiff parameterListDiff = new UMLParameterListDiff(originalClass.getPrimaryConstructor().get(), nextClass.getPrimaryConstructor().get(), Collections.emptySet(), Collections.emptySet(), this);
+			this.primaryConstructorParameterListDiff = Optional.of(parameterListDiff);
+			for(VariableDeclaration addedParameter : parameterListDiff.getAddedParameters()) {
+				Refactoring r = new AddParameterRefactoring(addedParameter, originalClass.getPrimaryConstructor().get(), nextClass.getPrimaryConstructor().get());
+				this.refactorings.add(r);
+			}
+			for(VariableDeclaration removedParameter : parameterListDiff.getRemovedParameters()) {
+				Refactoring r = new RemoveParameterRefactoring(removedParameter, originalClass.getPrimaryConstructor().get(), nextClass.getPrimaryConstructor().get());
+				this.refactorings.add(r);
+			}
 		}
 		else {
 			this.primaryConstructorParameterListDiff = Optional.empty();

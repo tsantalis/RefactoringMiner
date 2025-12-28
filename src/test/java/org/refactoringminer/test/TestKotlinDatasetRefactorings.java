@@ -16,7 +16,8 @@ public class TestKotlinDatasetRefactorings {
 					Refactorings.ExtractMethod.getValue()
 					.or(Refactorings.InlineMethod.getValue())
 					.or(Refactorings.RenameMethod.getValue())
-					//.or(Refactorings.RenameParameter.getValue())
+					.or(Refactorings.RenameParameter.getValue())
+					.or(Refactorings.ChangeParameterType.getValue())
 					.or(Refactorings.ReorderParameter.getValue())
 					.or(Refactorings.AddParameter.getValue())
 					.or(Refactorings.RemoveParameter.getValue())
@@ -57,6 +58,6 @@ public class TestKotlinDatasetRefactorings {
 					.or(Refactorings.SplitParameter.getValue());
 		TestBuilder test = new TestBuilder(detector, REPOS, types);
 		RefactoringPopulator.prepareKotlinRefactorings(test, types);
-		test.assertExpectationsWithGitHubAPI(31, 0, 0);
+		test.assertExpectationsWithGitHubAPI(37, 0, 0);
 	}
 }

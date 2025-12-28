@@ -147,6 +147,7 @@ public class PrimaryConstructor implements VariableDeclarationContainer {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append(constructorName);
 		sb.append("(");
 		for(int i=0; i<parameters.size(); i++) {
 			UMLParameter parameter = parameters.get(i);
@@ -166,6 +167,7 @@ public class PrimaryConstructor implements VariableDeclarationContainer {
 	@Override
 	public String toQualifiedString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append(constructorName);
 		sb.append("(");
 		for(int i=0; i<parameters.size(); i++) {
 			UMLParameter parameter = parameters.get(i);

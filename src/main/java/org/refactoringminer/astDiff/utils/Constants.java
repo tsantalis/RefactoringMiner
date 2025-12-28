@@ -139,6 +139,7 @@ public class Constants {
     public final String ANNOTATION = "annotation";
     public final String ENUM = "enum";
     public final String OPEN = "open";
+    public final String DATA = "data";
     public final String INTERNAL = "internal";
     public final String PRIVATE = "private";
     public final String COMPANION = "companion";

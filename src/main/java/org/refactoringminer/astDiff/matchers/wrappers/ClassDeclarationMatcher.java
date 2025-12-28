@@ -103,6 +103,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         new SameModifierMatcher(Constants.get().ANNOTATION).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
         new SameModifierMatcher(Constants.get().ENUM).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
         new SameModifierMatcher(Constants.get().OPEN).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
+        new SameModifierMatcher(Constants.get().DATA).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
         new SameModifierMatcher(Constants.get().COMPANION).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
 
         if (classDiff.getTypeParameterDiffList() != null)

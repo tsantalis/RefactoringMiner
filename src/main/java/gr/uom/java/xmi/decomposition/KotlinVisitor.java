@@ -12,6 +12,7 @@ import org.jetbrains.kotlin.com.intellij.psi.tree.IElementType;
 import org.jetbrains.kotlin.lexer.KtSingleValueToken;
 import org.jetbrains.kotlin.psi.KtArrayAccessExpression;
 import org.jetbrains.kotlin.psi.KtBinaryExpression;
+import org.jetbrains.kotlin.psi.KtBinaryExpressionWithTypeRHS;
 import org.jetbrains.kotlin.psi.KtCallExpression;
 import org.jetbrains.kotlin.psi.KtConstantExpression;
 import org.jetbrains.kotlin.psi.KtDotQualifiedExpression;
@@ -30,6 +31,7 @@ import org.jetbrains.kotlin.psi.KtStringTemplateExpression;
 import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry;
 import org.jetbrains.kotlin.psi.KtSuperTypeEntry;
 import org.jetbrains.kotlin.psi.KtThisExpression;
+import org.jetbrains.kotlin.psi.KtTypeReference;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.jetbrains.kotlin.psi.KtVisitor;
 import static org.jetbrains.kotlin.psi.stubs.elements.KtStubElementTypes.*;
@@ -89,6 +91,8 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 	public Object visitExpression(KtExpression expression, Object data) {
 		if (expression instanceof KtBinaryExpression binaryExpression) {
 			this.processBinaryExpression(binaryExpression, data);
+		} else if (expression instanceof KtBinaryExpressionWithTypeRHS binaryExpression) {
+			this.processBinaryExpression(binaryExpression, data);
 		} else if (expression instanceof KtReturnExpression) {
 			this.processReturnExpression((KtReturnExpression) expression, data);
 		} else if (expression instanceof KtDotQualifiedExpression dotQualifiedExpression) {
@@ -128,8 +132,7 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 	}
 
 	public Object visitSuperTypeEntry(KtSuperTypeEntry entry, Object data) {
-		UMLType type = UMLType.extractTypeObject(cu, sourceFolder, filePath, fileContent, entry.getTypeReference(), 0);
-		types.add(type.toString());
+		visitTypeReference(entry.getTypeReference(), data);
 		return super.visitSuperTypeEntry(entry, data);
 	}
 
@@ -217,6 +220,19 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 		if (ktExpression != null) {
 			this.visitExpression(ktExpression, data);
 		}
+	}
+
+	private void processBinaryExpression(KtBinaryExpressionWithTypeRHS expression, Object data) {
+		if (expression.getLeft() != null)
+			this.visitExpression(expression.getLeft(), data);
+		if (expression.getRight() != null)
+			this.visitTypeReference(expression.getRight(), data);
+	}
+
+	public Object visitTypeReference(KtTypeReference entry, Object data) {
+		UMLType type = UMLType.extractTypeObject(cu, sourceFolder, filePath, fileContent, entry, 0);
+		types.add(type.toString());
+		return super.visitTypeReference(entry, data);
 	}
 
 	private void processBinaryExpression(KtBinaryExpression expression, Object data) {

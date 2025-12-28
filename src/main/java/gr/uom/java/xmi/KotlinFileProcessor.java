@@ -211,7 +211,7 @@ public class KotlinFileProcessor {
 			if (baseFileName.contains("/")) {
 				baseFileName = baseFileName.substring(baseFileName.lastIndexOf("/")+1, baseFileName.length());
 			}
-			UMLClass moduleClass = new UMLClass(packageName, baseFileName, locationInfo, true, importedTypes);
+			UMLClass moduleClass = new UMLClass(packageName, baseFileName + ".module", locationInfo, true, importedTypes);
 			moduleClass.setModule(true);
 			moduleClass.setPackageDeclaration(umlPackage);
 			moduleClass.setVisibility(Visibility.PUBLIC);

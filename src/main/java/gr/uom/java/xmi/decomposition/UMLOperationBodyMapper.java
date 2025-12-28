@@ -3275,7 +3275,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.parameterNameList1 = container1.getParameterNameList();
 		this.parameterNameList2 = container2.getParameterNameList();
 		OperationBody addedOperationBody = addedOperation.getBody();
-		if(addedOperationBody != null) {
+		AbstractExpression addedOperationDefaultExpression = addedOperation.getDefaultExpression();
+		if(addedOperationBody != null || addedOperationDefaultExpression != null) {
 			List<AbstractCodeFragment> leavesT2 = new ArrayList<AbstractCodeFragment>();
 			List<AbstractExpression> expressionsT2 = new ArrayList<AbstractExpression>();
 			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
@@ -3366,7 +3367,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				processCommentsAndJavadoc(addedOperation);
 				return;
 			}
-			CompositeStatementObject composite2 = addedOperationBody.getCompositeStatement();
 			List<AbstractCodeFragment> leaves1 = leaves1Sublist.isPresent() ? leaves1Sublist.get() : operationBodyMapper.getNonMappedLeavesT1();
 			List<CompositeStatementObject> innerNodes1 = leaves1Sublist.isPresent() ? new ArrayList<>() : operationBodyMapper.getNonMappedInnerNodesT1();
 			for(Pair<AbstractCodeFragment, UMLComment> pair : operationBodyMapper.getCommentedCode()) {
@@ -3380,7 +3380,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			//adding leaves that were mapped with replacements
 			Set<AbstractCodeFragment> addedLeaves1 = new LinkedHashSet<AbstractCodeFragment>();
 			Set<CompositeStatementObject> addedInnerNodes1 = new LinkedHashSet<CompositeStatementObject>();
-			List<AbstractCodeFragment> leaves2 = composite2.getLeaves();
+			List<AbstractCodeFragment> leaves2 = addedOperationBody != null ? addedOperationBody.getCompositeStatement().getLeaves() : new ArrayList<>(List.of(addedOperationDefaultExpression));
 			if(leaves1Sublist.isPresent()) {
 				for(AbstractCodeFragment nonMappedLeaf1 : new ArrayList<>(leaves1Sublist.get())) {
 					expandAnonymousAndLambdas(nonMappedLeaf1, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
@@ -3491,11 +3491,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			
-			List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
+			List<CompositeStatementObject> innerNodes2 = addedOperationBody != null ? addedOperationBody.getCompositeStatement().getInnerNodes() : new ArrayList<>();
 			Set<AbstractCodeFragment> addedLeaves2 = new LinkedHashSet<AbstractCodeFragment>();
 			Set<CompositeStatementObject> addedInnerNodes2 = new LinkedHashSet<CompositeStatementObject>();
 			for(AbstractCodeFragment statement : new ArrayList<>(leaves2)) {
 				expandAnonymousAndLambdas(statement, leaves2, innerNodes2, addedLeaves2, addedInnerNodes2, anonymousClassList2(), codeFragmentOperationMap2, container2, false);
+				if(LANG.equals(Constants.KOTLIN)) {
+					for(LambdaExpressionObject lambda : statement.getLambdas()) {
+						expandLambda(lambda, leaves2, innerNodes2, addedLeaves2, addedInnerNodes2, codeFragmentOperationMap2, container2, true);
+					}
+				}
 			}
 			resetNodes(leaves1);
 			//replace parameters with arguments in leaves1
@@ -3567,7 +3572,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			innerNodes2.remove(composite2);
+			if(addedOperationBody != null) {
+				innerNodes2.remove(addedOperationBody.getCompositeStatement());
+			}
 			innerNodes2.addAll(addedInnerNodes2);
 			resetNodes(innerNodes1);
 			//replace parameters with arguments in innerNodes1
@@ -3654,7 +3661,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					CompositeStatementObject parent1 = fragment1.getParent();
 					CompositeStatementObject parent2 = fragment2.getParent();
 					while(parent1 != null && parent2 != null && !composites1.contains(parent1) && !composites2.contains(parent2) &&
-							!alreadyMatched2(parent2) && operationBodyMapper.alreadyMatched1(parent1) && !parent2.equals(composite2) && parent1.getString().equals(parent2.getString())) {
+							!alreadyMatched2(parent2) && operationBodyMapper.alreadyMatched1(parent1) && !parent2.equals(addedOperationBody.getCompositeStatement()) && parent1.getString().equals(parent2.getString())) {
 						composites2.add(parent2);
 						composites1.add(parent1);
 						parent2 = parent2.getParent();
@@ -3936,7 +3943,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.parameterNameList1 = container1.getParameterNameList();
 		this.parameterNameList2 = container2.getParameterNameList();
 		OperationBody removedOperationBody = removedOperation.getBody();
-		if(removedOperationBody != null) {
+		AbstractExpression removedOperationDefaultExpression = removedOperation.getDefaultExpression();
+		if(removedOperationBody != null || removedOperationDefaultExpression != null) {
 			List<AbstractCodeFragment> leavesT1 = new ArrayList<AbstractCodeFragment>();
 			List<AbstractExpression> expressionsT1 = new ArrayList<AbstractExpression>();
 			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
@@ -3968,7 +3976,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			this.callsToInlinedMethod = callsToInlinedMethod(leavesT1);
 			this.callsToInlinedMethod += callsToInlinedMethod(expressionsT1);
 			
-			CompositeStatementObject composite1 = removedOperationBody.getCompositeStatement();
 			List<AbstractCodeFragment> leaves2 = operationBodyMapper.getNonMappedLeavesT2();
 			List<CompositeStatementObject> innerNodes2 = operationBodyMapper.getNonMappedInnerNodesT2();
 			//adding leaves that were mapped with replacements or are inexact matches
@@ -3978,7 +3985,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(AbstractCodeFragment statement : new ArrayList<>(operationBodyMapper.getNonMappedLeavesT2())) {
 				expandAnonymousAndLambdas(statement, leaves2, innerNodes2, addedLeaves2, addedInnerNodes2, operationBodyMapper.anonymousClassList2(), codeFragmentOperationMap2, container2, false);
 			}
-			List<AbstractCodeFragment> leaves1 = composite1.getLeaves();
+			List<AbstractCodeFragment> leaves1 = removedOperationBody != null ? removedOperationBody.getCompositeStatement().getLeaves() : new ArrayList<>(List.of(removedOperationDefaultExpression));
 			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
 				if(!returnWithVariableReplacement(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()) ||
 						!mapping.getFragment1().getClass().equals(mapping.getFragment2().getClass()))) {
@@ -4027,11 +4034,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
+			List<CompositeStatementObject> innerNodes1 = removedOperationBody != null ? removedOperationBody.getCompositeStatement().getInnerNodes() : new ArrayList<>();
 			Set<AbstractCodeFragment> addedLeaves1 = new LinkedHashSet<AbstractCodeFragment>();
 			Set<CompositeStatementObject> addedInnerNodes1 = new LinkedHashSet<CompositeStatementObject>();
 			for(AbstractCodeFragment statement : new ArrayList<>(leaves1)) {
 				expandAnonymousAndLambdas(statement, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, anonymousClassList1(), codeFragmentOperationMap1, container1, false);
+				if(LANG.equals(Constants.KOTLIN)) {
+					for(LambdaExpressionObject lambda : statement.getLambdas()) {
+						expandLambda(lambda, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, codeFragmentOperationMap1, container1, true);
+					}
+				}
 			}
 			resetNodes(leaves1);
 			//replace parameters with arguments in leaves1
@@ -4112,7 +4124,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			innerNodes1.remove(composite1);
+			if(removedOperationBody != null) {
+				innerNodes1.remove(removedOperationBody.getCompositeStatement());
+			}
 			innerNodes1.addAll(addedInnerNodes1);
 			resetNodes(innerNodes1);
 			//replace parameters with arguments in innerNodes1
@@ -12263,7 +12277,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public boolean parentIsContainerBody(AbstractCodeMapping mapping) {
 		CompositeStatementObject parent1 = mapping.getFragment1().getParent();
 		CompositeStatementObject parent2 = mapping.getFragment2().getParent();
-		if(parent1 != null && parent2 != null) {
+		if(parent1 != null && parent2 != null && container1.getBody() != null && container2.getBody() != null) {
 			if(parent1.equals(container1.getBody().getCompositeStatement()) || parent2.equals(container2.getBody().getCompositeStatement())) {
 				return true;
 			}

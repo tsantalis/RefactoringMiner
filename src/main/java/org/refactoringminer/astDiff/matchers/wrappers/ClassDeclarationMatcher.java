@@ -124,6 +124,14 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, classDiff.getNextClass().getPrimaryConstructor().get().getLocationInfo());
             if (srcSubTree != null && dstSubTree != null) {
                 mappingStore.addMapping(srcSubTree, dstSubTree);
+                new SameModifierMatcher(Constants.get().INTERNAL).match(srcSubTree,dstSubTree,mappingStore);
+                new SameModifierMatcher(Constants.get().PRIVATE).match(srcSubTree,dstSubTree,mappingStore);
+                Pair<Tree,Tree> matched = findPairOfType(srcSubTree,dstSubTree,Constants.get().MODIFIERS);
+                if (matched != null)
+                    mappingStore.addMapping(matched.first,matched.second);
+                matched = findPairOfType(srcSubTree,dstSubTree,Constants.get().CONSTRUCTOR_KEYWORD);
+                if (matched != null)
+                    mappingStore.addMapping(matched.first,matched.second);
             }
         }
         

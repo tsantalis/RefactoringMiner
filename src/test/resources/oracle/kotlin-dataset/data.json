@@ -188,4 +188,48 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 5,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "0870f15b4985ea743cef403047f418d75fe56fb9",
+    "url": "https://github.com/android/architecture-samples/commit/0870f15b4985ea743cef403047f418d75fe56fb9",
+    "author": "JoseAlcerreca",
+    "time": "4/30/19 02:51 PM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public resetState() renamed to public init() in class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public resetForTests() renamed to public resetRepository() in class com.example.android.architecture.blueprints.todoapp.ServiceLocator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @VisibleForTesting in method public resetRepository() from class com.example.android.architecture.blueprints.todoapp.ServiceLocator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Attribute Annotation",
+        "description": "Add Attribute Annotation @Volatile in attribute public tasksRepository : TasksRepository from class com.example.android.architecture.blueprints.todoapp.ServiceLocator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Code",
+        "description": "Move Code from public resetForTests() to public resetRepository() in class com.example.android.architecture.blueprints.todoapp.ServiceLocator",
+        "comment": "<p>code is moved within a lambda expression body<br />database?.apply {<br /> clearAllTables()<br /> close()<br /> }</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }],
+    "refDiffExecutionTime": 0
 }]

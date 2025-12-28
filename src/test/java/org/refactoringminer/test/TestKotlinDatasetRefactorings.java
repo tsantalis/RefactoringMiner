@@ -58,6 +58,6 @@ public class TestKotlinDatasetRefactorings {
 					.or(Refactorings.SplitParameter.getValue());
 		TestBuilder test = new TestBuilder(detector, REPOS, types);
 		RefactoringPopulator.prepareKotlinRefactorings(test, types);
-		test.assertExpectationsWithGitHubAPI(37, 0, 0);
+		test.assertExpectationsWithGitHubAPI(47, 0, 0);
 	}
 }

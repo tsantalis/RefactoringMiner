@@ -1215,11 +1215,9 @@ public class OperationBody {
 			if(returnedExpression instanceof KtWhenExpression whenStatement) {
 				processWhenStatement(ktFile, sourceFolder, filePath, parent, fileContent, whenStatement);
 			}
-			else {
-				StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, returnStatement, parent.getDepth()+1, CodeElementType.RETURN_STATEMENT, container, activeVariableDeclarations, fileContent);
-				parent.addStatement(child);
-				addStatementInVariableScopes(child);
-			}
+			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, returnStatement, parent.getDepth()+1, CodeElementType.RETURN_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof KtThrowExpression throwStatement) {
 			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, throwStatement, parent.getDepth()+1, CodeElementType.THROW_STATEMENT, container, activeVariableDeclarations, fileContent);

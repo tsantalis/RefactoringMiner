@@ -311,4 +311,83 @@
         "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 7,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "1bfd69c01d4b52e5af548133daca62445ba266b0",
+    "url": "https://github.com/android/architecture-samples/commit/1bfd69c01d4b52e5af548133daca62445ba266b0",
+    "author": "JoseAlcerreca",
+    "time": "6/1/21 07:18 AM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public onActivityCreated(savedInstanceState Bundle) renamed to public onViewCreated(view View, savedInstanceState Bundle) in class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onActivityCreated(savedInstanceState Bundle) renamed to public onViewCreated(view View, savedInstanceState Bundle) in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onActivityCreated(savedInstanceState Bundle) renamed to public onViewCreated(view View, savedInstanceState Bundle) in class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onActivityCreated(savedInstanceState Bundle) renamed to public onViewCreated(view View, savedInstanceState Bundle) in class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter view : View in method public onViewCreated(view View, savedInstanceState Bundle) from class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter view : View in method public onViewCreated(view View, savedInstanceState Bundle) from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter view : View in method public onViewCreated(view View, savedInstanceState Bundle) from class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter view : View in method public onViewCreated(view View, savedInstanceState Bundle) from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type navController : NavController to navController : TestNavHostController in method private launchFragment(navController TestNavHostController) from class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type fragmentScenario : FragmentScenario<Fragment> to fragmentScenario : FragmentScenario<T> in method public monitorFragment(fragmentScenario FragmentScenario<T>) from class com.example.android.architecture.blueprints.todoapp.util.DataBindingIdlingResource.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

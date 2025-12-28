@@ -125,7 +125,7 @@
         "validators": null
     }, {
         "type": "Rename Method",
-        "description": "Rename Method public getVmFactory() : ViewModelFactory renamed to public getViewModelFactory() : ViewModelFactory in class com.example.android.architecture.blueprints.todoapp.util.FragmentExt",
+        "description": "Rename Method public getVmFactory() : ViewModelFactory renamed to public getViewModelFactory() : ViewModelFactory in class com.example.android.architecture.blueprints.todoapp.util.FragmentExt.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -230,6 +230,29 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 6,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "17da41e50e9fc9e005abf3164eeef2cec05afea6",
+    "url": "https://github.com/android/architecture-samples/commit/17da41e50e9fc9e005abf3164eeef2cec05afea6",
+    "author": "dturner",
+    "time": "2/28/23 06:22 AM",
+    "refactorings": [{
+        "type": "Remove Parameter",
+        "description": "Remove Parameter ioDispatcher : CoroutineDispatcher in method public provideTasksRepository(remoteDataSource TasksDataSource, localDataSource TasksDataSource, ioDispatcher CoroutineDispatcher) : TasksRepository from class com.example.android.architecture.blueprints.todoapp.di.RepositoryModule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter ioDispatcher : CoroutineDispatcher in method public provideTasksLocalDataSource(database ToDoDatabase, ioDispatcher CoroutineDispatcher) : TasksDataSource from class com.example.android.architecture.blueprints.todoapp.di.DataSourceModule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }]

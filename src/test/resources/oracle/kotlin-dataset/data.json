@@ -253,6 +253,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method public activateTask(task Task) inlined to public activateTask(taskId String) in class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method public completeTask(task Task) inlined to public completeTask(taskId String) in class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }]

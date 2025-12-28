@@ -508,6 +508,15 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				invocation.coverage = StatementCoverageType.ONLY_CALL;
 				return invocation;
 			}
+			else if(getParent() != null && getParent().getOwner().isPresent() && getParent().getOwner().get() instanceof LambdaExpressionObject lambda && lambda.getOwner() != null) {
+				// Kotlin specific return@withContext
+				for(AbstractCall call : lambda.getOwner().getAllOperationInvocations()) {
+					if(("return@" + call.getName() + " " + methodInvocation + LANG.STATEMENT_TERMINATION).equals(statement)) {
+						invocation.coverage = StatementCoverageType.RETURN_CALL;
+						return invocation;
+					}
+				}
+			}
 		}
 		return null;
 	}

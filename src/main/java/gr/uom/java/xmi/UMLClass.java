@@ -92,6 +92,8 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     		return "annotation";
     	else if(isRecord)
     		return "record";
+    	else if(isObject)
+    		return "object";
     	else
     		return "class";
     }

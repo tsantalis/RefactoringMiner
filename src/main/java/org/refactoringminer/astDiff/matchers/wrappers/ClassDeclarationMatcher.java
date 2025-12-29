@@ -57,8 +57,16 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         	AST_type = Constants.get().COMPANION_OBJECT;
         Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),AST_type);
         Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),AST_type);
-        if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isObject()) {
+        if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isObject() && classDiff.getNextClass().isObject()) {
         	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),Constants.get().OBJECT_DECLARATION);
+        	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),Constants.get().OBJECT_DECLARATION);
+        }
+        if(classDiff.getOriginalClass().isObject() && !classDiff.getNextClass().isObject()) {
+        	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),Constants.get().OBJECT_DECLARATION);
+        	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),Constants.get().TYPE_DECLARATION);
+        }
+        else if(!classDiff.getOriginalClass().isObject() && classDiff.getNextClass().isObject()) {
+        	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),Constants.get().TYPE_DECLARATION);
         	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),Constants.get().OBJECT_DECLARATION);
         }
         if (srcTypeDeclaration == null || dstTypeDeclaration == null) return;

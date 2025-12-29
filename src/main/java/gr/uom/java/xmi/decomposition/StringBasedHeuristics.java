@@ -627,7 +627,7 @@ public class StringBasedHeuristics {
 			else if(diff2.isEmpty() && diff1.equals(LANG.THIS_DOT)) {
 				return true;
 			}
-			if(diff1.isEmpty() && diff2.equals(LANG.THIS_DOT + "_")) {
+			else if(diff1.isEmpty() && diff2.equals(LANG.THIS_DOT + "_")) {
 				return true;
 			}
 			else if(diff2.isEmpty() && diff1.equals(LANG.THIS_DOT + "_")) {
@@ -643,6 +643,12 @@ public class StringBasedHeuristics {
 				return true;
 			}
 			else if(diff2.isEmpty() && diff1.equals("== null")) {
+				return true;
+			}
+			else if(diff1.isEmpty() && diff2.startsWith("@")) {
+				return true;
+			}
+			else if(diff2.isEmpty() && diff1.startsWith("@")) {
 				return true;
 			}
 		}

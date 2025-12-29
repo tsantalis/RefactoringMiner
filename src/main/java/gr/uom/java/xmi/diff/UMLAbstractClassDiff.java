@@ -1017,12 +1017,22 @@ public abstract class UMLAbstractClassDiff {
 		for(SplitVariableReplacement split : splitMap.keySet()) {
 			Set<UMLAttribute> splitAttributes = new LinkedHashSet<UMLAttribute>();
 			Set<VariableDeclaration> splitVariables = new LinkedHashSet<VariableDeclaration>();
+			int renamedVariables = 0;
 			for(String splitVariable : split.getSplitVariables()) {
 				UMLAttribute a2 = findAttributeInNextClass(splitVariable);
 				if(a2 != null) {
 					splitAttributes.add(a2);
 					splitVariables.add(a2.getVariableDeclaration());
 				}
+				for(Replacement r : renameMap.keySet()) {
+					if(r.getAfter().equals(splitVariable)) {
+						renamedVariables++;
+						break;
+					}
+				}
+			}
+			if(renamedVariables == splitVariables.size()) {
+				continue;
 			}
 			UMLAttribute a1 = findAttributeInOriginalClass(split.getBefore());
 			Set<CandidateSplitVariableRefactoring> set = splitMap.get(split);

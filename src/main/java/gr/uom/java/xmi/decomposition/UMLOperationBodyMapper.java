@@ -1454,30 +1454,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<AbstractCodeFragment> leaves2 = composite2.getLeaves();
 			
 			List<LambdaExpressionObject> lambdas1 = defaultExpression1.getLambdas();
-			List<LambdaExpressionObject> nestedLambdas1 = new ArrayList<>();
-			int lambdasWithBody1 = 0;
-			for(LambdaExpressionObject lambda1 : lambdas1) {
-				if(lambda1.getBody() != null)
-					lambdasWithBody1++;
-				collectNestedLambdaExpressions(lambda1, nestedLambdas1);
-			}
 			List<LambdaExpressionObject> lambdas2 = body2.getAllLambdas();
-			List<LambdaExpressionObject> nestedLambdas2 = new ArrayList<>();
-			int lambdasWithBody2 = 0;
-			for(LambdaExpressionObject lambda2 : lambdas2) {
-				if(lambda2.getBody() != null)
-					lambdasWithBody2++;
-				collectNestedLambdaExpressions(lambda2, nestedLambdas2);
-			}
 			List<CompositeStatementObject> innerNodes1 = new ArrayList<>();
 			List<CompositeStatementObject> innerNodes2 = new ArrayList<>();
-			if(lambdasWithBody1 != lambdasWithBody2 || nestedLambdas1.size() != nestedLambdas2.size()) {
-				for(LambdaExpressionObject lambda : lambdas1) {
-					expandLambda(lambda, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), codeFragmentOperationMap1, operation1, true);
-				}
-				for(LambdaExpressionObject lambda : lambdas2) {
-					expandLambda(lambda, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), codeFragmentOperationMap2, operation2, true);
-				}
+			for(LambdaExpressionObject lambda : lambdas1) {
+				expandLambda(lambda, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), codeFragmentOperationMap1, operation1, true);
+			}
+			for(LambdaExpressionObject lambda : lambdas2) {
+				expandLambda(lambda, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), codeFragmentOperationMap2, operation2, true);
 			}
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
 		}
@@ -1488,30 +1472,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			leaves2.add(defaultExpression2);
 			
 			List<LambdaExpressionObject> lambdas1 = body1.getAllLambdas();
-			List<LambdaExpressionObject> nestedLambdas1 = new ArrayList<>();
-			int lambdasWithBody1 = 0;
-			for(LambdaExpressionObject lambda1 : lambdas1) {
-				if(lambda1.getBody() != null)
-					lambdasWithBody1++;
-				collectNestedLambdaExpressions(lambda1, nestedLambdas1);
-			}
 			List<LambdaExpressionObject> lambdas2 = defaultExpression2.getLambdas();
-			List<LambdaExpressionObject> nestedLambdas2 = new ArrayList<>();
-			int lambdasWithBody2 = 0;
-			for(LambdaExpressionObject lambda2 : lambdas2) {
-				if(lambda2.getBody() != null)
-					lambdasWithBody2++;
-				collectNestedLambdaExpressions(lambda2, nestedLambdas2);
-			}
 			List<CompositeStatementObject> innerNodes1 = new ArrayList<>();
 			List<CompositeStatementObject> innerNodes2 = new ArrayList<>();
-			if(lambdasWithBody1 != lambdasWithBody2 || nestedLambdas1.size() != nestedLambdas2.size()) {
-				for(LambdaExpressionObject lambda : lambdas1) {
-					expandLambda(lambda, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), codeFragmentOperationMap1, operation1, true);
-				}
-				for(LambdaExpressionObject lambda : lambdas2) {
-					expandLambda(lambda, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), codeFragmentOperationMap2, operation2, true);
-				}
+			for(LambdaExpressionObject lambda : lambdas1) {
+				expandLambda(lambda, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), codeFragmentOperationMap1, operation1, true);
+			}
+			for(LambdaExpressionObject lambda : lambdas2) {
+				expandLambda(lambda, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), codeFragmentOperationMap2, operation2, true);
 			}
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
 		}

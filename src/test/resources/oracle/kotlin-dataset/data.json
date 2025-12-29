@@ -434,4 +434,90 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 9,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "498dde087909261b277578edd1c689a61efd8fc9",
+    "url": "https://github.com/android/architecture-samples/commit/498dde087909261b277578edd1c689a61efd8fc9",
+    "author": "JoseAlcerreca",
+    "time": "4/10/19 05:48 AM",
+    "refactorings": [{
+        "type": "Change Type Declaration Kind",
+        "description": "Change Type Declaration Kind object to class in type com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute TASKS_SERVICE_DATA : LinkedHashMap<String,Task> to tasksServiceData : LinkedHashMap<String,Task> in class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public tasksServiceData : LinkedHashMap<String,Task> from class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable itemsValue : Inferred in method public loadTasks(forceUpdate Boolean) from class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass com.example.android.architecture.blueprints.todoapp.BaseViewModel from classes [com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModel, com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModel, com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel, com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel]",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter coroutineContext : CoroutineContext in method AddEditTaskViewModel(tasksRepository TasksRepository, coroutineContext CoroutineContext) from class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter coroutineContext : CoroutineContext in method TaskDetailViewModel(tasksRepository TasksRepository, coroutineContext CoroutineContext) from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter coroutineContext : CoroutineContext in method TasksViewModel(tasksRepository TasksRepository, coroutineContext CoroutineContext) from class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter coroutineContext : CoroutineContext in method StatisticsViewModel(tasksRepository TasksRepository, coroutineContext CoroutineContext) from class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier internal to public in method public saveTask() from class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @ObsoleteCoroutinesApi in class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModelTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

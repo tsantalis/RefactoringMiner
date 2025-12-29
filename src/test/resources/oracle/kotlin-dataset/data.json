@@ -230,6 +230,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public tasksRepository : TasksRepository from class com.example.android.architecture.blueprints.todoapp.ServiceLocator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -384,6 +391,43 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type fragmentScenario : FragmentScenario<Fragment> to fragmentScenario : FragmentScenario<T> in method public monitorFragment(fragmentScenario FragmentScenario<T>) from class com.example.android.architecture.blueprints.todoapp.util.DataBindingIdlingResource.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 8,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "48bb7b5fefe0b9da8e2fa3bb39868af4f32f5f57",
+    "url": "https://github.com/android/architecture-samples/commit/48bb7b5fefe0b9da8e2fa3bb39868af4f32f5f57",
+    "author": "ceruleanotter",
+    "time": "7/3/19 01:22 PM",
+    "refactorings": [{
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @Suppress(\"UNCHECKED_CAST\") in class com.example.android.architecture.blueprints.todoapp.ViewModelFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onRefresh() renamed to public refresh() in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private taskId : String from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter forceRefresh : Boolean in method public start(taskId String, forceRefresh Boolean) from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

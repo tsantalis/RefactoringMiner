@@ -1032,6 +1032,38 @@ public class OperationBody {
 		this.activeVariableDeclarations = null;
 	}
 
+	// Use this constructor when the body of a Kotlin function is when expression
+	public OperationBody(KtFile ktFile, String sourceFolder, String filePath, KtWhenExpression whenExpression, VariableDeclarationContainer container, List<UMLAttribute> attributes, String fileContent) {
+		this.comments = container.getComments();
+		this.container = container;
+		// TODO replace with stringify
+		this.bodyHashCode = whenExpression.getText().hashCode();
+		this.activeVariableDeclarations = new HashMap<String, Set<VariableDeclaration>>();
+		for(UMLAttribute attribute : attributes) {
+			addInActiveVariableDeclarations(attribute.getVariableDeclaration());
+		}
+		addAllInActiveVariableDeclarations(container != null ? container.getParameterDeclarationList() : Collections.emptyList());
+		if(container.isDeclaredInAnonymousClass()) {
+			UMLAnonymousClass anonymousClassContainer = container.getAnonymousClassContainer().get();
+			for(VariableDeclarationContainer parentContainer : anonymousClassContainer.getParentContainers()) {
+				for(VariableDeclaration parameterDeclaration : parentContainer.getParameterDeclarationList()) {
+					if(parameterDeclaration.isFinal()) {
+						addInActiveVariableDeclarations(parameterDeclaration);
+					}
+				}
+			}
+		}
+		this.compositeStatement = processWhenStatement(ktFile, sourceFolder, filePath, null, fileContent, whenExpression);
+		this.compositeStatement.setOwner(container);
+		for(AbstractCall invocation : getAllOperationInvocations()) {
+			if(invocation.isAssertion()) {
+				containsAssertion = true;
+				break;
+			}
+		}
+		this.activeVariableDeclarations = null;
+	}
+
 	public OperationBody(KtFile ktFile, String sourceFolder, String filePath, KtBlockExpression methodBody, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.compositeStatement = new CompositeStatementObject(ktFile, sourceFolder, filePath, methodBody, 0, CodeElementType.BLOCK, fileContent);
 		this.compositeStatement.setOwner(container);
@@ -1251,10 +1283,12 @@ public class OperationBody {
 		}
 	}
 
-	private void processWhenStatement(KtFile ktFile, String sourceFolder, String filePath,
+	private CompositeStatementObject processWhenStatement(KtFile ktFile, String sourceFolder, String filePath,
 			CompositeStatementObject parent, String fileContent, KtWhenExpression whenStatement) {
-		CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, whenStatement, parent.getDepth()+1, CodeElementType.WHEN_STATEMENT, fileContent);
-		parent.addStatement(child);
+		int depth = parent != null ? parent.getDepth()+1 : 0;
+		CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, whenStatement, depth, CodeElementType.WHEN_STATEMENT, fileContent);
+		if (parent != null)
+			parent.addStatement(child);
 		addStatementInVariableScopes(child);
 		KtExpression subjectExpression = whenStatement.getSubjectExpression();
 		if(subjectExpression != null) {
@@ -1262,7 +1296,7 @@ public class OperationBody {
 			child.addExpression(expr);
 		}
 		for(KtWhenEntry whenEntry : whenStatement.getEntries()) {
-			CompositeStatementObject grandChild = new CompositeStatementObject(ktFile, sourceFolder, filePath, whenEntry, parent.getDepth()+1, CodeElementType.WHEN_ENTRY, fileContent);
+			CompositeStatementObject grandChild = new CompositeStatementObject(ktFile, sourceFolder, filePath, whenEntry, child.getDepth()+1, CodeElementType.WHEN_ENTRY, fileContent);
 			KtWhenCondition[] whenConditions = whenEntry.getConditions();
 			for(KtWhenCondition whenCondition : whenConditions) {
 				AbstractExpression expr = new AbstractExpression(ktFile, sourceFolder, filePath, whenCondition, CodeElementType.WHEN_ENTRY_CONDITION, container, activeVariableDeclarations, fileContent);
@@ -1291,5 +1325,6 @@ public class OperationBody {
 				child.addExpression(expr);
 			}
 		}
+		return child;
 	}
 }

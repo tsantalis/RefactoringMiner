@@ -512,9 +512,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<AbstractCodeFragment> leaves1 = composite1.getLeaves();
 			List<AbstractCodeFragment> leaves2 = composite2.getLeaves();
 			List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
-			innerNodes1.remove(composite1);
+			if(composite1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK))
+				innerNodes1.remove(composite1);
 			List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
-			innerNodes2.remove(composite2);
+			if(composite2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK))
+				innerNodes2.remove(composite2);
 			int totalNodes1 = leaves1.size() + innerNodes1.size();
 			int totalNodes2 = leaves2.size() + innerNodes2.size();
 			int assertThrows1 = 0;

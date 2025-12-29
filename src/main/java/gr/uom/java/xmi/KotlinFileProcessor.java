@@ -49,6 +49,7 @@ import org.jetbrains.kotlin.psi.KtTypeParameter;
 import org.jetbrains.kotlin.psi.KtTypeReference;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.jetbrains.kotlin.psi.KtValueArgumentList;
+import org.jetbrains.kotlin.psi.KtWhenExpression;
 
 import com.github.gumtreediff.gen.treesitterng.KotlinTreeSitterNgTreeGenerator;
 import com.github.gumtreediff.tree.TreeContext;
@@ -778,19 +779,25 @@ public class KotlinFileProcessor {
 		}
 		KtExpression functionInitializer = function.getInitializer();
 		if (functionInitializer != null) {
-			Map<String, Set<VariableDeclaration>> activeVariableDeclarations = new LinkedHashMap<>();
-			for(VariableDeclaration v : umlOperation.getParameterDeclarationList()) {
-				if(activeVariableDeclarations.containsKey(v.getVariableName())) {
-					activeVariableDeclarations.get(v.getVariableName()).add(v);
-				}
-				else {
-					Set<VariableDeclaration> set = new HashSet<VariableDeclaration>();
-					set.add(v);
-					activeVariableDeclarations.put(v.getVariableName(), set);
-				}
+			if(functionInitializer instanceof KtWhenExpression whenExpression) {
+				OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, whenExpression, umlOperation, attributes, fileContent);
+				umlOperation.setBody(operationBody);
 			}
-			AbstractExpression defaultExpression = new AbstractExpression(ktFile, sourceFolder, filePath, functionInitializer, CodeElementType.FUNCTION_INITIALIZER_EXPRESSION, umlOperation, activeVariableDeclarations, fileContent);
-			umlOperation.setDefaultExpression(defaultExpression);
+			else {
+				Map<String, Set<VariableDeclaration>> activeVariableDeclarations = new LinkedHashMap<>();
+				for(VariableDeclaration v : umlOperation.getParameterDeclarationList()) {
+					if(activeVariableDeclarations.containsKey(v.getVariableName())) {
+						activeVariableDeclarations.get(v.getVariableName()).add(v);
+					}
+					else {
+						Set<VariableDeclaration> set = new HashSet<VariableDeclaration>();
+						set.add(v);
+						activeVariableDeclarations.put(v.getVariableName(), set);
+					}
+				}
+				AbstractExpression defaultExpression = new AbstractExpression(ktFile, sourceFolder, filePath, functionInitializer, CodeElementType.FUNCTION_INITIALIZER_EXPRESSION, umlOperation, activeVariableDeclarations, fileContent);
+				umlOperation.setDefaultExpression(defaultExpression);
+			}
 		}
 		if (function.getBodyBlockExpression() != null) {
 			OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, function.getBodyBlockExpression(), umlOperation, attributes, fileContent);

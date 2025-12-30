@@ -225,17 +225,17 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
     private void processLeafMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore, boolean isPartOfExtractedMethod) {
         LeafMapping leafMapping = (LeafMapping) abstractCodeMapping;
         Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,leafMapping.getFragment1().getLocationInfo());
-        if(srcStatementNode.getType().name.equals(Constants.get().STATEMENTS)) {
+        if(srcStatementNode != null && srcStatementNode.getType().name.equals(Constants.get().STATEMENTS)) {
             srcStatementNode = srcStatementNode.getChild(0);
         }
-        else if(srcStatementNode.getType().name.equals(Constants.get().PROPERY_DECLARATION_KEYWORD)) {
+        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(Constants.get().PROPERY_DECLARATION_KEYWORD)) {
             srcStatementNode = srcStatementNode.getParent();
         }
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo());
-        if(dstStatementNode.getType().name.equals(Constants.get().STATEMENTS)) {
+        if(dstStatementNode != null && dstStatementNode.getType().name.equals(Constants.get().STATEMENTS)) {
             dstStatementNode = dstStatementNode.getChild(0);
         }
-        else if(dstStatementNode.getType().name.equals(Constants.get().PROPERY_DECLARATION_KEYWORD)) {
+        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(Constants.get().PROPERY_DECLARATION_KEYWORD)) {
             dstStatementNode = dstStatementNode.getParent();
         }
         if (srcStatementNode == null || dstStatementNode == null) {

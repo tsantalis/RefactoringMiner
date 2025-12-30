@@ -58,9 +58,10 @@ public class TestKotlinDatasetRefactorings {
 					.or(Refactorings.SplitParameter.getValue())
 					.or(Refactorings.ChangeMethodAccessModifier.getValue())
 					.or(Refactorings.ChangeAttributeAccessModifier.getValue())
-					.or(Refactorings.ChangeTypeDeclarationKind.getValue());
+					.or(Refactorings.ChangeTypeDeclarationKind.getValue())
+					.or(Refactorings.InlineAttribute.getValue());
 		TestBuilder test = new TestBuilder(detector, REPOS, types);
 		RefactoringPopulator.prepareKotlinRefactorings(test, types);
-		test.assertExpectationsWithGitHubAPI(89, 0, 0);
+		test.assertExpectationsWithGitHubAPI(104, 0, 0);
 	}
 }

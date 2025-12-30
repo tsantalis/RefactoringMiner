@@ -11294,6 +11294,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		int thisExactMatches = this.exactMatches();
 		int otherExactMatches = operationBodyMapper.exactMatches();
+		boolean thisEqualSignature = this.getOperation1().equalsIgnoringTypeParameters(this.getOperation2());
+		boolean otherEqualSignature = operationBodyMapper.getOperation1().equalsIgnoringTypeParameters(operationBodyMapper.getOperation2());
+		boolean thisConstructor = this.getOperation1().isConstructor() && this.getOperation2().isConstructor();
+		boolean otherConstructor = operationBodyMapper.getOperation1().isConstructor() && operationBodyMapper.getOperation2().isConstructor();
+		if(thisEqualSignature && !otherEqualSignature && !thisConstructor && !otherConstructor)
+			return -1;
+		else if(!thisEqualSignature && otherEqualSignature && !thisConstructor && !otherConstructor)
+			return 1;
 		if(thisMappings > otherMappings && thisExactMatches >= otherExactMatches) {
 			return -1;
 		}
@@ -11315,8 +11323,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				else {
 					if(getOperation1() != null && getOperation2() != null && operationBodyMapper.getOperation1() != null && operationBodyMapper.getOperation2() != null) {
-						boolean thisEqualSignature = this.getOperation1().equalsIgnoringTypeParameters(this.getOperation2());
-						boolean otherEqualSignature = operationBodyMapper.getOperation1().equalsIgnoringTypeParameters(operationBodyMapper.getOperation2());
 						if(thisEqualSignature && !otherEqualSignature) {
 							return -1;
 						}

@@ -1117,7 +1117,26 @@ public abstract class UMLAbstractClass {
 		if(totalOperations == 0 && totalAttributes == 0 && (this.getEnumConstants().size() == 0 || umlClass.getEnumConstants().size() == 0) && !this.getNonQualifiedName().equals(umlClass.getNonQualifiedName()) && !identicalAnnotations && !identicalComments(umlClass)) {
 			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
 		}
-		boolean emptyModules = this instanceof UMLClass class1 && (class1.isModule() || class1.isAnnotation()) && umlClass instanceof UMLClass class2 && (class2.isModule() || class2.isAnnotation()) && (this.container.isEmpty() || umlClass.container.isEmpty()) && totalAttributes + totalOperations == 0;
+		boolean emptyAnnotations = this instanceof UMLClass class1 && class1.isAnnotation() && umlClass instanceof UMLClass class2 && class2.isAnnotation() && totalAttributes + totalOperations == 0;
+		if(emptyAnnotations) {
+			String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(this.name);
+			String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(umlClass.name);
+			int commonTokens = 0;
+			for(String token1 : tokens1) {
+				for(String token2 : tokens2) {
+					if(token1.equals(token2)) {
+						commonTokens++;
+					}
+				}
+			}
+			if(commonTokens >= Math.min(tokens1.length, tokens2.length)-1) {
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+			}
+			else {
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
+			}
+		}
+		boolean emptyModules = this instanceof UMLClass class1 && class1.isModule() && umlClass instanceof UMLClass class2 && class2.isModule() && (this.container.isEmpty() || umlClass.container.isEmpty()) && totalAttributes + totalOperations == 0;
 		if(commonOperations.size() == totalOperations && commonAttributes.size() == totalAttributes && !emptyModules) {
 			if(allAttributes == totalAttributes && identicalAllAttributes != allAttributes && totalOperations == 0) {
 				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);

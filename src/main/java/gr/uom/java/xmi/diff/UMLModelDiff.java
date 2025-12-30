@@ -6703,7 +6703,7 @@ public class UMLModelDiff {
 						int mappings = operationBodyMapper.mappingsWithoutBlocks();
 						if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || addedOperation.equalSignatureForAbstractMethods(removedOperation) ||
 								(mappings > 0 && isPartOfMethodExtracted(removedOperation, addedOperation, addedOperations, umlClassDiff)) ||
-								(mappings > 0 && isPartOfMethodInlined(removedOperation, addedOperation, removedOperations, umlClassDiff))) {
+								(mappings > 0 && isPartOfMethodInlined(removedOperation, addedOperation, removedOperations, umlClassDiff) && removedOperation.getName().equals(addedOperation.getName()))) {
 							int exactMatches = operationBodyMapper.exactMatches();
 							List<AbstractCodeMapping> exactMappings = operationBodyMapper.getExactMatches();
 							for(AbstractCodeMapping mapping : exactMappings) {
@@ -6878,7 +6878,7 @@ public class UMLModelDiff {
 						int mappings = operationBodyMapper.mappingsWithoutBlocks();
 						if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || removedOperation.equalSignatureForAbstractMethods(addedOperation) ||
 								(mappings > 0 && isPartOfMethodExtracted(removedOperation, addedOperation, addedOperations, umlClassDiff)) ||
-								(mappings > 0 && isPartOfMethodInlined(removedOperation, addedOperation, removedOperations, umlClassDiff))) {
+								(mappings > 0 && isPartOfMethodInlined(removedOperation, addedOperation, removedOperations, umlClassDiff) && removedOperation.getName().equals(addedOperation.getName()))) {
 							int exactMatches = operationBodyMapper.exactMatches();
 							List<AbstractCodeMapping> exactMappings = operationBodyMapper.getExactMatches();
 							for(AbstractCodeMapping mapping : exactMappings) {

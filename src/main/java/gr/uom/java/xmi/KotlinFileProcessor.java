@@ -874,7 +874,7 @@ public class KotlinFileProcessor {
 		distributeComments(comments, locationInfo, umlOperation.getComments());
 		int startSignatureOffset = locationInfo.getStartOffset();
 		KtModifierList modifierList = function.getModifierList();
-		startSignatureOffset = processFunctionModifiers(ktFile, sourceFolder, filePath, fileContent, umlOperation, modifierList);
+		processFunctionModifiers(ktFile, sourceFolder, filePath, fileContent, umlOperation, modifierList);
 		List<KtParameter> parameters = function.getValueParameters();
 		for (KtParameter parameter : parameters) {
 			KtTypeReference typeReference = parameter.getTypeReference();

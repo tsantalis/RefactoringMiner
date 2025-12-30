@@ -650,4 +650,104 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 12,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "570c0b592e00fea0319e44e7a46ab23a7e03369c",
+    "url": "https://github.com/android/architecture-samples/commit/570c0b592e00fea0319e44e7a46ab23a7e03369c",
+    "author": "JoseAlcerreca",
+    "time": "4/8/19 10:54 AM",
+    "refactorings": [{
+        "type": "Extract Method",
+        "description": "Extract Method private setupSnackbar() extracted from public onActivityCreated(savedInstanceState Bundle) in class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private setupSnackbar() extracted from public onActivityCreated(savedInstanceState Bundle) in class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier internal to public in method public saveTask() from class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method public obtainViewModel() : TasksViewModel moved from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivity to class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragment & inlined to public onCreateView(inflater LayoutInflater, container ViewGroup, savedInstanceState Bundle) : View",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method public obtainViewModel() : AddEditTaskViewModel moved from class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskActivity to class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragment & inlined to public onCreateView(inflater LayoutInflater, container ViewGroup, savedInstanceState Bundle) : View",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method public obtainViewModel() : StatisticsViewModel moved from class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsActivity to class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsFragment & inlined to public onActivityCreated(savedInstanceState Bundle)",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method public obtainViewModel() : TaskDetailViewModel moved from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailActivity to class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailFragment & inlined to public onCreateView(inflater LayoutInflater, container ViewGroup, savedInstanceState Bundle) : View",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Attribute With Variable",
+        "description": "Replace Attribute With Variable activityScenario : ActivityScenario<TaskDetailActivity> to scenario : Inferred in method public activeTaskDetails_DisplayedInUi() from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Attribute With Variable",
+        "description": "Replace Attribute With Variable activityScenario : ActivityScenario<TaskDetailActivity> to scenario : Inferred in method public completedTaskDetails_DisplayedInUi() from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable tasksRepository : Inferred in method public setup() from class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable activityScenario : Inferred to scenario : Inferred in method public tasks_showsNonEmptyMessage() from class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public handleActivityResult(requestCode Int, resultCode Int) renamed to public showEditResultMessage(result Int) in class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resultCode : Int to result : Int in method public showEditResultMessage(result Int) from class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

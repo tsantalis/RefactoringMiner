@@ -1335,9 +1335,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private boolean matchCondition(UMLOperation removedOperation, UMLOperation addedOperation) {
 		List<String> removedOperationParameterNameList = removedOperation.getParameterNameList();
 		List<String> addedOperationParameterNameList = addedOperation.getParameterNameList();
-		if(removedOperation.getName().equals(addedOperation.getName()) &&
+		if((removedOperation.getName().equals(addedOperation.getName()) &&
 				removedOperation.getParameters().size() == addedOperation.getParameters().size() &&
-				removedOperation.isAbstract() == addedOperation.isAbstract()) {
+				removedOperation.isAbstract() == addedOperation.isAbstract()) ||
+				removedOperation.getBodyHashCode() == addedOperation.getBodyHashCode()) {
 			if(removedOperation.getParameterTypeList().equals(addedOperation.getParameterTypeList()) &&
 					removedOperationParameterNameList.equals(addedOperationParameterNameList)) {
 				return true;

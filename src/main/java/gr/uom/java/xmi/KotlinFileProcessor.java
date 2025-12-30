@@ -33,6 +33,7 @@ import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtEnumEntry;
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.psi.KtIfExpression;
 import org.jetbrains.kotlin.psi.KtImportDirective;
 import org.jetbrains.kotlin.psi.KtImportList;
 import org.jetbrains.kotlin.psi.KtInitializerList;
@@ -710,6 +711,10 @@ public class KotlinFileProcessor {
 		if (functionInitializer != null) {
 			if(functionInitializer instanceof KtWhenExpression whenExpression) {
 				OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, whenExpression, umlOperation, attributes, fileContent);
+				umlOperation.setBody(operationBody);
+			}
+			else if(functionInitializer instanceof KtIfExpression ifExpression) {
+				OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, ifExpression, umlOperation, attributes, fileContent);
 				umlOperation.setBody(operationBody);
 			}
 			else {

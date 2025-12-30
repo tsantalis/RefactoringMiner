@@ -1144,6 +1144,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private filterItems(tasks List<Task>, filteringType TasksFilterType) : List<Task> renamed to private filterTasks(tasks List<Task>, filteringType TasksFilterType) : List<Task> in class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }]

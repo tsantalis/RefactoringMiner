@@ -1064,6 +1064,37 @@ public class OperationBody {
 		this.activeVariableDeclarations = null;
 	}
 
+	public OperationBody(KtFile ktFile, String sourceFolder, String filePath, KtIfExpression ifExpression, VariableDeclarationContainer container, List<UMLAttribute> attributes, String fileContent) {
+		this.comments = container.getComments();
+		this.container = container;
+		// TODO replace with stringify
+		this.bodyHashCode = ifExpression.getText().hashCode();
+		this.activeVariableDeclarations = new HashMap<String, Set<VariableDeclaration>>();
+		for(UMLAttribute attribute : attributes) {
+			addInActiveVariableDeclarations(attribute.getVariableDeclaration());
+		}
+		addAllInActiveVariableDeclarations(container != null ? container.getParameterDeclarationList() : Collections.emptyList());
+		if(container.isDeclaredInAnonymousClass()) {
+			UMLAnonymousClass anonymousClassContainer = container.getAnonymousClassContainer().get();
+			for(VariableDeclarationContainer parentContainer : anonymousClassContainer.getParentContainers()) {
+				for(VariableDeclaration parameterDeclaration : parentContainer.getParameterDeclarationList()) {
+					if(parameterDeclaration.isFinal()) {
+						addInActiveVariableDeclarations(parameterDeclaration);
+					}
+				}
+			}
+		}
+		this.compositeStatement = processIfStatement(ktFile, sourceFolder, filePath, null, fileContent, ifExpression);
+		this.compositeStatement.setOwner(container);
+		for(AbstractCall invocation : getAllOperationInvocations()) {
+			if(invocation.isAssertion()) {
+				containsAssertion = true;
+				break;
+			}
+		}
+		this.activeVariableDeclarations = null;
+	}
+
 	public OperationBody(KtFile ktFile, String sourceFolder, String filePath, KtBlockExpression methodBody, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.compositeStatement = new CompositeStatementObject(ktFile, sourceFolder, filePath, methodBody, 0, CodeElementType.BLOCK, fileContent);
 		this.compositeStatement.setOwner(container);
@@ -1278,10 +1309,12 @@ public class OperationBody {
 		}
 	}
 
-	private void processIfStatement(KtFile ktFile, String sourceFolder, String filePath,
+	private CompositeStatementObject processIfStatement(KtFile ktFile, String sourceFolder, String filePath,
 			CompositeStatementObject parent, String fileContent, KtIfExpression ifStatement) {
-		CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, ifStatement, parent.getDepth()+1, CodeElementType.IF_STATEMENT, fileContent);
-		parent.addStatement(child);
+		int depth = parent != null ? parent.getDepth()+1 : 0;
+		CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, ifStatement, depth, CodeElementType.IF_STATEMENT, fileContent);
+		if (parent != null)
+			parent.addStatement(child);
 		AbstractExpression abstractExpression = new AbstractExpression(ktFile, sourceFolder, filePath, ifStatement.getCondition(), CodeElementType.IF_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent);
 		child.addExpression(abstractExpression);
 		addStatementInVariableScopes(child);
@@ -1289,6 +1322,7 @@ public class OperationBody {
 		if(ifStatement.getElse() != null) {
 			processStatement(ktFile, sourceFolder, filePath, child, ifStatement.getElse(), fileContent);
 		}
+		return child;
 	}
 
 	private CompositeStatementObject processWhenStatement(KtFile ktFile, String sourceFolder, String filePath,

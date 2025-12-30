@@ -40,6 +40,9 @@ public class Constants {
 			MODIFIER = "";
 			INITIALIZER = "";
 			CONSTRUCTOR_INVOCATION = "";
+			ENUM_DECLARATION = "class_definition";
+			ANNOTATION_TYPE_DECLARATION = "class_definition";
+			RECORD_DECLARATION = "class_definition";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -62,6 +65,9 @@ public class Constants {
 			MODIFIER = "visibility_modifier";
 			INITIALIZER = "anonymous_initializer";
 			CONSTRUCTOR_INVOCATION = "constructor_invocation";
+			ENUM_DECLARATION = "class_declaration";
+			ANNOTATION_TYPE_DECLARATION = "class_declaration";
+			RECORD_DECLARATION = "class_declaration";
 		}
 		else {
 			// Java values as default
@@ -85,6 +91,9 @@ public class Constants {
 			MODIFIER = "Modifier";
 			INITIALIZER = "Initializer";
 			CONSTRUCTOR_INVOCATION = "ConstructorInvocation";
+			ENUM_DECLARATION = "EnumDeclaration";
+			ANNOTATION_TYPE_DECLARATION = "AnnotationTypeDeclaration";
+			RECORD_DECLARATION = "RecordDeclaration";
 		}
 	}
 
@@ -110,9 +119,9 @@ public class Constants {
     public final String IMPORT_DECLARATION;
     public final String PRIMITIVE_TYPE = "PrimitiveType";
     public final String TYPE_DECLARATION;
-    public final String ENUM_DECLARATION = "EnumDeclaration";
-    public final String RECORD_DECLARATION = "RecordDeclaration";
-    public final String ANNOTATION_TYPE_DECLARATION = "AnnotationTypeDeclaration";
+    public final String ENUM_DECLARATION;
+    public final String RECORD_DECLARATION;
+    public final String ANNOTATION_TYPE_DECLARATION;
     public final String ENUM_CONSTANT_DECLARATION = "EnumConstantDeclaration";
     public final String TYPE_DECLARATION_STATEMENT = "TypeDeclarationStatement";
     public final String RECORD_COMPONENT = "SingleVariableDeclaration";

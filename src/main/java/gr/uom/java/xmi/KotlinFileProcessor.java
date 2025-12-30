@@ -300,10 +300,10 @@ public class KotlinFileProcessor {
 			umlClass.setInterface(true);
 		}
 		if(ktClass.isEnum()) {
-			//umlClass.setEnum(true);
+			umlClass.setEnum(true);
 		}
 		if(ktClass.isAnnotation()) {
-			//umlClass.setAnnotation(true);
+			umlClass.setAnnotation(true);
 		}
 		if(ktClass.isData()) {
 			umlClass.setData(true);

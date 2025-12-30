@@ -864,4 +864,286 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 14,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "a3d0c076e6aab1abcf403a903a8dc077ef332ed9",
+    "url": "https://github.com/android/architecture-samples/commit/a3d0c076e6aab1abcf403a903a8dc077ef332ed9",
+    "author": "dturner",
+    "time": "2/24/23 01:09 PM",
+    "refactorings": [{
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<List<Task>> to List<Task> in method public getTasks() : List<Task> from class com.example.android.architecture.blueprints.todoapp.FakeFailingTasksRemoteDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<Task> to Task in method public getTask(taskId String) : Task from class com.example.android.architecture.blueprints.todoapp.FakeFailingTasksRemoteDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<List<Task>>> to Flow<List<Task>> in method public getTasksStream() : Flow<List<Task>> from class com.example.android.architecture.blueprints.todoapp.FakeFailingTasksRemoteDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<Task>> to Flow<Task> in method public getTaskStream(taskId String) : Flow<Task> from class com.example.android.architecture.blueprints.todoapp.FakeFailingTasksRemoteDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<List<Task>>> to Flow<List<Task>> in method public getTasksStream() : Flow<List<Task>> from class com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<List<Task>> to List<Task> in method public getTasks() : List<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<Task>> to Flow<Task> in method public getTaskStream(taskId String) : Flow<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<Task> to Task in method public getTask(taskId String) : Task from class com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<List<Task>>> to Flow<List<Task>> in method public getTasksStream() : Flow<List<Task>> from class com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<List<Task>> to List<Task> in method public getTasks(forceUpdate Boolean) : List<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<Task>> to Flow<Task> in method public getTaskStream(taskId String) : Flow<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<Task> to Task in method public getTask(taskId String, forceUpdate Boolean) : Task from class com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<Task>> to Flow<Task> in method public getTaskStream(taskId String) : Flow<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.remote.TasksRemoteDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<List<Task>>> to Flow<List<Task>> in method public getTasksStream() : Flow<List<Task>> from class com.example.android.architecture.blueprints.todoapp.data.source.remote.TasksRemoteDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<List<Task>> to List<Task> in method public getTasks() : List<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.remote.TasksRemoteDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<Task> to Task in method public getTask(taskId String) : Task from class com.example.android.architecture.blueprints.todoapp.data.source.remote.TasksRemoteDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<List<Task>>> to Flow<List<Task>> in method public getTasksStream() : Flow<List<Task>> from class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<Task>> to Flow<Task> in method public getTaskStream(taskId String) : Flow<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<Task> to Task in method public getTask(taskId String, forceUpdate Boolean) : Task from class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<List<Task>> to List<Task> in method public getTasks(forceUpdate Boolean) : List<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<List<Task>> to List<Task> in method public getTasks() : List<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<Task> to Task in method public getTask(taskId String) : Task from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<List<Task>> to List<Task> in method public getTasks(forceUpdate Boolean) : List<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<List<Task>>> to Flow<List<Task>> in method public getTasksStream() : Flow<List<Task>> from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<Task>> to Flow<Task> in method public getTaskStream(taskId String) : Flow<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<Task> to Task in method public getTask(taskId String, forceUpdate Boolean) : Task from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<Task> to Task in method private getTaskWithId(id String) : Task from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<List<Task>>> to Flow<List<Task>> in method public getTasksStream() : Flow<List<Task>> from class com.example.android.architecture.blueprints.todoapp.data.source.FakeDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<Task>> to Flow<Task> in method public getTaskStream(taskId String) : Flow<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.FakeDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public getTasks_WithDirtyCache_remoteUnavailable_error() renamed to public getTasks_WithDirtyCache_remoteUnavailable_throwsException() in class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepositoryTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public getTasks_WithBothDataSourcesUnavailable_returnsError() renamed to public getTasks_WithBothDataSourcesUnavailable_throwsError() in class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepositoryTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public setReturnError(value Boolean) renamed to public setShouldThrowError(value Boolean) in class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute shouldReturnError : Inferred to shouldThrowError : Inferred in class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type observableTasks : Flow<Result<List<Task>>> to observableTasks : Flow<List<Task>> in class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type taskLoad : Async<Result<List<Task>>> to taskLoad : Async<List<Task>> in method private produceStatisticsUiState(taskLoad Async<List<Task>>) from class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable result : Inferred to task : Inferred in method public activateTask_retrievedTaskIsActive() from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSourceTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable result : Inferred to task : Inferred in method public saveTask_retrievesTask() from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSourceTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable result : Inferred to tasks : Inferred in method public deleteAllTasks_emptyListOfRetrievedTask() from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSourceTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable result : Inferred to task : Inferred in method public completeTask_retrievedTaskIsComplete() from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSourceTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

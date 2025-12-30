@@ -650,78 +650,7 @@ public class KotlinFileProcessor {
 		distributeComments(comments, locationInfo, umlOperation.getComments());
 		
 		KtModifierList modifierList = function.getModifierList();
-		// default visibility in Kotlin is public
-		umlOperation.setVisibility(Visibility.PUBLIC);
-		int startSignatureOffset = -1;
-		if(modifierList != null) {
-			for (PsiElement modifier : modifierList.getChildren()) {
-				if (modifier instanceof KtAnnotationEntry annotationEntry) {
-					umlOperation.addAnnotation(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
-				}
-			}
-			if (modifierList.hasModifier(PUBLIC_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PUBLIC_KEYWORD));
-				umlOperation.addModifier(modifier);
-				umlOperation.setVisibility(Visibility.PUBLIC);
-				if(startSignatureOffset == -1) {
-					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
-				}
-			}
-			if (modifierList.hasModifier(PROTECTED_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PROTECTED_KEYWORD));
-				umlOperation.addModifier(modifier);
-				umlOperation.setVisibility(Visibility.PROTECTED);
-				if(startSignatureOffset == -1) {
-					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
-				}
-			}
-			if (modifierList.hasModifier(PRIVATE_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PRIVATE_KEYWORD));
-				umlOperation.addModifier(modifier);
-				umlOperation.setVisibility(Visibility.PRIVATE);
-				if(startSignatureOffset == -1) {
-					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
-				}
-			}
-			if (modifierList.hasModifier(INTERNAL_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(INTERNAL_KEYWORD));
-				umlOperation.addModifier(modifier);
-				umlOperation.setVisibility(Visibility.INTERNAL);
-				if(startSignatureOffset == -1) {
-					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
-				}
-			}
-			if (modifierList.hasModifier(OPEN_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(OPEN_KEYWORD));
-				umlOperation.addModifier(modifier);
-				if(startSignatureOffset == -1) {
-					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
-				}
-			}
-			if (modifierList.hasModifier(OVERRIDE_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(OVERRIDE_KEYWORD));
-				umlOperation.addModifier(modifier);
-				if(startSignatureOffset == -1) {
-					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
-				}
-			}
-			if (modifierList.hasModifier(INLINE_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(INLINE_KEYWORD));
-				umlOperation.addModifier(modifier);
-				umlOperation.setInline(true);
-				if(startSignatureOffset == -1) {
-					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
-				}
-			}
-			if (modifierList.hasModifier(ABSTRACT_KEYWORD)) {
-				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(ABSTRACT_KEYWORD));
-				umlOperation.addModifier(modifier);
-				umlOperation.setAbstract(true);
-				if(startSignatureOffset == -1) {
-					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
-				}
-			}
-		}
+		int startSignatureOffset = processFunctionModifiers(ktFile, sourceFolder, filePath, fileContent, umlOperation, modifierList);
 		List<KtTypeParameter> typeParameters = function.getTypeParameters();
 		for (KtTypeParameter typeParameter : typeParameters) {
 			LocationInfo typeParameterLocation = generateLocationInfo(ktFile, sourceFolder, filePath, typeParameter, CodeElementType.TYPE_PARAMETER);
@@ -811,6 +740,83 @@ public class KotlinFileProcessor {
 		return umlOperation;
 	}
 
+	private int processFunctionModifiers(KtFile ktFile, String sourceFolder, String filePath, String fileContent,
+			UMLOperation umlOperation, KtModifierList modifierList) {
+		// default visibility in Kotlin is public
+		umlOperation.setVisibility(Visibility.PUBLIC);
+		int startSignatureOffset = -1;
+		if(modifierList != null) {
+			for (PsiElement modifier : modifierList.getChildren()) {
+				if (modifier instanceof KtAnnotationEntry annotationEntry) {
+					umlOperation.addAnnotation(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
+				}
+			}
+			if (modifierList.hasModifier(PUBLIC_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PUBLIC_KEYWORD));
+				umlOperation.addModifier(modifier);
+				umlOperation.setVisibility(Visibility.PUBLIC);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
+			}
+			if (modifierList.hasModifier(PROTECTED_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PROTECTED_KEYWORD));
+				umlOperation.addModifier(modifier);
+				umlOperation.setVisibility(Visibility.PROTECTED);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
+			}
+			if (modifierList.hasModifier(PRIVATE_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(PRIVATE_KEYWORD));
+				umlOperation.addModifier(modifier);
+				umlOperation.setVisibility(Visibility.PRIVATE);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
+			}
+			if (modifierList.hasModifier(INTERNAL_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(INTERNAL_KEYWORD));
+				umlOperation.addModifier(modifier);
+				umlOperation.setVisibility(Visibility.INTERNAL);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
+			}
+			if (modifierList.hasModifier(OPEN_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(OPEN_KEYWORD));
+				umlOperation.addModifier(modifier);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
+			}
+			if (modifierList.hasModifier(OVERRIDE_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(OVERRIDE_KEYWORD));
+				umlOperation.addModifier(modifier);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
+			}
+			if (modifierList.hasModifier(INLINE_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(INLINE_KEYWORD));
+				umlOperation.addModifier(modifier);
+				umlOperation.setInline(true);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
+			}
+			if (modifierList.hasModifier(ABSTRACT_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(ABSTRACT_KEYWORD));
+				umlOperation.addModifier(modifier);
+				umlOperation.setAbstract(true);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
+			}
+		}
+		return startSignatureOffset;
+	}
+
 	private UMLAttribute processFieldDeclaration(KtFile ktFile, KtProperty property, String sourceFolder, String filePath, String fileContent, List<UMLComment> comments, LocationInfo parentLocationInfo) {
 		KtTypeReference type = property.getTypeReference();
 		UMLType typeObject = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, type, 0);
@@ -866,8 +872,9 @@ public class KotlinFileProcessor {
 		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, function.getDocComment());
 		umlOperation.setJavadoc(javadoc);
 		distributeComments(comments, locationInfo, umlOperation.getComments());
-		umlOperation.setVisibility(Visibility.PUBLIC);
 		int startSignatureOffset = locationInfo.getStartOffset();
+		KtModifierList modifierList = function.getModifierList();
+		startSignatureOffset = processFunctionModifiers(ktFile, sourceFolder, filePath, fileContent, umlOperation, modifierList);
 		List<KtParameter> parameters = function.getValueParameters();
 		for (KtParameter parameter : parameters) {
 			KtTypeReference typeReference = parameter.getTypeReference();

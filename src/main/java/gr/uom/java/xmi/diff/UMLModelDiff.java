@@ -2698,6 +2698,12 @@ public class UMLModelDiff {
 		List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			removedOperations.addAll(classDiff.getRemovedOperations());
+			for(Refactoring ref : classDiff.getRefactoringsBeforePostProcessing()) {
+				if(ref instanceof InlineOperationRefactoring) {
+					InlineOperationRefactoring inlineRef = (InlineOperationRefactoring)ref;
+					removedOperations.add(inlineRef.getInlinedOperation());
+				}
+			}
 		}
 		for(UMLClassMoveDiff classDiff : classMoveDiffList) {
 			removedOperations.addAll(classDiff.getRemovedOperations());

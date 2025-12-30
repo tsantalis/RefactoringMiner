@@ -538,6 +538,16 @@ public class KotlinFileProcessor {
 				UMLClass companionObject = processObjectDeclaration(ktFile, companion, null, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments, umlClass.getAttributes());
 				umlModel.addClass(companionObject);
 			}
+			for(KtDeclaration declaration : classBody.getDeclarations()) {
+				if(declaration instanceof KtClass ktClass) {
+					UMLClass nestedClass = processClassDeclaration(ktFile, ktClass, null, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments);
+					umlModel.addClass(nestedClass);
+				}
+				else if(declaration instanceof KtObjectDeclaration objectDeclaration) {
+					UMLClass nestedClass = processObjectDeclaration(ktFile, objectDeclaration, null, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments, umlClass.getAttributes());
+					umlModel.addClass(nestedClass);
+				}
+			}
 		}
 	}
 

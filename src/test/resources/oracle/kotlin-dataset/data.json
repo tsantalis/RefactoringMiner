@@ -634,4 +634,20 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 11,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "515e82c93a69423e831e58948e1e537fa50aee1f",
+    "url": "https://github.com/android/architecture-samples/commit/515e82c93a69423e831e58948e1e537fa50aee1f",
+    "author": "JoseAlcerreca",
+    "time": "7/9/19 11:41 AM",
+    "refactorings": [{
+        "type": "Remove Parameter",
+        "description": "Remove Parameter forceRefresh : Boolean in method public start(taskId String, forceRefresh Boolean) from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

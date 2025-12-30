@@ -750,4 +750,118 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 13,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "5dec53b48b7dce677f9c2a99dec42166b0d97ddb",
+    "url": "https://github.com/android/architecture-samples/commit/5dec53b48b7dce677f9c2a99dec42166b0d97ddb",
+    "author": "dmeng",
+    "time": "4/24/19 05:36 PM",
+    "refactorings": [{
+        "type": "Move Method",
+        "description": "Move Method public showActiveTasks() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public showActiveTasks() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public showCompletedTasks() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public showCompletedTasks() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public noTasks_AllTasksFilter_AddTaskViewVisible() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public noTasks_AllTasksFilter_AddTaskViewVisible() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public noTasks_CompletedTasksFilter_AddTaskViewNotVisible() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public noTasks_CompletedTasksFilter_AddTaskViewNotVisible() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public noTasks_ActiveTasksFilter_AddTaskViewNotVisible() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public noTasks_ActiveTasksFilter_AddTaskViewNotVisible() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public markTaskAsComplete() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public markTaskAsComplete() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public markTaskAsActive() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public markTaskAsActive() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @MediumTest in method public displayTask_whenRepositoryHasData() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Attribute",
+        "description": "Inline Attribute private TITLE1 : Inferred in class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Attribute",
+        "description": "Inline Attribute private TITLE2 : Inferred in class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Attribute",
+        "description": "Inline Attribute private TITLE3 : Inferred in class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method private viewAllTasks() inlined to public createOneTask_deleteTask() in class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method private viewAllTasks() inlined to public createTwoTasks_deleteOneTask() in class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public showAllTasks() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public showAllTasks() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public clearCompletedTasks() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public clearCompletedTasks() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

@@ -1121,15 +1121,7 @@ public class OperationBody {
 			}
 		}
 		else if(statement instanceof KtIfExpression ifStatement) {
-			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, ifStatement, parent.getDepth()+1, CodeElementType.IF_STATEMENT, fileContent);
-			parent.addStatement(child);
-			AbstractExpression abstractExpression = new AbstractExpression(ktFile, sourceFolder, filePath, ifStatement.getCondition(), CodeElementType.IF_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent);
-			child.addExpression(abstractExpression);
-			addStatementInVariableScopes(child);
-			processStatement(ktFile, sourceFolder, filePath, child, ifStatement.getThen(), fileContent);
-			if(ifStatement.getElse() != null) {
-				processStatement(ktFile, sourceFolder, filePath, child, ifStatement.getElse(), fileContent);
-			}
+			processIfStatement(ktFile, sourceFolder, filePath, parent, fileContent, ifStatement);
 		}
 		else if(statement instanceof KtWhileExpression whileStatement) {
 			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, whileStatement, parent.getDepth()+1, CodeElementType.WHILE_STATEMENT, fileContent);
@@ -1247,6 +1239,9 @@ public class OperationBody {
 			if(returnedExpression instanceof KtWhenExpression whenStatement) {
 				processWhenStatement(ktFile, sourceFolder, filePath, parent, fileContent, whenStatement);
 			}
+			else if(returnedExpression instanceof KtIfExpression ifStatement) {
+				processIfStatement(ktFile, sourceFolder, filePath, parent, fileContent, ifStatement);
+			}
 			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, returnStatement, parent.getDepth()+1, CodeElementType.RETURN_STATEMENT, container, activeVariableDeclarations, fileContent);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
@@ -1280,6 +1275,19 @@ public class OperationBody {
 			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, statement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
+		}
+	}
+
+	private void processIfStatement(KtFile ktFile, String sourceFolder, String filePath,
+			CompositeStatementObject parent, String fileContent, KtIfExpression ifStatement) {
+		CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, ifStatement, parent.getDepth()+1, CodeElementType.IF_STATEMENT, fileContent);
+		parent.addStatement(child);
+		AbstractExpression abstractExpression = new AbstractExpression(ktFile, sourceFolder, filePath, ifStatement.getCondition(), CodeElementType.IF_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent);
+		child.addExpression(abstractExpression);
+		addStatementInVariableScopes(child);
+		processStatement(ktFile, sourceFolder, filePath, child, ifStatement.getThen(), fileContent);
+		if(ifStatement.getElse() != null) {
+			processStatement(ktFile, sourceFolder, filePath, child, ifStatement.getElse(), fileContent);
 		}
 	}
 

@@ -578,7 +578,18 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				}
 			}
 		}
-		return this.name.equals(operation.name) && equalTypeParameters(operation) && (equalParameterTypes || compatibleParameterTypes) && equalReturnParameter(operation);
+		boolean equalReturnParameter = equalReturnParameter(operation);
+		if(!equalReturnParameter && LANG.equals(Constants.KOTLIN)) {
+			UMLParameter thisReturnParameter = this.getReturnParameter();
+			UMLParameter otherReturnParameter = operation.getReturnParameter();
+			if(thisReturnParameter != null && otherReturnParameter == null) {
+				equalReturnParameter = true;
+			}
+			else if(thisReturnParameter == null && otherReturnParameter != null) {
+				equalReturnParameter = true;
+			}
+		}
+		return this.name.equals(operation.name) && equalTypeParameters(operation) && (equalParameterTypes || compatibleParameterTypes) && equalReturnParameter;
 	}
 
 	public boolean equalSignatureRelaxedReturnType(UMLOperation operation) {

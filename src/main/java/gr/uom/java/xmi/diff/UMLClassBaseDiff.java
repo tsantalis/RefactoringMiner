@@ -1308,6 +1308,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				List<UMLOperation> matchingOperations = new ArrayList<UMLOperation>();
 				for(UMLOperation removedOperation : removedOperations) {
 					if(matchCondition(removedOperation, addedOperation)) {
+						if(removedOperation.getBodyHashCode() == addedOperation.getBodyHashCode() && matchingOperations.size() > 0 && matchingOperations.get(0).delegatesTo(removedOperation, this, modelDiff) != null)
+							continue;
 						if(removedOperation.isConstructor() && addedOperation.isConstructor()) {
 							if(removedOperation.equalParameterTypes(addedOperation))
 								matchingOperations.add(removedOperation);
@@ -1338,7 +1340,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if((removedOperation.getName().equals(addedOperation.getName()) &&
 				removedOperation.getParameters().size() == addedOperation.getParameters().size() &&
 				removedOperation.isAbstract() == addedOperation.isAbstract()) ||
-				removedOperation.getBodyHashCode() == addedOperation.getBodyHashCode()) {
+				(removedOperation.getBodyHashCode() == addedOperation.getBodyHashCode() && removedOperation.getBodyHashCode() != 0)) {
 			if(removedOperation.getParameterTypeList().equals(addedOperation.getParameterTypeList()) &&
 					removedOperationParameterNameList.equals(addedOperationParameterNameList)) {
 				return true;

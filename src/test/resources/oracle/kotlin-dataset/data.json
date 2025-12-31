@@ -1411,4 +1411,76 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 18,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "e43a301c2a247ab957dae8100d789d8b5238195c",
+    "url": "https://github.com/android/architecture-samples/commit/e43a301c2a247ab957dae8100d789d8b5238195c",
+    "author": null,
+    "time": "4/24/19 01:43 PM",
+    "refactorings": [{
+        "type": "Rename Class",
+        "description": "Rename Class com.example.android.architecture.blueprints.todoapp.tasks.TasksScreenTest renamed to com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskScreenTest renamed to com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsScreenTest renamed to com.example.android.architecture.blueprints.todoapp.statistics.StatisticsFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailScreenTest renamed to com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class com.example.android.architecture.blueprints.todoapp.tasks.TasksSingleScreenTest renamed to com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @MediumTest in class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @MediumTest in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @MediumTest in class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Class Annotation",
+        "description": "Remove Class Annotation @SmallTest in class com.example.android.architecture.blueprints.todoapp.tasks.TasksSingleScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

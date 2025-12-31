@@ -12,6 +12,7 @@ import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
+import org.refactoringminer.util.PathFileUtils;
 
 import java.util.Optional;
 
@@ -79,6 +80,9 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             mappingStore.addMappingRecursively(srcAttr,dstAttr);
         }
 
+        if(srcFieldDeclaration != null && dstFieldDeclaration != null && PathFileUtils.isKotlinFile(srcUMLAttribute.getLocationInfo().getFilePath())) {
+        	mappingStore.addMappingRecursively(srcFieldDeclaration,dstFieldDeclaration);
+        }
         mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
         matchFieldAllModifiers(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute,dstUMLAttribute,mappingStore);
         matchFieldAnnotations(srcFieldDeclaration, dstFieldDeclaration, mappingStore);

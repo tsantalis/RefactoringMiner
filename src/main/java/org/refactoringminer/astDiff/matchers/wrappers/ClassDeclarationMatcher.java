@@ -237,7 +237,15 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
     }
 
     private void processClassAnnotations(Tree srcTree, Tree dstTree, UMLAnnotationListDiff annotationListDiff, ExtendedMultiMappingStore mappingStore) {
-        for (org.apache.commons.lang3.tuple.Pair<UMLAnnotation, UMLAnnotation> umlAnnotationUMLAnnotationPair : annotationListDiff.getCommonAnnotations())
+        for (org.apache.commons.lang3.tuple.Pair<UMLAnnotation, UMLAnnotation> umlAnnotationUMLAnnotationPair : annotationListDiff.getCommonAnnotations()) {
             processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, umlAnnotationUMLAnnotationPair.getLeft(), umlAnnotationUMLAnnotationPair.getRight());
+            Tree srcClassAnnotationTree = TreeUtilFunctions.findByLocationInfo(srcTree , umlAnnotationUMLAnnotationPair.getLeft().getLocationInfo());
+            Tree dstClassAnnotationTree = TreeUtilFunctions.findByLocationInfo(dstTree, umlAnnotationUMLAnnotationPair.getRight().getLocationInfo());
+            if(annotationListDiff.getCommonAnnotations().size() > 1 &&
+            		srcClassAnnotationTree.getParent() != null && srcClassAnnotationTree.getParent().getType().name.equals(Constants.get().MODIFIERS) &&
+            		dstClassAnnotationTree.getParent() != null && dstClassAnnotationTree.getParent().getType().name.equals(Constants.get().MODIFIERS)) {
+            	mappingStore.addMapping(srcClassAnnotationTree.getParent(), dstClassAnnotationTree.getParent());
+            }
+        }
     }
 }

@@ -1267,4 +1267,125 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 16,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "c531c353d874f6f863181f9eaea4ef78a4a90b60",
+    "url": "https://github.com/android/architecture-samples/commit/c531c353d874f6f863181f9eaea4ef78a4a90b60",
+    "author": "dturner",
+    "time": "3/14/23 08:09 AM",
+    "refactorings": [{
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type tasksRepository : FakeRepository to tasksRepository : FakeTasksRepository in class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModelTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type tasksRepository : FakeRepository to tasksRepository : FakeTasksRepository in class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModelTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type tasksRepository : FakeRepository to tasksRepository : FakeTasksRepository in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModelTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type tasksRepository : FakeRepository to tasksRepository : FakeTasksRepository in class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModelTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository moved to com.example.android.architecture.blueprints.todoapp.data.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository moved to com.example.android.architecture.blueprints.todoapp.data.TasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.NetworkDataSource moved to com.example.android.architecture.blueprints.todoapp.data.source.network.NetworkDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepositoryTest moved to com.example.android.architecture.blueprints.todoapp.data.DefaultTasksRepositoryTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.FakeTasksDao moved to com.example.android.architecture.blueprints.todoapp.data.source.local.FakeTasksDao",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.FakeNetworkDataSource moved to com.example.android.architecture.blueprints.todoapp.data.source.network.FakeNetworkDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.remote.NetworkTask moved to com.example.android.architecture.blueprints.todoapp.data.source.network.NetworkTask",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.remote.TaskStatus moved to com.example.android.architecture.blueprints.todoapp.data.source.network.TaskStatus",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.remote.TasksNetworkDataSource moved to com.example.android.architecture.blueprints.todoapp.data.source.network.TasksNetworkDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository moved and renamed to com.example.android.architecture.blueprints.todoapp.data.FakeTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Package",
+        "description": "Rename Package com.example.android.architecture.blueprints.todoapp.data.source.remote to com.example.android.architecture.blueprints.todoapp.data.source.network",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Package",
+        "description": "Move Package com.example.android.architecture.blueprints.todoapp.data.source to com.example.android.architecture.blueprints.todoapp.data",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

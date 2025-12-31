@@ -198,6 +198,11 @@ public class MethodMatcher extends BodyMapperMatcher{
             else {
                 new IgnoringCommentsLeafMatcher().match(srcClassAnnotationTree, dstClassAnnotationTree, mappingStore);
             }
+            if(umlOperationDiff.getAnnotationListDiff().getCommonAnnotations().size() > 1 &&
+            		srcClassAnnotationTree.getParent() != null && srcClassAnnotationTree.getParent().getType().name.equals(Constants.get().MODIFIERS) &&
+            		dstClassAnnotationTree.getParent() != null && dstClassAnnotationTree.getParent().getType().name.equals(Constants.get().MODIFIERS)) {
+            	mappingStore.addMapping(srcClassAnnotationTree.getParent(), dstClassAnnotationTree.getParent());
+            }
         }
         Set<org.apache.commons.lang3.tuple.Pair<UMLType, UMLType>> commonExceptionTypes = umlOperationDiff.getCommonExceptionTypes();
         new KeywordMatcher(Constants.get().THROWS_KEYWORD, THROWS_KEYWORD_LABEL).match(srcTree, dstTree, mappingStore);

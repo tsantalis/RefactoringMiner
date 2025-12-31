@@ -1153,4 +1153,118 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 15,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "b5d947c4ab4867e65d9fc110b404a6fd964c4ef1",
+    "url": "https://github.com/android/architecture-samples/commit/b5d947c4ab4867e65d9fc110b404a6fd964c4ef1",
+    "author": null,
+    "time": "3/27/23 11:07 AM",
+    "refactorings": [{
+        "type": "Rename Attribute",
+        "description": "Rename Attribute tasksNetworkDataSource : NetworkDataSource to networkDataSource : NetworkDataSource in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute taskDao : TaskDao to localDataSource : TaskDao in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Type Declaration Kind",
+        "description": "Change Type Declaration Kind object to class in type com.example.android.architecture.blueprints.todoapp.data.source.network.TaskNetworkDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Type Declaration Kind",
+        "description": "Change Type Declaration Kind object to class in type com.example.android.architecture.blueprints.todoapp.di.RepositoryModule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Type Declaration Kind",
+        "description": "Change Type Declaration Kind object to class in type com.example.android.architecture.blueprints.todoapp.di.DataSourceModule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Modifier",
+        "description": "Add Class Modifier abstract in class com.example.android.architecture.blueprints.todoapp.di.RepositoryModule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Modifier",
+        "description": "Add Class Modifier abstract in class com.example.android.architecture.blueprints.todoapp.di.DataSourceModule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute coroutineDispatcher : CoroutineDispatcher to dispatcher : CoroutineDispatcher in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Attribute Annotation",
+        "description": "Add Attribute Annotation @DefaultDispatcher in attribute private dispatcher : CoroutineDispatcher from class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter scope : CoroutineScope in method DefaultTaskRepository(networkDataSource NetworkDataSource, localDataSource TaskDao, dispatcher CoroutineDispatcher, scope CoroutineScope) from class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public refreshTasks() renamed to public refresh() in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public refreshTasks() renamed to public refresh() in class com.example.android.architecture.blueprints.todoapp.data.FakeTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public refreshTasks() renamed to public refresh() in class com.example.android.architecture.blueprints.todoapp.data.TaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method private loadTasksFromNetwork() inlined to public refresh() in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @Singleton in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

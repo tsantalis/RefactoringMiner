@@ -1388,4 +1388,27 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 17,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "d402dae442a482923e0e45d2eb82046777ff1742",
+    "url": "https://github.com/android/architecture-samples/commit/d402dae442a482923e0e45d2eb82046777ff1742",
+    "author": "dmeng",
+    "time": "4/3/19 01:45 PM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public clickOnAndroidHomeIcon_OpensNavigation() renamed to public tasksScreen_clickOnAndroidHomeIcon_OpensNavigation() in class com.example.android.architecture.blueprints.todoapp.tasks.AppNavigationTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public markTaskAsAcompleteAndActiveOnDetailScreen_taskIsActiveInList() renamed to public markTaskAsCompleteAndActiveOnDetailScreen_taskIsActiveInList() in class com.example.android.architecture.blueprints.todoapp.tasks.TasksScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

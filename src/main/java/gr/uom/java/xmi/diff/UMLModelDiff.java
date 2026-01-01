@@ -7789,6 +7789,11 @@ public class UMLModelDiff {
 
 	private boolean movedAndRenamedMethodSignature(UMLOperation removedOperation, UMLOperation addedOperation, UMLOperationBodyMapper mapper, boolean multipleMappers) {
 		Constants LANG = PathFileUtils.getLang(mapper.getContainer1().getLocationInfo().getFilePath());
+		boolean default1 = removedOperation.getDefaultExpression() != null;
+		boolean default2 = addedOperation.getDefaultExpression() != null;
+		if(default1 != default2) {
+			return false;
+		}
 		List<AbstractCodeMapping> exactMatchListWithoutMatchesInNestedContainers = mapper.getExactMatchesWithoutMatchesInNestedContainers();
 		int exactMatchesWithoutMatchesInNestedContainers = exactMatchListWithoutMatchesInNestedContainers.size();
 		if(!removedOperation.getName().equals(addedOperation.getName()) &&

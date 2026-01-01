@@ -25,6 +25,7 @@ import gr.uom.java.xmi.decomposition.StringBasedHeuristics;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
@@ -326,6 +327,21 @@ public class MappingOptimizer {
 							(r.getAfter().equals(mapping.getFragment2().getString()) || (r.getAfter() + LANG.STATEMENT_TERMINATION).equals(mapping.getFragment2().getString()))) {
 						replacementFound = true;
 						break;
+					}
+					if(r instanceof MethodInvocationReplacement methodInvocationReplacement) {
+						AbstractCall call1 = methodInvocationReplacement.getInvokedOperationBefore();
+						AbstractCall call2 = methodInvocationReplacement.getInvokedOperationAfter();
+						AbstractCall invocationCoveringTheEntireStatement1 = mapping.getFragment1().invocationCoveringEntireFragment();
+						AbstractCall invocationCoveringTheEntireStatement2 = mapping.getFragment2().invocationCoveringEntireFragment();
+						if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
+							continue;
+						}
+						AbstractCall assignmentCall1 = invocationCoveringTheEntireStatement1 == null ? mapping.getFragment1().assignmentInvocationCoveringEntireStatement() : invocationCoveringTheEntireStatement1;
+						AbstractCall assignmentCall2 = invocationCoveringTheEntireStatement2 == null ? mapping.getFragment2().assignmentInvocationCoveringEntireStatement() : invocationCoveringTheEntireStatement2;	
+						if(assignmentCall1 != null && assignmentCall2 != null && assignmentCall1.equals(call1) && assignmentCall2.equals(call2)) {
+							replacementFound = true;
+							break;
+						}
 					}
 				}
 				replacementCoversEntireStatement.add(replacementFound);

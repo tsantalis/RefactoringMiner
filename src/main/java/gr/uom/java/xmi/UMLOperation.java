@@ -618,7 +618,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				}
 			}
 		}
-		return this.name.equals(operation.name) && equalTypeParameters(operation) && (equalParameterTypes || compatibleParameterTypes) && equalReturnParameterClassType(operation);
+		return this.name.equals(operation.name) && equalTypeParameters(operation) && (equalParameterTypes || compatibleParameterTypes) &&
+				(equalReturnParameterClassType(operation) || compatibleReturnParameter(operation));
 	}
 
 	public boolean equalSignatureIgnoringOperationName(UMLOperation operation) {

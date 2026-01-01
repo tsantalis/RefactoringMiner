@@ -133,10 +133,16 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			UMLParameterListDiff parameterListDiff = new UMLParameterListDiff(originalClass.getPrimaryConstructor().get(), nextClass.getPrimaryConstructor().get(), Collections.emptySet(), Collections.emptySet(), this);
 			this.primaryConstructorParameterListDiff = Optional.of(parameterListDiff);
 			for(VariableDeclaration addedParameter : parameterListDiff.getAddedParameters()) {
+				if(addedParameter.isAttribute() && originalClass.getPrimaryConstructor().get().getParameters().size() == nextClass.getPrimaryConstructor().get().getParameters().size()) {
+					continue;
+				}
 				Refactoring r = new AddParameterRefactoring(addedParameter, originalClass.getPrimaryConstructor().get(), nextClass.getPrimaryConstructor().get());
 				this.refactorings.add(r);
 			}
 			for(VariableDeclaration removedParameter : parameterListDiff.getRemovedParameters()) {
+				if(removedParameter.isAttribute() && originalClass.getPrimaryConstructor().get().getParameters().size() == nextClass.getPrimaryConstructor().get().getParameters().size()) {
+					continue;
+				}
 				Refactoring r = new RemoveParameterRefactoring(removedParameter, originalClass.getPrimaryConstructor().get(), nextClass.getPrimaryConstructor().get());
 				this.refactorings.add(r);
 			}
@@ -963,25 +969,43 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	protected void processOperations() throws RefactoringMinerTimedOutException {
 		for(UMLOperation operation : originalClass.getOperations()) {
-    		UMLOperation operationWithTheSameSignature = nextClass.operationWithTheSameSignatureIgnoringChangedTypes(operation);
+			UMLOperation operationWithTheSameSignature = nextClass.operationWithTheSameSignatureIgnoringChangedTypes(operation);
+			boolean skip = false;
+			if(operationWithTheSameSignature != null && originalClass.isInterface() && !operation.getName().equals(operationWithTheSameSignature.getName()) ) {
+				for(UMLOperation operation1 : originalClass.getOperations()) {
+					if(operation1.equalSignatureRelaxedReturnType(operationWithTheSameSignature)) {
+						skip = true;
+						break;
+					}
+				}
+			}
 			if(operationWithTheSameSignature == null) {
 				this.removedOperations.add(operation);
-    		}
-			else if(!mapperListContainsOperation(operation, operationWithTheSameSignature)) {
+			}
+			else if(!mapperListContainsOperation(operation, operationWithTheSameSignature) && !skip) {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation, operationWithTheSameSignature, this);
 				this.addOperationBodyMapper(mapper);
 			}
-    	}
-    	for(UMLOperation operation : nextClass.getOperations()) {
-    		UMLOperation operationWithTheSameSignature = originalClass.operationWithTheSameSignatureIgnoringChangedTypes(operation);
+		}
+		for(UMLOperation operation : nextClass.getOperations()) {
+			UMLOperation operationWithTheSameSignature = originalClass.operationWithTheSameSignatureIgnoringChangedTypes(operation);
+			boolean skip = false;
+			if(operationWithTheSameSignature != null && nextClass.isInterface() && !operation.getName().equals(operationWithTheSameSignature.getName()) ) {
+				for(UMLOperation operation2 : nextClass.getOperations()) {
+					if(operation2.equalSignatureRelaxedReturnType(operationWithTheSameSignature)) {
+						skip = true;
+						break;
+					}
+				}
+			}
 			if(operationWithTheSameSignature == null) {
 				this.addedOperations.add(operation);
-    		}
-			else if(!mapperListContainsOperation(operationWithTheSameSignature, operation)) {
+			}
+			else if(!mapperListContainsOperation(operationWithTheSameSignature, operation) && !skip) {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operationWithTheSameSignature, operation, this);
 				this.addOperationBodyMapper(mapper);
 			}
-    	}
+		}
 	}
 
 	private boolean attributeDiffListContainsAttribute(UMLAttribute attribute1, UMLAttribute attribute2) {

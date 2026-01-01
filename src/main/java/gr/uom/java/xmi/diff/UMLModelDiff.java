@@ -2734,6 +2734,12 @@ public class UMLModelDiff {
 		List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			removedOperations.addAll(classDiff.getRemovedOperations());
+			for(Refactoring ref : classDiff.getRefactoringsBeforePostProcessing()) {
+				if(ref instanceof InlineOperationRefactoring) {
+					InlineOperationRefactoring inlineRef = (InlineOperationRefactoring)ref;
+					removedOperations.add(inlineRef.getInlinedOperation());
+				}
+			}
 		}
 		for(UMLClassMoveDiff classDiff : classMoveDiffList) {
 			removedOperations.addAll(classDiff.getRemovedOperations());
@@ -2759,6 +2765,17 @@ public class UMLModelDiff {
 			}
 		}
 		return removedOperations;
+	}
+
+	private List<UMLOperationBodyMapper> getOperationBodyMappersInCommonAndRenamedClasses() {
+		List<UMLOperationBodyMapper> mappers = new ArrayList<UMLOperationBodyMapper>();
+		for(UMLClassDiff classDiff : commonClassDiffList) {
+			mappers.addAll(classDiff.getOperationBodyMapperList());
+		}
+		for(UMLClassRenameDiff classDiff : classRenameDiffList) {
+			mappers.addAll(classDiff.getOperationBodyMapperList());
+		}
+		return mappers;
 	}
 
 	private List<UMLOperationBodyMapper> getOperationBodyMappersInCommonClasses() {
@@ -3995,6 +4012,10 @@ public class UMLModelDiff {
 									if(!movedAttributeDiffList.contains(attributeDiff) && !a1.getClassName().equals(a2.getClassName())) {
 										movedAttributeDiffList.add(attributeDiff);
 									}
+									if(a1.getClassName().equals(a2.getClassName()) && diff.getOriginalClassName().equals(a1.getClassName()) &&
+											!diff.getAttributeDiffList().contains(attributeDiff)) {
+										diff.getAttributeDiffList().add(attributeDiff);
+									}
 									Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
 									if(!refactorings.containsAll(attributeDiffRefactorings)) {
 										refactorings.addAll(attributeDiffRefactorings);
@@ -4247,7 +4268,8 @@ public class UMLModelDiff {
 		List<UMLOperation> allOperationsInAddedClasses = getOperationsInAddedClasses();
 		checkForExtractedAndMovedLambdas(getOperationBodyMappersInMovedAndRenamedClasses(), allOperationsInAddedClasses);
 		if(allOperationsInAddedClasses.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
-			checkForExtractedAndMovedOperations(getOperationBodyMappersInCommonClasses(), allOperationsInAddedClasses);
+			processedOperationPairs.clear();
+			checkForExtractedAndMovedOperations(getOperationBodyMappersInCommonAndRenamedClasses(), allOperationsInAddedClasses);
 			processedOperationPairs.clear();
 			checkForExtractedAndMovedOperations(getOperationBodyMappersInMovedClasses(), allOperationsInAddedClasses);
 		}
@@ -6686,7 +6708,8 @@ public class UMLModelDiff {
 							continue;
 						}
 						else if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || addedOperation.equalSignatureForAbstractMethods(removedOperation2) ||
-								(mappings > 0 && isPartOfMethodExtracted(removedOperation2, addedOperation, addedOperations, umlClassDiff))) {
+								(mappings > 0 && isPartOfMethodExtracted(removedOperation2, addedOperation, addedOperations, umlClassDiff)) ||
+								(mappings > 0 && isPartOfMethodInlined(removedOperation2, addedOperation, removedOperations, umlClassDiff))) {
 							int exactMatches = operationBodyMapper.exactMatches();
 							List<AbstractCodeMapping> exactMappings = operationBodyMapper.getExactMatches();
 							for(AbstractCodeMapping mapping : exactMappings) {
@@ -6721,7 +6744,8 @@ public class UMLModelDiff {
 						processedOperationPairs.add(pair);
 						int mappings = operationBodyMapper.mappingsWithoutBlocks();
 						if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || addedOperation.equalSignatureForAbstractMethods(removedOperation) ||
-								(mappings > 0 && isPartOfMethodExtracted(removedOperation, addedOperation, addedOperations, umlClassDiff))) {
+								(mappings > 0 && isPartOfMethodExtracted(removedOperation, addedOperation, addedOperations, umlClassDiff)) ||
+								(mappings > 0 && isPartOfMethodInlined(removedOperation, addedOperation, removedOperations, umlClassDiff) && removedOperation.getName().equals(addedOperation.getName()))) {
 							int exactMatches = operationBodyMapper.exactMatches();
 							List<AbstractCodeMapping> exactMappings = operationBodyMapper.getExactMatches();
 							for(AbstractCodeMapping mapping : exactMappings) {
@@ -6859,7 +6883,8 @@ public class UMLModelDiff {
 							continue;
 						}
 						else if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || removedOperation.equalSignatureForAbstractMethods(addedOperation2) ||
-								(mappings > 0 && isPartOfMethodExtracted(removedOperation, addedOperation2, addedOperations, umlClassDiff))) {
+								(mappings > 0 && isPartOfMethodExtracted(removedOperation, addedOperation2, addedOperations, umlClassDiff)) ||
+								(mappings > 0 && isPartOfMethodInlined(removedOperation, addedOperation2, removedOperations, umlClassDiff))) {
 							int exactMatches = operationBodyMapper.exactMatches();
 							List<AbstractCodeMapping> exactMappings = operationBodyMapper.getExactMatches();
 							for(AbstractCodeMapping mapping : exactMappings) {
@@ -6894,7 +6919,8 @@ public class UMLModelDiff {
 						processedOperationPairs.add(pair);
 						int mappings = operationBodyMapper.mappingsWithoutBlocks();
 						if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || removedOperation.equalSignatureForAbstractMethods(addedOperation) ||
-								(mappings > 0 && isPartOfMethodExtracted(removedOperation, addedOperation, addedOperations, umlClassDiff))) {
+								(mappings > 0 && isPartOfMethodExtracted(removedOperation, addedOperation, addedOperations, umlClassDiff)) ||
+								(mappings > 0 && isPartOfMethodInlined(removedOperation, addedOperation, removedOperations, umlClassDiff) && removedOperation.getName().equals(addedOperation.getName()))) {
 							int exactMatches = operationBodyMapper.exactMatches();
 							List<AbstractCodeMapping> exactMappings = operationBodyMapper.getExactMatches();
 							for(AbstractCodeMapping mapping : exactMappings) {
@@ -7706,6 +7732,52 @@ public class UMLModelDiff {
 		return set;
 	}
 
+	private boolean isPartOfMethodInlined(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation, List<UMLOperation> removedOperations, UMLAbstractClassDiff classDiff) {
+		//filter removedOperations that belong to the same class as the removedOperation
+		List<UMLOperation> filteredRemovedOperations = new ArrayList<>();
+		for(UMLOperation operation : removedOperations) {
+			if(operation.getClassName().equals(removedOperation.getClassName())) {
+				filteredRemovedOperations.add(operation);
+			}
+		}
+		List<AbstractCall> removedOperationInvocations = removedOperation.getAllOperationInvocations();
+		List<AbstractCall> addedOperationInvocations = addedOperation.getAllOperationInvocations();
+		Set<AbstractCall> intersection = new LinkedHashSet<AbstractCall>(removedOperationInvocations);
+		intersection.retainAll(addedOperationInvocations);
+		int numberOfInvocationsMissingFromAddedOperation = new LinkedHashSet<AbstractCall>(addedOperationInvocations).size() - intersection.size();
+		
+		Set<AbstractCall> operationInvocationsInMethodsCalledByRemovedOperation = new LinkedHashSet<AbstractCall>();
+		for(AbstractCall removedOperationInvocation : removedOperationInvocations) {
+			if(!intersection.contains(removedOperationInvocation)) {
+				for(UMLOperation operation : filteredRemovedOperations) {
+					if(!operation.equals(removedOperation) && operation.getBody() != null) {
+						if(removedOperationInvocation.matchesOperation(operation, removedOperation, classDiff, this)) {
+							//removedOperation calls another removed method
+							operationInvocationsInMethodsCalledByRemovedOperation.addAll(operation.getAllOperationInvocations());
+						}
+					}
+				}
+			}
+		}
+		Set<AbstractCall> newIntersection = new LinkedHashSet<AbstractCall>(addedOperationInvocations);
+		newIntersection.retainAll(operationInvocationsInMethodsCalledByRemovedOperation);
+		
+		Set<AbstractCall> addedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted = new LinkedHashSet<AbstractCall>(addedOperationInvocations);
+		addedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.removeAll(intersection);
+		addedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.removeAll(newIntersection);
+		for(Iterator<AbstractCall> operationInvocationIterator = addedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.iterator(); operationInvocationIterator.hasNext();) {
+			AbstractCall invocation = operationInvocationIterator.next();
+			if(invocation.getName().startsWith("get") || invocation.getName().equals("add") || invocation.getName().equals("contains")) {
+				operationInvocationIterator.remove();
+			}
+		}
+		
+		int numberOfInvocationsCalledByAddedOperationFoundInOtherRemovedOperations = newIntersection.size();
+		int numberOfInvocationsMissingFromAddedOperationWithoutThoseFoundInOtherRemovedOperations = numberOfInvocationsMissingFromAddedOperation - numberOfInvocationsCalledByAddedOperationFoundInOtherRemovedOperations;
+		return numberOfInvocationsCalledByAddedOperationFoundInOtherRemovedOperations > numberOfInvocationsMissingFromAddedOperationWithoutThoseFoundInOtherRemovedOperations ||
+				numberOfInvocationsCalledByAddedOperationFoundInOtherRemovedOperations > addedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.size();
+	}
+
 	private boolean isPartOfMethodExtracted(UMLOperation removedOperation, UMLOperation addedOperation, List<UMLOperation> addedOperations, UMLAbstractClassDiff classDiff) {
 		//filter addedOperations that belong to the same class as the addedOperation
 		List<UMLOperation> filteredAddedOperations = new ArrayList<>();
@@ -7789,6 +7861,8 @@ public class UMLModelDiff {
 			}
 		}
 		int exactLeafMappings = 0;
+		boolean identicalStringLiterals = false;
+		int todoMappings = 0;
 		for(AbstractCodeMapping mapping : mapper.getMappings()) {
 			if(mapping instanceof LeafMapping && mapping.isExact() && !mapping.getFragment1().getString().startsWith(LANG.RETURN_SPACE)
 					&& !(mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression)) {
@@ -7801,13 +7875,6 @@ public class UMLModelDiff {
 					exactLeafMappings++;
 				}
 			}
-		}
-		double normalizedEditDistance = mapper.normalizedEditDistance();
-		boolean zeroNonMapped = mapper.getNonMappedLeavesT1().size() == 0 && mapper.getNonMappedLeavesT2().size() == 0 &&
-				mapper.getNonMappedInnerNodesT1().size() == 0 && mapper.getNonMappedInnerNodesT2().size() == 0 &&
-				removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation();
-		boolean identicalStringLiterals = false;
-		for(AbstractCodeMapping mapping : mapper.getMappings()) {
 			List<LeafExpression> expressions1 = mapping.getFragment1().getStringLiterals();
 			List<LeafExpression> expressions2 = mapping.getFragment2().getStringLiterals();
 			int matches = 0;
@@ -7823,7 +7890,19 @@ public class UMLModelDiff {
 			if(matches == expressions1.size() && matches >= 10) {
 				identicalStringLiterals = true;
 			}
+			AbstractCall call1 = mapping.getFragment1().invocationCoveringEntireFragment();
+			AbstractCall call2 = mapping.getFragment2().invocationCoveringEntireFragment();
+			if(call1 != null && call2 != null && call1.getName().equals("TODO") && call2.getName().equals("TODO")) {
+				todoMappings++;
+			}
 		}
+		if(todoMappings == mapper.getMappings().size() && todoMappings > 0) {
+			return false;
+		}
+		double normalizedEditDistance = mapper.normalizedEditDistance();
+		boolean zeroNonMapped = mapper.getNonMappedLeavesT1().size() == 0 && mapper.getNonMappedLeavesT2().size() == 0 &&
+				mapper.getNonMappedInnerNodesT1().size() == 0 && mapper.getNonMappedInnerNodesT2().size() == 0 &&
+				removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation();
 		if(exactLeafMappings == 0 && !zeroNonMapped && !identicalStringLiterals && normalizedEditDistance > 0.24) {
 			return false;
 		}

@@ -19,6 +19,19 @@ import org.eclipse.jdt.core.dom.QualifiedType;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.UnionType;
 import org.eclipse.jdt.core.dom.WildcardType;
+import org.jetbrains.kotlin.com.intellij.psi.PsiElement;
+import org.jetbrains.kotlin.psi.KtAnnotationEntry;
+import org.jetbrains.kotlin.psi.KtElement;
+import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.psi.KtFunctionType;
+import org.jetbrains.kotlin.psi.KtIntersectionType;
+import org.jetbrains.kotlin.psi.KtModifierList;
+import org.jetbrains.kotlin.psi.KtNullableType;
+import org.jetbrains.kotlin.psi.KtParameter;
+import org.jetbrains.kotlin.psi.KtTypeElement;
+import org.jetbrains.kotlin.psi.KtTypeProjection;
+import org.jetbrains.kotlin.psi.KtTypeReference;
+import org.jetbrains.kotlin.psi.KtUserType;
 import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.ListCompositeType.Kind;
@@ -32,6 +45,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 	private LocationInfo locationInfo;
 	private int arrayDimension;
 	private boolean parameterized;
+	private boolean nullable;
 	private List<UMLType> typeArguments = new ArrayList<UMLType>();
 	protected List<UMLAnnotation> annotations = new ArrayList<UMLAnnotation>();
 
@@ -57,6 +71,10 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 
 	public void setVarargs() {
 		arrayDimension++;
+	}
+
+	public boolean isNullable() {
+		return nullable;
 	}
 
 	public String typeArgumentsToString() {
@@ -417,5 +435,90 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 			}
 		}
 		return false;
+	}
+
+	public static UMLType extractTypeObject(KtFile ktFile, String sourceFolder, String filePath, String fileContent, KtElement type, int extraDimensions) {
+		UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, type);
+		if (!(umlType instanceof InferredType)) {
+			umlType.locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, type, CodeElementType.TYPE);
+			umlType.arrayDimension += extraDimensions;
+		}
+		return umlType;
+	}
+
+	private static UMLType extractTypeObject(KtFile ktFile, String sourceFolder, String filePath, String fileContent, KtElement type) {
+		if (type == null) {
+			return new InferredType();
+		} else if (type instanceof KtUserType userType) {
+			KtUserType qualifier = userType.getQualifier();
+			if (qualifier != null) {
+				UMLType left = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, qualifier);
+				UMLType rightType = extractTypeObject(userType.getReferencedName());
+				for (KtTypeProjection typeProjection : userType.getTypeArguments()) {
+					UMLType projection = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeProjection);
+					rightType.typeArguments.add(projection);
+					rightType.parameterized = true;
+				}
+				return new CompositeType(left, (LeafType) rightType);
+			} else {
+				UMLType leafType = extractTypeObject(userType.getReferencedName());
+				for (KtTypeProjection typeProjection : userType.getTypeArguments()) {
+					UMLType projection = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeProjection);
+					leafType.typeArguments.add(projection);
+					leafType.parameterized = true;
+				}
+				return leafType;
+			}
+		} else if (type instanceof KtTypeReference typeReference) {
+			KtTypeElement element = typeReference.getTypeElement();
+			if (element instanceof KtFunctionType functionType) {
+				KtTypeReference returnTypeReference = functionType.getReturnTypeReference();
+				UMLType returnType = returnTypeReference == null ? null : extractTypeObject(ktFile, sourceFolder, filePath, fileContent, returnTypeReference);
+				KtTypeReference receiverTypeReference = functionType.getReceiverTypeReference();
+				UMLType receiverType = receiverTypeReference == null ? null : extractTypeObject(ktFile, sourceFolder, filePath, fileContent, receiverTypeReference);
+				List<UMLType> parameterTypeList = new ArrayList<>();
+				if (functionType.getParameterList() != null) {
+					List<KtParameter> parameterList = functionType.getParameterList().getParameters();
+					for (KtParameter ktParameter : parameterList) {
+						KtTypeReference parameterTypeReference = ktParameter.getTypeReference();
+						UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, parameterTypeReference);
+						parameterTypeList.add(umlType);
+					}
+				}
+				FunctionType umlType = new FunctionType(receiverType, returnType, parameterTypeList);
+				processAnnotations(ktFile, sourceFolder, filePath, fileContent, typeReference, umlType);
+				return umlType;
+			} else if(element instanceof KtUserType userType) {
+				UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, userType);
+				processAnnotations(ktFile, sourceFolder, filePath, fileContent, typeReference, umlType);
+				return umlType;
+			} else if(element instanceof KtNullableType nullableType) {
+				UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, nullableType.getInnerType());
+				umlType.nullable = true;
+				processAnnotations(ktFile, sourceFolder, filePath, fileContent, typeReference, umlType);
+				return umlType;
+			} else if (element instanceof KtIntersectionType intersectionType) {
+				List<UMLType> umlTypes = new ArrayList<UMLType>();
+				umlTypes.add(extractTypeObject(ktFile, sourceFolder, filePath, fileContent, intersectionType.getLeftTypeRef()));
+				umlTypes.add(extractTypeObject(ktFile, sourceFolder, filePath, fileContent, intersectionType.getRightTypeRef()));
+				ListCompositeType listCompositeType = new ListCompositeType(umlTypes, Kind.INTERSECTION);
+				return listCompositeType;
+			}
+		} else if (type instanceof KtTypeProjection typeProjection) {
+			UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeProjection.getTypeReference());
+			return umlType;
+		}
+		return null;
+	}
+
+	private static void processAnnotations(KtFile ktFile, String sourceFolder, String filePath, String fileContent, KtTypeReference typeReference, UMLType umlType) {
+		KtModifierList modifierList = typeReference.getModifierList();
+		if(modifierList != null) {
+			for (PsiElement modifier : modifierList.getChildren()) {
+				if (modifier instanceof KtAnnotationEntry annotationEntry) {
+					umlType.annotations.add(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
+				}
+			}
+		}
 	}
 }

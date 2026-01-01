@@ -24,7 +24,7 @@ public class SameModifierMatcher implements TreeMatcher {
         Tree srcTree = TreeUtilFunctions.findChildByTypeAndLabel(srcTypeDeclaration,type,modifier);
         Tree dstTree = TreeUtilFunctions.findChildByTypeAndLabel(dstTypeDeclaration,type,modifier);
         if (srcTree != null && dstTree != null){
-            mappingStore.addMapping(srcTree,dstTree);
+            mappingStore.addMappingRecursively(srcTree,dstTree);
         }
     }
 }

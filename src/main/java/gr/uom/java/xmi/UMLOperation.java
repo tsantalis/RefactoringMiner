@@ -44,12 +44,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private boolean isSynchronized;
 	private boolean isDefault;
 	private boolean isStrictfp;
+	private boolean isInline;
 	private Optional<UMLAnonymousClass> anonymousClassContainer;
 	private OperationBody operationBody;
 	private AbstractExpression defaultExpression;
 	private List<UMLAnonymousClass> anonymousClassList;
 	private List<UMLTypeParameter> typeParameters;
 	private List<UMLType> thrownExceptionTypes;
+	private UMLType receiverTypeReference;
 	private UMLJavadoc javadoc;
 	private List<UMLAnnotation> annotations;
 	private List<UMLModifier> modifiers;
@@ -237,6 +239,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		this.isStrictfp = isStrictfp;
 	}
 
+	public boolean isInline() {
+		return isInline;
+	}
+
+	public void setInline(boolean isInline) {
+		this.isInline = isInline;
+	}
+
 	public boolean isDeclaredInAnonymousClass() {
 		return anonymousClassContainer != null && anonymousClassContainer.isPresent();
 	}
@@ -348,6 +358,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return false;
 	}
 
+	public UMLType getReceiverTypeReference() {
+		return receiverTypeReference;
+	}
+
+	public void setReceiverTypeReference(UMLType receiverTypeReference) {
+		this.receiverTypeReference = receiverTypeReference;
+	}
+
 	public UMLJavadoc getJavadoc() {
 		return javadoc;
 	}
@@ -363,12 +381,16 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	public List<AbstractCall> getAllOperationInvocations() {
 		if(operationBody != null)
 			return operationBody.getAllOperationInvocations();
+		if(defaultExpression != null)
+			return defaultExpression.getAllOperationInvocations();
 		return Collections.emptyList();
 	}
 
 	public List<AbstractCall> getAllCreations() {
 		if(operationBody != null)
 			return operationBody.getAllCreations();
+		if(defaultExpression != null)
+			return defaultExpression.getAllCreations();
 		return Collections.emptyList();
 	}
 
@@ -556,7 +578,18 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				}
 			}
 		}
-		return this.name.equals(operation.name) && equalTypeParameters(operation) && (equalParameterTypes || compatibleParameterTypes) && equalReturnParameter(operation);
+		boolean equalReturnParameter = equalReturnParameter(operation);
+		if(!equalReturnParameter && LANG.equals(Constants.KOTLIN)) {
+			UMLParameter thisReturnParameter = this.getReturnParameter();
+			UMLParameter otherReturnParameter = operation.getReturnParameter();
+			if(thisReturnParameter != null && otherReturnParameter == null) {
+				equalReturnParameter = true;
+			}
+			else if(thisReturnParameter == null && otherReturnParameter != null) {
+				equalReturnParameter = true;
+			}
+		}
+		return this.name.equals(operation.name) && equalTypeParameters(operation) && (equalParameterTypes || compatibleParameterTypes) && equalReturnParameter;
 	}
 
 	public boolean equalSignatureRelaxedReturnType(UMLOperation operation) {
@@ -585,7 +618,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				}
 			}
 		}
-		return this.name.equals(operation.name) && equalTypeParameters(operation) && (equalParameterTypes || compatibleParameterTypes) && equalReturnParameterClassType(operation);
+		return this.name.equals(operation.name) && equalTypeParameters(operation) && (equalParameterTypes || compatibleParameterTypes) &&
+				(equalReturnParameterClassType(operation) || compatibleReturnParameter(operation));
 	}
 
 	public boolean equalSignatureIgnoringOperationName(UMLOperation operation) {

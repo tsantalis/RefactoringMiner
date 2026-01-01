@@ -129,6 +129,18 @@ public class TreeUtilFunctions {
 			for (Tree child: tree.getChildren()) {
 				if (isFromType(child, type) && child.getLabel().equals(label))
 					return child;
+				if (child.getType().name.equals(Constants.get().MODIFIERS)) {
+					for (Tree grandChild : child.getChildren()) {
+						if (grandChild.getType().name.endsWith("_modifier") && grandChild.getChild(0).getLabel().equals(label))
+							return grandChild;
+					}
+				}
+				else if (child.getType().name.endsWith("_modifier") && child.getLabel().equals(label)) {
+					return child;
+				}
+				else if(child.getType().name.equals(label) && child.getLabel().equals(label)) {
+					return child;
+				}
 			}
 		}
 		return null;

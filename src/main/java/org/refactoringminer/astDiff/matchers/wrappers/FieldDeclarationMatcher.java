@@ -12,6 +12,7 @@ import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
+import org.refactoringminer.util.PathFileUtils;
 
 import java.util.Optional;
 
@@ -63,7 +64,12 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         if (dstFieldDeclaration == null) {
             dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, Constants.get().RECORD_COMPONENT);
         }
-        //				|| srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
+        if (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment")) {
+            srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo(), Constants.get().FIELD_DECLARATION);
+        }
+        if (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment")) {
+            dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo(), Constants.get().FIELD_DECLARATION);
+        }
         new CommentMatcher(optimizationData, umlCommentListDiff).match(srcTree, dstTree, mappingStore);
         if (srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash) {
             //IsoStructural can't be a good idea here, i.e. anonymous class
@@ -74,6 +80,9 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             mappingStore.addMappingRecursively(srcAttr,dstAttr);
         }
 
+        if(srcFieldDeclaration != null && dstFieldDeclaration != null && PathFileUtils.isKotlinFile(srcUMLAttribute.getLocationInfo().getFilePath())) {
+        	mappingStore.addMappingRecursively(srcFieldDeclaration,dstFieldDeclaration);
+        }
         mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
         matchFieldAllModifiers(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute,dstUMLAttribute,mappingStore);
         matchFieldAnnotations(srcFieldDeclaration, dstFieldDeclaration, mappingStore);

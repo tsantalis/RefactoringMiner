@@ -99,8 +99,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private Optional<Pair<UMLType, UMLType>> superclassBecomesImplementedInterface;
 	private Optional<UMLJavadocDiff> javadocDiff;
 	private Optional<UMLJavadocDiff> packageDeclarationJavadocDiff;
+	private Optional<UMLParameterListDiff> primaryConstructorParameterListDiff;
 	private UMLCommentListDiff packageDeclarationCommentListDiff;
 	private Set<UMLOperationBodyMapper> extractMethodCandidates;
+	private int removedOperationDelegates;
 
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
 		super(originalClass, nextClass, modelDiff);
@@ -127,6 +129,27 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		else {
 			this.packageDeclarationJavadocDiff = Optional.empty();
 		}
+		if(originalClass.getPrimaryConstructor().isPresent() && nextClass.getPrimaryConstructor().isPresent()) {
+			UMLParameterListDiff parameterListDiff = new UMLParameterListDiff(originalClass.getPrimaryConstructor().get(), nextClass.getPrimaryConstructor().get(), Collections.emptySet(), Collections.emptySet(), this);
+			this.primaryConstructorParameterListDiff = Optional.of(parameterListDiff);
+			for(VariableDeclaration addedParameter : parameterListDiff.getAddedParameters()) {
+				if(addedParameter.isAttribute() && originalClass.getPrimaryConstructor().get().getParameters().size() == nextClass.getPrimaryConstructor().get().getParameters().size()) {
+					continue;
+				}
+				Refactoring r = new AddParameterRefactoring(addedParameter, originalClass.getPrimaryConstructor().get(), nextClass.getPrimaryConstructor().get());
+				this.refactorings.add(r);
+			}
+			for(VariableDeclaration removedParameter : parameterListDiff.getRemovedParameters()) {
+				if(removedParameter.isAttribute() && originalClass.getPrimaryConstructor().get().getParameters().size() == nextClass.getPrimaryConstructor().get().getParameters().size()) {
+					continue;
+				}
+				Refactoring r = new RemoveParameterRefactoring(removedParameter, originalClass.getPrimaryConstructor().get(), nextClass.getPrimaryConstructor().get());
+				this.refactorings.add(r);
+			}
+		}
+		else {
+			this.primaryConstructorParameterListDiff = Optional.empty();
+		}
 		processImports();
 	}
 
@@ -144,6 +167,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	public Optional<UMLJavadocDiff> getPackageDeclarationJavadocDiff() {
 		return packageDeclarationJavadocDiff;
+	}
+
+	public Optional<UMLParameterListDiff> getPrimaryConstructorParameterListDiff() {
+		return primaryConstructorParameterListDiff;
 	}
 
 	public UMLCommentListDiff getPackageDeclarationCommentListDiff() {
@@ -602,7 +629,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				if(mappings > 0) {
 					int nonMappedElementsT1 = mapper.nonMappedElementsT1();
 					int nonMappedElementsT2 = mapper.nonMappedElementsT2();
-					if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
+					if((mappings >= nonMappedElementsT1 && mappings >= nonMappedElementsT2) ||
 							isPartOfMethodExtracted(initializer1, initializer2) || isPartOfMethodInlined(initializer1, initializer2)) {
 						addOperationBodyMapper(mapper);
 						this.removedInitializers.remove(initializer1);
@@ -942,25 +969,43 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	protected void processOperations() throws RefactoringMinerTimedOutException {
 		for(UMLOperation operation : originalClass.getOperations()) {
-    		UMLOperation operationWithTheSameSignature = nextClass.operationWithTheSameSignatureIgnoringChangedTypes(operation);
+			UMLOperation operationWithTheSameSignature = nextClass.operationWithTheSameSignatureIgnoringChangedTypes(operation);
+			boolean skip = false;
+			if(operationWithTheSameSignature != null && originalClass.isInterface() && !operation.getName().equals(operationWithTheSameSignature.getName()) ) {
+				for(UMLOperation operation1 : originalClass.getOperations()) {
+					if(operation1.equalSignatureRelaxedReturnType(operationWithTheSameSignature)) {
+						skip = true;
+						break;
+					}
+				}
+			}
 			if(operationWithTheSameSignature == null) {
 				this.removedOperations.add(operation);
-    		}
-			else if(!mapperListContainsOperation(operation, operationWithTheSameSignature)) {
+			}
+			else if(!mapperListContainsOperation(operation, operationWithTheSameSignature) && !skip) {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation, operationWithTheSameSignature, this);
 				this.addOperationBodyMapper(mapper);
 			}
-    	}
-    	for(UMLOperation operation : nextClass.getOperations()) {
-    		UMLOperation operationWithTheSameSignature = originalClass.operationWithTheSameSignatureIgnoringChangedTypes(operation);
+		}
+		for(UMLOperation operation : nextClass.getOperations()) {
+			UMLOperation operationWithTheSameSignature = originalClass.operationWithTheSameSignatureIgnoringChangedTypes(operation);
+			boolean skip = false;
+			if(operationWithTheSameSignature != null && nextClass.isInterface() && !operation.getName().equals(operationWithTheSameSignature.getName()) ) {
+				for(UMLOperation operation2 : nextClass.getOperations()) {
+					if(operation2.equalSignatureRelaxedReturnType(operationWithTheSameSignature)) {
+						skip = true;
+						break;
+					}
+				}
+			}
 			if(operationWithTheSameSignature == null) {
 				this.addedOperations.add(operation);
-    		}
-			else if(!mapperListContainsOperation(operationWithTheSameSignature, operation)) {
+			}
+			else if(!mapperListContainsOperation(operationWithTheSameSignature, operation) && !skip) {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operationWithTheSameSignature, operation, this);
 				this.addOperationBodyMapper(mapper);
 			}
-    	}
+		}
 	}
 
 	private boolean attributeDiffListContainsAttribute(UMLAttribute attribute1, UMLAttribute attribute2) {
@@ -1287,6 +1332,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				List<UMLOperation> matchingOperations = new ArrayList<UMLOperation>();
 				for(UMLOperation removedOperation : removedOperations) {
 					if(matchCondition(removedOperation, addedOperation)) {
+						if(removedOperation.getBodyHashCode() == addedOperation.getBodyHashCode() && matchingOperations.size() > 0 && matchingOperations.get(0).delegatesTo(removedOperation, this, modelDiff) != null)
+							continue;
 						if(removedOperation.isConstructor() && addedOperation.isConstructor()) {
 							if(removedOperation.equalParameterTypes(addedOperation))
 								matchingOperations.add(removedOperation);
@@ -1314,9 +1361,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private boolean matchCondition(UMLOperation removedOperation, UMLOperation addedOperation) {
 		List<String> removedOperationParameterNameList = removedOperation.getParameterNameList();
 		List<String> addedOperationParameterNameList = addedOperation.getParameterNameList();
-		if(removedOperation.getName().equals(addedOperation.getName()) &&
+		if((removedOperation.getName().equals(addedOperation.getName()) &&
 				removedOperation.getParameters().size() == addedOperation.getParameters().size() &&
-				removedOperation.isAbstract() == addedOperation.isAbstract()) {
+				removedOperation.isAbstract() == addedOperation.isAbstract()) ||
+				(removedOperation.getBodyHashCode() == addedOperation.getBodyHashCode() && removedOperation.getBodyHashCode() != 0)) {
 			if(removedOperation.getParameterTypeList().equals(addedOperation.getParameterTypeList()) &&
 					removedOperationParameterNameList.equals(addedOperationParameterNameList)) {
 				return true;
@@ -1434,6 +1482,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	private void checkForOperationSignatureChanges() throws RefactoringMinerTimedOutException {
+		for(UMLOperation op1 : removedOperations) {
+			for(UMLOperation op2 : removedOperations) {
+				if(!op1.equals(op2) && op1.delegatesTo(op2, this, modelDiff) != null) {
+					removedOperationDelegates++;
+					break;
+				}
+			}
+		}
 		boolean junit3Migration = nextClass.importsType("org.junit.Test") != originalClass.importsType("org.junit.Test");
 		if(parameterTypeChanges(removedOperations, addedOperations)) {
 			this.consistentMethodInvocationRenames = new HashMap<MethodInvocationReplacement, UMLOperationBodyMapper>();
@@ -2682,7 +2738,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
-		if(mappings > 0 || (delegatesToAnotherRemovedOperation(removedOperation) && addedOperation.getBody() != null && addedOperation.stringRepresentation().size() > 3) || (removedOperation.getName().equals(addedOperation.getName()) && removedOperation.getBody() != null && addedOperation.getBody() != null) ||
+		if(mappings > 0 || (delegatesToAnotherRemovedOperation(removedOperation) && addedOperation.getBody() != null && (addedOperation.stringRepresentation().size() > 3 || addedOperation.getAllLambdas().size() > 0)) || (removedOperation.getName().equals(addedOperation.getName()) && removedOperation.getBody() != null && addedOperation.getBody() != null) ||
 				removedOperation.equalSignatureForAbstractMethods(addedOperation)) {
 			boolean zeroNonMapped = operationBodyMapper.getNonMappedLeavesT1().size() == 0 && operationBodyMapper.getNonMappedLeavesT2().size() == 0 &&
 					operationBodyMapper.getNonMappedInnerNodesT1().size() == 0 && operationBodyMapper.getNonMappedInnerNodesT2().size() == 0 &&
@@ -2694,7 +2750,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				mapperSet.add(operationBodyMapper);
 			}
 			else if(mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper) &&
-					(relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) || zeroNonMapped || containsAnonymousClassDiff) &&
+					(relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) || zeroNonMapped || containsAnonymousClassDiff || operationsBeforeAndAfterMatch(removedOperation, addedOperation)) &&
 					compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition) &&
 					removedOperation.testMethodCheck(addedOperation)) {
 				isPartOfMethodMovedFromDeletedMethod(removedOperation, addedOperation, operationBodyMapper, mapperSet);
@@ -2860,7 +2916,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	private boolean relativePositionCheck(int differenceInPosition, int absoluteDifferenceInPosition) {
-		return absoluteDifferenceInPosition <= differenceInPosition || (removedOperations.size() == addedOperations.size() && removedOperations.size() == 1 && !originalClass.isTestClass() && !nextClass.isTestClass());
+		return absoluteDifferenceInPosition <= differenceInPosition || (removedOperations.size() == addedOperations.size() && removedOperations.size() == 1 && !originalClass.isTestClass() && !nextClass.isTestClass()) ||
+				(removedOperations.size() - removedOperationDelegates == addedOperations.size() && removedOperations.size() - removedOperationDelegates == 1 && !originalClass.isTestClass() && !nextClass.isTestClass());
 	}
 
 	private void updateMapperSet(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperation removedOperation, UMLOperation operationInsideAnonymousClass, UMLOperation addedOperation, int differenceInPosition) throws RefactoringMinerTimedOutException {

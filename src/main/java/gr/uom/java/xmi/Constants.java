@@ -7,7 +7,7 @@ public enum Constants {
 	PYTHON("\n", "return ", "return\n", "return true\n", "return false\n", "return None\n", "return self\n", "=", "break\n", "continue\n",
 			" -> ", "::", " + ", "raise ", "case ", "try", "{", "}", "{", "}", "self", "self.", " if ", " else ", "assertRaises", "assertRaises", " and ", " or ", "not ", "None", "True", "False"),
 	
-	KOTLIN("\n", "return ", "return\n", "return true\n", "return false\n", "return null\n", "return this\n", "=", "break\n", "continue\n",
+	KOTLIN("\n", "return ", "return\n", "return true\n", "return false\n", "return null\n", "return this\n", " = ", "break\n", "continue\n",
 			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", " if ", " else ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "null", "true", "false");
 	
 	public final String STATEMENT_TERMINATION;

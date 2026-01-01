@@ -1,5 +1,6 @@
 package gr.uom.java.xmi;
 
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
@@ -21,11 +22,15 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean isInterface;
 	private boolean isEnum;
 	private boolean isAnnotation;
+	private boolean isData;
 	private boolean isRecord;
 	private boolean topLevel;
 	private boolean isLocal;
 	private boolean isModule;
+	private boolean isObject;
     private List<UMLTypeParameter> typeParameters;
+    private Optional<PrimaryConstructor> primaryConstructor;
+    private List<AbstractExpression> superTypeCallEntries;
     private UMLJavadoc javadoc;
     private Optional<UMLPackage> packageDeclaration;
     private UMLJavadoc packageDeclarationJavadoc;
@@ -72,6 +77,8 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.isInterface = false;
         this.topLevel = topLevel;
         this.typeParameters = new ArrayList<UMLTypeParameter>();
+        this.primaryConstructor = Optional.empty();
+        this.superTypeCallEntries = new ArrayList<>();
         this.packageDeclarationComments = new ArrayList<UMLComment>();
         this.packageDeclaration = Optional.empty();
     }
@@ -85,6 +92,8 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     		return "annotation";
     	else if(isRecord)
     		return "record";
+    	else if(isObject)
+    		return "object";
     	else
     		return "class";
     }
@@ -97,31 +106,43 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		this.actualSignature = actualSignature;
 	}
 
-    public List<UMLTypeParameter> getTypeParameters() {
+	public List<UMLTypeParameter> getTypeParameters() {
 		return typeParameters;
 	}
 
-    public List<String> getTypeParameterNames() {
-    	List<String> typeParameterNames = new ArrayList<String>();
+	public List<String> getTypeParameterNames() {
+		List<String> typeParameterNames = new ArrayList<String>();
 		for(UMLTypeParameter typeParameter : typeParameters) {
 			typeParameterNames.add(typeParameter.getName());
 		}
 		return typeParameterNames;
 	}
 
-	public void addTypeParameter(UMLTypeParameter typeParameter) {
-    	typeParameters.add(typeParameter);
-    }
+	public void addSuperTypeCallEntry(AbstractExpression expr) {
+		this.superTypeCallEntries.add(expr);
+	}
 
-    public String getSourceFolder() {
+	public void setPrimaryConstructorParameter(PrimaryConstructor primary) {
+		primaryConstructor = Optional.of(primary);
+	}
+
+	public Optional<PrimaryConstructor> getPrimaryConstructor() {
+		return primaryConstructor;
+	}
+
+	public void addTypeParameter(UMLTypeParameter typeParameter) {
+		typeParameters.add(typeParameter);
+	}
+
+	public String getSourceFolder() {
 		return sourceFolder;
 	}
 
-    public String getName() {
-    	return this.qualifiedName;
-    }
+	public String getName() {
+		return this.qualifiedName;
+	}
 
-    public boolean isTopLevel() {
+	public boolean isTopLevel() {
 		return topLevel;
 	}
 
@@ -201,6 +222,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		this.isRecord = isRecord;
 	}
 
+	public boolean isData() {
+		return isData;
+	}
+
+	public void setData(boolean isData) {
+		this.isData = isData;
+	}
+
 	public boolean isInterface() {
 		return isInterface;
 	}
@@ -223,6 +252,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void setModule(boolean isModule) {
 		this.isModule = isModule;
+	}
+
+	public boolean isObject() {
+		return isObject;
+	}
+
+	public void setObject(boolean isObject) {
+		this.isObject = isObject;
 	}
 
 	public UMLJavadoc getJavadoc() {

@@ -17,12 +17,15 @@ public class UMLComment extends UMLAbstractDocumentation {
 	//represents non-attached Javadocs found within method bodies
 	private Optional<UMLJavadoc> javaDoc;
 	private CompositeStatementObject parent;
+	private boolean markdown;
 	private List<LocationInfo> previousLineLocations = new ArrayList<>();
 	private static final Pattern EMPTY_LINES = Pattern.compile("(^\\s*$\\r?\\n)+", Pattern.MULTILINE);
 
 	public UMLComment(String text, LocationInfo locationInfo) {
 		super(text, locationInfo);
 		this.javaDoc = Optional.empty();
+		if(text.startsWith("///"))
+			markdown = true;
 	}
 
 	public void setJavaDoc(UMLJavadoc doc) {
@@ -47,6 +50,10 @@ public class UMLComment extends UMLAbstractDocumentation {
 
 	public void addPreviousLocation(LocationInfo info) {
 		previousLineLocations.add(info);
+	}
+
+	public boolean isMarkdown() {
+		return markdown;
 	}
 
 	@Override

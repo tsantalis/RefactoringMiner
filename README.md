@@ -8,10 +8,11 @@
 [![Test Results](https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2Ftsantalis%2F19fb416d06d1b4d40820e0209540f6c0%2Fraw%2FRefactoringMiner-junit-tests.json)](https://github.com/tsantalis/RefactoringMiner/actions/workflows/gradle.yml)
 
 ### Programming languages supported by RefactoringMiner:
-| Language | Refactoring detection | AST diff generation |
-|:-----------------------|-----------:|--------:|
-|<img src="https://upload.wikimedia.org/wikipedia/en/3/30/Java_programming_language_logo.svg" alt="Java" height="60"/> | ✅ | ✅ |
-|<img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Python_logo_and_wordmark.svg" alt="Python" width="100"/> | ✅ | ✅ |
+| Language | Refactoring detection | AST diff generation | Roadmap |
+|:-----------------------|:-----------|:--------|:--------|
+|<img src="https://upload.wikimedia.org/wikipedia/en/3/30/Java_programming_language_logo.svg" alt="Java" height="60"/> | ✅ | ✅ | |
+|<img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Python_logo_and_wordmark.svg" alt="Python" width="120"/> | ✅ | ✅ | <ul><li>- [ ] Support comments</li><li>- [ ] Support version 3.14</li></ul> |
+|<img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Kotlin_logo_%282021-present%29.svg" alt="Kotlin" width="100"/> | ✅ | ✅ | <ul><li>- [ ] Validate precision/recall</li></ul> |
 
 
 ### Open source projects using RefactoringMiner diff tool for code reviews:
@@ -389,11 +390,11 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **December 16, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **December 30, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12600  | 13  | 215  | 0.999  | 0.983|
+|**Total**|12608  | 13  | 215  | 0.999  | 0.983|
 |Extract Method|1019  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
@@ -401,7 +402,7 @@ As of **December 16, 2025** the precision and recall of RefactoringMiner on this
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|394  |  2  | 20  | 0.995  | 0.952|
 |Inline Method|119  |  0  |  1  | 1.000  | 0.992|
-|Move Method|388  |  3  |  5  | 0.992  | 0.987|
+|Move Method|390  |  3  |  5  | 0.992  | 0.987|
 |Move And Rename Method|130  |  0  |  4  | 1.000  | 0.970|
 |Pull Up Method|285  |  0  |  5  | 1.000  | 0.983|
 |Move Class|1095  |  0  |  4  | 1.000  | 0.996|
@@ -414,7 +415,7 @@ As of **December 16, 2025** the precision and recall of RefactoringMiner on this
 |Extract Superclass|74  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|108  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|127  |  0  | 60  | 1.000  | 0.679|
+|Extract And Move Method|128  |  0  | 60  | 1.000  | 0.681|
 |Move And Inline Method|12  |  0  |  4  | 1.000  | 0.750|
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
@@ -436,9 +437,9 @@ As of **December 16, 2025** the precision and recall of RefactoringMiner on this
 |Parameterize Variable|112  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|31  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|25  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|435  |  0  | 12  | 1.000  | 0.973|
+|Change Return Type|436  |  0  | 12  | 1.000  | 0.973|
 |Change Variable Type|817  |  1  |  7  | 0.999  | 0.992|
-|Change Parameter Type|657  |  1  | 10  | 0.998  | 0.985|
+|Change Parameter Type|658  |  1  | 10  | 0.998  | 0.985|
 |Change Attribute Type|244  |  0  |  4  | 1.000  | 0.984|
 |Add Method Annotation|331  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|98  |  0  |  0  | 1.000  | 1.000|
@@ -453,7 +454,7 @@ As of **December 16, 2025** the precision and recall of RefactoringMiner on this
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter|851  |  1  |  1  | 0.999  | 0.999|
-|Remove Parameter|324  |  0  |  0  | 1.000  | 1.000|
+|Remove Parameter|327  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 2  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 4  |  0  |  0  | 1.000  | 1.000|
@@ -521,11 +522,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Merge Parameter`
 * `Invert Condition`
 
-As of **December 16, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **December 22, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3522  | 41  | 76  | 0.988  | 0.979|
+|**Total**|3527  | 41  | 76  | 0.989  | 0.979|
 |Extract Method|373  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -544,7 +545,7 @@ As of **December 16, 2025** the precision and recall of RefactoringMiner on this
 |Extract Superclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|45  |  1  |  4  | 0.978  | 0.918|
-|Extract And Move Method|123  |  2  |  5  | 0.984  | 0.961|
+|Extract And Move Method|128  |  2  |  5  | 0.985  | 0.962|
 |Move And Inline Method|29  |  1  |  6  | 0.967  | 0.829|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|292  |  1  |  6  | 0.997  | 0.980|
@@ -609,11 +610,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Invert Condition`
 * `Split Parameter`
 
-As of **December 17, 2025** the precision and recall of RefactoringMiner on this benchmark is:
+As of **December 22, 2025** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1103  |  6  |  2  | 0.995  | 0.998|
+|**Total**|1107  |  6  |  2  | 0.995  | 0.998|
 |Extract Method|38  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|13  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 5  |  0  |  0  | 1.000  | 1.000|
@@ -627,10 +628,10 @@ As of **December 17, 2025** the precision and recall of RefactoringMiner on this
 |Pull Up Attribute| 4  |  0  |  0  | 1.000  | 1.000|
 |Push Down Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method| 3  |  0  |  0  | 1.000  | 1.000|
-|Extract Superclass| 3  |  0  |  0  | 1.000  | 1.000|
+|Extract Superclass| 4  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 2  |  0  |  0  | 1.000  | 1.000|
 |Extract Class| 3  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|10  |  0  |  0  | 1.000  | 1.000|
+|Extract And Move Method|13  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|56  |  1  |  0  | 0.982  | 1.000|
 |Inline Variable|21  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|119  |  1  |  0  | 0.992  | 1.000|

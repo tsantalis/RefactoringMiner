@@ -1,0 +1,1486 @@
+[{
+    "id": 1,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "720da617c258cac1e2a341f6e72aa6dd93ca771e",
+    "url": "https://github.com/android/architecture-samples/commit/720da617c258cac1e2a341f6e72aa6dd93ca771e",
+    "author": "JoseAlcerreca",
+    "time": "5/28/19 01:17 PM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public drawNavigationFromTasksToStatistics() renamed to public drawerNavigationFromTasksToStatistics() in class com.example.android.architecture.blueprints.todoapp.tasks.AppNavigationTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 2,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "8e1e0527a0d043b41da58925a39fb8e03d62829a",
+    "url": "https://github.com/android/architecture-samples/commit/8e1e0527a0d043b41da58925a39fb8e03d62829a",
+    "author": "manuelvicnt",
+    "time": "3/15/22 06:35 AM",
+    "refactorings": [{
+        "type": "Rename Class",
+        "description": "Rename Class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest renamed to com.example.android.architecture.blueprints.todoapp.tasks.TasksScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private launchScreen() extracted from public clickAddTaskButton_navigateToAddEditFragment() in class com.example.android.architecture.blueprints.todoapp.tasks.TasksScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 3,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "82503b7ecc3fca5110bdd6eb824b7a029de2ad7f",
+    "url": "https://github.com/android/architecture-samples/commit/82503b7ecc3fca5110bdd6eb824b7a029de2ad7f",
+    "author": "dmeng",
+    "time": "4/23/19 12:17 PM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public clickAddTaskButton_opensAddTaskUi() renamed to public createTask() in class com.example.android.architecture.blueprints.todoapp.tasks.TasksScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @SmallTest in class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksDaoTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @MediumTest in class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @SmallTest in class com.example.android.architecture.blueprints.todoapp.tasks.TasksSingleScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Class Annotation",
+        "description": "Remove Class Annotation @Ignore(\"blocked on robolectric/4862\") in class com.example.android.architecture.blueprints.todoapp.tasks.TasksSingleScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Ignore(\"blocked on robolectric/4862\") in method public displayActiveTask() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksSingleScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Ignore(\"blocked on robolectric/4862\") in method public displayCompletedTask() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksSingleScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Ignore(\"blocked on robolectric/4862\") in method public deleteOneTest() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksSingleScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Ignore(\"blocked on robolectric/4862\") in method public deleteOneOfTwoTests() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksSingleScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 4,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "0aba5dc1240238fa8ed32bb745db6b5a61671466",
+    "url": "https://github.com/android/architecture-samples/commit/0aba5dc1240238fa8ed32bb745db6b5a61671466",
+    "author": "ceruleanotter",
+    "time": "7/11/19 12:55 PM",
+    "refactorings": [{
+        "type": "Rename Attribute",
+        "description": "Rename Attribute statisticsViewModel : Inferred to viewModel : Inferred in class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public getVmFactory() : ViewModelFactory renamed to public getViewModelFactory() : ViewModelFactory in class com.example.android.architecture.blueprints.todoapp.util.FragmentExt.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute snackbarMessage : LiveData<Event<Int>> to snackbarText : LiveData<Event<Int>> in class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute _taskUpdated : Inferred to _taskUpdatedEvent : Inferred in class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute snackbarMessage : LiveData<Event<Int>> to snackbarText : LiveData<Event<Int>> in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute _deleteTaskCommand : Inferred to _deleteTaskEvent : Inferred in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute _editTaskCommand : Inferred to _editTaskEvent : Inferred in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute snackbarMessage : LiveData<Event<Int>> to snackbarText : LiveData<Event<Int>> in class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute deleteTaskCommand : LiveData<Event<Unit>> to deleteTaskEvent : LiveData<Event<Unit>> in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute editTaskCommand : LiveData<Event<Unit>> to editTaskEvent : LiveData<Event<Unit>> in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 5,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "0870f15b4985ea743cef403047f418d75fe56fb9",
+    "url": "https://github.com/android/architecture-samples/commit/0870f15b4985ea743cef403047f418d75fe56fb9",
+    "author": "JoseAlcerreca",
+    "time": "4/30/19 02:51 PM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public resetState() renamed to public init() in class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public resetForTests() renamed to public resetRepository() in class com.example.android.architecture.blueprints.todoapp.ServiceLocator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @VisibleForTesting in method public resetRepository() from class com.example.android.architecture.blueprints.todoapp.ServiceLocator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Attribute Annotation",
+        "description": "Add Attribute Annotation @Volatile in attribute public tasksRepository : TasksRepository from class com.example.android.architecture.blueprints.todoapp.ServiceLocator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Code",
+        "description": "Move Code from public resetForTests() to public resetRepository() in class com.example.android.architecture.blueprints.todoapp.ServiceLocator",
+        "comment": "<p>code is moved within a lambda expression body<br />database?.apply {<br /> clearAllTables()<br /> close()<br /> }</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public tasksRepository : TasksRepository from class com.example.android.architecture.blueprints.todoapp.ServiceLocator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 6,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "17da41e50e9fc9e005abf3164eeef2cec05afea6",
+    "url": "https://github.com/android/architecture-samples/commit/17da41e50e9fc9e005abf3164eeef2cec05afea6",
+    "author": "dturner",
+    "time": "2/28/23 06:22 AM",
+    "refactorings": [{
+        "type": "Remove Parameter",
+        "description": "Remove Parameter ioDispatcher : CoroutineDispatcher in method public provideTasksRepository(remoteDataSource TasksDataSource, localDataSource TasksDataSource, ioDispatcher CoroutineDispatcher) : TasksRepository from class com.example.android.architecture.blueprints.todoapp.di.RepositoryModule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter ioDispatcher : CoroutineDispatcher in method public provideTasksLocalDataSource(database ToDoDatabase, ioDispatcher CoroutineDispatcher) : TasksDataSource from class com.example.android.architecture.blueprints.todoapp.di.DataSourceModule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method public activateTask(task Task) inlined to public activateTask(taskId String) in class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method public completeTask(task Task) inlined to public completeTask(taskId String) in class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter ioDispatcher : CoroutineDispatcher in method TasksLocalDataSource(tasksDao TasksDao, ioDispatcher CoroutineDispatcher) from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter ioDispatcher : CoroutineDispatcher in method DefaultTasksRepository(tasksRemoteDataSource TasksDataSource, tasksLocalDataSource TasksDataSource, ioDispatcher CoroutineDispatcher) from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type task : Task to taskId : String in method public completeTask(taskId String) from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": "<p>Inline Method public completeTask(task Task) inlined to public completeTask(taskId String)</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter task : Task to taskId : String in method public completeTask(taskId String) from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": "<p>Inline Method public completeTask(task Task) inlined to public completeTask(taskId String)</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type task : Task to taskId : String in method public activateTask(taskId String) from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": "<p>Inline Method public activateTask(task Task) inlined to public activateTask(taskId String)</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter task : Task to taskId : String in method public activateTask(taskId String) from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": "<p>Inline Method public activateTask(task Task) inlined to public activateTask(taskId String)</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 7,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "1bfd69c01d4b52e5af548133daca62445ba266b0",
+    "url": "https://github.com/android/architecture-samples/commit/1bfd69c01d4b52e5af548133daca62445ba266b0",
+    "author": "JoseAlcerreca",
+    "time": "6/1/21 07:18 AM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public onActivityCreated(savedInstanceState Bundle) renamed to public onViewCreated(view View, savedInstanceState Bundle) in class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onActivityCreated(savedInstanceState Bundle) renamed to public onViewCreated(view View, savedInstanceState Bundle) in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onActivityCreated(savedInstanceState Bundle) renamed to public onViewCreated(view View, savedInstanceState Bundle) in class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onActivityCreated(savedInstanceState Bundle) renamed to public onViewCreated(view View, savedInstanceState Bundle) in class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter view : View in method public onViewCreated(view View, savedInstanceState Bundle) from class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter view : View in method public onViewCreated(view View, savedInstanceState Bundle) from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter view : View in method public onViewCreated(view View, savedInstanceState Bundle) from class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter view : View in method public onViewCreated(view View, savedInstanceState Bundle) from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type navController : NavController to navController : TestNavHostController in method private launchFragment(navController TestNavHostController) from class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type fragmentScenario : FragmentScenario<Fragment> to fragmentScenario : FragmentScenario<T> in method public monitorFragment(fragmentScenario FragmentScenario<T>) from class com.example.android.architecture.blueprints.todoapp.util.DataBindingIdlingResource.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 8,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "48bb7b5fefe0b9da8e2fa3bb39868af4f32f5f57",
+    "url": "https://github.com/android/architecture-samples/commit/48bb7b5fefe0b9da8e2fa3bb39868af4f32f5f57",
+    "author": "ceruleanotter",
+    "time": "7/3/19 01:22 PM",
+    "refactorings": [{
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @Suppress(\"UNCHECKED_CAST\") in class com.example.android.architecture.blueprints.todoapp.ViewModelFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onRefresh() renamed to public refresh() in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private taskId : String from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter forceRefresh : Boolean in method public start(taskId String, forceRefresh Boolean) from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 9,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "498dde087909261b277578edd1c689a61efd8fc9",
+    "url": "https://github.com/android/architecture-samples/commit/498dde087909261b277578edd1c689a61efd8fc9",
+    "author": "JoseAlcerreca",
+    "time": "4/10/19 05:48 AM",
+    "refactorings": [{
+        "type": "Change Type Declaration Kind",
+        "description": "Change Type Declaration Kind object to class in type com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute TASKS_SERVICE_DATA : LinkedHashMap<String,Task> to tasksServiceData : LinkedHashMap<String,Task> in class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public tasksServiceData : LinkedHashMap<String,Task> from class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable itemsValue : Inferred in method public loadTasks(forceUpdate Boolean) from class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass com.example.android.architecture.blueprints.todoapp.BaseViewModel from classes [com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModel, com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModel, com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel, com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel]",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter coroutineContext : CoroutineContext in method AddEditTaskViewModel(tasksRepository TasksRepository, coroutineContext CoroutineContext) from class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter coroutineContext : CoroutineContext in method TaskDetailViewModel(tasksRepository TasksRepository, coroutineContext CoroutineContext) from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter coroutineContext : CoroutineContext in method TasksViewModel(tasksRepository TasksRepository, coroutineContext CoroutineContext) from class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter coroutineContext : CoroutineContext in method StatisticsViewModel(tasksRepository TasksRepository, coroutineContext CoroutineContext) from class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier internal to public in method public saveTask() from class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @ObsoleteCoroutinesApi in class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModelTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 10,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "4aff2473f2247237ead641e702530762536f50a0",
+    "url": "https://github.com/android/architecture-samples/commit/4aff2473f2247237ead641e702530762536f50a0",
+    "author": "dturner",
+    "time": "3/27/23 11:06 AM",
+    "refactorings": [{
+        "type": "Rename Attribute",
+        "description": "Rename Attribute tasksNetworkDataSource : NetworkDataSource to networkDataSource : NetworkDataSource in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute taskDao : TaskDao to localDataSource : TaskDao in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Type Declaration Kind",
+        "description": "Change Type Declaration Kind object to class in type com.example.android.architecture.blueprints.todoapp.data.source.network.TaskNetworkDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Type Declaration Kind",
+        "description": "Change Type Declaration Kind object to class in type com.example.android.architecture.blueprints.todoapp.di.RepositoryModule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Type Declaration Kind",
+        "description": "Change Type Declaration Kind object to class in type com.example.android.architecture.blueprints.todoapp.di.DataSourceModule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Modifier",
+        "description": "Add Class Modifier abstract in class com.example.android.architecture.blueprints.todoapp.di.RepositoryModule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Modifier",
+        "description": "Add Class Modifier abstract in class com.example.android.architecture.blueprints.todoapp.di.DataSourceModule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute coroutineDispatcher : CoroutineDispatcher to dispatcher : CoroutineDispatcher in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Attribute Annotation",
+        "description": "Add Attribute Annotation @DefaultDispatcher in attribute private dispatcher : CoroutineDispatcher from class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter scope : CoroutineScope in method DefaultTaskRepository(networkDataSource NetworkDataSource, localDataSource TaskDao, dispatcher CoroutineDispatcher, scope CoroutineScope) from class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public refreshTasks() renamed to public refresh() in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public refreshTasks() renamed to public refresh() in class com.example.android.architecture.blueprints.todoapp.data.FakeTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public refreshTasks() renamed to public refresh() in class com.example.android.architecture.blueprints.todoapp.data.TaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method private loadTasksFromNetwork() inlined to public refresh() in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @Singleton in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 11,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "515e82c93a69423e831e58948e1e537fa50aee1f",
+    "url": "https://github.com/android/architecture-samples/commit/515e82c93a69423e831e58948e1e537fa50aee1f",
+    "author": "JoseAlcerreca",
+    "time": "7/9/19 11:41 AM",
+    "refactorings": [{
+        "type": "Remove Parameter",
+        "description": "Remove Parameter forceRefresh : Boolean in method public start(taskId String, forceRefresh Boolean) from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 12,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "570c0b592e00fea0319e44e7a46ab23a7e03369c",
+    "url": "https://github.com/android/architecture-samples/commit/570c0b592e00fea0319e44e7a46ab23a7e03369c",
+    "author": "JoseAlcerreca",
+    "time": "4/8/19 10:54 AM",
+    "refactorings": [{
+        "type": "Extract Method",
+        "description": "Extract Method private setupSnackbar() extracted from public onActivityCreated(savedInstanceState Bundle) in class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private setupSnackbar() extracted from public onActivityCreated(savedInstanceState Bundle) in class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier internal to public in method public saveTask() from class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method public obtainViewModel() : TasksViewModel moved from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivity to class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragment & inlined to public onCreateView(inflater LayoutInflater, container ViewGroup, savedInstanceState Bundle) : View",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method public obtainViewModel() : AddEditTaskViewModel moved from class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskActivity to class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragment & inlined to public onCreateView(inflater LayoutInflater, container ViewGroup, savedInstanceState Bundle) : View",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method public obtainViewModel() : StatisticsViewModel moved from class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsActivity to class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsFragment & inlined to public onActivityCreated(savedInstanceState Bundle)",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method public obtainViewModel() : TaskDetailViewModel moved from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailActivity to class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailFragment & inlined to public onCreateView(inflater LayoutInflater, container ViewGroup, savedInstanceState Bundle) : View",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Attribute With Variable",
+        "description": "Replace Attribute With Variable activityScenario : ActivityScenario<TaskDetailActivity> to scenario : Inferred in method public activeTaskDetails_DisplayedInUi() from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Attribute With Variable",
+        "description": "Replace Attribute With Variable activityScenario : ActivityScenario<TaskDetailActivity> to scenario : Inferred in method public completedTaskDetails_DisplayedInUi() from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable tasksRepository : Inferred in method public setup() from class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable activityScenario : Inferred to scenario : Inferred in method public tasks_showsNonEmptyMessage() from class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public handleActivityResult(requestCode Int, resultCode Int) renamed to public showEditResultMessage(result Int) in class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resultCode : Int to result : Int in method public showEditResultMessage(result Int) from class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 13,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "5dec53b48b7dce677f9c2a99dec42166b0d97ddb",
+    "url": "https://github.com/android/architecture-samples/commit/5dec53b48b7dce677f9c2a99dec42166b0d97ddb",
+    "author": "dmeng",
+    "time": "4/24/19 05:36 PM",
+    "refactorings": [{
+        "type": "Move Method",
+        "description": "Move Method public showActiveTasks() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public showActiveTasks() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public showCompletedTasks() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public showCompletedTasks() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public noTasks_AllTasksFilter_AddTaskViewVisible() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public noTasks_AllTasksFilter_AddTaskViewVisible() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public noTasks_CompletedTasksFilter_AddTaskViewNotVisible() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public noTasks_CompletedTasksFilter_AddTaskViewNotVisible() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public noTasks_ActiveTasksFilter_AddTaskViewNotVisible() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public noTasks_ActiveTasksFilter_AddTaskViewNotVisible() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public markTaskAsComplete() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public markTaskAsComplete() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public markTaskAsActive() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public markTaskAsActive() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @MediumTest in method public displayTask_whenRepositoryHasData() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Attribute",
+        "description": "Inline Attribute private TITLE1 : Inferred in class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Attribute",
+        "description": "Inline Attribute private TITLE2 : Inferred in class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Attribute",
+        "description": "Inline Attribute private TITLE3 : Inferred in class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method private viewAllTasks() inlined to public createOneTask_deleteTask() in class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method private viewAllTasks() inlined to public createTwoTasks_deleteOneTask() in class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public showAllTasks() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public showAllTasks() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public clearCompletedTasks() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest to public clearCompletedTasks() from class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 14,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "a3d0c076e6aab1abcf403a903a8dc077ef332ed9",
+    "url": "https://github.com/android/architecture-samples/commit/a3d0c076e6aab1abcf403a903a8dc077ef332ed9",
+    "author": "dturner",
+    "time": "2/24/23 01:09 PM",
+    "refactorings": [{
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<List<Task>> to List<Task> in method public getTasks() : List<Task> from class com.example.android.architecture.blueprints.todoapp.FakeFailingTasksRemoteDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<Task> to Task in method public getTask(taskId String) : Task from class com.example.android.architecture.blueprints.todoapp.FakeFailingTasksRemoteDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<List<Task>>> to Flow<List<Task>> in method public getTasksStream() : Flow<List<Task>> from class com.example.android.architecture.blueprints.todoapp.FakeFailingTasksRemoteDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<Task>> to Flow<Task> in method public getTaskStream(taskId String) : Flow<Task> from class com.example.android.architecture.blueprints.todoapp.FakeFailingTasksRemoteDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<List<Task>>> to Flow<List<Task>> in method public getTasksStream() : Flow<List<Task>> from class com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<List<Task>> to List<Task> in method public getTasks() : List<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<Task>> to Flow<Task> in method public getTaskStream(taskId String) : Flow<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<Task> to Task in method public getTask(taskId String) : Task from class com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<List<Task>>> to Flow<List<Task>> in method public getTasksStream() : Flow<List<Task>> from class com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<List<Task>> to List<Task> in method public getTasks(forceUpdate Boolean) : List<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<Task>> to Flow<Task> in method public getTaskStream(taskId String) : Flow<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<Task> to Task in method public getTask(taskId String, forceUpdate Boolean) : Task from class com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<Task>> to Flow<Task> in method public getTaskStream(taskId String) : Flow<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.remote.TasksRemoteDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<List<Task>>> to Flow<List<Task>> in method public getTasksStream() : Flow<List<Task>> from class com.example.android.architecture.blueprints.todoapp.data.source.remote.TasksRemoteDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<List<Task>> to List<Task> in method public getTasks() : List<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.remote.TasksRemoteDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<Task> to Task in method public getTask(taskId String) : Task from class com.example.android.architecture.blueprints.todoapp.data.source.remote.TasksRemoteDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<List<Task>>> to Flow<List<Task>> in method public getTasksStream() : Flow<List<Task>> from class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<Task>> to Flow<Task> in method public getTaskStream(taskId String) : Flow<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<Task> to Task in method public getTask(taskId String, forceUpdate Boolean) : Task from class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<List<Task>> to List<Task> in method public getTasks(forceUpdate Boolean) : List<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<List<Task>> to List<Task> in method public getTasks() : List<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<Task> to Task in method public getTask(taskId String) : Task from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<List<Task>> to List<Task> in method public getTasks(forceUpdate Boolean) : List<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<List<Task>>> to Flow<List<Task>> in method public getTasksStream() : Flow<List<Task>> from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<Task>> to Flow<Task> in method public getTaskStream(taskId String) : Flow<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<Task> to Task in method public getTask(taskId String, forceUpdate Boolean) : Task from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Result<Task> to Task in method private getTaskWithId(id String) : Task from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<List<Task>>> to Flow<List<Task>> in method public getTasksStream() : Flow<List<Task>> from class com.example.android.architecture.blueprints.todoapp.data.source.FakeDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Flow<Result<Task>> to Flow<Task> in method public getTaskStream(taskId String) : Flow<Task> from class com.example.android.architecture.blueprints.todoapp.data.source.FakeDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public getTasks_WithDirtyCache_remoteUnavailable_error() renamed to public getTasks_WithDirtyCache_remoteUnavailable_throwsException() in class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepositoryTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public getTasks_WithBothDataSourcesUnavailable_returnsError() renamed to public getTasks_WithBothDataSourcesUnavailable_throwsError() in class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepositoryTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public setReturnError(value Boolean) renamed to public setShouldThrowError(value Boolean) in class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute shouldReturnError : Inferred to shouldThrowError : Inferred in class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type observableTasks : Flow<Result<List<Task>>> to observableTasks : Flow<List<Task>> in class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type taskLoad : Async<Result<List<Task>>> to taskLoad : Async<List<Task>> in method private produceStatisticsUiState(taskLoad Async<List<Task>>) from class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable result : Inferred to task : Inferred in method public activateTask_retrievedTaskIsActive() from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSourceTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable result : Inferred to task : Inferred in method public saveTask_retrievesTask() from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSourceTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable result : Inferred to tasks : Inferred in method public deleteAllTasks_emptyListOfRetrievedTask() from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSourceTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable result : Inferred to task : Inferred in method public completeTask_retrievedTaskIsComplete() from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSourceTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private filterItems(tasks List<Task>, filteringType TasksFilterType) : List<Task> renamed to private filterTasks(tasks List<Task>, filteringType TasksFilterType) : List<Task> in class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 15,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "b5d947c4ab4867e65d9fc110b404a6fd964c4ef1",
+    "url": "https://github.com/android/architecture-samples/commit/b5d947c4ab4867e65d9fc110b404a6fd964c4ef1",
+    "author": null,
+    "time": "3/27/23 11:07 AM",
+    "refactorings": [{
+        "type": "Rename Attribute",
+        "description": "Rename Attribute tasksNetworkDataSource : NetworkDataSource to networkDataSource : NetworkDataSource in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute taskDao : TaskDao to localDataSource : TaskDao in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Type Declaration Kind",
+        "description": "Change Type Declaration Kind object to class in type com.example.android.architecture.blueprints.todoapp.data.source.network.TaskNetworkDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Type Declaration Kind",
+        "description": "Change Type Declaration Kind object to class in type com.example.android.architecture.blueprints.todoapp.di.RepositoryModule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Type Declaration Kind",
+        "description": "Change Type Declaration Kind object to class in type com.example.android.architecture.blueprints.todoapp.di.DataSourceModule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Modifier",
+        "description": "Add Class Modifier abstract in class com.example.android.architecture.blueprints.todoapp.di.RepositoryModule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Modifier",
+        "description": "Add Class Modifier abstract in class com.example.android.architecture.blueprints.todoapp.di.DataSourceModule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute coroutineDispatcher : CoroutineDispatcher to dispatcher : CoroutineDispatcher in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Attribute Annotation",
+        "description": "Add Attribute Annotation @DefaultDispatcher in attribute private dispatcher : CoroutineDispatcher from class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter scope : CoroutineScope in method DefaultTaskRepository(networkDataSource NetworkDataSource, localDataSource TaskDao, dispatcher CoroutineDispatcher, scope CoroutineScope) from class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public refreshTasks() renamed to public refresh() in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public refreshTasks() renamed to public refresh() in class com.example.android.architecture.blueprints.todoapp.data.FakeTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public refreshTasks() renamed to public refresh() in class com.example.android.architecture.blueprints.todoapp.data.TaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method private loadTasksFromNetwork() inlined to public refresh() in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @Singleton in class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 16,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "c531c353d874f6f863181f9eaea4ef78a4a90b60",
+    "url": "https://github.com/android/architecture-samples/commit/c531c353d874f6f863181f9eaea4ef78a4a90b60",
+    "author": "dturner",
+    "time": "3/14/23 08:09 AM",
+    "refactorings": [{
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type tasksRepository : FakeRepository to tasksRepository : FakeTasksRepository in class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModelTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type tasksRepository : FakeRepository to tasksRepository : FakeTasksRepository in class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModelTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type tasksRepository : FakeRepository to tasksRepository : FakeTasksRepository in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModelTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type tasksRepository : FakeRepository to tasksRepository : FakeTasksRepository in class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModelTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository moved to com.example.android.architecture.blueprints.todoapp.data.DefaultTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository moved to com.example.android.architecture.blueprints.todoapp.data.TasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.NetworkDataSource moved to com.example.android.architecture.blueprints.todoapp.data.source.network.NetworkDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepositoryTest moved to com.example.android.architecture.blueprints.todoapp.data.DefaultTasksRepositoryTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.FakeTasksDao moved to com.example.android.architecture.blueprints.todoapp.data.source.local.FakeTasksDao",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.FakeNetworkDataSource moved to com.example.android.architecture.blueprints.todoapp.data.source.network.FakeNetworkDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.remote.NetworkTask moved to com.example.android.architecture.blueprints.todoapp.data.source.network.NetworkTask",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.remote.TaskStatus moved to com.example.android.architecture.blueprints.todoapp.data.source.network.TaskStatus",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.source.remote.TasksNetworkDataSource moved to com.example.android.architecture.blueprints.todoapp.data.source.network.TasksNetworkDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository moved and renamed to com.example.android.architecture.blueprints.todoapp.data.FakeTasksRepository",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Package",
+        "description": "Rename Package com.example.android.architecture.blueprints.todoapp.data.source.remote to com.example.android.architecture.blueprints.todoapp.data.source.network",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Package",
+        "description": "Move Package com.example.android.architecture.blueprints.todoapp.data.source to com.example.android.architecture.blueprints.todoapp.data",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 17,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "d402dae442a482923e0e45d2eb82046777ff1742",
+    "url": "https://github.com/android/architecture-samples/commit/d402dae442a482923e0e45d2eb82046777ff1742",
+    "author": "dmeng",
+    "time": "4/3/19 01:45 PM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public clickOnAndroidHomeIcon_OpensNavigation() renamed to public tasksScreen_clickOnAndroidHomeIcon_OpensNavigation() in class com.example.android.architecture.blueprints.todoapp.tasks.AppNavigationTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public markTaskAsAcompleteAndActiveOnDetailScreen_taskIsActiveInList() renamed to public markTaskAsCompleteAndActiveOnDetailScreen_taskIsActiveInList() in class com.example.android.architecture.blueprints.todoapp.tasks.TasksScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 18,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "e43a301c2a247ab957dae8100d789d8b5238195c",
+    "url": "https://github.com/android/architecture-samples/commit/e43a301c2a247ab957dae8100d789d8b5238195c",
+    "author": null,
+    "time": "4/24/19 01:43 PM",
+    "refactorings": [{
+        "type": "Rename Class",
+        "description": "Rename Class com.example.android.architecture.blueprints.todoapp.tasks.TasksScreenTest renamed to com.example.android.architecture.blueprints.todoapp.tasks.TasksActivityTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskScreenTest renamed to com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsScreenTest renamed to com.example.android.architecture.blueprints.todoapp.statistics.StatisticsFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailScreenTest renamed to com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class com.example.android.architecture.blueprints.todoapp.tasks.TasksSingleScreenTest renamed to com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @MediumTest in class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @MediumTest in class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @MediumTest in class com.example.android.architecture.blueprints.todoapp.tasks.TasksFragmentTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Class Annotation",
+        "description": "Remove Class Annotation @SmallTest in class com.example.android.architecture.blueprints.todoapp.tasks.TasksSingleScreenTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}]

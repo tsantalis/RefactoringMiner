@@ -11,6 +11,10 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MemberValuePair;
 import org.eclipse.jdt.core.dom.NormalAnnotation;
 import org.eclipse.jdt.core.dom.SingleMemberAnnotation;
+import org.jetbrains.kotlin.psi.KtAnnotationEntry;
+import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.psi.KtValueArgument;
+import org.jetbrains.kotlin.psi.ValueArgument;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.metadata.LangAnnotation;
@@ -40,6 +44,15 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 				AbstractExpression value = new AbstractExpression(cu, sourceFolder, filePath, pair.getValue(), CodeElementType.NORMAL_ANNOTATION_MEMBER_VALUE_PAIR, null, new LinkedHashMap<>(), javaFileContent);
 				memberValuePairs.put(pair.getName().getIdentifier(), value);
 			}
+		}
+	}
+
+	public UMLAnnotation(KtFile ktFile, String sourceFolder, String filePath, KtAnnotationEntry annotationEntry, String fileContent) {
+		this.typeName = annotationEntry.getShortName().asString();
+		this.locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, annotationEntry, CodeElementType.ANNOTATION);
+		for(ValueArgument argument : annotationEntry.getValueArguments()) {
+			AbstractExpression expression = new AbstractExpression(ktFile, sourceFolder, filePath, (KtValueArgument)argument, CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, null, new LinkedHashMap<>(), fileContent);
+			this.arguments.add(expression);
 		}
 	}
 

@@ -12,6 +12,10 @@ import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.Type;
+import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry;
+import org.jetbrains.kotlin.psi.KtTypeProjection;
+import org.jetbrains.kotlin.psi.ValueArgument;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.expression.LangFieldAccess;
@@ -193,8 +197,24 @@ public class ObjectCreation extends AbstractCall {
 
 	public String actualString() {
 		StringBuilder sb = new StringBuilder();
-        sb.append("new ");
-        sb.append(super.actualString());
-        return sb.toString();
+		sb.append("new ");
+		sb.append(super.actualString());
+		return sb.toString();
+	}
+
+	public ObjectCreation(KtFile cu, String sourceFolder, String filePath, KtSuperTypeCallEntry invocation, VariableDeclarationContainer container, String fileContent) {
+		super(cu, sourceFolder, filePath, invocation, CodeElementType.CLASS_INSTANCE_CREATION, container);
+		this.type = UMLType.extractTypeObject(cu, sourceFolder, filePath, fileContent, invocation.getTypeReference(), 0);
+		this.numberOfArguments = invocation.getValueArguments().size();
+		this.arguments = new ArrayList<String>();
+		List<KtTypeProjection> typeArgs = invocation.getTypeArguments();
+		for(KtTypeProjection typeArg : typeArgs) {
+			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, fileContent, typeArg, 0));
+		}
+		List<? extends ValueArgument> args = invocation.getValueArguments();
+		for(ValueArgument argument : args) {
+			// TODO replace with stringify
+			this.arguments.add(argument.getArgumentExpression().getText());
+		}
 	}
 }

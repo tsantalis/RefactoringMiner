@@ -30,13 +30,22 @@ public class ImportMatcher implements TreeMatcher {
         if (importDiffList == null) return;
         Set<Pair<UMLImport, UMLImport>> commonImports = importDiffList.getCommonImports();
         if (!commonImports.isEmpty()) {
+        	int counter = 0;
             for (org.apache.commons.lang3.tuple.Pair<UMLImport, UMLImport> pair : commonImports) {
                 Tree srcImportStatement = TreeUtilFunctions.findByLocationInfo(srcTree, pair.getLeft().getLocationInfo());
                 Tree dstImportStatement = TreeUtilFunctions.findByLocationInfo(dstTree, pair.getRight().getLocationInfo());
+                boolean isLast = counter == commonImports.size()-1;
+                if(isLast && srcImportStatement.getType().name.equals(Constants.get().IMPORT_IDENTIFIER) && !dstImportStatement.getType().name.equals(Constants.get().IMPORT_IDENTIFIER)) {
+                	srcImportStatement = srcImportStatement.getParent();
+                }
+                if(isLast && !srcImportStatement.getType().name.equals(Constants.get().IMPORT_IDENTIFIER) && dstImportStatement.getType().name.equals(Constants.get().IMPORT_IDENTIFIER)) {
+                	dstImportStatement = dstImportStatement.getParent();
+                }
                 if (srcImportStatement != null && dstImportStatement != null) {
                     mappingStore.addMappingRecursively(srcImportStatement, dstImportStatement);
                     handleParent(mappingStore, srcImportStatement, dstImportStatement);
                 }
+                counter++;
             }
         }
         //Grouped Imports
@@ -114,6 +123,11 @@ public class ImportMatcher implements TreeMatcher {
             if (relatives != null) {
                 mappingStore.addMappingRecursively(relatives.first,relatives.second);
             }
+        }
+        else if (srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
+                srcImportStatement.getParent().getType().name.equals(Constants.get().IMPORT_LIST) &&
+                dstImportStatement.getParent().getType().name.equals(Constants.get().IMPORT_LIST)) {
+            mappingStore.addMapping(srcImportStatement.getParent(), dstImportStatement.getParent());
         }
     }
 }

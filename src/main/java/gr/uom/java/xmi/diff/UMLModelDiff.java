@@ -7825,6 +7825,8 @@ public class UMLModelDiff {
 			}
 		}
 		int exactLeafMappings = 0;
+		boolean identicalStringLiterals = false;
+		int todoMappings = 0;
 		for(AbstractCodeMapping mapping : mapper.getMappings()) {
 			if(mapping instanceof LeafMapping && mapping.isExact() && !mapping.getFragment1().getString().startsWith(LANG.RETURN_SPACE)
 					&& !(mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression)) {
@@ -7837,13 +7839,6 @@ public class UMLModelDiff {
 					exactLeafMappings++;
 				}
 			}
-		}
-		double normalizedEditDistance = mapper.normalizedEditDistance();
-		boolean zeroNonMapped = mapper.getNonMappedLeavesT1().size() == 0 && mapper.getNonMappedLeavesT2().size() == 0 &&
-				mapper.getNonMappedInnerNodesT1().size() == 0 && mapper.getNonMappedInnerNodesT2().size() == 0 &&
-				removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation();
-		boolean identicalStringLiterals = false;
-		for(AbstractCodeMapping mapping : mapper.getMappings()) {
 			List<LeafExpression> expressions1 = mapping.getFragment1().getStringLiterals();
 			List<LeafExpression> expressions2 = mapping.getFragment2().getStringLiterals();
 			int matches = 0;
@@ -7859,7 +7854,19 @@ public class UMLModelDiff {
 			if(matches == expressions1.size() && matches >= 10) {
 				identicalStringLiterals = true;
 			}
+			AbstractCall call1 = mapping.getFragment1().invocationCoveringEntireFragment();
+			AbstractCall call2 = mapping.getFragment2().invocationCoveringEntireFragment();
+			if(call1 != null && call2 != null && call1.getName().equals("TODO") && call2.getName().equals("TODO")) {
+				todoMappings++;
+			}
 		}
+		if(todoMappings == mapper.getMappings().size() && todoMappings > 0) {
+			return false;
+		}
+		double normalizedEditDistance = mapper.normalizedEditDistance();
+		boolean zeroNonMapped = mapper.getNonMappedLeavesT1().size() == 0 && mapper.getNonMappedLeavesT2().size() == 0 &&
+				mapper.getNonMappedInnerNodesT1().size() == 0 && mapper.getNonMappedInnerNodesT2().size() == 0 &&
+				removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation();
 		if(exactLeafMappings == 0 && !zeroNonMapped && !identicalStringLiterals && normalizedEditDistance > 0.24) {
 			return false;
 		}

@@ -1975,4 +1975,83 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 20,
+    "repository": "https://github.com/android/architecture-samples.git",
+    "sha1": "ffda0f1102e1e929e9c19b051af650519efea67d",
+    "url": "https://github.com/android/architecture-samples/commit/ffda0f1102e1e929e9c19b051af650519efea67d",
+    "author": null,
+    "time": "11/8/17 01:35 AM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter appExecutors : AppExecutors in method TasksLocalDataSource(appExecutors AppExecutors, tasksDao TasksDao) from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter tasksDao : TasksDao in method TasksLocalDataSource(appExecutors AppExecutors, tasksDao TasksDao) from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter context : Context in method TasksLocalDataSource(context Context) from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.android.architecture.blueprints.todoapp.data.TasksLocalDataSourceTest moved to com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSourceTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @Entity(tableName = \"tasks\") in class com.example.android.architecture.blueprints.todoapp.data.Task",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Attribute Annotation",
+        "description": "Add Attribute Annotation @ColumnInfo(name = \"title\") in attribute public title : String from class com.example.android.architecture.blueprints.todoapp.data.Task",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Attribute Annotation",
+        "description": "Add Attribute Annotation @ColumnInfo(name = \"description\") in attribute public description : String from class com.example.android.architecture.blueprints.todoapp.data.Task",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Attribute Annotation",
+        "description": "Add Attribute Annotation @PrimaryKey in attribute public id : String from class com.example.android.architecture.blueprints.todoapp.data.Task",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Attribute Annotation",
+        "description": "Add Attribute Annotation @ColumnInfo(name = \"entryid\") in attribute public id : String from class com.example.android.architecture.blueprints.todoapp.data.Task",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Attribute Annotation",
+        "description": "Add Attribute Annotation @ColumnInfo(name = \"completed\") in attribute public isCompleted : Inferred from class com.example.android.architecture.blueprints.todoapp.data.Task",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

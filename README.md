@@ -37,6 +37,7 @@ Table of Contents
       * [Java Benchmark 1](#java-benchmark-1)
       * [Java Benchmark 2](#java-benchmark-2)
       * [Python Benchmark](#python-benchmark) 
+	  * [Kotlin Benchmark](#kotlin-benchmark) 
    * [How to build RefactoringMiner](#how-to-build-refactoringminer)
    * [How to test RefactoringMiner](#how-to-test-refactoringminer)
    * [How to use RefactoringMiner as a maven dependency](#how-to-use-refactoringminer-as-a-maven-dependency)
@@ -575,7 +576,7 @@ As of **December 22, 2025** the precision and recall of RefactoringMiner on this
 
 **Commit dates**: January 2013 - October 2020
 
-**Files**: [python-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/python-dataset/data.json)
+**File**: [python-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/python-dataset/data.json)
 
 The original benchmark has been re-validated by Nikolaos Tsantalis. The validation process is still in progress.
 Moreover, the benchmark has been extended with valid instances for the following refactoring types:
@@ -663,6 +664,52 @@ def append(self, loss, g, ppl, d, d0, d1,
              w_loss=1., w_g=1., w_ppl=1. w_d=1, w_d0=1., w_d1=1.):
 ```
 Python commits may not always be syntactically valid, leading to parsing errors. Make sure to consult the `System.error` logs printed by the tool for parsing errors, as commits with parsing errors may include incorrect refactoring information.
+
+## Kotlin Benchmark
+**Source**: Iman Hemati Moghadam, Mohammad Mehdi Afkhami, Parsa Kamalipour, and Vadim Zaytsev, "Extending Refactoring Detection to Kotlin: A Dataset and Comparative Study," 2024 IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER), Rovaniemi, Finland, 2024, pp. 267-271, doi: 10.1109/SANER60148.2024.00034
+
+**File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
+
+As of **January 1, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+
+| Refactoring Type | TP | FP | FN | Precision | Recall |
+|:-----------------------|-----------:|--------:|--------:|--------:|--------:|
+|**Total**|267  |  0  |  0  | 1.000  | 1.000|
+|Extract Method| 3  |  0  |  0  | 1.000  | 1.000|
+|Rename Class| 9  |  0  |  0  | 1.000  | 1.000|
+|Move Attribute| 1  |  0  |  0  | 1.000  | 1.000|
+|Rename Method|28  |  0  |  0  | 1.000  | 1.000|
+|Inline Method| 6  |  0  |  0  | 1.000  | 1.000|
+|Move Method| 9  |  0  |  0  | 1.000  | 1.000|
+|Move Class|10  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Class| 1  |  0  |  0  | 1.000  | 1.000|
+|Extract Superclass| 4  |  0  |  0  | 1.000  | 1.000|
+|Move And Inline Method|18  |  0  |  0  | 1.000  | 1.000|
+|Rename Package| 1  |  0  |  0  | 1.000  | 1.000|
+|Move Package| 1  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable| 3  |  0  |  0  | 1.000  | 1.000|
+|Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable| 5  |  0  |  0  | 1.000  | 1.000|
+|Rename Parameter| 5  |  0  |  0  | 1.000  | 1.000|
+|Rename Attribute|20  |  0  |  0  | 1.000  | 1.000|
+|Replace Attribute With Variable| 2  |  0  |  0  | 1.000  | 1.000|
+|Localize Parameter| 1  |  0  |  0  | 1.000  | 1.000|
+|Change Return Type|38  |  0  |  0  | 1.000  | 1.000|
+|Change Variable Type| 1  |  0  |  0  | 1.000  | 1.000|
+|Change Parameter Type|12  |  0  |  0  | 1.000  | 1.000|
+|Change Attribute Type| 9  |  0  |  0  | 1.000  | 1.000|
+|Add Method Annotation| 5  |  0  |  0  | 1.000  | 1.000|
+|Remove Method Annotation| 1  |  0  |  0  | 1.000  | 1.000|
+|Add Attribute Annotation| 8  |  0  |  0  | 1.000  | 1.000|
+|Remove Attribute Annotation| 5  |  0  |  0  | 1.000  | 1.000|
+|Add Class Annotation|16  |  0  |  0  | 1.000  | 1.000|
+|Remove Class Annotation| 3  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|19  |  0  |  0  | 1.000  | 1.000|
+|Remove Parameter| 6  |  0  |  0  | 1.000  | 1.000|
+|Change Method Access Modifier| 3  |  0  |  0  | 1.000  | 1.000|
+|Change Attribute Access Modifier| 3  |  0  |  0  | 1.000  | 1.000|
+|Change Type Declaration Kind| 7  |  0  |  0  | 1.000  | 1.000|
+|Move Code| 1  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 Since release 3.0.0, RefactoringMiner requires **Java 17** or newer and **Gradle 7.4** or newer.

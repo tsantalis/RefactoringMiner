@@ -167,6 +167,7 @@ public class MethodMatcher extends BodyMapperMatcher{
                 new SameModifierMatcher(Constants.get().INLINE).match(srcOperationNode,dstOperationNode,mappingStore);
             new SameModifierMatcher(Constants.get().OVERRIDE).match(srcOperationNode,dstOperationNode,mappingStore);
             new SameModifierMatcher(Constants.get().SUSPEND).match(srcOperationNode,dstOperationNode,mappingStore);
+            new SameModifierMatcher(Constants.get().OPEN).match(srcOperationNode,dstOperationNode,mappingStore);
             String v1 = umlOperationBodyMapper.getOperation1().getVisibility().toString();
             String v2 = umlOperationBodyMapper.getOperation2().getVisibility().toString();
             Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcOperationNode, Constants.get().MODIFIER, v1);

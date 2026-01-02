@@ -3231,7 +3231,7 @@ public class UMLModelDiff {
 					this.refactorings.removeAll(conflictingRefactorings);
 				}
 				this.refactorings.add(ref);
-				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, Collections.emptyList()); 
+				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, new ArrayList<>()); 
 				if(!movedAttributeDiffList.contains(attributeDiff)) {
 					movedAttributeDiffList.add(attributeDiff);
 				}

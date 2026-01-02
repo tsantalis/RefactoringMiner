@@ -5,12 +5,10 @@ import java.util.List;
 
 import org.refactoringminer.api.RefactoringType;
 
-import gr.uom.java.xmi.UMLAttribute;
-
 public class PushDownAttributeRefactoring extends MoveAttributeRefactoring {
 
-	public PushDownAttributeRefactoring(UMLAttribute originalAttribute, UMLAttribute movedAttribute) {
-		super(originalAttribute, movedAttribute);
+	public PushDownAttributeRefactoring(UMLAttributeDiff diff) {
+		super(diff);
 	}
 
 	public String toString() {

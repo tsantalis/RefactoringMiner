@@ -9,6 +9,10 @@ import gr.uom.java.xmi.UMLAttribute;
 
 public class PullUpAttributeRefactoring extends MoveAttributeRefactoring {
 
+	public PullUpAttributeRefactoring(UMLAttributeDiff diff) {
+		super(diff);
+	}
+
 	public PullUpAttributeRefactoring(UMLAttribute originalAttribute, UMLAttribute movedAttribute) {
 		super(originalAttribute, movedAttribute);
 	}

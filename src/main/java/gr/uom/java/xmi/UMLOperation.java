@@ -1128,6 +1128,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			sb.append(" ");
 		}
 		sb.append(name);
+		if(propertyAccessor.isPresent()) {
+			String attributeName = propertyAccessor.get().getName();
+			String capitalizedFirstLetter = Character.toUpperCase(attributeName.charAt(0)) + attributeName.substring(1, attributeName.length());
+			sb.append(capitalizedFirstLetter);
+		}
 		UMLParameter returnParameter = getReturnParameter();
 		List<UMLParameter> parameters = new ArrayList<UMLParameter>(this.parameters);
 		parameters.remove(returnParameter);
@@ -1160,6 +1165,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			sb.append(" ");
 		}
 		sb.append(name);
+		if(propertyAccessor.isPresent()) {
+			String attributeName = propertyAccessor.get().getName();
+			String capitalizedFirstLetter = Character.toUpperCase(attributeName.charAt(0)) + attributeName.substring(1, attributeName.length());
+			sb.append(capitalizedFirstLetter);
+		}
 		UMLParameter returnParameter = getReturnParameter();
 		List<UMLParameter> parameters = new ArrayList<UMLParameter>(this.parameters);
 		parameters.remove(returnParameter);

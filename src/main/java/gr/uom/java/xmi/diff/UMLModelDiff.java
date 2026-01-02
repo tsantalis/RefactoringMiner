@@ -2134,7 +2134,7 @@ public class UMLModelDiff {
 				if(!movedAttributeDiffList.contains(attributeDiff)) {
 					movedAttributeDiffList.add(attributeDiff);
 				}
-				PullUpAttributeRefactoring pullUpAttribute = new PullUpAttributeRefactoring(removedAttribute, addedAttribute);
+				PullUpAttributeRefactoring pullUpAttribute = new PullUpAttributeRefactoring(attributeDiff);
 				checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);
 				return pullUpAttribute;
 			}
@@ -2143,7 +2143,7 @@ public class UMLModelDiff {
 				if(!movedAttributeDiffList.contains(attributeDiff)) {
 					movedAttributeDiffList.add(attributeDiff);
 				}
-				PushDownAttributeRefactoring pushDownAttribute = new PushDownAttributeRefactoring(removedAttribute, addedAttribute);
+				PushDownAttributeRefactoring pushDownAttribute = new PushDownAttributeRefactoring(attributeDiff);
 				checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);
 				return pushDownAttribute;
 			}
@@ -2174,7 +2174,7 @@ public class UMLModelDiff {
 						if(!movedAttributeDiffList.contains(attributeDiff)) {
 							movedAttributeDiffList.add(attributeDiff);
 						}
-						MoveAttributeRefactoring moveAttribute = new MoveAttributeRefactoring(removedAttribute, addedAttribute);
+						MoveAttributeRefactoring moveAttribute = new MoveAttributeRefactoring(attributeDiff);
 						checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);
 						return moveAttribute;
 					}
@@ -2190,7 +2190,7 @@ public class UMLModelDiff {
 					movedAttributeDiffList.add(attributeDiff);
 				}
 				Set<CandidateAttributeRefactoring> candidates = renameMap.get(rename);
-				MoveAndRenameAttributeRefactoring moveAttribute = new MoveAndRenameAttributeRefactoring(removedAttribute, addedAttribute, candidates);
+				MoveAndRenameAttributeRefactoring moveAttribute = new MoveAndRenameAttributeRefactoring(attributeDiff, candidates);
 				checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);
 				return moveAttribute;
 			}
@@ -3218,23 +3218,23 @@ public class UMLModelDiff {
 			if(removedAttribute != null) {
 				classDiff.getRemovedAttributes().remove(removedAttribute);
 				Refactoring ref = null;
+				ArrayList<UMLOperationBodyMapper> operationBodyMapperList = new ArrayList<>();
+				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, operationBodyMapperList);
 				if(parentType.equals(RefactoringType.EXTRACT_SUPERCLASS)) {
-					ref = new PullUpAttributeRefactoring(removedAttribute, addedAttribute);
+					ref = new PullUpAttributeRefactoring(attributeDiff);
 				}
 				else if(parentType.equals(RefactoringType.EXTRACT_CLASS) || parentType.equals(RefactoringType.MERGE_CLASS)) {
-					ref = new MoveAttributeRefactoring(removedAttribute, addedAttribute);
+					ref = new MoveAttributeRefactoring(attributeDiff);
 				}
 				else if(parentType.equals(RefactoringType.EXTRACT_SUBCLASS)) {
-					ref = new PushDownAttributeRefactoring(removedAttribute, addedAttribute);
+					ref = new PushDownAttributeRefactoring(attributeDiff);
 				}
 				Set<Refactoring> conflictingRefactorings = movedAttributeRenamed(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), new LinkedHashSet<>(classDiff.getRefactoringsBeforePostProcessing()));
 				if(!conflictingRefactorings.isEmpty()) {
 					classDiff.getRefactoringsBeforePostProcessing().removeAll(conflictingRefactorings);
 					this.refactorings.removeAll(conflictingRefactorings);
 				}
-				this.refactorings.add(ref);
-				ArrayList<UMLOperationBodyMapper> operationBodyMapperList = new ArrayList<>();
-				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, operationBodyMapperList); 
+				this.refactorings.add(ref); 
 				if(!movedAttributeDiffList.contains(attributeDiff)) {
 					movedAttributeDiffList.add(attributeDiff);
 					for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
@@ -3690,7 +3690,7 @@ public class UMLModelDiff {
 					refactorings.add(move);
 				}
 				for(UMLAttributeDiff attributeDiff : renameDiff.getAttributeDiffList()) {
-					MoveAttributeRefactoring move = new MoveAttributeRefactoring(attributeDiff.getRemovedAttribute(), attributeDiff.getAddedAttribute());
+					MoveAttributeRefactoring move = new MoveAttributeRefactoring(attributeDiff);
 					refactorings.add(move);
 					refactorings.addAll(attributeDiff.getRefactorings());
 				}
@@ -4073,16 +4073,16 @@ public class UMLModelDiff {
 									}
 									Refactoring ref = null;
 									if(isSubclassOf(candidate.getOriginalAttribute().getClassName(), a2.getClassName())) {
-										ref = new PullUpAttributeRefactoring(candidate.getOriginalAttribute(), a2);
+										ref = new PullUpAttributeRefactoring(attributeDiff);
 									}
 									else if(isSubclassOf(a2.getClassName(), candidate.getOriginalAttribute().getClassName())) {
-										ref = new PushDownAttributeRefactoring(candidate.getOriginalAttribute(), a2);
+										ref = new PushDownAttributeRefactoring(attributeDiff);
 									}
 									else if(candidate.getOriginalAttribute().getName().equals(a2.getName())) {
-										ref = new MoveAttributeRefactoring(candidate.getOriginalAttribute(), a2);
+										ref = new MoveAttributeRefactoring(attributeDiff);
 									}
 									else {
-										ref = new MoveAndRenameAttributeRefactoring(candidate.getOriginalAttribute(), a2, set);
+										ref = new MoveAndRenameAttributeRefactoring(attributeDiff, set);
 									}
 									if(ref != null && !refactorings.contains(ref)) {
 										refactorings.add(ref);
@@ -4267,22 +4267,23 @@ public class UMLModelDiff {
 			if(!conflictingRefactorings.isEmpty()) {
 				refactorings.removeAll(conflictingRefactorings);
 			}
-			ArrayList<UMLOperationBodyMapper> operationBodyMapperList = new ArrayList<>();
-			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(originalAttribute, movedAttribute, operationBodyMapperList);
-			for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-				if(mapper.getContainer1().getPropertyAccessor().isPresent() && mapper.getContainer2().getPropertyAccessor().isPresent()) {
-					if(moveAttributeRefactoring instanceof PullUpAttributeRefactoring) {
-						this.refactorings.add(new PullUpOperationRefactoring(mapper));
-					}
-					else if(moveAttributeRefactoring instanceof PushDownAttributeRefactoring) {
-						this.refactorings.add(new PushDownOperationRefactoring(mapper));
-					}
-					else {
-						this.refactorings.add(new MoveOperationRefactoring(mapper));
+			if(moveAttributeRefactoring.getAttributeDiff().isPresent()) {
+				UMLAttributeDiff attributeDiff = moveAttributeRefactoring.getAttributeDiff().get();
+				for(UMLOperationBodyMapper mapper : attributeDiff.getOperationBodyMapperList()) {
+					if(mapper.getContainer1().getPropertyAccessor().isPresent() && mapper.getContainer2().getPropertyAccessor().isPresent()) {
+						if(moveAttributeRefactoring instanceof PullUpAttributeRefactoring) {
+							this.refactorings.add(new PullUpOperationRefactoring(mapper));
+						}
+						else if(moveAttributeRefactoring instanceof PushDownAttributeRefactoring) {
+							this.refactorings.add(new PushDownOperationRefactoring(mapper));
+						}
+						else {
+							this.refactorings.add(new MoveOperationRefactoring(mapper));
+						}
 					}
 				}
+				refactorings.addAll(attributeDiff.getRefactorings());
 			}
-			refactorings.addAll(attributeDiff.getRefactorings());
 		}
 		refactorings.addAll(this.refactorings);
 		Set<Refactoring> packageRefactorings = filterPackageRefactorings(refactorings);

@@ -199,6 +199,11 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 		}
 	}
 
+	// this method is useful only if the attribute has accessor functions in Kotlin
+	public List<UMLOperationBodyMapper> getOperationBodyMapperList() {
+		return operationBodyMapperList;
+	}
+
 	public UMLAttribute getRemovedAttribute() {
 		return removedAttribute;
 	}

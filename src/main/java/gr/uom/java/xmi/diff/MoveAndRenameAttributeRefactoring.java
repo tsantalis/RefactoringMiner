@@ -7,15 +7,14 @@ import java.util.Set;
 
 import org.refactoringminer.api.RefactoringType;
 
-import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 
 public class MoveAndRenameAttributeRefactoring extends MoveAttributeRefactoring implements ReferenceBasedRefactoring {
 	private Set<CandidateAttributeRefactoring> attributeRenames;
 	
-	public MoveAndRenameAttributeRefactoring(UMLAttribute originalAttribute, UMLAttribute movedAttribute,
+	public MoveAndRenameAttributeRefactoring(UMLAttributeDiff diff,
 			Set<CandidateAttributeRefactoring> attributeRenames) {
-		super(originalAttribute, movedAttribute);
+		super(diff);
 		this.attributeRenames = attributeRenames;
 	}
 

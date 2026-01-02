@@ -3,6 +3,7 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -14,11 +15,23 @@ import gr.uom.java.xmi.UMLAttribute;
 public class MoveAttributeRefactoring implements Refactoring {
 	protected UMLAttribute originalAttribute;
 	protected UMLAttribute movedAttribute;
+	protected Optional<UMLAttributeDiff> attributeDiff;
 	private volatile int hashCode = 0;
-	
+
+	public MoveAttributeRefactoring(UMLAttributeDiff diff) {
+		this.originalAttribute = diff.getRemovedAttribute();
+		this.movedAttribute = diff.getAddedAttribute();
+		this.attributeDiff = Optional.of(diff);
+	}
+
 	public MoveAttributeRefactoring(UMLAttribute originalAttribute, UMLAttribute movedAttribute) {
 		this.originalAttribute = originalAttribute;
 		this.movedAttribute = movedAttribute;
+		this.attributeDiff = Optional.empty();
+	}
+
+	public Optional<UMLAttributeDiff> getAttributeDiff() {
+		return attributeDiff;
 	}
 
 	public String toString() {

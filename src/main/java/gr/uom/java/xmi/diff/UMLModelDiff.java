@@ -8100,7 +8100,9 @@ public class UMLModelDiff {
 					}
 					else if(refactoring.getRefactoringType().equals(RefactoringType.PULL_UP_OPERATION) ||
 							refactoring.getRefactoringType().equals(RefactoringType.PUSH_DOWN_OPERATION)) {
-						competingPullUp = true;
+						if(!pullUp && !pushDown) {
+							return true;
+						}
 					}
 				}
 			}

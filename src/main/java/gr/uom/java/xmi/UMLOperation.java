@@ -53,6 +53,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private List<UMLType> thrownExceptionTypes;
 	private UMLType receiverTypeReference;
 	private UMLJavadoc javadoc;
+	private Optional<UMLAttribute> propertyAccessor;
 	private List<UMLAnnotation> annotations;
 	private List<UMLModifier> modifiers;
 	private List<UMLComment> comments;
@@ -74,6 +75,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
         this.comments = new ArrayList<UMLComment>();
         this.nestedOperations = new ArrayList<UMLOperation>();
         this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+        this.propertyAccessor = Optional.empty();
     }
 
 	public void addNestedOperation(UMLOperation operation) {
@@ -257,6 +259,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public void setAnonymousClassContainer(UMLAnonymousClass anonymousClass) {
 		this.anonymousClassContainer = Optional.of(anonymousClass);
+	}
+
+	public Optional<UMLAttribute> getPropertyAccessor() {
+		return propertyAccessor;
+	}
+
+	public void setProperyAccessor(UMLAttribute attribute) {
+		this.propertyAccessor = Optional.of(attribute);
 	}
 
 	public OperationBody getBody() {

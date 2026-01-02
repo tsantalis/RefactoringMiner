@@ -131,6 +131,9 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	String getNonQualifiedClassName();
 	String toQualifiedString();
 	Map<String, Set<VariableDeclaration>> variableDeclarationMap();
+	default Optional<UMLAttribute> getPropertyAccessor() {
+		return Optional.empty();
+	}
 	default UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration) {
 		for(UMLAnonymousClass anonymousClass : this.getAnonymousClassList()) {
 			if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration.getLocationInfo())) {

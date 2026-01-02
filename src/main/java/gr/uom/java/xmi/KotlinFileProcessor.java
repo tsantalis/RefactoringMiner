@@ -874,11 +874,13 @@ public class KotlinFileProcessor {
 		KtPropertyAccessor getter = property.getGetter();
 		if (getter != null) {
 			UMLOperation operation = processPropertyAccessor(ktFile, getter, sourceFolder, filePath, fileContent, Collections.emptyList(), comments);
+			operation.setProperyAccessor(umlAttribute);
 			umlAttribute.setCustomGetter(operation);
 		}
 		KtPropertyAccessor setter = property.getSetter();
 		if (setter != null) {
 			UMLOperation operation = processPropertyAccessor(ktFile, setter, sourceFolder, filePath, fileContent, Collections.emptyList(), comments);
+			operation.setProperyAccessor(umlAttribute);
 			umlAttribute.setCustomSetter(operation);
 		}
 		return umlAttribute;

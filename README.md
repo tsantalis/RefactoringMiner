@@ -670,20 +670,23 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **January 1, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **January 2, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|267  |  0  |  0  | 1.000  | 1.000|
+|**Total**|352  |  0  |  0  | 1.000  | 1.000|
 |Extract Method| 3  |  0  |  0  | 1.000  | 1.000|
 |Rename Class| 9  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|28  |  0  |  0  | 1.000  | 1.000|
+|Rename Method|30  |  0  |  0  | 1.000  | 1.000|
 |Inline Method| 6  |  0  |  0  | 1.000  | 1.000|
 |Move Method| 9  |  0  |  0  | 1.000  | 1.000|
-|Move Class|10  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Method| 1  |  0  |  0  | 1.000  | 1.000|
+|Pull Up Method|46  |  0  |  0  | 1.000  | 1.000|
+|Move Class|17  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Class| 1  |  0  |  0  | 1.000  | 1.000|
-|Extract Superclass| 4  |  0  |  0  | 1.000  | 1.000|
+|Pull Up Attribute|17  |  0  |  0  | 1.000  | 1.000|
+|Extract Superclass| 5  |  0  |  0  | 1.000  | 1.000|
 |Move And Inline Method|18  |  0  |  0  | 1.000  | 1.000|
 |Rename Package| 1  |  0  |  0  | 1.000  | 1.000|
 |Move Package| 1  |  0  |  0  | 1.000  | 1.000|
@@ -696,7 +699,7 @@ As of **January 1, 2026** the precision and recall of RefactoringMiner on this b
 |Localize Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|38  |  0  |  0  | 1.000  | 1.000|
 |Change Variable Type| 1  |  0  |  0  | 1.000  | 1.000|
-|Change Parameter Type|12  |  0  |  0  | 1.000  | 1.000|
+|Change Parameter Type|21  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Type| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Method Annotation| 5  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation| 1  |  0  |  0  | 1.000  | 1.000|
@@ -704,10 +707,11 @@ As of **January 1, 2026** the precision and recall of RefactoringMiner on this b
 |Remove Attribute Annotation| 5  |  0  |  0  | 1.000  | 1.000|
 |Add Class Annotation|16  |  0  |  0  | 1.000  | 1.000|
 |Remove Class Annotation| 3  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter|19  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter| 6  |  0  |  0  | 1.000  | 1.000|
 |Change Method Access Modifier| 3  |  0  |  0  | 1.000  | 1.000|
-|Change Attribute Access Modifier| 3  |  0  |  0  | 1.000  | 1.000|
+|Change Attribute Access Modifier| 4  |  0  |  0  | 1.000  | 1.000|
 |Change Type Declaration Kind| 7  |  0  |  0  | 1.000  | 1.000|
 |Move Code| 1  |  0  |  0  | 1.000  | 1.000|
 

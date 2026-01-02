@@ -2054,4 +2054,608 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 21,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "1b6c801385ad8461fcede8d2a91338ff7bb60617",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/1b6c801385ad8461fcede8d2a91338ff7bb60617",
+    "author": "limuyang2",
+    "time": "7/18/22 06:45 AM",
+    "refactorings": [{
+        "type": "Move Class",
+        "description": "Move Class com.chad.library.adapter.base.BaseQuickAdapter.Companion moved to com.chad.library.adapter.base.BrvahAdapter.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.library.adapter.base.BaseQuickAdapter.AnimationType moved to com.chad.library.adapter.base.BrvahAdapter.AnimationType",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.library.adapter.base.BaseQuickAdapter.OnItemClickListener moved to com.chad.library.adapter.base.BrvahAdapter.OnItemClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.library.adapter.base.BaseQuickAdapter.OnItemLongClickListener moved to com.chad.library.adapter.base.BrvahAdapter.OnItemLongClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.library.adapter.base.BaseQuickAdapter.OnItemChildClickListener moved to com.chad.library.adapter.base.BrvahAdapter.OnItemChildClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.library.adapter.base.BaseQuickAdapter.OnItemChildLongClickListener moved to com.chad.library.adapter.base.BrvahAdapter.OnItemChildLongClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.library.adapter.base.BaseQuickAdapter.OnViewAttachStateChangeListener moved to com.chad.library.adapter.base.BrvahAdapter.OnViewAttachStateChangeListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter<Status,?> to adapter : BrvahAdapter<Status,?> in method public onItemClick(adapter BrvahAdapter<Status,?>, view View, position int) : void from class com.chad.baserecyclerviewadapterhelper.activity.HeaderAndFooterUseActivity.onCreate.setOnItemClickListener.new BrvahAdapter.OnItemClickListener<Status>",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter<ClickEntity,?> to adapter : BrvahAdapter<ClickEntity,?> in method public onItemClick(adapter BrvahAdapter<ClickEntity,?>, view View, position int) : void from class com.chad.baserecyclerviewadapterhelper.activity.ItemClickActivity.onCreate.setOnItemClickListener.new BrvahAdapter.OnItemClickListener<ClickEntity>",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter<ClickEntity,?> to adapter : BrvahAdapter<ClickEntity,?> in method public onItemLongClick(adapter BrvahAdapter<ClickEntity,?>, view View, position int) : boolean from class com.chad.baserecyclerviewadapterhelper.activity.ItemClickActivity.onCreate.setOnItemLongClickListener.new BrvahAdapter.OnItemLongClickListener<ClickEntity>",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter<ClickEntity,?> to adapter : BrvahAdapter<ClickEntity,?> in method public onItemChildClick(adapter BrvahAdapter<ClickEntity,?>, view View, position int) : void from class com.chad.baserecyclerviewadapterhelper.activity.ItemClickActivity.onCreate.addOnItemChildClickListener.new BrvahAdapter.OnItemChildClickListener<ClickEntity>",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter<ClickEntity,?> to adapter : BrvahAdapter<ClickEntity,?> in method public onItemChildLongClick(adapter BrvahAdapter<ClickEntity,?>, view View, position int) : boolean from class com.chad.baserecyclerviewadapterhelper.activity.ItemClickActivity.onCreate.addOnItemChildLongClickListener.new BrvahAdapter.OnItemChildLongClickListener<ClickEntity>",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter<T,Inferred> to adapter : BrvahAdapter<T,Inferred> in method public onItemClick(adapter BrvahAdapter<T,Inferred>, view View, position Int) from class com.chad.library.adapter.base.BrvahAdapter.OnItemClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter<T,Inferred> to adapter : BrvahAdapter<T,Inferred> in method public onItemLongClick(adapter BrvahAdapter<T,Inferred>, view View, position Int) : Boolean from class com.chad.library.adapter.base.BrvahAdapter.OnItemLongClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter<T,Inferred> to adapter : BrvahAdapter<T,Inferred> in method public onItemChildClick(adapter BrvahAdapter<T,Inferred>, view View, position Int) from class com.chad.library.adapter.base.BrvahAdapter.OnItemChildClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter<T,Inferred> to adapter : BrvahAdapter<T,Inferred> in method public onItemChildLongClick(adapter BrvahAdapter<T,Inferred>, view View, position Int) : Boolean from class com.chad.library.adapter.base.BrvahAdapter.OnItemChildLongClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public setData(position Int, data T) renamed to public set(position Int, data T) in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public addData(newData Collection<T>) renamed to public addAll(newData Collection<T>) in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public setEmptyView(layoutResId Int) from class com.chad.library.adapter.base.BaseQuickAdapter to public setEmptyViewLayout(layoutResId Int) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter Annotation",
+        "description": "Add Parameter Annotation @LayoutRes in parameter layoutResId : Int in method public setEmptyViewLayout(layoutResId Int) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass com.chad.library.adapter.base.BrvahAdapter from classes [com.chad.library.adapter.base.BaseQuickAdapter]",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private checkModule() from class com.chad.library.adapter.base.BaseQuickAdapter to private checkModule() from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected getItemViewType(position Int, list List<T>) : Int from class com.chad.library.adapter.base.BaseQuickAdapter to protected getItemViewType(position Int, list List<T>) : Int from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected abstract onCreateViewHolder(context Context, parent ViewGroup, viewType Int) : VH from class com.chad.library.adapter.base.BaseQuickAdapter to protected abstract onCreateViewHolder(context Context, parent ViewGroup, viewType Int) : VH from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected abstract onBindViewHolder(holder VH, position Int, item T) from class com.chad.library.adapter.base.BaseQuickAdapter to protected abstract onBindViewHolder(holder VH, position Int, item T) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected onBindViewHolder(holder VH, position Int, item T, payloads List<Any>) from class com.chad.library.adapter.base.BaseQuickAdapter to protected onBindViewHolder(holder VH, position Int, item T, payloads List<Any>) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected getItemCount(items List<T>) : Int from class com.chad.library.adapter.base.BaseQuickAdapter to protected getItemCount(items List<T>) : Int from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getItemCount() : Int from class com.chad.library.adapter.base.BaseQuickAdapter to public getItemCount() : Int from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getItemViewType(position Int) : Int from class com.chad.library.adapter.base.BaseQuickAdapter to public getItemViewType(position Int) : Int from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public onCreateViewHolder(parent ViewGroup, viewType Int) : RecyclerView.ViewHolder from class com.chad.library.adapter.base.BaseQuickAdapter to public onCreateViewHolder(parent ViewGroup, viewType Int) : RecyclerView.ViewHolder from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public onBindViewHolder(holder RecyclerView.ViewHolder, position Int) from class com.chad.library.adapter.base.BaseQuickAdapter to public onBindViewHolder(holder RecyclerView.ViewHolder, position Int) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public onBindViewHolder(holder RecyclerView.ViewHolder, position Int, payloads MutableList<Any>) from class com.chad.library.adapter.base.BaseQuickAdapter to public onBindViewHolder(holder RecyclerView.ViewHolder, position Int, payloads MutableList<Any>) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getItemId(position Int) : Long from class com.chad.library.adapter.base.BaseQuickAdapter to public getItemId(position Int) : Long from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public onViewAttachedToWindow(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.BaseQuickAdapter to public onViewAttachedToWindow(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public onViewDetachedFromWindow(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.BaseQuickAdapter to public onViewDetachedFromWindow(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public onAttachedToRecyclerView(recyclerView RecyclerView) from class com.chad.library.adapter.base.BaseQuickAdapter to public onAttachedToRecyclerView(recyclerView RecyclerView) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public onDetachedFromRecyclerView(recyclerView RecyclerView) from class com.chad.library.adapter.base.BaseQuickAdapter to public onDetachedFromRecyclerView(recyclerView RecyclerView) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected bindViewClickListener(viewHolder VH, viewType Int) from class com.chad.library.adapter.base.BaseQuickAdapter to protected bindViewClickListener(viewHolder VH, viewType Int) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected onItemClick(v View, position Int) from class com.chad.library.adapter.base.BaseQuickAdapter to protected onItemClick(v View, position Int) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected onItemLongClick(v View, position Int) : Boolean from class com.chad.library.adapter.base.BaseQuickAdapter to protected onItemLongClick(v View, position Int) : Boolean from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected onItemChildClick(v View, position Int) from class com.chad.library.adapter.base.BaseQuickAdapter to protected onItemChildClick(v View, position Int) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected onItemChildLongClick(v View, position Int) : Boolean from class com.chad.library.adapter.base.BaseQuickAdapter to protected onItemChildLongClick(v View, position Int) : Boolean from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getItem(position Int) : T from class com.chad.library.adapter.base.BaseQuickAdapter to public getItem(position Int) : T from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getItemPosition(item T) : Int from class com.chad.library.adapter.base.BaseQuickAdapter to public getItemPosition(item T) : Int from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public isFullSpanItem(itemType Int) : Boolean from class com.chad.library.adapter.base.BaseQuickAdapter to public isFullSpanItem(itemType Int) : Boolean from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected setStaggeredGridFullSpan(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.BaseQuickAdapter to protected setStaggeredGridFullSpan(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getViewByPosition(position Int, viewId Int) : View from class com.chad.library.adapter.base.BaseQuickAdapter to public getViewByPosition(position Int, viewId Int) : View from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private addAnimation(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.BaseQuickAdapter to private addAnimation(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected startAnim(anim Animator, index Int) from class com.chad.library.adapter.base.BaseQuickAdapter to protected startAnim(anim Animator, index Int) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public setAnimationWithDefault(animationType AnimationType) from class com.chad.library.adapter.base.BaseQuickAdapter to public setAnimationWithDefault(animationType AnimationType) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public setOnItemClickListener(listener OnItemClickListener<T>) from class com.chad.library.adapter.base.BaseQuickAdapter to public setOnItemClickListener(listener OnItemClickListener<T>) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getOnItemClickListener() : OnItemClickListener<T> from class com.chad.library.adapter.base.BaseQuickAdapter to public getOnItemClickListener() : OnItemClickListener<T> from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public setOnItemLongClickListener(listener OnItemLongClickListener<T>) from class com.chad.library.adapter.base.BaseQuickAdapter to public setOnItemLongClickListener(listener OnItemLongClickListener<T>) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getOnItemLongClickListener() : OnItemLongClickListener<T> from class com.chad.library.adapter.base.BaseQuickAdapter to public getOnItemLongClickListener() : OnItemLongClickListener<T> from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public addOnItemChildClickListener(id Int, listener OnItemChildClickListener<T>) from class com.chad.library.adapter.base.BaseQuickAdapter to public addOnItemChildClickListener(id Int, listener OnItemChildClickListener<T>) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public removeOnItemChildClickListener(id Int) from class com.chad.library.adapter.base.BaseQuickAdapter to public removeOnItemChildClickListener(id Int) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public addOnItemChildLongClickListener(id Int, listener OnItemChildLongClickListener<T>) from class com.chad.library.adapter.base.BaseQuickAdapter to public addOnItemChildLongClickListener(id Int, listener OnItemChildLongClickListener<T>) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public removeOnItemChildLongClickListener(id Int) from class com.chad.library.adapter.base.BaseQuickAdapter to public removeOnItemChildLongClickListener(id Int) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public addOnViewAttachStateChangeListener(listener OnViewAttachStateChangeListener) from class com.chad.library.adapter.base.BaseQuickAdapter to public addOnViewAttachStateChangeListener(listener OnViewAttachStateChangeListener) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public removeOnViewAttachStateChangeListener(listener OnViewAttachStateChangeListener) from class com.chad.library.adapter.base.BaseQuickAdapter to public removeOnViewAttachStateChangeListener(listener OnViewAttachStateChangeListener) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public clearOnViewAttachStateChangeListener() from class com.chad.library.adapter.base.BaseQuickAdapter to public clearOnViewAttachStateChangeListener() from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public setAdapterAnimation(value Inferred) from class com.chad.library.adapter.base.BaseQuickAdapter to public setAdapterAnimation(value Inferred) from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": "<p>property&nbsp;accessor</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getDraggableModule() from class com.chad.library.adapter.base.BaseQuickAdapter to public getDraggableModule() from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": "<p>property&nbsp;accessor</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private setRecyclerViewOrNull() from class com.chad.library.adapter.base.BaseQuickAdapter to private setRecyclerViewOrNull() from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": "<p>property&nbsp;accessor</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getRecyclerView() from class com.chad.library.adapter.base.BaseQuickAdapter to public getRecyclerView() from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": "<p>property&nbsp;accessor</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getContext() from class com.chad.library.adapter.base.BaseQuickAdapter to public getContext() from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": "<p>property&nbsp;accessor</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getIsEmptyViewHolder() from class com.chad.library.adapter.base.BaseQuickAdapter to public getIsEmptyViewHolder() from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": "<p>property&nbsp;accessor</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public items : List<T> from class com.chad.library.adapter.base.BaseQuickAdapter to public items : List<T> from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public isUseEmpty : Inferred from class com.chad.library.adapter.base.BaseQuickAdapter to public isUseEmpty : Inferred from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public animationEnable : Boolean from class com.chad.library.adapter.base.BaseQuickAdapter to public animationEnable : Boolean from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public isAnimationFirstOnly : Inferred from class com.chad.library.adapter.base.BaseQuickAdapter to public isAnimationFirstOnly : Inferred from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public adapterAnimation : BaseAnimation from class com.chad.library.adapter.base.BaseQuickAdapter to public adapterAnimation : BaseAnimation from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public draggableModule : BaseDraggableModule from class com.chad.library.adapter.base.BaseQuickAdapter to public draggableModule : BaseDraggableModule from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private mLastPosition : Inferred from class com.chad.library.adapter.base.BaseQuickAdapter to internal mLastPosition : Inferred from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private mOnItemClickListener : OnItemClickListener<T> from class com.chad.library.adapter.base.BaseQuickAdapter to private mOnItemClickListener : OnItemClickListener<T> from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private mOnItemLongClickListener : OnItemLongClickListener<T> from class com.chad.library.adapter.base.BaseQuickAdapter to private mOnItemLongClickListener : OnItemLongClickListener<T> from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private mOnItemChildClickArray : Inferred from class com.chad.library.adapter.base.BaseQuickAdapter to private mOnItemChildClickArray : Inferred from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private mOnItemChildLongClickArray : Inferred from class com.chad.library.adapter.base.BaseQuickAdapter to private mOnItemChildLongClickArray : Inferred from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private mDraggableModule : BaseDraggableModule from class com.chad.library.adapter.base.BaseQuickAdapter to private mDraggableModule : BaseDraggableModule from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public recyclerViewOrNull : RecyclerView from class com.chad.library.adapter.base.BaseQuickAdapter to public recyclerViewOrNull : RecyclerView from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public recyclerView : RecyclerView from class com.chad.library.adapter.base.BaseQuickAdapter to public recyclerView : RecyclerView from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public context : Context from class com.chad.library.adapter.base.BaseQuickAdapter to public context : Context from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private onViewAttachStateChangeListeners : MutableList<OnViewAttachStateChangeListener> from class com.chad.library.adapter.base.BaseQuickAdapter to private onViewAttachStateChangeListeners : MutableList<OnViewAttachStateChangeListener> from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public isEmptyViewHolder : Boolean from class com.chad.library.adapter.base.BaseQuickAdapter to public isEmptyViewHolder : Boolean from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to internal in attribute internal mLastPosition : Inferred from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

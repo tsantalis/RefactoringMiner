@@ -805,6 +805,14 @@ public class KotlinFileProcessor {
 					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
 				}
 			}
+			if (modifierList.hasModifier(FINAL_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(FINAL_KEYWORD));
+				umlOperation.addModifier(modifier);
+				umlOperation.setFinal(true);
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getLocationInfo().getStartOffset();
+				}
+			}
 			if (modifierList.hasModifier(OVERRIDE_KEYWORD)) {
 				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(OVERRIDE_KEYWORD));
 				umlOperation.addModifier(modifier);

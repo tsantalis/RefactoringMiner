@@ -2695,4 +2695,34 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 23,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "207198911c1ee1783751161c73b4f869c538932d",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/207198911c1ee1783751161c73b4f869c538932d",
+    "author": "limuyang2",
+    "time": "8/24/22 09:01 AM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method protected setStaggeredGridFullSpan(holder RecyclerView.ViewHolder) renamed to protected asStaggeredGridFullSpan() in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter holder : RecyclerView.ViewHolder in method protected setStaggeredGridFullSpan(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable adapter : null to movieBaseQuickAdapter : null in method protected onCreate(savedInstanceState Bundle) : void from class com.chad.baserecyclerviewadapterhelper.activity.databinding.DataBindingUseActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

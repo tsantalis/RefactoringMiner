@@ -55,6 +55,8 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         	AST_type = Constants.get().MODULE;
         else if (classDiff.getOriginalClass().isObject())
         	AST_type = Constants.get().COMPANION_OBJECT;
+        else if (classDiff.getOriginalClass().isFunctionalInterface())
+        	AST_type = Constants.get().METHOD_DECLARATION;
         Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),AST_type);
         Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),AST_type);
         if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isObject() && classDiff.getNextClass().isObject()) {
@@ -71,14 +73,16 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         }
         if (srcTypeDeclaration == null || dstTypeDeclaration == null) return;
         if (srcTypeDeclaration.getParent() != null && dstTypeDeclaration.getParent() != null) {
-            if (
-                    srcTypeDeclaration.getParent().getType().name.equals(Constants.get().TYPE_DECLARATION_STATEMENT)
-                            &&
-                            dstTypeDeclaration.getParent().getType().name.equals(Constants.get().TYPE_DECLARATION_STATEMENT)
-            )
+            if (srcTypeDeclaration.getParent().getType().name.equals(Constants.get().TYPE_DECLARATION_STATEMENT)
+                    && dstTypeDeclaration.getParent().getType().name.equals(Constants.get().TYPE_DECLARATION_STATEMENT)) {
                 mappingStore.addMapping(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent());
+            }
         }
 
+        if(classDiff.getOriginalClass().isFunctionalInterface() && classDiff.getNextClass().isFunctionalInterface()) {
+        	new MethodMatcher(optimizationData, classDiff.getOperationBodyMapperList().get(0)).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
+        	return;
+        }
         mappingStore.addMapping(srcTypeDeclaration,dstTypeDeclaration);
 
         String v1 = classDiff.getOriginalClass().getVisibility().toString();

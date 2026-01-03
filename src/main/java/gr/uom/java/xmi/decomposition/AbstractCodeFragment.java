@@ -31,6 +31,10 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		this.locationInfo = location;
 	}
 
+	public Constants getLANG() {
+		return LANG;
+	}
+
 	@Override
 	public LocationInfo getLocationInfo() {
 		return locationInfo;

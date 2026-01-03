@@ -62,6 +62,12 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (dstOperationNode.getType().name.endsWith("_comment")) {
                 dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), Constants.get().METHOD_DECLARATION);
             }
+            if (srcOperationNode.getType().name.equals(Constants.get().FUNCTION_KEYWORD)) {
+            	srcOperationNode = srcOperationNode.getParent().getParent();
+            }
+            if (dstOperationNode.getType().name.equals(Constants.get().FUNCTION_KEYWORD)) {
+            	dstOperationNode = dstOperationNode.getParent().getParent();
+            }
             if (srcOperationNode != null && srcOperationNode.getParent() != null && srcOperationNode.getParent().getType().name.equals(Constants.get().DECORATED_METHOD)) {
                 srcOperationNode = srcOperationNode.getParent();
             }

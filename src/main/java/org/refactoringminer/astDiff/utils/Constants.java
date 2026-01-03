@@ -56,7 +56,7 @@ public class Constants {
 			EXPRESSION_STATEMENT = "expression_statement"; // TODO update value
 			TRY_STATEMENT = "try_statement"; // TODO update value
 			CATCH_CLAUSE = "except_clause"; // TODO update value
-			IF_STATEMENT = "if_statement"; // TODO update value
+			IF_STATEMENT = "if_expression";
 			WHILE_STATEMENT = "while_statement"; // TODO update value
 			FOR_STATEMENT = "for_statement";
 			ENHANCED_FOR_STATEMENT = "for_statement";
@@ -260,4 +260,5 @@ public class Constants {
     public final String SETTER = "setter";
     public final String PROPERY_DECLARATION_KEYWORD = "property_declaration_keyword";
     public final String IMPORT_IDENTIFIER = "identifier";
+    public final String CONTROL_STRUCTURE_BODY = "control_structure_body";
 }

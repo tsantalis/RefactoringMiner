@@ -2725,4 +2725,195 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 24,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "2587c1476efe93a10a75debccac7d3191ac1849a",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/2587c1476efe93a10a75debccac7d3191ac1849a",
+    "author": null,
+    "time": "8/20/22 05:58 AM",
+    "refactorings": [{
+        "type": "Remove Parameter",
+        "description": "Remove Parameter dragAndSwipe : DragAndSwipeImpl in primary constructor QuickAdapterHelper(contentAdapter BaseQuickAdapter<Inferred,Inferred>, leadingLoadStateAdapter LeadingLoadStateAdapter<Inferred>, trailingLoadStateAdapter TrailingLoadStateAdapter<Inferred>, config ConcatAdapter.Config, dragAndSwipe DragAndSwipeImpl) from class com.chad.library.adapter.base.QuickAdapterHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public clearfooter() renamed to public clearFooter() in class com.chad.library.adapter.base.QuickAdapterHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type _dragMoveFlags : Inferred to _dragMoveFlags : Int in class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type _swipeMoveFlags : Inferred to _swipeMoveFlags : Int in class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public _dragMoveFlags : Int from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public _swipeMoveFlags : Int from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public _isLongPressDragEnabled : Boolean from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public _isItemViewSwipeEnabled : Boolean from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public setDragMoveFlags(dragMoveFlags Int) from class com.chad.library.adapter.base.QuickAdapterHelper.Builder to public setDragMoveFlags(dragMoveFlags Int) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public setSwipeMoveFlags(swipeMoveFlags Int) from class com.chad.library.adapter.base.QuickAdapterHelper.Builder to public setSwipeMoveFlags(swipeMoveFlags Int) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public setLongPressDragEnabled(isLongPressDragEnabled Boolean) from class com.chad.library.adapter.base.QuickAdapterHelper.Builder to public setLongPressDragEnabled(isLongPressDragEnabled Boolean) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public setItemViewSwipeEnabled(isItemViewSwipeEnabled Boolean) from class com.chad.library.adapter.base.QuickAdapterHelper.Builder to public setItemViewSwipeEnabled(isItemViewSwipeEnabled Boolean) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe.Builder from class com.chad.library.adapter.base.QuickAdapterHelper.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public setItemDragListener(onItemDragListener OnItemDragListener) from class com.chad.library.adapter.base.QuickAdapterHelper.Builder to public setItemDragListener(onItemDragListener OnItemDragListener) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public setItemSwipeListener(onItemSwipeListener OnItemSwipeListener) from class com.chad.library.adapter.base.QuickAdapterHelper.Builder to public setItemSwipeListener(onItemSwipeListener OnItemSwipeListener) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public startDrag(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.QuickAdapterHelper to public startDrag(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public startDrag(position Int) from class com.chad.library.adapter.base.QuickAdapterHelper to public startDrag(position Int) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public startSwipe(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.QuickAdapterHelper to public startSwipe(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public startSwipe(position Int) from class com.chad.library.adapter.base.QuickAdapterHelper to public startSwipe(position Int) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public setDragMoveFlags(dragMoveFlags Int) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe to public setDragMoveFlags(dragMoveFlags Int) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public setSwipeMoveFlags(swipeMoveFlags Int) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe to public setSwipeMoveFlags(swipeMoveFlags Int) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public setLongPressDragEnabled(isLongPressDragEnabled Boolean) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe to public setLongPressDragEnabled(isLongPressDragEnabled Boolean) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public setItemViewSwipeEnabled(isItemViewSwipeEnabled Boolean) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe to public setItemViewSwipeEnabled(isItemViewSwipeEnabled Boolean) from class com.chad.library.adapter.base.dragswipe.DefaultDragAndSwipe.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public setBaseQuickAdapter(baseQuickAdapter BaseQuickAdapter<Inferred,Inferred>) renamed to public setAdapterImpl(adapterImpl DragAndSwipeAdapterImpl) : DefaultDragAndSwipe in class com.chad.library.adapter.base.dragswipe.DragAndSwipeImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter baseQuickAdapter : BaseQuickAdapter<Inferred,Inferred> to adapterImpl : DragAndSwipeAdapterImpl in method public setAdapterImpl(adapterImpl DragAndSwipeAdapterImpl) : DefaultDragAndSwipe from class com.chad.library.adapter.base.dragswipe.DragAndSwipeImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type baseQuickAdapter : BaseQuickAdapter<Inferred,Inferred> to adapterImpl : DragAndSwipeAdapterImpl in method public setAdapterImpl(adapterImpl DragAndSwipeAdapterImpl) : DefaultDragAndSwipe from class com.chad.library.adapter.base.dragswipe.DragAndSwipeImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

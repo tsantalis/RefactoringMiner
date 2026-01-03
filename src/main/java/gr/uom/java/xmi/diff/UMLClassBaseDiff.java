@@ -60,6 +60,7 @@ import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.MethodReference;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.decomposition.VariableReplacementAnalysis;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
@@ -129,27 +130,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		else {
 			this.packageDeclarationJavadocDiff = Optional.empty();
 		}
-		if(originalClass.getPrimaryConstructor().isPresent() && nextClass.getPrimaryConstructor().isPresent()) {
-			UMLParameterListDiff parameterListDiff = new UMLParameterListDiff(originalClass.getPrimaryConstructor().get(), nextClass.getPrimaryConstructor().get(), Collections.emptySet(), Collections.emptySet(), this);
-			this.primaryConstructorParameterListDiff = Optional.of(parameterListDiff);
-			for(VariableDeclaration addedParameter : parameterListDiff.getAddedParameters()) {
-				if(addedParameter.isAttribute() && originalClass.getPrimaryConstructor().get().getParameters().size() == nextClass.getPrimaryConstructor().get().getParameters().size()) {
-					continue;
-				}
-				Refactoring r = new AddParameterRefactoring(addedParameter, originalClass.getPrimaryConstructor().get(), nextClass.getPrimaryConstructor().get());
-				this.refactorings.add(r);
-			}
-			for(VariableDeclaration removedParameter : parameterListDiff.getRemovedParameters()) {
-				if(removedParameter.isAttribute() && originalClass.getPrimaryConstructor().get().getParameters().size() == nextClass.getPrimaryConstructor().get().getParameters().size()) {
-					continue;
-				}
-				Refactoring r = new RemoveParameterRefactoring(removedParameter, originalClass.getPrimaryConstructor().get(), nextClass.getPrimaryConstructor().get());
-				this.refactorings.add(r);
-			}
-		}
-		else {
-			this.primaryConstructorParameterListDiff = Optional.empty();
-		}
 		processImports();
 	}
 
@@ -200,6 +180,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	public void process() throws RefactoringMinerTimedOutException {
+		processPrimaryConstructors();
 		if(originalClass.getContainer().isPresent() && nextClass.getContainer().isPresent()) {
 			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(originalClass.getContainer().get(), nextClass.getContainer().get(), this);
 			addOperationBodyMapper(mapper);
@@ -220,6 +201,43 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		checkForExtractedOperationsWithCallsInOtherMappers();
 		checkForInlinedOperationsToExtractedOperations(extractedbodyMappers);
 		checkForMovedCodeBetweenOperations();
+	}
+
+	private void processPrimaryConstructors() throws RefactoringMinerTimedOutException {
+		if(getOriginalClass().getPrimaryConstructor().isPresent() && getNextClass().getPrimaryConstructor().isPresent()) {
+			List<AbstractExpression> superCallEntries1 = getOriginalClass().getSuperTypeCallEntries();
+			List<AbstractExpression> superCallEntries2 = getNextClass().getSuperTypeCallEntries();
+			if(superCallEntries1.size() == superCallEntries2.size()) {
+				for(int i=0; i<superCallEntries1.size(); i++) {
+					AbstractExpression expr1 = superCallEntries1.get(i);
+					AbstractExpression expr2 = superCallEntries2.get(i);
+					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(expr1, expr2, getOriginalClass().getPrimaryConstructor().get(), getNextClass().getPrimaryConstructor().get(), this, modelDiff);
+					Set<Refactoring> refactorings2 = new LinkedHashSet<>();
+					VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(mapper, refactorings2, this, new LinkedHashSet<>());
+					refactorings.addAll(analysis.getVariableRenames());
+					refactorings.addAll(refactorings2);
+				}
+			}
+			UMLParameterListDiff parameterListDiff = new UMLParameterListDiff(getOriginalClass().getPrimaryConstructor().get(), getNextClass().getPrimaryConstructor().get(), Collections.emptySet(), Collections.emptySet(), this);
+			this.primaryConstructorParameterListDiff = Optional.of(parameterListDiff);
+			for(VariableDeclaration addedParameter : parameterListDiff.getAddedParameters()) {
+				if(addedParameter.isAttribute() && getOriginalClass().getPrimaryConstructor().get().getParameters().size() == getNextClass().getPrimaryConstructor().get().getParameters().size()) {
+					continue;
+				}
+				Refactoring r = new AddParameterRefactoring(addedParameter, getOriginalClass().getPrimaryConstructor().get(), getNextClass().getPrimaryConstructor().get());
+				this.refactorings.add(r);
+			}
+			for(VariableDeclaration removedParameter : parameterListDiff.getRemovedParameters()) {
+				if(removedParameter.isAttribute() && getOriginalClass().getPrimaryConstructor().get().getParameters().size() == getNextClass().getPrimaryConstructor().get().getParameters().size()) {
+					continue;
+				}
+				Refactoring r = new RemoveParameterRefactoring(removedParameter, getOriginalClass().getPrimaryConstructor().get(), getNextClass().getPrimaryConstructor().get());
+				this.refactorings.add(r);
+			}
+		}
+		else {
+			this.primaryConstructorParameterListDiff = Optional.empty();
+		}
 	}
 
 	private void checkForMovedCodeBetweenOperations() throws RefactoringMinerTimedOutException {

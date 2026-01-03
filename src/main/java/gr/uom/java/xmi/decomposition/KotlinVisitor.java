@@ -15,6 +15,7 @@ import org.jetbrains.kotlin.psi.KtBinaryExpression;
 import org.jetbrains.kotlin.psi.KtBinaryExpressionWithTypeRHS;
 import org.jetbrains.kotlin.psi.KtCallExpression;
 import org.jetbrains.kotlin.psi.KtConstantExpression;
+import org.jetbrains.kotlin.psi.KtConstructorCalleeExpression;
 import org.jetbrains.kotlin.psi.KtDotQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
@@ -32,8 +33,11 @@ import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry;
 import org.jetbrains.kotlin.psi.KtSuperTypeEntry;
 import org.jetbrains.kotlin.psi.KtThisExpression;
 import org.jetbrains.kotlin.psi.KtTypeReference;
+import org.jetbrains.kotlin.psi.KtUserType;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.jetbrains.kotlin.psi.KtVisitor;
+import org.jetbrains.kotlin.psi.ValueArgument;
+
 import static org.jetbrains.kotlin.psi.stubs.elements.KtStubElementTypes.*;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -99,6 +103,8 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 			this.processDotQualifiedExpression(dotQualifiedExpression, data);
 		} else if (expression instanceof KtCallExpression callExpression) {
 			this.processCallExpression(callExpression, data);
+		} else if (expression instanceof KtConstructorCalleeExpression callExpression) {
+			this.processConstructorCallExpression(callExpression, data);
 		} else if (expression instanceof KtPrefixExpression prefixExpression) {
 			this.processPrefixExpression(prefixExpression, data);
 		} else if (expression instanceof KtPostfixExpression postfixExpression) {
@@ -128,6 +134,12 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 	public Object visitSuperTypeCallEntry(KtSuperTypeCallEntry entry, Object data) {
 		ObjectCreation invocation = new ObjectCreation(cu, sourceFolder, filePath, entry, container, fileContent);
 		creations.add(invocation);
+		KtConstructorCalleeExpression callee = entry.getCalleeExpression();
+		this.visitExpression(callee, data);
+		List<? extends ValueArgument> arguments = entry.getValueArguments();
+		for (ValueArgument argument : arguments) {
+			processArgument(argument, data);
+		}
 		return super.visitSuperTypeCallEntry(entry, data);
 	}
 
@@ -162,8 +174,13 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 
 	private void processReferenceExpression(KtReferenceExpression expression) {
 		if (expression instanceof KtNameReferenceExpression && !(expression.getParent() instanceof KtCallExpression)) {
-			LeafExpression name = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.SIMPLE_NAME, container);
-			variables.add(name);
+			if(expression.getParent() instanceof KtUserType) {
+				types.add(expression.getText());
+			}
+			else {
+				LeafExpression name = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.SIMPLE_NAME, container);
+				variables.add(name);
+			}
 		}
 	}
 
@@ -179,7 +196,16 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 		}
 	}
 
+	private void processConstructorCallExpression(KtConstructorCalleeExpression expression, Object data) {
+		this.visitExpression(expression.getConstructorReferenceExpression(), data);
+	}
+
 	private void processArgument(KtValueArgument argument, Object data) {
+		KtExpression argumentExpression = argument.getArgumentExpression();
+		this.visitExpression(argumentExpression, data);
+	}
+
+	private void processArgument(ValueArgument argument, Object data) {
 		KtExpression argumentExpression = argument.getArgumentExpression();
 		this.visitExpression(argumentExpression, data);
 	}

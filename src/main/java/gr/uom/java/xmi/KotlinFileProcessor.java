@@ -56,7 +56,11 @@ import com.github.gumtreediff.gen.treesitterng.KotlinTreeSitterNgTreeGenerator;
 import com.github.gumtreediff.tree.TreeContext;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
+import gr.uom.java.xmi.decomposition.AbstractStatement;
+import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
@@ -397,7 +401,7 @@ public class KotlinFileProcessor {
 				umlParameter.setVariableDeclaration(variableDeclaration);
 				primaryConstructor.addParameter(umlParameter);
 			}
-			umlClass.setPrimaryConstructorParameter(primaryConstructor);
+			umlClass.setPrimaryConstructor(primaryConstructor);
 		}
 		List<KtSuperTypeListEntry> superTypeListEntries = ktClass.getSuperTypeListEntries();
 		processSuperTypeListEntries(ktFile, sourceFolder, filePath, fileContent, umlClass, activeVariableDeclarations, superTypeListEntries);
@@ -426,8 +430,38 @@ public class KotlinFileProcessor {
 			}
 			AbstractExpression callEntry = new AbstractExpression(ktFile, sourceFolder, filePath, superTypeListEntry, CodeElementType.SUPER_TYPE_CALL_ENTRY,
 					umlClass.getPrimaryConstructor().isPresent() ? umlClass.getPrimaryConstructor().get() : null, activeVariableDeclarations, fileContent);
+			addStatementInVariableScopes(activeVariableDeclarations, callEntry);
 			umlClass.addSuperTypeCallEntry(callEntry);
 			index++;
+		}
+	}
+
+	private void addStatementInVariableScopes(Map<String, Set<VariableDeclaration>> activeVariableDeclarations, AbstractExpression statement) {
+		for(String variableName : activeVariableDeclarations.keySet()) {
+			Set<VariableDeclaration> variableDeclarations = activeVariableDeclarations.get(variableName);
+			for(VariableDeclaration variableDeclaration : variableDeclarations) {
+				boolean localVariableWithSameName = false;
+				if(variableDeclaration.isAttribute() && variableDeclarations.size() > 1) {
+					localVariableWithSameName = true;
+				}
+				variableDeclaration.addStatementInScope(statement, localVariableWithSameName);
+				for(LambdaExpressionObject lambda : statement.getLambdas()) {
+					OperationBody lambdaBody = lambda.getBody();
+					if(lambdaBody != null) {
+						CompositeStatementObject composite = lambdaBody.getCompositeStatement();
+						for(AbstractStatement lambdaStatement : composite.getInnerNodes()) {
+							variableDeclaration.addStatementInScope(lambdaStatement, localVariableWithSameName);
+						}
+						for(AbstractCodeFragment lambdaStatement : composite.getLeaves()) {
+							variableDeclaration.addStatementInScope(lambdaStatement, localVariableWithSameName);
+						}
+					}
+					AbstractExpression lambdaExpression = lambda.getExpression();
+					if(lambdaExpression != null) {
+						variableDeclaration.addStatementInScope(lambdaExpression, localVariableWithSameName);
+					}
+				}
+			}
 		}
 	}
 

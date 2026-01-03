@@ -637,6 +637,11 @@ public class KotlinFileProcessor {
 				umlClass.addModifier(modifier);
 				umlClass.setVisibility(Visibility.INTERNAL);
 			}
+			if (modifierList.hasModifier(FUN_KEYWORD)) {
+				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(FUN_KEYWORD));
+				umlClass.addModifier(modifier);
+				umlClass.setFunctionalInterface(true);
+			}
 			if (modifierList.hasModifier(OPEN_KEYWORD)) {
 				UMLModifier modifier = new UMLModifier(ktFile, sourceFolder, filePath, modifierList.getModifier(OPEN_KEYWORD));
 				umlClass.addModifier(modifier);

@@ -4132,8 +4132,8 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(classDiff != null && statement1.assignmentInvocationCoveringEntireStatement() != null && statement2.assignmentInvocationCoveringEntireStatement() != null) {
-			String assignedVariable1 = statement1.getString().substring(0, statement1.getString().indexOf(LANG.ASSIGNMENT));
-			String assignedVariable2 = statement2.getString().substring(0, statement2.getString().indexOf(LANG.ASSIGNMENT));
+			String assignedVariable1 = statement1.getString().substring(0, statement1.getString().indexOf(statement1.getLANG().ASSIGNMENT));
+			String assignedVariable2 = statement2.getString().substring(0, statement2.getString().indexOf(statement2.getLANG().ASSIGNMENT));
 			if(assignedVariable1.equals(assignedVariable2)) {
 				for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
 					if(assignmentInvocationCoveringTheEntireStatement1.matchesOperation(removedOperation, container1, classDiff, modelDiff)) {

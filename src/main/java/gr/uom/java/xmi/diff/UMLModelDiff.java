@@ -2050,7 +2050,7 @@ public class UMLModelDiff {
 			if(maxCompatibility > 0) {
 				refactorings.addAll(map.get(maxCompatibility));
 				for(MoveAttributeRefactoring moveAttributeRefactoring : map.get(maxCompatibility)) {
-					UMLAttributeDiff attributeDiff = new UMLAttributeDiff(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), operationBodyMapperList); 
+					UMLAttributeDiff attributeDiff = moveAttributeRefactoring.getAttributeDiff().get(); 
 					if(!movedAttributeDiffList.contains(attributeDiff)) {
 						movedAttributeDiffList.add(attributeDiff);
 					}
@@ -2072,7 +2072,7 @@ public class UMLModelDiff {
 			if(conflictingRefactoring == null) {
 				refactorings.addAll(candidates);
 				for(MoveAttributeRefactoring moveAttributeRefactoring : candidates) {
-					UMLAttributeDiff attributeDiff = new UMLAttributeDiff(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), operationBodyMapperList);
+					UMLAttributeDiff attributeDiff = moveAttributeRefactoring.getAttributeDiff().get();
 					if(!movedAttributeDiffList.contains(attributeDiff)) {
 						movedAttributeDiffList.add(attributeDiff);
 					}
@@ -2082,11 +2082,11 @@ public class UMLModelDiff {
 			else if((conflictingRefactoring.getRefactoringType().equals(RefactoringType.MOVE_ATTRIBUTE) || conflictingRefactoring.getRefactoringType().equals(RefactoringType.MOVE_RENAME_ATTRIBUTE)) &&
 					candidates.get(0).getRefactoringType().equals(RefactoringType.PULL_UP_ATTRIBUTE)) {
 				refactorings.remove(conflictingRefactoring);
-				UMLAttributeDiff conflictingAttributeDiff = new UMLAttributeDiff(conflictingRefactoring.getOriginalAttribute(), conflictingRefactoring.getMovedAttribute(), operationBodyMapperList);
+				UMLAttributeDiff conflictingAttributeDiff = conflictingRefactoring.getAttributeDiff().get();
 				pastRefactorings.removeAll(conflictingAttributeDiff.getRefactorings());
 				refactorings.addAll(candidates);
 				for(MoveAttributeRefactoring moveAttributeRefactoring : candidates) {
-					UMLAttributeDiff attributeDiff = new UMLAttributeDiff(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), operationBodyMapperList);
+					UMLAttributeDiff attributeDiff = moveAttributeRefactoring.getAttributeDiff().get();
 					if(!movedAttributeDiffList.contains(attributeDiff)) {
 						movedAttributeDiffList.add(attributeDiff);
 					}

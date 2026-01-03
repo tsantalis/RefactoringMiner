@@ -119,6 +119,16 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         }
                 	}
                 }
+                if(srcStatementNode.getType().name.equals(Constants.get().CONTROL_STRUCTURE_BODY) && dstStatementNode.getType().name.equals(Constants.get().CONTROL_STRUCTURE_BODY)) {
+                	Tree srcFirstChild = srcStatementNode.getChild(0);
+					Tree dstFirstChild = dstStatementNode.getChild(0);
+					if(abstractCodeMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && srcFirstChild.getType().name.equals(Constants.get().IF_STATEMENT)) {
+						srcStatementNode = srcFirstChild;
+					}
+					if(abstractCodeMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && dstFirstChild.getType().name.equals(Constants.get().IF_STATEMENT)) {
+						dstStatementNode = dstFirstChild;
+					}
+                }
             }
             if (srcStatementNode.getType().name.equals(Constants.get().IF_STATEMENT) && dstStatementNode.getType().name.equals(Constants.get().IF_STATEMENT)) {
                 Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().ELSE_IF);

@@ -276,14 +276,14 @@
         "validators": null
     }, {
         "type": "Remove Parameter",
-        "description": "Remove Parameter ioDispatcher : CoroutineDispatcher in method TasksLocalDataSource(tasksDao TasksDao, ioDispatcher CoroutineDispatcher) from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
+        "description": "Remove Parameter ioDispatcher : CoroutineDispatcher in primary constructor TasksLocalDataSource(tasksDao TasksDao, ioDispatcher CoroutineDispatcher) from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Remove Parameter",
-        "description": "Remove Parameter ioDispatcher : CoroutineDispatcher in method DefaultTasksRepository(tasksRemoteDataSource TasksDataSource, tasksLocalDataSource TasksDataSource, ioDispatcher CoroutineDispatcher) from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
+        "description": "Remove Parameter ioDispatcher : CoroutineDispatcher in primary constructor DefaultTasksRepository(tasksRemoteDataSource TasksDataSource, tasksLocalDataSource TasksDataSource, ioDispatcher CoroutineDispatcher) from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -478,28 +478,28 @@
         "validators": null
     }, {
         "type": "Add Parameter",
-        "description": "Add Parameter coroutineContext : CoroutineContext in method AddEditTaskViewModel(tasksRepository TasksRepository, coroutineContext CoroutineContext) from class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModel",
+        "description": "Add Parameter coroutineContext : CoroutineContext in primary constructor AddEditTaskViewModel(tasksRepository TasksRepository, coroutineContext CoroutineContext) from class com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModel",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Add Parameter",
-        "description": "Add Parameter coroutineContext : CoroutineContext in method TaskDetailViewModel(tasksRepository TasksRepository, coroutineContext CoroutineContext) from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
+        "description": "Add Parameter coroutineContext : CoroutineContext in primary constructor TaskDetailViewModel(tasksRepository TasksRepository, coroutineContext CoroutineContext) from class com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Add Parameter",
-        "description": "Add Parameter coroutineContext : CoroutineContext in method TasksViewModel(tasksRepository TasksRepository, coroutineContext CoroutineContext) from class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel",
+        "description": "Add Parameter coroutineContext : CoroutineContext in primary constructor TasksViewModel(tasksRepository TasksRepository, coroutineContext CoroutineContext) from class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Add Parameter",
-        "description": "Add Parameter coroutineContext : CoroutineContext in method StatisticsViewModel(tasksRepository TasksRepository, coroutineContext CoroutineContext) from class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModel",
+        "description": "Add Parameter coroutineContext : CoroutineContext in primary constructor StatisticsViewModel(tasksRepository TasksRepository, coroutineContext CoroutineContext) from class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModel",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -592,7 +592,7 @@
         "validators": null
     }, {
         "type": "Add Parameter",
-        "description": "Add Parameter scope : CoroutineScope in method DefaultTaskRepository(networkDataSource NetworkDataSource, localDataSource TaskDao, dispatcher CoroutineDispatcher, scope CoroutineScope) from class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "description": "Add Parameter scope : CoroutineScope in primary constructor DefaultTaskRepository(networkDataSource NetworkDataSource, localDataSource TaskDao, dispatcher CoroutineDispatcher, scope CoroutineScope) from class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -1225,7 +1225,7 @@
         "validators": null
     }, {
         "type": "Add Parameter",
-        "description": "Add Parameter scope : CoroutineScope in method DefaultTaskRepository(networkDataSource NetworkDataSource, localDataSource TaskDao, dispatcher CoroutineDispatcher, scope CoroutineScope) from class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
+        "description": "Add Parameter scope : CoroutineScope in primary constructor DefaultTaskRepository(networkDataSource NetworkDataSource, localDataSource TaskDao, dispatcher CoroutineDispatcher, scope CoroutineScope) from class com.example.android.architecture.blueprints.todoapp.data.DefaultTaskRepository",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -1984,21 +1984,21 @@
     "time": "11/8/17 01:35 AM",
     "refactorings": [{
         "type": "Add Parameter",
-        "description": "Add Parameter appExecutors : AppExecutors in method TasksLocalDataSource(appExecutors AppExecutors, tasksDao TasksDao) from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
+        "description": "Add Parameter appExecutors : AppExecutors in primary constructor TasksLocalDataSource(appExecutors AppExecutors, tasksDao TasksDao) from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Add Parameter",
-        "description": "Add Parameter tasksDao : TasksDao in method TasksLocalDataSource(appExecutors AppExecutors, tasksDao TasksDao) from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
+        "description": "Add Parameter tasksDao : TasksDao in primary constructor TasksLocalDataSource(appExecutors AppExecutors, tasksDao TasksDao) from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Remove Parameter",
-        "description": "Remove Parameter context : Context in method TasksLocalDataSource(context Context) from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
+        "description": "Remove Parameter context : Context in primary constructor TasksLocalDataSource(context Context) from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -2652,6 +2652,43 @@
     }, {
         "type": "Change Attribute Access Modifier",
         "description": "Change Attribute Access Modifier private to internal in attribute internal mLastPosition : Inferred from class com.chad.library.adapter.base.BrvahAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute view : View to emptyLayout : FrameLayout in primary constructor EmptyLayoutVH(emptyLayout FrameLayout) from class com.chad.library.adapter.base.viewholder.EmptyLayoutVH",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Attribute",
+        "description": "Parameterize Attribute items : List<T> to items : List<T> in primary constructor BaseQuickAdapter(items List<T>) from class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type view : View to emptyLayout : FrameLayout in primary constructor EmptyLayoutVH(emptyLayout FrameLayout) from class com.chad.library.adapter.base.viewholder.EmptyLayoutVH",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 22,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "07647f9c5bc0aa7923522cdfa7837266bb053d00",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/07647f9c5bc0aa7923522cdfa7837266bb053d00",
+    "author": "limuyang2",
+    "time": "8/7/23 03:07 AM",
+    "refactorings": [{
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type data : MutableList<HomeEntity> to data : List<HomeEntity> in primary constructor HomeAdapter(data List<HomeEntity>) from class com.chad.baserecyclerviewadapterhelper.activity.home.adapter.HomeAdapter",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

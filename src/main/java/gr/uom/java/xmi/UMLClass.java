@@ -122,7 +122,11 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		this.superTypeCallEntries.add(expr);
 	}
 
-	public void setPrimaryConstructorParameter(PrimaryConstructor primary) {
+	public List<AbstractExpression> getSuperTypeCallEntries() {
+		return superTypeCallEntries;
+	}
+
+	public void setPrimaryConstructor(PrimaryConstructor primary) {
 		primaryConstructor = Optional.of(primary);
 	}
 

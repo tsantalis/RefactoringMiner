@@ -4488,19 +4488,19 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean isElseIfBranch(AbstractCodeFragment child, CompositeStatementObject parent) {
-		return parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+		return parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
 				child.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
 				parent.getStatements().size() == 2 && parent.getStatements().indexOf(child) == 1;
 	}
 
 	protected static boolean isIfBranch(AbstractCodeFragment child, CompositeStatementObject parent) {
-		return parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+		return parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
 				child.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
 				parent.getStatements().size() >= 1 && parent.getStatements().indexOf(child) == 0;
 	}
 
 	protected static boolean isElseBranch(AbstractCodeFragment child, CompositeStatementObject parent) {
-		return parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+		return parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
 				child.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
 				parent.getStatements().size() == 2 && parent.getStatements().indexOf(child) == 1;
 	}

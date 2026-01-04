@@ -2147,28 +2147,28 @@
         "validators": null
     }, {
         "type": "Change Parameter Type",
-        "description": "Change Parameter Type adapter : BaseQuickAdapter<T,Inferred> to adapter : BrvahAdapter<T,Inferred> in method public onItemClick(adapter BrvahAdapter<T,Inferred>, view View, position Int) from class com.chad.library.adapter.base.BrvahAdapter.OnItemClickListener",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter<T,*> to adapter : BrvahAdapter<T,*> in method public onItemClick(adapter BrvahAdapter<T,*>, view View, position Int) from class com.chad.library.adapter.base.BrvahAdapter.OnItemClickListener",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Change Parameter Type",
-        "description": "Change Parameter Type adapter : BaseQuickAdapter<T,Inferred> to adapter : BrvahAdapter<T,Inferred> in method public onItemLongClick(adapter BrvahAdapter<T,Inferred>, view View, position Int) : Boolean from class com.chad.library.adapter.base.BrvahAdapter.OnItemLongClickListener",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter<T,*> to adapter : BrvahAdapter<T,*> in method public onItemLongClick(adapter BrvahAdapter<T,*>, view View, position Int) : Boolean from class com.chad.library.adapter.base.BrvahAdapter.OnItemLongClickListener",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Change Parameter Type",
-        "description": "Change Parameter Type adapter : BaseQuickAdapter<T,Inferred> to adapter : BrvahAdapter<T,Inferred> in method public onItemChildClick(adapter BrvahAdapter<T,Inferred>, view View, position Int) from class com.chad.library.adapter.base.BrvahAdapter.OnItemChildClickListener",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter<T,*> to adapter : BrvahAdapter<T,*> in method public onItemChildClick(adapter BrvahAdapter<T,*>, view View, position Int) from class com.chad.library.adapter.base.BrvahAdapter.OnItemChildClickListener",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Change Parameter Type",
-        "description": "Change Parameter Type adapter : BaseQuickAdapter<T,Inferred> to adapter : BrvahAdapter<T,Inferred> in method public onItemChildLongClick(adapter BrvahAdapter<T,Inferred>, view View, position Int) : Boolean from class com.chad.library.adapter.base.BrvahAdapter.OnItemChildLongClickListener",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter<T,*> to adapter : BrvahAdapter<T,*> in method public onItemChildLongClick(adapter BrvahAdapter<T,*>, view View, position Int) : Boolean from class com.chad.library.adapter.base.BrvahAdapter.OnItemChildLongClickListener",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -2734,7 +2734,7 @@
     "time": "8/20/22 05:58 AM",
     "refactorings": [{
         "type": "Remove Parameter",
-        "description": "Remove Parameter dragAndSwipe : DragAndSwipeImpl in primary constructor QuickAdapterHelper(contentAdapter BaseQuickAdapter<Inferred,Inferred>, leadingLoadStateAdapter LeadingLoadStateAdapter<Inferred>, trailingLoadStateAdapter TrailingLoadStateAdapter<Inferred>, config ConcatAdapter.Config, dragAndSwipe DragAndSwipeImpl) from class com.chad.library.adapter.base.QuickAdapterHelper",
+        "description": "Remove Parameter dragAndSwipe : DragAndSwipeImpl in primary constructor QuickAdapterHelper(contentAdapter BaseQuickAdapter<*,*>, leadingLoadStateAdapter LeadingLoadStateAdapter<*>, trailingLoadStateAdapter TrailingLoadStateAdapter<*>, config ConcatAdapter.Config, dragAndSwipe DragAndSwipeImpl) from class com.chad.library.adapter.base.QuickAdapterHelper",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -2895,21 +2895,21 @@
         "validators": null
     }, {
         "type": "Rename Method",
-        "description": "Rename Method public setBaseQuickAdapter(baseQuickAdapter BaseQuickAdapter<Inferred,Inferred>) renamed to public setAdapterImpl(adapterImpl DragAndSwipeAdapterImpl) : DefaultDragAndSwipe in class com.chad.library.adapter.base.dragswipe.DragAndSwipeImpl",
+        "description": "Rename Method public setBaseQuickAdapter(baseQuickAdapter BaseQuickAdapter<*,*>) renamed to public setAdapterImpl(adapterImpl DragAndSwipeAdapterImpl) : DefaultDragAndSwipe in class com.chad.library.adapter.base.dragswipe.DragAndSwipeImpl",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Rename Parameter",
-        "description": "Rename Parameter baseQuickAdapter : BaseQuickAdapter<Inferred,Inferred> to adapterImpl : DragAndSwipeAdapterImpl in method public setAdapterImpl(adapterImpl DragAndSwipeAdapterImpl) : DefaultDragAndSwipe from class com.chad.library.adapter.base.dragswipe.DragAndSwipeImpl",
+        "description": "Rename Parameter baseQuickAdapter : BaseQuickAdapter<*,*> to adapterImpl : DragAndSwipeAdapterImpl in method public setAdapterImpl(adapterImpl DragAndSwipeAdapterImpl) : DefaultDragAndSwipe from class com.chad.library.adapter.base.dragswipe.DragAndSwipeImpl",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Change Parameter Type",
-        "description": "Change Parameter Type baseQuickAdapter : BaseQuickAdapter<Inferred,Inferred> to adapterImpl : DragAndSwipeAdapterImpl in method public setAdapterImpl(adapterImpl DragAndSwipeAdapterImpl) : DefaultDragAndSwipe from class com.chad.library.adapter.base.dragswipe.DragAndSwipeImpl",
+        "description": "Change Parameter Type baseQuickAdapter : BaseQuickAdapter<*,*> to adapterImpl : DragAndSwipeAdapterImpl in method public setAdapterImpl(adapterImpl DragAndSwipeAdapterImpl) : DefaultDragAndSwipe from class com.chad.library.adapter.base.dragswipe.DragAndSwipeImpl",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

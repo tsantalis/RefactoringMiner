@@ -28,6 +28,7 @@ import org.jetbrains.kotlin.psi.KtIntersectionType;
 import org.jetbrains.kotlin.psi.KtModifierList;
 import org.jetbrains.kotlin.psi.KtNullableType;
 import org.jetbrains.kotlin.psi.KtParameter;
+import org.jetbrains.kotlin.psi.KtProjectionKind;
 import org.jetbrains.kotlin.psi.KtTypeElement;
 import org.jetbrains.kotlin.psi.KtTypeProjection;
 import org.jetbrains.kotlin.psi.KtTypeReference;
@@ -505,8 +506,14 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 				return listCompositeType;
 			}
 		} else if (type instanceof KtTypeProjection typeProjection) {
-			UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeProjection.getTypeReference());
-			return umlType;
+			if(typeProjection.getProjectionKind().equals(KtProjectionKind.STAR)) {
+				UMLType umlType = extractTypeObject("*");
+				return umlType;
+			}
+			else {
+				UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeProjection.getTypeReference());
+				return umlType;
+			}
 		}
 		return null;
 	}

@@ -2916,4 +2916,307 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 25,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "29dc3c5fd1642a028e34ba847f3299fe3581431a",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/29dc3c5fd1642a028e34ba847f3299fe3581431a",
+    "author": "limuyang2",
+    "time": "8/23/22 04:11 AM",
+    "refactorings": [{
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.activity.AnimationUseActivity moved to com.chad.baserecyclerviewadapterhelper.activity.animation.AnimationUseActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.adapter.AnimationAdapter moved to com.chad.baserecyclerviewadapterhelper.activity.animation.adapter.AnimationAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.activity.DataBindingUseActivity moved to com.chad.baserecyclerviewadapterhelper.activity.databinding.DataBindingUseActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.adapter.DataBindingAdapter moved to com.chad.baserecyclerviewadapterhelper.activity.databinding.adapter.DataBindingAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.activity.DifferActivity moved to com.chad.baserecyclerviewadapterhelper.activity.differ.DifferActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.adapter.DiffDragAndSwipeAdapter moved to com.chad.baserecyclerviewadapterhelper.activity.dragswipe.adapter.DiffDragAndSwipeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.adapter.DragAndSwipeAdapter moved to com.chad.baserecyclerviewadapterhelper.activity.dragswipe.adapter.DragAndSwipeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.adapter.HeaderDragAndSwipeAdapter moved to com.chad.baserecyclerviewadapterhelper.activity.dragswipe.adapter.HeaderDragAndSwipeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.activity.EmptyViewUseActivity moved to com.chad.baserecyclerviewadapterhelper.activity.emptyview.EmptyViewUseActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.adapter.EmptyViewAdapter moved to com.chad.baserecyclerviewadapterhelper.activity.emptyview.adapter.EmptyViewAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.activity.HeaderAndFooterUseActivity moved to com.chad.baserecyclerviewadapterhelper.activity.headerfooter.HeaderAndFooterUseActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.adapter.FooterAdapter moved to com.chad.baserecyclerviewadapterhelper.activity.headerfooter.adapter.FooterAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.adapter.HeaderAdapter moved to com.chad.baserecyclerviewadapterhelper.activity.headerfooter.adapter.HeaderAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.adapter.HeaderAndFooterAdapter moved to com.chad.baserecyclerviewadapterhelper.activity.headerfooter.adapter.HeaderAndFooterAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.activity.HomeActivity moved to com.chad.baserecyclerviewadapterhelper.activity.home.HomeActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.adapter.HomeTopHeaderAdapter moved to com.chad.baserecyclerviewadapterhelper.activity.home.adapter.HomeTopHeaderAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.activity.ItemClickActivity moved to com.chad.baserecyclerviewadapterhelper.activity.itemclick.ItemClickActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.adapter.ItemClickAdapter moved to com.chad.baserecyclerviewadapterhelper.activity.itemclick.adapter.ItemClickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.adapter.CustomLoadMoreAdapter moved to com.chad.baserecyclerviewadapterhelper.activity.loadmore.adapter.CustomLoadMoreAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.adapter.LoadMoreAdapter moved to com.chad.baserecyclerviewadapterhelper.activity.loadmore.adapter.LoadMoreAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.activity.UpFetchUseActivity moved to com.chad.baserecyclerviewadapterhelper.activity.upfetch.UpFetchUseActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.adapter.UpFetchAdapter moved to com.chad.baserecyclerviewadapterhelper.activity.upfetch.adapter.UpFetchAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.baserecyclerviewadapterhelper.adapter.diffutil.DiffUtilAdapter moved to com.chad.baserecyclerviewadapterhelper.activity.differ.adapter.DiffUtilAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class com.chad.baserecyclerviewadapterhelper.adapter.diffutil.DiffDemoCallback moved and renamed to com.chad.baserecyclerviewadapterhelper.activity.differ.adapter.DiffEntityCallback",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class com.chad.baserecyclerviewadapterhelper.entity.DiffUtilDemoEntity renamed to com.chad.baserecyclerviewadapterhelper.entity.DiffEntity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Package",
+        "description": "Move Package com.chad.baserecyclerviewadapterhelper.adapter.diffutil to com.chad.baserecyclerviewadapterhelper.activity.differ.adapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type list : List<DiffUtilDemoEntity> to list : List<DiffEntity> in method public DiffUtilAdapter(list List<DiffEntity>) from class com.chad.baserecyclerviewadapterhelper.activity.differ.adapter.DiffUtilAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type item : DiffUtilDemoEntity to item : DiffEntity in method protected onBindViewHolder(holder QuickViewHolder, position int, item DiffEntity) : void from class com.chad.baserecyclerviewadapterhelper.activity.differ.adapter.DiffUtilAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type list : List<DiffUtilDemoEntity> to list : List<DiffEntity> in method public DiffDragAndSwipeAdapter(list List<DiffEntity>) from class com.chad.baserecyclerviewadapterhelper.activity.dragswipe.adapter.DiffDragAndSwipeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type item : DiffUtilDemoEntity to item : DiffEntity in method protected onBindViewHolder(holder QuickViewHolder, position int, item DiffEntity) : void from class com.chad.baserecyclerviewadapterhelper.activity.dragswipe.adapter.DiffDragAndSwipeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type oldItem : DiffUtilDemoEntity to oldItem : DiffEntity in method public areItemsTheSame(oldItem DiffEntity, newItem DiffEntity) : boolean from class com.chad.baserecyclerviewadapterhelper.activity.differ.adapter.DiffEntityCallback",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type newItem : DiffUtilDemoEntity to newItem : DiffEntity in method public areItemsTheSame(oldItem DiffEntity, newItem DiffEntity) : boolean from class com.chad.baserecyclerviewadapterhelper.activity.differ.adapter.DiffEntityCallback",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type oldItem : DiffUtilDemoEntity to oldItem : DiffEntity in method public areContentsTheSame(oldItem DiffEntity, newItem DiffEntity) : boolean from class com.chad.baserecyclerviewadapterhelper.activity.differ.adapter.DiffEntityCallback",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type newItem : DiffUtilDemoEntity to newItem : DiffEntity in method public areContentsTheSame(oldItem DiffEntity, newItem DiffEntity) : boolean from class com.chad.baserecyclerviewadapterhelper.activity.differ.adapter.DiffEntityCallback",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type oldItem : DiffUtilDemoEntity to oldItem : DiffEntity in method public getChangePayload(oldItem DiffEntity, newItem DiffEntity) : Object from class com.chad.baserecyclerviewadapterhelper.activity.differ.adapter.DiffEntityCallback",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type newItem : DiffUtilDemoEntity to newItem : DiffEntity in method public getChangePayload(oldItem DiffEntity, newItem DiffEntity) : Object from class com.chad.baserecyclerviewadapterhelper.activity.differ.adapter.DiffEntityCallback",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type list : List<DiffUtilDemoEntity> to list : List<DiffEntity> in method public getDiffUtilDemoEntities() : List<DiffEntity> from class com.chad.baserecyclerviewadapterhelper.data.DataServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type that : DiffUtilDemoEntity to that : DiffEntity in method public equals(o Object) : boolean from class com.chad.baserecyclerviewadapterhelper.entity.DiffEntity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type newData : List<DiffUtilDemoEntity> to newData : List<DiffEntity> in method public onClick(v View) : void from class com.chad.baserecyclerviewadapterhelper.activity.differ.DifferActivity.initClick.setOnClickListener.new View.OnClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type list : List<DiffUtilDemoEntity> to list : List<DiffEntity> in method private getNewList() : List<DiffEntity> from class com.chad.baserecyclerviewadapterhelper.activity.differ.DifferActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List<DiffUtilDemoEntity> to List<DiffEntity> in method private getNewList() : List<DiffEntity> from class com.chad.baserecyclerviewadapterhelper.activity.differ.DifferActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List<DiffUtilDemoEntity> to List<DiffEntity> in method public getDiffUtilDemoEntities() : List<DiffEntity> from class com.chad.baserecyclerviewadapterhelper.data.DataServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

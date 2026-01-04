@@ -3219,4 +3219,155 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 26,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "2d1dbaac06e650bed845e794236ee1ea4b488200",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/2d1dbaac06e650bed845e794236ee1ea4b488200",
+    "author": "limuyang2",
+    "time": "7/18/22 11:26 PM",
+    "refactorings": [{
+        "type": "Rename Attribute",
+        "description": "Rename Attribute adapterAnimation : BaseAnimation to itemAnimation : BaseAnimation in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @CallSuper in method public onViewAttachedToWindow(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @CallSuper in method public onViewDetachedFromWindow(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @CallSuper in method public onAttachedToRecyclerView(recyclerView RecyclerView) from class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @CallSuper in method public onDetachedFromRecyclerView(recyclerView RecyclerView) from class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public setAnimationWithDefault(animationType AnimationType) renamed to public setItemAnimation(animationType AnimationType) in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter index : Int to holder : RecyclerView.ViewHolder in method protected startAnim(anim Animator, holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type index : Int to holder : RecyclerView.ViewHolder in method protected startAnim(anim Animator, holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 27,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "53644d00014beeec5f339942f96c7096cdbd8331",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/53644d00014beeec5f339942f96c7096cdbd8331",
+    "author": null,
+    "time": "1/3/20 05:02 AM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter parentPayload : Any in method private collapse(position Int, isChangeChildCollapse Boolean, animate Boolean, notify Boolean, parentPayload Any) : Int from class com.chad.library.adapter.base.BaseNodeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter parentPayload : Any in method private expand(position Int, isChangeChildExpand Boolean, animate Boolean, notify Boolean, parentPayload Any) : Int from class com.chad.library.adapter.base.BaseNodeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter parentPayload : Any in method public collapse(position Int, animate Boolean, notify Boolean, parentPayload Any) : Int from class com.chad.library.adapter.base.BaseNodeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter parentPayload : Any in method public expand(position Int, animate Boolean, notify Boolean, parentPayload Any) : Int from class com.chad.library.adapter.base.BaseNodeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter parentPayload : Any in method public expandOrCollapse(position Int, animate Boolean, notify Boolean, parentPayload Any) : Int from class com.chad.library.adapter.base.BaseNodeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter parentPayload : Any in method public expandAndChild(position Int, animate Boolean, notify Boolean, parentPayload Any) : Int from class com.chad.library.adapter.base.BaseNodeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter parentPayload : Any in method public collapseAndChild(position Int, animate Boolean, notify Boolean, parentPayload Any) : Int from class com.chad.library.adapter.base.BaseNodeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter expandPayload : Any in method public expandAndCollapseOther(position Int, isExpandedChild Boolean, isCollapseChild Boolean, animate Boolean, notify Boolean, expandPayload Any, collapsePayload Any) from class com.chad.library.adapter.base.BaseNodeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter collapsePayload : Any in method public expandAndCollapseOther(position Int, isExpandedChild Boolean, isCollapseChild Boolean, animate Boolean, notify Boolean, expandPayload Any, collapsePayload Any) from class com.chad.library.adapter.base.BaseNodeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable positionStart : Inferred in method public nodeReplaceChildData(parentNode BaseNode, newData Collection<BaseNode>) from class com.chad.library.adapter.base.BaseNodeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private setArrowSpin(helper BaseViewHolder, data BaseNode, isAnimate boolean) : void extracted from public convert(helper BaseViewHolder, data BaseNode) : void in class com.chad.baserecyclerviewadapterhelper.adapter.node.tree.provider.FirstProvider",
+        "comment": "<div style='color: #000000; background-color: #fffffe; font-family: Menlo, Monaco, 'Courier New', monospace; font-weight: normal; font-size: 12px; line-height: 18px; white-space: pre;'><div><span style='color: #0000ff;'>if</span><span style='color: #000000;'> (entity.isExpanded()) {</span></div></div>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }],
+    "refDiffExecutionTime": 0
 }]

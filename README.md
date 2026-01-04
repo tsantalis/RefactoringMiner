@@ -674,23 +674,23 @@ As of **January 3, 2026** the precision and recall of RefactoringMiner on this b
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|385  |  0  |  0  | 1.000  | 1.000|
+|**Total**|427  |  0  |  0  | 1.000  | 1.000|
 |Extract Method| 3  |  0  |  0  | 1.000  | 1.000|
-|Rename Class| 9  |  0  |  0  | 1.000  | 1.000|
+|Rename Class|10  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|33  |  0  |  0  | 1.000  | 1.000|
 |Inline Method| 6  |  0  |  0  | 1.000  | 1.000|
 |Move Method|23  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Method| 1  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Method|46  |  0  |  0  | 1.000  | 1.000|
-|Move Class|17  |  0  |  0  | 1.000  | 1.000|
-|Move And Rename Class| 1  |  0  |  0  | 1.000  | 1.000|
+|Move Class|40  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Class| 2  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|17  |  0  |  0  | 1.000  | 1.000|
 |Extract Superclass| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Class| 1  |  0  |  0  | 1.000  | 1.000|
 |Move And Inline Method|18  |  0  |  0  | 1.000  | 1.000|
 |Rename Package| 1  |  0  |  0  | 1.000  | 1.000|
-|Move Package| 1  |  0  |  0  | 1.000  | 1.000|
+|Move Package| 2  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable| 3  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable| 6  |  0  |  0  | 1.000  | 1.000|
@@ -700,9 +700,9 @@ As of **January 3, 2026** the precision and recall of RefactoringMiner on this b
 |Replace Attribute With Variable| 2  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|38  |  0  |  0  | 1.000  | 1.000|
-|Change Variable Type| 2  |  0  |  0  | 1.000  | 1.000|
-|Change Parameter Type|23  |  0  |  0  | 1.000  | 1.000|
+|Change Return Type|40  |  0  |  0  | 1.000  | 1.000|
+|Change Variable Type| 6  |  0  |  0  | 1.000  | 1.000|
+|Change Parameter Type|33  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Type|11  |  0  |  0  | 1.000  | 1.000|
 |Add Method Annotation| 5  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation| 1  |  0  |  0  | 1.000  | 1.000|

@@ -3370,4 +3370,50 @@
         "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 28,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "8c5573f5d122296c5712a12d6a1cc5485d6cc090",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/8c5573f5d122296c5712a12d6a1cc5485d6cc090",
+    "author": "limuyang2",
+    "time": "8/7/23 03:06 AM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public getItemPosition(item T) : Int renamed to public itemIndexOfFirst(item T) : Int in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 29,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "8feacd1efe25a7af2874e09c340546f728fadfe7",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/8feacd1efe25a7af2874e09c340546f728fadfe7",
+    "author": "limuyang2",
+    "time": "7/14/22 04:38 AM",
+    "refactorings": [{
+        "type": "Rename Class",
+        "description": "Rename Class com.chad.library.adapter.base.loadState.trailing.TrailingLoadMoreVH renamed to com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateVH",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier public to internal in class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateVH",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.library.adapter.base.loadState.LeadingLoadStateAdapter moved to com.chad.library.adapter.base.loadState.leading.LeadingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

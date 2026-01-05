@@ -1404,10 +1404,12 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		List<String> parameterNames2 = removedOperation.getParameterNameList();
 		List<UMLType> parameterTypes1 = this.getParameterTypeList();
 		List<UMLType> parameterTypes2 = removedOperation.getParameterTypeList();
-		if(parameterNames1.containsAll(parameterNames2) && parameterTypes1.containsAll(parameterTypes2))
-			return true;
-		if(parameterNames2.containsAll(parameterNames1) && parameterTypes2.containsAll(parameterTypes1))
-			return true;
+		if(parameterNames1.size() > 0 && parameterNames2.size() > 0) {
+			if(parameterNames1.containsAll(parameterNames2) && parameterTypes1.containsAll(parameterTypes2))
+				return true;
+			if(parameterNames2.containsAll(parameterNames1) && parameterTypes2.containsAll(parameterTypes1))
+				return true;
+		}
 		return false;
 	}
 

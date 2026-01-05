@@ -3416,4 +3416,202 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 30,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "aa1ed6ebf896411bef0b7650a0603729e9c66ebc",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/aa1ed6ebf896411bef0b7650a0603729e9c66ebc",
+    "author": "limuyang2",
+    "time": "7/17/22 10:47 PM",
+    "refactorings": [{
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type contentAdapter : RecyclerView.Adapter<*> to contentAdapter : BaseQuickAdapter<*,*> in class com.chad.library.adapter.base.QuickAdapterHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type leadingLoadStateAdapter : LoadStateAdapter<*> to leadingLoadStateAdapter : LeadingLoadStateAdapter<*> in class com.chad.library.adapter.base.QuickAdapterHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type trailingLoadStateAdapter : TrailingLoadStateAdapter to trailingLoadStateAdapter : TrailingLoadStateAdapter<*> in class com.chad.library.adapter.base.QuickAdapterHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type adapter : Inferred to adapter : RecyclerView.Adapter<*> in class com.chad.library.adapter.base.QuickAdapterHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type leadingLoadStateAdapter : LoadStateAdapter<*> to leadingLoadStateAdapter : LeadingLoadStateAdapter<*> in class com.chad.library.adapter.base.QuickAdapterHelper.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type trailingLoadStateAdapter : TrailingLoadStateAdapter to trailingLoadStateAdapter : TrailingLoadStateAdapter<*> in class com.chad.library.adapter.base.QuickAdapterHelper.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type loadStateAdapter : TrailingLoadStateAdapter to loadStateAdapter : TrailingLoadStateAdapter<*> in method public setTrailingLoadStateAdapter(loadStateAdapter TrailingLoadStateAdapter<*>) from class com.chad.library.adapter.base.QuickAdapterHelper.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type loadStateAdapter : LoadStateAdapter<*> to loadStateAdapter : LeadingLoadStateAdapter<*> in method public setLeadingLoadStateAdapter(loadStateAdapter LeadingLoadStateAdapter<*>) from class com.chad.library.adapter.base.QuickAdapterHelper.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute viewBinding : ViewLoadMoreBinding to viewBinding : ViewLoadMoreBinding in primary constructor CustomVH(viewBinding ViewLoadMoreBinding) from class com.chad.baserecyclerviewadapterhelper.adapter.CustomLoadMoreAdapter.CustomVH",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier internal to public in attribute public Complete : Inferred from class com.chad.library.adapter.base.loadState.LoadState.NotLoading.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier internal to public in attribute public Incomplete : Inferred from class com.chad.library.adapter.base.loadState.LoadState.NotLoading.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class com.chad.library.adapter.base.loadState.LoadState.NotLoading.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Modifier",
+        "description": "Add Class Modifier abstract in class com.chad.library.adapter.base.loadState.leading.LeadingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Modifier",
+        "description": "Add Class Modifier abstract in class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private loadMoreAction() renamed to private loadAction() in class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute loadMoreListener : OnLoadMoreListener to onTrailingListener : OnTrailingListener in class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type loadMoreListener : OnLoadMoreListener to onTrailingListener : OnTrailingListener in class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public onTrailingListener : OnTrailingListener from class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type holder : TrailingViewHolder to holder : VH in method public onViewAttachedToWindow(holder VH) from class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @Synchronized in method private loadMoreAction() from class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type onLoadMoreListener : OnLoadMoreListener to listener : OnTrailingListener in method public setOnLoadMoreListener(listener OnTrailingListener) from class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter onLoadMoreListener : OnLoadMoreListener to listener : OnTrailingListener in method public setOnLoadMoreListener(listener OnTrailingListener) from class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method public getStateViewType(loadState LoadState) : Int from class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter to public getStateViewType(loadState LoadState) : Int from class com.chad.library.adapter.base.loadState.trailing.DefaultTrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method public onCreateViewHolder(context Context, parent ViewGroup, loadState LoadState) : TrailingViewHolder from class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter to public onCreateViewHolder(parent ViewGroup, loadState LoadState) : TrailingLoadStateVH from class com.chad.library.adapter.base.loadState.trailing.DefaultTrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter context : Context in method public onCreateViewHolder(context Context, parent ViewGroup, loadState LoadState) : TrailingViewHolder from class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type TrailingViewHolder to TrailingLoadStateVH in method public onCreateViewHolder(parent ViewGroup, loadState LoadState) : TrailingLoadStateVH from class com.chad.library.adapter.base.loadState.trailing.DefaultTrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Subclass",
+        "description": "Extract Subclass com.chad.library.adapter.base.loadState.trailing.DefaultTrailingLoadStateAdapter from class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

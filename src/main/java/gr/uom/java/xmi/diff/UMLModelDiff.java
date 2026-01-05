@@ -1769,6 +1769,8 @@ public class UMLModelDiff {
 						skip = true;
 					}
 				}
+				if(removedClass.isAbstract() != addedClass.isAbstract())
+					skip = true;
 				if(!skip) {
 					UMLClassRenameDiff newClassRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
 					newClassRenameDiff.process();
@@ -7072,6 +7074,7 @@ public class UMLModelDiff {
 		}
 		List<UMLOperationBodyMapper> list4 = new ArrayList<UMLOperationBodyMapper>(list3);
 		//filter based on superclass relationship
+		int max = 0;
 		for(int i=0; i<list3.size(); i++) {
 			UMLOperationBodyMapper mapperI = list3.get(i);
 			int matchesI = superclassRelationship(mapperI);
@@ -7081,6 +7084,17 @@ public class UMLModelDiff {
 					int matchesJ = superclassRelationship(mapperJ);
 					if(matchesJ < matchesI) {
 						list4.remove(mapperJ);
+						if(matchesI > max)
+							max = matchesI;
+					}
+				}
+				if(matchesI > max) {
+					for(int j=0; j<list3.size(); j++) {
+						UMLOperationBodyMapper mapperJ = list3.get(j);
+						int matchesJ = superclassRelationship(mapperJ);
+						if(matchesJ < matchesI) {
+							list4.remove(mapperJ);
+						}
 					}
 				}
 			}
@@ -7112,6 +7126,22 @@ public class UMLModelDiff {
 			int matches = 0;
 			for(String token : tokens1) {
 				if(container2ClassName.contains(token)) {
+					matches++;
+				}
+			}
+			return matches;
+		}
+		UMLClass addedClass = getAddedClass(mapper.getContainer2().getClassName());
+		if(addedClass != null && addedClass.getSuperclass() != null) {
+			String superclassType = addedClass.getSuperclass().getClassType();
+			String container1ClassName = mapper.getContainer1().getClassName();
+			if(container1ClassName.contains(".")) {
+				container1ClassName = container1ClassName.substring(container1ClassName.lastIndexOf(".") + 1, container1ClassName.length());
+			}
+			String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(superclassType);
+			int matches = 0;
+			for(String token : tokens1) {
+				if(container1ClassName.contains(token)) {
 					matches++;
 				}
 			}
@@ -7697,8 +7727,17 @@ public class UMLModelDiff {
 			}
 			matchingClassName = commonTokens >= Math.max(tokens1.length, tokens2.length)/2;
 		}
+		int fragmentsNestedUnderMapping = 0;
+		for(AbstractCodeFragment s2 : operationBodyMapper.getNonMappedLeavesT2()) {
+			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+				if(mapping.getFragment2() instanceof StatementObject && mapping.getFragment2().getLocationInfo().subsumes(s2.getLocationInfo())) {
+					fragmentsNestedUnderMapping++;
+					break;
+				}
+			}
+		}
 		return (mappings > nonMappedElementsT1-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable &&
-				mappings > nonMappedElementsT2-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable) ||
+				mappings > nonMappedElementsT2-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable-fragmentsNestedUnderMapping) ||
 				(mappings > 10 && mappings >= nonMappedElementsT1-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable &&
 						mappings >= nonMappedElementsT2-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable) ||
 				(nonMappedElementsT1-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable <= 0 && mappings > Math.floor(nonMappedElementsT2/2.0)) ||

@@ -1396,7 +1396,19 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	public boolean compatibleSignature(UMLOperation removedOperation, Map<UMLTypeParameter, UMLType> typeParameterToTypeArgumentMap) {
-		return ((this.equalReturnParameter(removedOperation) || typeParameterToTypeArgumentMatch(removedOperation, typeParameterToTypeArgumentMap)) && (equalParameterTypes(removedOperation) || overloadedParameterTypes(removedOperation) || equalParameterNames(removedOperation))) || replacedParameterTypes(removedOperation);
+		if ((this.equalReturnParameter(removedOperation) || typeParameterToTypeArgumentMatch(removedOperation, typeParameterToTypeArgumentMap)) && (equalParameterTypes(removedOperation) || overloadedParameterTypes(removedOperation) || equalParameterNames(removedOperation)))
+			return true;
+		if(replacedParameterTypes(removedOperation))
+			return true;
+		List<String> parameterNames1 = this.getParameterNameList();
+		List<String> parameterNames2 = removedOperation.getParameterNameList();
+		List<UMLType> parameterTypes1 = this.getParameterTypeList();
+		List<UMLType> parameterTypes2 = removedOperation.getParameterTypeList();
+		if(parameterNames1.containsAll(parameterNames2) && parameterTypes1.containsAll(parameterTypes2))
+			return true;
+		if(parameterNames2.containsAll(parameterNames1) && parameterTypes2.containsAll(parameterTypes1))
+			return true;
+		return false;
 	}
 
 	public List<String> getSignatureIdentifiers() {

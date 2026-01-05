@@ -3612,6 +3612,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Merge Conditional",
+        "description": "Merge Conditional [super.displayLoadStateAsItem(loadState) || (loadState is LoadState.NotLoading && loadState.endOfPaginationReached), if(isLoadEndDisplay)] to return super.displayLoadStateAsItem(loadState) in method public displayLoadStateAsItem(loadState LoadState) : Boolean from class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Conditional",
+        "description": "Merge Conditional [super.displayLoadStateAsItem(loadState), if(isLoadEndDisplay)] to return super.displayLoadStateAsItem(loadState) in method public displayLoadStateAsItem(loadState LoadState) : Boolean from class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }]

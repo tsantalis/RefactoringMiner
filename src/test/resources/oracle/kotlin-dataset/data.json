@@ -3628,4 +3628,69 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 31,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "bb45af37cb1f3cc0da4af9b8325620374e874f3b",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/bb45af37cb1f3cc0da4af9b8325620374e874f3b",
+    "author": "limuyang2",
+    "time": "8/24/22 09:27 AM",
+    "refactorings": [{
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type position : Int to item : Any in method public onBindViewHolder(holder VH, item Any) from class com.chad.baserecyclerviewadapterhelper.activity.headerfooter.adapter.HeaderAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type listener : OnItemClickListener<T> to listener : (BaseSingleItemAdapter<T,*>,View,T) -> Unit in method public setOnItemClickListener(listener (BaseSingleItemAdapter<T,*>,View,T) -> Unit) from class com.chad.library.adapter.base.BaseSingleItemAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type listener : OnItemLongClickListener<T> to listener : (BaseSingleItemAdapter<T,*>,View,T) -> Boolean in method public setOnItemLongClickListener(listener (BaseSingleItemAdapter<T,*>,View,T) -> Boolean) from class com.chad.library.adapter.base.BaseSingleItemAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type mOnItemClickListener : OnItemClickListener<T> to mOnItemClickListener : (BaseSingleItemAdapter<T,*>,View,T) -> Unit in class com.chad.library.adapter.base.BaseSingleItemAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type mOnItemLongClickListener : OnItemLongClickListener<T> to mOnItemLongClickListener : (BaseSingleItemAdapter<T,*>,View,T) -> Boolean in class com.chad.library.adapter.base.BaseSingleItemAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter position : Int to item : Any in method public onBindViewHolder(holder VH, item Any) from class com.chad.baserecyclerviewadapterhelper.activity.headerfooter.adapter.HeaderAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter context : Context in method public onCreateViewHolder(context Context, parent ViewGroup, viewType Int) : VH from class com.chad.baserecyclerviewadapterhelper.activity.headerfooter.adapter.HeaderAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter click : (FooterAdapter) -> Unit in primary constructor FooterAdapter(isDelete Boolean, click (FooterAdapter) -> Unit) from class com.chad.baserecyclerviewadapterhelper.activity.headerfooter.adapter.FooterAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

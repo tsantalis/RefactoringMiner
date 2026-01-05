@@ -3990,11 +3990,14 @@ public class StringBasedHeuristics {
 				int matches2 = matchCount(intersection2, info, statement1, statement2, LANG);
 				boolean pass2 = pass(subConditionsAsList, subConditionsAsList2, intersection2, matches2, LANG);
 				if(pass2 && !intersection.containsAll(intersection2)) {
-					Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
-					additionallyMatchedStatements1.add(ifNode1);
-					CompositeReplacement composite = new CompositeReplacement(ifNode1.getString(), statement2.getString(), additionallyMatchedStatements1, new LinkedHashSet<>());
-					info.addReplacement(composite);
-					mergeConditional = true;
+					boolean subsume = statement1 instanceof StatementObject && statement1.getLocationInfo().subsumes(ifNode1.getLocationInfo());
+					if(!subsume) {
+						Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
+						additionallyMatchedStatements1.add(ifNode1);
+						CompositeReplacement composite = new CompositeReplacement(ifNode1.getString(), statement2.getString(), additionallyMatchedStatements1, new LinkedHashSet<>());
+						info.addReplacement(composite);
+						mergeConditional = true;
+					}
 				}
 			}
 		}

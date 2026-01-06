@@ -2276,6 +2276,22 @@ public class VariableReplacementAnalysis {
 								}
 							}
 						}
+						if(!insideExtractedOrInlinedMethod && invocation1.getExpression() != null && invocation2.getExpression() != null && !invocation1.identicalExpression(invocation2) && invocation1.equalArguments(invocation2)) {
+							String expression1 = invocation1.getExpression().endsWith("?") ? invocation1.getExpression().substring(0, invocation1.getExpression().length()-1) : invocation1.getExpression();
+							String expression2 = invocation2.getExpression().endsWith("?") ? invocation2.getExpression().substring(0, invocation2.getExpression().length()-1) : invocation2.getExpression();
+							if(variables1.stream().anyMatch(variable -> variable.getString().equals(expression1)) &&
+									variables2.stream().anyMatch(variable -> variable.getString().equals(expression2))) {
+								Replacement variableReplacement = new Replacement(expression1, expression2, ReplacementType.VARIABLE_NAME);
+								if(map.containsKey(variableReplacement)) {
+									map.get(variableReplacement).add(mapping);
+								}
+								else {
+									Set<AbstractCodeMapping> list = new LinkedHashSet<AbstractCodeMapping>();
+									list.add(mapping);
+									map.put(variableReplacement, list);
+								}
+							}
+						}
 					}
 					else if(replacement.getType().equals(ReplacementType.METHOD_INVOCATION_NAME)) {
 						Replacement variableReplacement = new Replacement(replacement.getBefore(), replacement.getAfter(), ReplacementType.VARIABLE_NAME);

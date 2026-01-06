@@ -674,9 +674,9 @@ As of **January 6, 2026** the precision and recall of RefactoringMiner on this b
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|519  |  0  |  0  | 1.000  | 1.000|
+|**Total**|533  |  0  |  0  | 1.000  | 1.000|
 |Extract Method| 4  |  0  |  0  | 1.000  | 1.000|
-|Rename Class|12  |  0  |  0  | 1.000  | 1.000|
+|Rename Class|13  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|36  |  0  |  0  | 1.000  | 1.000|
 |Inline Method| 6  |  0  |  0  | 1.000  | 1.000|
@@ -687,9 +687,11 @@ As of **January 6, 2026** the precision and recall of RefactoringMiner on this b
 |Move And Rename Class| 2  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|17  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method| 2  |  0  |  0  | 1.000  | 1.000|
+|Extract Interface| 1  |  0  |  0  | 1.000  | 1.000|
 |Extract Superclass| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 1  |  0  |  0  | 1.000  | 1.000|
 |Extract Class| 1  |  0  |  0  | 1.000  | 1.000|
+|Extract And Move Method| 1  |  0  |  0  | 1.000  | 1.000|
 |Move And Inline Method|18  |  0  |  0  | 1.000  | 1.000|
 |Rename Package| 1  |  0  |  0  | 1.000  | 1.000|
 |Move Package| 2  |  0  |  0  | 1.000  | 1.000|
@@ -698,7 +700,7 @@ As of **January 6, 2026** the precision and recall of RefactoringMiner on this b
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Rename Parameter| 9  |  0  |  0  | 1.000  | 1.000|
-|Rename Attribute|22  |  0  |  0  | 1.000  | 1.000|
+|Rename Attribute|27  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute| 2  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable| 2  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter| 1  |  0  |  0  | 1.000  | 1.000|
@@ -706,7 +708,7 @@ As of **January 6, 2026** the precision and recall of RefactoringMiner on this b
 |Change Return Type|55  |  0  |  0  | 1.000  | 1.000|
 |Change Variable Type| 6  |  0  |  0  | 1.000  | 1.000|
 |Change Parameter Type|51  |  0  |  0  | 1.000  | 1.000|
-|Change Attribute Type|20  |  0  |  0  | 1.000  | 1.000|
+|Change Attribute Type|21  |  0  |  0  | 1.000  | 1.000|
 |Add Method Annotation| 9  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation| 2  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Annotation| 8  |  0  |  0  | 1.000  | 1.000|
@@ -714,11 +716,12 @@ As of **January 6, 2026** the precision and recall of RefactoringMiner on this b
 |Add Class Annotation|16  |  0  |  0  | 1.000  | 1.000|
 |Remove Class Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter Annotation| 1  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|29  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|30  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter|10  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Method Access Modifier| 3  |  0  |  0  | 1.000  | 1.000|
-|Change Attribute Access Modifier|11  |  0  |  0  | 1.000  | 1.000|
+|Change Attribute Access Modifier|14  |  0  |  0  | 1.000  | 1.000|
+|Encapsulate Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier| 2  |  0  |  0  | 1.000  | 1.000|
 |Add Class Modifier| 6  |  0  |  0  | 1.000  | 1.000|
 |Change Type Declaration Kind| 7  |  0  |  0  | 1.000  | 1.000|

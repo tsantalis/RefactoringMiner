@@ -224,13 +224,6 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Move Code",
-        "description": "Move Code from public resetForTests() to public resetRepository() in class com.example.android.architecture.blueprints.todoapp.ServiceLocator",
-        "comment": "<p>code is moved within a lambda expression body<br />database?.apply {<br /> clearAllTables()<br /> close()<br /> }</p>",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Nikos"
-    }, {
         "type": "Change Attribute Access Modifier",
         "description": "Change Attribute Access Modifier private to public in attribute public tasksRepository : TasksRepository from class com.example.android.architecture.blueprints.todoapp.ServiceLocator",
         "comment": null,

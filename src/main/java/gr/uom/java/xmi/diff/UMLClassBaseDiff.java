@@ -101,6 +101,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private Optional<UMLJavadocDiff> javadocDiff;
 	private Optional<UMLJavadocDiff> packageDeclarationJavadocDiff;
 	private Optional<UMLParameterListDiff> primaryConstructorParameterListDiff;
+	private Optional<UMLTypeAliasListDiff> typeAliasListDiff;
 	private UMLCommentListDiff packageDeclarationCommentListDiff;
 	private Set<UMLOperationBodyMapper> extractMethodCandidates;
 	private int removedOperationDelegates;
@@ -153,6 +154,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return primaryConstructorParameterListDiff;
 	}
 
+	public Optional<UMLTypeAliasListDiff> getTypeAliasListDiff() {
+		return typeAliasListDiff;
+	}
+
 	public UMLCommentListDiff getPackageDeclarationCommentListDiff() {
 		if(packageDeclarationCommentListDiff == null)
 			packageDeclarationCommentListDiff = new UMLCommentListDiff(getOriginalClass().getPackageDeclarationComments(), getNextClass().getPackageDeclarationComments());
@@ -181,6 +186,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	public void process() throws RefactoringMinerTimedOutException {
 		processPrimaryConstructors();
+		if(getOriginalClass().getTypeAliasList().size() > 0 && getNextClass().getTypeAliasList().size() > 0) {
+			UMLTypeAliasListDiff typeAliasListDiff = new UMLTypeAliasListDiff(getOriginalClass().getTypeAliasList(), getNextClass().getTypeAliasList());
+			this.typeAliasListDiff = Optional.of(typeAliasListDiff);
+		}
+		else {
+			this.typeAliasListDiff = Optional.empty();
+		}
 		if(originalClass.getContainer().isPresent() && nextClass.getContainer().isPresent()) {
 			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(originalClass.getContainer().get(), nextClass.getContainer().get(), this);
 			addOperationBodyMapper(mapper);

@@ -36,6 +36,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private Optional<UMLPackage> packageDeclaration;
     private UMLJavadoc packageDeclarationJavadoc;
     private List<UMLComment> packageDeclarationComments;
+    private List<UMLTypeAlias> typeAliasList;
     private String actualSignature;
     
     public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<UMLImport> importedTypes) {
@@ -82,6 +83,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.superTypeCallEntries = new ArrayList<>();
         this.packageDeclarationComments = new ArrayList<UMLComment>();
         this.packageDeclaration = Optional.empty();
+        this.typeAliasList = new ArrayList<UMLTypeAlias>();
     }
 
     public String getTypeDeclarationKind() {
@@ -117,6 +119,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 			typeParameterNames.add(typeParameter.getName());
 		}
 		return typeParameterNames;
+	}
+
+	public List<UMLTypeAlias> getTypeAliasList() {
+		return typeAliasList;
+	}
+
+	public void addTypeAlias(UMLTypeAlias typeAlias) {
+		this.typeAliasList.add(typeAlias);
 	}
 
 	public void addSuperTypeCallEntry(AbstractExpression expr) {

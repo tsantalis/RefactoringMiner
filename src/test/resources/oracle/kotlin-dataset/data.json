@@ -3693,4 +3693,209 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 32,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "bbc5bd8e33db0a2d812992b491827936134b3787",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/bbc5bd8e33db0a2d812992b491827936134b3787",
+    "author": "limuyang2",
+    "time": "7/16/22 03:47 AM",
+    "refactorings": [{
+        "type": "Change Return Type",
+        "description": "Change Return Type BaseViewHolder to QuickViewHolder in method public setText(viewId Int, value CharSequence) : QuickViewHolder from class com.chad.library.adapter.base.viewholder.QuickViewHolder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type BaseViewHolder to QuickViewHolder in method public setText(viewId Int, strId Int) : QuickViewHolder from class com.chad.library.adapter.base.viewholder.QuickViewHolder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type BaseViewHolder to QuickViewHolder in method public setTextColor(viewId Int, color Int) : QuickViewHolder from class com.chad.library.adapter.base.viewholder.QuickViewHolder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type BaseViewHolder to QuickViewHolder in method public setTextColorRes(viewId Int, colorRes Int) : QuickViewHolder from class com.chad.library.adapter.base.viewholder.QuickViewHolder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type BaseViewHolder to QuickViewHolder in method public setImageResource(viewId Int, imageResId Int) : QuickViewHolder from class com.chad.library.adapter.base.viewholder.QuickViewHolder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type BaseViewHolder to QuickViewHolder in method public setImageDrawable(viewId Int, drawable Drawable) : QuickViewHolder from class com.chad.library.adapter.base.viewholder.QuickViewHolder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type BaseViewHolder to QuickViewHolder in method public setImageBitmap(viewId Int, bitmap Bitmap) : QuickViewHolder from class com.chad.library.adapter.base.viewholder.QuickViewHolder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type BaseViewHolder to QuickViewHolder in method public setBackgroundColor(viewId Int, color Int) : QuickViewHolder from class com.chad.library.adapter.base.viewholder.QuickViewHolder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type BaseViewHolder to QuickViewHolder in method public setBackgroundResource(viewId Int, backgroundRes Int) : QuickViewHolder from class com.chad.library.adapter.base.viewholder.QuickViewHolder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type BaseViewHolder to QuickViewHolder in method public setVisible(viewId Int, isVisible Boolean) : QuickViewHolder from class com.chad.library.adapter.base.viewholder.QuickViewHolder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type BaseViewHolder to QuickViewHolder in method public setGone(viewId Int, isGone Boolean) : QuickViewHolder from class com.chad.library.adapter.base.viewholder.QuickViewHolder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type BaseViewHolder to QuickViewHolder in method public setEnabled(viewId Int, isEnabled Boolean) : QuickViewHolder from class com.chad.library.adapter.base.viewholder.QuickViewHolder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type BaseViewHolder to QuickViewHolder in method protected onCreateViewHolder(context Context, parent ViewGroup, viewType int) : QuickViewHolder from class com.chad.baserecyclerviewadapterhelper.adapter.AnimationAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type BaseViewHolder to QuickViewHolder in method public onCreateViewHolder(parent ViewGroup, viewType Int) : QuickViewHolder from class com.chad.library.adapter.base.binder.QuickItemBinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type holder : BaseViewHolder to holder : QuickViewHolder in method protected onBindViewHolder(holder QuickViewHolder, position int, item Status) : void from class com.chad.baserecyclerviewadapterhelper.adapter.AnimationAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type holder : BaseViewHolder to holder : QuickViewHolder in method public convert(holder QuickViewHolder, position Int, loadMoreStatus LoadMoreStatus) from class com.chad.library.adapter.base.loadmore.BaseLoadMoreView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type holder : BaseViewHolder to holder : QuickViewHolder in method public abstract getLoadingView(holder QuickViewHolder) : View from class com.chad.library.adapter.base.loadmore.BaseLoadMoreView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type holder : BaseViewHolder to holder : QuickViewHolder in method public abstract getLoadComplete(holder QuickViewHolder) : View from class com.chad.library.adapter.base.loadmore.BaseLoadMoreView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type holder : BaseViewHolder to holder : QuickViewHolder in method public abstract getLoadEndView(holder QuickViewHolder) : View from class com.chad.library.adapter.base.loadmore.BaseLoadMoreView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type holder : BaseViewHolder to holder : QuickViewHolder in method public abstract getLoadFailView(holder QuickViewHolder) : View from class com.chad.library.adapter.base.loadmore.BaseLoadMoreView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type holder : BaseViewHolder to holder : QuickViewHolder in method public getLoadingView(holder QuickViewHolder) : View from class com.chad.library.adapter.base.loadmore.SimpleLoadMoreView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type holder : BaseViewHolder to holder : QuickViewHolder in method public getLoadComplete(holder QuickViewHolder) : View from class com.chad.library.adapter.base.loadmore.SimpleLoadMoreView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type holder : BaseViewHolder to holder : QuickViewHolder in method public getLoadEndView(holder QuickViewHolder) : View from class com.chad.library.adapter.base.loadmore.SimpleLoadMoreView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type holder : BaseViewHolder to holder : QuickViewHolder in method public getLoadFailView(holder QuickViewHolder) : View from class com.chad.library.adapter.base.loadmore.SimpleLoadMoreView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class com.chad.library.adapter.base.viewholder.BaseViewHolder renamed to com.chad.library.adapter.base.viewholder.QuickViewHolder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable view : View in method protected onCreateViewHolder(context Context, parent ViewGroup, viewType int) : BaseViewHolder from class com.chad.baserecyclerviewadapterhelper.adapter.AnimationAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Class Annotation",
+        "description": "Remove Class Annotation @Keep in class com.chad.library.adapter.base.viewholder.BaseViewHolder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Reorder Parameter",
+        "description": "Reorder Parameter [parent : ViewGroup, resId : int] to [resId : int, parent : ViewGroup] in method public DataBindingHolder(resId int, parent ViewGroup) from class com.chad.library.adapter.base.viewholder.DataBindingHolder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

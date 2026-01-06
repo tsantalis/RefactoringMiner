@@ -670,13 +670,13 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **January 5, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **January 6, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|491  |  0  |  0  | 1.000  | 1.000|
+|**Total**|519  |  0  |  0  | 1.000  | 1.000|
 |Extract Method| 4  |  0  |  0  | 1.000  | 1.000|
-|Rename Class|11  |  0  |  0  | 1.000  | 1.000|
+|Rename Class|12  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|36  |  0  |  0  | 1.000  | 1.000|
 |Inline Method| 6  |  0  |  0  | 1.000  | 1.000|
@@ -694,7 +694,7 @@ As of **January 5, 2026** the precision and recall of RefactoringMiner on this b
 |Rename Package| 1  |  0  |  0  | 1.000  | 1.000|
 |Move Package| 2  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable| 1  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable| 3  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable| 4  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Rename Parameter| 9  |  0  |  0  | 1.000  | 1.000|
@@ -703,19 +703,20 @@ As of **January 5, 2026** the precision and recall of RefactoringMiner on this b
 |Replace Attribute With Variable| 2  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|41  |  0  |  0  | 1.000  | 1.000|
+|Change Return Type|55  |  0  |  0  | 1.000  | 1.000|
 |Change Variable Type| 6  |  0  |  0  | 1.000  | 1.000|
-|Change Parameter Type|41  |  0  |  0  | 1.000  | 1.000|
+|Change Parameter Type|51  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Type|20  |  0  |  0  | 1.000  | 1.000|
 |Add Method Annotation| 9  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation| 2  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Annotation| 8  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Annotation| 5  |  0  |  0  | 1.000  | 1.000|
 |Add Class Annotation|16  |  0  |  0  | 1.000  | 1.000|
-|Remove Class Annotation| 3  |  0  |  0  | 1.000  | 1.000|
+|Remove Class Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter|29  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter|10  |  0  |  0  | 1.000  | 1.000|
+|Reorder Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Method Access Modifier| 3  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Access Modifier|11  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier| 2  |  0  |  0  | 1.000  | 1.000|

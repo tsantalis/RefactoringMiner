@@ -46,6 +46,7 @@ import org.jetbrains.kotlin.psi.KtProperty;
 import org.jetbrains.kotlin.psi.KtPropertyAccessor;
 import org.jetbrains.kotlin.psi.KtSecondaryConstructor;
 import org.jetbrains.kotlin.psi.KtSuperTypeListEntry;
+import org.jetbrains.kotlin.psi.KtTypeAlias;
 import org.jetbrains.kotlin.psi.KtTypeParameter;
 import org.jetbrains.kotlin.psi.KtTypeReference;
 import org.jetbrains.kotlin.psi.KtValueArgument;
@@ -192,6 +193,7 @@ public class KotlinFileProcessor {
 		this.umlModel.getCommentMap().put(filePath, comments);
 		List<KtNamedFunction> topLevelFunctions = new ArrayList<>();
 		List<KtProperty> topLevelProperties = new ArrayList<>();
+		List<KtTypeAlias> topLevelTypeAliasList = new ArrayList<>();
 		for (PsiElement psiElement : ktFile.getChildren()) {
 			if (psiElement instanceof KtObjectDeclaration objectDeclaration) {
 				UMLClass companionObject = processObjectDeclaration(ktFile, objectDeclaration, umlPackage, packageName, sourceFolder, filePath, fileContent, importedTypes, comments, Collections.emptyList());
@@ -207,8 +209,11 @@ public class KotlinFileProcessor {
 			else if (psiElement instanceof KtProperty property) {
 				topLevelProperties.add(property);
 			}
+			else if (psiElement instanceof KtTypeAlias typeAlias) {
+				topLevelTypeAliasList.add(typeAlias);
+			}
 		}
-		if (topLevelFunctions.size() > 0 || topLevelProperties.size() > 0) {
+		if (topLevelFunctions.size() > 0 || topLevelProperties.size() > 0 || topLevelTypeAliasList.size() > 0) {
 			LocationInfo locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, ktFile, CodeElementType.TYPE_DECLARATION);
 			String baseFileName = ktFile.getName();
 			if (baseFileName.endsWith(".kt")) {
@@ -235,6 +240,31 @@ public class KotlinFileProcessor {
 				UMLOperation operation = processFunctionDeclaration(ktFile, function, sourceFolder, filePath, fileContent, moduleClass.getAttributes(), comments);
 				operation.setClassName(moduleClass.getName());
 				moduleClass.addOperation(operation);
+			}
+			for(KtTypeAlias typeAlias : topLevelTypeAliasList) {
+				KtTypeReference typeReference = typeAlias.getTypeReference();
+				LocationInfo typeAliasLocationInfo = new LocationInfo(ktFile, sourceFolder, filePath, typeAlias, CodeElementType.TYPE_ALIAS);
+				UMLType rightType = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeReference, 0);
+				UMLTypeAlias umlTypeAlias = new UMLTypeAlias(typeAlias.getName(), rightType, typeAliasLocationInfo);
+				for(KtTypeParameter typeParameter : typeAlias.getTypeParameters()) {
+					LocationInfo typeParameterLocation = generateLocationInfo(ktFile, sourceFolder, filePath, typeParameter, CodeElementType.TYPE_PARAMETER);
+					UMLTypeParameter umlTypeParameter = new UMLTypeParameter(typeParameter.getName(), typeParameterLocation);
+					KtTypeReference typeBounds = typeParameter.getExtendsBound();
+					if (typeBounds != null) {
+						umlTypeParameter.addTypeBound(
+								UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeBounds, 0));
+					}
+					KtModifierList typeParameterModifiers = typeParameter.getModifierList();
+					if (typeParameterModifiers != null) {
+						for (PsiElement modifier : typeParameterModifiers.getChildren()) {
+							if (modifier instanceof KtAnnotationEntry annotationEntry) {
+								umlTypeParameter.addAnnotation(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
+							}
+						}
+					}
+					umlTypeAlias.addTypeParameter(umlTypeParameter);
+				}
+				moduleClass.addTypeAlias(umlTypeAlias);
 			}
 			distributeComments(comments, locationInfo, moduleClass.getComments());
 			umlModel.addClass(moduleClass);

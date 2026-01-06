@@ -5,10 +5,13 @@ import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.UMLTypeAlias;
 import gr.uom.java.xmi.UMLTypeParameter;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLAnnotationListDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
+import gr.uom.java.xmi.diff.UMLTypeAliasListDiff;
+
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
@@ -70,6 +73,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         else if(!classDiff.getOriginalClass().isObject() && classDiff.getNextClass().isObject()) {
         	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),Constants.get().TYPE_DECLARATION);
         	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),Constants.get().OBJECT_DECLARATION);
+        }
+        if(classDiff.getTypeAliasListDiff().isPresent()) {
+        	processTypeAliasList(srcTree, dstTree, classDiff.getTypeAliasListDiff().get(), mappingStore);
         }
         if (srcTypeDeclaration == null || dstTypeDeclaration == null) return;
         if (srcTypeDeclaration.getParent() != null && dstTypeDeclaration.getParent() != null) {
@@ -237,6 +243,15 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         }
         if (src_argumentList.getParent().getType().name.equals(Constants.get().DELEGATION_SPECIFIER) && dst_argumentList.getParent().getType().name.equals(Constants.get().DELEGATION_SPECIFIER)) {
             mappingStore.addMapping(src_argumentList.getParent(),dst_argumentList.getParent());
+        }
+    }
+
+    private void processTypeAliasList(Tree srcTree, Tree dstTree, UMLTypeAliasListDiff typeAliasListDiff, ExtendedMultiMappingStore mappingStore) {
+        for (org.apache.commons.lang3.tuple.Pair<UMLTypeAlias, UMLTypeAlias> typeAliasPair : typeAliasListDiff.getCommonTypeAliases()) {
+        	Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree, typeAliasPair.getLeft().getLocationInfo());
+            Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, typeAliasPair.getRight().getLocationInfo());
+            if (srcSubTree == null || dstSubTree == null) return;
+            mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
         }
     }
 

@@ -137,10 +137,19 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (classDiff.getPrimaryConstructorParameterListDiff().isPresent()) {
             Set<org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration>> pairs = classDiff.getPrimaryConstructorParameterListDiff().get().getCommonParameters();
             for (org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration> pair : pairs) {
-                processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, pair.getLeft(), pair.getRight());
+                Tree srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, pair.getLeft().getLocationInfo());
+                Tree dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, pair.getRight().getLocationInfo());
+                if (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment")) {
+                    srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, pair.getLeft().getLocationInfo(), Constants.get().CLASS_PARAMETER);
+                }
+                if (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment")) {
+                    dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, pair.getRight().getLocationInfo(), Constants.get().CLASS_PARAMETER);
+                }
+                if (srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
+                    mappingStore.addMappingRecursively(srcFieldDeclaration,dstFieldDeclaration);
             }
-            Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree, classDiff.getOriginalClass().getPrimaryConstructor().get().getLocationInfo());
-            Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, classDiff.getNextClass().getPrimaryConstructor().get().getLocationInfo());
+            Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, classDiff.getOriginalClass().getPrimaryConstructor().get().getLocationInfo());
+            Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, classDiff.getNextClass().getPrimaryConstructor().get().getLocationInfo());
             if (srcSubTree != null && dstSubTree != null) {
                 mappingStore.addMapping(srcSubTree, dstSubTree);
                 new SameModifierMatcher(Constants.get().INTERNAL).match(srcSubTree,dstSubTree,mappingStore);

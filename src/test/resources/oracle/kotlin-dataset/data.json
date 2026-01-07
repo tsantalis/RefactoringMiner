@@ -4270,4 +4270,269 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 37,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "dd523d04df1d6c4d3b7989b13806e205bf7db464",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/dd523d04df1d6c4d3b7989b13806e205bf7db464",
+    "author": "limuyang2",
+    "time": "7/22/22 02:26 AM",
+    "refactorings": [{
+        "type": "Rename Class",
+        "description": "Rename Class com.chad.library.adapter.base.animation.ItemAnimation renamed to com.chad.library.adapter.base.animation.ItemAnimator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private addAnimation(holder RecyclerView.ViewHolder) renamed to private runAnimator(holder RecyclerView.ViewHolder) in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method protected startItemAnim(anim Animator, holder RecyclerView.ViewHolder) renamed to protected startItemAnimator(anim Animator, holder RecyclerView.ViewHolder) in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type itemAnimation : ItemAnimation to itemAnimation : ItemAnimator in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type animation : ItemAnimation to animation : ItemAnimator in method private runAnimator(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 38,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "e4234c1287427c27d7b21d646a107da155b2c70c",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/e4234c1287427c27d7b21d646a107da155b2c70c",
+    "author": null,
+    "time": "4/11/20 04:02 AM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public remove(position Int) renamed to public removeAt(position Int) in class com.chad.library.adapter.base.BaseNodeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private removeAt(position Int) : Int renamed to private removeNodesAt(position Int) : Int in class com.chad.library.adapter.base.BaseNodeAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public removeAt(position Int) extracted from public remove(position Int) in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Deprecated(\"Please use removeAt()\", replaceWith = ReplaceWith(\"removeAt(position)\")) in method public remove(position Int) from class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Class Annotation",
+        "description": "Remove Class Annotation @Deprecated(\"please use Class BaseBinderAdapter\") in class com.chad.library.adapter.base.BaseProviderMultiAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 39,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "e77a6cacacf15e669bb5716ea55e1d39fd5e1f6f",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/e77a6cacacf15e669bb5716ea55e1d39fd5e1f6f",
+    "author": "limuyang2",
+    "time": "7/22/22 02:17 AM",
+    "refactorings": [{
+        "type": "Rename Class",
+        "description": "Rename Class com.chad.library.adapter.base.animation.BaseAnimation renamed to com.chad.library.adapter.base.animation.ItemAnimation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public animators(view View) : Animator[] renamed to public animator(view View) : Animator in class com.chad.baserecyclerviewadapterhelper.animator.CustomAnimation1",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public animators(view View) : Animator[] renamed to public animator(view View) : Animator in class com.chad.baserecyclerviewadapterhelper.animator.CustomAnimation2",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public animators(view View) : Animator[] renamed to public animator(view View) : Animator in class com.chad.baserecyclerviewadapterhelper.animator.CustomAnimation3",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public animators(view View) : Array<Animator> renamed to public animator(view View) : Animator in class com.chad.library.adapter.base.animation.AlphaInAnimation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public animators(view View) : Array<Animator> renamed to public animator(view View) : Animator in class com.chad.library.adapter.base.animation.ScaleInAnimation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public animators(view View) : Array<Animator> renamed to public animator(view View) : Animator in class com.chad.library.adapter.base.animation.SlideInBottomAnimation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public animators(view View) : Array<Animator> renamed to public animator(view View) : Animator in class com.chad.library.adapter.base.animation.SlideInLeftAnimation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public animators(view View) : Array<Animator> renamed to public animator(view View) : Animator in class com.chad.library.adapter.base.animation.SlideInRightAnimation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Animator[] to Animator in method public animator(view View) : Animator from class com.chad.baserecyclerviewadapterhelper.animator.CustomAnimation1",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Animator[] to Animator in method public animator(view View) : Animator from class com.chad.baserecyclerviewadapterhelper.animator.CustomAnimation2",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Animator[] to Animator in method public animator(view View) : Animator from class com.chad.baserecyclerviewadapterhelper.animator.CustomAnimation3",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Array<Animator> to Animator in method public animator(view View) : Animator from class com.chad.library.adapter.base.animation.AlphaInAnimation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Array<Animator> to Animator in method public animator(view View) : Animator from class com.chad.library.adapter.base.animation.ScaleInAnimation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Array<Animator> to Animator in method public animator(view View) : Animator from class com.chad.library.adapter.base.animation.SlideInBottomAnimation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Array<Animator> to Animator in method public animator(view View) : Animator from class com.chad.library.adapter.base.animation.SlideInLeftAnimation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Array<Animator> to Animator in method public animator(view View) : Animator from class com.chad.library.adapter.base.animation.SlideInRightAnimation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Array<Animator> to Animator in method public animator(view View) : Animator from class com.chad.library.adapter.base.animation.ItemAnimation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier package to private in class com.chad.baserecyclerviewadapterhelper.animator.CustomAnimation2.MyInterpolator2",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Modifier",
+        "description": "Add Class Modifier static in class com.chad.baserecyclerviewadapterhelper.animator.CustomAnimation2.MyInterpolator2",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter duration : Long in primary constructor AlphaInAnimation(duration Long, mFrom Float) from class com.chad.library.adapter.base.animation.AlphaInAnimation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter duration : Long in primary constructor ScaleInAnimation(duration Long, mFrom Float) from class com.chad.library.adapter.base.animation.ScaleInAnimation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type itemAnimation : BaseAnimation to itemAnimation : ItemAnimation in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type animation : BaseAnimation to animation : ItemAnimation in method private addAnimation(holder RecyclerView.ViewHolder) from class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

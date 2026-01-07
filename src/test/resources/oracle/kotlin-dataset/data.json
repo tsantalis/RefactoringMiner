@@ -4154,4 +4154,120 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 35,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "c50965893a7ae7833940bda59d7f045d32cfa534",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/c50965893a7ae7833940bda59d7f045d32cfa534",
+    "author": "limuyang2",
+    "time": "7/19/22 02:32 AM",
+    "refactorings": [{
+        "type": "Rename Class",
+        "description": "Rename Class com.chad.library.adapter.base.BaseMultiItemQuickAdapter.OnViewHolderListener renamed to com.chad.library.adapter.base.BaseMultiItemQuickAdapter.OnMultiItemAdapterListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type listener : OnViewHolderListener<T,V> to listener : OnMultiItemAdapterListener<T,V> in method public addItemType(type Int, listener OnMultiItemAdapterListener<T,V>) from class com.chad.library.adapter.base.BaseMultiItemQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type listener : OnViewHolderListener<T,V> to listener : OnMultiItemAdapterListener<T,V> in method public addItemType(type Int, holderClazz Class<V>, listener OnMultiItemAdapterListener<T,V>) from class com.chad.library.adapter.base.BaseMultiItemQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 36,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "dd42634ec1c2e642a32506014863cbcdde6d9200",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/dd42634ec1c2e642a32506014863cbcdde6d9200",
+    "author": "limuyang2",
+    "time": "8/7/23 03:06 AM",
+    "refactorings": [{
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type item : T to item : Any in method public onBindViewHolder(holder VH, position Int, item Any) from class com.chad.library.adapter.base.BaseSingleItemAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type item : T to item : Any in method public onBindViewHolder(holder VH, position Int, item Any, payloads List<Any>) from class com.chad.library.adapter.base.BaseSingleItemAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type items : List<T> to items : List<Any> in method public getItemCount(items List<Any>) : Int from class com.chad.library.adapter.base.BaseSingleItemAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type list : List<T> to list : List<Any> in method public submitList(list List<Any>) from class com.chad.library.adapter.base.BaseSingleItemAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type data : T to data : Any in method public add(data Any) from class com.chad.library.adapter.base.BaseSingleItemAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type data : T to data : Any in method public add(position Int, data Any) from class com.chad.library.adapter.base.BaseSingleItemAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type collection : Collection<T> to collection : Collection<Any> in method public addAll(collection Collection<Any>) from class com.chad.library.adapter.base.BaseSingleItemAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type collection : Collection<T> to collection : Collection<Any> in method public addAll(position Int, collection Collection<Any>) from class com.chad.library.adapter.base.BaseSingleItemAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type data : T to data : Any in method public remove(data Any) from class com.chad.library.adapter.base.BaseSingleItemAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type data : T to data : Any in method public set(position Int, data Any) from class com.chad.library.adapter.base.BaseSingleItemAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute item : T to mItem : T in method public onBindViewHolder(holder VH, position Int, item Any, payloads List<Any>) from class com.chad.library.adapter.base.BaseSingleItemAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

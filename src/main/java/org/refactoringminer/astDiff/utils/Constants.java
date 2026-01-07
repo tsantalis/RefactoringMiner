@@ -54,10 +54,10 @@ public class Constants {
 			BLOCK_COMMENT = "multiline_comment";
 			LINE_COMMENT = "line_comment";
 			EXPRESSION_STATEMENT = "expression_statement"; // TODO update value
-			TRY_STATEMENT = "try_statement"; // TODO update value
-			CATCH_CLAUSE = "except_clause"; // TODO update value
+			TRY_STATEMENT = "try_expression";
+			CATCH_CLAUSE = "catch_block";
 			IF_STATEMENT = "if_expression";
-			WHILE_STATEMENT = "while_statement"; // TODO update value
+			WHILE_STATEMENT = "while_statement";
 			FOR_STATEMENT = "for_statement";
 			ENHANCED_FOR_STATEMENT = "for_statement";
 			PACKAGE_DECLARATION = "package_header";
@@ -263,4 +263,5 @@ public class Constants {
     public final String IMPORT_IDENTIFIER = "identifier";
     public final String CONTROL_STRUCTURE_BODY = "control_structure_body";
     public final String CLASS_PARAMETER = "class_parameter";
+    public final String USER_TYPE = "user_type";
 }

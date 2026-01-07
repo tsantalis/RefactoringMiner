@@ -231,6 +231,12 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     mappingStore.addMapping(finally_blocks.first,finally_blocks.second);
                 }
             }
+            if(srcStatementNode.getType().name.equals(Constants.get().CATCH_CLAUSE) && dstStatementNode.getType().name.equals(Constants.get().CATCH_CLAUSE)) {
+            	Pair<Tree, Tree> types = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().USER_TYPE);
+            	if (types != null) {
+                    mappingStore.addMappingRecursively(types.first,types.second);
+            	}
+            }
         }
     }
 

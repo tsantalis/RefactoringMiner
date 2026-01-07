@@ -521,6 +521,7 @@ public class KotlinFileProcessor {
 				UMLJavadoc constructorJavadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, constructor.getDocComment());
 				umlConstructor.setJavadoc(constructorJavadoc);
 				distributeComments(comments, constructorLocationInfo, umlConstructor.getComments());
+				int startSignatureOffset = constructorLocationInfo.getStartOffset();
 				List<KtParameter> parameters = constructor.getValueParameters();
 				for (KtParameter parameter : parameters) {
 					KtTypeReference typeReference = parameter.getTypeReference();
@@ -563,6 +564,11 @@ public class KotlinFileProcessor {
 					umlConstructor.setBody(operationBody);
 				}
 				umlConstructor.setClassName(umlClass.getName());
+				int endSignatureOffset = constructor.getBodyBlockExpression() != null ?
+						umlConstructor.getBody().getCompositeStatement().getLocationInfo().getStartOffset() + 1 :
+							constructor.getTextRange().getEndOffset();
+				String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
+				umlConstructor.setActualSignature(text);
 				umlClass.addOperation(umlConstructor);
 			}
 			for(KtEnumEntry entry : classBody.getEnumEntries()) {

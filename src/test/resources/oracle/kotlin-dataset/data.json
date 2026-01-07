@@ -3998,4 +3998,160 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 34,
+    "repository": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper.git",
+    "sha1": "dbe23d122ebc0b0f6b6ac3b609aaef0a022f9463",
+    "url": "https://github.com/CymChad/BaseRecyclerViewAdapterHelper/commit/dbe23d122ebc0b0f6b6ac3b609aaef0a022f9463",
+    "author": "limuyang2",
+    "time": "7/15/22 04:41 AM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method protected setOnItemClick(v View, position Int) renamed to protected onItemClick(v View, position Int) in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method protected setOnItemLongClick(v View, position Int) : Boolean renamed to protected onItemLongClick(v View, position Int) : Boolean in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method protected setOnItemChildClick(v View, position Int) renamed to protected onItemChildClick(v View, position Int) in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method protected setOnItemChildLongClick(v View, position Int) : Boolean renamed to protected onItemChildLongClick(v View, position Int) : Boolean in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type mOnItemClickListener : OnItemClickListener to mOnItemClickListener : OnItemClickListener<T> in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type mOnItemLongClickListener : OnItemLongClickListener to mOnItemLongClickListener : OnItemLongClickListener<T> in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter to adapter : BaseQuickAdapter<Status,?> in method public onItemClick(adapter BaseQuickAdapter<Status,?>, view View, position int) : void from class com.chad.baserecyclerviewadapterhelper.activity.HeaderAndFooterUseActivity.onCreate.setOnItemClickListener.new BaseQuickAdapter.OnItemClickListener<Status>",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter<?,?> to adapter : BaseQuickAdapter<ClickEntity,?> in method public onItemClick(adapter BaseQuickAdapter<ClickEntity,?>, view View, position int) : void from class com.chad.baserecyclerviewadapterhelper.activity.ItemClickActivity.onCreate.setOnItemClickListener.new BaseQuickAdapter.OnItemClickListener<ClickEntity>",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter to adapter : BaseQuickAdapter<ClickEntity,?> in method public onItemLongClick(adapter BaseQuickAdapter<ClickEntity,?>, view View, position int) : boolean from class com.chad.baserecyclerviewadapterhelper.activity.ItemClickActivity.onCreate.setOnItemLongClickListener.new BaseQuickAdapter.OnItemLongClickListener<ClickEntity>",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type listener : OnItemClickListener to listener : OnItemClickListener<T> in method public setOnItemClickListener(listener OnItemClickListener<T>) from class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type listener : OnItemLongClickListener to listener : OnItemLongClickListener<T> in method public setOnItemLongClickListener(listener OnItemLongClickListener<T>) from class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter<?,?> to adapter : BaseQuickAdapter<T,*> in method public onItemLongClick(adapter BaseQuickAdapter<T,*>, view View, position Int) : Boolean from class com.chad.library.adapter.base.BaseQuickAdapter.OnItemLongClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type OnItemClickListener to OnItemClickListener<T> in method public getOnItemClickListener() : OnItemClickListener<T> from class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type OnItemLongClickListener to OnItemLongClickListener<T> in method public getOnItemLongClickListener() : OnItemLongClickListener<T> from class com.chad.library.adapter.base.BaseQuickAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.library.adapter.base.listener.OnItemClickListener moved to com.chad.library.adapter.base.BaseQuickAdapter.OnItemClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.chad.library.adapter.base.listener.OnItemLongClickListener moved to com.chad.library.adapter.base.BaseQuickAdapter.OnItemLongClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter Annotation",
+        "description": "Remove Parameter Annotation @NonNull in parameter adapter : BaseQuickAdapter<?,?> in method public onItemLongClick(adapter BaseQuickAdapter<?,?>, view View, position int) : boolean from class com.chad.library.adapter.base.listener.OnItemLongClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter Annotation",
+        "description": "Remove Parameter Annotation @NonNull in parameter view : View in method public onItemLongClick(adapter BaseQuickAdapter<?,?>, view View, position int) : boolean from class com.chad.library.adapter.base.listener.OnItemLongClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type boolean to Boolean in method public onItemLongClick(adapter BaseQuickAdapter<T,*>, view View, position Int) : Boolean from class com.chad.library.adapter.base.BaseQuickAdapter.OnItemLongClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type position : int to position : Int in method public onItemLongClick(adapter BaseQuickAdapter<T,*>, view View, position Int) : Boolean from class com.chad.library.adapter.base.BaseQuickAdapter.OnItemLongClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Anonymous With Lambda",
+        "description": "Replace Anonymous With Lambda com.chad.baserecyclerviewadapterhelper.activity.DataBindingUseActivity.onCreate.setOnItemClickListener.new OnItemClickListener with (adapter, view, position) -> Tips.show(\"onItemClick: \" + position) in method protected onCreate(savedInstanceState Bundle) : void from class com.chad.baserecyclerviewadapterhelper.activity.DataBindingUseActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

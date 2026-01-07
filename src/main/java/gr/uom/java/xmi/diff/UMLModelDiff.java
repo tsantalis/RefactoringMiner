@@ -1732,7 +1732,8 @@ public class UMLModelDiff {
 				}
 			}
 		}
-		Set<UMLClassRenameDiff> diffsToBeAdded = new LinkedHashSet<UMLClassRenameDiff>();
+		Set<UMLClassRenameDiff> renameDiffsToBeAdded = new LinkedHashSet<UMLClassRenameDiff>();
+		Set<UMLClassMoveDiff> moveDiffsToBeAdded = new LinkedHashSet<UMLClassMoveDiff>();
 		Set<UMLClassRenameDiff> diffsToBeRemoved = new LinkedHashSet<UMLClassRenameDiff>();
 		Set<UMLClass> addedClassesToBeRemoved = new LinkedHashSet<UMLClass>();
 		Set<UMLClass> removedClassesToBeRemoved = new LinkedHashSet<UMLClass>();
@@ -1772,9 +1773,16 @@ public class UMLModelDiff {
 				if(removedClass.isAbstract() != addedClass.isAbstract())
 					skip = true;
 				if(!skip) {
-					UMLClassRenameDiff newClassRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
-					newClassRenameDiff.process();
-					diffsToBeAdded.add(newClassRenameDiff);
+					if(removedClass.getNonQualifiedName().equals(addedClass.getNonQualifiedName())) {
+						UMLClassMoveDiff newClassMoveDiff = new UMLClassMoveDiff(removedClass, addedClass, this, matchResult);
+						newClassMoveDiff.process();
+						moveDiffsToBeAdded.add(newClassMoveDiff);
+					}
+					else {
+						UMLClassRenameDiff newClassRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
+						newClassRenameDiff.process();
+						renameDiffsToBeAdded.add(newClassRenameDiff);
+					}
 					addedClassesToBeRemoved.add(addedClass);
 					removedClassesToBeRemoved.add(removedClass);
 					if(oldClassRenameDiff != null)
@@ -1783,7 +1791,8 @@ public class UMLModelDiff {
 			}
 		}
 		classRenameDiffList.removeAll(diffsToBeRemoved);
-		classRenameDiffList.addAll(diffsToBeAdded);
+		classRenameDiffList.addAll(renameDiffsToBeAdded);
+		classMoveDiffList.addAll(moveDiffsToBeAdded);
 		removedClasses.removeAll(removedClassesToBeRemoved);
 		addedClasses.removeAll(addedClassesToBeRemoved);
 	}
@@ -3539,8 +3548,15 @@ public class UMLModelDiff {
 							break;
 						}
 					}
-					if(!foundInMatchingRenamePackageRefactoring) {
+					UMLClassBaseDiff classDiff = null;
+					if(renamePattern.getAfter().endsWith(".")) {
+						classDiff = getUMLClassDiff(renamePattern.getAfter().substring(0, renamePattern.getAfter().length()-1));
+					}
+					if(!foundInMatchingRenamePackageRefactoring && classDiff == null) {
 						renamePackageRefactorings.add(new RenamePackageRefactoring(refactoring));
+					}
+					else {
+						refactorings.add(refactoring);
 					}
 				}
 			} else if(!originalPathPrefix.equals(movedPathPrefix)) {

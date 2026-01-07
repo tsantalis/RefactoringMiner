@@ -4535,4 +4535,629 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 40,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "b6ed80b37e1de9aecdc9ba6b77f9bd8c749b517f",
+    "url": "https://github.com/square/leakcanary/commit/b6ed80b37e1de9aecdc9ba6b77f9bd8c749b517f",
+    "author": "pyricau",
+    "time": "4/4/19 08:41 PM",
+    "refactorings": [{
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.AnalysisResult moved to leakcanary.AnalysisResult",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.AnalyzerProgressListener moved to leakcanary.AnalyzerProgressListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.ExcludedRefs moved to leakcanary.ExcludedRefs",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.Exclusion moved to leakcanary.Exclusion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.HahaHelper moved to leakcanary.HahaHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.HeapAnalyzer moved to leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.LeakNode moved to leakcanary.LeakNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.LeakReference moved to leakcanary.LeakReference",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.LeakTrace moved to leakcanary.LeakTrace",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.LeakTraceElement moved to leakcanary.LeakTraceElement",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.Reachability moved to leakcanary.Reachability",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.ShortestPathFinder moved to leakcanary.ShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.AsyncTaskLeakTest moved to leakcanary.AsyncTaskLeakTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.FakeDataBuffer moved to leakcanary.FakeDataBuffer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.HahaHelperTest moved to leakcanary.HahaHelperTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.HeapAnalyzerHeapDumpTest moved to leakcanary.HeapAnalyzerHeapDumpTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.HeapAnalyzerTest moved to leakcanary.HeapAnalyzerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.RetainedSizeTest moved to leakcanary.RetainedSizeTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.HeapDumpFile moved to leakcanary.HeapDumpFile",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.FragmentLeakTest moved to leakcanary.FragmentLeakTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.Fragments.module moved to leakcanary.Fragments.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.InstrumentationLeakDetectorTest moved to leakcanary.InstrumentationLeakDetectorTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.InstrumentationTestApplication moved to leakcanary.InstrumentationTestApplication",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.LeakingFragment moved to leakcanary.LeakingFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.TestActivity moved to leakcanary.TestActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.ViewLeakingFragment moved to leakcanary.ViewLeakingFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.FailTestOnLeakRunListener moved to leakcanary.FailTestOnLeakRunListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.InstrumentationLeakDetector moved to leakcanary.InstrumentationLeakDetector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.InstrumentationLeakResults moved to leakcanary.InstrumentationLeakResults",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.AbstractAnalysisResultService moved to leakcanary.AbstractAnalysisResultService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.AnalyzedHeap moved to leakcanary.AnalyzedHeap",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.AndroidDebuggerControl moved to leakcanary.AndroidDebuggerControl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.AndroidExcludedRefs moved to leakcanary.AndroidExcludedRefs",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.AndroidHeapDumper moved to leakcanary.AndroidHeapDumper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.AndroidReachabilityInspectors moved to leakcanary.AndroidReachabilityInspectors",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.CanaryLog moved to leakcanary.CanaryLog",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.DebuggerControl moved to leakcanary.DebuggerControl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.DefaultLeakDirectoryProvider moved to leakcanary.DefaultLeakDirectoryProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.DisplayLeakService moved to leakcanary.DisplayLeakService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.GcTrigger moved to leakcanary.GcTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.HeapDump moved to leakcanary.HeapDump",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.HeapDumpTrigger moved to leakcanary.HeapDumpTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.HeapDumper moved to leakcanary.HeapDumper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.LeakCanary moved to leakcanary.LeakCanary",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.LeakDirectoryProvider moved to leakcanary.LeakDirectoryProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.ServiceHeapDumpListener moved to leakcanary.ServiceHeapDumpListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.DisplayLeakActivity moved to leakcanary.internal.DisplayLeakActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.DisplayLeakAdapter moved to leakcanary.internal.DisplayLeakAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.DisplayLeakConnectorView moved to leakcanary.internal.DisplayLeakConnectorView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.ForegroundService moved to leakcanary.internal.ForegroundService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.FutureResult moved to leakcanary.internal.FutureResult",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.HeapAnalyzerService moved to leakcanary.internal.HeapAnalyzerService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.InternalLeakCanary moved to leakcanary.internal.InternalLeakCanary",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.LeakCanaryFileProvider moved to leakcanary.internal.LeakCanaryFileProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.LeakCanaryInternals moved to leakcanary.internal.LeakCanaryInternals",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.LeakCanaryReceiver moved to leakcanary.internal.LeakCanaryReceiver",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.LeakCanarySingleThreadFactory moved to leakcanary.internal.LeakCanarySingleThreadFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.MoreDetailsView moved to leakcanary.internal.MoreDetailsView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.RequestStoragePermissionActivity moved to leakcanary.internal.RequestStoragePermissionActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.RowElementLayout moved to leakcanary.internal.RowElementLayout",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.SquigglySpan moved to leakcanary.internal.SquigglySpan",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.VisibilityTracker moved to leakcanary.internal.VisibilityTracker",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.VisibilityTracker.module moved to leakcanary.internal.VisibilityTracker.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leaksentry.LeakSentry moved to leakcanary.LeakSentry",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leaksentry.internal.ActivityDestroyWatcher moved to leakcanary.internal.ActivityDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leaksentry.internal.ActivityLifecycleCallbacksAdapter moved to leakcanary.internal.ActivityLifecycleCallbacksAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leaksentry.internal.AndroidOFragmentDestroyWatcher moved to leakcanary.internal.AndroidOFragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leaksentry.internal.FragmentDestroyWatcher moved to leakcanary.internal.FragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leaksentry.internal.InternalLeakSentry moved to leakcanary.internal.InternalLeakSentry",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leaksentry.internal.LeakSentryInstaller moved to leakcanary.internal.LeakSentryInstaller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leaksentry.internal.SupportFragmentDestroyWatcher moved to leakcanary.internal.SupportFragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.example.leakcanary.tests.TuPeuxPasTest moved to leakcanary.tests.TuPeuxPasTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leaksentry.Clock moved to leakcanary.Clock",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leaksentry.KeyedWeakReference moved to leakcanary.KeyedWeakReference",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leaksentry.RefWatcher moved to leakcanary.RefWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leaksentry.RefWatcherTest moved to leakcanary.RefWatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.HeapDumpMemoryStore moved to leakcanary.internal.HeapDumpMemoryStore",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leaksentry.AbstractLeakSentryReceiver moved to leakcanary.AbstractLeakSentryReceiver",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.TestUtil.module moved to leakcanary.TestUtil.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Package",
+        "description": "Rename Package leaksentry to leakcanary",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter heapDumpMemoryStoreClassName : String in primary constructor HeapAnalyzer(excludedRefs ExcludedRefs, listener AnalyzerProgressListener, reachabilityInspectorClasses List<Class<Inspector>>, keyedWeakReferenceClassName String, heapDumpMemoryStoreClassName String) from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type reachabilityInspectorClasses : List<Class<Reachability.Inspector>> to reachabilityInspectorClasses : List<Class<Inspector>> in method public HeapAnalyzer(excludedRefs ExcludedRefs, listener AnalyzerProgressListener, reachabilityInspectorClasses List<Class<Inspector>>) from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type reachabilityInspectors : MutableList<Reachability.Inspector> to reachabilityInspectors : MutableList<Inspector> in class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type holderType : LeakTraceElement.Holder to holderType : Holder in method private buildLeakElement(node LeakNode) : LeakTraceElement from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type type : LeakTraceElement.Type to type : Type in class leakcanary.LeakReference",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type heapdumpListener : HeapDump.Listener to heapdumpListener : Listener in class leakcanary.HeapDumpTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type DisplayLeakConnectorView.Type to Type in method private getConnectorType(position Int) : Type from class leakcanary.internal.DisplayLeakAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Package",
+        "description": "Move Package com.squareup.leakcanary to leakcanary.internal",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

@@ -651,10 +651,10 @@ public class StringBasedHeuristics {
 			else if(diff2.isEmpty() && diff1.startsWith("@")) {
 				return true;
 			}
-			else if(diff1.isEmpty() && diff2.isBlank()) {
+			else if(diff1.isEmpty() && diff2.isBlank() && !diff2.isEmpty()) {
 				return true;
 			}
-			else if(diff2.isEmpty() && diff1.isBlank()) {
+			else if(diff2.isEmpty() && diff1.isBlank() && !diff1.isEmpty()) {
 				return true;
 			}
 		}

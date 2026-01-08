@@ -3274,7 +3274,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return (mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 				(mappings > 0 && identicalFixtureAnnotation) ||
 				(mappings > 0 && migrateToExpected) ||
-				(operationsWithSameName && mappings >= nonMappedElementsT1 && mappings >= nonMappedElementsT2) ||
+				((operationsWithSameName || mappings > 10) && mappings >= nonMappedElementsT1 && mappings >= nonMappedElementsT2) ||
 				(nonMappedElementsT1 == 0 && mappings > Math.floor(nonMappedElementsT2/2.0) && (!operationBodyMapper.involvesTestMethods() || removedOperations.size() == 1 || addedOperations.size() == 1)) ||
 				(nonMappedElementsT2 == 0 && mappings > Math.floor(nonMappedElementsT1/2.0) && (!operationBodyMapper.involvesTestMethods() || removedOperations.size() == 1 || addedOperations.size() == 1) && !(this instanceof UMLClassMoveDiff)) ||
 				(nonMappedElementsT1 == 0 && exactMappings >= Math.floor(nonMappedElementsT2/2.0) && operationBodyMapper.getContainer1().isConstructor() == operationBodyMapper.getContainer2().isConstructor()) ||

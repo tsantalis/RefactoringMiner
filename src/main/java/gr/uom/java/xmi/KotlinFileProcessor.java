@@ -617,7 +617,7 @@ public class KotlinFileProcessor {
 			}
 			for(KtDeclaration declaration : classBody.getDeclarations()) {
 				if(declaration instanceof KtClass ktClass) {
-					boolean enumConstant = ktClass.getParent() instanceof KtClassBody && ktClass.getParent().getParent() instanceof KtClass parentClass && parentClass.isEnum();
+					boolean enumConstant = ktClass.getParent() instanceof KtClassBody && ktClass.getParent().getParent() instanceof KtClass parentClass && parentClass.isEnum() && ktClass.getClassKeyword() == null;
 					if(!enumConstant) {
 						UMLClass nestedClass = processClassDeclaration(ktFile, ktClass, null, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments);
 						umlModel.addClass(nestedClass);

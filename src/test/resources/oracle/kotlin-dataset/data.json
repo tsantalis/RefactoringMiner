@@ -5160,4 +5160,720 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 41,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "01210bbbfaecb3bcb6057c62b2195366d3bfa4f9",
+    "url": "https://github.com/square/leakcanary/commit/01210bbbfaecb3bcb6057c62b2195366d3bfa4f9",
+    "author": "pyricau",
+    "time": "5/7/19 10:56 AM",
+    "refactorings": [{
+        "type": "Move Class",
+        "description": "Move Class leakcanary.Labeler.AllFieldsLabeler moved to leakcanary.AllFieldsLabeler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leakcanary.Labeler.InstanceDefaultLabeler moved to leakcanary.InstanceDefaultLabeler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leakcanary.Reachability.Companion moved to leakcanary.LeakNodeStatus.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.Reachability renamed to leakcanary.LeakNodeStatusAndReason",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.AndroidReachabilityInspectors renamed to leakcanary.AndroidLeakInspectors",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.AndroidReachabilityInspectors.module renamed to leakcanary.AndroidLeakInspectors.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class leakcanary.Reachability.Status moved and renamed to leakcanary.LeakNodeStatus",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @Ignore in class leakcanary.HeapAnalyzerComparisonTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter leakStatusAndReason : LeakNodeStatusAndReason in method private buildLeakElement(node LeakNode, leakStatusAndReason LeakNodeStatusAndReason) : LeakTraceElement from class leakcanary.internal.perflib.PerflibHeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter expectedReachability : List<Reachability> in primary constructor LeakTrace(elements List<LeakTraceElement>, expectedReachability List<Reachability>) from class leakcanary.LeakTrace",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter leakStatusAndReason : LeakNodeStatusAndReason in primary constructor LeakTraceElement(reference LeakReference, holder Holder, className String, exclusion ExclusionDescription, labels List<String>, leakStatusAndReason LeakNodeStatusAndReason) from class leakcanary.LeakTraceElement",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type exclusionsFactory : (HprofParser) -> List<Exclusion> to exclusionsFactory : ExclusionsFactory in method public findPaths(parser HprofParser, exclusionsFactory ExclusionsFactory, leakingWeakRefs List<KeyedWeakReferenceMirror>, gcRootIds MutableList<Long>) : List<Result> from class leakcanary.internal.ShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute defaultExclusionFactory : (HprofParser) -> List<Exclusion> to defaultExclusionsFactory : ExclusionsFactory in class leakcanary.internal.TestUtil.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type defaultExclusionFactory : (HprofParser) -> List<Exclusion> to defaultExclusionsFactory : ExclusionsFactory in class leakcanary.internal.TestUtil.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type reachabilityInspectors : List<Reachability.Inspector> to leakInspectors : List<LeakInspector> in method public checkForLeaks(labelers List<Labeler>, leakInspectors List<LeakInspector>, exclusionsFactory ExclusionsFactory) : T from class leakcanary.internal.TestUtil.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type exclusionsFactory : (HprofParser) -> List<Exclusion> to exclusionsFactory : ExclusionsFactory in method public checkForLeaks(labelers List<Labeler>, leakInspectors List<LeakInspector>, exclusionsFactory ExclusionsFactory) : T from class leakcanary.internal.TestUtil.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter reachabilityInspectors : List<Reachability.Inspector> to leakInspectors : List<LeakInspector> in method public checkForLeaks(labelers List<Labeler>, leakInspectors List<LeakInspector>, exclusionsFactory ExclusionsFactory) : T from class leakcanary.internal.TestUtil.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type (HprofParser) -> List<Exclusion> to ExclusionsFactory in method public exclusionsFactory(refs EnumSet<AndroidExcludedRefs>) : ExclusionsFactory from class leakcanary.AndroidExcludedRefs.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public computeLabels(parser HprofParser, node LeakNode) : List<String> renamed to public invoke(parser HprofParser, node LeakNode) : List<String> in class leakcanary.AndroidLabelers.FRAGMENT_LABELER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public computeLabels(parser HprofParser, node LeakNode) : List<String> renamed to public invoke(parser HprofParser, node LeakNode) : List<String> in class leakcanary.AndroidLabelers.ViewLabeler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type exclusionsFactory : (HprofParser) -> List<Exclusion> to exclusionsFactory : ExclusionsFactory in class leakcanary.LeakCanary.Config",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type analysisResultListener : (Application,HeapAnalysis) -> Unit to analysisResultListener : AnalysisResultListener in class leakcanary.LeakCanary.Config",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute reachabilityInspectors : List<Reachability.Inspector> to leakInspectors : List<LeakInspector> in class leakcanary.LeakCanary.Config",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type reachabilityInspectors : List<Reachability.Inspector> to leakInspectors : List<LeakInspector> in class leakcanary.LeakCanary.Config",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.VIEW",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public expectedReachability(parser HprofParser, node LeakNode) : Reachability renamed to public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.VIEW",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.ACTIVITY",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public expectedReachability(parser HprofParser, node LeakNode) : Reachability renamed to public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.ACTIVITY",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.DIALOG",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public expectedReachability(parser HprofParser, node LeakNode) : Reachability renamed to public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.DIALOG",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.APPLICATION",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public expectedReachability(parser HprofParser, node LeakNode) : Reachability renamed to public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.APPLICATION",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.CLASSLOADER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public expectedReachability(parser HprofParser, node LeakNode) : Reachability renamed to public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.CLASSLOADER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.CLASS",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public expectedReachability(parser HprofParser, node LeakNode) : Reachability renamed to public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.CLASS",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.FRAGMENT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public expectedReachability(parser HprofParser, node LeakNode) : Reachability renamed to public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.FRAGMENT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.SUPPORT_FRAGMENT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public expectedReachability(parser HprofParser, node LeakNode) : Reachability renamed to public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.SUPPORT_FRAGMENT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.MESSAGE_QUEUE",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public expectedReachability(parser HprofParser, node LeakNode) : Reachability renamed to public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.MESSAGE_QUEUE",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.MORTAR_PRESENTER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public expectedReachability(parser HprofParser, node LeakNode) : Reachability renamed to public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.MORTAR_PRESENTER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.MAIN_THEAD",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public expectedReachability(parser HprofParser, node LeakNode) : Reachability renamed to public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.MAIN_THEAD",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.WINDOW",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public expectedReachability(parser HprofParser, node LeakNode) : Reachability renamed to public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.WINDOW",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.TOAST_TN",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public expectedReachability(parser HprofParser, node LeakNode) : Reachability renamed to public invoke(parser HprofParser, node LeakNode) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.TOAST_TN",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter reachability : Reachability in method private htmlTitle(element LeakTraceElement, maybeLeakCause Boolean, reachability Reachability, context Context) : Spanned from class leakcanary.internal.DisplayLeakAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type exclusionsFactory : (HprofParser) -> List<Exclusion> to exclusionsFactory : ExclusionsFactory in method public checkForLeaks(heapDumpFile File, exclusionsFactory ExclusionsFactory, computeRetainedHeapSize Boolean, reachabilityInspectors List<LeakInspector>, labelers List<Labeler>) : HeapAnalysis from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type reachabilityInspectors : List<Reachability.Inspector> to reachabilityInspectors : List<LeakInspector> in method public checkForLeaks(heapDumpFile File, exclusionsFactory ExclusionsFactory, computeRetainedHeapSize Boolean, reachabilityInspectors List<LeakInspector>, labelers List<Labeler>) : HeapAnalysis from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type exclusionsFactory : (HprofParser) -> List<Exclusion> to exclusionsFactory : ExclusionsFactory in method private findShortestPaths(parser HprofParser, exclusionsFactory ExclusionsFactory, leakingWeakRefs List<KeyedWeakReferenceMirror>, gcRootIds MutableList<Long>) : List<Result> from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type reachabilityInspectors : List<Reachability.Inspector> to leakInspectors : List<LeakInspector> in method private buildLeakTraces(computeRetainedHeapSize Boolean, leakInspectors List<LeakInspector>, labelers List<Labeler>, pathResults List<Result>, parser HprofParser, leakingWeakRefs MutableList<KeyedWeakReferenceMirror>, analysisResults MutableMap<String,RetainedInstance>) from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter reachabilityInspectors : List<Reachability.Inspector> to leakInspectors : List<LeakInspector> in method private buildLeakTraces(computeRetainedHeapSize Boolean, leakInspectors List<LeakInspector>, labelers List<Labeler>, pathResults List<Result>, parser HprofParser, leakingWeakRefs MutableList<KeyedWeakReferenceMirror>, analysisResults MutableMap<String,RetainedInstance>) from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter reachabilityInspectors : List<Reachability.Inspector> to leakInspectors : List<LeakInspector> in method private buildLeakTrace(parser HprofParser, leakInspectors List<LeakInspector>, leakingNode LeakNode, labelers List<Labeler>) : LeakTrace from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type reachabilityInspectors : List<Reachability.Inspector> to leakInspectors : List<LeakInspector> in method private buildLeakTrace(parser HprofParser, leakInspectors List<LeakInspector>, leakingNode LeakNode, labelers List<Labeler>) : LeakTrace from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter leakStatus : LeakNodeStatusAndReason in method private buildLeakElement(parser HprofParser, node ChildNode, labels List<String>, leakStatus LeakNodeStatusAndReason) : LeakTraceElement from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public computeLabels(parser HprofParser, node LeakNode) : List<String> renamed to public invoke(parser HprofParser, node LeakNode) : List<String> in class leakcanary.AllFieldsLabeler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public computeLabels(parser HprofParser, node LeakNode) : List<String> renamed to public invoke(parser HprofParser, node LeakNode) : List<String> in class leakcanary.InstanceDefaultLabeler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private computeExpectedReachability(parser HprofParser, reachabilityInspectors List<Reachability.Inspector>, nodes List<LeakNode>) : List<Reachability> renamed to private computeLeakStatuses(parser HprofParser, leakInspectors List<LeakInspector>, nodes List<LeakNode>) : List<LeakNodeStatusAndReason> in class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable expectedReachability : Inferred to leakStatuses : Inferred in method private computeLeakStatuses(parser HprofParser, leakInspectors List<LeakInspector>, nodes List<LeakNode>) : List<LeakNodeStatusAndReason> from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable reachability : Inferred to leakStatus : Inferred in method private computeLeakStatuses(parser HprofParser, leakInspectors List<LeakInspector>, nodes List<LeakNode>) : List<LeakNodeStatusAndReason> from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable lastReachableElementIndex : Inferred to lastNotLeakingElementIndex : Inferred in method private computeLeakStatuses(parser HprofParser, leakInspectors List<LeakInspector>, nodes List<LeakNode>) : List<LeakNodeStatusAndReason> from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable firstUnreachableElementIndex : Inferred to firstLeakingElementIndex : Inferred in method private computeLeakStatuses(parser HprofParser, leakInspectors List<LeakInspector>, nodes List<LeakNode>) : List<LeakNodeStatusAndReason> from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List<Reachability> to List<LeakNodeStatusAndReason> in method private computeLeakStatuses(parser HprofParser, leakInspectors List<LeakInspector>, nodes List<LeakNode>) : List<LeakNodeStatusAndReason> from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter reachabilityInspectors : List<Reachability.Inspector> to leakInspectors : List<LeakInspector> in method private computeLeakStatuses(parser HprofParser, leakInspectors List<LeakInspector>, nodes List<LeakNode>) : List<LeakNodeStatusAndReason> from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type reachabilityInspectors : List<Reachability.Inspector> to leakInspectors : List<LeakInspector> in method private computeLeakStatuses(parser HprofParser, leakInspectors List<LeakInspector>, nodes List<LeakNode>) : List<LeakNodeStatusAndReason> from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public unknown() : LeakNodeStatusAndReason from class leakcanary.LeakNodeStatus.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type status : Status to status : LeakNodeStatus in class leakcanary.LeakNodeStatusAndReason",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable inspectorClasses : Inferred to inspectors : Inferred in method public defaultAndroidInspectors() : List<LeakInspector> from class leakcanary.AndroidLeakInspectors.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List<Reachability.Inspector> to List<LeakInspector> in method public defaultAndroidInspectors() : List<LeakInspector> from class leakcanary.AndroidLeakInspectors.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public reachable(reason String) : Reachability renamed to public notLeaking(reason String) : LeakNodeStatusAndReason in class leakcanary.LeakNodeStatus.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public unreachable(reason String) : Reachability renamed to public leaking(reason String) : LeakNodeStatusAndReason in class leakcanary.LeakNodeStatus.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public leaking(reason String) : LeakNodeStatusAndReason from class leakcanary.LeakNodeStatus.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public notLeaking(reason String) : LeakNodeStatusAndReason from class leakcanary.LeakNodeStatus.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public unreachableWhenNull(fieldName String) : Reachability renamed to public leakingWhenNull(fieldName String) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public unreachableWhenTrue(fieldName String) : Reachability renamed to public leakingWhenTrue(fieldName String) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public instanceOfOrUnknown(expectedClass KClass<Any>, block HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type block : HprofParser.(HydratedInstance) -> Reachability to block : HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason in method public instanceOfOrUnknown(expectedClass KClass<Any>, block HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public instanceOfOrUnknown(className String, block HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type block : HprofParser.(HydratedInstance) -> Reachability to block : HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason in method public instanceOfOrUnknown(className String, block HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public leakingWhenNull(fieldName String) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public leakingWhenTrue(fieldName String) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute UNREACHABLE : Status to LEAKING : LeakNodeStatus in class leakcanary.LeakNodeStatus",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute REACHABLE : Status to NOT_LEAKING : LeakNodeStatus in class leakcanary.LeakNodeStatus",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public inspectorReachable() renamed to public inspectorNotLeaking() in class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public inspectorUnreachable() renamed to public inspectorLeaking() in class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public unreachableWinsUnknown() renamed to public leakingWinsUnknown() in class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public reachableWhenNextIsReachable() renamed to public notLeakingWhenNextIsNotLeaking() in class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public unreachableWhenPreviousIsUnreachable() renamed to public leakingWhenPreviousIsLeaking() in class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public leakCausesAreLastReachableAndUnknown() renamed to public leakCausesAreLastNotLeakingAndUnknown() in class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private reachableInstance(className String) : Inspector renamed to private notLeaking(className String) : LeakInspector in class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private unreachableInstance(className String) : Inspector renamed to private leaking(className String) : LeakInspector in class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Inspector to LeakInspector in method private unknownInstance() : LeakInspector from class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Inspector to LeakInspector in method private notLeaking(className String) : LeakInspector from class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Inspector to LeakInspector in method private leaking(className String) : LeakInspector from class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.internal.ReachabilityTest renamed to leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter reachable : String to notLeaking : String in method private computeGroupHash(path List<Pair<String,String>>, notLeaking String, leaking String) : String from class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter unreachable : String to leaking : String in method private computeGroupHash(path List<Pair<String,String>>, notLeaking String, leaking String) : String from class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

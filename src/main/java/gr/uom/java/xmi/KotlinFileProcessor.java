@@ -496,7 +496,7 @@ public class KotlinFileProcessor {
 	}
 
 	private void processClassBody(KtFile ktFile, String sourceFolder, String filePath, String fileContent,
-			List<UMLImport> importedTypes, List<UMLComment> comments, UMLClass umlClass,
+			List<UMLImport> importedTypes, List<UMLComment> comments, UMLAbstractClass umlClass,
 			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, KtClassBody classBody) {
 		if(classBody != null) {
 			for(KtProperty property : classBody.getProperties()) {
@@ -596,6 +596,13 @@ public class KotlinFileProcessor {
 						
 					}
 				}
+				if(entry.getBody() != null) {
+					LocationInfo anonymousLocationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, entry.getBody(), CodeElementType.ANONYMOUS_CLASS_DECLARATION);
+					UMLAnonymousClass anonymousClass =  new UMLAnonymousClass(umlClass.getName(), entry.getName(), entry.getName(), anonymousLocationInfo, importedTypes);
+					processClassBody(ktFile, sourceFolder, filePath, fileContent, importedTypes, comments, anonymousClass, activeVariableDeclarations, entry.getBody());
+					enumConstant.addAnonymousClass(anonymousClass);
+					anonymousClass.addParentContainer(enumConstant);
+				}
 				enumConstant.setClassName(umlClass.getName());
 				umlClass.addEnumConstant(enumConstant);
 			}
@@ -610,12 +617,17 @@ public class KotlinFileProcessor {
 			}
 			for(KtDeclaration declaration : classBody.getDeclarations()) {
 				if(declaration instanceof KtClass ktClass) {
-					UMLClass nestedClass = processClassDeclaration(ktFile, ktClass, null, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments);
-					umlModel.addClass(nestedClass);
+					boolean enumConstant = ktClass.getParent() instanceof KtClassBody && ktClass.getParent().getParent() instanceof KtClass parentClass && parentClass.isEnum();
+					if(!enumConstant) {
+						UMLClass nestedClass = processClassDeclaration(ktFile, ktClass, null, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments);
+						umlModel.addClass(nestedClass);
+					}
 				}
 				else if(declaration instanceof KtObjectDeclaration objectDeclaration) {
 					UMLClass nestedClass = processObjectDeclaration(ktFile, objectDeclaration, null, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments, umlClass.getAttributes());
-					umlModel.addClass(nestedClass);
+					if(!umlModel.getClassList().contains(nestedClass)) {
+						umlModel.addClass(nestedClass);
+					}
 				}
 			}
 		}

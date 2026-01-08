@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +48,13 @@ public class UMLEnumConstantDiff implements UMLDocumentationDiffProvider {
 			List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
 			if(matchedOperationMappers.size() > 0) {
 				this.refactorings.addAll(anonymousClassDiff.getRefactorings());
+				for(UMLOperationBodyMapper matchedMapper : matchedOperationMappers) {
+					if(!matchedMapper.getContainer1().getName().equals(matchedMapper.getContainer2().getName()) &&
+							!(matchedMapper.getContainer1().isConstructor() && matchedMapper.getContainer2().isConstructor())) {
+						RenameOperationRefactoring rename = new RenameOperationRefactoring(matchedMapper, Collections.emptySet());
+						refactorings.add(rename);
+					}
+				}
 				if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(anonymousClass1)) {
 					classDiff.getRemovedAnonymousClasses().remove(anonymousClass1);
 				}

@@ -918,6 +918,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     					if(enumConstantDiff.getAnonymousClassDiff().isPresent()) {
         					this.enumConstantDiffList.add(enumConstantDiff);
         				}
+    					refactorings.addAll(enumConstantDiff.getRefactorings());
     				}
     			}
     		}
@@ -940,6 +941,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     					if(enumConstantDiff.getAnonymousClassDiff().isPresent()) {
         					this.enumConstantDiffList.add(enumConstantDiff);
         				}
+    					refactorings.addAll(enumConstantDiff.getRefactorings());
     				}
     			}
     		}

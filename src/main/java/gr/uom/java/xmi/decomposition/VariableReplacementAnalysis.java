@@ -2413,6 +2413,37 @@ public class VariableReplacementAnalysis {
 					}
 				}
 			}
+			List<AbstractCall> methodInvocations1 = mapping.getFragment1().getMethodInvocations();
+			List<AbstractCall> methodInvocations2 = mapping.getFragment2().getMethodInvocations();
+			if(methodInvocations1.size() == methodInvocations2.size() && variables1.size() == variables2.size() && !insideExtractedOrInlinedMethod) {
+				for(int i=0; i<methodInvocations1.size(); i++) {
+					AbstractCall call1 = methodInvocations1.get(i);
+					AbstractCall call2 = methodInvocations2.get(i);
+					if(call1.arguments().size() == call2.arguments().size()) {
+						for(int j=0; j<variables1.size(); j++) {
+							LeafExpression variable1 = variables1.get(j);
+							LeafExpression variable2 = variables2.get(j);
+							String string1 = variable1.getString();
+							String string2 = variable2.getString();
+							if(call1.arguments().contains(string1) && call2.arguments().contains(string2) &&
+									call1.arguments().indexOf(string1) == call2.arguments().indexOf(string2)) {
+								if(!string1.equals(string2)) {
+									Replacement variableReplacement = new Replacement(string1, string2, ReplacementType.VARIABLE_NAME);
+									if(map.containsKey(variableReplacement)) {
+										map.get(variableReplacement).add(mapping);
+									}
+									else {
+										Set<AbstractCodeMapping> list = new LinkedHashSet<AbstractCodeMapping>();
+										list.add(mapping);
+										map.put(variableReplacement, list);
+									}
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		return map;
 	}

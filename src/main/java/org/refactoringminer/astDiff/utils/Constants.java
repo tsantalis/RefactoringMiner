@@ -43,6 +43,7 @@ public class Constants {
 			ENUM_DECLARATION = "class_definition";
 			ANNOTATION_TYPE_DECLARATION = "class_definition";
 			RECORD_DECLARATION = "class_definition";
+			PREFIX_EXPRESSION = "prefix_expression";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -54,10 +55,10 @@ public class Constants {
 			BLOCK_COMMENT = "multiline_comment";
 			LINE_COMMENT = "line_comment";
 			EXPRESSION_STATEMENT = "expression_statement"; // TODO update value
-			TRY_STATEMENT = "try_statement"; // TODO update value
-			CATCH_CLAUSE = "except_clause"; // TODO update value
-			IF_STATEMENT = "if_statement"; // TODO update value
-			WHILE_STATEMENT = "while_statement"; // TODO update value
+			TRY_STATEMENT = "try_expression";
+			CATCH_CLAUSE = "catch_block";
+			IF_STATEMENT = "if_expression";
+			WHILE_STATEMENT = "while_statement";
 			FOR_STATEMENT = "for_statement";
 			ENHANCED_FOR_STATEMENT = "for_statement";
 			PACKAGE_DECLARATION = "package_header";
@@ -68,6 +69,7 @@ public class Constants {
 			ENUM_DECLARATION = "class_declaration";
 			ANNOTATION_TYPE_DECLARATION = "class_declaration";
 			RECORD_DECLARATION = "class_declaration";
+			PREFIX_EXPRESSION = "prefix_expression";
 		}
 		else {
 			// Java values as default
@@ -94,6 +96,7 @@ public class Constants {
 			ENUM_DECLARATION = "EnumDeclaration";
 			ANNOTATION_TYPE_DECLARATION = "AnnotationTypeDeclaration";
 			RECORD_DECLARATION = "RecordDeclaration";
+			PREFIX_EXPRESSION = "PrefixExpression";
 		}
 	}
 
@@ -148,6 +151,7 @@ public class Constants {
     public final String ANNOTATION = "annotation";
     public final String ENUM = "enum";
     public final String OPEN = "open";
+    public final String OPERATOR = "operator";
     public final String DATA = "data";
     public final String INTERNAL = "internal";
     public final String PRIVATE = "private";
@@ -194,7 +198,7 @@ public class Constants {
 
     public final String SIMPLE_TYPE = "SimpleType";
     public final String EXPRESSION_METHOD_REFERENCE = "ExpressionMethodReference";
-    public final String PREFIX_EXPRESSION = "PrefixExpression";
+    public final String PREFIX_EXPRESSION;
     public final String INITIALIZER;
     public final String QUALIFIED_NAME = "QualifiedName";
     public final String CLASS_INSTANCE_CREATION = "ClassInstanceCreation";
@@ -260,4 +264,7 @@ public class Constants {
     public final String SETTER = "setter";
     public final String PROPERY_DECLARATION_KEYWORD = "property_declaration_keyword";
     public final String IMPORT_IDENTIFIER = "identifier";
+    public final String CONTROL_STRUCTURE_BODY = "control_structure_body";
+    public final String CLASS_PARAMETER = "class_parameter";
+    public final String USER_TYPE = "user_type";
 }

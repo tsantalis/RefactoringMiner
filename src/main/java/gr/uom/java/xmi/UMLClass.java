@@ -28,6 +28,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean isLocal;
 	private boolean isModule;
 	private boolean isObject;
+	private boolean isFunctionalInterface;
     private List<UMLTypeParameter> typeParameters;
     private Optional<PrimaryConstructor> primaryConstructor;
     private List<AbstractExpression> superTypeCallEntries;
@@ -35,6 +36,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private Optional<UMLPackage> packageDeclaration;
     private UMLJavadoc packageDeclarationJavadoc;
     private List<UMLComment> packageDeclarationComments;
+    private List<UMLTypeAlias> typeAliasList;
     private String actualSignature;
     
     public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<UMLImport> importedTypes) {
@@ -81,6 +83,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.superTypeCallEntries = new ArrayList<>();
         this.packageDeclarationComments = new ArrayList<UMLComment>();
         this.packageDeclaration = Optional.empty();
+        this.typeAliasList = new ArrayList<UMLTypeAlias>();
     }
 
     public String getTypeDeclarationKind() {
@@ -118,11 +121,23 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		return typeParameterNames;
 	}
 
+	public List<UMLTypeAlias> getTypeAliasList() {
+		return typeAliasList;
+	}
+
+	public void addTypeAlias(UMLTypeAlias typeAlias) {
+		this.typeAliasList.add(typeAlias);
+	}
+
 	public void addSuperTypeCallEntry(AbstractExpression expr) {
 		this.superTypeCallEntries.add(expr);
 	}
 
-	public void setPrimaryConstructorParameter(PrimaryConstructor primary) {
+	public List<AbstractExpression> getSuperTypeCallEntries() {
+		return superTypeCallEntries;
+	}
+
+	public void setPrimaryConstructor(PrimaryConstructor primary) {
 		primaryConstructor = Optional.of(primary);
 	}
 
@@ -260,6 +275,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void setObject(boolean isObject) {
 		this.isObject = isObject;
+	}
+
+	public boolean isFunctionalInterface() {
+		return isFunctionalInterface;
+	}
+
+	public void setFunctionalInterface(boolean isFunctionalInterface) {
+		this.isFunctionalInterface = isFunctionalInterface;
 	}
 
 	public UMLJavadoc getJavadoc() {

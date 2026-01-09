@@ -6798,6 +6798,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			return false;
 		}
+		if(this.lambdaBodyMapper && parentMapper != null && parentMapper.operationInvocation == null) {
+			if(parentMapper.mappingHashcodesT1.contains(fragment.hashCode()))
+				return true;
+		}
 		return mappingHashcodesT1.contains(fragment.hashCode());
 	}
 
@@ -6817,6 +6821,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			return false;
+		}
+		if(this.lambdaBodyMapper && parentMapper != null && parentMapper.operationInvocation == null) {
+			if(parentMapper.mappingHashcodesT2.contains(fragment.hashCode()))
+				return true;
 		}
 		return mappingHashcodesT2.contains(fragment.hashCode());
 	}

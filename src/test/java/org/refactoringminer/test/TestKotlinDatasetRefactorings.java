@@ -21,6 +21,7 @@ public class TestKotlinDatasetRefactorings {
 					.or(Refactorings.ReorderParameter.getValue())
 					.or(Refactorings.AddParameter.getValue())
 					.or(Refactorings.RemoveParameter.getValue())
+					.or(Refactorings.RemoveParameterAnnotation.getValue())
 					.or(Refactorings.MoveAndRenameClass.getValue())
 					.or(Refactorings.RenameClass.getValue())
 					.or(Refactorings.ChangeVariableType.getValue())
@@ -36,9 +37,11 @@ public class TestKotlinDatasetRefactorings {
 					.or(Refactorings.MoveAndRenameMethod.getValue())
 					.or(Refactorings.MoveClass.getValue())
 					.or(Refactorings.ExtractClass.getValue())
+					.or(Refactorings.ExtractInterface.getValue())
 					.or(Refactorings.ExtractSuperclass.getValue())
 					.or(Refactorings.ExtractAndMoveMethod.getValue())
 					.or(Refactorings.AddClassAnnotation.getValue())
+					.or(Refactorings.AddClassModifier.getValue())
 					.or(Refactorings.RemoveClassAnnotation.getValue())
 					.or(Refactorings.MoveCode.getValue())
 					.or(Refactorings.AddMethodAnnotation.getValue())
@@ -46,6 +49,7 @@ public class TestKotlinDatasetRefactorings {
 					.or(Refactorings.AddAttributeAnnotation.getValue())
 					.or(Refactorings.RemoveAttributeAnnotation.getValue())
 					.or(Refactorings.SplitConditional.getValue())
+					.or(Refactorings.MergeConditional.getValue())
 					.or(Refactorings.PullUpAttribute.getValue())
 					.or(Refactorings.PullUpMethod.getValue())
 					.or(Refactorings.ReplaceVariableWithAttribute.getValue())
@@ -63,9 +67,13 @@ public class TestKotlinDatasetRefactorings {
 					.or(Refactorings.InlineAttribute.getValue())
 					.or(Refactorings.ChangeReturnType.getValue())
 					.or(Refactorings.RenamePackage.getValue())
-					.or(Refactorings.MovePackage.getValue());
+					.or(Refactorings.MovePackage.getValue())
+					.or(Refactorings.MoveAndInlineMethod.getValue())
+					.or(Refactorings.AddParameterAnnotation.getValue())
+					.or(Refactorings.AddParameterModifier.getValue())
+					.or(Refactorings.ChangeClassAccessModifier.getValue());
 		TestBuilder test = new TestBuilder(detector, REPOS, types);
 		RefactoringPopulator.prepareKotlinRefactorings(test, types);
-		test.assertExpectationsWithGitHubAPI(184, 0, 0);
+		test.assertExpectationsWithGitHubAPI(789, 0, 0);
 	}
 }

@@ -53,6 +53,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private List<UMLType> thrownExceptionTypes;
 	private UMLType receiverTypeReference;
 	private UMLJavadoc javadoc;
+	private Optional<UMLAttribute> propertyAccessor;
 	private List<UMLAnnotation> annotations;
 	private List<UMLModifier> modifiers;
 	private List<UMLComment> comments;
@@ -74,6 +75,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
         this.comments = new ArrayList<UMLComment>();
         this.nestedOperations = new ArrayList<UMLOperation>();
         this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+        this.propertyAccessor = Optional.empty();
     }
 
 	public void addNestedOperation(UMLOperation operation) {
@@ -257,6 +259,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public void setAnonymousClassContainer(UMLAnonymousClass anonymousClass) {
 		this.anonymousClassContainer = Optional.of(anonymousClass);
+	}
+
+	public Optional<UMLAttribute> getPropertyAccessor() {
+		return propertyAccessor;
+	}
+
+	public void setProperyAccessor(UMLAttribute attribute) {
+		this.propertyAccessor = Optional.of(attribute);
 	}
 
 	public OperationBody getBody() {
@@ -1118,6 +1128,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			sb.append(" ");
 		}
 		sb.append(name);
+		if(propertyAccessor.isPresent()) {
+			String attributeName = propertyAccessor.get().getName();
+			String capitalizedFirstLetter = Character.toUpperCase(attributeName.charAt(0)) + attributeName.substring(1, attributeName.length());
+			sb.append(capitalizedFirstLetter);
+		}
 		UMLParameter returnParameter = getReturnParameter();
 		List<UMLParameter> parameters = new ArrayList<UMLParameter>(this.parameters);
 		parameters.remove(returnParameter);
@@ -1150,6 +1165,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			sb.append(" ");
 		}
 		sb.append(name);
+		if(propertyAccessor.isPresent()) {
+			String attributeName = propertyAccessor.get().getName();
+			String capitalizedFirstLetter = Character.toUpperCase(attributeName.charAt(0)) + attributeName.substring(1, attributeName.length());
+			sb.append(capitalizedFirstLetter);
+		}
 		UMLParameter returnParameter = getReturnParameter();
 		List<UMLParameter> parameters = new ArrayList<UMLParameter>(this.parameters);
 		parameters.remove(returnParameter);
@@ -1376,7 +1396,21 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	public boolean compatibleSignature(UMLOperation removedOperation, Map<UMLTypeParameter, UMLType> typeParameterToTypeArgumentMap) {
-		return ((this.equalReturnParameter(removedOperation) || typeParameterToTypeArgumentMatch(removedOperation, typeParameterToTypeArgumentMap)) && (equalParameterTypes(removedOperation) || overloadedParameterTypes(removedOperation) || equalParameterNames(removedOperation))) || replacedParameterTypes(removedOperation);
+		if ((this.equalReturnParameter(removedOperation) || typeParameterToTypeArgumentMatch(removedOperation, typeParameterToTypeArgumentMap)) && (equalParameterTypes(removedOperation) || overloadedParameterTypes(removedOperation) || equalParameterNames(removedOperation)))
+			return true;
+		if(replacedParameterTypes(removedOperation))
+			return true;
+		List<String> parameterNames1 = this.getParameterNameList();
+		List<String> parameterNames2 = removedOperation.getParameterNameList();
+		List<UMLType> parameterTypes1 = this.getParameterTypeList();
+		List<UMLType> parameterTypes2 = removedOperation.getParameterTypeList();
+		if(parameterNames1.size() > 0 && parameterNames2.size() > 0) {
+			if(parameterNames1.containsAll(parameterNames2) && parameterTypes1.containsAll(parameterTypes2))
+				return true;
+			if(parameterNames2.containsAll(parameterNames1) && parameterTypes2.containsAll(parameterTypes1))
+				return true;
+		}
+		return false;
 	}
 
 	public List<String> getSignatureIdentifiers() {

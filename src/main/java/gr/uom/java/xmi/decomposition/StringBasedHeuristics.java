@@ -651,6 +651,12 @@ public class StringBasedHeuristics {
 			else if(diff2.isEmpty() && diff1.startsWith("@")) {
 				return true;
 			}
+			else if(diff1.isEmpty() && diff2.isBlank() && !diff2.isEmpty()) {
+				return true;
+			}
+			else if(diff2.isEmpty() && diff1.isBlank() && !diff1.isEmpty()) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -3990,11 +3996,14 @@ public class StringBasedHeuristics {
 				int matches2 = matchCount(intersection2, info, statement1, statement2, LANG);
 				boolean pass2 = pass(subConditionsAsList, subConditionsAsList2, intersection2, matches2, LANG);
 				if(pass2 && !intersection.containsAll(intersection2)) {
-					Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
-					additionallyMatchedStatements1.add(ifNode1);
-					CompositeReplacement composite = new CompositeReplacement(ifNode1.getString(), statement2.getString(), additionallyMatchedStatements1, new LinkedHashSet<>());
-					info.addReplacement(composite);
-					mergeConditional = true;
+					boolean subsume = statement1 instanceof StatementObject && statement1.getLocationInfo().subsumes(ifNode1.getLocationInfo());
+					if(!subsume) {
+						Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
+						additionallyMatchedStatements1.add(ifNode1);
+						CompositeReplacement composite = new CompositeReplacement(ifNode1.getString(), statement2.getString(), additionallyMatchedStatements1, new LinkedHashSet<>());
+						info.addReplacement(composite);
+						mergeConditional = true;
+					}
 				}
 			}
 		}
@@ -4488,19 +4497,19 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean isElseIfBranch(AbstractCodeFragment child, CompositeStatementObject parent) {
-		return parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+		return parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
 				child.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
 				parent.getStatements().size() == 2 && parent.getStatements().indexOf(child) == 1;
 	}
 
 	protected static boolean isIfBranch(AbstractCodeFragment child, CompositeStatementObject parent) {
-		return parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+		return parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
 				child.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
 				parent.getStatements().size() >= 1 && parent.getStatements().indexOf(child) == 0;
 	}
 
 	protected static boolean isElseBranch(AbstractCodeFragment child, CompositeStatementObject parent) {
-		return parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+		return parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
 				child.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
 				parent.getStatements().size() == 2 && parent.getStatements().indexOf(child) == 1;
 	}

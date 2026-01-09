@@ -25,6 +25,7 @@ import gr.uom.java.xmi.decomposition.StringBasedHeuristics;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
@@ -256,6 +257,7 @@ public class MappingOptimizer {
 			List<Boolean> extractInlineOverlappingRefactoring = new ArrayList<>();
 			List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
 			List<Double> editDistances = new ArrayList<>();
+			List<Double> compositeChildMatchingScores = new ArrayList<>();
 			//check if mappings are the same references
 			Set<AbstractCodeMapping> mappingsAsSet = new LinkedHashSet<>();
 			mappingsAsSet.addAll(mappings);
@@ -296,10 +298,13 @@ public class MappingOptimizer {
 					}
 					identicalStatementsForCompositeMappings.add(identicalStatements);
 					exactMappingsNestedUnderCompositeExcludingBlocks.add(mapper.exactMappingsNestedUnderCompositeExcludingBlocks((CompositeStatementObjectMapping)mapping));
+					double score = ((CompositeStatementObjectMapping)mapping).getCompositeChildMatchingScore();
+					compositeChildMatchingScores.add(score);
 				}
 				else {
 					identicalStatementsForCompositeMappings.add(0);
 					exactMappingsNestedUnderCompositeExcludingBlocks.add(0);
+					compositeChildMatchingScores.add(0.0);
 				}
 				callsExtractedInlinedMethod.add(mapper.containsExtractedOrInlinedOperationInvocation(mapping));
 				parentMappingFound.add(mapper.containsParentMapping(mapping));
@@ -326,6 +331,21 @@ public class MappingOptimizer {
 							(r.getAfter().equals(mapping.getFragment2().getString()) || (r.getAfter() + LANG.STATEMENT_TERMINATION).equals(mapping.getFragment2().getString()))) {
 						replacementFound = true;
 						break;
+					}
+					if(r instanceof MethodInvocationReplacement methodInvocationReplacement) {
+						AbstractCall call1 = methodInvocationReplacement.getInvokedOperationBefore();
+						AbstractCall call2 = methodInvocationReplacement.getInvokedOperationAfter();
+						AbstractCall invocationCoveringTheEntireStatement1 = mapping.getFragment1().invocationCoveringEntireFragment();
+						AbstractCall invocationCoveringTheEntireStatement2 = mapping.getFragment2().invocationCoveringEntireFragment();
+						if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
+							continue;
+						}
+						AbstractCall assignmentCall1 = invocationCoveringTheEntireStatement1 == null ? mapping.getFragment1().assignmentInvocationCoveringEntireStatement() : invocationCoveringTheEntireStatement1;
+						AbstractCall assignmentCall2 = invocationCoveringTheEntireStatement2 == null ? mapping.getFragment2().assignmentInvocationCoveringEntireStatement() : invocationCoveringTheEntireStatement2;	
+						if(assignmentCall1 != null && assignmentCall2 != null && assignmentCall1.equals(call1) && assignmentCall2.equals(call2)) {
+							replacementFound = true;
+							break;
+						}
 					}
 				}
 				replacementCoversEntireStatement.add(replacementFound);
@@ -375,11 +395,11 @@ public class MappingOptimizer {
 								indicesToBeRemoved.add(i);
 							}
 						}
-						determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances);
+						determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances, compositeChildMatchingScores);
 					}
 				}
 				else if(callerToExtractedMethodHasCompositeReplacement) {
-					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances);
+					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances, compositeChildMatchingScores);
 				}
 			}
 			else if(parentMappingFound.contains(true)) {
@@ -424,7 +444,7 @@ public class MappingOptimizer {
 					}
 				}
 				if(!anonymousClassDeclarationMatch && !splitConditional && !splitDeclaration)
-					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances);
+					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances, compositeChildMatchingScores);
 			}
 			else if(parentIsContainerBody.contains(true)) {
 				boolean splitConditional = false;
@@ -467,10 +487,10 @@ public class MappingOptimizer {
 					}
 				}
 				if(!splitConditional && !splitDeclaration)
-					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances);
+					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances, compositeChildMatchingScores);
 			}
 			else {
-				determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances);
+				determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances, compositeChildMatchingScores);
 			}
 			if(indicesToBeRemoved.isEmpty() && matchingParentMappers(parentMappers, mappings) == parentMappers.size()) {
 				int minimum = nonMappedNodes.get(0);
@@ -724,7 +744,7 @@ public class MappingOptimizer {
 	private void determineIndicesToBeRemoved(List<Boolean> nestedMapper, List<Boolean> identical,
 			List<Integer> exactMappingsNestedUnderCompositeExcludingBlocks,
 			List<Integer> replacementTypeCount, List<Boolean> replacementCoversEntireStatement,
-			List<Boolean> extractInlineOverlappingRefactoring, Set<Integer> indicesToBeRemoved, List<Double> editDistances) {
+			List<Boolean> extractInlineOverlappingRefactoring, Set<Integer> indicesToBeRemoved, List<Double> editDistances, List<Double> compositeChildMatchingScores) {
 		if(indicesToBeRemoved.isEmpty()) {
 			if(nestedMapper.contains(false)) {
 				double editDistanceFalseNestedMapper = editDistances.get(nestedMapper.indexOf(false));
@@ -797,15 +817,28 @@ public class MappingOptimizer {
 					}
 				}
 				if(indicesToBeRemoved.isEmpty()) {
-					double minimumEditDistance = editDistances.get(0);
-					for(int i=1; i<editDistances.size(); i++) {
-						if(editDistances.get(i) < minimumEditDistance) {
-							minimumEditDistance = editDistances.get(i);
+					double maximumCompositeChildMatchingScore = compositeChildMatchingScores.get(0);
+					for(int i=1; i<compositeChildMatchingScores.size(); i++) {
+						if(compositeChildMatchingScores.get(i) > maximumCompositeChildMatchingScore) {
+							maximumCompositeChildMatchingScore = compositeChildMatchingScores.get(i);
 						}
 					}
-					for(int i=0; i<editDistances.size(); i++) {
-						if(editDistances.get(i) > minimumEditDistance) {
+					for(int i=0; i<compositeChildMatchingScores.size(); i++) {
+						if(compositeChildMatchingScores.get(i) < maximumCompositeChildMatchingScore) {
 							indicesToBeRemoved.add(i);
+						}
+					}
+					if(indicesToBeRemoved.isEmpty()) {
+						double minimumEditDistance = editDistances.get(0);
+						for(int i=1; i<editDistances.size(); i++) {
+							if(editDistances.get(i) < minimumEditDistance) {
+								minimumEditDistance = editDistances.get(i);
+							}
+						}
+						for(int i=0; i<editDistances.size(); i++) {
+							if(editDistances.get(i) > minimumEditDistance) {
+								indicesToBeRemoved.add(i);
+							}
 						}
 					}
 				}

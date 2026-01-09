@@ -38,8 +38,9 @@ public class AddParameterRefactoring implements MethodLevelRefactoring {
 	@Override
 	public List<CodeRange> leftSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		String elementType = operationBefore.getElementType();
 		ranges.add(operationBefore.codeRange()
-				.setDescription("original method declaration")
+				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
@@ -50,8 +51,9 @@ public class AddParameterRefactoring implements MethodLevelRefactoring {
 		ranges.add(parameter.getVariableDeclaration().codeRange()
 				.setDescription("added parameter")
 				.setCodeElement(parameter.getVariableDeclaration().toString()));
+		String elementType = operationAfter.getElementType();
 		ranges.add(operationAfter.codeRange()
-				.setDescription("method declaration with added parameter")
+				.setDescription(elementType + " declaration with added parameter")
 				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}
@@ -84,7 +86,8 @@ public class AddParameterRefactoring implements MethodLevelRefactoring {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
 		sb.append(parameter.getVariableDeclaration());
-		sb.append(" in method ");
+		String elementType = operationAfter.getElementType();
+		sb.append(" in " + elementType + " ");
 		sb.append(operationAfter.toQualifiedString());
 		sb.append(" from class ");
 		sb.append(operationAfter.getClassName());

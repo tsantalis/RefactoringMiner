@@ -5,10 +5,13 @@ import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.UMLTypeAlias;
 import gr.uom.java.xmi.UMLTypeParameter;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLAnnotationListDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
+import gr.uom.java.xmi.diff.UMLTypeAliasListDiff;
+
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
@@ -55,6 +58,8 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         	AST_type = Constants.get().MODULE;
         else if (classDiff.getOriginalClass().isObject())
         	AST_type = Constants.get().COMPANION_OBJECT;
+        else if (classDiff.getOriginalClass().isFunctionalInterface())
+        	AST_type = Constants.get().METHOD_DECLARATION;
         Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),AST_type);
         Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),AST_type);
         if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isObject() && classDiff.getNextClass().isObject()) {
@@ -69,16 +74,21 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),Constants.get().TYPE_DECLARATION);
         	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),Constants.get().OBJECT_DECLARATION);
         }
+        if(classDiff.getTypeAliasListDiff().isPresent()) {
+        	processTypeAliasList(srcTree, dstTree, classDiff.getTypeAliasListDiff().get(), mappingStore);
+        }
         if (srcTypeDeclaration == null || dstTypeDeclaration == null) return;
         if (srcTypeDeclaration.getParent() != null && dstTypeDeclaration.getParent() != null) {
-            if (
-                    srcTypeDeclaration.getParent().getType().name.equals(Constants.get().TYPE_DECLARATION_STATEMENT)
-                            &&
-                            dstTypeDeclaration.getParent().getType().name.equals(Constants.get().TYPE_DECLARATION_STATEMENT)
-            )
+            if (srcTypeDeclaration.getParent().getType().name.equals(Constants.get().TYPE_DECLARATION_STATEMENT)
+                    && dstTypeDeclaration.getParent().getType().name.equals(Constants.get().TYPE_DECLARATION_STATEMENT)) {
                 mappingStore.addMapping(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent());
+            }
         }
 
+        if(classDiff.getOriginalClass().isFunctionalInterface() && classDiff.getNextClass().isFunctionalInterface()) {
+        	new MethodMatcher(optimizationData, classDiff.getOperationBodyMapperList().get(0)).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
+        	return;
+        }
         mappingStore.addMapping(srcTypeDeclaration,dstTypeDeclaration);
 
         String v1 = classDiff.getOriginalClass().getVisibility().toString();
@@ -127,10 +137,19 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (classDiff.getPrimaryConstructorParameterListDiff().isPresent()) {
             Set<org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration>> pairs = classDiff.getPrimaryConstructorParameterListDiff().get().getCommonParameters();
             for (org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration> pair : pairs) {
-                processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, pair.getLeft(), pair.getRight());
+                Tree srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, pair.getLeft().getLocationInfo());
+                Tree dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, pair.getRight().getLocationInfo());
+                if (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment")) {
+                    srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, pair.getLeft().getLocationInfo(), Constants.get().CLASS_PARAMETER);
+                }
+                if (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment")) {
+                    dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, pair.getRight().getLocationInfo(), Constants.get().CLASS_PARAMETER);
+                }
+                if (srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
+                    mappingStore.addMappingRecursively(srcFieldDeclaration,dstFieldDeclaration);
             }
-            Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree, classDiff.getOriginalClass().getPrimaryConstructor().get().getLocationInfo());
-            Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, classDiff.getNextClass().getPrimaryConstructor().get().getLocationInfo());
+            Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, classDiff.getOriginalClass().getPrimaryConstructor().get().getLocationInfo());
+            Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, classDiff.getNextClass().getPrimaryConstructor().get().getLocationInfo());
             if (srcSubTree != null && dstSubTree != null) {
                 mappingStore.addMapping(srcSubTree, dstSubTree);
                 new SameModifierMatcher(Constants.get().INTERNAL).match(srcSubTree,dstSubTree,mappingStore);
@@ -233,6 +252,15 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         }
         if (src_argumentList.getParent().getType().name.equals(Constants.get().DELEGATION_SPECIFIER) && dst_argumentList.getParent().getType().name.equals(Constants.get().DELEGATION_SPECIFIER)) {
             mappingStore.addMapping(src_argumentList.getParent(),dst_argumentList.getParent());
+        }
+    }
+
+    private void processTypeAliasList(Tree srcTree, Tree dstTree, UMLTypeAliasListDiff typeAliasListDiff, ExtendedMultiMappingStore mappingStore) {
+        for (org.apache.commons.lang3.tuple.Pair<UMLTypeAlias, UMLTypeAlias> typeAliasPair : typeAliasListDiff.getCommonTypeAliases()) {
+        	Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree, typeAliasPair.getLeft().getLocationInfo());
+            Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, typeAliasPair.getRight().getLocationInfo());
+            if (srcSubTree == null || dstSubTree == null) return;
+            mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
         }
     }
 

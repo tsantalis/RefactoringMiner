@@ -28,6 +28,7 @@ import org.jetbrains.kotlin.psi.KtIntersectionType;
 import org.jetbrains.kotlin.psi.KtModifierList;
 import org.jetbrains.kotlin.psi.KtNullableType;
 import org.jetbrains.kotlin.psi.KtParameter;
+import org.jetbrains.kotlin.psi.KtProjectionKind;
 import org.jetbrains.kotlin.psi.KtTypeElement;
 import org.jetbrains.kotlin.psi.KtTypeProjection;
 import org.jetbrains.kotlin.psi.KtTypeReference;
@@ -469,23 +470,13 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 				}
 				return leafType;
 			}
+		} else if (type instanceof KtFunctionType functionType) {
+			FunctionType umlType = processFunctionType(ktFile, sourceFolder, filePath, fileContent, functionType);
+			return umlType;
 		} else if (type instanceof KtTypeReference typeReference) {
 			KtTypeElement element = typeReference.getTypeElement();
 			if (element instanceof KtFunctionType functionType) {
-				KtTypeReference returnTypeReference = functionType.getReturnTypeReference();
-				UMLType returnType = returnTypeReference == null ? null : extractTypeObject(ktFile, sourceFolder, filePath, fileContent, returnTypeReference);
-				KtTypeReference receiverTypeReference = functionType.getReceiverTypeReference();
-				UMLType receiverType = receiverTypeReference == null ? null : extractTypeObject(ktFile, sourceFolder, filePath, fileContent, receiverTypeReference);
-				List<UMLType> parameterTypeList = new ArrayList<>();
-				if (functionType.getParameterList() != null) {
-					List<KtParameter> parameterList = functionType.getParameterList().getParameters();
-					for (KtParameter ktParameter : parameterList) {
-						KtTypeReference parameterTypeReference = ktParameter.getTypeReference();
-						UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, parameterTypeReference);
-						parameterTypeList.add(umlType);
-					}
-				}
-				FunctionType umlType = new FunctionType(receiverType, returnType, parameterTypeList);
+				FunctionType umlType = processFunctionType(ktFile, sourceFolder, filePath, fileContent, functionType);
 				processAnnotations(ktFile, sourceFolder, filePath, fileContent, typeReference, umlType);
 				return umlType;
 			} else if(element instanceof KtUserType userType) {
@@ -505,10 +496,34 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 				return listCompositeType;
 			}
 		} else if (type instanceof KtTypeProjection typeProjection) {
-			UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeProjection.getTypeReference());
-			return umlType;
+			if(typeProjection.getProjectionKind().equals(KtProjectionKind.STAR)) {
+				UMLType umlType = extractTypeObject("*");
+				return umlType;
+			}
+			else {
+				UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeProjection.getTypeReference());
+				return umlType;
+			}
 		}
 		return null;
+	}
+
+	private static FunctionType processFunctionType(KtFile ktFile, String sourceFolder, String filePath, String fileContent, KtFunctionType functionType) {
+		KtTypeReference returnTypeReference = functionType.getReturnTypeReference();
+		UMLType returnType = returnTypeReference == null ? null : extractTypeObject(ktFile, sourceFolder, filePath, fileContent, returnTypeReference);
+		KtTypeReference receiverTypeReference = functionType.getReceiverTypeReference();
+		UMLType receiverType = receiverTypeReference == null ? null : extractTypeObject(ktFile, sourceFolder, filePath, fileContent, receiverTypeReference);
+		List<UMLType> parameterTypeList = new ArrayList<>();
+		if (functionType.getParameterList() != null) {
+			List<KtParameter> parameterList = functionType.getParameterList().getParameters();
+			for (KtParameter ktParameter : parameterList) {
+				KtTypeReference parameterTypeReference = ktParameter.getTypeReference();
+				UMLType umlType = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, parameterTypeReference);
+				parameterTypeList.add(umlType);
+			}
+		}
+		FunctionType umlType = new FunctionType(receiverType, returnType, parameterTypeList);
+		return umlType;
 	}
 
 	private static void processAnnotations(KtFile ktFile, String sourceFolder, String filePath, String fileContent, KtTypeReference typeReference, UMLType umlType) {

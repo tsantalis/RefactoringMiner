@@ -175,8 +175,8 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 			distance1 = 0;
 		}
 		else {
-			String s1 = this.getFragment1().getString().toLowerCase();
-			String s2 = this.getFragment2().getString().toLowerCase();
+			String s1 = ((CompositeStatementObject)this.getFragment1()).toStringForStringRepresentation().toLowerCase();
+			String s2 = ((CompositeStatementObject)this.getFragment2()).toStringForStringRepresentation().toLowerCase();
 			int distance = StringDistance.editDistance(s1, s2);
 			distance1 = (double)distance/(double)Math.max(s1.length(), s2.length());
 		}

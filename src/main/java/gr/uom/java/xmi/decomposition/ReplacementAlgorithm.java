@@ -2666,6 +2666,20 @@ public class ReplacementAlgorithm {
 				replacementInfo.addReplacement(replacement);
 				return replacementInfo.getReplacements();
 			}
+			if(classDiff != null) {
+				AbstractCall fieldAssignmentInvocationCoveringTheEntireStatement1 = statement1.fieldAssignmentInvocationCoveringEntireStatement(classDiff);
+				AbstractCall fieldAssignmentInvocationCoveringTheEntireStatement2 = statement2.fieldAssignmentInvocationCoveringEntireStatement(classDiff);
+				if(fieldAssignmentInvocationCoveringTheEntireStatement1 != null && fieldAssignmentInvocationCoveringTheEntireStatement2 != null) {
+					String assignedField1 = statement1.getString().substring(0, statement1.getString().indexOf(LANG.ASSIGNMENT));
+					String assignedField2 = statement2.getString().substring(0, statement2.getString().indexOf(LANG.ASSIGNMENT));
+					if(assignedField1.equals(assignedField2) && fieldAssignmentInvocationCoveringTheEntireStatement1.identicalName(fieldAssignmentInvocationCoveringTheEntireStatement2)) {
+						Replacement replacement = new MethodInvocationReplacement(fieldAssignmentInvocationCoveringTheEntireStatement1.actualString(),
+								fieldAssignmentInvocationCoveringTheEntireStatement2.actualString(), fieldAssignmentInvocationCoveringTheEntireStatement1, fieldAssignmentInvocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_ARGUMENT);
+						replacementInfo.addReplacement(replacement);
+						return replacementInfo.getReplacements();
+					}
+				}
+			}
 		}
 		if(!methodInvocations1.isEmpty() && invocationCoveringTheEntireStatement2 != null) {
 			for(String methodInvocation1 : methodInvocations1) {
@@ -4118,8 +4132,8 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(classDiff != null && statement1.assignmentInvocationCoveringEntireStatement() != null && statement2.assignmentInvocationCoveringEntireStatement() != null) {
-			String assignedVariable1 = statement1.getString().substring(0, statement1.getString().indexOf(LANG.ASSIGNMENT));
-			String assignedVariable2 = statement2.getString().substring(0, statement2.getString().indexOf(LANG.ASSIGNMENT));
+			String assignedVariable1 = statement1.getString().substring(0, statement1.getString().indexOf(statement1.getLANG().ASSIGNMENT));
+			String assignedVariable2 = statement2.getString().substring(0, statement2.getString().indexOf(statement2.getLANG().ASSIGNMENT));
 			if(assignedVariable1.equals(assignedVariable2)) {
 				for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
 					if(assignmentInvocationCoveringTheEntireStatement1.matchesOperation(removedOperation, container1, classDiff, modelDiff)) {

@@ -1966,6 +1966,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public createTask(title String, description String) : Task extracted from public tasks_showsNonEmptyMessage() in class com.example.android.architecture.blueprints.todoapp.statistics.StatisticsScreenTest & moved to class com.example.android.architecture.blueprints.todoapp.data.source.FakeRepository",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

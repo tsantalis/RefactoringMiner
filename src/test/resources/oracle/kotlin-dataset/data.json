@@ -5876,4 +5876,475 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 42,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "1a8957126a115d80e680de9b89daf23fdadfc1e1",
+    "url": "https://github.com/square/leakcanary/commit/1a8957126a115d80e680de9b89daf23fdadfc1e1",
+    "author": "pyricau",
+    "time": "7/11/19 08:12 PM",
+    "refactorings": [{
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.AndroidLeakTraceInspectors renamed to leakcanary.AndroidObjectInspectors",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.LeakTraceElementReporter renamed to leakcanary.ObjectReporter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.AndroidLeakTraceInspectors.module renamed to leakcanary.AndroidObjectInspectors.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AppSingletonInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AppSingletonInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.VIEW",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.VIEW",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.ACTIVITY",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.ACTIVITY",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.CONTEXT_WRAPPER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.CONTEXT_WRAPPER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.DIALOG",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.DIALOG",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.APPLICATION",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.APPLICATION",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.INPUT_METHOD_MANAGER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.INPUT_METHOD_MANAGER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.CLASSLOADER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.CLASSLOADER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.CLASS",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.CLASS",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.FRAGMENT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.FRAGMENT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.SUPPORT_FRAGMENT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.SUPPORT_FRAGMENT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.ANDROIDX_FRAGMENT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.ANDROIDX_FRAGMENT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.MESSAGE_QUEUE",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.MESSAGE_QUEUE",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.MORTAR_PRESENTER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.MORTAR_PRESENTER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.COORDINATOR",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.COORDINATOR",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.ANONYMOUS_CLASS",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.ANONYMOUS_CLASS",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.THREAD",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.THREAD",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.WINDOW",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.WINDOW",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.TOAST",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.TOAST",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.TOAST_TN",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.TOAST_TN",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public forEachInstanceOf(expectedClass KClass<Any>, action LeakTraceElementReporter.(GraphInstanceRecord) -> Unit) renamed to public asInstance(expectedClass KClass<Any>, action ObjectReporter.(GraphInstanceRecord) -> Unit) in class leakcanary.AndroidObjectInspectors.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public forEachInstanceOf(className String, action LeakTraceElementReporter.(GraphInstanceRecord) -> Unit) renamed to public asInstance(className String, block ObjectReporter.(GraphInstanceRecord) -> Unit) in class leakcanary.AndroidObjectInspectors.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type action : LeakTraceElementReporter.(GraphInstanceRecord) -> Unit to action : ObjectReporter.(GraphInstanceRecord) -> Unit in method public asInstance(expectedClass KClass<Any>, action ObjectReporter.(GraphInstanceRecord) -> Unit) from class leakcanary.AndroidObjectInspectors.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter action : LeakTraceElementReporter.(GraphInstanceRecord) -> Unit to block : ObjectReporter.(GraphInstanceRecord) -> Unit in method public asInstance(className String, block ObjectReporter.(GraphInstanceRecord) -> Unit) from class leakcanary.AndroidObjectInspectors.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type action : LeakTraceElementReporter.(GraphInstanceRecord) -> Unit to block : ObjectReporter.(GraphInstanceRecord) -> Unit in method public asInstance(className String, block ObjectReporter.(GraphInstanceRecord) -> Unit) from class leakcanary.AndroidObjectInspectors.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.LeakTraceInspector renamed to leakcanary.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute leakTraceInspectors : List<LeakTraceInspector> to objectInspectors : List<ObjectInspector> in class leakcanary.LeakCanary.Config",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type leakTraceInspectors : List<LeakTraceInspector> to objectInspectors : List<ObjectInspector> in class leakcanary.LeakCanary.Config",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTraceInspectors : List<LeakTraceInspector> to objectInspectors : List<ObjectInspector> in method public checkForLeaks(heapDumpFile File, exclusions List<Exclusion>, computeRetainedHeapSize Boolean, objectInspectors List<ObjectInspector>) : HeapAnalysis from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTraceInspectors : List<LeakTraceInspector> to objectInspectors : List<ObjectInspector> in method private buildLeakTraces(objectInspectors List<ObjectInspector>, pathResults List<Result>, graph HprofGraph, leakingWeakRefs MutableList<KeyedWeakReferenceMirror>, analysisResults MutableMap<String,RetainedInstance>, retainedSizes List<Int>) from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTraceInspectors : List<LeakTraceInspector> to objectInspectors : List<ObjectInspector> in method private buildLeakTraces(objectInspectors List<ObjectInspector>, pathResults List<Result>, graph HprofGraph, leakingWeakRefs MutableList<KeyedWeakReferenceMirror>, analysisResults MutableMap<String,RetainedInstance>, retainedSizes List<Int>) from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTraceInspectors : List<LeakTraceInspector> to objectInspectors : List<ObjectInspector> in method private buildLeakTrace(graph HprofGraph, objectInspectors List<ObjectInspector>, leakingNode LeakNode) : LeakTrace from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTraceInspectors : List<LeakTraceInspector> to objectInspectors : List<ObjectInspector> in method private buildLeakTrace(graph HprofGraph, objectInspectors List<ObjectInspector>, leakingNode LeakNode) : LeakTrace from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakReporters : List<LeakTraceElementReporter> to leakReporters : List<ObjectReporter> in method private computeLeakStatuses(rootNode RootNode, leakReporters List<ObjectReporter>) : List<LeakNodeStatusAndReason> from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type reporter : LeakTraceElementReporter to reporter : ObjectReporter in method private resolveStatus(reporter ObjectReporter) : LeakNodeStatusAndReason from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List<LeakTraceInspector> to List<ObjectInspector> in method public defaultInspectors() : List<ObjectInspector> from class leakcanary.AndroidObjectInspectors.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTraceInspectors : List<LeakTraceInspector> to objectInspectors : List<ObjectInspector> in method public checkForLeaks(objectInspectors List<ObjectInspector>, computeRetainedHeapSize Boolean, exclusions List<Exclusion>) : T from class leakcanary.internal.TestUtil.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTraceInspectors : List<LeakTraceInspector> to objectInspectors : List<ObjectInspector> in method public checkForLeaks(objectInspectors List<ObjectInspector>, computeRetainedHeapSize Boolean, exclusions List<Exclusion>) : T from class leakcanary.internal.TestUtil.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type LeakTraceInspector to ObjectInspector in method private notLeaking(className String) : ObjectInspector from class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type LeakTraceInspector to ObjectInspector in method private leaking(className String) : ObjectInspector from class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTraceInspectors : List<LeakTraceInspector> to objectInspectors : List<ObjectInspector> in method public checkForLeaks(heapDumpFile File, exclusions List<Exclusion>, computeRetainedHeapSize Boolean, objectInspectors List<ObjectInspector>) : HeapAnalysis from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

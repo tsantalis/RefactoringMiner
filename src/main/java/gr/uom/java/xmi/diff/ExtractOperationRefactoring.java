@@ -242,7 +242,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 			String actualArgument = argument.substring(argument.indexOf(LANG.LAMBDA_ARROW) + LANG.LAMBDA_ARROW.length());
 			expressions1 = mapping.getFragment1().findExpression(actualArgument);
 		}
-		if(expressions1.size() > 0) {
+		if(expressions1.size() > 0 && sourceOperationAfterExtraction.getBody() != null) {
 			List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
 			for(AbstractCodeFragment leaf : leaves) {
 				if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {

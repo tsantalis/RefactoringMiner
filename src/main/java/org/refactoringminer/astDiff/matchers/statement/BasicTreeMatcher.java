@@ -81,7 +81,8 @@ public class BasicTreeMatcher implements TreeMatcher {
 				}
 			}
 			if (mapping.first.getType().name.equals(Constants.get().SIMPLE_NAME)){
-				if (mapping.first.getParent().getType().name.equals(Constants.get().EXPRESSION_METHOD_REFERENCE) && mapping.second.getParent().getType().name.equals(Constants.get().EXPRESSION_METHOD_REFERENCE)) {
+				if (mapping.first.getParent() != null && mapping.second.getParent() != null &&
+						mapping.first.getParent().getType().name.equals(Constants.get().EXPRESSION_METHOD_REFERENCE) && mapping.second.getParent().getType().name.equals(Constants.get().EXPRESSION_METHOD_REFERENCE)) {
 					if (mapping.first.positionInParent() != mapping.second.positionInParent())
 						incorrectMethodExpressionReferenceSimpleName.add(mapping);
 				}
@@ -103,8 +104,8 @@ public class BasicTreeMatcher implements TreeMatcher {
 		{
 			if (mapping.first.getType().name.equals(Constants.get().SIMPLE_NAME))
 			{
-				if (mapping.first.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION)
-						&&
+				if (mapping.first.getParent() !=  null && mapping.second.getParent() != null &&
+						mapping.first.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION) &&
 						mapping.second.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION))
 				{
 					if (match.getDstForSrc(mapping.first.getParent()) != mapping.second.getParent())

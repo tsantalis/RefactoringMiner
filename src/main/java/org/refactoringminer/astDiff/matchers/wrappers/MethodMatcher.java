@@ -284,6 +284,12 @@ public class MethodMatcher extends BodyMapperMatcher{
             Tree leftTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getLocationInfo());
             Tree rightTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightVarDecl.getLocationInfo());
             if (leftTree == null || rightTree == null) return;
+            if (leftTree.getType().name.endsWith("_comment")) {
+                leftTree = TreeUtilFunctions.findByLocationInfo(srcTree, leftVarDecl.getLocationInfo(), Constants.get().PARAMETER);
+            }
+            if (rightTree.getType().name.endsWith("_comment")) {
+                rightTree = TreeUtilFunctions.findByLocationInfo(dstTree, rightVarDecl.getLocationInfo(), Constants.get().PARAMETER);
+            }
             if (leftVarDecl.isParameter() && rightVarDecl.isParameter()) {
                 if (TreeUtilFunctions.isIsomorphicTo(rightTree, leftTree))
                     mappingStore.addMappingRecursively(leftTree, rightTree);

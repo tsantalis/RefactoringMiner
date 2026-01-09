@@ -44,6 +44,7 @@ import org.jetbrains.kotlin.psi.KtCallExpression;
 import org.jetbrains.kotlin.psi.KtDotQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.psi.KtLambdaExpression;
 import org.jetbrains.kotlin.psi.KtNameReferenceExpression;
 import org.jetbrains.kotlin.psi.KtSafeQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtTypeProjection;
@@ -1138,6 +1139,9 @@ public class OperationInvocation extends AbstractCall {
 		KtExpression calleeExpression = invocation.getCalleeExpression();
 		if(calleeExpression instanceof KtNameReferenceExpression nameReference) {
 			this.methodName = nameReference.getReferencedName();
+		}
+		else if(calleeExpression instanceof KtLambdaExpression lambda) {
+			this.methodName = "lambda";
 		}
 		this.numberOfArguments = invocation.getValueArguments().size();
 		this.arguments = new ArrayList<String>();

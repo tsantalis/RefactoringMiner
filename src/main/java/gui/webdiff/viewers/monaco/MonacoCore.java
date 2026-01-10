@@ -316,6 +316,11 @@ public class MonacoCore {
         return !t_outerP.equals(astDiff.src.getRoot()) || !dst_outerP.equals(astDiff.dst.getRoot());
     }
 
+    private static boolean isDeclaration(Tree t) {
+    	String type = t.getType().toString();
+    	return type.endsWith("Declaration");
+    }
+
     private static boolean isStatement(Tree t) {
     	String type = t.getType().toString();
 		return type.endsWith("Statement") || type.equals("Block") || type.endsWith("ConstructorInvocation") || type.equals("SwitchCase");
@@ -328,12 +333,15 @@ public class MonacoCore {
     			type.equals("Assignment") || type.equals("ArrayInitializer");
     }
 
+    private static boolean isComment(Tree t) {
+    	String type = t.getType().toString();
+    	return type.startsWith("LineComment") || type.startsWith("BlockComment");
+    }
     //private Map<Tree, Set<String>> appliedTooltips = new HashMap<>();
 
     private void appendRange(StringBuilder b, Tree t, String kind, String tip) {
         Set<String> tooltips = kind.equals("updated") ? updateTooltip(t) : tooltip(t);
-        if(!tooltips.isEmpty() && (isStatement(t) || t.getType().toString().endsWith("Declaration") || isExpression(t) ||
-        		t.getType().toString().startsWith("LineComment") || t.getType().toString().startsWith("BlockComment")) &&
+        if(!tooltips.isEmpty() && (isStatement(t) || isDeclaration(t) || isExpression(t) || isComment(t)) &&
         		(kind.equals("moved") || kind.startsWith("mm") || kind.equals("moveOut") || kind.equals("moveIn"))) {
         	for(String tooltip : tooltips) {
         		//TODO the problem with duplicated tooltips seems to be related with cascading tooltips from parent nodes
@@ -564,7 +572,7 @@ public class MonacoCore {
     		}
     		else if(r instanceof MergeOperationRefactoring) {
     			MergeOperationRefactoring merge = (MergeOperationRefactoring)r;
-    			if(t.getType().toString().endsWith("Statement") || t.getType().toString().startsWith("LineComment") || t.getType().toString().startsWith("BlockComment")) {
+    			if(isStatement(t) || isComment(t)) {
     				for(UMLOperationBodyMapper bodyMapper : merge.getMappers()) {
     					String tooltipLeft = "merged to " + bodyMapper.getContainer2();
         				String tooltipRight = "merged from " + bodyMapper.getContainer1();
@@ -576,7 +584,7 @@ public class MonacoCore {
     		}
     		else if(r instanceof SplitOperationRefactoring) {
     			SplitOperationRefactoring split = (SplitOperationRefactoring)r;
-    			if(t.getType().toString().endsWith("Statement") || t.getType().toString().startsWith("LineComment") || t.getType().toString().startsWith("BlockComment")) {
+    			if(isStatement(t) || isComment(t)) {
     				for(UMLOperationBodyMapper bodyMapper : split.getMappers()) {
     					String tooltipLeft = "split to " + bodyMapper.getContainer2();
         				String tooltipRight = "split from " + bodyMapper.getContainer1();
@@ -605,7 +613,7 @@ public class MonacoCore {
     		}
     		else if(r instanceof MoveOperationRefactoring || r instanceof MoveAttributeRefactoring || r instanceof MoveClassRefactoring ||
     				r instanceof MoveAndRenameClassRefactoring) {
-    			if(t.getType().toString().endsWith("Declaration")) {
+    			if(isDeclaration(t)) {
     				String tooltipLeft = "moved to file: " + r.getInvolvedClassesAfterRefactoring().iterator().next().left;
     				String tooltipRight = "moved from file: " + r.getInvolvedClassesBeforeRefactoring().iterator().next().left;
     				String tooltip = generateTooltip(t, c, (UMLOperationBodyMapper)null, tooltipLeft, tooltipRight);
@@ -717,7 +725,7 @@ public class MonacoCore {
     			}
     		}
     	}
-    	if(tooltips.isEmpty() && t.getType().toString().endsWith("Declaration") && srcFileName.equals(dstFileName)) {
+    	if(tooltips.isEmpty() && isDeclaration(t) && srcFileName.equals(dstFileName)) {
     		tooltips.add("reordered in file");
     	}
     	return tooltips;
@@ -748,7 +756,7 @@ public class MonacoCore {
 
 	private String generateTooltip(Tree tree, ExtendedTreeClassifier classifier, UMLOperationBodyMapper bodyMapper,
 			String tooltipLeft, String tooltipRight) {
-		if(tree.getType().toString().endsWith("Declaration")) {
+		if(isDeclaration(tree)) {
 			if(classifier.getSrcMoveOutTreeMap().get(tree) != null) {
 				List<Action> actions = classifier.getSrcMoveOutTreeMap().get(tree);
 				for(Action action : actions) {
@@ -795,7 +803,7 @@ public class MonacoCore {
 					return tooltipRight + " & " + actions.stream().map(Action::toString).collect(Collectors.joining(", "));
 				}
 			}
-			if(bodyMapper.getCommentListDiff() != null && (tree.getType().toString().startsWith("LineComment") || tree.getType().toString().startsWith("BlockComment"))) {
+			if(bodyMapper.getCommentListDiff() != null && isComment(tree)) {
 				for(Pair<UMLComment, UMLComment> pair : bodyMapper.getCommentListDiff().getCommonComments()) {
 					if(subsumes(pair.getLeft().codeRange(),tree) && (classifier.getMovedSrcs().contains(tree) || classifier.getMultiMapSrc().containsKey(tree))) {
 						return tooltipLeft;

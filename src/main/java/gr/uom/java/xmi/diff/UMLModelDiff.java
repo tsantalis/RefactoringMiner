@@ -65,6 +65,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
@@ -5839,7 +5840,7 @@ public class UMLModelDiff {
 									ArrayList<AbstractCodeFragment> subList = new ArrayList<AbstractCodeFragment>();
 									subList.add(fragment);
 									UMLOperationBodyMapper operationBodyMapper = createMapperForExtractAndMove(addedOperation,
-											mapper, className, addedOperationInvocation, Optional.of(subList));
+											mapper, className, addedOperationInvocation, Optional.of(subList), addedOperations, false);
 									if(!anotherAddedMethodExistsWithBetterMatchingInvocationExpression(addedOperationInvocation, addedOperation, addedOperations) &&
 											!conflictingExpression(addedOperationInvocation, addedOperation, variableDeclarationMap, childFieldDeclarationMap) &&
 											operationBodyMapper.getMappings().size() >= lambdaStatementCount - castingStatements &&
@@ -5878,7 +5879,7 @@ public class UMLModelDiff {
 										ArrayList<AbstractCodeFragment> subList = new ArrayList<AbstractCodeFragment>();
 										subList.add(fragment);
 										UMLOperationBodyMapper operationBodyMapper = createMapperForExtractAndMove(addedOperation,
-												mapper, className, addedOperationInvocation, Optional.of(subList));
+												mapper, className, addedOperationInvocation, Optional.of(subList), addedOperations, false);
 										if(!anotherAddedMethodExistsWithBetterMatchingInvocationExpression(addedOperationInvocation, addedOperation, addedOperations) &&
 												!conflictingExpression(addedOperationInvocation, addedOperation, variableDeclarationMap, childFieldDeclarationMap) &&
 												operationBodyMapper.getMappings().size() >= lambdaStatementCount - castingStatements - possiblyInlinedOperations.size() &&
@@ -5972,6 +5973,12 @@ public class UMLModelDiff {
 						String nonQualifiedAddedOperationClassName = addedOperation.getClassName().contains(".") ?
 								addedOperation.getClassName().substring(addedOperation.getClassName().lastIndexOf(".") + 1) :
 								addedOperation.getClassName();
+						if(nonQualifiedAddedOperationClassName.equals("Companion")) {
+							String tmp = addedOperation.getClassName().substring(0, addedOperation.getClassName().indexOf(".Companion"));
+							if(tmp.contains(".")) {
+								nonQualifiedAddedOperationClassName = tmp.substring(tmp.lastIndexOf(".") + 1);
+							}
+						}
 						Map<String, Set<VariableDeclaration>> variableDeclarationMap = mapper.getContainer2().variableDeclarationMap();
 						UMLAbstractClass childCallerClass = this.findClassInChildModel(mapper.getContainer2().getClassName());
 						Map<String, VariableDeclaration> childFieldDeclarationMap = childCallerClass != null ? childCallerClass.getFieldDeclarationMap() : null;
@@ -6015,7 +6022,7 @@ public class UMLModelDiff {
 							if(!anotherAddedMethodExistsWithBetterMatchingInvocationExpression(addedOperationInvocation, addedOperation, addedOperations) &&
 									!conflictingExpression(addedOperationInvocation, addedOperation, variableDeclarationMap, childFieldDeclarationMap)) {
 								UMLOperationBodyMapper operationBodyMapper = createMapperForExtractAndMove(addedOperation,
-										mapper, className, addedOperationInvocation, Optional.empty());
+										mapper, className, addedOperationInvocation, Optional.empty(), addedOperations, false);
 								if(extractAndMoveMatchCondition(operationBodyMapper, mapper, addedOperationInvocation) && !skipRefactoring(operationBodyMapper.getMappings())) {
 									createExtractAndMoveMethodRefactoringBasedOnClassName(addedOperation, mapper,
 											className, addedOperationInvocations, operationBodyMapper, false);
@@ -6031,7 +6038,7 @@ public class UMLModelDiff {
 									}
 									if(delegateDeclaration != null) {
 										UMLOperationBodyMapper nestedOperationBodyMapper = createMapperForExtractAndMove(delegateDeclaration,
-												mapper, className, delegateCall, Optional.empty());
+												mapper, className, delegateCall, Optional.empty(), addedOperations, false);
 										if(extractAndMoveMatchCondition(nestedOperationBodyMapper, mapper, delegateCall)) {
 											createExtractAndMoveMethodRefactoringBasedOnClassName(addedOperation, mapper,
 													className, addedOperationInvocations, nestedOperationBodyMapper, true);
@@ -6206,7 +6213,7 @@ public class UMLModelDiff {
 	}
 
 	private UMLOperationBodyMapper createMapperForExtractAndMove(UMLOperation addedOperation,
-			UMLOperationBodyMapper mapper, String className, AbstractCall addedOperationInvocation, Optional<List<AbstractCodeFragment>> leaves1Sublist)
+			UMLOperationBodyMapper mapper, String className, AbstractCall addedOperationInvocation, Optional<List<AbstractCodeFragment>> leaves1Sublist, List<UMLOperation> addedOperations, boolean nested)
 			throws RefactoringMinerTimedOutException {
 		List<String> arguments = addedOperationInvocation.arguments();
 		List<String> parameters = addedOperation.getParameterNameList();
@@ -6216,6 +6223,7 @@ public class UMLModelDiff {
 		for(int i=0; i<size; i++) {
 			parameterToArgumentMap2.put(parameters.get(i), arguments.get(i));
 		}
+		UMLClassBaseDiff umlClassDiff = null;
 		List<UMLAttribute> attributes = new ArrayList<UMLAttribute>();
 		if(className.contains(".") && isAnonymousClassName(className)) {
 			//add enclosing class fields + anonymous class fields
@@ -6230,7 +6238,7 @@ public class UMLModelDiff {
 					break;
 				}
 			}
-			UMLClassBaseDiff umlClassDiff = getUMLClassDiff(className);
+			umlClassDiff = getUMLClassDiff(className);
 			if(umlClassDiff == null) {
 				String enclosingClassName = className.substring(0, className.indexOf(anonymousID));
 				umlClassDiff = getUMLClassDiff(enclosingClassName);
@@ -6244,7 +6252,7 @@ public class UMLModelDiff {
 			}
 		}
 		else {
-			UMLClassBaseDiff umlClassDiff = getUMLClassDiff(className);
+			umlClassDiff = getUMLClassDiff(className);
 			if(umlClassDiff == null) {
 				for(UMLClassDiff classDiff : commonClassDiffList) {
 					for(UMLAnonymousClass anonymousClass : classDiff.getAddedAnonymousClasses()) {
@@ -6273,8 +6281,64 @@ public class UMLModelDiff {
 			parameterToArgumentMap1.put(addedOperationInvocation.getExpression() + ".", "");
 			parameterToArgumentMap2.put(LANG.THIS_DOT, "");
 		}
-		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(addedOperation.getClassName()), addedOperationInvocation, false, leaves1Sublist);
+		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(addedOperation.getClassName()), addedOperationInvocation, nested, leaves1Sublist);
+		if(!nested) {
+			CallTreeNode root = new CallTreeNode(mapper.getContainer1(), addedOperation, addedOperationInvocation);
+			CallTree callTree = new CallTree(root);
+			//filter added operations in the same class as addedOperation.getClassName()
+			List<UMLOperation> filteredAddedOperations = addedOperations.stream()
+					.filter(op -> op.getClassName().equals(addedOperation.getClassName()) && !op.equals(addedOperation))
+					.collect(Collectors.toList());
+			generateCallTree(addedOperation, root, callTree, umlClassDiff, filteredAddedOperations);
+			List<CallTreeNode> nodesInBreadthFirstOrder = callTree.getNodesInBreadthFirstOrder();
+			for(int i=1; i<nodesInBreadthFirstOrder.size(); i++) {
+				CallTreeNode node = nodesInBreadthFirstOrder.get(i);
+				UMLOperationBodyMapper nestedMapper = createMapperForExtractAndMove(node.getInvokedOperation(), mapper, className, node.getInvocation(), leaves1Sublist, addedOperations, true);
+				if(nestedMapper.getMappings().size() > 1 && extractAndMoveMatchCondition(nestedMapper, mapper, node.getInvocation()) && !containsRefactoringWithIdenticalMappings(nestedMapper)) {
+					createExtractAndMoveMethodRefactoringBasedOnClassName(node.getInvokedOperation(), mapper,
+							className, List.of(node.getInvocation()), nestedMapper, true);
+				}
+			}
+		}
 		return operationBodyMapper;
+	}
+
+	private boolean containsRefactoringWithIdenticalMappings(UMLOperationBodyMapper mapper) {
+		Set<AbstractCodeMapping> newMappings = mapper.getMappings();
+		for(Refactoring ref : this.refactorings) {
+			if(ref instanceof ExtractOperationRefactoring extract && ref.getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION)) {
+				Set<AbstractCodeMapping> oldMappings = extract.getBodyMapper().getMappings();
+				int matches = 0;
+				for(AbstractCodeMapping oldMapping : oldMappings) {
+					for(AbstractCodeMapping newMapping : newMappings) {
+						if(oldMapping.getFragment1().equals(newMapping.getFragment1()) ||
+								oldMapping.getFragment2().equals(newMapping.getFragment2())) {
+							matches++;
+							break;
+						}
+					}
+				}
+				if(matches == oldMappings.size() && matches> 0) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private void generateCallTree(UMLOperation operation, CallTreeNode parent, CallTree callTree, UMLClassBaseDiff classDiff, List<UMLOperation> addedOperations) {
+		List<AbstractCall> invocations = operation.getAllOperationInvocations();
+		for(UMLOperation addedOperation : addedOperations) {
+			for(AbstractCall invocation : invocations) {
+				if(invocation.matchesOperation(addedOperation, operation, classDiff, this)) {
+					if(!callTree.containsInPathToRootOrSibling(parent, addedOperation)) {
+						CallTreeNode node = new CallTreeNode(parent, operation, addedOperation, invocation);
+						parent.addChild(node);
+						generateCallTree(addedOperation, node, callTree, classDiff, addedOperations);
+					}
+				}
+			}
+		}
 	}
 
 	private boolean isAnonymousClassName(String className) {

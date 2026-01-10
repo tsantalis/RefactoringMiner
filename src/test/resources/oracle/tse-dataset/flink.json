@@ -1087,6 +1087,16 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tfile9 : PhysicalFile to file10 : PhysicalFile in method package testCreateAndReuseFiles() : void from class org.apache.flink.runtime.checkpoint.filemerging.FileMergingSnapshotManagerTest",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprivate closeFilesInQueue(queue Queue<PhysicalFile>) : void extracted from private removeAndCloseFiles(subtaskKey SubtaskKey, checkpointId long) : void in class org.apache.flink.runtime.checkpoint.filemerging.WithinCheckpointFileMergingSnapshotManager & moved to class org.apache.flink.runtime.checkpoint.filemerging.PhysicalFilePool",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tfile : PhysicalFile to physicalFile : PhysicalFile in method private closeFilesInQueue(queue Queue<PhysicalFile>) : void from class org.apache.flink.runtime.checkpoint.filemerging.PhysicalFilePool",
+          "validation": true
         }
       ]
     },

@@ -921,6 +921,25 @@ public class VariableReplacementAnalysis {
 					}
 				}
 			}
+			TernaryOperatorExpression ternary = initializer.ternaryOperatorCoveringEntireFragment();
+			if(ternary != null) {
+				invocation = ternary.getThenExpression().invocationCoveringEntireFragment();
+				if(invocation != null) {
+					for(UMLOperationBodyMapper childMapper : childMappers) {
+						if(invocation.matchesOperation(childMapper.getContainer2(), operation2, classDiff, modelDiff)) {
+							return true;
+						}
+					}
+				}
+				invocation = ternary.getElseExpression().invocationCoveringEntireFragment();
+				if(invocation != null) {
+					for(UMLOperationBodyMapper childMapper : childMappers) {
+						if(invocation.matchesOperation(childMapper.getContainer2(), operation2, classDiff, modelDiff)) {
+							return true;
+						}
+					}
+				}
+			}
 		}
 		return false;
 	}
@@ -933,6 +952,25 @@ public class VariableReplacementAnalysis {
 				for(UMLOperationBodyMapper childMapper : childMappers) {
 					if(invocation.matchesOperation(childMapper.getContainer1(), operation1, classDiff, modelDiff)) {
 						return true;
+					}
+				}
+			}
+			TernaryOperatorExpression ternary = initializer.ternaryOperatorCoveringEntireFragment();
+			if(ternary != null) {
+				invocation = ternary.getThenExpression().invocationCoveringEntireFragment();
+				if(invocation != null) {
+					for(UMLOperationBodyMapper childMapper : childMappers) {
+						if(invocation.matchesOperation(childMapper.getContainer1(), operation1, classDiff, modelDiff)) {
+							return true;
+						}
+					}
+				}
+				invocation = ternary.getElseExpression().invocationCoveringEntireFragment();
+				if(invocation != null) {
+					for(UMLOperationBodyMapper childMapper : childMappers) {
+						if(invocation.matchesOperation(childMapper.getContainer1(), operation1, classDiff, modelDiff)) {
+							return true;
+						}
 					}
 				}
 			}

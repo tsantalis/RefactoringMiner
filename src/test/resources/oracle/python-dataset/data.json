@@ -2797,6 +2797,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public get_stream_map_nodes(stream_map) extracted from public get_args(stream) in class _run.__module__ & moved to class nodes.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -3454,8 +3461,8 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public get_hash(item) extracted from private __get_hash() in class _utils.__module__",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public get_hash(item) extracted from private __get_hash() in class dag.KwargReprNode & moved to class _utils.__module__",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

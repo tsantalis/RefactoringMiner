@@ -3300,7 +3300,8 @@ public class UMLModelDiff {
 					ExtractOperationDetection detection = new ExtractOperationDetection(movedMethodMapper, potentiallyMovedOperations, addedOperations, getUMLClassDiff(operation.getClassName()), this);
 					List<ExtractOperationRefactoring> refs = detection.check(operation);
 					for(ExtractOperationRefactoring extractRefactoring : refs) {
-						if(!refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(extractRefactoring.getExtractedOperation())) {
+						if(!refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(extractRefactoring.getExtractedOperation()) &&
+								!containsRefactoringWithIdenticalMappings(extractRefactoring.getBodyMapper())) {
 							this.refactorings.add(extractRefactoring);
 							refactorings.addAll(extractRefactoring.getBodyMapper().getRefactorings());
 						}
@@ -6306,19 +6307,24 @@ public class UMLModelDiff {
 	private boolean containsRefactoringWithIdenticalMappings(UMLOperationBodyMapper mapper) {
 		Set<AbstractCodeMapping> newMappings = mapper.getMappings();
 		for(Refactoring ref : this.refactorings) {
-			if(ref instanceof ExtractOperationRefactoring extract && ref.getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION)) {
+			if(ref instanceof ExtractOperationRefactoring extract) {
 				Set<AbstractCodeMapping> oldMappings = extract.getBodyMapper().getMappings();
-				int matches = 0;
-				for(AbstractCodeMapping oldMapping : oldMappings) {
-					for(AbstractCodeMapping newMapping : newMappings) {
-						if(oldMapping.getFragment1().equals(newMapping.getFragment1()) ||
-								oldMapping.getFragment2().equals(newMapping.getFragment2())) {
-							matches++;
-							break;
+				if(ref.getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION)) {
+					int matches = 0;
+					for(AbstractCodeMapping oldMapping : oldMappings) {
+						for(AbstractCodeMapping newMapping : newMappings) {
+							if(oldMapping.getFragment1().equals(newMapping.getFragment1()) ||
+									oldMapping.getFragment2().equals(newMapping.getFragment2())) {
+								matches++;
+								break;
+							}
 						}
 					}
+					if(matches == oldMappings.size() && matches > 0) {
+						return true;
+					}
 				}
-				if(matches == oldMappings.size() && matches> 0) {
+				if(newMappings.containsAll(oldMappings) || oldMappings.containsAll(newMappings)) {
 					return true;
 				}
 			}

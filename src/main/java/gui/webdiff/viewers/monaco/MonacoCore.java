@@ -318,24 +318,25 @@ public class MonacoCore {
 
     private static boolean isDeclaration(Tree t) {
     	String type = t.getType().toString();
-    	return type.endsWith("Declaration");
+    	return type.endsWith("Declaration") || type.endsWith("_declaration") || type.endsWith("_definition");
     }
 
     private static boolean isStatement(Tree t) {
     	String type = t.getType().toString();
-		return type.endsWith("Statement") || type.equals("Block") || type.endsWith("ConstructorInvocation") || type.equals("SwitchCase");
+		return type.endsWith("Statement") || type.equals("Block") || type.endsWith("ConstructorInvocation") || type.equals("SwitchCase") ||
+				type.endsWith("_statement") || type.endsWith("block");
     }
 
     private static boolean isExpression(Tree t) {
     	String type = t.getType().toString();
     	return type.endsWith("Expression") || type.endsWith("Literal") || type.endsWith("Reference") || type.endsWith("Invocation") ||
     			type.endsWith("Creation") || type.endsWith("Access") || type.endsWith("Name") || type.endsWith("Annotation") || type.endsWith("Pattern") ||
-    			type.equals("Assignment") || type.equals("ArrayInitializer");
+    			type.equals("Assignment") || type.equals("ArrayInitializer") || type.endsWith("_expression");
     }
 
     private static boolean isComment(Tree t) {
     	String type = t.getType().toString();
-    	return type.startsWith("LineComment") || type.startsWith("BlockComment");
+    	return type.startsWith("LineComment") || type.startsWith("BlockComment") || type.endsWith("_comment");
     }
     //private Map<Tree, Set<String>> appliedTooltips = new HashMap<>();
 

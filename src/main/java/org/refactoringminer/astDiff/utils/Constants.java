@@ -262,7 +262,7 @@ public class Constants {
     public final String PARAMETER = "parameter";
     public final String GETTER = "getter";
     public final String SETTER = "setter";
-    public final String PROPERY_DECLARATION_KEYWORD = "property_declaration_keyword";
+    public final String PROPERTY_DECLARATION_KEYWORD = "property_declaration_keyword";
     public final String IMPORT_IDENTIFIER = "identifier";
     public final String CONTROL_STRUCTURE_BODY = "control_structure_body";
     public final String CLASS_PARAMETER = "class_parameter";

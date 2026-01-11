@@ -33,6 +33,7 @@ import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.MergeOperationRefactoring;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring;
 import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
+import gr.uom.java.xmi.diff.PullUpOperationRefactoring;
 import gr.uom.java.xmi.diff.PushDownOperationRefactoring;
 import gr.uom.java.xmi.diff.RenameOperationRefactoring;
 import gr.uom.java.xmi.diff.SplitOperationRefactoring;
@@ -1833,6 +1834,58 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "javaparser-d017fb8caf6ccb3343da0062eb2c85262712772c.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testMergedForLoops() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/spring-projects/spring-boot.git", "3e41807e1d5561256424f5f2b098f74bcc706e40", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("getAdditionalResources") && mapper.getContainer2().getName().equals("getAdditionalResources")) {
+					mapperInfo(mapper, actual);
+				}
+				if(mapper.getContainer1().getName().equals("isDeleted") && mapper.getContainer2().getName().equals("isDeleted")) {
+					mapperInfo(mapper, actual);
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "spring-boot-3e41807e1d5561256424f5f2b098f74bcc706e40.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testExtractAndPullUpMethodStatementMappings() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommitWithGitHubAPI("https://github.com/junit-team/junit4.git", "095d3f8df0708f98d41f5894a892388b6985c44f", new File(REPOS), (commitId, refactorings) -> {
+			List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+			for (Refactoring ref : refactorings) {
+				if(ref instanceof ExtractOperationRefactoring) {
+					ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+					UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+					if(!bodyMapper.isNested()) {
+						if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+							parentMappers.add(bodyMapper.getParentMapper());
+						}
+					}
+					mapperInfo(bodyMapper, actual);
+				}
+				if(ref instanceof PullUpOperationRefactoring) {
+					PullUpOperationRefactoring ex = (PullUpOperationRefactoring)ref;
+					UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+					mapperInfo(bodyMapper, actual);
+				}
+			}
+			for(UMLOperationBodyMapper parentMapper : parentMappers) {
+				mapperInfo(parentMapper, actual);
+			}
+		});
+
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "junit4-095d3f8df0708f98d41f5894a892388b6985c44f.txt"));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

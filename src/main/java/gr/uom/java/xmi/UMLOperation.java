@@ -62,6 +62,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private List<UMLOperation> nestedOperations;
 	private final Constants LANG;
 	private boolean importsTestCase;
+	private Optional<UMLType> receiver;
 	
 	public UMLOperation(String name, LocationInfo locationInfo) {
 		this.locationInfo = locationInfo;
@@ -76,6 +77,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
         this.nestedOperations = new ArrayList<UMLOperation>();
         this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
         this.propertyAccessor = Optional.empty();
+        this.receiver = Optional.empty();
     }
 
 	public void addNestedOperation(UMLOperation operation) {
@@ -84,6 +86,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public List<UMLOperation> getNestedOperations() {
 		return nestedOperations;
+	}
+
+	public void setReceiver(UMLType type) {
+		this.receiver = Optional.of(type);
+	}
+
+	public Optional<UMLType> getReceiver() {
+		return receiver;
 	}
 
 	public UMLOperation nestedOperationWithTheSameSignatureIgnoringChangedTypes(UMLOperation operation) {

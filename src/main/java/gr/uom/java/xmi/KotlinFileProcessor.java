@@ -28,6 +28,7 @@ import org.jetbrains.kotlin.psi.KtAnonymousInitializer;
 import org.jetbrains.kotlin.psi.KtBlockExpression;
 import org.jetbrains.kotlin.psi.KtClass;
 import org.jetbrains.kotlin.psi.KtClassBody;
+import org.jetbrains.kotlin.psi.KtContextReceiver;
 import org.jetbrains.kotlin.psi.KtDeclaration;
 import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtEnumEntry;
@@ -741,8 +742,19 @@ public class KotlinFileProcessor {
 
 	private UMLOperation processFunctionDeclaration(KtFile ktFile, KtNamedFunction function, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments) {
 		String methodName = function.getName();
+		UMLType receiver = null;
+		if(function.getReceiverTypeReference() != null) {
+			receiver = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, function.getReceiverTypeReference(), 0);
+		}
 		LocationInfo locationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, function, CodeElementType.METHOD_DECLARATION);
-		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo);
+		UMLOperation umlOperation = null;
+		if(receiver != null) {
+			umlOperation = new UMLOperation(receiver.toQualifiedString() + "." + methodName, locationInfo);
+			umlOperation.setReceiver(receiver);
+		}
+		else {
+			umlOperation = new UMLOperation(methodName, locationInfo);
+		}
 		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, function.getDocComment());
 		umlOperation.setJavadoc(javadoc);
 		distributeComments(comments, locationInfo, umlOperation.getComments());

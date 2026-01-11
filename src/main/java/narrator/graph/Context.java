@@ -61,7 +61,8 @@ public class Context {
         put(Constants.get().BREAK_STATEMENT, List.of(Constants.get().SWITCH_STATEMENT));
         put(Constants.get().SWITCH_CASE, List.of(Constants.get().SWITCH_STATEMENT));
         put(Constants.get().MARKER_ANNOTATION, List.of(Constants.get().FIELD_DECLARATION,
-                Constants.get().VARIABLE_DECLARATION_STATEMENT));
+                Constants.get().VARIABLE_DECLARATION_STATEMENT,
+                Constants.get().METHOD_DECLARATION));
         put(Constants.get().EXPRESSION_STATEMENT, List.of(Constants.get().BLOCK));
         put(Constants.get().METHOD_INVOCATION_RECEIVER, List.of(Constants.get().METHOD_INVOCATION));
         put(Constants.get().METHOD_INVOCATION_ARGUMENTS,
@@ -93,7 +94,7 @@ public class Context {
         put("ArrayAccess", List.of(Constants.get().INFIX_EXPRESSION));
         put(Constants.get().IF_STATEMENT, List.of(Constants.get().BLOCK));
     }};
-    
+
     private static final List<String> locationContext = new ArrayList<>() {{
         // location context
         add(Constants.get().COMPILATION_UNIT);
@@ -101,12 +102,6 @@ public class Context {
         add(Constants.get().ENUM_DECLARATION);
         add(Constants.get().RECORD_DECLARATION);
         add(Constants.get().METHOD_DECLARATION);
-
-        // intel context
-        //        add(Constants.get().VARIABLE_DECLARATION_STATEMENT);
-        //        add(Constants.get().RETURN_STATEMENT);
-        //        add(Constants.get().JAVA_DOC);
-        //        add(Constants.get().METHOD_INVOCATION);
     }};
 
     public static List<Pair<Tree, NodeType>> get(Tree tree) {
@@ -125,12 +120,12 @@ public class Context {
 
             String parentType = parent.getType().name;
 
-            if (locationContext.contains(parentType)) {
-                contexts.add(new Pair<>(parent, NodeType.LOCATION_CONTEXT));
-            }
-
             if (treeSemanticContexts != null && treeSemanticContexts.contains(parentType)) {
                 contexts.add(new Pair<>(parent, NodeType.SEMANTIC_CONTEXT));
+            }
+
+            if (locationContext.contains(parentType)) {
+                contexts.add(new Pair<>(parent, NodeType.LOCATION_CONTEXT));
             }
         }
     }

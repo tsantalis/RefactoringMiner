@@ -658,6 +658,22 @@ public class StringBasedHeuristics {
 				return true;
 			}
 		}
+		if(commonSuffix.equals(s1) && commonPrefix.isEmpty()) {
+			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS2 = s2.lastIndexOf(commonSuffix);
+			String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
+			if(diff2.equals("val ") || diff2.equals("var ")) {
+				return true;
+			}
+		}
+		else if(commonSuffix.equals(s2) && commonPrefix.isEmpty()) {
+			int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS1 = s1.lastIndexOf(commonSuffix);
+			String diff1 = beginIndexS1 > endIndexS1 ? "" :	s1.substring(beginIndexS1, endIndexS1);
+			if(diff1.equals("val ") || diff1.equals("var ")) {
+				return true;
+			}
+		}
 		return false;
 	}
 

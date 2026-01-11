@@ -181,7 +181,9 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	private boolean argumentizedStringExact() {
 		return fragment1.getArgumentizedString().equals(fragment2.getArgumentizedString()) ||
 				fragment1.getArgumentizedString().equals(LANG.THIS_DOT + fragment2.getArgumentizedString()) ||
-				fragment2.getArgumentizedString().equals(LANG.THIS_DOT + fragment1.getArgumentizedString());
+				fragment2.getArgumentizedString().equals(LANG.THIS_DOT + fragment1.getArgumentizedString()) ||
+				fragment1.getArgumentizedString().equals("val " + fragment2.getArgumentizedString()) ||
+				fragment2.getArgumentizedString().equals("val " + fragment1.getArgumentizedString());
 	}
 
 	private boolean callChainMatch() {

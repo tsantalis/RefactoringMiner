@@ -17,6 +17,7 @@ public class Node {
 
     private final String id;
     private final String path;
+    private final SrcDst srcDst;
     private final String fileContent;
     private final Tree tree;
     @Nullable
@@ -27,11 +28,13 @@ public class Node {
     private final NodeType nodeType;
     private final ASTDiff diff;
 
-    public Node(String fileContent, String path, Tree tree, @Nullable Set<Tree> subTrees,
-            @Nullable Set<Tree> moveTrees, NodeType nodeType, ASTDiff diff) {
-        this.id = formatId(path, tree);
+    public Node(String fileContent, String path, SrcDst srcDst, Tree tree,
+            @Nullable Set<Tree> subTrees, @Nullable Set<Tree> moveTrees, NodeType nodeType,
+            ASTDiff diff) {
+        this.id = formatId(path, srcDst, nodeType, tree);
         this.fileContent = fileContent;
         this.path = path;
+        this.srcDst = srcDst;
         this.tree = tree;
         this.subTrees = subTrees;
         this.moveTrees = moveTrees;
@@ -39,9 +42,9 @@ public class Node {
         this.diff = diff;
     }
 
-    public static String formatId(String path, Tree tree) {
-        return String.format("%s-%s-%s-%s", path, tree.getPos(), tree.getEndPos(),
-                tree.getType().name);
+    public static String formatId(String path, SrcDst srcDst, NodeType nodeType, Tree tree) {
+        return String.format("%s-%s-%s-%s-%s-%s", path, srcDst, nodeType, tree.getPos(),
+                tree.getEndPos(), tree.getType().name);
     }
 
     @Nullable
@@ -53,11 +56,24 @@ public class Node {
         return diff;
     }
 
+    public SrcDst getSrcDst() {
+        return srcDst;
+    }
+
+    public boolean isSrc() {
+        return srcDst.equals(SrcDst.SRC);
+    }
+
+    public boolean isDst() {
+        return srcDst.equals(SrcDst.DST);
+    }
+
     public JsonObject stringify() {
         JsonObject nodeObj = new JsonObject();
 
         nodeObj.addProperty("id", id);
         nodeObj.addProperty("path", path);
+        nodeObj.addProperty("srcDst", this.srcDst.name());
         nodeObj.addProperty("content", getContent());
         nodeObj.addProperty("nodeType", nodeType.name());
 
@@ -140,7 +156,8 @@ public class Node {
     }
 
     public boolean isBase() {
-        return nodeType.equals(NodeType.ADDITION) || nodeType.equals(NodeType.DELETION);
+        return nodeType.equals(NodeType.DELETION) || nodeType.equals(NodeType.SRC_MOVE)
+                || nodeType.equals(NodeType.ADDITION) || nodeType.equals(NodeType.DST_MOVE);
     }
 
     public boolean isContext() {
@@ -161,7 +178,7 @@ public class Node {
     }
 
     public String getContent() {
-        if (isContext()) {
+        if (nodeType.equals(NodeType.LOCATION_CONTEXT)) {
             String type = tree.getType().name;
             if (type.equals(Constants.get().TYPE_DECLARATION) || type.equals(
                     Constants.get().METHOD_DECLARATION) || type.equals(

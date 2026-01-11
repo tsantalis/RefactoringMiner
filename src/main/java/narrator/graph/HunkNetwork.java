@@ -63,38 +63,34 @@ public class HunkNetwork {
         this.dstContexts = dstContexts;
     }
 
-    private Pair<String, String> localizeTree(Tree tree) {
+    private Pair<SrcDst, String> localizeTree(Tree tree) {
         Tree root = TreeUtilFunctions.getParentUntilType(
                 tree, Constants.get().COMPILATION_UNIT);
-        return findContext(srcContexts, root, "src")
-                .or(() -> findContext(dstContexts, root, "dst"))
-                .orElseGet(() -> new Pair<>("unreachable", "unreachable"));
+        return findContext(srcContexts, root, SrcDst.SRC)
+                .or(() -> findContext(dstContexts, root, SrcDst.DST))
+                .orElse(null);
     }
 
-    private Optional<Pair<String, String>> findContext(
+    private Optional<Pair<SrcDst, String>> findContext(
             Map<String, TreeContext> contexts,
             Tree root,
-            String label) {
+            SrcDst srcDst) {
         return contexts.entrySet().stream()
                 .filter(e -> e.getValue().getRoot().equals(root))
-                .map(e -> new Pair<>(label, e.getKey()))
+                .map(e -> new Pair<>(srcDst, e.getKey()))
                 .findFirst();
     }
 
-    private String getContent(String srcDst, String path) {
-        return (srcDst.equals("src") ? srcContents : dstContents).get(path);
-    }
-
-    private boolean isSrc(Node node) {
-        return localizeTree(node.getTree()).first.equals("src");
+    private String getContent(SrcDst srcDst, String path) {
+        return (srcDst.equals(SrcDst.SRC) ? srcContents : dstContents).get(path);
     }
 
     public void importDiff(ASTDiff diff) {
         TreeClassifier classifier = diff.createRootNodesClassifier();
         importTrees(aggregateTrees(getValidTrees(classifier.getDeletedSrcs())),
-                classifier.getMovedSrcs(), NodeType.DELETION, NodeType.SRC_MOVE, diff);
+                classifier.getMovedSrcs(), SrcDst.SRC, NodeType.DELETION, NodeType.SRC_MOVE, diff);
         importTrees(aggregateTrees(getValidTrees(classifier.getInsertedDsts())),
-                classifier.getMovedDsts(), NodeType.ADDITION, NodeType.DST_MOVE, diff);
+                classifier.getMovedDsts(), SrcDst.DST, NodeType.ADDITION, NodeType.DST_MOVE, diff);
     }
 
     private Set<Tree> getValidTrees(Set<Tree> trees) {
@@ -141,7 +137,7 @@ public class HunkNetwork {
         return result;
     }
 
-    private void importTrees(HashMap<Tree, Set<Tree>> trees, Set<Tree> allMoves,
+    private void importTrees(HashMap<Tree, Set<Tree>> trees, Set<Tree> allMoves, SrcDst srcDst,
             NodeType baseType, NodeType moveType, ASTDiff diff) {
         Set<Tree> parentTrees = trees.keySet();
 
@@ -157,9 +153,9 @@ public class HunkNetwork {
             Tree tree = entry.getKey();
             Set<Tree> subTrees = entry.getValue();
             Set<Tree> moveTrees = treesMoves.get(tree);
-            Pair<String, String> treeLocation = localizeTree(tree);
+            Pair<SrcDst, String> treeLocation = localizeTree(tree);
             return new Node(getContent(treeLocation.first, treeLocation.second),
-                    treeLocation.second, tree, subTrees.isEmpty() ? null : subTrees,
+                    treeLocation.second, srcDst, tree, subTrees.isEmpty() ? null : subTrees,
                     moveTrees.isEmpty() ? null : moveTrees, baseType, diff);
         }).forEach(this::addNode);
 
@@ -167,23 +163,25 @@ public class HunkNetwork {
                 .noneMatch(parentTree -> parentTree.getPos() <= move.getPos()
                         && move.getEndPos() <= parentTree.getEndPos())).toList();
         pureMoves.stream().map(tree -> {
-            Pair<String, String> treeLocation = localizeTree(tree);
+            Pair<SrcDst, String> treeLocation = localizeTree(tree);
             return new Node(getContent(treeLocation.first, treeLocation.second),
-                    treeLocation.second, tree, null, null, moveType, diff);
+                    treeLocation.second, srcDst, tree, null, null, moveType, diff);
         }).forEach(this::addNode);
     }
 
     private Node addExtensionNode(Tree extensionTree, Node extendedNode) {
-        Pair<String, String> treeLocation = localizeTree(extensionTree);
+        Pair<SrcDst, String> treeLocation = localizeTree(extensionTree);
         String path = treeLocation.second;
 
-        String potentialNodeId = Node.formatId(path, extensionTree);
+        String potentialNodeId = Node.formatId(path, treeLocation.first, NodeType.EXTENSION,
+                extensionTree);
         if (nodeMap.containsKey(potentialNodeId)) {
             return nodeMap.get(potentialNodeId);
         }
 
         Node node = new Node(getContent(treeLocation.first, treeLocation.second), path,
-                extensionTree, null, null, NodeType.EXTENSION, extendedNode.getDiff());
+                treeLocation.first, extensionTree, null, null, NodeType.EXTENSION,
+                extendedNode.getDiff());
         return addNode(node);
     }
 
@@ -202,14 +200,15 @@ public class HunkNetwork {
 
     private void addNodeContext(Node node) {
         String path = node.getPath();
+        SrcDst srcDst = node.getSrcDst();
 
         Node lastNode = node;
         List<Pair<Tree, NodeType>> contexts = Context.get(node.getTree());
         for (Pair<Tree, NodeType> context : contexts) {
-            String potentialContextId = Node.formatId(path, context.first);
+            String potentialContextId = Node.formatId(path, srcDst, context.second, context.first);
             if (!nodeMap.containsKey(potentialContextId)) {
-                Node contextNode = new Node(node.getFileContent(), path, context.first, null, null,
-                        context.second, node.getDiff());
+                Node contextNode = new Node(node.getFileContent(), path, srcDst, context.first,
+                        null, null, context.second, node.getDiff());
                 graph.addVertex(contextNode);
                 nodeMap.put(contextNode.getId(), contextNode);
             }
@@ -378,9 +377,10 @@ public class HunkNetwork {
                 node.addIdentifier(umlAttribute.getVariableDeclaration().getVariableName());
 
                 List<Node> useNodes = findAccessNodes(umlAttribute.getLocationInfo(),
-                        isSrc(node) ? modelDiff.findFieldAccessesInParentModel(umlAttribute)
+                        node.isSrc()
+                                ? modelDiff.findFieldAccessesInParentModel(umlAttribute)
                                 : modelDiff.findFieldAccessesInChildModel(umlAttribute),
-                        isSrc(node) ? srcContexts : dstContexts,
+                        node.isSrc() ? srcContexts : dstContexts,
                         node);
                 for (Node useNode : useNodes) {
                     addEdge(node, useNode, EdgeType.DEF_USE);
@@ -429,7 +429,7 @@ public class HunkNetwork {
                     continue;
                 }
 
-                Optional<UMLClass> instantiatedClass = (isSrc(node) ? modelDiff.getParentModel()
+                Optional<UMLClass> instantiatedClass = (node.isSrc() ? modelDiff.getParentModel()
                         : modelDiff.getChildModel()).getClassList()
                         .stream()
                         .filter(c -> c.getName().endsWith(className.getLabel()))
@@ -472,7 +472,7 @@ public class HunkNetwork {
         }
 
         return getUMLClass(localizeTree(tree).second, parentTypeName.getLabel(),
-                isSrc(node) ? modelDiff.getParentModel() : modelDiff.getChildModel());
+                node.isSrc() ? modelDiff.getParentModel() : modelDiff.getChildModel());
     }
 
     private UMLClass getUMLClass(String path, String typeName, UMLModel umlModel) {
@@ -519,7 +519,7 @@ public class HunkNetwork {
 
                 List<Node> useNodes = findAccessNodes(variableDeclaration.getLocationInfo(),
                         variableDeclaration.getScope().getStatementsInScopeUsingVariable(),
-                        isSrc(node) ? srcContexts : dstContexts, node);
+                        node.isSrc() ? srcContexts : dstContexts, node);
                 for (Node useNode : useNodes) {
                     addEdge(node, useNode, EdgeType.DEF_USE);
                 }
@@ -532,7 +532,7 @@ public class HunkNetwork {
                 List<AbstractCall> variableInitInvocations = variableInitStatement.getMethodInvocations();
                 for (AbstractCall methodInvocation : variableInitInvocations) {
                     UMLOperation declaration =
-                            isSrc(node) ? modelDiff.findDeclarationsInParentModel(umlOperation,
+                            node.isSrc() ? modelDiff.findDeclarationsInParentModel(umlOperation,
                                     methodInvocation)
                                     : modelDiff.findDeclarationsInChildModel(umlOperation,
                                             methodInvocation);
@@ -543,9 +543,10 @@ public class HunkNetwork {
                     LocationInfo locationInfo = declaration.getLocationInfo();
                     String path = locationInfo.getFilePath();
                     Tree tree = TreeUtilFunctions.findByLocationInfo(
-                            (isSrc(node) ? srcContexts : dstContexts).get(path).getRoot(),
+                            (node.isSrc() ? srcContexts : dstContexts).get(path).getRoot(),
                             locationInfo);
-                    if (nodeMap.containsKey(Node.formatId(path, tree))) {
+                    if (nodeMap.containsKey(
+                            Node.formatId(path, node.getSrcDst(), NodeType.EXTENSION, tree))) {
                         continue;
                     }
 
@@ -651,7 +652,7 @@ public class HunkNetwork {
 
     private List<Node> findInvocationNodes(Node node, UMLOperation operation) {
         List<AbstractCall> invocations =
-                isSrc(node) ? modelDiff.findInvocationsInParentModel(operation)
+                node.isSrc() ? modelDiff.findInvocationsInParentModel(operation)
                         : modelDiff.findInvocationsInChildModel(operation);
 
         List<Node> result = new ArrayList<>();

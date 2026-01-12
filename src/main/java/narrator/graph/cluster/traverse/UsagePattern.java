@@ -16,43 +16,29 @@ import narrator.graph.NodeType;
 public class UsagePattern extends TraversalPattern {
 
     private final HashMap<Node, UsagePattern> requirements = new HashMap<>();
-    Set<Node> useNodes = new HashSet<>();
-    private Node ringNode;
+    Node useNode;
 
     UsagePattern(Node node) {
         addNode(node);
-        useNodes.add(node);
-    }
-
-    public Node getRingNode() {
-        return ringNode;
-    }
-
-    public void setRingNode(Node ringNode) {
-        this.ringNode = ringNode;
-    }
-
-    private Set<Node> getUseNodes() {
-        return useNodes;
+        useNode = node;
     }
 
     public void addRequirement(Node node, UsagePattern requirement) {
         requirements.put(node, requirement);
     }
 
-    public HashMap<Node, UsagePattern> getRequirements() {
-        return requirements;
+    public void breakRequirement(Node node) {
+        requirements.remove(node);
     }
 
-    public void merge(UsagePattern usagePattern) {
-        super.merge(usagePattern);
-        useNodes.addAll(usagePattern.getUseNodes());
+    public HashMap<Node, UsagePattern> getRequirements() {
+        return requirements;
     }
 
     @Override
     public Node getLead() {
         if (cachedLead == null) {
-            cachedLead = useNodes.iterator().next();
+            cachedLead = useNode;
         }
 
         return cachedLead;

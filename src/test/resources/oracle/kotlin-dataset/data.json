@@ -125,7 +125,7 @@
         "validators": null
     }, {
         "type": "Rename Method",
-        "description": "Rename Method public getVmFactory() : ViewModelFactory renamed to public getViewModelFactory() : ViewModelFactory in class com.example.android.architecture.blueprints.todoapp.util.FragmentExt.module",
+        "description": "Rename Method public Fragment.getVmFactory() : ViewModelFactory renamed to public Fragment.getViewModelFactory() : ViewModelFactory in class com.example.android.architecture.blueprints.todoapp.util.FragmentExt.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -383,7 +383,7 @@
         "validators": null
     }, {
         "type": "Change Parameter Type",
-        "description": "Change Parameter Type fragmentScenario : FragmentScenario<Fragment> to fragmentScenario : FragmentScenario<T> in method public monitorFragment(fragmentScenario FragmentScenario<T>) from class com.example.android.architecture.blueprints.todoapp.util.DataBindingIdlingResource.module",
+        "description": "Change Parameter Type fragmentScenario : FragmentScenario<Fragment> to fragmentScenario : FragmentScenario<T> in method public DataBindingIdlingResource.monitorFragment(fragmentScenario FragmentScenario<T>) from class com.example.android.architecture.blueprints.todoapp.util.DataBindingIdlingResource.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -739,6 +739,13 @@
         "description": "Rename Parameter resultCode : Int to result : Int in method public showEditResultMessage(result Int) from class com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel",
         "comment": null,
         "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Rename Method public AppCompatActivity.obtainViewModel(viewModelClass Class<T>) : T renamed to public Fragment.obtainViewModel(viewModelClass Class<T>) : T in class com.example.android.architecture.blueprints.todoapp.util.AppCompatActivityExt.module",
+        "comment": null,
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -2704,7 +2711,7 @@
     "time": "8/24/22 09:01 AM",
     "refactorings": [{
         "type": "Rename Method",
-        "description": "Rename Method protected setStaggeredGridFullSpan(holder RecyclerView.ViewHolder) renamed to protected asStaggeredGridFullSpan() in class com.chad.library.adapter.base.BaseQuickAdapter",
+        "description": "Rename Method protected setStaggeredGridFullSpan(holder RecyclerView.ViewHolder) renamed to protected RecyclerView.ViewHolder.asStaggeredGridFullSpan() in class com.chad.library.adapter.base.BaseQuickAdapter",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -5274,21 +5281,21 @@
         "validators": null
     }, {
         "type": "Change Parameter Type",
-        "description": "Change Parameter Type reachabilityInspectors : List<Reachability.Inspector> to leakInspectors : List<LeakInspector> in method public checkForLeaks(labelers List<Labeler>, leakInspectors List<LeakInspector>, exclusionsFactory ExclusionsFactory) : T from class leakcanary.internal.TestUtil.module",
+        "description": "Change Parameter Type reachabilityInspectors : List<Reachability.Inspector> to leakInspectors : List<LeakInspector> in method public File.checkForLeaks(labelers List<Labeler>, leakInspectors List<LeakInspector>, exclusionsFactory ExclusionsFactory) : T from class leakcanary.internal.TestUtil.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Change Parameter Type",
-        "description": "Change Parameter Type exclusionsFactory : (HprofParser) -> List<Exclusion> to exclusionsFactory : ExclusionsFactory in method public checkForLeaks(labelers List<Labeler>, leakInspectors List<LeakInspector>, exclusionsFactory ExclusionsFactory) : T from class leakcanary.internal.TestUtil.module",
+        "description": "Change Parameter Type exclusionsFactory : (HprofParser) -> List<Exclusion> to exclusionsFactory : ExclusionsFactory in method public File.checkForLeaks(labelers List<Labeler>, leakInspectors List<LeakInspector>, exclusionsFactory ExclusionsFactory) : T from class leakcanary.internal.TestUtil.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Rename Parameter",
-        "description": "Rename Parameter reachabilityInspectors : List<Reachability.Inspector> to leakInspectors : List<LeakInspector> in method public checkForLeaks(labelers List<Labeler>, leakInspectors List<LeakInspector>, exclusionsFactory ExclusionsFactory) : T from class leakcanary.internal.TestUtil.module",
+        "description": "Rename Parameter reachabilityInspectors : List<Reachability.Inspector> to leakInspectors : List<LeakInspector> in method public File.checkForLeaks(labelers List<Labeler>, leakInspectors List<LeakInspector>, exclusionsFactory ExclusionsFactory) : T from class leakcanary.internal.TestUtil.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -5715,56 +5722,56 @@
         "validators": null
     }, {
         "type": "Rename Method",
-        "description": "Rename Method public unreachableWhenNull(fieldName String) : Reachability renamed to public leakingWhenNull(fieldName String) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.module",
+        "description": "Rename Method public HydratedInstance.unreachableWhenNull(fieldName String) : Reachability renamed to public HydratedInstance.leakingWhenNull(fieldName String) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Rename Method",
-        "description": "Rename Method public unreachableWhenTrue(fieldName String) : Reachability renamed to public leakingWhenTrue(fieldName String) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.module",
+        "description": "Rename Method public HydratedInstance.unreachableWhenTrue(fieldName String) : Reachability renamed to public HydratedInstance.leakingWhenTrue(fieldName String) : LeakNodeStatusAndReason in class leakcanary.AndroidLeakInspectors.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Change Return Type",
-        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public instanceOfOrUnknown(expectedClass KClass<Any>, block HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public Pair<HprofParser,LeakNode>.instanceOfOrUnknown(expectedClass KClass<Any>, block HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Change Parameter Type",
-        "description": "Change Parameter Type block : HprofParser.(HydratedInstance) -> Reachability to block : HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason in method public instanceOfOrUnknown(expectedClass KClass<Any>, block HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
+        "description": "Change Parameter Type block : HprofParser.(HydratedInstance) -> Reachability to block : HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason in method public Pair<HprofParser,LeakNode>.instanceOfOrUnknown(expectedClass KClass<Any>, block HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Change Return Type",
-        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public instanceOfOrUnknown(className String, block HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public Pair<HprofParser,LeakNode>.instanceOfOrUnknown(className String, block HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Change Parameter Type",
-        "description": "Change Parameter Type block : HprofParser.(HydratedInstance) -> Reachability to block : HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason in method public instanceOfOrUnknown(className String, block HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
+        "description": "Change Parameter Type block : HprofParser.(HydratedInstance) -> Reachability to block : HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason in method public Pair<HprofParser,LeakNode>.instanceOfOrUnknown(className String, block HprofParser.(HydratedInstance) -> LeakNodeStatusAndReason) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Change Return Type",
-        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public leakingWhenNull(fieldName String) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public HydratedInstance.leakingWhenNull(fieldName String) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Change Return Type",
-        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public leakingWhenTrue(fieldName String) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
+        "description": "Change Return Type Reachability to LeakNodeStatusAndReason in method public HydratedInstance.leakingWhenTrue(fieldName String) : LeakNodeStatusAndReason from class leakcanary.AndroidLeakInspectors.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -5877,6 +5884,13 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter unreachable : String to leaking : String in method private computeGroupHash(path List<Pair<String,String>>, notLeaking String, leaking String) : String from class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private Reachability.renderToString() : String renamed to private LeakNodeStatusAndReason.renderToString() : String in class leakcanary.internal.LeakTraceRenderer.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -6193,35 +6207,35 @@
         "validators": null
     }, {
         "type": "Rename Method",
-        "description": "Rename Method public forEachInstanceOf(expectedClass KClass<Any>, action LeakTraceElementReporter.(GraphInstanceRecord) -> Unit) renamed to public asInstance(expectedClass KClass<Any>, action ObjectReporter.(GraphInstanceRecord) -> Unit) in class leakcanary.AndroidObjectInspectors.module",
+        "description": "Rename Method public List<LeakTraceElementReporter>.forEachInstanceOf(expectedClass KClass<Any>, action LeakTraceElementReporter.(GraphInstanceRecord) -> Unit) renamed to public ObjectReporter.asInstance(expectedClass KClass<Any>, action ObjectReporter.(GraphInstanceRecord) -> Unit) in class leakcanary.AndroidObjectInspectors.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Rename Method",
-        "description": "Rename Method public forEachInstanceOf(className String, action LeakTraceElementReporter.(GraphInstanceRecord) -> Unit) renamed to public asInstance(className String, block ObjectReporter.(GraphInstanceRecord) -> Unit) in class leakcanary.AndroidObjectInspectors.module",
+        "description": "Rename Method public List<LeakTraceElementReporter>.forEachInstanceOf(className String, action LeakTraceElementReporter.(GraphInstanceRecord) -> Unit) renamed to public ObjectReporter.asInstance(className String, block ObjectReporter.(GraphInstanceRecord) -> Unit) in class leakcanary.AndroidObjectInspectors.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Change Parameter Type",
-        "description": "Change Parameter Type action : LeakTraceElementReporter.(GraphInstanceRecord) -> Unit to action : ObjectReporter.(GraphInstanceRecord) -> Unit in method public asInstance(expectedClass KClass<Any>, action ObjectReporter.(GraphInstanceRecord) -> Unit) from class leakcanary.AndroidObjectInspectors.module",
+        "description": "Change Parameter Type action : LeakTraceElementReporter.(GraphInstanceRecord) -> Unit to action : ObjectReporter.(GraphInstanceRecord) -> Unit in method public ObjectReporter.asInstance(expectedClass KClass<Any>, action ObjectReporter.(GraphInstanceRecord) -> Unit) from class leakcanary.AndroidObjectInspectors.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Rename Parameter",
-        "description": "Rename Parameter action : LeakTraceElementReporter.(GraphInstanceRecord) -> Unit to block : ObjectReporter.(GraphInstanceRecord) -> Unit in method public asInstance(className String, block ObjectReporter.(GraphInstanceRecord) -> Unit) from class leakcanary.AndroidObjectInspectors.module",
+        "description": "Rename Parameter action : LeakTraceElementReporter.(GraphInstanceRecord) -> Unit to block : ObjectReporter.(GraphInstanceRecord) -> Unit in method public ObjectReporter.asInstance(className String, block ObjectReporter.(GraphInstanceRecord) -> Unit) from class leakcanary.AndroidObjectInspectors.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Change Parameter Type",
-        "description": "Change Parameter Type action : LeakTraceElementReporter.(GraphInstanceRecord) -> Unit to block : ObjectReporter.(GraphInstanceRecord) -> Unit in method public asInstance(className String, block ObjectReporter.(GraphInstanceRecord) -> Unit) from class leakcanary.AndroidObjectInspectors.module",
+        "description": "Change Parameter Type action : LeakTraceElementReporter.(GraphInstanceRecord) -> Unit to block : ObjectReporter.(GraphInstanceRecord) -> Unit in method public ObjectReporter.asInstance(className String, block ObjectReporter.(GraphInstanceRecord) -> Unit) from class leakcanary.AndroidObjectInspectors.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -6319,14 +6333,14 @@
         "validators": null
     }, {
         "type": "Change Parameter Type",
-        "description": "Change Parameter Type leakTraceInspectors : List<LeakTraceInspector> to objectInspectors : List<ObjectInspector> in method public checkForLeaks(objectInspectors List<ObjectInspector>, computeRetainedHeapSize Boolean, exclusions List<Exclusion>) : T from class leakcanary.internal.TestUtil.module",
+        "description": "Change Parameter Type leakTraceInspectors : List<LeakTraceInspector> to objectInspectors : List<ObjectInspector> in method public File.checkForLeaks(objectInspectors List<ObjectInspector>, computeRetainedHeapSize Boolean, exclusions List<Exclusion>) : T from class leakcanary.internal.TestUtil.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Rename Parameter",
-        "description": "Rename Parameter leakTraceInspectors : List<LeakTraceInspector> to objectInspectors : List<ObjectInspector> in method public checkForLeaks(objectInspectors List<ObjectInspector>, computeRetainedHeapSize Boolean, exclusions List<Exclusion>) : T from class leakcanary.internal.TestUtil.module",
+        "description": "Rename Parameter leakTraceInspectors : List<LeakTraceInspector> to objectInspectors : List<ObjectInspector> in method public File.checkForLeaks(objectInspectors List<ObjectInspector>, computeRetainedHeapSize Boolean, exclusions List<Exclusion>) : T from class leakcanary.internal.TestUtil.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

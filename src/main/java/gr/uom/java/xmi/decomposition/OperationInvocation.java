@@ -323,10 +323,14 @@ public class OperationInvocation extends AbstractCall {
     public boolean matchesOperation(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation,
     		UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
     	boolean constructorCall = false;
-    	if(this.methodName.equals(LANG.THIS) && operation.getClassName().equals(callerOperation.getClassName()) && operation.getName().equals(callerOperation.getName())) {
+    	String operationName = operation.getName();
+    	if(operationName.contains(".")) {
+    		operationName = operationName.substring(operationName.lastIndexOf(".") + 1, operationName.length());
+    	}
+		if(this.methodName.equals(LANG.THIS) && operation.getClassName().equals(callerOperation.getClassName()) && operationName.equals(callerOperation.getName())) {
     		constructorCall = true;
     	}
-    	if(!this.methodName.equals(operation.getName()) && !constructorCall) {
+    	if(!this.methodName.equals(operationName) && !constructorCall) {
     		return false;
     	}
     	Map<String, Set<VariableDeclaration>> variableDeclarationMap = callerOperation.variableDeclarationMap();
@@ -525,7 +529,7 @@ public class OperationInvocation extends AbstractCall {
 				varArgsMatch(operation, lastInferredArgumentType, parameterTypeList);
 		if(result && classDiff != null) {
 			for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
-				if(!addedOperation.equals(operation) && addedOperation.getName().equals(operation.getName()) && addedOperation.getParameterDeclarationList().size() == operation.getParameterDeclarationList().size()) {
+				if(!addedOperation.equals(operation) && addedOperation.getName().equals(operationName) && addedOperation.getParameterDeclarationList().size() == operation.getParameterDeclarationList().size()) {
 					int j = 0;
 					int exactlyMatchingArguments = 0;
 					for(UMLParameter parameter : addedOperation.getParametersWithoutReturnType()) {
@@ -547,7 +551,7 @@ public class OperationInvocation extends AbstractCall {
 					if(r instanceof ExtractOperationRefactoring) {
 						ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
 						UMLOperation addedOperation = extract.getExtractedOperation();
-						if(!addedOperation.equals(operation) && addedOperation.getName().equals(operation.getName()) && addedOperation.getParameterDeclarationList().size() == operation.getParameterDeclarationList().size()) {
+						if(!addedOperation.equals(operation) && addedOperation.getName().equals(operationName) && addedOperation.getParameterDeclarationList().size() == operation.getParameterDeclarationList().size()) {
 							int j = 0;
 							int exactlyMatchingArguments = 0;
 							for(UMLParameter parameter : addedOperation.getParametersWithoutReturnType()) {
@@ -572,7 +576,7 @@ public class OperationInvocation extends AbstractCall {
 				return operation.getClassName().endsWith("." + expression) || operation.getClassName().equals(expression) || expression.equals(LANG.THIS);
 			}
 			else {
-				if(classDiff != null && classDiff.getNextClass().importsType(operation.getClassName() + "." + operation.getName())) {
+				if(classDiff != null && classDiff.getNextClass().importsType(operation.getClassName() + "." + operationName)) {
 					return true;
 				}
 				if(classDiff != null && classDiff.getNextClass().getSuperclass() != null && modelDiff != null) {

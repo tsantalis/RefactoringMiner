@@ -391,15 +391,15 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **January 9, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **January 13, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12610  | 13  | 215  | 0.999  | 0.983|
+|**Total**|12614  | 13  | 215  | 0.999  | 0.983|
 |Extract Method|1019  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
-|Move And Rename Attribute|11  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Attribute|12  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|394  |  2  | 20  | 0.995  | 0.952|
 |Inline Method|119  |  0  |  1  | 1.000  | 0.992|
@@ -411,7 +411,7 @@ As of **January 9, 2026** the precision and recall of RefactoringMiner on this b
 |Move Source Folder| 3  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|145  |  0  |  1  | 1.000  | 0.993|
 |Push Down Attribute|35  |  0  |  0  | 1.000  | 1.000|
-|Push Down Method|46  |  0  |  0  | 1.000  | 1.000|
+|Push Down Method|47  |  0  |  0  | 1.000  | 1.000|
 |Extract Interface|22  |  0  |  0  | 1.000  | 1.000|
 |Extract Superclass|74  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
@@ -442,7 +442,7 @@ As of **January 9, 2026** the precision and recall of RefactoringMiner on this b
 |Change Variable Type|817  |  1  |  7  | 0.999  | 0.992|
 |Change Parameter Type|658  |  1  | 10  | 0.998  | 0.985|
 |Change Attribute Type|244  |  0  |  4  | 1.000  | 0.984|
-|Add Method Annotation|331  |  0  |  0  | 1.000  | 1.000|
+|Add Method Annotation|332  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|98  |  0  |  0  | 1.000  | 1.000|
 |Modify Method Annotation|29  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Annotation|62  |  0  |  1  | 1.000  | 0.984|
@@ -463,7 +463,7 @@ As of **January 9, 2026** the precision and recall of RefactoringMiner on this b
 |Remove Thrown Exception Type|271  |  0  |  0  | 1.000  | 1.000|
 |Change Thrown Exception Type| 9  |  0  |  0  | 1.000  | 1.000|
 |Change Method Access Modifier|334  |  0  |  0  | 1.000  | 1.000|
-|Change Attribute Access Modifier|232  |  0  |  0  | 1.000  | 1.000|
+|Change Attribute Access Modifier|233  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute|52  |  0  |  0  | 1.000  | 1.000|
 |Add Method Modifier|90  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Modifier|112  |  0  |  0  | 1.000  | 1.000|
@@ -672,35 +672,36 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **January 8, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **January 13, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|855  |  0  |  0  | 1.000  | 1.000|
-|Extract Method| 5  |  0  |  0  | 1.000  | 1.000|
+|**Total**|998  |  2  |  0  | 0.998  | 1.000|
+|Extract Method| 7  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|24  |  0  |  0  | 1.000  | 1.000|
-|Move Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|84  |  0  |  0  | 1.000  | 1.000|
-|Inline Method| 6  |  0  |  0  | 1.000  | 1.000|
-|Move Method|23  |  0  |  0  | 1.000  | 1.000|
-|Move And Rename Method| 1  |  0  |  0  | 1.000  | 1.000|
+|Move Attribute| 6  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Attribute| 1  |  0  |  0  | 1.000  | 1.000|
+|Rename Method|86  |  0  |  0  | 1.000  | 1.000|
+|Inline Method| 7  |  0  |  0  | 1.000  | 1.000|
+|Move Method|60  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Method| 6  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Method|46  |  0  |  0  | 1.000  | 1.000|
 |Move Class|125  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Class| 3  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|17  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method| 2  |  0  |  0  | 1.000  | 1.000|
-|Extract Interface| 1  |  0  |  0  | 1.000  | 1.000|
+|Extract Interface| 2  |  0  |  0  | 1.000  | 1.000|
 |Extract Superclass| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 1  |  0  |  0  | 1.000  | 1.000|
-|Extract Class| 1  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method| 1  |  0  |  0  | 1.000  | 1.000|
+|Extract Class| 3  |  0  |  0  | 1.000  | 1.000|
+|Extract And Move Method| 5  |  1  |  0  | 0.833  | 1.000|
 |Move And Inline Method|18  |  0  |  0  | 1.000  | 1.000|
 |Rename Package| 2  |  0  |  0  | 1.000  | 1.000|
 |Move Package| 3  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable| 1  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable| 4  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable| 5  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|11  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable|13  |  1  |  0  | 0.929  | 1.000|
 |Rename Parameter|41  |  0  |  0  | 1.000  | 1.000|
 |Rename Attribute|32  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute| 3  |  0  |  0  | 1.000  | 1.000|
@@ -709,26 +710,27 @@ As of **January 8, 2026** the precision and recall of RefactoringMiner on this b
 |Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|97  |  0  |  0  | 1.000  | 1.000|
 |Change Variable Type| 9  |  0  |  0  | 1.000  | 1.000|
-|Change Parameter Type|111  |  0  |  0  | 1.000  | 1.000|
-|Change Attribute Type|34  |  0  |  0  | 1.000  | 1.000|
-|Add Method Annotation|10  |  0  |  0  | 1.000  | 1.000|
-|Remove Method Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Attribute Annotation| 8  |  0  |  0  | 1.000  | 1.000|
+|Change Parameter Type|113  |  0  |  0  | 1.000  | 1.000|
+|Change Attribute Type|36  |  0  |  0  | 1.000  | 1.000|
+|Add Method Annotation|12  |  0  |  0  | 1.000  | 1.000|
+|Remove Method Annotation| 3  |  0  |  0  | 1.000  | 1.000|
+|Add Attribute Annotation|10  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Annotation| 5  |  0  |  0  | 1.000  | 1.000|
-|Add Class Annotation|17  |  0  |  0  | 1.000  | 1.000|
-|Remove Class Annotation| 5  |  0  |  0  | 1.000  | 1.000|
+|Add Class Annotation|20  |  0  |  0  | 1.000  | 1.000|
+|Remove Class Annotation| 6  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|36  |  0  |  0  | 1.000  | 1.000|
-|Remove Parameter|12  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|57  |  0  |  0  | 1.000  | 1.000|
+|Remove Parameter|25  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 1  |  0  |  0  | 1.000  | 1.000|
-|Change Method Access Modifier| 3  |  0  |  0  | 1.000  | 1.000|
+|Change Method Access Modifier|35  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Access Modifier|14  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier| 3  |  0  |  0  | 1.000  | 1.000|
 |Add Class Modifier| 7  |  0  |  0  | 1.000  | 1.000|
 |Change Type Declaration Kind| 7  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional| 2  |  0  |  0  | 1.000  | 1.000|
+|Move Code| 1  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 Since release 3.0.0, RefactoringMiner requires **Java 17** or newer and **Gradle 7.4** or newer.

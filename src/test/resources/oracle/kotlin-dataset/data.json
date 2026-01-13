@@ -6368,4 +6368,1007 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 43,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "297fa59817fa8b9f751e57f2e059ba2f426ba68e",
+    "url": "https://github.com/square/leakcanary/commit/297fa59817fa8b9f751e57f2e059ba2f426ba68e",
+    "author": "pyricau",
+    "time": "9/15/20 05:25 PM",
+    "refactorings": [{
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public parseHeaderOf(source BufferedSource) : HprofHeader extracted from public open(hprofFile File) : Hprof in class shark.Hprof.Companion & moved to class shark.HprofHeader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public parseHeaderOf(hprofFile File) : HprofHeader extracted from public open(hprofFile File) : Hprof in class shark.Hprof.Companion & moved to class shark.HprofHeader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable reader : Inferred in method public open(hprofFile File) : Hprof from class shark.Hprof.Companion",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable hprofVersion : Inferred to version : Inferred in method public parseHeaderOf(source BufferedSource) : HprofHeader from class shark.HprofHeader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public parseHeaderOf(hprofFile File) : HprofHeader extracted from public open(hprofFile File) : Hprof in class shark.HprofHeader.Companion",
+        "comment": "<p>There is an Extract And Move Method refactoring reported for the same methods</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method private fileFromResources(fileName String) : File from class shark.LegacyHprofTest to public String.classpathFile() : File from class shark.Resources.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public readClassSkipContentRecord() : ClassSkipContentRecord from class shark.HprofReader to public ClassSkipContentRecord.read() : ClassSkipContentRecord from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public readPrimitiveArraySkipContentRecord() : PrimitiveArraySkipContentRecord from class shark.HprofReader to public PrimitiveArraySkipContentRecord.read() : PrimitiveArraySkipContentRecord from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public String.classpathFile() : File from class shark.Resources.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter fileName : String in method private fileFromResources(fileName String) : File from class shark.LegacyHprofTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class shark.HprofHeader.Companion from class shark.Hprof.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public readInstanceDumpRecord() : InstanceDumpRecord from class shark.HprofReader to public readInstanceDumpRecord() : InstanceDumpRecord from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readHeapDumpInfoRecord() : HeapDumpInfoRecord from class shark.HprofReader to public readHeapDumpInfoRecord() : HeapDumpInfoRecord from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readHeapDumpInfoRecord() : HeapDumpInfoRecord from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public readClassDumpRecord() : ClassDumpRecord from class shark.HprofReader to public readClassDumpRecord() : ClassDumpRecord from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public readPrimitiveArrayDumpRecord() : PrimitiveArrayDumpRecord from class shark.HprofReader to public readPrimitiveArrayDumpRecord() : PrimitiveArrayDumpRecord from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public readObjectArrayDumpRecord() : ObjectArrayDumpRecord from class shark.HprofReader to public readObjectArrayDumpRecord() : ObjectArrayDumpRecord from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private skipInstanceDumpRecord() from class shark.HprofReader to public skipInstanceDumpRecord() from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public skipInstanceDumpRecord() from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private skipClassDumpRecord() from class shark.HprofReader to public skipClassDumpRecord() from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public skipClassDumpRecord() from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private skipObjectArrayDumpRecord() from class shark.HprofReader to public skipObjectArrayDumpRecord() from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public skipObjectArrayDumpRecord() from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private skipPrimitiveArrayDumpRecord() from class shark.HprofReader to public skipPrimitiveArrayDumpRecord() from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public skipPrimitiveArrayDumpRecord() from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private skipHeapDumpInfoRecord() from class shark.HprofReader to public skipHeapDumpInfoRecord() from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public skipHeapDumpInfoRecord() from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private skip(byteCount Int) from class shark.HprofReader to public skip(byteCount Int) from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public skip(byteCount Int) from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private skip(byteCount Long) from class shark.HprofReader to public skip(byteCount Long) from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public skip(byteCount Long) from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readUnsignedInt() : Long from class shark.HprofReader to public readUnsignedInt() : Long from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readUnsignedInt() : Long from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readUnsignedByte() : Int from class shark.HprofReader to public readUnsignedByte() : Int from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readUnsignedByte() : Int from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public readValue(type Int) : ValueHolder from class shark.HprofReader to public readValue(type Int) : ValueHolder from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readShort() : Short from class shark.HprofReader to public readShort() : Short from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readShort() : Short from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readInt() : Int from class shark.HprofReader to public readInt() : Int from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readInt() : Int from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readIdArray(arrayLength Int) : LongArray from class shark.HprofReader to public readIdArray(arrayLength Int) : LongArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readIdArray(arrayLength Int) : LongArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readBooleanArray(arrayLength Int) : BooleanArray from class shark.HprofReader to public readBooleanArray(arrayLength Int) : BooleanArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readBooleanArray(arrayLength Int) : BooleanArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readCharArray(arrayLength Int) : CharArray from class shark.HprofReader to public readCharArray(arrayLength Int) : CharArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readCharArray(arrayLength Int) : CharArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readString(byteCount Int, charset Charset) : String from class shark.HprofReader to public readString(byteCount Int, charset Charset) : String from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readString(byteCount Int, charset Charset) : String from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readFloatArray(arrayLength Int) : FloatArray from class shark.HprofReader to public readFloatArray(arrayLength Int) : FloatArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readFloatArray(arrayLength Int) : FloatArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readDoubleArray(arrayLength Int) : DoubleArray from class shark.HprofReader to public readDoubleArray(arrayLength Int) : DoubleArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readDoubleArray(arrayLength Int) : DoubleArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readShortArray(arrayLength Int) : ShortArray from class shark.HprofReader to public readShortArray(arrayLength Int) : ShortArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readShortArray(arrayLength Int) : ShortArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readIntArray(arrayLength Int) : IntArray from class shark.HprofReader to public readIntArray(arrayLength Int) : IntArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readIntArray(arrayLength Int) : IntArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readLongArray(arrayLength Int) : LongArray from class shark.HprofReader to public readLongArray(arrayLength Int) : LongArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readLongArray(arrayLength Int) : LongArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readLong() : Long from class shark.HprofReader to public readLong() : Long from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readLong() : Long from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readByte() : Byte from class shark.HprofReader to public readByte() : Byte from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readByte() : Byte from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readBoolean() : Boolean from class shark.HprofReader to public readBoolean() : Boolean from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readBoolean() : Boolean from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readByteArray(byteCount Int) : ByteArray from class shark.HprofReader to public readByteArray(byteCount Int) : ByteArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readByteArray(byteCount Int) : ByteArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readChar() : Char from class shark.HprofReader to public readChar() : Char from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readChar() : Char from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readFloat() : Float from class shark.HprofReader to public readFloat() : Float from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readFloat() : Float from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readDouble() : Double from class shark.HprofReader to public readDouble() : Double from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readDouble() : Double from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readId() : Long from class shark.HprofReader to public readId() : Long from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readId() : Long from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readUtf8(byteCount Long) : String from class shark.HprofReader to public readUtf8(byteCount Long) : String from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readUtf8(byteCount Long) : String from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private readUnsignedShort() : Int from class shark.HprofReader to public readUnsignedShort() : Int from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public readUnsignedShort() : Int from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class shark.HprofRecordReader from class shark.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private source : BufferedSource from class shark.HprofReader to private source : BufferedSource from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private typeSizes : Inferred from class shark.HprofReader to private typeSizes : IntArray from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type typeSizes : Inferred to typeSizes : IntArray in class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Attribute",
+        "description": "Move And Rename Attribute public position : Inferred renamed to public bytesRead : Inferred and moved from class shark.HprofReader to class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private hprof : Hprof from class shark.HprofHeapGraph to private hprof : Hprof from class shark.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private source : BufferedSource from class shark.Hprof to private source : BufferedSource from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private supportedVersions : Inferred from class shark.Hprof.Companion to private supportedVersions : Inferred from class shark.HprofHeader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method internal setPosition() from class shark.HprofReader to private setBytesRead() from class shark.HprofRecordReader",
+        "comment": "<p>This is an accessor method moved along with moved renamed attribute<br />Move And Rename Attribute public position : Inferred renamed to public bytesRead : Inferred and moved from class shark.HprofReader to class shark.HprofRecordReader<br /><br /></p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public readInstanceSkipContentRecord() : InstanceSkipContentRecord from class shark.HprofReader to public InstanceSkipContentRecord.read() : InstanceSkipContentRecord from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public readObjectArraySkipContentRecord() : ObjectArraySkipContentRecord from class shark.HprofReader to public ObjectArraySkipContentRecord.read() : ObjectArraySkipContentRecord from class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Code",
+        "description": "Move Code from public readHprofRecords(recordTypes Set<KClass<HprofRecord>>, listener OnHprofRecordListener) in class shark.HprofReader to public LoadClassRecord.read() in class shark.HprofRecordReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter header : HprofHeader in primary constructor HprofHeapGraph(header HprofHeader, reader RandomAccessHprofReader, index HprofInMemoryIndex) from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter reader : RandomAccessHprofReader in primary constructor HprofHeapGraph(header HprofHeader, reader RandomAccessHprofReader, index HprofInMemoryIndex) from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter hprof : Hprof in primary constructor HprofHeapGraph(hprof Hprof, index HprofInMemoryIndex) from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type readBlock : () -> T to readBlock : HprofRecordReader.() -> T in method private readObjectRecord(objectId Long, indexedObject IndexedObject, readBlock HprofRecordReader.() -> T) : T from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter bytesForClassSize : Int in primary constructor HprofInMemoryIndex(positionSize Int, hprofStringCache LongObjectScatterMap<String>, classNames LongLongScatterMap, classIndex SortedBytesMap, instanceIndex SortedBytesMap, objectArrayIndex SortedBytesMap, primitiveArrayIndex SortedBytesMap, gcRoots List<GcRoot>, proguardMapping ProguardMapping, primitiveWrapperTypes Set<Long>, bytesForClassSize Int, bytesForInstanceSize Int, bytesForObjectArraySize Int, bytesForPrimitiveArraySize Int, useForwardSlashClassPackageSeparator Boolean) from class shark.internal.HprofInMemoryIndex",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter bytesForInstanceSize : Int in primary constructor HprofInMemoryIndex(positionSize Int, hprofStringCache LongObjectScatterMap<String>, classNames LongLongScatterMap, classIndex SortedBytesMap, instanceIndex SortedBytesMap, objectArrayIndex SortedBytesMap, primitiveArrayIndex SortedBytesMap, gcRoots List<GcRoot>, proguardMapping ProguardMapping, primitiveWrapperTypes Set<Long>, bytesForClassSize Int, bytesForInstanceSize Int, bytesForObjectArraySize Int, bytesForPrimitiveArraySize Int, useForwardSlashClassPackageSeparator Boolean) from class shark.internal.HprofInMemoryIndex",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter bytesForObjectArraySize : Int in primary constructor HprofInMemoryIndex(positionSize Int, hprofStringCache LongObjectScatterMap<String>, classNames LongLongScatterMap, classIndex SortedBytesMap, instanceIndex SortedBytesMap, objectArrayIndex SortedBytesMap, primitiveArrayIndex SortedBytesMap, gcRoots List<GcRoot>, proguardMapping ProguardMapping, primitiveWrapperTypes Set<Long>, bytesForClassSize Int, bytesForInstanceSize Int, bytesForObjectArraySize Int, bytesForPrimitiveArraySize Int, useForwardSlashClassPackageSeparator Boolean) from class shark.internal.HprofInMemoryIndex",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter bytesForPrimitiveArraySize : Int in primary constructor HprofInMemoryIndex(positionSize Int, hprofStringCache LongObjectScatterMap<String>, classNames LongLongScatterMap, classIndex SortedBytesMap, instanceIndex SortedBytesMap, objectArrayIndex SortedBytesMap, primitiveArrayIndex SortedBytesMap, gcRoots List<GcRoot>, proguardMapping ProguardMapping, primitiveWrapperTypes Set<Long>, bytesForClassSize Int, bytesForInstanceSize Int, bytesForObjectArraySize Int, bytesForPrimitiveArraySize Int, useForwardSlashClassPackageSeparator Boolean) from class shark.internal.HprofInMemoryIndex",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter useForwardSlashClassPackageSeparator : Boolean in primary constructor HprofInMemoryIndex(positionSize Int, hprofStringCache LongObjectScatterMap<String>, classNames LongLongScatterMap, classIndex SortedBytesMap, instanceIndex SortedBytesMap, objectArrayIndex SortedBytesMap, primitiveArrayIndex SortedBytesMap, gcRoots List<GcRoot>, proguardMapping ProguardMapping, primitiveWrapperTypes Set<Long>, bytesForClassSize Int, bytesForInstanceSize Int, bytesForObjectArraySize Int, bytesForPrimitiveArraySize Int, useForwardSlashClassPackageSeparator Boolean) from class shark.internal.HprofInMemoryIndex",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter bytesForClassSize : Int in primary constructor Builder(longIdentifiers Boolean, maxPosition Long, classCount Int, instanceCount Int, objectArrayCount Int, primitiveArrayCount Int, indexedGcRootsTypes Set<Class<GcRoot>>, bytesForClassSize Int, bytesForInstanceSize Int, bytesForObjectArraySize Int, bytesForPrimitiveArraySize Int) from class shark.internal.HprofInMemoryIndex.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter bytesForInstanceSize : Int in primary constructor Builder(longIdentifiers Boolean, maxPosition Long, classCount Int, instanceCount Int, objectArrayCount Int, primitiveArrayCount Int, indexedGcRootsTypes Set<Class<GcRoot>>, bytesForClassSize Int, bytesForInstanceSize Int, bytesForObjectArraySize Int, bytesForPrimitiveArraySize Int) from class shark.internal.HprofInMemoryIndex.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter bytesForObjectArraySize : Int in primary constructor Builder(longIdentifiers Boolean, maxPosition Long, classCount Int, instanceCount Int, objectArrayCount Int, primitiveArrayCount Int, indexedGcRootsTypes Set<Class<GcRoot>>, bytesForClassSize Int, bytesForInstanceSize Int, bytesForObjectArraySize Int, bytesForPrimitiveArraySize Int) from class shark.internal.HprofInMemoryIndex.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter bytesForPrimitiveArraySize : Int in primary constructor Builder(longIdentifiers Boolean, maxPosition Long, classCount Int, instanceCount Int, objectArrayCount Int, primitiveArrayCount Int, indexedGcRootsTypes Set<Class<GcRoot>>, bytesForClassSize Int, bytesForInstanceSize Int, bytesForObjectArraySize Int, bytesForPrimitiveArraySize Int) from class shark.internal.HprofInMemoryIndex.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hprofHeader : HprofHeader in method public buildIndex(proguardMapping ProguardMapping, hprofHeader HprofHeader) : HprofInMemoryIndex from class shark.internal.HprofInMemoryIndex.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter recordSize : Long in primary constructor IndexedInstance(position Long, classId Long, recordSize Long) from class shark.internal.IndexedObject.IndexedInstance",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter recordSize : Long in primary constructor IndexedObjectArray(position Long, arrayClassId Long, recordSize Long) from class shark.internal.IndexedObject.IndexedObjectArray",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter recordSize : Long in primary constructor IndexedPrimitiveArray(position Long, primitiveType PrimitiveType, recordSize Long) from class shark.internal.IndexedObject.IndexedPrimitiveArray",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter recordSize : Long in primary constructor IndexedClass(position Long, superclassId Long, instanceSize Int, recordSize Long) from class shark.internal.IndexedObject.IndexedClass",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter channel : FileChannel in primary constructor Hprof(channel FileChannel, source BufferedSource, reader HprofReader, heapDumpTimestamp Long, hprofVersion HprofVersion, fileLength Long) from class shark.Hprof",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter source : BufferedSource in primary constructor Hprof(channel FileChannel, source BufferedSource, reader HprofReader, heapDumpTimestamp Long, hprofVersion HprofVersion, fileLength Long) from class shark.Hprof",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter reader : HprofReader in primary constructor Hprof(channel FileChannel, source BufferedSource, reader HprofReader, heapDumpTimestamp Long, hprofVersion HprofVersion, fileLength Long) from class shark.Hprof",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter heapDumpTimestamp : Long in primary constructor Hprof(channel FileChannel, source BufferedSource, reader HprofReader, heapDumpTimestamp Long, hprofVersion HprofVersion, fileLength Long) from class shark.Hprof",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter hprofVersion : HprofVersion in primary constructor Hprof(channel FileChannel, source BufferedSource, reader HprofReader, heapDumpTimestamp Long, hprofVersion HprofVersion, fileLength Long) from class shark.Hprof",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter fileLength : Long in primary constructor Hprof(channel FileChannel, source BufferedSource, reader HprofReader, heapDumpTimestamp Long, hprofVersion HprofVersion, fileLength Long) from class shark.Hprof",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter file : File in primary constructor Hprof(file File, header HprofHeader) from class shark.Hprof",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter header : HprofHeader in primary constructor Hprof(file File, header HprofHeader) from class shark.Hprof",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public stripPrimitiveArrays(hprofSourceProvider StreamingSourceProvider, hprofSink BufferedSink) extracted from public stripPrimitiveArrays(inputHprofFile File, outputHprofFile File) : File in class shark.HprofPrimitiveArrayStripper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable reader : Inferred to header : Inferred in method public stripPrimitiveArrays(hprofSourceProvider StreamingSourceProvider, hprofSink BufferedSink) from class shark.HprofPrimitiveArrayStripper",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter source : BufferedSource in primary constructor HprofReader(source BufferedSource, identifierByteSize Int, startPosition Long) from class shark.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter identifierByteSize : Int in primary constructor HprofReader(source BufferedSource, identifierByteSize Int, startPosition Long) from class shark.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter startPosition : Long in primary constructor HprofReader(source BufferedSource, identifierByteSize Int, startPosition Long) from class shark.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter identifierByteSize : Int in primary constructor HprofWriter(sink BufferedSink, identifierByteSize Int, hprofVersion HprofVersion) from class shark.HprofWriter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter hprofVersion : HprofVersion in primary constructor HprofWriter(sink BufferedSink, identifierByteSize Int, hprofVersion HprofVersion) from class shark.HprofWriter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hprof : Hprof in primary constructor HprofReader(hprof Hprof) from class shark.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hprofHeader : HprofHeader in primary constructor HprofWriter(sink BufferedSink, hprofHeader HprofHeader) from class shark.HprofWriter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method public File.readHprof(block (HeapGraph) -> Unit) inlined to public stripHprof() in class shark.HprofPrimitiveArrayStripperTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable hprofFile : Inferred to hprofBytes : Inferred in method public stripHprof() from class shark.HprofPrimitiveArrayStripperTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type hprofVersion : HprofVersion to hprofVersion : Hprof.HprofVersion in class shark.HprofWriter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter retainedSize : Int in method private updateTrie(pathNode ReferencePathNode, path List<Long>, pathIndex Int, parentNode ParentNode, retainedSize Int) from class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type outputPathResults : MutableList<ReferencePathNode> to outputPathResults : MutableList<Pair<ReferencePathNode,Int>> in method private findResultsInTrie(parentNode ParentNode, outputPathResults MutableList<Pair<ReferencePathNode,Int>>) from class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Interface",
+        "description": "Extract Interface shark.CloseableHeapGraph from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @Deprecated(\"Replaced by HprofStreamingReader.readerFor or HprofRandomAccessReader.openReaderFor\") in class shark.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @Deprecated(message = \"Moved to top level class\", replaceWith = ReplaceWith(\"shark.HprofVersion\")) in class shark.Hprof.HprofVersion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @Deprecated(\"Replaced by HprofStreamingReader.readerFor or HprofRandomAccessReader.openReaderFor\") in class shark.Hprof",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Deprecated(\"Replaced by HprofIndex.indexRecordsOf().openHeapGraph() or File.openHeapGraph()\", replaceWith = ReplaceWith( \"HprofIndex.indexRecordsOf(hprof, proguardMapping, indexedGcRootTypes)\" + \".openHeapGraph()\" )) in method public indexHprof(hprof Hprof, proguardMapping ProguardMapping, indexedGcRootTypes Set<KClass<GcRoot>>) : HeapGraph from class shark.HprofHeapGraph.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Deprecated(message = \"Replaced by HprofStreamingReader.readerFor or HprofRandomAccessReader.openReaderFor\") in method public open(hprofFile File) : Hprof from class shark.Hprof.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Attribute Annotation",
+        "description": "Add Attribute Annotation @Deprecated(\"Replaced by HprofWriter.hprofHeader.identifierByteSize\", ReplaceWith(\"hprofHeader.identifierByteSize\")) in attribute public identifierByteSize : Int from class shark.HprofWriter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Attribute Annotation",
+        "description": "Add Attribute Annotation @Deprecated(\"Replaced by HprofWriter.hprofHeader.version\", ReplaceWith(\"hprofHeader.version\")) in attribute public hprofVersion : Hprof.HprofVersion from class shark.HprofWriter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Class Annotation",
+        "description": "Remove Class Annotation @Suppress(\"LargeClass\") in class shark.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @Suppress(\"ComplexMethod\", \"LongMethod\") in method public readHprofRecords(recordTypes Set<KClass<HprofRecord>>, listener OnHprofRecordListener) from class shark.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public close() extracted from public close() in class shark.Hprof & moved to class shark.RandomAccessHprofReader",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public readerFor(hprofSourceProvider StreamingSourceProvider, hprofHeader HprofHeader) : StreamingHprofReader extracted from public readHprofRecords(recordTypes Set<KClass<HprofRecord>>, listener OnHprofRecordListener) in class shark.HprofReader & moved to class shark.StreamingHprofReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

@@ -6841,6 +6841,10 @@ public class UMLModelDiff {
 								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
 								mapperList.add(operationBodyMapper);
 							}
+							else if(operationBodyMapperMap.size() > 0 && operationBodyMapperMap.lastKey() > exactMatches && operationBodyMapperMap.lastEntry().getValue().get(0).mappingsWithoutBlocks() < mappings) {
+								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(operationBodyMapperMap.lastKey());
+								mapperList.add(operationBodyMapper);
+							}
 							else {
 								List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>();
 								mapperList.add(operationBodyMapper);
@@ -7014,6 +7018,10 @@ public class UMLModelDiff {
 							}
 							if(operationBodyMapperMap.containsKey(exactMatches)) {
 								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
+								mapperList.add(operationBodyMapper);
+							}
+							else if(operationBodyMapperMap.size() > 0 && operationBodyMapperMap.lastKey() > exactMatches && operationBodyMapperMap.lastEntry().getValue().get(0).mappingsWithoutBlocks() < mappings) {
+								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(operationBodyMapperMap.lastKey());
 								mapperList.add(operationBodyMapper);
 							}
 							else {

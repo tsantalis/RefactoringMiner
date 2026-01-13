@@ -143,7 +143,7 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 			sb.append("(");
 			int i = 0;
 			for(AbstractExpression argument : arguments) {
-				sb.append(argument.getExpression());
+				sb.append(argument.getExpression().replaceAll("\n\\s+", " "));
 				if(i < arguments.size() - 1)
 					sb.append(", ");
 				i++;

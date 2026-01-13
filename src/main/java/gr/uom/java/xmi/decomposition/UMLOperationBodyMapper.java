@@ -11330,6 +11330,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		boolean otherEqualSignature = operationBodyMapper.getOperation1().equalsIgnoringTypeParameters(operationBodyMapper.getOperation2());
 		boolean thisConstructor = this.getOperation1().isConstructor() && this.getOperation2().isConstructor();
 		boolean otherConstructor = operationBodyMapper.getOperation1().isConstructor() && operationBodyMapper.getOperation2().isConstructor();
+		boolean dottedName1 = false;
+		if(this.getOperation1() != null && this.getOperation2() != null && (this.getOperation1().getReceiver().isPresent() || this.getOperation2().getReceiver().isPresent())) {
+			if(this.getOperation1().getReceiver().isPresent() && !this.getOperation2().getReceiver().isPresent()) {
+				dottedName1 = this.getOperation2().getName().contains(this.getOperation1().getReceiver().get().getClassType());
+			}
+			else if(!this.getOperation1().getReceiver().isPresent() && this.getOperation2().getReceiver().isPresent()) {
+				dottedName1 = this.getOperation1().getName().contains(this.getOperation2().getReceiver().get().getClassType());
+			}
+		}
+		boolean dottedName2 = false;
+		if(operationBodyMapper.getOperation1() != null && operationBodyMapper.getOperation2() != null && (operationBodyMapper.getOperation1().getReceiver().isPresent() || operationBodyMapper.getOperation2().getReceiver().isPresent())) {
+			if(operationBodyMapper.getOperation1().getReceiver().isPresent() && !operationBodyMapper.getOperation2().getReceiver().isPresent()) {
+				dottedName2 = operationBodyMapper.getOperation2().getName().contains(operationBodyMapper.getOperation1().getReceiver().get().getClassType());
+			}
+			else if(!operationBodyMapper.getOperation1().getReceiver().isPresent() && operationBodyMapper.getOperation2().getReceiver().isPresent()) {
+				dottedName2 = operationBodyMapper.getOperation1().getName().contains(operationBodyMapper.getOperation2().getReceiver().get().getClassType());
+			}
+		}
 		if(thisEqualSignature && !otherEqualSignature && !thisConstructor && !otherConstructor)
 			return -1;
 		else if(!thisEqualSignature && otherEqualSignature && !thisConstructor && !otherConstructor)
@@ -11344,6 +11362,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//	return -Integer.compare(thisMappings, otherMappings);
 		//}
 		else {
+			if(dottedName1 && !dottedName2) {
+				return -1;
+			}
+			else if(!dottedName1 && dottedName2) {
+				return 1;
+			}
 			if(thisExactMatches != otherExactMatches) {
 				return -Integer.compare(thisExactMatches, otherExactMatches);
 			}

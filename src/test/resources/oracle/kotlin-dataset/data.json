@@ -7371,4 +7371,97 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 44,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "2a8e7fb267732fae8930e613251136e1d593e63b",
+    "url": "https://github.com/square/leakcanary/commit/2a8e7fb267732fae8930e613251136e1d593e63b",
+    "author": "pyricau",
+    "time": "7/18/19 05:15 PM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public onLeakSentryInstalled(application Application) renamed to public invoke(application Application) in class leakcanary.internal.InternalLeakCanary",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public watchFragments(activity Activity) renamed to public invoke(activity Activity) in class leakcanary.internal.AndroidXFragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Type Declaration Kind",
+        "description": "Change Type Declaration Kind interface to object in type leakcanary.internal.FragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier public to internal in class leakcanary.internal.FragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public install(application Application, refWatcher RefWatcher, configProvider () -> LeakSentry.Config) from class leakcanary.internal.FragmentDestroyWatcher.Companion to public install(application Application, refWatcher RefWatcher, configProvider () -> LeakSentry.Config) from class leakcanary.internal.FragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private ANDROIDX_FRAGMENT_CLASS_NAME : Inferred from class leakcanary.internal.FragmentDestroyWatcher.Companion to private ANDROIDX_FRAGMENT_CLASS_NAME : Inferred from class leakcanary.internal.FragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private ANDROIDX_FRAGMENT_DESTROY_WATCHER_CLASS_NAME : Inferred from class leakcanary.internal.FragmentDestroyWatcher.Companion to private ANDROIDX_FRAGMENT_DESTROY_WATCHER_CLASS_NAME : Inferred from class leakcanary.internal.FragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onLeakSentryInstalled(application Application) renamed to public invoke(application Application) in class leakcanary.internal.InternalLeakSentry.NoLeakCanary",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public noOpDelegate() : T from class leakcanary.internal.InternalHelper to public noOpDelegate() : T from class leakcanary.internal.InternalLeakCanary",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class leakcanary.internal.LeakSentryListener.None moved and renamed to leakcanary.internal.InternalLeakSentry.NoLeakCanary",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class leakcanary.internal.LeakSentryListener moved and renamed to leakcanary.OnInstanceRetainedListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public watchFragments(activity Activity) renamed to public invoke(activity Activity) in class leakcanary.internal.AndroidOFragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

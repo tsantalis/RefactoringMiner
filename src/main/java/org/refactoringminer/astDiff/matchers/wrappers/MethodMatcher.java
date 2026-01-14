@@ -74,6 +74,12 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (dstOperationNode.getType().name.equals(Constants.get().FUNCTION_KEYWORD)) {
             	dstOperationNode = dstOperationNode.getParent().getParent();
             }
+            if (srcOperationNode != null && srcOperationNode.getParent() != null && srcOperationNode.getType().name.equals(Constants.get().MODIFIERS)) {
+                srcOperationNode = srcOperationNode.getParent();
+            }
+            if (dstOperationNode != null && dstOperationNode.getParent() != null && dstOperationNode.getType().name.equals(Constants.get().MODIFIERS)) {
+                dstOperationNode = dstOperationNode.getParent();
+            }
             if (srcOperationNode != null && srcOperationNode.getParent() != null && srcOperationNode.getParent().getType().name.equals(Constants.get().DECORATED_METHOD)) {
                 srcOperationNode = srcOperationNode.getParent();
             }

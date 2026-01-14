@@ -757,6 +757,8 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 		this.variableName = property.getName();
 		this.initializer = property.getInitializer() != null ? new AbstractExpression(ktFile, sourceFolder, filePath, property.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent) : null;
+		if(property.getInitializer() == null)
+			this.initializer = property.getDelegate() != null ? new AbstractExpression(ktFile, sourceFolder, filePath, property.getDelegate().getExpression(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent) : null;
 		KtTypeReference type = property.getTypeReference();
 		this.type = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, type, 0);
 		this.scope = new VariableScope(ktFile, filePath, parentLocation.getStartOffset(), parentLocation.getEndOffset());

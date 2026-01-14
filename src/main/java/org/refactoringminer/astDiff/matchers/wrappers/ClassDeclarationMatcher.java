@@ -181,6 +181,14 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
     private void processClassBlock(Tree srcTypeDeclaration, Tree dstTypeDeclaration, ExtendedMultiMappingStore mappingStore) {
         Tree srcBlock = TreeUtilFunctions.findFirstByType(srcTypeDeclaration, Constants.get().CLASS_BLOCK);
         Tree dstBlock = TreeUtilFunctions.findFirstByType(dstTypeDeclaration, Constants.get().CLASS_BLOCK);
+        if (srcBlock == null && dstBlock == null) {
+            srcBlock = TreeUtilFunctions.findFirstByType(srcTypeDeclaration, Constants.get().DELEGATION_SPECIFIER);
+            dstBlock = TreeUtilFunctions.findFirstByType(dstTypeDeclaration, Constants.get().DELEGATION_SPECIFIER);
+            if (srcBlock != null && dstBlock != null) {
+                mappingStore.addMappingRecursively(srcBlock, dstBlock);
+                return;
+            }
+        }
         if (srcBlock == null || dstBlock == null) return;
         mappingStore.addMapping(srcBlock, dstBlock);
 

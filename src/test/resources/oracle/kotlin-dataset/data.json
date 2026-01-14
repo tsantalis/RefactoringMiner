@@ -7464,4 +7464,174 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 45,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "34d5023720da3ce48641c1584e8c38f0d47a823b",
+    "url": "https://github.com/square/leakcanary/commit/34d5023720da3ce48641c1584e8c38f0d47a823b",
+    "author": "pyricau",
+    "time": "12/27/21 10:31 AM",
+    "refactorings": [{
+        "type": "Move Class",
+        "description": "Move Class leakcanary.AndroidDebugHeapAnalyzer moved to leakcanary.internal.AndroidDebugHeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.internal.LeakCanaryProcesssAppWatcherInstaller renamed to leakcanary.internal.LeakCanaryProcessAppWatcherInstaller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.internal.AppWatcherInstaller renamed to leakcanary.internal.MainProcessAppWatcherInstaller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class leakcanary.internal.StoppableFileSourceProvider moved and renamed to shark.ThrowingCancelableFileSourceProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute backgroundHandler : Inferred to heapAnalyzerThreadHandler : Inferred in class leakcanary.BackgroundThreadHeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to internal in attribute internal heapAnalyzerThreadHandler : Inferred from class leakcanary.BackgroundThreadHeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type showIntent : PendingIntent to showIntent : Intent in class leakcanary.EventListener.Event.HeapAnalysisDone",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type showIntent : PendingIntent to showIntent : Intent in primary constructor HeapAnalysisFailed(heapAnalysis HeapAnalysisFailure, showIntent Intent) from class leakcanary.EventListener.Event.HeapAnalysisDone.HeapAnalysisFailed",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type showIntent : PendingIntent to showIntent : Intent in primary constructor HeapAnalysisSucceeded(heapAnalysis HeapAnalysisSuccess, unreadLeakSignatures Set<String>, showIntent Intent) from class leakcanary.EventListener.Event.HeapAnalysisDone.HeapAnalysisSucceeded",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable pendingIntent : Inferred in method public onEvent(event Event) from class leakcanary.NotificationEventListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable workManager : Inferred in method public onEvent(event Event) from class leakcanary.RemoteWorkManagerHeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public HeapDump.asWorkerInputData(dataBuilder Data.Builder) renamed to public Event.asWorkerInputData(dataBuilder Data.Builder) in class leakcanary.internal.HeapAnalyzerWorker.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public createIntent(context Context) : Intent renamed to public createHomeIntent(context Context) : Intent in class leakcanary.internal.activity.LeakActivity.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Variable Annotation",
+        "description": "Remove Variable Annotation @Suppress(\"UNCHECKED_CAST\") in variable screens : Inferred in method public onNewIntent(intent Intent) from class leakcanary.internal.navigation.NavigatingActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable screens : Inferred in method public onNewIntent(intent Intent) from class leakcanary.internal.navigation.NavigatingActivity",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier public to internal in class leakcanary.internal.AndroidDebugHeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter isCanceled : () -> Boolean in method public runAnalysisBlocking(heapDumped HeapDump, isCanceled () -> Boolean, progressEventListener (HeapAnalysisProgress) -> Unit) : HeapAnalysisDone<*> from class leakcanary.internal.AndroidDebugHeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter progressEventListener : (HeapAnalysisProgress) -> Unit in method public runAnalysisBlocking(heapDumped HeapDump, isCanceled () -> Boolean, progressEventListener (HeapAnalysisProgress) -> Unit) : HeapAnalysisDone<*> from class leakcanary.internal.AndroidDebugHeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter isCanceled : () -> Boolean in method private analyzeHeap(heapDumpFile File, progressListener OnAnalysisProgressListener, isCanceled () -> Boolean) : HeapAnalysis from class leakcanary.internal.AndroidDebugHeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class shark.ThrowingCancelableFileSourceProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute throwIfStop : () -> Unit to throwIfCanceled : Runnable in class shark.ThrowingCancelableFileSourceProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type throwIfStop : () -> Unit to throwIfCanceled : Runnable in class shark.ThrowingCancelableFileSourceProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable screenToShow : Inferred in method public runAnalysisBlocking(heapDumped HeapDump) from class leakcanary.AndroidDebugHeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

@@ -1293,6 +1293,13 @@ public class OperationBody {
 			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof KtVariableDeclaration variableDeclaration) {
+			KtExpression initializer = variableDeclaration.getInitializer();
+			if(initializer instanceof KtWhenExpression whenStatement) {
+				processWhenStatement(ktFile, sourceFolder, filePath, parent, fileContent, whenStatement);
+			}
+			else if(initializer instanceof KtIfExpression ifStatement) {
+				processIfStatement(ktFile, sourceFolder, filePath, parent, fileContent, ifStatement);
+			}
 			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, variableDeclaration, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
 			parent.addStatement(child);
 			VariableDeclaration vd = variableDeclaration instanceof KtProperty ?

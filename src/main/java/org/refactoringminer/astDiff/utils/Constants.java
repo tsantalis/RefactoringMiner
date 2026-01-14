@@ -267,4 +267,5 @@ public class Constants {
     public final String CONTROL_STRUCTURE_BODY = "control_structure_body";
     public final String CLASS_PARAMETER = "class_parameter";
     public final String USER_TYPE = "user_type";
+    public final String ERROR = "ERROR";
 }

@@ -668,26 +668,26 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 ## Kotlin Benchmark
 **Source**: Iman Hemati Moghadam, Mohammad Mehdi Afkhami, Parsa Kamalipour, and Vadim Zaytsev, "Extending Refactoring Detection to Kotlin: A Dataset and Comparative Study," 2024 IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER), Rovaniemi, Finland, 2024, pp. 267-271, doi: 10.1109/SANER60148.2024.00034
 
-**Properties**: 42 commits from 3 open-source projects
+**Properties**: 44 commits from 3 open-source projects
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **January 13, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **January 14, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|998  |  2  |  0  | 0.998  | 1.000|
+|**Total**|1010  |  2  |  0  | 0.998  | 1.000|
 |Extract Method| 7  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|24  |  0  |  0  | 1.000  | 1.000|
-|Move Attribute| 6  |  0  |  0  | 1.000  | 1.000|
+|Move Attribute| 8  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|86  |  0  |  0  | 1.000  | 1.000|
+|Rename Method|90  |  0  |  0  | 1.000  | 1.000|
 |Inline Method| 7  |  0  |  0  | 1.000  | 1.000|
-|Move Method|60  |  0  |  0  | 1.000  | 1.000|
+|Move Method|62  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Method| 6  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Method|46  |  0  |  0  | 1.000  | 1.000|
 |Move Class|125  |  0  |  0  | 1.000  | 1.000|
-|Move And Rename Class| 3  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Class| 5  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|17  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method| 2  |  0  |  0  | 1.000  | 1.000|
 |Extract Interface| 2  |  0  |  0  | 1.000  | 1.000|
@@ -726,9 +726,9 @@ As of **January 13, 2026** the precision and recall of RefactoringMiner on this 
 |Change Method Access Modifier|35  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Access Modifier|14  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Change Class Access Modifier| 3  |  0  |  0  | 1.000  | 1.000|
+|Change Class Access Modifier| 4  |  0  |  0  | 1.000  | 1.000|
 |Add Class Modifier| 7  |  0  |  0  | 1.000  | 1.000|
-|Change Type Declaration Kind| 7  |  0  |  0  | 1.000  | 1.000|
+|Change Type Declaration Kind| 8  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional| 2  |  0  |  0  | 1.000  | 1.000|
 |Move Code| 1  |  0  |  0  | 1.000  | 1.000|
 

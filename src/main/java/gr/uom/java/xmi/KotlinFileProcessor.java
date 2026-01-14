@@ -33,6 +33,7 @@ import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtEnumEntry;
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.psi.KtFileAnnotationList;
 import org.jetbrains.kotlin.psi.KtIfExpression;
 import org.jetbrains.kotlin.psi.KtImportDirective;
 import org.jetbrains.kotlin.psi.KtImportList;
@@ -194,10 +195,16 @@ public class KotlinFileProcessor {
 		List<KtNamedFunction> topLevelFunctions = new ArrayList<>();
 		List<KtProperty> topLevelProperties = new ArrayList<>();
 		List<KtTypeAlias> topLevelTypeAliasList = new ArrayList<>();
+		List<KtAnnotationEntry> topLevelAnnotations = new ArrayList<>();
 		for (PsiElement psiElement : ktFile.getChildren()) {
 			if (psiElement instanceof KtObjectDeclaration objectDeclaration) {
 				UMLClass companionObject = processObjectDeclaration(ktFile, objectDeclaration, umlPackage, packageName, sourceFolder, filePath, fileContent, importedTypes, comments, Collections.emptyList());
 				umlModel.addClass(companionObject);
+			}
+			else if (psiElement instanceof KtFileAnnotationList annotationList) {
+				for (KtAnnotationEntry entry : annotationList.getAnnotationEntries()) {
+					topLevelAnnotations.add(entry);
+				}
 			}
 			else if (psiElement instanceof KtClass ktClass) {
 				UMLClass umlClass = processClassDeclaration(ktFile, ktClass, umlPackage, packageName, sourceFolder, filePath, fileContent, importedTypes, comments);
@@ -213,7 +220,7 @@ public class KotlinFileProcessor {
 				topLevelTypeAliasList.add(typeAlias);
 			}
 		}
-		if (topLevelFunctions.size() > 0 || topLevelProperties.size() > 0 || topLevelTypeAliasList.size() > 0) {
+		if (topLevelFunctions.size() > 0 || topLevelProperties.size() > 0 || topLevelTypeAliasList.size() > 0 || topLevelAnnotations.size() > 0) {
 			LocationInfo locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, ktFile, CodeElementType.TYPE_DECLARATION);
 			String baseFileName = ktFile.getName();
 			if (baseFileName.endsWith(".kt")) {
@@ -227,6 +234,9 @@ public class KotlinFileProcessor {
 			moduleClass.setPackageDeclaration(umlPackage);
 			moduleClass.setVisibility(Visibility.PUBLIC);
 			
+			for(KtAnnotationEntry annotationEntry : topLevelAnnotations) {
+				moduleClass.addAnnotation(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
+			}
 			for(KtProperty property : topLevelProperties) {
 				UMLAttribute attribute = processFieldDeclaration(ktFile, property, sourceFolder, filePath, fileContent, comments, locationInfo);
 				attribute.setClassName(moduleClass.getName());

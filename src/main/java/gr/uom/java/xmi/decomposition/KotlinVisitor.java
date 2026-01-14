@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.psi.KtBinaryExpressionWithTypeRHS;
 import org.jetbrains.kotlin.psi.KtCallExpression;
 import org.jetbrains.kotlin.psi.KtConstantExpression;
 import org.jetbrains.kotlin.psi.KtConstructorCalleeExpression;
+import org.jetbrains.kotlin.psi.KtDelegatedSuperTypeEntry;
 import org.jetbrains.kotlin.psi.KtDotQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
@@ -129,6 +130,12 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 			this.processPropertyExpression(property, data);
 		}
 		return super.visitExpression(expression, data);
+	}
+
+	public Object visitDelegatedSuperTypeEntry(KtDelegatedSuperTypeEntry entry, Object data) {
+		KtExpression delegateExpression = entry.getDelegateExpression();
+		this.visitExpression(delegateExpression, data);
+		return super.visitDelegatedSuperTypeEntry(entry, data);
 	}
 
 	public Object visitSuperTypeCallEntry(KtSuperTypeCallEntry entry, Object data) {

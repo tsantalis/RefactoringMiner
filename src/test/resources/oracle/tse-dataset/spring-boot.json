@@ -362,11 +362,46 @@
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tasciidoctorPlugin : null to antoraPlugin : null in method package apply(project Project) : void from class org.springframework.boot.build.AntoraConventions",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tbomExtension : BomExtension to bom : BomExtension in method private extractVersionProperties(projectPath String) : void from class org.springframework.boot.build.constraints.ExtractVersionConstraints",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate apply(project Project, antoraPlugin AntoraPlugin) : void extracted from package apply(project Project) : void in class org.springframework.boot.build.AntoraConventions",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_OPERATION",
+          "description": "Extract Method\tprivate configureAntoraTask(project Project, antoraTask AntoraTask, generateAntoraPlaybookTask GenerateAntoraPlaybook) : void extracted from package apply(project Project) : void in class org.springframework.boot.build.AntoraConventions",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate makeAllWarningsFatal(project Project) : void inlined to private apply(project Project, antoraPlugin AntoraPlugin) : void in class org.springframework.boot.build.AntoraConventions",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate upgradeAsciidoctorJVersion(project Project) : void inlined to private apply(project Project, antoraPlugin AntoraPlugin) : void in class org.springframework.boot.build.AntoraConventions",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tasciidoctorTask : null to antoraTask : null in method private apply(project Project, antoraPlugin AntoraPlugin) : void from class org.springframework.boot.build.AntoraConventions",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tasciidoctorPlugin : null to javaBasePlugin : null in method private configureAntoraTask(project Project, antoraTask AntoraTask, generateAntoraPlaybookTask GenerateAntoraPlaybook) : void from class org.springframework.boot.build.AntoraConventions",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_VARIABLE",
+          "description": "Extract Variable\ttasks : TaskContainer in method private apply(project Project, antoraPlugin AntoraPlugin) : void from class org.springframework.boot.build.AntoraConventions",
           "validation": true
         }
       ]

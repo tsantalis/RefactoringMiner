@@ -2363,7 +2363,7 @@ public class ReplacementAlgorithm {
 					}
 				}
 			}
-			if((assignmentInvocationCoveringTheEntireStatement1.identicalName(assignmentInvocationCoveringTheEntireStatement2) || assignmentInvocationCoveringTheEntireStatement1.compatibleName(assignmentInvocationCoveringTheEntireStatement2)) &&
+			if((assignmentInvocationCoveringTheEntireStatement1.identicalName(assignmentInvocationCoveringTheEntireStatement2) || assignmentInvocationCoveringTheEntireStatement1.compatibleName(assignmentInvocationCoveringTheEntireStatement2, false)) &&
 					(staticVSNonStatic || additionalCaller || overlappingExtractVariable || addedParameter || removedParameter) && assignmentInvocationCoveringTheEntireStatement1.identicalOrReplacedArguments(assignmentInvocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap)) {
 				Replacement replacement = new MethodInvocationReplacement(assignmentInvocationCoveringTheEntireStatement1.actualString(), assignmentInvocationCoveringTheEntireStatement2.actualString(), assignmentInvocationCoveringTheEntireStatement1, assignmentInvocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
 				replacementInfo.addReplacement(replacement);
@@ -3757,7 +3757,7 @@ public class ReplacementAlgorithm {
 						replacementInfo.addReplacement(replacement);
 						return replacementInfo.getReplacements();
 					}
-					else if(objectCreation1.compatibleName(creationCoveringTheEntireStatement2) && objectCreation1.equalArguments(creationCoveringTheEntireStatement2) && objectCreation1.identicalExpression(creationCoveringTheEntireStatement2) &&
+					else if(objectCreation1.compatibleName(creationCoveringTheEntireStatement2, false) && objectCreation1.equalArguments(creationCoveringTheEntireStatement2) && objectCreation1.identicalExpression(creationCoveringTheEntireStatement2) &&
 							variableDeclarations1.size() == variableDeclarations2.size()) {
 						Replacement replacement = new ObjectCreationReplacement(objectCreation1.actualString(),
 								creationCoveringTheEntireStatement2.actualString(), objectCreation1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION);

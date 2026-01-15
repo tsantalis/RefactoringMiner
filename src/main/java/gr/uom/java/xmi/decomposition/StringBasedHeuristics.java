@@ -3882,7 +3882,7 @@ public class StringBasedHeuristics {
 					AbstractCall invocation1 = statement1.invocationCoveringEntireFragment();
 					if(invocation1 != null) {
 						for(AbstractCall invocation2 : statement2.getMethodInvocations()) {
-							if(invocation1.compatibleName(invocation2) && invocation1.arguments().size() == invocation2.arguments().size()) {
+							if(invocation1.compatibleName(invocation2, true) && invocation1.arguments().size() == invocation2.arguments().size()) {
 								if(subConditionsAsList2.size() > 1) {
 									IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONDITIONAL);
 									LeafMapping leafMapping = new LeafMapping(invocation1, invocation2, container1, container2);

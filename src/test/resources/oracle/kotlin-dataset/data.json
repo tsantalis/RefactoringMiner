@@ -1954,7 +1954,7 @@
         "validators": null
     }, {
         "type": "Move And Inline Method",
-        "description": "Move And Inline Method public deleteTask(taskId String) moved from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource to class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository & inlined to private updateTaskFromRemoteDataSource(taskId String)",
+        "description": "Move And Inline Method public getTask(taskId String) : Task moved from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource to class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository & inlined to private updateTaskFromRemoteDataSource(taskId String)",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

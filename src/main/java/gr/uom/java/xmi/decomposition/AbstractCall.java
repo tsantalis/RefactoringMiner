@@ -693,7 +693,7 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public boolean renamedWithNoExpressionAndArgumentIntersection(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, boolean possiblyRenamedBasedOnClassDiff) {
 		int argumentIntersectionSize = argumentIntersection(call).size();
-		return (oneNameContainsTheOther(call) || (possiblyRenamedBasedOnClassDiff && (equalArguments(call) || commonTokens(call)))) &&
+		return (oneNameContainsTheOther(call) || (possiblyRenamedBasedOnClassDiff && (equalArguments(call) || commonTokens(call, false)))) &&
 				(this.getExpression() == null && call.getExpression() == null) &&
 				this.arguments.size() > 0 && call.arguments.size() > 0 &&
 				(argumentIntersectionSize >= Math.floor(Math.min(this.arguments.size(), call.arguments.size())/2) ||
@@ -746,10 +746,10 @@ public abstract class AbstractCall extends LeafExpression {
 		if(normalizedNameDistance(call) <= distance) {
 			return true;
 		}
-		return compatibleName(call);
+		return compatibleName(call, false);
 	}
 
-	private boolean commonTokens(AbstractCall call) {
+	private boolean commonTokens(AbstractCall call, boolean strict) {
 		String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(this.getName());
 		String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(call.getName());
 		if(tokens1.length == 1 && tokens2.length == 1 && tokens1[0].contains("_") && tokens2[0].contains("_")) {
@@ -767,11 +767,25 @@ public abstract class AbstractCall extends LeafExpression {
 		if(commonTokens == Math.min(tokens1.length, tokens2.length)) {
 			return true;
 		}
+		if(!strict) {
+			int commonTokensInSamePosition = 0;
+			if(tokens1.length == tokens2.length) {
+				for(int i=0; i<tokens1.length; i++) {
+					String token1 = tokens1[i];
+					String token2 = tokens2[i];
+					if(token1.equals(token2) && !token1.equals("set") && !token1.equals("get"))
+						commonTokensInSamePosition++;
+				}
+			}
+			if(commonTokensInSamePosition > 1 && commonTokensInSamePosition >= tokens1.length - 1) {
+				return true;
+			}
+		}
 		return false;
 	}
 
-	public boolean compatibleName(AbstractCall call) {
-		if(commonTokens(call)) {
+	public boolean compatibleName(AbstractCall call, boolean strict) {
+		if(commonTokens(call, strict)) {
 			return true;
 		}
 		if(this.loggerExpression() && call.loggerExpression() && this.getExpression().equals(call.getExpression())) {

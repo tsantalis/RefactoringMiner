@@ -1,27 +1,27 @@
 package narrator.graph.cluster.traverse;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import narrator.graph.Node;
 import narrator.graph.NodeType;
 
-import java.util.*;
-
 public class TraversalComponent extends TraversalPattern {
-    private List<TraversalPattern> components;
-    protected Set<Node> reasons;
-    private ReasonType reasonType;
 
-    TraversalComponent(List<TraversalPattern> components, Set<Node> reasons, ReasonType reasonType) {
+    private final List<TraversalPattern> components;
+    private final ReasonType reasonType;
+
+    TraversalComponent(List<TraversalPattern> components, ReasonType reasonType) {
         this.components = components;
-        this.reasons = reasons;
         this.reasonType = reasonType;
     }
 
     @Override
     public boolean containsNode(Node node) {
         Node foundNode =
-                getGraph().vertexSet().stream().filter(reasonNode -> reasonNode.equals(node)).findFirst().orElse(null);
+                getGraph().vertexSet().stream().filter(reasonNode -> reasonNode.equals(node))
+                        .findFirst().orElse(null);
         if (foundNode != null) {
             return true;
         }
@@ -66,14 +66,14 @@ public class TraversalComponent extends TraversalPattern {
     public JsonObject stringify() {
         JsonObject result = super.stringify();
 
-        JsonArray reasonsArr = new JsonArray();
-        for (Node reason : reasons) {
-            JsonObject reasonObj = new JsonObject();
-            reasonObj.addProperty("id", reason.getId());
-            reasonObj.addProperty("content", reason.getContent());
-            reasonsArr.add(reasonObj);
-        }
-        result.add("reasons", reasonsArr);
+//        JsonArray reasonsArr = new JsonArray();
+//        for (Node reason : reasons) {
+//            JsonObject reasonObj = new JsonObject();
+//            reasonObj.addProperty("id", reason.getId());
+//            reasonObj.addProperty("content", reason.getContent());
+//            reasonsArr.add(reasonObj);
+//        }
+//        result.add("reasons", reasonsArr);
 
         result.addProperty("reasonType", reasonType.name());
         result.addProperty("nodeType", NodeType.COMPONENT.name());

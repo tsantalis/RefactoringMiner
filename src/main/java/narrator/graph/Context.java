@@ -5,6 +5,8 @@ import com.github.gumtreediff.utils.Pair;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
+import org.jgrapht.Graph;
 import org.refactoringminer.astDiff.utils.Constants;
 
 public class Context {
@@ -95,6 +97,7 @@ public class Context {
         put(Constants.get().IF_STATEMENT, List.of(Constants.get().BLOCK));
     }};
 
+
     private static final List<String> locationContext = new ArrayList<>() {{
         // location context
         add(Constants.get().COMPILATION_UNIT);
@@ -126,6 +129,31 @@ public class Context {
 
             if (locationContext.contains(parentType)) {
                 contexts.add(new Pair<>(parent, NodeType.LOCATION_CONTEXT));
+            }
+        }
+    }
+
+    public static List<Node> get(Graph<Node, Edge> graph, Node node) {
+        List<Node> contexts = new ArrayList<>();
+
+        String treeType = node.getTree().getType().name;
+
+        List<String> treeSemanticContexts = semanticContext.get(treeType);
+        Node parent = node;
+        while (true) {
+            Optional<Node> nextParent = graph.outgoingEdgesOf(parent).stream()
+                    .filter(edge -> edge.getType().equals(EdgeType.CONTEXT)).map(
+                            graph::getEdgeTarget).findFirst();
+            if (nextParent.isEmpty()) {
+                return contexts;
+            }
+            parent = nextParent.get();
+
+            String parentType = parent.getTree().getType().name;
+
+            if ((treeSemanticContexts != null && treeSemanticContexts.contains(parentType))
+                    || locationContext.contains(parentType)) {
+                contexts.add(parent);
             }
         }
     }

@@ -4,8 +4,11 @@ import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import narrator.graph.Edge;
+import narrator.graph.EdgeType;
 import narrator.graph.Node;
 import narrator.graph.NodeType;
+import org.jgrapht.Graph;
 
 /*
  * EXTENSION:
@@ -38,7 +41,14 @@ public class UsagePattern extends TraversalPattern {
     @Override
     public Node getLead() {
         if (cachedLead == null) {
-            cachedLead = useNode;
+            if (!useNode.isExtension()) {
+                cachedLead = useNode;
+            } else {
+                Graph<Node, Edge> graph = getGraph();
+                cachedLead = graph.incomingEdgesOf(useNode).stream()
+                        .filter(edge -> edge.getType().equals(EdgeType.DEF_USE))
+                        .map(graph::getEdgeSource).findFirst().get();
+            }
         }
 
         return cachedLead;

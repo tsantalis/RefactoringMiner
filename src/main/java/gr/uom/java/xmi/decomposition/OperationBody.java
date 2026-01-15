@@ -51,7 +51,6 @@ import org.jetbrains.kotlin.psi.KtFinallySection;
 import org.jetbrains.kotlin.psi.KtForExpression;
 import org.jetbrains.kotlin.psi.KtIfExpression;
 import org.jetbrains.kotlin.psi.KtLabeledExpression;
-import org.jetbrains.kotlin.psi.KtNameReferenceExpression;
 import org.jetbrains.kotlin.psi.KtParameter;
 import org.jetbrains.kotlin.psi.KtProperty;
 import org.jetbrains.kotlin.psi.KtReturnExpression;
@@ -1306,6 +1305,23 @@ public class OperationBody {
 					new VariableDeclaration(ktFile, sourceFolder, filePath, (KtProperty)variableDeclaration, container, activeVariableDeclarations, fileContent, parent.getLocationInfo()) :
 					new VariableDeclaration(ktFile, sourceFolder, filePath, (KtDestructuringDeclarationEntry)variableDeclaration, container, activeVariableDeclarations, fileContent, parent.getLocationInfo());
 			child.getVariableDeclarations().add(vd);
+			addStatementInVariableScopes(child);
+			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
+		}
+		else if(statement instanceof KtDestructuringDeclaration destructuringDeclaration) {
+			KtExpression initializer = destructuringDeclaration.getInitializer();
+			if(initializer instanceof KtWhenExpression whenStatement) {
+				processWhenStatement(ktFile, sourceFolder, filePath, parent, fileContent, whenStatement);
+			}
+			else if(initializer instanceof KtIfExpression ifStatement) {
+				processIfStatement(ktFile, sourceFolder, filePath, parent, fileContent, ifStatement);
+			}
+			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, destructuringDeclaration, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			for(KtDestructuringDeclarationEntry entry : destructuringDeclaration.getEntries()) {
+				VariableDeclaration vd = new VariableDeclaration(ktFile, sourceFolder, filePath, entry, container, activeVariableDeclarations, fileContent, parent.getLocationInfo());
+				child.getVariableDeclarations().add(vd);
+			}
 			addStatementInVariableScopes(child);
 			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
 		}

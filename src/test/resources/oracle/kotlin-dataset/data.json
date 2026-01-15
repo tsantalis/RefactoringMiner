@@ -7634,4 +7634,503 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 46,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "41c69a5d424b4236114c5ce1b077afdad38e57a5",
+    "url": "https://github.com/square/leakcanary/commit/41c69a5d424b4236114c5ce1b077afdad38e57a5",
+    "author": "pyricau",
+    "time": "7/19/19 02:57 AM",
+    "refactorings": [{
+        "type": "Move Class",
+        "description": "Move Class leakcanary.ReferencePathNode moved to leakcanary.internal.ReferencePathNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leakcanary.Serializables moved to leakcanary.internal.Serializables",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leakcanary.Serializables.module moved to leakcanary.internal.Serializables.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leakcanary.FieldValuesReader moved to leakcanary.internal.FieldValuesReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.DefaultAnalysisResultListener renamed to leakcanary.DefaultOnHeapAnalyzedListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.RefWatcher renamed to leakcanary.ObjectWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.RefWatcherTest renamed to leakcanary.ObjectWatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onReferenceRetained() renamed to public onObjectRetained() in class leakcanary.internal.HeapDumpTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private checkRetainedInstances(reason String) renamed to private checkRetainedObjects(reason String) in class leakcanary.internal.HeapDumpTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private scheduleRetainedInstanceCheck(reason String) renamed to private scheduleRetainedObjectCheck(reason String) in class leakcanary.internal.HeapDumpTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private scheduleRetainedInstanceCheck(reason String, delayMillis Long) renamed to private scheduleRetainedObjectCheck(reason String, delayMillis Long) in class leakcanary.internal.HeapDumpTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private showNoMoreRetainedInstanceNotification() renamed to private showNoMoreRetainedObjectNotification() in class leakcanary.internal.HeapDumpTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter className : String to expectedClassName : String in method public ObjectReporter.whenInstanceOf(expectedClassName String, block ObjectReporter.(GraphInstanceRecord) -> Unit) from class leakcanary.AndroidObjectInspectors.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter defaults : Set<AndroidReferenceMatchers> to referenceMatchers : Set<AndroidReferenceMatchers> in method public buildKnownReferences(referenceMatchers Set<AndroidReferenceMatchers>) : List<ReferenceMatcher> from class leakcanary.AndroidReferenceMatchers.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute lastDisplayedRetainedInstanceCount : Inferred to lastDisplayedRetainedObjectCount : Inferred in class leakcanary.internal.HeapDumpTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter instanceCount : Int to objectCount : Int in method private showRetainedCountBelowThresholdNotification(objectCount Int, retainedVisibleThreshold Int) from class leakcanary.internal.HeapDumpTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter instanceCount : Int to objectCount : Int in method private showRetainedCountWithDebuggerAttached(objectCount Int) from class leakcanary.internal.HeapDumpTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter instanceCount : Int to objectCount : Int in method private showRetainedCountWithHeapDumpFailed(objectCount Int) from class leakcanary.internal.HeapDumpTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter instanceCount : Int to objectCount : Int in method private showRetainedCountNotification(objectCount Int, contentText String) from class leakcanary.internal.HeapDumpTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute refWatcher : RefWatcher to objectWatcher : ObjectWatcher in class leakcanary.internal.HeapDumpTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type refWatcher : RefWatcher to objectWatcher : ObjectWatcher in class leakcanary.internal.HeapDumpTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute WAIT_FOR_INSTANCE_THRESHOLD_MILLIS : Inferred to WAIT_FOR_OBJECT_THRESHOLD_MILLIS : Inferred in class leakcanary.internal.HeapDumpTrigger.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute DISMISS_NO_RETAINED_INSTANCE_NOTIFICATION_MILLIS : Inferred to DISMISS_NO_RETAINED_OBJECT_NOTIFICATION_MILLIS : Inferred in class leakcanary.internal.HeapDumpTrigger.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onReferenceRetained() renamed to public onObjectRetained() in class leakcanary.internal.InternalLeakCanary",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public graph : HprofGraph from class leakcanary.GraphObjectRecord.GraphInstanceRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public graph : HprofGraph from class leakcanary.GraphObjectRecord.GraphObjectArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public graph : HprofGraph from class leakcanary.GraphObjectRecord.GraphPrimitiveArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public graph : HprofGraph from class leakcanary.GraphObjectRecord.GraphClassRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public indexedObject(objectId Long) : GraphObjectRecord renamed to public findObjectByObjectId(objectId Long) : GraphObjectRecord in class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public indexedClass(className String) : GraphClassRecord renamed to public findClassByClassName(className String) : GraphClassRecord in class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public objectIdExists(objectId Long) : Boolean renamed to public objectExists(objectId Long) : Boolean in class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to internal in method internal readObjectRecord(objectId Long) : ObjectRecord from class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type refWatcher : RefWatcher to objectWatcher : ObjectWatcher in method public install(application Application, objectWatcher ObjectWatcher, configProvider () -> Config) from class leakcanary.internal.ActivityDestroyWatcher.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter refWatcher : RefWatcher to objectWatcher : ObjectWatcher in method public install(application Application, objectWatcher ObjectWatcher, configProvider () -> Config) from class leakcanary.internal.ActivityDestroyWatcher.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute refWatcher : RefWatcher to objectWatcher : ObjectWatcher in class leakcanary.internal.ActivityDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type refWatcher : RefWatcher to objectWatcher : ObjectWatcher in class leakcanary.internal.ActivityDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type refWatcher : RefWatcher to objectWatcher : ObjectWatcher in method public install(application Application, objectWatcher ObjectWatcher, configProvider () -> LeakSentry.Config) from class leakcanary.internal.FragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter refWatcher : RefWatcher to objectWatcher : ObjectWatcher in method public install(application Application, objectWatcher ObjectWatcher, configProvider () -> LeakSentry.Config) from class leakcanary.internal.FragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute onInstanceRetainedListener : OnInstanceRetainedListener to ON_OBJECT_RETAINED_LISTENER : OnObjectRetainedListener in class leakcanary.internal.InternalLeakSentry",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type onInstanceRetainedListener : OnInstanceRetainedListener to ON_OBJECT_RETAINED_LISTENER : OnObjectRetainedListener in class leakcanary.internal.InternalLeakSentry",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute refWatcher : Inferred to objectWatcher : Inferred in class leakcanary.internal.InternalLeakSentry",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier public to internal in class leakcanary.internal.ReferencePathNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier public to internal in class leakcanary.internal.Serializables",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to internal in method internal Serializable.toByteArray() : ByteArray from class leakcanary.internal.Serializables.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier public to internal in class leakcanary.internal.FieldValuesReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public invoke(application Application, heapAnalysis HeapAnalysis) renamed to public onHeapAnalyzed(heapAnalysis HeapAnalysis) in class leakcanary.DefaultOnHeapAnalyzedListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter application : Application in method public invoke(application Application, heapAnalysis HeapAnalysis) from class leakcanary.DefaultAnalysisResultListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Type Declaration Kind",
+        "description": "Change Type Declaration Kind object to class in type leakcanary.DefaultOnHeapAnalyzedListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public removeInstancesWatchedBeforeHeapDump(heapDumpUptimeMillis Long) renamed to public clearObjectsWatchedBefore(heapDumpUptimeMillis Long) in class leakcanary.ObjectWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public clearWatchedInstances() renamed to public clearWatchedObjects() in class leakcanary.ObjectWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private removeWeaklyReachableInstances() renamed to private removeWeaklyReachableObjects() in class leakcanary.ObjectWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute watchedInstances : Inferred to watchedObjects : Inferred in class leakcanary.ObjectWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter watchedInstance : Any to watchedObject : Any in method public watch(watchedObject Any) from class leakcanary.ObjectWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter watchedInstance : Any to watchedObject : Any in method public watch(watchedObject Any, name String) from class leakcanary.ObjectWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute onInstanceRetainedListener : OnInstanceRetainedListener to onObjectRetainedListener : OnObjectRetainedListener in class leakcanary.ObjectWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type onInstanceRetainedListener : OnInstanceRetainedListener to onObjectRetainedListener : OnObjectRetainedListener in class leakcanary.ObjectWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute refWatcher : Inferred to objectWatcher : Inferred in class leakcanary.ObjectWatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private objectWatcher : Inferred from class leakcanary.ObjectWatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.OnInstanceRetainedListener renamed to leakcanary.OnObjectRetainedListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute FINDING_WATCHED_REFERENCES : Step to FINDING_LEAKING_INSTANCES : Step in class leakcanary.AnalyzerProgressListener.Step",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute asNonNullObjectIdReference : Long to asNonNullObjectId : Long in class leakcanary.GraphHeapValue",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute FINDING_SHORTEST_PATHS : Step to FINDING_PATHS_TO_LEAKING_INSTANCES : Step in class leakcanary.AnalyzerProgressListener.Step",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute asObjectIdReference : Long to asObjectId : Long in class leakcanary.GraphHeapValue",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute retainedInstanceCount : Int to retainedObjectCount : Int in class leakcanary.ObjectWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute hasWatchedInstances : Boolean to hasWatchedObjects : Boolean in class leakcanary.ObjectWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute hasRetainedInstances : Boolean to hasRetainedObjects : Boolean in class leakcanary.ObjectWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onReferenceRetained() renamed to public onObjectRetained() in class leakcanary.internal.InternalLeakSentry.NoLeakCanary",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onReferenceRetained() renamed to public onObjectRetained() in class leakcanary.OnObjectRetainedListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method public computeShallowSize(graphObject GraphObjectRecord) : Int moved from class leakcanary.HprofGraph to class leakcanary.HeapAnalyzer & inlined to private computeRetainedSizes(graph HprofGraph, results List<ReferencePathNode>, dominatedInstances LongLongScatterMap) : List<Int>",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Interface",
+        "description": "Extract Interface leakcanary.OnHeapAnalyzedListener from classes [leakcanary.DefaultAnalysisResultListener]",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

@@ -8133,4 +8133,62 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 47,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "4d5992a28fe5d4b2940c28c47ce5e66ef37816cd",
+    "url": "https://github.com/square/leakcanary/commit/4d5992a28fe5d4b2940c28c47ce5e66ef37816cd",
+    "author": "pyricau",
+    "time": "4/20/19 03:00 PM",
+    "refactorings": [{
+        "type": "Move Class",
+        "description": "Move Class leakcanary.internal.experimental.HeapAnalyzerTest moved to leakcanary.internal.HeapAnalyzerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.internal.DefaultLeakDirectoryProvider renamed to leakcanary.internal.LeakDirectoryProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Attribute Annotation",
+        "description": "Add Attribute Annotation @SuppressLint(\"StaticFieldLeak\") in attribute private leakDirectoryProvider : LeakDirectoryProvider from class leakcanary.internal.LeakCanaryUtils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Type Declaration Kind",
+        "description": "Change Type Declaration Kind interface to class in type leakcanary.internal.LeakDirectoryProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable classDumpRecord : Inferred in method private SeekableHprofReader.scan(callbacks RecordCallbacks) from class leakcanary.HprofParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public hasStoragePermission() : Boolean from class leakcanary.internal.LeakDirectoryProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public requestWritePermissionNotification() from class leakcanary.internal.LeakDirectoryProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

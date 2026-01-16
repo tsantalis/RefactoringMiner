@@ -773,7 +773,11 @@ public abstract class AbstractCall extends LeafExpression {
 				for(int i=0; i<tokens1.length; i++) {
 					String token1 = tokens1[i];
 					String token2 = tokens2[i];
-					if(token1.equals(token2) && !token1.equals("set") && !token1.equals("get"))
+					if(token1.equals("set") && token2.equals("get"))
+						return false;
+					else if(token1.equals("get") && token2.equals("set"))
+						return false;
+					if(token1.equals(token2) && !token1.equals("set") && !token1.equals("get") && !token1.equals("add"))
 						commonTokensInSamePosition++;
 				}
 			}

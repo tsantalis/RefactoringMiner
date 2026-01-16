@@ -2,10 +2,8 @@ package narrator.graph.cluster.traverse;
 
 import com.github.gumtreediff.utils.Pair;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -29,6 +27,7 @@ public class TraversalEngine {
     }};
     private final Graph<Node, Edge> graph;
     private final List<TraversalPattern> components = new ArrayList<>();
+    private final Set<UsagePattern> usagePatterns = new HashSet<>();
 
     public TraversalEngine(Cluster cluster) {
         graph = cluster.getGraph();
@@ -48,6 +47,7 @@ public class TraversalEngine {
 
         mergeByContext();
         // up until this point, they are merged per file.
+        mergeByUsageChain();
     }
 
     private void addUsageComponents() {
@@ -58,11 +58,12 @@ public class TraversalEngine {
         }
 
         for (UsagePattern usagePattern : usagePatterns.values()) {
-            ArrayList<UsagePattern> path = new ArrayList<>();
+            List<UsagePattern> path = new ArrayList<>();
             path.add(usagePattern);
             breakCircularDependencies(usagePattern, path);
         }
 
+        this.usagePatterns.addAll(usagePatterns.values());
     }
 
     // TODO: test and validate
@@ -212,6 +213,7 @@ public class TraversalEngine {
     /*
      * Assumption: there is no traversal component yet before calling this method
      * */
+    // TODO: not incorporating a usage pattern, if it is the requirement of another usage pattern within the same context
     private void mergeByContext() {
         Map<TraversalPattern, List<Node>> componentsContexts = new HashMap<>();
         for (TraversalPattern component : components) {
@@ -224,11 +226,7 @@ public class TraversalEngine {
         }
 
         Set<TraversalPattern> iteratedComponents = new HashSet<>();
-        while (true) {
-            if (componentsContexts.isEmpty()) {
-                break;
-            }
-
+        while (!componentsContexts.isEmpty()) {
             Optional<TraversalPattern> iteratee = componentsContexts.keySet().stream()
                     .filter(component -> !iteratedComponents.contains(component)).findFirst();
             if (iteratee.isEmpty()) {
@@ -289,8 +287,56 @@ public class TraversalEngine {
         }
     }
 
+    private void mergeByUsageChain() {
+        Map<UsagePattern, Set<UsagePattern>> usageRequirements = new HashMap<>();
+        for (UsagePattern usagePattern : usagePatterns) {
+            usageRequirements.put(usagePattern,
+                    new HashSet<>(usagePattern.getRequirements().values()));
+        }
+
+        while (!usageRequirements.isEmpty()) {
+            Optional<UsagePattern> requirementLeaf = usageRequirements.entrySet().stream()
+                    .filter(entry -> entry.getValue().isEmpty()).map(Entry::getKey).findFirst();
+            if (requirementLeaf.isEmpty()) {
+                break;
+            }
+
+            UsagePattern subject = requirementLeaf.get();
+            Node useNode = subject.useNode;
+            Set<Node> usedNodes = subject.getUsedNodes();
+
+            HashSet<TraversalPattern> mergeComponents = new HashSet<>();
+            List<TraversalPattern> useComponents = components.stream()
+                    .filter(component -> component.containsNode(useNode)).toList();
+            mergeComponents.addAll(useComponents);
+            List<TraversalPattern> usedComponents = components.stream()
+                    .filter(component -> usedNodes.stream().anyMatch(component::containsNode))
+                    .toList();
+            mergeComponents.addAll(usedComponents);
+
+            if (mergeComponents.size() > 1) {
+                for (TraversalPattern mergeComponent : mergeComponents) {
+                    components.remove(mergeComponent);
+                }
+
+                TraversalComponent mergedComponent = new TraversalComponent(
+                        mergeComponents.stream().toList(), ReasonType.USAGE);
+                mergedComponent.addNode(useNode);
+                for (Node usedNode : usedNodes) {
+                    mergedComponent.addEdge(usedNode, useNode, new Edge(EdgeType.DEF_USE));
+                }
+                components.add(mergedComponent);
+            }
+
+            usageRequirements.remove(subject);
+            for (UsagePattern usagePattern : usageRequirements.keySet()) {
+                usageRequirements.get(usagePattern).remove(subject);
+            }
+        }
+    }
+
     private void addContext(Node node, TraversalPattern traversalPattern) {
-        List<Node> contexts = util.getContexts(node);
+        List<Node> contexts = Context.get(graph, node);
         Node currentNode = node;
         for (Node context : contexts) {
             traversalPattern.addEdge(currentNode, context, new Edge(EdgeType.CONTEXT), (edges) -> {
@@ -326,29 +372,8 @@ public class TraversalEngine {
         }
     }
 
-    private List<Node> getMappingSources(Node node) {
-        return graph.incomingEdgesOf(node).stream()
-                .filter(edge -> edge.getType().equals(EdgeType.MAPPING)).map(graph::getEdgeSource)
-                .toList();
-    }
-
-    private List<Node> getMappingTargets(Node node) {
-        return graph.outgoingEdgesOf(node).stream()
-                .filter(edge -> edge.getType().equals(EdgeType.MAPPING)).map(graph::getEdgeTarget)
-                .toList();
-    }
-
-    //    private List<String> singularTypes = new ArrayList<>() {{
-    //        add(Constants.METHOD_DECLARATION);
-    //        add(Constants.EXPRESSION_STATEMENT);
-    //        add(Constants.METHOD_INVOCATION);
-    //        add(Constants.RETURN_STATEMENT);
-    //    }};
-
-    // for chunks of code which are using already existing declarations, or their uses are not regular
     private void addSingularComponents() {
         List<Node> singularNodes = graph.vertexSet().stream().filter(node -> !node.isContext())
-                //                        .filter(node -> singularTypes.contains(node.getTree().getType().name))
                 .filter(node -> {
                     for (TraversalPattern traversalComponent : components) {
                         boolean contains = traversalComponent.containsNode(node);
@@ -368,30 +393,15 @@ public class TraversalEngine {
         }
     }
 
-    private Set<TraversalPattern> getCommonComponents(
-            Collection<List<TraversalPattern>> componentsList) {
-        Iterator<List<TraversalPattern>> componetsIterator = componentsList.iterator();
-        Set<TraversalPattern> commonComponents = new HashSet<>(componetsIterator.next());
-        while (componetsIterator.hasNext()) {
-            commonComponents.retainAll(componetsIterator.next());
-        }
-
-        return commonComponents;
+    private List<Node> getMappingSources(Node node) {
+        return graph.incomingEdgesOf(node).stream()
+                .filter(edge -> edge.getType().equals(EdgeType.MAPPING)).map(graph::getEdgeSource)
+                .toList();
     }
 
-    private HashMap<Node, List<TraversalPattern>> getNodesComponents(Set<Node> nodes) {
-        HashMap<Node, List<TraversalPattern>> nodesComponents = new HashMap<>();
-
-        for (Node node : nodes) {
-            List<TraversalPattern> nodeComponents = new ArrayList<>();
-            for (TraversalPattern component : components) {
-                if (component.containsNode(node)) {
-                    nodeComponents.add(component);
-                }
-            }
-            nodesComponents.put(node, nodeComponents);
-        }
-
-        return nodesComponents;
+    private List<Node> getMappingTargets(Node node) {
+        return graph.outgoingEdgesOf(node).stream()
+                .filter(edge -> edge.getType().equals(EdgeType.MAPPING)).map(graph::getEdgeTarget)
+                .toList();
     }
 }

@@ -54,6 +54,10 @@ public class UsagePattern extends TraversalPattern {
         return cachedLead;
     }
 
+    public Set<Node> getUsedNodes() {
+        return util.getUsedNodes(useNode);
+    }
+
     @Override
     public JsonObject stringify() {
         JsonObject result = super.stringify();

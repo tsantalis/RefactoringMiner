@@ -136,9 +136,6 @@ public class Context {
     public static List<Node> get(Graph<Node, Edge> graph, Node node) {
         List<Node> contexts = new ArrayList<>();
 
-        String treeType = node.getTree().getType().name;
-
-        List<String> treeSemanticContexts = semanticContext.get(treeType);
         Node parent = node;
         while (true) {
             Optional<Node> nextParent = graph.outgoingEdgesOf(parent).stream()
@@ -147,14 +144,9 @@ public class Context {
             if (nextParent.isEmpty()) {
                 return contexts;
             }
+
             parent = nextParent.get();
-
-            String parentType = parent.getTree().getType().name;
-
-            if ((treeSemanticContexts != null && treeSemanticContexts.contains(parentType))
-                    || locationContext.contains(parentType)) {
-                contexts.add(parent);
-            }
+            contexts.add(parent);
         }
     }
 }

@@ -1,7 +1,7 @@
 package narrator.graph.cluster.traverse;
 
 public enum ReasonType {
-    CONTEXT("context");
+    CONTEXT("context"), USAGE("usage");
 
     String label;
 

@@ -8191,4 +8191,370 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 48,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "4fd47950f8d0f3c4583136b9a36144db1eb027bd",
+    "url": "https://github.com/square/leakcanary/commit/4fd47950f8d0f3c4583136b9a36144db1eb027bd",
+    "author": "pyricau",
+    "time": "4/4/19 05:25 PM",
+    "refactorings": [{
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class com.squareup.leakcanary.ActivityRefWatcher moved and renamed to leaksentry.internal.ActivityDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class com.squareup.leakcanary.LeakCanaryInstaller moved and renamed to leaksentry.internal.LeakSentryInstaller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class com.squareup.leakcanary.internal.SupportFragmentRefWatcher moved and renamed to leaksentry.internal.SupportFragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class com.squareup.leakcanary.LeakCanaryInternal moved and renamed to leaksentry.internal.InternalLeakSentry",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class com.squareup.leakcanary.internal.InternalLeakCanary from class com.squareup.leakcanary.LeakCanaryInternal",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public leakInfo(context Context, heapDump HeapDump, result AnalysisResult, detailed Boolean) : String from class com.squareup.leakcanary.LeakCanaryInternal to public leakInfo(context Context, heapDump HeapDump, result AnalysisResult, detailed Boolean) : String from class com.squareup.leakcanary.internal.InternalLeakCanary",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public isInAnalyzerProcess(context Context) : Boolean from class com.squareup.leakcanary.LeakCanaryInternal to public isInAnalyzerProcess(context Context) : Boolean from class com.squareup.leakcanary.internal.InternalLeakCanary",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public watchActivities : Boolean from class com.squareup.leakcanary.LeakCanary.Config to public watchActivities : Boolean from class leaksentry.LeakSentry.Config",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public watchFragments : Boolean from class com.squareup.leakcanary.LeakCanary.Config to public watchFragments : Boolean from class leaksentry.LeakSentry.Config",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public watchFragmentViews : Boolean from class com.squareup.leakcanary.LeakCanary.Config to public watchFragmentViews : Boolean from class leaksentry.LeakSentry.Config",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public manualInstall(application Application) from class com.squareup.leakcanary.LeakCanary to public manualInstall(application Application) from class leaksentry.LeakSentry",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute isEmpty : Boolean to hasRetainedReferences : Boolean in class leaksentry.RefWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.tests.FragmentLeakTest moved to com.squareup.leakcanary.FragmentLeakTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.tests.Fragments.module moved to com.squareup.leakcanary.Fragments.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.tests.LeakingFragment moved to com.squareup.leakcanary.LeakingFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.tests.TestActivity moved to com.squareup.leakcanary.TestActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.tests.ViewLeakingFragment moved to com.squareup.leakcanary.ViewLeakingFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.KeyedWeakReference moved to leaksentry.KeyedWeakReference",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.internal.ActivityLifecycleCallbacksAdapter moved to leaksentry.internal.ActivityLifecycleCallbacksAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.RefWatcher moved to leaksentry.RefWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Package",
+        "description": "Move Package com.squareup.leakcanary to leaksentry",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.Clock moved to leaksentry.Clock",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Package",
+        "description": "Move Package com.squareup.leakcanary to leaksentry.internal",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Ignore(\"KeyedWeakReference has moved packages, need new heap dumps\") in method public findsExpectedRef() from class com.squareup.leakcanary.HeapAnalyzerHeapDumpTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Ignore(\"KeyedWeakReference has moved packages, need new heap dumps\") in method public findsSeveralRefs() from class com.squareup.leakcanary.HeapAnalyzerHeapDumpTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Ignore(\"KeyedWeakReference has moved packages, need new heap dumps\") in method public leakFoundWithGcRootInNonPrimaryHeap() from class com.squareup.leakcanary.HeapAnalyzerHeapDumpTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Ignore(\"KeyedWeakReference has moved packages, need new heap dumps\") in method public heapDumpWithMissingNativeThread() from class com.squareup.leakcanary.HeapAnalyzerHeapDumpTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Ignore(\"KeyedWeakReference has moved packages, need new heap dumps\") in method public leakFound() from class com.squareup.leakcanary.AsyncTaskLeakTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Ignore(\"KeyedWeakReference has moved packages, need new heap dumps\") in method public excludeThread() from class com.squareup.leakcanary.AsyncTaskLeakTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Ignore(\"KeyedWeakReference has moved packages, need new heap dumps\") in method public excludeStatic() from class com.squareup.leakcanary.AsyncTaskLeakTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Ignore(\"KeyedWeakReference has moved packages, need new heap dumps\") in method public leakFound() from class com.squareup.leakcanary.RetainedSizeTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter refWatcher : RefWatcher in method public AndroidHeapDumper(context Context, leakDirectoryProvider LeakDirectoryProvider, refWatcher RefWatcher) from class com.squareup.leakcanary.AndroidHeapDumper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter watchActivities : Boolean in primary constructor Config(watchActivities Boolean, watchFragments Boolean, watchFragmentViews Boolean, dumpHeap Boolean, excludedRefs ExcludedRefs, reachabilityInspectorClasses List<Class<Reachability.Inspector>>, computeRetainedHeapSize Boolean) from class com.squareup.leakcanary.LeakCanary.Config",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter watchFragments : Boolean in primary constructor Config(watchActivities Boolean, watchFragments Boolean, watchFragmentViews Boolean, dumpHeap Boolean, excludedRefs ExcludedRefs, reachabilityInspectorClasses List<Class<Reachability.Inspector>>, computeRetainedHeapSize Boolean) from class com.squareup.leakcanary.LeakCanary.Config",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter watchFragmentViews : Boolean in primary constructor Config(watchActivities Boolean, watchFragments Boolean, watchFragmentViews Boolean, dumpHeap Boolean, excludedRefs ExcludedRefs, reachabilityInspectorClasses List<Class<Reachability.Inspector>>, computeRetainedHeapSize Boolean) from class com.squareup.leakcanary.LeakCanary.Config",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Invert Condition",
+        "description": "Invert Condition if(refWatcher.isEmpty) to if(!refWatcher.hasWatchedReferences) in method public detectLeaks() : InstrumentationLeakResults from class com.squareup.leakcanary.InstrumentationLeakDetector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Invert Condition",
+        "description": "Invert Condition if(refWatcher.isEmpty) to if(!refWatcher.hasRetainedReferences) in method public detectLeaks() : InstrumentationLeakResults from class com.squareup.leakcanary.InstrumentationLeakDetector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.squareup.leakcanary.RefWatcherTest moved to leaksentry.RefWatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @Override in method public onActivityCreated(activity Activity, savedInstanceState Bundle) : void from class com.squareup.leakcanary.internal.ActivityLifecycleCallbacksAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @Override in method public onActivityStarted(activity Activity) : void from class com.squareup.leakcanary.internal.ActivityLifecycleCallbacksAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @Override in method public onActivityResumed(activity Activity) : void from class com.squareup.leakcanary.internal.ActivityLifecycleCallbacksAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @Override in method public onActivityPaused(activity Activity) : void from class com.squareup.leakcanary.internal.ActivityLifecycleCallbacksAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @Override in method public onActivityStopped(activity Activity) : void from class com.squareup.leakcanary.internal.ActivityLifecycleCallbacksAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @Override in method public onActivitySaveInstanceState(activity Activity, outState Bundle) : void from class com.squareup.leakcanary.internal.ActivityLifecycleCallbacksAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @Override in method public onActivityDestroyed(activity Activity) : void from class com.squareup.leakcanary.internal.ActivityLifecycleCallbacksAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class leaksentry.LeakSentry.Config from class com.squareup.leakcanary.LeakCanary.Config",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter onReferenceRetained : () -> Unit in primary constructor RefWatcher(clock Clock, checkRetainedExecutor Executor, onReferenceRetained () -> Unit) from class leaksentry.RefWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter checkRetainedExecutor : Executor in primary constructor RefWatcher(clock Clock, checkRetainedExecutor Executor, onReferenceRetained () -> Unit) from class leaksentry.RefWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable activityRefWatcher : Inferred to activityDestroyWatcher : Inferred in method public install(application Application, refWatcher RefWatcher, configProvider () -> Config) from class leaksentry.internal.ActivityDestroyWatcher.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type retainedKeys : Inferred to retainedKeys : Set<String> in class leaksentry.RefWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public retainedKeys : Set<String> from class leaksentry.RefWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

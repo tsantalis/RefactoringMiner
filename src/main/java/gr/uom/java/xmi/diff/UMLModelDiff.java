@@ -3081,8 +3081,10 @@ public class UMLModelDiff {
 				UMLGeneralization addedGeneralization = generalizationDiff.getAddedGeneralization();
 				UMLGeneralization removedGeneralization = generalizationDiff.getRemovedGeneralization();
 				if(!addedGeneralization.getParent().equals(removedGeneralization.getParent())) {
+					boolean inferRename = addedGeneralization.getChild().getName().endsWith(addedGeneralization.getParent()) &&
+							removedGeneralization.getChild().getName().endsWith(removedGeneralization.getParent());
 					UMLClassBaseDiff classDiff = getUMLClassDiff(UMLType.extractTypeObject(removedGeneralization.getParent()));
-					if(!(classDiff instanceof UMLClassMoveDiff) && !(classDiff instanceof UMLClassRenameDiff)) {
+					if(!(classDiff instanceof UMLClassMoveDiff) && !(classDiff instanceof UMLClassRenameDiff) && !inferRename) {
 						processAddedGeneralization(addedClass, subclassSetBefore, subclassSetAfter, addedGeneralization);
 					}
 				}

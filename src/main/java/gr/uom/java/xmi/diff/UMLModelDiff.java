@@ -2197,14 +2197,26 @@ public class UMLModelDiff {
 				(addedAttribute.getType().equals(removedAttribute.getType()) || addedAttribute.getType().equalClassType(removedAttribute.getType()))) {
 			Replacement rename = new Replacement(removedAttribute.getName(), addedAttribute.getName(), ReplacementType.VARIABLE_NAME);
 			if(renameMap.containsKey(rename)) {
-				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, operationBodyMapperList); 
-				if(!movedAttributeDiffList.contains(attributeDiff)) {
-					movedAttributeDiffList.add(attributeDiff);
+				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, operationBodyMapperList);
+				UMLClassBaseDiff classDiff1 = getUMLClassDiff(removedAttribute.getClassName());
+				UMLClassBaseDiff classDiff2 = getUMLClassDiff(addedAttribute.getClassName());
+				boolean sameClass = classDiff1 != null && classDiff2 != null && classDiff1.equals(classDiff2);
+				if(!sameClass) {
+					if(!movedAttributeDiffList.contains(attributeDiff)) {
+						movedAttributeDiffList.add(attributeDiff);
+					}
+					Set<CandidateAttributeRefactoring> candidates = renameMap.get(rename);
+					MoveAndRenameAttributeRefactoring moveAttribute = new MoveAndRenameAttributeRefactoring(attributeDiff, candidates);
+					checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);
+					return moveAttribute;
 				}
-				Set<CandidateAttributeRefactoring> candidates = renameMap.get(rename);
-				MoveAndRenameAttributeRefactoring moveAttribute = new MoveAndRenameAttributeRefactoring(attributeDiff, candidates);
-				checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);
-				return moveAttribute;
+				else {
+					classDiff1.getAttributeDiffList().add(attributeDiff);
+					Set<CandidateAttributeRefactoring> candidates = renameMap.get(rename);
+					Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), classDiff1.getOperationBodyMapperList(), classDiff1, this);
+					RenameAttributeRefactoring renameAttribute = new RenameAttributeRefactoring(removedAttribute, addedAttribute, candidates, references);
+					this.refactorings.add(renameAttribute);
+				}
 			}
 		}
 		return null;

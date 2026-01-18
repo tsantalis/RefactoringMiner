@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.psi.KtObjectDeclaration;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -50,6 +52,11 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, anonymous, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
 		this.astNode = anonymous;
 		this.astNodeString = stringify(anonymous);
+	}
+
+	public AnonymousClassDeclarationObject(KtFile cu, String sourceFolder, String filePath, KtObjectDeclaration objectDeclaration) {
+		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, objectDeclaration, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
+		this.astNodeString = objectDeclaration.getText();
 	}
 
 	public LocationInfo getLocationInfo() {

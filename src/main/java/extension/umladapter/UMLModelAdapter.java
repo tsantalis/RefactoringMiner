@@ -243,11 +243,10 @@ public class UMLModelAdapter {
             UMLOperation umlOperation = createUMLOperation(methodDecl, umlClass.getName(), sourceFolder, filepath, fileContent, convertToVariableDeclarationMap(umlClass.getFieldDeclarationMap().values()), language);
             umlClass.addOperation(umlOperation);
             if ("__init__".equals(methodDecl.getName()) || "_build".equals(methodDecl.getName())) {
-                List<UMLAttribute> attributes = getAttributes(methodDecl, sourceFolder, filepath, umlOperation, fileContent);
+                List<UMLAttribute> attributes = getAttributes(methodDecl, umlClass.getName(), sourceFolder, filepath, umlOperation, fileContent);
                 for (UMLAttribute attribute : attributes) {
                     // avoid adding the attribute again, if it has been already created by processing a class-level assignment
                     if(!umlClass.getAttributes().contains(attribute)) {
-                        attribute.setClassName(umlClass.getName());
                         umlClass.addAttribute(attribute);
                     }
                 }
@@ -275,8 +274,7 @@ public class UMLModelAdapter {
         LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, methodDecl, LocationInfo.CodeElementType.METHOD_DECLARATION);
 
         String operationName = methodDecl.getName();
-        UMLOperation umlOperation = new UMLOperation(operationName, locationInfo);
-        umlOperation.setClassName(className);
+        UMLOperation umlOperation = new UMLOperation(operationName, locationInfo, className);
 
         // Convert to UMLAnnotations
         for (LangAnnotation langAnnotation : methodDecl.getAnnotations()) {
@@ -382,7 +380,7 @@ public class UMLModelAdapter {
         return variableDeclarationMap;
     }
 
-    private static List<UMLAttribute> getAttributes(LangMethodDeclaration methodDecl, String sourceFolder, String filePath, UMLOperation umlOperation, String fileContent) {
+    private static List<UMLAttribute> getAttributes(LangMethodDeclaration methodDecl, String className, String sourceFolder, String filePath, UMLOperation umlOperation, String fileContent) {
         List<UMLAttribute> attributes = new ArrayList<>();
 
         // Only process __init__ method for attribute extraction
@@ -399,12 +397,12 @@ public class UMLModelAdapter {
             for (LangASTNode statement : methodBody.getStatements()) {
                 // Handle direct assignments
                 if (statement instanceof LangAssignment assignment) {
-                    processAssignmentForAttribute(methodDecl, assignment, attributes, sourceFolder, filePath, umlOperation, fileContent);
+                    processAssignmentForAttribute(methodDecl, assignment, className, attributes, sourceFolder, filePath, umlOperation, fileContent);
                 }
                 // Handle expression statements that contain assignments
                 else if (statement instanceof LangExpressionStatement exprStmt) {
                     if (exprStmt.getExpression() instanceof LangAssignment assignment) {
-                        processAssignmentForAttribute(methodDecl, assignment, attributes, sourceFolder, filePath, umlOperation, fileContent);
+                        processAssignmentForAttribute(methodDecl, assignment, className, attributes, sourceFolder, filePath, umlOperation, fileContent);
                     }
                 }
             }
@@ -413,7 +411,7 @@ public class UMLModelAdapter {
         return attributes;
     }
 
-    private static void processAssignmentForAttribute(LangMethodDeclaration methodDeclaration, LangAssignment assignment, List<UMLAttribute> attributes,
+    private static void processAssignmentForAttribute(LangMethodDeclaration methodDeclaration, LangAssignment assignment, String className, List<UMLAttribute> attributes,
                                                String sourceFolder, String filePath, UMLOperation umlOperation, String fileContent) {
         LangASTNode leftSide = assignment.getLeftSide();
 
@@ -447,7 +445,8 @@ public class UMLModelAdapter {
                     UMLAttribute attribute = new UMLAttribute(
                             attributeName,
                             variableDeclaration.getType(),
-                            attributeLocationInfo
+                            attributeLocationInfo,
+                            className
                     );
 
                     // Set the variable declaration on the attribute
@@ -455,12 +454,6 @@ public class UMLModelAdapter {
                     attribute.setVisibility(Visibility.PUBLIC);
                     attribute.setFinal(false);
                     attribute.setStatic(false);
-
-                    if (methodDeclaration.getParent() instanceof LangTypeDeclaration typeDeclaration){
-                        attribute.setClassName(typeDeclaration.getName());
-                    } else {
-                        attribute.setClassName("UnknownClass");
-                    }
 
                     attributes.add(attribute);
 
@@ -489,7 +482,8 @@ public class UMLModelAdapter {
             UMLAttribute attribute = new UMLAttribute(
                     attributeName,
                     UMLType.extractTypeObject("Object"),
-                    attributeLocationInfo
+                    attributeLocationInfo,
+                    typeDeclaration.getName()
             );
             // Create VariableDeclaration for the attribute using the new constructor
             VariableDeclaration variableDeclaration = UMLAdapterVariableProcessor.processAttributeAssignment(
@@ -501,15 +495,12 @@ public class UMLModelAdapter {
                     fileContent
             );
 
-
-
             // Set the variable declaration on the attribute
             attribute.setVariableDeclaration(variableDeclaration);
             attribute.setVisibility(Visibility.PUBLIC);
             attribute.setFinal(false);
             attribute.setStatic(false);
 
-            attribute.setClassName(typeDeclaration.getName());
             typeDeclaration.addAttribute(attribute);
         }
     }

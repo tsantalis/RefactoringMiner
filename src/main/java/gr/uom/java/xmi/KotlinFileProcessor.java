@@ -238,17 +238,11 @@ public class KotlinFileProcessor {
 				moduleClass.addAnnotation(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
 			}
 			for(KtProperty property : topLevelProperties) {
-				UMLAttribute attribute = processFieldDeclaration(ktFile, property, sourceFolder, filePath, fileContent, comments, locationInfo);
-				attribute.setClassName(moduleClass.getName());
-				if(attribute.getCustomGetter().isPresent())
-					attribute.getCustomGetter().get().setClassName(moduleClass.getName());
-				if(attribute.getCustomSetter().isPresent())
-					attribute.getCustomSetter().get().setClassName(moduleClass.getName());
+				UMLAttribute attribute = processFieldDeclaration(ktFile, property, sourceFolder, filePath, fileContent, comments, locationInfo, moduleClass.getName());
 				moduleClass.addAttribute(attribute);
 			}
 			for(KtNamedFunction function : topLevelFunctions) {
-				UMLOperation operation = processFunctionDeclaration(ktFile, function, sourceFolder, filePath, fileContent, moduleClass.getAttributes(), comments);
-				operation.setClassName(moduleClass.getName());
+				UMLOperation operation = processFunctionDeclaration(ktFile, function, sourceFolder, filePath, fileContent, moduleClass.getAttributes(), comments, moduleClass.getName());
 				moduleClass.addOperation(operation);
 			}
 			for(KtTypeAlias typeAlias : topLevelTypeAliasList) {
@@ -417,7 +411,7 @@ public class KotlinFileProcessor {
 				}
 				if(parameter.hasValOrVar()) {
 					variableDeclaration.setAttribute(true);
-					UMLAttribute umlAttribute = new UMLAttribute(parameterName, type, variableDeclaration.getLocationInfo());
+					UMLAttribute umlAttribute = new UMLAttribute(parameterName, type, variableDeclaration.getLocationInfo(), umlClass.getName());
 					umlAttribute.setVisibility(Visibility.PUBLIC);
 					KtModifierList parameterModifierList = parameter.getModifierList();
 					if(parameterModifierList != null) {
@@ -432,7 +426,6 @@ public class KotlinFileProcessor {
 						}
 					}
 					umlAttribute.setVariableDeclaration(variableDeclaration);
-					umlAttribute.setClassName(umlClass.getName());
 					umlClass.addAttribute(umlAttribute);
 				}
 				else {
@@ -510,12 +503,7 @@ public class KotlinFileProcessor {
 			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, KtClassBody classBody) {
 		if(classBody != null) {
 			for(KtProperty property : classBody.getProperties()) {
-				UMLAttribute attribute = processFieldDeclaration(ktFile, property, sourceFolder, filePath, fileContent, comments, umlClass.getLocationInfo());
-				attribute.setClassName(umlClass.getName());
-				if(attribute.getCustomGetter().isPresent())
-					attribute.getCustomGetter().get().setClassName(umlClass.getName());
-				if(attribute.getCustomSetter().isPresent())
-					attribute.getCustomSetter().get().setClassName(umlClass.getName());
+				UMLAttribute attribute = processFieldDeclaration(ktFile, property, sourceFolder, filePath, fileContent, comments, umlClass.getLocationInfo(), umlClass.getName());
 				umlClass.addAttribute(attribute);
 			}
 			for(KtAnonymousInitializer initializer : classBody.getAnonymousInitializers()) {
@@ -525,7 +513,7 @@ public class KotlinFileProcessor {
 			}
 			for(KtSecondaryConstructor constructor : classBody.getSecondaryConstructors$psi_api()) {
 				LocationInfo constructorLocationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, constructor, CodeElementType.METHOD_DECLARATION);
-				UMLOperation umlConstructor = new UMLOperation(umlClass.getNonQualifiedName(), constructorLocationInfo);
+				UMLOperation umlConstructor = new UMLOperation(umlClass.getNonQualifiedName(), constructorLocationInfo, umlClass.getName());
 				umlConstructor.setConstructor(true);
 				umlConstructor.setVisibility(Visibility.PUBLIC);
 				UMLJavadoc constructorJavadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, constructor.getDocComment());
@@ -545,7 +533,7 @@ public class KotlinFileProcessor {
 							new VariableDeclaration(ktFile, sourceFolder, filePath, parameter, umlConstructor, activeVariableDeclarations, fileContent, umlConstructor.getLocationInfo());
 					if(parameter.hasValOrVar()) {
 						variableDeclaration.setAttribute(true);
-						UMLAttribute umlAttribute = new UMLAttribute(parameterName, type, variableDeclaration.getLocationInfo());
+						UMLAttribute umlAttribute = new UMLAttribute(parameterName, type, variableDeclaration.getLocationInfo(), umlClass.getName());
 						umlAttribute.setVisibility(Visibility.PUBLIC);
 						KtModifierList parameterModifierList = parameter.getModifierList();
 						if(parameterModifierList != null) {
@@ -560,7 +548,6 @@ public class KotlinFileProcessor {
 							}
 						}
 						umlAttribute.setVariableDeclaration(variableDeclaration);
-						umlAttribute.setClassName(umlClass.getName());
 						umlClass.addAttribute(umlAttribute);
 					}
 					else {
@@ -573,7 +560,6 @@ public class KotlinFileProcessor {
 					OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, constructor.getBodyBlockExpression(), umlConstructor, umlClass.getAttributes(), fileContent);
 					umlConstructor.setBody(operationBody);
 				}
-				umlConstructor.setClassName(umlClass.getName());
 				int endSignatureOffset = constructor.getBodyBlockExpression() != null ?
 						umlConstructor.getBody().getCompositeStatement().getLocationInfo().getStartOffset() + 1 :
 							constructor.getTextRange().getEndOffset();
@@ -584,7 +570,7 @@ public class KotlinFileProcessor {
 			for(KtEnumEntry entry : classBody.getEnumEntries()) {
 				UMLJavadoc entryJavadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, entry.getDocComment());
 				LocationInfo entryLocationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, entry, CodeElementType.ENUM_CONSTANT_DECLARATION);
-				UMLEnumConstant enumConstant = new UMLEnumConstant(entry.getName(), UMLType.extractTypeObject(umlClass.getName()), entryLocationInfo);
+				UMLEnumConstant enumConstant = new UMLEnumConstant(entry.getName(), UMLType.extractTypeObject(umlClass.getName()), entryLocationInfo, umlClass.getName());
 				VariableDeclaration variableDeclaration = new VariableDeclaration(ktFile, sourceFolder, filePath, entry, activeVariableDeclarations, fileContent, umlClass.getLocationInfo());
 				enumConstant.setVariableDeclaration(variableDeclaration);
 				enumConstant.setJavadoc(entryJavadoc);
@@ -613,12 +599,10 @@ public class KotlinFileProcessor {
 					enumConstant.addAnonymousClass(anonymousClass);
 					anonymousClass.addParentContainer(enumConstant);
 				}
-				enumConstant.setClassName(umlClass.getName());
 				umlClass.addEnumConstant(enumConstant);
 			}
 			for(KtNamedFunction function : classBody.getFunctions()) {
-				UMLOperation operation = processFunctionDeclaration(ktFile, function, sourceFolder, filePath, fileContent, umlClass.getAttributes(), comments);
-				operation.setClassName(umlClass.getName());
+				UMLOperation operation = processFunctionDeclaration(ktFile, function, sourceFolder, filePath, fileContent, umlClass.getAttributes(), comments, umlClass.getName());
 				umlClass.addOperation(operation);
 			}
 			for(KtObjectDeclaration companion : classBody.getAllCompanionObjects()) {
@@ -749,7 +733,7 @@ public class KotlinFileProcessor {
 		return umlInitializer;
 	}
 
-	private UMLOperation processFunctionDeclaration(KtFile ktFile, KtNamedFunction function, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments) {
+	private UMLOperation processFunctionDeclaration(KtFile ktFile, KtNamedFunction function, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments, String className) {
 		String methodName = function.getName();
 		UMLType receiver = null;
 		if(function.getReceiverTypeReference() != null) {
@@ -758,11 +742,11 @@ public class KotlinFileProcessor {
 		LocationInfo locationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, function, CodeElementType.METHOD_DECLARATION);
 		UMLOperation umlOperation = null;
 		if(receiver != null) {
-			umlOperation = new UMLOperation(receiver.toQualifiedString() + "." + methodName, locationInfo);
+			umlOperation = new UMLOperation(receiver.toQualifiedString() + "." + methodName, locationInfo, className);
 			umlOperation.setReceiver(receiver);
 		}
 		else {
-			umlOperation = new UMLOperation(methodName, locationInfo);
+			umlOperation = new UMLOperation(methodName, locationInfo, className);
 		}
 		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, function.getDocComment());
 		umlOperation.setJavadoc(javadoc);
@@ -948,11 +932,11 @@ public class KotlinFileProcessor {
 		return startSignatureOffset;
 	}
 
-	private UMLAttribute processFieldDeclaration(KtFile ktFile, KtProperty property, String sourceFolder, String filePath, String fileContent, List<UMLComment> comments, LocationInfo parentLocationInfo) {
+	private UMLAttribute processFieldDeclaration(KtFile ktFile, KtProperty property, String sourceFolder, String filePath, String fileContent, List<UMLComment> comments, LocationInfo parentLocationInfo, String className) {
 		KtTypeReference type = property.getTypeReference();
 		UMLType typeObject = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, type, 0);
 		LocationInfo locationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, property, CodeElementType.FIELD_DECLARATION);
-		UMLAttribute umlAttribute = new UMLAttribute(property.getName(), typeObject, locationInfo);
+		UMLAttribute umlAttribute = new UMLAttribute(property.getName(), typeObject, locationInfo, className);
 		VariableDeclaration variableDeclaration = new VariableDeclaration(ktFile, sourceFolder, filePath, property, umlAttribute, new LinkedHashMap<>(), fileContent, parentLocationInfo);
 		variableDeclaration.setAttribute(true);
 		umlAttribute.setVariableDeclaration(variableDeclaration);
@@ -981,27 +965,27 @@ public class KotlinFileProcessor {
 		}
 		KtPropertyAccessor getter = property.getGetter();
 		if (getter != null) {
-			UMLOperation operation = processPropertyAccessor(ktFile, getter, sourceFolder, filePath, fileContent, Collections.emptyList(), comments);
+			UMLOperation operation = processPropertyAccessor(ktFile, getter, sourceFolder, filePath, fileContent, Collections.emptyList(), comments, className);
 			operation.setProperyAccessor(umlAttribute);
 			umlAttribute.setCustomGetter(operation);
 		}
 		KtPropertyAccessor setter = property.getSetter();
 		if (setter != null) {
-			UMLOperation operation = processPropertyAccessor(ktFile, setter, sourceFolder, filePath, fileContent, Collections.emptyList(), comments);
+			UMLOperation operation = processPropertyAccessor(ktFile, setter, sourceFolder, filePath, fileContent, Collections.emptyList(), comments, className);
 			operation.setProperyAccessor(umlAttribute);
 			umlAttribute.setCustomSetter(operation);
 		}
 		return umlAttribute;
 	}
 
-	private UMLOperation processPropertyAccessor(KtFile ktFile, KtPropertyAccessor function, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments) {
+	private UMLOperation processPropertyAccessor(KtFile ktFile, KtPropertyAccessor function, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments, String className) {
 		String methodName = "";
 		if(function.isGetter())
 			methodName = "get";
 		else if(function.isSetter())
 			methodName = "set";
 		LocationInfo locationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, function, CodeElementType.METHOD_DECLARATION);
-		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo);
+		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo, className);
 		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, function.getDocComment());
 		umlOperation.setJavadoc(javadoc);
 		distributeComments(comments, locationInfo, umlOperation.getComments());

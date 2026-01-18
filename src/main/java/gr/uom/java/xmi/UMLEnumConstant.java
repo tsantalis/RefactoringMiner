@@ -6,8 +6,8 @@ import java.util.List;
 public class UMLEnumConstant extends UMLAttribute {
 	private List<String> arguments;
 
-	public UMLEnumConstant(String name, UMLType type, LocationInfo locationInfo) {
-		super(name, type, locationInfo);
+	public UMLEnumConstant(String name, UMLType type, LocationInfo locationInfo, String className) {
+		super(name, type, locationInfo, className);
 		this.arguments = new ArrayList<String>();
 	}
 

@@ -242,9 +242,10 @@ public class HunkNetwork {
         processDefUse();
         // TODO: how does it contribute to usage pattern if it is connected to a context class?
         processClassInstanceCreations();
-        processSimilarity();
+        // DEPRECATED
+//        processSimilarity();
         processSuccession();
-        processSingularity();
+        processMapping();
     }
 
     // TODO: find a diff-based import of added and deleted files
@@ -764,7 +765,7 @@ public class HunkNetwork {
     }
 
     // TODO: pure moves can be handled here
-    public void processSingularity() {
+    public void processMapping() {
         Set<Node> nodes = graph.vertexSet();
         for (Node subject : nodes) {
             Tree tree = subject.getTree();
@@ -774,8 +775,17 @@ public class HunkNetwork {
             if (dst == null) {
                 continue;
             }
-            nodes.stream().filter(node -> node.getTree().equals(dst))
-                    .forEach(node -> addEdge(subject, node, EdgeType.MAPPING));
+
+            // TODO: should be equal to the root tree or any descendant trees?
+            List<Node> dstNodes = nodes.stream().filter(node -> node.getTree().equals(dst))
+                    .toList();
+            if (subject.isContext()) {
+                dstNodes = dstNodes.stream()
+                        .filter(node -> node.getNodeType().equals(subject.getNodeType())).toList();
+            }
+            for (Node dstNode : dstNodes) {
+                addEdge(subject, dstNode, EdgeType.MAPPING);
+            }
         }
     }
 }

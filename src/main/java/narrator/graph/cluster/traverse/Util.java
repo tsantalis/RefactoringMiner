@@ -1,5 +1,6 @@
 package narrator.graph.cluster.traverse;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import narrator.graph.Edge;
@@ -24,5 +25,17 @@ public class Util {
     public boolean doesUse(Node node) {
         return graph.incomingEdgesOf(node).stream()
                 .anyMatch(edge -> edge.getType().equals(EdgeType.DEF_USE));
+    }
+
+    public List<Node> getMappingSources(Node node) {
+        return graph.incomingEdgesOf(node).stream()
+                .filter(edge -> edge.getType().equals(EdgeType.MAPPING)).map(graph::getEdgeSource)
+                .toList();
+    }
+
+    public List<Node> getMappingTargets(Node node) {
+        return graph.outgoingEdgesOf(node).stream()
+                .filter(edge -> edge.getType().equals(EdgeType.MAPPING)).map(graph::getEdgeTarget)
+                .toList();
     }
 }

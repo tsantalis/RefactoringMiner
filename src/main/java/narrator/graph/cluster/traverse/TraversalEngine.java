@@ -13,7 +13,6 @@ import narrator.graph.Context;
 import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.Node;
-import narrator.graph.NodeType;
 import narrator.graph.cluster.Cluster;
 import org.jgrapht.Graph;
 import org.refactoringminer.astDiff.utils.Constants;
@@ -213,16 +212,11 @@ public class TraversalEngine {
     /*
      * Assumption: there is no traversal component yet before calling this method
      * */
-    // TODO: not incorporating a usage pattern, if it is the requirement of another usage pattern within the same context
     private void mergeByContext() {
         Map<TraversalPattern, List<Node>> componentsContexts = new HashMap<>();
         for (TraversalPattern component : components) {
-            // the SEMANTIC_CONTEXT of two dsts (srcs) may not be equal and this may lead to merging
-            // a deletion with an addition while there are two additions (deletions) to merge beforehand
             List<Node> contexts = Context.get(component.getGraph(), component.getLead());
-            List<Node> locationContexts = contexts.stream()
-                    .filter(node -> node.getNodeType().equals(NodeType.LOCATION_CONTEXT)).toList();
-            componentsContexts.put(component, new ArrayList<>(locationContexts));
+            componentsContexts.put(component, new ArrayList<>(contexts));
         }
 
         Set<TraversalPattern> iteratedComponents = new HashSet<>();
@@ -239,8 +233,8 @@ public class TraversalEngine {
             Node subjectContextsHead = subjectContexts.get(0);
             Set<Node> headMappings = new HashSet<>();
             headMappings.add(subjectContextsHead);
-            headMappings.addAll(getMappingSources(subjectContextsHead));
-            headMappings.addAll(getMappingTargets(subjectContextsHead));
+            headMappings.addAll(util.getMappingSources(subjectContextsHead));
+            headMappings.addAll(util.getMappingTargets(subjectContextsHead));
 
             List<Pair<TraversalPattern, Integer>> mergeCandidates = componentsContexts.entrySet()
                     .stream()
@@ -276,8 +270,6 @@ public class TraversalEngine {
 
             TraversalComponent mergedComponent = new TraversalComponent(mergeComponents,
                     ReasonType.CONTEXT);
-            mergedComponent.addNode(subjectContextsHead);
-            addMapping(subjectContextsHead, mergedComponent);
             components.add(mergedComponent);
 
             if (subjectContexts.size() > 1) {
@@ -321,10 +313,6 @@ public class TraversalEngine {
 
                 TraversalComponent mergedComponent = new TraversalComponent(
                         mergeComponents.stream().toList(), ReasonType.USAGE);
-                mergedComponent.addNode(useNode);
-                for (Node usedNode : usedNodes) {
-                    mergedComponent.addEdge(usedNode, useNode, new Edge(EdgeType.DEF_USE));
-                }
                 components.add(mergedComponent);
             }
 
@@ -351,7 +339,7 @@ public class TraversalEngine {
     }
 
     private void addMapping(Node node, TraversalPattern traversalPattern) {
-        List<Node> sources = getMappingSources(node);
+        List<Node> sources = util.getMappingSources(node);
         for (Node source : sources) {
             traversalPattern.addEdge(source, node, new Edge(EdgeType.MAPPING), (edges) -> {
                 List<Edge> duplicateEdges =
@@ -361,7 +349,7 @@ public class TraversalEngine {
             });
         }
 
-        List<Node> targets = getMappingTargets(node);
+        List<Node> targets = util.getMappingTargets(node);
         for (Node target : targets) {
             traversalPattern.addEdge(node, target, new Edge(EdgeType.MAPPING), (edges) -> {
                 List<Edge> duplicateEdges =
@@ -391,17 +379,5 @@ public class TraversalEngine {
 
             components.add(singularComponent);
         }
-    }
-
-    private List<Node> getMappingSources(Node node) {
-        return graph.incomingEdgesOf(node).stream()
-                .filter(edge -> edge.getType().equals(EdgeType.MAPPING)).map(graph::getEdgeSource)
-                .toList();
-    }
-
-    private List<Node> getMappingTargets(Node node) {
-        return graph.outgoingEdgesOf(node).stream()
-                .filter(edge -> edge.getType().equals(EdgeType.MAPPING)).map(graph::getEdgeTarget)
-                .toList();
     }
 }

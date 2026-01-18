@@ -672,64 +672,65 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **January 15, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **January 18, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1110  |  2  |  0  | 0.998  | 1.000|
+|**Total**|1175  |  2  |  0  | 0.998  | 1.000|
 |Extract Method| 7  |  0  |  0  | 1.000  | 1.000|
-|Rename Class|31  |  0  |  0  | 1.000  | 1.000|
-|Move Attribute| 8  |  0  |  0  | 1.000  | 1.000|
+|Rename Class|32  |  0  |  0  | 1.000  | 1.000|
+|Move Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|107  |  0  |  0  | 1.000  | 1.000|
 |Inline Method| 7  |  0  |  0  | 1.000  | 1.000|
-|Move Method|62  |  0  |  0  | 1.000  | 1.000|
+|Move Method|65  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Method| 6  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Method|46  |  0  |  0  | 1.000  | 1.000|
-|Move Class|131  |  0  |  0  | 1.000  | 1.000|
-|Move And Rename Class| 6  |  0  |  0  | 1.000  | 1.000|
+|Move Class|141  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Class|10  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|17  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method| 2  |  0  |  0  | 1.000  | 1.000|
 |Extract Interface| 3  |  0  |  0  | 1.000  | 1.000|
 |Extract Superclass| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 1  |  0  |  0  | 1.000  | 1.000|
-|Extract Class| 3  |  0  |  0  | 1.000  | 1.000|
+|Extract Class| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract And Move Method| 5  |  1  |  0  | 0.833  | 1.000|
 |Move And Inline Method|19  |  0  |  0  | 1.000  | 1.000|
 |Rename Package| 2  |  0  |  0  | 1.000  | 1.000|
-|Move Package| 3  |  0  |  0  | 1.000  | 1.000|
+|Move Package| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable| 4  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable| 7  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|13  |  1  |  0  | 0.929  | 1.000|
-|Rename Parameter|51  |  0  |  0  | 1.000  | 1.000|
-|Rename Attribute|51  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable|14  |  1  |  0  | 0.933  | 1.000|
+|Rename Parameter|55  |  0  |  0  | 1.000  | 1.000|
+|Rename Attribute|52  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable| 2  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|97  |  0  |  0  | 1.000  | 1.000|
 |Change Variable Type| 9  |  0  |  0  | 1.000  | 1.000|
-|Change Parameter Type|117  |  0  |  0  | 1.000  | 1.000|
-|Change Attribute Type|42  |  0  |  0  | 1.000  | 1.000|
-|Add Method Annotation|12  |  0  |  0  | 1.000  | 1.000|
-|Remove Method Annotation| 3  |  0  |  0  | 1.000  | 1.000|
+|Change Parameter Type|121  |  0  |  0  | 1.000  | 1.000|
+|Change Attribute Type|43  |  0  |  0  | 1.000  | 1.000|
+|Add Method Annotation|21  |  0  |  0  | 1.000  | 1.000|
+|Remove Method Annotation|10  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Annotation|11  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Annotation| 5  |  0  |  0  | 1.000  | 1.000|
 |Add Class Annotation|20  |  0  |  0  | 1.000  | 1.000|
 |Remove Class Annotation| 6  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|60  |  0  |  0  | 1.000  | 1.000|
-|Remove Parameter|26  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|64  |  0  |  0  | 1.000  | 1.000|
+|Remove Parameter|31  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Method Access Modifier|39  |  0  |  0  | 1.000  | 1.000|
-|Change Attribute Access Modifier|20  |  0  |  0  | 1.000  | 1.000|
+|Change Attribute Access Modifier|21  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Class Modifier| 7  |  0  |  0  | 1.000  | 1.000|
-|Change Type Declaration Kind|10  |  0  |  0  | 1.000  | 1.000|
+|Change Type Declaration Kind|11  |  0  |  0  | 1.000  | 1.000|
+|Invert Condition| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional| 2  |  0  |  0  | 1.000  | 1.000|
 |Move Code| 1  |  0  |  0  | 1.000  | 1.000|
 

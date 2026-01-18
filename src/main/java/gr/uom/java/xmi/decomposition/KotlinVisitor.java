@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,6 +23,8 @@ import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtLambdaExpression;
 import org.jetbrains.kotlin.psi.KtNameReferenceExpression;
+import org.jetbrains.kotlin.psi.KtObjectDeclaration;
+import org.jetbrains.kotlin.psi.KtObjectLiteralExpression;
 import org.jetbrains.kotlin.psi.KtParenthesizedExpression;
 import org.jetbrains.kotlin.psi.KtPostfixExpression;
 import org.jetbrains.kotlin.psi.KtPrefixExpression;
@@ -32,6 +35,7 @@ import org.jetbrains.kotlin.psi.KtSafeQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtStringTemplateExpression;
 import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry;
 import org.jetbrains.kotlin.psi.KtSuperTypeEntry;
+import org.jetbrains.kotlin.psi.KtSuperTypeListEntry;
 import org.jetbrains.kotlin.psi.KtThisExpression;
 import org.jetbrains.kotlin.psi.KtTypeReference;
 import org.jetbrains.kotlin.psi.KtUserType;
@@ -43,6 +47,9 @@ import static org.jetbrains.kotlin.psi.stubs.elements.KtStubElementTypes.*;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.KotlinFileProcessor;
+import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLType;
 
 public class KotlinVisitor extends KtVisitor<Object, Object> {
@@ -128,8 +135,39 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 			this.processLambdaExpression(lambdaExpression, data);
 		} else if (expression instanceof KtProperty property) {
 			this.processPropertyExpression(property, data);
+		} else if (expression instanceof KtObjectLiteralExpression objectLiteralExpression) {
+			this.processObjectLiteralExpression(objectLiteralExpression, data);
 		}
 		return super.visitExpression(expression, data);
+	}
+
+	private void processObjectLiteralExpression(KtObjectLiteralExpression objectLiteralExpression, Object data) {
+		KtObjectDeclaration objectDeclaration = objectLiteralExpression.getObjectDeclaration();
+		UMLType type = null;
+		for(KtSuperTypeListEntry entry : objectDeclaration.getSuperTypeListEntries()) {
+			type = UMLType.extractTypeObject(cu, sourceFolder, filePath, fileContent, entry.getTypeReference(), 0);
+			break;
+		}
+		LocationInfo anonymousLocationInfo = new LocationInfo(cu, sourceFolder, filePath, objectDeclaration, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
+		String leftSide = null;
+		if(objectLiteralExpression.getParent() instanceof KtBinaryExpression binary) {
+			leftSide = "." + binary.getLeft().getText() + ".";
+		}
+		else {
+			leftSide = ".";
+		}
+		String codePath = container.getName() + leftSide + type.getClassType();
+		UMLAnonymousClass anonymousClass =  new UMLAnonymousClass(container.getClassName(), codePath, codePath, anonymousLocationInfo, Collections.emptyList());
+		KotlinFileProcessor.processClassBody(cu, sourceFolder, filePath, fileContent, Collections.emptyList(), container.getComments(), anonymousClass, activeVariableDeclarations, objectDeclaration.getBody(), null);
+		if(container instanceof LambdaExpressionObject lambda) {
+			lambda.getOwner().getAnonymousClassList().add(anonymousClass);
+		}
+		else {
+			container.getAnonymousClassList().add(anonymousClass);
+		}
+		anonymousClass.addParentContainer(container);
+		AnonymousClassDeclarationObject anonymousObject = new AnonymousClassDeclarationObject(cu, sourceFolder, filePath, objectDeclaration);
+		anonymousClassDeclarations.add(anonymousObject);
 	}
 
 	public Object visitDelegatedSuperTypeEntry(KtDelegatedSuperTypeEntry entry, Object data) {

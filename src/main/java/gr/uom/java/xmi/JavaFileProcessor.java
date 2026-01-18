@@ -740,8 +740,7 @@ public class JavaFileProcessor {
 			}
 			else if(bodyDeclaration instanceof Initializer) {
 				Initializer initializer = (Initializer)bodyDeclaration;
-				UMLInitializer umlInitializer = processInitializer(cu, initializer, packageName, false, sourceFolder, sourceFile, comments, javaFileContent);
-				umlInitializer.setClassName(umlClass.getName());
+				UMLInitializer umlInitializer = processInitializer(cu, initializer, umlClass.getName(), false, sourceFolder, sourceFile, comments, javaFileContent);
 				umlClass.addInitializer(umlInitializer);
 				map.put(initializer, umlInitializer);
 			}
@@ -1125,7 +1124,7 @@ public class JavaFileProcessor {
 		return startSignatureOffset;
 	}
 
-	private UMLInitializer processInitializer(CompilationUnit cu, Initializer initializer, String packageName, boolean isInterfaceMethod, String sourceFolder, String sourceFile, List<UMLComment> comments, String javaFileContent) {
+	private UMLInitializer processInitializer(CompilationUnit cu, Initializer initializer, String className, boolean isInterfaceMethod, String sourceFolder, String sourceFile, List<UMLComment> comments, String javaFileContent) {
 		UMLJavadoc javadoc = generateJavadoc(cu, initializer, sourceFolder, sourceFile, javaFileContent);
 		String name = "";
 		if(initializer.getParent() instanceof AnonymousClassDeclaration && initializer.getParent().getParent() instanceof ClassInstanceCreation) {
@@ -1137,7 +1136,7 @@ public class JavaFileProcessor {
 			name = typeDeclaration.getName().getIdentifier();
 		}
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, initializer, CodeElementType.INITIALIZER);
-		UMLInitializer umlInitializer = new UMLInitializer(name, locationInfo);
+		UMLInitializer umlInitializer = new UMLInitializer(name, locationInfo, className);
 		umlInitializer.setJavadoc(javadoc);
 		distributeComments(comments, locationInfo, umlInitializer.getComments(), cu);
 
@@ -1428,8 +1427,7 @@ public class JavaFileProcessor {
 			}
 			else if(bodyDeclaration instanceof Initializer) {
 				Initializer initializer = (Initializer)bodyDeclaration;
-				UMLInitializer umlInitializer = processInitializer(cu, initializer, packageName, false, sourceFolder, sourceFile, comments, javaFileContent);
-				umlInitializer.setClassName(anonymousClass.getCodePath());
+				UMLInitializer umlInitializer = processInitializer(cu, initializer, anonymousClass.getCodePath(), false, sourceFolder, sourceFile, comments, javaFileContent);
 				umlInitializer.setAnonymousClassContainer(anonymousClass);
 				anonymousClass.addInitializer(umlInitializer);
 			}

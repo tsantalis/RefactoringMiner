@@ -105,7 +105,7 @@ public class KotlinFileProcessor {
 		return comments;
 	}
 
-	private void distributeComments(List<UMLComment> compilationUnitComments, LocationInfo codeElementLocationInfo, List<UMLComment> codeElementComments) {
+	private static void distributeComments(List<UMLComment> compilationUnitComments, LocationInfo codeElementLocationInfo, List<UMLComment> codeElementComments) {
 		ListIterator<UMLComment> listIterator = compilationUnitComments.listIterator(compilationUnitComments.size());
 		while(listIterator.hasPrevious()) {
 			UMLComment comment = listIterator.previous();
@@ -124,7 +124,7 @@ public class KotlinFileProcessor {
 		compilationUnitComments.removeAll(codeElementComments);
 	}
 
-	private UMLJavadoc generateDocComment(KtFile cu, String sourceFolder, String filePath, String fileContent, KDoc javaDoc) {
+	private static UMLJavadoc generateDocComment(KtFile cu, String sourceFolder, String filePath, String fileContent, KDoc javaDoc) {
 		UMLJavadoc doc = null;
 		if (javaDoc != null) {
 			LocationInfo locationInfo = new LocationInfo(cu, sourceFolder, filePath, javaDoc, CodeElementType.JAVADOC);
@@ -198,7 +198,7 @@ public class KotlinFileProcessor {
 		List<KtAnnotationEntry> topLevelAnnotations = new ArrayList<>();
 		for (PsiElement psiElement : ktFile.getChildren()) {
 			if (psiElement instanceof KtObjectDeclaration objectDeclaration) {
-				UMLClass companionObject = processObjectDeclaration(ktFile, objectDeclaration, umlPackage, packageName, sourceFolder, filePath, fileContent, importedTypes, comments, Collections.emptyList());
+				UMLClass companionObject = processObjectDeclaration(ktFile, objectDeclaration, umlPackage, packageName, sourceFolder, filePath, fileContent, importedTypes, comments, Collections.emptyList(), umlModel);
 				umlModel.addClass(companionObject);
 			}
 			else if (psiElement instanceof KtFileAnnotationList annotationList) {
@@ -207,7 +207,7 @@ public class KotlinFileProcessor {
 				}
 			}
 			else if (psiElement instanceof KtClass ktClass) {
-				UMLClass umlClass = processClassDeclaration(ktFile, ktClass, umlPackage, packageName, sourceFolder, filePath, fileContent, importedTypes, comments);
+				UMLClass umlClass = processClassDeclaration(ktFile, ktClass, umlPackage, packageName, sourceFolder, filePath, fileContent, importedTypes, comments, umlModel);
 				umlModel.addClass(umlClass);
 			}
 			else if (psiElement instanceof KtNamedFunction function) {
@@ -275,7 +275,7 @@ public class KotlinFileProcessor {
 		}
 	}
 
-	private UMLClass processObjectDeclaration(KtFile ktFile, KtObjectDeclaration ktClass, UMLPackage umlPackage, String packageName, String sourceFolder, String filePath, String fileContent, List<UMLImport> importedTypes, List<UMLComment> comments, List<UMLAttribute> attributes) {
+	private static UMLClass processObjectDeclaration(KtFile ktFile, KtObjectDeclaration ktClass, UMLPackage umlPackage, String packageName, String sourceFolder, String filePath, String fileContent, List<UMLImport> importedTypes, List<UMLComment> comments, List<UMLAttribute> attributes, UMLModel umlModel) {
 		LocationInfo locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, ktClass, CodeElementType.OBJECT_DECLARATION);
 		String name = ktClass.getName() != null ? ktClass.getName() : "Companion";
 		UMLClass umlClass = new UMLClass(packageName, name, locationInfo, ktClass.isTopLevel(), importedTypes);
@@ -323,14 +323,14 @@ public class KotlinFileProcessor {
 			}
 		}
 		List<KtSuperTypeListEntry> superTypeListEntries = ktClass.getSuperTypeListEntries();
-		processSuperTypeListEntries(ktFile, sourceFolder, filePath, fileContent, umlClass, activeVariableDeclarations, superTypeListEntries);
+		processSuperTypeListEntries(ktFile, sourceFolder, filePath, fileContent, umlClass, activeVariableDeclarations, superTypeListEntries, umlModel);
 		KtClassBody classBody = ktClass.getBody();
-		processClassBody(ktFile, sourceFolder, filePath, fileContent, importedTypes, comments, umlClass, activeVariableDeclarations, classBody);
+		processClassBody(ktFile, sourceFolder, filePath, fileContent, importedTypes, comments, umlClass, activeVariableDeclarations, classBody, umlModel);
 		distributeComments(comments, locationInfo, umlClass.getComments());
 		return umlClass;
 	}
 
-	private UMLClass processClassDeclaration(KtFile ktFile, KtClass ktClass, UMLPackage umlPackage, String packageName, String sourceFolder, String filePath, String fileContent, List<UMLImport> importedTypes, List<UMLComment> comments) {
+	private static UMLClass processClassDeclaration(KtFile ktFile, KtClass ktClass, UMLPackage umlPackage, String packageName, String sourceFolder, String filePath, String fileContent, List<UMLImport> importedTypes, List<UMLComment> comments, UMLModel umlModel) {
 		LocationInfo locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, ktClass, CodeElementType.TYPE_DECLARATION);
 		UMLClass umlClass = new UMLClass(packageName, ktClass.getName(), locationInfo, ktClass.isTopLevel(), importedTypes);
 		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, ktClass.getDocComment());
@@ -437,16 +437,16 @@ public class KotlinFileProcessor {
 			umlClass.setPrimaryConstructor(primaryConstructor);
 		}
 		List<KtSuperTypeListEntry> superTypeListEntries = ktClass.getSuperTypeListEntries();
-		processSuperTypeListEntries(ktFile, sourceFolder, filePath, fileContent, umlClass, activeVariableDeclarations, superTypeListEntries);
+		processSuperTypeListEntries(ktFile, sourceFolder, filePath, fileContent, umlClass, activeVariableDeclarations, superTypeListEntries, umlModel);
 		KtClassBody classBody = ktClass.getBody();
-		processClassBody(ktFile, sourceFolder, filePath, fileContent, importedTypes, comments, umlClass, activeVariableDeclarations, classBody);
+		processClassBody(ktFile, sourceFolder, filePath, fileContent, importedTypes, comments, umlClass, activeVariableDeclarations, classBody, umlModel);
 		distributeComments(comments, locationInfo, umlClass.getComments());
 		return umlClass;
 	}
 
-	private void processSuperTypeListEntries(KtFile ktFile, String sourceFolder, String filePath, String fileContent,
+	private static void processSuperTypeListEntries(KtFile ktFile, String sourceFolder, String filePath, String fileContent,
 			UMLClass umlClass, Map<String, Set<VariableDeclaration>> activeVariableDeclarations,
-			List<KtSuperTypeListEntry> superTypeListEntries) {
+			List<KtSuperTypeListEntry> superTypeListEntries, UMLModel umlModel) {
 		int index = 0;
 		for (KtSuperTypeListEntry superTypeListEntry : superTypeListEntries) {
 			UMLType umlType = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent,
@@ -454,12 +454,14 @@ public class KotlinFileProcessor {
 			if(index == 0) {
 				UMLGeneralization umlGeneralization = new UMLGeneralization(umlClass, umlType.getClassType());
 				umlClass.setSuperclass(umlType);
-				umlModel.addGeneralization(umlGeneralization);
+				if(umlModel != null)
+					umlModel.addGeneralization(umlGeneralization);
 			}
 			else {
 				UMLRealization umlRealization = new UMLRealization(umlClass, umlType.getClassType());
 				umlClass.addImplementedInterface(umlType);
-				umlModel.addRealization(umlRealization);
+				if(umlModel != null)
+					umlModel.addRealization(umlRealization);
 			}
 			AbstractExpression callEntry = new AbstractExpression(ktFile, sourceFolder, filePath, superTypeListEntry, CodeElementType.SUPER_TYPE_CALL_ENTRY,
 					umlClass.getPrimaryConstructor().isPresent() ? umlClass.getPrimaryConstructor().get() : null, activeVariableDeclarations, fileContent);
@@ -469,7 +471,7 @@ public class KotlinFileProcessor {
 		}
 	}
 
-	private void addStatementInVariableScopes(Map<String, Set<VariableDeclaration>> activeVariableDeclarations, AbstractExpression statement) {
+	private static void addStatementInVariableScopes(Map<String, Set<VariableDeclaration>> activeVariableDeclarations, AbstractExpression statement) {
 		for(String variableName : activeVariableDeclarations.keySet()) {
 			Set<VariableDeclaration> variableDeclarations = activeVariableDeclarations.get(variableName);
 			for(VariableDeclaration variableDeclaration : variableDeclarations) {
@@ -498,17 +500,16 @@ public class KotlinFileProcessor {
 		}
 	}
 
-	private void processClassBody(KtFile ktFile, String sourceFolder, String filePath, String fileContent,
+	public static void processClassBody(KtFile ktFile, String sourceFolder, String filePath, String fileContent,
 			List<UMLImport> importedTypes, List<UMLComment> comments, UMLAbstractClass umlClass,
-			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, KtClassBody classBody) {
+			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, KtClassBody classBody, UMLModel umlModel) {
 		if(classBody != null) {
 			for(KtProperty property : classBody.getProperties()) {
 				UMLAttribute attribute = processFieldDeclaration(ktFile, property, sourceFolder, filePath, fileContent, comments, umlClass.getLocationInfo(), umlClass.getName());
 				umlClass.addAttribute(attribute);
 			}
 			for(KtAnonymousInitializer initializer : classBody.getAnonymousInitializers()) {
-				UMLInitializer umlInitializer = processInitializer(ktFile, initializer, sourceFolder, filePath, fileContent, umlClass.getAttributes(), comments, umlClass.getNonQualifiedName());
-				umlInitializer.setClassName(umlClass.getName());
+				UMLInitializer umlInitializer = processInitializer(ktFile, initializer, sourceFolder, filePath, fileContent, umlClass.getAttributes(), comments, umlClass.getNonQualifiedName(), umlClass.getName());
 				umlClass.addInitializer(umlInitializer);
 			}
 			for(KtSecondaryConstructor constructor : classBody.getSecondaryConstructors$psi_api()) {
@@ -595,7 +596,7 @@ public class KotlinFileProcessor {
 				if(entry.getBody() != null) {
 					LocationInfo anonymousLocationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, entry.getBody(), CodeElementType.ANONYMOUS_CLASS_DECLARATION);
 					UMLAnonymousClass anonymousClass =  new UMLAnonymousClass(umlClass.getName(), entry.getName(), entry.getName(), anonymousLocationInfo, importedTypes);
-					processClassBody(ktFile, sourceFolder, filePath, fileContent, importedTypes, comments, anonymousClass, activeVariableDeclarations, entry.getBody());
+					processClassBody(ktFile, sourceFolder, filePath, fileContent, importedTypes, comments, anonymousClass, activeVariableDeclarations, entry.getBody(), umlModel);
 					enumConstant.addAnonymousClass(anonymousClass);
 					anonymousClass.addParentContainer(enumConstant);
 				}
@@ -606,20 +607,22 @@ public class KotlinFileProcessor {
 				umlClass.addOperation(operation);
 			}
 			for(KtObjectDeclaration companion : classBody.getAllCompanionObjects()) {
-				UMLClass companionObject = processObjectDeclaration(ktFile, companion, null, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments, umlClass.getAttributes());
-				umlModel.addClass(companionObject);
+				UMLClass companionObject = processObjectDeclaration(ktFile, companion, null, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments, umlClass.getAttributes(), umlModel);
+				if(umlModel != null)
+					umlModel.addClass(companionObject);
 			}
 			for(KtDeclaration declaration : classBody.getDeclarations()) {
 				if(declaration instanceof KtClass ktClass) {
 					boolean enumConstant = ktClass.getParent() instanceof KtClassBody && ktClass.getParent().getParent() instanceof KtClass parentClass && parentClass.isEnum() && ktClass.getClassKeyword() == null;
 					if(!enumConstant) {
-						UMLClass nestedClass = processClassDeclaration(ktFile, ktClass, null, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments);
-						umlModel.addClass(nestedClass);
+						UMLClass nestedClass = processClassDeclaration(ktFile, ktClass, null, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments, umlModel);
+						if(umlModel != null)
+							umlModel.addClass(nestedClass);
 					}
 				}
 				else if(declaration instanceof KtObjectDeclaration objectDeclaration) {
-					UMLClass nestedClass = processObjectDeclaration(ktFile, objectDeclaration, null, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments, umlClass.getAttributes());
-					if(!umlModel.getClassList().contains(nestedClass)) {
+					UMLClass nestedClass = processObjectDeclaration(ktFile, objectDeclaration, null, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments, umlClass.getAttributes(), umlModel);
+					if(umlModel != null && !umlModel.getClassList().contains(nestedClass)) {
 						umlModel.addClass(nestedClass);
 					}
 				}
@@ -627,7 +630,7 @@ public class KotlinFileProcessor {
 		}
 	}
 
-	private void processTypeParameters(KtFile ktFile, String sourceFolder, String filePath, String fileContent,
+	private static void processTypeParameters(KtFile ktFile, String sourceFolder, String filePath, String fileContent,
 			UMLClass umlClass, List<KtTypeParameter> typeParameters) {
 		for (KtTypeParameter typeParameter : typeParameters) {
 			LocationInfo typeParameterLocation = generateLocationInfo(ktFile, sourceFolder, filePath, typeParameter, CodeElementType.TYPE_PARAMETER);
@@ -649,7 +652,7 @@ public class KotlinFileProcessor {
 		}
 	}
 
-	private void processClassModifiers(KtFile ktFile, String sourceFolder, String filePath, String fileContent,
+	private static void processClassModifiers(KtFile ktFile, String sourceFolder, String filePath, String fileContent,
 			UMLClass umlClass, KtModifierList modifierList) {
 		// default visibility in Kotlin is public
 		umlClass.setVisibility(Visibility.PUBLIC);
@@ -718,9 +721,9 @@ public class KotlinFileProcessor {
 		}
 	}
 
-	private UMLInitializer processInitializer(KtFile ktFile, KtAnonymousInitializer initializer, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments, String name) {
+	private static UMLInitializer processInitializer(KtFile ktFile, KtAnonymousInitializer initializer, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments, String name, String className) {
 		LocationInfo locationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, initializer, CodeElementType.INITIALIZER);
-		UMLInitializer umlInitializer = new UMLInitializer(name, locationInfo);
+		UMLInitializer umlInitializer = new UMLInitializer(name, locationInfo, className);
 		UMLJavadoc javadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, initializer.getDocComment());
 		umlInitializer.setJavadoc(javadoc);
 		distributeComments(comments, locationInfo, umlInitializer.getComments());
@@ -733,7 +736,7 @@ public class KotlinFileProcessor {
 		return umlInitializer;
 	}
 
-	private UMLOperation processFunctionDeclaration(KtFile ktFile, KtNamedFunction function, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments, String className) {
+	private static UMLOperation processFunctionDeclaration(KtFile ktFile, KtNamedFunction function, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments, String className) {
 		String methodName = function.getName();
 		UMLType receiver = null;
 		if(function.getReceiverTypeReference() != null) {
@@ -847,7 +850,7 @@ public class KotlinFileProcessor {
 		return umlOperation;
 	}
 
-	private int processFunctionModifiers(KtFile ktFile, String sourceFolder, String filePath, String fileContent,
+	private static int processFunctionModifiers(KtFile ktFile, String sourceFolder, String filePath, String fileContent,
 			UMLOperation umlOperation, KtModifierList modifierList) {
 		// default visibility in Kotlin is public
 		umlOperation.setVisibility(Visibility.PUBLIC);
@@ -932,7 +935,7 @@ public class KotlinFileProcessor {
 		return startSignatureOffset;
 	}
 
-	private UMLAttribute processFieldDeclaration(KtFile ktFile, KtProperty property, String sourceFolder, String filePath, String fileContent, List<UMLComment> comments, LocationInfo parentLocationInfo, String className) {
+	private static UMLAttribute processFieldDeclaration(KtFile ktFile, KtProperty property, String sourceFolder, String filePath, String fileContent, List<UMLComment> comments, LocationInfo parentLocationInfo, String className) {
 		KtTypeReference type = property.getTypeReference();
 		UMLType typeObject = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, type, 0);
 		LocationInfo locationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, property, CodeElementType.FIELD_DECLARATION);
@@ -978,7 +981,7 @@ public class KotlinFileProcessor {
 		return umlAttribute;
 	}
 
-	private UMLOperation processPropertyAccessor(KtFile ktFile, KtPropertyAccessor function, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments, String className) {
+	private static UMLOperation processPropertyAccessor(KtFile ktFile, KtPropertyAccessor function, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments, String className) {
 		String methodName = "";
 		if(function.isGetter())
 			methodName = "get";
@@ -1035,7 +1038,7 @@ public class KotlinFileProcessor {
 		return umlOperation;
 	}
 
-	private LocationInfo generateLocationInfo(KtFile ktFile,
+	private static LocationInfo generateLocationInfo(KtFile ktFile,
 			String sourceFolder,
 			String sourceFilePath,
 			KtElement node,

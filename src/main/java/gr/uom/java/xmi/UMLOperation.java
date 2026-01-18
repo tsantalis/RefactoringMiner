@@ -64,9 +64,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private boolean importsTestCase;
 	private Optional<UMLType> receiver;
 	
-	public UMLOperation(String name, LocationInfo locationInfo) {
+	public UMLOperation(String name, LocationInfo locationInfo, String className) {
 		this.locationInfo = locationInfo;
         this.name = name;
+        this.className = className;
         this.parameters = new ArrayList<UMLParameter>();
         this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
         this.typeParameters = new ArrayList<UMLTypeParameter>();
@@ -481,10 +482,6 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public String getClassName() {
 		return className;
-	}
-
-	public void setClassName(String className) {
-		this.className = className;
 	}
 
 	public void addParameter(UMLParameter parameter) {

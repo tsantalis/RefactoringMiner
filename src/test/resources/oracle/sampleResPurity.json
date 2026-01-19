@@ -25700,16 +25700,6 @@
       "validationComment" : ""
     }
   }, {
-    "type" : "Inline Method",
-    "description" : "Inline Method\tpublic withResultCallback(resultCallback ResultCallback<A_RES_T>) : CMD_T inlined to public AbstrAsyncDockerCmd(execution DockerCmdAsyncExec<CMD_T,A_RES_T>) in class com.github.dockerjava.core.command.AbstrAsyncDockerCmd",
-    "purity" : {
-      "purityValue" : "1",
-      "purityValidation" : "-",
-      "purityComment" : "",
-      "mappingState" : "",
-      "validationComment" : "Rename Variable on top"
-    }
-  }, {
     "type" : "Change Parameter Type",
     "description" : "Change Parameter Type\tresultCallback : ResultCallback<A_RES_T> to execution : DockerCmdAsyncExec<CMD_T,A_RES_T> in method public AbstrAsyncDockerCmd(execution DockerCmdAsyncExec<CMD_T,A_RES_T>) from class com.github.dockerjava.core.command.AbstrAsyncDockerCmd",
     "purity" : {

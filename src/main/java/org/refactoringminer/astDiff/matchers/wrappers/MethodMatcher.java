@@ -86,6 +86,14 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (dstOperationNode != null && dstOperationNode.getParent() != null && dstOperationNode.getParent().getType().name.equals(Constants.get().DECORATED_METHOD)) {
                 dstOperationNode = dstOperationNode.getParent();
             }
+            if (srcOperationNode != null && srcOperationNode.getType().name.equals(Constants.get().ERROR) && srcOperationNode.getChildren().size() > 0 &&
+            		srcOperationNode.getChildren().get(0).getType().name.equals(Constants.get().METHOD_DECLARATION)) {
+            	srcOperationNode = srcOperationNode.getChildren().get(0);
+            }
+            if (dstOperationNode != null && dstOperationNode.getType().name.equals(Constants.get().ERROR) && dstOperationNode.getChildren().size() > 0 &&
+            		dstOperationNode.getChildren().get(0).getType().name.equals(Constants.get().METHOD_DECLARATION)) {
+            	dstOperationNode = dstOperationNode.getChildren().get(0);
+            }
             if (srcOperationNode == null || !(srcOperationNode.getType().name.equals(Constants.get().METHOD_DECLARATION) || srcOperationNode.getType().name.equals(Constants.get().SECONDARY_CONSTRUCTOR) || srcOperationNode.getType().name.equals(Constants.get().DECORATED_METHOD) || srcOperationNode.getType().name.equals(Constants.get().ANNOTATION_TYPE_MEMBER_DECLARATION) || srcOperationNode.getType().name.equals(Constants.get().GETTER) || srcOperationNode.getType().name.equals(Constants.get().SETTER))) return;
             if (dstOperationNode == null || !(dstOperationNode.getType().name.equals(Constants.get().METHOD_DECLARATION) || dstOperationNode.getType().name.equals(Constants.get().SECONDARY_CONSTRUCTOR) || dstOperationNode.getType().name.equals(Constants.get().DECORATED_METHOD) || dstOperationNode.getType().name.equals(Constants.get().ANNOTATION_TYPE_MEMBER_DECLARATION) || dstOperationNode.getType().name.equals(Constants.get().GETTER) || dstOperationNode.getType().name.equals(Constants.get().SETTER))) return;
             new JavaDocMatcher(optimizationData, umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc(), umlOperationBodyMapper.getJavadocDiff())

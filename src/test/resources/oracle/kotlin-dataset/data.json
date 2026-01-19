@@ -8690,4 +8690,811 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 49,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "50b3d17592d332df612daf18e04fdcea9651011c",
+    "url": "https://github.com/square/leakcanary/commit/50b3d17592d332df612daf18e04fdcea9651011c",
+    "author": "pyricau",
+    "time": "12/23/19 06:39 AM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method private drawRoot(cacheCanvas Canvas) renamed to private drawGcRoot(cacheCanvas Canvas) in class leakcanary.internal.DisplayLeakConnectorView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable projection : Inferred to leak : Inferred in method public getView(position Int, convertView View, parent ViewGroup) from class leakcanary.internal.activity.screen.HeapDumpScreen.View.onSuccessRetrieved.listView.adapter.BaseAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter leakReadStatus : Map<String,Boolean> in method private View.onSuccessRetrieved(heapAnalysis HeapAnalysisSuccess, leakReadStatus Map<String,Boolean>, heapDumpFileExist Boolean) from class leakcanary.internal.activity.screen.HeapDumpScreen",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter leakGroupByHash : Map<String,HeapAnalysisGroupProjection> in method private View.onSuccessRetrieved(heapAnalysis HeapAnalysisSuccess, leakGroupByHash Map<String,HeapAnalysisGroupProjection>, heapDumpFileExist Boolean) from class leakcanary.internal.activity.screen.HeapDumpScreen",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List<GroupProjection> to List<AllLeaksProjection> in method public retrieveAllLeaks(db SQLiteDatabase) : List<AllLeaksProjection> from class leakcanary.internal.activity.db.LeakTable",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakId : Long to signature : String in method public markAsRead(db SQLiteDatabase, signature String) from class leakcanary.internal.activity.db.LeakTable",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakId : Long to signature : String in method public markAsRead(db SQLiteDatabase, signature String) from class leakcanary.internal.activity.db.LeakTable",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter leakTraces : List<LeakTraceProjection> in primary constructor LeakProjection(shortDescription String, isNew Boolean, isLibraryLeak Boolean, leakTraces List<LeakTraceProjection>) from class leakcanary.internal.activity.db.LeakTable.LeakProjection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter id : Long in primary constructor LeakProjection(id Long, analysisId Long, classSimpleName String, groupDescription String, createdAtTimeMillis Long, isNew Boolean, isLibraryLeak Boolean) from class leakcanary.internal.activity.db.LeakTable.LeakProjection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter analysisId : Long in primary constructor LeakProjection(id Long, analysisId Long, classSimpleName String, groupDescription String, createdAtTimeMillis Long, isNew Boolean, isLibraryLeak Boolean) from class leakcanary.internal.activity.db.LeakTable.LeakProjection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter groupDescription : String in primary constructor LeakProjection(id Long, analysisId Long, classSimpleName String, groupDescription String, createdAtTimeMillis Long, isNew Boolean, isLibraryLeak Boolean) from class leakcanary.internal.activity.db.LeakTable.LeakProjection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable leakGroupCount : Inferred to leakCount : Inferred in method public insert(db SQLiteDatabase, heapAnalysis HeapAnalysis) : Long from class leakcanary.internal.activity.db.HeapAnalysisTable",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter id : Long to heapAnalysisId : Long in method public delete(db SQLiteDatabase, heapAnalysisId Long, heapDumpFile File) from class leakcanary.internal.activity.db.HeapAnalysisTable",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private View.displayLeakTrace(projection LeakDetails) renamed to private View.onLeakTraceSelected(analysis HeapAnalysisSuccess, heapAnalysisId Long, leakTraceIndex Int) in class leakcanary.internal.activity.screen.LeakScreen",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter selectedLeakIndex : Int to selectedLeakTraceIndex : Int in method private View.onLeaksRetrieved(leak LeakProjection, selectedLeakTraceIndex Int, selectedHeapAnalysis HeapAnalysisSuccess) from class leakcanary.internal.activity.screen.LeakScreen",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter leak : LeakProjection in method private View.onLeaksRetrieved(leak LeakProjection, selectedLeakTraceIndex Int, selectedHeapAnalysis HeapAnalysisSuccess) from class leakcanary.internal.activity.screen.LeakScreen",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter selectedHeapAnalysis : HeapAnalysisSuccess in method private View.onLeaksRetrieved(leak LeakProjection, selectedLeakTraceIndex Int, selectedHeapAnalysis HeapAnalysisSuccess) from class leakcanary.internal.activity.screen.LeakScreen",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter leaks : List<LeakProjection> in method private View.onLeaksRetrieved(leaks List<LeakProjection>, selectedLeakIndex Int) from class leakcanary.internal.activity.screen.LeakScreen",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable analysis : Inferred to analysis : HeapAnalysisSuccess in method private View.onLeakTraceSelected(analysis HeapAnalysisSuccess, heapAnalysisId Long, leakTraceIndex Int) from class leakcanary.internal.activity.screen.LeakScreen",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type analysis : Inferred to analysis : HeapAnalysisSuccess in method private View.onLeakTraceSelected(analysis HeapAnalysisSuccess, heapAnalysisId Long, leakTraceIndex Int) from class leakcanary.internal.activity.screen.LeakScreen",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter heapAnalysisId : Long in method private View.onLeakTraceSelected(analysis HeapAnalysisSuccess, heapAnalysisId Long, leakTraceIndex Int) from class leakcanary.internal.activity.screen.LeakScreen",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter leakTraceIndex : Int in method private View.onLeakTraceSelected(analysis HeapAnalysisSuccess, heapAnalysisId Long, leakTraceIndex Int) from class leakcanary.internal.activity.screen.LeakScreen",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter projection : LeakDetails in method private View.displayLeakTrace(projection LeakDetails) from class leakcanary.internal.activity.screen.LeakScreen",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type projections : List<GroupProjection> to projections : List<AllLeaksProjection> in method private View.onGroupsRetrieved(projections List<AllLeaksProjection>) from class leakcanary.internal.activity.screen.LeaksScreen",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable leakInstance : Inferred to leak : Inferred in method public assertLeak(expectedLeakClass Class<*>) from class leakcanary.TestUtils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter indexedGcRootTypes : Set<KClass<GcRoot>> in method public indexHprof(hprof Hprof, proguardMapping ProguardMapping, indexedGcRootTypes Set<KClass<GcRoot>>) : HeapGraph from class shark.HprofHeapGraph.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type allLeaks : List<Leak> to allLeaks : Sequence<Leak> in class shark.HeapAnalysisSuccess",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Split Method",
+        "description": "Split Method public sameLeakTraceSameGroup() to [public leakingWhenFurtherUpIsleaking(), public notLeakingWhenFurtherDownIsNotLeaking()] in class shark.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public differentLeakTraceDifferentGroup() renamed to public differentLeakTraceDifferentSignature() in class shark.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public sameCausesSameGroup() renamed to public sameCausesSameSignature() in class shark.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private computeGroupHash(notLeaking String, leaking String) : String renamed to private computeSignature(notLeaking String, leaking String) : String in class shark.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter leakTraces : List<LeakTrace> in primary constructor LibraryLeak(leakTraces List<LeakTrace>, pattern ReferencePattern, description String) from class shark.LibraryLeak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter className : String in primary constructor LibraryLeak(className String, leakTrace LeakTrace, retainedHeapByteSize Int, pattern ReferencePattern, description String) from class shark.LibraryLeak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter leakTrace : LeakTrace in primary constructor LibraryLeak(className String, leakTrace LeakTrace, retainedHeapByteSize Int, pattern ReferencePattern, description String) from class shark.LibraryLeak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter retainedHeapByteSize : Int in primary constructor LibraryLeak(className String, leakTrace LeakTrace, retainedHeapByteSize Int, pattern ReferencePattern, description String) from class shark.LibraryLeak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private leakTrace : LeakTrace from class shark.LibraryLeak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private retainedHeapByteSize : Int from class shark.LibraryLeak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter leakTraces : List<LeakTrace> in primary constructor ApplicationLeak(leakTraces List<LeakTrace>) from class shark.ApplicationLeak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter className : String in primary constructor ApplicationLeak(className String, leakTrace LeakTrace, retainedHeapByteSize Int) from class shark.ApplicationLeak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter leakTrace : LeakTrace in primary constructor ApplicationLeak(className String, leakTrace LeakTrace, retainedHeapByteSize Int) from class shark.ApplicationLeak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter retainedHeapByteSize : Int in primary constructor ApplicationLeak(className String, leakTrace LeakTrace, retainedHeapByteSize Int) from class shark.ApplicationLeak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private leakTrace : LeakTrace from class shark.ApplicationLeak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private retainedHeapByteSize : Int from class shark.ApplicationLeak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public findMultipleLeaks() renamed to public findMultipleIdenticalLeaks() in class shark.HeapAnalyzerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier public to internal in class shark.LeakNodeStatus",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier public to internal in class shark.LeakReference",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type type : Type to type : LeakTraceElement.Type in class shark.LeakReference",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private type : LeakTraceElement.Type from class shark.LeakReference",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private name : String from class shark.LeakReference",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable maybeLeakCause : Inferred in method private getNextElementString(leakTrace LeakTrace, element LeakTraceElement, index Int) : String from class shark.LeakTrace.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type element : LeakTraceElement to element : ReferencePathElement in method private getNextElementString(leakTrace LeakTrace, element ReferencePathElement, index Int) : String from class shark.LeakTrace.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier public to internal in class shark.LeakTraceElement",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private reference : LeakReference from class shark.LeakTraceElement",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private holder : Holder from class shark.LeakTraceElement",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private className : String from class shark.LeakTraceElement",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private labels : Set<String> from class shark.LeakTraceElement",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private leakStatus : LeakNodeStatus from class shark.LeakTraceElement",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private leakStatusReason : String from class shark.LeakTraceElement",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable refFromParentName : Inferred in method private State.enqueueGcRoots() from class shark.internal.PathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute referenceFromParent : LeakReference to refFromParentType : ReferencePathElement.ReferenceType in class shark.internal.ReferencePathNode.ChildNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type referenceFromParent : LeakReference to refFromParentType : ReferencePathElement.ReferenceType in class shark.internal.ReferencePathNode.ChildNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter refFromParentType : ReferencePathElement.ReferenceType in primary constructor NormalNode(objectId Long, parent ReferencePathNode, refFromParentType ReferencePathElement.ReferenceType, refFromParentName String) from class shark.internal.ReferencePathNode.ChildNode.NormalNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter refFromParentName : String in primary constructor NormalNode(objectId Long, parent ReferencePathNode, refFromParentType ReferencePathElement.ReferenceType, refFromParentName String) from class shark.internal.ReferencePathNode.ChildNode.NormalNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter referenceFromParent : LeakReference in primary constructor NormalNode(objectId Long, parent ReferencePathNode, referenceFromParent LeakReference) from class shark.internal.ReferencePathNode.ChildNode.NormalNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter refFromParentType : ReferencePathElement.ReferenceType in primary constructor LibraryLeakChildNode(objectId Long, parent ReferencePathNode, refFromParentType ReferencePathElement.ReferenceType, refFromParentName String, matcher LibraryLeakReferenceMatcher) from class shark.internal.ReferencePathNode.ChildNode.LibraryLeakChildNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter refFromParentName : String in primary constructor LibraryLeakChildNode(objectId Long, parent ReferencePathNode, refFromParentType ReferencePathElement.ReferenceType, refFromParentName String, matcher LibraryLeakReferenceMatcher) from class shark.internal.ReferencePathNode.ChildNode.LibraryLeakChildNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter referenceFromParent : LeakReference in primary constructor LibraryLeakChildNode(objectId Long, parent ReferencePathNode, referenceFromParent LeakReference, matcher LibraryLeakReferenceMatcher) from class shark.internal.ReferencePathNode.ChildNode.LibraryLeakChildNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private buildLeakTrace(graph HeapGraph, objectInspectors List<ObjectInspector>, rootNode RootNode, shortestChildPath List<ChildNode>) : LeakTrace renamed to private buildLeakTraceObjects(objectInspectors List<ObjectInspector>, pathHeapObjects List<HeapObject>) : List<LeakTraceObject> in class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable shortestPath : Inferred to pathHeapObjects : List<HeapObject> in method private buildLeakTraceObjects(objectInspectors List<ObjectInspector>, pathHeapObjects List<HeapObject>) : List<LeakTraceObject> from class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type shortestPath : Inferred to pathHeapObjects : List<HeapObject> in method private buildLeakTraceObjects(objectInspectors List<ObjectInspector>, pathHeapObjects List<HeapObject>) : List<LeakTraceObject> from class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type LeakTrace to List<LeakTraceObject> in method private buildLeakTraceObjects(objectInspectors List<ObjectInspector>, pathHeapObjects List<HeapObject>) : List<LeakTraceObject> from class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method private buildLeakTrace(graph HeapGraph, objectInspectors List<ObjectInspector>, rootNode RootNode, shortestChildPath List<ChildNode>) : LeakTrace from class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter rootNode : RootNode in method private buildLeakTrace(graph HeapGraph, objectInspectors List<ObjectInspector>, rootNode RootNode, shortestChildPath List<ChildNode>) : LeakTrace from class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter shortestChildPath : List<ChildNode> in method private buildLeakTrace(graph HeapGraph, objectInspectors List<ObjectInspector>, rootNode RootNode, shortestChildPath List<ChildNode>) : LeakTrace from class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable winReasons : Inferred in method private resolveStatus(reporter ObjectReporter, leakingWins Boolean) : Pair<LeakingStatus,String> from class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Pair<LeakNodeStatus,String> to Pair<LeakingStatus,String> in method private resolveStatus(reporter ObjectReporter, leakingWins Boolean) : Pair<LeakingStatus,String> from class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter leakingWins : Boolean in method private resolveStatus(reporter ObjectReporter, leakingWins Boolean) : Pair<LeakingStatus,String> from class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter gcRootType : GcRootType in primary constructor LeakTrace(gcRootType GcRootType, referencePath List<ReferencePathElement>, leakingObject LeakTraceObject, retainedHeapByteSize Int) from class shark.LeakTrace",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter referencePath : List<ReferencePathElement> in primary constructor LeakTrace(gcRootType GcRootType, referencePath List<ReferencePathElement>, leakingObject LeakTraceObject, retainedHeapByteSize Int) from class shark.LeakTrace",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter leakingObject : LeakTraceObject in primary constructor LeakTrace(gcRootType GcRootType, referencePath List<ReferencePathElement>, leakingObject LeakTraceObject, retainedHeapByteSize Int) from class shark.LeakTrace",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter retainedHeapByteSize : Int in primary constructor LeakTrace(gcRootType GcRootType, referencePath List<ReferencePathElement>, leakingObject LeakTraceObject, retainedHeapByteSize Int) from class shark.LeakTrace",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter elements : List<LeakTraceElement> in primary constructor LeakTrace(elements List<LeakTraceElement>) from class shark.LeakTrace",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public elementMayBeLeakCause(index Int) : Boolean renamed to public referencePathElementIsSuspect(index Int) : Boolean in class shark.LeakTrace",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private elements : List<LeakTraceElement> from class shark.LeakTrace",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute HELP : Type to GC_ROOT : Type in class leakcanary.internal.DisplayLeakConnectorView.Type",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute elements : List<LeakTraceElement> to referencePath : List<ReferencePathElement> in class shark.LeakTrace",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type elements : List<LeakTraceElement> to referencePath : List<ReferencePathElement> in class shark.LeakTrace",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute createGroupHashIndex : Inferred to createSignatureIndex : Inferred in class leakcanary.internal.activity.db.LeakTable",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute leakGroupCount : Int to leakCount : Int in class leakcanary.internal.activity.db.HeapAnalysisTable.Projection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public classSimpleName : String from class leakcanary.internal.activity.db.LeakTable.LeakProjection to public classSimpleName : String from class leakcanary.internal.activity.db.LeakTable.LeakTraceProjection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public createdAtTimeMillis : Long from class leakcanary.internal.activity.db.LeakTable.LeakProjection to public createdAtTimeMillis : Long from class leakcanary.internal.activity.db.LeakTable.LeakTraceProjection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public classSimpleName : String from class shark.LeakTraceElement to public classSimpleName : String from class shark.LeakTraceObject",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public getClassSimpleName() from class shark.LeakTraceElement to public getClassSimpleName() from class shark.LeakTraceObject",
+        "comment": "<p>accessor method for&nbsp;classSimpleName</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class leakcanary.internal.activity.db.LeakTable.LeakTraceProjection from class leakcanary.internal.activity.db.LeakTable.LeakProjection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class shark.LeakTraceObject from class shark.LeakTraceElement",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public insert(db SQLiteDatabase, leakId Long, heapAnalysisId Long, leakTraceIndex Int, leakingObjectClassSimpleName String) : Long extracted from public insert(db SQLiteDatabase, heapAnalysisId Long, leak Leak) : Long in class leakcanary.internal.activity.db.LeakTable & moved to class leakcanary.internal.activity.db.LeakTraceTable",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public deleteByHeapAnalysisId(db SQLiteDatabase, heapAnalysisId Long) extracted from public deleteByHeapAnalysisId(db SQLiteDatabase, heapAnalysisId Long) in class leakcanary.internal.activity.db.LeakTable & moved to class leakcanary.internal.activity.db.LeakTraceTable",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public retainedHeapByteSize : Int from class shark.Leak to public retainedHeapByteSize : Int from class shark.LeakTrace",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Attribute",
+        "description": "Move And Rename Attribute public analysisId : Long renamed to public heapAnalysisId : Long and moved from class leakcanary.internal.activity.db.LeakTable.LeakProjection to class leakcanary.internal.activity.db.LeakTable.LeakTraceProjection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Attribute",
+        "description": "Move And Rename Attribute private groupHash : String renamed to public signature : String and moved from class leakcanary.internal.activity.screen.LeakScreen to class shark.Leak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public className : String from class shark.LibraryLeak to public className : String from class shark.LeakTraceObject",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public className : String from class shark.ApplicationLeak to public className : String from class shark.LeakTraceObject",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public className : String from class shark.Leak to public className : String from class shark.LeakTraceObject",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public classSimpleName : String from class shark.Leak to public classSimpleName : String from class shark.LeakTraceObject",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public signature : String from class shark.Leak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public getClassSimpleName() from class shark.Leak to public getClassSimpleName() from class shark.LeakTraceObject",
+        "comment": "<p>accessor method for classSimpleName</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List<LeakProjection> to Map<String,Boolean> in method public retrieveLeakReadStatuses(db SQLiteDatabase, signatures Set<String>) : Map<String,Boolean> from class leakcanary.internal.activity.db.LeakTable",
+        "comment": "<p>retrieveLeaksByHash() -&gt;&nbsp;retrieveLeakBySignature()</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public retrieveLeaksByHash(db SQLiteDatabase, groupHash String) : List<LeakProjection> renamed to public retrieveLeakReadStatuses(db SQLiteDatabase, signatures Set<String>) : Map<String,Boolean> in class leakcanary.internal.activity.db.LeakTable",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter groupHash : String in method public retrieveLeaksByHash(db SQLiteDatabase, groupHash String) : List<LeakProjection> from class leakcanary.internal.activity.db.LeakTable",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter signatures : Set<String> in method public retrieveLeakReadStatuses(db SQLiteDatabase, signatures Set<String>) : Map<String,Boolean> from class leakcanary.internal.activity.db.LeakTable",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter createdAtTimeMillis : Long in primary constructor LeakProjection(id Long, analysisId Long, classSimpleName String, groupDescription String, createdAtTimeMillis Long, isNew Boolean, isLibraryLeak Boolean) from class leakcanary.internal.activity.db.LeakTable.LeakProjection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable elementIndex : Inferred in method private bindConnectorRow(view View, position Int) from class leakcanary.internal.DisplayLeakAdapter",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Code",
+        "description": "Move Code from private FindLeakInput.buildLeakTraces(pathFindingResults PathFindingResults) : Pair<List<ApplicationLeak>,List<LibraryLeak>> to private FindLeakInput.buildLeakTraces(pathFindingResults PathFindingResults) : Pair<List<ApplicationLeak>,List<LibraryLeak>> in class shark.HeapAnalyzer",
+        "comment": "<p>libraryLeaks  = LibraryLeak(<br /> className, leakTrace, retainedSizes?.get(index), matcher.pattern, matcher.description<br />val libraryLeaks = libraryLeaksMap.map { (_, pair) -&gt;<br /> val (matcher, leakTraces) = pair<br /> LibraryLeak(leakTraces, matcher.pattern, matcher.description)<br /> }</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Move Code",
+        "description": "Move Code from private View.onLeaksRetrieved(leaks List<LeakProjection>, selectedLeakIndex Int) to private View.onLeaksRetrieved(leak LeakProjection, selectedLeakTraceIndex Int, selectedHeapAnalysis HeapAnalysisSuccess) in class leakcanary.internal.activity.screen.LeakScreen",
+        "comment": "<p>move to nested lambda</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }],
+    "refDiffExecutionTime": 0
 }]

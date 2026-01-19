@@ -2048,6 +2048,25 @@ public class ReplacementAlgorithm {
 				return replacementInfo.getReplacements();
 			}
 		}
+		//match while with if
+		/*if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) &&
+				statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+			CompositeStatementObject while1 = (CompositeStatementObject)statement1;
+			CompositeStatementObject if2 = (CompositeStatementObject)statement2;
+			if(while1.getExpressions().size() == if2.getExpressions().size()) {
+				int matches = 0;
+				for(int i=0; i< while1.getExpressions().size(); i++) {
+					AbstractExpression expr1 = while1.getExpressions().get(i);
+					AbstractExpression expr2 = if2.getExpressions().get(i);
+					if(expr1.getString().equals(expr2.getString())) {
+						matches++;
+					}
+				}
+				if(matches > 0 && matches == while1.getExpressions().size()) {
+					return replacementInfo.getReplacements();
+				}
+			}
+		}*/
 		//match try-with-resources with regular try
 		if(statement1 instanceof TryStatementObject && statement2 instanceof TryStatementObject) {
 			TryStatementObject try1 = (TryStatementObject)statement1;

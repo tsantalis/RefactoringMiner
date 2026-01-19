@@ -7467,6 +7467,41 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public createReadingHprof(hprof Hprof, proguardMapping ProguardMapping, indexedGcRootTypes Set<KClass<GcRoot>>) : HprofInMemoryIndex renamed to public indexHprof(reader StreamingHprofReader, hprofHeader HprofHeader, proguardMapping ProguardMapping, indexedGcRootTypes Set<KClass<GcRoot>>) : HprofInMemoryIndex in class shark.internal.HprofInMemoryIndex.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter hprof : Hprof in method public createReadingHprof(hprof Hprof, proguardMapping ProguardMapping, indexedGcRootTypes Set<KClass<GcRoot>>) : HprofInMemoryIndex from class shark.internal.HprofInMemoryIndex.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hprofHeader : HprofHeader in method public indexHprof(reader StreamingHprofReader, hprofHeader HprofHeader, proguardMapping ProguardMapping, indexedGcRootTypes Set<KClass<GcRoot>>) : HprofInMemoryIndex from class shark.internal.HprofInMemoryIndex.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable reader : Inferred to reader : StreamingHprofReader in method public indexHprof(reader StreamingHprofReader, hprofHeader HprofHeader, proguardMapping ProguardMapping, indexedGcRootTypes Set<KClass<GcRoot>>) : HprofInMemoryIndex from class shark.internal.HprofInMemoryIndex.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type reader : Inferred to reader : StreamingHprofReader in method public indexHprof(reader StreamingHprofReader, hprofHeader HprofHeader, proguardMapping ProguardMapping, indexedGcRootTypes Set<KClass<GcRoot>>) : HprofInMemoryIndex from class shark.internal.HprofInMemoryIndex.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

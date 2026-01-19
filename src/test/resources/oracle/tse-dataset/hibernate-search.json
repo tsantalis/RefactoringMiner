@@ -1762,7 +1762,7 @@
         {
           "type": "MOVE_AND_INLINE_OPERATION",
           "description": "Move And Inline Method\tpublic buildAndContributeTo(extendedMappingCollector PojoTypeExtendedMappingCollector<?>, mode IdentityMappingMode) : IdentifierMappingImplementor<?,E> moved from class org.hibernate.search.mapper.pojo.identity.impl.PojoRootIdentityMappingCollector to class org.hibernate.search.mapper.pojo.mapping.impl.AbstractPojoTypeManager.Builder & inlined to public preBuildIdentifierMapping(identityMappingMode IdentityMappingMode) : void",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_ATTRIBUTE_TYPE",
@@ -1777,6 +1777,16 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tsearchMapping : CloseableSearchMapping in method package setup() : void from class org.hibernate.search.documentation.mapper.pojo.standalone.loading.StandalonePojoSelectionLoadingIT",
+          "validation": true
+        },
+        {
+          "type": "RENAME_OPERATION",
+          "description": "Rename Method\tpublic buildAndContributeTo(extendedMappingCollector PojoTypeExtendedMappingCollector<?>, mode IdentityMappingMode) : IdentifierMappingImplementor<?,E> renamed to public build(mode IdentityMappingMode) : BoundIdentifierMapping<?,E> in class org.hibernate.search.mapper.pojo.identity.impl.PojoRootIdentityMappingCollector",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tIdentifierMappingImplementor<?,E> to BoundIdentifierMapping<?,E> in method public build(mode IdentityMappingMode) : BoundIdentifierMapping<?,E> from class org.hibernate.search.mapper.pojo.identity.impl.PojoRootIdentityMappingCollector",
           "validation": true
         }
       ]

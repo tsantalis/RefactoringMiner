@@ -2783,7 +2783,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 			else if(mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper) &&
 					(relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) || zeroNonMapped || containsAnonymousClassDiff || operationsBeforeAndAfterMatch(removedOperation, addedOperation)) &&
-					compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition) &&
+					(compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition) || operationsBeforeAndAfterMatch(removedOperation, addedOperation)) &&
 					removedOperation.testMethodCheck(addedOperation)) {
 				isPartOfMethodMovedFromDeletedMethod(removedOperation, addedOperation, operationBodyMapper, mapperSet);
 				isPartOfMethodMovedToAddedMethod(removedOperation, addedOperation, operationBodyMapper);
@@ -3829,7 +3829,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			operationsBeforeMatch = (operationBefore1.equalReturnParameter(operationBefore2) && operationBefore1.getName().equals(operationBefore2.getName()))
 					|| (matchingDataProviderAnnotation(removedOperation, operationBefore1) && matchingDataProviderAnnotation(addedOperation, operationBefore2));
 		}
-		else if(operationBefore1 == null && operationBefore2 == null) {
+		else if(operationBefore1 == null && operationBefore2 == null && !removedOperation.isConstructor() && !addedOperation.isConstructor()) {
 			//both operations are in the first position
 			operationsBeforeMatch = true;
 		}

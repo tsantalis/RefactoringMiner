@@ -9497,4 +9497,111 @@
         "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 50,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "6c2ee609efda323e88a4964d31fc5a5f0532f776",
+    "url": "https://github.com/square/leakcanary/commit/6c2ee609efda323e88a4964d31fc5a5f0532f776",
+    "author": "pyricau",
+    "time": "5/20/19 09:17 AM",
+    "refactorings": [{
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.Exclusion.ExclusionType.ThreadExclusion renamed to leakcanary.Exclusion.ExclusionType.JavaLocalExclusion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.internal.LabelTest renamed to leakcanary.internal.LabelerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable gcRootIds : Inferred to gcRoot : Inferred in method private scan(parser HprofParser, computeRetainedSize Boolean) : ScanResult from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter hprofParser : HprofParser to parser : HprofParser in method private enqueueGcRoots(parser HprofParser, gcRoots MutableList<GcRoot>, threadNameExclusions Map<String,Exclusion>, computeDominators Boolean) from class leakcanary.internal.ShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter gcRoots : MutableList<GcRoot> in method private enqueueGcRoots(parser HprofParser, gcRoots MutableList<GcRoot>, threadNameExclusions Map<String,Exclusion>, computeDominators Boolean) from class leakcanary.internal.ShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter threadNameExclusions : Map<String,Exclusion> in method private enqueueGcRoots(parser HprofParser, gcRoots MutableList<GcRoot>, threadNameExclusions Map<String,Exclusion>, computeDominators Boolean) from class leakcanary.internal.ShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter gcRootIds : List<Long> in method private enqueueGcRoots(hprofParser HprofParser, gcRootIds List<Long>, computeDominators Boolean) from class leakcanary.internal.ShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter hprofParser : HprofParser to parser : HprofParser in method private enqueue(parser HprofParser, node LeakNode, exclusionPriority Status) from class leakcanary.internal.ShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type gcRootIds : MutableList<Long> to gcRootIds : MutableList<GcRoot> in method public findPaths(parser HprofParser, exclusionsFactory ExclusionsFactory, leakingWeakRefs List<KeyedWeakReferenceMirror>, gcRootIds MutableList<GcRoot>, computeDominators Boolean, listener AnalyzerProgressListener) : Results from class leakcanary.internal.ShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable gcRootRecord : Inferred to gcRoot : Inferred in method public clazz(className String, superClassId Long, staticFields List<Pair<String,HeapValue>>, fields List<Pair<String,KClass<HeapValue>>>) : Long from class leakcanary.internal.HprofWriterHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type gcRootIds : MutableList<Long> to gcRootIds : MutableList<GcRoot> in class leakcanary.HeapAnalyzer.ScanResult",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type gcRootIds : MutableList<Long> to gcRootIds : MutableList<GcRoot> in method private findShortestPaths(parser HprofParser, exclusionsFactory ExclusionsFactory, leakingWeakRefs List<KeyedWeakReferenceMirror>, gcRootIds MutableList<GcRoot>, computeDominators Boolean) : Results from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type visitOrder : Inferred to visitOrder : Int in class leakcanary.LeakNode.RootNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter visitOrder : Int in primary constructor RootNode(instance Long, visitOrder Int) from class leakcanary.LeakNode.RootNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

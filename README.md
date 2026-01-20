@@ -672,31 +672,31 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **January 19, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **January 20, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1328  |  3  |  0  | 0.998  | 1.000|
+|**Total**|1338  |  3  |  0  | 0.998  | 1.000|
 |Extract Method| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|34  |  0  |  0  | 1.000  | 1.000|
-|Move Attribute|19  |  0  |  0  | 1.000  | 1.000|
+|Move Attribute|21  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|117  |  0  |  0  | 1.000  | 1.000|
 |Inline Method| 7  |  0  |  0  | 1.000  | 1.000|
 |Move Method|68  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Method| 6  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Method|46  |  0  |  0  | 1.000  | 1.000|
-|Move Class|141  |  0  |  0  | 1.000  | 1.000|
+|Move Class|145  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Class|10  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|17  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method| 2  |  0  |  0  | 1.000  | 1.000|
 |Extract Interface| 3  |  0  |  0  | 1.000  | 1.000|
 |Extract Superclass| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 1  |  0  |  0  | 1.000  | 1.000|
-|Extract Class| 7  |  0  |  0  | 1.000  | 1.000|
+|Extract Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract And Move Method| 7  |  1  |  0  | 0.875  | 1.000|
 |Move And Inline Method|19  |  0  |  0  | 1.000  | 1.000|
-|Rename Package| 2  |  0  |  0  | 1.000  | 1.000|
+|Rename Package| 3  |  0  |  0  | 1.000  | 1.000|
 |Move Package| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable| 7  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable| 8  |  1  |  0  | 0.889  | 1.000|
@@ -722,7 +722,7 @@ As of **January 19, 2026** the precision and recall of RefactoringMiner on this 
 |Remove Class Annotation| 6  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|92  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|93  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter|54  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
@@ -734,7 +734,7 @@ As of **January 19, 2026** the precision and recall of RefactoringMiner on this 
 |Change Type Declaration Kind|11  |  0  |  0  | 1.000  | 1.000|
 |Invert Condition| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional| 2  |  0  |  0  | 1.000  | 1.000|
-|Move Code| 3  |  0  |  0  | 1.000  | 1.000|
+|Move Code| 4  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 Since release 3.0.0, RefactoringMiner requires **Java 17** or newer and **Gradle 7.4** or newer.

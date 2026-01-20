@@ -9767,4 +9767,83 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 52,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "7b66364ecb46c688398c03abd5d34c7ec626cb4f",
+    "url": "https://github.com/square/leakcanary/commit/7b66364ecb46c688398c03abd5d34c7ec626cb4f",
+    "author": "pyricau",
+    "time": "4/17/19 08:44 PM",
+    "refactorings": [{
+        "type": "Move Class",
+        "description": "Move Class leakcanary.updated.KeyedWeakReferenceMirror moved to leakcanary.experimental.KeyedWeakReferenceMirror",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leakcanary.updated.internal.LeakNode moved to leakcanary.experimental.internal.LeakNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leakcanary.updated.internal.ShortestPathFinder moved to leakcanary.experimental.internal.ShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leakcanary.updated.HeapAnalyzer moved to leakcanary.experimental.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Package",
+        "description": "Rename Package leakcanary.updated to leakcanary.experimental",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter useExperimentalHeapParser : Boolean in primary constructor Config(dumpHeap Boolean, excludedRefs ExcludedRefs, reachabilityInspectorClasses List<Class<Reachability.Inspector>>, computeRetainedHeapSize Boolean, useExperimentalHeapParser Boolean) from class leakcanary.LeakCanary.Config",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public firstMaxMemoryUsed : Inferred from class leakcanary.InstrumentationLeakDetector to public firstMaxMemoryUsed : Inferred from class leakcanary.HprofParserComparisonTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public secondMaxMemoryUsed : Inferred from class leakcanary.InstrumentationLeakDetector to public secondMaxMemoryUsed : Inferred from class leakcanary.HprofParserComparisonTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class leakcanary.HprofParserComparisonTest from class leakcanary.InstrumentationLeakDetector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Code",
+        "description": "Move Code from public detectLeaks() : Result in class leakcanary.InstrumentationLeakDetector to public compareHprofParsers() in class leakcanary.HprofParserComparisonTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

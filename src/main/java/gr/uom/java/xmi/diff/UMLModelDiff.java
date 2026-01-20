@@ -7458,6 +7458,7 @@ public class UMLModelDiff {
 	private void checkForMovedCodeWithoutCalls() throws RefactoringMinerTimedOutException {
 		for(UMLClassDiff classDiff  : commonClassDiffList) {
 			Map<String, Set<VariableDeclarationContainer>> movedOperationMap = new LinkedHashMap<>();
+			Map<String, Set<UMLAttribute>> movedAttributeMap = new LinkedHashMap<>();
 			for(Refactoring r : refactorings) {
 				if(r instanceof MoveOperationRefactoring move) {
 					if(move.getOriginalOperation().getClassName().equals(classDiff.getOriginalClassName())) {
@@ -7472,15 +7473,32 @@ public class UMLModelDiff {
 						}
 					}
 				}
+				else if(r instanceof MoveAttributeRefactoring move) {
+					if(move.getOriginalAttribute().getClassName().equals(classDiff.getOriginalClassName())) {
+						UMLAttribute movedAttribute = move.getMovedAttribute();
+						if(movedAttributeMap.containsKey(movedAttribute.getClassName())) {
+							movedAttributeMap.get(movedAttribute.getClassName()).add(movedAttribute);
+						}
+						else {
+							Set<UMLAttribute> movedAttributes = new LinkedHashSet<>();
+							movedAttributes.add(movedAttribute);
+							movedAttributeMap.put(movedAttribute.getClassName(), movedAttributes);
+						}
+					}
+				}
 			}
 			List<UMLOperationBodyMapper> moveCodeMappers = new ArrayList<>();
-			if(movedOperationMap.size() == 1) {
-				String addedClassName = movedOperationMap.keySet().iterator().next();
+			if(movedOperationMap.size() == 1 || movedAttributeMap.size() == 1) {
+				String addedClassName = !movedOperationMap.isEmpty() ? movedOperationMap.keySet().iterator().next() : null;
+				if(addedClassName == null) {
+					addedClassName = !movedAttributeMap.isEmpty() ? movedAttributeMap.keySet().iterator().next() : null;
+				}
 				UMLClass addedClass = getAddedClass(addedClassName);
 				Set<VariableDeclarationContainer> movedOperations = movedOperationMap.get(addedClassName);
 				if(addedClass != null) {
 					for(UMLOperation operation : addedClass.getOperations()) {
-						if(!movedOperations.contains(operation) && !operation.isConstructor()) {
+						boolean isMoved = movedOperations != null && movedOperations.contains(operation);
+						if(!isMoved && !operation.isConstructor()) {
 							for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
 								UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, operation, mapper.getClassDiff());
 								for(AbstractCodeMapping mapping : new LinkedHashSet<>(moveCodeMapper.getMappings())) {

@@ -1150,6 +1150,13 @@
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Move Code",
+        "description": "Move Code from public build_linear_equality_constraints() in class algorithms.maxentropy.MaximumEntropy to public build_linear_equality_constraints() in class algorithms.maxentropy.MarginalMaximumEntropy",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

@@ -5660,7 +5660,7 @@ public class ReplacementAlgorithm {
 				}
 				boolean isWithinElseBranch1 = isBlock1 ? isElseBranch(statement1, statement1.getParent()) : isElseBranch(statement1.getParent(), statement1.getParent().getParent());
 				boolean isWithinElseIfBranch1 = false;
-				CompositeStatementObject grandGrandParent1 = statement1.getParent().getParent().getParent();
+				CompositeStatementObject grandGrandParent1 = statement1.getParent().getParent() != null ? statement1.getParent().getParent().getParent() : null;
 				if(grandGrandParent1 != null) {
 					isWithinElseIfBranch1 = isBlock1 ? isElseIfBranch(statement1.getParent(), statement1.getParent().getParent()) : isElseIfBranch(statement1.getParent().getParent(), grandGrandParent1);
 				}

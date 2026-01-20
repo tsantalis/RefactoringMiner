@@ -96,53 +96,29 @@ public class MarkAsViewed {
 	}
 
 	private static void unmarkAsViewed(String prNodeId, String path) {
-		try {
-			String mutation = """
-			mutation UnmarkFileViewed($path: String!, $pullRequestId: ID!) {
-			  unmarkFileAsViewed(input: {path: $path, pullRequestId: $pullRequestId}) {
-			    clientMutationId
-			  }
-			}
-			""";
-			ObjectMapper objectMapper = new ObjectMapper();
-			ObjectNode variables = objectMapper.createObjectNode();
-			variables.put("path", path);
-			variables.put("pullRequestId", prNodeId);
-
-			ObjectNode requestBodyJson = objectMapper.createObjectNode();
-			requestBodyJson.put("query", mutation);
-			requestBodyJson.set("variables", variables);
-
-			String requestBody = objectMapper.writeValueAsString(requestBodyJson);
-
-			HttpClient client = HttpClient.newHttpClient();
-			HttpRequest request = HttpRequest.newBuilder()
-					.uri(URI.create(API_URL))
-					.header("Authorization", "Bearer " + OAUTH_TOKEN)
-					.header("Content-Type", "application/json")
-					.POST(HttpRequest.BodyPublishers.ofString(requestBody))
-					.build();
-
-			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-			System.out.println("Response status code: " + response.statusCode());
-			System.out.println("Response body: " + response.body());
-		} catch(IOException ioe) {
-			ioe.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		String mutation = """
+				mutation UnmarkFileViewed($path: String!, $pullRequestId: ID!) {
+				  unmarkFileAsViewed(input: {path: $path, pullRequestId: $pullRequestId}) {
+				    clientMutationId
+				  }
+				}
+				""";
+		process(prNodeId, path, mutation);
 	}
 
 	private static void markAsViewed(String prNodeId, String path) {
-		try {	
-			String mutation = """
-			mutation MarkFileViewed($path: String!, $pullRequestId: ID!) {
-			  markFileAsViewed(input: {path: $path, pullRequestId: $pullRequestId}) {
-			    clientMutationId
-			  }
-			}
-			""";
+		String mutation = """
+				mutation MarkFileViewed($path: String!, $pullRequestId: ID!) {
+				  markFileAsViewed(input: {path: $path, pullRequestId: $pullRequestId}) {
+				    clientMutationId
+				  }
+				}
+				""";
+		process(prNodeId, path, mutation);
+	}
+
+	private static void process(String prNodeId, String path, String mutation) {
+		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			ObjectNode variables = objectMapper.createObjectNode();
 			variables.put("path", path);

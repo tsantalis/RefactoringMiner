@@ -9604,4 +9604,167 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 51,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "6daac6d61cddbc501bd82c68f281fca72bd85a59",
+    "url": "https://github.com/square/leakcanary/commit/6daac6d61cddbc501bd82c68f281fca72bd85a59",
+    "author": "pyricau",
+    "time": "4/16/19 06:27 PM",
+    "refactorings": [{
+        "type": "Rename Attribute",
+        "description": "Rename Attribute PARSING_HEAP_DUMP : Step to SCANNING_HEAP_DUMP : Step in class leakcanary.AnalyzerProgressListener.Step",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private scan(parser HprofParser) : Triple<List<Long>,Long,List<InstanceDumpRecord>> from class leakcanary.internal.HeapParsingTest to private scan(parser HprofParser) : Triple<List<Long>,Long,List<InstanceDumpRecord>> from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public retrieveStringById(objectId Long) : String extracted from public retrieveString(reference ObjectReference) : String in class leakcanary.HprofParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute instance : HydratedInstance to classHierarchy : List<String> in class leakcanary.updated.LeakTraceElement",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type instance : HydratedInstance to classHierarchy : List<String> in class leakcanary.updated.LeakTraceElement",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type value : Long to value : HeapValue in class leakcanary.updated.LeakReference",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable holder : Inferred to parser : HprofParser in method private buildLeakElement(parser HprofParser, node LeakNode) : LeakTraceElement from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable classObj : Inferred to instance : Inferred in method private buildLeakElement(parser HprofParser, node LeakNode) : LeakTraceElement from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type holder : Inferred to parser : HprofParser in method private buildLeakElement(parser HprofParser, node LeakNode) : LeakTraceElement from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type className : String to className : Inferred in method private buildLeakElement(parser HprofParser, node LeakNode) : LeakTraceElement from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hprofParser : HprofParser in method private addRemainingInstancesWithNoPath(hprofParser HprofParser, leakingWeakRefs List<KeyedWeakReferenceMirror>, analysisResults MutableMap<String,RetainedInstance>) from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter parser : HprofParser in method private buildLeakTrace(parser HprofParser, heapDump HeapDump, leakingNode LeakNode) : LeakTrace from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter parser : HprofParser in method private computeExpectedReachability(parser HprofParser, heapDump HeapDump, elements List<LeakTraceElement>) : List<Reachability> from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter parser : HprofParser in method private inspectElementReachability(parser HprofParser, reachabilityInspectors List<Reachability.Inspector>, element LeakTraceElement) : Reachability from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter parser : HprofParser in method private buildLeakTraces(heapDump HeapDump, pathResults List<Result>, parser HprofParser, leakingWeakRefs MutableList<KeyedWeakReferenceMirror>, analysisResults MutableMap<String,RetainedInstance>) from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter snapshot : Snapshot in method private buildLeakTraces(heapDump HeapDump, pathResults List<Result>, snapshot Snapshot, leakingWeakRefs MutableList<HasReferent>, analysisResults MutableMap<String,RetainedInstance>) from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakingWeakRefs : MutableList<HasReferent> to leakingWeakRefs : List<KeyedWeakReferenceMirror> in method private addRemainingInstancesWithNoPath(hprofParser HprofParser, leakingWeakRefs List<KeyedWeakReferenceMirror>, analysisResults MutableMap<String,RetainedInstance>) from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakingWeakRefs : MutableList<HasReferent> to leakingWeakRefs : MutableList<KeyedWeakReferenceMirror> in method private buildLeakTraces(heapDump HeapDump, pathResults List<Result>, parser HprofParser, leakingWeakRefs MutableList<KeyedWeakReferenceMirror>, analysisResults MutableMap<String,RetainedInstance>) from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakingWeakRefs : MutableList<HasReferent> to leakingWeakRefs : List<KeyedWeakReferenceMirror> in method private findShortestPaths(heapDump HeapDump, parser HprofParser, leakingWeakRefs List<KeyedWeakReferenceMirror>, gcRootIds List<Long>) : List<ShortestPathFinder.Result> from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List<Result> to List<ShortestPathFinder.Result> in method private findShortestPaths(heapDump HeapDump, parser HprofParser, leakingWeakRefs List<KeyedWeakReferenceMirror>, gcRootIds List<Long>) : List<ShortestPathFinder.Result> from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable key : Inferred in method private buildLeakTraces(heapDump HeapDump, pathResults List<Result>, parser HprofParser, leakingWeakRefs MutableList<KeyedWeakReferenceMirror>, analysisResults MutableMap<String,RetainedInstance>) from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Split Parameter",
+        "description": "Split Parameter snapshot : Snapshot to [parser : HprofParser, gcRootIds : List<Long>] in method private findShortestPaths(heapDump HeapDump, parser HprofParser, leakingWeakRefs List<KeyedWeakReferenceMirror>, gcRootIds List<Long>) : List<ShortestPathFinder.Result> from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

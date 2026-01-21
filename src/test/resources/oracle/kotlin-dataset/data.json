@@ -9846,4 +9846,342 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 53,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "7c149da778d585f3b4bc200a02c9c7e77071ea2f",
+    "url": "https://github.com/square/leakcanary/commit/7c149da778d585f3b4bc200a02c9c7e77071ea2f",
+    "author": "pyricau",
+    "time": "4/9/19 04:38 PM",
+    "refactorings": [{
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type heapAnalyzer : HeapAnalyzer to heapAnalyzer : Inferred in class leakcanary.internal.HeapAnalyzerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter excludedRefs : ExcludedRefs in primary constructor HeapAnalyzer(excludedRefs ExcludedRefs, listener AnalyzerProgressListener, reachabilityInspectorClasses List<Class<Inspector>>, keyedWeakReferenceClassName String, heapDumpMemoryStoreClassName String) from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter reachabilityInspectorClasses : List<Class<Inspector>> in primary constructor HeapAnalyzer(excludedRefs ExcludedRefs, listener AnalyzerProgressListener, reachabilityInspectorClasses List<Class<Inspector>>, keyedWeakReferenceClassName String, heapDumpMemoryStoreClassName String) from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter heapDumpFile : File to heapDump : HeapDump in method internal checkForLeak(heapDump HeapDump, referenceKey String) : AnalysisResult from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type heapDumpFile : File to heapDump : HeapDump in method internal checkForLeak(heapDump HeapDump, referenceKey String) : AnalysisResult from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter computeRetainedSize : Boolean in method internal checkForLeak(heapDumpFile File, referenceKey String, computeRetainedSize Boolean) : AnalysisResult from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable e : Throwable to exception : Throwable in method public checkForLeaks(heapDump HeapDump) : HeapAnalysis from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List<AnalysisResult> to HeapAnalysis in method public checkForLeaks(heapDump HeapDump) : HeapAnalysis from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter heapDumpFile : File to heapDump : HeapDump in method public checkForLeaks(heapDump HeapDump) : HeapAnalysis from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type heapDumpFile : File to heapDump : HeapDump in method public checkForLeaks(heapDump HeapDump) : HeapAnalysis from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter computeRetainedSize : Boolean in method public checkForLeaks(heapDumpFile File, computeRetainedSize Boolean) : List<AnalysisResult> from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type analysisResults : MutableMap<String,AnalysisResult> to analysisResults : MutableMap<String,RetainedInstance> in method private findLeakingReferences(snapshot Snapshot, retainedKeys MutableList<String>, analysisResults MutableMap<String,RetainedInstance>, heapDumpUptimeMillis Long) : MutableList<HasReferent> from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter analysisStartNanoTime : Long in method private findLeakingReferences(snapshot Snapshot, retainedKeys MutableList<String>, analysisResults MutableMap<String,AnalysisResult>, heapDumpUptimeMillis Long, analysisStartNanoTime Long) : MutableList<HasReferent> from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter heapDump : HeapDump in method private findShortestPaths(heapDump HeapDump, snapshot Snapshot, leakingWeakRefs MutableList<HasReferent>) : List<Result> from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type analysisResults : MutableMap<String,AnalysisResult> to analysisResults : MutableMap<String,RetainedInstance> in method private buildLeakTraces(heapDump HeapDump, pathResults List<Result>, snapshot Snapshot, leakingWeakRefs MutableList<HasReferent>, analysisResults MutableMap<String,RetainedInstance>) from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter heapDump : HeapDump in method private buildLeakTraces(heapDump HeapDump, pathResults List<Result>, snapshot Snapshot, leakingWeakRefs MutableList<HasReferent>, analysisResults MutableMap<String,RetainedInstance>) from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter computeRetainedSize : Boolean in method private buildLeakTraces(computeRetainedSize Boolean, pathResults List<Result>, snapshot Snapshot, leakingWeakRefs MutableList<HasReferent>, analysisStartNanoTime Long, analysisResults MutableMap<String,AnalysisResult>) from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter analysisStartNanoTime : Long in method private buildLeakTraces(computeRetainedSize Boolean, pathResults List<Result>, snapshot Snapshot, leakingWeakRefs MutableList<HasReferent>, analysisStartNanoTime Long, analysisResults MutableMap<String,AnalysisResult>) from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type analysisResults : MutableMap<String,AnalysisResult> to analysisResults : MutableMap<String,RetainedInstance> in method private addRemainingInstancesWithNoPath(leakingWeakRefs MutableList<HasReferent>, analysisResults MutableMap<String,RetainedInstance>) from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter analysisStartNanoTime : Long in method private addRemainingInstancesWithNoPath(leakingWeakRefs MutableList<HasReferent>, analysisStartNanoTime Long, analysisResults MutableMap<String,AnalysisResult>) from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter heapDump : HeapDump in method private findLeakTrace(heapDump HeapDump, referenceKey String, referenceName String, analysisStartNanoTime Long, snapshot Snapshot, leakingRef Instance, watchDurationMs Long) : AnalysisResult from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter computeRetainedSize : Boolean in method private findLeakTrace(referenceKey String, referenceName String, analysisStartNanoTime Long, snapshot Snapshot, leakingRef Instance, computeRetainedSize Boolean, watchDurationMs Long) : AnalysisResult from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter heapDump : HeapDump in method private buildLeakTrace(heapDump HeapDump, leakingNode LeakNode) : LeakTrace from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter heapDump : HeapDump in method private computeExpectedReachability(heapDump HeapDump, elements List<LeakTraceElement>) : List<Reachability> from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter reachabilityInspectors : List<Reachability.Inspector> in method private inspectElementReachability(reachabilityInspectors List<Reachability.Inspector>, element LeakTraceElement) : Reachability from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable heapDump : Inferred in method internal analyze(heapDumpFile HeapDumpFile, excludedRefs BuilderWithParams) : AnalysisResult from class leakcanary.internal.TestUtil.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type AnalysisResult to RetainedInstance in method internal findLeak(heapDumpFile HeapDumpFile) : RetainedInstance from class leakcanary.internal.TestUtil.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List<AnalysisResult> to HeapAnalysis in method internal findAllLeaks(heapDumpFile HeapDumpFile) : HeapAnalysis from class leakcanary.internal.TestUtil.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable results : Inferred to heapAnalysis : Inferred in method internal findLeak(heapDumpFile HeapDumpFile) : RetainedInstance from class leakcanary.internal.TestUtil.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable results : Inferred to result : Inferred in method private detectLeaks() from class leakcanary.FailTestOnLeakRunListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter heapAnalysis : HeapAnalysis in method protected reportLeaks(heapAnalysis HeapAnalysis, applicationLeaks List<LeakingInstance>) from class leakcanary.FailTestOnLeakRunListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter applicationLeaks : List<LeakingInstance> in method protected reportLeaks(heapAnalysis HeapAnalysis, applicationLeaks List<LeakingInstance>) from class leakcanary.FailTestOnLeakRunListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter heapAnalysis : HeapAnalysis in method protected buildLeakDetectedMessage(heapAnalysis HeapAnalysis, applicationLeaks List<LeakingInstance>) : String from class leakcanary.FailTestOnLeakRunListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter detectedLeaks : List<InstrumentationLeakResults.Result> to applicationLeaks : List<LeakingInstance> in method protected buildLeakDetectedMessage(heapAnalysis HeapAnalysis, applicationLeaks List<LeakingInstance>) : String from class leakcanary.FailTestOnLeakRunListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type detectedLeaks : List<InstrumentationLeakResults.Result> to applicationLeaks : List<LeakingInstance> in method protected buildLeakDetectedMessage(heapAnalysis HeapAnalysis, applicationLeaks List<LeakingInstance>) : String from class leakcanary.FailTestOnLeakRunListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter results : InstrumentationLeakResults in method protected reportLeaks(results InstrumentationLeakResults) from class leakcanary.FailTestOnLeakRunListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable heapDump : Inferred in method public detectLeaks() : Result from class leakcanary.InstrumentationLeakDetector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable e : Exception to exception : Exception in method public detectLeaks() : Result from class leakcanary.InstrumentationLeakDetector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type InstrumentationLeakResults to Result in method public detectLeaks() : Result from class leakcanary.InstrumentationLeakDetector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class leakcanary.HeapDump.Listener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter heapDumpFile : File in method public builder(heapDumpFile File) : Builder from class leakcanary.HeapDump.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private assertLeak(expectedLeakClass Class<*>) from class leakcanary.FragmentLeakTest to public assertLeak(expectedLeakClass Class<*>) from class leakcanary.TestUtils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable results : Inferred to result : Inferred in method public assertLeak(expectedLeakClass Class<*>) from class leakcanary.TestUtils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public assertLeak(expectedLeakClass Class<*>) from class leakcanary.TestUtils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class leakcanary.TestUtils from class leakcanary.FragmentLeakTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter excludedRefs : ExcludedRefs in method public HeapAnalyzer(excludedRefs ExcludedRefs, listener AnalyzerProgressListener, reachabilityInspectorClasses List<Class<Inspector>>) from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter reachabilityInspectorClasses : List<Class<Inspector>> in method public HeapAnalyzer(excludedRefs ExcludedRefs, listener AnalyzerProgressListener, reachabilityInspectorClasses List<Class<Inspector>>) from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

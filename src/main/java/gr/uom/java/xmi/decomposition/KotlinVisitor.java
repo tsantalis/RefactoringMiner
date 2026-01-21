@@ -21,6 +21,7 @@ import org.jetbrains.kotlin.psi.KtDelegatedSuperTypeEntry;
 import org.jetbrains.kotlin.psi.KtDotQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.psi.KtLabeledExpression;
 import org.jetbrains.kotlin.psi.KtLambdaExpression;
 import org.jetbrains.kotlin.psi.KtNameReferenceExpression;
 import org.jetbrains.kotlin.psi.KtObjectDeclaration;
@@ -137,6 +138,8 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 			this.processPropertyExpression(property, data);
 		} else if (expression instanceof KtObjectLiteralExpression objectLiteralExpression) {
 			this.processObjectLiteralExpression(objectLiteralExpression, data);
+		} else if (expression instanceof KtLabeledExpression labeledExpression) {
+			this.processLabeledExpression(labeledExpression, data);
 		}
 		return super.visitExpression(expression, data);
 	}
@@ -191,6 +194,13 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 	public Object visitSuperTypeEntry(KtSuperTypeEntry entry, Object data) {
 		visitTypeReference(entry.getTypeReference(), data);
 		return super.visitSuperTypeEntry(entry, data);
+	}
+
+	private void processLabeledExpression(KtLabeledExpression labeledExpression, Object data) {
+		KtExpression baseExpression = labeledExpression.getBaseExpression();
+		if(baseExpression != null) {
+			this.visitExpression(baseExpression, data);
+		}
 	}
 
 	private void processPropertyExpression(KtProperty ktProperty, Object data) {

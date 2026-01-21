@@ -2,6 +2,7 @@ package narrator.graph.cluster.traverse;
 
 import com.github.gumtreediff.utils.Pair;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -9,10 +10,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import narrator.graph.Context;
 import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.Node;
+import narrator.graph.SrcDst;
 import narrator.graph.cluster.Cluster;
 import org.jgrapht.Graph;
 import org.refactoringminer.astDiff.utils.Constants;
@@ -108,14 +111,14 @@ public class TraversalEngine {
         }
 
         UsagePattern usageComponent = new UsagePattern(node);
-        addMapping(node, usageComponent);
         addContext(node, usageComponent);
+        addMapping(node, usageComponent);
 
         Set<Node> usedNodes = util.getUsedNodes(node);
         for (Node usedNode : usedNodes) {
             usageComponent.addEdge(usedNode, node, new Edge(EdgeType.DEF_USE));
-            addMapping(usedNode, usageComponent);
             addContext(usedNode, usageComponent);
+            addMapping(usedNode, usageComponent);
 
             if (util.doesUse(usedNode)) {
                 addUsageComponent(usedNode, usagePatterns);
@@ -152,10 +155,10 @@ public class TraversalEngine {
                 mergeSuccessiveComponent(successivePatterns, target, successivePattern);
 
                 successivePattern.addEdge(source, target, edge);
-                addMapping(source, successivePattern);
                 addContext(source, successivePattern);
-                addMapping(target, successivePattern);
+                addMapping(source, successivePattern);
                 addContext(target, successivePattern);
+                addMapping(target, successivePattern);
 
                 successivePatterns.put(acceptedNode, successivePattern);
                 components.add(successivePattern);
@@ -347,6 +350,7 @@ public class TraversalEngine {
                                 .toList();
                 return duplicateEdges.isEmpty();
             });
+            addContext(source, traversalPattern);
         }
 
         List<Node> targets = util.getMappingTargets(node);
@@ -357,26 +361,33 @@ public class TraversalEngine {
                                 .toList();
                 return duplicateEdges.isEmpty();
             });
+            addContext(target, traversalPattern);
         }
     }
 
     private void addSingularComponents() {
-        List<Node> singularNodes = graph.vertexSet().stream().filter(node -> !node.isContext())
-                .filter(node -> {
-                    for (TraversalPattern traversalComponent : components) {
-                        boolean contains = traversalComponent.containsNode(node);
-                        if (contains) {
-                            return false;
+        while (true) {
+            List<Node> singularNodes = graph.vertexSet().stream().filter(node -> !node.isContext())
+                    .filter(node -> {
+                        for (TraversalPattern traversalComponent : components) {
+                            boolean contains = traversalComponent.containsNode(node);
+                            if (contains) {
+                                return false;
+                            }
                         }
-                    }
-                    return true;
-                }).toList();
+                        return true;
+                    }).collect(Collectors.toCollection(ArrayList::new));
+            if (singularNodes.isEmpty()) {
+                break;
+            }
+            singularNodes.sort(Comparator.comparing(
+                    node -> !node.getSrcDst().equals(SrcDst.DST)
+            ));
 
-        for (Node node : singularNodes) {
-            SingularPattern singularComponent = new SingularPattern(node);
-            addMapping(node, singularComponent);
-            addContext(node, singularComponent);
-
+            Node singularNode = singularNodes.get(0);
+            SingularPattern singularComponent = new SingularPattern(singularNode);
+            addContext(singularNode, singularComponent);
+            addMapping(singularNode, singularComponent);
             components.add(singularComponent);
         }
     }

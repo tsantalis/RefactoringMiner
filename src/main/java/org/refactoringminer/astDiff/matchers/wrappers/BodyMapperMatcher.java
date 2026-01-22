@@ -161,7 +161,8 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             else if (srcStatementNode.getType().name.equals(Constants.get().WHEN_EXPRESSION) && dstStatementNode.getType().name.equals(Constants.get().WHEN_EXPRESSION)) {
             	Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().WHEN_SUBJECT);
                 if (matched != null) {
-                    mappingStore.addMapping(matched.first,matched.second);
+                	//when subject can be a property declaration, thus we need to match it recursively
+                    mappingStore.addMappingRecursively(matched.first,matched.second);
                 }
                 new CompositeMatcher(abstractCodeMapping).match(srcStatementNode,dstStatementNode,mappingStore);
             }

@@ -157,6 +157,7 @@ public class Constants {
     public final String PRIVATE = "private";
     public final String COMPANION = "companion";
     public final String INFIX = "infix";
+    public final String INNER = "inner";
 
     public final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
     public final String METHOD_INVOCATION_RECEIVER = "METHOD_INVOCATION_RECEIVER";

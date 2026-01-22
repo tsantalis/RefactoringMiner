@@ -10,6 +10,7 @@ import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.models.OptimizationData;
+import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.Optional;
@@ -38,6 +39,12 @@ public class EnumConstantsMatcher extends OptimizationAwareMatcher {
             LocationInfo locationInfo2 = commonEnumConstant.getRight().getLocationInfo();
             Tree srcEnumConstant = TreeUtilFunctions.findByLocationInfo(srcTree,locationInfo1);
             Tree dstEnumConstant = TreeUtilFunctions.findByLocationInfo(dstTree,locationInfo2);
+            if (srcEnumConstant == null || srcEnumConstant.getType().name.endsWith("_comment")) {
+            	srcEnumConstant = TreeUtilFunctions.findByLocationInfo(srcTree, locationInfo1, Constants.get().ENUM_ENTRY);
+            }
+            if (dstEnumConstant == null || dstEnumConstant.getType().name.endsWith("_comment")) {
+            	dstEnumConstant = TreeUtilFunctions.findByLocationInfo(dstTree, locationInfo2, Constants.get().ENUM_ENTRY);
+            }
             new LeafMatcher().match(srcEnumConstant,dstEnumConstant,mappingStore);
             new FieldDeclarationMatcher(
                     optimizationData,

@@ -3828,7 +3828,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(operationBefore1 != null && operationBefore2 != null) {
 			operationsBeforeMatch = (operationBefore1.equalReturnParameter(operationBefore2) && operationBefore1.getName().equals(operationBefore2.getName()))
 					|| (matchingDataProviderAnnotation(removedOperation, operationBefore1) && matchingDataProviderAnnotation(addedOperation, operationBefore2))
-					|| mapperListContainsOperation(operationBefore1, operationBefore2);
+					|| mapperListContainsMapper(operationBefore1, operationBefore2);
 		}
 		else if(operationBefore1 == null && operationBefore2 == null) {
 			//both operations are in the first position

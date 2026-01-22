@@ -10198,4 +10198,678 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 54,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "84d97ed9d9c2127937bddb284b9fcbcdf571a1df",
+    "url": "https://github.com/square/leakcanary/commit/84d97ed9d9c2127937bddb284b9fcbcdf571a1df",
+    "author": "pyricau",
+    "time": "7/23/19 06:17 PM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public onProgressUpdate(step shark.AnalyzerProgressListener.Step) renamed to public onAnalysisProgress(step OnAnalysisProgressListener.Step) in class leakcanary.internal.HeapAnalyzerService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type step : shark.AnalyzerProgressListener.Step to step : OnAnalysisProgressListener.Step in method public onAnalysisProgress(step OnAnalysisProgressListener.Step) from class leakcanary.internal.HeapAnalyzerService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class shark.AnalyzerProgressListener renamed to shark.OnAnalysisProgressListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.AndroidObjectInspectors.VIEW",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.AndroidObjectInspectors.ACTIVITY",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.AndroidObjectInspectors.CONTEXT_WRAPPER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.AndroidObjectInspectors.DIALOG",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.AndroidObjectInspectors.APPLICATION",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.AndroidObjectInspectors.INPUT_METHOD_MANAGER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.AndroidObjectInspectors.FRAGMENT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.AndroidObjectInspectors.SUPPORT_FRAGMENT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.AndroidObjectInspectors.ANDROIDX_FRAGMENT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.AndroidObjectInspectors.MESSAGE_QUEUE",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.AndroidObjectInspectors.MORTAR_PRESENTER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.AndroidObjectInspectors.COORDINATOR",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.AndroidObjectInspectors.MAIN_THREAD",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.AndroidObjectInspectors.WINDOW",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.AndroidObjectInspectors.TOAST",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Anonymous With Lambda",
+        "description": "Replace Anonymous With Lambda shark.Main.module.analyze.AnalyzerProgressListener with {SharkLog.d(step.name) in method private analyze(heapDumpFile File) from class shark.Main.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Type Declaration Kind",
+        "description": "Change Type Declaration Kind class to interface in type shark.HeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type context : Inferred to context : GraphContext in class shark.HeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Throws(IllegalArgumentException::class) in method public findObjectById(objectId Long) : HeapObject from class shark.HeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public readFieldsSize() : Int renamed to public readFieldsByteSize() : Int in class shark.HeapObject.HeapClass",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public readSize() : Int renamed to public readByteSize() : Int in class shark.HeapObject.HeapObjectArray",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public readSize() : Int renamed to public readByteSize() : Int in class shark.HeapObject.HeapPrimitiveArray",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public graph : HeapGraph from class shark.HeapValue",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hprofVersion : HprofVersion in primary constructor Hprof(channel FileChannel, source BufferedSource, reader HprofReader, heapDumpTimestamp Long, hprofVersion HprofVersion) from class shark.Hprof",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable version : Inferred to versionName : Inferred in method public open(hprofFile File) : Hprof from class shark.Hprof.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable objectIdByteSize : Inferred to identifierByteSize : Inferred in method public open(hprofFile File) : Hprof from class shark.Hprof.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public startByteReadCount : Long from class shark.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable superClassId : Inferred to superclassId : Inferred in method public readClassDumpRecord() : ClassDumpRecord from class shark.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute objectIdByteSize : Int to identifierByteSize : Int in class shark.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hprofVersion : HprofVersion in primary constructor HprofWriter(sink BufferedSink, identifierByteSize Int, hprofVersion HprofVersion) from class shark.HprofWriter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to private in method private BufferedSink.writeValue(wrapper ValueHolder) from class shark.HprofWriter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute idSize : Int to identifierByteSize : Int in class shark.HprofWriter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable hprofVersion : Inferred to hprofVersion : HprofVersion in method public open(hprofFile File, identifierByteSize Int, hprofVersion HprofVersion) : HprofWriter from class shark.HprofWriter.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type hprofVersion : Inferred to hprofVersion : HprofVersion in method public open(hprofFile File, identifierByteSize Int, hprofVersion HprofVersion) : HprofWriter from class shark.HprofWriter.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter idSize : Int to identifierByteSize : Int in method public open(hprofFile File, identifierByteSize Int, hprofVersion HprofVersion) : HprofWriter from class shark.HprofWriter.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.AppSingletonInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.LeakStatusTest.notLeakingInstance.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.LeakStatusTest.leakingInstance.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.LeakStatusTest.notLeakingClass.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.LeakStatusTest.leakingClass.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.LeakTraceRendererTest.rendersLeakingWithReason.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.LeakTraceRendererTest.rendersLabelsOnAllNodes.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.ObjectInspector.Companion.invoke.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type block : (HeapGraph,ObjectReporter) -> Unit to block : (ObjectReporter) -> Unit in method public invoke(block (ObjectReporter) -> Unit) : ObjectInspector from class shark.ObjectInspector.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Localize Parameter",
+        "description": "Localize Parameter graph : HeapGraph to graph : Inferred in method public inspect(reporter ObjectReporter) from class shark.ObjectInspectors.KEYED_WEAK_REFERENCE",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type graph : HeapGraph to graph : Inferred in method public inspect(reporter ObjectReporter) from class shark.ObjectInspectors.KEYED_WEAK_REFERENCE",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.ObjectInspectors.CLASSLOADER",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.ObjectInspectors.CLASS",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.ObjectInspectors.ANONYMOUS_CLASS",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.ObjectInspectors.THREAD",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type listener : shark.AnalyzerProgressListener to listener : shark.OnAnalysisProgressListener in method public findPaths(graph HeapGraph, referenceMatchers List<ReferenceMatcher>, leakingInstanceObjectIds Set<Long>, computeDominators Boolean, listener shark.OnAnalysisProgressListener) : Results from class shark.internal.ShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type listener : AnalyzerProgressListener to listener : OnAnalysisProgressListener in class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter superClassId : Long to superclassId : Long in method public clazz(className String, superclassId Long, staticFields List<Pair<String,ValueHolder>>, fields List<Pair<String,KClass<ValueHolder>>>) : Long from class shark.HprofWriterHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.LabelerTest.stringContentAsLabel.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to protected in method protected abstract createGroupHash() : String from class shark.Leak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onProgressUpdate(step Step) renamed to public onAnalysisProgress(step Step) in class shark.OnAnalysisProgressListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute objectIdByteSize : Int to identifierByteSize : Int in class shark.HeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute superClassId : Long to superclassId : Long in class shark.HprofRecord.HeapDumpRecord.ObjectRecord.ClassDumpRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute instanceSize : Int to instanceByteSize : Int in class shark.HeapObject.HeapClass",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute size : Inferred to byteSize : Inferred in class shark.HeapObject.HeapInstance",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute retainedHeapSize : Int to retainedHeapByteSize : Int in class shark.Leak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute NONE : Inferred to NO_OP : Inferred in class shark.OnAnalysisProgressListener.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method internal fieldName(fieldRecord FieldRecord) : String from class shark.HeapGraph to internal fieldName(fieldRecord FieldRecord) : String from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method internal staticFieldName(fieldRecord StaticFieldRecord) : String from class shark.HeapGraph to internal staticFieldName(fieldRecord StaticFieldRecord) : String from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method internal createFieldValuesReader(record InstanceDumpRecord) : FieldValuesReader from class shark.HeapGraph to internal createFieldValuesReader(record InstanceDumpRecord) : FieldValuesReader from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method internal className(classId Long) : String from class shark.HeapGraph to internal className(classId Long) : String from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method internal readObjectArrayDumpRecord(objectId Long, indexedObject IndexedObjectArray) : ObjectArrayDumpRecord from class shark.HeapGraph to internal readObjectArrayDumpRecord(objectId Long, indexedObject IndexedObjectArray) : ObjectArrayDumpRecord from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method internal readPrimitiveArrayDumpRecord(objectId Long, indexedObject IndexedPrimitiveArray) : PrimitiveArrayDumpRecord from class shark.HeapGraph to internal readPrimitiveArrayDumpRecord(objectId Long, indexedObject IndexedPrimitiveArray) : PrimitiveArrayDumpRecord from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method internal readClassDumpRecord(objectId Long, indexedObject IndexedClass) : ClassDumpRecord from class shark.HeapGraph to internal readClassDumpRecord(objectId Long, indexedObject IndexedClass) : ClassDumpRecord from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method internal readInstanceDumpRecord(objectId Long, indexedObject IndexedInstance) : InstanceDumpRecord from class shark.HeapGraph to internal readInstanceDumpRecord(objectId Long, indexedObject IndexedInstance) : InstanceDumpRecord from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method private readObjectRecord(objectId Long, indexedObject IndexedObject, readBlock () -> T) : T from class shark.HeapGraph to private readObjectRecord(objectId Long, indexedObject IndexedObject, readBlock () -> T) : T from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method private wrapIndexedObject(indexedObject IndexedObject, objectId Long) : HeapObject from class shark.HeapGraph to private wrapIndexedObject(indexedObject IndexedObject, objectId Long) : HeapObject from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Attribute",
+        "description": "Push Down Attribute private hprof : Hprof from class shark.HeapGraph to private hprof : Hprof from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Attribute",
+        "description": "Push Down Attribute private index : HprofInMemoryIndex from class shark.HeapGraph to private index : HprofInMemoryIndex from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Attribute",
+        "description": "Push Down Attribute public context : Inferred from class shark.HeapGraph to public context : Inferred from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Attribute",
+        "description": "Push Down Attribute private objectCache : Inferred from class shark.HeapGraph to private objectCache : Inferred from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method public findObjectById(objectId Long) : HeapObject from class shark.HeapGraph to public findObjectById(objectId Long) : HeapObject from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method public findClassByName(className String) : HeapClass from class shark.HeapGraph to public findClassByName(className String) : HeapClass from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method public objectExists(objectId Long) : Boolean from class shark.HeapGraph to public objectExists(objectId Long) : Boolean from class shark.HprofHeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Subclass",
+        "description": "Extract Subclass shark.HprofHeapGraph from class shark.HeapGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute retainedHeapSize : Int to retainedHeapByteSize : Int in class shark.LibraryLeak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute retainedHeapSize : Int to retainedHeapByteSize : Int in class shark.ApplicationLeak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable fieldsBuffer : Inferred to valuesBuffer : Inferred in method public valuesToBytes(values List<ValueHolder>) : ByteArray from class shark.HprofWriter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.HeapGraph.Companion moved to shark.HprofHeapGraph.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.Leak.ApplicationLeak moved to shark.ApplicationLeak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.ReferenceMatcher.LibraryLeakReferenceMatcher moved to shark.LibraryLeakReferenceMatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public valuesToBytes(values List<ValueHolder>) : ByteArray extracted from public instance(classId Long, fields List<ValueHolder>) : ReferenceHolder in class shark.HprofWriterHelper & moved to class shark.HprofWriter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.AnalyzerProgressListener.Step moved to shark.OnAnalysisProgressListener.Step",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.AnalyzerProgressListener.Companion moved to shark.OnAnalysisProgressListener.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.Leak.LibraryLeak moved to shark.LibraryLeak",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.ReferenceMatcher.IgnoredReferenceMatcher moved to shark.IgnoredReferenceMatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

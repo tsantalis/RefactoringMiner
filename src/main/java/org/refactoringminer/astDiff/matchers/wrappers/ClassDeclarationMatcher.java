@@ -1,5 +1,6 @@
 package org.refactoringminer.astDiff.matchers.wrappers;
 
+import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.LocationInfoProvider;
@@ -12,6 +13,7 @@ import gr.uom.java.xmi.diff.UMLAnnotationListDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLTypeAliasListDiff;
 
+import org.refactoringminer.astDiff.matchers.vanilla.CustomTopDownMatcher;
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
@@ -113,8 +115,16 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         searchingTypes.add(Constants.get().MODIFIERS);
         for (String type : searchingTypes) {
             Pair<Tree,Tree> matched = findPairOfType(srcTypeDeclaration,dstTypeDeclaration,type);
-            if (matched != null)
-                mappingStore.addMapping(matched.first,matched.second);
+            if (matched != null) {
+                //For kotlin due to its nesting structure, modifier is not a single node, thus it must be matched as a whole tree
+                //This is supposed to fix the issue with inner keyword
+                if (type.equals(Constants.get().MODIFIERS))
+                    mappingStore.add(new CustomTopDownMatcher(0).match(matched.first, matched.second));
+                else
+                    mappingStore.addMapping(matched.first, matched.second);
+
+
+            }
         }
         if (classDiff.getOriginalClass().isStatic() && classDiff.getNextClass().isStatic())
             new SameModifierMatcher(Constants.get().STATIC).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);

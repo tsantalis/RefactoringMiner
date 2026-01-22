@@ -672,11 +672,11 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **January 21, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **January 22, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1385  |  3  |  0  | 0.998  | 1.000|
+|**Total**|1387  |  3  |  0  | 0.998  | 1.000|
 |Extract Method| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|34  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|21  |  0  |  0  | 1.000  | 1.000|
@@ -710,7 +710,7 @@ As of **January 21, 2026** the precision and recall of RefactoringMiner on this 
 |Parameterize Variable| 4  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|106  |  0  |  0  | 1.000  | 1.000|
+|Change Return Type|107  |  0  |  0  | 1.000  | 1.000|
 |Change Variable Type|14  |  0  |  0  | 1.000  | 1.000|
 |Change Parameter Type|135  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Type|52  |  0  |  0  | 1.000  | 1.000|
@@ -723,7 +723,7 @@ As of **January 21, 2026** the precision and recall of RefactoringMiner on this 
 |Add Parameter Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter|103  |  0  |  0  | 1.000  | 1.000|
-|Remove Parameter|66  |  0  |  0  | 1.000  | 1.000|
+|Remove Parameter|67  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Method Access Modifier|40  |  0  |  0  | 1.000  | 1.000|

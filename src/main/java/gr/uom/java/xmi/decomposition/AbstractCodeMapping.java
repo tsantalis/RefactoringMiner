@@ -199,6 +199,14 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				(s1.equals(longestCommonPrefix + longestCommonSuffix) || s2.equals(longestCommonPrefix + longestCommonSuffix))) {
 			return true;
 		}
+		if(s1.equals(longestCommonPrefix + LANG.STATEMENT_TERMINATION)) {
+			if(s2.length() > longestCommonPrefix.length() && s2.charAt(longestCommonPrefix.length()) == '.')
+				return true;
+		}
+		if(s2.equals(longestCommonPrefix + LANG.STATEMENT_TERMINATION)) {
+			if(s1.length() > longestCommonPrefix.length() && s1.charAt(longestCommonPrefix.length()) == '.')
+				return true;
+		}
 		return false;
 	}
 

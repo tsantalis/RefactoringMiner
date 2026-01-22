@@ -3675,6 +3675,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type TrailingViewHolder to CustomVH in method public onCreateViewHolder(parent ViewGroup, loadState LoadState) : CustomVH from class com.chad.baserecyclerviewadapterhelper.adapter.CustomLoadMoreAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter context : Context in method public onCreateViewHolder(context Context, parent ViewGroup, loadState LoadState) : TrailingViewHolder from class com.chad.baserecyclerviewadapterhelper.adapter.CustomLoadMoreAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

@@ -2782,7 +2782,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				mapperSet.add(operationBodyMapper);
 			}
 			else if(mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper) &&
-					(relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) || zeroNonMapped || containsAnonymousClassDiff || operationsBeforeAndAfterMatch(removedOperation, addedOperation)) &&
+					(relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) || zeroNonMapped || containsAnonymousClassDiff || operationsBeforeOrAfterMatch(removedOperation, addedOperation)) &&
 					(compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition) || operationsBeforeAndAfterMatch(removedOperation, addedOperation)) &&
 					removedOperation.testMethodCheck(addedOperation)) {
 				isPartOfMethodMovedFromDeletedMethod(removedOperation, addedOperation, operationBodyMapper, mapperSet);
@@ -3737,7 +3737,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(addedOperation.compatibleSignature(removedOperation)) {
 			return true;
 		}
-		if(absoluteDifferenceInPosition == 0 || operationsBeforeAndAfterMatch(removedOperation, addedOperation)) {
+		if(absoluteDifferenceInPosition == 0 || operationsBeforeOrAfterMatch(removedOperation, addedOperation)) {
 			if(!gettersWithDifferentReturnType(removedOperation, addedOperation)) {
 				if(addedOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList()) || addedOperation.normalizedNameDistance(removedOperation) <= MAX_OPERATION_NAME_DISTANCE) {
 					return true;
@@ -3794,6 +3794,61 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	private boolean operationsBeforeAndAfterMatch(UMLOperation removedOperation, UMLOperation addedOperation) {
+		UMLOperation operationBefore1 = null;
+		UMLOperation operationAfter1 = null;
+		List<UMLOperation> originalClassOperations = originalClass.getOperations();
+		for(int i=0; i<originalClassOperations.size(); i++) {
+			UMLOperation current = originalClassOperations.get(i);
+			if(current.equals(removedOperation)) {
+				if(i>0) {
+					operationBefore1 = originalClassOperations.get(i-1);
+				}
+				if(i<originalClassOperations.size()-1) {
+					operationAfter1 = originalClassOperations.get(i+1);
+				}
+			}
+		}
+		
+		UMLOperation operationBefore2 = null;
+		UMLOperation operationAfter2 = null;
+		List<UMLOperation> nextClassOperations = nextClass.getOperations();
+		for(int i=0; i<nextClassOperations.size(); i++) {
+			UMLOperation current = nextClassOperations.get(i);
+			if(current.equals(addedOperation)) {
+				if(i>0) {
+					operationBefore2 = nextClassOperations.get(i-1);
+				}
+				if(i<nextClassOperations.size()-1) {
+					operationAfter2 = nextClassOperations.get(i+1);
+				}
+			}
+		}
+		
+		boolean operationsBeforeMatch = false;
+		if(operationBefore1 != null && operationBefore2 != null) {
+			operationsBeforeMatch = (operationBefore1.equalReturnParameter(operationBefore2) && operationBefore1.getName().equals(operationBefore2.getName()))
+					|| (matchingDataProviderAnnotation(removedOperation, operationBefore1) && matchingDataProviderAnnotation(addedOperation, operationBefore2))
+					|| mapperListContainsOperation(operationBefore1, operationBefore2);
+		}
+		else if(operationBefore1 == null && operationBefore2 == null) {
+			//both operations are in the first position
+			operationsBeforeMatch = true;
+		}
+		
+		boolean operationsAfterMatch = false;
+		if(operationAfter1 != null && operationAfter2 != null) {
+			operationsAfterMatch = (operationAfter1.equalReturnParameter(operationAfter2) && operationAfter1.getName().equals(operationAfter2.getName()))
+					|| (matchingDataProviderAnnotation(removedOperation, operationAfter1) && matchingDataProviderAnnotation(addedOperation, operationAfter2));
+		}
+		else if(operationAfter1 == null && operationAfter2 == null) {
+			//both operations are in the last position
+			operationsAfterMatch = true;
+		}
+		
+		return operationsBeforeMatch && operationsAfterMatch;
+	}
+
+	private boolean operationsBeforeOrAfterMatch(UMLOperation removedOperation, UMLOperation addedOperation) {
 		UMLOperation operationBefore1 = null;
 		UMLOperation operationAfter1 = null;
 		List<UMLOperation> originalClassOperations = originalClass.getOperations();

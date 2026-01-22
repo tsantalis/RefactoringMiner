@@ -270,4 +270,5 @@ public class Constants {
     public final String CLASS_PARAMETER = "class_parameter";
     public final String USER_TYPE = "user_type";
     public final String ERROR = "ERROR";
+    public final String ENUM_ENTRY = "enum_entry";
 }

@@ -159,6 +159,13 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 new CompositeMatcher(abstractCodeMapping).match(srcStatementNode,dstStatementNode,mappingStore);
             }
             else if (srcStatementNode.getType().name.equals(Constants.get().WHEN_EXPRESSION) && dstStatementNode.getType().name.equals(Constants.get().WHEN_EXPRESSION)) {
+            	if(srcStatementNode.getParent().getType().name.equals(Constants.get().FIELD_DECLARATION) && dstStatementNode.getParent().getType().name.equals(Constants.get().FIELD_DECLARATION)) {
+            		//when expression is the initializer of a property declaration
+            		mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
+            	}
+            	else if(srcStatementNode.getParent().getType().name.equals(Constants.get().JUMP_EXPRESSION) && dstStatementNode.getParent().getType().name.equals(Constants.get().JUMP_EXPRESSION)) {
+            		mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
+            	}
             	Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().WHEN_SUBJECT);
                 if (matched != null) {
                 	//when subject can be a property declaration, thus we need to match it recursively

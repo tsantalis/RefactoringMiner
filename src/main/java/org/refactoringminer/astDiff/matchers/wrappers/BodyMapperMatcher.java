@@ -133,6 +133,14 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 }
             }
             if (srcStatementNode.getType().name.equals(Constants.get().IF_STATEMENT) && dstStatementNode.getType().name.equals(Constants.get().IF_STATEMENT)) {
+                if(srcStatementNode.getParent().getType().name.equals(Constants.get().FIELD_DECLARATION) && dstStatementNode.getParent().getType().name.equals(Constants.get().FIELD_DECLARATION)) {
+                    //if expression is the initializer of a property declaration
+                    mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
+                }
+                else if(srcStatementNode.getParent().getType().name.equals(Constants.get().JUMP_EXPRESSION) && dstStatementNode.getParent().getType().name.equals(Constants.get().JUMP_EXPRESSION)) {
+                    mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
+                    new KeywordMatcher(Constants.get().JUMP_KEYWORD, "return").match(srcStatementNode.getParent(),dstStatementNode.getParent(),mappingStore);
+                }
                 Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().ELSE_IF);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
@@ -152,23 +160,24 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 new CompositeMatcher(abstractCodeMapping).match(srcStatementNode,dstStatementNode,mappingStore);
             }
             else if (srcStatementNode.getType().name.equals(Constants.get().WHEN_ENTRY) && dstStatementNode.getType().name.equals(Constants.get().WHEN_ENTRY)) {
-            	Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().ARROW);
+                Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().ARROW);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
                 }
                 new CompositeMatcher(abstractCodeMapping).match(srcStatementNode,dstStatementNode,mappingStore);
             }
             else if (srcStatementNode.getType().name.equals(Constants.get().WHEN_EXPRESSION) && dstStatementNode.getType().name.equals(Constants.get().WHEN_EXPRESSION)) {
-            	if(srcStatementNode.getParent().getType().name.equals(Constants.get().FIELD_DECLARATION) && dstStatementNode.getParent().getType().name.equals(Constants.get().FIELD_DECLARATION)) {
-            		//when expression is the initializer of a property declaration
-            		mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
-            	}
-            	else if(srcStatementNode.getParent().getType().name.equals(Constants.get().JUMP_EXPRESSION) && dstStatementNode.getParent().getType().name.equals(Constants.get().JUMP_EXPRESSION)) {
-            		mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
-            	}
-            	Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().WHEN_SUBJECT);
+                if(srcStatementNode.getParent().getType().name.equals(Constants.get().FIELD_DECLARATION) && dstStatementNode.getParent().getType().name.equals(Constants.get().FIELD_DECLARATION)) {
+                    //when expression is the initializer of a property declaration
+                    mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
+                }
+                else if(srcStatementNode.getParent().getType().name.equals(Constants.get().JUMP_EXPRESSION) && dstStatementNode.getParent().getType().name.equals(Constants.get().JUMP_EXPRESSION)) {
+                    mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
+                    new KeywordMatcher(Constants.get().JUMP_KEYWORD, "return").match(srcStatementNode.getParent(),dstStatementNode.getParent(),mappingStore);
+                }
+                Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, Constants.get().WHEN_SUBJECT);
                 if (matched != null) {
-                	//when subject can be a property declaration, thus we need to match it recursively
+                    //when subject can be a property declaration, thus we need to match it recursively
                     mappingStore.addMappingRecursively(matched.first,matched.second);
                 }
                 new CompositeMatcher(abstractCodeMapping).match(srcStatementNode,dstStatementNode,mappingStore);

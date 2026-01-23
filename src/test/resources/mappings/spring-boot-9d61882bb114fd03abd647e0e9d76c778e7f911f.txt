@@ -28,6 +28,25 @@ line range:460-462==line range:51-53
 line range:454-456==line range:45-47
 line range:457-459==line range:48-50
 line range:460-462==line range:51-53
+protected getUrlsOfJarsWithMetaInfResources() : List<URL> -> private addUrl(urls List<URL>, url URL) : void
+line range:349-349==line range:59-59
+line range:329-346==line range:51-56
+line range:328-350==line range:50-60
+line range:348-350==line range:58-60
+line range:329-338==line range:51-53
+line range:339-346==line range:54-56
+protected getUrlsOfJarsWithMetaInfResources() : List<URL> -> private addUrlFile(urls List<URL>, url URL, file File) : void
+line range:336-336==line range:68-68
+line range:335-337==line range:67-69
+line range:331-337==line range:64-69
+line range:335-337==line range:67-69
+line range:332-334==line range:64-66
+protected getUrlsOfJarsWithMetaInfResources() : List<URL> -> private addUrlConnection(urls List<URL>, url URL, connection URLConnection) : void
+line range:343-343==line range:75-75
+line range:342-344==line range:74-76
+line range:341-345==line range:73-77
+line range:342-344==line range:74-76
+line range:341-345==line range:73-77
 protected getUrlsOfJarsWithMetaInfResources() : List<URL> -> public getUrls() : List<URL>
 line range:324-324==line range:39-39
 line range:325-325==line range:40-40
@@ -37,31 +56,6 @@ line range:327-351==line range:42-44
 line range:326-352==line range:41-45
 line range:327-351==line range:42-44
 line range:326-352==line range:41-45
-protected getUrlsOfJarsWithMetaInfResources() : List<URL> -> private addUrlFile(urls List<URL>, url URL, file File) : void
-line range:336-336==line range:65-65
-line range:343-343==line range:68-68
-line range:335-337==line range:67-69
-line range:331-337==line range:64-69
-line range:335-337==line range:67-69
-line range:332-334==line range:64-66
-line range:330-330==line range:52-52
-line range:340-340==line range:55-55
-protected getUrlsOfJarsWithMetaInfResources() : List<URL> -> private addUrlConnection(urls List<URL>, url URL, connection URLConnection) : void
-line range:342-344==line range:74-76
-line range:341-345==line range:73-77
-line range:342-344==line range:74-76
-line range:341-345==line range:73-77
-line range:330-330==line range:52-52
-line range:340-340==line range:55-55
-protected getUrlsOfJarsWithMetaInfResources() : List<URL> -> private addUrl(urls List<URL>, url URL) : void
-line range:349-349==line range:59-59
-line range:329-346==line range:51-56
-line range:328-350==line range:50-60
-line range:348-350==line range:58-60
-line range:329-338==line range:51-53
-line range:339-346==line range:54-56
-line range:330-330==line range:52-52
-line range:340-340==line range:55-55
 public setSessionStoreDir(sessionStoreDir File) : void -> public setSessionStoreDir(sessionStoreDir File) : void
 public setDocumentRoot(documentRoot File) : void -> public setDocumentRoot(documentRoot File) : void
 protected getValidDocumentRoot() : File -> protected getValidDocumentRoot() : File
@@ -77,14 +71,12 @@ line range:308-315==line range:66-71
 line range:313-315==line range:69-71
 line range:308-312==line range:66-68
 protected getValidSessionStoreDir(mkdirs boolean) : File -> protected getValidSessionStoreDir(mkdirs boolean) : File
+protected getUrlsOfJarsWithMetaInfResources() : List<URL> -> private addUrl(urls List<URL>, url URL) : void
+line range:349-349==line range:59-59
+line range:329-346==line range:51-56
+line range:328-350==line range:50-60
+line range:348-350==line range:58-60
+line range:329-338==line range:51-53
+line range:339-346==line range:54-56
 protected getUrlsOfJarsWithMetaInfResources() : List<URL> -> protected getUrlsOfJarsWithMetaInfResources() : List<URL>
 line range:353-353==line range:296-296
-protected getUrlsOfJarsWithMetaInfResources() : List<URL> -> public getUrls() : List<URL>
-line range:324-324==line range:39-39
-line range:325-325==line range:40-40
-line range:333-333==line range:43-43
-line range:353-353==line range:46-46
-line range:327-351==line range:42-44
-line range:326-352==line range:41-45
-line range:327-351==line range:42-44
-line range:326-352==line range:41-45

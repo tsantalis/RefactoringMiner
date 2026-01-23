@@ -156,6 +156,8 @@ public class Constants {
     public final String INTERNAL = "internal";
     public final String PRIVATE = "private";
     public final String COMPANION = "companion";
+    public final String INFIX = "infix";
+    public final String INNER = "inner";
 
     public final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
     public final String METHOD_INVOCATION_RECEIVER = "METHOD_INVOCATION_RECEIVER";
@@ -262,9 +264,12 @@ public class Constants {
     public final String PARAMETER = "parameter";
     public final String GETTER = "getter";
     public final String SETTER = "setter";
-    public final String PROPERY_DECLARATION_KEYWORD = "property_declaration_keyword";
+    public final String PROPERTY_DECLARATION_KEYWORD = "property_declaration_keyword";
     public final String IMPORT_IDENTIFIER = "identifier";
     public final String CONTROL_STRUCTURE_BODY = "control_structure_body";
     public final String CLASS_PARAMETER = "class_parameter";
     public final String USER_TYPE = "user_type";
+    public final String ERROR = "ERROR";
+    public final String ENUM_ENTRY = "enum_entry";
+    public final String JUMP_EXPRESSION = "jump_expression";
 }

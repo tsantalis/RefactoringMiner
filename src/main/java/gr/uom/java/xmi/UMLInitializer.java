@@ -2,7 +2,6 @@ package gr.uom.java.xmi;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -28,9 +27,10 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	private List<UMLComment> comments;
 	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
 	
-	public UMLInitializer(String name, LocationInfo locationInfo) {
+	public UMLInitializer(String name, LocationInfo locationInfo, String className) {
 		this.name = name;
 		this.locationInfo = locationInfo;
+		this.className = className;
 		this.comments = new ArrayList<UMLComment>();
 		this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
 	}
@@ -135,10 +135,6 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	@Override
 	public String getClassName() {
 		return className;
-	}
-
-	public void setClassName(String className) {
-		this.className = className;
 	}
 
 	public String toString() {

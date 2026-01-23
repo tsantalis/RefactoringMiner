@@ -658,6 +658,22 @@ public class StringBasedHeuristics {
 				return true;
 			}
 		}
+		if(commonSuffix.equals(s1) && commonPrefix.isEmpty()) {
+			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS2 = s2.lastIndexOf(commonSuffix);
+			String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
+			if(diff2.equals("val ") || diff2.equals("var ")) {
+				return true;
+			}
+		}
+		else if(commonSuffix.equals(s2) && commonPrefix.isEmpty()) {
+			int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS1 = s1.lastIndexOf(commonSuffix);
+			String diff1 = beginIndexS1 > endIndexS1 ? "" :	s1.substring(beginIndexS1, endIndexS1);
+			if(diff1.equals("val ") || diff1.equals("var ")) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -3866,7 +3882,7 @@ public class StringBasedHeuristics {
 					AbstractCall invocation1 = statement1.invocationCoveringEntireFragment();
 					if(invocation1 != null) {
 						for(AbstractCall invocation2 : statement2.getMethodInvocations()) {
-							if(invocation1.compatibleName(invocation2) && invocation1.arguments().size() == invocation2.arguments().size()) {
+							if(invocation1.compatibleName(invocation2, true) && invocation1.arguments().size() == invocation2.arguments().size()) {
 								if(subConditionsAsList2.size() > 1) {
 									IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONDITIONAL);
 									LeafMapping leafMapping = new LeafMapping(invocation1, invocation2, container1, container2);

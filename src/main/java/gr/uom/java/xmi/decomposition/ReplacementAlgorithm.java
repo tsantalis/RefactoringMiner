@@ -2048,6 +2048,25 @@ public class ReplacementAlgorithm {
 				return replacementInfo.getReplacements();
 			}
 		}
+		//match while with if
+		/*if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) &&
+				statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+			CompositeStatementObject while1 = (CompositeStatementObject)statement1;
+			CompositeStatementObject if2 = (CompositeStatementObject)statement2;
+			if(while1.getExpressions().size() == if2.getExpressions().size()) {
+				int matches = 0;
+				for(int i=0; i< while1.getExpressions().size(); i++) {
+					AbstractExpression expr1 = while1.getExpressions().get(i);
+					AbstractExpression expr2 = if2.getExpressions().get(i);
+					if(expr1.getString().equals(expr2.getString())) {
+						matches++;
+					}
+				}
+				if(matches > 0 && matches == while1.getExpressions().size()) {
+					return replacementInfo.getReplacements();
+				}
+			}
+		}*/
 		//match try-with-resources with regular try
 		if(statement1 instanceof TryStatementObject && statement2 instanceof TryStatementObject) {
 			TryStatementObject try1 = (TryStatementObject)statement1;
@@ -2363,7 +2382,7 @@ public class ReplacementAlgorithm {
 					}
 				}
 			}
-			if((assignmentInvocationCoveringTheEntireStatement1.identicalName(assignmentInvocationCoveringTheEntireStatement2) || assignmentInvocationCoveringTheEntireStatement1.compatibleName(assignmentInvocationCoveringTheEntireStatement2)) &&
+			if((assignmentInvocationCoveringTheEntireStatement1.identicalName(assignmentInvocationCoveringTheEntireStatement2) || assignmentInvocationCoveringTheEntireStatement1.compatibleName(assignmentInvocationCoveringTheEntireStatement2, false)) &&
 					(staticVSNonStatic || additionalCaller || overlappingExtractVariable || addedParameter || removedParameter) && assignmentInvocationCoveringTheEntireStatement1.identicalOrReplacedArguments(assignmentInvocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap)) {
 				Replacement replacement = new MethodInvocationReplacement(assignmentInvocationCoveringTheEntireStatement1.actualString(), assignmentInvocationCoveringTheEntireStatement2.actualString(), assignmentInvocationCoveringTheEntireStatement1, assignmentInvocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
 				replacementInfo.addReplacement(replacement);
@@ -3757,7 +3776,7 @@ public class ReplacementAlgorithm {
 						replacementInfo.addReplacement(replacement);
 						return replacementInfo.getReplacements();
 					}
-					else if(objectCreation1.compatibleName(creationCoveringTheEntireStatement2) && objectCreation1.equalArguments(creationCoveringTheEntireStatement2) && objectCreation1.identicalExpression(creationCoveringTheEntireStatement2) &&
+					else if(objectCreation1.compatibleName(creationCoveringTheEntireStatement2, false) && objectCreation1.equalArguments(creationCoveringTheEntireStatement2) && objectCreation1.identicalExpression(creationCoveringTheEntireStatement2) &&
 							variableDeclarations1.size() == variableDeclarations2.size()) {
 						Replacement replacement = new ObjectCreationReplacement(objectCreation1.actualString(),
 								creationCoveringTheEntireStatement2.actualString(), objectCreation1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION);
@@ -5641,7 +5660,7 @@ public class ReplacementAlgorithm {
 				}
 				boolean isWithinElseBranch1 = isBlock1 ? isElseBranch(statement1, statement1.getParent()) : isElseBranch(statement1.getParent(), statement1.getParent().getParent());
 				boolean isWithinElseIfBranch1 = false;
-				CompositeStatementObject grandGrandParent1 = statement1.getParent().getParent().getParent();
+				CompositeStatementObject grandGrandParent1 = statement1.getParent().getParent() != null ? statement1.getParent().getParent().getParent() : null;
 				if(grandGrandParent1 != null) {
 					isWithinElseIfBranch1 = isBlock1 ? isElseIfBranch(statement1.getParent(), statement1.getParent().getParent()) : isElseIfBranch(statement1.getParent().getParent(), grandGrandParent1);
 				}
@@ -5655,7 +5674,7 @@ public class ReplacementAlgorithm {
 				}
 				boolean isWithinElseBranch2 = isBlock2 ? isElseBranch(statement2, statement2.getParent()) : isElseBranch(statement2.getParent(), statement2.getParent().getParent());
 				boolean isWithinElseIfBranch2 = false;
-				CompositeStatementObject grandGrandParent2 = statement2.getParent().getParent().getParent();
+				CompositeStatementObject grandGrandParent2 = statement2.getParent().getParent() != null ? statement2.getParent().getParent().getParent() : null;
 				if(grandGrandParent2 != null) {
 					isWithinElseIfBranch2 = isBlock2 ? isElseIfBranch(statement2.getParent(), statement2.getParent().getParent()) : isElseIfBranch(statement2.getParent().getParent(), grandGrandParent2);
 				}

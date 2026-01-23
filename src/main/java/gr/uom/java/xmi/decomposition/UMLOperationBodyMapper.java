@@ -1456,7 +1456,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<LambdaExpressionObject> lambdas1 = defaultExpression1.getLambdas();
 			List<LambdaExpressionObject> lambdas2 = body2.getAllLambdas();
 			List<CompositeStatementObject> innerNodes1 = new ArrayList<>();
-			List<CompositeStatementObject> innerNodes2 = new ArrayList<>();
+			List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
+			if(composite2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK))
+				innerNodes2.remove(composite2);
 			for(LambdaExpressionObject lambda : lambdas1) {
 				expandLambda(lambda, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), codeFragmentOperationMap1, operation1, true);
 			}
@@ -1464,6 +1466,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				expandLambda(lambda, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), codeFragmentOperationMap2, operation2, true);
 			}
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			boolean containsCallToExtractedMethod = containsCallToExtractedMethod(leaves2);
+			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), containsCallToExtractedMethod);
+			
+			leaves1.remove(defaultExpression1);
+			updateNonMappedLeavesT1(leaves1);
+			updateNonMappedLeavesT2(leaves2);
+			nonMappedInnerNodesT1.addAll(innerNodes1);
+			nonMappedInnerNodesT2.addAll(innerNodes2);
 		}
 		else if(defaultExpression2 != null && body1 != null) {
 			CompositeStatementObject composite1 = body1.getCompositeStatement();
@@ -1473,7 +1483,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			
 			List<LambdaExpressionObject> lambdas1 = body1.getAllLambdas();
 			List<LambdaExpressionObject> lambdas2 = defaultExpression2.getLambdas();
-			List<CompositeStatementObject> innerNodes1 = new ArrayList<>();
+			List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
+			if(composite1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK))
+				innerNodes1.remove(composite1);
 			List<CompositeStatementObject> innerNodes2 = new ArrayList<>();
 			for(LambdaExpressionObject lambda : lambdas1) {
 				expandLambda(lambda, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), codeFragmentOperationMap1, operation1, true);
@@ -1482,6 +1494,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				expandLambda(lambda, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), codeFragmentOperationMap2, operation2, true);
 			}
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			boolean containsCallToExtractedMethod = containsCallToExtractedMethod(leaves2);
+			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), containsCallToExtractedMethod);
+			
+			updateNonMappedLeavesT1(leaves1);
+			leaves2.remove(defaultExpression2);
+			updateNonMappedLeavesT2(leaves2);
+			nonMappedInnerNodesT1.addAll(innerNodes1);
+			nonMappedInnerNodesT2.addAll(innerNodes2);
 		}
 		if(operation1.getJavadoc() != null && operation2.getJavadoc() != null) {
 			this.operationSignatureDiff = new UMLOperationDiff(this);
@@ -3350,6 +3370,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Set<AbstractCodeFragment> addedLeaves1 = new LinkedHashSet<AbstractCodeFragment>();
 			Set<CompositeStatementObject> addedInnerNodes1 = new LinkedHashSet<CompositeStatementObject>();
 			List<AbstractCodeFragment> leaves2 = addedOperationBody != null ? addedOperationBody.getCompositeStatement().getLeaves() : new ArrayList<>(List.of(addedOperationDefaultExpression));
+			List<String> leaves2AsStrings = new ArrayList<>();
+			for(AbstractCodeFragment fragment2 : leaves2) {
+				leaves2AsStrings.add(fragment2.getString());
+			}
 			if(leaves1Sublist.isPresent()) {
 				for(AbstractCodeFragment nonMappedLeaf1 : new ArrayList<>(leaves1Sublist.get())) {
 					expandAnonymousAndLambdas(nonMappedLeaf1, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
@@ -3418,7 +3442,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(childMapper.container1.getClassName().equals(addedOperation.getClassName()) || classDiff instanceof UMLClassMoveDiff) {
 						for(AbstractCodeMapping mapping : childMapper.getMappings()) {
 							AbstractCodeFragment fragment = mapping.getFragment1();
-							if(!returnWithVariableReplacement(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
+							if(!returnWithVariableReplacement(mapping) && (leaves2AsStrings.contains(fragment.getString()) || !mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
 								expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, childMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
 								if(fragment instanceof CompositeStatementObject) {
 									CompositeStatementObject comp = (CompositeStatementObject)fragment;
@@ -9459,7 +9483,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		//check if the parent statement is the body of parentMapper.container2
-		if(statementContainingOperationInvocation != null && statementContainingOperationInvocation.getParent() != null && container2.getBody() != null &&
+		if(statementContainingOperationInvocation != null && statementContainingOperationInvocation.getParent() != null && parentMapper.container2.getBody() != null &&
 				statementContainingOperationInvocation.getParent().equals(parentMapper.container2.getBody().getCompositeStatement())) {
 			return null;
 		}
@@ -11306,6 +11330,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		boolean otherEqualSignature = operationBodyMapper.getOperation1().equalsIgnoringTypeParameters(operationBodyMapper.getOperation2());
 		boolean thisConstructor = this.getOperation1().isConstructor() && this.getOperation2().isConstructor();
 		boolean otherConstructor = operationBodyMapper.getOperation1().isConstructor() && operationBodyMapper.getOperation2().isConstructor();
+		boolean dottedName1 = false;
+		if(this.getOperation1() != null && this.getOperation2() != null && (this.getOperation1().getReceiver().isPresent() || this.getOperation2().getReceiver().isPresent())) {
+			if(this.getOperation1().getReceiver().isPresent() && !this.getOperation2().getReceiver().isPresent()) {
+				dottedName1 = this.getOperation2().getName().contains(this.getOperation1().getReceiver().get().getClassType());
+			}
+			else if(!this.getOperation1().getReceiver().isPresent() && this.getOperation2().getReceiver().isPresent()) {
+				dottedName1 = this.getOperation1().getName().contains(this.getOperation2().getReceiver().get().getClassType());
+			}
+		}
+		boolean dottedName2 = false;
+		if(operationBodyMapper.getOperation1() != null && operationBodyMapper.getOperation2() != null && (operationBodyMapper.getOperation1().getReceiver().isPresent() || operationBodyMapper.getOperation2().getReceiver().isPresent())) {
+			if(operationBodyMapper.getOperation1().getReceiver().isPresent() && !operationBodyMapper.getOperation2().getReceiver().isPresent()) {
+				dottedName2 = operationBodyMapper.getOperation2().getName().contains(operationBodyMapper.getOperation1().getReceiver().get().getClassType());
+			}
+			else if(!operationBodyMapper.getOperation1().getReceiver().isPresent() && operationBodyMapper.getOperation2().getReceiver().isPresent()) {
+				dottedName2 = operationBodyMapper.getOperation1().getName().contains(operationBodyMapper.getOperation2().getReceiver().get().getClassType());
+			}
+		}
 		if(thisEqualSignature && !otherEqualSignature && !thisConstructor && !otherConstructor)
 			return -1;
 		else if(!thisEqualSignature && otherEqualSignature && !thisConstructor && !otherConstructor)
@@ -11320,6 +11362,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//	return -Integer.compare(thisMappings, otherMappings);
 		//}
 		else {
+			if(dottedName1 && !dottedName2) {
+				return -1;
+			}
+			else if(!dottedName1 && dottedName2) {
+				return 1;
+			}
 			if(thisExactMatches != otherExactMatches) {
 				return -Integer.compare(thisExactMatches, otherExactMatches);
 			}

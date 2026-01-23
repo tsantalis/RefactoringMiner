@@ -74,11 +74,25 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (dstOperationNode.getType().name.equals(Constants.get().FUNCTION_KEYWORD)) {
             	dstOperationNode = dstOperationNode.getParent().getParent();
             }
+            if (srcOperationNode != null && srcOperationNode.getParent() != null && srcOperationNode.getType().name.equals(Constants.get().MODIFIERS)) {
+                srcOperationNode = srcOperationNode.getParent();
+            }
+            if (dstOperationNode != null && dstOperationNode.getParent() != null && dstOperationNode.getType().name.equals(Constants.get().MODIFIERS)) {
+                dstOperationNode = dstOperationNode.getParent();
+            }
             if (srcOperationNode != null && srcOperationNode.getParent() != null && srcOperationNode.getParent().getType().name.equals(Constants.get().DECORATED_METHOD)) {
                 srcOperationNode = srcOperationNode.getParent();
             }
             if (dstOperationNode != null && dstOperationNode.getParent() != null && dstOperationNode.getParent().getType().name.equals(Constants.get().DECORATED_METHOD)) {
                 dstOperationNode = dstOperationNode.getParent();
+            }
+            if (srcOperationNode != null && srcOperationNode.getType().name.equals(Constants.get().ERROR) && srcOperationNode.getChildren().size() > 0 &&
+            		srcOperationNode.getChildren().get(0).getType().name.equals(Constants.get().METHOD_DECLARATION)) {
+            	srcOperationNode = srcOperationNode.getChildren().get(0);
+            }
+            if (dstOperationNode != null && dstOperationNode.getType().name.equals(Constants.get().ERROR) && dstOperationNode.getChildren().size() > 0 &&
+            		dstOperationNode.getChildren().get(0).getType().name.equals(Constants.get().METHOD_DECLARATION)) {
+            	dstOperationNode = dstOperationNode.getChildren().get(0);
             }
             if (srcOperationNode == null || !(srcOperationNode.getType().name.equals(Constants.get().METHOD_DECLARATION) || srcOperationNode.getType().name.equals(Constants.get().SECONDARY_CONSTRUCTOR) || srcOperationNode.getType().name.equals(Constants.get().DECORATED_METHOD) || srcOperationNode.getType().name.equals(Constants.get().ANNOTATION_TYPE_MEMBER_DECLARATION) || srcOperationNode.getType().name.equals(Constants.get().GETTER) || srcOperationNode.getType().name.equals(Constants.get().SETTER))) return;
             if (dstOperationNode == null || !(dstOperationNode.getType().name.equals(Constants.get().METHOD_DECLARATION) || dstOperationNode.getType().name.equals(Constants.get().SECONDARY_CONSTRUCTOR) || dstOperationNode.getType().name.equals(Constants.get().DECORATED_METHOD) || dstOperationNode.getType().name.equals(Constants.get().ANNOTATION_TYPE_MEMBER_DECLARATION) || dstOperationNode.getType().name.equals(Constants.get().GETTER) || dstOperationNode.getType().name.equals(Constants.get().SETTER))) return;
@@ -182,6 +196,7 @@ public class MethodMatcher extends BodyMapperMatcher{
             new SameModifierMatcher(Constants.get().OPEN).match(srcOperationNode,dstOperationNode,mappingStore);
             new SameModifierMatcher(Constants.get().OPERATOR).match(srcOperationNode,dstOperationNode,mappingStore);
             new SameModifierMatcher(Constants.get().INTERNAL).match(srcOperationNode,dstOperationNode,mappingStore);
+            new SameModifierMatcher(Constants.get().INFIX).match(srcOperationNode,dstOperationNode,mappingStore);
             String v1 = umlOperationBodyMapper.getOperation1().getVisibility().toString();
             String v2 = umlOperationBodyMapper.getOperation2().getVisibility().toString();
             Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcOperationNode, Constants.get().MODIFIER, v1);
@@ -284,6 +299,12 @@ public class MethodMatcher extends BodyMapperMatcher{
             Tree leftTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getLocationInfo());
             Tree rightTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightVarDecl.getLocationInfo());
             if (leftTree == null || rightTree == null) return;
+            if (leftTree.getType().name.endsWith("_comment")) {
+                leftTree = TreeUtilFunctions.findByLocationInfo(srcTree, leftVarDecl.getLocationInfo(), Constants.get().PARAMETER);
+            }
+            if (rightTree.getType().name.endsWith("_comment")) {
+                rightTree = TreeUtilFunctions.findByLocationInfo(dstTree, rightVarDecl.getLocationInfo(), Constants.get().PARAMETER);
+            }
             if (leftVarDecl.isParameter() && rightVarDecl.isParameter()) {
                 if (TreeUtilFunctions.isIsomorphicTo(rightTree, leftTree))
                     mappingStore.addMappingRecursively(leftTree, rightTree);

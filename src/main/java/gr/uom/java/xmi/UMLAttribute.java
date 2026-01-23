@@ -42,10 +42,11 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	private Optional<UMLOperation> customGetter;
 	private Optional<UMLOperation> customSetter;
 
-	public UMLAttribute(String name, UMLType type, LocationInfo locationInfo) {
+	public UMLAttribute(String name, UMLType type, LocationInfo locationInfo, String className) {
 		this.locationInfo = locationInfo;
 		this.name = name;
 		this.type = type;
+		this.className = className;
 		this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
 		this.comments = new ArrayList<UMLComment>();
 		this.customGetter = Optional.empty();
@@ -310,10 +311,6 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 
 	public String getClassName() {
 		return className;
-	}
-
-	public void setClassName(String className) {
-		this.className = className;
 	}
 
 	public String getName() {

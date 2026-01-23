@@ -74,6 +74,14 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),Constants.get().TYPE_DECLARATION);
         	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),Constants.get().OBJECT_DECLARATION);
         }
+        if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isModule() && classDiff.getNextClass().isModule()) {
+        	srcTypeDeclaration = srcTree;
+        	dstTypeDeclaration = dstTree;
+        }
+        if (srcTypeDeclaration == null && dstTypeDeclaration == null) {
+        	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),Constants.get().ERROR);
+        	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),Constants.get().ERROR);
+        }
         if(classDiff.getTypeAliasListDiff().isPresent()) {
         	processTypeAliasList(srcTree, dstTree, classDiff.getTypeAliasListDiff().get(), mappingStore);
         }
@@ -123,6 +131,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         new SameModifierMatcher(Constants.get().OPEN).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
         new SameModifierMatcher(Constants.get().DATA).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
         new SameModifierMatcher(Constants.get().COMPANION).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
+        new SameModifierMatcher(Constants.get().INNER).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
 
         if (classDiff.getTypeParameterDiffList() != null)
         for (org.apache.commons.lang3.tuple.Pair<UMLTypeParameter, UMLTypeParameter> commonTypeParamSet : classDiff.getTypeParameterDiffList().getCommonTypeParameters()) {
@@ -181,6 +190,14 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
     private void processClassBlock(Tree srcTypeDeclaration, Tree dstTypeDeclaration, ExtendedMultiMappingStore mappingStore) {
         Tree srcBlock = TreeUtilFunctions.findFirstByType(srcTypeDeclaration, Constants.get().CLASS_BLOCK);
         Tree dstBlock = TreeUtilFunctions.findFirstByType(dstTypeDeclaration, Constants.get().CLASS_BLOCK);
+        if (srcBlock == null && dstBlock == null) {
+            srcBlock = TreeUtilFunctions.findFirstByType(srcTypeDeclaration, Constants.get().DELEGATION_SPECIFIER);
+            dstBlock = TreeUtilFunctions.findFirstByType(dstTypeDeclaration, Constants.get().DELEGATION_SPECIFIER);
+            if (srcBlock != null && dstBlock != null) {
+                mappingStore.addMappingRecursively(srcBlock, dstBlock);
+                return;
+            }
+        }
         if (srcBlock == null || dstBlock == null) return;
         mappingStore.addMapping(srcBlock, dstBlock);
 

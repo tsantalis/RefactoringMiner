@@ -292,6 +292,14 @@ public abstract class UMLAbstractClassDiff {
 		return false;
 	}
 
+	protected boolean mapperListContainsMapper(UMLOperation operation1, UMLOperation operation2) {
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			if(mapper.getContainer1().equals(operation1) && mapper.getContainer2().equals(operation2))
+				return true;
+		}
+		return false;
+	}
+
 	protected boolean mapperListContainsOperation(UMLOperation operation1, UMLOperation operation2) {
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			if(mapper.getContainer1().equals(operation1) || mapper.getContainer2().equals(operation2))

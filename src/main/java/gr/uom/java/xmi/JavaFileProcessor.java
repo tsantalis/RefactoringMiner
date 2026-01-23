@@ -534,11 +534,10 @@ public class JavaFileProcessor {
 				type.setVarargs();
 			}
 			LocationInfo recordComponentLocationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, recordComponent, CodeElementType.RECORD_COMPONENT);
-			UMLRecordComponent umlRecordComponent = new UMLRecordComponent(parameterName, type, recordComponentLocationInfo);
+			UMLRecordComponent umlRecordComponent = new UMLRecordComponent(parameterName, type, recordComponentLocationInfo, umlClass.getName());
 			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFolder, sourceFile, recordComponent, umlRecordComponent, recordComponent.isVarargs(), new LinkedHashMap<>(), javaFileContent);
 			variableDeclaration.setAttribute(true);
 			umlRecordComponent.setVariableDeclaration(variableDeclaration);
-			umlRecordComponent.setClassName(umlClass.getName());
 			umlClass.addAttribute(umlRecordComponent);
 		}
 
@@ -722,30 +721,26 @@ public class JavaFileProcessor {
 		for(BodyDeclaration bodyDeclaration : bodyDeclarations) {
 			if(bodyDeclaration instanceof FieldDeclaration) {
 				FieldDeclaration fieldDeclaration = (FieldDeclaration)bodyDeclaration;
-				List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, interfaceOrAnnotation, sourceFolder, sourceFile, comments, javaFileContent);
+				List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, umlClass.getName(), interfaceOrAnnotation, sourceFolder, sourceFile, comments, javaFileContent);
 				for(UMLAttribute attribute : attributes) {
-					attribute.setClassName(umlClass.getName());
 					umlClass.addAttribute(attribute);
 				}
 			}
 			else if(bodyDeclaration instanceof MethodDeclaration) {
 				MethodDeclaration methodDeclaration = (MethodDeclaration)bodyDeclaration;
-				UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, interfaceOrAnnotation, sourceFolder, sourceFile, comments, javaFileContent);
-				operation.setClassName(umlClass.getName());
+				UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, umlClass.getName(), interfaceOrAnnotation, sourceFolder, sourceFile, comments, javaFileContent);
 				umlClass.addOperation(operation);
 				map.put(methodDeclaration, operation);
 			}
 			else if(bodyDeclaration instanceof AnnotationTypeMemberDeclaration) {
 				AnnotationTypeMemberDeclaration annotationTypeMemberDeclaration = (AnnotationTypeMemberDeclaration)bodyDeclaration;
-				UMLOperation operation = processAnnotationTypeMember(cu, annotationTypeMemberDeclaration, packageName, interfaceOrAnnotation, sourceFolder, sourceFile, comments, javaFileContent);
-				operation.setClassName(umlClass.getName());
+				UMLOperation operation = processAnnotationTypeMember(cu, annotationTypeMemberDeclaration, umlClass.getName(), interfaceOrAnnotation, sourceFolder, sourceFile, comments, javaFileContent);
 				umlClass.addOperation(operation);
 				map.put(annotationTypeMemberDeclaration, operation);
 			}
 			else if(bodyDeclaration instanceof Initializer) {
 				Initializer initializer = (Initializer)bodyDeclaration;
-				UMLInitializer umlInitializer = processInitializer(cu, initializer, packageName, false, sourceFolder, sourceFile, comments, javaFileContent);
-				umlInitializer.setClassName(umlClass.getName());
+				UMLInitializer umlInitializer = processInitializer(cu, initializer, umlClass.getName(), false, sourceFolder, sourceFile, comments, javaFileContent);
 				umlClass.addInitializer(umlInitializer);
 				map.put(initializer, umlInitializer);
 			}
@@ -1129,7 +1124,7 @@ public class JavaFileProcessor {
 		return startSignatureOffset;
 	}
 
-	private UMLInitializer processInitializer(CompilationUnit cu, Initializer initializer, String packageName, boolean isInterfaceMethod, String sourceFolder, String sourceFile, List<UMLComment> comments, String javaFileContent) {
+	private UMLInitializer processInitializer(CompilationUnit cu, Initializer initializer, String className, boolean isInterfaceMethod, String sourceFolder, String sourceFile, List<UMLComment> comments, String javaFileContent) {
 		UMLJavadoc javadoc = generateJavadoc(cu, initializer, sourceFolder, sourceFile, javaFileContent);
 		String name = "";
 		if(initializer.getParent() instanceof AnonymousClassDeclaration && initializer.getParent().getParent() instanceof ClassInstanceCreation) {
@@ -1141,7 +1136,7 @@ public class JavaFileProcessor {
 			name = typeDeclaration.getName().getIdentifier();
 		}
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, initializer, CodeElementType.INITIALIZER);
-		UMLInitializer umlInitializer = new UMLInitializer(name, locationInfo);
+		UMLInitializer umlInitializer = new UMLInitializer(name, locationInfo, className);
 		umlInitializer.setJavadoc(javadoc);
 		distributeComments(comments, locationInfo, umlInitializer.getComments(), cu);
 
@@ -1152,12 +1147,12 @@ public class JavaFileProcessor {
 		return umlInitializer;
 	}
 
-	private UMLOperation processAnnotationTypeMember(CompilationUnit cu, AnnotationTypeMemberDeclaration annotationTypeMemberDeclatation, String packageName, boolean isInterfaceMethod, String sourceFolder, String sourceFile, List<UMLComment> comments, String javaFileContent) {
+	private UMLOperation processAnnotationTypeMember(CompilationUnit cu, AnnotationTypeMemberDeclaration annotationTypeMemberDeclatation, String className, boolean isInterfaceMethod, String sourceFolder, String sourceFile, List<UMLComment> comments, String javaFileContent) {
 		UMLJavadoc javadoc = generateJavadoc(cu, annotationTypeMemberDeclatation, sourceFolder, sourceFile, javaFileContent);
 		String methodName = annotationTypeMemberDeclatation.getName().getFullyQualifiedName();
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, annotationTypeMemberDeclatation, CodeElementType.ANNOTATION_TYPE_MEMBER_DECLARATION);
 
-		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo);
+		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo, className);
 		umlOperation.setJavadoc(javadoc);
 		distributeComments(comments, locationInfo, umlOperation.getComments(), cu);
 
@@ -1217,11 +1212,11 @@ public class JavaFileProcessor {
 		return umlOperation;
 	}
 
-	private UMLOperation processMethodDeclaration(CompilationUnit cu, MethodDeclaration methodDeclaration, String packageName, boolean isInterfaceMethod, String sourceFolder, String sourceFile, List<UMLComment> comments, String javaFileContent) {
+	private UMLOperation processMethodDeclaration(CompilationUnit cu, MethodDeclaration methodDeclaration, String className, boolean isInterfaceMethod, String sourceFolder, String sourceFile, List<UMLComment> comments, String javaFileContent) {
 		UMLJavadoc javadoc = generateJavadoc(cu, methodDeclaration, sourceFolder, sourceFile, javaFileContent);
 		String methodName = methodDeclaration.getName().getFullyQualifiedName();
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, methodDeclaration, CodeElementType.METHOD_DECLARATION);
-		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo);
+		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo, className);
 		umlOperation.setJavadoc(javadoc);
 		distributeComments(comments, locationInfo, umlOperation.getComments(), cu);
 
@@ -1340,7 +1335,7 @@ public class JavaFileProcessor {
 	private void processEnumConstantDeclaration(CompilationUnit cu, EnumConstantDeclaration enumConstantDeclaration, String sourceFolder, String sourceFile, UMLClass umlClass, List<UMLComment> comments, String javaFileContent) {
 		UMLJavadoc javadoc = generateJavadoc(cu, enumConstantDeclaration, sourceFolder, sourceFile, javaFileContent);
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, enumConstantDeclaration, CodeElementType.ENUM_CONSTANT_DECLARATION);
-		UMLEnumConstant enumConstant = new UMLEnumConstant(enumConstantDeclaration.getName().getIdentifier(), UMLType.extractTypeObject(umlClass.getName()), locationInfo);
+		UMLEnumConstant enumConstant = new UMLEnumConstant(enumConstantDeclaration.getName().getIdentifier(), UMLType.extractTypeObject(umlClass.getName()), locationInfo, umlClass.getName());
 		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFolder, sourceFile, enumConstantDeclaration, new LinkedHashMap<>(), javaFileContent);
 		enumConstant.setVariableDeclaration(variableDeclaration);
 		enumConstant.setJavadoc(javadoc);
@@ -1352,11 +1347,10 @@ public class JavaFileProcessor {
 		for(Expression argument : arguments) {
 			enumConstant.addArgument(stringify(argument));
 		}
-		enumConstant.setClassName(umlClass.getName());
 		umlClass.addEnumConstant(enumConstant);
 	}
 
-	private List<UMLAttribute> processFieldDeclaration(CompilationUnit cu, FieldDeclaration fieldDeclaration, boolean isInterfaceField, String sourceFolder, String sourceFile, List<UMLComment> comments, String javaFileContent) {
+	private List<UMLAttribute> processFieldDeclaration(CompilationUnit cu, FieldDeclaration fieldDeclaration, String className, boolean isInterfaceField, String sourceFolder, String sourceFile, List<UMLComment> comments, String javaFileContent) {
 		UMLJavadoc javadoc = generateJavadoc(cu, fieldDeclaration, sourceFolder, sourceFile, javaFileContent);
 		List<UMLAttribute> attributes = new ArrayList<UMLAttribute>();
 		Type fieldType = fieldDeclaration.getType();
@@ -1365,7 +1359,7 @@ public class JavaFileProcessor {
 			UMLType type = UMLType.extractTypeObject(cu, sourceFolder, sourceFile, fieldType, fragment.getExtraDimensions(), javaFileContent);
 			String fieldName = fragment.getName().getFullyQualifiedName();
 			LocationInfo locationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, fragment, CodeElementType.FIELD_DECLARATION);
-			UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo);
+			UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo, className);
 			umlAttribute.setFieldDeclarationLocationInfo(generateLocationInfo(cu, sourceFolder, sourceFile, fieldDeclaration, CodeElementType.FIELD_DECLARATION));
 			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFolder, sourceFile, fragment, umlAttribute, new LinkedHashMap<>(), javaFileContent);
 			variableDeclaration.setAttribute(true);
@@ -1419,24 +1413,21 @@ public class JavaFileProcessor {
 		for(BodyDeclaration bodyDeclaration : bodyDeclarations) {
 			if(bodyDeclaration instanceof FieldDeclaration) {
 				FieldDeclaration fieldDeclaration = (FieldDeclaration)bodyDeclaration;
-				List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, false, sourceFolder, sourceFile, comments, javaFileContent);
+				List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, anonymousClass.getCodePath(), false, sourceFolder, sourceFile, comments, javaFileContent);
 				for(UMLAttribute attribute : attributes) {
-					attribute.setClassName(anonymousClass.getCodePath());
 					attribute.setAnonymousClassContainer(anonymousClass);
 					anonymousClass.addAttribute(attribute);
 				}
 			}
 			else if(bodyDeclaration instanceof MethodDeclaration) {
 				MethodDeclaration methodDeclaration = (MethodDeclaration)bodyDeclaration;
-				UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, false, sourceFolder, sourceFile, comments, javaFileContent);
-				operation.setClassName(anonymousClass.getCodePath());
+				UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, anonymousClass.getCodePath(), false, sourceFolder, sourceFile, comments, javaFileContent);
 				operation.setAnonymousClassContainer(anonymousClass);
 				anonymousClass.addOperation(operation);
 			}
 			else if(bodyDeclaration instanceof Initializer) {
 				Initializer initializer = (Initializer)bodyDeclaration;
-				UMLInitializer umlInitializer = processInitializer(cu, initializer, packageName, false, sourceFolder, sourceFile, comments, javaFileContent);
-				umlInitializer.setClassName(anonymousClass.getCodePath());
+				UMLInitializer umlInitializer = processInitializer(cu, initializer, anonymousClass.getCodePath(), false, sourceFolder, sourceFile, comments, javaFileContent);
 				umlInitializer.setAnonymousClassContainer(anonymousClass);
 				anonymousClass.addInitializer(umlInitializer);
 			}

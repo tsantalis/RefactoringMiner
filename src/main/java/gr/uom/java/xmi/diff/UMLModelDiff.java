@@ -1442,6 +1442,7 @@ public class UMLModelDiff {
 			TreeSet<UMLClassRenameDiff> identicalPackageDeclarationDocDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 			TreeMap<Integer, TreeSet<UMLClassRenameDiff>> matchingStatementMap = new TreeMap<Integer, TreeSet<UMLClassRenameDiff>>();
 			TreeMap<Integer, TreeSet<UMLClassRenameDiff>> identicalMethodMap = new TreeMap<Integer, TreeSet<UMLClassRenameDiff>>();
+			TreeMap<Integer, TreeSet<UMLClassRenameDiff>> identicalCompanionMap = new TreeMap<Integer, TreeSet<UMLClassRenameDiff>>();
 			for(UMLClassRenameDiff diff : diffSet) {
 				if(diff.getOriginalClass().getPackageDeclarationJavadoc() != null && diff.getNextClass().getPackageDeclarationJavadoc() != null) {
 					if(diff.getOriginalClass().getPackageDeclarationJavadoc().getFullText().equals(diff.getNextClass().getPackageDeclarationJavadoc().getFullText())) {
@@ -1547,6 +1548,15 @@ public class UMLModelDiff {
 						identicalMethodMap.put(count, set);
 					}
 				}
+				int count = diff.getMatchResult().getMatchedCompanions();
+				if(identicalCompanionMap.containsKey(count)) {
+					identicalCompanionMap.get(count).add(diff);
+				}
+				else {
+					TreeSet<UMLClassRenameDiff> set = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
+					set.add(diff);
+					identicalCompanionMap.put(count, set);
+				}
 				if(identicalBodies == operations1.size()) {
 					identicalBodyDiffSet.add(diff);
 				}
@@ -1577,6 +1587,10 @@ public class UMLModelDiff {
 			}
 			Map.Entry<Integer, TreeSet<UMLClassRenameDiff>> entry = matchingStatementMap.lastEntry();
 			if(entry != null && entry.getKey() > 0 && entry.getValue().size() == 1) {
+				return entry.getValue();
+			}
+			entry = identicalCompanionMap.lastEntry();
+			if(entry != null && entry.getKey() > 0 && identicalCompanionMap.firstEntry().getKey() == 0 && entry.getValue().size() == 1) {
 				return entry.getValue();
 			}
 			entry = identicalMethodMap.lastEntry();
@@ -4145,7 +4159,7 @@ public class UMLModelDiff {
 					if(!parentClass.getNonQualifiedName().equals(childClass.getNonQualifiedName())) {
 						int totalOperations = parentClass.getOperations().size() + childClass.getOperations().size();
 						int totalAttributes = parentClass.getAttributes().size() + childClass.getAttributes().size();
-						MatchResult matchResult = new MatchResult(0, set.size(), 0, totalOperations, totalAttributes, true);
+						MatchResult matchResult = new MatchResult(0, set.size(), 0, totalOperations, totalAttributes, 0, 0, true);
 						UMLClassRenameDiff renameDiff = new UMLClassRenameDiff(parentClass, childClass, this, matchResult);
 						renameDiff.process();
 						refactorings.addAll(renameDiff.getRefactorings());
@@ -4198,7 +4212,7 @@ public class UMLModelDiff {
 					else {
 						int totalOperations = parentClass.getOperations().size() + childClass.getOperations().size();
 						int totalAttributes = parentClass.getAttributes().size() + childClass.getAttributes().size();
-						MatchResult matchResult = new MatchResult(0, set.size(), 0, totalOperations, totalAttributes, true);
+						MatchResult matchResult = new MatchResult(0, set.size(), 0, totalOperations, totalAttributes, 0, 0, true);
 						UMLClassMoveDiff moveDiff = new UMLClassMoveDiff(parentClass, childClass, this, matchResult);
 						moveDiff.process();
 						refactorings.addAll(moveDiff.getRefactorings());
@@ -4445,7 +4459,7 @@ public class UMLModelDiff {
 						if(!parentClass.getNonQualifiedName().equals(childClass.getNonQualifiedName())) {
 							int totalOperations = parentClass.getOperations().size() + childClass.getOperations().size();
 							int totalAttributes = parentClass.getAttributes().size() + childClass.getAttributes().size();
-							MatchResult matchResult = new MatchResult(refs.size(), 0, 0, totalOperations, totalAttributes, true);
+							MatchResult matchResult = new MatchResult(refs.size(), 0, 0, totalOperations, totalAttributes, 0, 0, true);
 							UMLClassRenameDiff renameDiff = new UMLClassRenameDiff((UMLClass)parentClass, (UMLClass)childClass, this, matchResult);
 							renameDiff.process();
 							refactorings.addAll(renameDiff.getRefactorings());
@@ -4480,7 +4494,7 @@ public class UMLModelDiff {
 						else {
 							int totalOperations = parentClass.getOperations().size() + childClass.getOperations().size();
 							int totalAttributes = parentClass.getAttributes().size() + childClass.getAttributes().size();
-							MatchResult matchResult = new MatchResult(refs.size(), 0, 0, totalOperations, totalAttributes, true);
+							MatchResult matchResult = new MatchResult(refs.size(), 0, 0, totalOperations, totalAttributes, 0, 0, true);
 							UMLClassMoveDiff moveDiff = new UMLClassMoveDiff((UMLClass)parentClass, (UMLClass)childClass, this, matchResult);
 							moveDiff.process();
 							refactorings.addAll(moveDiff.getRefactorings());

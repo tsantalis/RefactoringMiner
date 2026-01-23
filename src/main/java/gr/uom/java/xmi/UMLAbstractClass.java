@@ -42,6 +42,7 @@ public abstract class UMLAbstractClass {
     private List<UMLAnnotation> annotations;
     private List<UMLModifier> modifiers;
     private List<UMLEnumConstant> enumConstants;
+    private List<UMLClass> companionObjects;
 
 	public UMLAbstractClass(String packageName, String name, LocationInfo locationInfo, List<UMLImport> importedTypes) {
 		this.packageName = packageName;
@@ -61,6 +62,15 @@ public abstract class UMLAbstractClass {
         this.annotations = new ArrayList<UMLAnnotation>();
         this.modifiers = new ArrayList<UMLModifier>();
         this.enumConstants = new ArrayList<UMLEnumConstant>();
+        this.companionObjects = new ArrayList<UMLClass>();
+	}
+
+	public void addCompanion(UMLClass companion) {
+		this.companionObjects.add(companion);
+	}
+
+	public List<UMLClass> getCompanionObjects() {
+		return companionObjects;
 	}
 
 	public boolean isEmpty() {
@@ -735,30 +745,42 @@ public abstract class UMLAbstractClass {
 				commonAttributes.add(attribute);
 			}
 		}
+		int matchedCompanions = 0;
+		int totalCompanions = Math.max(this.getCompanionObjects().size(), umlClass.getCompanionObjects().size());
+		if(this.getCompanionObjects().size() == umlClass.getCompanionObjects().size()) {
+			for(int i=0; i<this.getCompanionObjects().size(); i++) {
+				UMLClass companion1 = this.getCompanionObjects().get(i);
+				UMLClass companion2 = umlClass.getCompanionObjects().get(i);
+				MatchResult match = companion1.hasCommonAttributesAndOperations(companion2);
+				if(match.isMatch()) {
+					matchedCompanions++;
+				}
+			}
+		}
 		if(this.isTestClass() && umlClass.isTestClass()) {
 			if(commonOperations.size() > Math.floor(totalOperations/2.0) || commonOperations.containsAll(this.operations)) {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 			}
 			else {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 			}
 		}
 		if(this.isSingleAbstractMethodInterface() && umlClass.isSingleAbstractMethodInterface()) {
 			if(commonOperations.size() == totalOperations) {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 			}
 			else {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 			}
 		}
 		if((commonOperations.size() >= Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0)) ||
 				(commonAttributes.size() >= Math.floor(totalAttributes/2.0) && (commonOperations.size() > 2 || totalOperations == 0)) ||
 				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && this.attributes.size() == umlClass.attributes.size()) ||
 				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && totalAttributes == 1)) {
-			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 		}
 		else {
-			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
+			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 		}
 	}
 
@@ -943,30 +965,42 @@ public abstract class UMLAbstractClass {
 				}
 			}
 		}
+		int matchedCompanions = 0;
+		int totalCompanions = Math.max(this.getCompanionObjects().size(), umlClass.getCompanionObjects().size());
+		if(this.getCompanionObjects().size() == umlClass.getCompanionObjects().size()) {
+			for(int i=0; i<this.getCompanionObjects().size(); i++) {
+				UMLClass companion1 = this.getCompanionObjects().get(i);
+				UMLClass companion2 = umlClass.getCompanionObjects().get(i);
+				MatchResult match = companion1.hasCommonAttributesAndOperations(companion2);
+				if(match.isMatch()) {
+					matchedCompanions++;
+				}
+			}
+		}
 		if(this.getNonQualifiedName().equals(umlClass.getNonQualifiedName()) && this.getSourceFile().equals(umlClass.getSourceFile())) {
 			if(commonAttributes.size() > 0 || commonOperations.size() > 0 || commonTypeAttributes.size() > 0) {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 			}
 		}
 		if(this.isTestClass() && umlClass.isTestClass()) {
 			if(commonOperations.size() > Math.floor(totalOperations/2.0) || commonOperations.containsAll(this.operations)) {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 			}
 			else {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 			}
 		}
 		if(this.isSingleAbstractMethodInterface() && umlClass.isSingleAbstractMethodInterface()) {
 			if(commonOperations.size() == totalOperations) {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 			}
 			else {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 			}
 		}
 		if(this.isSingleMethodClass() && umlClass.isSingleMethodClass() && this.getNonQualifiedName().equals(umlClass.getNonQualifiedName())) {
 			if(commonOperations.size() >= totalOperations) {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 			}
 		}
 		if(this.getNonQualifiedName().equals(umlClass.getNonQualifiedName())) {
@@ -977,30 +1011,34 @@ public abstract class UMLAbstractClass {
 				}
 			}
 			if(mainCount == 2) {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 			}
 		}
 		if(this.isSingleAbstractMethodInterface() || umlClass.isSingleAbstractMethodInterface()) {
 			if(commonOperations.size() == 2) {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 			}
 			else {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 			}
 		}
 		if(this.isInterface() && umlClass.isInterface()) {
 			if(commonOperations.size() > Math.floor(totalOperations/2.0)) {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 			}
 			else if(commonOperations.size() >= Math.floor((totalOperations-totalDefaultOperations)/2.0)) {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 			}
+		}
+		if(this.isObject() && umlClass.isObject()) {
+			if(commonAttributes.size() > Math.floor(totalAttributes/2.0) && commonAttributes.size() >= 10)
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 		}
 		boolean allAttributesMatched = commonAttributes.size() == totalAttributes && totalAttributes > 0;
 		boolean containsName = this.getNonQualifiedName().contains(umlClass.getNonQualifiedName()) || umlClass.getNonQualifiedName().contains(this.getNonQualifiedName());
 		if(commonConstructors.size() == commonOperations.size() && commonConstructors.size() > 0 && !allAttributesMatched && !containsName) {
 			//return false match result if only constructors have been matched
-			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
+			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 		}
 		int abstractOperationsToBeDeducted = this.isAbstract() != umlClass.isAbstract() ? totalAbstractOperations : 0;
 		if((commonOperations.size() > Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0)) ||
@@ -1010,8 +1048,9 @@ public abstract class UMLAbstractClass {
 				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && this.attributes.size() == umlClass.attributes.size()) ||
 				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && totalAttributes == 1) ||
 				(identicalAttributes.size() == totalAttributes && totalAttributes > 0) ||
-				(commonOperations.size() >= 10 && commonAttributes.size() >= 10 && identicalOperations.size() > 0 && identicalAttributes.size() > 0)) {
-			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+				(commonOperations.size() >= 10 && commonAttributes.size() >= 10 && identicalOperations.size() > 0 && identicalAttributes.size() > 0) ||
+				(matchedCompanions > 0 && matchedCompanions == this.getCompanionObjects().size())) {
+			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 		}
 		Set<UMLOperation> unmatchedOperations = new LinkedHashSet<UMLOperation>(umlClass.operations);
 		unmatchedOperations.removeAll(commonOperations);
@@ -1029,12 +1068,12 @@ public abstract class UMLAbstractClass {
 			}
 		}
 		if((commonOperations.size() + unmatchedCalledOperations.size() > Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0))) {
-			return new MatchResult(commonOperations.size() + unmatchedCalledOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+			return new MatchResult(commonOperations.size() + unmatchedCalledOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 		}
 		if(unmatchedOperations.size() == 0 && commonOperations.size() > Math.floor(totalOperations/3.0*2.0)) {
-			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 		}
-		return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
+		return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 	}
 
 	private static boolean containsToken(String input, String[] tokens) {
@@ -1112,10 +1151,22 @@ public abstract class UMLAbstractClass {
 				commonAttributes.add(attribute);
 			}
 		}
+		int matchedCompanions = 0;
+		int totalCompanions = Math.max(this.getCompanionObjects().size(), umlClass.getCompanionObjects().size());
+		if(this.getCompanionObjects().size() == umlClass.getCompanionObjects().size()) {
+			for(int i=0; i<this.getCompanionObjects().size(); i++) {
+				UMLClass companion1 = this.getCompanionObjects().get(i);
+				UMLClass companion2 = umlClass.getCompanionObjects().get(i);
+				MatchResult match = companion1.hasCommonAttributesAndOperations(companion2);
+				if(match.isMatch()) {
+					matchedCompanions++;
+				}
+			}
+		}
 		UMLAnnotationListDiff annotationListDiff = new UMLAnnotationListDiff(this.getAnnotations(), umlClass.getAnnotations());
 		boolean identicalAnnotations = this.getAnnotations().size() > 0 && umlClass.getAnnotations().size() > 0 && annotationListDiff.isEmpty();
 		if(totalOperations == 0 && totalAttributes == 0 && (this.getEnumConstants().size() == 0 || umlClass.getEnumConstants().size() == 0) && !this.getNonQualifiedName().equals(umlClass.getNonQualifiedName()) && !identicalAnnotations && !identicalComments(umlClass)) {
-			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
+			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 		}
 		boolean emptyAnnotations = this instanceof UMLClass class1 && class1.isAnnotation() && umlClass instanceof UMLClass class2 && class2.isAnnotation() && totalAttributes + totalOperations == 0;
 		if(emptyAnnotations) {
@@ -1130,21 +1181,21 @@ public abstract class UMLAbstractClass {
 				}
 			}
 			if(commonTokens >= Math.min(tokens1.length, tokens2.length)-1) {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 			}
 			else {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 			}
 		}
 		boolean emptyModules = this instanceof UMLClass class1 && class1.isModule() && umlClass instanceof UMLClass class2 && class2.isModule() && (this.container.isEmpty() || umlClass.container.isEmpty()) && totalAttributes + totalOperations == 0;
 		if(commonOperations.size() == totalOperations && commonAttributes.size() == totalAttributes && !emptyModules) {
 			if(allAttributes == totalAttributes && identicalAllAttributes != allAttributes && totalOperations == 0) {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 			}
-			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
+			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 		}
 		else {
-			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
+			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 		}
 	}
 
@@ -1213,10 +1264,10 @@ public abstract class UMLAbstractClass {
 			}
 		}
 		if(commonOperations.size() > 2) {
-			return new MatchResult(commonOperations.size(), 0, identicalOperations.size(), totalOperations, 0, true);
+			return new MatchResult(commonOperations.size(), 0, identicalOperations.size(), totalOperations, 0, 0, 0, true);
 		}
 		else {
-			return new MatchResult(commonOperations.size(), 0, identicalOperations.size(), totalOperations, 0, false);
+			return new MatchResult(commonOperations.size(), 0, identicalOperations.size(), totalOperations, 0, 0, 0, false);
 		}
 	}
 
@@ -1303,6 +1354,7 @@ public abstract class UMLAbstractClass {
 	
 	public abstract String getTypeDeclarationKind();
 	public abstract boolean isFinal();
+	public abstract boolean isObject();
 	public abstract boolean isStatic();
 	public abstract boolean isSealed();
 	public abstract boolean isTopLevel();

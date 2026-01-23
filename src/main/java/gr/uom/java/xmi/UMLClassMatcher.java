@@ -8,18 +8,24 @@ public interface UMLClassMatcher {
 		private int identicalBodyOperations;
 		private int matchedOperations;
 		private int matchedAttributes;
+		private int matchedCompanions;
 		private int totalOperations;
 		private int totalAttributes;
+		private int totalCompanions;
 		private boolean match;
 
 		public MatchResult(int matchedOperations, int matchedAttributes,
 				int identicalBodyOperations,
-				int totalOperations, int totalAttributes, boolean match) {
+				int totalOperations, int totalAttributes,
+				int matchedCompanions, int totalCompanions,
+				boolean match) {
 			this.matchedOperations = matchedOperations;
 			this.matchedAttributes = matchedAttributes;
 			this.identicalBodyOperations = identicalBodyOperations;
 			this.totalOperations = totalOperations;
 			this.totalAttributes = totalAttributes;
+			this.matchedCompanions = matchedCompanions;
+			this.totalCompanions = totalCompanions;
 			this.match = match;
 		}
 
@@ -41,6 +47,14 @@ public interface UMLClassMatcher {
 
 		public int getTotalAttributes() {
 			return totalAttributes;
+		}
+
+		public int getMatchedCompanions() {
+			return matchedCompanions;
+		}
+
+		public int getTotalCompanions() {
+			return totalCompanions;
 		}
 
 		public boolean isMatch() {

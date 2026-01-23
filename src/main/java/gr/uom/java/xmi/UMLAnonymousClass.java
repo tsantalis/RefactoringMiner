@@ -109,4 +109,8 @@ public class UMLAnonymousClass extends UMLAbstractClass implements Comparable<UM
 	public boolean isTopLevel() {
 		return false;
 	}
+
+	public boolean isObject() {
+		return false;
+	}
 }

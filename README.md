@@ -672,21 +672,21 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **January 22, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **January 23, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1481  |  3  |  0  | 0.998  | 1.000|
+|**Total**|1499  |  3  |  0  | 0.998  | 1.000|
 |Extract Method| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|35  |  0  |  0  | 1.000  | 1.000|
-|Move Attribute|21  |  0  |  0  | 1.000  | 1.000|
+|Move Attribute|37  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|122  |  0  |  0  | 1.000  | 1.000|
 |Inline Method| 7  |  0  |  0  | 1.000  | 1.000|
 |Move Method|69  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Method| 6  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Method|46  |  0  |  0  | 1.000  | 1.000|
-|Move Class|152  |  0  |  0  | 1.000  | 1.000|
+|Move Class|153  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Class|10  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|17  |  0  |  0  | 1.000  | 1.000|
 |Push Down Attribute| 4  |  0  |  0  | 1.000  | 1.000|
@@ -694,7 +694,7 @@ As of **January 22, 2026** the precision and recall of RefactoringMiner on this 
 |Extract Interface| 3  |  0  |  0  | 1.000  | 1.000|
 |Extract Superclass| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 2  |  0  |  0  | 1.000  | 1.000|
-|Extract Class| 9  |  0  |  0  | 1.000  | 1.000|
+|Extract Class|10  |  0  |  0  | 1.000  | 1.000|
 |Extract And Move Method| 8  |  1  |  0  | 0.889  | 1.000|
 |Move And Inline Method|19  |  0  |  0  | 1.000  | 1.000|
 |Rename Package| 3  |  0  |  0  | 1.000  | 1.000|

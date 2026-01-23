@@ -7516,6 +7516,132 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private INT_SIZE : Inferred from class shark.HprofReader.Companion to private INT_SIZE : Inferred from class shark.HprofRecordReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private BYTE_TYPE : Inferred from class shark.HprofReader.Companion to private BYTE_TYPE : Inferred from class shark.HprofRecordReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private INT_MASK : Inferred from class shark.HprofReader.Companion to private INT_MASK : Inferred from class shark.HprofRecordReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private INT_TYPE : Inferred from class shark.HprofReader.Companion to private INT_TYPE : Inferred from class shark.HprofRecordReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private FLOAT_TYPE : Inferred from class shark.HprofReader.Companion to private FLOAT_TYPE : Inferred from class shark.HprofRecordReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private CHAR_SIZE : Inferred from class shark.HprofReader.Companion to private CHAR_SIZE : Inferred from class shark.HprofRecordReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private LONG_SIZE : Inferred from class shark.HprofReader.Companion to private LONG_SIZE : Inferred from class shark.HprofRecordReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private CHAR_TYPE : Inferred from class shark.HprofReader.Companion to private CHAR_TYPE : Inferred from class shark.HprofRecordReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private LONG_TYPE : Inferred from class shark.HprofReader.Companion to private LONG_TYPE : Inferred from class shark.HprofRecordReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private SHORT_SIZE : Inferred from class shark.HprofReader.Companion to private SHORT_SIZE : Inferred from class shark.HprofRecordReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private SHORT_TYPE : Inferred from class shark.HprofReader.Companion to private SHORT_TYPE : Inferred from class shark.HprofRecordReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private BOOLEAN_SIZE : Inferred from class shark.HprofReader.Companion to private BOOLEAN_SIZE : Inferred from class shark.HprofRecordReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private BYTE_MASK : Inferred from class shark.HprofReader.Companion to private BYTE_MASK : Inferred from class shark.HprofRecordReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private DOUBLE_TYPE : Inferred from class shark.HprofReader.Companion to private DOUBLE_TYPE : Inferred from class shark.HprofRecordReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private BOOLEAN_TYPE : Inferred from class shark.HprofReader.Companion to private BOOLEAN_TYPE : Inferred from class shark.HprofRecordReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private BYTE_SIZE : Inferred from class shark.HprofReader.Companion to private BYTE_SIZE : Inferred from class shark.HprofRecordReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.HprofReader.Companion moved to shark.StreamingHprofReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class shark.HprofRecordReader.Companion from class shark.HprofReader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

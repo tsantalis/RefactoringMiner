@@ -272,4 +272,5 @@ public class Constants {
     public final String ERROR = "ERROR";
     public final String ENUM_ENTRY = "enum_entry";
     public final String JUMP_EXPRESSION = "jump_expression";
+    public final String JUMP_KEYWORD = "jump_keyword";
 }

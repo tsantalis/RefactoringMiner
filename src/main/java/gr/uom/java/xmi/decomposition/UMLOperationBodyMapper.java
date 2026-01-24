@@ -1685,6 +1685,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		for(AbstractCodeMapping mapping : getMappings()) {
 			if(mapping.getFragment1().getLocationInfo().subsumes(nonMappedLeaf1.getLocationInfo()) && mapping.getFragment2().getLocationInfo().subsumes(nonMappedLeaf2.getLocationInfo())) {
+				if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_STATEMENT)) {
+					CompositeStatementObject parent1 = nonMappedLeaf1.getParent();
+					while(parent1 != null) {
+						if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY)) {
+							break;
+						}
+						parent1 = parent1.getParent();
+					}
+					CompositeStatementObject parent2 = nonMappedLeaf2.getParent();
+					while(parent2 != null) {
+						if(parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY)) {
+							break;
+						}
+						parent2 = parent2.getParent();
+					}
+					if(!this.containsMapping(parent1, parent2)) {
+						break;
+					}
+				}
 				return true;
 			}
 		}

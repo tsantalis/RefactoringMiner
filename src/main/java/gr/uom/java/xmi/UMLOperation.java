@@ -1399,6 +1399,13 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	public boolean compatibleSignature(UMLOperation removedOperation) {
+		if(this.getName().contains(".") && removedOperation.getName().contains(".")) {
+			String prefix1 = this.getName().substring(0, this.getName().indexOf("."));
+			String prefix2 = removedOperation.getName().substring(0, removedOperation.getName().indexOf("."));
+			if(prefix1.equals(prefix2) && this.equalReturnParameter(removedOperation)) {
+				return true;
+			}
+		}
 		return (this.equalReturnParameter(removedOperation) && (equalParameterTypes(removedOperation) || overloadedParameterTypes(removedOperation) || equalParameterNames(removedOperation))) || replacedParameterTypes(removedOperation);
 	}
 

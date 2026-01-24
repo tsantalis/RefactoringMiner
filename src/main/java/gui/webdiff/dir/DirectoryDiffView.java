@@ -145,6 +145,11 @@ public class DirectoryDiffView implements Renderable {
             if (node == null) {
                 return;
             }
+            else if(node.getUserObject() != null) {
+                TreeNodeInfo nodeInfo = (TreeNodeInfo) node.getUserObject();
+                if(node.isLeaf() && nodeInfo.getId() == -1)
+                    return;
+            }
             // Start a list item for this node
             HtmlCanvas li = null;
             if (!node.isLeaf())

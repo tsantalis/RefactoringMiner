@@ -8,6 +8,7 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.PrimaryConstructor;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -36,6 +37,9 @@ public class RenameVariableRefactoring implements MethodLevelRefactoring, Refere
 	}
 
 	public RefactoringType getRefactoringType() {
+		if(originalVariable.isAttribute() && renamedVariable.isAttribute() &&
+				operationBefore instanceof PrimaryConstructor && operationAfter instanceof PrimaryConstructor)
+			return RefactoringType.RENAME_PARAMETER;
 		if(originalVariable.isParameter() && renamedVariable.isParameter())
 			return RefactoringType.RENAME_PARAMETER;
 		if(originalVariable.isAttribute() && renamedVariable.isParameter())

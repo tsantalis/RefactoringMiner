@@ -11839,29 +11839,29 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable record : ObjectArrayDumpRecord to indexedObject : IndexedObjectArray in primary constructor GraphObjectArrayRecord(graph HprofGraph, indexedObject IndexedObjectArray, objectId Long, isPrimitiveWrapperArray Boolean) from class leakcanary.GraphObjectRecord.GraphObjectArrayRecord",
+        "type": "Rename Parameter",
+        "description": "Rename Parameter record : ObjectArrayDumpRecord to indexedObject : IndexedObjectArray in primary constructor GraphObjectArrayRecord(graph HprofGraph, indexedObject IndexedObjectArray, objectId Long, isPrimitiveWrapperArray Boolean) from class leakcanary.GraphObjectRecord.GraphObjectArrayRecord",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable record : InstanceDumpRecord to indexedObject : IndexedInstance in primary constructor GraphInstanceRecord(graph HprofGraph, indexedObject IndexedInstance, objectId Long, isPrimitiveWrapper Boolean) from class leakcanary.GraphObjectRecord.GraphInstanceRecord",
+        "type": "Rename Parameter",
+        "description": "Rename Parameter record : InstanceDumpRecord to indexedObject : IndexedInstance in primary constructor GraphInstanceRecord(graph HprofGraph, indexedObject IndexedInstance, objectId Long, isPrimitiveWrapper Boolean) from class leakcanary.GraphObjectRecord.GraphInstanceRecord",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable record : ClassDumpRecord to objectId : Long in primary constructor GraphClassRecord(graph HprofGraph, indexedObject IndexedClass, objectId Long) from class leakcanary.GraphObjectRecord.GraphClassRecord",
+        "type": "Rename Parameter",
+        "description": "Rename Parameter record : ClassDumpRecord to objectId : Long in primary constructor GraphClassRecord(graph HprofGraph, indexedObject IndexedClass, objectId Long) from class leakcanary.GraphObjectRecord.GraphClassRecord",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable parser : HprofParser to index : HprofInMemoryIndex in primary constructor HprofGraph(reader SeekableHprofReader, index HprofInMemoryIndex) from class leakcanary.HprofGraph",
+        "type": "Rename Parameter",
+        "description": "Rename Parameter parser : HprofParser to index : HprofInMemoryIndex in primary constructor HprofGraph(reader SeekableHprofReader, index HprofInMemoryIndex) from class leakcanary.HprofGraph",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

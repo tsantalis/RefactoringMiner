@@ -702,8 +702,8 @@ As of **January 23, 2026** the precision and recall of RefactoringMiner on this 
 |Extract Variable|12  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable| 9  |  1  |  0  | 0.900  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|34  |  1  |  0  | 0.971  | 1.000|
-|Rename Parameter|66  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable|30  |  1  |  0  | 0.968  | 1.000|
+|Rename Parameter|70  |  0  |  0  | 1.000  | 1.000|
 |Rename Attribute|73  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute| 3  |  0  |  0  | 1.000  | 1.000|

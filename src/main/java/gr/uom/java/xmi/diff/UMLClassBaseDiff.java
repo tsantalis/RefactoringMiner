@@ -3219,7 +3219,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		}
 		boolean operationsWithSameName = operationBodyMapper.getContainer1().getName().equals(operationBodyMapper.getContainer2().getName()) &&
 				!operationBodyMapper.getContainer1().isConstructor() && !operationBodyMapper.getContainer2().isConstructor();
+		int inExactWhenEntries = 0;
 		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+			if((mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY) ||
+					mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_STATEMENT)) &&
+					!mapping.getFragment1().getString().replaceAll("\s", "").equals(mapping.getFragment2().getString().replaceAll("\s", ""))) {
+				inExactWhenEntries++;
+			}
 			if(mapping.isIdenticalWithInlinedVariable() || mapping.isIdenticalWithExtractedVariable()) {
 				for(Refactoring r : mapping.getRefactorings()) {
 					if(r instanceof InlineVariableRefactoring) {
@@ -3234,6 +3240,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 			}
+		}
+		if(inExactWhenEntries > 0 && inExactWhenEntries == operationBodyMapper.getMappings().size()) {
+			return false;
 		}
 		boolean identicalFixtureAnnotation = operationBodyMapper.getContainer1().identicalTextFixture(operationBodyMapper.getContainer2());
 		boolean migrateToExpected = false;
@@ -3271,7 +3280,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
-		return (mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
+		return operationBodyMapper.getMappings().size() > 100 ||
+				(mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 				(mappings > 0 && identicalFixtureAnnotation) ||
 				(mappings > 0 && migrateToExpected) ||
 				((operationsWithSameName || mappings > 10) && mappings >= nonMappedElementsT1 && mappings >= nonMappedElementsT2) ||

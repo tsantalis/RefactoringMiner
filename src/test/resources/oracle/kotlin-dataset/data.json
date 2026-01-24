@@ -10998,4 +10998,846 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 55,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "9e84be4521f4e2f35516d7f9b89edb6697a8ba3e",
+    "url": "https://github.com/square/leakcanary/commit/9e84be4521f4e2f35516d7f9b89edb6697a8ba3e",
+    "author": "pyricau",
+    "time": "7/10/19 08:32 PM",
+    "refactorings": [{
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal STRING_IN_UTF8 : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal LOAD_CLASS : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal UNLOAD_CLASS : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal STACK_FRAME : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal STACK_TRACE : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ALLOC_SITES : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal HEAP_SUMMARY : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal START_THREAD : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal END_THREAD : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal HEAP_DUMP : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal HEAP_DUMP_SEGMENT : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal HEAP_DUMP_END : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal CPU_SAMPLES : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal CONTROL_SETTINGS : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ROOT_UNKNOWN : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ROOT_JNI_GLOBAL : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ROOT_JNI_LOCAL : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ROOT_JAVA_FRAME : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ROOT_NATIVE_STACK : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ROOT_STICKY_CLASS : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ROOT_THREAD_BLOCK : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ROOT_MONITOR_USED : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ROOT_THREAD_OBJECT : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal CLASS_DUMP : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal INSTANCE_DUMP : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal OBJECT_ARRAY_DUMP : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal PRIMITIVE_ARRAY_DUMP : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal HEAP_DUMP_INFO : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ROOT_INTERNED_STRING : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ROOT_FINALIZING : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ROOT_DEBUGGER : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ROOT_REFERENCE_CLEANUP : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ROOT_VM_INTERNAL : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ROOT_JNI_MONITOR : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal ROOT_UNREACHABLE : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal PRIMITIVE_ARRAY_NODATA : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private SeekableHprofReader.scan(callbacks RecordCallbacks) renamed to private SeekableHprofReader.readHprofRecords(listeners Set<OnRecordListener>) in class leakcanary.HprofPushRecordsParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Localize Parameter",
+        "description": "Localize Parameter id : Long to id : Inferred in method public readInstanceDumpRecord() : InstanceDumpRecord from class leakcanary.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Localize Parameter",
+        "description": "Localize Parameter id : Long to id : Inferred in method public readClassDumpRecord() : ClassDumpRecord from class leakcanary.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Localize Parameter",
+        "description": "Localize Parameter id : Long to id : Inferred in method public readObjectArrayDumpRecord() : ObjectArrayDumpRecord from class leakcanary.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Localize Parameter",
+        "description": "Localize Parameter id : Long to id : Inferred in method public readPrimitiveArrayDumpRecord() : PrimitiveArrayDumpRecord from class leakcanary.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type id : Long to id : Inferred in method public readInstanceDumpRecord() : InstanceDumpRecord from class leakcanary.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type id : Long to id : Inferred in method public readClassDumpRecord() : ClassDumpRecord from class leakcanary.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type id : Long to id : Inferred in method public readObjectArrayDumpRecord() : ObjectArrayDumpRecord from class leakcanary.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type id : Long to id : Inferred in method public readPrimitiveArrayDumpRecord() : PrimitiveArrayDumpRecord from class leakcanary.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable record : Inferred in method private SeekableHprofReader.readHprofRecords(listeners Set<OnRecordListener>) from class leakcanary.HprofPushRecordsParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter callbacks : RecordCallbacks to listeners : Set<OnRecordListener> in method private SeekableHprofReader.readHprofRecords(listeners Set<OnRecordListener>) from class leakcanary.HprofPushRecordsParser",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type callbacks : RecordCallbacks to listeners : Set<OnRecordListener> in method private SeekableHprofReader.readHprofRecords(listeners Set<OnRecordListener>) from class leakcanary.HprofPushRecordsParser",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private hprofStringCache : Inferred from class leakcanary.HprofParser to private hprofStringCache : Inferred from class leakcanary.internal.HprofInMemoryIndex.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private classNames : Inferred from class leakcanary.HprofParser to private classNames : Inferred from class leakcanary.internal.HprofInMemoryIndex.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private objectIndex : Inferred from class leakcanary.HprofParser to private objectIndex : Inferred from class leakcanary.internal.HprofInMemoryIndex.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private primitiveWrapperTypes : Inferred from class leakcanary.HprofParser to private primitiveWrapperTypes : Inferred from class leakcanary.internal.HprofInMemoryIndex.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private primitiveWrapperClassNames : Inferred from class leakcanary.HprofParser to private primitiveWrapperClassNames : Inferred from class leakcanary.internal.HprofInMemoryIndex.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public hprofStringById(id Long) : String from class leakcanary.HprofParser to public hprofStringById(id Long) : String from class leakcanary.internal.HprofInMemoryIndex",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public className(classId Long) : String from class leakcanary.HprofParser to public className(classId Long) : String from class leakcanary.internal.HprofInMemoryIndex",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public classId(className String) : Long from class leakcanary.HprofParser to public classId(className String) : Long from class leakcanary.internal.HprofInMemoryIndex",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public idSize : Inferred from class leakcanary.HprofParser to public idSize : Int from class leakcanary.internal.HprofInMemoryIndex",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public getIdSize() from class leakcanary.HprofParser to public getIdSize() from class leakcanary.internal.HprofInMemoryIndex",
+        "comment": "<p>attribute accessor</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type idSize : Inferred to idSize : Int in class leakcanary.internal.HprofInMemoryIndex",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class leakcanary.internal.HprofInMemoryIndex.Builder from class leakcanary.HprofParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class leakcanary.internal.HprofInMemoryIndex from class leakcanary.HprofParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable fileLength : Inferred in method public open(heapDump File) : HprofParser from class leakcanary.HprofParser.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public open(heapDump File) : HprofParser from class leakcanary.HprofParser.Companion to public readHprofRecords(heapDump File, listeners Set<OnRecordListener>) : SeekableHprofReader from class leakcanary.HprofPushRecordsParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter listeners : Set<OnRecordListener> in method public readHprofRecords(heapDump File, listeners Set<OnRecordListener>) : SeekableHprofReader from class leakcanary.HprofPushRecordsParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type HprofParser to SeekableHprofReader in method public readHprofRecords(heapDump File, listeners Set<OnRecordListener>) : SeekableHprofReader from class leakcanary.HprofPushRecordsParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable hprofReader : Inferred to reader : Inferred in method public readHprofRecords(heapDump File, listeners Set<OnRecordListener>) : SeekableHprofReader from class leakcanary.HprofPushRecordsParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public readRecord() : ObjectArrayDumpRecord extracted from private updateDominatorWithSkips(graph HprofGraph, parentObjectId Long, objectId Long) in class leakcanary.internal.ShortestPathFinder & moved to class leakcanary.GraphObjectRecord.GraphObjectArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public readRecord() : ObjectArrayDumpRecord extracted from private undominateWithSkips(graph HprofGraph, objectId Long) in class leakcanary.internal.ShortestPathFinder & moved to class leakcanary.GraphObjectRecord.GraphObjectArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public skipInstanceDumpRecord() extracted from private SeekableHprofReader.scan(callbacks RecordCallbacks) in class leakcanary.HprofParser & moved to class leakcanary.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public skipClassDumpRecord() extracted from private SeekableHprofReader.scan(callbacks RecordCallbacks) in class leakcanary.HprofParser & moved to class leakcanary.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public skipObjectArrayDumpRecord() extracted from private SeekableHprofReader.scan(callbacks RecordCallbacks) in class leakcanary.HprofParser & moved to class leakcanary.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public readHeapDumpInfoRecord() : HeapDumpInfoRecord extracted from private SeekableHprofReader.scan(callbacks RecordCallbacks) in class leakcanary.HprofParser & moved to class leakcanary.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public skipHeapDumpInfoRecord() extracted from private SeekableHprofReader.scan(callbacks RecordCallbacks) in class leakcanary.HprofParser & moved to class leakcanary.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private reader : SeekableHprofReader from class leakcanary.HprofParser to private reader : SeekableHprofReader from class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private objectCache : Inferred from class leakcanary.HprofParser to private objectCache : Inferred from class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hprofFile : File in method private scan(hprofFile File, computeRetainedSize Boolean) : ScanResult from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter graph : HprofGraph in primary constructor ScanResult(graph HprofGraph, hprofCloseable Closeable, gcRootIds MutableList<GcRoot>, keyedWeakReferenceInstances List<GraphInstanceRecord>, cleaners MutableList<Long>) from class leakcanary.HeapAnalyzer.ScanResult",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hprofCloseable : Closeable in primary constructor ScanResult(graph HprofGraph, hprofCloseable Closeable, gcRootIds MutableList<GcRoot>, keyedWeakReferenceInstances List<GraphInstanceRecord>, cleaners MutableList<Long>) from class leakcanary.HeapAnalyzer.ScanResult",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter parser : HprofParser in method private scan(parser HprofParser, graph HprofGraph, computeRetainedSize Boolean) : ScanResult from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HprofGraph in method private scan(parser HprofParser, graph HprofGraph, computeRetainedSize Boolean) : ScanResult from class leakcanary.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.HprofParser renamed to leakcanary.HprofPushRecordsParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Code",
+        "description": "Move Code from public checkForLeaks(heapDumpFile File, exclusions List<Exclusion>, computeRetainedHeapSize Boolean, leakTraceInspectors List<LeakTraceInspector>) : HeapAnalysis to public checkForLeaks(heapDumpFile File, exclusions List<Exclusion>, computeRetainedHeapSize Boolean, leakTraceInspectors List<LeakTraceInspector>) : HeapAnalysis in class leakcanary.HeapAnalyzer",
+        "comment": "<p>moved from lambda to parent function</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable result : Inferred in method public File.checkForLeaks(leakTraceInspectors List<LeakTraceInspector>, computeRetainedHeapSize Boolean, exclusions List<Exclusion>) : T from class leakcanary.internal.TestUtil.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable reader : Inferred in method public render(context Context, heapDumpFile File, sourceWidth Int, sourceHeight Int, sourceBytesPerPixel Int) : Bitmap from class leakcanary.internal.activity.screen.HeapDumpRenderer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute record : InstanceDumpRecord to indexedObject : IndexedInstance in class leakcanary.GraphObjectRecord.GraphInstanceRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type record : InstanceDumpRecord to indexedObject : IndexedInstance in class leakcanary.GraphObjectRecord.GraphInstanceRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter indexedObject : IndexedInstance in primary constructor GraphInstanceRecord(graph HprofGraph, indexedObject IndexedInstance, objectId Long, isPrimitiveWrapper Boolean) from class leakcanary.GraphObjectRecord.GraphInstanceRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter objectId : Long in primary constructor GraphInstanceRecord(graph HprofGraph, indexedObject IndexedInstance, objectId Long, isPrimitiveWrapper Boolean) from class leakcanary.GraphObjectRecord.GraphInstanceRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter isPrimitiveWrapper : Boolean in primary constructor GraphInstanceRecord(graph HprofGraph, indexedObject IndexedInstance, objectId Long, isPrimitiveWrapper Boolean) from class leakcanary.GraphObjectRecord.GraphInstanceRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter record : InstanceDumpRecord in primary constructor GraphInstanceRecord(graph HprofGraph, record InstanceDumpRecord) from class leakcanary.GraphObjectRecord.GraphInstanceRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private indexedObject : IndexedInstance from class leakcanary.GraphObjectRecord.GraphInstanceRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter indexedObject : IndexedObjectArray in primary constructor GraphObjectArrayRecord(graph HprofGraph, indexedObject IndexedObjectArray, objectId Long, isPrimitiveWrapperArray Boolean) from class leakcanary.GraphObjectRecord.GraphObjectArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter objectId : Long in primary constructor GraphObjectArrayRecord(graph HprofGraph, indexedObject IndexedObjectArray, objectId Long, isPrimitiveWrapperArray Boolean) from class leakcanary.GraphObjectRecord.GraphObjectArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter isPrimitiveWrapperArray : Boolean in primary constructor GraphObjectArrayRecord(graph HprofGraph, indexedObject IndexedObjectArray, objectId Long, isPrimitiveWrapperArray Boolean) from class leakcanary.GraphObjectRecord.GraphObjectArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter record : ObjectArrayDumpRecord in primary constructor GraphObjectArrayRecord(graph HprofGraph, record ObjectArrayDumpRecord) from class leakcanary.GraphObjectRecord.GraphObjectArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute record : ObjectArrayDumpRecord to indexedObject : IndexedObjectArray in class leakcanary.GraphObjectRecord.GraphObjectArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type record : ObjectArrayDumpRecord to indexedObject : IndexedObjectArray in class leakcanary.GraphObjectRecord.GraphObjectArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Access Modifier public to private in attribute private indexedObject : IndexedObjectArray from class leakcanary.GraphObjectRecord.GraphObjectArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter graph : HprofGraph in primary constructor GraphPrimitiveArrayRecord(graph HprofGraph, indexedObject IndexedPrimitiveArray, objectId Long) from class leakcanary.GraphObjectRecord.GraphPrimitiveArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter indexedObject : IndexedPrimitiveArray in primary constructor GraphPrimitiveArrayRecord(graph HprofGraph, indexedObject IndexedPrimitiveArray, objectId Long) from class leakcanary.GraphObjectRecord.GraphPrimitiveArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter objectId : Long in primary constructor GraphPrimitiveArrayRecord(graph HprofGraph, indexedObject IndexedPrimitiveArray, objectId Long) from class leakcanary.GraphObjectRecord.GraphPrimitiveArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter record : PrimitiveArrayDumpRecord in primary constructor GraphPrimitiveArrayRecord(record PrimitiveArrayDumpRecord) from class leakcanary.GraphObjectRecord.GraphPrimitiveArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter indexedObject : IndexedClass in primary constructor GraphClassRecord(graph HprofGraph, indexedObject IndexedClass, objectId Long) from class leakcanary.GraphObjectRecord.GraphClassRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter objectId : Long in primary constructor GraphClassRecord(graph HprofGraph, indexedObject IndexedClass, objectId Long) from class leakcanary.GraphObjectRecord.GraphClassRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter record : ClassDumpRecord in primary constructor GraphClassRecord(graph HprofGraph, record ClassDumpRecord) from class leakcanary.GraphObjectRecord.GraphClassRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute record : ClassDumpRecord to objectId : Long in class leakcanary.GraphObjectRecord.GraphClassRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type record : ClassDumpRecord to objectId : Long in class leakcanary.GraphObjectRecord.GraphClassRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter reader : SeekableHprofReader in primary constructor HprofGraph(reader SeekableHprofReader, index HprofInMemoryIndex) from class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter index : HprofInMemoryIndex in primary constructor HprofGraph(reader SeekableHprofReader, index HprofInMemoryIndex) from class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter parser : HprofParser in primary constructor HprofGraph(parser HprofParser) from class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to internal in method internal className(classId Long) : String from class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to internal in method internal fieldName(fieldRecord FieldRecord) : String from class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to internal in method internal staticFieldName(fieldRecord StaticFieldRecord) : String from class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to internal in method internal createFieldValuesReader(record InstanceDumpRecord) : FieldValuesReader from class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public readClass(className String) : GraphClassRecord renamed to public indexedClass(className String) : GraphClassRecord in class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute parser : HprofParser to index : HprofInMemoryIndex in class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type parser : HprofParser to index : HprofInMemoryIndex in class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public typeSizes : Inferred from class leakcanary.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public readGraphObjectRecord(objectId Long) : GraphObjectRecord renamed to public indexedObject(objectId Long) : GraphObjectRecord in class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

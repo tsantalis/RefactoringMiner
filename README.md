@@ -676,7 +676,7 @@ As of **January 23, 2026** the precision and recall of RefactoringMiner on this 
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1618  |  3  |  0  | 0.998  | 1.000|
+|**Total**|1614  |  3  |  0  | 0.998  | 1.000|
 |Extract Method| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|36  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|45  |  0  |  0  | 1.000  | 1.000|
@@ -702,7 +702,7 @@ As of **January 23, 2026** the precision and recall of RefactoringMiner on this 
 |Extract Variable|12  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable| 9  |  1  |  0  | 0.900  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|30  |  1  |  0  | 0.968  | 1.000|
+|Rename Variable|34  |  1  |  0  | 0.971  | 1.000|
 |Rename Parameter|66  |  0  |  0  | 1.000  | 1.000|
 |Rename Attribute|73  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 1  |  0  |  0  | 1.000  | 1.000|
@@ -723,8 +723,8 @@ As of **January 23, 2026** the precision and recall of RefactoringMiner on this 
 |Remove Class Annotation| 6  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|122  |  0  |  0  | 1.000  | 1.000|
-|Remove Parameter|103  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|118  |  0  |  0  | 1.000  | 1.000|
+|Remove Parameter|99  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Method Access Modifier|46  |  0  |  0  | 1.000  | 1.000|

@@ -1129,6 +1129,22 @@ public abstract class UMLAbstractClassDiff {
 										attributeDiffList.add(attributeDiff);
 									}
 									Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
+									RemoveParameterRefactoring remove = null;
+									AddParameterRefactoring add = null;
+									for(Refactoring r : originalRefactorings) {
+										if(r instanceof RemoveParameterRefactoring ref && ref.getParameter().equals(a1.getVariableDeclaration())) {
+											remove = ref;
+										}
+										else if(r instanceof AddParameterRefactoring ref && ref.getParameter().equals(a2.getVariableDeclaration())) {
+											add = ref;
+										}
+									}
+									if(remove != null && add != null) {
+										refactorings.remove(remove);
+										refactorings.remove(add);
+										RenameVariableRefactoring rename = new RenameVariableRefactoring(remove.getParameter(), add.getParameter(), remove.getOperationBefore(), remove.getOperationAfter(), candidate.getReferences(), false);
+										refactorings.add(rename);
+									}
 									if(!refactorings.containsAll(attributeDiffRefactorings)) {
 										refactorings.addAll(attributeDiffRefactorings);
 										break;//it's not necessary to repeat the same process for all candidates in the set

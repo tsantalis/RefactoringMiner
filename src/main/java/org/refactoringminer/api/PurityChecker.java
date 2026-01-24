@@ -2680,18 +2680,21 @@ Mapping state for Move Method refactoring purity:
                 after = replacement.getAfter();
 
             } else if (replacement.getType().equals(Replacement.ReplacementType.METHOD_INVOCATION)) {
-                if (((MethodInvocationReplacement) replacement).getInvokedOperationAfter().getName().equals(
-                        ((MethodInvocationReplacement) replacement).getInvokedOperationBefore().getName()
+                MethodInvocationReplacement methodInvocationReplacement = (MethodInvocationReplacement) replacement;
+                if (methodInvocationReplacement.getInvokedOperationAfter().getName().equals(
+                        methodInvocationReplacement.getInvokedOperationBefore().getName()
                 )) {
-                    if (((MethodInvocationReplacement) replacement).getInvokedOperationAfter().arguments().equals(
-                            ((MethodInvocationReplacement) replacement).getInvokedOperationBefore().arguments()
+                    if (methodInvocationReplacement.getInvokedOperationAfter().arguments().equals(
+                            methodInvocationReplacement.getInvokedOperationBefore().arguments()
                     )) {
                         before = replacement.getBefore();
                         after = replacement.getAfter();
-                    } else if (((MethodInvocationReplacement) replacement).getInvokedOperationAfter().arguments().size() ==
-                            ((MethodInvocationReplacement) replacement).getInvokedOperationBefore().arguments().size()) {
-                        before = replacement.getBefore().substring(0, replacement.getBefore().indexOf("("));
-                        after = replacement.getAfter().substring(0, replacement.getAfter().indexOf("("));
+                    } else if (methodInvocationReplacement.getInvokedOperationAfter().arguments().size() ==
+                            methodInvocationReplacement.getInvokedOperationBefore().arguments().size()) {
+                        if(replacement.getBefore().contains("(") && replacement.getAfter().contains("(")) {
+                            before = replacement.getBefore().substring(0, replacement.getBefore().indexOf("("));
+                            after = replacement.getAfter().substring(0, replacement.getAfter().indexOf("("));
+                        }
                     }
                 }
             } else {

@@ -11868,4 +11868,552 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 56,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "b4634453be60d5f3d988f6ef804f322633f2f302",
+    "url": "https://github.com/square/leakcanary/commit/b4634453be60d5f3d988f6ef804f322633f2f302",
+    "author": "pyricau",
+    "time": "5/31/23 02:37 PM",
+    "refactorings": [{
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.InstrumentationLeakDetectorTest renamed to leakcanary.AndroidDetectLeaksAssertTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private FindLeakInput.findLeaks(leakingObjectIds Set<Long>) : LeaksAndUnreachableObjects from class shark.HeapAnalyzer to private FindLeakInput.findLeaks(leakingObjectIds Set<Long>) : LeaksAndUnreachableObjects from class shark.RealLeakTracerFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private FindLeakInput.findUnreachableObjects(pathFindingResults PathFindingResults, leakingObjectIds Set<Long>) : List<LeakTraceObject> from class shark.HeapAnalyzer to private FindLeakInput.findUnreachableObjects(pathFindingResults PathFindingResults, leakingObjectIds Set<Long>) : List<LeakTraceObject> from class shark.RealLeakTracerFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private deduplicateShortestPaths(inputPathResults List<ReferencePathNode>) : List<ShortestPath> from class shark.HeapAnalyzer to private deduplicateShortestPaths(inputPathResults List<ReferencePathNode>) : List<ShortestPath> from class shark.RealLeakTracerFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private updateTrie(pathNode ReferencePathNode, path List<Long>, pathIndex Int, parentNode ParentNode) from class shark.HeapAnalyzer to private updateTrie(pathNode ReferencePathNode, path List<Long>, pathIndex Int, parentNode ParentNode) from class shark.RealLeakTracerFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private findResultsInTrie(parentNode ParentNode, outputPathResults MutableList<ReferencePathNode>) from class shark.HeapAnalyzer to private findResultsInTrie(parentNode ParentNode, outputPathResults MutableList<ReferencePathNode>) from class shark.RealLeakTracerFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private FindLeakInput.buildLeakTraces(shortestPaths List<ShortestPath>, inspectedObjectsByPath List<List<InspectedObject>>, retainedSizes Map<Long,Pair<Int,Int>>) : Pair<List<ApplicationLeak>,List<LibraryLeak>> from class shark.HeapAnalyzer to private FindLeakInput.buildLeakTraces(shortestPaths List<ShortestPath>, inspectedObjectsByPath List<List<InspectedObject>>, retainedSizes Map<Long,Pair<Int,Int>>) : Pair<List<ApplicationLeak>,List<LibraryLeak>> from class shark.RealLeakTracerFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private FindLeakInput.inspectObjects(shortestPaths List<ShortestPath>) : List<List<InspectedObject>> from class shark.HeapAnalyzer to private FindLeakInput.inspectObjects(shortestPaths List<ShortestPath>) : List<List<InspectedObject>> from class shark.RealLeakTracerFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private FindLeakInput.computeRetainedSizes(inspectedObjectsByPath List<List<InspectedObject>>, dominatorTree DominatorTree) : Map<Long,Pair<Int,Int>> from class shark.HeapAnalyzer to private FindLeakInput.computeRetainedSizes(inspectedObjectsByPath List<List<InspectedObject>>, dominatorTree DominatorTree) : Map<Long,Pair<Int,Int>> from class shark.RealLeakTracerFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private buildLeakTraceObjects(inspectedObjects List<InspectedObject>, retainedSizes Map<Long,Pair<Int,Int>>) : List<LeakTraceObject> from class shark.HeapAnalyzer to private buildLeakTraceObjects(inspectedObjects List<InspectedObject>, retainedSizes Map<Long,Pair<Int,Int>>) : List<LeakTraceObject> from class shark.RealLeakTracerFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private FindLeakInput.buildReferencePath(shortestPath ShortestPath, leakTraceObjects List<LeakTraceObject>) : List<LeakTraceReference> from class shark.HeapAnalyzer to private FindLeakInput.buildReferencePath(shortestPath ShortestPath, leakTraceObjects List<LeakTraceObject>) : List<LeakTraceReference> from class shark.RealLeakTracerFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private computeLeakStatuses(leakReporters List<ObjectReporter>) : List<InspectedObject> from class shark.HeapAnalyzer to private computeLeakStatuses(leakReporters List<ObjectReporter>) : List<InspectedObject> from class shark.RealLeakTracerFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private resolveStatus(reporter ObjectReporter, leakingWins Boolean) : Pair<LeakingStatus,String> from class shark.HeapAnalyzer to private resolveStatus(reporter ObjectReporter, leakingWins Boolean) : Pair<LeakingStatus,String> from class shark.RealLeakTracerFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private recordClassName(heap HeapObject) : String from class shark.HeapAnalyzer to private recordClassName(heap HeapObject) : String from class shark.RealLeakTracerFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class shark.RealLeakTracerFactory from class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.AndroidNativeSizeMapper moved to shark.AndroidNativeSizeMapper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.AndroidReferenceReaders moved to shark.AndroidReferenceReaders",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.ApacheHarmonyInstanceRefReaders moved to shark.ApacheHarmonyInstanceRefReaders",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.ChainingInstanceReferenceReader moved to shark.ChainingInstanceReferenceReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.ClassReferenceReader moved to shark.ClassReferenceReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.DelegatingObjectReferenceReader moved to shark.DelegatingObjectReferenceReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.DominatorTree moved to shark.DominatorTree",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.FieldInstanceReferenceReader moved to shark.FieldInstanceReferenceReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.HeapAnalyzer.LeaksAndUnreachableObjects moved to shark.LeaksAndUnreachableObjects",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.HeapAnalyzer.InspectedObject moved to shark.RealLeakTracerFactory.InspectedObject",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.JavaLocalReferenceReader moved to shark.JavaLocalReferenceReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.GcRootProvider.GcRootReference moved to shark.GcRootReference",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.ObjectArrayReferenceReader moved to shark.ObjectArrayReferenceReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.ObjectDominators moved to shark.ObjectDominators",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.OpenJdkInstanceRefReaders moved to shark.OpenJdkInstanceRefReaders",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.PathFinder.PathFindingResults moved to shark.PathFindingResults",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.Reference moved to shark.Reference",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.ReferenceReader moved to shark.ReferenceReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.internal.ReferenceLocationType moved to shark.ReferenceLocationType",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.HeapAnalyzer.ShortestPath moved to shark.RealLeakTracerFactory.ShortestPath",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class shark.HeapAnalyzer.TrieNode moved to shark.RealLeakTracerFactory.TrieNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class shark.internal.PathFinder moved and renamed to shark.PrioritizingShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class shark.internal.GcRootProvider moved and renamed to shark.MatchingGcRootProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter onHeapAnalyzedListener : OnHeapAnalyzedListener in primary constructor Config(dumpHeap Boolean, dumpHeapWhenDebugging Boolean, retainedVisibleThreshold Int, referenceMatchers List<ReferenceMatcher>, objectInspectors List<ObjectInspector>, onHeapAnalyzedListener OnHeapAnalyzedListener, metadataExtractor MetadataExtractor, computeRetainedHeapSize Boolean, maxStoredHeapDumps Int, requestWriteExternalStoragePermission Boolean, leakingObjectFinder LeakingObjectFinder, heapDumper HeapDumper, eventListeners List<EventListener>, showNotifications Boolean, useExperimentalLeakFinders Boolean) from class leakcanary.LeakCanary.Config",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter useExperimentalLeakFinders : Boolean in primary constructor Config(dumpHeap Boolean, dumpHeapWhenDebugging Boolean, retainedVisibleThreshold Int, referenceMatchers List<ReferenceMatcher>, objectInspectors List<ObjectInspector>, onHeapAnalyzedListener OnHeapAnalyzedListener, metadataExtractor MetadataExtractor, computeRetainedHeapSize Boolean, maxStoredHeapDumps Int, requestWriteExternalStoragePermission Boolean, leakingObjectFinder LeakingObjectFinder, heapDumper HeapDumper, eventListeners List<EventListener>, showNotifications Boolean, useExperimentalLeakFinders Boolean) from class leakcanary.LeakCanary.Config",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable analysis : Inferred to leaks : Inferred in method private File.findPathFromLeak(computeRetainedHeapSize Boolean, virtualRefReaderFactory OptionalFactory) : List<LeakTraceReference> from class shark.OpenJdkInstanceRefReadersTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class shark.internal.ReferencePathNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class shark.AndroidNativeSizeMapper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class shark.AndroidReferenceReaders",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class shark.ApacheHarmonyInstanceRefReaders",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class shark.ChainingInstanceReferenceReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class shark.ClassReferenceReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class shark.DominatorTree",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class shark.FieldInstanceReferenceReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier private to public in class shark.LeaksAndUnreachableObjects",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class shark.Reference",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class shark.ReferenceReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class shark.ReferenceLocationType",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class shark.ObjectDominators.DominatorNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter instance : HeapInstance to source : HeapInstance in method public read(source HeapInstance) : Sequence<Reference> from class shark.ApacheHarmonyInstanceRefReaders.HASH_SET.create.VirtualInstanceReferenceReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter graph : HeapGraph to heapGraph : HeapGraph in method public createFor(heapGraph HeapGraph) : ReferenceReader<T> from class shark.ReferenceReader.Factory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier public to private in class shark.PrioritizingShortestPathFinder.VisitTracker",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter gcRootProvider : GcRootProvider in primary constructor PrioritizingShortestPathFinder(graph HeapGraph, listener Event.Listener, objectReferenceReader ReferenceReader<HeapObject>, gcRootProvider GcRootProvider, computeRetainedHeapSize Boolean) from class shark.PrioritizingShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter computeRetainedHeapSize : Boolean in primary constructor PrioritizingShortestPathFinder(graph HeapGraph, listener Event.Listener, objectReferenceReader ReferenceReader<HeapObject>, gcRootProvider GcRootProvider, computeRetainedHeapSize Boolean) from class shark.PrioritizingShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter referenceMatchers : List<ReferenceMatcher> in primary constructor PathFinder(graph HeapGraph, listener OnAnalysisProgressListener, objectReferenceReader ReferenceReader<HeapObject>, referenceMatchers List<ReferenceMatcher>) from class shark.internal.PathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class shark.PrioritizingShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public findPathsFromGcRoots(leakingObjectIds Set<Long>, computeRetainedHeapSize Boolean) : PathFindingResults renamed to public findShortestPathsFromGcRoots(leakingObjectIds Set<Long>) : PathFindingResults in class shark.PrioritizingShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type listener : OnAnalysisProgressListener to listener : Event.Listener in class shark.PrioritizingShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type gcRootProvider : Inferred to gcRootProvider : GcRootProvider in class shark.PrioritizingShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter computeRetainedHeapSize : Boolean in method public findPathsFromGcRoots(leakingObjectIds Set<Long>, computeRetainedHeapSize Boolean) : PathFindingResults from class shark.internal.PathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in primary constructor GcRootProvider(graph HeapGraph, referenceMatchers List<ReferenceMatcher>) from class shark.internal.GcRootProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier internal to public in class shark.MatchingGcRootProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter graph : HeapGraph in method public provideGcRoots(graph HeapGraph) : Sequence<GcRootReference> from class shark.MatchingGcRootProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter graph : HeapGraph in method private sortedGcRoots(graph HeapGraph) : List<Pair<HeapObject,GcRoot>> from class shark.MatchingGcRootProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Interface",
+        "description": "Extract Interface shark.ShortestPathFinder from classes [shark.internal.PathFinder]",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Interface",
+        "description": "Extract Interface shark.GcRootProvider from classes [shark.internal.GcRootProvider]",
+        "comment": "<p>child class is renamed and interface with the same name is extracted</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable sourceProvider : Inferred in method public indexHprof() from class leakcanary.IndexingTest",
+        "comment": "<p>heapDumpFile extract to&nbsp;val sourceProvider = FileSourceProvider(heapDumpFile)</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method public indexHprof(hprof Hprof, proguardMapping ProguardMapping, indexedGcRootTypes Set<KClass<GcRoot>>) : HeapGraph moved from class shark.HprofHeapGraph.Companion to class leakcanary.IndexingTest & inlined to public indexHprof()",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public createFor(heapGraph HeapGraph) : ReferenceReader<HeapObject> extracted from private buildDominatorTree(graph HeapGraph, ignoredRefs List<IgnoredReferenceMatcher>) : Map<Long,DominatorNode> in class shark.internal.ObjectDominators & moved to class shark.ActualMatchingReferenceReaderFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter graph : HeapGraph to heapGraph : HeapGraph in method public createFor(heapGraph HeapGraph) : ReferenceReader<HeapObject> from class shark.ActualMatchingReferenceReaderFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to private in attribute private computeRetainedHeapSize : Boolean from class shark.PrioritizingShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public computeRetainedHeapSize : Boolean from class shark.HeapAnalyzer.FindLeakInput to private computeRetainedHeapSize : Boolean from class shark.PrioritizingShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

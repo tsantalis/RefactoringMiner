@@ -6084,6 +6084,19 @@ public class ReplacementAlgorithm {
 		if(lambdaMappers.size() > 0 && lambdaMappers.size() == lambdas1.size() && lambdaMappers.size() == lambdas2.size()) {
 			return replacementInfo.getReplacements();
 		}
+		if(lambdaMappers.size() > 0 && lambdas1.size() != lambdas2.size() && (lambdaMappers.size() == lambdas1.size() || lambdaMappers.size() == lambdas2.size())) {
+			if(lambdas1.size() > lambdaMappers.size() && statement1.getTypes().size() > 0) {
+				int followedByAs = 0;
+				for(LambdaExpressionObject lambda1 : lambdas1) {
+					if(statement1.getString().contains(lambda1.getString() + " as " + statement1.getTypes().get(statement1.getTypes().size()-1))) {
+						followedByAs++;
+					}
+				}
+				if(lambdas1.size() == lambdaMappers.size() + followedByAs) {
+					return replacementInfo.getReplacements();
+				}
+			}
+		}
 		return null;
 	}
 

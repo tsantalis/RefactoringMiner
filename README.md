@@ -514,6 +514,7 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Extract Attribute`
 * `Change Type Declaration Kind`
 * `Replace Pipeline With Loop`
+* `Replace Loop With Pipeline`
 * `Merge Method`
 * `Split Method`
 * `Replace Anonymous With Class`
@@ -523,11 +524,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Merge Parameter`
 * `Invert Condition`
 
-As of **January 19, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **January 26, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3535  | 41  | 76  | 0.989  | 0.979|
+|**Total**|3539  | 41  | 76  | 0.989  | 0.979|
 |Extract Method|375  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -562,6 +563,7 @@ As of **January 19, 2026** the precision and recall of RefactoringMiner on this 
 |Change Variable Type|378  |  6  |  2  | 0.984  | 0.995|
 |Change Attribute Type|164  |  2  |  3  | 0.988  | 0.982|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
+|Replace Loop With Pipeline| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|
 |Split Class| 1  |  0  |  0  | 1.000  | 1.000|
 |Invert Condition|23  |  0  |  0  | 1.000  | 1.000|
@@ -676,13 +678,13 @@ As of **January 26, 2026** the precision and recall of RefactoringMiner on this 
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1703  |  3  |  0  | 0.998  | 1.000|
-|Extract Method| 8  |  0  |  0  | 1.000  | 1.000|
+|**Total**|1723  |  3  |  0  | 0.998  | 1.000|
+|Extract Method|10  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|38  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|47  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|128  |  0  |  0  | 1.000  | 1.000|
-|Inline Method| 7  |  0  |  0  | 1.000  | 1.000|
+|Inline Method|11  |  0  |  0  | 1.000  | 1.000|
 |Move Method|86  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Method| 8  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Method|46  |  0  |  0  | 1.000  | 1.000|
@@ -699,10 +701,10 @@ As of **January 26, 2026** the precision and recall of RefactoringMiner on this 
 |Move And Inline Method|20  |  0  |  0  | 1.000  | 1.000|
 |Rename Package| 3  |  0  |  0  | 1.000  | 1.000|
 |Move Package| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|13  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|14  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable| 9  |  1  |  0  | 0.900  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|31  |  1  |  0  | 0.969  | 1.000|
+|Rename Variable|32  |  1  |  0  | 0.970  | 1.000|
 |Rename Parameter|73  |  0  |  0  | 1.000  | 1.000|
 |Rename Attribute|73  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 1  |  0  |  0  | 1.000  | 1.000|
@@ -711,9 +713,9 @@ As of **January 26, 2026** the precision and recall of RefactoringMiner on this 
 |Parameterize Variable| 5  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter| 6  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|108  |  0  |  0  | 1.000  | 1.000|
+|Change Return Type|111  |  0  |  0  | 1.000  | 1.000|
 |Change Variable Type|20  |  0  |  0  | 1.000  | 1.000|
-|Change Parameter Type|139  |  0  |  0  | 1.000  | 1.000|
+|Change Parameter Type|140  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Type|61  |  0  |  0  | 1.000  | 1.000|
 |Add Method Annotation|22  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|10  |  0  |  0  | 1.000  | 1.000|
@@ -723,8 +725,8 @@ As of **January 26, 2026** the precision and recall of RefactoringMiner on this 
 |Remove Class Annotation| 6  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|124  |  0  |  0  | 1.000  | 1.000|
-|Remove Parameter|105  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|129  |  0  |  0  | 1.000  | 1.000|
+|Remove Parameter|108  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Method Access Modifier|49  |  0  |  0  | 1.000  | 1.000|

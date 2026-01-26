@@ -657,6 +657,12 @@ public class StringBasedHeuristics {
 			else if(diff2.isEmpty() && diff1.isBlank() && !diff1.isEmpty()) {
 				return true;
 			}
+			else if(diff1.isEmpty() && s2.startsWith(s1)) {
+				return true;
+			}
+			else if(diff2.isEmpty() && s1.startsWith(s2)) {
+				return true;
+			}
 		}
 		if(commonSuffix.equals(s1) && commonPrefix.isEmpty()) {
 			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();

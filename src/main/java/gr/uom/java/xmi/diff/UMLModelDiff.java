@@ -6871,12 +6871,12 @@ public class UMLModelDiff {
 									exactMatches--;
 								}
 							}
-							if(operationBodyMapperMap.containsKey(exactMatches)) {
-								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
+							if(!partialModel() && operationBodyMapperMap.size() > 0 && operationBodyMapperMap.lastKey() > exactMatches && operationBodyMapperMap.lastEntry().getValue().get(0).mappingsWithoutBlocks() < mappings) {
+								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(operationBodyMapperMap.lastKey());
 								mapperList.add(operationBodyMapper);
 							}
-							else if(!partialModel() && operationBodyMapperMap.size() > 0 && operationBodyMapperMap.lastKey() > exactMatches && operationBodyMapperMap.lastEntry().getValue().get(0).mappingsWithoutBlocks() < mappings) {
-								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(operationBodyMapperMap.lastKey());
+							else if(operationBodyMapperMap.containsKey(exactMatches)) {
+								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
 								mapperList.add(operationBodyMapper);
 							}
 							else {
@@ -7050,12 +7050,12 @@ public class UMLModelDiff {
 									exactMatches--;
 								}
 							}
-							if(operationBodyMapperMap.containsKey(exactMatches)) {
-								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
+							if(!partialModel() && operationBodyMapperMap.size() > 0 && operationBodyMapperMap.lastKey() > exactMatches && operationBodyMapperMap.lastEntry().getValue().get(0).mappingsWithoutBlocks() < mappings) {
+								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(operationBodyMapperMap.lastKey());
 								mapperList.add(operationBodyMapper);
 							}
-							else if(!partialModel() && operationBodyMapperMap.size() > 0 && operationBodyMapperMap.lastKey() > exactMatches && operationBodyMapperMap.lastEntry().getValue().get(0).mappingsWithoutBlocks() < mappings) {
-								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(operationBodyMapperMap.lastKey());
+							else if(operationBodyMapperMap.containsKey(exactMatches)) {
+								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
 								mapperList.add(operationBodyMapper);
 							}
 							else {

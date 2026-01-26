@@ -2850,7 +2850,7 @@ public class ReplacementAlgorithm {
 			}
 		}
 		//check if the argument of the method call in the second statement is returned in the first statement
-		if(invocationCoveringTheEntireStatement2 != null && (r = invocationCoveringTheEntireStatement2.makeReplacementForWrappedCall(replacementInfo.getArgumentizedString1())) != null) {
+		if(invocationCoveringTheEntireStatement2 != null && (r = invocationCoveringTheEntireStatement2.makeReplacementForWrappedCall(replacementInfo.getArgumentizedString1(), replacementInfo)) != null) {
 			replacementInfo.addReplacement(r);
 			addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
 			return replacementInfo.getReplacements();
@@ -2861,7 +2861,7 @@ public class ReplacementAlgorithm {
 		}
 		for(String methodInvocation2 : methodInvocations2) {
 			for(AbstractCall operationInvocation2 : methodInvocationMap2.get(methodInvocation2)) {
-				if((statement2.getString().endsWith(methodInvocation2 + LANG.STATEMENT_TERMINATION) || statement2.getString().startsWith(methodInvocation2 + ".")) && (r = operationInvocation2.makeReplacementForWrappedCall(replacementInfo.getArgumentizedString1())) != null) {
+				if((statement2.getString().endsWith(methodInvocation2 + LANG.STATEMENT_TERMINATION) || statement2.getString().startsWith(methodInvocation2 + ".")) && (r = operationInvocation2.makeReplacementForWrappedCall(replacementInfo.getArgumentizedString1(), replacementInfo)) != null) {
 					if(!variableReturn1) {
 						replacementInfo.addReplacement(r);
 						addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
@@ -6229,6 +6229,7 @@ public class ReplacementAlgorithm {
 				invocation = statement.assignmentInvocationCoveringEntireStatement();
 			}
 			if(invocation != null && (invocation.actualString().contains(LANG.LAMBDA_ARROW) ||
+					invocation.actualString().contains(" ->\n") ||
 					invocation.actualString().contains(LANG.METHOD_REFERENCE))) {
 				for(AbstractCall inv : statement.getMethodInvocations()) {
 					if(streamAPIName(inv.getName())) {

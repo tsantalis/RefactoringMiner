@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import gr.uom.java.xmi.InferredType;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAbstractClass;
@@ -625,6 +626,8 @@ public class OperationInvocation extends AbstractCall {
 			UMLModelDiff modelDiff, boolean varargsParameter) {
 		String type1 = parameterType.toString();
     	String type2 = type.toString();
+    	if(type instanceof InferredType || parameterType instanceof InferredType)
+    		return true;
     	if(parameterType.getClassType().length() == 1) {
     		return true;
     	}

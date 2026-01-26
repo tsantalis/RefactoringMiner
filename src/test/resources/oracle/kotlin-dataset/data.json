@@ -12416,4 +12416,97 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 57,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "dc5ec42e725d77d1ae8bb83c7a5bab96eb2cd0c8",
+    "url": "https://github.com/square/leakcanary/commit/dc5ec42e725d77d1ae8bb83c7a5bab96eb2cd0c8",
+    "author": "Armaxis",
+    "time": "1/17/20 10:35 AM",
+    "refactorings": [{
+        "type": "Move Class",
+        "description": "Move Class leakcanary.TvOnRetainInstanceListener moved to leakcanary.internal.tv.TvOnRetainInstanceListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class com.example.leakcanary.tv.BaseTvApplication renamed to com.example.leakcanary.tv.ExampleTvApplication",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to private in method private onCountChanged(retainedCount Int) from class leakcanary.internal.tv.TvOnRetainInstanceListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to private in method private onReset() from class leakcanary.internal.tv.TvOnRetainInstanceListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private handler : Inferred from class leakcanary.TvOnHeapAnalyzedListener to private handler : Inferred from class leakcanary.DefaultOnHeapAnalyzedListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public onHeapAnalyzed(heapAnalysis HeapAnalysis) from class leakcanary.TvOnHeapAnalyzedListener to private showToast() from class leakcanary.DefaultOnHeapAnalyzedListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter change : RetainInstanceChange in method public onChange(change RetainInstanceChange) from class leakcanary.DefaultOnRetainInstanceListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter change : RetainInstanceChange in method public onChange(change RetainInstanceChange) from class leakcanary.OnRetainInstanceListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onReset() renamed to public onChange(change RetainInstanceChange) in class leakcanary.DefaultOnRetainInstanceListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onReset() renamed to public onChange(change RetainInstanceChange) in class leakcanary.OnRetainInstanceListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to private in method private showToast() from class leakcanary.DefaultOnHeapAnalyzedListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter heapAnalysis : HeapAnalysis in method public onHeapAnalyzed(heapAnalysis HeapAnalysis) from class leakcanary.TvOnHeapAnalyzedListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

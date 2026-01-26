@@ -1336,8 +1336,11 @@ public class UMLModelDiff {
 		}
 		if(!partialModel()) {
 			//include classes from commonClassDiff
+			UMLType superType1 = removedClass.getSuperclass();
 			for(UMLClassDiff classDiff : commonClassDiffList) {
-				if(!classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && classDiff.getAddedOperations().size() > classDiff.getOperationBodyMapperList().size()) {
+				UMLType superType2 = classDiff.getNewSuperclass();
+				boolean sameSuperType = superType1 != null && superType2 != null && superType1.equalClassType(superType2);
+				if(!sameSuperType && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && classDiff.getAddedOperations().size() > classDiff.getOperationBodyMapperList().size()) {
 					if(matcher instanceof UMLClassMatcher.RelaxedRename) {
 						Pair<UMLClass, UMLClass> pair = Pair.of(removedClass, classDiff.getNextClass());
 						if(processedClassPairs.contains(pair)) {
@@ -1403,8 +1406,11 @@ public class UMLModelDiff {
 		}
 		if(!partialModel()) {
 			//include classes from commonClassDiff
+			UMLType superType2 = addedClass.getSuperclass();
 			for(UMLClassDiff classDiff : commonClassDiffList) {
-				if(!classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && classDiff.getRemovedOperations().size() > classDiff.getOperationBodyMapperList().size()) {
+				UMLType superType1 = classDiff.getOldSuperclass();
+				boolean sameSuperType = superType1 != null && superType2 != null && superType1.equalClassType(superType2);
+				if(!sameSuperType && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && classDiff.getRemovedOperations().size() > classDiff.getOperationBodyMapperList().size()) {
 					if(matcher instanceof UMLClassMatcher.RelaxedRename) {
 						Pair<UMLClass, UMLClass> pair = Pair.of(classDiff.getOriginalClass(), addedClass);
 						if(processedClassPairs.contains(pair)) {

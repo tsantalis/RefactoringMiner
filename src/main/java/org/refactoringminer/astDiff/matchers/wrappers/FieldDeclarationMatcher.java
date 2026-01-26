@@ -70,6 +70,12 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         if (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment")) {
             dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo(), Constants.get().FIELD_DECLARATION);
         }
+        if (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment")) {
+            srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo(), Constants.get().CLASS_PARAMETER);
+        }
+        if (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment")) {
+            dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo(), Constants.get().CLASS_PARAMETER);
+        }
         new CommentMatcher(optimizationData, umlCommentListDiff).match(srcTree, dstTree, mappingStore);
         if (srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash) {
             //IsoStructural can't be a good idea here, i.e. anonymous class

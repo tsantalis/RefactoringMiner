@@ -163,6 +163,11 @@
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tselector : Selector in method private processUpdates() : void from class org.eclipse.jetty.io.ManagedSelector.SelectorProducer",
           "validation": true
+        },
+        {
+          "type": "REPLACE_LOOP_WITH_PIPELINE",
+          "description": "Replace Loop With Pipeline\tfor(destination: destinations.values()) with destinations.values().forEach(HttpDestination::close); in method protected doStop() : void from class org.eclipse.jetty.client.HttpClient",
+          "validation": true
         }
       ]
     },

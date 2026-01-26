@@ -178,6 +178,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				invocation = statement.assignmentInvocationCoveringEntireStatement();
 			}
 			if(invocation != null && (invocation.actualString().contains(LANG.LAMBDA_ARROW) ||
+					invocation.actualString().contains(" ->\n") ||
 					invocation.actualString().contains(LANG.METHOD_REFERENCE))) {
 				for(AbstractCall inv : statement.getMethodInvocations()) {
 					if(streamAPIName(inv.getName())) {
@@ -664,7 +665,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			Set<AbstractCodeFragment> streamAPIStatements1 = statementsWithStreamAPICalls(leaves1);
 			Set<AbstractCodeFragment> streamAPIStatements2 = statementsWithStreamAPICalls(leaves2);
-			if(streamAPIStatements1.size() == 0 && streamAPIStatements2.size() > 0) {
+			boolean skip = false;
+			if(streamAPIStatements1.size() > 0 && streamAPIStatements2.size() > 0) {
+				skip = streamAPIStatements1.iterator().next().getString().equals(streamAPIStatements2.iterator().next().getString());
+			}
+			if((streamAPIStatements1.size() == 0 && streamAPIStatements2.size() > 0) || (!skip && streamAPIStatements2.size() == streamAPIStatements1.size() + 1)) {
 				for(AbstractCodeFragment streamAPICall : streamAPIStatements2) {
 					if(streamAPICall.getLambdas().size() > 0) {
 						expandAnonymousAndLambdas(streamAPICall, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, false);
@@ -676,7 +681,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			else if(streamAPIStatements1.size() > 0 && streamAPIStatements2.size() == 0) {
+			else if((streamAPIStatements1.size() > 0 && streamAPIStatements2.size() == 0) || (!skip && streamAPIStatements1.size() == streamAPIStatements2.size() + 1)) {
 				for(AbstractCodeFragment streamAPICall : streamAPIStatements1) {
 					if(streamAPICall.getLambdas().size() > 0) {
 						expandAnonymousAndLambdas(streamAPICall, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1, false);

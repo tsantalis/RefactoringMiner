@@ -1369,10 +1369,15 @@ public abstract class AbstractCall extends LeafExpression {
 		return null;
 	}
 
-	public Replacement makeReplacementForWrappedCall(String statement) {
+	public Replacement makeReplacementForWrappedCall(String statement, ReplacementInfo info) {
 		int index = -1;
 		if((index = argumentIsReturned(statement)) != -1 && indexCondition(statement, index)) {
 			String arg = statement.substring(LANG.RETURN_SPACE.length(), statement.length()-LANG.STATEMENT_TERMINATION.length());
+			for(Replacement r : info.getReplacements()) {
+				if(r.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_LAMBDA) && r.getAfter().equals(arg)) {
+					return null;
+				}
+			}
 			return new Replacement(arg, arguments().get(index),
 					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 		}

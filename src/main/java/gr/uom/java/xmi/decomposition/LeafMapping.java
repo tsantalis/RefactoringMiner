@@ -161,6 +161,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				else if(o.referencesMapping(this)) {
 					return -1;
 				}
+				if(this.differOnlyInVal() && !o.differOnlyInVal()) {
+					return -1;
+				}
+				else if(!this.differOnlyInVal() && o.differOnlyInVal()) {
+					return 1;
+				}
 				Set<ReplacementType> thisReplacementTypes = this.getReplacementTypes();
 				Set<ReplacementType> otherReplacementTypes = o.getReplacementTypes();
 				Set<ReplacementType> intersection = new LinkedHashSet<>(thisReplacementTypes);
@@ -988,6 +994,22 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					}
 				}
 			}
+		}
+		return false;
+	}
+
+	private boolean differOnlyInVal() {
+		String s1 = this.getFragment1().getString();
+		String s2 = this.getFragment2().getString();
+		if(!s1.equals(s2)) {
+			if(s1.equals("val " + s2))
+				return true;
+			else if(s1.equals("var " + s2))
+				return true;
+			if(s2.equals("val " + s1))
+				return true;
+			else if(s2.equals("var " + s1))
+				return true;
 		}
 		return false;
 	}

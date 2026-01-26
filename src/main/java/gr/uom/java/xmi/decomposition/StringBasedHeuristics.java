@@ -657,10 +657,10 @@ public class StringBasedHeuristics {
 			else if(diff2.isEmpty() && diff1.isBlank() && !diff1.isEmpty()) {
 				return true;
 			}
-			else if(diff1.isEmpty() && s2.startsWith(s1)) {
+			else if(diff1.isEmpty() && s2.startsWith(s1) && !diff2.startsWith(LANG.TERNARY_CONDITION)) {
 				return true;
 			}
-			else if(diff2.isEmpty() && s1.startsWith(s2)) {
+			else if(diff2.isEmpty() && s1.startsWith(s2) && !diff1.startsWith(LANG.TERNARY_CONDITION)) {
 				return true;
 			}
 		}

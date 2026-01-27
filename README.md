@@ -678,14 +678,14 @@ As of **January 26, 2026** the precision and recall of RefactoringMiner on this 
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1723  |  3  |  0  | 0.998  | 1.000|
+|**Total**|1727  |  4  |  0  | 0.998  | 1.000|
 |Extract Method|10  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|38  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|47  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|128  |  0  |  0  | 1.000  | 1.000|
-|Inline Method|11  |  0  |  0  | 1.000  | 1.000|
-|Move Method|86  |  0  |  0  | 1.000  | 1.000|
+|Inline Method|13  |  0  |  0  | 1.000  | 1.000|
+|Move Method|87  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Method| 8  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Method|46  |  0  |  0  | 1.000  | 1.000|
 |Move Class|175  |  0  |  0  | 1.000  | 1.000|
@@ -697,12 +697,12 @@ As of **January 26, 2026** the precision and recall of RefactoringMiner on this 
 |Extract Superclass| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 2  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|13  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|16  |  1  |  0  | 0.941  | 1.000|
+|Extract And Move Method|17  |  1  |  0  | 0.944  | 1.000|
 |Move And Inline Method|20  |  0  |  0  | 1.000  | 1.000|
 |Rename Package| 3  |  0  |  0  | 1.000  | 1.000|
 |Move Package| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|14  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable| 9  |  1  |  0  | 0.900  | 1.000|
+|Inline Variable| 9  |  2  |  0  | 0.818  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|32  |  1  |  0  | 0.970  | 1.000|
 |Rename Parameter|73  |  0  |  0  | 1.000  | 1.000|

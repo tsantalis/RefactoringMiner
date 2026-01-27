@@ -7763,6 +7763,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private classAvailable(className String) : Boolean from class leakcanary.internal.FragmentDestroyWatcher.Companion to private classAvailable(className String) : Boolean from class leakcanary.internal.FragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -12561,6 +12568,34 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method internal analyze(heapDumpFile File, graph HeapGraph, leakingObjectFinder LeakingObjectFinder, referenceMatchers List<ReferenceMatcher>, computeRetainedHeapSize Boolean, objectInspectors List<ObjectInspector>, metadataExtractor MetadataExtractor, referenceReader ReferenceReader<HeapObject>) : HeapAnalysis inlined to public analyze(heapDumpFile File, graph HeapGraph, leakingObjectFinder LeakingObjectFinder, referenceMatchers List<ReferenceMatcher>, computeRetainedHeapSize Boolean, objectInspectors List<ObjectInspector>, metadataExtractor MetadataExtractor) : HeapAnalysis in class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method private FindLeakInput.analyzeGraph(metadataExtractor MetadataExtractor, leakingObjectFinder LeakingObjectFinder, heapDumpFile File, analysisStartNanoTime Long) : HeapAnalysisSuccess inlined to public analyze(heapDumpFile File, graph HeapGraph, leakingObjectFinder LeakingObjectFinder, referenceMatchers List<ReferenceMatcher>, computeRetainedHeapSize Boolean, objectInspectors List<ObjectInspector>, metadataExtractor MetadataExtractor) : HeapAnalysis in class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable updatedDurationMillis : Inferred in method public analyze(heapDumpFile File, graph HeapGraph, leakingObjectFinder LeakingObjectFinder, referenceMatchers List<ReferenceMatcher>, computeRetainedHeapSize Boolean, objectInspectors List<ObjectInspector>, metadataExtractor MetadataExtractor) : HeapAnalysis from class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public createFor(heapGraph HeapGraph) : ReferenceReader<HeapObject> extracted from public analyze(heapDumpFile File, graph HeapGraph, leakingObjectFinder LeakingObjectFinder, referenceMatchers List<ReferenceMatcher>, computeRetainedHeapSize Boolean, objectInspectors List<ObjectInspector>, metadataExtractor MetadataExtractor) : HeapAnalysis in class shark.HeapAnalyzer & moved to class shark.ActualMatchingReferenceReaderFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

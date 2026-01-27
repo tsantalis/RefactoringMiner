@@ -670,7 +670,7 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 ## Kotlin Benchmark
 **Source**: Iman Hemati Moghadam, Mohammad Mehdi Afkhami, Parsa Kamalipour, and Vadim Zaytsev, "Extending Refactoring Detection to Kotlin: A Dataset and Comparative Study," 2024 IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER), Rovaniemi, Finland, 2024, pp. 267-271, doi: 10.1109/SANER60148.2024.00034
 
-**Properties**: 58 commits from 3 open-source projects
+**Properties**: 59 commits from 3 open-source projects
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
@@ -678,31 +678,31 @@ As of **January 27, 2026** the precision and recall of RefactoringMiner on this 
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1745  |  4  |  0  | 0.998  | 1.000|
+|**Total**|1767  |  4  |  0  | 0.998  | 1.000|
 |Extract Method|10  |  0  |  0  | 1.000  | 1.000|
-|Rename Class|39  |  0  |  0  | 1.000  | 1.000|
+|Rename Class|41  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|47  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Attribute| 3  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|131  |  0  |  0  | 1.000  | 1.000|
-|Inline Method|13  |  0  |  0  | 1.000  | 1.000|
+|Rename Method|132  |  0  |  0  | 1.000  | 1.000|
+|Inline Method|15  |  0  |  0  | 1.000  | 1.000|
 |Move Method|87  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Method| 8  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Method|46  |  0  |  0  | 1.000  | 1.000|
-|Move Class|175  |  0  |  0  | 1.000  | 1.000|
+|Move Class|179  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Class|12  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|17  |  0  |  0  | 1.000  | 1.000|
 |Push Down Attribute| 4  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method|15  |  0  |  0  | 1.000  | 1.000|
 |Extract Interface| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Superclass| 5  |  0  |  0  | 1.000  | 1.000|
+|Extract Superclass| 9  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 2  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|13  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|17  |  1  |  0  | 0.944  | 1.000|
-|Move And Inline Method|20  |  0  |  0  | 1.000  | 1.000|
+|Extract And Move Method|19  |  1  |  0  | 0.950  | 1.000|
+|Move And Inline Method|23  |  0  |  0  | 1.000  | 1.000|
 |Rename Package| 3  |  0  |  0  | 1.000  | 1.000|
 |Move Package| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|14  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable| 9  |  2  |  0  | 0.818  | 1.000|
+|Extract Variable|15  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|10  |  2  |  0  | 0.833  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|32  |  1  |  0  | 0.970  | 1.000|
 |Rename Parameter|73  |  0  |  0  | 1.000  | 1.000|
@@ -713,10 +713,10 @@ As of **January 27, 2026** the precision and recall of RefactoringMiner on this 
 |Parameterize Variable| 5  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter| 6  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|115  |  0  |  0  | 1.000  | 1.000|
+|Change Return Type|116  |  0  |  0  | 1.000  | 1.000|
 |Change Variable Type|20  |  0  |  0  | 1.000  | 1.000|
 |Change Parameter Type|145  |  0  |  0  | 1.000  | 1.000|
-|Change Attribute Type|62  |  0  |  0  | 1.000  | 1.000|
+|Change Attribute Type|63  |  0  |  0  | 1.000  | 1.000|
 |Add Method Annotation|22  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|10  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Annotation|11  |  0  |  0  | 1.000  | 1.000|

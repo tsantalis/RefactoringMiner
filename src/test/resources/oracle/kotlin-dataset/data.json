@@ -12833,4 +12833,146 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 59,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "e5a07bd5015c15331b21307785066ba01b575136",
+    "url": "https://github.com/square/leakcanary/commit/e5a07bd5015c15331b21307785066ba01b575136",
+    "author": "pyricau",
+    "time": "4/16/19 11:00 AM",
+    "refactorings": [{
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public readObjectArrayDumpRecord(id Long) : ObjectArrayDumpRecord extracted from private SeekableHprofReader.scan(callbacks RecordCallbacks) in class leakcanary.internal.haha.HprofParser & moved to class leakcanary.internal.haha.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public readPrimitiveArrayDumpRecord(id Long) : PrimitiveArrayDumpRecord extracted from private SeekableHprofReader.scan(callbacks RecordCallbacks) in class leakcanary.internal.haha.HprofParser & moved to class leakcanary.internal.haha.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method public skipInt() moved from class leakcanary.internal.haha.HprofReader to class leakcanary.internal.haha.HprofParser & inlined to private SeekableHprofReader.scan(callbacks RecordCallbacks)",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method public skipLong() moved from class leakcanary.internal.haha.HprofReader to class leakcanary.internal.haha.HprofParser & inlined to private SeekableHprofReader.scan(callbacks RecordCallbacks)",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method public skipShort() moved from class leakcanary.internal.haha.HprofReader to class leakcanary.internal.haha.HprofParser & inlined to private SeekableHprofReader.scan(callbacks RecordCallbacks)",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leakcanary.internal.haha.Record.HeapDumpRecord.ClassDumpRecord moved to leakcanary.internal.haha.Record.HeapDumpRecord.ObjectRecord.ClassDumpRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leakcanary.internal.haha.Record.HeapDumpRecord.InstanceDumpRecord moved to leakcanary.internal.haha.Record.HeapDumpRecord.ObjectRecord.InstanceDumpRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leakcanary.internal.haha.Record.HeapDumpRecord.ObjectArrayDumpRecord moved to leakcanary.internal.haha.Record.HeapDumpRecord.ObjectRecord.ObjectArrayDumpRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class leakcanary.internal.haha.Record.HeapDumpRecord.PrimitiveArrayDumpRecord moved to leakcanary.internal.haha.Record.HeapDumpRecord.ObjectRecord.PrimitiveArrayDumpRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.internal.haha.HprofParser.HydradedClass renamed to leakcanary.internal.haha.HprofParser.HydratedClass",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.internal.haha.HprofParser.HydradedInstance renamed to leakcanary.internal.haha.HprofParser.HydratedInstance",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method public hydrate(instanceRecord InstanceDumpRecord) : HydradedInstance inlined to public hydrateInstance(instanceRecord InstanceDumpRecord) : HydratedInstance in class leakcanary.internal.haha.HprofParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public hydratedInstanceById(id Long) : HydradedInstance renamed to public hydrateInstance(instanceRecord InstanceDumpRecord) : HydratedInstance in class leakcanary.internal.haha.HprofParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable valuesByteString : Inferred in method public hydrate(instanceRecord InstanceDumpRecord) : HydradedInstance from class leakcanary.internal.haha.HprofParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable heapDump : Inferred in method public findKeyedWeakReferenceClassInHeapDump() from class leakcanary.internal.HeapParsingTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type HydradedInstance to HydratedInstance in method public hydrateInstance(instanceRecord InstanceDumpRecord) : HydratedInstance from class leakcanary.internal.haha.HprofParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method public skipShort() inlined to public readClassDumpRecord(id Long) : ClassDumpRecord in class leakcanary.internal.haha.HprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type classHierarchy : List<HydradedClass> to classHierarchy : List<HydratedClass> in class leakcanary.internal.haha.HprofParser.HydratedInstance",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass leakcanary.internal.haha.Record.HeapDumpRecord.ObjectRecord from classes [leakcanary.internal.haha.Record.HeapDumpRecord.ClassDumpRecord, leakcanary.internal.haha.Record.HeapDumpRecord.InstanceDumpRecord, leakcanary.internal.haha.Record.HeapDumpRecord.ObjectArrayDumpRecord, leakcanary.internal.haha.Record.HeapDumpRecord.PrimitiveArrayDumpRecord]",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

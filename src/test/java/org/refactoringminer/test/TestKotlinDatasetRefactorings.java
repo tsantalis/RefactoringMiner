@@ -56,6 +56,8 @@ public class TestKotlinDatasetRefactorings {
 					.or(Refactorings.PullUpMethod.getValue())
 					.or(Refactorings.ReplaceVariableWithAttribute.getValue())
 					.or(Refactorings.ReplaceAttributeWithVariable.getValue())
+					.or(Refactorings.ReplaceLoopWithPipeline.getValue())
+					.or(Refactorings.ReplacePipelineWithLoop.getValue())
 					.or(Refactorings.LocalizeParameter.getValue())
 					.or(Refactorings.ParameterizeAttribute.getValue())
 					.or(Refactorings.ParameterizeVariable.getValue())

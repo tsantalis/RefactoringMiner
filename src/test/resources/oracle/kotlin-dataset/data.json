@@ -12698,4 +12698,139 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 58,
+    "repository": "https://github.com/square/leakcanary.git",
+    "sha1": "de00819e8c7d696400c2f377605252ef178c48ff",
+    "url": "https://github.com/square/leakcanary/commit/de00819e8c7d696400c2f377605252ef178c48ff",
+    "author": "pyricau",
+    "time": "4/18/19 05:12 AM",
+    "refactorings": [{
+        "type": "Rename Attribute",
+        "description": "Rename Attribute objectPositionsAndBoring : Inferred to objectIndex : Inferred in class leakcanary.HprofParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public isBoring(objectId Long) : Boolean renamed to public objectIdMetadata(objectId Long) : ObjectIdMetadata in class leakcanary.HprofParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Boolean to ObjectIdMetadata in method public objectIdMetadata(objectId Long) : ObjectIdMetadata from class leakcanary.HprofParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class leakcanary.internal.LongToPairOfLongBooleanSparseArray renamed to leakcanary.internal.LongToPairOfLongByteSparseArray",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public insertBoolean(array BooleanArray, currentSize Int, index Int, element Boolean) : BooleanArray renamed to public insertByte(array ByteArray, currentSize Int, index Int, element Byte) : ByteArray in class leakcanary.internal.SparseArrayUtils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public appendBoolean(array BooleanArray, currentSize Int, element Boolean) : BooleanArray renamed to public appendByte(array ByteArray, currentSize Int, element Byte) : ByteArray in class leakcanary.internal.SparseArrayUtils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type array : BooleanArray to array : ByteArray in method public insertByte(array ByteArray, currentSize Int, index Int, element Byte) : ByteArray from class leakcanary.internal.SparseArrayUtils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type element : Boolean to element : Byte in method public insertByte(array ByteArray, currentSize Int, index Int, element Byte) : ByteArray from class leakcanary.internal.SparseArrayUtils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type array : BooleanArray to array : ByteArray in method public appendByte(array ByteArray, currentSize Int, element Byte) : ByteArray from class leakcanary.internal.SparseArrayUtils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type element : Boolean to element : Byte in method public appendByte(array ByteArray, currentSize Int, element Byte) : ByteArray from class leakcanary.internal.SparseArrayUtils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type BooleanArray to ByteArray in method public appendByte(array ByteArray, currentSize Int, element Byte) : ByteArray from class leakcanary.internal.SparseArrayUtils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type BooleanArray to ByteArray in method public insertByte(array ByteArray, currentSize Int, index Int, element Byte) : ByteArray from class leakcanary.internal.SparseArrayUtils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type seconds : BooleanArray to seconds : ByteArray in class leakcanary.internal.LongToPairOfLongByteSparseArray",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Pair<Long,Boolean> to Pair<Long,Byte> in method public get(key Long) : Pair<Long,Byte> from class leakcanary.internal.LongToPairOfLongByteSparseArray",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type second : Boolean to second : Byte in method private insert(key Long, first Long, second Byte) from class leakcanary.internal.LongToPairOfLongByteSparseArray",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter value : Pair<Long,Byte> in method public set(key Long, value Pair<Long,Byte>) from class leakcanary.internal.LongToPairOfLongByteSparseArray",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter first : Long in method public set(key Long, first Long, second Boolean) from class leakcanary.internal.LongToPairOfLongBooleanSparseArray",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter second : Boolean in method public set(key Long, first Long, second Boolean) from class leakcanary.internal.LongToPairOfLongBooleanSparseArray",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

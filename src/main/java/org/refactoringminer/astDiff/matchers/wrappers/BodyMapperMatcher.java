@@ -198,6 +198,14 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             }
             else if ((srcStatementNode.getType().name.equals(Constants.get().TRY_STATEMENT) && dstStatementNode.getType().name.equals(Constants.get().TRY_STATEMENT)) ||
                     (srcStatementNode.getType().name.equals(Constants.get().CATCH_CLAUSE) && dstStatementNode.getType().name.equals(Constants.get().CATCH_CLAUSE))) {
+                if(srcStatementNode.getParent().getType().name.equals(Constants.get().FIELD_DECLARATION) && dstStatementNode.getParent().getType().name.equals(Constants.get().FIELD_DECLARATION)) {
+                    //try expression is the initializer of a property declaration
+                    mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
+                }
+                else if(srcStatementNode.getParent().getType().name.equals(Constants.get().JUMP_EXPRESSION) && dstStatementNode.getParent().getType().name.equals(Constants.get().JUMP_EXPRESSION)) {
+                    mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
+                    new KeywordMatcher(Constants.get().JUMP_KEYWORD, "return").match(srcStatementNode.getParent(),dstStatementNode.getParent(),mappingStore);
+                }
                 matchBlocks(srcStatementNode, dstStatementNode, mappingStore);
                 new CompositeMatcher(abstractCodeMapping).match(srcStatementNode,dstStatementNode,mappingStore);
             } else if (!srcStatementNode.getType().name.equals(Constants.get().BLOCK) && !dstStatementNode.getType().name.equals(Constants.get().BLOCK)) {

@@ -171,8 +171,14 @@ public class MethodMatcher extends BodyMapperMatcher{
         searchingTypes.add(Constants.get().MODIFIERS);
         for (String type : searchingTypes) {
             com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,type);
-            if (matched != null)
-                mappingStore.addMapping(matched.first,matched.second);
+            if (matched != null) {
+                if(type.equals(Constants.get().SIMPLE_NAME) && matched.first.getChildren().size() > 0 && matched.second.getChildren().size() > 0) {
+                    mappingStore.addMappingRecursively(matched.first,matched.second);
+                }
+                else {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+            }
         }
         if (umlOperationBodyMapper.getOperation1() != null && umlOperationBodyMapper.getOperation2() != null) {
             if (umlOperationBodyMapper.getOperation1().isStatic() && umlOperationBodyMapper.getOperation2().isStatic())

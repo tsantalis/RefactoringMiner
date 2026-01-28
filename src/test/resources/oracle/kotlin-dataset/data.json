@@ -12975,4 +12975,104 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 60,
+    "repository": "https://github.com/square/okhttp.git",
+    "sha1": "0d09dc123850a7cd3583ff2ccbde89cac0712275",
+    "url": "https://github.com/square/okhttp/commit/0d09dc123850a7cd3583ff2ccbde89cac0712275",
+    "author": "swankjesse",
+    "time": "2/9/20 01:06 PM",
+    "refactorings": [{
+        "type": "Extract Variable",
+        "description": "Extract Variable connection : Inferred in method private retryCurrentRoute() : Boolean from class okhttp3.internal.connection.ExchangeFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public prepareExchangeFinder(request Request) renamed to public enterNetworkInterceptorExchange(request Request) in class okhttp3.internal.connection.RealCall",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method internal prepareNewExchange(chain RealInterceptorChain) : Exchange renamed to internal initExchange(chain RealInterceptorChain) : Exchange in class okhttp3.internal.connection.RealCall",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier public to internal in attribute internal isDuplex : Boolean from class okhttp3.internal.connection.Exchange",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to internal in attribute internal address : Address from class okhttp3.internal.connection.ExchangeFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public callsPerHost : Inferred from class okhttp3.internal.connection.RealCall.AsyncCall",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Reorder Parameter",
+        "description": "Reorder Parameter [e : IOException, call : RealCall, requestSendStarted : Boolean, userRequest : Request] to [e : IOException, call : RealCall, userRequest : Request, requestSendStarted : Boolean] in method private recover(e IOException, call RealCall, userRequest Request, requestSendStarted Boolean) : Boolean from class okhttp3.internal.http.RetryAndFollowUpInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Localize Parameter",
+        "description": "Localize Parameter route : Route to route : Inferred in method private followUpRequest(userResponse Response, exchange Exchange) : Request from class okhttp3.internal.http.RetryAndFollowUpInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type route : Route to route : Inferred in method private followUpRequest(userResponse Response, exchange Exchange) : Request from class okhttp3.internal.http.RetryAndFollowUpInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter exchange : Exchange in method private followUpRequest(userResponse Response, exchange Exchange) : Request from class okhttp3.internal.http.RetryAndFollowUpInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type connection : Http2Connection to connection : RealConnection in class okhttp3.internal.http2.Http2ExchangeCodec",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type canceled : Boolean to canceled : Inferred in class okhttp3.internal.http2.Http2ExchangeCodec",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Access Modifier",
+        "description": "Change Attribute Access Modifier private to public in attribute public connection : RealConnection from class okhttp3.internal.http2.Http2ExchangeCodec",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

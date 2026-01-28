@@ -2119,6 +2119,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					return true;
 				}
 			}
+			else if(lambda.getBody() != null) {
+				if(lambda.getBody().getCompositeStatement().getLocationInfo().subsumes(lambdaExpression.getLocationInfo())) {
+					boolean foundInNested = false;
+					for(LambdaExpressionObject nestedLambda : lambda.getAllLambdas()) {
+						if(nestedLambda.getExpression() != null) {
+							if(nestedLambda.getExpression().equals(lambdaExpression)) {
+								foundInNested = true;
+								break;
+							}
+						}
+					}
+					if(!foundInNested) {
+						return true;
+					}
+				}
+			}
 		}
 		return false;
 	}
@@ -8654,7 +8670,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return;
 		}
 		CompositeStatementObject parent1 = leaf1.getParent();
-		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+		while(parent1 != null && parent1.getParent() != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 			parent1 = parent1.getParent();
 		}
 		for(AbstractCodeFragment leaf : leaves2) {
@@ -8706,7 +8722,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						boolean matchWithLessReplacements = mappingSet.size() == 1 && replacements.size() < mappingSet.first().getReplacements().size();
-						if(allowAdd || nested || matchWithLessReplacements || mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable()) {
+						boolean variableDeclarationNameMismatch = mapping.sameVariableDeclarationName() && !mappingSet.first().sameVariableDeclarationName();
+						if(allowAdd || nested || matchWithLessReplacements || variableDeclarationNameMismatch || mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable()) {
 							mappingSet.add(mapping);
 						}
 					}

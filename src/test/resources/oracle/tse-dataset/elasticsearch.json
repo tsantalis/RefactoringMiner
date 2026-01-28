@@ -659,6 +659,11 @@
           "type": "MERGE_VARIABLE",
           "description": "Merge Variable\t[docCount : long, aggs : InternalAggregations] to reducer : BucketReducer<Bucket> in method private reduceBucket(buckets List<Bucket>, context AggregationReduceContext) : Bucket from class org.elasticsearch.search.aggregations.bucket.histogram.InternalVariableWidthHistogram",
           "validation": true
+        },
+        {
+          "type": "REPLACE_PIPELINE_WITH_LOOP",
+          "description": "Replace Pipeline With Loop\tbucketsReducer.forEach(entry -> { with do(pq.size() > 0) in method public reduceBuckets(pq PriorityQueue<IteratorAndCurrent<Bucket>>, reduceContext AggregationReduceContext) : List<Bucket> from class org.elasticsearch.search.aggregations.bucket.histogram.InternalVariableWidthHistogram",
+          "validation": true
         }
       ]
     },

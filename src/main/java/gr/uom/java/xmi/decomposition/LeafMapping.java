@@ -1466,4 +1466,11 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		}
 		return 0;
 	}
+
+	public boolean sameVariableDeclarationName() {
+		if(this.getFragment1().getVariableDeclarations().size() > 0 && this.getFragment2().getVariableDeclarations().size() > 0) {
+			return this.getFragment1().getVariableDeclarations().get(0).getVariableName().equals(this.getFragment2().getVariableDeclarations().get(0).getVariableName());
+		}
+		return false;
+	}
 }

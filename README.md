@@ -391,11 +391,11 @@ Currently, it supports the detection of the following refactorings:
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **January 19, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **January 28, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12638  | 13  | 212  | 0.999  | 0.984|
+|**Total**|12639  | 13  | 212  | 0.999  | 0.984|
 |Extract Method|1018  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
@@ -480,7 +480,7 @@ As of **January 19, 2026** the precision and recall of RefactoringMiner on this 
 |Merge Package| 2  |  0  |  0  | 1.000  | 1.000|
 |Change Type Declaration Kind| 6  |  0  |  0  | 1.000  | 1.000|
 |Collapse Hierarchy| 1  |  0  |  0  | 1.000  | 1.000|
-|Replace Loop With Pipeline|35  |  0  |  0  | 1.000  | 1.000|
+|Replace Loop With Pipeline|36  |  0  |  0  | 1.000  | 1.000|
 |Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|
 |Replace Anonymous With Lambda|45  |  0  |  0  | 1.000  | 1.000|
 |Merge Class| 5  |  0  |  0  | 1.000  | 1.000|
@@ -524,11 +524,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Merge Parameter`
 * `Invert Condition`
 
-As of **January 26, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **January 28, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3539  | 40  | 76  | 0.989  | 0.979|
+|**Total**|3540  | 40  | 76  | 0.989  | 0.979|
 |Extract Method|375  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -564,7 +564,7 @@ As of **January 26, 2026** the precision and recall of RefactoringMiner on this 
 |Change Attribute Type|164  |  2  |  3  | 0.988  | 0.982|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Loop With Pipeline| 4  |  0  |  0  | 1.000  | 1.000|
-|Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|
+|Replace Pipeline With Loop| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Class| 1  |  0  |  0  | 1.000  | 1.000|
 |Invert Condition|23  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 1  |  0  |  0  | 1.000  | 1.000|
@@ -678,8 +678,8 @@ As of **January 28, 2026** the precision and recall of RefactoringMiner on this 
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1800  |  4  |  0  | 0.998  | 1.000|
-|Extract Method|10  |  0  |  0  | 1.000  | 1.000|
+|**Total**|1810  |  4  |  0  | 0.998  | 1.000|
+|Extract Method|11  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|42  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|53  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Attribute| 3  |  0  |  0  | 1.000  | 1.000|
@@ -735,6 +735,7 @@ As of **January 28, 2026** the precision and recall of RefactoringMiner on this 
 |Change Class Access Modifier|30  |  0  |  0  | 1.000  | 1.000|
 |Add Class Modifier| 7  |  0  |  0  | 1.000  | 1.000|
 |Change Type Declaration Kind|12  |  0  |  0  | 1.000  | 1.000|
+|Replace Loop With Pipeline| 9  |  0  |  0  | 1.000  | 1.000|
 |Merge Class| 1  |  0  |  0  | 1.000  | 1.000|
 |Invert Condition| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional| 2  |  0  |  0  | 1.000  | 1.000|

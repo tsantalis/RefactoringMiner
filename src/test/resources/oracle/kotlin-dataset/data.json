@@ -7670,6 +7670,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Replace Loop With Pipeline",
+        "description": "Replace Loop With Pipeline for(pathNode in inputPathResults) with inputPathResults.forEachIndexed { index, pathNode -> in method private deduplicateShortestPaths(inputPathResults List<ReferencePathNode>, retainedSizes List<Int>) : List<Pair<ReferencePathNode,Int>> from class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public parseHeaderOf(source BufferedSource) : HprofHeader extracted from public open(hprofFile File) : Hprof in class shark.HprofHeader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -10045,6 +10059,41 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Replace Loop With Pipeline",
+        "description": "Replace Loop With Pipeline for(weakRef in refClass.instancesList) with keyedWeakReferenceInstances.forEach { record -> in method private findLeakingReferences(parser HprofParser, retainedKeys MutableSet<Long>, analysisResults MutableMap<String,RetainedInstance>, keyedWeakReferenceInstances List<InstanceDumpRecord>, heapDumpUptimeMillis Long) : MutableList<KeyedWeakReferenceMirror> from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Loop With Pipeline",
+        "description": "Replace Loop With Pipeline for((key, value) in classObj!!.staticFieldValues) with hydratedClass.staticFieldNames.forEachIndexed { index, fieldName -> in method private describeFields(parser HprofParser, record ObjectRecord) : List<LeakReference> from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Loop With Pipeline",
+        "description": "Replace Loop With Pipeline for(i in values.indices) with instance.classHierarchy[0].staticFieldNames.forEachIndexed { index, fieldName -> in method private describeFields(parser HprofParser, record ObjectRecord) : List<LeakReference> from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Loop With Pipeline",
+        "description": "Replace Loop With Pipeline for((key, value) in classObj.staticFieldValues) with instance.classHierarchy[0].staticFieldNames.forEachIndexed { index, fieldName -> in method private describeFields(parser HprofParser, record ObjectRecord) : List<LeakReference> from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Loop With Pipeline",
+        "description": "Replace Loop With Pipeline for(field in classInstance!!.values) with instance.fieldValues.forEachIndexed { classIndex, fieldValues -> in method private describeFields(parser HprofParser, record ObjectRecord) : List<LeakReference> from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -10465,6 +10514,27 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable results : Inferred to heapAnalysis : Inferred in method internal findAllLeaks(heapDumpFile HeapDumpFile) : HeapAnalysis from class leakcanary.internal.TestUtil.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Loop With Pipeline",
+        "description": "Replace Loop With Pipeline for(result in analysisResults) with heapAnalysis.retainedInstances.forEachIndexed nextResult@{ index, retainedInstance -> in method public onHandleIntentInForeground(intent Intent) from class leakcanary.internal.HeapAnalyzerService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Loop With Pipeline",
+        "description": "Replace Loop With Pipeline for(result in results) with heapAnalysis.retainedInstances.forEach { retainedInstance -> in method internal findLeak(heapDumpFile HeapDumpFile) : RetainedInstance from class leakcanary.internal.TestUtil.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Loop With Pipeline",
+        "description": "Replace Loop With Pipeline for(result in results) with heapAnalysis.retainedInstances.forEach { retainedInstance -> in method internal findAllLeaks(heapDumpFile HeapDumpFile) : HeapAnalysis from class leakcanary.internal.TestUtil.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

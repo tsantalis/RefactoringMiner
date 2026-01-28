@@ -13075,4 +13075,153 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 61,
+    "repository": "https://github.com/square/okhttp.git",
+    "sha1": "1364ea44ae1f1c4b5a1cc32e4e7b51d23cb78517",
+    "url": "https://github.com/square/okhttp/commit/1364ea44ae1f1c4b5a1cc32e4e7b51d23cb78517",
+    "author": "swankjesse",
+    "time": "5/11/20 05:35 PM",
+    "refactorings": [{
+        "type": "Inline Method",
+        "description": "Inline Method private invokeDelegateMethod(delegateMethod Method, chain Array<X509Certificate>, authType String, host String) : List<Certificate> inlined to public checkServerTrusted(chain Array<X509Certificate>, authType String, host String) : List<Certificate> in class okhttp3.tls.internal.InsecureAndroidTrustManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable ite : InvocationTargetException to e : InvocationTargetException in method public checkServerTrusted(chain Array<X509Certificate>, authType String, host String) : List<Certificate> from class okhttp3.tls.internal.InsecureAndroidTrustManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class okhttp3.recipes.kt.AndroidAllowlistedTrustManager moved and renamed to okhttp3.tls.internal.InsecureAndroidTrustManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier public to internal in class okhttp3.tls.internal.InsecureAndroidTrustManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public getAcceptedIssuers() : Array<X509Certificate> from class okhttp3.recipes.kt.JvmAllowlistedTrustManager to public getAcceptedIssuers() : Array<X509Certificate> from class okhttp3.tls.internal.InsecureAndroidTrustManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public checkServerTrusted(chain Array<X509Certificate>, authType String) from class okhttp3.recipes.kt.JvmAllowlistedTrustManager to public checkServerTrusted(chain Array<X509Certificate>, authType String) from class okhttp3.tls.internal.InsecureAndroidTrustManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @Suppress(\"unused\", \"UNCHECKED_CAST\") in method public checkServerTrusted(chain Array<X509Certificate>, authType String, host String) : List<Certificate> from class okhttp3.tls.internal.InsecureAndroidTrustManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter insecureHosts : List<String> in method public newTrustManager(keyStoreType String, trustedCertificates List<X509Certificate>, insecureHosts List<String>) : X509TrustManager from class okhttp3.tls.internal.TlsUtil",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Annotation",
+        "description": "Add Method Annotation @IgnoreJRERequirement in method public newTrustManager(keyStoreType String, trustedCertificates List<X509Certificate>, insecureHosts List<String>) : X509TrustManager from class okhttp3.tls.internal.TlsUtil",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable trustManager : Inferred in method public newTrustManager(keyStoreType String, trustedCertificates List<X509Certificate>, insecureHosts List<String>) : X509TrustManager from class okhttp3.tls.internal.TlsUtil",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Class",
+        "description": "Merge Class [okhttp3.recipes.kt.DevServerAndroid, okhttp3.recipes.kt.DevServerJvm] merged to okhttp3.recipes.kt.DevServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public handshakeCertificates : Inferred from class okhttp3.recipes.kt.DevServerAndroid to public handshakeCertificates : Inferred from class okhttp3.recipes.kt.DevServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public server : Inferred from class okhttp3.recipes.kt.DevServerAndroid to public server : Inferred from class okhttp3.recipes.kt.DevServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public client : Inferred from class okhttp3.recipes.kt.DevServerAndroid to public client : Inferred from class okhttp3.recipes.kt.DevServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public handshakeCertificates : Inferred from class okhttp3.recipes.kt.DevServerJvm to public handshakeCertificates : Inferred from class okhttp3.recipes.kt.DevServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public server : Inferred from class okhttp3.recipes.kt.DevServerJvm to public server : Inferred from class okhttp3.recipes.kt.DevServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public client : Inferred from class okhttp3.recipes.kt.DevServerJvm to public client : Inferred from class okhttp3.recipes.kt.DevServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public run() from class okhttp3.recipes.kt.DevServerAndroid to public run() from class okhttp3.recipes.kt.DevServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public run() from class okhttp3.recipes.kt.DevServerJvm to public run() from class okhttp3.recipes.kt.DevServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class okhttp3.recipes.kt.DevServerJvm.module renamed to okhttp3.recipes.kt.DevServer.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

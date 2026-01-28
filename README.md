@@ -670,7 +670,7 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 ## Kotlin Benchmark
 **Source**: Iman Hemati Moghadam, Mohammad Mehdi Afkhami, Parsa Kamalipour, and Vadim Zaytsev, "Extending Refactoring Detection to Kotlin: A Dataset and Comparative Study," 2024 IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER), Rovaniemi, Finland, 2024, pp. 267-271, doi: 10.1109/SANER60148.2024.00034
 
-**Properties**: 60 commits from 3 open-source projects
+**Properties**: 61 commits from 3 open-source projects
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
@@ -678,18 +678,18 @@ As of **January 28, 2026** the precision and recall of RefactoringMiner on this 
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1767  |  4  |  0  | 0.998  | 1.000|
+|**Total**|1800  |  4  |  0  | 0.998  | 1.000|
 |Extract Method|10  |  0  |  0  | 1.000  | 1.000|
-|Rename Class|41  |  0  |  0  | 1.000  | 1.000|
-|Move Attribute|47  |  0  |  0  | 1.000  | 1.000|
+|Rename Class|42  |  0  |  0  | 1.000  | 1.000|
+|Move Attribute|53  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|134  |  0  |  0  | 1.000  | 1.000|
-|Inline Method|15  |  0  |  0  | 1.000  | 1.000|
-|Move Method|87  |  0  |  0  | 1.000  | 1.000|
+|Inline Method|16  |  0  |  0  | 1.000  | 1.000|
+|Move Method|91  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Method| 8  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Method|46  |  0  |  0  | 1.000  | 1.000|
 |Move Class|179  |  0  |  0  | 1.000  | 1.000|
-|Move And Rename Class|12  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Class|13  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|17  |  0  |  0  | 1.000  | 1.000|
 |Push Down Attribute| 4  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method|15  |  0  |  0  | 1.000  | 1.000|
@@ -701,10 +701,10 @@ As of **January 28, 2026** the precision and recall of RefactoringMiner on this 
 |Move And Inline Method|23  |  0  |  0  | 1.000  | 1.000|
 |Rename Package| 3  |  0  |  0  | 1.000  | 1.000|
 |Move Package| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|16  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|17  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|10  |  2  |  0  | 0.833  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|32  |  1  |  0  | 0.970  | 1.000|
+|Rename Variable|33  |  1  |  0  | 0.971  | 1.000|
 |Rename Parameter|73  |  0  |  0  | 1.000  | 1.000|
 |Rename Attribute|74  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 1  |  0  |  0  | 1.000  | 1.000|
@@ -717,7 +717,7 @@ As of **January 28, 2026** the precision and recall of RefactoringMiner on this 
 |Change Variable Type|21  |  0  |  0  | 1.000  | 1.000|
 |Change Parameter Type|145  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Type|65  |  0  |  0  | 1.000  | 1.000|
-|Add Method Annotation|22  |  0  |  0  | 1.000  | 1.000|
+|Add Method Annotation|24  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|10  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Annotation|11  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Annotation| 5  |  0  |  0  | 1.000  | 1.000|
@@ -725,16 +725,17 @@ As of **January 28, 2026** the precision and recall of RefactoringMiner on this 
 |Remove Class Annotation| 6  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|131  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|132  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter|110  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 2  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Method Access Modifier|49  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Access Modifier|81  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Change Class Access Modifier|29  |  0  |  0  | 1.000  | 1.000|
+|Change Class Access Modifier|30  |  0  |  0  | 1.000  | 1.000|
 |Add Class Modifier| 7  |  0  |  0  | 1.000  | 1.000|
 |Change Type Declaration Kind|12  |  0  |  0  | 1.000  | 1.000|
+|Merge Class| 1  |  0  |  0  | 1.000  | 1.000|
 |Invert Condition| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional| 2  |  0  |  0  | 1.000  | 1.000|
 |Move Code| 5  |  0  |  0  | 1.000  | 1.000|

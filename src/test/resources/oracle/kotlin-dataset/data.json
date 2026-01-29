@@ -13294,4 +13294,104 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 62,
+    "repository": "https://github.com/square/okhttp.git",
+    "sha1": "15339353c15878f35eb750f9653e0410937efa68",
+    "url": "https://github.com/square/okhttp/commit/15339353c15878f35eb750f9653e0410937efa68",
+    "author": "yschimke",
+    "time": "1/6/20 09:54 PM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter hostname : String in method public configureTlsExtensions(sslSocket SSLSocket, hostname String, protocols List<Protocol>) from class okhttp3.internal.platform.Android10Platform",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hostname : String in method public configureTlsExtensions(sslSocket SSLSocket, hostname String, protocols List<Protocol>) from class okhttp3.internal.platform.AndroidPlatform",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hostname : String in method public configureTlsExtensions(sslSocket SSLSocket, hostname String, protocols List<Protocol>) from class okhttp3.internal.platform.ConscryptPlatform",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hostname : String in method public configureTlsExtensions(sslSocket SSLSocket, hostname String, protocols List<Protocol>) from class okhttp3.internal.platform.Jdk8WithJettyBootPlatform",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hostname : String in method public configureTlsExtensions(sslSocket SSLSocket, hostname String, protocols List<Protocol>) from class okhttp3.internal.platform.OpenJSSEPlatform",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hostname : String in method public configureTlsExtensions(sslSocket SSLSocket, hostname String, protocols List<Protocol>) from class okhttp3.internal.platform.android.Android10SocketAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hostname : String in method public configureTlsExtensions(sslSocket SSLSocket, hostname String, protocols List<Protocol>) from class okhttp3.internal.platform.android.ConscryptSocketAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hostname : String in method public configureTlsExtensions(sslSocket SSLSocket, hostname String, protocols List<Protocol>) from class okhttp3.internal.platform.android.DeferredSocketAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hostname : String in method public configureTlsExtensions(sslSocket SSLSocket, hostname String, protocols List<Protocol>) from class okhttp3.internal.platform.Platform",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hostname : String in method public configureTlsExtensions(sslSocket SSLSocket, hostname String, protocols List<Protocol>) from class okhttp3.internal.platform.android.SocketAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hostname : String in method public configureTlsExtensions(sslSocket SSLSocket, hostname String, protocols List<Protocol>) from class okhttp3.internal.platform.Jdk9Platform",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter hostname : String in method public configureTlsExtensions(sslSocket SSLSocket, hostname String, protocols List<Protocol>) from class okhttp3.internal.platform.android.AndroidSocketAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type NoSuchMethodException in method public testToStringIsClassname() : void from class okhttp3.internal.platform.Jdk9PlatformTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

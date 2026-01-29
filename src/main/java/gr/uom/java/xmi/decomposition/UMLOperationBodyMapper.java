@@ -8666,6 +8666,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions)
 			throws RefactoringMinerTimedOutException {
 		AbstractCodeFragment leaf1 = mappingSet.first().getFragment1();
+		if(leaf1 instanceof AbstractExpression) {
+			return;
+		}
 		if(parentMapper != null && parentMapper.alreadyMatched1(leaf1)) {
 			return;
 		}

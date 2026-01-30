@@ -1168,6 +1168,45 @@ public class VariableReplacementAnalysis {
 							}
 						}
 					}
+					else if(replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION)) {
+						AbstractCall beforeCall = null;
+						for(AbstractCall creation1 : mapping.getFragment1().getCreations()) {
+							int argMatch = 0;
+							for(String arg : creation1.arguments()) {
+								if(replacement.getBefore().contains(arg)) {
+									argMatch++;
+								}
+							}
+							if(argMatch == creation1.arguments().size() && replacement.getBefore().contains(creation1.getName())) {
+								beforeCall = creation1;
+								break;
+							}
+						}
+						AbstractCall afterCall = null;
+						for(AbstractCall creation2 : mapping.getFragment2().getCreations()) {
+							int argMatch = 0;
+							for(String arg : creation2.arguments()) {
+								if(replacement.getAfter().contains(arg)) {
+									argMatch++;
+								}
+							}
+							if(argMatch == creation2.arguments().size() && replacement.getAfter().contains(creation2.getName())) {
+								afterCall = creation2;
+								break;
+							}
+						}
+						if(beforeCall != null && afterCall != null && beforeCall.identicalName(afterCall) && beforeCall.arguments().size() == afterCall.arguments().size()) {
+							for(int i=0; i<beforeCall.arguments().size(); i++) {
+								String arg1 = beforeCall.arguments().get(i);
+								String arg2 = afterCall.arguments().get(i);
+								if(!arg1.equals(arg2)) {
+									argumentBefore = arg1;
+									argumentAfter = arg2;
+									break;
+								}
+							}
+						}
+					}
 					if(replacement.involvesVariable() || argumentBefore != null) {
 						String after = argumentAfter != null ? argumentAfter : replacement.getAfter();
 						String before = argumentBefore != null ? argumentBefore : replacement.getBefore();

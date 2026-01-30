@@ -76,7 +76,8 @@ public class ReplacementAlgorithm {
 			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo, boolean equalNumberOfAssertions, UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
 		VariableDeclarationContainer container1 = operationBodyMapper.getContainer1();
 		VariableDeclarationContainer container2 = operationBodyMapper.getContainer2();
-		Constants LANG = PathFileUtils.getLang(container1.getLocationInfo().getFilePath());
+		Constants LANG1 = operationBodyMapper.LANG1;
+		Constants LANG2 = operationBodyMapper.LANG2;
 		CodeBlockBetweenComments codeBlock1 = container1.hasTestAnnotation() ? generateCodeBlock(statement1, container1) : null;
 		CodeBlockBetweenComments codeBlock2 = container2.hasTestAnnotation() ? generateCodeBlock(statement2, container2) : null;
 		boolean betweenSameComments = codeBlock1 != null && codeBlock2 != null && (codeBlock1.compatible(codeBlock2) || codeBlock1.compatibleWithAfterEnd(codeBlock2));
@@ -279,8 +280,8 @@ public class ReplacementAlgorithm {
 			if(index1 != -1 && index2 != -1 && index1 != index2) {
 				variablesToBeRemovedFromTheIntersection.add(variable);
 			}
-			if(!variable.startsWith(LANG.THIS_DOT) && !variableIntersection.contains(LANG.THIS_DOT+variable) &&
-					(variables1.contains(LANG.THIS_DOT+variable) || variables2.contains(LANG.THIS_DOT+variable))) {
+			if(!variable.startsWith(LANG1.THIS_DOT) && !variable.startsWith(LANG2.THIS_DOT) && !variableIntersection.contains(LANG1.THIS_DOT+variable) && !variableIntersection.contains(LANG2.THIS_DOT+variable) &&
+					(variables1.contains(LANG1.THIS_DOT+variable) || variables2.contains(LANG2.THIS_DOT+variable))) {
 				variablesToBeRemovedFromTheIntersection.add(variable);
 			}
 			String s1 = stringEndingWithDotVariable(variables1, variable);
@@ -292,12 +293,12 @@ public class ReplacementAlgorithm {
 					variablesToBeRemovedFromTheIntersection.add(variable);
 			}
 			if(s1 != null && s2 != null) {
-				if(statement1.getString().endsWith(LANG.ASSIGNMENT + variable + LANG.STATEMENT_TERMINATION) &&
-						!statement2.getString().endsWith(LANG.ASSIGNMENT + variable + LANG.STATEMENT_TERMINATION)) {
+				if(statement1.getString().endsWith(LANG1.ASSIGNMENT + variable + LANG1.STATEMENT_TERMINATION) &&
+						!statement2.getString().endsWith(LANG2.ASSIGNMENT + variable + LANG2.STATEMENT_TERMINATION)) {
 					variablesToBeRemovedFromTheIntersection.add(variable);
 				}
-				else if(!statement1.getString().endsWith(LANG.ASSIGNMENT + variable + LANG.STATEMENT_TERMINATION) &&
-						statement2.getString().endsWith(LANG.ASSIGNMENT + variable + LANG.STATEMENT_TERMINATION)) {
+				else if(!statement1.getString().endsWith(LANG1.ASSIGNMENT + variable + LANG1.STATEMENT_TERMINATION) &&
+						statement2.getString().endsWith(LANG2.ASSIGNMENT + variable + LANG2.STATEMENT_TERMINATION)) {
 					variablesToBeRemovedFromTheIntersection.add(variable);
 				}
 			}
@@ -458,7 +459,7 @@ public class ReplacementAlgorithm {
 				}
 			}
 			for(String arg1 : arguments1) {
-				if(methodInvocationMap1.containsKey(arg1) && (arg1.contains(LANG.METHOD_REFERENCE) || arg1.contains(LANG.LAMBDA_ARROW))) {
+				if(methodInvocationMap1.containsKey(arg1) && (arg1.contains(LANG1.METHOD_REFERENCE) || arg1.contains(LANG1.LAMBDA_ARROW))) {
 					argsAreMethodCalls = true;
 				}
 			}
@@ -488,7 +489,7 @@ public class ReplacementAlgorithm {
 		replaceVariablesWithArguments(methodInvocationMap1, methodInvocations1, map);
 		
 		//remove methodInvocation covering the entire statement
-		boolean variableReturn2 = statement2.getVariables().size() > 0 && statement2.getString().equals(LANG.RETURN_SPACE + statement2.getVariables().get(0).getString() + LANG.STATEMENT_TERMINATION);
+		boolean variableReturn2 = statement2.getVariables().size() > 0 && statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getVariables().get(0).getString() + LANG2.STATEMENT_TERMINATION);
 		boolean returnMatch2 = false;
 		if(variableReturn2 && invocationCoveringTheEntireStatement1 != null) {
 			for(AbstractCodeFragment f2 : replacementInfo.getStatements2()) {
@@ -520,7 +521,7 @@ public class ReplacementAlgorithm {
 				}
 			}
 		}
-		boolean variableReturn1 = statement1.getVariables().size() > 0 && statement1.getString().equals(LANG.RETURN_SPACE + statement1.getVariables().get(0).getString() + LANG.STATEMENT_TERMINATION);
+		boolean variableReturn1 = statement1.getVariables().size() > 0 && statement1.getString().equals(LANG1.RETURN_SPACE + statement1.getVariables().get(0).getString() + LANG1.STATEMENT_TERMINATION);
 		boolean returnMatch1 = false;
 		if(variableReturn1 && invocationCoveringTheEntireStatement2 != null) {
 			for(AbstractCodeFragment f1 : replacementInfo.getStatements1()) {
@@ -735,7 +736,7 @@ public class ReplacementAlgorithm {
 			if(infixExpressionCoveringTheEntireFragment != null) {
 				boolean skip = false;
 				if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) || statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT)) {
-					if(infixExpressionCoveringTheEntireFragment.contains(LANG.OR) || infixExpressionCoveringTheEntireFragment.contains(LANG.AND)) {
+					if(infixExpressionCoveringTheEntireFragment.contains(LANG1.OR) || infixExpressionCoveringTheEntireFragment.contains(LANG1.AND)) {
 						skip = true;
 					}
 				}
@@ -792,7 +793,7 @@ public class ReplacementAlgorithm {
 		findReplacements(creations1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
 		findReplacements(variables1, convertLambdasToStringSet(lambdas2), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_LAMBDA, container1, container2, classDiff);
 		findReplacements(convertLambdasToStringSet(lambdas1), variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_LAMBDA, container1, container2, classDiff);
-		if(statement1.getString().startsWith(LANG.THROW_SPACE) && statement2.getString().startsWith(LANG.THROW_SPACE) && creationCoveringTheEntireStatement2 != null && creations2.isEmpty()) {
+		if(statement1.getString().startsWith(LANG1.THROW_SPACE) && statement2.getString().startsWith(LANG2.THROW_SPACE) && creationCoveringTheEntireStatement2 != null && creations2.isEmpty()) {
 			findReplacements(variables1, Set.of(creationCoveringTheEntireStatement2.actualString()), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
 		}
 		if(charLiterals1.size() > 0 && charLiterals2.isEmpty() && stringLiterals2.size() > 0) {
@@ -812,11 +813,11 @@ public class ReplacementAlgorithm {
 					if(Thread.interrupted()) {
 						throw new RefactoringMinerTimedOutException();
 					}
-					String temp = ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), s1, s2, LANG);
+					String temp = ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), s1, s2, LANG1, LANG2);
 					int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
 					boolean prefixMatch = false;
-					if(distanceRaw == -1 && replacementInfo.getArgumentizedString2().endsWith(")" + LANG.STATEMENT_TERMINATION)) {
-						String prefix2 = replacementInfo.getArgumentizedString2().substring(0, replacementInfo.getArgumentizedString2().length() - 1 - LANG.STATEMENT_TERMINATION.length());
+					if(distanceRaw == -1 && replacementInfo.getArgumentizedString2().endsWith(")" + LANG2.STATEMENT_TERMINATION)) {
+						String prefix2 = replacementInfo.getArgumentizedString2().substring(0, replacementInfo.getArgumentizedString2().length() - 1 - LANG2.STATEMENT_TERMINATION.length());
 						if(temp.startsWith(prefix2)) {
 							prefixMatch = true;
 						}
@@ -831,7 +832,7 @@ public class ReplacementAlgorithm {
 							if(typeTolowerCase.contains(variableDeclaration.getVariableName().toLowerCase()) &&	typeTolowerCase.contains(s2.toLowerCase())) {
 								typeContainsVariableName = true;
 							}
-							if(!typeContainsVariableName && statement1.getString().contains(s1 + LANG.ASSIGNMENT) && statement2.getString().contains(s2 + LANG.ASSIGNMENT)) {
+							if(!typeContainsVariableName && statement1.getString().contains(s1 + LANG1.ASSIGNMENT) && statement2.getString().contains(s2 + LANG2.ASSIGNMENT)) {
 								String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variableType.toString());
 								String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(s2);
 								int commonTokens = 0;
@@ -857,7 +858,7 @@ public class ReplacementAlgorithm {
 					if(distanceRaw >= 0 && (distanceRaw < replacementInfo.getRawDistance() || allowReplacementIncreasingDistance)) {
 						minDistance = distanceRaw;
 						Replacement replacement = null;
-						if(variables1.contains(s1) && variables2.contains(s2) && variablesStartWithSameCase(s1, s2, container1, container2, replacementInfo, LANG)) {
+						if(variables1.contains(s1) && variables2.contains(s2) && variablesStartWithSameCase(s1, s2, container1, container2, replacementInfo, LANG1, LANG2)) {
 							replacement = new Replacement(s1, s2, ReplacementType.VARIABLE_NAME);
 							if(s1.startsWith("(") && s2.startsWith("(") && s1.contains(")") && s2.contains(")")) {
 								String prefix1 = s1.substring(0, s1.indexOf(")")+1);
@@ -938,7 +939,7 @@ public class ReplacementAlgorithm {
 						}
 					}
 					replacementInfo.addReplacement(replacement);
-					replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement.getBefore(), replacement.getAfter(), LANG));
+					replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement.getBefore(), replacement.getAfter(), LANG1, LANG2));
 					if(replacementMap.firstEntry().getKey() == 0) {
 						break;
 					}
@@ -997,7 +998,7 @@ public class ReplacementAlgorithm {
 				if(strippedText1.equals(strippedText2)) {
 					Replacement replacement = new Replacement(s1, s2, ReplacementType.TEXT_BLOCK);
 					replacementInfo.addReplacement(replacement);
-					replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement.getBefore(), replacement.getAfter(), LANG));
+					replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement.getBefore(), replacement.getAfter(), LANG1, LANG2));
 				}
 			}
 		}
@@ -1007,8 +1008,8 @@ public class ReplacementAlgorithm {
 		if(!statement1.containsInitializerOfVariableDeclaration(numberLiterals1) && !statement2.containsInitializerOfVariableDeclaration(variables2) &&
 				(!statement1.getString().endsWith("=0;\n") || (statement1.getString().endsWith("=0;\n") && statement2.getString().endsWith(".length;\n")))) {
 			findReplacements(numberLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_NUMBER_LITERAL, container1, container2, classDiff);
-			if(variables1.size() > 0 && numberLiterals2.size() > 0 && statement1.getString().contains(LANG.ASSIGNMENT + variables1.iterator().next()) && statement2.getString().contains(LANG.ASSIGNMENT + numberLiterals2.iterator().next()) &&
-					!statement2.getString().endsWith(LANG.ASSIGNMENT + numberLiterals2.iterator().next() + LANG.STATEMENT_TERMINATION)) {
+			if(variables1.size() > 0 && numberLiterals2.size() > 0 && statement1.getString().contains(LANG1.ASSIGNMENT + variables1.iterator().next()) && statement2.getString().contains(LANG2.ASSIGNMENT + numberLiterals2.iterator().next()) &&
+					!statement2.getString().endsWith(LANG2.ASSIGNMENT + numberLiterals2.iterator().next() + LANG2.STATEMENT_TERMINATION)) {
 				findReplacements(variables1, numberLiterals2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_NUMBER_LITERAL, container1, container2, classDiff);
 			}
 		}
@@ -1020,17 +1021,17 @@ public class ReplacementAlgorithm {
 		
 		findReplacements(variables1, prefixExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PREFIX_EXPRESSION, container1, container2, classDiff);
 		findReplacements(prefixExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PREFIX_EXPRESSION, container1, container2, classDiff);
-		if(prefixExpressions1.size() == 1 && prefixExpressions1.iterator().next().startsWith(LANG.NOT) && booleanLiterals1.isEmpty()) {
+		if(prefixExpressions1.size() == 1 && prefixExpressions1.iterator().next().startsWith(LANG1.NOT) && booleanLiterals1.isEmpty()) {
 			findReplacements(prefixExpressions1, booleanLiterals2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_PREFIX_EXPRESSION, container1, container2, classDiff);
 		}
-		if(prefixExpressions2.size() == 1 && prefixExpressions2.iterator().next().startsWith(LANG.NOT) && booleanLiterals2.isEmpty()) {
+		if(prefixExpressions2.size() == 1 && prefixExpressions2.iterator().next().startsWith(LANG2.NOT) && booleanLiterals2.isEmpty()) {
 			findReplacements(booleanLiterals1, prefixExpressions2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_PREFIX_EXPRESSION, container1, container2, classDiff);
 		}
-		if(statement2.getThisExpressions().size() > 0 && !statement2.getString().equals(LANG.RETURN_THIS)) {
-			findReplacements(variables1, Set.of(LANG.THIS), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION, container1, container2, classDiff);
+		if(statement2.getThisExpressions().size() > 0 && !statement2.getString().equals(LANG2.RETURN_THIS)) {
+			findReplacements(variables1, Set.of(LANG2.THIS), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION, container1, container2, classDiff);
 		}
-		if(statement1.getThisExpressions().size() > 0 && !statement1.getString().equals(LANG.RETURN_THIS)) {
-			findReplacements(Set.of(LANG.THIS), variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION, container1, container2, classDiff);
+		if(statement1.getThisExpressions().size() > 0 && !statement1.getString().equals(LANG1.RETURN_THIS)) {
+			findReplacements(Set.of(LANG1.THIS), variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION, container1, container2, classDiff);
 		}
 		if(!container1.isGetter() && !container2.isGetter() && !container1.isSetter() && !container2.isSetter()) {
 			findReplacements(stringLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
@@ -1084,8 +1085,8 @@ public class ReplacementAlgorithm {
 		}
 		if((statement1.getNullLiterals().isEmpty() && !statement2.getNullLiterals().isEmpty()) ||
 				bothContainNullInDifferentIndexes(invocationCoveringTheEntireStatement1 != null ? invocationCoveringTheEntireStatement1 : creationCoveringTheEntireStatement1,
-						invocationCoveringTheEntireStatement2 != null ? invocationCoveringTheEntireStatement2 : creationCoveringTheEntireStatement2, LANG)) {
-			Set<String> nullLiterals2 = Set.of(LANG.NULL);
+						invocationCoveringTheEntireStatement2 != null ? invocationCoveringTheEntireStatement2 : creationCoveringTheEntireStatement2, LANG1, LANG2)) {
+			Set<String> nullLiterals2 = Set.of(LANG2.NULL);
 			for(String parameter : parameterToArgumentMap.keySet()) { 
 				String argument = parameterToArgumentMap.get(parameter); 
 				if(!parameter.equals(argument) && variables1.contains(parameter)) {
@@ -1117,8 +1118,8 @@ public class ReplacementAlgorithm {
 		}
 		if((!statement1.getNullLiterals().isEmpty() && statement2.getNullLiterals().isEmpty()) ||
 				bothContainNullInDifferentIndexes(invocationCoveringTheEntireStatement1 != null ? invocationCoveringTheEntireStatement1 : creationCoveringTheEntireStatement1,
-						invocationCoveringTheEntireStatement2 != null ? invocationCoveringTheEntireStatement2 : creationCoveringTheEntireStatement2, LANG)) {
-			Set<String> nullLiterals1 = Set.of(LANG.NULL);
+						invocationCoveringTheEntireStatement2 != null ? invocationCoveringTheEntireStatement2 : creationCoveringTheEntireStatement2, LANG1, LANG2)) {
+			Set<String> nullLiterals1 = Set.of(LANG1.NULL);
 			for(String parameter : parameterToArgumentMap.keySet()) { 
 				String argument = parameterToArgumentMap.get(parameter); 
 				if(!parameter.equals(argument) && variables2.contains(parameter)) {
@@ -1158,14 +1159,14 @@ public class ReplacementAlgorithm {
 		if(statement1.getTernaryOperatorExpressions().isEmpty() && !statement2.getTernaryOperatorExpressions().isEmpty()) {
 			if(!statement1.getNullLiterals().isEmpty()) {
 				Set<String> nullLiterals1 = new LinkedHashSet<String>();
-				nullLiterals1.add(LANG.NULL);
+				nullLiterals1.add(LANG1.NULL);
 				Set<String> ternaryExpressions2 = new LinkedHashSet<String>();
 				for(TernaryOperatorExpression ternary : statement2.getTernaryOperatorExpressions()) {
 					ternaryExpressions2.add(ternary.getExpression());	
 				}
 				findReplacements(nullLiterals1, ternaryExpressions2, replacementInfo, ReplacementType.NULL_LITERAL_REPLACED_WITH_CONDITIONAL_EXPRESSION, container1, container2, classDiff);
 			}
-			if(methodInvocations1.size() > methodInvocations2.size() && !containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG)) {
+			if(methodInvocations1.size() > methodInvocations2.size() && !containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1)) {
 				Set<String> ternaryExpressions2 = new LinkedHashSet<String>();
 				for(TernaryOperatorExpression ternary : statement2.getTernaryOperatorExpressions()) {
 					ternaryExpressions2.add(ternary.getExpression());	
@@ -1195,14 +1196,14 @@ public class ReplacementAlgorithm {
 		else if(!statement1.getTernaryOperatorExpressions().isEmpty() && statement2.getTernaryOperatorExpressions().isEmpty()) {
 			if(!statement2.getNullLiterals().isEmpty()) {
 				Set<String> nullLiterals2 = new LinkedHashSet<String>();
-				nullLiterals2.add(LANG.NULL);
+				nullLiterals2.add(LANG2.NULL);
 				Set<String> ternaryExpressions1 = new LinkedHashSet<String>();
 				for(TernaryOperatorExpression ternary : statement1.getTernaryOperatorExpressions()) {
 					ternaryExpressions1.add(ternary.getExpression());	
 				}
 				findReplacements(ternaryExpressions1, nullLiterals2, replacementInfo, ReplacementType.NULL_LITERAL_REPLACED_WITH_CONDITIONAL_EXPRESSION, container1, container2, classDiff);
 			}
-			if(methodInvocations2.size() > methodInvocations1.size() && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG)) {
+			if(methodInvocations2.size() > methodInvocations1.size() && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2)) {
 				Set<String> ternaryExpressions1 = new LinkedHashSet<String>();
 				for(TernaryOperatorExpression ternary : statement1.getTernaryOperatorExpressions()) {
 					ternaryExpressions1.add(ternary.getExpression());	
@@ -1403,7 +1404,7 @@ public class ReplacementAlgorithm {
 						}
 						else if(statement1.getString().contains(checkIfNull)) {
 							Set<String> set1 = Set.of(checkIfNull);
-							Set<String> set2 = Set.of(LANG.NOT + call.actualString());
+							Set<String> set2 = Set.of(LANG2.NOT + call.actualString());
 							findReplacements(set1, set2, replacementInfo, ReplacementType.NULL_LITERAL_CHECK_REPLACED_WITH_OPTIONAL_IS_PRESENT_CHECK, container1, container2, classDiff);
 						}
 					}
@@ -1412,7 +1413,7 @@ public class ReplacementAlgorithm {
 						String checkIfNotNull = call.getExpression() + " != null";
 						if(statement1.getString().contains(checkIfNotNull)) {
 							Set<String> set1 = Set.of(checkIfNotNull);
-							Set<String> set2 = Set.of(LANG.NOT + call.actualString());
+							Set<String> set2 = Set.of(LANG2.NOT + call.actualString());
 							findReplacements(set1, set2, replacementInfo, ReplacementType.NULL_LITERAL_CHECK_REPLACED_WITH_OPTIONAL_IS_EMPTY_CHECK, container1, container2, classDiff);
 						}
 						else if(statement1.getString().contains(checkIfNull)) {
@@ -1431,20 +1432,20 @@ public class ReplacementAlgorithm {
 			boolean anonymousArgument1 = false;
 			int lambdaArgumentCount1 = 0;
 			for(String s : arguments1) {
-				if(containsMethodSignatureOfAnonymousClass(s, LANG)) {
+				if(containsMethodSignatureOfAnonymousClass(s, LANG1)) {
 					anonymousArgument1 = true;
 				}
-				if(s.contains(LANG.LAMBDA_ARROW) || s.contains(LANG.METHOD_REFERENCE)) {
+				if(s.contains(LANG1.LAMBDA_ARROW) || s.contains(LANG1.METHOD_REFERENCE)) {
 					lambdaArgumentCount1++;
 				}
 			}
 			boolean anonymousArgument2 = false;
 			int lambdaArgumentCount2 = 0;
 			for(String s : arguments2) {
-				if(containsMethodSignatureOfAnonymousClass(s, LANG)) {
+				if(containsMethodSignatureOfAnonymousClass(s, LANG2)) {
 					anonymousArgument2 = true;
 				}
-				if(s.contains(LANG.LAMBDA_ARROW) || s.contains(LANG.METHOD_REFERENCE)) {
+				if(s.contains(LANG2.LAMBDA_ARROW) || s.contains(LANG2.METHOD_REFERENCE)) {
 					lambdaArgumentCount2++;
 				}
 			}
@@ -1461,16 +1462,16 @@ public class ReplacementAlgorithm {
 		}
 		if(parentMapper != null && statement1.getParent() != null && statement2.getParent() != null &&
 				statement1.getParent().getLocationInfo().getCodeElementType().equals(statement2.getParent().getLocationInfo().getCodeElementType())) {
-			if(statement1.getString().equals(LANG.RETURN_STATEMENT) && statement2.getString().equals(LANG.RETURN_NULL)) {
+			if(statement1.getString().equals(LANG1.RETURN_STATEMENT) && statement2.getString().equals(LANG2.RETURN_NULL)) {
 				return replacementInfo.getReplacements();
 			}
-			else if(statement1.getString().equals(LANG.RETURN_NULL) && statement2.getString().equals(LANG.RETURN_STATEMENT)) {
+			else if(statement1.getString().equals(LANG1.RETURN_NULL) && statement2.getString().equals(LANG2.RETURN_STATEMENT)) {
 				return replacementInfo.getReplacements();
 			}
-			if(statement1.getString().equals(LANG.RETURN_FALSE) && statement2.getString().equals(LANG.RETURN_NULL)) {
+			if(statement1.getString().equals(LANG1.RETURN_FALSE) && statement2.getString().equals(LANG2.RETURN_NULL)) {
 				return replacementInfo.getReplacements();
 			}
-			else if(statement1.getString().equals(LANG.RETURN_NULL) && statement2.getString().equals(LANG.RETURN_FALSE)) {
+			else if(statement1.getString().equals(LANG1.RETURN_NULL) && statement2.getString().equals(LANG2.RETURN_FALSE)) {
 				return replacementInfo.getReplacements();
 			}
 		}
@@ -1483,23 +1484,23 @@ public class ReplacementAlgorithm {
 					UMLType returnType1 = returnParameter1.getType();
 					UMLType returnType2 = returnParameter2.getType();
 					if(returnType1.getClassType().equals("void") && returnType2.getClassType().equals("boolean")) {
-						if(statement1.getString().equals(LANG.RETURN_STATEMENT) && statement2.getString().equals(LANG.RETURN_FALSE)) {
+						if(statement1.getString().equals(LANG1.RETURN_STATEMENT) && statement2.getString().equals(LANG2.RETURN_FALSE)) {
 							return replacementInfo.getReplacements();
 						}
-						if(statement1.getString().equals(LANG.RETURN_STATEMENT) && statement2.getString().equals(LANG.RETURN_TRUE)) {
+						if(statement1.getString().equals(LANG1.RETURN_STATEMENT) && statement2.getString().equals(LANG2.RETURN_TRUE)) {
 							return replacementInfo.getReplacements();
 						}
 					}
 					else if(returnType1.getClassType().equals("boolean") && returnType2.getClassType().equals("void")) {
-						if(statement2.getString().equals(LANG.RETURN_STATEMENT) && statement1.getString().equals(LANG.RETURN_FALSE)) {
+						if(statement2.getString().equals(LANG2.RETURN_STATEMENT) && statement1.getString().equals(LANG1.RETURN_FALSE)) {
 							return replacementInfo.getReplacements();
 						}
-						if(statement2.getString().equals(LANG.RETURN_STATEMENT) && statement1.getString().equals(LANG.RETURN_TRUE)) {
+						if(statement2.getString().equals(LANG2.RETURN_STATEMENT) && statement1.getString().equals(LANG1.RETURN_TRUE)) {
 							return replacementInfo.getReplacements();
 						}
 					}
 					if(returnType1.getClassType().equals("void") && !returnType2.getClassType().equals("void")) {
-						if(statement1.getString().equals(LANG.RETURN_STATEMENT) && statement2.getVariables().size() > 0 && statement2.getString().equals(LANG.RETURN_SPACE + statement2.getVariables().get(0).getString() + LANG.STATEMENT_TERMINATION)) {
+						if(statement1.getString().equals(LANG1.RETURN_STATEMENT) && statement2.getVariables().size() > 0 && statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getVariables().get(0).getString() + LANG2.STATEMENT_TERMINATION)) {
 							VariableDeclaration variableDeclaration2 = container2.getVariableDeclaration(statement2.getVariables().get(0).getString());
 							if(variableDeclaration2 != null && variableDeclaration2.getType() != null && variableDeclaration2.getType().equals(returnType2)) {
 								return replacementInfo.getReplacements();
@@ -1507,7 +1508,7 @@ public class ReplacementAlgorithm {
 						}
 					}
 					else if(!returnType1.getClassType().equals("void") && returnType2.getClassType().equals("void")) {
-						if(statement2.getString().equals(LANG.RETURN_STATEMENT) && statement1.getVariables().size() > 0 && statement1.getString().equals(LANG.RETURN_SPACE + statement1.getVariables().get(0).getString() + LANG.STATEMENT_TERMINATION)) {
+						if(statement2.getString().equals(LANG2.RETURN_STATEMENT) && statement1.getVariables().size() > 0 && statement1.getString().equals(LANG1.RETURN_SPACE + statement1.getVariables().get(0).getString() + LANG1.STATEMENT_TERMINATION)) {
 							VariableDeclaration variableDeclaration1 = container1.getVariableDeclaration(statement1.getVariables().get(0).getString());
 							if(variableDeclaration1 != null && variableDeclaration1.getType() != null && variableDeclaration1.getType().equals(returnType1)) {
 								return replacementInfo.getReplacements();
@@ -1515,11 +1516,11 @@ public class ReplacementAlgorithm {
 						}
 					}
 					//match break with already matched return
-					if(statement1.getString().equals(LANG.BREAK_STATEMENT)) {
+					if(statement1.getString().equals(LANG1.BREAK_STATEMENT)) {
 						Set<AbstractCodeMapping> mappingsToBeAdded = new LinkedHashSet<>();
 						for(AbstractCodeMapping mapping : mappings) {
 							AbstractCodeFragment fragment2 = mapping.getFragment2();
-							if(fragment2.getParent() != null && fragment2.getString().startsWith(LANG.RETURN_SPACE)) {
+							if(fragment2.getParent() != null && fragment2.getString().startsWith(LANG2.RETURN_SPACE)) {
 								CompositeStatementObject parent1 = statement1.getParent();
 								CompositeStatementObject parent2 = fragment2.getParent();
 								String signature1 = parent1.getSignature();
@@ -1552,10 +1553,10 @@ public class ReplacementAlgorithm {
 		replacementsToBeRemoved = new LinkedHashSet<Replacement>();
 		replacementsToBeAdded = new LinkedHashSet<Replacement>();
 		for(Replacement replacement : replacementInfo.getReplacements()) {
-			s1 = ReplacementUtil.performReplacement(s1, s2, replacement.getBefore(), replacement.getAfter(), LANG);
+			s1 = ReplacementUtil.performReplacement(s1, s2, replacement.getBefore(), replacement.getAfter(), LANG1, LANG2);
 			//find method invocation replacements within method invocation replacements, the boolean value indicates if the remaining part of the original replacement is identical or not
-			Map<Replacement, Boolean> nestedReplacementMap = replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), methodInvocations1, methodInvocations2, methodInvocationMap1, methodInvocationMap2, LANG);
-			nestedReplacementMap.putAll(replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), creations1, creations2, creationMap1, creationMap2, LANG));
+			Map<Replacement, Boolean> nestedReplacementMap = replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), methodInvocations1, methodInvocations2, methodInvocationMap1, methodInvocationMap2, LANG1);
+			nestedReplacementMap.putAll(replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), creations1, creations2, creationMap1, creationMap2, LANG1));
 			if(!nestedReplacementMap.isEmpty()) {
 				if(!nestedReplacementMap.values().contains(false)) {
 					replacementsToBeRemoved.add(replacement);
@@ -1564,8 +1565,8 @@ public class ReplacementAlgorithm {
 			}
 			//find variable-to-method-invocation replacements within method invocation replacements, the boolean value indicates if the remaining part of the original replacement is identical or not
 			if(nestedReplacementMap.isEmpty()) {
-				nestedReplacementMap.putAll(replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), variables1, methodInvocations2, methodInvocationMap2, Direction.VARIABLE_TO_INVOCATION, LANG));
-				nestedReplacementMap.putAll(replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), methodInvocations1, variables2, methodInvocationMap1, Direction.INVOCATION_TO_VARIABLE, LANG));
+				nestedReplacementMap.putAll(replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), variables1, methodInvocations2, methodInvocationMap2, Direction.VARIABLE_TO_INVOCATION, LANG1));
+				nestedReplacementMap.putAll(replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), methodInvocations1, variables2, methodInvocationMap1, Direction.INVOCATION_TO_VARIABLE, LANG1));
 			}
 			if(!nestedReplacementMap.isEmpty()) {
 				if(!nestedReplacementMap.values().contains(false)) {
@@ -1583,17 +1584,17 @@ public class ReplacementAlgorithm {
 				}
 			}
 			if(!methodInvocationReplacementWithDifferentNumberOfArguments) {
-				Set<Replacement> r = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), variables1, variables2, operationBodyMapper.getParameterToArgumentMap1(), LANG);
+				Set<Replacement> r = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), variables1, variables2, operationBodyMapper.getParameterToArgumentMap1(), LANG1, LANG2);
 				if(!r.isEmpty()) {
 					replacementsToBeRemoved.add(replacement);
 					replacementsToBeAdded.addAll(r);
 				}
-				Set<Replacement> r2 = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), stringLiterals1, variables2, operationBodyMapper.getParameterToArgumentMap1(), LANG);
+				Set<Replacement> r2 = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), stringLiterals1, variables2, operationBodyMapper.getParameterToArgumentMap1(), LANG1, LANG2);
 				if(!r2.isEmpty()) {
 					replacementsToBeRemoved.add(replacement);
 					replacementsToBeAdded.addAll(r2);
 				}
-				Set<Replacement> r3 = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), numberLiterals1, variables2, operationBodyMapper.getParameterToArgumentMap1(), LANG);
+				Set<Replacement> r3 = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), numberLiterals1, variables2, operationBodyMapper.getParameterToArgumentMap1(), LANG1, LANG2);
 				if(!r3.isEmpty()) {
 					replacementsToBeRemoved.add(replacement);
 					replacementsToBeAdded.addAll(r3);
@@ -1603,16 +1604,16 @@ public class ReplacementAlgorithm {
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
 		int refactoringsBefore = operationBodyMapper.getRefactoringsAfterPostProcessing().size();
-		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + LANG.STATEMENT_TERMINATION).equals(s2) || (s2 + LANG.STATEMENT_TERMINATION).equals(s1) || ("final " + s1 + LANG.STATEMENT_TERMINATION).equals(s2) || ("final " + s2 + LANG.STATEMENT_TERMINATION).equals(s1) || replacementInfo.getArgumentizedString1().equals(replacementInfo.getArgumentizedString2()) || equalAfterParenthesisElimination(s1, s2, LANG) ||
-				multiAssignmentWithReorderedVariables(s1, s2, LANG) || arrayAccessDimensionChange(statement1.getString(), statement2.getString(), LANG) ||
-				differOnlyInFinalModifier(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || differOnlyInThis(s1, s2, LANG) || differOnlyInThrow(s1, s2, LANG) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo, statement1, container2, operationBodyMapper) || differOnlyInDefaultInitializer(s1, s2, variableDeclarations1, variableDeclarations2) ||
+		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + LANG1.STATEMENT_TERMINATION).equals(s2) || (s2 + LANG2.STATEMENT_TERMINATION).equals(s1) || ("final " + s1 + LANG1.STATEMENT_TERMINATION).equals(s2) || ("final " + s2 + LANG2.STATEMENT_TERMINATION).equals(s1) || replacementInfo.getArgumentizedString1().equals(replacementInfo.getArgumentizedString2()) || equalAfterParenthesisElimination(s1, s2, LANG1, LANG2) ||
+				multiAssignmentWithReorderedVariables(s1, s2, LANG1, LANG2) || arrayAccessDimensionChange(statement1.getString(), statement2.getString(), LANG1, LANG2) ||
+				differOnlyInFinalModifier(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || differOnlyInThis(s1, s2, LANG1, LANG2) || differOnlyInThrow(s1, s2, LANG1, LANG2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo, statement1, container2, operationBodyMapper) || differOnlyInDefaultInitializer(s1, s2, variableDeclarations1, variableDeclarations2) ||
 				differOnlyInPatternInstanceExpressions(s1, s2, statement1, statement2, replacementInfo) ||
-				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo, LANG) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
-				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2, variableDeclarations1, variableDeclarations2, LANG) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString(), variableDeclarations1, variableDeclarations2, LANG) ||
+				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
+				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2, variableDeclarations1, variableDeclarations2, LANG1, LANG2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString(), variableDeclarations1, variableDeclarations2, LANG1, LANG2) ||
 				(invocationCoveringTheEntireStatement1 == null && invocationCoveringTheEntireStatement2 == null && creationCoveringTheEntireStatement1 == null && creationCoveringTheEntireStatement2 == null && wrapInMethodCall(s1, s2, methodInvocationMap1, replacementInfo)) ||
-				(containsValidOperatorReplacements(replacementInfo, LANG) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper))) ||
+				(containsValidOperatorReplacements(replacementInfo, LANG1, LANG2) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper))) ||
 				differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(s1, s2, methodInvocationMap1, methodInvocationMap2, statement1, statement2, variableDeclarations1, variableDeclarations2, replacementInfo, operationBodyMapper) ||
-				equalAfterArgumentMerge(s1, s2, replacementInfo, LANG) ||
+				equalAfterArgumentMerge(s1, s2, replacementInfo, LANG1, LANG2) ||
 				equalAfterNewArgumentAdditions(s1, s2, replacementInfo, operationBodyMapper) ||
 				(validStatementForConcatComparison(statement1, statement2) && commonConcat(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper)) ||
 				partiallyUndoParameterToArgumentMap(s1, s2, parameterToArgumentMap);
@@ -1683,7 +1684,7 @@ public class ReplacementAlgorithm {
 					}
 				}
 			}
-			if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG) &&
+			if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2) &&
 					!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
 					!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
 					!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
@@ -1705,7 +1706,7 @@ public class ReplacementAlgorithm {
 			if(invocationWithEverythingReplaced(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacementInfo)) {
 				return null;
 			}
-			if(statement1.getString().startsWith(LANG.RETURN_SPACE) && statement2.getString().startsWith(LANG.RETURN_SPACE) &&
+			if(statement1.getString().startsWith(LANG1.RETURN_SPACE) && statement2.getString().startsWith(LANG2.RETURN_SPACE) &&
 					(statement1.commonReturnStatement() || statement2.commonReturnStatement()) &&
 					statement1.getParent() != null && statement2.getParent() != null &&
 					!statement1.getParent().getLocationInfo().getCodeElementType().equals(statement2.getParent().getLocationInfo().getCodeElementType())) {
@@ -1743,16 +1744,18 @@ public class ReplacementAlgorithm {
 					assignmentInvocationCoveringTheEntireStatement1 != null ? assignmentInvocationCoveringTheEntireStatement1 : assignmentCreationCoveringTheEntireStatement1,
 					assignmentInvocationCoveringTheEntireStatement2 != null ? assignmentInvocationCoveringTheEntireStatement2 : assignmentCreationCoveringTheEntireStatement2,
 					methodInvocationMap1, methodInvocationMap2,	anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, operationBodyMapper);
-			if(s1.equals(s2) && replacementInfo.containsOnlyReplacement(ReplacementType.INFIX_OPERATOR) && containsValidOperatorReplacements(replacementInfo, LANG)) {
-				String AND = LANG.AND.strip();
-				String OR = LANG.OR.strip();
+			if(s1.equals(s2) && replacementInfo.containsOnlyReplacement(ReplacementType.INFIX_OPERATOR) && containsValidOperatorReplacements(replacementInfo, LANG1, LANG2)) {
+				String AND1 = LANG1.AND.strip();
+				String OR1 = LANG1.OR.strip();
+				String AND2 = LANG2.AND.strip();
+				String OR2 = LANG2.OR.strip();
 				List<Replacement> operatorReplacements = replacementInfo.getReplacements(ReplacementType.INFIX_OPERATOR);
 				boolean booleanOperatorReversed = false;
 				for(Replacement r : operatorReplacements) {
-					if(r.getBefore().equals(AND) && r.getAfter().equals(OR)) {
+					if(r.getBefore().equals(AND1) && r.getAfter().equals(OR2)) {
 						booleanOperatorReversed = true;
 					}
-					else if(r.getBefore().equals(OR) && r.getAfter().equals(AND)) {
+					else if(r.getBefore().equals(OR1) && r.getAfter().equals(AND2)) {
 						booleanOperatorReversed = true;
 					}
 					else if(r.getBefore().equals("==") && r.getAfter().equals("!=")) {
@@ -2176,7 +2179,7 @@ public class ReplacementAlgorithm {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
 					if(invocation1.identical(assignmentInvocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, replacementInfo.getLambdaMappers()) &&
 							(!containsInArguments(assignmentInvocationCoveringTheEntireStatement1, key1) || operationBodyMapper.parentMapperContainsMapping(statement1))) {
-						if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG) &&
+						if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2) &&
 								!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
 								!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
 							return null;
@@ -2353,11 +2356,11 @@ public class ReplacementAlgorithm {
 			if(!staticVSNonStatic && modelDiff != null) {
 				if(assignmentInvocationCoveringTheEntireStatement1.identicalName(assignmentInvocationCoveringTheEntireStatement2)) {
 					if(expression1 != null && expression1.length() > 0 && Character.isUpperCase(expression1.charAt(0)) &&
-							expression2 != null && expression2.startsWith(LANG.THIS_DOT)) {
+							expression2 != null && expression2.startsWith(LANG2.THIS_DOT)) {
 						staticVSNonStatic = true;
 					}
 					else if(expression2 != null && expression2.length() > 0 && Character.isUpperCase(expression2.charAt(0)) &&
-							expression1 != null && expression1.startsWith(LANG.THIS_DOT)) {
+							expression1 != null && expression1.startsWith(LANG1.THIS_DOT)) {
 						staticVSNonStatic = true;
 					}
 				}
@@ -2628,12 +2631,12 @@ public class ReplacementAlgorithm {
 			// https://github.com/asyml/texar/commit/b5b06c0f262413ef62c4bfff996f3189673507b1
 			// texar/core/layers.py
 			// the code that follows is a temporary solution
-			boolean endsWithArrayAccess1 = statement1.getString().endsWith("[0]"+LANG.STATEMENT_TERMINATION) ||
-					statement1.getString().endsWith("[1]"+LANG.STATEMENT_TERMINATION) ||
-					statement1.getString().endsWith("[2]"+LANG.STATEMENT_TERMINATION);
-			boolean endsWithArrayAccess2 = statement2.getString().endsWith("[0]"+LANG.STATEMENT_TERMINATION) ||
-					statement2.getString().endsWith("[1]"+LANG.STATEMENT_TERMINATION) ||
-					statement2.getString().endsWith("[2]"+LANG.STATEMENT_TERMINATION);
+			boolean endsWithArrayAccess1 = statement1.getString().endsWith("[0]"+LANG1.STATEMENT_TERMINATION) ||
+					statement1.getString().endsWith("[1]"+LANG1.STATEMENT_TERMINATION) ||
+					statement1.getString().endsWith("[2]"+LANG1.STATEMENT_TERMINATION);
+			boolean endsWithArrayAccess2 = statement2.getString().endsWith("[0]"+LANG2.STATEMENT_TERMINATION) ||
+					statement2.getString().endsWith("[1]"+LANG2.STATEMENT_TERMINATION) ||
+					statement2.getString().endsWith("[2]"+LANG2.STATEMENT_TERMINATION);
 			for(String methodInvocation1 : methodInvocations1) {
 				for(AbstractCall operationInvocation1 : methodInvocationMap1.get(methodInvocation1)) {
 					if(operationInvocation1.renamedWithIdenticalExpressionAndDifferentArguments(invocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, replacementInfo.getLambdaMappers()) &&
@@ -2689,8 +2692,8 @@ public class ReplacementAlgorithm {
 				AbstractCall fieldAssignmentInvocationCoveringTheEntireStatement1 = statement1.fieldAssignmentInvocationCoveringEntireStatement(classDiff);
 				AbstractCall fieldAssignmentInvocationCoveringTheEntireStatement2 = statement2.fieldAssignmentInvocationCoveringEntireStatement(classDiff);
 				if(fieldAssignmentInvocationCoveringTheEntireStatement1 != null && fieldAssignmentInvocationCoveringTheEntireStatement2 != null) {
-					String assignedField1 = statement1.getString().substring(0, statement1.getString().indexOf(LANG.ASSIGNMENT));
-					String assignedField2 = statement2.getString().substring(0, statement2.getString().indexOf(LANG.ASSIGNMENT));
+					String assignedField1 = statement1.getString().substring(0, statement1.getString().indexOf(LANG1.ASSIGNMENT));
+					String assignedField2 = statement2.getString().substring(0, statement2.getString().indexOf(LANG2.ASSIGNMENT));
 					if(assignedField1.equals(assignedField2) && fieldAssignmentInvocationCoveringTheEntireStatement1.identicalName(fieldAssignmentInvocationCoveringTheEntireStatement2)) {
 						Replacement replacement = new MethodInvocationReplacement(fieldAssignmentInvocationCoveringTheEntireStatement1.actualString(),
 								fieldAssignmentInvocationCoveringTheEntireStatement2.actualString(), fieldAssignmentInvocationCoveringTheEntireStatement1, fieldAssignmentInvocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_ARGUMENT);
@@ -2840,7 +2843,7 @@ public class ReplacementAlgorithm {
 		}
 		for(String methodInvocation1 : methodInvocations1) {
 			for(AbstractCall operationInvocation1 : methodInvocationMap1.get(methodInvocation1)) {
-				if((statement1.getString().endsWith(methodInvocation1 + LANG.STATEMENT_TERMINATION) || statement1.getString().startsWith(methodInvocation1 + ".")) && (r = operationInvocation1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
+				if((statement1.getString().endsWith(methodInvocation1 + LANG1.STATEMENT_TERMINATION) || statement1.getString().startsWith(methodInvocation1 + ".")) && (r = operationInvocation1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
 					if(!variableReturn2) {
 						replacementInfo.addReplacement(r);
 						addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
@@ -2861,7 +2864,7 @@ public class ReplacementAlgorithm {
 		}
 		for(String methodInvocation2 : methodInvocations2) {
 			for(AbstractCall operationInvocation2 : methodInvocationMap2.get(methodInvocation2)) {
-				if((statement2.getString().endsWith(methodInvocation2 + LANG.STATEMENT_TERMINATION) || statement2.getString().startsWith(methodInvocation2 + ".")) && (r = operationInvocation2.makeReplacementForWrappedCall(replacementInfo.getArgumentizedString1(), replacementInfo)) != null) {
+				if((statement2.getString().endsWith(methodInvocation2 + LANG2.STATEMENT_TERMINATION) || statement2.getString().startsWith(methodInvocation2 + ".")) && (r = operationInvocation2.makeReplacementForWrappedCall(replacementInfo.getArgumentizedString1(), replacementInfo)) != null) {
 					if(!variableReturn1) {
 						replacementInfo.addReplacement(r);
 						addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
@@ -2887,12 +2890,12 @@ public class ReplacementAlgorithm {
 		if(invocationCoveringTheEntireStatement2 != null) {
 			for(String key1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
-					if(statement1.getString().endsWith(key1 + LANG.STATEMENT_TERMINATION)) {
+					if(statement1.getString().endsWith(key1 + LANG1.STATEMENT_TERMINATION)) {
 						if(methodInvocationMap2.keySet().contains(invocation1.getExpression())) {
 							Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
 									invocationCoveringTheEntireStatement2.actualString(), invocation1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
 							replacementInfo.addReplacement(replacement);
-							if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG) &&
+							if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2) &&
 									invocationCoveringTheEntireStatement2.arguments().contains(invocation1.getExpression()) &&
 									!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
 									!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
@@ -2935,14 +2938,14 @@ public class ReplacementAlgorithm {
 					else if(statement1 instanceof AbstractExpression && invocation1.getName().equals("isPresent") && invocation1.getExpression() != null &&
 							(invocationCoveringTheEntireStatement2.getName().equals("ifPresent") || invocationCoveringTheEntireStatement2.getName().equals("ifPresentOrElse")) &&
 							invocationCoveringTheEntireStatement2.arguments().size() >= 1) {
-						if(invocationCoveringTheEntireStatement2.arguments().get(0).startsWith(invocation1.getExpression() + LANG.LAMBDA_ARROW)) {
+						if(invocationCoveringTheEntireStatement2.arguments().get(0).startsWith(invocation1.getExpression() + LANG2.LAMBDA_ARROW)) {
 							Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
 									invocationCoveringTheEntireStatement2.actualString(), invocation1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
 							replacementInfo.addReplacement(replacement);
 							return replacementInfo.getReplacements();
 						}
 						else if(invocationCoveringTheEntireStatement2.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression().equals(invocation1.getExpression()) &&
-								invocationCoveringTheEntireStatement2.arguments().get(0).contains(LANG.LAMBDA_ARROW)) {
+								invocationCoveringTheEntireStatement2.arguments().get(0).contains(LANG2.LAMBDA_ARROW)) {
 							Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
 									invocationCoveringTheEntireStatement2.actualString(), invocation1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
 							replacementInfo.addReplacement(replacement);
@@ -2956,12 +2959,12 @@ public class ReplacementAlgorithm {
 		if(invocationCoveringTheEntireStatement1 != null) {
 			for(String key2 : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
-					if(statement2.getString().endsWith(key2 + LANG.STATEMENT_TERMINATION)) {
+					if(statement2.getString().endsWith(key2 + LANG2.STATEMENT_TERMINATION)) {
 						if(methodInvocationMap1.keySet().contains(invocation2.getExpression())) {
 							Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 									invocation2.actualString(), invocationCoveringTheEntireStatement1, invocation2, ReplacementType.METHOD_INVOCATION);
 							replacementInfo.addReplacement(replacement);
-							if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG) &&
+							if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2) &&
 									invocationCoveringTheEntireStatement1.arguments().contains(invocation2.getExpression()) &&
 									!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
 									!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
@@ -3368,7 +3371,7 @@ public class ReplacementAlgorithm {
 			}
 			//assertEquals() to assertNull() conversion
 			if(invocationCoveringTheEntireStatement1.getName().equals("assertEquals") && invocationCoveringTheEntireStatement2.getName().equals("assertNull")) {
-				if(invocationCoveringTheEntireStatement1.arguments().size() == 2 && invocationCoveringTheEntireStatement1.arguments().contains(LANG.NULL) && invocationCoveringTheEntireStatement2.arguments().size() == 1) {
+				if(invocationCoveringTheEntireStatement1.arguments().size() == 2 && invocationCoveringTheEntireStatement1.arguments().contains(LANG1.NULL) && invocationCoveringTheEntireStatement2.arguments().size() == 1) {
 					String assertNullArgument = invocationCoveringTheEntireStatement2.arguments().get(0);
 					if(invocationCoveringTheEntireStatement1.arguments().contains(assertNullArgument)) {
 						Replacement replacement = new MethodInvocationReplacement(
@@ -3406,7 +3409,7 @@ public class ReplacementAlgorithm {
 		if(creationCoveringTheEntireStatement1 != null) {
 			for(String key2 : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
-					if(statement2.getString().endsWith(key2 + LANG.STATEMENT_TERMINATION) && invocation2.getExpression() != null &&
+					if(statement2.getString().endsWith(key2 + LANG2.STATEMENT_TERMINATION) && invocation2.getExpression() != null &&
 							invocation2.getExpression().startsWith(creationCoveringTheEntireStatement1.actualString())) {
 						Replacement replacement = new ClassInstanceCreationWithMethodInvocationReplacement(creationCoveringTheEntireStatement1.getName(),
 								invocation2.getName(), creationCoveringTheEntireStatement1, invocation2, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION);
@@ -3420,7 +3423,7 @@ public class ReplacementAlgorithm {
 		if(creationCoveringTheEntireStatement2 != null) {
 			for(String key1 : creationMap1.keySet()) {
 				for(AbstractCall creation1 : creationMap1.get(key1)) {
-					if(statement1.getString().endsWith(key1 + LANG.STATEMENT_TERMINATION) &&
+					if(statement1.getString().endsWith(key1 + LANG1.STATEMENT_TERMINATION) &&
 							creationCoveringTheEntireStatement2.arguments().contains(creation1.actualString())) {
 						if(variableDeclarations1.size() > 0) {
 							VariableDeclaration declaration1 = variableDeclarations1.get(0);
@@ -3806,15 +3809,15 @@ public class ReplacementAlgorithm {
 		}
 		for(String creation1 : creations1) {
 			for(AbstractCall objectCreation1 : creationMap1.get(creation1)) {
-				if(statement1.getString().endsWith(creation1 + LANG.STATEMENT_TERMINATION) && (r = objectCreation1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
+				if(statement1.getString().endsWith(creation1 + LANG1.STATEMENT_TERMINATION) && (r = objectCreation1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
 					replacementInfo.addReplacement(r);
 					return replacementInfo.getReplacements();
 				}
 			}
 		}
 		if(variableDeclarationWithArrayInitializer1 != null && invocationCoveringTheEntireStatement2 != null && !(invocationCoveringTheEntireStatement2 instanceof MethodReference) && variableDeclarations2.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG)) {
-			String args1 = s1.substring(s1.indexOf(LANG.OPEN_ARRAY_INITIALIZER)+1, s1.lastIndexOf(LANG.CLOSE_ARRAY_INITIALIZER));
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2)) {
+			String args1 = s1.substring(s1.indexOf(LANG1.OPEN_ARRAY_INITIALIZER)+1, s1.lastIndexOf(LANG1.CLOSE_ARRAY_INITIALIZER));
 			String args2 = s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"));
 			if(args1.equals(args2)) {
 				r = new Replacement(args1, args2, ReplacementType.ARRAY_INITIALIZER_REPLACED_WITH_METHOD_INVOCATION_ARGUMENTS);
@@ -3823,9 +3826,9 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.getAnonymousClassDeclaration() != null && invocationCoveringTheEntireStatement2 != null && !(invocationCoveringTheEntireStatement2 instanceof MethodReference) && variableDeclarations2.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG)) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2)) {
 			String arrayInitializer = creationCoveringTheEntireStatement1.getAnonymousClassDeclaration();
-			String args1 = arrayInitializer.substring(arrayInitializer.indexOf(LANG.OPEN_ARRAY_INITIALIZER)+1, arrayInitializer.lastIndexOf(LANG.CLOSE_ARRAY_INITIALIZER));
+			String args1 = arrayInitializer.substring(arrayInitializer.indexOf(LANG1.OPEN_ARRAY_INITIALIZER)+1, arrayInitializer.lastIndexOf(LANG1.CLOSE_ARRAY_INITIALIZER));
 			String args2 = s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"));
 			if(args1.equals(args2)) {
 				r = new Replacement(args1, args2, ReplacementType.ARRAY_INITIALIZER_REPLACED_WITH_METHOD_INVOCATION_ARGUMENTS);
@@ -3834,9 +3837,9 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(variableDeclarationWithArrayInitializer2 != null && invocationCoveringTheEntireStatement1 != null && !(invocationCoveringTheEntireStatement1 instanceof MethodReference) && variableDeclarations1.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG)) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2)) {
 			String args1 = s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")"));
-			String args2 = s2.substring(s2.indexOf(LANG.OPEN_ARRAY_INITIALIZER)+1, s2.lastIndexOf(LANG.CLOSE_ARRAY_INITIALIZER));
+			String args2 = s2.substring(s2.indexOf(LANG2.OPEN_ARRAY_INITIALIZER)+1, s2.lastIndexOf(LANG2.CLOSE_ARRAY_INITIALIZER));
 			if(args1.equals(args2)) {
 				r = new Replacement(args1, args2, ReplacementType.ARRAY_INITIALIZER_REPLACED_WITH_METHOD_INVOCATION_ARGUMENTS);
 				replacementInfo.addReplacement(r);
@@ -3844,10 +3847,10 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(creationCoveringTheEntireStatement2 != null && creationCoveringTheEntireStatement2.getAnonymousClassDeclaration() != null && invocationCoveringTheEntireStatement1 != null && !(invocationCoveringTheEntireStatement1 instanceof MethodReference) && variableDeclarations1.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG)) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2)) {
 			String args1 = s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")"));
 			String arrayInitializer = creationCoveringTheEntireStatement2.getAnonymousClassDeclaration();
-			String args2 = arrayInitializer.substring(arrayInitializer.indexOf(LANG.OPEN_ARRAY_INITIALIZER)+1, arrayInitializer.lastIndexOf(LANG.CLOSE_ARRAY_INITIALIZER));
+			String args2 = arrayInitializer.substring(arrayInitializer.indexOf(LANG2.OPEN_ARRAY_INITIALIZER)+1, arrayInitializer.lastIndexOf(LANG2.CLOSE_ARRAY_INITIALIZER));
 			if(args1.equals(args2)) {
 				r = new Replacement(args1, args2, ReplacementType.ARRAY_INITIALIZER_REPLACED_WITH_METHOD_INVOCATION_ARGUMENTS);
 				replacementInfo.addReplacement(r);
@@ -3940,12 +3943,12 @@ public class ReplacementAlgorithm {
 				}
 			}
 		}
-		if(invocationCoveringTheEntireStatement2 != null && statement2.getString().equals(invocationCoveringTheEntireStatement2.actualString() + LANG.STATEMENT_TERMINATION) &&
-				invocationCoveringTheEntireStatement2.arguments().size() == 1 && statement1.getString().endsWith(LANG.ASSIGNMENT + invocationCoveringTheEntireStatement2.arguments().get(0) + LANG.STATEMENT_TERMINATION) &&
+		if(invocationCoveringTheEntireStatement2 != null && statement2.getString().equals(invocationCoveringTheEntireStatement2.actualString() + LANG2.STATEMENT_TERMINATION) &&
+				invocationCoveringTheEntireStatement2.arguments().size() == 1 && statement1.getString().endsWith(LANG1.ASSIGNMENT + invocationCoveringTheEntireStatement2.arguments().get(0) + LANG1.STATEMENT_TERMINATION) &&
 				invocationCoveringTheEntireStatement2.expressionIsNullOrThis() && invocationCoveringTheEntireStatement2.getName().startsWith("set")) {
-			String prefix1 = statement1.getString().substring(0, statement1.getString().lastIndexOf(LANG.ASSIGNMENT));
+			String prefix1 = statement1.getString().substring(0, statement1.getString().lastIndexOf(LANG1.ASSIGNMENT));
 			if(variables1.contains(prefix1)) {
-				String before = prefix1 + LANG.ASSIGNMENT + invocationCoveringTheEntireStatement2.arguments().get(0);
+				String before = prefix1 + LANG1.ASSIGNMENT + invocationCoveringTheEntireStatement2.arguments().get(0);
 				String after = invocationCoveringTheEntireStatement2.actualString();
 				r = new Replacement(before, after, ReplacementType.FIELD_ASSIGNMENT_REPLACED_WITH_SETTER_METHOD_INVOCATION);
 				replacementInfo.addReplacement(r);
@@ -3953,7 +3956,7 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(creationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				(variableDeclarations1.size() == variableDeclarations2.size() || (variableDeclarations1.size() > 0 && statement2.getString().startsWith(LANG.RETURN_SPACE)))) {
+				(variableDeclarations1.size() == variableDeclarations2.size() || (variableDeclarations1.size() > 0 && statement2.getString().startsWith(LANG2.RETURN_SPACE)))) {
 			if(invocationCoveringTheEntireStatement2.getName().equals("of") && variableDeclarations1.size() > 0) {
 				Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
 				for(String argument2 : invocationCoveringTheEntireStatement2.arguments()) {
@@ -4000,14 +4003,14 @@ public class ReplacementAlgorithm {
 		else if(creationCoveringTheEntireStatement1 == null && invocationCoveringTheEntireStatement2 == null) {
 			for(String key1 : creationMap1.keySet()) {
 				for(AbstractCall creation1 : creationMap1.get(key1)) {
-					if(statement1.getString().endsWith(key1 + LANG.STATEMENT_TERMINATION)) {
+					if(statement1.getString().endsWith(key1 + LANG1.STATEMENT_TERMINATION)) {
 						for(String key2 : methodInvocationMap2.keySet()) {
 							for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
-								if(statement2.getString().endsWith(key2 + LANG.STATEMENT_TERMINATION)) {
+								if(statement2.getString().endsWith(key2 + LANG2.STATEMENT_TERMINATION)) {
 									if(invocation2.getName().equals("of")) {
 										String assignedVariable = null;
 										if(assignmentCreationCoveringTheEntireStatement1 != null) {
-											assignedVariable = statement1.getString().substring(0, statement1.getString().indexOf(LANG.ASSIGNMENT));
+											assignedVariable = statement1.getString().substring(0, statement1.getString().indexOf(LANG1.ASSIGNMENT));
 										}
 										Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
 										for(String argument2 : invocation2.arguments()) {
@@ -4075,10 +4078,10 @@ public class ReplacementAlgorithm {
 		else if(invocationCoveringTheEntireStatement1 == null && creationCoveringTheEntireStatement2 == null) {
 			for(String key1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
-					if(statement1.getString().endsWith(key1 + LANG.STATEMENT_TERMINATION)) {
+					if(statement1.getString().endsWith(key1 + LANG1.STATEMENT_TERMINATION)) {
 						for(String key2 : creationMap2.keySet()) {
 							for(AbstractCall creation2 : creationMap2.get(key2)) {
-								if(statement2.getString().endsWith(key2 + LANG.STATEMENT_TERMINATION)) {
+								if(statement2.getString().endsWith(key2 + LANG2.STATEMENT_TERMINATION)) {
 									if(invocation1.equalArguments(creation2) && invocation1.arguments().size() > 0) {
 										Replacement replacement = new MethodInvocationWithClassInstanceCreationReplacement(invocation1.getName(),
 												creation2.getName(), invocation1, creation2, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_CLASS_INSTANCE_CREATION);
@@ -4168,7 +4171,7 @@ public class ReplacementAlgorithm {
 					for(Replacement replacement : replacementInfo.getReplacements()) {
 						if(creation1.arguments().contains(replacement.getBefore())) {
 							String creationAfterReplacement = ReplacementUtil.performArgumentReplacement(creation1.actualString(), replacement.getBefore(), replacement.getAfter());
-							String temp = ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), creationAfterReplacement, replacement.getAfter(), LANG);
+							String temp = ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), creationAfterReplacement, replacement.getAfter(), LANG1, LANG2);
 							int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), replacementInfo.getRawDistance());
 							if(distanceRaw == 0) {
 								if(replacement instanceof MethodInvocationReplacement) {
@@ -4317,8 +4320,8 @@ public class ReplacementAlgorithm {
 			variableReturnQualified2 = true;
 		}
 		boolean variableReturnAsLastStatement2 = variableReturn2 && statement2.isLastStatement();
-		boolean numberLiteralReturn1 = statement1.getNumberLiterals().size() > 0 && statement1.getString().equals(LANG.RETURN_SPACE + statement1.getNumberLiterals().get(0).getString() + LANG.STATEMENT_TERMINATION) && statement1.isLastStatementInParentBlock();
-		boolean numberLiteralReturn2 = statement2.getNumberLiterals().size() > 0 && statement2.getString().equals(LANG.RETURN_SPACE + statement2.getNumberLiterals().get(0).getString() + LANG.STATEMENT_TERMINATION) && statement2.isLastStatementInParentBlock();
+		boolean numberLiteralReturn1 = statement1.getNumberLiterals().size() > 0 && statement1.getString().equals(LANG1.RETURN_SPACE + statement1.getNumberLiterals().get(0).getString() + LANG1.STATEMENT_TERMINATION) && statement1.isLastStatementInParentBlock();
+		boolean numberLiteralReturn2 = statement2.getNumberLiterals().size() > 0 && statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getNumberLiterals().get(0).getString() + LANG2.STATEMENT_TERMINATION) && statement2.isLastStatementInParentBlock();
 		boolean singleReturnStatement = container1.singleReturnStatement() != null && container2.singleReturnStatement() != null;
 		boolean lastStatement = (statement1.isLastStatement() && statement2.isLastStatement()) || 
 				lastStatementInParentBlockWithSameParentType(statement1, statement2);
@@ -4336,7 +4339,7 @@ public class ReplacementAlgorithm {
 				break;
 			}
 		}
-		if(parentMapper == null && (!variableReturnAsLastStatement1 || possibleInline) && (!variableReturnAsLastStatement2 || possibleExtract) && ((!numberLiteralReturn1 && !numberLiteralReturn2) || singleReturnStatement) && statement1.getString().startsWith(LANG.RETURN_SPACE) && statement2.getString().startsWith(LANG.RETURN_SPACE) && lastStatement &&
+		if(parentMapper == null && (!variableReturnAsLastStatement1 || possibleInline) && (!variableReturnAsLastStatement2 || possibleExtract) && ((!numberLiteralReturn1 && !numberLiteralReturn2) || singleReturnStatement) && statement1.getString().startsWith(LANG1.RETURN_SPACE) && statement2.getString().startsWith(LANG2.RETURN_SPACE) && lastStatement &&
 				variableReturnQualified1 == variableReturnQualified2 && container1 instanceof UMLOperation && container2 instanceof UMLOperation &&
 				compatibleSignatureForFinalReturnStatement(operationBodyMapper) &&
 				(statement1.getLambdas().size() == statement2.getLambdas().size() || possibleExtract)) {
@@ -4366,7 +4369,7 @@ public class ReplacementAlgorithm {
 						isMovedMethod = false;
 					}
 				}
-				Set<String> thisReferences = Set.of(LANG.THIS, "INSTANCE");
+				Set<String> thisReferences = Set.of(LANG2.THIS, "INSTANCE");
 				if(invocationCoveringTheEntireStatement2 != null) {
 					Set<String> thisReferences2 = new LinkedHashSet<>();
 					Map<String, Set<VariableDeclaration>> variableDeclarationMap2 = container2.variableDeclarationMap();
@@ -4469,7 +4472,7 @@ public class ReplacementAlgorithm {
 					for(String key : methodInvocationMap1.keySet()) {
 						List<AbstractCall> calls = methodInvocationMap1.get(key);
 						for(AbstractCall call : calls) {
-							if(statement1.getString().endsWith(call.actualString() + LANG.STATEMENT_TERMINATION)) {
+							if(statement1.getString().endsWith(call.actualString() + LANG1.STATEMENT_TERMINATION)) {
 								invocation1 = call;
 								break;
 							}
@@ -4490,7 +4493,7 @@ public class ReplacementAlgorithm {
 					for(String key : methodInvocationMap2.keySet()) {
 						List<AbstractCall> calls = methodInvocationMap2.get(key);
 						for(AbstractCall call : calls) {
-							if(statement2.getString().endsWith(call.actualString() + LANG.STATEMENT_TERMINATION)) {
+							if(statement2.getString().endsWith(call.actualString() + LANG2.STATEMENT_TERMINATION)) {
 								invocation2 = call;
 								break;
 							}
@@ -4523,64 +4526,64 @@ public class ReplacementAlgorithm {
 					replacementInfo.addReplacement(replacement);
 				}
 				if(invocationCoveringTheEntireStatement1 != null && booleanLiterals2.size() == 1 &&
-						statement2.getString().equals(LANG.RETURN_SPACE + statement2.getBooleanLiterals().get(0).getString() + LANG.STATEMENT_TERMINATION)) {
+						statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getBooleanLiterals().get(0).getString() + LANG2.STATEMENT_TERMINATION)) {
 					Replacement replacement = new Replacement(invocationCoveringTheEntireStatement1.actualString(), statement2.getBooleanLiterals().get(0).getString(), ReplacementType.METHOD_INVOCATION_REPLACED_WITH_BOOLEAN_LITERAL);
 					replacementInfo.addReplacement(replacement);
 				}
 				if(invocationCoveringTheEntireStatement2 != null && booleanLiterals1.size() == 1 &&
-						statement1.getString().equals(LANG.RETURN_SPACE + statement1.getBooleanLiterals().get(0).getString() + LANG.STATEMENT_TERMINATION)) {
+						statement1.getString().equals(LANG1.RETURN_SPACE + statement1.getBooleanLiterals().get(0).getString() + LANG1.STATEMENT_TERMINATION)) {
 					Replacement replacement = new Replacement(statement1.getBooleanLiterals().get(0).getString(), invocationCoveringTheEntireStatement2.actualString(), ReplacementType.METHOD_INVOCATION_REPLACED_WITH_BOOLEAN_LITERAL);
 					replacementInfo.addReplacement(replacement);
 				}
 				if(invocationCoveringTheEntireStatement1 != null && numberLiterals2.size() == 1 &&
-						statement2.getString().equals(LANG.RETURN_SPACE + statement2.getNumberLiterals().get(0).getString() + LANG.STATEMENT_TERMINATION)) {
+						statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getNumberLiterals().get(0).getString() + LANG2.STATEMENT_TERMINATION)) {
 					Replacement replacement = new Replacement(invocationCoveringTheEntireStatement1.actualString(), statement2.getNumberLiterals().get(0).getString(), ReplacementType.METHOD_INVOCATION_REPLACED_WITH_NUMBER_LITERAL);
 					replacementInfo.addReplacement(replacement);
 				}
 				if(invocationCoveringTheEntireStatement2 != null && numberLiterals1.size() == 1 &&
-						statement1.getString().equals(LANG.RETURN_SPACE + statement1.getNumberLiterals().get(0).getString() + LANG.STATEMENT_TERMINATION)) {
+						statement1.getString().equals(LANG1.RETURN_SPACE + statement1.getNumberLiterals().get(0).getString() + LANG1.STATEMENT_TERMINATION)) {
 					Replacement replacement = new Replacement(statement1.getNumberLiterals().get(0).getString(), invocationCoveringTheEntireStatement2.actualString(), ReplacementType.METHOD_INVOCATION_REPLACED_WITH_NUMBER_LITERAL);
 					replacementInfo.addReplacement(replacement);
 				}
 				if(invocationCoveringTheEntireStatement1 != null && statement2.getInfixExpressions().size() >= 1 &&
-						(statement2.getString().equals(LANG.RETURN_SPACE + statement2.getInfixExpressions().get(0).getString() + LANG.STATEMENT_TERMINATION) ||
-						statement2.getString().startsWith(LANG.RETURN_SPACE + statement2.getInfixExpressions().get(0).getString() + LANG.TERNARY_CONDITION))) {
+						(statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getInfixExpressions().get(0).getString() + LANG2.STATEMENT_TERMINATION) ||
+						statement2.getString().startsWith(LANG2.RETURN_SPACE + statement2.getInfixExpressions().get(0).getString() + LANG2.TERNARY_CONDITION))) {
 					Replacement replacement = new Replacement(invocationCoveringTheEntireStatement1.actualString(), statement2.getInfixExpressions().get(0).getString(), ReplacementType.METHOD_INVOCATION_REPLACED_WITH_INFIX);
 					replacementInfo.addReplacement(replacement);
 				}
 				if(invocationCoveringTheEntireStatement2 != null && statement1.getInfixExpressions().size() >= 1 &&
-						(statement1.getString().equals(LANG.RETURN_SPACE + statement1.getInfixExpressions().get(0).getString() + LANG.STATEMENT_TERMINATION) ||
-						statement1.getString().startsWith(LANG.RETURN_SPACE + statement1.getInfixExpressions().get(0).getString() + LANG.TERNARY_CONDITION))) {
+						(statement1.getString().equals(LANG1.RETURN_SPACE + statement1.getInfixExpressions().get(0).getString() + LANG1.STATEMENT_TERMINATION) ||
+						statement1.getString().startsWith(LANG1.RETURN_SPACE + statement1.getInfixExpressions().get(0).getString() + LANG1.TERNARY_CONDITION))) {
 					Replacement replacement = new Replacement(statement1.getInfixExpressions().get(0).getString(), invocationCoveringTheEntireStatement2.actualString(), ReplacementType.METHOD_INVOCATION_REPLACED_WITH_INFIX);
 					replacementInfo.addReplacement(replacement);
 				}
 				if(invocationCoveringTheEntireStatement1 != null && statement2.getArrayAccesses().size() == 1 &&
-						statement2.getString().equals(LANG.RETURN_SPACE + statement2.getArrayAccesses().get(0).getString() + LANG.STATEMENT_TERMINATION)) {
+						statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getArrayAccesses().get(0).getString() + LANG2.STATEMENT_TERMINATION)) {
 					Replacement replacement = new Replacement(invocationCoveringTheEntireStatement1.actualString(), statement2.getArrayAccesses().get(0).getString(), ReplacementType.METHOD_INVOCATION_REPLACED_WITH_ARRAY_ACCESS);
 					replacementInfo.addReplacement(replacement);
 				}
 				if(invocationCoveringTheEntireStatement2 != null && statement1.getArrayAccesses().size() == 1 &&
-						statement1.getString().equals(LANG.RETURN_SPACE + statement1.getArrayAccesses().get(0).getString() + LANG.STATEMENT_TERMINATION)) {
+						statement1.getString().equals(LANG1.RETURN_SPACE + statement1.getArrayAccesses().get(0).getString() + LANG1.STATEMENT_TERMINATION)) {
 					Replacement replacement = new Replacement(statement1.getArrayAccesses().get(0).getString(), invocationCoveringTheEntireStatement2.actualString(), ReplacementType.METHOD_INVOCATION_REPLACED_WITH_ARRAY_ACCESS);
 					replacementInfo.addReplacement(replacement);
 				}
 				if(invocationCoveringTheEntireStatement1 != null && statement2.getParenthesizedExpressions().size() == 1 &&
-						statement2.getString().equals(LANG.RETURN_SPACE + statement2.getParenthesizedExpressions().get(0).getString() + LANG.STATEMENT_TERMINATION)) {
+						statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getParenthesizedExpressions().get(0).getString() + LANG2.STATEMENT_TERMINATION)) {
 					Replacement replacement = new Replacement(invocationCoveringTheEntireStatement1.actualString(), statement2.getParenthesizedExpressions().get(0).getString(), ReplacementType.METHOD_INVOCATION_REPLACED_WITH_PARENTHESIZED_EXPRESSION);
 					replacementInfo.addReplacement(replacement);
 				}
 				if(invocationCoveringTheEntireStatement2 != null && statement1.getParenthesizedExpressions().size() == 1 &&
-						statement1.getString().equals(LANG.RETURN_SPACE + statement1.getParenthesizedExpressions().get(0).getString() + LANG.STATEMENT_TERMINATION)) {
+						statement1.getString().equals(LANG1.RETURN_SPACE + statement1.getParenthesizedExpressions().get(0).getString() + LANG1.STATEMENT_TERMINATION)) {
 					Replacement replacement = new Replacement(statement1.getParenthesizedExpressions().get(0).getString(), invocationCoveringTheEntireStatement2.actualString(), ReplacementType.METHOD_INVOCATION_REPLACED_WITH_PARENTHESIZED_EXPRESSION);
 					replacementInfo.addReplacement(replacement);
 				}
 				if(variableReturn1 && statement2.getParenthesizedExpressions().size() == 1 &&
-						statement2.getString().equals(LANG.RETURN_SPACE + statement2.getParenthesizedExpressions().get(0).getString() + LANG.STATEMENT_TERMINATION)) {
+						statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getParenthesizedExpressions().get(0).getString() + LANG2.STATEMENT_TERMINATION)) {
 					Replacement replacement = new Replacement(statement1.getVariables().get(0).getString(), statement2.getParenthesizedExpressions().get(0).getString(), ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION);
 					replacementInfo.addReplacement(replacement);
 				}
 				if(variableReturn2 && statement1.getParenthesizedExpressions().size() == 1 &&
-						statement1.getString().equals(LANG.RETURN_SPACE + statement1.getParenthesizedExpressions().get(0).getString() + LANG.STATEMENT_TERMINATION)) {
+						statement1.getString().equals(LANG1.RETURN_SPACE + statement1.getParenthesizedExpressions().get(0).getString() + LANG1.STATEMENT_TERMINATION)) {
 					Replacement replacement = new Replacement(statement1.getParenthesizedExpressions().get(0).getString(), statement2.getVariables().get(0).getString(), ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION);
 					replacementInfo.addReplacement(replacement);
 				}
@@ -4593,42 +4596,42 @@ public class ReplacementAlgorithm {
 					}
 				}
 				if(booleanLiterals1.size() == 1 && statement2.getInfixExpressions().size() >= 1) {
-					boolean returnBoolean1 = statement1.getString().equals(LANG.RETURN_SPACE + statement1.getBooleanLiterals().get(0).getString() + LANG.STATEMENT_TERMINATION);
-					boolean returnInfix2 = statement2.getString().equals(LANG.RETURN_SPACE + statement2.getInfixExpressions().get(0).getString() + LANG.STATEMENT_TERMINATION);
+					boolean returnBoolean1 = statement1.getString().equals(LANG1.RETURN_SPACE + statement1.getBooleanLiterals().get(0).getString() + LANG1.STATEMENT_TERMINATION);
+					boolean returnInfix2 = statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getInfixExpressions().get(0).getString() + LANG2.STATEMENT_TERMINATION);
 					if(returnBoolean1 && returnInfix2) {
 						Replacement replacement = new Replacement(statement1.getBooleanLiterals().get(0).getString(), statement2.getInfixExpressions().get(0).getString(), ReplacementType.BOOLEAN_REPLACED_WITH_INFIX_EXPRESSION);
 						replacementInfo.addReplacement(replacement);
 					}
 				}
 				if(booleanLiterals2.size() == 1 && statement1.getInfixExpressions().size() >= 1) {
-					boolean returnBoolean2 = statement2.getString().equals(LANG.RETURN_SPACE + statement2.getBooleanLiterals().get(0).getString() + LANG.STATEMENT_TERMINATION);
-					boolean returnInfix1 = statement1.getString().equals(LANG.RETURN_SPACE + statement1.getInfixExpressions().get(0).getString() + LANG.STATEMENT_TERMINATION);
+					boolean returnBoolean2 = statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getBooleanLiterals().get(0).getString() + LANG2.STATEMENT_TERMINATION);
+					boolean returnInfix1 = statement1.getString().equals(LANG1.RETURN_SPACE + statement1.getInfixExpressions().get(0).getString() + LANG1.STATEMENT_TERMINATION);
 					if(returnBoolean2 && returnInfix1) {
 						Replacement replacement = new Replacement(statement1.getInfixExpressions().get(0).getString(), statement2.getBooleanLiterals().get(0).getString(), ReplacementType.BOOLEAN_REPLACED_WITH_INFIX_EXPRESSION);
 						replacementInfo.addReplacement(replacement);
 					}
 				}
 				if(statement1.getInfixExpressions().size() >= 1 && statement2.getInfixExpressions().size() >= 1) {
-					boolean returnInfix1 = statement1.getString().equals(LANG.RETURN_SPACE + statement1.getInfixExpressions().get(0).getString() + LANG.STATEMENT_TERMINATION);
-					boolean returnInfix2 = statement2.getString().equals(LANG.RETURN_SPACE + statement2.getInfixExpressions().get(0).getString() + LANG.STATEMENT_TERMINATION);
+					boolean returnInfix1 = statement1.getString().equals(LANG1.RETURN_SPACE + statement1.getInfixExpressions().get(0).getString() + LANG1.STATEMENT_TERMINATION);
+					boolean returnInfix2 = statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getInfixExpressions().get(0).getString() + LANG2.STATEMENT_TERMINATION);
 					if(returnInfix1 && returnInfix2) {
 						Replacement replacement = new Replacement(statement1.getInfixExpressions().get(0).getString(), statement2.getInfixExpressions().get(0).getString(), ReplacementType.INFIX_EXPRESSION);
 						replacementInfo.addReplacement(replacement);
 					}
 				}
 				if(statement1.getInfixExpressions().size() >= 1 && statement2.getInfixExpressions().size() == 0 && statement2.getVariables().size() == 1) {
-					boolean returnInfix1 = statement1.getString().equals(LANG.RETURN_SPACE + statement1.getInfixExpressions().get(0).getString() + LANG.STATEMENT_TERMINATION) &&
-							!statement1.getInfixExpressions().get(0).getString().contains(LANG.STRING_CONCATENATION);
-					boolean returnVariable2 = statement2.getString().equals(LANG.RETURN_SPACE + statement2.getVariables().get(0).getString() + LANG.STATEMENT_TERMINATION);
+					boolean returnInfix1 = statement1.getString().equals(LANG1.RETURN_SPACE + statement1.getInfixExpressions().get(0).getString() + LANG1.STATEMENT_TERMINATION) &&
+							!statement1.getInfixExpressions().get(0).getString().contains(LANG1.STRING_CONCATENATION);
+					boolean returnVariable2 = statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getVariables().get(0).getString() + LANG2.STATEMENT_TERMINATION);
 					if(returnInfix1 && returnVariable2) {
 						Replacement replacement = new Replacement(statement1.getInfixExpressions().get(0).getString(), statement2.getVariables().get(0).getString(), ReplacementType.VARIABLE_REPLACED_WITH_INFIX_EXPRESSION);
 						replacementInfo.addReplacement(replacement);
 					}
 				}
 				if(statement2.getInfixExpressions().size() >= 1 && statement1.getInfixExpressions().size() == 0 && statement1.getVariables().size() == 1) {
-					boolean returnInfix2 = statement2.getString().equals(LANG.RETURN_SPACE + statement2.getInfixExpressions().get(0).getString() + LANG.STATEMENT_TERMINATION) &&
-							!statement2.getInfixExpressions().get(0).getString().contains(LANG.STRING_CONCATENATION);
-					boolean returnVariable1 = statement1.getString().equals(LANG.RETURN_SPACE + statement1.getVariables().get(0).getString() + LANG.STATEMENT_TERMINATION);
+					boolean returnInfix2 = statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getInfixExpressions().get(0).getString() + LANG2.STATEMENT_TERMINATION) &&
+							!statement2.getInfixExpressions().get(0).getString().contains(LANG2.STRING_CONCATENATION);
+					boolean returnVariable1 = statement1.getString().equals(LANG1.RETURN_SPACE + statement1.getVariables().get(0).getString() + LANG1.STATEMENT_TERMINATION);
 					if(returnInfix2 && returnVariable1) {
 						Replacement replacement = new Replacement(statement1.getVariables().get(0).getString(), statement2.getInfixExpressions().get(0).getString(), ReplacementType.VARIABLE_REPLACED_WITH_INFIX_EXPRESSION);
 						replacementInfo.addReplacement(replacement);
@@ -4763,19 +4766,19 @@ public class ReplacementAlgorithm {
 
 	private static boolean existsVariableDeclarationForV2InitializedWithV1(VariableDeclaration v1, VariableDeclaration v2, ReplacementInfo info) {
 		for(AbstractCodeFragment fragment2 : info.getStatements2()) {
-			Constants LANG = PathFileUtils.getLang(fragment2.getLocationInfo().getFilePath());
+			Constants LANG2 = PathFileUtils.getLang(fragment2.getLocationInfo().getFilePath());
 			if(fragment2.getVariableDeclarations().contains(v2)) {
 				AbstractExpression initializer = v2.getInitializer();
 				if(initializer != null) {
 					for(LeafExpression variable : initializer.getVariables()) {
-						if(variable.getString().equals(v1.getVariableName()) || variable.getString().equals(LANG.THIS_DOT + v1.getVariableName())) {
+						if(variable.getString().equals(v1.getVariableName()) || variable.getString().equals(LANG2.THIS_DOT + v1.getVariableName())) {
 							return true;
 						}
 					}
 				}
 				
 			}
-			if(fragment2.getString().equals(v2.getVariableName() + LANG.ASSIGNMENT + v1.getVariableName() + LANG.STATEMENT_TERMINATION)) {
+			if(fragment2.getString().equals(v2.getVariableName() + LANG2.ASSIGNMENT + v1.getVariableName() + LANG2.STATEMENT_TERMINATION)) {
 				return true;
 			}
 			VariableDeclaration v1DeclarationInFragment2 = fragment2.getVariableDeclaration(v1.getVariableName());
@@ -4789,7 +4792,7 @@ public class ReplacementAlgorithm {
 					}
 				}
 			}
-			if(fragment2.getString().equals(v1.getVariableName() + LANG.ASSIGNMENT + v2.getVariableName() + LANG.STATEMENT_TERMINATION)) {
+			if(fragment2.getString().equals(v1.getVariableName() + LANG2.ASSIGNMENT + v2.getVariableName() + LANG2.STATEMENT_TERMINATION)) {
 				return true;
 			}
 		}
@@ -4798,19 +4801,19 @@ public class ReplacementAlgorithm {
 
 	private static boolean existsVariableDeclarationForV1InitializedWithV2(VariableDeclaration v1, VariableDeclaration v2, ReplacementInfo info) {
 		for(AbstractCodeFragment fragment1 : info.getStatements1()) {
-			Constants LANG = PathFileUtils.getLang(fragment1.getLocationInfo().getFilePath());
+			Constants LANG1 = PathFileUtils.getLang(fragment1.getLocationInfo().getFilePath());
 			if(fragment1.getVariableDeclarations().contains(v1)) {
 				AbstractExpression initializer = v1.getInitializer();
 				if(initializer != null) {
 					for(LeafExpression variable : initializer.getVariables()) {
-						if(variable.getString().equals(v2.getVariableName()) || variable.getString().equals(LANG.THIS_DOT + v2.getVariableName())) {
+						if(variable.getString().equals(v2.getVariableName()) || variable.getString().equals(LANG1.THIS_DOT + v2.getVariableName())) {
 							return true;
 						}
 					}
 				}
 				
 			}
-			if(fragment1.getString().equals(v1.getVariableName() + LANG.ASSIGNMENT + v2.getVariableName() + LANG.STATEMENT_TERMINATION)) {
+			if(fragment1.getString().equals(v1.getVariableName() + LANG1.ASSIGNMENT + v2.getVariableName() + LANG1.STATEMENT_TERMINATION)) {
 				return true;
 			}
 			VariableDeclaration v2DeclarationInFragment1 = fragment1.getVariableDeclaration(v2.getVariableName());
@@ -4824,7 +4827,7 @@ public class ReplacementAlgorithm {
 					}
 				}
 			}
-			if(fragment1.getString().equals(v2.getVariableName() + LANG.ASSIGNMENT + v1.getVariableName() + LANG.STATEMENT_TERMINATION)) {
+			if(fragment1.getString().equals(v2.getVariableName() + LANG1.ASSIGNMENT + v1.getVariableName() + LANG1.STATEMENT_TERMINATION)) {
 				return true;
 			}
 		}
@@ -5091,7 +5094,8 @@ public class ReplacementAlgorithm {
 				strings2.size() > 10*strings1.size() || strings1.size() > 10*strings2.size()) {
 			return;
 		}
-		Constants LANG = PathFileUtils.getLang(container1.getLocationInfo().getFilePath());
+		Constants LANG1 = PathFileUtils.getLang(container1.getLocationInfo().getFilePath());
+		Constants LANG2 = PathFileUtils.getLang(container2.getLocationInfo().getFilePath());
 		TreeMap<Double, Set<Replacement>> globalReplacementMap = new TreeMap<Double, Set<Replacement>>();
 		TreeMap<Double, Set<Replacement>> replacementCache = new TreeMap<Double, Set<Replacement>>();
 		if(strings1.size() <= strings2.size()) {
@@ -5101,15 +5105,15 @@ public class ReplacementAlgorithm {
 					if(Thread.interrupted()) {
 						throw new RefactoringMinerTimedOutException();
 					}
-					boolean containsMethodSignatureOfAnonymousClass1 = containsMethodSignatureOfAnonymousClass(s1, LANG);
-					boolean containsMethodSignatureOfAnonymousClass2 = containsMethodSignatureOfAnonymousClass(s2, LANG);
+					boolean containsMethodSignatureOfAnonymousClass1 = containsMethodSignatureOfAnonymousClass(s1, LANG1);
+					boolean containsMethodSignatureOfAnonymousClass2 = containsMethodSignatureOfAnonymousClass(s2, LANG2);
 					if(containsMethodSignatureOfAnonymousClass1 != containsMethodSignatureOfAnonymousClass2 &&
 							container1 != null && container2 != null &&
 							container1.getVariableDeclaration(s1) == null && container2.getVariableDeclaration(s2) == null &&
 							classDiff != null && !classDiff.getOriginalClass().containsAttributeWithName(s1) && !classDiff.getNextClass().containsAttributeWithName(s2)) {
 						continue;
 					}
-					String temp = ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), s1, s2, LANG);
+					String temp = ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), s1, s2, LANG1, LANG2);
 					int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2());
 					if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance()) {
 						Replacement replacement = new Replacement(s1, s2, type);
@@ -5152,15 +5156,15 @@ public class ReplacementAlgorithm {
 					if(Thread.interrupted()) {
 						throw new RefactoringMinerTimedOutException();
 					}
-					boolean containsMethodSignatureOfAnonymousClass1 = containsMethodSignatureOfAnonymousClass(s1, LANG);
-					boolean containsMethodSignatureOfAnonymousClass2 = containsMethodSignatureOfAnonymousClass(s2, LANG);
+					boolean containsMethodSignatureOfAnonymousClass1 = containsMethodSignatureOfAnonymousClass(s1, LANG1);
+					boolean containsMethodSignatureOfAnonymousClass2 = containsMethodSignatureOfAnonymousClass(s2, LANG2);
 					if(containsMethodSignatureOfAnonymousClass1 != containsMethodSignatureOfAnonymousClass2 &&
 							container1 != null && container2 != null &&
 							container1.getVariableDeclaration(s1) == null && container2.getVariableDeclaration(s2) == null &&
 							classDiff != null && !classDiff.getOriginalClass().containsAttributeWithName(s1) && !classDiff.getNextClass().containsAttributeWithName(s2)) {
 						continue;
 					}
-					String temp = ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), s1, s2, LANG);
+					String temp = ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), s1, s2, LANG1, LANG2);
 					int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2());
 					if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance()) {
 						Replacement replacement = new Replacement(s1, s2, type);
@@ -5202,7 +5206,7 @@ public class ReplacementAlgorithm {
 				Set<Replacement> replacements = globalReplacementMap.firstEntry().getValue();
 				for(Replacement replacement : replacements) {
 					replacementInfo.addReplacement(replacement);
-					replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement.getBefore(), replacement.getAfter(), LANG));
+					replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement.getBefore(), replacement.getAfter(), LANG1, LANG2));
 				}
 			}
 			else {
@@ -5213,7 +5217,7 @@ public class ReplacementAlgorithm {
 						if(!conflictingReplacements.contains(replacement)) {
 							if(!processedBefores.contains(replacement.getBefore())) {
 								replacementInfo.addReplacement(replacement);
-								replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement.getBefore(), replacement.getAfter(), LANG));
+								replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement.getBefore(), replacement.getAfter(), LANG1, LANG2));
 								processedBefores.add(replacement.getBefore());
 							}
 							else {
@@ -5223,7 +5227,7 @@ public class ReplacementAlgorithm {
 									for(Replacement replacement2 : replacements2) {
 										if(replacement2.getAfter().equals(replacement.getAfter()) && !replacement2.equals(replacement)) {
 											replacementInfo.addReplacement(replacement2);
-											replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement2.getBefore(), replacement2.getAfter(), LANG));
+											replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement2.getBefore(), replacement2.getAfter(), LANG1, LANG2));
 											processedBefores.add(replacement2.getBefore());
 											found = true;
 											break;
@@ -5279,14 +5283,14 @@ public class ReplacementAlgorithm {
 		return conflictingReplacements;
 	}
 
-	private static Set<Replacement> variableReplacementWithinMethodInvocations(String s1, String s2, Set<String> variables1, Set<String> variables2, Optional<Map<String, String>> parameterToArgumentMap1, Constants LANG) {
+	private static Set<Replacement> variableReplacementWithinMethodInvocations(String s1, String s2, Set<String> variables1, Set<String> variables2, Optional<Map<String, String>> parameterToArgumentMap1, Constants LANG1, Constants LANG2) {
 		Set<Replacement> tempReplacements = new LinkedHashSet<Replacement>();
 		for(String variable1 : variables1) {
 			String originalVariable1 = variable1;
 			if(parameterToArgumentMap1.isPresent() && parameterToArgumentMap1.get().containsKey(variable1) && !parameterToArgumentMap1.get().get(variable1).equals(variable1)) {
 				variable1 = parameterToArgumentMap1.get().get(variable1);
 			}
-			if((ReplacementUtil.contains(s1, variable1) || s1.endsWith(variable1)) && !s1.equals(variable1) && !s1.equals(LANG.THIS_DOT + variable1) && !s1.equals("_" + variable1)) {
+			if((ReplacementUtil.contains(s1, variable1) || s1.endsWith(variable1)) && !s1.equals(variable1) && !s1.equals(LANG1.THIS_DOT + variable1) && !s1.equals("_" + variable1)) {
 				int startIndex1 = s1.indexOf(variable1);
 				String substringBeforeIndex1 = s1.substring(0, startIndex1);
 				String substringAfterIndex1 = s1.substring(startIndex1 + variable1.length(), s1.length());
@@ -5329,7 +5333,7 @@ public class ReplacementAlgorithm {
 		String tmp1 = new String(s1);
 		Set<Replacement> finalReplacements = new LinkedHashSet<Replacement>();
 		for(Replacement replacement : tempReplacements) {
-			tmp1 = ReplacementUtil.performReplacement(tmp1, s2, replacement.getBefore(), replacement.getAfter(), LANG);
+			tmp1 = ReplacementUtil.performReplacement(tmp1, s2, replacement.getBefore(), replacement.getAfter(), LANG1, LANG2);
 			finalReplacements.add(replacement);
 			if(tmp1.equals(s2)) {
 				return finalReplacements;
@@ -5542,13 +5546,13 @@ public class ReplacementAlgorithm {
 		return replacements;
 	}
 
-	private static boolean variablesStartWithSameCase(String s1, String s2, VariableDeclarationContainer container1, VariableDeclarationContainer container2, ReplacementInfo replacementInfo, Constants LANG) {
+	private static boolean variablesStartWithSameCase(String s1, String s2, VariableDeclarationContainer container1, VariableDeclarationContainer container2, ReplacementInfo replacementInfo, Constants LANG1, Constants LANG2) {
 		if(s1.length() > 0 && s2.length() > 0) {
 			StatementObject statement1 = container1.singleReturnStatement();
 			StatementObject statement2 = container2.singleReturnStatement();
 			boolean bothSingleReturnStatement = statement1 != null && statement2 != null;
-			if((s1.contains(".") || s2.contains(".")) && !s1.contains("."+s2) && !s2.contains("."+s1) && !bothSingleReturnStatement && (replacementInfo.getArgumentizedString1().equals(LANG.RETURN_SPACE + s1 + LANG.STATEMENT_TERMINATION) ||
-					replacementInfo.getArgumentizedString2().equals(LANG.RETURN_SPACE + s2 + LANG.STATEMENT_TERMINATION))) {
+			if((s1.contains(".") || s2.contains(".")) && !s1.contains("."+s2) && !s2.contains("."+s1) && !bothSingleReturnStatement && (replacementInfo.getArgumentizedString1().equals(LANG1.RETURN_SPACE + s1 + LANG1.STATEMENT_TERMINATION) ||
+					replacementInfo.getArgumentizedString2().equals(LANG2.RETURN_SPACE + s2 + LANG2.STATEMENT_TERMINATION))) {
 				return false;
 			}
 			else if(PRIMITIVE_WRAPPER_CLASS_MAP.values().contains(s1) != PRIMITIVE_WRAPPER_CLASS_MAP.values().contains(s2) &&
@@ -5576,27 +5580,28 @@ public class ReplacementAlgorithm {
 	}
 
 	private static boolean containsRightHandSideReplacementWithAppendChange(AbstractCodeFragment statement1, AbstractCodeFragment statement2, ReplacementInfo info, Replacement candidateReplacement) {
-		Constants LANG = PathFileUtils.getLang(statement1.getLocationInfo().getFilePath());
+		Constants LANG1 = PathFileUtils.getLang(statement1.getLocationInfo().getFilePath());
+		Constants LANG2 = PathFileUtils.getLang(statement2.getLocationInfo().getFilePath());
 		for(Replacement r : info.getReplacements()) {
-			if(statement1.getString().endsWith(LANG.ASSIGNMENT + r.getBefore() + LANG.STATEMENT_TERMINATION) &&
-					statement2.getString().endsWith(LANG.ASSIGNMENT + r.getAfter() + LANG.STATEMENT_TERMINATION) &&
+			if(statement1.getString().endsWith(LANG1.ASSIGNMENT + r.getBefore() + LANG1.STATEMENT_TERMINATION) &&
+					statement2.getString().endsWith(LANG2.ASSIGNMENT + r.getAfter() + LANG2.STATEMENT_TERMINATION) &&
 					(r.getAfter().startsWith(r.getBefore()) ||
 					r.getBefore().startsWith(r.getAfter()))) {
 				return true;
 			}
 		}
-		if(statement1.getString().endsWith(LANG.ASSIGNMENT + candidateReplacement.getBefore() + LANG.STATEMENT_TERMINATION) &&
-				statement2.getString().endsWith(LANG.ASSIGNMENT + candidateReplacement.getAfter() + LANG.STATEMENT_TERMINATION)) {
-			if(statement1.getString().contains("." + candidateReplacement.getAfter() + LANG.ASSIGNMENT) && statement2.getString().contains("." + candidateReplacement.getAfter() + LANG.ASSIGNMENT))
+		if(statement1.getString().endsWith(LANG1.ASSIGNMENT + candidateReplacement.getBefore() + LANG1.STATEMENT_TERMINATION) &&
+				statement2.getString().endsWith(LANG2.ASSIGNMENT + candidateReplacement.getAfter() + LANG2.STATEMENT_TERMINATION)) {
+			if(statement1.getString().contains("." + candidateReplacement.getAfter() + LANG1.ASSIGNMENT) && statement2.getString().contains("." + candidateReplacement.getAfter() + LANG2.ASSIGNMENT))
 				return true;
-			if(statement1.getString().contains("." + candidateReplacement.getBefore() + LANG.ASSIGNMENT) && statement2.getString().contains("." + candidateReplacement.getBefore() + LANG.ASSIGNMENT))
+			if(statement1.getString().contains("." + candidateReplacement.getBefore() + LANG1.ASSIGNMENT) && statement2.getString().contains("." + candidateReplacement.getBefore() + LANG2.ASSIGNMENT))
 				return true;
 		}
-		if(statement1.getString().startsWith(candidateReplacement.getBefore() + LANG.ASSIGNMENT) &&
-				statement2.getString().startsWith(candidateReplacement.getAfter() + LANG.ASSIGNMENT) &&
-				statement1.getString().endsWith(LANG.STATEMENT_TERMINATION) && statement2.getString().endsWith(LANG.STATEMENT_TERMINATION)) {
-			String suffix1 = statement1.getString().substring(statement1.getString().indexOf(LANG.ASSIGNMENT) + 1, statement1.getString().lastIndexOf(LANG.STATEMENT_TERMINATION));
-			String suffix2 = statement2.getString().substring(statement2.getString().indexOf(LANG.ASSIGNMENT) + 1, statement2.getString().lastIndexOf(LANG.STATEMENT_TERMINATION));
+		if(statement1.getString().startsWith(candidateReplacement.getBefore() + LANG1.ASSIGNMENT) &&
+				statement2.getString().startsWith(candidateReplacement.getAfter() + LANG2.ASSIGNMENT) &&
+				statement1.getString().endsWith(LANG1.STATEMENT_TERMINATION) && statement2.getString().endsWith(LANG2.STATEMENT_TERMINATION)) {
+			String suffix1 = statement1.getString().substring(statement1.getString().indexOf(LANG1.ASSIGNMENT) + 1, statement1.getString().lastIndexOf(LANG1.STATEMENT_TERMINATION));
+			String suffix2 = statement2.getString().substring(statement2.getString().indexOf(LANG2.ASSIGNMENT) + 1, statement2.getString().lastIndexOf(LANG2.STATEMENT_TERMINATION));
 			if(suffix1.startsWith(suffix2) || suffix2.startsWith(suffix1)) {
 				return true;
 			}
@@ -5641,7 +5646,6 @@ public class ReplacementAlgorithm {
 	}
 
 	private static boolean lastStatementInParentBlockWithSameParentType(AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
-		Constants LANG = PathFileUtils.getLang(statement1.getLocationInfo().getFilePath());
 		if(statement1.isLastStatementInParentBlock() && statement2.isLastStatementInParentBlock()) {
 			CompositeStatementObject parent1 = statement1.getParent();
 			CompositeStatementObject parent2 = statement2.getParent();
@@ -5689,12 +5693,13 @@ public class ReplacementAlgorithm {
 				List<AbstractStatement> statements2 = statement2.getParent().getAllStatements();
 				if(statements2.size() > 0) {
 					AbstractStatement first = statements2.get(0);
+					Constants LANG2 = PathFileUtils.getLang(first.getLocationInfo().getFilePath());
 					if(first.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
 						CompositeStatementObject comp = (CompositeStatementObject)first;
 						List<AbstractCodeFragment> leaves = comp.getLeaves();
 						if(leaves.size() > 0) {
 							AbstractCodeFragment lastLeaf = leaves.get(leaves.size()-1);
-							if(lastLeaf.getString().equals(LANG.RETURN_STATEMENT) || lastLeaf.getString().startsWith(LANG.RETURN_SPACE)) {
+							if(lastLeaf.getString().equals(LANG2.RETURN_STATEMENT) || lastLeaf.getString().startsWith(LANG2.RETURN_SPACE)) {
 								return true;
 							}
 						}
@@ -5722,7 +5727,6 @@ public class ReplacementAlgorithm {
 	private static boolean checkIfStatementIsExtracted(AbstractCodeFragment statement1, AbstractCodeFragment statement2, UMLOperation addedOperation, UMLOperationBodyMapper operationBodyMapper) {
 		boolean nested = operationBodyMapper.isNested();
 		UMLAbstractClassDiff classDiff = operationBodyMapper.getClassDiff();
-		Constants LANG = PathFileUtils.getLang(operationBodyMapper.getContainer1().getLocationInfo().getFilePath());
 		if(classDiff != null) { 
 			AbstractCall invocationCoveringTheEntireStatement2 = statement1.invocationCoveringEntireFragment();
 			if(invocationCoveringTheEntireStatement2 != null) {
@@ -5734,8 +5738,9 @@ public class ReplacementAlgorithm {
 						if(fragment.getVariableDeclarations().size() > 0 && fragment.getVariableDeclarations().toString().equals(statement1.getVariableDeclarations().toString())) {
 							return true;
 						}
+						Constants LANG2 = PathFileUtils.getLang(fragment.getLocationInfo().getFilePath());
 						if(statement1.getVariableDeclarations().size() > 0 && statement1.getVariableDeclarations().get(0).getInitializer() != null &&
-								fragment.getString().equals(LANG.RETURN_SPACE + statement1.getVariableDeclarations().get(0).getInitializer().getString() + LANG.STATEMENT_TERMINATION) &&
+								fragment.getString().equals(LANG2.RETURN_SPACE + statement1.getVariableDeclarations().get(0).getInitializer().getString() + LANG2.STATEMENT_TERMINATION) &&
 								(!fragment.getParent().equals(addedOperation.getBody().getCompositeStatement()) || nested)) {
 							return true;
 						}
@@ -5758,10 +5763,10 @@ public class ReplacementAlgorithm {
 		return false;
 	}
 
-	private static boolean bothContainNullInDifferentIndexes(AbstractCall call1, AbstractCall call2, Constants LANG) {
-		if(call1 != null && call2 != null && call1.arguments().contains(LANG.NULL) && call2.arguments().contains(LANG.NULL)) {
-			int index1 = call1.arguments().indexOf(LANG.NULL);
-			int index2 = call2.arguments().indexOf(LANG.NULL);
+	private static boolean bothContainNullInDifferentIndexes(AbstractCall call1, AbstractCall call2, Constants LANG1, Constants LANG2) {
+		if(call1 != null && call2 != null && call1.arguments().contains(LANG1.NULL) && call2.arguments().contains(LANG2.NULL)) {
+			int index1 = call1.arguments().indexOf(LANG1.NULL);
+			int index2 = call2.arguments().indexOf(LANG2.NULL);
 			return index1 != index2;
 		}
 		return false;
@@ -5798,14 +5803,14 @@ public class ReplacementAlgorithm {
 
 	private static boolean matchAsLambdaExpressionArgument(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo, AbstractCodeFragment statement1, VariableDeclarationContainer container2, UMLOperationBodyMapper operationBodyMapper) {
 		UMLOperationBodyMapper parentMapper = operationBodyMapper.getParentMapper();
-		Constants LANG = PathFileUtils.getLang(operationBodyMapper.getContainer1().getLocationInfo().getFilePath());
-		if(parentMapper != null && s2.contains(LANG.LAMBDA_ARROW)) {
+		Constants LANG2 = PathFileUtils.getLang(operationBodyMapper.getContainer2().getLocationInfo().getFilePath());
+		if(parentMapper != null && s2.contains(LANG2.LAMBDA_ARROW)) {
 			for(String parameterName : parameterToArgumentMap.keySet()) {
 				String argument = parameterToArgumentMap.get(parameterName);
 				if(!parameterName.equals(argument) && !argument.isEmpty() && s2.contains(argument)) {
 					for(VariableDeclaration parameter : container2.getParameterDeclarationList()) {
 						if(parameterName.equals(parameter.getVariableName())) {
-							String lambdaArrow = "()" + LANG.LAMBDA_ARROW;
+							String lambdaArrow = "()" + LANG2.LAMBDA_ARROW;
 							String supplierGet = ".get()";
 							UMLType parameterType = parameter.getType();
 							if(parameterType != null && parameterType.getClassType().equals("Supplier") && s2.contains(supplierGet) && s2.contains(lambdaArrow)) {
@@ -6297,7 +6302,8 @@ public class ReplacementAlgorithm {
 			boolean replacementAdded, AnonymousClassDeclarationObject anonymousClassDeclaration1,
 			AnonymousClassDeclarationObject anonymousClassDeclaration2, List<UMLOperationBodyMapper> lambdaMappers,
 			UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
-		Constants LANG = operationBodyMapper.LANG;
+		Constants LANG1 = operationBodyMapper.LANG1;
+		Constants LANG2 = operationBodyMapper.LANG2;
 		VariableDeclarationContainer container1 = operationBodyMapper.getContainer1();
 		VariableDeclarationContainer container2 = operationBodyMapper.getContainer2();
 		boolean varArgsParameter = container1.hasVarargsParameter() || container2.hasVarargsParameter();
@@ -6307,7 +6313,7 @@ public class ReplacementAlgorithm {
 		String statementWithoutAnonymous1 = statementWithoutAnonymous(statement1, anonymousClassDeclaration1, container1);
 		String statementWithoutAnonymous2 = statementWithoutAnonymous(statement2, anonymousClassDeclaration2, container2);
 		if(replacementInfo.getRawDistance() == 0 || statementWithoutAnonymous1.equals(statementWithoutAnonymous2) || anonymousClassDeclaration1.toString().equals(anonymousClassDeclaration2.toString()) ||
-				identicalAfterVariableAndTypeReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements(), LANG) ||
+				identicalAfterVariableAndTypeReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements(), LANG1, LANG2) ||
 				extractedToVariable(statementWithoutAnonymous1, statementWithoutAnonymous2, statement1, statement2, replacementInfo) ||
 				(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				(onlyDifferentInvoker(statementWithoutAnonymous1, statementWithoutAnonymous2, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||

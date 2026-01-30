@@ -37,10 +37,12 @@ public class InlineOperationDetection {
 	private List<AbstractCall> operationInvocations;
 	private Map<CallTreeNode, CallTree> callTreeMap = new LinkedHashMap<CallTreeNode, CallTree>();
 	private Map<UMLOperation, List<AbstractCall>> callCountMap = null;
-	private final Constants LANG;
+	private final Constants LANG1;
+	private final Constants LANG2;
 	
 	public InlineOperationDetection(UMLOperationBodyMapper mapper, List<UMLOperation> removedOperations, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
-		this.LANG = mapper.LANG;
+		this.LANG1 = mapper.LANG1;
+		this.LANG2 = mapper.LANG2;
 		this.mapper = mapper;
 		this.removedOperations = removedOperations;
 		this.classDiff = classDiff;
@@ -134,7 +136,7 @@ public class InlineOperationDetection {
 		StatementObject singleReturnStatement = removedOperation.singleReturnStatement();
 		if(operationBodyMapper != null && (operationBodyMapper.getMappings().isEmpty() || containsRefactoringWithIdenticalMappings(refactorings, operationBodyMapper)) && singleReturnStatement != null) {
 			String s = singleReturnStatement.getString();
-			String expression = s.substring(LANG.RETURN_SPACE.length(), s.length()-LANG.STATEMENT_TERMINATION.length());
+			String expression = s.substring(LANG1.RETURN_SPACE.length(), s.length()-LANG1.STATEMENT_TERMINATION.length());
 			for(AbstractCodeMapping mapping : mapper.getMappings()) {
 				for(Replacement r : mapping.getReplacements()) {
 					if(r.getBefore().contains(removedOperation.getName() + "(")) {
@@ -313,7 +315,7 @@ public class InlineOperationDetection {
 				StatementObject statement = (StatementObject)statements.get(0);
 				if(statement.getVariables().size() == 1) {
 					String variable = statement.getVariables().get(0).getString();
-					if(statement.getString().equals(LANG.RETURN_SPACE + variable + LANG.STATEMENT_TERMINATION)) {
+					if(statement.getString().equals(LANG1.RETURN_SPACE + variable + LANG1.STATEMENT_TERMINATION)) {
 						return false;
 					}
 				}
@@ -334,7 +336,7 @@ public class InlineOperationDetection {
 			if(variableDeclarations.size() > 0) {
 				for(VariableDeclaration variableDeclaration : variableDeclarations) {
 					for(AbstractCodeFragment leaf1 : operationBodyMapper.getNonMappedLeavesT1()) {
-						if(leaf1.countableStatement() && leaf1.getString().equals(LANG.RETURN_SPACE + variableDeclaration.getVariableName() + LANG.STATEMENT_TERMINATION)) {
+						if(leaf1.countableStatement() && leaf1.getString().equals(LANG1.RETURN_SPACE + variableDeclaration.getVariableName() + LANG1.STATEMENT_TERMINATION)) {
 							nonMappedElementsT1--;
 							break;
 						}
@@ -356,7 +358,7 @@ public class InlineOperationDetection {
 		}
 		for(VariableDeclaration variableDeclaration : operationBodyMapper.getContainer1().getParameterDeclarationList()) {
 			for(AbstractCodeFragment leaf1 : operationBodyMapper.getNonMappedLeavesT1()) {
-				if(leaf1.countableStatement() && leaf1.getString().equals(LANG.RETURN_SPACE + variableDeclaration.getVariableName() + LANG.STATEMENT_TERMINATION)) {
+				if(leaf1.countableStatement() && leaf1.getString().equals(LANG1.RETURN_SPACE + variableDeclaration.getVariableName() + LANG1.STATEMENT_TERMINATION)) {
 					nonMappedElementsT1--;
 					break;
 				}

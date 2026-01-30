@@ -43,10 +43,12 @@ public class ExtractOperationRefactoring implements Refactoring {
 	private UMLOperationBodyMapper bodyMapper;
 	private Map<String, String> parameterToArgumentMap;
 	private List<AbstractCodeMapping> argumentMappings;
-	private final Constants LANG;
+	private final Constants LANG1;
+	private final Constants LANG2;
 
 	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, VariableDeclarationContainer sourceOperationAfterExtraction, List<AbstractCall> operationInvocations) {
-		this.LANG = bodyMapper.LANG;
+		this.LANG1 = bodyMapper.LANG1;
+		this.LANG2 = bodyMapper.LANG2;
 		this.bodyMapper = bodyMapper;
 		this.extractedOperation = bodyMapper.getOperation2();
 		this.sourceOperationBeforeExtraction = bodyMapper.getContainer1();
@@ -68,7 +70,8 @@ public class ExtractOperationRefactoring implements Refactoring {
 
 	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, UMLOperation extractedOperation,
 			VariableDeclarationContainer sourceOperationBeforeExtraction, VariableDeclarationContainer sourceOperationAfterExtraction, List<AbstractCall> operationInvocations) {
-		this.LANG = bodyMapper.LANG;
+		this.LANG1 = bodyMapper.LANG1;
+		this.LANG2 = bodyMapper.LANG2;
 		this.bodyMapper = bodyMapper;
 		this.extractedOperation = extractedOperation;
 		this.sourceOperationBeforeExtraction = sourceOperationBeforeExtraction;
@@ -175,7 +178,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 					if(replacementFound != null) {
 						argumentMatchFound = processArgument(mapping, call, argument);
 					}
-					else if(!isDefaultValue(argument, LANG)) {
+					else if(!isDefaultValue(argument, LANG2)) {
 						argumentMatchFound = processArgument(mapping, call, argument);
 					}
 				}
@@ -183,7 +186,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 		}
 		if(!argumentMatchFound) {
 			for(Replacement replacement : mapping.getReplacements()) {
-				if(replacement.getBefore().equals(replacement.getAfter()) || replacement.getBefore().equals(LANG.THIS_DOT + replacement.getAfter()) || replacement.getAfter().equals(LANG.THIS_DOT + replacement.getBefore())) {
+				if(replacement.getBefore().equals(replacement.getAfter()) || replacement.getBefore().equals(LANG1.THIS_DOT + replacement.getAfter()) || replacement.getAfter().equals(LANG2.THIS_DOT + replacement.getBefore())) {
 					List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(replacement.getBefore());
 					if(expressions1.size() > 0) {
 						List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
@@ -238,8 +241,8 @@ public class ExtractOperationRefactoring implements Refactoring {
 			creation2 = mapping.getFragment2().assignmentCreationCoveringEntireStatement();
 		}
 		List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(argument);
-		if(expressions1.isEmpty() && argument.contains(LANG.LAMBDA_ARROW)) {
-			String actualArgument = argument.substring(argument.indexOf(LANG.LAMBDA_ARROW) + LANG.LAMBDA_ARROW.length());
+		if(expressions1.isEmpty() && argument.contains(LANG2.LAMBDA_ARROW)) {
+			String actualArgument = argument.substring(argument.indexOf(LANG2.LAMBDA_ARROW) + LANG2.LAMBDA_ARROW.length());
 			expressions1 = mapping.getFragment1().findExpression(actualArgument);
 		}
 		if(expressions1.size() > 0 && sourceOperationAfterExtraction.getBody() != null) {
@@ -306,7 +309,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 		AbstractCall creation = initializer.creationCoveringEntireFragment();
 		if(creation instanceof ObjectCreation) {
 			UMLType type = ((ObjectCreation)creation).getType();
-			if(replacedExpression.startsWith(type + LANG.METHOD_REFERENCE + "new")) {
+			if(replacedExpression.startsWith(type + LANG1.METHOD_REFERENCE + "new")) {
 				return true;
 			}
 		}

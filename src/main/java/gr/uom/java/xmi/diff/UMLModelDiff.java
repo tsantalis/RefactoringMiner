@@ -3173,7 +3173,8 @@ public class UMLModelDiff {
 
 	private void detectSubRefactorings(UMLClassBaseDiff classDiff, UMLClass addedClass, RefactoringType parentType) throws RefactoringMinerTimedOutException {
 		int refactoringsBefore = refactorings.size();
-		Constants LANG = classDiff.LANG;
+		Constants LANG1 = classDiff.LANG1;
+		Constants LANG2 = classDiff.LANG2;
 		for(UMLOperation addedOperation : addedClass.getOperations()) {
 			UMLOperation removedOperation = classDiff.containsRemovedOperationWithTheSameSignature(addedOperation);
 			if(parentType.equals(RefactoringType.MERGE_CLASS) && removedOperation == null) {
@@ -3212,8 +3213,8 @@ public class UMLModelDiff {
 					this.refactorings.add(ref);
 					refactorings.addAll(mapper.getRefactorings());
 					for(CandidateAttributeRefactoring candidate : mapper.getCandidateAttributeRenames()) {
-						String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG);
-						String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG);
+						String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG1);
+						String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG2);
 						if(before.contains(".") && after.contains(".")) {
 							String prefix1 = before.substring(0, before.lastIndexOf(".") + 1);
 							String prefix2 = after.substring(0, after.lastIndexOf(".") + 1);
@@ -5213,13 +5214,14 @@ public class UMLModelDiff {
 	}
 
 	private void extractMergePatterns(UMLClassBaseDiff classDiff, Map<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>> mergeMap) {
-		Constants LANG = classDiff.LANG;
+		Constants LANG1 = classDiff.LANG1;
+		Constants LANG2 = classDiff.LANG2;
 		for(CandidateMergeVariableRefactoring candidate : classDiff.getCandidateAttributeMerges()) {
 			Set<String> before = new LinkedHashSet<String>();
 			for(String mergedVariable : candidate.getMergedVariables()) {
-				before.add(PrefixSuffixUtils.normalize(mergedVariable, LANG));
+				before.add(PrefixSuffixUtils.normalize(mergedVariable, LANG1));
 			}
-			String after = PrefixSuffixUtils.normalize(candidate.getNewVariable(), LANG);
+			String after = PrefixSuffixUtils.normalize(candidate.getNewVariable(), LANG2);
 			MergeVariableReplacement merge = new MergeVariableReplacement(before, after);
 			if(mergeMap.containsKey(merge)) {
 				mergeMap.get(merge).add(candidate);
@@ -5233,10 +5235,11 @@ public class UMLModelDiff {
 	}
 
 	private void extractRenamePatterns(UMLClassBaseDiff classDiff, Map<Replacement, Set<CandidateAttributeRefactoring>> map) {
-		Constants LANG = classDiff.LANG;
+		Constants LANG1 = classDiff.LANG1;
+		Constants LANG2 = classDiff.LANG2;
 		for(CandidateAttributeRefactoring candidate : classDiff.getCandidateAttributeRenames()) {
-			String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG);
-			String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG);
+			String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG1);
+			String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG2);
 			if(before.contains(".") && after.contains(".")) {
 				String prefix1 = before.substring(0, before.lastIndexOf(".") + 1);
 				String prefix2 = after.substring(0, after.lastIndexOf(".") + 1);
@@ -5336,7 +5339,8 @@ public class UMLModelDiff {
 							}
 						}
 					}
-					Constants LANG = PathFileUtils.getLang(mapper.getContainer1().getLocationInfo().getFilePath());
+					Constants LANG1 = mapper.LANG1;
+					Constants LANG2 = mapper.LANG2;
 					if(removedOperationInvocations.size() > 0) {
 						for(AbstractCall removedOperationInvocation : removedOperationInvocations) {
 							if(!invocationMatchesWithAddedOperation(removedOperationInvocation, mapper.getContainer1(), mapper.getClassDiff(), mapper.getContainer2().getAllOperationInvocations()) &&
@@ -5354,7 +5358,7 @@ public class UMLModelDiff {
 								String expression = removedOperationInvocation.getExpression();
 								if(expression != null && !removedOperation.getClassName().endsWith("." + expression)) {
 									parameterToArgumentMap2.put(expression + ".", "");
-									parameterToArgumentMap1.put(LANG.THIS_DOT, "");
+									parameterToArgumentMap1.put(LANG1.THIS_DOT, "");
 								}
 								UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(removedOperation.getClassName()), removedOperationInvocation, false);
 								if(moveAndInlineMatchCondition(operationBodyMapper, mapper)) {
@@ -5391,8 +5395,8 @@ public class UMLModelDiff {
 										optimizer.optimizeDuplicateMappingsForInline(mapper, refactorings);
 										refactorings.addAll(operationBodyMapper.getRefactoringsAfterPostProcessing());
 										for(CandidateAttributeRefactoring candidate : operationBodyMapper.getCandidateAttributeRenames()) {
-											String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG);
-											String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG);
+											String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG1);
+											String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG2);
 											if(before.contains(".") && after.contains(".")) {
 												String prefix1 = before.substring(0, before.lastIndexOf(".") + 1);
 												String prefix2 = after.substring(0, after.lastIndexOf(".") + 1);
@@ -5443,7 +5447,7 @@ public class UMLModelDiff {
 								String expression = removedCreation.getExpression();
 								if(expression != null && !removedOperation.getClassName().endsWith("." + expression)) {
 									parameterToArgumentMap2.put(expression + ".", "");
-									parameterToArgumentMap1.put(LANG.THIS_DOT, "");
+									parameterToArgumentMap1.put(LANG1.THIS_DOT, "");
 								}
 								UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(removedOperation.getClassName()), removedCreation, false);
 								if(moveAndInlineMatchCondition(operationBodyMapper, mapper)) {
@@ -5845,7 +5849,7 @@ public class UMLModelDiff {
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(mapper.getContainer1(), addedOperation);
 					String className = mapper.getContainer2().getClassName();
 					if(!className.equals(addedOperation.getClassName()) && (mapper.nonMappedElementsT1() > 0 || includesReplacementInvolvingAddedMethod(mapper.getReplacementsInvolvingMethodInvocation(), addedOperation, mapper.getContainer2(), mapper.getClassDiff())) && !mapper.containsExtractOperationRefactoring(addedOperation) && !processedOperationPairs.contains(pair)) {
-						Constants LANG = PathFileUtils.getLang(mapper.getContainer1().getLocationInfo().getFilePath());
+						Constants LANG1 = mapper.LANG1;
 						processedOperationPairs.add(pair);
 						Map<String, Set<VariableDeclaration>> variableDeclarationMap = mapper.getContainer2().variableDeclarationMap();
 						UMLAbstractClass childCallerClass = this.findClassInChildModel(mapper.getContainer2().getClassName());
@@ -5895,7 +5899,7 @@ public class UMLModelDiff {
 									Map<UMLOperation, AbstractCall> possiblyInlinedOperations = new LinkedHashMap<UMLOperation, AbstractCall>();
 									for(AbstractCodeFragment f : fragment.getLambdas().get(0).getBody().getCompositeStatement().getLeaves()) {
 										AbstractCall inlinedInvocation = f.invocationCoveringEntireFragment();
-										if(inlinedInvocation != null && mapper.getClassDiff() != null && (inlinedInvocation.getExpression() == null || (inlinedInvocation.getExpression() != null && inlinedInvocation.getExpression().endsWith(LANG.THIS_DOT)))) {
+										if(inlinedInvocation != null && mapper.getClassDiff() != null && (inlinedInvocation.getExpression() == null || (inlinedInvocation.getExpression() != null && inlinedInvocation.getExpression().endsWith(LANG1.THIS_DOT)))) {
 											for(UMLOperation removedOperation : mapper.getClassDiff().getRemovedOperations()) {
 												if(inlinedInvocation.matchesOperation(removedOperation, mapper.getContainer1(), mapper.getClassDiff(), this)) {
 													possiblyInlinedOperations.put(removedOperation, inlinedInvocation);
@@ -5934,7 +5938,7 @@ public class UMLModelDiff {
 												String expression = inlinedOperationInvocation.getExpression();
 												if(expression != null && !inlinedOperation.getClassName().endsWith("." + expression)) {
 													parameterToArgumentMap2.put(expression + ".", "");
-													parameterToArgumentMap1.put(LANG.THIS_DOT, "");
+													parameterToArgumentMap1.put(LANG1.THIS_DOT, "");
 												}
 												UMLOperationBodyMapper inlinedOperationBodyMapper = new UMLOperationBodyMapper(inlinedOperation, operationBodyMapper, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(inlinedOperation.getClassName()), inlinedOperationInvocation, false);
 												if(moveAndInlineMatchCondition(inlinedOperationBodyMapper, operationBodyMapper)) {
@@ -6102,7 +6106,8 @@ public class UMLModelDiff {
 	private void createExtractAndMoveMethodRefactoringBasedOnClassName(UMLOperation addedOperation,
 			UMLOperationBodyMapper mapper, String className, List<AbstractCall> addedOperationInvocations,
 			UMLOperationBodyMapper operationBodyMapper, boolean nested) throws RefactoringMinerTimedOutException {
-		Constants LANG = mapper.LANG;
+		Constants LANG1 = mapper.LANG1;
+		Constants LANG2 = mapper.LANG2;
 		if(className.equals(addedOperation.getClassName())) {
 			//extract inside moved or renamed class
 			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper, nested);
@@ -6125,8 +6130,8 @@ public class UMLModelDiff {
 			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper, nested);
 		}
 		for(CandidateAttributeRefactoring candidate : operationBodyMapper.getCandidateAttributeRenames()) {
-			String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG);
-			String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG);
+			String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG1);
+			String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG2);
 			if(before.contains(".") && after.contains(".")) {
 				String prefix1 = before.substring(0, before.lastIndexOf(".") + 1);
 				String prefix2 = after.substring(0, after.lastIndexOf(".") + 1);
@@ -6306,15 +6311,15 @@ public class UMLModelDiff {
 				attributes.addAll(umlClassDiff.originalClassAttributesOfType(addedOperation.getClassName()));
 			}
 		}
-		Constants LANG = PathFileUtils.getLang(mapper.getContainer1().getLocationInfo().getFilePath());
+		Constants LANG2 = mapper.LANG2;
 		Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
 		for(UMLAttribute attribute : attributes) {
 			parameterToArgumentMap1.put(attribute.getName() + ".", "");
-			parameterToArgumentMap2.put(LANG.THIS_DOT, "");
+			parameterToArgumentMap2.put(LANG2.THIS_DOT, "");
 		}
 		if(addedOperationInvocation.getExpression() != null) {
 			parameterToArgumentMap1.put(addedOperationInvocation.getExpression() + ".", "");
-			parameterToArgumentMap2.put(LANG.THIS_DOT, "");
+			parameterToArgumentMap2.put(LANG2.THIS_DOT, "");
 		}
 		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(addedOperation.getClassName()), addedOperationInvocation, nested, leaves1Sublist);
 		if(!nested) {
@@ -6487,7 +6492,8 @@ public class UMLModelDiff {
 	}
 
 	private boolean extractAndMoveMatchCondition(UMLOperationBodyMapper operationBodyMapper, UMLOperationBodyMapper parentMapper, AbstractCall addedOperationInvocation) {
-		Constants LANG = PathFileUtils.getLang(operationBodyMapper.getContainer1().getLocationInfo().getFilePath());
+		Constants LANG1 = operationBodyMapper.LANG1;
+		Constants LANG2 = operationBodyMapper.LANG2;
 		List<AbstractCodeMapping> mappingList = new ArrayList<AbstractCodeMapping>(operationBodyMapper.getMappings());
 		if(operationBodyMapper.containsOnlySystemCalls()) {
 			return false;
@@ -6525,11 +6531,11 @@ public class UMLModelDiff {
 			String fragment1 = mappingList.get(0).getFragment1().getString();
 			String fragment2 = mappingList.get(0).getFragment2().getString();
 			if(operationBodyMapper.getContainer1().isGetter()) {
-				if(fragment1.equals(LANG.RETURN_THIS) || fragment2.equals(LANG.RETURN_THIS)) {
+				if(fragment1.equals(LANG1.RETURN_THIS) || fragment2.equals(LANG2.RETURN_THIS)) {
 					return false;
 				}
 			}
-			if(fragment1.startsWith(LANG.RETURN_SPACE) && fragment2.startsWith(LANG.RETURN_SPACE)) {
+			if(fragment1.startsWith(LANG1.RETURN_SPACE) && fragment2.startsWith(LANG2.RETURN_SPACE)) {
 				for(UMLAnonymousClass anonymousClass : operationBodyMapper.getContainer1().getAnonymousClassList()) {
 					if(anonymousClass.getLocationInfo().subsumes(mappingList.get(0).getFragment1().getLocationInfo()) &&
 							parentMapper.getContainer2().getAnonymousClassList().isEmpty()) {
@@ -6539,7 +6545,7 @@ public class UMLModelDiff {
 				UMLOperation extractedOperation = operationBodyMapper.getOperation2();
 				if(extractedOperation != null) {
 					UMLType returnType = extractedOperation.getReturnParameter().getType();
-					String fragment1VariableName = fragment1.substring(LANG.RETURN_SPACE.length(), fragment1.indexOf(LANG.STATEMENT_TERMINATION));
+					String fragment1VariableName = fragment1.substring(LANG1.RETURN_SPACE.length(), fragment1.indexOf(LANG1.STATEMENT_TERMINATION));
 					VariableDeclaration fragment1VariableDeclaration = operationBodyMapper.getContainer1().getVariableDeclaration(fragment1VariableName);
 					if(fragment1VariableDeclaration != null) {
 						if(!returnType.equals(fragment1VariableDeclaration.getType())) {
@@ -6562,11 +6568,11 @@ public class UMLModelDiff {
 			if(invocation1 != null && invocation2 != null && invocation1.getExpression() != null && invocation2.getExpression() != null) {
 				String expression1 = invocation1.getExpression();
 				String expression2 = invocation2.getExpression();
-				if(expression1.startsWith(LANG.THIS_DOT)) {
-					expression1 = expression1.substring(5);
+				if(expression1.startsWith(LANG1.THIS_DOT)) {
+					expression1 = expression1.substring(LANG1.THIS_DOT.length());
 				}
-				if(expression2.startsWith(LANG.THIS_DOT)) {
-					expression2 = expression2.substring(5);
+				if(expression2.startsWith(LANG2.THIS_DOT)) {
+					expression2 = expression2.substring(LANG2.THIS_DOT.length());
 				}
 				if(!expression1.equals(expression2) && operationBodyMapper.getClassDiff() != null) {
 					UMLAttribute attr1 = operationBodyMapper.getClassDiff().findAttributeInNextClass(expression1);
@@ -6592,8 +6598,8 @@ public class UMLModelDiff {
 			AbstractCodeFragment fragment2 = mappingList.get(0).getFragment2();
 			if(parentMapper.getContainer2().isDelegate() == null &&
 					fragment1.getVariables().size() == 1 && fragment2.getVariables().size() == 1 &&
-					fragment1.getString().equals(LANG.RETURN_SPACE + fragment1.getVariables().get(0).getString() + LANG.STATEMENT_TERMINATION) &&
-					fragment2.getString().equals(LANG.RETURN_SPACE + fragment2.getVariables().get(0).getString() + LANG.STATEMENT_TERMINATION)) {
+					fragment1.getString().equals(LANG1.RETURN_SPACE + fragment1.getVariables().get(0).getString() + LANG1.STATEMENT_TERMINATION) &&
+					fragment2.getString().equals(LANG2.RETURN_SPACE + fragment2.getVariables().get(0).getString() + LANG2.STATEMENT_TERMINATION)) {
 				return false;
 			}
 		}
@@ -7281,7 +7287,8 @@ public class UMLModelDiff {
 	private void createRefactoring(UMLOperation removedOperation, UMLOperation addedOperation,
 			UMLOperationBodyMapper firstMapper, boolean multipleMappers)
 			throws RefactoringMinerTimedOutException {
-		Constants LANG = firstMapper.LANG;
+		Constants LANG1 = firstMapper.LANG1;
+		Constants LANG2 = firstMapper.LANG2;
 		Refactoring refactoring = null;
 		if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 				isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation, typeParameterToTypeArgumentMap(removedOperation.getClassName(), addedOperation.getClassName())) &&
@@ -7371,8 +7378,8 @@ public class UMLModelDiff {
 				refactorings.addAll(firstMapper.getRefactorings());
 				refactorings.add(refactoring);
 				for(CandidateAttributeRefactoring candidate : firstMapper.getCandidateAttributeRenames()) {
-					String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG);
-					String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG);
+					String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG1);
+					String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG2);
 					if(before.contains(".") && after.contains(".")) {
 						String prefix1 = before.substring(0, before.lastIndexOf(".") + 1);
 						String prefix2 = after.substring(0, after.lastIndexOf(".") + 1);
@@ -7722,7 +7729,7 @@ public class UMLModelDiff {
 	}
 
 	private boolean mappedElementsMoreThanNonMappedT1AndT2(int mappings, UMLOperationBodyMapper operationBodyMapper) {
-		Constants LANG = PathFileUtils.getLang(operationBodyMapper.getContainer1().getLocationInfo().getFilePath());
+		Constants LANG1 = operationBodyMapper.LANG1;
 		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
 		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
 		UMLClass addedClass = getAddedClass(operationBodyMapper.getContainer2().getClassName());
@@ -7762,7 +7769,7 @@ public class UMLModelDiff {
 					}
 				}
 			}
-			else if(addedClass != null && s1.getString().contains(LANG.ASSIGNMENT)) {
+			else if(addedClass != null && s1.getString().contains(LANG1.ASSIGNMENT)) {
 				for(UMLAttribute attribute : addedClass.getAttributes()) {
 					VariableDeclaration attributeDeclaration = attribute.getVariableDeclaration();
 					if(attributeDeclaration.getInitializer() != null) {
@@ -7812,7 +7819,7 @@ public class UMLModelDiff {
 					}
 				}
 			}
-			else if(addedClass != null && s1.getString().contains(LANG.ASSIGNMENT) && !s1.getString().contains("==") && !s1.getString().contains("!=") && !s1.getString().contains("<=") && !s1.getString().contains(">=")) {
+			else if(addedClass != null && s1.getString().contains(LANG1.ASSIGNMENT) && !s1.getString().contains("==") && !s1.getString().contains("!=") && !s1.getString().contains("<=") && !s1.getString().contains(">=")) {
 				for(UMLAttribute attribute : addedClass.getAttributes()) {
 					VariableDeclaration attributeDeclaration = attribute.getVariableDeclaration();
 					if(attributeDeclaration.getInitializer() != null) {
@@ -8004,7 +8011,8 @@ public class UMLModelDiff {
 	}
 
 	private boolean movedAndRenamedMethodSignature(UMLOperation removedOperation, UMLOperation addedOperation, UMLOperationBodyMapper mapper, boolean multipleMappers) {
-		Constants LANG = PathFileUtils.getLang(mapper.getContainer1().getLocationInfo().getFilePath());
+		Constants LANG1 = mapper.LANG1;
+		Constants LANG2 = mapper.LANG2;
 		boolean default1 = removedOperation.getDefaultExpression() != null;
 		boolean default2 = addedOperation.getDefaultExpression() != null;
 		if(default1 != default2) {
@@ -8049,7 +8057,7 @@ public class UMLModelDiff {
 		boolean identicalStringLiterals = false;
 		int todoMappings = 0;
 		for(AbstractCodeMapping mapping : mapper.getMappings()) {
-			if(mapping instanceof LeafMapping && mapping.isExact() && !mapping.getFragment1().getString().startsWith(LANG.RETURN_SPACE)
+			if(mapping instanceof LeafMapping && mapping.isExact() && !mapping.getFragment1().getString().startsWith(LANG1.RETURN_SPACE)
 					&& !(mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression)) {
 				boolean pipelineRef = false;
 				for(Refactoring r : mapping.getRefactorings()) {
@@ -8098,13 +8106,13 @@ public class UMLModelDiff {
 			for(AbstractCodeMapping mapping : mapper.getMappings()) {
 				String fragment1 = mapping.getFragment1().getString();
 				String fragment2 = mapping.getFragment2().getString();
-				if(fragment1.equals(LANG.RETURN_TRUE) || fragment1.equals(LANG.RETURN_FALSE) || fragment1.equals(LANG.RETURN_THIS) || fragment1.equals(LANG.RETURN_NULL) || fragment1.equals(LANG.RETURN_STATEMENT) ||
-						fragment2.equals(LANG.RETURN_TRUE) || fragment2.equals(LANG.RETURN_FALSE) || fragment2.equals(LANG.RETURN_THIS) || fragment2.equals(LANG.RETURN_NULL) || fragment2.equals(LANG.RETURN_STATEMENT)) {
+				if(fragment1.equals(LANG1.RETURN_TRUE) || fragment1.equals(LANG1.RETURN_FALSE) || fragment1.equals(LANG1.RETURN_THIS) || fragment1.equals(LANG1.RETURN_NULL) || fragment1.equals(LANG1.RETURN_STATEMENT) ||
+						fragment2.equals(LANG2.RETURN_TRUE) || fragment2.equals(LANG2.RETURN_FALSE) || fragment2.equals(LANG2.RETURN_THIS) || fragment2.equals(LANG2.RETURN_NULL) || fragment2.equals(LANG2.RETURN_STATEMENT)) {
 					return false;
 				}
 				if(mapping.getFragment1().getVariables().size() == 1 && mapping.getFragment2().getVariables().size() == 1 &&
-						fragment1.equals(LANG.RETURN_SPACE + mapping.getFragment1().getVariables().get(0).getString() + LANG.STATEMENT_TERMINATION) &&
-						fragment2.equals(LANG.RETURN_SPACE + mapping.getFragment2().getVariables().get(0).getString() + LANG.STATEMENT_TERMINATION) &&
+						fragment1.equals(LANG1.RETURN_SPACE + mapping.getFragment1().getVariables().get(0).getString() + LANG1.STATEMENT_TERMINATION) &&
+						fragment2.equals(LANG2.RETURN_SPACE + mapping.getFragment2().getVariables().get(0).getString() + LANG2.STATEMENT_TERMINATION) &&
 						!removedOperation.getParameterNameList().contains(mapping.getFragment1().getVariables().get(0).getString()) &&
 						!addedOperation.getParameterNameList().contains(mapping.getFragment2().getVariables().get(0).getString())) {
 					return false;
@@ -8160,7 +8168,7 @@ public class UMLModelDiff {
 	}
 
 	private boolean movedMethodSignature(UMLOperation removedOperation, UMLOperation addedOperation, UMLOperationBodyMapper mapper, boolean multipleMappers) {
-		Constants LANG = PathFileUtils.getLang(mapper.getContainer1().getLocationInfo().getFilePath());
+		Constants LANG1 = mapper.LANG1;
 		if((removedOperation.isGetter() || removedOperation.isSetter() || addedOperation.isGetter() || addedOperation.isSetter()) &&
 				mapper.mappingsWithoutBlocks() == 1 && mapper.getMappings().size() == 1) {
 			if(!mapper.getMappings().iterator().next().isExact() || multipleMappers) {
@@ -8200,7 +8208,7 @@ public class UMLModelDiff {
 					if(interfaceIntersection.size() > 0) {
 						int exactLeafMappings = 0;
 						for(AbstractCodeMapping mapping : mapper.getMappings()) {
-							if(mapping instanceof LeafMapping && mapping.isExact() && !mapping.getFragment1().getString().startsWith(LANG.RETURN_SPACE)
+							if(mapping instanceof LeafMapping && mapping.isExact() && !mapping.getFragment1().getString().startsWith(LANG1.RETURN_SPACE)
 									&& !(mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression)) {
 								exactLeafMappings++;
 							}

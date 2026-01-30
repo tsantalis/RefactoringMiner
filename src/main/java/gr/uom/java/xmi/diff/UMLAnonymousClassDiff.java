@@ -214,8 +214,8 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 							if(!operation1.getName().equals(operation2.getName()) && mappings == 1) {
 								for(AbstractCodeMapping mapping : mapper.getMappings()) {
 									String statement = mapping.getFragment1().getString();
-									if(statement.equals(LANG.RETURN_TRUE) || statement.equals(LANG.RETURN_FALSE) || 
-											statement.equals(LANG.RETURN_THIS) || statement.equals(LANG.RETURN_NULL) || statement.equals(LANG.RETURN_STATEMENT)) {
+									if(statement.equals(LANG1.RETURN_TRUE) || statement.equals(LANG1.RETURN_FALSE) || 
+											statement.equals(LANG1.RETURN_THIS) || statement.equals(LANG1.RETURN_NULL) || statement.equals(LANG1.RETURN_STATEMENT)) {
 										mappings--;
 									}
 								}

@@ -543,12 +543,13 @@ public class UMLOperationDiff {
 
 	private void checkForSplitMergeParameterBasedOnAttributeAssignments(Set<Refactoring> refactorings) {
 		if(classDiff != null) {
-			Constants LANG = classDiff.LANG;
+			Constants LANG1 = classDiff.LANG1;
+			Constants LANG2 = classDiff.LANG2;
 			List<AbstractCodeFragment> removedOperationLeaves = removedOperation.getBody() != null ? removedOperation.getBody().getCompositeStatement().getLeaves() : Collections.emptyList();
 			Map<VariableDeclaration, AbstractCodeFragment> removedFieldAssignmentMap = new LinkedHashMap<>();
 			for(VariableDeclaration removedParameter : getRemovedParameters()) {
 				for(AbstractCodeFragment leaf : removedOperationLeaves) {
-					if(leaf.getString().equals(LANG.THIS_DOT + removedParameter.getVariableName() + LANG.ASSIGNMENT + removedParameter.getVariableName() + LANG.STATEMENT_TERMINATION)) {
+					if(leaf.getString().equals(LANG1.THIS_DOT + removedParameter.getVariableName() + LANG1.ASSIGNMENT + removedParameter.getVariableName() + LANG1.STATEMENT_TERMINATION)) {
 						removedFieldAssignmentMap.put(removedParameter.getVariableDeclaration(), leaf);
 						break;
 					}
@@ -558,7 +559,7 @@ public class UMLOperationDiff {
 			Map<VariableDeclaration, AbstractCodeFragment> addedFieldAssignmentMap = new LinkedHashMap<>();
 			for(VariableDeclaration addedParameter : getAddedParameters()) {
 				for(AbstractCodeFragment leaf : addedOperationLeaves) {
-					if(leaf.getString().equals(LANG.THIS_DOT + addedParameter.getVariableName() + LANG.ASSIGNMENT + addedParameter.getVariableName() + LANG.STATEMENT_TERMINATION)) {
+					if(leaf.getString().equals(LANG2.THIS_DOT + addedParameter.getVariableName() + LANG2.ASSIGNMENT + addedParameter.getVariableName() + LANG2.STATEMENT_TERMINATION)) {
 						addedFieldAssignmentMap.put(addedParameter.getVariableDeclaration(), leaf);
 						break;
 					}

@@ -39,11 +39,13 @@ public class InlineOperationRefactoring implements Refactoring {
 	private UMLOperationBodyMapper bodyMapper;
 	private Map<String, String> parameterToArgumentMap;
 	private List<AbstractCodeMapping> argumentMappings;
-	private final Constants LANG;
+	private final Constants LANG1;
+	private final Constants LANG2;
 	
 	public InlineOperationRefactoring(UMLOperationBodyMapper bodyMapper, VariableDeclarationContainer targetOperationBeforeInline,
 			List<AbstractCall> operationInvocations) {
-		this.LANG = bodyMapper.LANG;
+		this.LANG1 = bodyMapper.LANG1;
+		this.LANG2 = bodyMapper.LANG2;
 		this.bodyMapper = bodyMapper;
 		this.inlinedOperation = bodyMapper.getOperation1();
 		this.targetOperationAfterInline = bodyMapper.getContainer2();
@@ -167,7 +169,7 @@ public class InlineOperationRefactoring implements Refactoring {
 					if(replacementFound != null) {
 						argumentMatchFound = processArgument(mapping, call, argument);
 					}
-					else if(!isDefaultValue(argument, LANG)) {
+					else if(!isDefaultValue(argument, LANG1)) {
 						argumentMatchFound = processArgument(mapping, call, argument);
 					}
 				}
@@ -175,7 +177,7 @@ public class InlineOperationRefactoring implements Refactoring {
 		}
 		if(!argumentMatchFound) {
 			for(Replacement replacement : mapping.getReplacements()) {
-				if(replacement.getBefore().equals(replacement.getAfter()) || replacement.getBefore().equals(LANG.THIS_DOT + replacement.getAfter()) || replacement.getAfter().equals(LANG.THIS_DOT + replacement.getBefore())) {
+				if(replacement.getBefore().equals(replacement.getAfter()) || replacement.getBefore().equals(LANG1.THIS_DOT + replacement.getAfter()) || replacement.getAfter().equals(LANG2.THIS_DOT + replacement.getBefore())) {
 					List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(replacement.getAfter());
 					if(expressions2.size() > 0) {
 						List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
@@ -230,8 +232,8 @@ public class InlineOperationRefactoring implements Refactoring {
 			creation2 = mapping.getFragment2().assignmentCreationCoveringEntireStatement();
 		}
 		List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(argument);
-		if(expressions2.isEmpty() && argument.contains(LANG.LAMBDA_ARROW)) {
-			String actualArgument = argument.substring(argument.indexOf(LANG.LAMBDA_ARROW) + LANG.LAMBDA_ARROW.length());
+		if(expressions2.isEmpty() && argument.contains(LANG2.LAMBDA_ARROW)) {
+			String actualArgument = argument.substring(argument.indexOf(LANG2.LAMBDA_ARROW) + LANG2.LAMBDA_ARROW.length());
 			expressions2 = mapping.getFragment2().findExpression(actualArgument);
 		}
 		if(expressions2.size() > 0) {

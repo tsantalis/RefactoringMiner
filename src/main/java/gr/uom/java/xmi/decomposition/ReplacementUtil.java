@@ -99,7 +99,7 @@ public class ReplacementUtil {
 		return temp;
 	}
 
-	public static String performReplacement(String completeString1, String completeString2, String subString1, String subString2, Constants LANG) {	
+	public static String performReplacement(String completeString1, String completeString2, String subString1, String subString2, Constants LANG1, Constants LANG2) {	
 		String temp = new String(completeString1);
 		boolean replacementOccurred = false;
 		for(String character : SPECIAL_CHARACTERS) {
@@ -114,7 +114,7 @@ public class ReplacementUtil {
 					int start2 = m2.start();
 					String characterBeforeMatch1 = start1 == 0 ? "" : String.valueOf(temp.charAt(start1 - 1));
 					String characterBeforeMatch2 = start2 == 0 ? "" : String.valueOf(completeString2.charAt(start2 - 1));
-					if(compatibleCharacterBeforeMatch(characterBeforeMatch1, characterBeforeMatch2, LANG)) {
+					if(compatibleCharacterBeforeMatch(characterBeforeMatch1, characterBeforeMatch2, LANG2)) {
 						m1.appendReplacement(sb, Matcher.quoteReplacement(subString2 + character));
 						replacementOccurred = true;
 					}
@@ -123,7 +123,7 @@ public class ReplacementUtil {
 				temp = sb.toString();
 			}
 		}
-		if(!replacementOccurred && !containsMethodSignatureOfAnonymousClass(completeString1, LANG) && !containsMethodSignatureOfAnonymousClass(completeString2, LANG)) {
+		if(!replacementOccurred && !containsMethodSignatureOfAnonymousClass(completeString1, LANG1) && !containsMethodSignatureOfAnonymousClass(completeString2, LANG2)) {
 			for(String character : SPECIAL_CHARACTERS) {
 				if(temp.contains(character + subString1) && completeString2.contains(character + subString2)) {
 					StringBuffer sb = new StringBuffer();

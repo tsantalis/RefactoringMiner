@@ -14,6 +14,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry;
+import org.refactoringminer.util.PathFileUtils;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
@@ -256,6 +257,8 @@ public abstract class AbstractCall extends LeafExpression {
 			String expression1 = getExpression();
 			String expression2 = call.getExpression();
 			String expression1AfterReplacements = new String(expression1);
+			Constants LANG1 = PathFileUtils.getLang(this.getLocationInfo().getFilePath());
+			Constants LANG2 = PathFileUtils.getLang(call.getLocationInfo().getFilePath());
 			for(Replacement replacement : replacementInfo.getReplacements()) {
 				if(replacement.getType().equals(ReplacementType.TYPE) ||
 						//allow only class names corresponding to static calls
@@ -264,7 +267,7 @@ public abstract class AbstractCall extends LeafExpression {
 							(parameterToArgumentMap.containsKey(expression2) && replacement.getAfter().equals(parameterToArgumentMap.get(expression2))))) {
 						return true;
 					}
-					expression1AfterReplacements = ReplacementUtil.performReplacement(expression1AfterReplacements, expression2, replacement.getBefore(), replacement.getAfter(), LANG);
+					expression1AfterReplacements = ReplacementUtil.performReplacement(expression1AfterReplacements, expression2, replacement.getBefore(), replacement.getAfter(), LANG1, LANG2);
 				}
 				else if(replacement instanceof MethodInvocationReplacement) {
 					MethodInvocationReplacement methodInvocationReplacement = (MethodInvocationReplacement)replacement;

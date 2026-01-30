@@ -76,10 +76,12 @@ public abstract class UMLAbstractClassDiff {
 	private UMLTypeListDiff permittedTypeListDiff;
 	private UMLCommentListDiff commentListDiff;
 	private static final List<String> collectionAPINames = List.of("get", "add", "contains", "put", "putAll", "addAll", "equals");
-	public final Constants LANG;
+	public final Constants LANG1;
+	public final Constants LANG2;
 	
 	public UMLAbstractClassDiff(UMLAbstractClass originalClass, UMLAbstractClass nextClass, UMLModelDiff modelDiff) {
-		this.LANG = PathFileUtils.getLang(originalClass.getLocationInfo().getFilePath());
+		this.LANG1 = PathFileUtils.getLang(originalClass.getLocationInfo().getFilePath());
+		this.LANG2 = PathFileUtils.getLang(nextClass.getLocationInfo().getFilePath());
 		this.addedOperations = new ArrayList<UMLOperation>();
 		this.removedOperations = new ArrayList<UMLOperation>();
 		this.addedInitializers = new ArrayList<UMLInitializer>();
@@ -905,7 +907,7 @@ public abstract class UMLAbstractClassDiff {
 		if(modelDiff != null) {
 			for(AbstractCall addedOperationInvocation : addedOperationInvocations) {
 				String expression = addedOperationInvocation.getExpression();
-				if(expression != null && !expression.equals(LANG.THIS) &&
+				if(expression != null && !expression.equals(LANG2.THIS) &&
 						!intersection.contains(addedOperationInvocation) && !matchedOperationInvocations.contains(addedOperationInvocation)) {
 					UMLOperation operation = modelDiff.findOperationInAddedClasses(addedOperationInvocation, addedOperation, this);
 					if(operation != null) {
@@ -990,7 +992,7 @@ public abstract class UMLAbstractClassDiff {
 			for(String mergedVariable : merge.getMergedVariables()) {
 				UMLAttribute a1 = findAttributeInOriginalClass(mergedVariable);
 				if(a1 == null) {
-					a1 = findAttributeInOriginalClass(PrefixSuffixUtils.normalize(mergedVariable, LANG));
+					a1 = findAttributeInOriginalClass(PrefixSuffixUtils.normalize(mergedVariable, LANG1));
 				}
 				if(a1 != null) {
 					mergedAttributes.add(a1);
@@ -1003,7 +1005,7 @@ public abstract class UMLAbstractClassDiff {
 			}
 			UMLAttribute a2 = findAttributeInNextClass(after);
 			if(a2 == null) {
-				a2 = findAttributeInNextClass(PrefixSuffixUtils.normalize(after, LANG));
+				a2 = findAttributeInNextClass(PrefixSuffixUtils.normalize(after, LANG2));
 			}
 			Set<CandidateMergeVariableRefactoring> set = mergeMap.get(merge);
 			for(CandidateMergeVariableRefactoring candidate : set) {
@@ -1070,10 +1072,10 @@ public abstract class UMLAbstractClassDiff {
 		for(Replacement pattern : allConsistentRenames) {
 			String before = pattern.getBefore();
 			String after = pattern.getAfter();
-			if(after.contains(".") && after.startsWith(LANG.THIS_DOT)) {
+			if(after.contains(".") && after.startsWith(LANG2.THIS_DOT)) {
 				after = after.substring(after.lastIndexOf(".") + 1, after.length());
 			}
-			if(before.contains(".") && before.startsWith(LANG.THIS_DOT)) {
+			if(before.contains(".") && before.startsWith(LANG1.THIS_DOT)) {
 				before = before.substring(before.lastIndexOf(".") + 1, before.length());
 			}
 			UMLAttribute a1 = findAttributeInOriginalClass(before);
@@ -1301,8 +1303,8 @@ public abstract class UMLAbstractClassDiff {
 		}
 		for(CandidateAttributeRefactoring candidate : mapper.getCandidateAttributeRenames()) {
 			if(!multipleExtractedMethodInvocationsWithDifferentAttributesAsArguments(candidate, refactorings)) {
-				String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG);
-				String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG);
+				String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG1);
+				String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG2);
 				if(before.contains(".") && after.contains(".")) {
 					String prefix1 = before.substring(0, before.lastIndexOf(".") + 1);
 					String prefix2 = after.substring(0, after.lastIndexOf(".") + 1);
@@ -1327,9 +1329,9 @@ public abstract class UMLAbstractClassDiff {
 			if(movedAttributes != candidate.getMergedVariables().size()) {
 				Set<String> before = new LinkedHashSet<String>();
 				for(String mergedVariable : candidate.getMergedVariables()) {
-					before.add(PrefixSuffixUtils.normalize(mergedVariable, LANG));
+					before.add(PrefixSuffixUtils.normalize(mergedVariable, LANG1));
 				}
-				String after = PrefixSuffixUtils.normalize(candidate.getNewVariable(), LANG);
+				String after = PrefixSuffixUtils.normalize(candidate.getNewVariable(), LANG2);
 				MergeVariableReplacement merge = new MergeVariableReplacement(before, after);
 				processMerge(mergeMap, merge, candidate);
 			}
@@ -1337,9 +1339,9 @@ public abstract class UMLAbstractClassDiff {
 		for(CandidateSplitVariableRefactoring candidate : mapper.getCandidateAttributeSplits()) {
 			Set<String> after = new LinkedHashSet<String>();
 			for(String splitVariable : candidate.getSplitVariables()) {
-				after.add(PrefixSuffixUtils.normalize(splitVariable, LANG));
+				after.add(PrefixSuffixUtils.normalize(splitVariable, LANG2));
 			}
-			String before = PrefixSuffixUtils.normalize(candidate.getOldVariable(), LANG);
+			String before = PrefixSuffixUtils.normalize(candidate.getOldVariable(), LANG1);
 			SplitVariableReplacement split = new SplitVariableReplacement(before, after);
 			processSplit(splitMap, split, candidate);
 		}
@@ -1348,7 +1350,7 @@ public abstract class UMLAbstractClassDiff {
 	public int movedAttributeCount(CandidateMergeVariableRefactoring candidate) {
 		UMLAttribute addedAttribute = null;
 		for(UMLAttribute attribute : addedAttributes) {
-			if(attribute.getName().equals(PrefixSuffixUtils.normalize(candidate.getNewVariable(), LANG))) {
+			if(attribute.getName().equals(PrefixSuffixUtils.normalize(candidate.getNewVariable(), LANG2))) {
 				addedAttribute = attribute;
 				break;
 			}
@@ -1360,7 +1362,7 @@ public abstract class UMLAbstractClassDiff {
 				for(String mergedVariable : candidate.getMergedVariables()) {
 					UMLAttribute removedAttribute = null;
 					for(UMLAttribute attribute : removedAttributes) {
-						if(attribute.getName().equals(PrefixSuffixUtils.normalize(mergedVariable, LANG))) {
+						if(attribute.getName().equals(PrefixSuffixUtils.normalize(mergedVariable, LANG1))) {
 							removedAttribute = attribute;
 							break;
 						}
@@ -1416,8 +1418,8 @@ public abstract class UMLAbstractClassDiff {
 		for(Replacement replacement : map.keySet()) {
 			Set<CandidateAttributeRefactoring> candidates = map.get(replacement);
 			for(CandidateAttributeRefactoring candidate : candidates) {
-				String originalAttributeName = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG);
-				String renamedAttributeName = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG);
+				String originalAttributeName = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG1);
+				String renamedAttributeName = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG2);
 				UMLOperationBodyMapper candidateMapper = null;
 				for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 					if(mapper.getMappings().containsAll(candidate.getReferences())) {
@@ -1443,8 +1445,8 @@ public abstract class UMLAbstractClassDiff {
 								}
 								else {
 									for(AbstractCodeFragment statement : candidateMapper.getNonMappedLeavesT1()) {
-										if(statement.getString().startsWith(variableDeclaration.getVariableName() + LANG.ASSIGNMENT) ||
-												statement.getString().startsWith(LANG.THIS_DOT + variableDeclaration.getVariableName() + LANG.ASSIGNMENT)) {
+										if(statement.getString().startsWith(variableDeclaration.getVariableName() + LANG1.ASSIGNMENT) ||
+												statement.getString().startsWith(LANG1.THIS_DOT + variableDeclaration.getVariableName() + LANG1.ASSIGNMENT)) {
 											nonMatchingVariableNames.add(variableDeclaration.getVariableName());
 											break;
 										}
@@ -1489,8 +1491,8 @@ public abstract class UMLAbstractClassDiff {
 								}
 								else {
 									for(AbstractCodeFragment statement : candidateMapper.getNonMappedLeavesT2()) {
-										if(statement.getString().startsWith(variableDeclaration.getVariableName() + LANG.ASSIGNMENT) ||
-												statement.getString().startsWith(LANG.THIS_DOT + variableDeclaration.getVariableName() + LANG.ASSIGNMENT)) {
+										if(statement.getString().startsWith(variableDeclaration.getVariableName() + LANG2.ASSIGNMENT) ||
+												statement.getString().startsWith(LANG2.THIS_DOT + variableDeclaration.getVariableName() + LANG2.ASSIGNMENT)) {
 											nonMatchingVariableNames.add(variableDeclaration.getVariableName());
 											break;
 										}
@@ -1731,15 +1733,15 @@ public abstract class UMLAbstractClassDiff {
 			}
 			boolean variables1contains = (allVariables1.contains(pattern.getBefore()) &&
 					!mapper.getParameterNameList1().contains(pattern.getBefore())) ||
-					allVariables1.contains(LANG.THIS_DOT+pattern.getBefore());
+					allVariables1.contains(LANG1.THIS_DOT+pattern.getBefore());
 			if(!variables1contains && topLevelClassName != null) {
-				variables1contains = allVariables1.contains(topLevelClassName + "." + LANG.THIS_DOT+pattern.getBefore());
+				variables1contains = allVariables1.contains(topLevelClassName + "." + LANG1.THIS_DOT+pattern.getBefore());
 			}
 			boolean variables2Contains = (allVariables2.contains(pattern.getAfter()) &&
 					!mapper.getParameterNameList2().contains(pattern.getAfter())) ||
-					allVariables2.contains(LANG.THIS_DOT+pattern.getAfter());
+					allVariables2.contains(LANG2.THIS_DOT+pattern.getAfter());
 			if(!variables2Contains && topLevelClassName != null) {
-				variables2Contains = allVariables2.contains(topLevelClassName + "." + LANG.THIS_DOT+pattern.getAfter());
+				variables2Contains = allVariables2.contains(topLevelClassName + "." + LANG2.THIS_DOT+pattern.getAfter());
 			}
 			if(variables1contains && !variables2Contains) {
 				boolean skip = false;
@@ -1748,7 +1750,7 @@ public abstract class UMLAbstractClassDiff {
 						for(UMLOperation addedOperation : addedOperations) {
 							if(call.matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
 								List<String> addedOperationVariables = addedOperation.getAllVariables();
-								if(addedOperationVariables.contains(pattern.getAfter()) || addedOperationVariables.contains(LANG.THIS_DOT + pattern.getAfter())) {
+								if(addedOperationVariables.contains(pattern.getAfter()) || addedOperationVariables.contains(LANG2.THIS_DOT + pattern.getAfter())) {
 									skip = true;
 									break;
 								}
@@ -1758,7 +1760,7 @@ public abstract class UMLAbstractClassDiff {
 							if(!mapper.equals(mapper2)) {
 								if(call.matchesOperation(mapper2.getContainer2(), mapper.getContainer2(), this, modelDiff)) {
 									List<String> addedOperationVariables = mapper2.getContainer2().getAllVariables();
-									if(addedOperationVariables.contains(pattern.getAfter()) || addedOperationVariables.contains(LANG.THIS_DOT + pattern.getAfter())) {
+									if(addedOperationVariables.contains(pattern.getAfter()) || addedOperationVariables.contains(LANG2.THIS_DOT + pattern.getAfter())) {
 										skip = true;
 										break;
 									}
@@ -1782,7 +1784,7 @@ public abstract class UMLAbstractClassDiff {
 						for(UMLOperation removedOperation : removedOperations) {
 							if(call.matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff)) {
 								List<String> removedOperationVariables = removedOperation.getAllVariables();
-								if(removedOperationVariables.contains(pattern.getBefore()) || removedOperationVariables.contains(LANG.THIS_DOT + pattern.getBefore())) {
+								if(removedOperationVariables.contains(pattern.getBefore()) || removedOperationVariables.contains(LANG1.THIS_DOT + pattern.getBefore())) {
 									skip = true;
 									break;
 								}
@@ -1792,7 +1794,7 @@ public abstract class UMLAbstractClassDiff {
 							if(!mapper.equals(mapper2)) {
 								if(call.matchesOperation(mapper2.getContainer1(), mapper.getContainer1(), this, modelDiff)) {
 									List<String> removedOperationVariables = mapper2.getContainer1().getAllVariables();
-									if(removedOperationVariables.contains(pattern.getBefore()) || removedOperationVariables.contains(LANG.THIS_DOT + pattern.getBefore())) {
+									if(removedOperationVariables.contains(pattern.getBefore()) || removedOperationVariables.contains(LANG1.THIS_DOT + pattern.getBefore())) {
 										skip = true;
 										break;
 									}

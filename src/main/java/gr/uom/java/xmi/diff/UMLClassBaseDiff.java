@@ -2591,7 +2591,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						if(methodSignature != null && openCurlyBrackets == 0) {
 							int indexOfSignature = comment.indexOf(methodSignature);
 							String commentSubString = comment.substring(indexOfSignature, comment.length());
-							int indexOfOpenCurlyBracket = commentSubString.indexOf(LANG.OPEN_BLOCK);
+							int indexOfOpenCurlyBracket = commentSubString.indexOf(LANG2.OPEN_BLOCK);
 							bodyStartOffset = indexOfSignature + indexOfOpenCurlyBracket;
 						}
 						openCurlyBrackets++;
@@ -2810,7 +2810,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				mapperSet.add(operationBodyMapper);
 			}
 			// in Python only one constructor is allowed
-			else if(LANG.equals(Constants.PYTHON) && removedOperation.isConstructor() && addedOperation.isConstructor()) {
+			else if((LANG1.equals(Constants.PYTHON) || LANG2.equals(Constants.PYTHON)) && removedOperation.isConstructor() && addedOperation.isConstructor()) {
 				mapperSet.add(operationBodyMapper);
 			}
 			else {
@@ -3199,7 +3199,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				boolean returnFound = false;
 				if(returnType1.getClassType().equals("void") && !returnType2.getClassType().equals("void")) {
 					for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
-						if(fragment1.getString().equals(LANG.RETURN_STATEMENT)) {
+						if(fragment1.getString().equals(LANG1.RETURN_STATEMENT)) {
 							returnFound = true;
 							break;
 						}
@@ -3207,7 +3207,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 				if(!returnFound) {
 					for(AbstractCodeFragment statement2 : operationBodyMapper.getNonMappedLeavesT2()) {
-						if(statement2.getVariables().size() > 0 && statement2.getString().equals(LANG.RETURN_SPACE + statement2.getVariables().get(0).getString() + LANG.STATEMENT_TERMINATION)) {
+						if(statement2.getVariables().size() > 0 && statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getVariables().get(0).getString() + LANG2.STATEMENT_TERMINATION)) {
 							VariableDeclaration variableDeclaration2 = operationBodyMapper.getContainer2().getVariableDeclaration(statement2.getVariables().get(0).getString());
 							if(variableDeclaration2 != null && variableDeclaration2.getType() != null && variableDeclaration2.getType().equals(returnType2)) {
 								nonMappedElementsT2--;
@@ -3403,7 +3403,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				for(AbstractCall invocation : operationInvocations2) {
 					if(!(invocation instanceof MethodReference) && invocation.matchesOperation(bestMapper.getContainer2(), operation2, this, modelDiff) && !invocation.matchesOperation(bestMapper.getContainer1(), operation2, this, modelDiff) &&
 							(!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, removedOperations) || commonParameterTypes > bestCommonParameterTypes) &&
-							(invocation.getExpression() == null || invocation.getExpression().equals(LANG.THIS))) {
+							(invocation.getExpression() == null || invocation.getExpression().equals(LANG2.THIS))) {
 						boolean skip = false;
 						for(UMLOperationBodyMapper m : operationBodyMapperList) {
 							if(m.getContainer1().getName().equals(operation2.getName()) && !m.getContainer1().stringRepresentation().equals(m.getContainer2().stringRepresentation())) {
@@ -3428,7 +3428,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				for(AbstractCall invocation : operationInvocations1) {
 					if(!(invocation instanceof MethodReference) && invocation.matchesOperation(bestMapper.getContainer1(), operation1, this, modelDiff) && !invocation.matchesOperation(bestMapper.getContainer2(), operation1, this, modelDiff) &&
 							!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, addedOperations) &&
-							(invocation.getExpression() == null || invocation.getExpression().equals(LANG.THIS))) {
+							(invocation.getExpression() == null || invocation.getExpression().equals(LANG1.THIS))) {
 						boolean skip = false;
 						for(UMLOperationBodyMapper m : operationBodyMapperList) {
 							if(m.getContainer2().getName().equals(operation1.getName()) && !m.getContainer1().stringRepresentation().equals(m.getContainer2().stringRepresentation())) {
@@ -3538,8 +3538,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						List<String> commonStatements = new ArrayList<String>();
 						List<String> addedOperationStringRepresentation = addedOperation.stringRepresentation();
 						for(String statement : addedOperationStringRepresentation) {
-							if(!statement.equals(LANG.OPEN_BLOCK) && !statement.equals(LANG.CLOSE_BLOCK) && !statement.equals(LANG.TRY) && !statement.startsWith("catch(") && !statement.startsWith(LANG.CASE_SPACE) && !statement.startsWith("default :") &&
-									!statement.equals(LANG.RETURN_TRUE) && !statement.equals(LANG.RETURN_FALSE) && !statement.equals(LANG.RETURN_THIS) && !statement.equals(LANG.RETURN_NULL) && !statement.equals(LANG.RETURN_STATEMENT)) {
+							if(!statement.equals(LANG2.OPEN_BLOCK) && !statement.equals(LANG2.CLOSE_BLOCK) && !statement.equals(LANG2.TRY) && !statement.startsWith("catch(") && !statement.startsWith(LANG2.CASE_SPACE) && !statement.startsWith("default :") &&
+									!statement.equals(LANG2.RETURN_TRUE) && !statement.equals(LANG2.RETURN_FALSE) && !statement.equals(LANG2.RETURN_THIS) && !statement.equals(LANG2.RETURN_NULL) && !statement.equals(LANG2.RETURN_STATEMENT)) {
 								if(stringRepresentation.contains(statement)) {
 									commonStatements.add(statement);
 								}
@@ -3610,8 +3610,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						List<String> commonStatements = new ArrayList<String>();
 						List<String> removedOperationStringRepresentation = removedOperation.stringRepresentation();
 						for(String statement : removedOperationStringRepresentation) {
-							if(!statement.equals(LANG.OPEN_BLOCK) && !statement.equals(LANG.CLOSE_BLOCK) && !statement.equals(LANG.TRY) && !statement.startsWith("catch(") && !statement.startsWith(LANG.CASE_SPACE) && !statement.startsWith("default :") &&
-									!statement.equals(LANG.RETURN_TRUE) && !statement.equals(LANG.RETURN_FALSE) && !statement.equals(LANG.RETURN_THIS) && !statement.equals(LANG.RETURN_NULL) && !statement.equals(LANG.RETURN_STATEMENT)) {
+							if(!statement.equals(LANG1.OPEN_BLOCK) && !statement.equals(LANG1.CLOSE_BLOCK) && !statement.equals(LANG1.TRY) && !statement.startsWith("catch(") && !statement.startsWith(LANG1.CASE_SPACE) && !statement.startsWith("default :") &&
+									!statement.equals(LANG1.RETURN_TRUE) && !statement.equals(LANG1.RETURN_FALSE) && !statement.equals(LANG1.RETURN_THIS) && !statement.equals(LANG1.RETURN_NULL) && !statement.equals(LANG1.RETURN_STATEMENT)) {
 								if(stringRepresentation.contains(statement)) {
 									commonStatements.add(statement);
 								}
@@ -3780,7 +3780,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(variables1.size() > 0) {
 			int count = 0;
 			for(UMLAttribute attribute : originalClass.getAttributes()) {
-				if(attribute.getName().equals(variables1.get(0)) || variables1.get(0).equals(LANG.THIS_DOT + attribute.getName())) {
+				if(attribute.getName().equals(variables1.get(0)) || variables1.get(0).equals(LANG1.THIS_DOT + attribute.getName())) {
 					index1 = count;
 					break;
 				}
@@ -3792,7 +3792,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(variables2.size() > 0) {
 			int count = 0;
 			for(UMLAttribute attribute : nextClass.getAttributes()) {
-				if(attribute.getName().equals(variables2.get(0)) || variables2.get(0).equals(LANG.THIS_DOT + attribute.getName())) {
+				if(attribute.getName().equals(variables2.get(0)) || variables2.get(0).equals(LANG2.THIS_DOT + attribute.getName())) {
 					index2 = count;
 					break;
 				}

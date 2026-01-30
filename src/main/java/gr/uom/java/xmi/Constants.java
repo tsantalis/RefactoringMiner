@@ -2,13 +2,13 @@ package gr.uom.java.xmi;
 
 public enum Constants {
 	JAVA(";\n", "return ", "return;\n", "return true;\n", "return false;\n", "return null;\n", "return this;\n", "=", "break;\n", "continue;\n",
-			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", " ? ", " : ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "null", "true", "false"),
+			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", "this;\n", " ? ", " : ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "null", "true", "false"),
 	
 	PYTHON("\n", "return ", "return\n", "return true\n", "return false\n", "return None\n", "return self\n", "=", "break\n", "continue\n",
-			" -> ", "::", " + ", "raise ", "case ", "try", "{", "}", "{", "}", "self", "self.", " if ", " else ", "assertRaises", "assertRaises", " and ", " or ", "not ", "None", "True", "False"),
+			" -> ", "::", " + ", "raise ", "case ", "try", "{", "}", "{", "}", "self", "self.", "self\n", " if ", " else ", "assertRaises", "assertRaises", " and ", " or ", "not ", "None", "True", "False"),
 	
 	KOTLIN("\n", "return ", "return\n", "return true\n", "return false\n", "return null\n", "return this\n", " = ", "break\n", "continue\n",
-			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", " if ", " else ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "null", "true", "false");
+			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", "this\n", " if ", " else ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "null", "true", "false");
 	
 	public final String STATEMENT_TERMINATION;
 	public final String RETURN_SPACE;
@@ -32,6 +32,7 @@ public enum Constants {
 	public final String CLOSE_ARRAY_INITIALIZER;
 	public final String THIS;
 	public final String THIS_DOT;
+	public final String THIS_STATEMENT_TERMINATION;
 	public final String TERNARY_CONDITION;
 	public final String TERNARY_ELSE;
 	public final String ASSERT_THROWS;
@@ -66,6 +67,7 @@ public enum Constants {
 			String CLOSE_ARRAY_INITIALIZER,
 			String THIS,
 			String THIS_DOT,
+			String THIS_STATEMENT_TERMINATION,
 			String TERNARY_CONDITION,
 			String TERNARY_ELSE,
 			String ASSERT_THROWS,
@@ -98,6 +100,7 @@ public enum Constants {
 		this.CLOSE_ARRAY_INITIALIZER = CLOSE_ARRAY_INITIALIZER;
 		this.THIS = THIS;
 		this.THIS_DOT = THIS_DOT;
+		this.THIS_STATEMENT_TERMINATION = THIS_STATEMENT_TERMINATION;
 		this.TERNARY_CONDITION = TERNARY_CONDITION;
 		this.TERNARY_ELSE = TERNARY_ELSE;
 		this.ASSERT_THROWS = ASSERT_THROWS;

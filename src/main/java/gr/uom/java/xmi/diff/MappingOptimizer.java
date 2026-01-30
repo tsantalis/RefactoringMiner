@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -31,11 +32,13 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
 public class MappingOptimizer {
 	private UMLAbstractClassDiff classDiff;
-	private final Constants LANG;
+	private final Constants LANG1;
+	private final Constants LANG2;
 	
 	public MappingOptimizer(UMLAbstractClassDiff classDiff) {
 		this.classDiff = classDiff;
-		this.LANG = classDiff.LANG;
+		this.LANG1 = classDiff.LANG1;
+		this.LANG2 = classDiff.LANG2;
 	}
 
 	public void optimizeDuplicateMappingsForMoveCode(List<UMLOperationBodyMapper> moveCodeMappers, Collection<Refactoring> refactorings) {
@@ -153,10 +156,10 @@ public class MappingOptimizer {
 		for(AbstractCodeMapping previousMapping : mappings) {
 			AbstractCodeFragment previousFragment2 = previousMapping.getFragment2();
 			AbstractCodeFragment newFragment2 = newMapping.getFragment2();
-			if(previousFragment2.getString().startsWith(LANG.RETURN_SPACE) && previousFragment2.getString().endsWith(LANG.STATEMENT_TERMINATION) &&
-					newFragment2.getString().startsWith(LANG.RETURN_SPACE) && newFragment2.getString().endsWith(LANG.STATEMENT_TERMINATION)) {
-				String previousReturnExpression = previousFragment2.getString().substring(LANG.RETURN_SPACE.length(), previousFragment2.getString().length()-LANG.STATEMENT_TERMINATION.length());
-				String newReturnExpression = newFragment2.getString().substring(LANG.RETURN_SPACE.length(), newFragment2.getString().length()-LANG.STATEMENT_TERMINATION.length());
+			if(previousFragment2.getString().startsWith(LANG2.RETURN_SPACE) && previousFragment2.getString().endsWith(LANG2.STATEMENT_TERMINATION) &&
+					newFragment2.getString().startsWith(LANG2.RETURN_SPACE) && newFragment2.getString().endsWith(LANG2.STATEMENT_TERMINATION)) {
+				String previousReturnExpression = previousFragment2.getString().substring(LANG2.RETURN_SPACE.length(), previousFragment2.getString().length()-LANG2.STATEMENT_TERMINATION.length());
+				String newReturnExpression = newFragment2.getString().substring(LANG2.RETURN_SPACE.length(), newFragment2.getString().length()-LANG2.STATEMENT_TERMINATION.length());
 				if(previousReturnExpression.contains("(" + newReturnExpression + ")") || newReturnExpression.contains("(" + previousReturnExpression + ")")) {
 					return true;
 				}
@@ -278,11 +281,11 @@ public class MappingOptimizer {
 					int identicalStatements = 0;
 					for(int i=0; i<minSize; i++) {
 						if(stringRepresentation1.get(i).equals(stringRepresentation2.get(i)) &&
-								!stringRepresentation1.get(i).equals(LANG.OPEN_BLOCK) && !stringRepresentation1.get(i).equals(LANG.CLOSE_BLOCK)) {
+								!stringRepresentation1.get(i).equals(LANG1.OPEN_BLOCK) && !stringRepresentation1.get(i).equals(LANG1.CLOSE_BLOCK)) {
 							identicalStatements++;
 						}
 						else if(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
-								!stringRepresentation1.get(i).equals(LANG.OPEN_BLOCK) && !stringRepresentation1.get(i).equals(LANG.CLOSE_BLOCK) &&
+								!stringRepresentation1.get(i).equals(LANG1.OPEN_BLOCK) && !stringRepresentation1.get(i).equals(LANG1.CLOSE_BLOCK) &&
 								mapping.containsReplacement(ReplacementType.VARIABLE_NAME) && i > 0) {
 							//tolerate variable renames
 							int editDistance = StringDistance.editDistance(stringRepresentation1.get(i), stringRepresentation2.get(i));
@@ -327,8 +330,8 @@ public class MappingOptimizer {
 				replacementTypeCount.add(mapper.getReplacementTypesExcludingParameterToArgumentMaps(mapping).size());
 				boolean replacementFound = false;
 				for(Replacement r : mapping.getReplacements()) {
-					if((r.getBefore().equals(mapping.getFragment1().getString()) || (r.getBefore() + LANG.STATEMENT_TERMINATION).equals(mapping.getFragment1().getString())) &&
-							(r.getAfter().equals(mapping.getFragment2().getString()) || (r.getAfter() + LANG.STATEMENT_TERMINATION).equals(mapping.getFragment2().getString()))) {
+					if((r.getBefore().equals(mapping.getFragment1().getString()) || (r.getBefore() + LANG1.STATEMENT_TERMINATION).equals(mapping.getFragment1().getString())) &&
+							(r.getAfter().equals(mapping.getFragment2().getString()) || (r.getAfter() + LANG2.STATEMENT_TERMINATION).equals(mapping.getFragment2().getString()))) {
 						replacementFound = true;
 						break;
 					}
@@ -425,7 +428,7 @@ public class MappingOptimizer {
 							}
 						}
 						if(parentIsContainerBody.get(i) == true && editDistances.get(i).equals(editDistances.get(parentMappingFound.indexOf(true))) &&
-								!mappings.get(i).getFragment1().getString().startsWith(LANG.RETURN_SPACE) && !mappings.get(i).getFragment2().getString().startsWith(LANG.RETURN_SPACE)) {
+								!mappings.get(i).getFragment1().getString().startsWith(LANG1.RETURN_SPACE) && !mappings.get(i).getFragment2().getString().startsWith(LANG2.RETURN_SPACE)) {
 							skip = true;
 						}
 						if(parentIsContainerBody.get(i) == true && mappings.get(i).getFragment1().getAnonymousClassDeclarations().size() > 0 && mappings.get(i).getFragment2().getAnonymousClassDeclarations().size() > 0) {
@@ -434,7 +437,7 @@ public class MappingOptimizer {
 						}
 						List<VariableDeclaration> fragment2VariableDeclarations = mappings.get(i).getFragment2().getVariableDeclarations();
 						if(parentIsContainerBody.get(i) == true && fragment2VariableDeclarations.size() > 0 &&
-								mappings.get(parentMappingFound.indexOf(true)).getFragment2().getString().startsWith(fragment2VariableDeclarations.get(0).getVariableName() + LANG.ASSIGNMENT)) {
+								mappings.get(parentMappingFound.indexOf(true)).getFragment2().getString().startsWith(fragment2VariableDeclarations.get(0).getVariableName() + LANG2.ASSIGNMENT)) {
 							skip = true;
 							splitDeclaration = true;
 						}
@@ -470,7 +473,7 @@ public class MappingOptimizer {
 						}
 						List<VariableDeclaration> fragment2VariableDeclarations = mappings.get(parentIsContainerBody.indexOf(true)).getFragment2().getVariableDeclarations();
 						if(fragment2VariableDeclarations.size() > 0 &&
-								mappings.get(i).getFragment2().getString().startsWith(fragment2VariableDeclarations.get(0).getVariableName() + LANG.ASSIGNMENT)) {
+								mappings.get(i).getFragment2().getString().startsWith(fragment2VariableDeclarations.get(0).getVariableName() + LANG2.ASSIGNMENT)) {
 							skip = true;
 							splitDeclaration = true;
 						}
@@ -481,8 +484,8 @@ public class MappingOptimizer {
 				}
 				if(!parentIsContainerBody.contains(false)) {
 					if(mappings.get(0).getFragment1() instanceof AbstractExpression &&
-							(mappings.get(0).getFragment1().getString().contains(LANG.OR) ||
-							mappings.get(0).getFragment1().getString().contains(LANG.AND))) {
+							(mappings.get(0).getFragment1().getString().contains(LANG1.OR) ||
+							mappings.get(0).getFragment1().getString().contains(LANG1.AND))) {
 						splitConditional = true;
 					}
 				}
@@ -657,7 +660,7 @@ public class MappingOptimizer {
 		for(AbstractCodeMapping mapping : mappings) {
 			String s1 = mapping.getFragment1().getString();
 			String s2 = mapping.getFragment2().getString();
-			if(s1.equals(s2) || StringBasedHeuristics.differOnlyInThis(s1, s2, LANG)) {
+			if(s1.equals(s2) || StringBasedHeuristics.differOnlyInThis(s1, s2, LANG1, LANG2)) {
 				identicalMapping = true;
 			}
 			for(AbstractCall operationInvocation : operationInvocations) {
@@ -674,17 +677,17 @@ public class MappingOptimizer {
 
 	private boolean callsExtractedOrInlinedMethodWithVariableDeclarationOrThrow(AbstractCodeMapping mapping, AbstractCall operationInvocation) {
 		if(operationInvocation != null) {
-			if(stringBasedInvocationMatch(mapping.getFragment1(), operationInvocation)) {
+			if(stringBasedInvocationMatch(mapping.getFragment1(), operationInvocation, LANG1)) {
 				return true;
 			}
-			if(stringBasedInvocationMatch(mapping.getFragment2(), operationInvocation)) {
+			if(stringBasedInvocationMatch(mapping.getFragment2(), operationInvocation, LANG2)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean stringBasedInvocationMatch(AbstractCodeFragment callFragment, AbstractCall operationInvocation) {
+	private boolean stringBasedInvocationMatch(AbstractCodeFragment callFragment, AbstractCall operationInvocation, Constants LANG) {
 		AbstractCall invocation = callFragment.invocationCoveringEntireFragment();
 		if(invocation == null) {
 			invocation = callFragment.fieldAssignmentInvocationCoveringEntireStatement(classDiff);

@@ -14,7 +14,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class PurityChecker {
-	private static Constants LANG;
+	private static Constants LANG1;
+	private static Constants LANG2;
 
     public static Map<Refactoring, PurityCheckResult> check(List<Refactoring> refactorings, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
         Map<Refactoring, PurityCheckResult> purityCheckResults = new LinkedHashMap<>();
@@ -30,34 +31,41 @@ public class PurityChecker {
             case EXTRACT_OPERATION:
             case EXTRACT_AND_MOVE_OPERATION:
                 ExtractOperationRefactoring extract = (ExtractOperationRefactoring) refactoring;
-                LANG = extract.getBodyMapper().LANG;
+                LANG1 = extract.getBodyMapper().LANG1;
+                LANG2 = extract.getBodyMapper().LANG2;
                 result = detectExtractOperationPurity(extract, refactorings, modelDiff);
                 break;
             case MOVE_OPERATION:
             case MOVE_AND_RENAME_OPERATION:
                 MoveOperationRefactoring move = (MoveOperationRefactoring) refactoring;
-                LANG = move.getBodyMapper().LANG;
+                LANG1 = move.getBodyMapper().LANG1;
+                LANG2 = move.getBodyMapper().LANG2;
                 result = detectMoveMethodPurity(move, refactorings, modelDiff);
                 break;
             case PUSH_DOWN_OPERATION:
                 PushDownOperationRefactoring pushDown = (PushDownOperationRefactoring) refactoring;
-                LANG = pushDown.getBodyMapper().LANG;
+                LANG1 = pushDown.getBodyMapper().LANG1;
+                LANG2 = pushDown.getBodyMapper().LANG2;
                 result = detectPushDownMethodPurity(pushDown, refactorings, modelDiff);
                 break;
             case PULL_UP_OPERATION:
                 PullUpOperationRefactoring pullUp = (PullUpOperationRefactoring) refactoring;
-                LANG = pullUp.getBodyMapper().LANG;
+                LANG1 = pullUp.getBodyMapper().LANG1;
+                LANG2 = pullUp.getBodyMapper().LANG2;
                 result = detectPullUpMethodPurity(pullUp, refactorings, modelDiff);
                 break;
             case INLINE_OPERATION:
             case MOVE_AND_INLINE_OPERATION:
                 InlineOperationRefactoring inline = (InlineOperationRefactoring) refactoring;
-                LANG = inline.getBodyMapper().LANG;
+                LANG1 = inline.getBodyMapper().LANG1;
+                LANG2 = inline.getBodyMapper().LANG2;
                 result = detectInlineMethodPurity(inline, refactorings, modelDiff);
                 break;
             case SPLIT_OPERATION:
                 SplitOperationRefactoring split = (SplitOperationRefactoring) refactoring;
-                LANG = split.getMappers().iterator().next().LANG;
+                UMLOperationBodyMapper mapper = split.getMappers().iterator().next();
+                LANG1 = mapper.LANG1;
+                LANG2 = mapper.LANG2;
                 result = detectSplitMethodPurity(split, refactorings, modelDiff);
                 break;
             default:
@@ -3246,8 +3254,8 @@ Mapping state for Move Method refactoring purity:
 
         for (Replacement replacement : replacementsToCheck) {
             if (replacement.getType().equals(Replacement.ReplacementType.VARIABLE_NAME)) {
-                if (findLongestPrefixSuffix(replacement.getBefore(), replacement.getAfter()).equals(LANG.THIS) ||
-                        findLongestPrefixSuffix(replacement.getAfter(), replacement.getBefore()).equals(LANG.THIS)) {
+                if (findLongestPrefixSuffix(replacement.getBefore(), replacement.getAfter()).equals(LANG1.THIS) ||
+                        findLongestPrefixSuffix(replacement.getAfter(), replacement.getBefore()).equals(LANG2.THIS)) {
                     replacementsToRemove.add(replacement);
                 }
             }
@@ -4227,12 +4235,12 @@ Mapping state for Move Method refactoring purity:
         Set<Replacement> replacementsToRemove = new HashSet<>();
 
         for (Replacement replacement : replacementsToCheck) {
-                if (replacement.getBefore().contains(LANG.THIS) || replacement.getAfter().contains(LANG.THIS)) {
+                if (replacement.getBefore().contains(LANG1.THIS) || replacement.getAfter().contains(LANG2.THIS)) {
                     int findSimilar1 = replacement.getAfter().indexOf(replacement.getBefore());
                     int findSimilar2 = replacement.getBefore().indexOf(replacement.getAfter());
                     if (findSimilar1 != -1) {
                         try {
-	                        if (replacement.getAfter().substring(0, findSimilar1 - 1).equals(LANG.THIS)) {
+	                        if (replacement.getAfter().substring(0, findSimilar1 - 1).equals(LANG2.THIS)) {
 	                            replacementsToRemove.add(replacement);
 	                        }
                         } catch (StringIndexOutOfBoundsException ignored) {
@@ -4241,15 +4249,15 @@ Mapping state for Move Method refactoring purity:
                     } else if (findSimilar2 != -1) {
                         try {
                             String temp = replacement.getBefore().substring(0, findSimilar2 - 1);
-                            if (temp.equals(LANG.THIS)) {
+                            if (temp.equals(LANG1.THIS)) {
                                 replacementsToRemove.add(replacement);
                             }
                         } catch (StringIndexOutOfBoundsException ignored) {
                             //System.out.println("ignored");
                         }
                     }
-                else if (replacement.getBefore().contains(LANG.THIS_DOT) && !replacement.getAfter().contains(LANG.THIS_DOT)) {
-                    String before = replacement.getBefore().replace(LANG.THIS_DOT, "");
+                else if (replacement.getBefore().contains(LANG1.THIS_DOT) && !replacement.getAfter().contains(LANG2.THIS_DOT)) {
+                    String before = replacement.getBefore().replace(LANG1.THIS_DOT, "");
                     if (before.equals(replacement.getAfter())) {
                         replacementsToRemove.add(replacement);
                     }
@@ -6055,7 +6063,7 @@ Mapping state for Move Method refactoring purity:
 
 		String s1 = fragment1.getString();
 		String s2 = fragment2.getArgumentizedString();
-		String lambdaArrow = "()" + LANG.LAMBDA_ARROW;
+		String lambdaArrow = "()" + LANG2.LAMBDA_ARROW;
 		String supplierGet = ".get()";
 		String tmp = s2.replace(supplierGet, "");
 		tmp = tmp.replace(lambdaArrow, "");

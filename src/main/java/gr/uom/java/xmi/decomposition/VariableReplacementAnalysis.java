@@ -1077,7 +1077,7 @@ public class VariableReplacementAnalysis {
 			removedAttributes.addAll(classDiff.getRemovedAttributes());
 			if(modelDiff != null) {
 				for(UMLAbstractClassDiff otherClassDiff : modelDiff.getCommonClassDiffList()) {
-					if(otherClassDiff.getNextClass().isInnerClass(classDiff.getNextClass())) {
+					if(!otherClassDiff.equals(classDiff)) {
 						addedAttributes.addAll(otherClassDiff.getAddedAttributes());
 						removedAttributes.addAll(otherClassDiff.getRemovedAttributes());
 					}
@@ -1212,7 +1212,7 @@ public class VariableReplacementAnalysis {
 						String before = argumentBefore != null ? argumentBefore : replacement.getBefore();
 						for(UMLAttribute addedAttribute : addedAttributes) {
 							VariableDeclaration declaration2 = addedAttribute.getVariableDeclaration();
-							if(addedAttribute.getName().equals(after)) {
+							if(addedAttribute.getName().equals(after) || after.equals(addedAttribute.getNonQualifiedClassName() + "." + addedAttribute.getName())) {
 								LeafExpression leafExpression = extractInlineCondition(declaration2, replacement, before);
 								if(leafExpression != null) {
 									ExtractAttributeRefactoring refactoring = new ExtractAttributeRefactoring(addedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);

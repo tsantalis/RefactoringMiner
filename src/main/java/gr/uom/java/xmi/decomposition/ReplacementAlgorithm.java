@@ -3694,6 +3694,12 @@ public class ReplacementAlgorithm {
 				replacementInfo.addReplacement(replacement);
 				return replacementInfo.getReplacements();
 			}
+			else if(creationCoveringTheEntireStatement1.compatible(creationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap) && variableDeclarations1.size() > 0 && variableDeclarations2.size() > 0 && variableDeclarations1.get(0).getVariableName().equals(variableDeclarations2.get(0).getVariableName())) {
+				Replacement replacement = new ObjectCreationReplacement(creationCoveringTheEntireStatement1.actualString(),
+						creationCoveringTheEntireStatement2.actualString(), creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION);
+				replacementInfo.addReplacement(replacement);
+				return replacementInfo.getReplacements();
+			}
 			else if(creationCoveringTheEntireStatement1.inlinedStatementBecomesAdditionalArgument(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), statement1, replacementInfo.getStatements1())) {
 				Replacement replacement = new ObjectCreationReplacement(creationCoveringTheEntireStatement1.actualString(),
 						creationCoveringTheEntireStatement2.actualString(), creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);

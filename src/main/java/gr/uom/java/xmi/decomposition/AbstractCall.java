@@ -1203,13 +1203,19 @@ public abstract class AbstractCall extends LeafExpression {
 				args.add(arg.substring(0, arg.indexOf("\n")));
 			}
 			else {
-				args.add(arg);
+				if(LANG.equals(Constants.KOTLIN) && arg.contains(LANG.ASSIGNMENT)) {
+					String afterAssignment = arg.substring(arg.indexOf(LANG.ASSIGNMENT) + LANG.ASSIGNMENT.length(), arg.length());
+					args.add(afterAssignment);
+				}
+				else {
+					args.add(arg);
+				}
 			}
 		}
 		return args;
 	}
 
-	private int argumentIntersectionSize(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
+	protected int argumentIntersectionSize(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
 		Set<String> argumentIntersection = argumentIntersection(call);
 		int argumentIntersectionSize = argumentIntersection.size();
 		for(String parameter : parameterToArgumentMap.keySet()) {

@@ -9719,6 +9719,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable leakReference : Inferred to refFromParentName : Inferred in method private State.enqueueGcRoots() from class shark.internal.PathFinder",
+        "comment": "<p>leakReference is split to refFromParentType and refFromParentName</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {

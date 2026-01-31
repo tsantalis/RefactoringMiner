@@ -134,7 +134,18 @@
           "validation": false
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "EXTRACT_ATTRIBUTE",
+          "description": "Extract Attribute\tpublic JD_ORDER_BY_LIST : String in class org.hibernate.processor.util.Constants",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_ATTRIBUTE",
+          "description": "Extract Attribute\tpublic JD_ORDER_BY : String in class org.hibernate.processor.util.Constants",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/hibernate/hibernate-orm.git",

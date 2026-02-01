@@ -60,52 +60,34 @@ public class TraversalEngine {
         }
 
         for (UsagePattern usagePattern : usagePatterns.values()) {
-            List<UsagePattern> path = new ArrayList<>();
-            path.add(usagePattern);
-            breakCircularDependencies(usagePattern, path);
+            breakCircularDependencies(usagePattern, new ArrayList<>());
         }
 
         this.usagePatterns.addAll(usagePatterns.values());
     }
 
     // TODO: test and validate
-    private Set<UsagePattern> breakCircularDependencies(UsagePattern usagePattern,
-            List<UsagePattern> path) {
-        Set<UsagePattern> ringNodes = new HashSet<>();
-
-        HashMap<Node, UsagePattern> requirements = usagePattern.getRequirements();
-        if (requirements.isEmpty()) {
-            return ringNodes;
+    private void breakCircularDependencies(UsagePattern usagePattern, List<UsagePattern> path) {
+        if (usagePattern.getRequirements().isEmpty()) {
+            return;
         }
 
-        ArrayList<UsagePattern> newPath = new ArrayList<>() {{
-            addAll(path);
-            add(usagePattern);
-        }};
-        for (Entry<Node, UsagePattern> nodeRequirement : requirements.entrySet()) {
-            Node node = nodeRequirement.getKey();
-            UsagePattern requirement = nodeRequirement.getValue();
+        List<UsagePattern> newPath = new ArrayList<>(path);
+        newPath.add(usagePattern);
 
-            if (path.contains(requirement)) {
-                usagePattern.breakRequirement(node);
-                ringNodes.add(requirement);
-                continue;
-            }
-
-            Set<UsagePattern> requirementRingNodes = breakCircularDependencies(requirement,
-                    newPath);
-            if (!requirementRingNodes.isEmpty()) {
-                usagePattern.breakRequirement(node);
-                ringNodes.addAll(requirementRingNodes);
-            }
+        List<Node> circularRequirementNodes = usagePattern.getRequirements().entrySet().stream()
+                .filter(nodeRequirement -> newPath.contains(nodeRequirement.getValue())).map(
+                        Entry::getKey).toList();
+        for (Node circularRequirementNode : circularRequirementNodes) {
+            usagePattern.breakRequirement(circularRequirementNode);
         }
 
-        ringNodes.remove(usagePattern);
-        return ringNodes;
+        for (UsagePattern requirement : usagePattern.getRequirements().values()) {
+            breakCircularDependencies(requirement, newPath);
+        }
     }
 
-    private void addUsageComponent(Node node,
-            HashMap<Node, UsagePattern> usagePatterns) {
+    private void addUsageComponent(Node node, HashMap<Node, UsagePattern> usagePatterns) {
         if (usagePatterns.containsKey(node)) {
             return;
         }
@@ -113,6 +95,9 @@ public class TraversalEngine {
         UsagePattern usageComponent = new UsagePattern(node);
         addContext(node, usageComponent);
         addMapping(node, usageComponent);
+
+        components.add(usageComponent);
+        usagePatterns.put(node, usageComponent);
 
         Set<Node> usedNodes = util.getUsedNodes(node);
         for (Node usedNode : usedNodes) {
@@ -127,9 +112,6 @@ public class TraversalEngine {
                 usageComponent.addRequirement(usedNode, usedComponent);
             }
         }
-
-        components.add(usageComponent);
-        usagePatterns.put(node, usageComponent);
     }
 
     private void addSuccessiveComponents() {

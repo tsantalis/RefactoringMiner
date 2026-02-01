@@ -26,6 +26,7 @@ import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
@@ -1075,12 +1076,23 @@ public class VariableReplacementAnalysis {
 			addedAttributes.addAll(classDiff.getAddedAttributes());
 			List<UMLAttribute> removedAttributes = new ArrayList<>();
 			removedAttributes.addAll(classDiff.getRemovedAttributes());
+			
+			Map<String, List<UMLAttribute>> attributesInAddedClasses = new LinkedHashMap<>();
+			Map<String, List<UMLAttribute>> attributesInRemovedClasses = new LinkedHashMap<>();
 			if(modelDiff != null) {
 				for(UMLAbstractClassDiff otherClassDiff : modelDiff.getCommonClassDiffList()) {
 					if(!otherClassDiff.equals(classDiff)) {
 						addedAttributes.addAll(otherClassDiff.getAddedAttributes());
 						removedAttributes.addAll(otherClassDiff.getRemovedAttributes());
 					}
+				}
+				for(UMLClass addedClass : modelDiff.getAddedClasses()) {
+					addedAttributes.addAll(addedClass.getAttributes());
+					attributesInAddedClasses.put(addedClass.getName(), addedClass.getAttributes());
+				}
+				for(UMLClass removedClass : modelDiff.getRemovedClasses()) {
+					removedAttributes.addAll(removedClass.getAttributes());
+					attributesInRemovedClasses.put(removedClass.getName(), removedClass.getAttributes());
 				}
 			}
 			for(AbstractCodeFragment fragment1 : mapper.getNonMappedLeavesT1()) {
@@ -1213,8 +1225,9 @@ public class VariableReplacementAnalysis {
 						for(UMLAttribute addedAttribute : addedAttributes) {
 							VariableDeclaration declaration2 = addedAttribute.getVariableDeclaration();
 							if(addedAttribute.getName().equals(after) || after.equals(addedAttribute.getNonQualifiedClassName() + "." + addedAttribute.getName())) {
-								LeafExpression leafExpression = extractInlineCondition(declaration2, replacement, before);
-								if(leafExpression != null) {
+								boolean attributeInAddedClass = attributesInAddedClasses.containsKey(addedAttribute.getClassName()) && attributesInAddedClasses.get(addedAttribute.getClassName()).contains(addedAttribute);							
+								LeafExpression leafExpression = extractInlineCondition(declaration2, replacement, before, attributeInAddedClass);
+								if(leafExpression != null && !classDiff.getOriginalClass().importsType(after) && !parameterNameList2.contains(after)) {
 									ExtractAttributeRefactoring refactoring = new ExtractAttributeRefactoring(addedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);
 									if(refactorings.contains(refactoring)) {
 										Iterator<Refactoring> it = refactorings.iterator();
@@ -1261,8 +1274,9 @@ public class VariableReplacementAnalysis {
 						for(UMLAttribute removedAttribute : removedAttributes) {
 							VariableDeclaration declaration1 = removedAttribute.getVariableDeclaration();
 							if(removedAttribute.getName().equals(before)) {
-								LeafExpression leafExpression = extractInlineCondition(declaration1, replacement, after);
-								if(leafExpression != null) {
+								boolean attributeInRemovedClass = attributesInRemovedClasses.containsKey(removedAttribute.getClassName()) && attributesInRemovedClasses.get(removedAttribute.getClassName()).contains(removedAttribute);
+								LeafExpression leafExpression = extractInlineCondition(declaration1, replacement, after, attributeInRemovedClass);
+								if(leafExpression != null && !classDiff.getNextClass().importsType(before) && !parameterNameList1.contains(before)) {
 									InlineAttributeRefactoring refactoring = new InlineAttributeRefactoring(removedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);
 									if(refactorings.contains(refactoring)) {
 										Iterator<Refactoring> it = refactorings.iterator();
@@ -1313,7 +1327,7 @@ public class VariableReplacementAnalysis {
 		}
 	}
 
-	private LeafExpression extractInlineCondition(VariableDeclaration variableDeclaration, Replacement replacement, String replacementAsString) {
+	private LeafExpression extractInlineCondition(VariableDeclaration variableDeclaration, Replacement replacement, String replacementAsString, boolean attributeInAddedOrRemovedClass) {
 		if(variableDeclaration.getInitializer() != null) {
 			if(variableDeclaration.getInitializer().getString().equals(replacementAsString)) {
 				List<LeafExpression> subExpressions = variableDeclaration.getInitializer().findExpression(replacementAsString);
@@ -1334,7 +1348,7 @@ public class VariableReplacementAnalysis {
 					}
 				}
 			}
-			if(replacement instanceof VariableReplacementWithMethodInvocation) {
+			if(!attributeInAddedOrRemovedClass && replacement instanceof VariableReplacementWithMethodInvocation) {
 				VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;
 				for(AbstractCall call : variableDeclaration.getInitializer().getMethodInvocations()) {
 					if(call.identicalName(r.getInvokedOperation())) {

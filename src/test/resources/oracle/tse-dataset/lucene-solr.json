@@ -280,6 +280,11 @@
           "type": "MOVE_CODE",
           "description": "Move Code\tfrom private parseAffix(affixes TreeMap<String,List<Integer>>, secondStageFlags Set<Character>, header String, reader LineNumberReader, isSuffix boolean, seenPatterns Map<String,Integer>, seenStrips Map<String,Integer>, flags FlagEnumerator) : void in class org.apache.lucene.analysis.hunspell.Dictionary to public compile(kind AffixKind, strip String, condition String, line String) : AffixCondition in class org.apache.lucene.analysis.hunspell.AffixCondition",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_ATTRIBUTE",
+          "description": "Extract Attribute\tpublic ALWAYS_TRUE_KEY : String in class org.apache.lucene.analysis.hunspell.AffixCondition",
+          "validation": true
         }
       ]
     },

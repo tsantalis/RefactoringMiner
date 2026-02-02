@@ -2988,10 +2988,12 @@ public class ReplacementAlgorithm {
 												subExpression2, additionallyMatchedStatements1, new LinkedHashSet<>());
 										replacementInfo.addReplacement(composite);
 									}
-									Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
-											subExpression2, invocationCoveringTheEntireStatement1, subOperationInvocation2, ReplacementType.METHOD_INVOCATION);
-									replacementInfo.addReplacement(replacement);
-									return replacementInfo.getReplacements();
+									if(subOperationInvocation2 != null) {
+										Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+												subExpression2, invocationCoveringTheEntireStatement1, subOperationInvocation2, ReplacementType.METHOD_INVOCATION);
+										replacementInfo.addReplacement(replacement);
+										return replacementInfo.getReplacements();
+									}
 								}
 								for(AbstractCodeFragment codeFragment : replacementInfo.getStatements1()) {
 									AbstractCall invocationCoveringEntireCodeFragment = codeFragment.invocationCoveringEntireFragment();

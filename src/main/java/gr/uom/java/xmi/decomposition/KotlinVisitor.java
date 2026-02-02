@@ -244,8 +244,17 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 		for (KtValueArgument argument : arguments) {
 			processArgument(argument, data);
 		}
+		KtExpression calleeExpression = expression.getCalleeExpression();
+		if(calleeExpression instanceof KtNameReferenceExpression nameReference && Character.isUpperCase(nameReference.getReferencedName().charAt(0))) {
+			ObjectCreation creation = new ObjectCreation(cu, sourceFolder, filePath, expression, container, fileContent);
+			creations.add(creation);
+			types.add(creation.getType().toString());
+		}
 		OperationInvocation invocation = new OperationInvocation(cu, sourceFolder, filePath, expression, container, fileContent);
 		methodInvocations.add(invocation);
+		if(invocation.getExpression() != null && Character.isUpperCase(invocation.getExpression().charAt(0))) {
+			types.add(invocation.getExpression());
+		}
 		if(expression.getCalleeExpression() != null) {
 			this.visitExpression(expression.getCalleeExpression(), data);
 		}

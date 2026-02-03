@@ -775,7 +775,8 @@ public class ReplacementAlgorithm {
 		for(String methodInvocation1 : methodInvocations1) {
 			String temp = new String(methodInvocation1);
 			for(Replacement replacement : replacementInfo.getReplacements()) {
-				temp = ReplacementUtil.performReplacement(temp, replacement.getBefore(), replacement.getAfter());
+				if(!replacement.getBefore().equals(methodInvocation1) || operationBodyMapper.getParentMapper() != null)
+					temp = ReplacementUtil.performReplacement(temp, replacement.getBefore(), replacement.getAfter());
 			}
 			if(!temp.equals(methodInvocation1)) {
 				variablesAndMethodInvocations1.add(temp);

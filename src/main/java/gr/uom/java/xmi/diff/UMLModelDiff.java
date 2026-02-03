@@ -5467,6 +5467,12 @@ public class UMLModelDiff {
 													skip = true;
 												}
 											}
+											if(inline.getInlinedOperation().equals(inlineOperationRefactoring.getInlinedOperation()) &&
+													inlineOperationRefactoring.getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION) &&
+													inline.getRefactoringType().equals(RefactoringType.INLINE_OPERATION) &&
+													inline.getBodyMapper().getMappings().size() > inlineOperationRefactoring.getBodyMapper().getMappings().size()) {
+												skip = true;
+											}
 											if(inline.getInlinedOperation().getClassName().startsWith(inline.getTargetOperationBeforeInline().getClassName() + ".") &&
 													!inlineOperationRefactoring.getInlinedOperation().getClassName().startsWith(inlineOperationRefactoring.getTargetOperationBeforeInline().getClassName() + ".")) {
 												skip = true;

@@ -2036,6 +2036,13 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable emptySource : Inferred to emptyRemoteSource : Inferred in method public getTasks_emptyRepositoryAndUninitializedCache() from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepositoryTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -9726,6 +9733,13 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method public createGroupHash() moved from class shark.LibraryLeak to class shark.HeapAnalyzer & inlined to private FindLeakInput.buildLeakTraces(pathFindingResults PathFindingResults) : Pair<List<ApplicationLeak>,List<LibraryLeak>>",
+        "comment": "<p>The code is identical, but createGroupHash() is not being called. However, there is a dependency to LibraryLeak<br />libraryLeaks  = LibraryLeak(<br /> className, leakTrace, retainedSizes?.get(index), matcher.pattern, matcher.description</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -10444,10 +10458,10 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable heapDump : Inferred in method public detectLeaks() : Result from class leakcanary.InstrumentationLeakDetector",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>results.forEach { analysisResult -&gt;<br /> val heapDump = HeapDump.builder()<br /> .heapDumpFile(heapDumpFile)<br /> .excludedRefs(config.excludedRefs)<br /> .reachabilityInspectorClasses(config.reachabilityInspectorClasses)<br /> .build()<br />-&gt;<br />val heapDump = HeapDump.builder(heapDumpFile)<br /> .excludedRefs(config.excludedRefs)<br /> .reachabilityInspectorClasses(config.reachabilityInspectorClasses)<br /> .build()</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable e : Exception to exception : Exception in method public detectLeaks() : Result from class leakcanary.InstrumentationLeakDetector",

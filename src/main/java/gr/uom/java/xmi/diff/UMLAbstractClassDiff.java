@@ -1197,10 +1197,41 @@ public abstract class UMLAbstractClassDiff {
 				}
 				else if(candidate.getRenamedVariableDeclaration() != null) {
 					if(a1 != null) {
+						boolean betterParameterMatchFound = false;
+						if(modelDiff != null) {
+							for(Refactoring r : modelDiff.getDetectedRefactorings()) {
+								if(r instanceof ReplaceAnonymousWithClassRefactoring anonymous) {
+									for(VariableDeclarationContainer container : anonymous.getAnonymousClass().getParentContainers()) {
+										if(container.equals(a1) && candidate.getRenamedVariableDeclaration().isParameter()) {
+											for(VariableDeclaration parameter : candidate.getOperationAfter().getParameterDeclarationList()) {
+												if(!parameter.equals(candidate.getRenamedVariableDeclaration()) && parameter.getType().getClassType().equals(anonymous.getAddedClass().getNonQualifiedName())) {
+													betterParameterMatchFound = true;
+													break;
+												}
+											}
+										}
+										if(container.equals(a1)) {
+											for(AbstractCodeMapping mapping : candidate.getReferences()) {
+												AbstractCall call = mapping.getFragment2().invocationCoveringEntireFragment();
+												if(call != null) {
+													for(String arg : call.arguments()) {
+														if(!arg.equals(candidate.getRenamedVariableDeclaration().getVariableName()) &&
+																arg.contains(anonymous.getAddedClass().getNonQualifiedName())) {
+															betterParameterMatchFound = true;
+															break;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
 						RenameVariableRefactoring ref = new RenameVariableRefactoring(
 								a1.getVariableDeclaration(), candidate.getRenamedVariableDeclaration(),
 								candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getReferences(), false);
-						if(!refactorings.contains(ref)) {
+						if(!refactorings.contains(ref) && !betterParameterMatchFound) {
 							refactorings.add(ref);
 							List<Refactoring> refactoringsToBeRemoved = new ArrayList<>();
 							for(Refactoring r : refactorings) {

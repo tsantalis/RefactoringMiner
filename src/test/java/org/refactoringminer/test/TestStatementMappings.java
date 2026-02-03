@@ -2203,6 +2203,22 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
+	@Test
+	public void testJavaToKotlinMigration() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/square/okhttp.git", "34bb12533b56eacd7b03c13b87dede4204d48629", new File(REPOS));
+		List<UMLClassMoveDiff> commonClassDiff = modelDiff.getClassMoveDiffList();
+		for(UMLClassMoveDiff classDiff : commonClassDiff) {
+			if(classDiff.getOriginalClassName().equals("mockwebserver3.MockWebServerTest") || classDiff.getOriginalClassName().equals("mockwebserver3.CustomDispatcherTest"))
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				mapperInfo(mapper, actual);
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "okhttp-34bb12533b56eacd7b03c13b87dede4204d48629.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
 	private void mapperInfo(UMLOperationBodyMapper bodyMapper, final List<String> actual) {
 		actual.add(bodyMapper.toString());
 		//System.out.println(bodyMapper.toString());

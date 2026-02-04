@@ -55,6 +55,51 @@ public class StringBasedHeuristics {
 	protected static final Pattern SPLIT_COMMA_PATTERN = Pattern.compile("(\\s)*(\\,)(\\s)*");
 	protected static final Pattern SPLIT_TAB_PATTERN = Pattern.compile("(\\s)*(\\\\t)(\\s)*");
 
+	protected static boolean javaToKotlin(String s1, String s2, List<AbstractCall> methodInvocations1, List<AbstractCall> methodInvocations2,
+			Constants LANG1, Constants LANG2) {
+		if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN)) {
+			String temp = new String(s1);
+			for(AbstractCall call : methodInvocations1) {
+				if(s1.contains(call.toString()) && call.getName().startsWith("get") && call.getName().length() > "get".length() && call.arguments().size() == 0 && !methodInvocations2.contains(call)) {
+					String fieldName = call.getName().substring(3, call.getName().length());
+					fieldName = Character.toLowerCase(fieldName.charAt(0)) + fieldName.substring(1, fieldName.length());
+					temp = ReplacementUtil.performReplacement(temp, call.getName() + "()", fieldName);
+				}
+			}
+			if(temp.endsWith(LANG1.STATEMENT_TERMINATION) && s2.endsWith(LANG2.STATEMENT_TERMINATION)) {
+				String ss1 = temp.substring(0, temp.length()-LANG1.STATEMENT_TERMINATION.length());
+				String ss2 = s2.substring(0, s2.length()-LANG2.STATEMENT_TERMINATION.length());
+				if(ss1.equals(ss2)) {
+					return true;
+				}
+				String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(ss1, ss2);
+				String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(ss1, ss2);
+				if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+					int beginIndexS1 = ss1.indexOf(commonPrefix) + commonPrefix.length();
+					int endIndexS1 = ss1.lastIndexOf(commonSuffix);
+					String diff1 = beginIndexS1 > endIndexS1 ? "" :	ss1.substring(beginIndexS1, endIndexS1);
+					int beginIndexS2 = ss2.indexOf(commonPrefix) + commonPrefix.length();
+					int endIndexS2 = ss2.lastIndexOf(commonSuffix);
+					String diff2 = beginIndexS2 > endIndexS2 ? "" :	ss2.substring(beginIndexS2, endIndexS2);
+					if(diff1.isEmpty() && diff2.isBlank() && !diff2.isEmpty()) {
+						return true;
+					}
+					if(diff1.isEmpty() && diff2.equals("!!")) {
+						return true;
+					}
+					if(diff1.endsWith("()") && diff2.startsWith("!!")) {
+						String d1 = diff1.substring(0, diff1.length()-2);
+						String d2 = diff2.substring(2, diff2.length());
+						if(d1.equals(d2)) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	protected static boolean partiallyUndoParameterToArgumentMap(String s1, String s2, Map<String, String> parameterToArgumentMap) {
 		for(String key : parameterToArgumentMap.keySet()) {
 			String value = parameterToArgumentMap.get(key);

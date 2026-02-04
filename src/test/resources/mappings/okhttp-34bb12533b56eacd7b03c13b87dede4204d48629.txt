@@ -7,6 +7,8 @@ line range:92-100==line range:89-95
 line range:92-100==line range:88-96
 public setUp(mockWebServer MockWebServer) : void -> public setUp(mockWebServer MockWebServer)
 public simpleDispatch() : void -> public simpleDispatch()
+line range:55-55==line range:51-51
+line range:49-49==line range:45-45
 line range:51-51==line range:47-47
 line range:53-53==line range:49-49
 public outOfOrderResponses() : void -> public outOfOrderResponses()
@@ -33,6 +35,8 @@ line range:92-100==line range:89-95
 line range:92-100==line range:88-96
 public setUp(mockWebServer MockWebServer) : void -> public setUp(mockWebServer MockWebServer)
 public simpleDispatch() : void -> public simpleDispatch()
+line range:55-55==line range:51-51
+line range:49-49==line range:45-45
 line range:51-51==line range:47-47
 line range:53-53==line range:49-49
 public outOfOrderResponses() : void -> public outOfOrderResponses()
@@ -216,6 +220,7 @@ line range:436-436==line range:418-418
 public portImplicitlyStarts() : void -> public portImplicitlyStarts()
 line range:440-440==line range:423-423
 public hostnameImplicitlyStarts() : void -> public hostnameImplicitlyStarts()
+line range:444-444==line range:428-428
 public toProxyAddressImplicitlyStarts() : void -> public toProxyAddressImplicitlyStarts()
 line range:448-448==line range:433-433
 public differentInstancesGetDifferentPorts() : void -> public differentInstancesGetDifferentPorts()
@@ -237,7 +242,10 @@ line range:481-481==line range:469-469
 line range:483-483==line range:470-470
 line range:484-485==line range:471-472
 line range:488-488==line range:474-474
-line range:489-489==line range:478-478
+line range:489-489==line range:475-475
+line range:490-490==line range:476-476
+line range:491-491==line range:477-477
+line range:492-492==line range:478-478
 public shutdownServerAfterRequest() : void -> public shutdownServerAfterRequest()
 line range:496-498==line range:483-485
 line range:500-500==line range:486-486
@@ -271,6 +279,7 @@ public testH2PriorKnowledgeServerDuplicates() : void -> public testH2PriorKnowle
 line range:569-569==line range:550-550
 line range:566-574==line range:547-555
 public testMockWebServerH2PriorKnowledgeProtocol() : void -> public testMockWebServerH2PriorKnowledgeProtocol()
+line range:580-580==line range:561-561
 public https() : void -> public https()
 line range:585-585==line range:567-567
 line range:586-586==line range:568-568
@@ -281,6 +290,12 @@ line range:597-598==line range:577-577
 line range:599-599==line range:578-578
 line range:601-601==line range:579-579
 line range:602-602==line range:580-580
+line range:604-604==line range:582-582
+line range:605-605==line range:583-583
+line range:606-606==line range:584-584
+line range:607-607==line range:585-585
+line range:608-608==line range:586-586
+line range:609-609==line range:587-587
 public httpsWithClientAuth() : void -> public httpsWithClientAuth()
 line range:630-630==line range:607-607
 line range:631-633==line range:608-610
@@ -291,6 +306,12 @@ line range:650-651==line range:624-624
 line range:652-652==line range:625-625
 line range:654-654==line range:626-626
 line range:655-655==line range:627-627
+line range:657-657==line range:629-629
+line range:658-658==line range:630-630
+line range:659-659==line range:631-631
+line range:660-660==line range:632-632
+line range:661-661==line range:633-633
+line range:662-662==line range:634-634
 public proxiedRequestGetsCorrectRequestUrl() : void -> public proxiedRequestGetsCorrectRequestUrl()
 line range:666-668==line range:639-641
 line range:675-675==line range:646-646
@@ -474,6 +495,7 @@ line range:436-436==line range:418-418
 public portImplicitlyStarts() : void -> public portImplicitlyStarts()
 line range:440-440==line range:423-423
 public hostnameImplicitlyStarts() : void -> public hostnameImplicitlyStarts()
+line range:444-444==line range:428-428
 public toProxyAddressImplicitlyStarts() : void -> public toProxyAddressImplicitlyStarts()
 line range:448-448==line range:433-433
 public differentInstancesGetDifferentPorts() : void -> public differentInstancesGetDifferentPorts()
@@ -495,7 +517,10 @@ line range:481-481==line range:469-469
 line range:483-483==line range:470-470
 line range:484-485==line range:471-472
 line range:488-488==line range:474-474
-line range:489-489==line range:478-478
+line range:489-489==line range:475-475
+line range:490-490==line range:476-476
+line range:491-491==line range:477-477
+line range:492-492==line range:478-478
 public shutdownServerAfterRequest() : void -> public shutdownServerAfterRequest()
 line range:496-498==line range:483-485
 line range:500-500==line range:486-486
@@ -529,6 +554,7 @@ public testH2PriorKnowledgeServerDuplicates() : void -> public testH2PriorKnowle
 line range:569-569==line range:550-550
 line range:566-574==line range:547-555
 public testMockWebServerH2PriorKnowledgeProtocol() : void -> public testMockWebServerH2PriorKnowledgeProtocol()
+line range:580-580==line range:561-561
 public https() : void -> public https()
 line range:585-585==line range:567-567
 line range:586-586==line range:568-568
@@ -539,6 +565,12 @@ line range:597-598==line range:577-577
 line range:599-599==line range:578-578
 line range:601-601==line range:579-579
 line range:602-602==line range:580-580
+line range:604-604==line range:582-582
+line range:605-605==line range:583-583
+line range:606-606==line range:584-584
+line range:607-607==line range:585-585
+line range:608-608==line range:586-586
+line range:609-609==line range:587-587
 public httpsWithClientAuth() : void -> public httpsWithClientAuth()
 line range:630-630==line range:607-607
 line range:631-633==line range:608-610
@@ -549,6 +581,12 @@ line range:650-651==line range:624-624
 line range:652-652==line range:625-625
 line range:654-654==line range:626-626
 line range:655-655==line range:627-627
+line range:657-657==line range:629-629
+line range:658-658==line range:630-630
+line range:659-659==line range:631-631
+line range:660-660==line range:632-632
+line range:661-661==line range:633-633
+line range:662-662==line range:634-634
 public proxiedRequestGetsCorrectRequestUrl() : void -> public proxiedRequestGetsCorrectRequestUrl()
 line range:666-668==line range:639-641
 line range:675-675==line range:646-646

@@ -60,9 +60,12 @@ public class StringBasedHeuristics {
 		if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN)) {
 			String temp = new String(s1);
 			for(AbstractCall call : methodInvocations1) {
-				if(s1.contains(call.toString()) && call.getName().startsWith("get") && call.getName().length() > "get".length() && call.arguments().size() == 0 && !methodInvocations2.contains(call)) {
-					String fieldName = call.getName().substring(3, call.getName().length());
-					fieldName = Character.toLowerCase(fieldName.charAt(0)) + fieldName.substring(1, fieldName.length());
+				if(s1.contains(call.toString()) && call.arguments().size() == 0 && !methodInvocations2.contains(call)) {
+					String fieldName = call.getName();
+					if(call.getName().startsWith("get") && call.getName().length() > "get".length()) {
+						fieldName = call.getName().substring(3, call.getName().length());
+						fieldName = Character.toLowerCase(fieldName.charAt(0)) + fieldName.substring(1, fieldName.length());
+					}
 					temp = ReplacementUtil.performReplacement(temp, call.getName() + "()", fieldName);
 				}
 			}

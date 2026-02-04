@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import org.refactoringminer.util.PathFileUtils;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -43,6 +44,7 @@ public abstract class UMLAbstractClass {
     private List<UMLModifier> modifiers;
     private List<UMLEnumConstant> enumConstants;
     private List<UMLClass> companionObjects;
+    protected final Constants LANG;
 
 	public UMLAbstractClass(String packageName, String name, LocationInfo locationInfo, List<UMLImport> importedTypes) {
 		this.packageName = packageName;
@@ -63,6 +65,7 @@ public abstract class UMLAbstractClass {
         this.modifiers = new ArrayList<UMLModifier>();
         this.enumConstants = new ArrayList<UMLEnumConstant>();
         this.companionObjects = new ArrayList<UMLClass>();
+        this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 	}
 
 	public void addCompanion(UMLClass companion) {

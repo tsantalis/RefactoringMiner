@@ -18,6 +18,7 @@ import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -84,10 +85,17 @@ public class HunkNetwork {
 
     public void importFiles(List<Tree> deletedFiles, List<Tree> addedFiles) {
         if (deletedFiles.isEmpty() && addedFiles.isEmpty()) {
+            return;
         }
 
-//        System.out.println(deletedFiles);
-//        System.out.println(addedFiles);
+        List<Tree> filesTree = new ArrayList<>();
+        filesTree.addAll(deletedFiles);
+        filesTree.addAll(addedFiles);
+
+        for (Tree fileTree : filesTree) {
+            importTrees(aggregateTrees(getValidTrees(fileTree.getChildren())), new HashSet<>(),
+                    SrcDst.SRC, NodeType.DELETION, NodeType.SRC_MOVE, null);
+        }
     }
 
     public void importDiff(ASTDiff diff) {
@@ -98,7 +106,7 @@ public class HunkNetwork {
                 classifier.getMovedDsts(), SrcDst.DST, NodeType.ADDITION, NodeType.DST_MOVE, diff);
     }
 
-    private Set<Tree> getValidTrees(Set<Tree> trees) {
+    private Set<Tree> getValidTrees(Collection<Tree> trees) {
         return trees.stream()
                 .filter(addition -> !this.invalidTypes.contains(addition.getType().name)).collect(
                         Collectors.toSet());
@@ -259,8 +267,12 @@ public class HunkNetwork {
                 .filter(node -> node.getNodeType().equals(NodeType.DST_MOVE)).toList();
 
         for (Node deletionNode : deletionNodes) {
-            MappingStore mappingStore = deletionNode.getDiff().getAllMappings()
-                    .getMonoMappingStore();
+            ASTDiff diff = deletionNode.getDiff();
+            if (diff == null) {
+                continue;
+            }
+
+            MappingStore mappingStore = diff.getAllMappings().getMonoMappingStore();
             List<Tree> deletionMovesDsts = deletionNode.getMoveTrees().stream()
                     .map(mappingStore::getDstForSrc).toList();
 
@@ -278,8 +290,12 @@ public class HunkNetwork {
         }
 
         for (Node srcMoveNode : srcMoveNodes) {
-            MappingStore mappingStore = srcMoveNode.getDiff().getAllMappings()
-                    .getMonoMappingStore();
+            ASTDiff diff = srcMoveNode.getDiff();
+            if (diff == null) {
+                continue;
+            }
+
+            MappingStore mappingStore = diff.getAllMappings().getMonoMappingStore();
             Tree dst = mappingStore.getDstForSrc(srcMoveNode.getTree());
 
             for (Node additionNode : additionNodes) {
@@ -743,9 +759,13 @@ public class HunkNetwork {
     public void processMapping() {
         Set<Node> nodes = graph.vertexSet();
         for (Node subject : nodes) {
-            Tree tree = subject.getTree();
-            MappingStore mappingStore = subject.getDiff().getAllMappings().getMonoMappingStore();
+            ASTDiff diff = subject.getDiff();
+            if (diff == null) {
+                continue;
+            }
 
+            MappingStore mappingStore = diff.getAllMappings().getMonoMappingStore();
+            Tree tree = subject.getTree();
             Tree dst = mappingStore.getDstForSrc(tree);
             if (dst == null) {
                 continue;

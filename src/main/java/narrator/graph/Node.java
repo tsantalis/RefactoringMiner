@@ -26,11 +26,12 @@ public class Node {
     private final Set<Tree> subTrees;
     private final Set<String> identifiers = new HashSet<>();
     private final NodeType nodeType;
+    @Nullable
     private final ASTDiff diff;
 
     public Node(String fileContent, String path, SrcDst srcDst, Tree tree,
             @Nullable Set<Tree> subTrees, @Nullable Set<Tree> moveTrees, NodeType nodeType,
-            ASTDiff diff) {
+            @Nullable ASTDiff diff) {
         this.id = formatId(path, srcDst, nodeType, tree);
         this.fileContent = fileContent;
         this.path = path;
@@ -52,6 +53,7 @@ public class Node {
         return moveTrees;
     }
 
+    @Nullable
     public ASTDiff getDiff() {
         return diff;
     }

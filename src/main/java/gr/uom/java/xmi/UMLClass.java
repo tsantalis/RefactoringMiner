@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Optional;
 
+import org.refactoringminer.util.PathFileUtils;
+
 public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider {
 	private String qualifiedName;
     private String sourceFile;
@@ -409,7 +411,13 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     	
     	if(o instanceof UMLClass) {
     		UMLClass umlClass = (UMLClass)o;
-    		return this.packageName.equals(umlClass.packageName) && this.name.equals(umlClass.name) && this.sourceFile.equals(umlClass.sourceFile);
+    		boolean fileMatch = this.sourceFile.equals(umlClass.sourceFile);
+    		if(!this.LANG.equals(umlClass.LANG)) {
+    			String path1 = PathFileUtils.filePathWithoutExtension(this.getSourceFile());
+    			String path2 = PathFileUtils.filePathWithoutExtension(umlClass.getSourceFile());
+				fileMatch = path1.equals(path2);
+    		}
+    		return this.packageName.equals(umlClass.packageName) && this.name.equals(umlClass.name) && fileMatch;
     	}
     	return false;
     }

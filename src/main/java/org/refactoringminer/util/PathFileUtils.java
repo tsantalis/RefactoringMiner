@@ -24,6 +24,12 @@ public class PathFileUtils {
         return isPythonFile(path);
     }
 
+    public static String filePathWithoutExtension(String path) {
+        if(path.contains("."))
+            return path.substring(0, path.lastIndexOf("."));
+        return path;
+    }
+
     public static Constants getLang(String path) {
         if (isJavaFile(path))
             return Constants.JAVA;

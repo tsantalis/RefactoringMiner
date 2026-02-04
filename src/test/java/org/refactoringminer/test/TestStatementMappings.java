@@ -2208,8 +2208,8 @@ public class TestStatementMappings {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
 		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/square/okhttp.git", "34bb12533b56eacd7b03c13b87dede4204d48629", new File(REPOS));
-		List<UMLClassMoveDiff> commonClassDiff = modelDiff.getClassMoveDiffList();
-		for(UMLClassMoveDiff classDiff : commonClassDiff) {
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
 			if(classDiff.getOriginalClassName().equals("mockwebserver3.MockWebServerTest") || classDiff.getOriginalClassName().equals("mockwebserver3.CustomDispatcherTest"))
 			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
 				mapperInfo(mapper, actual);

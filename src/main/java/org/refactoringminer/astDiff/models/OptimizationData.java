@@ -1,7 +1,6 @@
 package org.refactoringminer.astDiff.models;
 
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
-import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 
 import java.util.List;
 

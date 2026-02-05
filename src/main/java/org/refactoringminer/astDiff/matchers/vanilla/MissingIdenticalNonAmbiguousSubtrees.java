@@ -22,13 +22,19 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
     protected int minPriority = DEFAULT_MIN_PRIORITY;
     protected final Predicate<Mapping> acceptance;
     public final int tooAmbiguousThreshold = 5;
+    private final Constants LANG1;
+    private final Constants LANG2;
 
-    public MissingIdenticalNonAmbiguousSubtrees(Predicate<Mapping> acceptance) {
+    public MissingIdenticalNonAmbiguousSubtrees(Predicate<Mapping> acceptance, Constants LANG1, Constants LANG2) {
         this.acceptance = acceptance;
+        this.LANG1 = LANG1;
+        this.LANG2 = LANG2;
     }
 
-    public MissingIdenticalNonAmbiguousSubtrees() {
+    public MissingIdenticalNonAmbiguousSubtrees(Constants LANG1, Constants LANG2) {
         this.acceptance = (m) -> isAcceptable(m.first, m.second);
+        this.LANG1 = LANG1;
+        this.LANG2 = LANG2;
     }
 
     private static final String DEFAULT_PRIORITY_CALCULATOR = "height";
@@ -83,7 +89,7 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
         trees.addAll(multiMappings.allMappedSrcs());
         for (var src : trees) {
             var isMappingUnique = false;
-            if (tinyTrees(src,multiMappings,minPriority))
+            if (tinyTrees(src,multiMappings,minPriority,LANG1))
                 continue;
             if (multiMappings.isSrcUnique(src)) {
                 var dst = multiMappings.getDsts(src).stream().findAny().get();
@@ -105,7 +111,7 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
                 }
                 if (tooAmbiguous) continue;
             }
-            if (!tinyTrees(src,multiMappings,minPriority) && !(ignored.contains(src) || isMappingUnique))
+            if (!tinyTrees(src,multiMappings,minPriority,LANG1) && !(ignored.contains(src) || isMappingUnique))
             {
                 var adsts = multiMappings.getDsts(src);
                 var asrcs = multiMappings.getSrcs(multiMappings.getDsts(src).iterator().next());
@@ -126,60 +132,60 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
     private boolean isAcceptable(Tree src, Tree dst) {
         if (ONLY_JAVA_DOCS)
         {
-            if (src.getType().name.equals(Constants.get().JAVA_DOC))
+            if (src.getType().name.equals(LANG1.JAVA_DOC))
                 return true;
             return false;
         }
         boolean ret;
-        if (src.getType().name.equals(Constants.get().JAVA_DOC))
+        if (src.getType().name.equals(LANG1.JAVA_DOC))
             return true;
         else {
-            if (TreeUtilFunctions.isStatement(src.getType().name) && !src.getType().name.equals(Constants.get().BLOCK))
-                if (src.getType().name.equals(Constants.get().RETURN_STATEMENT) && src.getMetrics().height <= 2)
+            if (TreeUtilFunctions.isStatement(src.getType().name, LANG1) && !src.getType().name.equals(LANG1.BLOCK))
+                if (src.getType().name.equals(LANG1.RETURN_STATEMENT) && src.getMetrics().height <= 2)
                     ret =  false;
                 else
                     ret =  true;
-            else if (src.getType().name.equals(Constants.get().METHOD_INVOCATION)) {
-                if (!src.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION_RECEIVER) &&
-                        dst.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION_RECEIVER)) ret = false;
-                else if (src.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION_RECEIVER) &&
-                        !dst.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION_RECEIVER)) ret = true;
+            else if (src.getType().name.equals(LANG1.METHOD_INVOCATION)) {
+                if (!src.getParent().getType().name.equals(LANG1.METHOD_INVOCATION_RECEIVER) &&
+                        dst.getParent().getType().name.equals(LANG2.METHOD_INVOCATION_RECEIVER)) ret = false;
+                else if (src.getParent().getType().name.equals(LANG1.METHOD_INVOCATION_RECEIVER) &&
+                        !dst.getParent().getType().name.equals(LANG2.METHOD_INVOCATION_RECEIVER)) ret = true;
                 else{
                     ret = true;
                 }
-            } else if (src.getType().name.equals(Constants.get().METHOD_INVOCATION_ARGUMENTS))
+            } else if (src.getType().name.equals(LANG1.METHOD_INVOCATION_ARGUMENTS))
                 ret = true;
-            else if (src.getType().name.equals(Constants.get().METHOD_INVOCATION_RECEIVER))
+            else if (src.getType().name.equals(LANG1.METHOD_INVOCATION_RECEIVER))
                 ret =  true;
-            else if (src.getType().name.equals(Constants.get().INFIX_EXPRESSION))
+            else if (src.getType().name.equals(LANG1.INFIX_EXPRESSION))
                 ret =  true;
-            else if (src.getType().name.equals(Constants.get().CLASS_INSTANCE_CREATION))
+            else if (src.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION))
                 ret =  true;
-            else if (src.getType().name.equals(Constants.get().IMPORT_DECLARATION))
+            else if (src.getType().name.equals(LANG1.IMPORT_DECLARATION))
                 ret = true;
-            else if (TreeUtilFunctions.isPartOf(src, Constants.get().JAVA_DOC))
+            else if (TreeUtilFunctions.isPartOf(src, LANG1.JAVA_DOC))
                 ret = true;
-            else if(src.getType().name.equals(Constants.get().LINE_COMMENT) || src.getType().name.equals(Constants.get().BLOCK_COMMENT))
+            else if(src.getType().name.equals(LANG1.LINE_COMMENT) || src.getType().name.equals(LANG1.BLOCK_COMMENT))
                 ret = true;
             else {
                 ret = false;
             }
         }
         if (!ret) return false;
-        if (notBelongingToMethodWithTestAnnotation(src) && notBelongingToMethodWithTestAnnotation(dst))
+        if (notBelongingToMethodWithTestAnnotation(src, LANG1) && notBelongingToMethodWithTestAnnotation(dst, LANG2))
             return ret;
         else return false;
 
     }
 
-    private boolean notBelongingToMethodWithTestAnnotation(Tree src) {
-        Tree methodDecl = TreeUtilFunctions.getParentUntilType(src, Constants.get().METHOD_DECLARATION);
+    private boolean notBelongingToMethodWithTestAnnotation(Tree src, Constants LANG) {
+        Tree methodDecl = TreeUtilFunctions.getParentUntilType(src, LANG.METHOD_DECLARATION);
         if (methodDecl == null) return true;
         for (Tree child : methodDecl.getChildren()) {
-            if (child.getType().name.equals(Constants.get().MARKER_ANNOTATION))
+            if (child.getType().name.equals(LANG.MARKER_ANNOTATION))
             {
                 if (!child.getChildren().isEmpty() &&
-                        child.getChild(0).getType().name.equals(Constants.get().SIMPLE_NAME) &&
+                        child.getChild(0).getType().name.equals(LANG.SIMPLE_NAME) &&
                         child.getChild(0).getLabel().equals("Test"))
                 {
                     return false;
@@ -189,16 +195,16 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
         return true;
     }
 
-    private static boolean tinyTrees(Tree src, MultiMappingStore multiMappings, int minP) {
+    private static boolean tinyTrees(Tree src, MultiMappingStore multiMappings, int minP, Constants LANG) {
         if (src.getMetrics().height <= minP){
-            if (src.getType().name.equals(Constants.get().METHOD_INVOCATION_RECEIVER))
+            if (src.getType().name.equals(LANG.METHOD_INVOCATION_RECEIVER))
                 return true;
-            if (src.getType().name.equals(Constants.get().METHOD_INVOCATION_ARGUMENTS))
+            if (src.getType().name.equals(LANG.METHOD_INVOCATION_ARGUMENTS))
                 return true;
-            if (src.getType().name.equals(Constants.get().SIMPLE_TYPE ))
+            if (src.getType().name.equals(LANG.SIMPLE_TYPE ))
                 return true;
         }
-        if (src.getType().name.equals(Constants.get().METHOD_INVOCATION_RECEIVER)) {
+        if (src.getType().name.equals(LANG.METHOD_INVOCATION_RECEIVER)) {
             return true;
         }
         return false;

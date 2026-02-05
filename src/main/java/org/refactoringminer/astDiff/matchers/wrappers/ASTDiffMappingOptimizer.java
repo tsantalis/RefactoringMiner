@@ -9,7 +9,6 @@ import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
-import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.Map;
@@ -39,10 +38,10 @@ public class ASTDiffMappingOptimizer extends OptimizationAwareMatcher{
         processOptimization(astDiff, optimizationData, parentContextMap, childContextMap);
 
     }
-    private static void processOptimization(ASTDiff input, OptimizationData optimizationData, Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
+    private void processOptimization(ASTDiff input, OptimizationData optimizationData, Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
         Tree srcTree = input.src.getRoot();
         Tree dstTree = input.dst.getRoot();
-        ExtendedMultiMappingStore lastStepMappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
+        ExtendedMultiMappingStore lastStepMappingStore = new ExtendedMultiMappingStore(srcTree,dstTree,astDiff.LANG1,astDiff.LANG2);
         for (AbstractCodeMapping lastStepMapping : optimizationData.getLastStepMappings()) {
             if (lastStepMapping.getFragment1().getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.STRING_LITERAL)
                     && lastStepMapping.getFragment2().getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.STRING_LITERAL))
@@ -50,30 +49,30 @@ public class ASTDiffMappingOptimizer extends OptimizationAwareMatcher{
                 //Handles all string-literal cases (intra and inter file)
                 Tree srcTotal = parentContextMap.get(lastStepMapping.getFragment1().getLocationInfo().getFilePath()).getRoot();
                 Tree dstTotal = childContextMap.get(lastStepMapping.getFragment2().getLocationInfo().getFilePath()).getRoot();
-                Tree srcStringLiteral = TreeUtilFunctions.findByLocationInfo(srcTotal, lastStepMapping.getFragment1().getLocationInfo(), Constants.get().STRING_LITERAL);
-                Tree dstStringLiteral = TreeUtilFunctions.findByLocationInfo(dstTotal, lastStepMapping.getFragment2().getLocationInfo(), Constants.get().STRING_LITERAL);
+                Tree srcStringLiteral = TreeUtilFunctions.findByLocationInfo(srcTotal, lastStepMapping.getFragment1().getLocationInfo(), astDiff.LANG1, astDiff.LANG1.STRING_LITERAL);
+                Tree dstStringLiteral = TreeUtilFunctions.findByLocationInfo(dstTotal, lastStepMapping.getFragment2().getLocationInfo(), astDiff.LANG2, astDiff.LANG2.STRING_LITERAL);
                 if (srcStringLiteral != null && dstStringLiteral != null) {
                     input.getAllMappings().addMapping(srcStringLiteral, dstStringLiteral);
                 }
                 continue;
             }
             if (lastStepMapping.getFragment1().getLocationInfo().getFilePath().equals(input.getSrcPath()) && lastStepMapping.getFragment2().getLocationInfo().getFilePath().equals(input.getDstPath())) {
-                Tree srcExp = TreeUtilFunctions.findByLocationInfo(srcTree, lastStepMapping.getFragment1().getLocationInfo());
-                Tree dstExp = TreeUtilFunctions.findByLocationInfo(dstTree, lastStepMapping.getFragment2().getLocationInfo());
+                Tree srcExp = TreeUtilFunctions.findByLocationInfo(srcTree, lastStepMapping.getFragment1().getLocationInfo(), astDiff.LANG1);
+                Tree dstExp = TreeUtilFunctions.findByLocationInfo(dstTree, lastStepMapping.getFragment2().getLocationInfo(), astDiff.LANG2);
                 if (srcExp == null || dstExp == null) continue;
                 if (needToOverride(input, srcExp, dstExp))
-                    new IgnoringCommentsLeafMatcher().match(srcExp, dstExp, lastStepMappingStore);
+                    new IgnoringCommentsLeafMatcher(astDiff.LANG1, astDiff.LANG2).match(srcExp, dstExp, lastStepMappingStore);
                 else
-                    new LeafMatcher().match(srcExp,dstExp,input.getAllMappings());
+                    new LeafMatcher(astDiff.LANG1, astDiff.LANG2).match(srcExp,dstExp,input.getAllMappings());
             }
             else {
                 //Inter-file optimizations
                 TreeContext tc1 = parentContextMap.get(lastStepMapping.getFragment1().getLocationInfo().getFilePath());
-                Tree t1 = TreeUtilFunctions.findByLocationInfo(tc1.getRoot(), lastStepMapping.getFragment1().getLocationInfo());
+                Tree t1 = TreeUtilFunctions.findByLocationInfo(tc1.getRoot(), lastStepMapping.getFragment1().getLocationInfo(), astDiff.LANG1);
                 TreeContext tc2 = childContextMap.get(lastStepMapping.getFragment2().getLocationInfo().getFilePath());
-                Tree t2 = TreeUtilFunctions.findByLocationInfo(tc2.getRoot(), lastStepMapping.getFragment2().getLocationInfo());
+                Tree t2 = TreeUtilFunctions.findByLocationInfo(tc2.getRoot(), lastStepMapping.getFragment2().getLocationInfo(), astDiff.LANG2);
                 if (t1 == null || t2 == null) continue;
-                new LeafMatcher().match(t1, t2, input.getAllMappings());
+                new LeafMatcher(astDiff.LANG1, astDiff.LANG2).match(t1, t2, input.getAllMappings());
             }
         }
         ExtendedMultiMappingStore allMappings = input.getAllMappings();

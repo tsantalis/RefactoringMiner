@@ -7,13 +7,16 @@ import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 public class IgnoringCommentsLeafMatcher extends LeafMatcher {
+    public IgnoringCommentsLeafMatcher(Constants LANG1, Constants LANG2) {
+        super(LANG1, LANG2);
+    }
     @Override
     public void match(Tree src, Tree dst, ExtendedMultiMappingStore mappingStore) {
-        ExtendedMultiMappingStore newMappings = new ExtendedMultiMappingStore(src, dst);
+        ExtendedMultiMappingStore newMappings = new ExtendedMultiMappingStore(src, dst, LANG1, LANG2);
         super.match(src, dst, newMappings);
         // Remove comment mappings from the mapping store
         for (Mapping newMapping : newMappings) {
-            if (isPartOfComments(newMapping.first) || isPartOfComments(newMapping.second)) {
+            if (isPartOfComments(newMapping.first, LANG1) || isPartOfComments(newMapping.second, LANG2)) {
                 newMappings.removeMapping(newMapping.first, newMapping.second);
             }
         }
@@ -21,9 +24,9 @@ public class IgnoringCommentsLeafMatcher extends LeafMatcher {
             mappingStore.addMapping(newMapping.first, newMapping.second);
         }
     }
-    public static boolean isPartOfComments(Tree tree) {
-        return TreeUtilFunctions.getParentUntilType(tree, Constants.get().LINE_COMMENT) != null ||
-               TreeUtilFunctions.getParentUntilType(tree, Constants.get().JAVA_DOC) != null ||
-               TreeUtilFunctions.getParentUntilType(tree, Constants.get().BLOCK_COMMENT) != null;
+    public static boolean isPartOfComments(Tree tree, Constants LANG) {
+        return TreeUtilFunctions.getParentUntilType(tree, LANG.LINE_COMMENT) != null ||
+               TreeUtilFunctions.getParentUntilType(tree, LANG.JAVA_DOC) != null ||
+               TreeUtilFunctions.getParentUntilType(tree, LANG.BLOCK_COMMENT) != null;
     }
 }

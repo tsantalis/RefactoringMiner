@@ -3,22 +3,8 @@ package org.refactoringminer.astDiff.utils;
 import org.refactoringminer.util.PathFileUtils;
 
 public class Constants {
-	private static String filePath;
-	private static Constants singleton;
 
-	public static void setFilePath(String filePath) {
-		Constants.filePath = filePath;
-		singleton = new Constants(filePath);
-	}
-
-	public static Constants get() {
-		if(singleton == null) {
-			singleton = new Constants(filePath);
-		}
-		return singleton;
-	}
-
-	private Constants(String filePath) {
+	public Constants(String filePath) {
 		if(PathFileUtils.isPythonFile(filePath)) {
 			CLASS_BLOCK = "block";
 			METHOD_DECLARATION = "function_definition";

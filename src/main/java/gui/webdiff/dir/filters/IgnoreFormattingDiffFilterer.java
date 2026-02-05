@@ -18,15 +18,14 @@ public class IgnoreFormattingDiffFilterer implements DiffFilterer {
     }
 
     public boolean changesOtherThanCommentUpdates(ASTDiff diff) {
-    	Constants.setFilePath(diff.getSrcPath());
         for(Action action : diff.editScript) {
             boolean validMultiMove = false;
             if(action instanceof MultiMove) {
-                validMultiMove = isFromType(action.getNode(), Constants.get().LINE_COMMENT, Constants.get().TEXT_ELEMENT);
+                validMultiMove = isFromType(action.getNode(), diff.LANG1.LINE_COMMENT, diff.LANG1.TEXT_ELEMENT, diff.LANG2.LINE_COMMENT, diff.LANG2.TEXT_ELEMENT);
             }
             boolean validUpdate = false;
             if(action instanceof Update) {
-                validUpdate = isCommentOrJavaDoc(action.getNode());
+                validUpdate = isCommentOrJavaDoc(action.getNode(), diff.LANG1, diff.LANG2);
             }
             if(!validUpdate && !validMultiMove) {
                 return true;
@@ -35,8 +34,9 @@ public class IgnoreFormattingDiffFilterer implements DiffFilterer {
         return false;
     }
 
-    public static boolean isCommentOrJavaDoc(Tree tree) {
-        return isFromType(tree, Constants.get().LINE_COMMENT, Constants.get().BLOCK_COMMENT, Constants.get().TEXT_ELEMENT);
+    public static boolean isCommentOrJavaDoc(Tree tree, Constants LANG1, Constants LANG2) {
+        return isFromType(tree, LANG1.LINE_COMMENT, LANG1.BLOCK_COMMENT, LANG1.TEXT_ELEMENT,
+                LANG2.LINE_COMMENT, LANG2.BLOCK_COMMENT, LANG2.TEXT_ELEMENT);
     }
 }
 

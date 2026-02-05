@@ -7,6 +7,7 @@ import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import org.refactoringminer.astDiff.actions.classifier.ExtendedOnlyRootsClassifier;
 import org.refactoringminer.astDiff.actions.editscript.ExtendedEditScriptGenerator;
+import org.refactoringminer.astDiff.utils.Constants;
 
 import java.util.Map;
 import java.util.Objects;
@@ -20,12 +21,16 @@ public class ASTDiff extends Diff {
 	private String dstPath;
 	private ExtendedMultiMappingStore mappings;
 	private ExtendedOnlyRootsClassifier classifier;
+	public final Constants LANG1;
+	public final Constants LANG2;
 
 	public ASTDiff(String srcPath, String dstPath, TreeContext src, TreeContext dst, ExtendedMultiMappingStore mappings) {
 		super(src, dst, new MappingStore(src.getRoot(),dst.getRoot()), new EditScript());
 		this.srcPath = srcPath;
 		this.dstPath = dstPath;
 		this.mappings = mappings;
+		this.LANG1 = mappings.LANG1;
+		this.LANG2 = mappings.LANG2;
 	}
 
 	public ASTDiff(String srcPath, String dstPath, TreeContext src, TreeContext dst, ExtendedMultiMappingStore mappings, EditScript ed) {
@@ -33,6 +38,8 @@ public class ASTDiff extends Diff {
 		this.srcPath = srcPath;
 		this.dstPath = dstPath;
 		this.mappings = mappings;
+		this.LANG1 = mappings.LANG1;
+		this.LANG2 = mappings.LANG2;
 		finalizeEditScript(ed);
 	}
 

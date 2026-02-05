@@ -2,7 +2,6 @@ package org.refactoringminer.astDiff.matchers.statement;
 
 import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.matchers.MappingStore;
-import com.github.gumtreediff.tree.FakeTree;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 import org.refactoringminer.astDiff.matchers.*;
@@ -20,6 +19,13 @@ import java.util.List;
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
 public class BasicTreeMatcher implements TreeMatcher {
+	protected final Constants LANG1;
+	protected final Constants LANG2;
+	
+	public BasicTreeMatcher(Constants LANG1, Constants LANG2) {
+		this.LANG1 = LANG1;
+		this.LANG2 = LANG2;
+	}
 
 	private int minP = 0;
 	public void setMinP(int minP) {
@@ -41,10 +47,10 @@ public class BasicTreeMatcher implements TreeMatcher {
 
 	public MappingStore process(Tree src, Tree dst) {
         MappingStore match = new MappingStore(src, dst);
-        List<Pair<Tree, Tree>> pairs = LRAUtils.LRAify(src, dst, match);
+        List<Pair<Tree, Tree>> pairs = LRAUtils.LRAify(src, dst, match, LANG1, LANG2);
         for (Pair<Tree, Tree> pair : pairs) {
-            MappingStore mappings = new CustomTopDownMatcher(minP).match(pair.first, pair.second);
-            new CustomBottomUpMatcher().match(pair.first, pair.second, mappings);
+            MappingStore mappings = new CustomTopDownMatcher(minP, LANG1, LANG2).match(pair.first, pair.second);
+            new CustomBottomUpMatcher(LANG1, LANG2).match(pair.first, pair.second, mappings);
             for (Mapping mapping : mappings) {
                 match.addMapping(mapping.first, mapping.second);
             }
@@ -53,22 +59,22 @@ public class BasicTreeMatcher implements TreeMatcher {
 		return match;
 	}
 
-    private static void optimizeMappings(MappingStore match) {
+    private void optimizeMappings(MappingStore match) {
 		List<Pair<Tree, Tree>> removeList = new ArrayList<>();
 		List<Pair<Tree, Tree>> incorrectMethodExpressionReferenceSimpleName = new ArrayList<>();
 		for (Mapping mapping : match) {
-			if (mapping.first.getType().name.equals(Constants.get().METHOD_INVOCATION)) {
-				Tree srcMethodName = TreeUtilFunctions.findChildByType(mapping.first, Constants.get().SIMPLE_NAME);
-				Tree dstMethodName = TreeUtilFunctions.findChildByType(mapping.second, Constants.get().SIMPLE_NAME);
+			if (mapping.first.getType().name.equals(LANG1.METHOD_INVOCATION)) {
+				Tree srcMethodName = TreeUtilFunctions.findChildByType(mapping.first, LANG1.SIMPLE_NAME);
+				Tree dstMethodName = TreeUtilFunctions.findChildByType(mapping.second, LANG2.SIMPLE_NAME);
 				if (srcMethodName == null || dstMethodName == null) continue;
 				if (!srcMethodName.getLabel().equals(dstMethodName.getLabel())) {
-					Tree srcMethodInvocationReceiver = TreeUtilFunctions.findChildByType(mapping.first, Constants.get().METHOD_INVOCATION_RECEIVER);
-					Tree dstMethodInvocationReceiver = TreeUtilFunctions.findChildByType(mapping.second, Constants.get().METHOD_INVOCATION_RECEIVER);
+					Tree srcMethodInvocationReceiver = TreeUtilFunctions.findChildByType(mapping.first, LANG1.METHOD_INVOCATION_RECEIVER);
+					Tree dstMethodInvocationReceiver = TreeUtilFunctions.findChildByType(mapping.second, LANG2.METHOD_INVOCATION_RECEIVER);
 					if ((srcMethodInvocationReceiver == null && dstMethodInvocationReceiver != null)
 							||
 							(srcMethodInvocationReceiver != null && dstMethodInvocationReceiver == null)) {
-						Tree srcMethodInvocationArguments = TreeUtilFunctions.findChildByType(mapping.first, Constants.get().METHOD_INVOCATION_ARGUMENTS);
-						Tree dstMethodInvocationArguments = TreeUtilFunctions.findChildByType(mapping.second, Constants.get().METHOD_INVOCATION_ARGUMENTS);
+						Tree srcMethodInvocationArguments = TreeUtilFunctions.findChildByType(mapping.first, LANG1.METHOD_INVOCATION_ARGUMENTS);
+						Tree dstMethodInvocationArguments = TreeUtilFunctions.findChildByType(mapping.second, LANG2.METHOD_INVOCATION_ARGUMENTS);
 						boolean _notEmptyIsoStructuralArguments = false;
 						if (srcMethodInvocationArguments != null && dstMethodInvocationArguments != null)
 							_notEmptyIsoStructuralArguments = srcMethodInvocationArguments.isIsoStructuralTo(dstMethodInvocationArguments);
@@ -80,9 +86,9 @@ public class BasicTreeMatcher implements TreeMatcher {
 					}
 				}
 			}
-			if (mapping.first.getType().name.equals(Constants.get().SIMPLE_NAME)){
+			if (mapping.first.getType().name.equals(LANG1.SIMPLE_NAME)){
 				if (mapping.first.getParent() != null && mapping.second.getParent() != null &&
-						mapping.first.getParent().getType().name.equals(Constants.get().EXPRESSION_METHOD_REFERENCE) && mapping.second.getParent().getType().name.equals(Constants.get().EXPRESSION_METHOD_REFERENCE)) {
+						mapping.first.getParent().getType().name.equals(LANG1.EXPRESSION_METHOD_REFERENCE) && mapping.second.getParent().getType().name.equals(LANG2.EXPRESSION_METHOD_REFERENCE)) {
 					if (mapping.first.positionInParent() != mapping.second.positionInParent())
 						incorrectMethodExpressionReferenceSimpleName.add(mapping);
 				}
@@ -102,21 +108,21 @@ public class BasicTreeMatcher implements TreeMatcher {
 		List<Pair<Tree, Tree>> addList = new ArrayList<>();
 		for (Mapping mapping : match)
 		{
-			if (mapping.first.getType().name.equals(Constants.get().SIMPLE_NAME))
+			if (mapping.first.getType().name.equals(LANG1.SIMPLE_NAME))
 			{
 				if (mapping.first.getParent() !=  null && mapping.second.getParent() != null &&
-						mapping.first.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION) &&
-						mapping.second.getParent().getType().name.equals(Constants.get().METHOD_INVOCATION))
+						mapping.first.getParent().getType().name.equals(LANG1.METHOD_INVOCATION) &&
+						mapping.second.getParent().getType().name.equals(LANG2.METHOD_INVOCATION))
 				{
 					if (match.getDstForSrc(mapping.first.getParent()) != mapping.second.getParent())
 						addList.add(new Pair<>(mapping.first.getParent() , mapping.second.getParent()));
 				}
 			}
-			if (mapping.first.getType().name.equals(Constants.get().SIMPLE_TYPE))
+			if (mapping.first.getType().name.equals(LANG1.SIMPLE_TYPE))
 			{
-				if (mapping.first.getParent().getType().name.equals(Constants.get().CLASS_INSTANCE_CREATION)
+				if (mapping.first.getParent().getType().name.equals(LANG1.CLASS_INSTANCE_CREATION)
 					&&
-						mapping.second.getParent().getType().name.equals(Constants.get().CLASS_INSTANCE_CREATION))
+						mapping.second.getParent().getType().name.equals(LANG2.CLASS_INSTANCE_CREATION))
 				{
 					if (match.getDstForSrc(mapping.first.getParent()) != mapping.second.getParent())
 						addList.add(new Pair<>(mapping.first.getParent() , mapping.second.getParent()));
@@ -126,8 +132,8 @@ public class BasicTreeMatcher implements TreeMatcher {
 		for (Pair<Tree, Tree> treeTreePair : addList) {
 			match.removeMapping(treeTreePair.first, match.getSrcForDst(treeTreePair.first));
 			match.removeMapping(match.getSrcForDst(treeTreePair.second), treeTreePair.second);
-			Tree srcMIR = TreeUtilFunctions.findChildByType(treeTreePair.first, Constants.get().METHOD_INVOCATION_RECEIVER);
-			Tree dstMIR = TreeUtilFunctions.findChildByType(treeTreePair.second, Constants.get().METHOD_INVOCATION_RECEIVER);
+			Tree srcMIR = TreeUtilFunctions.findChildByType(treeTreePair.first, LANG1.METHOD_INVOCATION_RECEIVER);
+			Tree dstMIR = TreeUtilFunctions.findChildByType(treeTreePair.second, LANG2.METHOD_INVOCATION_RECEIVER);
 			if (match.isSrcMapped(srcMIR)) {
 				match.removeMapping(srcMIR, match.getDstForSrc(srcMIR));
 			}
@@ -137,8 +143,8 @@ public class BasicTreeMatcher implements TreeMatcher {
 		}
 		for (Pair<Tree, Tree> treeTreePair : addList) {
 			match.addMapping(treeTreePair.first, treeTreePair.second);
-			Tree srcMIR = TreeUtilFunctions.findChildByType(treeTreePair.first, Constants.get().METHOD_INVOCATION_RECEIVER);
-			Tree dstMIR = TreeUtilFunctions.findChildByType(treeTreePair.second, Constants.get().METHOD_INVOCATION_RECEIVER);
+			Tree srcMIR = TreeUtilFunctions.findChildByType(treeTreePair.first, LANG1.METHOD_INVOCATION_RECEIVER);
+			Tree dstMIR = TreeUtilFunctions.findChildByType(treeTreePair.second, LANG2.METHOD_INVOCATION_RECEIVER);
 			if (srcMIR != null && dstMIR != null)
 				match.addMapping(srcMIR, dstMIR);
 		}

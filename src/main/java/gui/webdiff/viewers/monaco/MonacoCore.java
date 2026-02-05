@@ -299,16 +299,15 @@ public class MonacoCore {
     private boolean isInterfile(ASTDiff astDiff, Tree t, Tree dst) {
         //find the most parent of t and dst
         //if they are not same as the astdiff src,dst return false
-    	Constants.setFilePath(astDiff.getSrcPath());
-        Tree t_outerP = TreeUtilFunctions.getParentUntilType(t, Constants.get().COMPILATION_UNIT);
-        Tree dst_outerP = TreeUtilFunctions.getParentUntilType(dst, Constants.get().COMPILATION_UNIT);
+        Tree t_outerP = TreeUtilFunctions.getParentUntilType(t, astDiff.LANG1.COMPILATION_UNIT);
+        Tree dst_outerP = TreeUtilFunctions.getParentUntilType(dst, astDiff.LANG2.COMPILATION_UNIT);
         if(t_outerP == null && dst_outerP == null) {
-            t_outerP = TreeUtilFunctions.getParentUntilType(t, Constants.get().MODULE);
-            dst_outerP = TreeUtilFunctions.getParentUntilType(dst, Constants.get().MODULE);
+            t_outerP = TreeUtilFunctions.getParentUntilType(t, astDiff.LANG1.MODULE);
+            dst_outerP = TreeUtilFunctions.getParentUntilType(dst, astDiff.LANG2.MODULE);
         }
         if(t_outerP == null && dst_outerP == null) {
-            t_outerP = TreeUtilFunctions.getParentUntilType(t, Constants.get().SOURCE_FILE);
-            dst_outerP = TreeUtilFunctions.getParentUntilType(dst, Constants.get().SOURCE_FILE);
+            t_outerP = TreeUtilFunctions.getParentUntilType(t, astDiff.LANG1.SOURCE_FILE);
+            dst_outerP = TreeUtilFunctions.getParentUntilType(dst, astDiff.LANG2.SOURCE_FILE);
         }
         if (t_outerP == null || dst_outerP == null) {
             return false;

@@ -18,11 +18,15 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 public class ExtendedMultiMappingStore extends MultiMappingStore implements Iterable<Mapping> {
 	private final Tree src;
 	private final Tree dst;
+	public final Constants LANG1;
+	public final Constants LANG2;
 
-	public ExtendedMultiMappingStore(Tree srcTree, Tree dstTree) {
+	public ExtendedMultiMappingStore(Tree srcTree, Tree dstTree, Constants LANG1, Constants LANG2) {
 		super();
 		this.src = srcTree;
 		this.dst = dstTree;
+		this.LANG1 = LANG1;
+		this.LANG2 = LANG2;
 	}
 
 	public boolean isEmpty() {
@@ -258,15 +262,15 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 
     private boolean sameFile(Tree t1, Tree t2) {
         // find the most parent of both, and compare
-        Tree t1_p = TreeUtilFunctions.getParentUntilType(t1, Constants.get().COMPILATION_UNIT);
-        Tree t2_p = TreeUtilFunctions.getParentUntilType(t2, Constants.get().COMPILATION_UNIT);
+        Tree t1_p = TreeUtilFunctions.getParentUntilType(t1, LANG1.COMPILATION_UNIT);
+        Tree t2_p = TreeUtilFunctions.getParentUntilType(t2, LANG2.COMPILATION_UNIT);
         if(t1_p == null && t2_p == null) {
-            t1_p = TreeUtilFunctions.getParentUntilType(t1, Constants.get().MODULE);
-            t2_p = TreeUtilFunctions.getParentUntilType(t2, Constants.get().MODULE);
+            t1_p = TreeUtilFunctions.getParentUntilType(t1, LANG1.MODULE);
+            t2_p = TreeUtilFunctions.getParentUntilType(t2, LANG2.MODULE);
         }
         if(t1_p == null && t2_p == null) {
-            t1_p = TreeUtilFunctions.getParentUntilType(t1, Constants.get().SOURCE_FILE);
-            t2_p = TreeUtilFunctions.getParentUntilType(t2, Constants.get().SOURCE_FILE);
+            t1_p = TreeUtilFunctions.getParentUntilType(t1, LANG1.SOURCE_FILE);
+            t2_p = TreeUtilFunctions.getParentUntilType(t2, LANG2.SOURCE_FILE);
         }
         return Objects.equals(t1_p, t2_p);
     }

@@ -56,86 +56,104 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                     }
                 }
                 if (enhancedFor == null) continue;
+                Constants LANG1 = new Constants(enhancedFor.getLocationInfo().getFilePath());
+                Constants LANG2 = new Constants(next.getLocationInfo().getFilePath());
                 for (LambdaExpressionObject lambda : lambdas) {
                     for (VariableDeclaration parameter : lambda.getParameters()) {
                         String variableName = parameter.getVariableName();
                         VariableDeclaration variableDeclaration = enhancedFor.getVariableDeclaration(variableName);
                         if (variableDeclaration != null) {
-                            Tree srcNode = TreeUtilFunctions.findByLocationInfo(srcTree,variableDeclaration.getLocationInfo());
-                            Tree dstNode = TreeUtilFunctions.findByLocationInfo(dstTree,parameter.getLocationInfo());
-                            new LeafMatcher().match(srcNode,dstNode,mappingStore);
+                            Tree srcNode = TreeUtilFunctions.findByLocationInfo(srcTree,variableDeclaration.getLocationInfo(),LANG1);
+                            Tree dstNode = TreeUtilFunctions.findByLocationInfo(dstTree,parameter.getLocationInfo(),LANG2);
+                            new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);
                         }
                     }
                 }
-                Tree srcSt = TreeUtilFunctions.findByLocationInfo(srcTree,enhancedFor.getLocationInfo());
-                Tree dstSt = TreeUtilFunctions.findByLocationInfo(dstTree,next.getLocationInfo());
+                Tree srcSt = TreeUtilFunctions.findByLocationInfo(srcTree,enhancedFor.getLocationInfo(),LANG1);
+                Tree dstSt = TreeUtilFunctions.findByLocationInfo(dstTree,next.getLocationInfo(),LANG2);
                 if (srcSt != null && dstSt != null)
                     if (srcSt.getType().name.equals(dstSt.getType().name))
                         mappingStore.addMapping(srcSt,dstSt);
             } else if (refactoring instanceof ReplacePipelineWithLoopRefactoring) {
-                ReplacePipelineWithLoopRefactoring replaceLoopWithPipelineRefactoring = (ReplacePipelineWithLoopRefactoring) refactoring;
-                if (replaceLoopWithPipelineRefactoring.getCodeFragmentsBefore().size() != 1) continue;
-                AbstractCodeFragment next = replaceLoopWithPipelineRefactoring.getCodeFragmentsBefore().iterator().next();
+                ReplacePipelineWithLoopRefactoring replacePipelineWithLoopRefactoring = (ReplacePipelineWithLoopRefactoring) refactoring;
+                if (replacePipelineWithLoopRefactoring.getCodeFragmentsBefore().size() != 1) continue;
+                AbstractCodeFragment next = replacePipelineWithLoopRefactoring.getCodeFragmentsBefore().iterator().next();
                 List<LambdaExpressionObject> lambdas = next.getLambdas();
                 AbstractCodeFragment enhancedFor = null;
-                for (AbstractCodeFragment abstractCodeFragment : replaceLoopWithPipelineRefactoring.getCodeFragmentsAfter()) {
+                for (AbstractCodeFragment abstractCodeFragment : replacePipelineWithLoopRefactoring.getCodeFragmentsAfter()) {
                     if (abstractCodeFragment.getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.ENHANCED_FOR_STATEMENT)) {
                         enhancedFor = abstractCodeFragment;
                         break;
                     }
                 }
                 if( enhancedFor == null) continue;
+                Constants LANG1 = new Constants(next.getLocationInfo().getFilePath());
+                Constants LANG2 = new Constants(enhancedFor.getLocationInfo().getFilePath());
                 for (LambdaExpressionObject lambda : lambdas) {
                     for (VariableDeclaration parameter : lambda.getParameters()) {
                         String variableName = parameter.getVariableName();
                         VariableDeclaration variableDeclaration = enhancedFor.getVariableDeclaration(variableName);
                         if (variableDeclaration == null)
                             continue;
-                        Tree srcNode = TreeUtilFunctions.findByLocationInfo(srcTree,parameter.getLocationInfo());
-                        Tree dstNode = TreeUtilFunctions.findByLocationInfo(dstTree,variableDeclaration.getLocationInfo());
-                        new LeafMatcher().match(srcNode,dstNode,mappingStore);
+                        Tree srcNode = TreeUtilFunctions.findByLocationInfo(srcTree,parameter.getLocationInfo(),LANG1);
+                        Tree dstNode = TreeUtilFunctions.findByLocationInfo(dstTree,variableDeclaration.getLocationInfo(),LANG2);
+                        new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);
                     }
                 }
-                Tree srcSt = TreeUtilFunctions.findByLocationInfo(srcTree,next.getLocationInfo());
-                Tree dstSt = TreeUtilFunctions.findByLocationInfo(dstTree,enhancedFor.getLocationInfo());
+                Tree srcSt = TreeUtilFunctions.findByLocationInfo(srcTree,next.getLocationInfo(),LANG1);
+                Tree dstSt = TreeUtilFunctions.findByLocationInfo(dstTree,enhancedFor.getLocationInfo(),LANG2);
                 if (dstSt != null && srcSt != null && srcSt.getType().name.equals(dstSt.getType().name))
                     mappingStore.addMapping(srcSt, dstSt);
             } else if (refactoring instanceof MergeOperationRefactoring) {
                 MergeOperationRefactoring mergeOperationRefactoring = (MergeOperationRefactoring) refactoring;
                 for(UMLOperationBodyMapper bodyMapper : mergeOperationRefactoring.getMappers()) {
-                    new MethodMatcher(optimizationData, bodyMapper).match(srcTree,dstTree,mappingStore);
+                    Constants LANG1 = new Constants(bodyMapper.getContainer1().getLocationInfo().getFilePath());
+                    Constants LANG2 = new Constants(bodyMapper.getContainer2().getLocationInfo().getFilePath());
+                    new MethodMatcher(optimizationData, bodyMapper, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
                 }
             } else if (refactoring instanceof SplitOperationRefactoring) {
                 SplitOperationRefactoring splitOperationRefactoring = (SplitOperationRefactoring) refactoring;
                 for(UMLOperationBodyMapper bodyMapper : splitOperationRefactoring.getMappers()) {
-                    new MethodMatcher(optimizationData, bodyMapper).match(srcTree,dstTree,mappingStore);
+                    Constants LANG1 = new Constants(bodyMapper.getContainer1().getLocationInfo().getFilePath());
+                    Constants LANG2 = new Constants(bodyMapper.getContainer2().getLocationInfo().getFilePath());
+                    new MethodMatcher(optimizationData, bodyMapper, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
                 }
             } else if (refactoring instanceof ExtractOperationRefactoring) {
                 ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
                 UMLOperationBodyMapper bodyMapper = extractOperationRefactoring.getBodyMapper();
-                new BodyMapperMatcher(optimizationData, bodyMapper, true).match(srcTree,dstTree,mappingStore);
+                Constants LANG1 = new Constants(bodyMapper.getContainer1().getLocationInfo().getFilePath());
+                Constants LANG2 = new Constants(bodyMapper.getContainer2().getLocationInfo().getFilePath());
+                new BodyMapperMatcher(optimizationData, bodyMapper, true, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
                 if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
                     processArgumentMappings(srcTree, dstTree, extractOperationRefactoring.getArgumentMappings());
             } else if (refactoring instanceof InlineOperationRefactoring) {
                 InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
                 UMLOperationBodyMapper bodyMapper = inlineOperationRefactoring.getBodyMapper();
-                new BodyMapperMatcher(optimizationData, bodyMapper, false).match(srcTree,dstTree,mappingStore);
+                Constants LANG1 = new Constants(bodyMapper.getContainer1().getLocationInfo().getFilePath());
+                Constants LANG2 = new Constants(bodyMapper.getContainer2().getLocationInfo().getFilePath());
+                new BodyMapperMatcher(optimizationData, bodyMapper, false, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
                 if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
                     processArgumentMappings(srcTree, dstTree, inlineOperationRefactoring.getArgumentMappings());
             } else if (refactoring instanceof MoveCodeRefactoring) {
                 MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) refactoring;
                 if (!moveCodeRefactoring.getMoveType().equals(Type.MOVE_BETWEEN_FILES)) {
                     UMLOperationBodyMapper bodyMapper = moveCodeRefactoring.getBodyMapper();
-                    new BodyMapperMatcher(optimizationData, bodyMapper, false).match(srcTree,dstTree,mappingStore);
+                    Constants LANG1 = new Constants(bodyMapper.getContainer1().getLocationInfo().getFilePath());
+                    Constants LANG2 = new Constants(bodyMapper.getContainer2().getLocationInfo().getFilePath());
+                    new BodyMapperMatcher(optimizationData, bodyMapper, false, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
                 }
             } else if (refactoring instanceof ReplaceAnonymousWithLambdaRefactoring) {
             	ReplaceAnonymousWithLambdaRefactoring replaceAnonymousWithLambdaRefactoring = (ReplaceAnonymousWithLambdaRefactoring) refactoring;
                 UMLOperationBodyMapper bodyMapper = replaceAnonymousWithLambdaRefactoring.getBodyMapper();
-                new BodyMapperMatcher(optimizationData, bodyMapper, false).match(srcTree,dstTree,mappingStore);
+                Constants LANG1 = new Constants(bodyMapper.getContainer1().getLocationInfo().getFilePath());
+                Constants LANG2 = new Constants(bodyMapper.getContainer2().getLocationInfo().getFilePath());
+                new BodyMapperMatcher(optimizationData, bodyMapper, false, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
             } else if (refactoring instanceof ParameterizeTestRefactoring) {
                 ParameterizeTestRefactoring parameterizeTestRefactoring = (ParameterizeTestRefactoring) refactoring;
                 UMLOperationBodyMapper bodyMapper = parameterizeTestRefactoring.getBodyMapper();
-                new BodyMapperMatcher(optimizationData, bodyMapper, false).match(srcTree,dstTree,mappingStore);
+                Constants LANG1 = new Constants(bodyMapper.getContainer1().getLocationInfo().getFilePath());
+                Constants LANG2 = new Constants(bodyMapper.getContainer2().getLocationInfo().getFilePath());
+                new BodyMapperMatcher(optimizationData, bodyMapper, false, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
             } else if (refactoring instanceof ExtractVariableRefactoring) {
                 ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring) refactoring;
                 optimizationData.getLastStepMappings().addAll(extractVariableRefactoring.getSubExpressionMappings());
@@ -162,20 +180,24 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 //}
                 optimizationData.getLastStepMappings().addAll(extractAttributeRefactoring.getSubExpressionMappings());
                 for (UMLAnonymousClassDiff umlAnonymousClassDiff : extractAttributeRefactoring.getAnonymousClassDiffList()) {
-                    new AnonymousClassDiffMatcher(optimizationData, umlAnonymousClassDiff).match(srcTree,dstTree,mappingStore);
+                    Constants LANG1 = new Constants(umlAnonymousClassDiff.getOriginalClass().getLocationInfo().getFilePath());
+                    Constants LANG2 = new Constants(umlAnonymousClassDiff.getNextClass().getLocationInfo().getFilePath());
+                    new AnonymousClassDiffMatcher(optimizationData, umlAnonymousClassDiff, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
                 }
             } else if (refactoring instanceof MergeVariableRefactoring) {
                 MergeVariableRefactoring mergeVariableRefactoring = (MergeVariableRefactoring) refactoring;
                 Set<VariableDeclaration> mergedVariables = mergeVariableRefactoring.getMergedVariables();
                 VariableDeclaration newVariable = mergeVariableRefactoring.getNewVariable();
-                Tree dstVariableDeclaration =TreeUtilFunctions.findByLocationInfo(dstTree,newVariable.getLocationInfo());
+                Constants LANG2 = new Constants(newVariable.getLocationInfo().getFilePath());
+                Tree dstVariableDeclaration =TreeUtilFunctions.findByLocationInfo(dstTree,newVariable.getLocationInfo(),LANG2);
 
                 if (dstVariableDeclaration != null) {
                     List<Tree> dstChildrenList = dstVariableDeclaration.getChildren();
                     if (dstChildrenList.isEmpty()) continue; //Might need to investigate what would be the better diff in these cases
                     Tree dstVarName = dstChildrenList.get(dstChildrenList.size() - 1);
                     for (VariableDeclaration variableDeclaration : mergedVariables) {
-                        Tree srcVariableDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, variableDeclaration.getLocationInfo());
+                        Constants LANG1 = new Constants(variableDeclaration.getLocationInfo().getFilePath());
+                        Tree srcVariableDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, variableDeclaration.getLocationInfo(), LANG1);
                         if (srcVariableDeclaration != null) {
                             List<Tree> srcChildrenList = srcVariableDeclaration.getChildren();
                             if (srcChildrenList.size() > 0) {
@@ -196,10 +218,12 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 optimizationData.getLastStepMappings().addAll(replaceGenericWithDiamondRefactoring.getSubExpressionMappings());
             } else if (refactoring instanceof MergeCatchRefactoring) {
                 MergeCatchRefactoring mergeCatchRefactoring = (MergeCatchRefactoring) refactoring;
-                Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree,mergeCatchRefactoring.getNewCatchBlock().getLocationInfo());
+                Constants LANG2 = new Constants(mergeCatchRefactoring.getNewCatchBlock().getLocationInfo().getFilePath());
+                Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree,mergeCatchRefactoring.getNewCatchBlock().getLocationInfo(),LANG2);
                 for (AbstractCodeFragment eachMerged : mergeCatchRefactoring.getMergedCatchBlocks()) {
-                    Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree,eachMerged.getLocationInfo());
-                    new GeneralMatcher(eachMerged, mergeCatchRefactoring.getNewCatchBlock())
+                    Constants LANG1 = new Constants(eachMerged.getLocationInfo().getFilePath());
+                    Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree,eachMerged.getLocationInfo(),LANG1);
+                    new GeneralMatcher(eachMerged, mergeCatchRefactoring.getNewCatchBlock(), LANG1, LANG2)
                             .match(srcSubTree,dstSubTree,mappingStore);
                 }
             }
@@ -207,20 +231,22 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 RenameVariableRefactoring renameVariableRefactoring = (RenameVariableRefactoring) refactoring;
                 VariableDeclaration originalVariable = renameVariableRefactoring.getOriginalVariable();
                 VariableDeclaration renamedVariable = renameVariableRefactoring.getRenamedVariable();
-                Tree srcInput = TreeUtilFunctions.findByLocationInfo(srcTree,originalVariable.getLocationInfo());
-                Tree dstInput = TreeUtilFunctions.findByLocationInfo(dstTree, renamedVariable.getLocationInfo());
+                Constants LANG1 = new Constants(originalVariable.getLocationInfo().getFilePath());
+                Constants LANG2 = new Constants(renamedVariable.getLocationInfo().getFilePath());
+                Tree srcInput = TreeUtilFunctions.findByLocationInfo(srcTree, originalVariable.getLocationInfo(), LANG1);
+                Tree dstInput = TreeUtilFunctions.findByLocationInfo(dstTree, renamedVariable.getLocationInfo(), LANG2);
                 if (srcInput == null || dstInput == null) continue;
                 boolean eligible = true;
                 switch (renameVariableRefactoring.getRefactoringType()) {
                     case REPLACE_VARIABLE_WITH_ATTRIBUTE:
-                        srcInput = TreeUtilFunctions.getParentUntilType(srcInput, Constants.get().VARIABLE_DECLARATION_STATEMENT);
-                        dstInput = TreeUtilFunctions.getParentUntilType(dstInput,Constants.get().FIELD_DECLARATION);
+                        srcInput = TreeUtilFunctions.getParentUntilType(srcInput, LANG1.VARIABLE_DECLARATION_STATEMENT);
+                        dstInput = TreeUtilFunctions.getParentUntilType(dstInput,LANG2.FIELD_DECLARATION);
                         if (mappingStore.isSrcMapped(srcInput) || mappingStore.isDstMapped(dstInput))
                             continue;
                         break;
                     case REPLACE_ATTRIBUTE_WITH_VARIABLE:
-                        srcInput = TreeUtilFunctions.getParentUntilType(srcInput,Constants.get().FIELD_DECLARATION);
-                        dstInput = TreeUtilFunctions.getParentUntilType(dstInput,Constants.get().VARIABLE_DECLARATION_STATEMENT);
+                        srcInput = TreeUtilFunctions.getParentUntilType(srcInput,LANG1.FIELD_DECLARATION);
+                        dstInput = TreeUtilFunctions.getParentUntilType(dstInput,LANG2.VARIABLE_DECLARATION_STATEMENT);
                         if (mappingStore.isSrcMapped(srcInput) || mappingStore.isDstMapped(dstInput))
                             continue;
                         break;
@@ -229,7 +255,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                         if (eligible)
                             for (AbstractCodeMapping abstractCodeMapping : renameVariableRefactoring.getReferences())
                                 if (abstractCodeMapping instanceof LeafMapping)
-                                    findVariablesAndMatch(TreeUtilFunctions.findByLocationInfo(srcTree, abstractCodeMapping.getFragment1().getLocationInfo()), TreeUtilFunctions.findByLocationInfo(dstTree, abstractCodeMapping.getFragment2().getLocationInfo()), renameVariableRefactoring.getOriginalVariable().getVariableName(), renameVariableRefactoring.getRenamedVariable().getVariableName());
+                                    findVariablesAndMatch(TreeUtilFunctions.findByLocationInfo(srcTree, abstractCodeMapping.getFragment1().getLocationInfo(), LANG1), TreeUtilFunctions.findByLocationInfo(dstTree, abstractCodeMapping.getFragment2().getLocationInfo(), LANG2), renameVariableRefactoring.getOriginalVariable().getVariableName(), renameVariableRefactoring.getRenamedVariable().getVariableName(), LANG1, LANG2);
                         break;
                     case RENAME_VARIABLE:
                         Set<AbstractCodeMapping> references = renameVariableRefactoring.getReferences();
@@ -242,7 +268,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                             }
                             if (eligible) {
                                 if (abstractCodeMapping instanceof LeafMapping) {
-                                    findVariablesAndMatch(TreeUtilFunctions.findByLocationInfo(srcTree, abstractCodeMapping.getFragment1().getLocationInfo()), TreeUtilFunctions.findByLocationInfo(dstTree, abstractCodeMapping.getFragment2().getLocationInfo()), renameVariableRefactoring.getOriginalVariable().getVariableName(), renameVariableRefactoring.getRenamedVariable().getVariableName());
+                                    findVariablesAndMatch(TreeUtilFunctions.findByLocationInfo(srcTree, abstractCodeMapping.getFragment1().getLocationInfo(), LANG1), TreeUtilFunctions.findByLocationInfo(dstTree, abstractCodeMapping.getFragment2().getLocationInfo(), LANG2), renameVariableRefactoring.getOriginalVariable().getVariableName(), renameVariableRefactoring.getRenamedVariable().getVariableName(), LANG1, LANG2);
                                 }
                             }
                         }
@@ -253,13 +279,13 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
 
                         if (!eligible)
                             break;
-                        while (srcInput != null && !TreeUtilFunctions.isStatement(srcInput.getType().name)) {
+                        while (srcInput != null && !TreeUtilFunctions.isStatement(srcInput.getType().name, LANG1)) {
                             if (srcInput.getType() == null) break;
                             srcInput = srcInput.getParent();
                         }
                         if (srcInput == null) return;
-                        if (TreeUtilFunctions.isStatement(srcInput.getType().name)){
-                            new LeafMatcher().match(srcInput,dstInput,mappingStore);
+                        if (TreeUtilFunctions.isStatement(srcInput.getType().name, LANG1)){
+                            new LeafMatcher(LANG1, LANG2).match(srcInput,dstInput,mappingStore);
                         }
                         eligible = false;
                         break;
@@ -267,20 +293,20 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                         eligible = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();
                         if (!eligible)
                             break;
-                        while (dstInput != null && !TreeUtilFunctions.isStatement(dstInput.getType().name) ) {
+                        while (dstInput != null && !TreeUtilFunctions.isStatement(dstInput.getType().name, LANG2) ) {
                             if (dstInput.getType() == null) break;
                             dstInput = dstInput.getParent();
                         }
                         if (dstInput == null) return;
-                        if (TreeUtilFunctions.isStatement(dstInput.getType().name)){
-                            new LeafMatcher().match(srcInput,dstInput,mappingStore);
+                        if (TreeUtilFunctions.isStatement(dstInput.getType().name, LANG2)){
+                            new LeafMatcher(LANG1, LANG2).match(srcInput,dstInput,mappingStore);
                         }
                         eligible = false;
                         break;
                     default:
                         eligible = false;
                 }
-                if (eligible) new LeafMatcher().match(
+                if (eligible) new LeafMatcher(LANG1, LANG2).match(
                         srcInput,
                         dstInput,
                         mappingStore);
@@ -317,8 +343,10 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                         if (belongToDifferentFiles(subExpressionMapping.getFragment1(), renameAttributeRefactoring.getOriginalAttribute()) ||
                                 belongToDifferentFiles(subExpressionMapping.getFragment2(), renameAttributeRefactoring.getRenamedAttribute()))
                             continue;
-                        Tree srcSimpleName = TreeUtilFunctions.findByLocationInfo(srcTree, subExpressionMapping.getFragment1().getLocationInfo(), Constants.get().SIMPLE_NAME);
-                        Tree dstSimpleName = TreeUtilFunctions.findByLocationInfo(dstTree, subExpressionMapping.getFragment2().getLocationInfo(), Constants.get().SIMPLE_NAME);
+                        Constants LANG1 = new Constants(subExpressionMapping.getFragment1().getLocationInfo().getFilePath());
+                        Constants LANG2 = new Constants(subExpressionMapping.getFragment2().getLocationInfo().getFilePath());
+                        Tree srcSimpleName = TreeUtilFunctions.findByLocationInfo(srcTree, subExpressionMapping.getFragment1().getLocationInfo(), LANG1, LANG1.SIMPLE_NAME);
+                        Tree dstSimpleName = TreeUtilFunctions.findByLocationInfo(dstTree, subExpressionMapping.getFragment2().getLocationInfo(), LANG2, LANG2.SIMPLE_NAME);
                         if (srcSimpleName != null && dstSimpleName != null)
                             optimizationData.getSubtreeMappings().addMapping(srcSimpleName,dstSimpleName);
                     }
@@ -326,12 +354,14 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
             }
             else if (refactoring instanceof InvertConditionRefactoring) {
                 InvertConditionRefactoring invertConditionRefactoring = (InvertConditionRefactoring) refactoring;
-                Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree,invertConditionRefactoring.getOriginalConditional().getLocationInfo());
-                Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree,invertConditionRefactoring.getInvertedConditional().getLocationInfo());
+                Constants LANG1 = new Constants(invertConditionRefactoring.getOriginalConditional().getLocationInfo().getFilePath());
+                Constants LANG2 = new Constants(invertConditionRefactoring.getInvertedConditional().getLocationInfo().getFilePath());
+                Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree,invertConditionRefactoring.getOriginalConditional().getLocationInfo(),LANG1);
+                Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree,invertConditionRefactoring.getInvertedConditional().getLocationInfo(),LANG2);
 //				new CompositeMatcher(invertConditionRefactoring.getOriginalConditional(), )
                 new GeneralMatcher(
                         invertConditionRefactoring.getOriginalConditional(),
-                        invertConditionRefactoring.getInvertedConditional())
+                        invertConditionRefactoring.getInvertedConditional(), LANG1, LANG2)
                         .match(srcSubTree,dstSubTree,mappingStore);
             }
         }
@@ -351,11 +381,13 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
         return count > 1;
     }
     private void processArgumentMappings(Tree srcTree, Tree dstTree, List<AbstractCodeMapping> argumentMappings) {
-		for(AbstractCodeMapping expressionMapping : argumentMappings) {
-			Tree t1 = TreeUtilFunctions.findByLocationInfo(srcTree,expressionMapping.getFragment1().getLocationInfo());
-			Tree t2 = TreeUtilFunctions.findByLocationInfo(dstTree,expressionMapping.getFragment2().getLocationInfo());
-			new LeafMatcher().match(t1,t2,optimizationData.getSubtreeMappings());
-		}
+        for(AbstractCodeMapping expressionMapping : argumentMappings) {
+            Constants LANG1 = new Constants(expressionMapping.getFragment1().getLocationInfo().getFilePath());
+            Constants LANG2 = new Constants(expressionMapping.getFragment2().getLocationInfo().getFilePath());
+            Tree t1 = TreeUtilFunctions.findByLocationInfo(srcTree,expressionMapping.getFragment1().getLocationInfo(),LANG1);
+            Tree t2 = TreeUtilFunctions.findByLocationInfo(dstTree,expressionMapping.getFragment2().getLocationInfo(),LANG2);
+            new LeafMatcher(LANG1, LANG2).match(t1,t2,optimizationData.getSubtreeMappings());
+        }
     }
 
     private boolean multipleInstancesWithSameDescription(List<Refactoring> refactoringList, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
@@ -377,16 +409,18 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
     }
 
     private static void processModifiedAnnotation(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore, UMLAnnotation annotationBefore, UMLAnnotation annotationAfter) {
-        Tree srcAnnotationTree = TreeUtilFunctions.findByLocationInfo(srcTree, annotationBefore.getLocationInfo());
-        Tree dstAnnotationTree = TreeUtilFunctions.findByLocationInfo(dstTree, annotationAfter.getLocationInfo());
+        Constants LANG1 = new Constants(annotationBefore.getLocationInfo().getFilePath());
+        Constants LANG2 = new Constants(annotationAfter.getLocationInfo().getFilePath());
+        Tree srcAnnotationTree = TreeUtilFunctions.findByLocationInfo(srcTree, annotationBefore.getLocationInfo(),LANG1);
+        Tree dstAnnotationTree = TreeUtilFunctions.findByLocationInfo(dstTree, annotationAfter.getLocationInfo(),LANG2);
         if (srcAnnotationTree != null & dstAnnotationTree != null)
-            new BasicTreeMatcher().match(srcAnnotationTree,dstAnnotationTree, mappingStore);
+            new BasicTreeMatcher(LANG1, LANG2).match(srcAnnotationTree,dstAnnotationTree, mappingStore);
         mappingStore.addMapping(srcAnnotationTree,dstAnnotationTree);
     }
 
-    private void findVariablesAndMatch(Tree srcStatement, Tree dstStatement, String originalVariableName, String renamedVariableName) {
-        List<Tree> srcRefs = TreeUtilFunctions.findVariable(srcStatement,originalVariableName);
-        List<Tree> dstRefs = TreeUtilFunctions.findVariable(dstStatement,renamedVariableName);
+    private void findVariablesAndMatch(Tree srcStatement, Tree dstStatement, String originalVariableName, String renamedVariableName, Constants LANG1, Constants LANG2) {
+        List<Tree> srcRefs = TreeUtilFunctions.findVariable(srcStatement,originalVariableName,LANG1);
+        List<Tree> dstRefs = TreeUtilFunctions.findVariable(dstStatement,renamedVariableName,LANG2);
         if (srcRefs == null || dstRefs == null) return;
         if (srcRefs.size() == 1 && dstRefs.size() == 1)
             optimizationData.getSubtreeMappings().addMapping(srcRefs.get(0),dstRefs.get(0));

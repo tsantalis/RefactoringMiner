@@ -17,7 +17,11 @@ import java.util.*;
  * @since   2022-12-27 8:46 p.m.
  */
 public class CustomBottomUpMatcher implements Matcher {
-	public CustomBottomUpMatcher() {
+	private final Constants LANG1;
+	private final Constants LANG2;
+	public CustomBottomUpMatcher(Constants LANG1, Constants LANG2) {
+		this.LANG1 = LANG1;
+		this.LANG2 = LANG2;
 	}
 
 	@Override
@@ -49,7 +53,8 @@ public class CustomBottomUpMatcher implements Matcher {
 
 				if (best != null) {
 					lastChanceMatch(mappings, t, best);
-					boolean checkOperatorOfInfixExpression = checkInfixExpression(mappings, t, best);
+					//t is from src, best is from dst
+					boolean checkOperatorOfInfixExpression = checkInfixExpression(mappings, t, best, LANG1, LANG2);
 					if (checkOperatorOfInfixExpression)
 						mappings.addMapping(t, best);
 				}
@@ -61,13 +66,13 @@ public class CustomBottomUpMatcher implements Matcher {
 		return mappings;
 	}
 
-	private static boolean checkInfixExpression(MappingStore mappings, Tree t, Tree best) {
+	private static boolean checkInfixExpression(MappingStore mappings, Tree t, Tree best, Constants LANG1, Constants LANG2) {
 		boolean checkOperatorOfInfixExpression = true;
-		if (t.getType().name.equals(Constants.get().INFIX_EXPRESSION))
+		if (t.getType().name.equals(LANG1.INFIX_EXPRESSION))
 		{
 			checkOperatorOfInfixExpression = false;
-			Tree a = TreeUtilFunctions.findChildByType(t, Constants.get().INFIX_EXPRESSION_OPERATOR);
-			Tree b = TreeUtilFunctions.findChildByType(best, Constants.get().INFIX_EXPRESSION_OPERATOR);
+			Tree a = TreeUtilFunctions.findChildByType(t, LANG1.INFIX_EXPRESSION_OPERATOR);
+			Tree b = TreeUtilFunctions.findChildByType(best, LANG2.INFIX_EXPRESSION_OPERATOR);
 			if (mappings.getDstForSrc(a) == b) checkOperatorOfInfixExpression = true;
 		}
 		return checkOperatorOfInfixExpression;

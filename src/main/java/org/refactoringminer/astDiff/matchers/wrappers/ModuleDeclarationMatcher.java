@@ -9,11 +9,18 @@ import java.util.List;
 
 /* Created by pourya on 2024-05-22*/
 public class ModuleDeclarationMatcher implements TreeMatcher {
+    private final Constants LANG1;
+    private final Constants LANG2;
+
+    public ModuleDeclarationMatcher(Constants LANG1, Constants LANG2) {
+        this.LANG1 = LANG1;
+        this.LANG2 = LANG2;
+    }
 
     @Override
     public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
-        Tree srcModuleDeclaration = findModuleDeclaration(srcTree);
-        Tree dstModuleDeclaration = findModuleDeclaration(dstTree);
+        Tree srcModuleDeclaration = findModuleDeclaration(srcTree, LANG1);
+        Tree dstModuleDeclaration = findModuleDeclaration(dstTree, LANG2);
         if (srcModuleDeclaration != null && dstModuleDeclaration != null) {
             mappingStore.addMapping(srcModuleDeclaration,dstModuleDeclaration);
             matchModuleNames(mappingStore, srcModuleDeclaration, dstModuleDeclaration);
@@ -33,8 +40,8 @@ public class ModuleDeclarationMatcher implements TreeMatcher {
         }
     }
 
-    private Tree findModuleDeclaration(Tree inputTree) {
-        String searchingType = Constants.get().MODULE_DECLARATION;
+    private Tree findModuleDeclaration(Tree inputTree, Constants LANG) {
+        String searchingType = LANG.MODULE_DECLARATION;
         if (!inputTree.getChildren().isEmpty()) {
             List<Tree> children = inputTree.getChildren();
             for(Tree child: children) {

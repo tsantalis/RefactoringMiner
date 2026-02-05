@@ -10,19 +10,22 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 public class SameModifierMatcher implements TreeMatcher {
 
     private final String modifier;
+    private final Constants LANG1;
+    private final Constants LANG2;
 
-    public SameModifierMatcher(String modifier) {
+    public SameModifierMatcher(Constants LANG1, Constants LANG2, String modifier) {
         this.modifier = modifier;
+        this.LANG1 = LANG1;
+        this.LANG2 = LANG2;
     }
 
     @Override
     public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
         matchModifier(srcTree,dstTree, modifier, mappingStore);
     }
-    public static void matchModifier(Tree srcTypeDeclaration, Tree dstTypeDeclaration, String modifier, ExtendedMultiMappingStore mappingStore) {
-        String type = Constants.get().MODIFIER;
-        Tree srcTree = TreeUtilFunctions.findChildByTypeAndLabel(srcTypeDeclaration,type,modifier);
-        Tree dstTree = TreeUtilFunctions.findChildByTypeAndLabel(dstTypeDeclaration,type,modifier);
+    public void matchModifier(Tree srcTypeDeclaration, Tree dstTypeDeclaration, String modifier, ExtendedMultiMappingStore mappingStore) {
+        Tree srcTree = TreeUtilFunctions.findChildByTypeAndLabel(srcTypeDeclaration,LANG1.MODIFIER,modifier,LANG1);
+        Tree dstTree = TreeUtilFunctions.findChildByTypeAndLabel(dstTypeDeclaration,LANG2.MODIFIER,modifier,LANG2);
         if (srcTree != null && dstTree != null){
             mappingStore.addMappingRecursively(srcTree,dstTree);
         }

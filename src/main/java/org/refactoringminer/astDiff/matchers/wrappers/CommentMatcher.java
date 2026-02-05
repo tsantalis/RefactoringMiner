@@ -16,12 +16,15 @@ import java.util.Optional;
 /* Created by pourya on 2024-10-02*/
 public class CommentMatcher extends OptimizationAwareMatcher {
 
-
     private final UMLCommentListDiff commentListDiff;
+    private final Constants LANG1;
+    private final Constants LANG2;
 
-    public CommentMatcher(OptimizationData optimizationData, UMLCommentListDiff commentListDiff) {
+    public CommentMatcher(OptimizationData optimizationData, UMLCommentListDiff commentListDiff, Constants LANG1, Constants LANG2) {
         super(optimizationData);
         this.commentListDiff = commentListDiff;
+        this.LANG1 = LANG1;
+        this.LANG2 = LANG2;
     }
 
     @Override
@@ -34,15 +37,15 @@ public class CommentMatcher extends OptimizationAwareMatcher {
                 {
                     UMLJavadoc leftJavadoc = left.getJavaDoc().get();
                     UMLJavadoc rightJavadoc = right.getJavaDoc().get();
-                    new JavaDocMatcher(optimizationData, leftJavadoc, rightJavadoc, Optional.of(new UMLJavadocDiff(leftJavadoc, rightJavadoc))).
+                    new JavaDocMatcher(optimizationData, leftJavadoc, rightJavadoc, Optional.of(new UMLJavadocDiff(leftJavadoc, rightJavadoc)), LANG1, LANG2).
                             matchAndUpdateOptimizationStore(src, dst, mappingStore);
                 }
                 else {
-                    Tree srcComment = TreeUtilFunctions.findByLocationInfo(src, commonComment.getLeft().getLocationInfo(), Constants.get().LINE_COMMENT, Constants.get().BLOCK_COMMENT);
-                    Tree dstComment = TreeUtilFunctions.findByLocationInfo(dst, commonComment.getRight().getLocationInfo(), Constants.get().LINE_COMMENT, Constants.get().BLOCK_COMMENT);
+                    Tree srcComment = TreeUtilFunctions.findByLocationInfo(src, commonComment.getLeft().getLocationInfo(), LANG1, LANG1.LINE_COMMENT, LANG1.BLOCK_COMMENT);
+                    Tree dstComment = TreeUtilFunctions.findByLocationInfo(dst, commonComment.getRight().getLocationInfo(), LANG2, LANG2.LINE_COMMENT, LANG2.BLOCK_COMMENT);
                     if (srcComment != null && dstComment != null) {
                         mappingStore.addMapping(srcComment, dstComment);
-                        if (TreeUtilFunctions.areBothFromThisType(srcComment.getParent(), dstComment.getParent(), Constants.get().EXPRESSION_STATEMENT))
+                        if (TreeUtilFunctions.areBothFromThisType(srcComment.getParent(), dstComment.getParent(), LANG1.EXPRESSION_STATEMENT, LANG2.EXPRESSION_STATEMENT))
                             mappingStore.addMapping(srcComment.getParent(), dstComment.getParent());
                     }
                 }

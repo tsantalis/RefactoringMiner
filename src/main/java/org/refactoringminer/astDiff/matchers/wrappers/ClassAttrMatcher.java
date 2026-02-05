@@ -6,6 +6,7 @@ import gr.uom.java.xmi.diff.*;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
+import org.refactoringminer.astDiff.utils.Constants;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,14 +15,20 @@ import java.util.Set;
 /* Created by pourya on 2024-05-22*/
 public class ClassAttrMatcher extends OptimizationAwareMatcher {
     private final UMLAbstractClassDiff classDiff;
+    private final Constants LANG1;
+    private final Constants LANG2;
 
-    public ClassAttrMatcher(UMLAbstractClassDiff classDiff) {
+    public ClassAttrMatcher(UMLAbstractClassDiff classDiff, Constants LANG1, Constants LANG2) {
         this.classDiff = classDiff;
+        this.LANG1 = LANG1;
+        this.LANG2 = LANG2;
     }
 
-    public ClassAttrMatcher(OptimizationData optimizationData, UMLAbstractClassDiff classDiff) {
+    public ClassAttrMatcher(OptimizationData optimizationData, UMLAbstractClassDiff classDiff, Constants LANG1, Constants LANG2) {
         super(optimizationData);
         this.classDiff = classDiff;
+        this.LANG1 = LANG1;
+        this.LANG2 = LANG2;
     }
     @Override
     public void matchAndUpdateOptimizationStore(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
@@ -37,7 +44,7 @@ public class ClassAttrMatcher extends OptimizationAwareMatcher {
                         //TODO: Replace the above line with the pair.getJavaDocDiff() or something along those lines
                         :
                         Optional.empty(),
-                        new UMLCommentListDiff(pair.getLeft().getComments(), pair.getRight().getComments())) //Note: UMLJavaDocDiff throws exception if one side is null.
+                        new UMLCommentListDiff(pair.getLeft().getComments(), pair.getRight().getComments()), LANG1, LANG2) //Note: UMLJavaDocDiff throws exception if one side is null.
                     // So if one parameter is null, is better to handle it internally and allow the user to pass it
 
                     .match(srcTree, dstTree, mappingStore);
@@ -45,7 +52,7 @@ public class ClassAttrMatcher extends OptimizationAwareMatcher {
         }
         List<UMLAttributeDiff> attributeDiffList = classDiff.getAttributeDiffList();
         for (UMLAttributeDiff umlAttributeDiff : attributeDiffList) {
-            new FieldDeclarationByAttrDiffMatcher(optimizationData, umlAttributeDiff).match(srcTree, dstTree, mappingStore);
+            new FieldDeclarationByAttrDiffMatcher(optimizationData, umlAttributeDiff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
         }
         List<UMLEnumConstantDiff> enumConstantDiffList = classDiff.getEnumConstantDiffList();
         for (UMLEnumConstantDiff enumConstantDiff : enumConstantDiffList) {
@@ -53,10 +60,10 @@ public class ClassAttrMatcher extends OptimizationAwareMatcher {
         }
     }
     private void processFieldDeclarationByEnumConstantDiff(Tree srcTree, Tree dstTree, UMLEnumConstantDiff umlEnumConstantDiff, ExtendedMultiMappingStore mappingStore) {
-        new FieldDeclarationMatcher(optimizationData, umlEnumConstantDiff.getRemovedEnumConstant(), umlEnumConstantDiff.getAddedEnumConstant(), umlEnumConstantDiff.getJavadocDiff(), umlEnumConstantDiff.getCommentListDiff()).match(srcTree,dstTree,mappingStore);
+        new FieldDeclarationMatcher(optimizationData, umlEnumConstantDiff.getRemovedEnumConstant(), umlEnumConstantDiff.getAddedEnumConstant(), umlEnumConstantDiff.getJavadocDiff(), umlEnumConstantDiff.getCommentListDiff(), LANG1, LANG2).match(srcTree,dstTree,mappingStore);
         if(umlEnumConstantDiff.getAnonymousClassDiff().isPresent()) {
             UMLAnonymousClassDiff anonymousClassDiff = umlEnumConstantDiff.getAnonymousClassDiff().get();
-            new AnonymousClassDiffMatcher(optimizationData, anonymousClassDiff).match(srcTree, dstTree, mappingStore);
+            new AnonymousClassDiffMatcher(optimizationData, anonymousClassDiff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
         }
     }
 }

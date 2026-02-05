@@ -9,19 +9,18 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiPredicate;
 
 public enum LRAScenarios {
     VARIABLE_DECLARATION_STATEMENT(
-            (src, dst) ->  TreeUtilFunctions.areBothFromThisType(src, dst, Constants.get().VARIABLE_DECLARATION_STATEMENT)) {
+            (src, dst, LANG1, LANG2) ->  TreeUtilFunctions.areBothFromThisType(src, dst, LANG1.VARIABLE_DECLARATION_STATEMENT, LANG2.VARIABLE_DECLARATION_STATEMENT)) {
         @Override
-        List<Pair<Tree, Tree>> makePairs(Tree src, Tree dst, MappingStore match ) {
+        List<Pair<Tree, Tree>> makePairs(Tree src, Tree dst, MappingStore match, Constants LANG1, Constants LANG2) {
             List<Pair<Tree,Tree>> pairs = new ArrayList<>();
-            Tree srcVarDeclFragment = TreeUtilFunctions.findChildByType(src, Constants.get().VARIABLE_DECLARATION_FRAGMENT);
+            Tree srcVarDeclFragment = TreeUtilFunctions.findChildByType(src, LANG1.VARIABLE_DECLARATION_FRAGMENT);
             if (srcVarDeclFragment == null) return pairs;
             int indexOfSrcVarDeclFragment = srcVarDeclFragment.positionInParent();
 
-            Tree dstVarDeclFragment = TreeUtilFunctions.findChildByType(dst, Constants.get().VARIABLE_DECLARATION_FRAGMENT);
+            Tree dstVarDeclFragment = TreeUtilFunctions.findChildByType(dst, LANG2.VARIABLE_DECLARATION_FRAGMENT);
             if (dstVarDeclFragment == null) return pairs;
             int indexOfDstVarDeclFragment = dstVarDeclFragment.positionInParent();
 
@@ -39,14 +38,14 @@ public enum LRAScenarios {
         }
     },
     ExpressionStatementWithAssignment(
-            (src, dst) ->  TreeUtilFunctions.areBothFromThisType(src, dst, Constants.get().EXPRESSION_STATEMENT)
+            (src, dst, LANG1, LANG2) ->  TreeUtilFunctions.areBothFromThisType(src, dst, LANG1.EXPRESSION_STATEMENT, LANG2.EXPRESSION_STATEMENT)
             //And both having first child (if they have)
             && (!src.getChildren().isEmpty() && !dst.getChildren().isEmpty())
             //and che first child be the assignment
-            && (TreeUtilFunctions.areBothFromThisType(src.getChild(0), dst.getChild(0), Constants.get().ASSIGNMENT))
+            && (TreeUtilFunctions.areBothFromThisType(src.getChild(0), dst.getChild(0), LANG1.ASSIGNMENT, LANG2.ASSIGNMENT))
     ) {
         @Override
-        List<Pair<Tree, Tree>> makePairs(Tree src, Tree dst, MappingStore match) {
+        List<Pair<Tree, Tree>> makePairs(Tree src, Tree dst, MappingStore match, Constants LANG1, Constants LANG2) {
             Tree srcAssignment = src.getChild(0);
             Tree dstAssignment = dst.getChild(0);
             if (srcAssignment.getChildren().size() == 3 && dstAssignment.getChildren().size() == 3) {
@@ -66,12 +65,15 @@ public enum LRAScenarios {
         }
     };
 
-    final BiPredicate<Tree, Tree> condition;
-    abstract List<Pair<Tree,Tree>> makePairs(Tree src, Tree dst, MappingStore match);
+	@FunctionalInterface
+	interface Predicate {
+		boolean test(Tree src, Tree dst, Constants LANG1, Constants LANG2);
+	}
+    final Predicate condition;
+    abstract List<Pair<Tree,Tree>> makePairs(Tree src, Tree dst, MappingStore match, Constants LANG1, Constants LANG2);
     
-    LRAScenarios(BiPredicate<Tree, Tree> condition) {
+    LRAScenarios(Predicate condition) {
         this.condition = condition;
-
     }
 
     private static void makeSegments(Tree src, int indexOfSrcVarDeclFragment, FakeTree fake_src1, FakeTree fake_src2) {

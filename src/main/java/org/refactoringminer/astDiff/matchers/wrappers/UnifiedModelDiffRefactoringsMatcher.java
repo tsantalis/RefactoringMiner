@@ -14,6 +14,7 @@ import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
+import org.refactoringminer.astDiff.utils.Constants;
 
 import java.util.*;
 
@@ -55,10 +56,14 @@ public class UnifiedModelDiffRefactoringsMatcher {
             for (org.apache.commons.lang3.tuple.Pair<UMLComment, UMLComment> commonComment : commentsMovedBetweenClass.getCommonComments()) {
                 UMLComment left = commonComment.getLeft();
                 UMLComment right = commonComment.getRight();
+                String srcPath = left.getLocationInfo().getFilePath();
+                String dstPath = right.getLocationInfo().getFilePath();
+                Constants LANG1 = new Constants(srcPath);
+                Constants LANG2 = new Constants(dstPath);
                 findDiffsAndApplyMatcher(
-                        left.getLocationInfo().getFilePath(),
-                        right.getLocationInfo().getFilePath(),
-                        new CommentMatcher(null, commentsMovedBetweenClass));
+                        srcPath,
+                        dstPath,
+                        new CommentMatcher(null, commentsMovedBetweenClass, LANG1, LANG2));
                 break;
                 //We break because the comments always belong to the same pair of files, and the CommentMatcher handles everything
                 //Basically, need to take one pair to find the locations of the comments. The For loop is just overkill.
@@ -73,7 +78,9 @@ public class UnifiedModelDiffRefactoringsMatcher {
             UMLAttribute dstAttr = umlAttributeDiff.getAddedAttribute();
             String srcPath = srcAttr.getLocationInfo().getFilePath();
             String dstPath = dstAttr.getLocationInfo().getFilePath();
-            findDiffsAndApplyMatcher(srcPath, dstPath, new FieldDeclarationByAttrDiffMatcher(umlAttributeDiff));
+            Constants LANG1 = new Constants(srcPath);
+            Constants LANG2 = new Constants(dstPath);
+            findDiffsAndApplyMatcher(srcPath, dstPath, new FieldDeclarationByAttrDiffMatcher(umlAttributeDiff, LANG1, LANG2));
         }
     }
 
@@ -85,11 +92,13 @@ public class UnifiedModelDiffRefactoringsMatcher {
 //                if (isExtractedMethodRef(moveOperationRefactoring.getBodyMapper().getOperation2())) continue;
                 String srcPath = moveOperationRefactoring.getOriginalOperation().getLocationInfo().getFilePath();
                 String dstPath = moveOperationRefactoring.getMovedOperation().getLocationInfo().getFilePath();
-                findDiffsAndApplyMatcher(srcPath, dstPath, new MethodMatcher(moveOperationRefactoring.getBodyMapper(), true, true));
+                Constants LANG1 = new Constants(srcPath);
+                Constants LANG2 = new Constants(dstPath);
+                findDiffsAndApplyMatcher(srcPath, dstPath, new MethodMatcher(moveOperationRefactoring.getBodyMapper(), true, true, LANG1, LANG2));
                 if (moveOperationRefactoring.getOriginalOperation().getJavadoc() == null && moveOperationRefactoring.getMovedOperation().getJavadoc() != null) {
                     UMLClass originalClass = modelDiff.getRemovedClass(moveOperationRefactoring.getOriginalOperation().getClassName());
                     if (originalClass != null && originalClass.getJavadoc() != null) {
-                        findDiffsAndApplyMatcher(srcPath, dstPath, new JavaDocMatcher(originalClass.getJavadoc(), moveOperationRefactoring.getMovedOperation().getJavadoc(), moveOperationRefactoring.getBodyMapper().getJavadocDiff()));
+                        findDiffsAndApplyMatcher(srcPath, dstPath, new JavaDocMatcher(originalClass.getJavadoc(), moveOperationRefactoring.getMovedOperation().getJavadoc(), moveOperationRefactoring.getBodyMapper().getJavadocDiff(), LANG1, LANG2));
                     }
                 }
             }
@@ -98,6 +107,8 @@ public class UnifiedModelDiffRefactoringsMatcher {
                 MoveAttributeRefactoring moveAttributeRefactoring = (MoveAttributeRefactoring) refactoring;
                 String srcPath = moveAttributeRefactoring.getOriginalAttribute().getLocationInfo().getFilePath();
                 String dstPath = moveAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
+                Constants LANG1 = new Constants(srcPath);
+                Constants LANG2 = new Constants(dstPath);
                 findDiffsAndApplyMatcher(srcPath, dstPath,
                 new FieldDeclarationMatcher(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(),
                 		(moveAttributeRefactoring.getOriginalAttribute().getJavadoc() != null && moveAttributeRefactoring.getMovedAttribute().getJavadoc() != null) ?
@@ -105,7 +116,7 @@ public class UnifiedModelDiffRefactoringsMatcher {
                                 /* TODO : Replace with movedAttr.getJavaDocDiff() */
                                 :
                                 Optional.empty(),
-                                new UMLCommentListDiff(moveAttributeRefactoring.getOriginalAttribute().getComments(), moveAttributeRefactoring.getMovedAttribute().getComments())));
+                                new UMLCommentListDiff(moveAttributeRefactoring.getOriginalAttribute().getComments(), moveAttributeRefactoring.getMovedAttribute().getComments()), LANG1, LANG2));
             }
             else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION) ||
             		refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION))
@@ -113,20 +124,26 @@ public class UnifiedModelDiffRefactoringsMatcher {
                 ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
                 String srcPath = extractOperationRefactoring.getBodyMapper().getContainer1().getLocationInfo().getFilePath();
                 String dstPath = extractOperationRefactoring.getBodyMapper().getContainer2().getLocationInfo().getFilePath();
-                findDiffsAndApplyMatcher(srcPath, dstPath, new BodyMapperMatcher(extractOperationRefactoring.getBodyMapper(), true));
+                Constants LANG1 = new Constants(srcPath);
+                Constants LANG2 = new Constants(dstPath);
+                findDiffsAndApplyMatcher(srcPath, dstPath, new BodyMapperMatcher(extractOperationRefactoring.getBodyMapper(), true, LANG1, LANG2));
             }
             else if (refactoring.getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
                 InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
                 String srcPath = inlineOperationRefactoring.getBodyMapper().getContainer1().getLocationInfo().getFilePath();
                 String dstPath = inlineOperationRefactoring.getBodyMapper().getContainer2().getLocationInfo().getFilePath();
-                findDiffsAndApplyMatcher(srcPath, dstPath, new BodyMapperMatcher(inlineOperationRefactoring.getBodyMapper(), true));
+                Constants LANG1 = new Constants(srcPath);
+                Constants LANG2 = new Constants(dstPath);
+                findDiffsAndApplyMatcher(srcPath, dstPath, new BodyMapperMatcher(inlineOperationRefactoring.getBodyMapper(), true, LANG1, LANG2));
             }
             else if (refactoring.getRefactoringType().equals(RefactoringType.MOVE_CODE)) {
             	MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) refactoring;
             	if (moveCodeRefactoring.getMoveType().equals(Type.MOVE_BETWEEN_FILES)) {
             		String srcPath = moveCodeRefactoring.getBodyMapper().getContainer1().getLocationInfo().getFilePath();
                     String dstPath = moveCodeRefactoring.getBodyMapper().getContainer2().getLocationInfo().getFilePath();
-                    findDiffsAndApplyMatcher(srcPath, dstPath, new BodyMapperMatcher(moveCodeRefactoring.getBodyMapper(), true));
+                    Constants LANG1 = new Constants(srcPath);
+                    Constants LANG2 = new Constants(dstPath);
+                    findDiffsAndApplyMatcher(srcPath, dstPath, new BodyMapperMatcher(moveCodeRefactoring.getBodyMapper(), true, LANG1, LANG2));
             	}
             }
 			else if (refactoring instanceof InlineVariableRefactoring) {
@@ -157,11 +174,13 @@ public class UnifiedModelDiffRefactoringsMatcher {
                 Pair<TreeContext, TreeContext> treeContextPair = findTreeContexts(modelDiff, srcPath, dstPath);
                 Tree srcTree = treeContextPair.first.getRoot();
                 Tree dstTree = treeContextPair.second.getRoot();
-                ExtendedMultiMappingStore mappingStore = new ExtendedMultiMappingStore(srcTree, dstTree);
+                Constants LANG1 = new Constants(srcPath);
+                Constants LANG2 = new Constants(dstPath);
+                ExtendedMultiMappingStore mappingStore = new ExtendedMultiMappingStore(srcTree, dstTree, LANG1, LANG2);
                 ASTDiff diff = new ASTDiff(srcPath, dstPath,
                     treeContextPair.first, treeContextPair.second,
                     mappingStore);
-                newlyGeneratedDiffsOptimizationMap.putIfAbsent(diff, new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree,dstTree)));
+                newlyGeneratedDiffsOptimizationMap.putIfAbsent(diff, new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree,dstTree,LANG1,LANG2)));
                 setOptimizationAndMatch(matcher, diff, newlyGeneratedDiffsOptimizationMap.get(diff), srcTree, dstTree);
                 }
             else {

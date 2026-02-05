@@ -16,6 +16,7 @@ import gui.webdiff.viewers.vanilla.VanillaDiffView;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
+import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
@@ -239,10 +240,12 @@ public class WebDiff  {
                 astDiff = customProjectASTDiff.getDiffSet().iterator().next();
             }
             else {
-            	toolName = "GTS";
+                toolName = "GTS";
                 TreeContext srcContext = projectASTDiff.getParentContextMap().get(srcPath);
                 TreeContext dstContext = projectASTDiff.getChildContextMap().get(dstPath);
-                ExtendedMultiMappingStore extendedMappingStore = new ExtendedMultiMappingStore(srcContext.getRoot(), dstContext.getRoot());
+                Constants LANG1 = new Constants(srcPath);
+                Constants LANG2 = new Constants(dstPath);
+                ExtendedMultiMappingStore extendedMappingStore = new ExtendedMultiMappingStore(srcContext.getRoot(), dstContext.getRoot(), LANG1, LANG2);
                 MappingStore match = new CompositeMatchers.SimpleGumtree().match(srcContext.getRoot(), dstContext.getRoot());
                 for (Mapping mapping : match) extendedMappingStore.addMapping(mapping.first, mapping.second);
                 astDiff = new ASTDiff(srcPath, dstPath, srcContext, dstContext, extendedMappingStore);

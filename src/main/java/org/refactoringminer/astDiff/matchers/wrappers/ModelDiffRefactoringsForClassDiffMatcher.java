@@ -10,6 +10,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
+import org.refactoringminer.astDiff.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,9 +60,11 @@ public class ModelDiffRefactoringsForClassDiffMatcher extends OptimizationAwareM
                     if (isExtractedMethodRef(moveOperationRefactoring.getBodyMapper().getOperation2())) return;
                     String srcPath = moveOperationRefactoring.getOriginalOperation().getLocationInfo().getFilePath();
                     String dstPath = moveOperationRefactoring.getMovedOperation().getLocationInfo().getFilePath();
+                    Constants LANG1 = new Constants(srcPath);
+                    Constants LANG2 = new Constants(dstPath);
                     Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
                     Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
-                    new MethodMatcher(optimizationData, moveOperationRefactoring.getBodyMapper()).match(srcTotalTree, dstTotalTree, mappingStore);
+                    new MethodMatcher(optimizationData, moveOperationRefactoring.getBodyMapper(), LANG1, LANG2).match(srcTotalTree, dstTotalTree, mappingStore);
                     this.processedMoveRefactorings.add(moveOperationRefactoring);
                 }
             } else if (refactoring instanceof MoveAttributeRefactoring) {
@@ -70,6 +73,8 @@ public class ModelDiffRefactoringsForClassDiffMatcher extends OptimizationAwareM
                     MoveAttributeRefactoring moveAttributeRefactoring = (MoveAttributeRefactoring) refactoring;
                     String srcPath = moveAttributeRefactoring.getOriginalAttribute().getLocationInfo().getFilePath();
                     String dstPath = moveAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
+                    Constants LANG1 = new Constants(srcPath);
+                    Constants LANG2 = new Constants(dstPath);
                     Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
                     Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
                     new FieldDeclarationMatcher(optimizationData, moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(),
@@ -78,7 +83,7 @@ public class ModelDiffRefactoringsForClassDiffMatcher extends OptimizationAwareM
                                     /* TODO : Replace with movedAttr.getJavaDocDiff() */
                                     :
                                     Optional.empty(),
-                            new UMLCommentListDiff(moveAttributeRefactoring.getOriginalAttribute().getComments(), moveAttributeRefactoring.getMovedAttribute().getComments()))
+                            new UMLCommentListDiff(moveAttributeRefactoring.getOriginalAttribute().getComments(), moveAttributeRefactoring.getMovedAttribute().getComments()), LANG1, LANG2)
                             //TODO : Replace this with moveAttributeRefactoring.getJavadocDiff() when it is implemented
                             .match(srcTotalTree, dstTotalTree, mappingStore);
                     this.processedMoveRefactorings.add(moveAttributeRefactoring);
@@ -105,9 +110,11 @@ public class ModelDiffRefactoringsForClassDiffMatcher extends OptimizationAwareM
     private void findTreeFromMapperAndProcessBodyMapper(UMLOperationBodyMapper bodyMapper, ExtendedMultiMappingStore mappingStore) {
         String srcPath = bodyMapper.getOperation1().getLocationInfo().getFilePath();
         String dstPath = bodyMapper.getOperation2().getLocationInfo().getFilePath();
+        Constants LANG1 = new Constants(srcPath);
+        Constants LANG2 = new Constants(dstPath);
         Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
         Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
-        new BodyMapperMatcher(optimizationData, bodyMapper, true).match(srcTotalTree, dstTotalTree, mappingStore);
+        new BodyMapperMatcher(optimizationData, bodyMapper, true, LANG1, LANG2).match(srcTotalTree, dstTotalTree, mappingStore);
     }
 
     private boolean isExtractedMethodRef(UMLOperation operation2) {
@@ -127,11 +134,13 @@ public class ModelDiffRefactoringsForClassDiffMatcher extends OptimizationAwareM
             UMLAttribute dstAttr = umlAttributeDiff.getAddedAttribute();
             String srcAttrPath = srcAttr.getLocationInfo().getFilePath();
             String dstAttrPath = dstAttr.getLocationInfo().getFilePath();
+            Constants LANG1 = new Constants(srcAttrPath);
+            Constants LANG2 = new Constants(dstAttrPath);
             if (classDiff.getOriginalClass().getLocationInfo().getFilePath().equals(srcAttrPath) &&
                     classDiff.getNextClass().getLocationInfo().getFilePath().equals(dstAttrPath)) {
                 Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcAttrPath).getRoot();
                 Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstAttrPath).getRoot();
-                new FieldDeclarationByAttrDiffMatcher(optimizationData, umlAttributeDiff).match(srcTotalTree, dstTotalTree, mappingStore);
+                new FieldDeclarationByAttrDiffMatcher(optimizationData, umlAttributeDiff, LANG1, LANG2).match(srcTotalTree, dstTotalTree, mappingStore);
             }
         }
     }

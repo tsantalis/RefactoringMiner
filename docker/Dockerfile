@@ -22,6 +22,7 @@ RUN apk add --no-cache openjdk17-jre
 ENV JAVA_HOME=/usr/lib/jvm/default-jvm
 ENV PATH="$JAVA_HOME/bin:${PATH}"
 
+RUN apk add --no-cache libc6-compat
 RUN mkdir -p /diff/left /diff/right
 
 COPY --from=build /opt/refactoringminer/build/distributions/RefactoringMiner-DockerBuild /opt/refactoringminer/

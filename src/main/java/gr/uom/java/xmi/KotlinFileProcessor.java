@@ -28,6 +28,7 @@ import org.jetbrains.kotlin.psi.KtAnonymousInitializer;
 import org.jetbrains.kotlin.psi.KtBlockExpression;
 import org.jetbrains.kotlin.psi.KtClass;
 import org.jetbrains.kotlin.psi.KtClassBody;
+import org.jetbrains.kotlin.psi.KtConstructorDelegationCall;
 import org.jetbrains.kotlin.psi.KtDeclaration;
 import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtEnumEntry;
@@ -563,6 +564,11 @@ public class KotlinFileProcessor {
 				if (constructor.getBodyBlockExpression() != null) {
 					OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, constructor.getBodyBlockExpression(), umlConstructor, umlClass.getAttributes(), fileContent);
 					umlConstructor.setBody(operationBody);
+				}
+				if (constructor.getDelegationCall() != null) {
+					KtConstructorDelegationCall call = constructor.getDelegationCall();
+					AbstractExpression defaultExpression = new AbstractExpression(ktFile, sourceFolder, filePath, call, CodeElementType.FUNCTION_INITIALIZER_EXPRESSION, umlConstructor, activeVariableDeclarations, fileContent);
+					umlConstructor.setDefaultExpression(defaultExpression);
 				}
 				int endSignatureOffset = constructor.getBodyBlockExpression() != null ?
 						umlConstructor.getBody().getCompositeStatement().getLocationInfo().getStartOffset() + 1 :

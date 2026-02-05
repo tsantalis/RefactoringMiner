@@ -516,11 +516,14 @@ public class KotlinFileProcessor {
 				LocationInfo constructorLocationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, constructor, CodeElementType.METHOD_DECLARATION);
 				UMLOperation umlConstructor = new UMLOperation(umlClass.getNonQualifiedName(), constructorLocationInfo, umlClass.getName());
 				umlConstructor.setConstructor(true);
-				umlConstructor.setVisibility(Visibility.PUBLIC);
+				KtModifierList modifierList = constructor.getModifierList();
+				int startSignatureOffset = processFunctionModifiers(ktFile, sourceFolder, filePath, fileContent, umlConstructor, modifierList);
 				UMLJavadoc constructorJavadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, constructor.getDocComment());
 				umlConstructor.setJavadoc(constructorJavadoc);
 				distributeComments(comments, constructorLocationInfo, umlConstructor.getComments());
-				int startSignatureOffset = constructorLocationInfo.getStartOffset();
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = constructorLocationInfo.getStartOffset();
+				}
 				List<KtParameter> parameters = constructor.getValueParameters();
 				for (KtParameter parameter : parameters) {
 					KtTypeReference typeReference = parameter.getTypeReference();

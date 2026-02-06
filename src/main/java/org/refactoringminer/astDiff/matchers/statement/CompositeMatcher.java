@@ -68,7 +68,7 @@ public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 		for (Mapping mapping : mappingStore) {
 			if (mapping.first.getType().name.equals(LANG1.SIMPLE_NAME)) {
 				Tree p1 = getInfixParent(mapping.first, LANG1);
-				Tree p2 = getInfixParent(mapping.first, LANG2);
+				Tree p2 = getInfixParent(mapping.second, LANG2);
 				if (p1 == null || p2 == null) return;
 				if (p1.getType().name.equals(LANG1.SIMPLE_NAME)) continue;
 				if (p2.getType().name.equals(LANG2.SIMPLE_NAME)) continue;

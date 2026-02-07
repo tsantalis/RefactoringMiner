@@ -30,6 +30,9 @@ public class Constants {
 			ANNOTATION_TYPE_DECLARATION = "class_definition";
 			RECORD_DECLARATION = "class_definition";
 			PREFIX_EXPRESSION = "prefix_expression";
+			METHOD_INVOCATION_ARGUMENTS = "argument_list";
+			STRING_LITERAL = "string";
+			METHOD_INVOCATION = "call";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -56,6 +59,9 @@ public class Constants {
 			ANNOTATION_TYPE_DECLARATION = "class_declaration";
 			RECORD_DECLARATION = "class_declaration";
 			PREFIX_EXPRESSION = "prefix_expression";
+			METHOD_INVOCATION_ARGUMENTS = "value_arguments";
+			STRING_LITERAL = "string_literal";
+			METHOD_INVOCATION = "call_expression";
 		}
 		else {
 			// Java values as default
@@ -83,12 +89,15 @@ public class Constants {
 			ANNOTATION_TYPE_DECLARATION = "AnnotationTypeDeclaration";
 			RECORD_DECLARATION = "RecordDeclaration";
 			PREFIX_EXPRESSION = "PrefixExpression";
+			METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
+			STRING_LITERAL = "StringLiteral";
+			METHOD_INVOCATION = "MethodInvocation";
 		}
 	}
 
     // AST node type labels
     public final String ASSIGNMENT = "Assignment";
-    public final String METHOD_INVOCATION = "MethodInvocation";
+    public final String METHOD_INVOCATION;
     public final String METHOD_DECLARATION;
     public final String ANNOTATION_TYPE_MEMBER_DECLARATION = "AnnotationTypeMemberDeclaration";
     public final String TRY_STATEMENT;
@@ -145,7 +154,7 @@ public class Constants {
     public final String INFIX = "infix";
     public final String INNER = "inner";
 
-    public final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
+    public final String METHOD_INVOCATION_ARGUMENTS;
     public final String METHOD_INVOCATION_RECEIVER = "METHOD_INVOCATION_RECEIVER";
 
     public final String ASSERT_STATEMENT = "AssertStatement";
@@ -169,7 +178,7 @@ public class Constants {
     public final String INFIX_EXPRESSION = "InfixExpression";
     public final String INFIX_EXPRESSION_OPERATOR = "INFIX_EXPRESSION_OPERATOR";
 
-    public final String STRING_LITERAL = "StringLiteral";
+    public final String STRING_LITERAL;
     public final String NUMBER_LITERAL = "NumberLiteral";
     public final String BOOLEAN_LITERAL = "BooleanLiteral";
 

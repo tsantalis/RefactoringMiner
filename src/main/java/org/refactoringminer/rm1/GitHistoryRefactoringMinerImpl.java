@@ -1106,7 +1106,22 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					}
 					else {
 						URL currentRawURL = commitFile.getRawUrl();
-						InputStream currentRawFileInputStream = currentRawURL.openStream();
+                        InputStream currentRawFileInputStream;
+
+                        int attempts = 0;
+                        while (true) {
+                            try {
+                                currentRawFileInputStream = currentRawURL.openStream();
+                                break;
+                            } catch (IOException e) {
+                                if (attempts == 3) {
+                                    throw e;
+                                }
+                                attempts++;
+                                Thread.sleep(1000L * attempts); // linear backoff
+                            }
+                        }
+
 						currentRawFile = IOUtils.toString(currentRawFileInputStream);
 						String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId);
 						InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
@@ -1116,7 +1131,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						filesBefore.put(fileName, parentRawFile);
 					filesCurrent.put(fileName, currentRawFile);
 				}
-				catch(IOException e) {
+				catch(IOException | InterruptedException e) {
 					e.printStackTrace();
 				}
 			};
@@ -1132,12 +1147,27 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					}
 					else {
 						URL currentRawURL = commitFile.getRawUrl();
-						InputStream currentRawFileInputStream = currentRawURL.openStream();
+                        InputStream currentRawFileInputStream;
+
+                        int attempts = 0;
+                        while (true) {
+                            try {
+                                currentRawFileInputStream = currentRawURL.openStream();
+                                break;
+                            } catch (IOException e) {
+                                if (attempts == 3) {
+                                    throw e;
+                                }
+                                attempts++;
+                                Thread.sleep(1000L * attempts); // linear backoff
+                            }
+                        }
+
 						currentRawFile = IOUtils.toString(currentRawFileInputStream);
 					}
 					filesCurrent.put(fileName, currentRawFile);
 				}
-				catch(IOException e) {
+				catch(IOException | InterruptedException e) {
 					e.printStackTrace();
 				}
 			};

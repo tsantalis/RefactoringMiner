@@ -6,6 +6,7 @@ import com.github.gumtreediff.tree.DefaultTree;
 import com.github.gumtreediff.tree.FakeTree;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
+import com.github.gumtreediff.tree.TypeSet;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.LocationInfo;
 
@@ -123,6 +124,21 @@ public class TreeUtilFunctions {
 		return null;
 	}
 
+	public static List<Tree> findChildrenByTypeRecursively(Tree tree, String type) {
+		List<Tree> children = new ArrayList<>();
+		if (!tree.getChildren().isEmpty())
+		{
+			for (Tree child: tree.getChildren()) {
+				if (isFromType(child, type))
+					children.add(child);
+				if(child.getChildren().size() > 0) {
+					children.addAll(findChildrenByTypeRecursively(child, type));
+				}
+			}
+		}
+		return children;
+	}
+
 	public static Tree findChildByTypeAndLabel(Tree tree, String type, String label, Constants LANG) {
 		if (!tree.getChildren().isEmpty())
 		{
@@ -177,6 +193,42 @@ public class TreeUtilFunctions {
 		defaultTree.setChildren(new ArrayList<>());
 		defaultTree.setMetrics(other.getMetrics());
 		return defaultTree;
+	}
+
+	public static DefaultTree makeDefaultTreeWithTypeTranslation(Tree other, Constants LANG1, Constants LANG2) {
+		DefaultTree defaultTree = new DefaultTree(null);
+		String newType = null;
+		try {
+			for(java.lang.reflect.Field publicField : Constants.class.getFields()) {
+				String value = (String) publicField.get(LANG2);
+				if(value.equals(other.getType().name)) {
+					newType = (String) publicField.get(LANG1);
+					break;
+				}
+			}
+		} catch (SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			//e.printStackTrace();
+		}
+		if(newType == null) {
+			defaultTree.setType(other.getType());
+		}
+		else {
+			defaultTree.setType(TypeSet.type(newType));
+		}
+		defaultTree.setLabel(other.getLabel());
+		defaultTree.setPos(other.getPos());
+		defaultTree.setLength(other.getLength());
+		defaultTree.setChildren(new ArrayList<>());
+		defaultTree.setMetrics(other.getMetrics());
+		return defaultTree;
+	}
+
+	public static Tree deepCopyWithMapAndTypeTranslation(Tree tree,Map<Tree,Tree> cpyMap, Constants LANG1, Constants LANG2) {
+		Tree copy = makeDefaultTreeWithTypeTranslation(tree, LANG1, LANG2);
+		cpyMap.put(copy,tree);
+		for (Tree child : tree.getChildren())
+			copy.addChild(deepCopyWithMapAndTypeTranslation(child,cpyMap,LANG1, LANG2));
+		return copy;
 	}
 
 	public static Tree deepCopyWithMap(Tree tree,Map<Tree,Tree> cpyMap) {
@@ -294,13 +346,13 @@ public class TreeUtilFunctions {
 
 	public static List<Tree> findVariable(Tree inputTree, String variableName, Constants LANG) {
 		if (inputTree == null) return null;
-		boolean _seen = false;
+		//boolean _seen = false;
 		List<Tree> refs = new ArrayList<>();
 		for (Tree tree : inputTree.preOrder()) {
 			if (isFromType(tree, LANG.SIMPLE_NAME) && tree.getLabel().equals(variableName))
 			{
 				refs.add(tree);
-				_seen = true;
+				//_seen = true;
 			}
 		}
 		return refs;

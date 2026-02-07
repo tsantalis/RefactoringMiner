@@ -295,7 +295,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 mappingStore.addMappingRecursively(srcStatementNode, dstStatementNode);
             else
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
-
+        else if(!LANG1.EXPRESSION_STATEMENT.equals(LANG2.EXPRESSION_STATEMENT)) {
+            mappingStore.addMapping(srcStatementNode, dstStatementNode);
+            handleLanguageMigration(mappingStore, srcStatementNode, dstStatementNode);
+        }
         if(srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS)) {
             mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
         }
@@ -326,6 +329,55 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             leafMappingRefactoringAwareness(dstTree, abstractCodeMapping, mappingStore);
         }
 
+    }
+    private void handleLanguageMigration(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode) {
+        /*
+        Map<Tree, Tree> cpyToSrc = new HashMap<>();
+        Tree srcFakeTree = TreeUtilFunctions.deepCopyWithMap(srcStatementNode, cpyToSrc);
+        Map<Tree, Tree> cpyToDst = new HashMap<>();
+        Tree dstFakeTree = TreeUtilFunctions.deepCopyWithMapAndTypeTranslation(dstStatementNode, cpyToDst, LANG1, LANG2);
+        ExtendedMultiMappingStore tempMapping = new ExtendedMultiMappingStore(null,null,LANG1,LANG2);
+        //both trees are now in LANG1
+        new LeafMatcher(LANG1, LANG1).match(srcFakeTree, dstFakeTree, tempMapping);
+        */
+        List<Tree> children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_NAME);
+        List<Tree> children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.SIMPLE_NAME);
+        if(children1.size() == children2.size()) {
+            for(int i=0; i<children1.size(); i++) {
+                mappingStore.addMapping(children1.get(i), children2.get(i));
+            }
+        }
+        else if(children1.size() > children2.size()) {
+            //this happens when Java side has a type, but Kotlin side has var/val
+            Tree t2 = children2.get(0);
+            int start1 = -1;
+            for(int i=0; i<children1.size(); i++) {
+                if(children1.get(i).getLabel().equals(t2.getLabel())) {
+                    start1 = i;
+                    break;
+                }
+            }
+            if(children2.size() == children1.size() - start1) {
+                for(int i=0; i<children2.size(); i++) {
+                    mappingStore.addMapping(children1.get(i+start1), children2.get(i));
+                }
+            }
+        }
+        children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION_ARGUMENTS);
+        children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION_ARGUMENTS);
+        if(children1.size() == children2.size()) {
+            for(int i=0; i<children1.size(); i++) {
+                mappingStore.addMapping(children1.get(i), children2.get(i));
+                mappingStore.addMapping(children1.get(i).getParent(), children2.get(i).getParent());
+            }
+        }
+        children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.STRING_LITERAL);
+        children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.STRING_LITERAL);
+        if(children1.size() == children2.size()) {
+            for(int i=0; i<children1.size(); i++) {
+                mappingStore.addMapping(children1.get(i), children2.get(i));
+            }
+        }
     }
     private void additionallyMatchedStatements(Tree srcTree, Tree dstTree, Tree srcStatementNode, Tree dstStatementNode, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {
         if (abstractCodeMapping != null) {

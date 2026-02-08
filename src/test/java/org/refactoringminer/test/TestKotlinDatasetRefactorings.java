@@ -80,6 +80,6 @@ public class TestKotlinDatasetRefactorings {
 					.or(Refactorings.ChangeClassAccessModifier.getValue());
 		TestBuilder test = new TestBuilder(detector, REPOS, types);
 		RefactoringPopulator.prepareKotlinRefactorings(test, types);
-		test.assertExpectationsWithGitHubAPI(1825, 4, 0);
+		test.assertExpectationsWithGitHubAPI(1823, 4, 0);
 	}
 }

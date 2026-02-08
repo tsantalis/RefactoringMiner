@@ -674,7 +674,7 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **January 29, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **February 8, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
@@ -682,7 +682,7 @@ As of **January 29, 2026** the precision and recall of RefactoringMiner on this 
 |Extract Method|11  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|42  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|53  |  0  |  0  | 1.000  | 1.000|
-|Move And Rename Attribute| 3  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Attribute| 2  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|134  |  0  |  0  | 1.000  | 1.000|
 |Inline Method|16  |  0  |  0  | 1.000  | 1.000|
 |Move Method|91  |  0  |  0  | 1.000  | 1.000|
@@ -698,13 +698,13 @@ As of **January 29, 2026** the precision and recall of RefactoringMiner on this 
 |Extract Subclass| 2  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|13  |  0  |  0  | 1.000  | 1.000|
 |Extract And Move Method|19  |  1  |  0  | 0.950  | 1.000|
-|Move And Inline Method|23  |  0  |  0  | 1.000  | 1.000|
+|Move And Inline Method|24  |  0  |  0  | 1.000  | 1.000|
 |Rename Package| 3  |  0  |  0  | 1.000  | 1.000|
 |Move Package| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|17  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|16  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|10  |  2  |  0  | 0.833  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|33  |  1  |  0  | 0.971  | 1.000|
+|Rename Variable|35  |  1  |  0  | 0.972  | 1.000|
 |Rename Parameter|73  |  0  |  0  | 1.000  | 1.000|
 |Rename Attribute|74  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 1  |  0  |  0  | 1.000  | 1.000|
@@ -740,7 +740,7 @@ As of **January 29, 2026** the precision and recall of RefactoringMiner on this 
 |Merge Class| 1  |  0  |  0  | 1.000  | 1.000|
 |Invert Condition| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional| 2  |  0  |  0  | 1.000  | 1.000|
-|Move Code| 5  |  0  |  0  | 1.000  | 1.000|
+|Move Code| 4  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 Since release 3.0.0, RefactoringMiner requires **Java 17** or newer and **Gradle 7.4** or newer.

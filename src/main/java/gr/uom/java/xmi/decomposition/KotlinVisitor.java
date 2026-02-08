@@ -317,6 +317,8 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 			this.visitExpression(expression.getLeft(), data);
 		if (expression.getRight() != null)
 			this.visitTypeReference(expression.getRight(), data);
+		LeafExpression cast = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.ASSIGNMENT, container);
+		castExpressions.add(cast);
 	}
 
 	public Object visitTypeReference(KtTypeReference entry, Object data) {

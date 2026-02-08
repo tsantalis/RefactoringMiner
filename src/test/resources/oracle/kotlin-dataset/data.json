@@ -10560,6 +10560,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable results : Inferred to heapAnalysis : Inferred in method public findsSeveralRefs() from class leakcanary.internal.HeapAnalyzerHeapDumpTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

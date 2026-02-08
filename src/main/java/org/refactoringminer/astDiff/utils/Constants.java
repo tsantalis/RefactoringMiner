@@ -269,4 +269,6 @@ public class Constants {
     public final String JUMP_EXPRESSION = "jump_expression";
     public final String JUMP_KEYWORD = "jump_keyword";
     public final String CALL_SUFFIX = "call_suffix";
+    public final String NAVIGATION_EXPRESSION = "navigation_expression";
+    public final String NAVIGATION_SUFFIX = "navigation_suffix";
 }

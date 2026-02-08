@@ -1,31 +1,3 @@
-private buildRequestThread(path String, responseCode AtomicInteger) : Thread -> private buildRequestThread(path String, responseCode AtomicInteger) : Thread
-line range:93-93==line range:89-89
-line range:97-97==line range:93-93
-line range:95-99==line range:91-95
-line range:98-99==line range:94-95
-line range:92-100==line range:89-95
-line range:92-100==line range:88-96
-public setUp(mockWebServer MockWebServer) : void -> public setUp(mockWebServer MockWebServer)
-public simpleDispatch() : void -> public simpleDispatch()
-line range:55-55==line range:51-51
-line range:49-49==line range:45-45
-line range:51-51==line range:47-47
-line range:53-53==line range:49-49
-public outOfOrderResponses() : void -> public outOfOrderResponses()
-line range:80-80==line range:76-76
-line range:82-82==line range:78-78
-line range:83-83==line range:79-79
-line range:84-84==line range:80-80
-line range:86-86==line range:82-82
-line range:88-88==line range:84-84
-line range:59-59==line range:56-56
-line range:60-60==line range:57-57
-line range:63-63==line range:60-60
-line range:74-74==line range:70-70
-line range:75-75==line range:71-71
-line range:76-76==line range:72-72
-line range:77-77==line range:73-73
-line range:78-78==line range:74-74
 public setUp(server MockWebServer) : void -> public setUp(server MockWebServer)
 line range:76-76==line range:67-67
 line range:77-77==line range:68-68
@@ -103,11 +75,15 @@ line range:231-235==line range:223-227
 line range:236-238==line range:228-230
 line range:240-240==line range:231-231
 line range:242-242==line range:233-233
+line range:243-243==line range:234-234
+line range:244-244==line range:235-235
+line range:245-245==line range:236-236
 line range:247-247==line range:238-238
 line range:252-252==line range:243-243
-line range:254-254==line range:248-248
+line range:254-254==line range:245-245
 line range:255-255==line range:246-246
 line range:256-256==line range:247-247
+line range:257-257==line range:248-248
 line range:259-259==line range:249-249
 line range:260-260==line range:250-250
 line range:246-250==line range:237-242
@@ -126,6 +102,7 @@ line range:279-281==line range:274-274
 line range:282-282==line range:273-273
 line range:283-285==line range:272-272
 line range:287-287==line range:275-275
+line range:288-288==line range:276-276
 public throttleRequest() : void -> public throttleRequest()
 line range:296-296==line range:285-285
 line range:298-300==line range:286-288
@@ -141,16 +118,23 @@ line range:318-318==line range:306-306
 line range:320-323==line range:307-310
 line range:325-325==line range:311-311
 line range:326-326==line range:312-312
-line range:328-328==line range:323-323
+line range:328-328==line range:314-314
+line range:329-329==line range:315-315
+line range:330-330==line range:316-316
+line range:331-331==line range:317-317
+line range:332-332==line range:318-318
+line range:333-333==line range:319-319
 line range:334-334==line range:320-320
 line range:336-336==line range:322-322
+line range:337-337==line range:323-323
 public delayResponse() : void -> public delayResponse()
 line range:342-342==line range:329-329
 line range:344-347==line range:330-333
 line range:349-349==line range:334-334
 line range:350-350==line range:335-335
-line range:352-352==line range:340-340
+line range:352-352==line range:337-337
 line range:354-354==line range:339-339
+line range:355-355==line range:340-340
 line range:357-357==line range:341-341
 public disconnectRequestHalfway() : void -> public disconnectRequestHalfway()
 line range:371-371==line range:355-355
@@ -173,6 +157,7 @@ line range:394-397==line range:379-382
 line range:399-399==line range:383-383
 line range:400-400==line range:384-384
 line range:401-401==line range:385-385
+line range:402-402==line range:386-386
 line range:403-410==line range:387-394
 line range:407-410==line range:391-394
 public shutdownWithoutStart() : void -> public shutdownWithoutStart()
@@ -303,3 +288,31 @@ line range:701-706==line range:667-672
 line range:704-706==line range:670-672
 public getPlatform() : String -> private getPlatform() : String
 line range:711-711==line range:677-677
+public setUp(mockWebServer MockWebServer) : void -> public setUp(mockWebServer MockWebServer)
+public simpleDispatch() : void -> public simpleDispatch()
+line range:55-55==line range:51-51
+line range:49-49==line range:45-45
+line range:51-51==line range:47-47
+line range:53-53==line range:49-49
+public outOfOrderResponses() : void -> public outOfOrderResponses()
+line range:80-80==line range:76-76
+line range:82-82==line range:78-78
+line range:83-83==line range:79-79
+line range:84-84==line range:80-80
+line range:86-86==line range:82-82
+line range:88-88==line range:84-84
+line range:59-59==line range:56-56
+line range:60-60==line range:57-57
+line range:63-63==line range:60-60
+line range:74-74==line range:70-70
+line range:75-75==line range:71-71
+line range:76-76==line range:72-72
+line range:77-77==line range:73-73
+line range:78-78==line range:74-74
+private buildRequestThread(path String, responseCode AtomicInteger) : Thread -> private buildRequestThread(path String, responseCode AtomicInteger) : Thread
+line range:93-93==line range:89-89
+line range:97-97==line range:93-93
+line range:95-99==line range:91-95
+line range:98-99==line range:94-95
+line range:92-100==line range:89-95
+line range:92-100==line range:88-96

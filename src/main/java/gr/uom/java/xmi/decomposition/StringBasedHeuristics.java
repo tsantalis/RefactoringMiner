@@ -56,7 +56,7 @@ public class StringBasedHeuristics {
 	protected static final Pattern SPLIT_TAB_PATTERN = Pattern.compile("(\\s)*(\\\\t)(\\s)*");
 
 	protected static boolean javaToKotlin(String s1, String s2, List<AbstractCall> methodInvocations1, List<AbstractCall> methodInvocations2,
-			Constants LANG1, Constants LANG2) {
+			ReplacementInfo info, Constants LANG1, Constants LANG2) {
 		if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN)) {
 			String temp = new String(s1);
 			for(AbstractCall call : methodInvocations1) {
@@ -88,6 +88,11 @@ public class StringBasedHeuristics {
 						return true;
 					}
 					if(diff1.isEmpty() && diff2.equals("!!")) {
+						return true;
+					}
+					if(diff1.isEmpty() && diff2.equals(".code")) {
+						CompositeReplacement r = new CompositeReplacement(s1, s2, Collections.emptySet(), Collections.emptySet());
+						info.addReplacement(r);
 						return true;
 					}
 					if(diff1.endsWith("()") && diff2.startsWith("!!")) {

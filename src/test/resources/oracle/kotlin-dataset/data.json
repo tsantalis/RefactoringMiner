@@ -9582,10 +9582,10 @@
     }, {
         "type": "Move And Rename Attribute",
         "description": "Move And Rename Attribute public analysisId : Long renamed to public heapAnalysisId : Long and moved from class leakcanary.internal.activity.db.LeakTable.LeakProjection to class leakcanary.internal.activity.db.LeakTable.LeakTraceProjection",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>eliminated after improvement in statement mappings</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Move And Rename Attribute",
         "description": "Move And Rename Attribute private groupHash : String renamed to public signature : String and moved from class leakcanary.internal.activity.screen.LeakScreen to class shark.Leak",
@@ -9687,8 +9687,8 @@
     }, {
         "type": "Move Code",
         "description": "Move Code from private View.onLeaksRetrieved(leaks List<LeakProjection>, selectedLeakIndex Int) to private View.onLeaksRetrieved(leak LeakProjection, selectedLeakTraceIndex Int, selectedHeapAnalysis HeapAnalysisSuccess) in class leakcanary.internal.activity.screen.LeakScreen",
-        "comment": "<p>move to nested lambda</p>",
-        "validation": "TP",
+        "comment": "<p>eliminated after improvement in statement mappings</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
     }, {

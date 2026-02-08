@@ -720,6 +720,9 @@ public class StringBasedHeuristics {
 			else if(!diff1.isEmpty() && !diff2.isEmpty() && diff1.strip().equals(diff2.strip())) {
 				return true;
 			}
+			else if(diff1.isEmpty() && diff2.isEmpty()) {
+				return true;
+			}
 		}
 		if(commonSuffix.equals(s1) && commonPrefix.isEmpty()) {
 			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();

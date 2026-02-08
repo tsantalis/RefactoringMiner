@@ -371,6 +371,25 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 mappingStore.addMapping(children1.get(i).getParent(), children2.get(i).getParent());
             }
         }
+        else {
+            children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION);
+            children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION);
+            if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION))
+                children2.add(0, dstStatementNode);
+            if(children1.size() == children2.size()) {
+                for(int i=0; i<children1.size(); i++) {
+                    mappingStore.addMapping(children1.get(i), children2.get(i));
+                    Tree args1 = TreeUtilFunctions.findChildByType(children1.get(i), LANG1.METHOD_INVOCATION_ARGUMENTS);
+                    if(args1 != null) {
+                        Tree args2 = TreeUtilFunctions.findChildByType(children2.get(i), LANG2.CALL_SUFFIX);
+                        if(args2 != null) {
+                            args2 = TreeUtilFunctions.findChildByType(args2, LANG2.METHOD_INVOCATION_ARGUMENTS);
+                            mappingStore.addMapping(args1, args2);
+                        }
+                    }
+                }
+            }
+        }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.STRING_LITERAL);
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.STRING_LITERAL);
         if(children1.size() == children2.size()) {

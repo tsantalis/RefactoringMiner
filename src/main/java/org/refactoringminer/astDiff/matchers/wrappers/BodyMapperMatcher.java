@@ -387,6 +387,14 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                             mappingStore.addMapping(args1, args2);
                         }
                     }
+                    Tree receiver1 = TreeUtilFunctions.findChildByType(children1.get(i), LANG1.METHOD_INVOCATION_RECEIVER);
+                    if(receiver1 != null) {
+                        Tree receiver2 = TreeUtilFunctions.findChildByType(children2.get(i), LANG2.NAVIGATION_EXPRESSION);
+                        if(receiver2 != null) {
+                            receiver2 = TreeUtilFunctions.findChildByType(receiver2, LANG2.NAVIGATION_SUFFIX);
+                            mappingStore.addMapping(receiver1, receiver2);
+                        }
+                    }
                 }
             }
         }

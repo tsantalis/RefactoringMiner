@@ -720,7 +720,7 @@ public class StringBasedHeuristics {
 			else if(!diff1.isEmpty() && !diff2.isEmpty() && diff1.strip().equals(diff2.strip())) {
 				return true;
 			}
-			else if(diff1.isEmpty() && diff2.isEmpty()) {
+			else if(diff1.isEmpty() && diff2.isEmpty() && (commonPrefix.endsWith("=") || commonPrefix.matches(".*=\\s*\\z"))) {
 				return true;
 			}
 		}

@@ -55,9 +55,13 @@ public class StringBasedHeuristics {
 	protected static final Pattern SPLIT_COMMA_PATTERN = Pattern.compile("(\\s)*(\\,)(\\s)*");
 	protected static final Pattern SPLIT_TAB_PATTERN = Pattern.compile("(\\s)*(\\\\t)(\\s)*");
 
-	protected static boolean javaToKotlin(String s1, String s2, List<AbstractCall> methodInvocations1, List<AbstractCall> methodInvocations2,
+	protected static boolean javaToKotlin(String s1, String s2, AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			ReplacementInfo info, Constants LANG1, Constants LANG2) {
 		if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN)) {
+			List<AbstractCall> methodInvocations1 = statement1.getMethodInvocations();
+			List<AbstractCall> methodInvocations2 = statement2.getMethodInvocations();
+			List<LeafExpression> castExpressions1 = statement1.getCastExpressions();
+			List<LeafExpression> castExpressions2 = statement2.getCastExpressions();
 			String temp = new String(s1);
 			for(AbstractCall call : methodInvocations1) {
 				if(s1.contains(call.toString()) && call.arguments().size() == 0 && !methodInvocations2.contains(call)) {
@@ -101,6 +105,29 @@ public class StringBasedHeuristics {
 						if(d1.equals(d2)) {
 							return true;
 						}
+					}
+				}
+				if(castExpressions1.size() > 0 && castExpressions2.size() > 0 && castExpressions1.size() == castExpressions2.size()) {
+					String cast1 = castExpressions1.get(0).getString();
+					String cast2 = castExpressions2.get(0).getString();
+					String type1 = null;
+					String expression1 = null;
+					if(cast1.startsWith("(") && cast1.contains(")")) {
+						type1 = cast1.substring(1, cast1.indexOf(")"));
+						expression1 = cast1.substring(cast1.indexOf(")") + 1, cast1.length());
+					}
+					String type2 = null;
+					String expression2 = null;
+					if(cast2.contains(" as ")) {
+						type2 = cast2.substring(cast2.indexOf(" as ") + " as ".length(), cast2.length());
+						expression2 = cast2.substring(0, cast2.indexOf(" as "));
+					}
+					else if(cast2.contains(" as? ")) {
+						type2 = cast2.substring(cast2.indexOf(" as? ") + " as? ".length(), cast2.length());
+						expression2 = cast2.substring(0, cast2.indexOf(" as? "));
+					}
+					if(type1 != null && type2 != null && expression1 != null && expression2 != null) {
+						return type1.equals(type2) && expression1.equals(expression2);
 					}
 				}
 			}

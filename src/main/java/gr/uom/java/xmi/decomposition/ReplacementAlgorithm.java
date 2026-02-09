@@ -1618,7 +1618,7 @@ public class ReplacementAlgorithm {
 				equalAfterNewArgumentAdditions(s1, s2, replacementInfo, operationBodyMapper) ||
 				(validStatementForConcatComparison(statement1, statement2) && commonConcat(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper)) ||
 				partiallyUndoParameterToArgumentMap(s1, s2, parameterToArgumentMap) ||
-				javaToKotlin(s1, s2, statement1.getMethodInvocations(), statement2.getMethodInvocations(), replacementInfo, LANG1, LANG2);
+				javaToKotlin(s1, s2, statement1, statement2, replacementInfo, LANG1, LANG2);
 		int refactoringsAfter = operationBodyMapper.getRefactoringsAfterPostProcessing().size();
 		List<Refactoring> orderedRefactorings = new ArrayList<>(operationBodyMapper.getRefactoringsAfterPostProcessing());
 		Set<Refactoring> newRefactorings = new LinkedHashSet<>();

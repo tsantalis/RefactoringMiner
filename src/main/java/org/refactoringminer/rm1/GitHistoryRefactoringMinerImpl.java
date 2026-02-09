@@ -1124,7 +1124,22 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 						currentRawFile = IOUtils.toString(currentRawFileInputStream);
 						String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId);
-						InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
+						InputStream parentRawFileInputStream;
+
+                        attempts = 0;
+                        while (true) {
+                            try {
+                                parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
+                                break;
+                            } catch (IOException e) {
+                                if (attempts == 3) {
+                                    throw e;
+                                }
+                                attempts++;
+                                Thread.sleep(1000L * attempts); // linear backoff
+                            }
+                        }
+
 						parentRawFile = IOUtils.toString(parentRawFileInputStream);
 					}
 					if(!filesBefore.containsKey(fileName))
@@ -1183,7 +1198,22 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					}
 					else {
 						URL rawURL = commitFile.getRawUrl();
-						InputStream rawFileInputStream = rawURL.openStream();
+						InputStream rawFileInputStream;
+
+                        int attempts = 0;
+                        while (true) {
+                            try {
+                                rawFileInputStream = rawURL.openStream();
+                                break;
+                            } catch (IOException e) {
+                                if (attempts == 3) {
+                                    throw e;
+                                }
+                                attempts++;
+                                Thread.sleep(1000L * attempts); // linear backoff
+                            }
+                        }
+
 						parentRawFile = IOUtils.toString(rawFileInputStream);
 					}
 					filesBefore.put(fileName, parentRawFile);
@@ -1191,7 +1221,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						deletedAndRenamedFileParentDirectories.add(fileName.substring(0, fileName.lastIndexOf("/")));
 					}
 				}
-				catch(IOException e) {
+				catch(IOException | InterruptedException e) {
 					e.printStackTrace();
 				}
 			};
@@ -1212,7 +1242,22 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					}
 					else {
 						URL currentRawURL = commitFile.getRawUrl();
-						InputStream currentRawFileInputStream = currentRawURL.openStream();
+						InputStream currentRawFileInputStream;
+
+                        int attempts = 0;
+                        while (true) {
+                            try {
+                                currentRawFileInputStream = currentRawURL.openStream();
+                                break;
+                            } catch (IOException e) {
+                                if (attempts == 3) {
+                                    throw e;
+                                }
+                                attempts++;
+                                Thread.sleep(1000L * attempts); // linear backoff
+                            }
+                        }
+
 						currentRawFile = IOUtils.toString(currentRawFileInputStream);
 						String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
 						String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
@@ -1228,7 +1273,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						deletedAndRenamedFileParentDirectories.add(previousFilename.substring(0, previousFilename.lastIndexOf("/")));
 					}
 				}
-				catch(IOException e) {
+				catch(IOException | InterruptedException e) {
 					e.printStackTrace();
 				}
 			};

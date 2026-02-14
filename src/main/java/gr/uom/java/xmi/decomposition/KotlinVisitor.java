@@ -149,6 +149,9 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 		UMLType type = null;
 		for(KtSuperTypeListEntry entry : objectDeclaration.getSuperTypeListEntries()) {
 			type = UMLType.extractTypeObject(cu, sourceFolder, filePath, fileContent, entry.getTypeReference(), 0);
+			ObjectCreation invocation = new ObjectCreation(cu, sourceFolder, filePath, entry, container, fileContent);
+			creations.add(invocation);
+			invocation.setAnonymousClassDeclaration(objectDeclaration.getBody().getText());
 			break;
 		}
 		LocationInfo anonymousLocationInfo = new LocationInfo(cu, sourceFolder, filePath, objectDeclaration, CodeElementType.ANONYMOUS_CLASS_DECLARATION);

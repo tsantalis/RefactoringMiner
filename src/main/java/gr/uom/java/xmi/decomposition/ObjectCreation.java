@@ -20,6 +20,7 @@ import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtNameReferenceExpression;
 import org.jetbrains.kotlin.psi.KtSafeQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry;
+import org.jetbrains.kotlin.psi.KtSuperTypeListEntry;
 import org.jetbrains.kotlin.psi.KtTypeProjection;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.jetbrains.kotlin.psi.ValueArgument;
@@ -95,47 +96,6 @@ public class ObjectCreation extends AbstractCall {
 		}
 	}
 
-	public ObjectCreation(KtFile cu, String sourceFolder, String filePath, KtCallExpression invocation, VariableDeclarationContainer container, String fileContent) {
-		super(cu, sourceFolder, filePath, input(invocation), CodeElementType.CLASS_INSTANCE_CREATION, container);
-		KtExpression calleeExpression = invocation.getCalleeExpression();
-		if(calleeExpression instanceof KtNameReferenceExpression nameReference) {
-			this.type = UMLType.extractTypeObject(nameReference.getReferencedName(), "<", ">", this.locationInfo);
-		}
-		this.numberOfArguments = invocation.getValueArguments().size();
-		this.arguments = new ArrayList<String>();
-		List<KtTypeProjection> typeArgs = invocation.getTypeArguments();
-		for(KtTypeProjection typeArg : typeArgs) {
-			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, fileContent, typeArg, 0));
-		}
-		List<KtValueArgument> args = invocation.getValueArguments();
-		for(KtValueArgument argument : args) {
-			// TODO replace with stringify
-			this.arguments.add(argument.getText());
-		}
-		if(invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression) {
-			KtExpression receiver = dotQualifiedExpression.getReceiverExpression();
-			if(receiver != null) {
-				// TODO replace with stringify
-				this.expression = receiver.getText();
-			}
-		}
-		else if(invocation.getParent() instanceof KtSafeQualifiedExpression safeQualifiedExpression) {
-			KtExpression receiver = safeQualifiedExpression.getReceiverExpression();
-			if(receiver != null) {
-				// TODO replace with stringify
-				this.expression = receiver.getText();
-			}
-		}
-	}
-
-	private static KtExpression input(KtCallExpression invocation) {
-		if(invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression)
-			return dotQualifiedExpression;
-		if(invocation.getParent() instanceof KtSafeQualifiedExpression safeQualifiedExpression)
-			return safeQualifiedExpression;
-		return invocation;
-	}
-
 	public String getName() {
 		return getType().toString();
 	}
@@ -150,6 +110,10 @@ public class ObjectCreation extends AbstractCall {
 
 	public String getAnonymousClassDeclaration() {
 		return anonymousClassDeclaration;
+	}
+
+	public void setAnonymousClassDeclaration(String anonymous) {
+		this.anonymousClassDeclaration = anonymous;
 	}
 
 	private ObjectCreation(LocationInfo locationInfo) {
@@ -265,6 +229,47 @@ public class ObjectCreation extends AbstractCall {
 		return sb.toString();
 	}
 
+	public ObjectCreation(KtFile cu, String sourceFolder, String filePath, KtCallExpression invocation, VariableDeclarationContainer container, String fileContent) {
+		super(cu, sourceFolder, filePath, input(invocation), CodeElementType.CLASS_INSTANCE_CREATION, container);
+		KtExpression calleeExpression = invocation.getCalleeExpression();
+		if(calleeExpression instanceof KtNameReferenceExpression nameReference) {
+			this.type = UMLType.extractTypeObject(nameReference.getReferencedName(), "<", ">", this.locationInfo);
+		}
+		this.numberOfArguments = invocation.getValueArguments().size();
+		this.arguments = new ArrayList<String>();
+		List<KtTypeProjection> typeArgs = invocation.getTypeArguments();
+		for(KtTypeProjection typeArg : typeArgs) {
+			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, fileContent, typeArg, 0));
+		}
+		List<KtValueArgument> args = invocation.getValueArguments();
+		for(KtValueArgument argument : args) {
+			// TODO replace with stringify
+			this.arguments.add(argument.getText());
+		}
+		if(invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression) {
+			KtExpression receiver = dotQualifiedExpression.getReceiverExpression();
+			if(receiver != null) {
+				// TODO replace with stringify
+				this.expression = receiver.getText();
+			}
+		}
+		else if(invocation.getParent() instanceof KtSafeQualifiedExpression safeQualifiedExpression) {
+			KtExpression receiver = safeQualifiedExpression.getReceiverExpression();
+			if(receiver != null) {
+				// TODO replace with stringify
+				this.expression = receiver.getText();
+			}
+		}
+	}
+
+	private static KtExpression input(KtCallExpression invocation) {
+		if(invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression)
+			return dotQualifiedExpression;
+		if(invocation.getParent() instanceof KtSafeQualifiedExpression safeQualifiedExpression)
+			return safeQualifiedExpression;
+		return invocation;
+	}
+
 	public ObjectCreation(KtFile cu, String sourceFolder, String filePath, KtSuperTypeCallEntry invocation, VariableDeclarationContainer container, String fileContent) {
 		super(cu, sourceFolder, filePath, invocation, CodeElementType.CLASS_INSTANCE_CREATION, container);
 		this.type = UMLType.extractTypeObject(cu, sourceFolder, filePath, fileContent, invocation.getTypeReference(), 0);
@@ -279,5 +284,11 @@ public class ObjectCreation extends AbstractCall {
 			// TODO replace with stringify
 			this.arguments.add(argument.getArgumentExpression().getText());
 		}
+	}
+
+	public ObjectCreation(KtFile cu, String sourceFolder, String filePath, KtSuperTypeListEntry invocation, VariableDeclarationContainer container, String fileContent) {
+		super(cu, sourceFolder, filePath, invocation, CodeElementType.CLASS_INSTANCE_CREATION, container);
+		this.type = UMLType.extractTypeObject(cu, sourceFolder, filePath, fileContent, invocation.getTypeReference(), 0);
+		this.arguments = new ArrayList<String>();
 	}
 }

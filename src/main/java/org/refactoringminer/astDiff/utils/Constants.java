@@ -123,6 +123,7 @@ public class Constants {
     public final String ENUM_CONSTANT_DECLARATION = "EnumConstantDeclaration";
     public final String TYPE_DECLARATION_STATEMENT = "TypeDeclarationStatement";
     public final String RECORD_COMPONENT = "SingleVariableDeclaration";
+    public final String SINGLE_VARIABLE_DECLARATION = "SingleVariableDeclaration";
 
     // AST node property labels
     public final String ASSIGNMENT_OPERATOR = "ASSIGNMENT_OPERATOR";

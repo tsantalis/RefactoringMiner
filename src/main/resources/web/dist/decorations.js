@@ -256,6 +256,9 @@ function onClickHelper(config, index, activatedRange, ed, dstIndex) {
                 if(mappings[i][dstIndex].startLineNumber === mappings[i][dstIndex].endLineNumber && mappings[i][index].startLineNumber === mappings[i][index].endLineNumber) {
                     onClick(ed, mappings[i], dstIndex);
                 }
+				else if(mappings[i][dstIndex].endLineNumber - mappings[i][dstIndex].startLineNumber == mappings[i][index].endLineNumber - mappings[i][index].startLineNumber) {
+					onClick(ed, mappings[i], dstIndex);
+				}
             }
         }
     }

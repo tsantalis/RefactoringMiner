@@ -2570,6 +2570,17 @@ public class VariableReplacementAnalysis {
 						}
 					}
 				}
+				else if(replacement instanceof MethodInvocationReplacement methodInvocationReplacement && 
+						replacement.getType().equals(ReplacementType.METHOD_INVOCATION_NAME_AND_EXPRESSION) && !returnVariableMapping(mapping, replacement) && replacementNotInsideMethodSignatureOfAnonymousClass(mapping, replacement)) {
+					AbstractCall call1 = methodInvocationReplacement.getInvokedOperationBefore();
+					AbstractCall call2 = methodInvocationReplacement.getInvokedOperationAfter();
+					for(Replacement r : map.keySet()) {
+						VariableDeclarationReplacement var = (VariableDeclarationReplacement)r;
+						if(call1.arguments().contains(var.getVariableDeclaration1().getVariableName()) && call2.getExpression() != null && call2.getExpression().startsWith(var.getVariableDeclaration2().getVariableName())) {
+							map.get(var).add(mapping);
+						}
+					}
+				}
 			}
 			if(mapping.getReplacements().isEmpty() && mapping.getFragment1().getVariableDeclarations().size() > 0 && mapping.getFragment2().getVariableDeclarations().size() > 0) {
 				if(mapping.getFragment1().getVariableDeclarations().size() == 1 && mapping.getFragment2().getVariableDeclarations().size() == 1) {

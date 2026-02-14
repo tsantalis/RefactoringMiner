@@ -54,6 +54,17 @@ public class BasicTreeMatcher implements TreeMatcher {
             for (Mapping mapping : mappings) {
                 match.addMapping(mapping.first, mapping.second);
             }
+            if (pair.first.getType().name.equals(LANG1.VARIABLE_DECLARATION_STATEMENT) && pair.second.getType().name.equals(LANG2.SINGLE_VARIABLE_DECLARATION)) {
+            	Tree t1 = null;
+            	for (Tree child : pair.first.getChildren()) {
+            		if (child.getType().name.equals(LANG1.VARIABLE_DECLARATION_FRAGMENT))
+            			t1 = TreeUtilFunctions.findChildByType(child, LANG1.SIMPLE_NAME);
+            	}
+            	Tree t2 = TreeUtilFunctions.findChildByType(pair.second, LANG2.SIMPLE_NAME);
+            	if (t1 != null && t2 != null) {
+            		match.addMapping(t1, t2);
+            	}
+            }
         }
         optimizeMappings(match);
 		return match;

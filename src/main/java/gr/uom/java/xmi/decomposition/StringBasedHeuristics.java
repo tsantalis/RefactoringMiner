@@ -62,6 +62,8 @@ public class StringBasedHeuristics {
 			List<AbstractCall> methodInvocations2 = statement2.getMethodInvocations();
 			List<LeafExpression> castExpressions1 = statement1.getCastExpressions();
 			List<LeafExpression> castExpressions2 = statement2.getCastExpressions();
+			List<VariableDeclaration> variableDeclarations1 = statement1.getVariableDeclarations();
+			List<VariableDeclaration> variableDeclarations2 = statement2.getVariableDeclarations();
 			String temp = new String(s1);
 			for(AbstractCall call : methodInvocations1) {
 				if(s1.contains(call.toString()) && call.arguments().size() == 0 && !methodInvocations2.contains(call)) {
@@ -76,6 +78,14 @@ public class StringBasedHeuristics {
 			if(temp.endsWith(LANG1.STATEMENT_TERMINATION) && s2.endsWith(LANG2.STATEMENT_TERMINATION)) {
 				String ss1 = temp.substring(0, temp.length()-LANG1.STATEMENT_TERMINATION.length());
 				String ss2 = s2.substring(0, s2.length()-LANG2.STATEMENT_TERMINATION.length());
+				//eliminate formatting differences
+				ss2 = ss2.replaceAll("\\R\\s*", "");
+				if(!ss1.contains(", ") && ss2.contains(", ")) {
+					ss2 = ss2.replaceAll(",\\s*", ",");
+				}
+				if(!ss1.contains("!!") && ss2.contains("!!")) {
+					ss2 = ss2.replaceAll("!!", "");
+				}
 				if(ss1.equals(ss2)) {
 					return true;
 				}
@@ -105,6 +115,14 @@ public class StringBasedHeuristics {
 						if(d1.equals(d2)) {
 							return true;
 						}
+					}
+				}
+				else if(!commonSuffix.isEmpty() && commonSuffix.length() > 1 && commonPrefix.isEmpty()) {
+					int endIndexS2 = ss2.lastIndexOf(commonSuffix);
+					String diff2 = ss2.substring(0, endIndexS2);
+					if(variableDeclarations1.size() > 0 && variableDeclarations2.size() > 0 && (diff2.endsWith("=") || diff2.endsWith("= "))) {
+						if(variableDeclarations1.get(0).getVariableName().equals(variableDeclarations2.get(0).getVariableName()))
+							return true;
 					}
 				}
 				if(castExpressions1.size() > 0 && castExpressions2.size() > 0 && castExpressions1.size() == castExpressions2.size()) {

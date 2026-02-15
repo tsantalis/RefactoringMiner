@@ -4,10 +4,12 @@ line range:77-77==line range:68-68
 public tearDown() : void -> public tearDown()
 line range:82-82==line range:73-73
 public defaultMockResponse() : void -> public defaultMockResponse()
+line range:86-86==line range:78-78
 line range:87-87==line range:79-79
 line range:88-88==line range:80-80
 public setResponseMockReason() : void -> public setResponseMockReason()
 line range:102-102==line range:95-95
+line range:103-103==line range:96-96
 line range:105-105==line range:98-98
 line range:101-106==line range:94-99
 public setStatusControlsWholeStatusLine() : void -> public setStatusControlsWholeStatusLine()
@@ -81,6 +83,7 @@ line range:244-244==line range:235-235
 line range:245-245==line range:236-236
 line range:247-247==line range:238-238
 line range:252-252==line range:243-243
+line range:253-253==line range:244-244
 line range:254-254==line range:245-245
 line range:255-255==line range:246-246
 line range:256-256==line range:247-247
@@ -112,6 +115,7 @@ line range:303-303==line range:290-290
 line range:305-305==line range:292-292
 line range:306-306==line range:293-293
 line range:307-307==line range:294-294
+line range:308-308==line range:295-295
 line range:309-309==line range:296-296
 line range:310-310==line range:297-297
 public throttleResponse() : void -> public throttleResponse()
@@ -126,6 +130,7 @@ line range:331-331==line range:317-317
 line range:332-332==line range:318-318
 line range:333-333==line range:319-319
 line range:334-334==line range:320-320
+line range:335-335==line range:321-321
 line range:336-336==line range:322-322
 line range:337-337==line range:323-323
 public delayResponse() : void -> public delayResponse()
@@ -134,12 +139,14 @@ line range:344-347==line range:330-333
 line range:349-349==line range:334-334
 line range:350-350==line range:335-335
 line range:352-352==line range:337-337
+line range:353-353==line range:338-338
 line range:354-354==line range:339-339
 line range:355-355==line range:340-340
 line range:357-357==line range:341-341
 public disconnectRequestHalfway() : void -> public disconnectRequestHalfway()
 line range:371-371==line range:355-355
 line range:372-372==line range:356-356
+line range:373-373==line range:357-357
 line range:375-375==line range:358-358
 line range:379-379==line range:362-362
 line range:380-380==line range:363-363
@@ -159,6 +166,7 @@ line range:399-399==line range:383-383
 line range:400-400==line range:384-384
 line range:401-401==line range:385-385
 line range:402-402==line range:386-386
+line range:404-404==line range:388-388
 line range:403-410==line range:387-394
 line range:407-410==line range:391-394
 public shutdownWithoutStart() : void -> public shutdownWithoutStart()
@@ -196,6 +204,7 @@ line range:480-480==line range:468-468
 line range:481-481==line range:469-469
 line range:483-483==line range:470-470
 line range:484-485==line range:471-472
+line range:487-487==line range:473-473
 line range:488-488==line range:474-474
 line range:489-489==line range:475-475
 line range:490-490==line range:476-476
@@ -249,6 +258,7 @@ line range:597-598==line range:577-577
 line range:599-599==line range:578-578
 line range:601-601==line range:579-579
 line range:602-602==line range:580-580
+line range:603-603==line range:581-581
 line range:604-604==line range:582-582
 line range:605-605==line range:583-583
 line range:606-606==line range:584-584
@@ -256,15 +266,22 @@ line range:607-607==line range:585-585
 line range:608-608==line range:586-586
 line range:609-609==line range:587-587
 public httpsWithClientAuth() : void -> public httpsWithClientAuth()
+line range:615-617==line range:593-595
+line range:618-620==line range:596-598
+line range:621-624==line range:599-602
+line range:625-628==line range:603-606
 line range:630-630==line range:607-607
 line range:631-633==line range:608-610
 line range:634-634==line range:611-611
+line range:636-638==line range:612-614
+line range:639-642==line range:615-618
 line range:644-644==line range:619-619
 line range:649-649==line range:623-623
 line range:650-651==line range:624-624
 line range:652-652==line range:625-625
 line range:654-654==line range:626-626
 line range:655-655==line range:627-627
+line range:656-656==line range:628-628
 line range:657-657==line range:629-629
 line range:658-658==line range:630-630
 line range:659-659==line range:631-631
@@ -273,6 +290,7 @@ line range:661-661==line range:633-633
 line range:662-662==line range:634-634
 public proxiedRequestGetsCorrectRequestUrl() : void -> public proxiedRequestGetsCorrectRequestUrl()
 line range:666-668==line range:639-641
+line range:670-673==line range:642-645
 line range:675-675==line range:646-646
 line range:678-678==line range:648-648
 line range:681-681==line range:650-650
@@ -313,6 +331,8 @@ line range:86-86==line range:82-82
 line range:88-88==line range:84-84
 line range:59-59==line range:56-56
 line range:60-60==line range:57-57
+line range:61-61==line range:58-58
+line range:62-62==line range:59-59
 line range:63-63==line range:60-60
 line range:68-68==line range:64-64
 line range:70-70==line range:66-66

@@ -3857,7 +3857,7 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(creationCoveringTheEntireStatement2 != null && creationCoveringTheEntireStatement2.getAnonymousClassDeclaration() != null && invocationCoveringTheEntireStatement1 != null && !(invocationCoveringTheEntireStatement1 instanceof MethodReference) && variableDeclarations1.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2)) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s1.contains("(") && s1.contains(")")) {
 			String args1 = s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")"));
 			String arrayInitializer = creationCoveringTheEntireStatement2.getAnonymousClassDeclaration();
 			String args2 = arrayInitializer.substring(arrayInitializer.indexOf(LANG2.OPEN_ARRAY_INITIALIZER)+1, arrayInitializer.lastIndexOf(LANG2.CLOSE_ARRAY_INITIALIZER));

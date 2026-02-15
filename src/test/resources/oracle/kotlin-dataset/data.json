@@ -8884,6 +8884,48 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class com.squareup.leakcanary.internal.AndroidOFragmentRefWatcher moved and renamed to leaksentry.internal.AndroidOFragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier package to internal in class leaksentry.internal.AndroidOFragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @Override in method public watchFragments(activity Activity) : void from class com.squareup.leakcanary.internal.AndroidOFragmentRefWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type fragmentLifecycleCallbacks : FragmentManager.FragmentLifecycleCallbacks to fragmentLifecycleCallbacks : Inferred in class leaksentry.internal.AndroidOFragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type configProvider : Function0<LeakCanary.Config> to configProvider : () -> Config in class leaksentry.internal.AndroidOFragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type fragmentManager : FragmentManager to fragmentManager : Inferred in method public watchFragments(activity Activity) from class leaksentry.internal.AndroidOFragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

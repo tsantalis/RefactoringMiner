@@ -341,28 +341,42 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         new LeafMatcher(LANG1, LANG1).match(srcFakeTree, dstFakeTree, tempMapping);
         */
         List<Tree> children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_NAME);
+        Tree firstChild1 = children1.size() > 0 ? children1.get(0) : null;
         List<Tree> children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.SIMPLE_NAME);
         List<Tree> types1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_TYPE);
+        List<Tree> qualifiedNames1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.QUALIFIED_NAME);
         if(types1.size() > 0 && children1.size() != children2.size()) {
-        	List<Tree> toBeRemoved2 = new ArrayList<>();
-        	for(Tree type1 : types1) {
-        		if(type1.getChildren().size() > 0 && type1.getChild(0).getType().name.equals(LANG1.QUALIFIED_NAME)) {
-        			String qualifiedType = type1.getChild(0).getLabel();
-        			for(Tree child2 : children2) {
-        				if(qualifiedType.contains(child2.getLabel())) {
-        					toBeRemoved2.add(child2);
-        				}
-        			}
-        		}
-        	}
-        	children2.removeAll(toBeRemoved2);
+            List<Tree> toBeRemoved2 = new ArrayList<>();
+            for(Tree type1 : types1) {
+                if(type1.getChildren().size() > 0 && type1.getChild(0).getType().name.equals(LANG1.QUALIFIED_NAME)) {
+                    String qualifiedType = type1.getChild(0).getLabel();
+                    for(Tree child2 : children2) {
+                        if(qualifiedType.contains(child2.getLabel())) {
+                            toBeRemoved2.add(child2);
+                        }
+                    }
+                }
+            }
+            children2.removeAll(toBeRemoved2);
+        }
+        if(qualifiedNames1.size() > 0 && children1.size() != children2.size()) {
+            List<Tree> toBeRemoved2 = new ArrayList<>();
+            for(Tree qualified1 : qualifiedNames1) {
+                String qualifiedType = qualified1.getLabel();
+                for(Tree child2 : children2) {
+                    if(qualifiedType.contains(child2.getLabel())) {
+                        toBeRemoved2.add(child2);
+                    }
+                }
+            }
+            children2.removeAll(toBeRemoved2);
         }
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
                 mappingStore.addMapping(children1.get(i), children2.get(i));
             }
         }
-        else if(children1.size() > children2.size()) {
+        else if(children1.size() > children2.size() && firstChild1 != null && firstChild1.getParent().getType().name.equals(LANG1.SIMPLE_TYPE)) {
             //this happens when Java side has a type, but Kotlin side has var/val
             Tree t2 = children2.get(0);
             int start1 = -1;

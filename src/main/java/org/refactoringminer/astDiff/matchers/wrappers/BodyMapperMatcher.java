@@ -417,7 +417,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             }
         }
         else {
-            children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION);
+            children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION, LANG1.CLASS_INSTANCE_CREATION);
             children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION);
             if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION))
                 children2.add(0, dstStatementNode);
@@ -438,6 +438,25 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         if(receiver2 != null) {
                             receiver2 = TreeUtilFunctions.findChildByType(receiver2, LANG2.NAVIGATION_SUFFIX);
                             mappingStore.addMapping(receiver1, receiver2);
+                        }
+                    }
+                    if(children1.get(i).getType().name.equals(LANG1.CLASS_INSTANCE_CREATION)) {
+                        Tree type = TreeUtilFunctions.findChildByType(children1.get(i), LANG1.SIMPLE_TYPE);
+                        if(type != null && type.getChildren().size() > 0) {
+                            if(type.getChild(0).getType().name.equals(LANG1.QUALIFIED_NAME)) {
+                                Tree receiver2 = TreeUtilFunctions.findChildByType(children2.get(i), LANG2.NAVIGATION_EXPRESSION);
+                                if(receiver2 != null) {
+                                    receiver2 = TreeUtilFunctions.findChildByType(receiver2, LANG2.NAVIGATION_SUFFIX);
+                                    mappingStore.addMapping(type.getChild(0), receiver2);
+                                }
+                            }
+                            else if(type.getChild(0).getType().name.equals(LANG1.SIMPLE_NAME)) {
+                                Tree receiver2 = TreeUtilFunctions.findChildByType(children2.get(i), LANG2.NAVIGATION_EXPRESSION);
+                                if(receiver2 != null) {
+                                    receiver2 = TreeUtilFunctions.findChildByType(receiver2, LANG2.NAVIGATION_SUFFIX);
+                                    mappingStore.addMapping(type.getChild(0), receiver2);
+                                }
+                            }
                         }
                     }
                 }

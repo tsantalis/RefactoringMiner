@@ -249,6 +249,11 @@ public class ReplacementAlgorithm {
 		findReplacements(lambdaParameterNames1, lambdaParameterNames2, replacementInfo, ReplacementType.VARIABLE_DECLARATION, container1, container2, classDiff);
 		Set<String> variables1 = convertToStringSet(statement1.getVariables());
 		Set<String> variables2 = convertToStringSet(statement2.getVariables());
+		if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN) && variableDeclarations2.size() > 0) {
+			for(VariableDeclaration variable : variableDeclarations2) {
+				variables2.add(variable.getVariableName());
+			}
+		}
 		Set<String> variableIntersection = new LinkedHashSet<String>(variables1);
 		variableIntersection.retainAll(variables2);
 		// ignore the variables in the intersection that also appear with "this." prefix in the sets of variables

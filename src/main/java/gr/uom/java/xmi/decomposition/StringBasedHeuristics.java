@@ -123,6 +123,12 @@ public class StringBasedHeuristics {
 					if(variableDeclarations1.size() > 0 && variableDeclarations2.size() > 0 && (diff2.endsWith("=") || diff2.endsWith("= "))) {
 						if(variableDeclarations1.get(0).getVariableName().equals(variableDeclarations2.get(0).getVariableName()))
 							return true;
+						for(Replacement r : info.getReplacements()) {
+							if(r.getBefore().equals(variableDeclarations1.get(0).getVariableName()) &&
+									r.getAfter().equals(variableDeclarations2.get(0).getVariableName())) {
+								return true;
+							}
+						}
 					}
 				}
 				if(castExpressions1.size() > 0 && castExpressions2.size() > 0 && castExpressions1.size() == castExpressions2.size()) {

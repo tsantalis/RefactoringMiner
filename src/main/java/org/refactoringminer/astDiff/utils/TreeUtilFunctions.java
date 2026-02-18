@@ -124,7 +124,7 @@ public class TreeUtilFunctions {
 		return null;
 	}
 
-	public static List<Tree> findChildrenByTypeRecursively(Tree tree, String type) {
+	public static List<Tree> findChildrenByTypeRecursively(Tree tree, String... type) {
 		List<Tree> children = new ArrayList<>();
 		if (!tree.getChildren().isEmpty())
 		{

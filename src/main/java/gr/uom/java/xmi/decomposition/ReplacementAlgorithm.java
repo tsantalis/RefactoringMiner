@@ -458,12 +458,28 @@ public class ReplacementAlgorithm {
 					}
 				}
 			}
+			boolean assignmentInArguments1 = false;
+			boolean assignmentInArguments2 = false;
+			if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null) {
+				for(String arg1 : creationCoveringTheEntireStatement1.arguments()) {
+					if(arg1.contains(LANG1.ASSIGNMENT)) {
+						assignmentInArguments1 = true;
+						break;
+					}
+				}
+				for(String arg2 : creationCoveringTheEntireStatement2.arguments()) {
+					if(arg2.contains(LANG2.ASSIGNMENT)) {
+						assignmentInArguments2 = true;
+						break;
+					}
+				}
+			}
 			for(String arg1 : arguments1) {
 				if(methodInvocationMap1.containsKey(arg1) && (arg1.contains(LANG1.METHOD_REFERENCE) || arg1.contains(LANG1.LAMBDA_ARROW))) {
 					argsAreMethodCalls = true;
 				}
 			}
-			if(!argsAreMethodCalls) {
+			if(!argsAreMethodCalls && assignmentInArguments1 == assignmentInArguments2) {
 				findReplacements(arguments1, variables2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_VARIABLE, container1, container2, classDiff);
 			}
 		}
@@ -3826,7 +3842,7 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(variableDeclarationWithArrayInitializer1 != null && invocationCoveringTheEntireStatement2 != null && !(invocationCoveringTheEntireStatement2 instanceof MethodReference) && variableDeclarations2.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2)) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s2.contains("(") && s2.contains(")")) {
 			String args1 = s1.substring(s1.indexOf(LANG1.OPEN_ARRAY_INITIALIZER)+1, s1.lastIndexOf(LANG1.CLOSE_ARRAY_INITIALIZER));
 			String args2 = s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"));
 			if(args1.equals(args2)) {
@@ -3836,7 +3852,7 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.getAnonymousClassDeclaration() != null && invocationCoveringTheEntireStatement2 != null && !(invocationCoveringTheEntireStatement2 instanceof MethodReference) && variableDeclarations2.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2)) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s2.contains("(") && s2.contains(")")) {
 			String arrayInitializer = creationCoveringTheEntireStatement1.getAnonymousClassDeclaration();
 			String args1 = arrayInitializer.substring(arrayInitializer.indexOf(LANG1.OPEN_ARRAY_INITIALIZER)+1, arrayInitializer.lastIndexOf(LANG1.CLOSE_ARRAY_INITIALIZER));
 			String args2 = s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"));
@@ -3847,7 +3863,7 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(variableDeclarationWithArrayInitializer2 != null && invocationCoveringTheEntireStatement1 != null && !(invocationCoveringTheEntireStatement1 instanceof MethodReference) && variableDeclarations1.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2)) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s1.contains("(") && s1.contains(")")) {
 			String args1 = s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")"));
 			String args2 = s2.substring(s2.indexOf(LANG2.OPEN_ARRAY_INITIALIZER)+1, s2.lastIndexOf(LANG2.CLOSE_ARRAY_INITIALIZER));
 			if(args1.equals(args2)) {

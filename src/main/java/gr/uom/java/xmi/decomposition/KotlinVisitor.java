@@ -350,10 +350,11 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 	}
 
 	private void processDotQualifiedExpression(KtDotQualifiedExpression expression, Object data) {
-		//if(expression.getReceiverExpression() instanceof KtNameReferenceExpression && expression.getSelectorExpression() instanceof KtNameReferenceExpression) {
-		//	LeafExpression name = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.SIMPLE_NAME, container);
-		//	variables.add(name);
-		//}
+		if(expression.getReceiverExpression() instanceof KtNameReferenceExpression && expression.getSelectorExpression() instanceof KtNameReferenceExpression &&
+				expression.getParent() instanceof KtValueArgument) {
+			LeafExpression valueArgument = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.FIELD_ACCESS, container);
+			arguments.add(valueArgument);
+		}
 		this.visitExpression(expression.getReceiverExpression(), data);
 		if (expression.getSelectorExpression() != null)
 			this.visitExpression(expression.getSelectorExpression(), data);

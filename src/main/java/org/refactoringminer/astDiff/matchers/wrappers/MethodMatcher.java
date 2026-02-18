@@ -180,6 +180,15 @@ public class MethodMatcher extends BodyMapperMatcher{
         if (matched != null) {
             mappingStore.addMapping(matched.first,matched.second);
         }
+        if(!LANG1.EXPRESSION_STATEMENT.equals(LANG2.EXPRESSION_STATEMENT)) {
+            matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.BLOCK,LANG2.FUNCTION_BODY);
+            if (matched != null) {
+                mappingStore.addMapping(matched.first,matched.second);
+                if(matched.second.getChildren().size() > 0 && matched.second.getChild(0).getType().name.equals(LANG2.STATEMENTS)) {
+                    mappingStore.addMapping(matched.first,matched.second.getChild(0));
+                }
+            }
+        }
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.FUNCTION_KEYWORD,LANG2.FUNCTION_KEYWORD);
         if (matched != null) {
             mappingStore.addMapping(matched.first,matched.second);

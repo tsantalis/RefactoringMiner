@@ -343,6 +343,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         List<Tree> children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_NAME);
         Tree firstChild1 = children1.size() > 0 ? children1.get(0) : null;
         List<Tree> children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.SIMPLE_NAME);
+        if(children2.size() > 0 && children2.get(children2.size()-1).getLabel().equals("code")) {
+        	//remove .code on character literals to convert to int
+        	children2.remove(children2.size()-1);
+        }
         List<Tree> types1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_TYPE);
         List<Tree> qualifiedNames1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.QUALIFIED_NAME);
         if(types1.size() > 0 && children1.size() != children2.size()) {
@@ -384,6 +388,18 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if(children1.get(i).getLabel().equals(t2.getLabel())) {
                     start1 = i;
                     break;
+                }
+            }
+            //confirm simple name correspondence
+            if(start1 == -1) {
+                int matchingNames = 0;
+                for(int i=1; i<children1.size() && i-1<children2.size(); i++) {
+                    if(children1.get(i).getLabel().equals(children2.get(i-1).getLabel())) {
+                        matchingNames++;
+                    }
+                }
+                if(matchingNames > 0) {
+                    start1 = 1;
                 }
             }
             if(children2.size() == children1.size() - start1) {

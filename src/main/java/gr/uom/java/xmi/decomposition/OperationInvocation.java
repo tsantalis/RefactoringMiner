@@ -1179,6 +1179,19 @@ public class OperationInvocation extends AbstractCall {
 		}
 	}
 
+	public OperationInvocation(KtFile cu, String sourceFolder, String filePath, KtDotQualifiedExpression invocation, VariableDeclarationContainer container, String fileContent) {
+		super(cu, sourceFolder, filePath, invocation, CodeElementType.METHOD_INVOCATION, container);
+		this.methodName = invocation.getSelectorExpression().getText();
+		this.numberOfArguments = 0;
+		this.arguments = new ArrayList<String>();
+		KtExpression receiver = invocation.getReceiverExpression();
+		if(receiver != null) {
+			// TODO replace with stringify
+			this.expression = receiver.getText();
+			processExpression(receiver, this.subExpressions);
+		}
+	}
+
 	private static KtExpression input(KtCallExpression invocation) {
 		if(invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression)
 			return dotQualifiedExpression;

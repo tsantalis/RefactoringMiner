@@ -1220,6 +1220,31 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						}
 					}
 				}
+				if(initializer != null && replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION)) {
+					if(after.contains("(" + initializer.getString()) && before.contains("(" + variableName)) {
+						before = variableName;
+						after = initializer.getString();
+					}
+					if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN)) {
+						List<AbstractCall> methodInvocations1 = initializer.getMethodInvocations();
+						List<AbstractCall> methodInvocations2 = getFragment2().getMethodInvocations();
+						String temp = new String(initializer.getString());
+						for(AbstractCall call : methodInvocations1) {
+							if(initializer.getString().contains(call.toString()) && call.arguments().size() == 0 && !methodInvocations2.contains(call)) {
+								String fieldName = call.getName();
+								if(call.getName().startsWith("get") && call.getName().length() > "get".length()) {
+									fieldName = call.getName().substring(3, call.getName().length());
+									fieldName = Character.toLowerCase(fieldName.charAt(0)) + fieldName.substring(1, fieldName.length());
+								}
+								temp = ReplacementUtil.performReplacement(temp, call.getName() + "()", fieldName);
+							}
+						}
+						if(after.contains("(" + temp) && before.contains("(" + variableName)) {
+							before = variableName;
+							after = initializer.getString();
+						}
+					}
+				}
 				String lambdaArrow1 = "()" + LANG1.LAMBDA_ARROW;
 				String lambdaArrow2 = "()" + LANG2.LAMBDA_ARROW;
 				if(before.startsWith(lambdaArrow1) && after.startsWith(lambdaArrow2)) {
@@ -1480,6 +1505,22 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		}
 		if(!foundInLambdaMapper) {
 			List<LeafExpression> subExpressions = getFragment2().findExpression(after);
+			if(subExpressions.isEmpty() && LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN)) {
+				List<AbstractCall> methodInvocations1 = initializer.getMethodInvocations();
+				List<AbstractCall> methodInvocations2 = getFragment2().getMethodInvocations();
+				String temp = new String(initializer.getString());
+				for(AbstractCall call : methodInvocations1) {
+					if(initializer.getString().contains(call.toString()) && call.arguments().size() == 0 && !methodInvocations2.contains(call)) {
+						String fieldName = call.getName();
+						if(call.getName().startsWith("get") && call.getName().length() > "get".length()) {
+							fieldName = call.getName().substring(3, call.getName().length());
+							fieldName = Character.toLowerCase(fieldName.charAt(0)) + fieldName.substring(1, fieldName.length());
+						}
+						temp = ReplacementUtil.performReplacement(temp, call.getName() + "()", fieldName);
+					}
+				}
+				subExpressions = getFragment2().findExpression(temp);
+			}
 			for(LeafExpression subExpression : subExpressions) {
 				LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
 				ref.addSubExpressionMapping(leafMapping);

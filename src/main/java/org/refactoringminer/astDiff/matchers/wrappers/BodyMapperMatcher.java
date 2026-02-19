@@ -330,6 +330,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
 
     }
+
     private void handleLanguageMigration(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode) {
         /*
         Map<Tree, Tree> cpyToSrc = new HashMap<>();
@@ -344,8 +345,8 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         Tree firstChild1 = children1.size() > 0 ? children1.get(0) : null;
         List<Tree> children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.SIMPLE_NAME);
         if(children2.size() > 0 && children2.get(children2.size()-1).getLabel().equals("code")) {
-        	//remove .code on character literals to convert to int
-        	children2.remove(children2.size()-1);
+            //remove .code on character literals to convert to int
+            children2.remove(children2.size()-1);
         }
         List<Tree> types1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_TYPE);
         List<Tree> qualifiedNames1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.QUALIFIED_NAME);
@@ -356,6 +357,14 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     String qualifiedType = type1.getChild(0).getLabel();
                     for(Tree child2 : children2) {
                         if(qualifiedType.contains(child2.getLabel())) {
+                            toBeRemoved2.add(child2);
+                        }
+                    }
+                }
+                else if(type1.getChildren().size() > 0 && type1.getChild(0).getType().name.equals(LANG1.SIMPLE_NAME)) {
+                    String simpleType = type1.getChild(0).getLabel();
+                    for(Tree child2 : children2) {
+                        if(simpleType.equals(child2.getLabel())) {
                             toBeRemoved2.add(child2);
                         }
                     }
@@ -377,7 +386,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
-                mappingStore.addMapping(children1.get(i), children2.get(i));
+                if(children2.get(i).getChildren().size() > 0)
+                    mappingStore.addMapping(children1.get(i), children2.get(i).getChild(0));
+                else
+                    mappingStore.addMapping(children1.get(i), children2.get(i));
             }
         }
         else if(children1.size() > children2.size() && firstChild1 != null && firstChild1.getParent().getType().name.equals(LANG1.SIMPLE_TYPE)) {
@@ -423,42 +435,16 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 children2.add(0, dstStatementNode);
             if(children1.size() == children2.size()) {
                 for(int i=0; i<children1.size(); i++) {
-                    mappingStore.addMapping(children1.get(i), children2.get(i));
-                    Tree args1 = TreeUtilFunctions.findChildByType(children1.get(i), LANG1.METHOD_INVOCATION_ARGUMENTS);
-                    if(args1 != null) {
-                        Tree args2 = TreeUtilFunctions.findChildByType(children2.get(i), LANG2.CALL_SUFFIX);
-                        if(args2 != null) {
-                            args2 = TreeUtilFunctions.findChildByType(args2, LANG2.METHOD_INVOCATION_ARGUMENTS);
-                            mappingStore.addMapping(args1, args2);
-                        }
-                    }
-                    Tree receiver1 = TreeUtilFunctions.findChildByType(children1.get(i), LANG1.METHOD_INVOCATION_RECEIVER);
-                    if(receiver1 != null) {
-                        Tree receiver2 = TreeUtilFunctions.findChildByType(children2.get(i), LANG2.NAVIGATION_EXPRESSION);
-                        if(receiver2 != null) {
-                            receiver2 = TreeUtilFunctions.findChildByType(receiver2, LANG2.NAVIGATION_SUFFIX);
-                            mappingStore.addMapping(receiver1, receiver2);
-                        }
-                    }
-                    if(children1.get(i).getType().name.equals(LANG1.CLASS_INSTANCE_CREATION)) {
-                        Tree type = TreeUtilFunctions.findChildByType(children1.get(i), LANG1.SIMPLE_TYPE);
-                        if(type != null && type.getChildren().size() > 0) {
-                            if(type.getChild(0).getType().name.equals(LANG1.QUALIFIED_NAME)) {
-                                Tree receiver2 = TreeUtilFunctions.findChildByType(children2.get(i), LANG2.NAVIGATION_EXPRESSION);
-                                if(receiver2 != null) {
-                                    receiver2 = TreeUtilFunctions.findChildByType(receiver2, LANG2.NAVIGATION_SUFFIX);
-                                    mappingStore.addMapping(type.getChild(0), receiver2);
-                                }
-                            }
-                            else if(type.getChild(0).getType().name.equals(LANG1.SIMPLE_NAME)) {
-                                Tree receiver2 = TreeUtilFunctions.findChildByType(children2.get(i), LANG2.NAVIGATION_EXPRESSION);
-                                if(receiver2 != null) {
-                                    receiver2 = TreeUtilFunctions.findChildByType(receiver2, LANG2.NAVIGATION_SUFFIX);
-                                    mappingStore.addMapping(type.getChild(0), receiver2);
-                                }
-                            }
-                        }
-                    }
+                    Tree child1 = children1.get(i);
+                    Tree child2 = children2.get(i);
+                    processPair(mappingStore, child1, child2);
+                }
+            }
+            else if(children2.size() < children1.size()) {
+                for(int i=0; i<children2.size(); i++) {
+                    Tree child1 = children1.get(i);
+                    Tree child2 = children2.get(i);
+                    processPair(mappingStore, child1, child2);
                 }
             }
         }
@@ -469,7 +455,54 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 mappingStore.addMapping(children1.get(i), children2.get(i));
             }
         }
+        children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.NUMBER_LITERAL);
+        children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTEGER_LITERAL);
+        if(children1.size() == children2.size()) {
+            for(int i=0; i<children1.size(); i++) {
+                mappingStore.addMapping(children1.get(i), children2.get(i));
+            }
+        }
     }
+
+    private void processPair(ExtendedMultiMappingStore mappingStore, Tree child1, Tree child2) {
+        mappingStore.addMapping(child1, child2);
+        Tree args1 = TreeUtilFunctions.findChildByType(child1, LANG1.METHOD_INVOCATION_ARGUMENTS);
+        if(args1 != null) {
+            Tree args2 = TreeUtilFunctions.findChildByType(child2, LANG2.CALL_SUFFIX);
+            if(args2 != null) {
+                args2 = TreeUtilFunctions.findChildByType(args2, LANG2.METHOD_INVOCATION_ARGUMENTS);
+                mappingStore.addMapping(args1, args2);
+            }
+        }
+        Tree receiver1 = TreeUtilFunctions.findChildByType(child1, LANG1.METHOD_INVOCATION_RECEIVER);
+        if(receiver1 != null) {
+            Tree receiver2 = TreeUtilFunctions.findChildByType(child2, LANG2.NAVIGATION_EXPRESSION);
+            if(receiver2 != null) {
+                receiver2 = TreeUtilFunctions.findChildByType(receiver2, LANG2.NAVIGATION_SUFFIX);
+                mappingStore.addMapping(receiver1, receiver2);
+            }
+        }
+        if(child1.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION)) {
+            Tree type = TreeUtilFunctions.findChildByType(child1, LANG1.SIMPLE_TYPE);
+            if(type != null && type.getChildren().size() > 0) {
+                if(type.getChild(0).getType().name.equals(LANG1.QUALIFIED_NAME)) {
+                    Tree receiver2 = TreeUtilFunctions.findChildByType(child2, LANG2.NAVIGATION_EXPRESSION);
+                    if(receiver2 != null) {
+                        receiver2 = TreeUtilFunctions.findChildByType(receiver2, LANG2.NAVIGATION_SUFFIX);
+                        mappingStore.addMapping(type.getChild(0), receiver2);
+                    }
+                }
+                else if(type.getChild(0).getType().name.equals(LANG1.SIMPLE_NAME)) {
+                    Tree receiver2 = TreeUtilFunctions.findChildByType(child2, LANG2.NAVIGATION_EXPRESSION);
+                    if(receiver2 != null) {
+                        receiver2 = TreeUtilFunctions.findChildByType(receiver2, LANG2.NAVIGATION_SUFFIX);
+                        mappingStore.addMapping(type.getChild(0), receiver2);
+                    }
+                }
+            }
+        }
+    }
+
     private void additionallyMatchedStatements(Tree srcTree, Tree dstTree, Tree srcStatementNode, Tree dstStatementNode, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {
         if (abstractCodeMapping != null) {
             for (Replacement replacement : abstractCodeMapping.getReplacements()) {

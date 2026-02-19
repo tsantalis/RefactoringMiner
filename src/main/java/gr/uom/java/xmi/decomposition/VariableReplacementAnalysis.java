@@ -2811,6 +2811,31 @@ public class VariableReplacementAnalysis {
 		Set<Replacement> allConsistentRenames = new LinkedHashSet<Replacement>();
 		Set<Replacement> allInconsistentRenames = new LinkedHashSet<Replacement>();
 		ConsistentReplacementDetector.updateRenames(allConsistentRenames, allInconsistentRenames, aliasedVariablesInOriginalMethod, aliasedVariablesInNextMethod, renames);
+		int maxSupport = 0;
+		Replacement topReplacement = null;
+		boolean foundWithLessSupport = false;
+		Set<AbstractCodeMapping> references = null;
+		if(allInconsistentRenames.size() > 1 && !insideExtractedOrInlinedMethod) {
+			for(Replacement r : allInconsistentRenames) {
+				Set<AbstractCodeMapping> set = replacementOccurrenceMap.get(r);
+				int support = set.size();
+				if(support > maxSupport) {
+					maxSupport = support;
+					topReplacement = r;
+					references = set;
+				}
+				else if(support > 0 && support == maxSupport) {
+					foundWithLessSupport = false;
+					break;
+				}
+				else if(support < maxSupport && references.containsAll(set)) {
+					foundWithLessSupport = true;
+				}
+			}
+		}
+		if(foundWithLessSupport && topReplacement != null) {
+			allInconsistentRenames.remove(topReplacement);
+		}
 		allConsistentRenames.removeAll(allInconsistentRenames);
 		return allConsistentRenames;
 	}

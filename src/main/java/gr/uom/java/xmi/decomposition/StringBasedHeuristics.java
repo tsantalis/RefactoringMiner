@@ -89,6 +89,9 @@ public class StringBasedHeuristics {
 				if(ss1.equals(ss2)) {
 					return true;
 				}
+				if(equalAfterParenthesisElimination(ss1, ss2, LANG1, LANG2)) {
+					return true;
+				}
 				String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(ss1, ss2);
 				String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(ss1, ss2);
 				if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
@@ -265,7 +268,26 @@ public class StringBasedHeuristics {
 		updatedS1 = updatedS1.replace(")", "");
 		String updatedS2 = s2.replace("(", "");
 		updatedS2 = updatedS2.replace(")", "");
-		return updatedS1.equals(updatedS2) || updatedS1.equals(LANG1.RETURN_SPACE + updatedS2) || updatedS2.equals(LANG2.RETURN_SPACE + updatedS1);
+		if(updatedS1.equals(updatedS2) || updatedS1.equals(LANG1.RETURN_SPACE + updatedS2) || updatedS2.equals(LANG2.RETURN_SPACE + updatedS1)) {
+			return true;
+		}
+		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(updatedS1, updatedS2);
+		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(updatedS1, updatedS2);
+		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+			int beginIndexS1 = updatedS1.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS1 = updatedS1.lastIndexOf(commonSuffix);
+			String diff1 = beginIndexS1 > endIndexS1 ? "" :	updatedS1.substring(beginIndexS1, endIndexS1);
+			int beginIndexS2 = updatedS2.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS2 = updatedS2.lastIndexOf(commonSuffix);
+			String diff2 = beginIndexS2 > endIndexS2 ? "" :	updatedS2.substring(beginIndexS2, endIndexS2);
+			if(diff1.isEmpty() && diff2.isBlank() && !diff2.isEmpty()) {
+				return true;
+			}
+			if(diff2.isEmpty() && diff1.isBlank() && !diff1.isEmpty()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	protected static boolean differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(String s1, String s2, Map<String, List<AbstractCall>> methodInvocationMap1, Map<String, List<AbstractCall>> methodInvocationMap2,

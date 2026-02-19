@@ -330,7 +330,7 @@ public class MonacoCore {
     	String type = t.getType().toString();
     	return type.endsWith("Expression") || type.endsWith("Literal") || type.endsWith("Reference") || type.endsWith("Invocation") ||
     			type.endsWith("Creation") || type.endsWith("Access") || type.endsWith("Name") || type.endsWith("Annotation") || type.endsWith("Pattern") ||
-    			type.equals("Assignment") || type.equals("ArrayInitializer") || type.endsWith("_expression");
+    			type.equals("Assignment") || type.equals("ArrayInitializer") || type.endsWith("_expression") || type.endsWith("identifier");
     }
 
     private static boolean isComment(Tree t) {

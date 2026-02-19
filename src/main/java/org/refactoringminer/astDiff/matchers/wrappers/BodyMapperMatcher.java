@@ -297,7 +297,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
         else if(!LANG1.EXPRESSION_STATEMENT.equals(LANG2.EXPRESSION_STATEMENT)) {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);
-            handleLanguageMigration(mappingStore, srcStatementNode, dstStatementNode);
+            handleLanguageMigration(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2);
         }
         if(srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS)) {
             mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
@@ -331,7 +331,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
 
     }
 
-    private void handleLanguageMigration(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode) {
+    public static void handleLanguageMigration(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
         /*
         Map<Tree, Tree> cpyToSrc = new HashMap<>();
         Tree srcFakeTree = TreeUtilFunctions.deepCopyWithMap(srcStatementNode, cpyToSrc);
@@ -437,14 +437,14 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 for(int i=0; i<children1.size(); i++) {
                     Tree child1 = children1.get(i);
                     Tree child2 = children2.get(i);
-                    processPair(mappingStore, child1, child2);
+                    processPair(mappingStore, child1, child2, LANG1, LANG2);
                 }
             }
             else if(children2.size() < children1.size()) {
                 for(int i=0; i<children2.size(); i++) {
                     Tree child1 = children1.get(i);
                     Tree child2 = children2.get(i);
-                    processPair(mappingStore, child1, child2);
+                    processPair(mappingStore, child1, child2, LANG1, LANG2);
                 }
             }
         }
@@ -464,7 +464,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
     }
 
-    private void processPair(ExtendedMultiMappingStore mappingStore, Tree child1, Tree child2) {
+    private static void processPair(ExtendedMultiMappingStore mappingStore, Tree child1, Tree child2, Constants LANG1, Constants LANG2) {
         mappingStore.addMapping(child1, child2);
         Tree args1 = TreeUtilFunctions.findChildByType(child1, LANG1.METHOD_INVOCATION_ARGUMENTS);
         if(args1 != null) {

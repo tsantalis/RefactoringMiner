@@ -361,14 +361,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         }
                     }
                 }
-                else if(type1.getChildren().size() > 0 && type1.getChild(0).getType().name.equals(LANG1.SIMPLE_NAME)) {
-                    String simpleType = type1.getChild(0).getLabel();
-                    for(Tree child2 : children2) {
-                        if(simpleType.equals(child2.getLabel())) {
-                            toBeRemoved2.add(child2);
-                        }
-                    }
-                }
             }
             children2.removeAll(toBeRemoved2);
         }

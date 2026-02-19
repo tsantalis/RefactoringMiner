@@ -356,7 +356,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if(type1.getChildren().size() > 0 && type1.getChild(0).getType().name.equals(LANG1.QUALIFIED_NAME)) {
                     String qualifiedType = type1.getChild(0).getLabel();
                     for(Tree child2 : children2) {
-                        if(qualifiedType.contains(child2.getLabel())) {
+                        if(qualifiedType.contains(child2.getLabel() + ".") || qualifiedType.contains("." + child2.getLabel())) {
                             toBeRemoved2.add(child2);
                         }
                     }

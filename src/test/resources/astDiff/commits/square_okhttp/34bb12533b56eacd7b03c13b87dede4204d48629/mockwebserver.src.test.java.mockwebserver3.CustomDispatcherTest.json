@@ -21,6 +21,28 @@
   "firstEndPos" : 599,
   "secondEndPos" : 599
 }, {
+  "firstType" : "PackageDeclaration",
+  "secondType" : "package_header",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "source_file",
+  "firstPos" : 600,
+  "secondPos" : 600,
+  "firstEndPos" : 623,
+  "secondEndPos" : 622
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "identifier",
+  "firstLabel" : "mockwebserver3",
+  "secondLabel" : "",
+  "firstParentType" : "PackageDeclaration",
+  "secondParentType" : "package_header",
+  "firstPos" : 608,
+  "secondPos" : 608,
+  "firstEndPos" : 622,
+  "secondEndPos" : 622
+}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "import_header",
   "firstLabel" : "",

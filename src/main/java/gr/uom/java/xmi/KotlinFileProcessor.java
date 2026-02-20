@@ -186,7 +186,16 @@ public class KotlinFileProcessor {
 				if (importName != null) {
 					LocationInfo locationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, importDeclaration, CodeElementType.IMPORT_DECLARATION);
 					// kotlin does not have static keyword for method imports, you can import directly a method
-					UMLImport imported = new UMLImport(importName, importDeclaration.isAllUnder(), false, locationInfo);
+					// if the final part starts with lower case (static method) or all chars are in upper case (static attribute), then consider it static
+					boolean staticImport = false;
+					if(importName.contains(".")) {
+						String lastPart = importName.substring(importName.lastIndexOf(".") + 1, importName.length());
+						if(Character.isLowerCase(lastPart.charAt(0)))
+							staticImport = true;
+						else if(lastPart.equals(lastPart.toUpperCase()))
+							staticImport = true;
+					}
+					UMLImport imported = new UMLImport(importName, importDeclaration.isAllUnder(), staticImport, locationInfo);
 					importedTypes.add(imported);
 				}
 			}

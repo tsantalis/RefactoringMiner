@@ -34,7 +34,7 @@ public class ImportMatcher implements TreeMatcher {
         if (importDiffList == null) return;
         Set<Pair<UMLImport, UMLImport>> commonImports = importDiffList.getCommonImports();
         if (!commonImports.isEmpty()) {
-        	int counter = 0;
+            int counter = 0;
             for (org.apache.commons.lang3.tuple.Pair<UMLImport, UMLImport> pair : commonImports) {
                 Tree srcImportStatement = TreeUtilFunctions.findByLocationInfo(srcTree, pair.getLeft().getLocationInfo(), LANG1);
                 Tree dstImportStatement = TreeUtilFunctions.findByLocationInfo(dstTree, pair.getRight().getLocationInfo(), LANG2);
@@ -47,6 +47,14 @@ public class ImportMatcher implements TreeMatcher {
                 }
                 if (srcImportStatement != null && dstImportStatement != null) {
                     mappingStore.addMappingRecursively(srcImportStatement, dstImportStatement);
+                    if(Constants.isCrossLanguage(LANG1, LANG2)) {
+                        mappingStore.addMapping(srcImportStatement, dstImportStatement);
+                        Tree qualifiedName = TreeUtilFunctions.findChildByType(srcImportStatement, LANG1.QUALIFIED_NAME);
+                        Tree identifier = TreeUtilFunctions.findChildByType(dstImportStatement, LANG1.IMPORT_IDENTIFIER);
+                        if(qualifiedName != null && identifier != null) {
+                        	mappingStore.addMapping(qualifiedName, identifier);
+                        }
+                    }
                     handleParent(mappingStore, srcImportStatement, dstImportStatement);
                 }
                 counter++;

@@ -29040,6 +29040,28 @@
   "secondEndPos" : 23160
 }, {
   "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 26169,
+  "secondPos" : 23180,
+  "firstEndPos" : 26175,
+  "secondEndPos" : 23186
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "nullable_type",
+  "firstPos" : 26169,
+  "secondPos" : 23180,
+  "firstEndPos" : 26175,
+  "secondEndPos" : 23186
+}, {
+  "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "getPlatform",
   "secondLabel" : "getPlatform",

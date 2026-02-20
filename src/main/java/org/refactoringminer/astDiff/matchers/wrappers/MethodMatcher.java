@@ -297,6 +297,16 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (srcNode == null || dstNode == null) return;
             if (srcNode.isIsoStructuralTo(dstNode))
                 mappingStore.addMappingRecursively(srcNode,dstNode);
+            else if(Constants.isCrossLanguage(LANG1, LANG2)) {
+                Tree type1 = srcNode;
+                Tree type2 = dstNode.getType().name.equals(LANG2.USER_TYPE) ? dstNode : TreeUtilFunctions.findChildByType(dstNode, LANG2.USER_TYPE);
+                if(type1 != null && type2 != null) {
+                    mappingStore.addMapping(type1, type2);
+                    if(type1.getChildren().size() > 0 && type2.getChildren().size() > 0) {
+                        mappingStore.addMapping(type1.getChild(0),type2.getChild(0));
+                    }
+                }
+            }
             else {
                 new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);
             }
@@ -361,9 +371,9 @@ public class MethodMatcher extends BodyMapperMatcher{
                     mappingStore.addMapping(leftTree,rightTree);
                 }
                 if(leftTree.getType().name.equals(LANG1.PARAMETER_MODIFIERS) && rightTree.getType().name.equals(LANG2.PARAMETER_MODIFIERS)) {
-                	Tree leftParameter = TreeUtilFunctions.findByLocationInfo(leftTree.getParent(), leftVarDecl.getLocationInfo(), LANG1, LANG1.PARAMETER);
-                	Tree rightParameter = TreeUtilFunctions.findByLocationInfo(rightTree.getParent(), rightVarDecl.getLocationInfo(), LANG2, LANG2.PARAMETER);
-                	if (TreeUtilFunctions.isIsomorphicTo(leftParameter, rightParameter))
+                    Tree leftParameter = TreeUtilFunctions.findByLocationInfo(leftTree.getParent(), leftVarDecl.getLocationInfo(), LANG1, LANG1.PARAMETER);
+                    Tree rightParameter = TreeUtilFunctions.findByLocationInfo(rightTree.getParent(), rightVarDecl.getLocationInfo(), LANG2, LANG2.PARAMETER);
+                    if (TreeUtilFunctions.isIsomorphicTo(leftParameter, rightParameter))
                         mappingStore.addMappingRecursively(leftParameter, rightParameter);
                     else {
                         new LeafMatcher(LANG1, LANG2).match(leftParameter,rightParameter,mappingStore);
@@ -371,7 +381,7 @@ public class MethodMatcher extends BodyMapperMatcher{
                     }
                 }
                 if(leftVarDecl.getInitializer() != null && rightVarDecl.getInitializer() != null) {
-                	Tree leftInitializerTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getInitializer().getLocationInfo(),LANG1);
+                    Tree leftInitializerTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getInitializer().getLocationInfo(),LANG1);
                     Tree rightInitializerTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightVarDecl.getInitializer().getLocationInfo(),LANG2);
                     if (leftInitializerTree == null || rightInitializerTree == null) return;
                     if (TreeUtilFunctions.isIsomorphicTo(leftInitializerTree, rightInitializerTree))

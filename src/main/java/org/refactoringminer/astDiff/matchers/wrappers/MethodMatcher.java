@@ -340,6 +340,22 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (leftVarDecl.isParameter() && rightVarDecl.isParameter()) {
                 if (TreeUtilFunctions.isIsomorphicTo(rightTree, leftTree))
                     mappingStore.addMappingRecursively(leftTree, rightTree);
+                else if(Constants.isCrossLanguage(LANG1, LANG2)) {
+                    mappingStore.addMapping(leftTree, rightTree);
+                    Tree type1 = TreeUtilFunctions.findChildByType(leftTree, LANG1.SIMPLE_TYPE);
+                    Tree type2 = TreeUtilFunctions.findChildByType(rightTree, LANG2.USER_TYPE);
+                    if(type1 != null && type2 != null) {
+                        mappingStore.addMapping(type1, type2);
+                        if(type1.getChildren().size() > 0 && type2.getChildren().size() > 0) {
+                            mappingStore.addMapping(type1.getChild(0),type2.getChild(0));
+                        }
+                    }
+                    Tree name1 = TreeUtilFunctions.findChildByType(leftTree, LANG1.SIMPLE_NAME);
+                    Tree name2 = TreeUtilFunctions.findChildByType(rightTree, LANG2.SIMPLE_NAME);
+                    if(name1 != null && name2 != null) {
+                        mappingStore.addMapping(name1, name2);
+                    }
+                }
                 else {
                     new LeafMatcher(LANG1, LANG2).match(leftTree,rightTree,mappingStore);
                     mappingStore.addMapping(leftTree,rightTree);

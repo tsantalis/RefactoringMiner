@@ -318,6 +318,39 @@
   "firstEndPos" : 1178,
   "secondEndPos" : 1088
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "MockWebServer",
+  "secondLabel" : "MockWebServer",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 1151,
+  "secondPos" : 1075,
+  "firstEndPos" : 1164,
+  "secondEndPos" : 1088
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "SingleVariableDeclaration",
+  "secondParentType" : "parameter",
+  "firstPos" : 1151,
+  "secondPos" : 1075,
+  "firstEndPos" : 1164,
+  "secondEndPos" : 1088
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "mockWebServer",
+  "secondLabel" : "mockWebServer",
+  "firstParentType" : "SingleVariableDeclaration",
+  "secondParentType" : "parameter",
+  "firstPos" : 1165,
+  "secondPos" : 1060,
+  "firstEndPos" : 1178,
+  "secondEndPos" : 1073
+}, {
   "firstType" : "Block",
   "secondType" : "function_body",
   "firstLabel" : "",
@@ -449,6 +482,39 @@
   "secondPos" : 1310,
   "firstEndPos" : 1493,
   "secondEndPos" : 1334
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "RecordedRequest",
+  "secondLabel" : "RecordedRequest",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 1470,
+  "secondPos" : 1319,
+  "firstEndPos" : 1485,
+  "secondEndPos" : 1334
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "SingleVariableDeclaration",
+  "secondParentType" : "parameter",
+  "firstPos" : 1470,
+  "secondPos" : 1319,
+  "firstEndPos" : 1485,
+  "secondEndPos" : 1334
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "request",
+  "secondLabel" : "request",
+  "firstParentType" : "SingleVariableDeclaration",
+  "secondParentType" : "parameter",
+  "firstPos" : 1486,
+  "secondPos" : 1310,
+  "firstEndPos" : 1493,
+  "secondEndPos" : 1317
 }, {
   "firstType" : "Block",
   "secondType" : "function_body",
@@ -1340,6 +1406,39 @@
   "secondPos" : 2096,
   "firstEndPos" : 2425,
   "secondEndPos" : 2120
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "RecordedRequest",
+  "secondLabel" : "RecordedRequest",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 2402,
+  "secondPos" : 2105,
+  "firstEndPos" : 2417,
+  "secondEndPos" : 2120
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "SingleVariableDeclaration",
+  "secondParentType" : "parameter",
+  "firstPos" : 2402,
+  "secondPos" : 2105,
+  "firstEndPos" : 2417,
+  "secondEndPos" : 2120
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "request",
+  "secondLabel" : "request",
+  "firstParentType" : "SingleVariableDeclaration",
+  "secondParentType" : "parameter",
+  "firstPos" : 2418,
+  "secondPos" : 2096,
+  "firstEndPos" : 2425,
+  "secondEndPos" : 2103
 }, {
   "firstType" : "Block",
   "secondType" : "function_body",
@@ -2562,6 +2661,39 @@
   "firstEndPos" : 3321,
   "secondEndPos" : 2951
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 3310,
+  "secondPos" : 2945,
+  "firstEndPos" : 3316,
+  "secondEndPos" : 2951
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "SingleVariableDeclaration",
+  "secondParentType" : "parameter",
+  "firstPos" : 3310,
+  "secondPos" : 2945,
+  "firstEndPos" : 3316,
+  "secondEndPos" : 2951
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "path",
+  "secondLabel" : "path",
+  "firstParentType" : "SingleVariableDeclaration",
+  "secondParentType" : "parameter",
+  "firstPos" : 3317,
+  "secondPos" : 2939,
+  "firstEndPos" : 3321,
+  "secondEndPos" : 2943
+}, {
   "firstType" : "SingleVariableDeclaration",
   "secondType" : "parameter",
   "firstLabel" : "",
@@ -2572,6 +2704,39 @@
   "secondPos" : 2953,
   "firstEndPos" : 3349,
   "secondEndPos" : 2980
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "AtomicInteger",
+  "secondLabel" : "AtomicInteger",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 3323,
+  "secondPos" : 2967,
+  "firstEndPos" : 3336,
+  "secondEndPos" : 2980
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "SingleVariableDeclaration",
+  "secondParentType" : "parameter",
+  "firstPos" : 3323,
+  "secondPos" : 2967,
+  "firstEndPos" : 3336,
+  "secondEndPos" : 2980
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "responseCode",
+  "secondLabel" : "responseCode",
+  "firstParentType" : "SingleVariableDeclaration",
+  "secondParentType" : "parameter",
+  "firstPos" : 3337,
+  "secondPos" : 2953,
+  "firstEndPos" : 3349,
+  "secondEndPos" : 2965
 }, {
   "firstType" : "Block",
   "secondType" : "function_body",

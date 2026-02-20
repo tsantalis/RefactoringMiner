@@ -3,6 +3,9 @@ package org.refactoringminer.astDiff.utils;
 import org.refactoringminer.util.PathFileUtils;
 
 public class Constants {
+	public static boolean isCrossLanguage(Constants LANG1, Constants LANG2) {
+		return !LANG1.TYPE_DECLARATION.equals(LANG2.TYPE_DECLARATION);
+	}
 
 	public Constants(String filePath) {
 		if(PathFileUtils.isPythonFile(filePath)) {

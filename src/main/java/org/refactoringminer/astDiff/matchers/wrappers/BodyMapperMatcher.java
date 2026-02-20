@@ -262,10 +262,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 }
             }
             if(srcStatementNode.getType().name.equals(LANG1.CATCH_CLAUSE) && dstStatementNode.getType().name.equals(LANG2.CATCH_CLAUSE)) {
-            	Pair<Tree, Tree> types = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.USER_TYPE, LANG2.USER_TYPE);
-            	if (types != null) {
+                Pair<Tree, Tree> types = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.USER_TYPE, LANG2.USER_TYPE);
+                if (types != null) {
                     mappingStore.addMappingRecursively(types.first,types.second);
-            	}
+                }
             }
         }
     }
@@ -295,7 +295,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 mappingStore.addMappingRecursively(srcStatementNode, dstStatementNode);
             else
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
-        else if(!LANG1.EXPRESSION_STATEMENT.equals(LANG2.EXPRESSION_STATEMENT)) {
+        else if(Constants.isCrossLanguage(LANG1, LANG2)) {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);
             handleLanguageMigration(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2);
         }

@@ -9,6 +9,7 @@ import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
+import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.Map;
@@ -59,8 +60,8 @@ public class ASTDiffMappingOptimizer extends OptimizationAwareMatcher{
             if (lastStepMapping.getFragment1().getLocationInfo().getFilePath().equals(input.getSrcPath()) && lastStepMapping.getFragment2().getLocationInfo().getFilePath().equals(input.getDstPath())) {
                 Tree srcExp = TreeUtilFunctions.findByLocationInfo(srcTree, lastStepMapping.getFragment1().getLocationInfo(), astDiff.LANG1);
                 Tree dstExp = TreeUtilFunctions.findByLocationInfo(dstTree, lastStepMapping.getFragment2().getLocationInfo(), astDiff.LANG2);
-                if(!astDiff.LANG1.EXPRESSION_STATEMENT.equals(astDiff.LANG2.EXPRESSION_STATEMENT)) {
-                	BodyMapperMatcher.handleLanguageMigration(lastStepMappingStore, srcExp, dstExp, astDiff.LANG1, astDiff.LANG2);
+                if(Constants.isCrossLanguage(astDiff.LANG1, astDiff.LANG2)) {
+                    BodyMapperMatcher.handleLanguageMigration(lastStepMappingStore, srcExp, dstExp, astDiff.LANG1, astDiff.LANG2);
                 }
                 if (srcExp == null || dstExp == null) continue;
                 if (needToOverride(input, srcExp, dstExp))

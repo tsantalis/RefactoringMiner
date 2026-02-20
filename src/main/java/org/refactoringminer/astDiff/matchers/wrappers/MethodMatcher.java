@@ -180,7 +180,7 @@ public class MethodMatcher extends BodyMapperMatcher{
         if (matched != null) {
             mappingStore.addMapping(matched.first,matched.second);
         }
-        if(!LANG1.EXPRESSION_STATEMENT.equals(LANG2.EXPRESSION_STATEMENT)) {
+        if(Constants.isCrossLanguage(LANG1, LANG2)) {
             matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.BLOCK,LANG2.FUNCTION_BODY);
             if (matched != null) {
                 mappingStore.addMapping(matched.first,matched.second);

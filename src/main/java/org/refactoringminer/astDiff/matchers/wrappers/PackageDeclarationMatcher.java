@@ -2,6 +2,7 @@ package org.refactoringminer.astDiff.matchers.wrappers;
 
 import com.github.gumtreediff.tree.Tree;
 import org.refactoringminer.astDiff.utils.Constants;
+import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
 
@@ -19,8 +20,19 @@ public class PackageDeclarationMatcher implements TreeMatcher {
     public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
         Tree srcPackageDeclaration = findPackageDeclaration(srcTree, LANG1);
         Tree dstPackageDeclaration = findPackageDeclaration(dstTree, LANG2);
-        if (srcPackageDeclaration != null && dstPackageDeclaration != null)
+        if (srcPackageDeclaration != null && dstPackageDeclaration != null) {
             mappingStore.addMappingRecursively(srcPackageDeclaration,dstPackageDeclaration);
+            if(Constants.isCrossLanguage(LANG1, LANG2)) {
+                mappingStore.addMapping(srcPackageDeclaration, dstPackageDeclaration);
+                Tree packageName = TreeUtilFunctions.findChildByType(srcPackageDeclaration, LANG1.QUALIFIED_NAME);
+                if(packageName == null)
+                    packageName = TreeUtilFunctions.findChildByType(srcPackageDeclaration, LANG1.SIMPLE_NAME);
+                Tree identifier = TreeUtilFunctions.findChildByType(dstPackageDeclaration, LANG1.IMPORT_IDENTIFIER);
+                if(packageName != null && identifier != null) {
+                    mappingStore.addMapping(packageName, identifier);
+                }
+            }
+        }
     }
     private Tree findPackageDeclaration(Tree inputTree, Constants LANG) {
         String searchingType = LANG.PACKAGE_DECLARATION;

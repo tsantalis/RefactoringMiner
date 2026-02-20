@@ -206,7 +206,9 @@ public abstract class AbstractMenuBar implements Renderable {
     public abstract String getLegendValue() ;
 
     public String getShortcutDescriptions() {
-        return "<b>Alt + q</b> quit<br><b>Alt + l</b> list<br>"
-                + "<b>Alt + t</b> top<br><b>Alt + b</b> bottom <br>";
+        String OS = System.getProperty("os.name");
+        String alt = OS.contains("Mac") ? "⌥" : "Alt";
+        return "<b>" + alt + " + q</b> quit<br><b>" + alt + " + l</b> list<br>"
+             + "<b>" + alt + " + t</b> top<br><b>" + alt + " + b</b> bottom <br>";
     }
 }

@@ -202,10 +202,17 @@ public class JavaToKotlinMigration {
 
     public static void handleAnnotationMapping(ExtendedMultiMappingStore mappingStore, Tree srcClassAnnotationTree, Tree dstClassAnnotationTree, Constants LANG1, Constants LANG2) {
         if(srcClassAnnotationTree != null && dstClassAnnotationTree != null) {
-            Tree classModifiers2 = TreeUtilFunctions.findChildByType(dstClassAnnotationTree, LANG2.CLASS_MODIFIER);
+            mappingStore.addMapping(srcClassAnnotationTree, dstClassAnnotationTree);
+            Tree classModifiers2 = dstClassAnnotationTree.getType().name.equals(LANG2.CLASS_MODIFIER) ? dstClassAnnotationTree : TreeUtilFunctions.findChildByType(dstClassAnnotationTree, LANG2.CLASS_MODIFIER);
             if(classModifiers2 != null) {
                 Tree typeName1 = TreeUtilFunctions.findChildByType(srcClassAnnotationTree, LANG1.SIMPLE_NAME);
                 Tree userType2 = TreeUtilFunctions.findChildByType(classModifiers2, LANG2.USER_TYPE);
+                if(userType2 == null) {
+                    Tree constuctorInvocation2 = TreeUtilFunctions.findChildByType(classModifiers2, LANG2.CONSTRUCTOR_INVOCATION);
+                    if(constuctorInvocation2 != null) {
+                        userType2 = TreeUtilFunctions.findChildByType(constuctorInvocation2, LANG2.USER_TYPE);
+                    }
+                }
                 if(typeName1 != null && userType2 != null && userType2.getChildren().size() > 0) {
                     mappingStore.addMapping(typeName1, userType2.getChild(0));
                 }

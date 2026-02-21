@@ -183,6 +183,7 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 		if (getClass() != obj.getClass())
 			return false;
 		UMLAnnotation other = (UMLAnnotation) obj;
+		boolean equalArguments = this.argumentEquals(other);
 		if (memberValuePairs == null) {
 			if (other.memberValuePairs != null)
 				return false;
@@ -191,7 +192,7 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 		if (arguments == null) {
 			if (other.arguments != null)
 				return false;
-		} else if (!this.argumentEquals(other))
+		} else if (!equalArguments)
 			return false;
 		if (typeName == null) {
 			if (other.typeName != null)
@@ -199,21 +200,29 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 		} else if (!typeName.equals(other.typeName))
 			return false;
 		if (value == null) {
-			if (other.value != null)
+			if (other.value != null && !equalArguments)
 				return false;
 		} else {
-			if (other.value == null)
+			if (other.value == null && !equalArguments)
 				return false;
-			if (!value.getExpression().equals(other.value.getExpression()))
+			if (!equalArguments && !value.getExpression().equals(other.value.getExpression()))
 				return false;
 		}
 		return true;
 	}
 
-	private boolean argumentEquals(UMLAnnotation other) {
+	public boolean argumentEquals(UMLAnnotation other) {
 		int thisSize = this.arguments.size();
 		int otherSize = other.arguments.size();
 		if(thisSize != otherSize) {
+			if(this.arguments.size() == 1 && other.arguments.size() == 0 && other.value != null) {
+				if(this.arguments.get(0).getString().equals(other.value.getString()))
+					return true;
+			}
+			else if(other.arguments.size() == 1 && this.arguments.size() == 0 && this.value != null) {
+				if(other.arguments.get(0).getString().equals(this.value.getString()))
+					return true;
+			}
 			return false;
 		}
 		for(int i=0; i<this.arguments.size(); i++) {

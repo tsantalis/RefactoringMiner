@@ -36,6 +36,7 @@ public class UMLAnnotationDiff {
 		if(!removedAnnotation.getTypeName().equals(addedAnnotation.getTypeName())) {
 			typeNameChanged = true;
 		}
+		boolean equalArguments = removedAnnotation.argumentEquals(addedAnnotation);
 		AbstractExpression value1 = removedAnnotation.getValue();
 		AbstractExpression value2 = addedAnnotation.getValue();
 		if(value1 != null && value2 != null) {
@@ -43,10 +44,10 @@ public class UMLAnnotationDiff {
 				valueChanged = true;
 			}
 		}
-		else if(value1 != null && value2 == null) {
+		else if(value1 != null && value2 == null && !equalArguments) {
 			valueRemoved = true;
 		}
-		else if(value1 == null && value2 != null) {
+		else if(value1 == null && value2 != null && !equalArguments) {
 			valueAdded  = true;
 		}
 		Map<String, AbstractExpression> memberValuePairs1 = removedAnnotation.getMemberValuePairs();

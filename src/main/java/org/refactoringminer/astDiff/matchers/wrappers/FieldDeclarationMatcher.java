@@ -112,6 +112,20 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                         mappingStore.addMapping(type1.getChild(0),type2.getChild(0));
                     }
                 }
+                if(srcUMLAttribute.getAnnotations().size() > 0 && dstUMLAttribute.getAnnotations().size() > 0) {
+                    Tree annotation1 = TreeUtilFunctions.findChildByType(srcFieldDeclaration, LANG1.MARKER_ANNOTATION);
+                    Tree modifiers2 = TreeUtilFunctions.findChildByType(dstFieldDeclaration, LANG2.MODIFIERS);
+                    if(annotation1 != null && modifiers2 != null) {
+                        Tree classModifiers2 = TreeUtilFunctions.findChildByType(modifiers2, LANG2.CLASS_MODIFIER);
+                        if(classModifiers2 != null) {
+                            Tree typeName1 = TreeUtilFunctions.findChildByType(annotation1, LANG1.SIMPLE_NAME);
+                            Tree userType2 = TreeUtilFunctions.findChildByType(classModifiers2, LANG2.USER_TYPE);
+                            if(typeName1 != null && userType2 != null && userType2.getChildren().size() > 0) {
+                                mappingStore.addMapping(typeName1, userType2.getChild(0));
+                            }
+                        }
+                    }
+                }
             }
         }
         mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);

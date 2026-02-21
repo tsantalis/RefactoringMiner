@@ -277,4 +277,5 @@ public class Constants {
     public final String NAVIGATION_SUFFIX = "navigation_suffix";
     public final String INTEGER_LITERAL = "integer_literal";
     public final String VARIABLE_DECLARATION = "variable_declaration";
+    public final String CLASS_MODIFIER = "class_modifier";
 }

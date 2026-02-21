@@ -48,12 +48,7 @@ public class ImportMatcher implements TreeMatcher {
                 if (srcImportStatement != null && dstImportStatement != null) {
                     mappingStore.addMappingRecursively(srcImportStatement, dstImportStatement);
                     if(Constants.isCrossLanguage(LANG1, LANG2)) {
-                        mappingStore.addMapping(srcImportStatement, dstImportStatement);
-                        Tree qualifiedName = TreeUtilFunctions.findChildByType(srcImportStatement, LANG1.QUALIFIED_NAME);
-                        Tree identifier = TreeUtilFunctions.findChildByType(dstImportStatement, LANG1.IMPORT_IDENTIFIER);
-                        if(qualifiedName != null && identifier != null) {
-                        	mappingStore.addMapping(qualifiedName, identifier);
-                        }
+                        JavaToKotlinMigration.handleImportMapping(mappingStore, srcImportStatement, dstImportStatement, LANG1, LANG2);
                     }
                     handleParent(mappingStore, srcImportStatement, dstImportStatement);
                 }

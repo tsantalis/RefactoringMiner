@@ -181,13 +181,7 @@ public class MethodMatcher extends BodyMapperMatcher{
             mappingStore.addMapping(matched.first,matched.second);
         }
         if(Constants.isCrossLanguage(LANG1, LANG2)) {
-            matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.BLOCK,LANG2.FUNCTION_BODY);
-            if (matched != null) {
-                mappingStore.addMapping(matched.first,matched.second);
-                if(matched.second.getChildren().size() > 0 && matched.second.getChild(0).getType().name.equals(LANG2.STATEMENTS)) {
-                    mappingStore.addMapping(matched.first,matched.second.getChild(0));
-                }
-            }
+            JavaToKotlinMigration.handleFunctionBodyMapping(mappingStore, srcOperationNode, dstOperationNode, LANG1, LANG2);
         }
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.FUNCTION_KEYWORD,LANG2.FUNCTION_KEYWORD);
         if (matched != null) {
@@ -235,9 +229,7 @@ public class MethodMatcher extends BodyMapperMatcher{
             Tree tree2 = TreeUtilFunctions.findChildByTypeAndLabel(dstOperationNode, LANG2.MODIFIER, v2, LANG2);
             if (tree1 != null && tree2 != null) {
                 if(Constants.isCrossLanguage(LANG1, LANG2)) {
-                    Tree modifier2 = TreeUtilFunctions.findChildByType(tree2, LANG2.MODIFIER);
-                    if(modifier2 != null)
-                        mappingStore.addMapping(tree1, modifier2);
+                    JavaToKotlinMigration.handleModifierMapping(mappingStore, tree1, tree2, LANG1, LANG2);
                 }
                 else {
                     mappingStore.addMappingRecursively(tree1,tree2);
@@ -264,13 +256,16 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (srcClassAnnotationTree == null || dstClassAnnotationTree == null) continue;
             if (srcClassAnnotationTree.isIsoStructuralTo(dstClassAnnotationTree))
                 mappingStore.addMappingRecursively(srcClassAnnotationTree, dstClassAnnotationTree);
+            else if(Constants.isCrossLanguage(LANG1, LANG2)) {
+                JavaToKotlinMigration.handleAnnotationMapping(mappingStore, srcClassAnnotationTree, dstClassAnnotationTree, LANG1, LANG2);
+            }
             else {
                 new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcClassAnnotationTree, dstClassAnnotationTree, mappingStore);
             }
             if(umlOperationDiff.getAnnotationListDiff().getCommonAnnotations().size() > 1 &&
-            		srcClassAnnotationTree.getParent() != null && srcClassAnnotationTree.getParent().getType().name.equals(LANG1.MODIFIERS) &&
-            		dstClassAnnotationTree.getParent() != null && dstClassAnnotationTree.getParent().getType().name.equals(LANG2.MODIFIERS)) {
-            	mappingStore.addMapping(srcClassAnnotationTree.getParent(), dstClassAnnotationTree.getParent());
+                    srcClassAnnotationTree.getParent() != null && srcClassAnnotationTree.getParent().getType().name.equals(LANG1.MODIFIERS) &&
+                    dstClassAnnotationTree.getParent() != null && dstClassAnnotationTree.getParent().getType().name.equals(LANG2.MODIFIERS)) {
+                mappingStore.addMapping(srcClassAnnotationTree.getParent(), dstClassAnnotationTree.getParent());
             }
         }
         Set<org.apache.commons.lang3.tuple.Pair<UMLType, UMLType>> commonExceptionTypes = umlOperationDiff.getCommonExceptionTypes();
@@ -305,14 +300,7 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (srcNode.isIsoStructuralTo(dstNode))
                 mappingStore.addMappingRecursively(srcNode,dstNode);
             else if(Constants.isCrossLanguage(LANG1, LANG2)) {
-                Tree type1 = srcNode;
-                Tree type2 = dstNode.getType().name.equals(LANG2.USER_TYPE) ? dstNode : TreeUtilFunctions.findChildByType(dstNode, LANG2.USER_TYPE);
-                if(type1 != null && type2 != null) {
-                    mappingStore.addMapping(type1, type2);
-                    if(type1.getChildren().size() > 0 && type2.getChildren().size() > 0) {
-                        mappingStore.addMapping(type1.getChild(0),type2.getChild(0));
-                    }
-                }
+                JavaToKotlinMigration.handleTypeMapping(mappingStore, srcNode, dstNode, LANG1, LANG2);
             }
             else {
                 new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);
@@ -358,20 +346,7 @@ public class MethodMatcher extends BodyMapperMatcher{
                 if (TreeUtilFunctions.isIsomorphicTo(rightTree, leftTree))
                     mappingStore.addMappingRecursively(leftTree, rightTree);
                 else if(Constants.isCrossLanguage(LANG1, LANG2)) {
-                    mappingStore.addMapping(leftTree, rightTree);
-                    Tree type1 = TreeUtilFunctions.findChildByType(leftTree, LANG1.SIMPLE_TYPE);
-                    Tree type2 = TreeUtilFunctions.findChildByType(rightTree, LANG2.USER_TYPE);
-                    if(type1 != null && type2 != null) {
-                        mappingStore.addMapping(type1, type2);
-                        if(type1.getChildren().size() > 0 && type2.getChildren().size() > 0) {
-                            mappingStore.addMapping(type1.getChild(0),type2.getChild(0));
-                        }
-                    }
-                    Tree name1 = TreeUtilFunctions.findChildByType(leftTree, LANG1.SIMPLE_NAME);
-                    Tree name2 = TreeUtilFunctions.findChildByType(rightTree, LANG2.SIMPLE_NAME);
-                    if(name1 != null && name2 != null) {
-                        mappingStore.addMapping(name1, name2);
-                    }
+                    JavaToKotlinMigration.handleParameterMapping(mappingStore, leftTree, rightTree, LANG1, LANG2);
                 }
                 else {
                     new LeafMatcher(LANG1, LANG2).match(leftTree,rightTree,mappingStore);

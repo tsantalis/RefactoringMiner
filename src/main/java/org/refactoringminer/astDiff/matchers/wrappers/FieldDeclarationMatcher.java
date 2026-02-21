@@ -97,36 +97,7 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             mappingStore.addMappingRecursively(srcFieldDeclaration,dstFieldDeclaration);
         }
         else if(Constants.isCrossLanguage(LANG1, LANG2)) {
-            Tree variableDeclaration2 = TreeUtilFunctions.findChildByType(dstAttr, LANG2.VARIABLE_DECLARATION);
-            if(variableDeclaration2 != null) {
-                Tree name1 = TreeUtilFunctions.findChildByType(srcAttr, LANG1.SIMPLE_NAME);
-                Tree name2 = TreeUtilFunctions.findChildByType(variableDeclaration2, LANG2.SIMPLE_NAME);
-                if(name1 != null && name2 != null) {
-                    mappingStore.addMapping(name1, name2);
-                }
-                Tree type1 = TreeUtilFunctions.findChildByType(srcFieldDeclaration, LANG1.SIMPLE_TYPE);
-                Tree type2 = TreeUtilFunctions.findChildByType(variableDeclaration2, LANG2.USER_TYPE);
-                if(type1 != null && type2 != null) {
-                    mappingStore.addMapping(type1, type2);
-                    if(type1.getChildren().size() > 0 && type2.getChildren().size() > 0) {
-                        mappingStore.addMapping(type1.getChild(0),type2.getChild(0));
-                    }
-                }
-                if(srcUMLAttribute.getAnnotations().size() > 0 && dstUMLAttribute.getAnnotations().size() > 0) {
-                    Tree annotation1 = TreeUtilFunctions.findChildByType(srcFieldDeclaration, LANG1.MARKER_ANNOTATION);
-                    Tree modifiers2 = TreeUtilFunctions.findChildByType(dstFieldDeclaration, LANG2.MODIFIERS);
-                    if(annotation1 != null && modifiers2 != null) {
-                        Tree classModifiers2 = TreeUtilFunctions.findChildByType(modifiers2, LANG2.CLASS_MODIFIER);
-                        if(classModifiers2 != null) {
-                            Tree typeName1 = TreeUtilFunctions.findChildByType(annotation1, LANG1.SIMPLE_NAME);
-                            Tree userType2 = TreeUtilFunctions.findChildByType(classModifiers2, LANG2.USER_TYPE);
-                            if(typeName1 != null && userType2 != null && userType2.getChildren().size() > 0) {
-                                mappingStore.addMapping(typeName1, userType2.getChild(0));
-                            }
-                        }
-                    }
-                }
-            }
+            JavaToKotlinMigration.handleFieldDeclarationMapping(mappingStore, srcAttr, dstAttr, srcFieldDeclaration, dstFieldDeclaration, LANG1, LANG2);
         }
         mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
         matchFieldAllModifiers(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute,dstUMLAttribute,mappingStore);
@@ -199,9 +170,7 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         }
         if (srcModifierTree != null && dstModifierTree != null) {
             if(Constants.isCrossLanguage(LANG1, LANG2)) {
-                Tree modifier2 = TreeUtilFunctions.findChildByType(dstModifierTree, LANG2.MODIFIER);
-                if(modifier2 != null)
-                    mappingStore.addMapping(srcModifierTree, modifier2);
+                JavaToKotlinMigration.handleModifierMapping(mappingStore, srcModifierTree, dstModifierTree, LANG1, LANG2);
             }
             else {
                 mappingStore.addMapping(srcModifierTree,dstModifierTree);

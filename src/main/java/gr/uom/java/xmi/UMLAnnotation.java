@@ -108,6 +108,10 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 		return memberValuePairs;
 	}
 
+	public List<AbstractExpression> getArguments() {
+		return arguments;
+	}
+
 	public boolean isMarkerAnnotation() {
 		return value == null && memberValuePairs.isEmpty() && arguments.isEmpty();
 	}

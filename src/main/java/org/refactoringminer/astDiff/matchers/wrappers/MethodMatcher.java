@@ -234,7 +234,14 @@ public class MethodMatcher extends BodyMapperMatcher{
             Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcOperationNode, LANG1.MODIFIER, v1, LANG1);
             Tree tree2 = TreeUtilFunctions.findChildByTypeAndLabel(dstOperationNode, LANG2.MODIFIER, v2, LANG2);
             if (tree1 != null && tree2 != null) {
-                mappingStore.addMappingRecursively(tree1,tree2);
+                if(Constants.isCrossLanguage(LANG1, LANG2)) {
+                    Tree modifier2 = TreeUtilFunctions.findChildByType(tree2, LANG2.MODIFIER);
+                    if(modifier2 != null)
+                        mappingStore.addMapping(tree1, modifier2);
+                }
+                else {
+                    mappingStore.addMappingRecursively(tree1,tree2);
+                }
             }
         }
     }

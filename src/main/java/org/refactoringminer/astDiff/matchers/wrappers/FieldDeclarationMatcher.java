@@ -94,7 +94,25 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         }
 
         if(srcFieldDeclaration != null && dstFieldDeclaration != null && PathFileUtils.isKotlinFile(srcUMLAttribute.getLocationInfo().getFilePath())) {
-        	mappingStore.addMappingRecursively(srcFieldDeclaration,dstFieldDeclaration);
+            mappingStore.addMappingRecursively(srcFieldDeclaration,dstFieldDeclaration);
+        }
+        else if(Constants.isCrossLanguage(LANG1, LANG2)) {
+            Tree variableDeclaration2 = TreeUtilFunctions.findChildByType(dstAttr, LANG2.VARIABLE_DECLARATION);
+            if(variableDeclaration2 != null) {
+                Tree name1 = TreeUtilFunctions.findChildByType(srcAttr, LANG1.SIMPLE_NAME);
+                Tree name2 = TreeUtilFunctions.findChildByType(variableDeclaration2, LANG2.SIMPLE_NAME);
+                if(name1 != null && name2 != null) {
+                    mappingStore.addMapping(name1, name2);
+                }
+                Tree type1 = TreeUtilFunctions.findChildByType(srcFieldDeclaration, LANG1.SIMPLE_TYPE);
+                Tree type2 = TreeUtilFunctions.findChildByType(variableDeclaration2, LANG2.USER_TYPE);
+                if(type1 != null && type2 != null) {
+                    mappingStore.addMapping(type1, type2);
+                    if(type1.getChildren().size() > 0 && type2.getChildren().size() > 0) {
+                        mappingStore.addMapping(type1.getChild(0),type2.getChild(0));
+                    }
+                }
+            }
         }
         mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
         matchFieldAllModifiers(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute,dstUMLAttribute,mappingStore);
@@ -108,22 +126,26 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                 return;
             }
         }
-        Tree srcType = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getType().getLocationInfo(),LANG1);
-        Tree dstType = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getType().getLocationInfo(),LANG2);
+        if(!Constants.isCrossLanguage(LANG1, LANG2)) {
+            Tree srcType = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getType().getLocationInfo(),LANG1);
+            Tree dstType = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getType().getLocationInfo(),LANG2);
 
-        if (srcType != null && dstType != null && srcType.isIsoStructuralTo(dstType)) mappingStore.addMappingRecursively(srcType,dstType);
-        else {
-            new LeafMatcher(LANG1, LANG2).match(srcType,dstType,mappingStore);
+            if (srcType != null && dstType != null && srcType.isIsoStructuralTo(dstType)) {
+                mappingStore.addMappingRecursively(srcType,dstType);
+            }
+            else {
+                new LeafMatcher(LANG1, LANG2).match(srcType,dstType,mappingStore);
+            }
+            Tree srcVarDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getVariableDeclaration().getLocationInfo(),LANG1);
+            Tree dstVarDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getVariableDeclaration().getLocationInfo(),LANG2);
+            mappingStore.addMapping(srcVarDeclaration,dstVarDeclaration);
+            new LeafMatcher(LANG1, LANG2).match(srcVarDeclaration,dstVarDeclaration,mappingStore);
+            new JavaDocMatcher(optimizationData, srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc(), umlJavadocDiff, LANG1, LANG2)
+                    .match(srcTree, dstTree, mappingStore);
+            if (srcVarDeclaration != null && dstVarDeclaration != null)
+                if (!srcVarDeclaration.getChildren().isEmpty() && !dstVarDeclaration.getChildren().isEmpty())
+                    mappingStore.addMapping(srcVarDeclaration.getChild(0),dstVarDeclaration.getChild(0));
         }
-        Tree srcVarDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getVariableDeclaration().getLocationInfo(),LANG1);
-        Tree dstVarDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getVariableDeclaration().getLocationInfo(),LANG2);
-        mappingStore.addMapping(srcVarDeclaration,dstVarDeclaration);
-        new LeafMatcher(LANG1, LANG2).match(srcVarDeclaration,dstVarDeclaration,mappingStore);
-        new JavaDocMatcher(optimizationData, srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc(), umlJavadocDiff, LANG1, LANG2)
-                .match(srcTree, dstTree, mappingStore);
-        if (srcVarDeclaration != null && dstVarDeclaration != null)
-            if (!srcVarDeclaration.getChildren().isEmpty() && !dstVarDeclaration.getChildren().isEmpty())
-                mappingStore.addMapping(srcVarDeclaration.getChild(0),dstVarDeclaration.getChild(0));
     }
 
     private void matchFieldAllModifiers(Tree srcFieldDeclaration, Tree dstFieldDeclaration, UMLAttribute srcUMLAttribute, UMLAttribute dstUMLAttribute, ExtendedMultiMappingStore mappingStore) {
@@ -154,9 +176,23 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
 
     private void matchModifiersForField(Tree srcFieldDeclaration, Tree dstFieldDeclaration, String srcModifier, String dstModifier, ExtendedMultiMappingStore mappingStore) {
         Tree srcModifierTree = findAttributeModifierByLabel(srcFieldDeclaration, srcModifier, LANG1);
+        if(srcModifierTree == null) {
+            srcModifierTree = TreeUtilFunctions.findChildByTypeAndLabel(srcFieldDeclaration, LANG1.MODIFIER, srcModifier, LANG1);
+        }
         Tree dstModifierTree = findAttributeModifierByLabel(dstFieldDeclaration, dstModifier, LANG2);
-        if (srcModifierTree != null && dstModifierTree != null)
-            mappingStore.addMapping(srcModifierTree,dstModifierTree);
+        if(dstModifierTree == null) {
+            dstModifierTree = TreeUtilFunctions.findChildByTypeAndLabel(dstFieldDeclaration, LANG2.MODIFIER, dstModifier, LANG2);
+        }
+        if (srcModifierTree != null && dstModifierTree != null) {
+            if(Constants.isCrossLanguage(LANG1, LANG2)) {
+                Tree modifier2 = TreeUtilFunctions.findChildByType(dstModifierTree, LANG2.MODIFIER);
+                if(modifier2 != null)
+                    mappingStore.addMapping(srcModifierTree, modifier2);
+            }
+            else {
+                mappingStore.addMapping(srcModifierTree,dstModifierTree);
+            }
+        }
     }
 
     private void matchModifierForField(Tree srcFieldDeclaration, Tree dstFieldDeclaration, String modifier, ExtendedMultiMappingStore mappingStore) {

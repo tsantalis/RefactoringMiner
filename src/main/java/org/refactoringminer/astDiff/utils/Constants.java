@@ -178,6 +178,7 @@ public class Constants {
     public final String THROW_STATEMENT = "ThrowStatement";
     public final String WHILE_STATEMENT;
     public final String CONDITIONAL_EXPRESSION = "ConditionalExpression";
+    public final String CAST_EXPRESSION = "CastExpression";
 
     public final String INFIX_EXPRESSION = "InfixExpression";
     public final String INFIX_EXPRESSION_OPERATOR = "INFIX_EXPRESSION_OPERATOR";

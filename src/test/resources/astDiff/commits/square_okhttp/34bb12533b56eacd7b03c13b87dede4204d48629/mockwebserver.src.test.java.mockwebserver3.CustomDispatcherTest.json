@@ -1000,6 +1000,17 @@
   "firstEndPos" : 1803,
   "secondEndPos" : 1620
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "conn",
+  "secondLabel" : "conn",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 1755,
+  "secondPos" : 1572,
+  "firstEndPos" : 1759,
+  "secondEndPos" : 1576
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -1020,6 +1031,28 @@
   "firstPos" : 1782,
   "secondPos" : 1582,
   "firstEndPos" : 1785,
+  "secondEndPos" : 1597
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "url",
+  "secondLabel" : "url",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 1782,
+  "secondPos" : 1579,
+  "firstEndPos" : 1785,
+  "secondEndPos" : 1582
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "openConnection",
+  "secondLabel" : "openConnection",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 1786,
+  "secondPos" : 1583,
+  "firstEndPos" : 1800,
   "secondEndPos" : 1597
 }, {
   "firstType" : "ExpressionStatement",
@@ -3079,6 +3112,17 @@
   "firstEndPos" : 3528,
   "secondEndPos" : 3162
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "conn",
+  "secondLabel" : "conn",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "directly_assignable_expression",
+  "firstPos" : 3480,
+  "secondPos" : 3114,
+  "firstEndPos" : 3484,
+  "secondEndPos" : 3118
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -3099,6 +3143,28 @@
   "firstPos" : 3507,
   "secondPos" : 3124,
   "firstEndPos" : 3510,
+  "secondEndPos" : 3139
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "url",
+  "secondLabel" : "url",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 3507,
+  "secondPos" : 3121,
+  "firstEndPos" : 3510,
+  "secondEndPos" : 3124
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "openConnection",
+  "secondLabel" : "openConnection",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 3511,
+  "secondPos" : 3125,
+  "firstEndPos" : 3525,
   "secondEndPos" : 3139
 }, {
   "firstType" : "ExpressionStatement",

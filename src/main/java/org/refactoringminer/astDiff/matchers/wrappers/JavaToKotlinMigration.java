@@ -31,6 +31,7 @@ public class JavaToKotlinMigration {
             children2.remove(children2.size()-1);
         }
         List<Tree> types1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_TYPE);
+        List<Tree> castExpressions1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.CAST_EXPRESSION);
         List<Tree> qualifiedNames1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.QUALIFIED_NAME);
         if(types1.size() > 0 && children1.size() != children2.size()) {
             List<Tree> toBeRemoved2 = new ArrayList<>();
@@ -51,12 +52,25 @@ public class JavaToKotlinMigration {
             for(Tree qualified1 : qualifiedNames1) {
                 String qualifiedType = qualified1.getLabel();
                 for(Tree child2 : children2) {
-                    if(qualifiedType.contains(child2.getLabel())) {
+                    if(qualifiedType.contains(child2.getLabel() + ".") || qualifiedType.contains("." + child2.getLabel())) {
                         toBeRemoved2.add(child2);
                     }
                 }
             }
             children2.removeAll(toBeRemoved2);
+        }
+        if(castExpressions1.size() > 0 && children1.size() != children2.size()) {
+            //remove from children1
+            List<Tree> toBeRemoved1 = new ArrayList<>();
+            if(castExpressions1.get(0).getChildren().size() > 0) {
+                Tree simpleType = castExpressions1.get(0).getChild(0);
+                for(Tree child1 : children1) {
+                    if(simpleType.getChildren().contains(child1)) {
+                        toBeRemoved1.add(child1);
+                    }
+                }
+            }
+            children1.removeAll(toBeRemoved1);
         }
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {

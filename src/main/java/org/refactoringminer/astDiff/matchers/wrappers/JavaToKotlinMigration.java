@@ -13,6 +13,15 @@ import com.github.gumtreediff.utils.Pair;
 
 public class JavaToKotlinMigration {
 
+    public static void handleCompositeMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
+        if(srcStatementNode.getType().name.equals(LANG1.CATCH_CLAUSE) && dstStatementNode.getType().name.equals(LANG2.CATCH_CLAUSE)) {
+            Tree singleVariableDeclaration1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.SINGLE_VARIABLE_DECLARATION);
+            if(singleVariableDeclaration1 != null) {
+                handleParameterMapping(mappingStore, singleVariableDeclaration1, dstStatementNode, LANG1, LANG2);
+            }
+        }
+    }
+
     public static void handleLeafMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
         /*
         Map<Tree, Tree> cpyToSrc = new HashMap<>();
@@ -255,7 +264,8 @@ public class JavaToKotlinMigration {
     }
 
     public static void handleParameterMapping(ExtendedMultiMappingStore mappingStore, Tree leftTree, Tree rightTree, Constants LANG1, Constants LANG2) {
-        mappingStore.addMapping(leftTree, rightTree);
+        if(leftTree.getType().name.equals(LANG1.SINGLE_VARIABLE_DECLARATION) && rightTree.getType().name.equals(LANG2.PARAMETER))
+            mappingStore.addMapping(leftTree, rightTree);
         Tree type1 = TreeUtilFunctions.findChildByType(leftTree, LANG1.SIMPLE_TYPE);
         Tree type2 = TreeUtilFunctions.findChildByType(rightTree, LANG2.USER_TYPE);
         if(type1 != null && type2 != null) {

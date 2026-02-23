@@ -5072,25 +5072,14 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
-  "firstLabel" : "BufferedReader",
-  "secondLabel" : "reader",
-  "firstParentType" : "SimpleType",
-  "secondParentType" : "variable_declaration",
-  "firstPos" : 5842,
-  "secondPos" : 4858,
-  "firstEndPos" : 5856,
-  "secondEndPos" : 4864
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "simple_identifier",
   "firstLabel" : "reader",
-  "secondLabel" : "BufferedReader",
+  "secondLabel" : "reader",
   "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "call_expression",
+  "secondParentType" : "variable_declaration",
   "firstPos" : 5857,
-  "secondPos" : 4867,
+  "secondPos" : 4858,
   "firstEndPos" : 5863,
-  "secondEndPos" : 4881
+  "secondEndPos" : 4864
 }, {
   "firstType" : "ClassInstanceCreation",
   "secondType" : "call_expression",
@@ -5106,13 +5095,13 @@
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "BufferedReader",
-  "secondLabel" : "InputStreamReader",
+  "secondLabel" : "BufferedReader",
   "firstParentType" : "SimpleType",
   "secondParentType" : "call_expression",
   "firstPos" : 5870,
-  "secondPos" : 4882,
+  "secondPos" : 4867,
   "firstEndPos" : 5884,
-  "secondEndPos" : 4899
+  "secondEndPos" : 4881
 }, {
   "firstType" : "ClassInstanceCreation",
   "secondType" : "call_expression",
@@ -5124,6 +5113,17 @@
   "secondPos" : 4882,
   "firstEndPos" : 5917,
   "secondEndPos" : 4930
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "InputStreamReader",
+  "secondLabel" : "InputStreamReader",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "call_expression",
+  "firstPos" : 5889,
+  "secondPos" : 4882,
+  "firstEndPos" : 5906,
+  "secondEndPos" : 4899
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
@@ -6436,35 +6436,35 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
-  "firstLabel" : "BufferedReader",
+  "firstLabel" : "reader",
   "secondLabel" : "reader",
-  "firstParentType" : "SimpleType",
+  "firstParentType" : "VariableDeclarationFragment",
   "secondParentType" : "variable_declaration",
-  "firstPos" : 6867,
+  "firstPos" : 6882,
   "secondPos" : 5749,
-  "firstEndPos" : 6881,
+  "firstEndPos" : 6888,
   "secondEndPos" : 5755
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
-  "firstLabel" : "reader",
+  "firstLabel" : "BufferedReader",
   "secondLabel" : "BufferedReader",
-  "firstParentType" : "VariableDeclarationFragment",
+  "firstParentType" : "SimpleType",
   "secondParentType" : "call_expression",
-  "firstPos" : 6882,
+  "firstPos" : 6895,
   "secondPos" : 5758,
-  "firstEndPos" : 6888,
+  "firstEndPos" : 6909,
   "secondEndPos" : 5772
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
-  "firstLabel" : "BufferedReader",
+  "firstLabel" : "InputStreamReader",
   "secondLabel" : "InputStreamReader",
   "firstParentType" : "SimpleType",
   "secondParentType" : "call_expression",
-  "firstPos" : 6895,
+  "firstPos" : 6914,
   "secondPos" : 5773,
-  "firstEndPos" : 6909,
+  "firstEndPos" : 6931,
   "secondEndPos" : 5790
 }, {
   "firstType" : "SimpleName",
@@ -7624,35 +7624,35 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
-  "firstLabel" : "BufferedReader",
+  "firstLabel" : "reader",
   "secondLabel" : "reader",
-  "firstParentType" : "SimpleType",
+  "firstParentType" : "VariableDeclarationFragment",
   "secondParentType" : "variable_declaration",
-  "firstPos" : 7854,
+  "firstPos" : 7869,
   "secondPos" : 6599,
-  "firstEndPos" : 7868,
+  "firstEndPos" : 7875,
   "secondEndPos" : 6605
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
-  "firstLabel" : "reader",
+  "firstLabel" : "BufferedReader",
   "secondLabel" : "BufferedReader",
-  "firstParentType" : "VariableDeclarationFragment",
+  "firstParentType" : "SimpleType",
   "secondParentType" : "call_expression",
-  "firstPos" : 7869,
+  "firstPos" : 7882,
   "secondPos" : 6608,
-  "firstEndPos" : 7875,
+  "firstEndPos" : 7896,
   "secondEndPos" : 6622
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
-  "firstLabel" : "BufferedReader",
+  "firstLabel" : "InputStreamReader",
   "secondLabel" : "InputStreamReader",
   "firstParentType" : "SimpleType",
   "secondParentType" : "call_expression",
-  "firstPos" : 7882,
+  "firstPos" : 7901,
   "secondPos" : 6623,
-  "firstEndPos" : 7896,
+  "firstEndPos" : 7918,
   "secondEndPos" : 6640
 }, {
   "firstType" : "SimpleName",

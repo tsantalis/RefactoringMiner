@@ -46,6 +46,7 @@ public class JavaToKotlinMigration {
         */
         List<Tree> children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_NAME);
         Tree firstChild1 = children1.size() > 0 ? children1.get(0) : null;
+        boolean firstChildIsType1 = firstChild1 != null && firstChild1.getParent().getType().name.equals(LANG1.SIMPLE_TYPE);
         List<Tree> children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.SIMPLE_NAME);
         if(children2.size() > 0 && children2.get(children2.size()-1).getLabel().equals("code")) {
             //remove .code on character literals to convert to int
@@ -93,7 +94,7 @@ public class JavaToKotlinMigration {
             }
             children1.removeAll(toBeRemoved1);
         }
-        if(children1.size() == children2.size()) {
+        if(children1.size() == children2.size() && (!firstChildIsType1 || children1.size() == 1)) {
             for(int i=0; i<children1.size(); i++) {
                 if(children2.get(i).getChildren().size() > 0)
                     mappingStore.addMapping(children1.get(i), children2.get(i).getChild(0));
@@ -101,7 +102,31 @@ public class JavaToKotlinMigration {
                     mappingStore.addMapping(children1.get(i), children2.get(i));
             }
         }
-        else if(children1.size() > children2.size() && firstChild1 != null && firstChild1.getParent().getType().name.equals(LANG1.SIMPLE_TYPE)) {
+        if(children1.size() == children2.size() && firstChildIsType1) {
+        	//this happens when Java side has a type, but Kotlin side has var/val
+            Tree t2 = children2.get(0);
+            int start1 = -1;
+            for(int i=0; i<children1.size(); i++) {
+                if(children1.get(i).getLabel().equals(t2.getLabel())) {
+                    start1 = i;
+                    break;
+                }
+            }
+            if(start1 >= 1) {
+	            for(int i=start1; i<children1.size() && i-1<children2.size(); i++) {
+	                if(children1.get(i).getLabel().equals(children2.get(i-1).getLabel())) {
+						mappingStore.addMapping(children1.get(i), children2.get(i-1));
+	                }
+	            }
+	            //handle last child
+	            Tree lastChild1 = children1.get(children1.size()-1);
+				Tree lastChild2 = children2.get(children2.size()-1);
+				if(lastChild1.getLabel().equals(lastChild2.getLabel())) {
+					mappingStore.addMapping(lastChild1, lastChild2);
+                }
+            }
+        }
+        else if(children1.size() > children2.size() && firstChildIsType1) {
             //this happens when Java side has a type, but Kotlin side has var/val
             Tree t2 = children2.get(0);
             int start1 = -1;

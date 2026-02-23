@@ -107,6 +107,10 @@ public class StringBasedHeuristics {
 					if(diff1.isEmpty() && diff2.equals("!!")) {
 						return true;
 					}
+					if(diff1.isEmpty() && diff2.equals("toU")) {
+						//url() becomes toUrl()
+						return true;
+					}
 					if(diff1.isEmpty() && diff2.equals(".code")) {
 						CompositeReplacement r = new CompositeReplacement(s1, s2, Collections.emptySet(), Collections.emptySet());
 						info.addReplacement(r);
@@ -154,7 +158,33 @@ public class StringBasedHeuristics {
 						expression2 = cast2.substring(0, cast2.indexOf(" as? "));
 					}
 					if(type1 != null && type2 != null && expression1 != null && expression2 != null) {
-						return type1.equals(type2) && expression1.equals(expression2);
+						if(type1.equals(type2)) {
+							if(expression1.equals(expression2)) {
+								return true;
+							}
+							else {
+								commonPrefix = PrefixSuffixUtils.longestCommonPrefix(expression1, expression2);
+								commonSuffix = PrefixSuffixUtils.longestCommonSuffix(expression1, expression2);
+								if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+									int beginIndexS1 = ss1.indexOf(commonPrefix) + commonPrefix.length();
+									int endIndexS1 = ss1.lastIndexOf(commonSuffix);
+									String diff1 = beginIndexS1 > endIndexS1 ? "" :	ss1.substring(beginIndexS1, endIndexS1);
+									int beginIndexS2 = ss2.indexOf(commonPrefix) + commonPrefix.length();
+									int endIndexS2 = ss2.lastIndexOf(commonSuffix);
+									String diff2 = beginIndexS2 > endIndexS2 ? "" :	ss2.substring(beginIndexS2, endIndexS2);
+									if(diff1.isEmpty() && diff2.isBlank() && !diff2.isEmpty()) {
+										return true;
+									}
+									if(diff1.isEmpty() && diff2.equals("!!")) {
+										return true;
+									}
+									if(diff1.isEmpty() && diff2.equals("toU")) {
+										//url() becomes toUrl()
+										return true;
+									}
+								}
+							}
+						}
 					}
 				}
 			}

@@ -19,6 +19,18 @@ public class JavaToKotlinMigration {
             if(singleVariableDeclaration1 != null) {
                 handleParameterMapping(mappingStore, singleVariableDeclaration1, dstStatementNode, LANG1, LANG2);
             }
+            Tree block1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.BLOCK);
+            Tree block2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.STATEMENTS);
+            if(block1 != null && block2 != null) {
+                mappingStore.addMapping(block1, block2);
+            }
+        }
+        else if(srcStatementNode.getType().name.equals(LANG1.TRY_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.TRY_STATEMENT)) {
+            Tree block1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.BLOCK);
+            Tree block2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.STATEMENTS);
+            if(block1 != null && block2 != null) {
+                mappingStore.addMapping(block1, block2);
+            }
         }
     }
 

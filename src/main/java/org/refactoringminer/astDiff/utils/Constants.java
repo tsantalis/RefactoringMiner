@@ -279,4 +279,5 @@ public class Constants {
     public final String INTEGER_LITERAL = "integer_literal";
     public final String VARIABLE_DECLARATION = "variable_declaration";
     public final String CLASS_MODIFIER = "class_modifier";
+    public final String AS_EXPRESSION = "as_expression";
 }

@@ -120,6 +120,9 @@ public class StringBasedHeuristics {
 						//url() becomes toUrl()
 						return true;
 					}
+					if(diff1.equals("asList") && diff2.equals("listOf")) {
+						return true;
+					}
 					if(diff1.isEmpty() && diff2.equals(".code")) {
 						CompositeReplacement r = new CompositeReplacement(s1, s2, Collections.emptySet(), Collections.emptySet());
 						info.addReplacement(r);
@@ -189,6 +192,9 @@ public class StringBasedHeuristics {
 									}
 									if(diff1.isEmpty() && diff2.equals("toU")) {
 										//url() becomes toUrl()
+										return true;
+									}
+									if(diff1.equals("asList") && diff2.equals("listOf")) {
 										return true;
 									}
 								}

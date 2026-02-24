@@ -428,6 +428,39 @@
   "firstEndPos" : 1242,
   "secondEndPos" : 1130
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 1203,
+  "secondPos" : 1096,
+  "firstEndPos" : 1238,
+  "secondEndPos" : 1130
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "mockWebServer",
+  "secondLabel" : "mockWebServer",
+  "firstParentType" : "FieldAccess",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 1208,
+  "secondPos" : 1101,
+  "firstEndPos" : 1221,
+  "secondEndPos" : 1114
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "mockWebServer",
+  "secondLabel" : "mockWebServer",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 1224,
+  "secondPos" : 1117,
+  "firstEndPos" : 1237,
+  "secondEndPos" : 1130
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",

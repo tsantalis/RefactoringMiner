@@ -868,6 +868,50 @@
   "firstEndPos" : 1629,
   "secondEndPos" : 1475
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 1636,
+  "secondPos" : 1481,
+  "firstEndPos" : 1676,
+  "secondEndPos" : 1518
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "mockWebServer",
+  "secondLabel" : "mockWebServer",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "directly_assignable_expression",
+  "firstPos" : 1636,
+  "secondPos" : 1481,
+  "firstEndPos" : 1649,
+  "secondEndPos" : 1494
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "setDispatcher",
+  "secondLabel" : "dispatcher",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 1650,
+  "secondPos" : 1495,
+  "firstEndPos" : 1663,
+  "secondEndPos" : 1505
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "dispatcher",
+  "secondLabel" : "dispatcher",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "assignment",
+  "firstPos" : 1664,
+  "secondPos" : 1508,
+  "firstEndPos" : 1674,
+  "secondEndPos" : 1518
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
   "firstLabel" : "",
@@ -1791,6 +1835,50 @@
   "secondPos" : 2231,
   "firstEndPos" : 2577,
   "secondEndPos" : 2243
+}, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 2600,
+  "secondPos" : 2264,
+  "firstEndPos" : 2640,
+  "secondEndPos" : 2301
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "mockWebServer",
+  "secondLabel" : "mockWebServer",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "directly_assignable_expression",
+  "firstPos" : 2600,
+  "secondPos" : 2264,
+  "firstEndPos" : 2613,
+  "secondEndPos" : 2277
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "setDispatcher",
+  "secondLabel" : "dispatcher",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 2614,
+  "secondPos" : 2278,
+  "firstEndPos" : 2627,
+  "secondEndPos" : 2288
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "dispatcher",
+  "secondLabel" : "dispatcher",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "assignment",
+  "firstPos" : 2628,
+  "secondPos" : 2291,
+  "firstEndPos" : 2638,
+  "secondEndPos" : 2301
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",

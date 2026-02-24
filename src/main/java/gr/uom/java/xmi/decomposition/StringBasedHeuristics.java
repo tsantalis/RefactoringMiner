@@ -66,13 +66,22 @@ public class StringBasedHeuristics {
 			List<VariableDeclaration> variableDeclarations2 = statement2.getVariableDeclarations();
 			String temp = new String(s1);
 			for(AbstractCall call : methodInvocations1) {
-				if(s1.contains(call.toString()) && call.arguments().size() == 0 && !methodInvocations2.contains(call)) {
+				if(s1.contains(call.actualString()) && call.arguments().size() == 0 && !methodInvocations2.contains(call)) {
 					String fieldName = call.getName();
 					if(call.getName().startsWith("get") && call.getName().length() > "get".length()) {
 						fieldName = call.getName().substring(3, call.getName().length());
 						fieldName = Character.toLowerCase(fieldName.charAt(0)) + fieldName.substring(1, fieldName.length());
 					}
 					temp = ReplacementUtil.performReplacement(temp, call.getName() + "()", fieldName);
+				}
+				else if(s1.contains(call.actualString()) && call.arguments.size() == 1 && !methodInvocations2.contains(call) &&
+						call.getName().startsWith("set") && call.getName().length() > "set".length()) {
+					String fieldName = call.getName().substring(3, call.getName().length());
+					fieldName = Character.toLowerCase(fieldName.charAt(0)) + fieldName.substring(1, fieldName.length());
+					temp = ReplacementUtil.performReplacement(temp, call.getName() + "(", fieldName + " = ");
+					if(temp.endsWith(");\n")) {
+						temp = temp.replace(");\n", ";\n");
+					}
 				}
 			}
 			if(temp.endsWith(LANG1.STATEMENT_TERMINATION) && s2.endsWith(LANG2.STATEMENT_TERMINATION)) {

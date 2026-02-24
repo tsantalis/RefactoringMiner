@@ -200,6 +200,12 @@ public class StringBasedHeuristics {
 		if(diff1.equals("=") && diff2.equals(" = ")) {
 			return true;
 		}
+		if(diff1.equals("new") && diff2.isEmpty()) {
+			return true;
+		}
+		if(diff1.toLowerCase().equals(diff2.toLowerCase())) {
+			return true;
+		}
 		if(diff1.isEmpty() && diff2.equals(".code")) {
 			CompositeReplacement r = new CompositeReplacement(s1, s2, Collections.emptySet(), Collections.emptySet());
 			info.addReplacement(r);

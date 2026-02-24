@@ -83,6 +83,14 @@ public class StringBasedHeuristics {
 						temp = temp.replace(");\n", ";\n");
 					}
 				}
+				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 1 && !methodInvocations2.contains(call) &&
+						call.getName().equals("get")) {
+					//Map.get() replaced with square bracket []
+					String argBefore = "(" + call.arguments().get(0) + ")";
+					String argAfter = "[" + call.arguments().get(0) + "]";
+					if(temp.contains(argBefore))
+						temp = temp.replace(argBefore, argAfter);
+				}
 			}
 			if(temp.endsWith(LANG1.STATEMENT_TERMINATION) && s2.endsWith(LANG2.STATEMENT_TERMINATION)) {
 				String ss1 = temp.substring(0, temp.length()-LANG1.STATEMENT_TERMINATION.length());
@@ -110,30 +118,8 @@ public class StringBasedHeuristics {
 					int beginIndexS2 = ss2.indexOf(commonPrefix) + commonPrefix.length();
 					int endIndexS2 = ss2.lastIndexOf(commonSuffix);
 					String diff2 = beginIndexS2 > endIndexS2 ? "" :	ss2.substring(beginIndexS2, endIndexS2);
-					if(diff1.isEmpty() && diff2.isBlank() && !diff2.isEmpty()) {
+					if(compatibleDiffs(s1, s2, info, diff1, diff2)) {
 						return true;
-					}
-					if(diff1.isEmpty() && diff2.equals("!!")) {
-						return true;
-					}
-					if(diff1.isEmpty() && diff2.equals("toU")) {
-						//url() becomes toUrl()
-						return true;
-					}
-					if(diff1.equals("asList") && diff2.equals("listOf")) {
-						return true;
-					}
-					if(diff1.isEmpty() && diff2.equals(".code")) {
-						CompositeReplacement r = new CompositeReplacement(s1, s2, Collections.emptySet(), Collections.emptySet());
-						info.addReplacement(r);
-						return true;
-					}
-					if(diff1.endsWith("()") && diff2.startsWith("!!")) {
-						String d1 = diff1.substring(0, diff1.length()-2);
-						String d2 = diff2.substring(2, diff2.length());
-						if(d1.equals(d2)) {
-							return true;
-						}
 					}
 				}
 				else if(!commonSuffix.isEmpty() && commonSuffix.length() > 1 && commonPrefix.isEmpty()) {
@@ -184,17 +170,7 @@ public class StringBasedHeuristics {
 									int beginIndexS2 = ss2.indexOf(commonPrefix) + commonPrefix.length();
 									int endIndexS2 = ss2.lastIndexOf(commonSuffix);
 									String diff2 = beginIndexS2 > endIndexS2 ? "" :	ss2.substring(beginIndexS2, endIndexS2);
-									if(diff1.isEmpty() && diff2.isBlank() && !diff2.isEmpty()) {
-										return true;
-									}
-									if(diff1.isEmpty() && diff2.equals("!!")) {
-										return true;
-									}
-									if(diff1.isEmpty() && diff2.equals("toU")) {
-										//url() becomes toUrl()
-										return true;
-									}
-									if(diff1.equals("asList") && diff2.equals("listOf")) {
+									if(compatibleDiffs(expression1, expression2, info, diff1, diff2)) {
 										return true;
 									}
 								}
@@ -203,6 +179,41 @@ public class StringBasedHeuristics {
 					}
 				}
 			}
+		}
+		return false;
+	}
+
+	private static boolean compatibleDiffs(String s1, String s2, ReplacementInfo info, String diff1, String diff2) {
+		if(diff1.isEmpty() && diff2.isBlank() && !diff2.isEmpty()) {
+			return true;
+		}
+		if(diff1.isEmpty() && diff2.equals("!!")) {
+			return true;
+		}
+		if(diff1.isEmpty() && diff2.equals("toU")) {
+			//url() becomes toUrl()
+			return true;
+		}
+		if(diff1.equals("asList") && diff2.equals("listOf")) {
+			return true;
+		}
+		if(diff1.equals("=") && diff2.equals(" = ")) {
+			return true;
+		}
+		if(diff1.isEmpty() && diff2.equals(".code")) {
+			CompositeReplacement r = new CompositeReplacement(s1, s2, Collections.emptySet(), Collections.emptySet());
+			info.addReplacement(r);
+			return true;
+		}
+		if(diff1.endsWith("()") && diff2.startsWith("!!")) {
+			String d1 = diff1.substring(0, diff1.length()-2);
+			String d2 = diff2.substring(2, diff2.length());
+			if(d1.equals(d2)) {
+				return true;
+			}
+		}
+		if(diff1.equals("get")) {
+			return true;
 		}
 		return false;
 	}

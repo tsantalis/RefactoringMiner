@@ -292,16 +292,32 @@ public class JavaToKotlinMigration {
             mappingStore.addMapping(srcClassAnnotationTree, dstClassAnnotationTree);
             Tree classModifiers2 = dstClassAnnotationTree.getType().name.equals(LANG2.CLASS_MODIFIER) ? dstClassAnnotationTree : TreeUtilFunctions.findChildByType(dstClassAnnotationTree, LANG2.CLASS_MODIFIER);
             if(classModifiers2 != null) {
+                List<Tree> stringLiteral1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcClassAnnotationTree, LANG1.STRING_LITERAL);
+                List<Tree> numberLiteral1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcClassAnnotationTree, LANG1.NUMBER_LITERAL);
+                List<Tree> stringLiteral2 = null;
+                List<Tree> numberLiteral2 = null;
                 Tree typeName1 = TreeUtilFunctions.findChildByType(srcClassAnnotationTree, LANG1.SIMPLE_NAME);
                 Tree userType2 = TreeUtilFunctions.findChildByType(classModifiers2, LANG2.USER_TYPE);
                 if(userType2 == null) {
                     Tree constuctorInvocation2 = TreeUtilFunctions.findChildByType(classModifiers2, LANG2.CONSTRUCTOR_INVOCATION);
                     if(constuctorInvocation2 != null) {
+                        stringLiteral2 = TreeUtilFunctions.findChildrenByTypeRecursively(constuctorInvocation2, LANG2.STRING_LITERAL);
+                        numberLiteral2 = TreeUtilFunctions.findChildrenByTypeRecursively(constuctorInvocation2, LANG2.INTEGER_LITERAL);
                         userType2 = TreeUtilFunctions.findChildByType(constuctorInvocation2, LANG2.USER_TYPE);
                     }
                 }
                 if(typeName1 != null && userType2 != null && userType2.getChildren().size() > 0) {
                     mappingStore.addMapping(typeName1, userType2.getChild(0));
+                }
+                if(stringLiteral2 != null && stringLiteral1.size() == stringLiteral2.size()) {
+                    for(int i=0; i<stringLiteral1.size(); i++) {
+                        mappingStore.addMapping(stringLiteral1.get(i), stringLiteral2.get(i));
+                    }
+                }
+                if(numberLiteral2 != null && numberLiteral1.size() == numberLiteral2.size()) {
+                    for(int i=0; i<numberLiteral1.size(); i++) {
+                        mappingStore.addMapping(numberLiteral1.get(i), numberLiteral2.get(i));
+                    }
                 }
             }
         }

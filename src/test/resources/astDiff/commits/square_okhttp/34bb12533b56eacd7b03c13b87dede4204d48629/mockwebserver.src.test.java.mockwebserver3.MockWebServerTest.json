@@ -758,6 +758,17 @@
   "firstEndPos" : 2438,
   "secondEndPos" : 1937
 }, {
+  "firstType" : "NumberLiteral",
+  "secondType" : "integer_literal",
+  "firstLabel" : "30",
+  "secondLabel" : "30",
+  "firstParentType" : "SingleMemberAnnotation",
+  "secondParentType" : "value_argument",
+  "firstPos" : 2439,
+  "secondPos" : 1938,
+  "firstEndPos" : 2441,
+  "secondEndPos" : 1940
+}, {
   "firstType" : "SingleMemberAnnotation",
   "secondType" : "class_modifier",
   "firstLabel" : "",
@@ -779,6 +790,17 @@
   "secondPos" : 1943,
   "firstEndPos" : 2447,
   "secondEndPos" : 1946
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_literal",
+  "firstLabel" : "\"Slow\"",
+  "secondLabel" : "\"Slow\"",
+  "firstParentType" : "SingleMemberAnnotation",
+  "secondParentType" : "value_argument",
+  "firstPos" : 2448,
+  "secondPos" : 1947,
+  "firstEndPos" : 2454,
+  "secondEndPos" : 1953
 }, {
   "firstType" : "TYPE_DECLARATION_KIND",
   "secondType" : "type_keyword",
@@ -11020,6 +11042,17 @@
   "secondPos" : 8382,
   "firstEndPos" : 9689,
   "secondEndPos" : 8390
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_literal",
+  "firstLabel" : "\"Not actually failing where expected\"",
+  "secondLabel" : "\"Not actually failing where expected\"",
+  "firstParentType" : "SingleMemberAnnotation",
+  "secondParentType" : "value_argument",
+  "firstPos" : 9690,
+  "secondPos" : 8391,
+  "firstEndPos" : 9727,
+  "secondEndPos" : 8428
 }, {
   "firstType" : "MarkerAnnotation",
   "secondType" : "class_modifier",

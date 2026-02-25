@@ -95,21 +95,21 @@ public class JavaToKotlinMigration {
             children1.removeAll(toBeRemoved1);
         }
         if(children1.size() != children2.size()) {
-        	List<Tree> toBeRemoved1 = new ArrayList<>();
-        	for(Tree child1 : children1) {
-        		if(child1.getLabel().equals("get")) {
-        			toBeRemoved1.add(child1);
-        		}
-        	}
-        	List<Tree> toBeRemoved2 = new ArrayList<>();
-        	for(Tree child2 : children2) {
-        		if(child2.getLabel().equals("get")) {
-        			toBeRemoved2.add(child2);
-        		}
-        	}
-        	if(toBeRemoved1.size() > 0 && toBeRemoved2.size() == 0) {
-        		children1.removeAll(toBeRemoved1);
-        	}
+            List<Tree> toBeRemoved1 = new ArrayList<>();
+            for(Tree child1 : children1) {
+                if(child1.getLabel().equals("get")) {
+                    toBeRemoved1.add(child1);
+                }
+            }
+            List<Tree> toBeRemoved2 = new ArrayList<>();
+            for(Tree child2 : children2) {
+                if(child2.getLabel().equals("get")) {
+                    toBeRemoved2.add(child2);
+                }
+            }
+            if(toBeRemoved1.size() > 0 && toBeRemoved2.size() == 0) {
+                children1.removeAll(toBeRemoved1);
+            }
         }
         if(children1.size() == children2.size() && (!firstChildIsType1 || children1.size() == 1)) {
             for(int i=0; i<children1.size(); i++) {
@@ -120,7 +120,7 @@ public class JavaToKotlinMigration {
             }
         }
         if(children1.size() == children2.size() && firstChildIsType1) {
-        	//this happens when Java side has a type, but Kotlin side has var/val
+            //this happens when Java side has a type, but Kotlin side has var/val
             Tree t2 = children2.get(0);
             int start1 = -1;
             for(int i=0; i<children1.size(); i++) {
@@ -130,16 +130,16 @@ public class JavaToKotlinMigration {
                 }
             }
             if(start1 >= 1) {
-	            for(int i=start1; i<children1.size() && i-1<children2.size(); i++) {
-	                if(children1.get(i).getLabel().equals(children2.get(i-1).getLabel())) {
-						mappingStore.addMapping(children1.get(i), children2.get(i-1));
-	                }
-	            }
-	            //handle last child
-	            Tree lastChild1 = children1.get(children1.size()-1);
-				Tree lastChild2 = children2.get(children2.size()-1);
-				if(lastChild1.getLabel().equals(lastChild2.getLabel())) {
-					mappingStore.addMapping(lastChild1, lastChild2);
+                for(int i=start1; i<children1.size() && i-1<children2.size(); i++) {
+                    if(children1.get(i).getLabel().equals(children2.get(i-1).getLabel())) {
+                        mappingStore.addMapping(children1.get(i), children2.get(i-1));
+                    }
+                }
+                //handle last child
+                Tree lastChild1 = children1.get(children1.size()-1);
+                Tree lastChild2 = children2.get(children2.size()-1);
+                if(lastChild1.getLabel().equals(lastChild2.getLabel())) {
+                    mappingStore.addMapping(lastChild1, lastChild2);
                 }
             }
         }
@@ -200,14 +200,14 @@ public class JavaToKotlinMigration {
             }
         }
         if(castExpressions1.size() > 0) {
-        	Tree simpleType = castExpressions1.get(0).getChild(0);
-        	Tree as2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.AS_EXPRESSION);
-        	if(as2 != null) {
-        		Tree userType2 = TreeUtilFunctions.findChildByType(as2, LANG2.USER_TYPE);
-        		if(userType2 != null) {
-        			handleTypeMapping(mappingStore, simpleType, userType2, LANG1, LANG2);
-        		}
-        	}
+            Tree simpleType = castExpressions1.get(0).getChild(0);
+            Tree as2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.AS_EXPRESSION);
+            if(as2 != null) {
+                Tree userType2 = TreeUtilFunctions.findChildByType(as2, LANG2.USER_TYPE);
+                if(userType2 != null) {
+                    handleTypeMapping(mappingStore, simpleType, userType2, LANG1, LANG2);
+                }
+            }
         }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.STRING_LITERAL);
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.STRING_LITERAL);
@@ -221,6 +221,14 @@ public class JavaToKotlinMigration {
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
                 mappingStore.addMapping(children1.get(i), children2.get(i));
+            }
+        }
+        children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.BOOLEAN_LITERAL);
+        children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.BOOLEAN_LITERAL);
+        if(children1.size() == children2.size()) {
+            for(int i=0; i<children1.size(); i++) {
+                if(children2.get(i).getChildren().size() > 0)
+                    mappingStore.addMapping(children1.get(i), children2.get(i).getChild(0));
             }
         }
     }

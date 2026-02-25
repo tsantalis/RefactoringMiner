@@ -55,6 +55,15 @@ public class JavaToKotlinMigration {
         List<Tree> types1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_TYPE);
         List<Tree> castExpressions1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.CAST_EXPRESSION);
         List<Tree> qualifiedNames1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.QUALIFIED_NAME);
+        List<Tree> anonymous1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.ANONYMOUS_CLASS_DECLARATION);
+        List<Tree> anonymous2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.OBJECT_LITERAL);
+        List<Tree> lambdas1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.LAMBDA_EXPRESSION);
+        List<Tree> lambdas2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.ANNOTATED_LAMBDA);
+        //remove the simpleName children of anonymous/lambdas from the parent children
+        removeFromParent(children1, anonymous1, LANG1);
+        removeFromParent(children2, anonymous2, LANG2);
+        removeFromParent(children1, lambdas1, LANG1);
+        removeFromParent(children2, lambdas2, LANG2);
         if(types1.size() > 0 && children1.size() != children2.size()) {
             List<Tree> toBeRemoved2 = new ArrayList<>();
             for(Tree type1 : types1) {
@@ -171,6 +180,17 @@ public class JavaToKotlinMigration {
                 }
             }
         }
+        else if(children2.size() > children1.size()) {
+            //match only the children with identical labels on a first match basis
+            for(int i=0; i<children2.size(); i++) {
+                for(int j=0; j<children1.size(); j++) {
+                    if(children2.get(i).getLabel().equals(children1.get(j).getLabel())) {
+                        mappingStore.addMapping(children1.get(j), children2.get(i));
+                        break;
+                    }
+                }
+            }
+        }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION_ARGUMENTS);
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION_ARGUMENTS);
         if(children1.size() == children2.size()) {
@@ -179,7 +199,7 @@ public class JavaToKotlinMigration {
                 mappingStore.addMapping(children1.get(i).getParent(), children2.get(i).getParent());
             }
         }
-        else {
+        else if(anonymous1.isEmpty() && anonymous2.isEmpty()) {
             children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION, LANG1.CLASS_INSTANCE_CREATION);
             children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION);
             if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION))
@@ -230,6 +250,13 @@ public class JavaToKotlinMigration {
                 if(children2.get(i).getChildren().size() > 0)
                     mappingStore.addMapping(children1.get(i), children2.get(i).getChild(0));
             }
+        }
+    }
+
+    private static void removeFromParent(List<Tree> children, List<Tree> anonymousList, Constants LANG) {
+        for(Tree anonymous : anonymousList) {
+            List<Tree> anonymousChildren = TreeUtilFunctions.findChildrenByTypeRecursively(anonymous, LANG.SIMPLE_NAME);
+            children.removeAll(anonymousChildren);
         }
     }
 

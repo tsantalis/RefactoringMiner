@@ -184,6 +184,7 @@ public class Constants {
     public final String CAST_EXPRESSION = "CastExpression";
 
     public final String INFIX_EXPRESSION = "InfixExpression";
+    public final String LAMBDA_EXPRESSION = "LambdaExpression";
     public final String INFIX_EXPRESSION_OPERATOR = "INFIX_EXPRESSION_OPERATOR";
 
     public final String STRING_LITERAL;
@@ -258,6 +259,7 @@ public class Constants {
     public final String AFFECTATION_OPERATOR = "affectation_operator";
     public final String COMPANION_OBJECT = "companion_object";
     public final String OBJECT_DECLARATION = "object_declaration";
+    public final String OBJECT_LITERAL = "object_literal";
     public final String WHEN_ENTRY = "when_entry";
     public final String ARROW = "arrow";
     public final String WHEN_EXPRESSION = "when_expression";
@@ -283,4 +285,5 @@ public class Constants {
     public final String VARIABLE_DECLARATION = "variable_declaration";
     public final String CLASS_MODIFIER = "class_modifier";
     public final String AS_EXPRESSION = "as_expression";
+    public final String ANNOTATED_LAMBDA = "annotated_lambda";
 }

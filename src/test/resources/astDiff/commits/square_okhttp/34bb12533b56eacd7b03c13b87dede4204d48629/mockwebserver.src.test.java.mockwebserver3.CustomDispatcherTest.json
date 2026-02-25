@@ -549,28 +549,6 @@
   "firstEndPos" : 1581,
   "secondEndPos" : 1429
 }, {
-  "firstType" : "ClassInstanceCreation",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "statements",
-  "firstPos" : 1400,
-  "secondPos" : 1360,
-  "firstEndPos" : 1580,
-  "secondEndPos" : 1385
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "navigation_suffix",
-  "firstLabel" : "Dispatcher",
-  "secondLabel" : "",
-  "firstParentType" : "SimpleType",
-  "secondParentType" : "navigation_expression",
-  "firstPos" : 1404,
-  "secondPos" : 1372,
-  "firstEndPos" : 1414,
-  "secondEndPos" : 1376
-}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
@@ -703,17 +681,6 @@
   "firstEndPos" : 1530,
   "secondEndPos" : 1385
 }, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "jump_expression",
-  "firstPos" : 1505,
-  "secondPos" : 1401,
-  "firstEndPos" : 1530,
-  "secondEndPos" : 1415
-}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "requestsMade",
@@ -746,17 +713,6 @@
   "secondPos" : 1376,
   "firstEndPos" : 1529,
   "secondEndPos" : 1385
-}, {
-  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondType" : "value_arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "call_suffix",
-  "firstPos" : 1522,
-  "secondPos" : 1413,
-  "firstEndPos" : 1529,
-  "secondEndPos" : 1415
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
@@ -1616,28 +1572,6 @@
   "firstEndPos" : 2595,
   "secondEndPos" : 2259
 }, {
-  "firstType" : "ClassInstanceCreation",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "statements",
-  "firstPos" : 2332,
-  "secondPos" : 2192,
-  "firstEndPos" : 2594,
-  "secondEndPos" : 2205
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "navigation_suffix",
-  "firstLabel" : "Dispatcher",
-  "secondLabel" : "",
-  "firstParentType" : "SimpleType",
-  "secondParentType" : "navigation_expression",
-  "firstPos" : 2336,
-  "secondPos" : 2197,
-  "firstEndPos" : 2346,
-  "secondEndPos" : 2203
-}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
@@ -1758,28 +1692,6 @@
   "secondPos" : 2146,
   "firstEndPos" : 2545,
   "secondEndPos" : 2215
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "IfStatement",
-  "secondParentType" : "jump_expression",
-  "firstPos" : 2469,
-  "secondPos" : 2231,
-  "firstEndPos" : 2507,
-  "secondEndPos" : 2245
-}, {
-  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondType" : "value_arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "call_suffix",
-  "firstPos" : 2494,
-  "secondPos" : 2243,
-  "firstEndPos" : 2506,
-  "secondEndPos" : 2245
 }, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
@@ -3155,6 +3067,17 @@
   "secondPos" : 3003,
   "firstEndPos" : 3676,
   "secondEndPos" : 3304
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Thread",
+  "secondLabel" : "Thread",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "call_expression",
+  "firstPos" : 3368,
+  "secondPos" : 3003,
+  "firstEndPos" : 3374,
+  "secondEndPos" : 3009
 }, {
   "firstType" : "Block",
   "secondType" : "statements",

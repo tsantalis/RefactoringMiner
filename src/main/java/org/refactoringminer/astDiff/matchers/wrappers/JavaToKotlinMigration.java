@@ -60,10 +60,10 @@ public class JavaToKotlinMigration {
         List<Tree> lambdas1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.LAMBDA_EXPRESSION);
         List<Tree> lambdas2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.ANNOTATED_LAMBDA);
         //remove the simpleName children of anonymous/lambdas from the parent children
-        removeFromParent(children1, anonymous1, LANG1);
-        removeFromParent(children2, anonymous2, LANG2);
-        removeFromParent(children1, lambdas1, LANG1);
-        removeFromParent(children2, lambdas2, LANG2);
+        removeFromParent(children1, anonymous1, LANG1.SIMPLE_NAME);
+        removeFromParent(children2, anonymous2, LANG2.SIMPLE_NAME);
+        removeFromParent(children1, lambdas1, LANG1.SIMPLE_NAME);
+        removeFromParent(children2, lambdas2, LANG2.SIMPLE_NAME);
         if(types1.size() > 0 && children1.size() != children2.size()) {
             List<Tree> toBeRemoved2 = new ArrayList<>();
             for(Tree type1 : types1) {
@@ -199,11 +199,17 @@ public class JavaToKotlinMigration {
                 mappingStore.addMapping(children1.get(i).getParent(), children2.get(i).getParent());
             }
         }
-        else if(anonymous1.isEmpty() && anonymous2.isEmpty()) {
+        else {
             children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION, LANG1.CLASS_INSTANCE_CREATION);
             children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION);
             if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION))
                 children2.add(0, dstStatementNode);
+            removeFromParent(children1, anonymous1, LANG1.METHOD_INVOCATION);
+            removeFromParent(children1, anonymous1, LANG1.CLASS_INSTANCE_CREATION);
+            removeFromParent(children2, anonymous2, LANG2.METHOD_INVOCATION);
+            //removeFromParent(children1, lambdas1, LANG1.METHOD_INVOCATION);
+            //removeFromParent(children1, lambdas1, LANG1.CLASS_INSTANCE_CREATION);
+            //removeFromParent(children2, lambdas2, LANG2.METHOD_INVOCATION);
             if(children1.size() == children2.size()) {
                 for(int i=0; i<children1.size(); i++) {
                     Tree child1 = children1.get(i);
@@ -253,9 +259,9 @@ public class JavaToKotlinMigration {
         }
     }
 
-    private static void removeFromParent(List<Tree> children, List<Tree> anonymousList, Constants LANG) {
+    private static void removeFromParent(List<Tree> children, List<Tree> anonymousList, String astType) {
         for(Tree anonymous : anonymousList) {
-            List<Tree> anonymousChildren = TreeUtilFunctions.findChildrenByTypeRecursively(anonymous, LANG.SIMPLE_NAME);
+            List<Tree> anonymousChildren = TreeUtilFunctions.findChildrenByTypeRecursively(anonymous, astType);
             children.removeAll(anonymousChildren);
         }
     }

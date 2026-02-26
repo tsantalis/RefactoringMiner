@@ -191,38 +191,28 @@ public class JavaToKotlinMigration {
                 }
             }
         }
-        children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION_ARGUMENTS);
-        children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION_ARGUMENTS);
+        children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION, LANG1.CLASS_INSTANCE_CREATION);
+        children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION);
+        if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION))
+            children2.add(0, dstStatementNode);
+        removeFromParent(children1, anonymous1, LANG1.METHOD_INVOCATION);
+        removeFromParent(children1, anonymous1, LANG1.CLASS_INSTANCE_CREATION);
+        removeFromParent(children2, anonymous2, LANG2.METHOD_INVOCATION);
+        removeFromParent(children1, lambdas1, LANG1.METHOD_INVOCATION);
+        removeFromParent(children1, lambdas1, LANG1.CLASS_INSTANCE_CREATION);
+        removeFromParent(children2, lambdas2, LANG2.METHOD_INVOCATION);
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
-                mappingStore.addMapping(children1.get(i), children2.get(i));
-                mappingStore.addMapping(children1.get(i).getParent(), children2.get(i).getParent());
+                Tree child1 = children1.get(i);
+                Tree child2 = children2.get(i);
+                processPair(mappingStore, child1, child2, LANG1, LANG2);
             }
         }
-        else {
-            children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION, LANG1.CLASS_INSTANCE_CREATION);
-            children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION);
-            if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION))
-                children2.add(0, dstStatementNode);
-            removeFromParent(children1, anonymous1, LANG1.METHOD_INVOCATION);
-            removeFromParent(children1, anonymous1, LANG1.CLASS_INSTANCE_CREATION);
-            removeFromParent(children2, anonymous2, LANG2.METHOD_INVOCATION);
-            //removeFromParent(children1, lambdas1, LANG1.METHOD_INVOCATION);
-            //removeFromParent(children1, lambdas1, LANG1.CLASS_INSTANCE_CREATION);
-            //removeFromParent(children2, lambdas2, LANG2.METHOD_INVOCATION);
-            if(children1.size() == children2.size()) {
-                for(int i=0; i<children1.size(); i++) {
-                    Tree child1 = children1.get(i);
-                    Tree child2 = children2.get(i);
-                    processPair(mappingStore, child1, child2, LANG1, LANG2);
-                }
-            }
-            else if(children2.size() < children1.size()) {
-                for(int i=0; i<children2.size(); i++) {
-                    Tree child1 = children1.get(i);
-                    Tree child2 = children2.get(i);
-                    processPair(mappingStore, child1, child2, LANG1, LANG2);
-                }
+        else if(children2.size() < children1.size()) {
+            for(int i=0; i<children2.size(); i++) {
+                Tree child1 = children1.get(i);
+                Tree child2 = children2.get(i);
+                processPair(mappingStore, child1, child2, LANG1, LANG2);
             }
         }
         if(castExpressions1.size() > 0) {

@@ -671,15 +671,26 @@
   "secondEndPos" : 1385
 }, {
   "firstType" : "MethodInvocation",
-  "secondType" : "call_suffix",
+  "secondType" : "call_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "call_expression",
+  "secondParentType" : "statements",
   "firstPos" : 1505,
-  "secondPos" : 1376,
+  "secondPos" : 1360,
   "firstEndPos" : 1530,
   "secondEndPos" : 1385
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 1505,
+  "secondPos" : 1372,
+  "firstEndPos" : 1517,
+  "secondEndPos" : 1376
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
@@ -770,24 +781,35 @@
   "secondEndPos" : 1476
 }, {
   "firstType" : "MethodInvocation",
-  "secondType" : "call_suffix",
+  "secondType" : "call_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "call_expression",
+  "secondParentType" : "statements",
   "firstPos" : 1586,
-  "secondPos" : 1473,
+  "secondPos" : 1434,
   "firstEndPos" : 1630,
   "secondEndPos" : 1476
 }, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 1586,
+  "secondPos" : 1463,
+  "firstEndPos" : 1617,
+  "secondEndPos" : 1473
+}, {
   "firstType" : "MethodInvocation",
-  "secondType" : "call_suffix",
+  "secondType" : "call_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
-  "secondParentType" : "call_expression",
+  "secondParentType" : "navigation_expression",
   "firstPos" : 1586,
-  "secondPos" : 1444,
+  "secondPos" : 1434,
   "firstEndPos" : 1617,
   "secondEndPos" : 1463
 }, {
@@ -1188,24 +1210,35 @@
   "secondEndPos" : 1783
 }, {
   "firstType" : "MethodInvocation",
-  "secondType" : "call_suffix",
+  "secondType" : "call_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "call_expression",
+  "secondParentType" : "statements",
   "firstPos" : 1930,
-  "secondPos" : 1780,
+  "secondPos" : 1741,
   "firstEndPos" : 1974,
   "secondEndPos" : 1783
 }, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 1930,
+  "secondPos" : 1770,
+  "firstEndPos" : 1961,
+  "secondEndPos" : 1780
+}, {
   "firstType" : "MethodInvocation",
-  "secondType" : "call_suffix",
+  "secondType" : "call_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
-  "secondParentType" : "call_expression",
+  "secondParentType" : "navigation_expression",
   "firstPos" : 1930,
-  "secondPos" : 1751,
+  "secondPos" : 1741,
   "firstEndPos" : 1961,
   "secondEndPos" : 1770
 }, {
@@ -1859,13 +1892,13 @@
   "secondEndPos" : 2321
 }, {
   "firstType" : "MethodInvocation",
-  "secondType" : "call_suffix",
+  "secondType" : "call_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "call_expression",
+  "secondParentType" : "property_declaration",
   "firstPos" : 2672,
-  "secondPos" : 2342,
+  "secondPos" : 2324,
   "firstEndPos" : 2723,
   "secondEndPos" : 2375
 }, {
@@ -1991,13 +2024,13 @@
   "secondEndPos" : 2417
 }, {
   "firstType" : "MethodInvocation",
-  "secondType" : "call_suffix",
+  "secondType" : "call_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "call_expression",
+  "secondParentType" : "property_declaration",
   "firstPos" : 2779,
-  "secondPos" : 2438,
+  "secondPos" : 2420,
   "firstEndPos" : 2832,
   "secondEndPos" : 2473
 }, {
@@ -3340,17 +3373,6 @@
   "secondParentType" : "statements",
   "firstPos" : 3537,
   "secondPos" : 3171,
-  "firstEndPos" : 3577,
-  "secondEndPos" : 3206
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "call_suffix",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "call_expression",
-  "firstPos" : 3537,
-  "secondPos" : 3187,
   "firstEndPos" : 3577,
   "secondEndPos" : 3206
 }, {

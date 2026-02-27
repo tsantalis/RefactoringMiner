@@ -192,27 +192,33 @@ public class JavaToKotlinMigration {
             }
         }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION, LANG1.CLASS_INSTANCE_CREATION);
+        if(srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) || srcStatementNode.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION)) {
+            children1.add(0, srcStatementNode);
+        }
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION);
-        if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION))
+        if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION)) {
             children2.add(0, dstStatementNode);
+        }
         removeFromParent(children1, anonymous1, LANG1.METHOD_INVOCATION);
         removeFromParent(children1, anonymous1, LANG1.CLASS_INSTANCE_CREATION);
         removeFromParent(children2, anonymous2, LANG2.METHOD_INVOCATION);
         removeFromParent(children1, lambdas1, LANG1.METHOD_INVOCATION);
         removeFromParent(children1, lambdas1, LANG1.CLASS_INSTANCE_CREATION);
         removeFromParent(children2, lambdas2, LANG2.METHOD_INVOCATION);
-        if(children1.size() == children2.size()) {
-            for(int i=0; i<children1.size(); i++) {
-                Tree child1 = children1.get(i);
-                Tree child2 = children2.get(i);
-                processPair(mappingStore, child1, child2, LANG1, LANG2);
+        if(nameCompliance(children1, children2, LANG1, LANG2)) {
+            if(children1.size() <= children2.size()) {
+                for(int i=0; i<children1.size(); i++) {
+                    Tree child1 = children1.get(i);
+                    Tree child2 = children2.get(i);
+                    processPair(mappingStore, child1, child2, LANG1, LANG2);
+                }
             }
-        }
-        else if(children2.size() < children1.size()) {
-            for(int i=0; i<children2.size(); i++) {
-                Tree child1 = children1.get(i);
-                Tree child2 = children2.get(i);
-                processPair(mappingStore, child1, child2, LANG1, LANG2);
+            else if(children2.size() < children1.size()) {
+                for(int i=0; i<children2.size(); i++) {
+                    Tree child1 = children1.get(i);
+                    Tree child2 = children2.get(i);
+                    processPair(mappingStore, child1, child2, LANG1, LANG2);
+                }
             }
         }
         if(castExpressions1.size() > 0) {
@@ -237,6 +243,12 @@ public class JavaToKotlinMigration {
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
                 mappingStore.addMapping(children1.get(i), children2.get(i));
+                //handle -literal
+                //if(children2.get(i).getParent().getType().name.equals(LANG2.PREFIX_EXPRESSION)) {
+                //    if(children2.get(i).getParent().getChild(0).getType().name.equals(LANG2.ARITHMETIC_OPERATOR)) {
+                //        mappingStore.addMapping(children1.get(i), children2.get(i).getParent());
+                //    }
+                //}
             }
         }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.BOOLEAN_LITERAL);
@@ -247,6 +259,115 @@ public class JavaToKotlinMigration {
                     mappingStore.addMapping(children1.get(i), children2.get(i).getChild(0));
             }
         }
+    }
+
+    private static boolean nameCompliance(List<Tree> children1, List<Tree> children2, Constants LANG1, Constants LANG2) {
+        List<String> callNames1 = new ArrayList<>();
+        for(Tree child1 : children1) {
+            if(child1.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION)) {
+                Tree simpleType = TreeUtilFunctions.findChildByType(child1, LANG1.SIMPLE_TYPE);
+                if(simpleType != null && simpleType.getChildren().size() > 0) {
+                    callNames1.add(simpleType.getChild(0).getLabel());
+                }
+            }
+            else {
+                Tree simpleName = TreeUtilFunctions.findChildByType(child1, LANG1.SIMPLE_NAME);
+                if(simpleName != null) {
+                    callNames1.add(simpleName.getLabel());
+                }
+            }
+        }
+        List<String> callNames2 = new ArrayList<>();
+        for(Tree child2 : children2) {
+            Tree receiver2 = TreeUtilFunctions.findChildByType(child2, LANG2.NAVIGATION_EXPRESSION);
+            if(receiver2 != null) {
+                receiver2 = TreeUtilFunctions.findChildByType(receiver2, LANG2.NAVIGATION_SUFFIX);
+                if(receiver2 != null) {
+                    Tree simpleName = TreeUtilFunctions.findChildByType(receiver2, LANG2.SIMPLE_NAME);
+                    if(simpleName.getChildren().size() > 0)
+                        callNames2.add(simpleName.getChild(0).getLabel());
+                    else
+                        callNames2.add(simpleName.getLabel());
+                }
+            }
+            else {
+                Tree simpleName = TreeUtilFunctions.findChildByType(child2, LANG2.SIMPLE_NAME);
+                callNames2.add(simpleName.getLabel());
+            }
+        }
+        if(callNames1.size() <= callNames2.size()) {
+            int matches = 0;
+            for(int i=0; i<callNames1.size(); i++) {
+                String s1 = callNames1.get(i);
+                String s2 = callNames2.get(i);
+                if(s1.equals(s2) || s1.contains("." + s2)) {
+                    matches++;
+                }
+                else if(s1.equals("url") && s2.equals("toUrl")) {
+                    matches++;
+                }
+                else if(s1.equals("getBytes") && s2.equals("toByteArray")) {
+                    matches++;
+                }
+            }
+            if(matches == callNames1.size()) {
+                return true;
+            }
+        }
+        else if(callNames2.size() < callNames1.size()) {
+            int matches = 0;
+            for(int i=0; i<callNames2.size(); i++) {
+                String s1 = callNames1.get(i);
+                String s2 = callNames2.get(i);
+                if(s1.equals(s2) || s1.contains("." + s2)) {
+                    matches++;
+                }
+                else if(s1.equals("url") && s2.equals("toUrl")) {
+                    matches++;
+                }
+                else if(s1.equals("getBytes") && s2.equals("toByteArray")) {
+                    matches++;
+                }
+            }
+            if(matches == callNames2.size()) {
+                return true;
+            }
+        }
+        if(callNames1.size() > callNames2.size() && callNames1.containsAll(callNames2)) {
+            //sort callNames1 based on callNames2
+            List<Tree> newChildren1 = new ArrayList<>();
+            for(String s : callNames2) {
+                int index = callNames1.indexOf(s);
+                newChildren1.add(children1.get(index));
+            }
+            for(String s : callNames1) {
+                if(!callNames2.contains(s)) {
+                    int index = callNames1.indexOf(s);
+                    newChildren1.add(children1.get(index));
+                }
+            }
+            children1.clear();
+            children1.addAll(newChildren1);
+            return true;
+        }
+        else if(callNames2.size() > callNames1.size() && callNames2.containsAll(callNames1)) {
+            //sort callNames2 based on callNames1
+            List<Tree> newChildren2 = new ArrayList<>();
+            for(String s : callNames1) {
+                int index = callNames2.indexOf(s);
+                newChildren2.add(children2.get(index));
+            }
+            for(String s : callNames2) {
+                if(!callNames1.contains(s)) {
+                    int index = callNames2.indexOf(s);
+                    newChildren2.add(children2.get(index));
+                }
+            }
+            children2.clear();
+            children2.addAll(newChildren2);
+            return true;
+        }
+        return false;
     }
 
     private static void removeFromParent(List<Tree> children, List<Tree> anonymousList, String astType) {

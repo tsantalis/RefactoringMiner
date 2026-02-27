@@ -286,4 +286,5 @@ public class Constants {
     public final String CLASS_MODIFIER = "class_modifier";
     public final String AS_EXPRESSION = "as_expression";
     public final String ANNOTATED_LAMBDA = "annotated_lambda";
+    public final String ARITHMETIC_OPERATOR = "arithmetic_operator";
 }

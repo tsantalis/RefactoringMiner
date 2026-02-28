@@ -29,6 +29,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @throws Exception propagated from JGit library.
 	 */
 	void detectAll(Repository repository, String branch, RefactoringHandler handler) throws Exception;
+	void detectAll(Path repositoryDirectory, String branch, RefactoringHandler handler) throws Exception;
 
 	/**
 	 * Iterate over commits between two release tags of a git repository and detect the performed refactorings.
@@ -41,6 +42,8 @@ public interface GitHistoryRefactoringMiner {
 	 * @throws Exception propagated from JGit library.
 	 */
 	void detectBetweenTags(Repository repository, String startTag, String endTag, RefactoringHandler handler)
+			throws Exception;
+	void detectBetweenTags(Path repositoryDirectory, String startTag, String endTag, RefactoringHandler handler)
 			throws Exception;
 	
 	/**
@@ -55,6 +58,8 @@ public interface GitHistoryRefactoringMiner {
 	 */
 	void detectBetweenCommits(Repository repository, String startCommitId, String endCommitId, RefactoringHandler handler)
 			throws Exception;
+	void detectBetweenCommits(Path repositoryDirectory, String startCommitId, String endCommitId, RefactoringHandler handler)
+			throws Exception;
 	
 	/**
 	 * Fetch new commits from the remote repo and detect all refactorings performed in these
@@ -66,6 +71,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @throws Exception propagated from JGit library.
 	 */
 	void fetchAndDetectNew(Repository repository, RefactoringHandler handler) throws Exception;
+	void fetchAndDetectNew(Path repositoryDirectory, RefactoringHandler handler) throws Exception;
 
 	/**
 	 * Detect refactorings performed in the specified commit. 
@@ -75,6 +81,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @param handler A handler object that is responsible to process the detected refactorings. 
 	 */
 	void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler);
+	void detectAtCommit(Path repositoryDirectory, String commitId, RefactoringHandler handler) throws Exception;
 
 	/**
 	 * Detect refactorings performed in the specified commit.
@@ -85,6 +92,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @param timeout A timeout, in seconds. When timeout is reached, the operation stops and returns no refactorings.
 	 */
 	void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler, int timeout);
+	void detectAtCommit(Path repositoryDirectory, String commitId, RefactoringHandler handler, int timeout) throws Exception;
 
 	/**
 	 * Detect refactorings performed in the specified commit. All required information is extracted using the GitHub API.
@@ -145,6 +153,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @return A list of Refactoring objects.
 	 */
 	List<Refactoring> detectAtCommitRange(Repository repository, String startCommit, String endCommit) throws Exception;
+	List<Refactoring> detectAtCommitRange(Path repositoryDirectory, String startCommit, String endCommit) throws Exception;
 
 	/**
 	 * Detect refactorings for a commit range. 
@@ -169,6 +178,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
 	 */
 	ProjectASTDiff diffAtCommit(Repository repository, String commitId);
+	ProjectASTDiff diffAtCommit(Path repositoryDirectory, String commitId) throws Exception;
 
 	/**
 	 * Generate the AST diff for the specified commit. All required information is extracted using the GitHub API.
@@ -218,6 +228,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
 	 */
 	ProjectASTDiff diffAtCommitRange(Repository repository, String startCommit, String endCommit) throws Exception;
+	ProjectASTDiff diffAtCommitRange(Path repositoryDirectory, String startCommit, String endCommit) throws Exception;
 
 	/**
 	 * Generate the AST diff for a commit range. 

@@ -131,6 +131,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		logger.info(String.format("Analyzed %s [Commits: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, errorCommitsCount, refactoringsCount));
 	}
 
+	public ProjectASTDiff diffAtCommitRange(Path repositoryDirectory, String startCommit, String endCommit) throws Exception {
+		GitService gitService = new GitServiceImpl();
+		Repository repository = gitService.openRepository(repositoryDirectory.toString());
+		return diffAtCommitRange(repository, startCommit, endCommit);
+	}
+
 	public ProjectASTDiff diffAtCommitRange(Repository repository, String startCommit, String endCommit) throws Exception {
 		Iterable<RevCommit> commits = new GitServiceImpl().createRevsWalkBetweenCommits(repository, startCommit, endCommit);
 		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
@@ -151,6 +157,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				extractRepositoryName(cloneURL) + " " + URLHelper.shortenCommit(startCommit) + ".." + URLHelper.shortenCommit(endCommit),
 				extractCommitURL(cloneURL, endCommit)));
 		return diff;
+	}
+
+	public List<Refactoring> detectAtCommitRange(Path repositoryDirectory, String startCommit, String endCommit) throws Exception {
+		GitService gitService = new GitServiceImpl();
+		Repository repository = gitService.openRepository(repositoryDirectory.toString());
+		return detectAtCommitRange(repository, startCommit, endCommit);
 	}
 
 	public List<Refactoring> detectAtCommitRange(Repository repository, String startCommit, String endCommit) throws Exception {
@@ -757,6 +769,18 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 	
 	@Override
+	public void detectAll(Path repositoryDirectory, String branch, final RefactoringHandler handler) throws Exception {
+		GitService gitService = new GitServiceImpl() {
+			@Override
+			public boolean isCommitAnalyzed(String sha1) {
+				return handler.skipCommit(sha1);
+			}
+		};
+		Repository repository = gitService.openRepository(repositoryDirectory.toString());
+		detectAll(repository, branch, handler);
+	}
+
+	@Override
 	public void detectAll(Repository repository, String branch, final RefactoringHandler handler) throws Exception {
 		GitService gitService = new GitServiceImpl() {
 			@Override
@@ -770,6 +794,18 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		} finally {
 			walk.dispose();
 		}
+	}
+
+	@Override
+	public void fetchAndDetectNew(Path repositoryDirectory, final RefactoringHandler handler) throws Exception {
+		GitService gitService = new GitServiceImpl() {
+			@Override
+			public boolean isCommitAnalyzed(String sha1) {
+				return handler.skipCommit(sha1);
+			}
+		};
+		Repository repository = gitService.openRepository(repositoryDirectory.toString());
+		fetchAndDetectNew(repository, handler);
 	}
 
 	@Override
@@ -909,6 +945,13 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	@Override
+	public void detectAtCommit(Path repositoryDirectory, String commitId, RefactoringHandler handler) throws Exception {
+		GitService gitService = new GitServiceImpl();
+		Repository repository = gitService.openRepository(repositoryDirectory.toString());
+		detectAtCommit(repository, commitId, handler);
+	}
+
+	@Override
 	public void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler) {
 		String cloneURL = repository.getConfig().getString("remote", "origin", "url");
 		File metadataFolder = repository.getDirectory();
@@ -937,6 +980,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 
+	public void detectAtCommit(Path repositoryDirectory, String commitId, RefactoringHandler handler, int timeout) throws Exception {
+		GitService gitService = new GitServiceImpl();
+		Repository repository = gitService.openRepository(repositoryDirectory.toString());
+		detectAtCommit(repository, commitId, handler, timeout);
+	}
+
 	public void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler, int timeout) {
 		ExecutorService service = Executors.newSingleThreadExecutor();
 		Future<?> f = null;
@@ -961,6 +1010,19 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	@Override
+	public void detectBetweenTags(Path repositoryDirectory, String startTag, String endTag, RefactoringHandler handler)
+			throws Exception {
+		GitService gitService = new GitServiceImpl() {
+			@Override
+			public boolean isCommitAnalyzed(String sha1) {
+				return handler.skipCommit(sha1);
+			}
+		};
+		Repository repository = gitService.openRepository(repositoryDirectory.toString());
+		detectBetweenTags(repository, startTag, endTag, handler);
+	}
+
+	@Override
 	public void detectBetweenTags(Repository repository, String startTag, String endTag, RefactoringHandler handler)
 			throws Exception {
 		GitService gitService = new GitServiceImpl() {
@@ -972,6 +1034,19 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		
 		Iterable<RevCommit> walk = gitService.createRevsWalkBetweenTags(repository, startTag, endTag);
 		detect(gitService, repository, handler, walk.iterator());
+	}
+
+	@Override
+	public void detectBetweenCommits(Path repositoryDirectory, String startCommitId, String endCommitId,
+			RefactoringHandler handler) throws Exception {
+		GitService gitService = new GitServiceImpl() {
+			@Override
+			public boolean isCommitAnalyzed(String sha1) {
+				return handler.skipCommit(sha1);
+			}
+		};
+		Repository repository = gitService.openRepository(repositoryDirectory.toString());
+		detectBetweenCommits(repository, startCommitId, endCommitId, handler);
 	}
 
 	@Override
@@ -1697,6 +1772,13 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	@Override
+	public ProjectASTDiff diffAtCommit(Path repositoryDirectory, String commitId) throws Exception {
+		GitService gitService = new GitServiceImpl();
+		Repository repository = gitService.openRepository(repositoryDirectory.toString());
+		return diffAtCommit(repository, commitId);
+	}
+
+	@Override
 	public ProjectASTDiff diffAtCommit(Repository repository, String commitId) {
 		String cloneURL = repository.getConfig().getString("remote", "origin", "url");
 		File metadataFolder = repository.getDirectory();
@@ -2192,7 +2274,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
         return id;
     }
 
-    public ProjectASTDiff diffAtCommitRange(String cloneURL, String startCommit, String endCommit) throws Exception {
+	public ProjectASTDiff diffAtCommitRange(String cloneURL, String startCommit, String endCommit) throws Exception {
 		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
 		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();

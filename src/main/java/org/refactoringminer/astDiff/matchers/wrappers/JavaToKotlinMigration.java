@@ -243,12 +243,18 @@ public class JavaToKotlinMigration {
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
                 mappingStore.addMapping(children1.get(i), children2.get(i));
+                /*
                 //handle -literal
-                //if(children2.get(i).getParent().getType().name.equals(LANG2.PREFIX_EXPRESSION)) {
-                //    if(children2.get(i).getParent().getChild(0).getType().name.equals(LANG2.ARITHMETIC_OPERATOR)) {
-                //        mappingStore.addMapping(children1.get(i), children2.get(i).getParent());
-                //    }
-                //}
+                if(children2.get(i).getParent().getType().name.equals(LANG2.PREFIX_EXPRESSION)) {
+                    if(children2.get(i).getParent().getChild(0).getType().name.equals(LANG2.ARITHMETIC_OPERATOR)) {
+                        mappingStore.addMapping(children1.get(i), children2.get(i).getParent());
+                    }
+                }
+                //handle long literal
+                if(children2.get(i).getParent().getType().name.equals(LANG2.LONG_LITERAL)) {
+                    mappingStore.addMapping(children1.get(i), children2.get(i).getParent());
+                }
+                */
             }
         }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.BOOLEAN_LITERAL);

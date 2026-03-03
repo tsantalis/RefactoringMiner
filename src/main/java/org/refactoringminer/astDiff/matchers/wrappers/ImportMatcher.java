@@ -39,10 +39,10 @@ public class ImportMatcher implements TreeMatcher {
                 Tree srcImportStatement = TreeUtilFunctions.findByLocationInfo(srcTree, pair.getLeft().getLocationInfo(), LANG1);
                 Tree dstImportStatement = TreeUtilFunctions.findByLocationInfo(dstTree, pair.getRight().getLocationInfo(), LANG2);
                 boolean isLast = counter == commonImports.size()-1;
-                if(isLast && srcImportStatement.getType().name.equals(LANG1.IMPORT_IDENTIFIER) && !dstImportStatement.getType().name.equals(LANG2.IMPORT_IDENTIFIER)) {
+                if(isLast && srcImportStatement != null && dstImportStatement != null && srcImportStatement.getType().name.equals(LANG1.IMPORT_IDENTIFIER) && !dstImportStatement.getType().name.equals(LANG2.IMPORT_IDENTIFIER)) {
                 	srcImportStatement = srcImportStatement.getParent();
                 }
-                if(isLast && !srcImportStatement.getType().name.equals(LANG1.IMPORT_IDENTIFIER) && dstImportStatement.getType().name.equals(LANG2.IMPORT_IDENTIFIER)) {
+                if(isLast && srcImportStatement != null && dstImportStatement != null && !srcImportStatement.getType().name.equals(LANG1.IMPORT_IDENTIFIER) && dstImportStatement.getType().name.equals(LANG2.IMPORT_IDENTIFIER)) {
                 	dstImportStatement = dstImportStatement.getParent();
                 }
                 if (srcImportStatement != null && dstImportStatement != null) {

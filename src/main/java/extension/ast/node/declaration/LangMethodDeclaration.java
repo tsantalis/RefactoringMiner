@@ -183,6 +183,8 @@ public class LangMethodDeclaration extends LangDeclaration {
                 ", visibility=" + visibility +
                 ", cleanName=" + cleanName +
                 ", returnType=" + returnTypeAnnotation +
+                ", isAbstract=" + isAbstract +
+                ", langAnnotations=" + langAnnotations +
                 '}';
     }
 }

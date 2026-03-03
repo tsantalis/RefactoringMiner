@@ -278,7 +278,9 @@ public class PyASTFlattener implements LangASTFlattener {
 
     @Override
     public void visit(LangTupleLiteral langTupleLiteral) {
-        builder.append("(");
+        if (langTupleLiteral.isParenthesized()) {
+            builder.append("(");
+        }
         List<LangASTNode> elements = langTupleLiteral.getElements();
         int i = 0;
         for (LangASTNode expr : elements) {
@@ -289,7 +291,9 @@ public class PyASTFlattener implements LangASTFlattener {
             }
             i++;
         }
-        builder.append(")");
+        if (langTupleLiteral.isParenthesized()) {
+            builder.append(")");
+        }
     }
 
     @Override
@@ -408,7 +412,7 @@ public class PyASTFlattener implements LangASTFlattener {
     public void visit(LangPrefixExpression langPrefixExpression) {
         builder.append(langPrefixExpression.getOperator().getSymbol());
         if(langPrefixExpression.getOperator().equals(OperatorEnum.NOT)) {
-        	builder.append(" ");
+            builder.append(" ");
         }
         langPrefixExpression.getOperand().accept(this);
     }

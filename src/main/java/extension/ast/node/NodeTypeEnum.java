@@ -26,6 +26,8 @@ public enum NodeTypeEnum {
     PARENTHESIZED_EXPRESSION("LangParenthesizedExpression"),
     COMPREHENSION_EXPRESSION("LangComprehensionExpression"),
     COMPREHENSION_CLAUSE("LangComprehensionClause"),
+    TEMPLATE_STRING_EXPRESSION("LangTemplateStringExpression"),
+    TEMPLATE_EXPRESSION_PART("LangTemplateExpressionPart"),
 
     /** STATEMENTS */
     BLOCK("LangBlock"),

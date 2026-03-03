@@ -332,6 +332,16 @@ public class CSharpASTFlattener implements LangASTFlattener {
     }
 
     @Override
+    public void visit(LangTemplateStringExpression langTemplateStringExpression) {
+
+    }
+
+    @Override
+    public void visit(LangTemplateExpressionPart langTemplateExpressionPart) {
+
+    }
+
+    @Override
     public void visit(LangPrefixExpression expr) {
         builder.append(expr.getOperator().getSymbol());
         expr.getOperand().accept(this);

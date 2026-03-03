@@ -69,4 +69,6 @@ public interface LangASTVisitor {
     void visit(LangComprehensionExpression langComprehensionExpression);
     void visit(LangComprehensionExpression.LangComprehensionClause langComprehensionClause);
 	void visit(LangImportStatement.LangImportItem langImportItem);
+    void visit(LangTemplateStringExpression langTemplateStringExpression);
+    void visit(LangTemplateExpressionPart langTemplateExpressionPart);
 }

@@ -12,7 +12,7 @@ import extension.ast.node.pattern.LangLiteralPattern;
 import extension.ast.node.pattern.LangVariablePattern;
 import extension.ast.node.statement.*;
 import extension.ast.node.unit.LangCompilationUnit;
-import extension.base.lang.python.Python3Parser;
+import extension.base.lang.python.PythonParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.Map;
 public class LangASTNodeFactory {
 
     /** Compilation Unit */
-    public static LangCompilationUnit createCompilationUnit(Python3Parser.File_inputContext ctx) {
+    public static LangCompilationUnit createCompilationUnit(PythonParser.File_inputContext ctx) {
         return new LangCompilationUnit(PositionUtils.getPositionInfo(ctx));
     }
 
@@ -39,11 +39,6 @@ public class LangASTNodeFactory {
     }
 
     /** Declarations */
-    public static LangTypeDeclaration createTypeDeclaration(Python3Parser.ClassdefContext ctx) {
-        LangTypeDeclaration type = new LangTypeDeclaration(PositionUtils.getPositionInfo(ctx));
-        type.setName(ctx.name().getText());
-        return type;
-    }
 
     /** Generic type declaration creation for non-Python languages (e.g., C#) */
     public static LangTypeDeclaration createTypeDeclaration(String name, ParserRuleContext ctx) {
@@ -73,16 +68,20 @@ public class LangASTNodeFactory {
         return decl;
     }
 
+    public static LangSingleVariableDeclaration createSingleVariableDeclaration(String name, LangASTNode defaultValue, PositionInfo positionInfo) {
+        LangSimpleName langSimpleName = new LangSimpleName(name, positionInfo);
+        LangSingleVariableDeclaration decl = new LangSingleVariableDeclaration(langSimpleName, defaultValue, positionInfo);
+        decl.setTypeAnnotation(TypeObjectEnum.OBJECT);
+        return decl;
+    }
+
     /** Expressions */
     public static LangSimpleName createSimpleName(String name, ParserRuleContext ctx) {
         return new LangSimpleName(name, PositionUtils.getPositionInfo(ctx));
     }
 
     public static LangAssignment createAssignment(String operator, LangASTNode left, LangASTNode right, ParserRuleContext ctx) {
-        LangAssignment langAssignment = new LangAssignment(operator, left, right, PositionUtils.getPositionInfo(ctx));
-        langAssignment.addChild(left);
-        langAssignment.addChild(right);
-        return langAssignment;
+        return new LangAssignment(operator, left, right, PositionUtils.getPositionInfo(ctx));
     }
 
     public static LangInfixExpression createInfixExpression(LangASTNode left, LangASTNode right, String operatorSymbol, ParserRuleContext ctx) {
@@ -151,7 +150,6 @@ public class LangASTNodeFactory {
         LangExpressionStatement statement = new LangExpressionStatement(PositionUtils.getPositionInfo(ctx));
         if (expression != null) {
             statement.setExpression(expression);
-            statement.addChild(expression);
         }
 
         return statement;
@@ -183,6 +181,15 @@ public class LangASTNodeFactory {
 
     public static LangParenthesizedExpression createParenthesizedExpression(ParserRuleContext ctx, LangASTNode expression) {
         return new LangParenthesizedExpression(PositionUtils.getPositionInfo(ctx), expression);
+    }
+
+    public static LangTemplateStringExpression createTemplateStringExpression(ParserRuleContext ctx, LangTemplateStringExpression.TemplateStringKind kind,
+                                                                              List<LangTemplateExpressionPart> langTemplateExpressionParts) {
+        return new LangTemplateStringExpression(PositionUtils.getPositionInfo(ctx), kind, langTemplateExpressionParts);
+    }
+
+    public static LangTemplateExpressionPart createTemplateExpressionPart(ParserRuleContext ctx, LangASTNode expression, LangASTNode formatExpression) {
+        return new LangTemplateExpressionPart(PositionUtils.getPositionInfo(ctx), expression, formatExpression);
     }
 
     /** Comprehension Expressions */
@@ -326,15 +333,15 @@ public class LangASTNodeFactory {
         return new LangThrowStatement(PositionUtils.getPositionInfo(ctx), exception, fromExpr);
     }
 
-    public static LangASTNode createWithStatement(Python3Parser.With_stmtContext ctx, List<LangASTNode> contextItems, LangBlock body) {
+    public static LangASTNode createWithStatement(ParserRuleContext ctx, List<LangASTNode> contextItems, LangBlock body) {
         return new LangWithStatement(PositionUtils.getPositionInfo(ctx), contextItems, body);
     }
 
-    public static LangWithContextItem createWithContextItem(Python3Parser.With_itemContext ctx, LangASTNode expr) {
+    public static LangWithContextItem createWithContextItem(ParserRuleContext ctx, LangASTNode expr) {
         return new LangWithContextItem(PositionUtils.getPositionInfo(ctx), expr);
     }
 
-    public static LangWithContextItem createWithContextItem(Python3Parser.With_itemContext ctx, LangASTNode expr, LangASTNode alias) {
+    public static LangWithContextItem createWithContextItem(PythonParser.With_itemContext ctx, LangASTNode expr, LangASTNode alias) {
         return new LangWithContextItem(PositionUtils.getPositionInfo(ctx), expr, alias);
     }
 
@@ -356,6 +363,10 @@ public class LangASTNodeFactory {
 
     public static LangCaseStatement createCaseStatement(ParserRuleContext ctx, LangASTNode expression, LangBlock body) {
         return new LangCaseStatement(PositionUtils.getPositionInfo(ctx), expression, body);
+    }
+
+    public static LangCaseStatement createCaseStatement(ParserRuleContext ctx, LangASTNode expression, LangASTNode guard, LangBlock body) {
+        return new LangCaseStatement(PositionUtils.getPositionInfo(ctx), expression, guard, body);
     }
 
     /** Literals */

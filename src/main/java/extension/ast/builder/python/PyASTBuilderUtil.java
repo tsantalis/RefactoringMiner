@@ -1,83 +1,56 @@
 package extension.ast.builder.python;
 
 import extension.ast.node.OperatorEnum;
-import extension.base.lang.python.Python3Parser;
+import extension.base.lang.python.PythonParser;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 public class PyASTBuilderUtil {
 
-    public static String extractOperator(Python3Parser.ExprContext ctx) {
-
-        if (ctx.getChildCount() == 3) {
-            return ctx.getChild(1).getText();
+    public static String extractOperator(ParserRuleContext ctx) {
+        if (ctx instanceof PythonParser.Compare_op_bitwise_or_pairContext pair) {
+            return extractComparisonOperator(pair);
         }
 
-        if (ctx.getChildCount() > 3) {
+        if (ctx.getChildCount() >= 2) {
             for (int i = 0; i < ctx.getChildCount(); i++) {
                 String text = ctx.getChild(i).getText();
-                if (isOperator(text)) {
+                if (OperatorEnum.isOperator(text)) {
                     return text;
                 }
             }
-
-            StringBuilder operators = new StringBuilder();
-            for (int i = 0; i < ctx.getChildCount(); i++) {
-                String text = ctx.getChild(i).getText();
-                if (isOperator(text)) {
-                    if (!operators.isEmpty()) {
-                        operators.append(",");
-                    }
-                    operators.append(text);
-                }
-            }
-
-            if (!operators.isEmpty()) {
-                return operators.toString();
-            }
         }
-
-        //System.out.println("No operator found, returning null");
         return null;
     }
 
-    // Helper method to identify operators
-    private static boolean isOperator(String text) {
-        return OperatorEnum.isOperator(text);
+    private static String extractComparisonOperator(PythonParser.Compare_op_bitwise_or_pairContext pair) {
+        if (pair.eq_bitwise_or() != null) return "==";
+        else if (pair.noteq_bitwise_or() != null) return "!=";
+        else if (pair.lte_bitwise_or() != null) return "<=";
+        else if (pair.lt_bitwise_or() != null) return "<";
+        else if (pair.gte_bitwise_or() != null) return ">=";
+        else if (pair.gt_bitwise_or() != null) return ">";
+        else if (pair.notin_bitwise_or() != null) return "notin";
+        else if (pair.in_bitwise_or() != null) return "in";
+        else if (pair.isnot_bitwise_or() != null) return "isnot";
+        else if (pair.is_bitwise_or() != null) return "is";
+
+        return null;
     }
 
-    public static boolean isListLiteral(Python3Parser.AtomContext ctx) {
-        return ctx.OPEN_BRACK() != null && ctx.CLOSE_BRACK() != null;
-    }
-
-    public static boolean isStringLiteral(Python3Parser.AtomContext ctx) {
-        if (ctx == null) {
+    public static boolean isStringLiteral(PythonParser.AtomContext ctx) {
+        if (ctx == null || ctx.strings() == null) {
             return false;
         }
 
-        if (ctx.STRING() != null && !ctx.STRING().isEmpty()) {
-            return true;
-        }
-
-        String text = ctx.getText();
-        if (text == null || text.isEmpty()) {
-            return false;
-        }
-
-        // f-strings and complex strings
-        if (text.length() >= 2) {
-            String lower = text.toLowerCase();
-            // Check for any string prefix followed by quotes
-            if ((lower.startsWith("f") || lower.startsWith("r") || lower.startsWith("b") ||
-                    lower.startsWith("u") || lower.startsWith("fr") || lower.startsWith("rf")) &&
-                    (text.contains("\"") || text.contains("'"))) {
-                return true;
+        // If any child is an fstring or tstring, its not a literal
+        for (ParseTree child : ctx.strings().children) {
+            if (child instanceof PythonParser.FstringContext || child instanceof PythonParser.TstringContext) {
+                return false;
             }
-
-            // Check for regular strings
-            return text.startsWith("\"") || text.startsWith("'") ||
-                    text.startsWith("\"\"\"") || text.startsWith("'''");
         }
 
-        return false;
+        return true;
     }
 
     public static String removeQuotes(String text) {
@@ -98,5 +71,4 @@ public class PyASTBuilderUtil {
         }
         return unquotedValue;
     }
-
 }

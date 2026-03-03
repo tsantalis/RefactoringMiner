@@ -4,13 +4,14 @@ import extension.ast.builder.python.PyASTBuilder;
 import extension.ast.builder.python.PyASTBuilderUtil;
 import extension.ast.node.LangASTNode;
 import extension.ast.node.LangASTNodeFactory;
-import extension.ast.node.OperatorEnum;
 import extension.ast.node.expression.*;
 import extension.ast.node.literal.LangDictionaryLiteral;
 import extension.ast.node.literal.LangStringLiteral;
 import extension.ast.node.literal.LangTupleLiteral;
-import extension.base.lang.python.Python3Parser;
+import extension.base.lang.python.PythonParser;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,18 +22,15 @@ public class PyExpressionASTBuilder extends PyBaseASTBuilder {
         super(mainBuilder);
     }
 
-    public LangASTNode visitAtom(Python3Parser.AtomContext ctx) {
-        // Handle numbers
+    public LangASTNode visitAtom(PythonParser.AtomContext ctx) {
         if (ctx.NUMBER() != null) {
             return LangASTNodeFactory.createNumberLiteral(ctx, ctx.NUMBER().getText());
         }
 
-        // Handle None
         if (ctx.getText() != null && "None".equals(ctx.getText())) {
             return LangASTNodeFactory.createNullLiteral(ctx);
         }
 
-        // Handle string literals
         if (ctx.getText() != null && PyASTBuilderUtil.isStringLiteral(ctx)) {
             return LangASTNodeFactory.createStringLiteral(ctx, ctx.getText());
         }
@@ -41,578 +39,1042 @@ public class PyExpressionASTBuilder extends PyBaseASTBuilder {
             return LangASTNodeFactory.createEllipsisLiteral(ctx);
         }
 
-        // Handle boolean literals
         if (ctx.TRUE() != null || ctx.FALSE() != null) {
             return LangASTNodeFactory.createBooleanLiteral(ctx, Boolean.parseBoolean(ctx.getText()));
         }
 
-        // Handle dictionary literals and dictionary comprehensions
-        if (ctx.OPEN_BRACE() != null && ctx.CLOSE_BRACE() != null) {
-            if (ctx.dictorsetmaker() == null) {
-                // Empty dictionary
-                return LangASTNodeFactory.createDictionaryLiteral(ctx);
-            } else {
-                return mainBuilder.visit(ctx.dictorsetmaker());
-            }
+        if (ctx.dict() != null) {
+            return mainBuilder.visit(ctx.dict());
         }
 
-        // Handle list literals and list comprehensions
-        if (ctx.getText() != null && PyASTBuilderUtil.isListLiteral(ctx)) {
-            if (ctx.testlist_comp() != null) {
-                return mainBuilder.visit(ctx.testlist_comp());
-            } else {
-                // Empty list
-                return LangASTNodeFactory.createListLiteral(ctx, new ArrayList<>());
-            }
+        if (ctx.list() != null) {
+             return mainBuilder.visit(ctx.list());
         }
 
-        // Handle parenthesized expressions, tuples, and generator expressions
-        if (ctx.OPEN_PAREN() != null && ctx.CLOSE_PAREN() != null) {
-            if (ctx.testlist_comp() != null) {
-
-                LangASTNode result = mainBuilder.visit(ctx.testlist_comp());
-
-                // If the result is a comprehension, then it is a generator expression
-                if (result instanceof LangComprehensionExpression comprehension) {
-                    comprehension.setKind(LangComprehensionExpression.LangComprehensionKind.GENERATOR);
-                    return comprehension;
-                }
-
-                // Otherwise handle as regular parenthesized expression or tuple
-                if (result instanceof LangTupleLiteral tuple) {
-                    if (tuple.getElements().size() == 1) {
-                        // Single element in parentheses, create parenthesized expression
-                        return LangASTNodeFactory.createParenthesizedExpression(ctx, tuple.getElements().get(0));
-                    } else {
-                        // Multiple elements, return as tuple
-                        return result;
-                    }
-                } else {
-                    // Single expression, create parenthesized expression
-                    return LangASTNodeFactory.createParenthesizedExpression(ctx, result);
-                }
-            }
-            // Empty parenthesis
-            return LangASTNodeFactory.createParenthesizedExpression(ctx, null);
+        if (ctx.group() != null) {
+            return mainBuilder.visit(ctx.group());
         }
 
-        // Handle regular identifiers/names
+        if (ctx.tuple() != null) {
+            return mainBuilder.visit(ctx.tuple());
+        }
+
+        if (ctx.strings() != null) {
+            return mainBuilder.visit(ctx.strings());
+        }
+
         if (ctx.name() != null) {
             return LangASTNodeFactory.createSimpleName(ctx.name().getText(), ctx);
         }
 
-        // Fallback
-        String atomText = ctx.getText();
-        if (atomText != null && !atomText.isEmpty()) {
-            System.err.println("Warning: Unhandled atom type, creating SimpleName fallback: " + atomText);
-            System.err.println("Context: " + ctx.getText());
-            return LangASTNodeFactory.createSimpleName(atomText, ctx);
+        if (ctx.listcomp() != null) return mainBuilder.visit(ctx.listcomp());
+        if (ctx.dictcomp() != null) return mainBuilder.visit(ctx.dictcomp());
+        if (ctx.setcomp() != null) return mainBuilder.visit(ctx.setcomp());
+        if (ctx.set() != null) return mainBuilder.visit(ctx.set());
+        if (ctx.genexp() != null) return mainBuilder.visit(ctx.genexp());
+
+        throw new IllegalStateException("Unhandled atom: " + ctx.getText());
+    }
+
+    public LangASTNode visitPrimary(PythonParser.PrimaryContext ctx) {
+        if (ctx.atom() != null) {
+            return mainBuilder.visit(ctx.atom());
+        }
+
+        LangASTNode primary = mainBuilder.visit(ctx.primary());
+
+        if (ctx.DOT() != null) {
+            return LangASTNodeFactory.createFieldAccess(primary, ctx.name().getText(), ctx);
+        }
+
+        if (ctx.LPAR() != null) {
+            LangMethodInvocation invocation = LangASTNodeFactory.createMethodInvocation(ctx);
+            invocation.setExpression(primary);
+            if (primary instanceof LangSimpleName simpleName) {
+                invocation.setName(simpleName.getIdentifier());
+            } else if (primary instanceof LangFieldAccess fieldAccess) {
+                invocation.setName(fieldAccess.getName().getIdentifier());
+            }
+            if (ctx.arguments() != null) {
+                processArguments(ctx.arguments(), invocation);
+            }
+            return invocation;
+        }
+
+        if (ctx.LSQB() != null) {
+            return LangASTNodeFactory.createIndexAccess(ctx, primary, mainBuilder.visit(ctx.slices()));
+        }
+        
+        if (ctx.genexp() != null) {
+             LangMethodInvocation invocation = LangASTNodeFactory.createMethodInvocation(ctx);
+             invocation.setExpression(primary);
+             if (primary instanceof LangSimpleName simpleName) {
+                 invocation.setName(simpleName.getIdentifier());
+             } else if (primary instanceof LangFieldAccess fieldAccess) {
+                 invocation.setName(fieldAccess.getName().getIdentifier());
+             }
+             invocation.addArgument(mainBuilder.visit(ctx.genexp()));
+             return invocation;
+        }
+
+        return primary;
+    }
+
+    private void processArguments(PythonParser.ArgumentsContext ctx, LangMethodInvocation invocation) {
+        if (ctx.args() != null) {
+            PythonParser.ArgsContext args = ctx.args();
+
+            for (int i = 0; i < args.getChildCount(); i++) {
+                ParseTree child = args.getChild(i);
+                if (child instanceof PythonParser.ExpressionContext exprCtx) {
+                    invocation.addArgument(mainBuilder.visit(exprCtx));
+                } else if (child instanceof PythonParser.Starred_expressionContext starredCtx) {
+                    // Old builder strips '*' prefix
+                    invocation.addArgument(mainBuilder.visit(starredCtx.expression()));
+                } else if (child instanceof PythonParser.Assignment_expressionContext assignCtx) {
+                    invocation.addArgument(mainBuilder.visit(assignCtx));
+                }
+            }
+            
+            if (args.kwargs() != null) {
+                processKwargs(args.kwargs(), invocation);
+            }
+        } else if (ctx.getChildCount() > 0 && ctx.getChild(0) instanceof PythonParser.KwargsContext) {
+            processKwargs((PythonParser.KwargsContext) ctx.getChild(0), invocation);
+        }
+    }
+
+    private void processKwargs(PythonParser.KwargsContext ctx, LangMethodInvocation invocation) {
+        for (PythonParser.Kwarg_or_starredContext child : ctx.kwarg_or_starred()) {
+            if (child.name() != null) {
+                invocation.addArgument(mainBuilder.visit(child.expression()));
+            } else {
+                invocation.addArgument(mainBuilder.visit(child.starred_expression().expression()));
+            }
+        }
+        for (PythonParser.Kwarg_or_double_starredContext child : ctx.kwarg_or_double_starred()) {
+            if (child.name() != null) {
+                invocation.addArgument(mainBuilder.visit(child.expression()));
+            } else {
+                invocation.addArgument(mainBuilder.visit(child.expression()));
+            }
+        }
+    }
+
+    public LangASTNode visitKwarg_or_starred(PythonParser.Kwarg_or_starredContext ctx) {
+        if (ctx.name() != null) {
+            LangASTNode left = LangASTNodeFactory.createSimpleName(ctx.name().getText(), ctx.name());
+            LangASTNode right = mainBuilder.visit(ctx.expression());
+            return LangASTNodeFactory.createAssignment("=", left, right, ctx);
+        }
+        return mainBuilder.visit(ctx.starred_expression());
+    }
+
+    public LangASTNode visitKwarg_or_double_starred(PythonParser.Kwarg_or_double_starredContext ctx) {
+        if (ctx.name() != null) {
+            LangASTNode left = LangASTNodeFactory.createSimpleName(ctx.name().getText(), ctx.name());
+            LangASTNode right = mainBuilder.visit(ctx.expression());
+            return LangASTNodeFactory.createAssignment("=", left, right, ctx);
+        }
+        LangASTNode expr = mainBuilder.visit(ctx.expression());
+        return LangASTNodeFactory.createPrefixExpression(expr, "**", ctx);
+    }
+
+    public LangASTNode visitStarred_expression(PythonParser.Starred_expressionContext ctx) {
+        LangASTNode expr = mainBuilder.visit(ctx.expression());
+        return LangASTNodeFactory.createPrefixExpression(expr, "*", ctx);
+    }
+
+    public LangASTNode visitAssignment(PythonParser.AssignmentContext ctx) {
+
+        if (ctx.COLON() != null) {
+            if (ctx.name() != null) {
+                return LangASTNodeFactory.createSimpleName(ctx.name().getText(), ctx.name());
+            } else {
+                if (ctx.single_target() != null) {
+                    return mainBuilder.visit(ctx.single_target());
+                } else {
+                    return mainBuilder.visit(ctx.single_subscript_attribute_target());
+                }
+            }
+        }
+
+        if (ctx.EQUAL() != null && !ctx.EQUAL().isEmpty()) {
+
+            LangASTNode rhs;
+            PythonParser.Annotated_rhsContext rhsCtx = ctx.annotated_rhs();
+
+            if (rhsCtx == null) {
+                System.err.println("Warning: Null annotated_rhs in assignment: " + ctx.getText());
+                rhs = LangASTNodeFactory.createSimpleName("UNKNOWN_RHS", ctx);
+            } else if (rhsCtx.yield_expr() != null) {
+                rhs = mainBuilder.visit(rhsCtx.yield_expr());
+            } else if (rhsCtx.star_expressions() != null) {
+                rhs = mainBuilder.visit(rhsCtx.star_expressions());
+            } else {
+                // Should never happen according to grammar
+                System.err.println("Warning: Empty annotated_rhs in assignment: " + ctx.getText());
+                rhs = LangASTNodeFactory.createSimpleName("UNKNOWN_RHS", ctx);
+            }
+
+            LangASTNode currentRight = rhs;
+
+            for (int i = ctx.star_targets().size() - 1; i >= 0; i--) {
+                LangASTNode left = mainBuilder.visit(ctx.star_targets(i));
+                currentRight = LangASTNodeFactory.createAssignment(
+                        "=",
+                        left,
+                        currentRight,
+                        ctx
+                );
+            }
+
+            return currentRight;
+        }
+
+        if (ctx.augassign() != null) {
+
+            String operator = ctx.augassign().getText();
+
+            LangASTNode leftSide = mainBuilder.visit(ctx.single_target());
+
+            LangASTNode right;
+            PythonParser.Annotated_rhsContext rhsCtx = ctx.annotated_rhs();
+
+            if (rhsCtx == null) {
+                System.err.println("Warning: Null annotated_rhs in augmented assignment: " + ctx.getText());
+                right = LangASTNodeFactory.createSimpleName("UNKNOWN_RHS", ctx);
+            } else if (rhsCtx.yield_expr() != null) {
+                right = mainBuilder.visit(rhsCtx.yield_expr());
+            } else if (rhsCtx.star_expressions() != null) {
+                right = mainBuilder.visit(rhsCtx.star_expressions());
+            } else {
+                System.err.println("Warning: Empty annotated_rhs in augmented assignment: " + ctx.getText());
+                right = LangASTNodeFactory.createSimpleName("UNKNOWN_RHS", ctx);
+            }
+
+            return LangASTNodeFactory.createAssignment(
+                    operator,
+                    leftSide,
+                    right,
+                    ctx
+            );
+        }
+
+        System.err.println("Warning: Unknown assignment form: " + ctx.getText());
+        return null;
+    }
+
+    public LangASTNode visitExpression(PythonParser.ExpressionContext ctx) {
+        if (ctx.disjunction() != null && !ctx.disjunction().isEmpty()) {
+            if (ctx.disjunction().size() > 1 && ctx.expression() != null) {
+                LangASTNode thenExpr = mainBuilder.visit(ctx.disjunction(0));
+                LangASTNode condition = mainBuilder.visit(ctx.disjunction(1));
+                LangASTNode elseExpr = mainBuilder.visit(ctx.expression());
+                return LangASTNodeFactory.createTernaryExpression(ctx, condition, thenExpr, elseExpr);
+            }
+            return mainBuilder.visit(ctx.disjunction(0));
+        }
+        if (ctx.lambdef() != null) return mainBuilder.visit(ctx.lambdef());
+        return null;
+    }
+
+    public LangASTNode visitDisjunction(PythonParser.DisjunctionContext ctx) {
+        if (ctx.conjunction().size() == 1) return mainBuilder.visit(ctx.conjunction(0));
+
+        LangASTNode left = mainBuilder.visit(ctx.conjunction(0));
+        for (int i = 1; i < ctx.conjunction().size(); i++) {
+            LangASTNode right = mainBuilder.visit(ctx.conjunction(i));
+            left = LangASTNodeFactory.createInfixExpression(left, right, "or", ctx);
+        }
+        return left;
+    }
+
+    public LangASTNode visitConjunction(PythonParser.ConjunctionContext ctx) {
+        if (ctx.inversion().size() == 1) return mainBuilder.visit(ctx.inversion(0));
+
+        LangASTNode left = mainBuilder.visit(ctx.inversion(0));
+        for (int i = 1; i < ctx.inversion().size(); i++) {
+            LangASTNode right = mainBuilder.visit(ctx.inversion(i));
+            left = LangASTNodeFactory.createInfixExpression(left, right, "and", ctx);
+        }
+        return left;
+    }
+
+    public LangASTNode visitInversion(PythonParser.InversionContext ctx) {
+        if (ctx.NOT() != null) {
+            LangASTNode operand = mainBuilder.visit(ctx.inversion());
+            return LangASTNodeFactory.createPrefixExpression(operand, "not", ctx);
+        }
+        return mainBuilder.visit(ctx.comparison());
+    }
+
+    public LangASTNode visitComparison(PythonParser.ComparisonContext ctx) {
+        if (ctx.compare_op_bitwise_or_pair() == null || ctx.compare_op_bitwise_or_pair().isEmpty()) return mainBuilder.visit(ctx.bitwise_or());
+        
+        LangASTNode left = mainBuilder.visit(ctx.bitwise_or());
+        for (PythonParser.Compare_op_bitwise_or_pairContext pair : ctx.compare_op_bitwise_or_pair()) {
+            String op = PyASTBuilderUtil.extractOperator(pair);
+            LangASTNode right = null;
+            if (pair.eq_bitwise_or() != null) right = mainBuilder.visit(pair.eq_bitwise_or().bitwise_or());
+            else if (pair.noteq_bitwise_or() != null) right = mainBuilder.visit(pair.noteq_bitwise_or().bitwise_or());
+            else if (pair.lte_bitwise_or() != null) right = mainBuilder.visit(pair.lte_bitwise_or().bitwise_or());
+            else if (pair.lt_bitwise_or() != null) right = mainBuilder.visit(pair.lt_bitwise_or().bitwise_or());
+            else if (pair.gte_bitwise_or() != null) right = mainBuilder.visit(pair.gte_bitwise_or().bitwise_or());
+            else if (pair.gt_bitwise_or() != null) right = mainBuilder.visit(pair.gt_bitwise_or().bitwise_or());
+            else if (pair.notin_bitwise_or() != null) right = mainBuilder.visit(pair.notin_bitwise_or().bitwise_or());
+            else if (pair.in_bitwise_or() != null) right = mainBuilder.visit(pair.in_bitwise_or().bitwise_or());
+            else if (pair.isnot_bitwise_or() != null) right = mainBuilder.visit(pair.isnot_bitwise_or().bitwise_or());
+            else if (pair.is_bitwise_or() != null) right = mainBuilder.visit(pair.is_bitwise_or().bitwise_or());
+            
+            left = LangASTNodeFactory.createInfixExpression(left, right, op, ctx);
+        }
+        return left;
+    }
+
+    public LangASTNode visitBitwise_or(PythonParser.Bitwise_orContext ctx) {
+        if (ctx.bitwise_or() == null) return mainBuilder.visit(ctx.bitwise_xor());
+        
+        LangASTNode left = mainBuilder.visit(ctx.bitwise_or());
+        LangASTNode right = mainBuilder.visit(ctx.bitwise_xor());
+        return LangASTNodeFactory.createInfixExpression(left, right, "|", ctx);
+    }
+
+    public LangASTNode visitBitwise_xor(PythonParser.Bitwise_xorContext ctx) {
+        if (ctx.bitwise_xor() == null) return mainBuilder.visit(ctx.bitwise_and());
+        
+        LangASTNode left = mainBuilder.visit(ctx.bitwise_xor());
+        LangASTNode right = mainBuilder.visit(ctx.bitwise_and());
+        return LangASTNodeFactory.createInfixExpression(left, right, "^", ctx);
+    }
+
+    public LangASTNode visitBitwise_and(PythonParser.Bitwise_andContext ctx) {
+        if (ctx.bitwise_and() == null) return mainBuilder.visit(ctx.shift_expr());
+        
+        LangASTNode left = mainBuilder.visit(ctx.bitwise_and());
+        LangASTNode right = mainBuilder.visit(ctx.shift_expr());
+        return LangASTNodeFactory.createInfixExpression(left, right, "&", ctx);
+    }
+
+    public LangASTNode visitShift_expr(PythonParser.Shift_exprContext ctx) {
+        if (ctx.shift_expr() == null) return mainBuilder.visit(ctx.sum());
+        
+        LangASTNode left = mainBuilder.visit(ctx.shift_expr());
+        LangASTNode right = mainBuilder.visit(ctx.sum());
+        String op = ctx.getChild(1).getText();
+        return LangASTNodeFactory.createInfixExpression(left, right, op, ctx);
+    }
+
+    public LangASTNode visitSum(PythonParser.SumContext ctx) {
+        if (ctx.sum() == null) return mainBuilder.visit(ctx.term());
+        
+        LangASTNode left = mainBuilder.visit(ctx.sum());
+        LangASTNode right = mainBuilder.visit(ctx.term());
+        String op = ctx.getChild(1).getText();
+        return LangASTNodeFactory.createInfixExpression(left, right, op, ctx);
+    }
+
+    public LangASTNode visitTerm(PythonParser.TermContext ctx) {
+        if (ctx.term() == null) return mainBuilder.visit(ctx.factor());
+        
+        LangASTNode left = mainBuilder.visit(ctx.term());
+        LangASTNode right = mainBuilder.visit(ctx.factor());
+        String op = ctx.getChild(1).getText();
+        return LangASTNodeFactory.createInfixExpression(left, right, op, ctx);
+    }
+
+    public LangASTNode visitFactor(PythonParser.FactorContext ctx) {
+        if (ctx.power() != null) return mainBuilder.visit(ctx.power());
+        
+        String op = ctx.getChild(0).getText();
+        LangASTNode operand = mainBuilder.visit(ctx.factor());
+        return LangASTNodeFactory.createPrefixExpression(operand, op, ctx);
+    }
+
+    public LangASTNode visitPower(PythonParser.PowerContext ctx) {
+        LangASTNode left = mainBuilder.visit(ctx.await_primary());
+        if (ctx.factor() != null) {
+            LangASTNode right = mainBuilder.visit(ctx.factor());
+            return LangASTNodeFactory.createInfixExpression(left, right, "**", ctx);
+        }
+        return left;
+    }
+
+    public LangASTNode visitAwait_primary(PythonParser.Await_primaryContext ctx) {
+        if (ctx.AWAIT() != null) {
+            PythonParser.PrimaryContext primary = ctx.primary();
+            while (primary.atom() == null && primary.primary() != null) {
+                primary = primary.primary();
+            }
+            LangASTNode operand;
+            if (primary.atom() != null) {
+                operand = mainBuilder.visit(primary.atom());
+            } else {
+                operand = mainBuilder.visit(ctx.primary());
+            }
+            return LangASTNodeFactory.createAwaitExpression(ctx, operand);
+        }
+        return mainBuilder.visit(ctx.primary());
+    }
+
+    public LangASTNode visitList(PythonParser.ListContext ctx) {
+        List<LangASTNode> elements = new ArrayList<>();
+        if (ctx.star_named_expressions() != null) {
+            for (PythonParser.Star_named_expressionContext exprCtx : ctx.star_named_expressions().star_named_expression()) {
+                LangASTNode expr = mainBuilder.visit(exprCtx);
+                if (expr != null) elements.add(expr);
+            }
+        }
+        if (elements.size() == 1) {
+            return elements.get(0);
+        } else if (elements.size() > 1) {
+            return LangASTNodeFactory.createTupleLiteral(ctx, elements);
+        }
+        return LangASTNodeFactory.createListLiteral(ctx, elements);
+    }
+
+    public LangASTNode visitTuple(PythonParser.TupleContext ctx) {
+        List<LangASTNode> elements = new ArrayList<>();
+        
+        if (ctx.star_named_expression() != null) {
+            LangASTNode firstExpr = mainBuilder.visit(ctx.star_named_expression());
+            if (firstExpr != null) elements.add(firstExpr);
+        }
+        
+        if (ctx.star_named_expressions() != null) {
+            for (PythonParser.Star_named_expressionContext exprCtx : ctx.star_named_expressions().star_named_expression()) {
+                LangASTNode expr = mainBuilder.visit(exprCtx);
+                if (expr != null) elements.add(expr);
+            }
+        }
+        return LangASTNodeFactory.createTupleLiteral(ctx, elements);
+    }
+
+    public LangASTNode visitSet(PythonParser.SetContext ctx) {
+        List<LangASTNode> elements = new ArrayList<>();
+        if (ctx.star_named_expressions() != null) {
+            for (PythonParser.Star_named_expressionContext exprCtx : ctx.star_named_expressions().star_named_expression()) {
+                LangASTNode expr = mainBuilder.visit(exprCtx);
+                if (expr != null) elements.add(expr);
+            }
+        }
+        return LangASTNodeFactory.createListLiteral(ctx, elements);
+    }
+
+
+    public LangASTNode visitDict(PythonParser.DictContext ctx) {
+        LangDictionaryLiteral dict = LangASTNodeFactory.createDictionaryLiteral(ctx);
+        if (ctx.double_starred_kvpairs() != null) {
+            for (PythonParser.Double_starred_kvpairContext kvCtx : ctx.double_starred_kvpairs().double_starred_kvpair()) {
+                if (kvCtx.kvpair() != null) {
+                    LangASTNode key = mainBuilder.visit(kvCtx.kvpair().expression(0));
+                    LangASTNode value = mainBuilder.visit(kvCtx.kvpair().expression(1));
+                    dict.addEntry(key, value);
+                } else if (kvCtx.bitwise_or() != null) {
+                    // Handle **expression
+                    LangASTNode value = mainBuilder.visit(kvCtx.bitwise_or());
+                    dict.addEntry(null, LangASTNodeFactory.createPrefixExpression(value, "**", kvCtx));
+                }
+            }
+        }
+        return dict;
+    }
+
+    public LangASTNode visitStar_named_expression(PythonParser.Star_named_expressionContext ctx) {
+        if (ctx.STAR() != null) {
+            LangASTNode expr = mainBuilder.visit(ctx.named_expression());
+            return LangASTNodeFactory.createPrefixExpression(expr, "*", ctx);
+        }
+        return mainBuilder.visit(ctx.named_expression());
+    }
+
+    public LangASTNode visitStar_expressions(PythonParser.Star_expressionsContext ctx) {
+        if (ctx.star_expression().size() == 1) {
+            return mainBuilder.visit(ctx.star_expression(0));
+        }
+        List<LangASTNode> elements = new ArrayList<>();
+        for (PythonParser.Star_expressionContext exprCtx : ctx.star_expression()) {
+            LangASTNode expr = mainBuilder.visit(exprCtx);
+            if (expr != null) elements.add(expr);
+        }
+        return LangASTNodeFactory.createTupleLiteral(ctx, elements);
+    }
+
+    public LangASTNode visitStar_expression(PythonParser.Star_expressionContext ctx) {
+        if (ctx.STAR() != null) {
+            LangASTNode expr = mainBuilder.visit(ctx.expression());
+            return LangASTNodeFactory.createPrefixExpression(expr, "*", ctx);
+        }
+        return mainBuilder.visit(ctx.expression());
+    }
+
+    public LangASTNode visitListcomp(PythonParser.ListcompContext ctx) {
+        LangASTNode expression = mainBuilder.visit(ctx.named_expression());
+        List<LangComprehensionExpression.LangComprehensionClause> clauses = new ArrayList<>();
+        processComprehensionClauses(ctx.for_if_clauses(), clauses);
+        return LangASTNodeFactory.createListComprehension(ctx, expression, clauses);
+    }
+
+    public LangASTNode visitSetcomp(PythonParser.SetcompContext ctx) {
+        LangASTNode expression = mainBuilder.visit(ctx.named_expression());
+        List<LangComprehensionExpression.LangComprehensionClause> clauses = new ArrayList<>();
+        processComprehensionClauses(ctx.for_if_clauses(), clauses);
+        return LangASTNodeFactory.createSetComprehension(ctx, expression, clauses);
+    }
+
+    public LangASTNode visitGenexp(PythonParser.GenexpContext ctx) {
+        LangASTNode expression = ctx.assignment_expression() != null ? mainBuilder.visit(ctx.assignment_expression()) : mainBuilder.visit(ctx.expression());
+        List<LangComprehensionExpression.LangComprehensionClause> clauses = new ArrayList<>();
+        processComprehensionClauses(ctx.for_if_clauses(), clauses);
+        return LangASTNodeFactory.createGeneratorExpression(ctx, expression, clauses);
+    }
+
+    public LangASTNode visitDictcomp(PythonParser.DictcompContext ctx) {
+        LangASTNode key = mainBuilder.visit(ctx.kvpair().expression(0));
+        LangASTNode value = mainBuilder.visit(ctx.kvpair().expression(1));
+        List<LangComprehensionExpression.LangComprehensionClause> clauses = new ArrayList<>();
+        processComprehensionClauses(ctx.for_if_clauses(), clauses);
+        return LangASTNodeFactory.createDictComprehension(ctx, key, value, clauses);
+    }
+
+    private void processComprehensionClauses(PythonParser.For_if_clausesContext ctx, List<LangComprehensionExpression.LangComprehensionClause> clauses) {
+        for (PythonParser.For_if_clauseContext clauseCtx : ctx.for_if_clause()) {
+            boolean isAsync = clauseCtx.ASYNC() != null;
+            List<LangASTNode> targets = new ArrayList<>();
+            LangASTNode targetNode = mainBuilder.visit(clauseCtx.star_targets());
+            if (targetNode != null) {
+                targets.add(targetNode);
+            }
+            LangExpression iterable = null;
+            if (clauseCtx.disjunction() != null && !clauseCtx.disjunction().isEmpty()) {
+                LangASTNode iterableNode = mainBuilder.visit(clauseCtx.disjunction(0));
+                if (iterableNode instanceof LangExpression) {
+                    iterable = (LangExpression) iterableNode;
+                }
+            }
+            List<LangASTNode> filters = new ArrayList<>();
+            if (clauseCtx.disjunction() != null && clauseCtx.disjunction().size() > 1) {
+                for (int i = 1; i < clauseCtx.disjunction().size(); i++) {
+                    LangASTNode filterNode = mainBuilder.visit(clauseCtx.disjunction(i));
+                    if (filterNode != null) {
+                        filters.add(filterNode);
+                    }
+                }
+            }
+            clauses.add(LangASTNodeFactory.createComprehensionClause(clauseCtx, isAsync, targets, iterable, filters));
+        }
+    }
+
+    public LangASTNode visitLambdef(PythonParser.LambdefContext ctx) {
+        List<LangASTNode> parameters = new ArrayList<>();
+        if (ctx.lambda_params() != null && ctx.lambda_params().lambda_parameters() != null) {
+            processLambdaParameters(ctx.lambda_params().lambda_parameters(), parameters);
+        }
+        LangASTNode body = mainBuilder.visit(ctx.expression());
+        return LangASTNodeFactory.createLambdaExpression(ctx, body, parameters);
+    }
+
+    private void processLambdaParameters(PythonParser.Lambda_parametersContext ctx, List<LangASTNode> parameters) {
+        if (ctx.lambda_slash_no_default() != null) {
+            for (PythonParser.Lambda_param_no_defaultContext p : ctx.lambda_slash_no_default().lambda_param_no_default()) {
+                parameters.add(createLambdaParam(p.lambda_param(), null, false, false));
+            }
+        }
+        if (ctx.lambda_slash_with_default() != null) {
+            for (PythonParser.Lambda_param_no_defaultContext p : ctx.lambda_slash_with_default().lambda_param_no_default()) {
+                parameters.add(createLambdaParam(p.lambda_param(), null, false, false));
+            }
+            for (PythonParser.Lambda_param_with_defaultContext p : ctx.lambda_slash_with_default().lambda_param_with_default()) {
+                parameters.add(createLambdaParam(p.lambda_param(), p.default_assignment().expression(), false, false));
+            }
+        }
+        if (ctx.lambda_param_no_default() != null) {
+            for (PythonParser.Lambda_param_no_defaultContext p : ctx.lambda_param_no_default()) {
+                parameters.add(createLambdaParam(p.lambda_param(), null, false, false));
+            }
+        }
+        if (ctx.lambda_param_with_default() != null) {
+            for (PythonParser.Lambda_param_with_defaultContext p : ctx.lambda_param_with_default()) {
+                parameters.add(createLambdaParam(p.lambda_param(), p.default_assignment().expression(), false, false));
+            }
+        }
+        if (ctx.lambda_star_etc() != null) {
+            PythonParser.Lambda_star_etcContext s = ctx.lambda_star_etc();
+            if (s.lambda_param_no_default() != null) {
+                parameters.add(createLambdaParam(s.lambda_param_no_default().lambda_param(), null, true, false));
+            }
+            if (s.lambda_param_maybe_default() != null) {
+                for (PythonParser.Lambda_param_maybe_defaultContext p : s.lambda_param_maybe_default()) {
+                    parameters.add(createLambdaParam(p.lambda_param(), p.default_assignment() != null ? p.default_assignment().expression() : null, false, false));
+                }
+            }
+            if (s.lambda_kwds() != null) {
+                parameters.add(createLambdaParam(s.lambda_kwds().lambda_param_no_default().lambda_param(), null, false, true));
+            }
+        }
+    }
+
+    private LangASTNode createLambdaParam(PythonParser.Lambda_paramContext p, PythonParser.ExpressionContext defaultVal, boolean isStar, boolean isDoubleStar) {
+        LangASTNode defaultValueExpression = defaultVal != null ? mainBuilder.visit(defaultVal) : null;
+        extension.ast.node.declaration.LangSingleVariableDeclaration decl = LangASTNodeFactory.createSingleVariableDeclaration(p.name().getText(), defaultValueExpression, p);
+        decl.setParameter(true);
+        decl.setVarArgs(isStar);
+        decl.setKwArgs(isDoubleStar);
+        return decl;
+    }
+
+    public LangASTNode visitStrings(PythonParser.StringsContext ctx) {
+
+        boolean hasFString = !ctx.fstring().isEmpty();
+        boolean hasTString = !ctx.tstring().isEmpty();
+        boolean hasPlainString = !ctx.string().isEmpty();
+
+        if (!hasFString && !hasTString && hasPlainString) {
+            StringBuilder value = new StringBuilder();
+
+            for (PythonParser.StringContext s : ctx.string()) {
+                LangASTNode node = mainBuilder.visit(s);
+                if (node instanceof LangStringLiteral lit) {
+                    value.append(lit.getValue());
+                } else if (node != null) {
+                    value.append(s.getText());
+                }
+            }
+
+            return LangASTNodeFactory.createStringLiteral(ctx, value.toString());
+        }
+
+        List<LangTemplateExpressionPart> parts = new ArrayList<>();
+
+        for (ParseTree child : ctx.children) {
+            LangASTNode node = mainBuilder.visit(child);
+            if (node == null) continue;
+
+            if (node instanceof LangTemplateStringExpression tmpl) {
+                parts.addAll(tmpl.getParts());
+            } else if (node instanceof LangTemplateExpressionPart part) {
+                parts.add(part);
+            } else if (node instanceof LangStringLiteral lit) {
+                LangTemplateExpressionPart part = LangASTNodeFactory.createTemplateExpressionPart(
+                        (ParserRuleContext) child, lit, null
+                );
+                part.addChild(lit);
+                parts.add(part);
+            }
+        }
+
+        LangTemplateStringExpression.TemplateStringKind kind =
+                hasTString ? LangTemplateStringExpression.TemplateStringKind.TSTRING :
+                        LangTemplateStringExpression.TemplateStringKind.FSTRING;
+
+        return LangASTNodeFactory.createTemplateStringExpression(
+                ctx,
+                kind,
+                parts
+        );
+    }
+
+    public LangASTNode visitString(PythonParser.StringContext ctx) {
+        System.out.println("String: " + ctx.getText());
+        return LangASTNodeFactory.createStringLiteral(ctx, ctx.getText());
+    }
+
+    public LangASTNode visitFstring(PythonParser.FstringContext ctx) {
+        List<LangTemplateExpressionPart> parts = new ArrayList<>();
+
+        for (int i = 0; i < ctx.getChildCount(); i++) {
+            ParseTree child = ctx.getChild(i);
+            if (child instanceof TerminalNode) {
+                int type = ((TerminalNode) child).getSymbol().getType();
+                if (type == PythonParser.FSTRING_START || type == PythonParser.FSTRING_END) {
+                    continue;
+                }
+                
+                String tokenText = child.getText();
+                if (!tokenText.isEmpty()) {
+                    LangStringLiteral stringPart = LangASTNodeFactory.createStringLiteral((ParserRuleContext) child, tokenText);
+                    LangTemplateExpressionPart part = LangASTNodeFactory.createTemplateExpressionPart(null, stringPart, null);
+                    part.addChild(stringPart);
+                    parts.add(part);
+                }
+            } else {
+                LangASTNode node = mainBuilder.visit(child);
+                if (node instanceof LangTemplateExpressionPart part) {
+                    parts.add(part);
+                } else if (node != null) {
+                    LangTemplateExpressionPart part = LangASTNodeFactory.createTemplateExpressionPart((ParserRuleContext) child, node, null);
+                    part.addChild(node);
+                    parts.add(part);
+                }
+            }
+        }
+
+        return LangASTNodeFactory.createTemplateStringExpression(ctx,
+                LangTemplateStringExpression.TemplateStringKind.FSTRING, parts);
+    }
+
+    public LangASTNode visitFstring_middle(PythonParser.Fstring_middleContext ctx) {
+        if (ctx.fstring_replacement_field() != null) {
+            return mainBuilder.visit(ctx.fstring_replacement_field());
+        } else if (ctx.FSTRING_MIDDLE() != null) {
+            String text = ctx.FSTRING_MIDDLE().getText();
+            return LangASTNodeFactory.createStringLiteral(ctx, text);
+        }
+        return null;
+    }
+
+    public LangASTNode visitFstring_replacement_field(
+            PythonParser.Fstring_replacement_fieldContext ctx) {
+
+        LangASTNode expr = null;
+        if (ctx.annotated_rhs() != null) {
+            expr = mainBuilder.visit(ctx.annotated_rhs());
+        }
+
+        LangASTNode format = null;
+        if (ctx.fstring_full_format_spec() != null) {
+            format = mainBuilder.visit(ctx.fstring_full_format_spec());
+        }
+
+        LangTemplateExpressionPart part = LangASTNodeFactory.createTemplateExpressionPart(ctx, expr, format);
+        if (expr != null) part.addChild(expr);
+        if (format != null) part.addChild(format);
+        
+        if (ctx.EQUAL() != null) {
+            part.setDebug(true);
+        }
+        
+        if (ctx.fstring_conversion() != null) {
+            part.setConversion(ctx.fstring_conversion().name().getText());
+        }
+
+        return part;
+    }
+
+    public LangASTNode visitFstring_full_format_spec(PythonParser.Fstring_full_format_specContext ctx) {
+        List<LangASTNode> parts = new ArrayList<>();
+        for (PythonParser.Fstring_format_specContext spec : ctx.fstring_format_spec()) {
+            parts.add(mainBuilder.visit(spec));
+        }
+
+        if (parts.size() == 1) return parts.get(0);
+
+        return parts.isEmpty() ? null : parts.get(0);
+    }
+
+    public LangASTNode visitFstring_format_spec(PythonParser.Fstring_format_specContext ctx) {
+        if (ctx.FSTRING_MIDDLE() != null) {
+            return LangASTNodeFactory.createStringLiteral(ctx, ctx.FSTRING_MIDDLE().getText());
+        }
+        if (ctx.fstring_replacement_field() != null) {
+            return mainBuilder.visit(ctx.fstring_replacement_field());
+        }
+        return null;
+    }
+
+    public LangASTNode visitTstring(PythonParser.TstringContext ctx) {
+        List<LangTemplateExpressionPart> parts = new ArrayList<>();
+
+        for (int i = 0; i < ctx.getChildCount(); i++) {
+            ParseTree child = ctx.getChild(i);
+            if (child instanceof TerminalNode) {
+                int type = ((TerminalNode) child).getSymbol().getType();
+                if (type == PythonParser.TSTRING_START || type == PythonParser.TSTRING_END) {
+                    continue;
+                }
+                
+                String tokenText = child.getText();
+                if (!tokenText.isEmpty()) {
+                    LangStringLiteral stringPart = LangASTNodeFactory.createStringLiteral((ParserRuleContext) child, tokenText);
+                    LangTemplateExpressionPart part = LangASTNodeFactory.createTemplateExpressionPart((ParserRuleContext) child, stringPart, null);
+                    parts.add(part);
+                }
+            } else {
+                LangASTNode node = mainBuilder.visit(child);
+                if (node instanceof LangTemplateExpressionPart part) {
+                    parts.add(part);
+                } else if (node != null) {
+                    parts.add(LangASTNodeFactory.createTemplateExpressionPart((ParserRuleContext) child, node, null));
+                }
+            }
+        }
+
+        return LangASTNodeFactory.createTemplateStringExpression(ctx, LangTemplateStringExpression.TemplateStringKind.TSTRING, parts);
+    }
+
+    public LangASTNode visitTstring_middle(PythonParser.Tstring_middleContext ctx) {
+        if (ctx.tstring_replacement_field() != null) {
+            return mainBuilder.visit(ctx.tstring_replacement_field());
+        } else if (ctx.TSTRING_MIDDLE() != null) {
+            String text = ctx.TSTRING_MIDDLE().getText();
+            return LangASTNodeFactory.createStringLiteral(ctx, text);
+        }
+        return null;
+    }
+
+    public LangASTNode visitTstring_replacement_field(PythonParser.Tstring_replacement_fieldContext ctx) {
+        LangASTNode expr = null;
+        if (ctx.annotated_rhs() != null) {
+            expr = mainBuilder.visit(ctx.annotated_rhs());
+        }
+
+        LangASTNode format = null;
+        if (ctx.tstring_full_format_spec() != null) {
+            format = mainBuilder.visit(ctx.tstring_full_format_spec());
+        }
+
+        LangTemplateExpressionPart part = LangASTNodeFactory.createTemplateExpressionPart(ctx, expr, format);
+        
+        if (ctx.EQUAL() != null) {
+            part.setDebug(true);
+        }
+        
+        if (ctx.fstring_conversion() != null) {
+            part.setConversion(ctx.fstring_conversion().name().getText());
+        }
+
+        return part;
+    }
+
+    public LangASTNode visitTstring_full_format_spec(PythonParser.Tstring_full_format_specContext ctx) {
+        List<LangASTNode> parts = new ArrayList<>();
+        for (PythonParser.Tstring_format_specContext spec : ctx.tstring_format_spec()) {
+            parts.add(mainBuilder.visit(spec));
+        }
+        return parts.isEmpty() ? null : parts.get(0);
+    }
+
+    public LangASTNode visitTstring_format_spec(PythonParser.Tstring_format_specContext ctx) {
+        if (ctx.TSTRING_MIDDLE() != null) {
+            return LangASTNodeFactory.createStringLiteral(ctx, ctx.TSTRING_MIDDLE().getText());
+        }
+        if (ctx.tstring_replacement_field() != null) {
+            return mainBuilder.visit(ctx.tstring_replacement_field());
+        }
+        return null;
+    }
+
+    public LangASTNode visitYield_expr(PythonParser.Yield_exprContext ctx) {
+        LangASTNode expression = ctx.star_expressions() != null ? mainBuilder.visit(ctx.star_expressions()) : null;
+        return LangASTNodeFactory.createYieldStatement(ctx, expression);
+    }
+
+    public LangASTNode visitStar_targets(PythonParser.Star_targetsContext ctx) {
+        if (ctx.star_target().size() == 1) {
+            return mainBuilder.visit(ctx.star_target(0));
+        }
+        List<LangASTNode> elements = new ArrayList<>();
+        for (PythonParser.Star_targetContext exprCtx : ctx.star_target()) {
+            LangASTNode expr = mainBuilder.visit(exprCtx);
+            if (expr != null) elements.add(expr);
+        }
+        return LangASTNodeFactory.createTupleLiteral(ctx, elements);
+    }
+
+    public LangASTNode visitStar_target(PythonParser.Star_targetContext ctx) {
+        if (ctx.STAR() != null) {
+            LangASTNode expr = mainBuilder.visit(ctx.star_target());
+            return LangASTNodeFactory.createPrefixExpression(expr, "*", ctx);
+        }
+        return mainBuilder.visit(ctx.target_with_star_atom());
+    }
+
+    public LangASTNode visitTarget_with_star_atom(PythonParser.Target_with_star_atomContext ctx) {
+        if (ctx.t_primary() != null) {
+            LangASTNode primary = mainBuilder.visit(ctx.t_primary());
+            if (ctx.DOT() != null) {
+                return LangASTNodeFactory.createFieldAccess(primary, ctx.name().getText(), ctx);
+            }
+            if (ctx.LSQB() != null) {
+                return LangASTNodeFactory.createIndexAccess(ctx, primary, mainBuilder.visit(ctx.slices()));
+            }
+            return primary;
+        }
+        return mainBuilder.visit(ctx.star_atom());
+    }
+
+    public LangASTNode visitStar_atom(PythonParser.Star_atomContext ctx) {
+        if (ctx.name() != null) return LangASTNodeFactory.createSimpleName(ctx.name().getText(), ctx);
+        if (ctx.target_with_star_atom() != null) return mainBuilder.visit(ctx.target_with_star_atom());
+        if (ctx.star_targets_tuple_seq() != null) {
+            List<LangASTNode> elements = new ArrayList<>();
+            for (PythonParser.Star_targetContext exprCtx : ctx.star_targets_tuple_seq().star_target()) {
+                LangASTNode expr = mainBuilder.visit(exprCtx);
+                if (expr != null) elements.add(expr);
+            }
+            return LangASTNodeFactory.createTupleLiteral(ctx, elements);
+        }
+        if (ctx.star_targets_list_seq() != null) {
+            List<LangASTNode> elements = new ArrayList<>();
+            for (PythonParser.Star_targetContext exprCtx : ctx.star_targets_list_seq().star_target()) {
+                LangASTNode expr = mainBuilder.visit(exprCtx);
+                if (expr != null) elements.add(expr);
+            }
+            return LangASTNodeFactory.createListLiteral(ctx, elements);
+        }
+        return null;
+    }
+
+    public LangASTNode visitT_primary(PythonParser.T_primaryContext ctx) {
+        if (ctx.atom() != null) return mainBuilder.visit(ctx.atom());
+        LangASTNode primary = mainBuilder.visit(ctx.t_primary());
+        if (ctx.DOT() != null) return LangASTNodeFactory.createFieldAccess(primary, ctx.name().getText(), ctx);
+        if (ctx.LSQB() != null) return LangASTNodeFactory.createIndexAccess(ctx, primary, mainBuilder.visit(ctx.slices()));
+        if (ctx.genexp() != null) return mainBuilder.visit(ctx.genexp());
+        if (ctx.LPAR() != null) {
+            LangMethodInvocation invocation = LangASTNodeFactory.createMethodInvocation(ctx);
+            invocation.setExpression(primary);
+            if (primary instanceof LangSimpleName simpleName) {
+                invocation.setName(simpleName.getIdentifier());
+            } else if (primary instanceof LangFieldAccess fieldAccess) {
+                invocation.setName(fieldAccess.getName().getIdentifier());
+            }
+            if (ctx.arguments() != null) processArguments(ctx.arguments(), invocation);
+            return invocation;
+        }
+        return primary;
+    }
+
+    public LangASTNode visitNamed_expression(PythonParser.Named_expressionContext ctx) {
+        if (ctx.assignment_expression() != null) {
+            return mainBuilder.visit(ctx.assignment_expression());
+        }
+        return mainBuilder.visit(ctx.expression());
+    }
+
+    public LangASTNode visitSingle_target(PythonParser.Single_targetContext ctx) {
+
+        if (ctx.single_subscript_attribute_target() != null) {
+            return mainBuilder.visit(ctx.single_subscript_attribute_target());
+        }
+
+        if (ctx.name() != null) {
+            return LangASTNodeFactory.createSimpleName(
+                    ctx.name().getText(),
+                    ctx
+            );
+        }
+
+        if (ctx.single_target() != null) {
+            return mainBuilder.visit(ctx.single_target());
         }
 
         return null;
     }
 
-    public LangASTNode visitAtom_expr(Python3Parser.Atom_exprContext ctx) {
-        // Handle the base atom (which could be a function name like "print")
-        LangASTNode baseExpr = mainBuilder.visit(ctx.atom());
+    public LangASTNode visitSingle_subscript_attribute_target(
+            PythonParser.Single_subscript_attribute_targetContext ctx) {
 
-        // If there are no trailers, just return the atom
-        if (ctx.trailer().isEmpty()) {
-            return baseExpr;
+        LangASTNode base = mainBuilder.visit(ctx.t_primary());
+
+        if (ctx.name() != null) {
+            return LangASTNodeFactory.createFieldAccess(
+                    base,
+                    ctx.name().getText(),
+                    ctx
+            );
         }
 
-        if (ctx.AWAIT() != null) {
-            LangASTNode innerExpr = mainBuilder.visit(ctx.atom());
-            return LangASTNodeFactory.createAwaitExpression(ctx, innerExpr);
+        if (ctx.slices() != null) {
+            LangASTNode slices = mainBuilder.visit(ctx.slices());
+            return LangASTNodeFactory.createIndexAccess(ctx, base, slices);
         }
 
-        // Process trailers (method calls, attribute access, etc.)
-        LangASTNode result = baseExpr;
-        for (Python3Parser.TrailerContext trailerCtx : ctx.trailer()) {
-            if (trailerCtx.OPEN_PAREN() != null) {
-                // This is a function call like print(i) or a method call like obj.method()
-                LangMethodInvocation methodInvocation = LangASTNodeFactory.createMethodInvocation(ctx.getParent());
-
-                // Set the expression - this is the object on which the method is called
-                methodInvocation.setExpression(result);
-
-                // Process arguments if they exist
-                if (trailerCtx.arglist() != null) {
-                    for (Python3Parser.ArgumentContext argCtx : trailerCtx.arglist().argument()) {
-                        // Visit each argument and add it to the method invocation
-                        LangASTNode argNode = mainBuilder.visit(argCtx);
-                        if (argNode != null) {
-                            methodInvocation.addArgument(argNode);
-                        }
-                    }
-                }
-
-                result = methodInvocation;
-            } else if (trailerCtx.DOT() != null && trailerCtx.name() != null) {
-                // This is attribute access: obj.attr
-                String attrName = trailerCtx.name().getText();
-
-                // Create a field access node that combines the object and the field name
-                result = LangASTNodeFactory.createFieldAccess(result, attrName, trailerCtx);
-            } else if (trailerCtx.OPEN_BRACK() != null && trailerCtx.CLOSE_BRACK() != null) {
-                // This is index access: obj[index] or dict["key"]
-                // Use the existing visitTrailer logic but update the target
-                LangASTNode trailerResult = mainBuilder.visit(trailerCtx);
-
-                // The visitTrailer method returns LangIndexAccess with null target
-                if (trailerResult instanceof LangIndexAccess indexAccess) {
-                    // set the correct target
-                    indexAccess.setTarget(result);
-                    result = indexAccess;
-                }
-            } else {
-                LangASTNode trailerResult = mainBuilder.visit(trailerCtx);
-                if (trailerResult instanceof LangFieldAccess fieldAccess && fieldAccess.getExpression() == null) {
-                    fieldAccess.setExpression(result);
-                    result = fieldAccess;
-                } else {
-                    result = trailerResult;
-                }
-            }
-        }
-        return result;
+        return base;
     }
 
-    public LangASTNode visitStar_expr(Python3Parser.Star_exprContext ctx) {
-        LangASTNode expr = mainBuilder.visit(ctx.expr());
-        return LangASTNodeFactory.createPrefixExpression(expr, OperatorEnum.fromSymbol("*").getSymbol(), ctx);
-    }
+    public LangASTNode visitGroup(PythonParser.GroupContext ctx) {
+        LangASTNode innerExpression;
 
-
-    public LangASTNode visitTestlist_star_expr(Python3Parser.Testlist_star_exprContext ctx) {
-        // Handle single element case
-        if (ctx.test().size() == 1 && ctx.star_expr().isEmpty()) {
-            return mainBuilder.visit(ctx.test(0));
+        if (ctx.yield_expr() != null) {
+            innerExpression = mainBuilder.visit(ctx.yield_expr());
+        } else if (ctx.named_expression() != null) {
+            innerExpression = mainBuilder.visit(ctx.named_expression());
+        } else {
+            // Should never happen according to grammar
+            throw new IllegalStateException("Empty group: " + ctx.getText());
         }
 
-        // Handle multiple elements or star expressions - create a list/tuple
+        return LangASTNodeFactory.createParenthesizedExpression(ctx, innerExpression);
+    }
+
+    public LangASTNode visitAssignment_expression(PythonParser.Assignment_expressionContext ctx) {
+        LangASTNode left = LangASTNodeFactory.createSimpleName(ctx.name().getText(), ctx.name());
+        LangASTNode right = mainBuilder.visit(ctx.expression());
+        return LangASTNodeFactory.createAssignment(":=", left, right, ctx);
+    }
+
+    public LangASTNode visitSlices(PythonParser.SlicesContext ctx) {
+        if (ctx.slice().size() == 1) {
+            return mainBuilder.visit(ctx.slice(0));
+        }
         List<LangASTNode> elements = new ArrayList<>();
-
-        // Add regular test expressions
-        for (Python3Parser.TestContext testCtx : ctx.test()) {
-            elements.add(mainBuilder.visit(testCtx));
+        for (PythonParser.SliceContext sliceCtx : ctx.slice()) {
+            LangASTNode slice = mainBuilder.visit(sliceCtx);
+            if (slice != null) {
+                elements.add(slice);
+            }
         }
-
-        // Add star expressions
-        for (Python3Parser.Star_exprContext starCtx : ctx.star_expr()) {
-            elements.add(mainBuilder.visit(starCtx));
-        }
-
-        if (elements.size() > 1) {
-            return LangASTNodeFactory.createTupleLiteral(ctx, elements);
-        }
-
-        // Single element
-        return elements.get(0);
+        LangTupleLiteral tuple = LangASTNodeFactory.createTupleLiteral(ctx, elements);
+        tuple.setParenthesized(false);
+        return tuple;
     }
 
-    public LangASTNode visitExpr_stmt(Python3Parser.Expr_stmtContext ctx) {
-        if (ctx.ASSIGN().isEmpty() && ctx.augassign() == null) {
-            LangASTNode expr = mainBuilder.visit(ctx.testlist_star_expr(0));
-
-            if (expr instanceof LangStringLiteral && isModuleLevelDocstring(ctx)) {
-                return LangASTNodeFactory.createComment(ctx, ((LangStringLiteral) expr).getValue(), false, true);
-            }
-
-            return LangASTNodeFactory.createExpressionStatement(expr, ctx);
-        }
-
-        // Augmented assignment (+=, -=, etc.)
-        if (ctx.augassign() != null) {
-            LangASTNode left = mainBuilder.visit(ctx.testlist_star_expr(0));
-
-            // Grammar: augassign (yield_expr | testlist)
-            LangASTNode right = null;
-            if (ctx.yield_expr() != null && !ctx.yield_expr().isEmpty()) {
-                right = mainBuilder.visit(ctx.yield_expr(0));
-            } else if (ctx.testlist() != null) {
-                right = mainBuilder.visit(ctx.testlist());
-            }
-
-            if (left == null) left = LangASTNodeFactory.createSimpleName("UNKNOWN_LEFT", ctx);
-            if (right == null) right = LangASTNodeFactory.createSimpleName("UNKNOWN_RIGHT", ctx);
-
-            String operator = ctx.augassign().getText();
-            LangAssignment assignment = LangASTNodeFactory.createAssignment(operator, left, right, ctx);
-            return LangASTNodeFactory.createExpressionStatement(assignment, ctx);
-        }
-
-
-        List<Python3Parser.Testlist_star_exprContext> parts = ctx.testlist_star_expr();
-        int count = parts != null ? parts.size() : 0;
-
-        if (count == 1 && ctx.yield_expr() != null && !ctx.yield_expr().isEmpty()) {
-            LangASTNode left = mainBuilder.visit(parts.get(0));
-            LangASTNode right = mainBuilder.visit(ctx.yield_expr(0));
-
-            if (left == null) left = LangASTNodeFactory.createSimpleName("UNKNOWN_LEFT", ctx);
-            if (right == null) right = LangASTNodeFactory.createSimpleName("UNKNOWN_RIGHT", ctx);
-
-            LangAssignment assignment = LangASTNodeFactory.createAssignment("=", left, right, ctx);
-            return LangASTNodeFactory.createExpressionStatement(assignment, ctx);
-        }
-
-        if (count >= 2 && (ctx.yield_expr() == null || ctx.yield_expr().isEmpty())) {
-            LangASTNode right = mainBuilder.visit(parts.get(count - 1));
-            for (int i = count - 2; i >= 0; i--) {
-                LangASTNode left = mainBuilder.visit(parts.get(i));
-                if (left == null) left = LangASTNodeFactory.createSimpleName("UNKNOWN_LEFT", ctx);
-                if (right == null) right = LangASTNodeFactory.createSimpleName("UNKNOWN_RIGHT", ctx);
-                right = LangASTNodeFactory.createAssignment("=", left, right, ctx);
-            }
-            return LangASTNodeFactory.createExpressionStatement(right, ctx);
-        }
-
-        if (count >= 1 && ctx.yield_expr() != null && !ctx.yield_expr().isEmpty()) {
-            LangASTNode right = mainBuilder.visit(ctx.yield_expr(0));
-            if (right == null) right = LangASTNodeFactory.createSimpleName("UNKNOWN_RIGHT", ctx);
-
-            for (int i = count - 1; i >= 0; i--) {
-                LangASTNode left = mainBuilder.visit(parts.get(i));
-                if (left == null) left = LangASTNodeFactory.createSimpleName("UNKNOWN_LEFT", ctx);
-                right = LangASTNodeFactory.createAssignment("=", left, right, ctx);
-            }
-            return LangASTNodeFactory.createExpressionStatement(right, ctx);
-        }
-
-        LangASTNode fallbackExpr = null;
-        if (count >= 1) {
-            fallbackExpr = mainBuilder.visit(parts.get(0));
-            if (fallbackExpr == null) fallbackExpr = LangASTNodeFactory.createSimpleName("UNKNOWN_EXPR", ctx);
-        } else if (ctx.yield_expr() != null && !ctx.yield_expr().isEmpty()) {
-            fallbackExpr = mainBuilder.visit(ctx.yield_expr(0));
-            if (fallbackExpr == null) fallbackExpr = LangASTNodeFactory.createSimpleName("UNKNOWN_YIELD", ctx);
-        }
-        if (fallbackExpr != null) {
-            return LangASTNodeFactory.createExpressionStatement(fallbackExpr, ctx);
-        }
-
-        System.err.println("Warning: Unhandled expr_stmt context, creating placeholder");
-        LangASTNode placeholder = LangASTNodeFactory.createSimpleName("UNSUPPORTED_EXPR", ctx);
-        return LangASTNodeFactory.createExpressionStatement(placeholder, ctx);
-    }
-
-
-    private boolean isModuleLevelDocstring(Python3Parser.Expr_stmtContext ctx) {
-        ParserRuleContext parent = ctx.getParent();
-        while (parent != null) {
-            if (parent instanceof Python3Parser.FuncdefContext ||
-                    parent instanceof Python3Parser.ClassdefContext) {
-                return false; // Inside a function or class
-            }
-            if (parent instanceof Python3Parser.File_inputContext) {
-                return true; // At module level
-            }
-            parent = parent.getParent();
-        }
-        return false;
-    }
-
-    public LangASTNode visitExpr(Python3Parser.ExprContext ctx) {
-        if (ctx.atom_expr() != null) {
-            return mainBuilder.visitAtom_expr(ctx.atom_expr());
-        }
-
-        // Unary prefix
-        if (ctx.expr().size() == 1 && ctx.getChildCount() > 1) {
-            LangASTNode node = mainBuilder.visit(ctx.expr(0)); // operand is the last child
-            for (int i = ctx.getChildCount() - 2; i >= 0; i--) { // wrap from right to left
-                String symbol = ctx.getChild(i).getText();          // "+", "-", or "~"
-                String op = OperatorEnum.fromSymbol(symbol).getSymbol();
-                node = LangASTNodeFactory.createPrefixExpression(node, op, ctx);
-            }
-            return node;
-        }
-
-        if (ctx.expr().size() == 2) {
-            LangASTNode leftNode = mainBuilder.visit(ctx.expr(0));
-            LangASTNode rightNode = mainBuilder.visit(ctx.expr(1));
-            String operator = PyASTBuilderUtil.extractOperator(ctx);
-            return LangASTNodeFactory.createInfixExpression(leftNode, rightNode, operator, ctx);
-        }
-
-        return mainBuilder.visitChildren(ctx);
-    }
-
-    public LangASTNode visitComparison(Python3Parser.ComparisonContext ctx) {
-        // If there's only one expr, just visit it
-        if (ctx.expr().size() == 1) {
-            return mainBuilder.visit(ctx.expr(0));
-        }
-
-        // If there are multiple expressions connected by comparison operators
-        if (ctx.expr().size() >= 2) {
-            LangASTNode leftNode = mainBuilder.visit(ctx.expr(0));
-
-            // Check if the first expression failed to parse
-            if (leftNode == null) {
-                System.err.println("Warning: Left operand is null in comparison: " + ctx.getText());
-                return null;
-            }
-
-            // For each comparison operator and right operand
-            for (int i = 0; i < ctx.comp_op().size(); i++) {
-                LangASTNode rightNode = mainBuilder.visit(ctx.expr(i + 1));
-
-                // Check if the right operand is null
-                if (rightNode == null) {
-                    System.err.println("Warning: Right operand is null in comparison: " + ctx.getText());
-                    return leftNode;
-                }
-
-                String operator = ctx.comp_op(i).getText();
-
-                // Validate operator as well
-                if (operator == null || operator.isEmpty()) {
-                    System.err.println("Warning: Operator is null/empty in comparison: " + ctx.getText());
-                    return leftNode;
-                }
-
-                // Create an infix expression for this comparison
-                leftNode = LangASTNodeFactory.createInfixExpression(leftNode, rightNode, operator, ctx);
-            }
-
-            return leftNode;
-        }
-
-        return mainBuilder.visitChildren(ctx);
-    }
-
-    public LangASTNode visitPattern(Python3Parser.PatternContext ctx) {
-        // If we have an as_pattern, visit it
-        if (ctx.as_pattern() != null) {
-            return mainBuilder.visit(ctx.as_pattern());
-        }
-
-        //TODO
-//        if (ctx.or_pattern() != null) {
-//            return mainBuilder.visit(ctx.or_pattern());
-//        }
-
-        // Should not occur, but as fallback
-        return super.mainBuilder.visitPattern(ctx);
-    }
-
-    public LangASTNode visitTrailer(Python3Parser.TrailerContext ctx) {
-        // Handle index access: [...]
-        if (ctx.OPEN_BRACK() != null && ctx.CLOSE_BRACK() != null && ctx.subscriptlist() != null) {
-                LangASTNode index = mainBuilder.visit(ctx.subscriptlist());
-                return LangASTNodeFactory.createIndexAccess(ctx, null, index);
-        }
-
-        // Handle method calls: (...)
-        if (ctx.OPEN_PAREN() != null && ctx.CLOSE_PAREN() != null) {
-            LangMethodInvocation methodInvocation = LangASTNodeFactory.createMethodInvocation(ctx);
-
-            // Process arguments if they exist
-            if (ctx.arglist() != null) {
-                for (Python3Parser.ArgumentContext argCtx : ctx.arglist().argument()) {
-                    LangASTNode argNode = mainBuilder.visit(argCtx);
-                    if (argNode != null) {
-                        methodInvocation.addArgument(argNode);
-                    }
-                }
-            }
-
-            return methodInvocation;
-        }
-
-        if (ctx.DOT() != null && ctx.name() != null) {
-            String attrName = ctx.name().getText();
-            return LangASTNodeFactory.createFieldAccess(null, attrName, ctx);
-        }
-
-        return LangASTNodeFactory.createSimpleName(ctx.getText(), ctx);
-    }
-
-    public LangASTNode visitSubscriptlist(Python3Parser.SubscriptlistContext ctx) {
-        if (ctx.subscript_().size() == 1) {
-            return mainBuilder.visit(ctx.subscript_(0));
-        }
-
-        // If there are multiple subscripts, create a tuple literal
-        List<LangASTNode> subscripts = new ArrayList<>();
-        for (Python3Parser.Subscript_Context subscriptCtx : ctx.subscript_()) {
-            LangASTNode subscript = mainBuilder.visit(subscriptCtx);
-            if (subscript != null) {
-                subscripts.add(subscript);
-            }
-        }
-
-        return LangASTNodeFactory.createTupleLiteral(ctx, subscripts);
-    }
-
-    public LangASTNode visitSubscript_(Python3Parser.Subscript_Context ctx) {
-        if (ctx.test().size() == 1 && ctx.COLON() == null) {
-            return mainBuilder.visit(ctx.test(0));
+    public LangASTNode visitSlice(PythonParser.SliceContext ctx) {
+        if (ctx.named_expression() != null) {
+            return mainBuilder.visit(ctx.named_expression());
         }
 
         LangASTNode lower = null;
         LangASTNode upper = null;
         LangASTNode step = null;
 
-        List<Python3Parser.TestContext> tests = ctx.test();
+        int colonCount = ctx.COLON().size();
 
-        // Check if the first child is a test expression, then use it as lower bound
-        // First child might be a colon, in which case we use null as lower bound
-        if (!tests.isEmpty() && ctx.getChild(0) == tests.get(0)) {
-            lower = mainBuilder.visit(tests.get(0));
-        }
-
-        if (tests.size() > 1) {
-            upper = mainBuilder.visit(tests.get(1));
-        } else if (tests.size() == 1 && ctx.getChild(0).getText().equals(":")) {
-            upper = mainBuilder.visit(tests.get(0));
-            lower = null;
-        }
-
-        if (ctx.sliceop() != null) {
-            Python3Parser.SliceopContext sliceopCtx = ctx.sliceop();
-            if (sliceopCtx.test() != null) {
-                step = mainBuilder.visit(sliceopCtx.test());
+        for (int i = 0; i < ctx.getChildCount(); i++) {
+            ParseTree child = ctx.getChild(i);
+            if (child instanceof PythonParser.ExpressionContext) {
+                LangASTNode expr = mainBuilder.visit(child);
+                if (lower == null && colonCount > 0 && i < ctx.children.indexOf(ctx.COLON(0))) {
+                    lower = expr;
+                } else if (upper == null && colonCount > 0 && i > ctx.children.indexOf(ctx.COLON(0))
+                        && (colonCount == 1 || i < ctx.children.indexOf(ctx.COLON(1)))) {
+                    upper = expr;
+                } else if (step == null && colonCount == 2 && i > ctx.children.indexOf(ctx.COLON(1))) {
+                    step = expr;
+                }
             }
         }
 
         return LangASTNodeFactory.createSliceExpression(ctx, lower, upper, step);
     }
 
-
-    public LangASTNode visitTestlist_comp(Python3Parser.Testlist_compContext ctx) {
-
-        if (ctx.comp_for() != null && !ctx.comp_for().isEmpty()) {
-            // visit the first expression and first comp_for
-            LangASTNode expr = mainBuilder.visit(ctx.test(0));
-
-            // Process all comp_for clauses
-            List<LangComprehensionExpression.LangComprehensionClause> clauses = new ArrayList<>();
-            processComprehensionClauses(ctx.comp_for(), clauses);
-
-            // Determine if this is list or generator based on parent context
-            if (ctx.getParent() instanceof Python3Parser.AtomContext parent) {
-                if (parent.OPEN_BRACK() != null) {
-                    return LangASTNodeFactory.createListComprehension(ctx, expr, clauses);
-                } else {
-                    return LangASTNodeFactory.createGeneratorExpression(ctx, expr, clauses);
-                }
-            }
-
-            // Default
-            return LangASTNodeFactory.createGeneratorExpression(ctx, expr, clauses);
-        }
-
-        // Regular testlist
-        List<LangASTNode> elements = new ArrayList<>();
-        for (Python3Parser.TestContext testCtx : ctx.test()) {
-            elements.add(mainBuilder.visit(testCtx));
-        }
-
-        if (elements.size() == 1) {
-            return elements.get(0);
-        } else {
-            return LangASTNodeFactory.createTupleLiteral(ctx, elements);
-        }
+    public LangASTNode visitName(PythonParser.NameContext ctx) {
+        return LangASTNodeFactory.createSimpleName(ctx.getText(), ctx);
     }
 
-    public LangASTNode visitDictorsetmaker(Python3Parser.DictorsetmakerContext ctx) {
-
-        if (ctx.comp_for() != null && !ctx.comp_for().isEmpty()) {
-            // Process all comp_for clauses
-            List<LangComprehensionExpression.LangComprehensionClause> clauses = new ArrayList<>();
-            processComprehensionClauses(ctx.comp_for(), clauses);
-
-            if (ctx.COLON() != null && !ctx.COLON().isEmpty()) {
-                // Dictionary comprehension: {key: value for ...}
-                LangASTNode keyExpr = mainBuilder.visit(ctx.test(0));
-                LangASTNode valueExpr = mainBuilder.visit(ctx.test(1));
-                return LangASTNodeFactory.createDictComprehension(ctx, keyExpr, valueExpr, clauses);
-            } else {
-                // Set comprehension: {expr for ...}
-                LangASTNode expr = mainBuilder.visit(ctx.test(0));
-                return LangASTNodeFactory.createSetComprehension(ctx, expr, clauses);
-            }
+    public LangASTNode visitAttr(PythonParser.AttrContext ctx) {
+        List<PythonParser.NameContext> names = ctx.name();
+        LangASTNode result = LangASTNodeFactory.createSimpleName(names.get(0).getText(), names.get(0));
+        for (int i = 1; i < names.size(); i++) {
+            result = LangASTNodeFactory.createFieldAccess(result, names.get(i).getText(), ctx);
         }
-
-        // Regular dictionary or set literal
-        if (ctx.COLON() != null && !ctx.COLON().isEmpty()) {
-            LangDictionaryLiteral dict = LangASTNodeFactory.createDictionaryLiteral(ctx);
-            if (ctx.test().size() % 2 == 0) {
-                for (int i = 0; i < ctx.test().size(); i += 2) {
-                    LangASTNode key = mainBuilder.visit(ctx.test(i));
-                    LangASTNode value = mainBuilder.visit(ctx.test(i + 1));
-                    dict.addEntry(key, value);
-                }
-            }
-            return dict;
-        } else {
-            List<LangASTNode> elements = new ArrayList<>();
-            for (Python3Parser.TestContext testCtx : ctx.test()) {
-                elements.add(mainBuilder.visit(testCtx));
-            }
-            return LangASTNodeFactory.createListLiteral(ctx, elements);
-        }
+        return result;
     }
 
-
-    private void processComprehensionClauses(Python3Parser.Comp_forContext compFor,
-                                             List<LangComprehensionExpression.LangComprehensionClause> clauses) {
-        if (compFor == null) return;
-
-        boolean isAsync = compFor.ASYNC() != null;
-
-        List<LangASTNode> targets = new ArrayList<>();
-        if (compFor.exprlist() != null) {
-            LangASTNode targetNode = mainBuilder.visit(compFor.exprlist());
-            if (targetNode instanceof LangTupleLiteral tupleLiteral) {
-                targets.addAll(tupleLiteral.getElements());
-            } else {
-                targets.add(targetNode);
-            }
+    public LangASTNode visitName_or_attr(PythonParser.Name_or_attrContext ctx) {
+        List<PythonParser.NameContext> names = ctx.name();
+        LangASTNode result = LangASTNodeFactory.createSimpleName(names.get(0).getText(), names.get(0));
+        for (int i = 1; i < names.size(); i++) {
+            result = LangASTNodeFactory.createFieldAccess(result, names.get(i).getText(), ctx);
         }
-
-        LangExpression iterable = null;
-        if (compFor.or_test() != null) {
-            LangASTNode iterableNode = mainBuilder.visit(compFor.or_test());
-            if (iterableNode instanceof LangExpression) {
-                iterable = (LangExpression) iterableNode;
-            }
-        }
-
-        List<LangASTNode> filters = new ArrayList<>();
-
-        // Create clause for current comp_for before processing comp_iter
-        LangComprehensionExpression.LangComprehensionClause clause =
-                LangASTNodeFactory.createComprehensionClause(compFor, isAsync, targets, iterable, filters);
-        clauses.add(clause);
-
-        if (compFor.comp_iter() != null) {
-            // Process comp_iter, handle both filters and nested comp_for
-            processCompIter(compFor.comp_iter(), filters, clauses);
-        }
+        return result;
     }
 
-    private void processCompIter(Python3Parser.Comp_iterContext compIter,
-                                 List<LangASTNode> currentFilters,
-                                 List<LangComprehensionExpression.LangComprehensionClause> allClauses) {
-        if (compIter == null) return;
-
-        if (compIter.comp_if() != null) {
-            // filter condition
-            LangASTNode condition = mainBuilder.visit(compIter.comp_if().test_nocond());
-            if (condition != null) {
-                currentFilters.add(condition);
-            }
-            // Continue processing nested comp_iter
-            if (compIter.comp_if().comp_iter() != null) {
-                processCompIter(compIter.comp_if().comp_iter(), currentFilters, allClauses);
-            }
-        } else if (compIter.comp_for() != null) {
-            // This is a nested comp_for, process it as a new clause
-            processComprehensionClauses(compIter.comp_for(), allClauses);
-        }
+    public LangASTNode visitLiteral_expr(PythonParser.Literal_exprContext ctx) {
+        if (ctx.strings() != null) return mainBuilder.visit(ctx.strings());
+        if (ctx.signed_number() != null) return LangASTNodeFactory.createNumberLiteral(ctx, ctx.signed_number().getText());
+        if (ctx.complex_number() != null) return LangASTNodeFactory.createNumberLiteral(ctx, ctx.complex_number().getText());
+        return null;
     }
 }

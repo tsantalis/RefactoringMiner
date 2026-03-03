@@ -225,7 +225,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					AbstractExpression expr2 = superCallEntries2.get(i);
 					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(expr1, expr2, getOriginalClass().getPrimaryConstructor().get(), getNextClass().getPrimaryConstructor().get(), this, modelDiff);
 					Set<Refactoring> refactorings2 = new LinkedHashSet<>();
-					VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(mapper, refactorings2, this, new LinkedHashSet<>());
+					VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(mapper, refactorings2, this, modelDiff, new LinkedHashSet<>());
 					refactorings.addAll(analysis.getVariableRenames());
 					refactorings.addAll(refactorings2);
 				}

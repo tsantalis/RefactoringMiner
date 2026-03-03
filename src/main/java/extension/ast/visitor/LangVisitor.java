@@ -815,6 +815,31 @@ public class LangVisitor implements LangASTVisitor {
         }
     }
 
+    @Override
+    public void visit(LangTemplateStringExpression langTemplateStringExpression) {
+        LeafExpression templateStringExpr = new LeafExpression(cu, sourceFolder, filePath,
+                langTemplateStringExpression, LocationInfo.CodeElementType.STRING_LITERAL, container);
+        stringLiterals.add(templateStringExpr);
+
+        // Visit all template expression parts
+        if (langTemplateStringExpression.getParts() != null) {
+            for (LangTemplateExpressionPart part : langTemplateStringExpression.getParts()) {
+                if (part.getExpression() != null) {
+                    part.getExpression().accept(this);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void visit(LangTemplateExpressionPart langTemplateExpressionPart) {
+        // Visit the contained expression
+        if (langTemplateExpressionPart.getExpression() != null) {
+            langTemplateExpressionPart.getExpression().accept(this);
+        }
+    }
+
+
 
     public LangCompilationUnit getCu() {
         return cu;

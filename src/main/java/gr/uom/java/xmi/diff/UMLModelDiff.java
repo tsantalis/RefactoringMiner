@@ -1340,7 +1340,7 @@ public class UMLModelDiff {
 			for(UMLClassDiff classDiff : commonClassDiffList) {
 				UMLType superType2 = classDiff.getNewSuperclass();
 				boolean sameSuperType = superType1 != null && superType2 != null && superType1.equalClassType(superType2);
-				if(!sameSuperType && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && classDiff.getAddedOperations().size() > classDiff.getOperationBodyMapperList().size()) {
+				if(!sameSuperType && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && classDiff.getAddedOperations().size() >= classDiff.getOperationBodyMapperList().size()) {
 					if(matcher instanceof UMLClassMatcher.RelaxedRename) {
 						Pair<UMLClass, UMLClass> pair = Pair.of(removedClass, classDiff.getNextClass());
 						if(processedClassPairs.contains(pair)) {
@@ -2667,14 +2667,16 @@ public class UMLModelDiff {
 			for(UMLOperation operation : addedClass.getOperations()) {
 				//check if the method is moved
 				boolean movedMethod = false;
+				int count = 0;
 				for(Refactoring r : refactorings) {
 					if(r instanceof MoveOperationRefactoring) {
 						MoveOperationRefactoring move = (MoveOperationRefactoring)r;
-						if(move.getMovedOperation().equals(operation)) {
+						if(move.getMovedOperation().equals(operation) && count < refactorings.size()-1) {
 							movedMethod = true;
 							break;
 						}
 					}
+					count++;
 				}
 				if(!movedMethod) {
 					addedOperations.add(operation);
@@ -6327,7 +6329,8 @@ public class UMLModelDiff {
 			parameterToArgumentMap1.put(addedOperationInvocation.getExpression() + ".", "");
 			parameterToArgumentMap2.put(LANG2.THIS_DOT, "");
 		}
-		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(addedOperation.getClassName()), addedOperationInvocation, nested, leaves1Sublist);
+		UMLClassBaseDiff classDiff = getUMLClassDiff(addedOperation.getClassName());
+		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2, classDiff, addedOperationInvocation, nested, leaves1Sublist, Optional.of(this));
 		if(!nested) {
 			CallTreeNode root = new CallTreeNode(mapper.getContainer1(), addedOperation, addedOperationInvocation);
 			CallTree callTree = new CallTree(root);

@@ -27,7 +27,11 @@ public class PyASTFlattener implements LangASTFlattener {
     }
 
     public static String flattenNode(LangASTNode node) {
-        return new PyASTFlattener(node).getResult();
+        PyASTFlattener f = new PyASTFlattener(node);
+        if (node != null) {
+            node.accept(f);
+        }
+        return f.getResult();
     }
 
     @Override
@@ -204,7 +208,7 @@ public class PyASTFlattener implements LangASTFlattener {
     @Override
     public void visit(LangAssignment langAssignment) {
         langAssignment.getLeftSide().accept(this);
-        builder.append("=");
+        builder.append(langAssignment.getOperator());
         langAssignment.getRightSide().accept(this);
     }
 
@@ -362,6 +366,42 @@ public class PyASTFlattener implements LangASTFlattener {
     @Override
     public void visit(LangImportStatement.LangImportItem langImportItem) {
     	
+    }
+
+    @Override
+    public void visit(LangTemplateStringExpression expr) {
+        switch (expr.getKind()) {
+            case FSTRING -> builder.append("f\"");
+            case TSTRING -> builder.append("t\"");
+            default -> builder.append("\"");
+        }
+
+        for (LangTemplateExpressionPart part : expr.getParts()) {
+            part.accept(this);
+        }
+
+        builder.append("\"");
+    }
+
+    @Override
+    public void visit(LangTemplateExpressionPart part) {
+        if (part.getExpression() instanceof LangStringLiteral) {
+            part.getExpression().accept(this);
+        } else {
+            builder.append("{");
+            part.getExpression().accept(this);
+            if (part.isDebug()) {
+                builder.append("=");
+            }
+            if (part.getConversion() != null) {
+                builder.append("!").append(part.getConversion());
+            }
+            if (part.getFormatExpression() != null) {
+                builder.append(":");
+                part.getFormatExpression().accept(this);
+            }
+            builder.append("}");
+        }
     }
 
     @Override

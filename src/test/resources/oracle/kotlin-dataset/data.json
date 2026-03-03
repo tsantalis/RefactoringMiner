@@ -9782,6 +9782,13 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable leak : Inferred to leakTrace : Inferred in method private View.onLeakTraceSelected(analysis HeapAnalysisSuccess, heapAnalysisId Long, leakTraceIndex Int) from class leakcanary.internal.activity.screen.LeakScreen",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

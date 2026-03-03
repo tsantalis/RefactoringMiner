@@ -22,12 +22,15 @@ public class LangWithContextItem extends LangStatement {
     public LangWithContextItem(PositionInfo positionInfo, LangASTNode expr) {
         super(NodeTypeEnum.WITH_CONTEXT_ITEM, positionInfo);
         this.contextExpression = expr;
+        if (expr != null) addChild(expr);
     }
 
     public LangWithContextItem(PositionInfo positionInfo, LangASTNode expr, LangASTNode alias) {
         super(NodeTypeEnum.WITH_CONTEXT_ITEM, positionInfo);
         this.contextExpression = expr;
+        if (expr != null) addChild(expr);
         this.alias = alias;
+        if (alias != null) addChild(alias);
     }
 
 
@@ -50,6 +53,7 @@ public class LangWithContextItem extends LangStatement {
 
     public void setAlias(LangASTNode alias) {
         this.alias = alias;
+        if (alias != null) addChild(alias);
     }
 
     @Override

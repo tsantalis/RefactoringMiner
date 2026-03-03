@@ -3295,7 +3295,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public UMLOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper, UMLOperation addedOperation,
-			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLAbstractClassDiff classDiff, AbstractCall operationInvocation, boolean nested, Optional<List<AbstractCodeFragment>> leaves1Sublist) throws RefactoringMinerTimedOutException {
+			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLAbstractClassDiff classDiff, AbstractCall operationInvocation, boolean nested, Optional<List<AbstractCodeFragment>> leaves1Sublist, Optional<UMLModelDiff> modelDiff) throws RefactoringMinerTimedOutException {
 		this.parentMapper = operationBodyMapper;
 		this.operationInvocation = operationInvocation;
 		this.nested = nested;
@@ -3307,7 +3307,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.LANG1 = PathFileUtils.getLang(container1.getLocationInfo().getFilePath());
 		this.LANG2 = PathFileUtils.getLang(container2.getLocationInfo().getFilePath());
 		this.classDiff = classDiff;
-		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
+		if(classDiff !=  null) {
+			this.modelDiff = classDiff.getModelDiff();
+		}
+		else if(modelDiff.isPresent()) {
+			this.modelDiff = modelDiff.get();
+		}
 		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
 		this.nonMappedLeavesT1 = new ArrayList<AbstractCodeFragment>();
 		this.nonMappedLeavesT2 = new ArrayList<AbstractCodeFragment>();
@@ -4420,7 +4425,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public void computeRefactoringsWithinBody() throws RefactoringMinerTimedOutException {
-		VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(this, refactorings, classDiff, matchedVariables);
+		VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(this, refactorings, classDiff, modelDiff, matchedVariables);
 		refactorings.addAll(analysis.getVariableRenames());
 		refactorings.addAll(analysis.getVariableMerges());
 		refactorings.addAll(analysis.getVariableSplits());

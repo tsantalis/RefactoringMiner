@@ -9,22 +9,21 @@ import extension.ast.node.declaration.LangMethodDeclaration;
 import extension.ast.node.declaration.LangSingleVariableDeclaration;
 import extension.ast.node.declaration.LangTypeDeclaration;
 import extension.ast.node.expression.LangAssignment;
+import extension.ast.node.expression.LangFieldAccess;
 import extension.ast.node.expression.LangSimpleName;
 import extension.ast.node.literal.LangStringLiteral;
 import extension.ast.node.metadata.LangAnnotation;
 import extension.ast.node.metadata.comment.LangComment;
 import extension.ast.node.statement.LangBlock;
 import extension.ast.node.statement.LangExpressionStatement;
-import extension.base.lang.python.Python3Parser;
-import extension.base.lang.python.Python3Parser.TypedargslistContext;
+import extension.base.lang.python.PythonParser;
 import gr.uom.java.xmi.Visibility;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.antlr.v4.runtime.tree.ParseTree;
 
 public class PyDeclarationASTBuilder extends PyBaseASTBuilder {
 
@@ -32,64 +31,95 @@ public class PyDeclarationASTBuilder extends PyBaseASTBuilder {
         super(mainBuilder);
     }
 
-
-    public LangASTNode visitClassdef(Python3Parser.ClassdefContext ctx) {
-        LangTypeDeclaration langTypeDeclaration = LangASTNodeFactory.createTypeDeclaration(ctx);
-
-        langTypeDeclaration.setAbstract(isClassAbstract(ctx));
-        langTypeDeclaration.setEnum(isClassEnum(ctx));
-        langTypeDeclaration.setActualSignature("class " + ctx.name().getText());
-        langTypeDeclaration.setVisibility(Visibility.PUBLIC);
-        langTypeDeclaration.setTopLevel(true);
-
-        setSuperClasses(ctx, langTypeDeclaration);
-
-        if (ctx.block() != null && !ctx.block().stmt().isEmpty()) {
-            for (Python3Parser.StmtContext stmtContext : ctx.block().stmt()) {
-                LangASTNode statement = mainBuilder.visit(stmtContext);
-                if (statement instanceof LangMethodDeclaration) {
-                    langTypeDeclaration.addMethod((LangMethodDeclaration) statement);
-                } else if (statement instanceof LangExpressionStatement exprStatement) {
-                    if (exprStatement.getExpression() instanceof LangAssignment assignment)
-                        langTypeDeclaration.addAssignment(assignment);
-                    else if (exprStatement.getExpression() instanceof LangStringLiteral str) {
-                        LangComment comment = LangASTNodeFactory.createComment(ctx, str.getValue(), false, true);
-                        langTypeDeclaration.addComment(comment);
+    public LangASTNode visitClass_def(PythonParser.Class_defContext ctx) {
+        List<LangAnnotation> annotations = new ArrayList<>();
+        if (ctx.decorators() != null) {
+            LangASTNode decorators = mainBuilder.visit(ctx.decorators());
+            if (decorators instanceof LangBlock) {
+                for (LangASTNode node : ((LangBlock) decorators).getStatements()) {
+                    if (node instanceof LangAnnotation) {
+                        annotations.add((LangAnnotation) node);
                     }
-                    else {
-                        langTypeDeclaration.addStatement(statement);
-                    }
-                }
-                else {
-                    langTypeDeclaration.addStatement(statement);
                 }
             }
         }
-        return langTypeDeclaration;
+        return visitClass_def_raw(ctx.class_def_raw(), annotations);
     }
 
+    public LangASTNode visitClass_def_raw(PythonParser.Class_def_rawContext ctx, List<LangAnnotation> annotations) {
+        String className = ctx.name().getText();
+        LangTypeDeclaration typeDeclaration = LangASTNodeFactory.createTypeDeclaration(className, ctx);
+        typeDeclaration.setLangAnnotations(annotations);
+        typeDeclaration.setActualSignature("class " + ctx.name().getText());
+        typeDeclaration.setVisibility(Visibility.PUBLIC);
+        typeDeclaration.setTopLevel(true);
+        typeDeclaration.setAbstract(isClassAbstract(ctx));
+        typeDeclaration.setEnum(isClassEnum(ctx));
 
-    private void setSuperClasses(Python3Parser.ClassdefContext ctx, LangTypeDeclaration typeDeclaration) {
-        if (ctx.arglist() != null) {
-            List<LangSimpleName> superClasses = new ArrayList<>();
-            Python3Parser.ArglistContext arglist = ctx.arglist();
+        // TODO
+//        if (ctx.type_params() != null) {
+//            typeDeclaration.setTypeParameters(ctx.type_params().getText());
+//        }
 
-            for (Python3Parser.ArgumentContext argContext : arglist.argument()) {
-
-                String argText = argContext.getText();
-                if (argText.contains("metaclass=")) {
-                    continue; // Skip metaclass arguments
-                }
-                superClasses.add(LangASTNodeFactory.createSimpleName(argText, argContext));
-            }
-            typeDeclaration.setSuperClassNames(superClasses);
+        if (ctx.arguments() != null) {
+            setSuperClasses(ctx.arguments(), typeDeclaration);
         }
+
+
+
+        if (ctx.type_params() != null) {
+            LangASTNode typeParams = mainBuilder.visit(ctx.type_params());
+            // Store type params
+        }
+
+        LangBlock body = (LangBlock) mainBuilder.visit(ctx.block());
+        if (body != null) {
+            if (!body.getStatements().isEmpty() &&
+                    body.getStatements().get(0) instanceof LangExpressionStatement stmt &&
+                    stmt.getExpression() instanceof LangStringLiteral str) {
+                LangComment docstring = LangASTNodeFactory.createComment(ctx, str.getValue(), false, true);
+                typeDeclaration.addComment(docstring);
+                body.getStatements().remove(0);
+            }
+
+            for (LangASTNode statement : body.getStatements()) {
+                if (statement instanceof LangTypeDeclaration) {
+                    typeDeclaration.addStatement(statement);
+                } else if (statement instanceof LangMethodDeclaration) {
+                    typeDeclaration.addMethod((LangMethodDeclaration) statement);
+                } else if (statement instanceof LangComment) {
+                    typeDeclaration.addComment((LangComment) statement);
+                } else if (statement instanceof LangExpressionStatement exprStmt && exprStmt.getExpression() instanceof LangAssignment assignment) {
+                    typeDeclaration.addAssignment(assignment);
+                } else {
+                    typeDeclaration.addStatement(statement);
+                }
+            }
+        }
+
+        return typeDeclaration;
     }
 
-    private boolean isClassAbstract(Python3Parser.ClassdefContext ctx){
-        // Check inheritance or metaclass for ABC-related types
-        if (ctx.arglist() != null) {
-            String argsText = ctx.arglist().getText();
+    private void setSuperClasses(PythonParser.ArgumentsContext ctx,
+                                 LangTypeDeclaration typeDeclaration) {
+        if (ctx.args() == null) return;
+        List<LangSimpleName> superClasses = new ArrayList<>();
+
+        for (PythonParser.ExpressionContext expr : ctx.args().expression()) {
+            String argText = expr.getText();
+            if (argText.contains("metaclass=")) {
+                continue;
+            }
+            superClasses.add(
+                    LangASTNodeFactory.createSimpleName(argText, expr)
+            );
+        }
+        typeDeclaration.setSuperClassNames(superClasses);
+    }
+
+    private boolean isClassAbstract(PythonParser.Class_def_rawContext ctx) {
+        if (ctx.arguments() != null) {
+            String argsText = ctx.arguments().getText();
             return argsText.contains("metaclass=ABCMeta") ||
                     argsText.contains("metaclass=abc.ABCMeta") ||
                     argsText.contains("ABC") ||
@@ -98,16 +128,10 @@ public class PyDeclarationASTBuilder extends PyBaseASTBuilder {
         return false;
     }
 
-    private boolean isClassEnum(Python3Parser.ClassdefContext ctx){
-        if (ctx.arglist() != null) {
-            for (Python3Parser.ArgumentContext argContext : ctx.arglist().argument()) {
-                String argText = argContext.getText();
-
-                if (argText.contains("=")) {
-                    continue;
-                }
-
-                // Check if any parent class is an enum type
+    private boolean isClassEnum(PythonParser.Class_def_rawContext ctx) {
+        if (ctx.arguments() != null && ctx.arguments().args() != null) {
+            for (PythonParser.ExpressionContext expr : ctx.arguments().args().expression()) {
+                String argText = expr.getText();
                 if (argText.equals("Enum") || argText.equals("IntEnum") ||
                         argText.equals("Flag") || argText.equals("IntFlag") ||
                         argText.equals("AutoEnum") || argText.equals("StrEnum") ||
@@ -116,83 +140,69 @@ public class PyDeclarationASTBuilder extends PyBaseASTBuilder {
                 }
             }
         }
-
         return false;
     }
-    
-    public LangASTNode visitFuncdef(Python3Parser.FuncdefContext ctx) {
 
+    public LangASTNode visitFunction_def(PythonParser.Function_defContext ctx) {
+        List<LangAnnotation> annotations = new ArrayList<>();
+        if (ctx.decorators() != null) {
+            LangASTNode decorators = mainBuilder.visit(ctx.decorators());
+            if (decorators instanceof LangBlock) {
+                for (LangASTNode node : ((LangBlock) decorators).getStatements()) {
+                    if (node instanceof LangAnnotation) {
+                        annotations.add((LangAnnotation) node);
+                    }
+                }
+            }
+        }
+        return visitFunction_def_raw(ctx.function_def_raw(), annotations);
+    }
+
+    public LangASTNode visitFunction_def_raw(PythonParser.Function_def_rawContext ctx, List<LangAnnotation> annotations) {
         if (ctx.block() == null) {
             System.err.println("Warning: Function " + ctx.name().getText() + " has no body, skipping");
             return null;
         }
 
-        // Collect langSingleVariableDeclarations
-        List<LangSingleVariableDeclaration> langSingleVariableDeclarations = new ArrayList<>();
-        TypedargslistContext typedargslist = ctx.parameters().typedargslist();
-        if (typedargslist != null) {
-            for (Python3Parser.TfpdefContext paramCtx : typedargslist.tfpdef()) {
-                int index = 0;
-                boolean isArgs = false;
-                boolean isKwargs = false;
-                for(ParseTree tree : typedargslist.children) {
-                    if (tree.equals(paramCtx)) {
-                        if (index > 0) {
-                            ParseTree previous = typedargslist.children.get(index - 1);
-                            isArgs = previous.getText().equals("*");
-                            isKwargs = previous.getText().equals("**");
-                        }
-                        break;
-                    }
-                    index++;
-                }
-                LangASTNode defaultValueExpression = null;
-                if (!isArgs && !isKwargs && index + 1 < typedargslist.children.size()) {
-                    ParseTree next = typedargslist.children.get(index + 1);
-                    if(next.getText().equals("=") && index + 2 < typedargslist.children.size()) {
-                        // parameter with default value follows next
-                        ParseTree defaultValue = typedargslist.children.get(index + 2);
-                        defaultValueExpression = mainBuilder.visit(defaultValue);
-                    }
-                }
-                LangSingleVariableDeclaration singleVariableDeclaration =
-                        LangASTNodeFactory.createSingleVariableDeclaration(paramCtx.name().getText(), defaultValueExpression, paramCtx);
-                singleVariableDeclaration.setTypeAnnotation(TypeObjectEnum.OBJECT);
-                singleVariableDeclaration.setParameter(true);
-                singleVariableDeclaration.setVarArgs(isArgs);
-                singleVariableDeclaration.setKwArgs(isKwargs);
-                langSingleVariableDeclarations.add(singleVariableDeclaration);
-            }
+        List<LangSingleVariableDeclaration> parameters = new ArrayList<>();
+        if (ctx.params() != null && ctx.params().parameters() != null) {
+            processParameters(ctx.params().parameters(), parameters);
         }
 
-        // Visit the function body
         LangBlock body = (LangBlock) mainBuilder.visit(ctx.block());
 
         String docstring = null;
-        if (!body.getStatements().isEmpty() &&
+        if (body != null && !body.getStatements().isEmpty() &&
                 body.getStatements().get(0) instanceof LangExpressionStatement stmt &&
                 stmt.getExpression() instanceof LangStringLiteral str) {
             docstring = str.getValue();
             body.getStatements().remove(0);
         }
 
-
-        // Create the MethodDeclaration node using the factory
-        LangMethodDeclaration methodDeclaration = LangASTNodeFactory.createMethodDeclaration(ctx.name().getText(), ctx, langSingleVariableDeclarations, body);
-
+        LangMethodDeclaration methodDeclaration = LangASTNodeFactory.createMethodDeclaration(ctx.name().getText(), ctx, parameters, body);
+        methodDeclaration.setLangAnnotations(annotations);
         methodDeclaration.setConstructor(isMethodAConstructor(methodDeclaration));
-        // Following python naming conventions for visibility
         methodDeclaration.setVisibility(getMethodVisibility(methodDeclaration));
-        methodDeclaration.setCleanName(extractCleanName(methodDeclaration.getName()));
+        methodDeclaration.setCleanName(extractCleanName(ctx.name().getText()));
+        methodDeclaration.setStatic(isMethodStatic(annotations));
+        methodDeclaration.setAbstract(isMethodAbstract(annotations));
+        methodDeclaration.setName(ctx.name().getText());
 
-        if (ctx.test() != null) {
-            String returnType = ctx.test().getText();
-            methodDeclaration.setReturnTypeAnnotation(returnType);
+        if (ctx.type_params() != null) {
+            LangASTNode typeParams = mainBuilder.visit(ctx.type_params());
+            // Store type params
+        }
+
+        //TODO
+//        if (ctx.type_params() != null) {
+//            methodDeclaration.setTypeParameters(ctx.type_params().getText());
+//        }
+
+        if (ctx.expression() != null) {
+            methodDeclaration.setReturnTypeAnnotation(ctx.expression().getText());
         } else {
-            // Check if the method has a return statement
-            // Set return type annotation to "None" if no return statement is found
             boolean hasReturn = false;
-            if (body.getStatements() != null) {
+            if (body != null && body.getStatements() != null) {
                 for (LangASTNode statement : body.getStatements()) {
                     if (NodeTypeEnum.RETURN_STATEMENT.equals(statement.getNodeType())) {
                         hasReturn = true;
@@ -200,7 +210,6 @@ public class PyDeclarationASTBuilder extends PyBaseASTBuilder {
                     }
                 }
             }
-
             if (hasReturn) {
                 methodDeclaration.setReturnTypeAnnotation(TypeObjectEnum.OBJECT.getName());
             } else {
@@ -213,57 +222,97 @@ public class PyDeclarationASTBuilder extends PyBaseASTBuilder {
             methodDeclaration.addComment(comment);
         }
 
-        return methodDeclaration;
-    }
-
-
-    public LangASTNode visitAsync_funcdef(Python3Parser.Async_funcdefContext ctx) {
-        LangASTNode astNode = visitFuncdef(ctx.funcdef());
-
-
-        if (astNode instanceof LangMethodDeclaration methodDeclaration) {
-            LangAnnotation asyncAnnotation = LangASTNodeFactory.createAnnotation(
+        if (ctx.getChild(0).getText().equals("async")) {
+             LangAnnotation asyncAnnotation = LangASTNodeFactory.createAnnotation(
                     ctx,
                     LangASTNodeFactory.createSimpleName("async", ctx),
                     new ArrayList<>()
             );
-
-            List<LangAnnotation> annotations = methodDeclaration.getLangAnnotations();
-            if (annotations == null) {
-                annotations = new ArrayList<>();
-            }
-            annotations.add(asyncAnnotation);
-            methodDeclaration.setLangAnnotations(annotations);
-            methodDeclaration.setAsync(true);
+             methodDeclaration.getLangAnnotations().add(asyncAnnotation);
+             methodDeclaration.setAsync(true);
         }
 
-        return astNode;
+        return methodDeclaration;
+    }
+
+    private void processParameters(PythonParser.ParametersContext ctx, List<LangSingleVariableDeclaration> parameters) {
+        if (ctx.slash_no_default() != null) {
+            for (PythonParser.Param_no_defaultContext p : ctx.slash_no_default().param_no_default()) {
+                parameters.add(createParam(p.param(), null, false, false));
+            }
+        }
+        if (ctx.slash_with_default() != null) {
+            for (PythonParser.Param_no_defaultContext p : ctx.slash_with_default().param_no_default()) {
+                parameters.add(createParam(p.param(), null, false, false));
+            }
+            for (PythonParser.Param_with_defaultContext p : ctx.slash_with_default().param_with_default()) {
+                parameters.add(createParam(p.param(), p.default_assignment().expression(), false, false));
+            }
+        }
+        if (ctx.param_no_default() != null) {
+            for (PythonParser.Param_no_defaultContext p : ctx.param_no_default()) {
+                parameters.add(createParam(p.param(), null, false, false));
+            }
+        }
+        if (ctx.param_with_default() != null) {
+            for (PythonParser.Param_with_defaultContext p : ctx.param_with_default()) {
+                parameters.add(createParam(p.param(), p.default_assignment().expression(), false, false));
+            }
+        }
+        if (ctx.star_etc() != null) {
+            PythonParser.Star_etcContext s = ctx.star_etc();
+            if (s.param_no_default() != null) {
+                parameters.add(createParam(s.param_no_default().param(), null, true, false));
+            }
+            if (s.param_no_default_star_annotation() != null) {
+                parameters.add(createParam(s.param_no_default_star_annotation().param_star_annotation().name(), null, true, false));
+            }
+            if (s.param_maybe_default() != null) {
+                for (PythonParser.Param_maybe_defaultContext p : s.param_maybe_default()) {
+                    parameters.add(createParam(p.param(), p.default_assignment() != null ? p.default_assignment().expression() : null, false, false));
+                }
+            }
+            if (s.kwds() != null) {
+                parameters.add(createParam(s.kwds().param_no_default().param(), null, false, true));
+            }
+        }
+    }
+
+    private LangSingleVariableDeclaration createParam(PythonParser.ParamContext paramContext, PythonParser.ExpressionContext defaultVal, boolean isStar, boolean isDoubleStar) {
+        LangASTNode defaultValueExpression = defaultVal != null ? mainBuilder.visit(defaultVal) : null;
+        LangSingleVariableDeclaration decl = LangASTNodeFactory.createSingleVariableDeclaration(paramContext.name().getText(), defaultValueExpression, paramContext);
+        decl.setTypeAnnotation(TypeObjectEnum.OBJECT);
+        decl.setParameter(true);
+        decl.setVarArgs(isStar);
+        decl.setKwArgs(isDoubleStar);
+        if (paramContext.annotation() != null) {
+            decl.setTypeAnnotation(TypeObjectEnum.fromType(paramContext.annotation().expression().getText()));
+        }
+        return decl;
+    }
+
+    private LangSingleVariableDeclaration createParam(PythonParser.NameContext name, PythonParser.ExpressionContext defaultVal, boolean isStar, boolean isDoubleStar) {
+        LangASTNode defaultValueExpression = defaultVal != null ? mainBuilder.visit(defaultVal) : null;
+        LangSingleVariableDeclaration decl = LangASTNodeFactory.createSingleVariableDeclaration(name.getText(), defaultValueExpression, name);
+        decl.setTypeAnnotation(TypeObjectEnum.OBJECT);
+        decl.setParameter(true);
+        decl.setVarArgs(isStar);
+        decl.setKwArgs(isDoubleStar);
+        return decl;
     }
 
     private Visibility getMethodVisibility(LangMethodDeclaration methodDecl) {
-        String methodName = methodDecl.getName();
-
-        // In Python, methods starting with double underscore (__method) are considered private
-        if (methodName.startsWith("__") && !methodName.endsWith("__")) {
+        String name = methodDecl.getName();
+        if (name.startsWith("__") && !name.endsWith("__")) {
             return Visibility.PRIVATE;
         }
-        // Methods starting with single underscore (_method) are considered protected
-        else if (methodName.startsWith("_") && !methodName.startsWith("__")) {
+        else if (name.startsWith("_") && !name.startsWith("__")) {
             return Visibility.PROTECTED;
         }
-        // Double underscore at both ends are special methods (__init__, __str__) and are public
-        else if (methodName.startsWith("__") && methodName.endsWith("__")) {
-            return Visibility.PUBLIC;
-        }
-        // All other methods are public by default
-        else {
-            return Visibility.PUBLIC;
-        }
+        return Visibility.PUBLIC;
     }
 
-    // TODO: Refactor
     private String extractCleanName(String name) {
-
         if (name.startsWith("__") && name.endsWith("__")) {
             return name.substring(2, name.length() - 2);
         }
@@ -285,74 +334,166 @@ public class PyDeclarationASTBuilder extends PyBaseASTBuilder {
     }
 
     private boolean isMethodAConstructor(LangMethodDeclaration methodDecl) {
-        return "__init__".equals(methodDecl.getName());
+        return methodDecl.getName().equals("__init__");
     }
 
-    public LangASTNode visitDecorated(Python3Parser.DecoratedContext ctx) {
+    private boolean isMethodStatic(List<LangAnnotation> annotations) {
+        for (LangAnnotation annotation : annotations) {
+            if ("staticmethod".equals(annotation.getName().getIdentifier())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isMethodAbstract(List<LangAnnotation> annotations) {
+        for (LangAnnotation annotation : annotations) {
+            if ("abstractmethod".equals(annotation.getName().getIdentifier())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public LangASTNode visitDecorators(PythonParser.DecoratorsContext ctx) {
         List<LangAnnotation> annotations = new ArrayList<>();
-
-        // Process decorators
-        for (Python3Parser.DecoratorContext decoratorCtx : ctx.decorators().decorator()) {
-            // Get the name of the decorator
-            String decoratorName = decoratorCtx.dotted_name().getText();
-            LangSimpleName decoratorSimpleName = LangASTNodeFactory.createSimpleName(decoratorName, decoratorCtx);
-
-            // Process arguments if any
-            List<LangASTNode> arguments = new ArrayList<>();
-            Map<String, LangASTNode> memberValuePairs = new LinkedHashMap<>();
-            if (decoratorCtx.arglist() != null) {
-                for (Python3Parser.ArgumentContext argContext : decoratorCtx.arglist().argument()) {
-                    if(argContext.children.size() == 3 && argContext.children.get(1).getText().equals("=")) {
-                        LangASTNode value = mainBuilder.visit(argContext.children.get(2));
-                        memberValuePairs.put(argContext.children.get(0).getText(), value);
+        for (PythonParser.Named_expressionContext namedExpr : ctx.named_expression()) {
+            PythonParser.PrimaryContext callPrimary = findDecoratorCallPrimary(namedExpr);
+            
+            if (callPrimary != null && (callPrimary.LPAR() != null || callPrimary.genexp() != null)) {
+                LangASTNode calleeExpr = mainBuilder.visit(callPrimary.primary());
+                String decoratorNameStr = flattenExpressionToName(calleeExpr);
+                LangSimpleName name = LangASTNodeFactory.createSimpleName(decoratorNameStr, namedExpr);
+                
+                List<LangASTNode> positionalArgs = new ArrayList<>();
+                Map<String, LangASTNode> memberValuePairs = new LinkedHashMap<>();
+                
+                if (callPrimary.arguments() != null && callPrimary.arguments().args() != null) {
+                    PythonParser.ArgsContext args = callPrimary.arguments().args();
+                    for (int i = 0; i < args.getChildCount(); i++) {
+                        ParseTree child = args.getChild(i);
+                        if (child instanceof PythonParser.ExpressionContext exprCtx) {
+                            positionalArgs.add(mainBuilder.visit(exprCtx));
+                        } else if (child instanceof PythonParser.Starred_expressionContext starredCtx) {
+                            positionalArgs.add(mainBuilder.visit(starredCtx));
+                        } else if (child instanceof PythonParser.Assignment_expressionContext assignCtx) {
+                            positionalArgs.add(mainBuilder.visit(assignCtx));
+                        }
                     }
-                    else {
-                        LangASTNode node = mainBuilder.visit(argContext);
-                        arguments.add(node);
+                    if (args.kwargs() != null) {
+                        for (PythonParser.Kwarg_or_starredContext kws : args.kwargs().kwarg_or_starred()) {
+                            if (kws.name() != null) {
+                                LangASTNode value = mainBuilder.visit(kws.expression());
+                                memberValuePairs.put(kws.name().getText(), value);
+                            } else {
+                                positionalArgs.add(mainBuilder.visit(kws));
+                            }
+                        }
+                        for (PythonParser.Kwarg_or_double_starredContext kwds : args.kwargs().kwarg_or_double_starred()) {
+                            if (kwds.name() != null) {
+                                LangASTNode value = mainBuilder.visit(kwds.expression());
+                                memberValuePairs.put(kwds.name().getText(), value);
+                            } else {
+                                positionalArgs.add(mainBuilder.visit(kwds));
+                            }
+                        }
+                    }
+                } else if (callPrimary.arguments() != null) {
+                    ParseTree firstChild = callPrimary.arguments().getChild(0);
+                    if (firstChild instanceof PythonParser.KwargsContext kwargsCtx) {
+                        for (PythonParser.Kwarg_or_starredContext kws : kwargsCtx.kwarg_or_starred()) {
+                            if (kws.name() != null) {
+                                LangASTNode value = mainBuilder.visit(kws.expression());
+                                memberValuePairs.put(kws.name().getText(), value);
+                            } else {
+                                positionalArgs.add(mainBuilder.visit(kws));
+                            }
+                        }
+                        for (PythonParser.Kwarg_or_double_starredContext kwds : kwargsCtx.kwarg_or_double_starred()) {
+                            if (kwds.name() != null) {
+                                LangASTNode value = mainBuilder.visit(kwds.expression());
+                                memberValuePairs.put(kwds.name().getText(), value);
+                            } else {
+                                positionalArgs.add(mainBuilder.visit(kwds));
+                            }
+                        }
                     }
                 }
-            }
-
-            // Create the annotation
-            LangAnnotation annotation = LangASTNodeFactory.createAnnotation(decoratorCtx, decoratorSimpleName, memberValuePairs, arguments);
-            annotations.add(annotation);
-
-        }
-
-        LangASTNode decoratedNode = null;
-
-        if (ctx.funcdef() != null) {
-            decoratedNode = mainBuilder.visitFuncdef(ctx.funcdef());
-            if (decoratedNode instanceof LangMethodDeclaration method) {
-
-                method.setLangAnnotations(annotations);
-
-                // Apply decorators to the method
-                for (LangAnnotation annotation : annotations) {
-                    String decoratorName = annotation.getName().getIdentifier();
-
-                    // Handle specific Python decorators
-                    if (decoratorName.equals("abstractmethod")) {
-                        method.setAbstract(true);
-                    } else if (decoratorName.equals("staticmethod")) {
-                        method.setStatic(true);
-                    } else {
-                        method.setAbstract(false);
-                        method.setStatic(false);
-                    }
+                
+                LangAnnotation annotation = LangASTNodeFactory.createAnnotation(namedExpr, name, memberValuePairs, positionalArgs);
+                annotations.add(annotation);
+            } else {
+                LangASTNode expr = mainBuilder.visit(namedExpr);
+                LangAnnotation annotation;
+                if (expr instanceof LangSimpleName sn) {
+                    annotation = LangASTNodeFactory.createAnnotation(namedExpr, sn);
+                } else if (expr instanceof LangFieldAccess) {
+                    String decoratorNameStr = flattenExpressionToName(expr);
+                    LangSimpleName name = LangASTNodeFactory.createSimpleName(decoratorNameStr, namedExpr);
+                    annotation = LangASTNodeFactory.createAnnotation(namedExpr, name);
+                } else {
+                    String decoratorName = namedExpr.getText();
+                    annotation = LangASTNodeFactory.createAnnotation(namedExpr, LangASTNodeFactory.createSimpleName(decoratorName, namedExpr));
                 }
+                annotations.add(annotation);
             }
-        } else if (ctx.classdef() != null) {
-            decoratedNode = mainBuilder.visitClassdef(ctx.classdef());
-            if (decoratedNode instanceof LangTypeDeclaration classDecl) {
-                classDecl.setLangAnnotations(annotations);
-            }
-        } else if (ctx.async_funcdef() != null) {
-            decoratedNode = mainBuilder.visitAsync_funcdef(ctx.async_funcdef());
         }
-
-        return decoratedNode;
+        return LangASTNodeFactory.createBlock(ctx, new ArrayList<>(annotations));
     }
 
 
+    private PythonParser.PrimaryContext findDecoratorCallPrimary(PythonParser.Named_expressionContext namedExpr) {
+        return findPrimaryWithCall(namedExpr);
+    }
+    
+    private PythonParser.PrimaryContext findPrimaryWithCall(ParseTree tree) {
+        if (tree instanceof PythonParser.PrimaryContext primary) {
+            if (primary.LPAR() != null || primary.genexp() != null) {
+                return primary;
+            }
+        }
+        for (int i = 0; i < tree.getChildCount(); i++) {
+            PythonParser.PrimaryContext result = findPrimaryWithCall(tree.getChild(i));
+            if (result != null) return result;
+        }
+        return null;
+    }
+    
+    /**
+     * Recursively flatten a LangFieldAccess chain or LangSimpleName to a dotted string.
+     * For example: LangFieldAccess{pytest.mark.parametrize} -> "pytest.mark.parametrize"
+     */
+    private String flattenExpressionToName(LangASTNode expr) {
+        if (expr instanceof LangSimpleName sn) {
+            return sn.getIdentifier();
+        } else if (expr instanceof LangFieldAccess fa) {
+            String baseName = flattenExpressionToName(fa.getExpression());
+            return baseName + "." + fa.getName().getIdentifier();
+        } else {
+            // Fallback
+            return expr.toString();
+        }
+    }
+
+    public LangASTNode visitType_params(PythonParser.Type_paramsContext ctx) {
+        List<LangASTNode> params = new ArrayList<>();
+        for (PythonParser.Type_paramContext tp : ctx.type_param_seq().type_param()) {
+            params.add(visitType_param(tp));
+        }
+        return LangASTNodeFactory.createBlock(ctx, params);
+    }
+
+    public LangASTNode visitType_param(PythonParser.Type_paramContext ctx) {
+        String name = ctx.name().getText();
+        LangASTNode bound = null;
+        if (ctx.type_param_bound() != null) {
+            bound = mainBuilder.visit(ctx.type_param_bound().expression());
+        }
+        LangASTNode defaultValue = null;
+        if (ctx.type_param_default() != null) {
+            defaultValue = mainBuilder.visit(ctx.type_param_default().expression());
+        }
+        // Using SingleVariableDeclaration as a proxy for TypeParam if no specific node exists
+        return LangASTNodeFactory.createSingleVariableDeclaration(name, defaultValue, ctx);
+    }
 }

@@ -4,8 +4,8 @@ import extension.ast.builder.csharp.CSharpASTBuilder;
 import extension.ast.builder.python.PyASTBuilder;
 import extension.ast.node.LangASTNode;
 import extension.base.lang.csharp.CSharpParser;
-import extension.base.lang.python.Python3Lexer;
-import extension.base.lang.python.Python3Parser;
+import extension.base.lang.python.PythonLexer;
+import extension.base.lang.python.PythonParser;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -27,14 +27,11 @@ public class LangASTUtil {
             throw new UnsupportedOperationException("Language not supported for file");
         }
 
-        switch (language) {
-            case PYTHON:
-                return getCustomPythonAST(new StringReader(content));
-            case CSHARP:
-                return getCustomCSharpAST(new StringReader(content));
-            default:
-                throw new UnsupportedOperationException("Parser not implemented for language: " + language);
-        }
+        return switch (language) {
+            case PYTHON -> getCustomPythonAST(new StringReader(content));
+            case CSHARP -> getCustomCSharpAST(new StringReader(content));
+            default -> throw new UnsupportedOperationException("Parser not implemented for language: " + language);
+        };
 
     }
 
@@ -42,12 +39,14 @@ public class LangASTUtil {
 
         // Parse the Python code
         CharStream input = CharStreams.fromReader(r);
-        Python3Lexer lexer = new Python3Lexer(input);
+        PythonLexer lexer = new PythonLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        Python3Parser parser = new Python3Parser(tokens);
+        PythonParser parser = new PythonParser(tokens);
 
         // Get the parse tree
-        Python3Parser.File_inputContext parseTree = parser.file_input();
+        PythonParser.File_inputContext parseTree = parser.file_input();
+
+    //    System.out.println(parseTree.getText() + "\n");
 
         // Build custom AST
         PyASTBuilder astBuilder = new PyASTBuilder();

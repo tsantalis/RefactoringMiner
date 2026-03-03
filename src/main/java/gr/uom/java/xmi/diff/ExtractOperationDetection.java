@@ -544,7 +544,7 @@ public class ExtractOperationDetection {
 			UMLOperation delegateMethod = findDelegateMethod(originalOperation, addedOperation, addedOperationInvocation);
 			return new UMLOperationBodyMapper(mapper,
 					delegateMethod != null ? delegateMethod : addedOperation,
-					new LinkedHashMap<String, String>(), parameterToArgumentMap, classDiff, addedOperationInvocation, nested, Optional.empty());
+					new LinkedHashMap<String, String>(), parameterToArgumentMap, classDiff, addedOperationInvocation, nested, Optional.empty(), Optional.empty());
 		}
 		return null;
 	}

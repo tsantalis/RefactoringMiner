@@ -28,6 +28,9 @@ public class LangSliceExpression extends LangExpression {
         this.lower = lower;
         this.upper = upper;
         this.step = step;
+        if (lower != null) addChild(lower);
+        if (upper != null) addChild(upper);
+        if (step != null) addChild(step);
     }
 
     @Override
@@ -41,6 +44,7 @@ public class LangSliceExpression extends LangExpression {
 
     public void setLower(LangASTNode lower) {
         this.lower = lower;
+        if (lower != null) addChild(lower);
     }
 
     public LangASTNode getUpper() {
@@ -49,6 +53,7 @@ public class LangSliceExpression extends LangExpression {
 
     public void setUpper(LangASTNode upper) {
         this.upper = upper;
+        if (upper != null) addChild(upper);
     }
 
     public LangASTNode getStep() {
@@ -57,6 +62,7 @@ public class LangSliceExpression extends LangExpression {
 
     public void setStep(LangASTNode step) {
         this.step = step;
+        if (step != null) addChild(step);
     }
 
     @Override

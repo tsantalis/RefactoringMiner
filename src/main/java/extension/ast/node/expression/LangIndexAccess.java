@@ -14,18 +14,24 @@ public class LangIndexAccess extends LangExpression {
         super(NodeTypeEnum.INDEX_ACCESS);
         this.target = target;
         this.index = index;
+        if (target != null) addChild(target);
+        if (index != null) addChild(index);
     }
 
     public LangIndexAccess(PositionInfo positionInfo, LangASTNode target, LangASTNode index) {
         super(NodeTypeEnum.INDEX_ACCESS, positionInfo);
         this.target = target;
         this.index = index;
+        if (target != null) addChild(target);
+        if (index != null) addChild(index);
     }
 
     public LangIndexAccess(int startLine, int startChar, int endLine, int endChar, int startColumn, int endColumn, LangASTNode target, LangASTNode index) {
         super(NodeTypeEnum.INDEX_ACCESS, startLine, startChar, endLine, endChar, startColumn, endColumn);
         this.target = target;
         this.index = index;
+        if (target != null) addChild(target);
+        if (index != null) addChild(index);
     }
 
     public LangASTNode getTarget() {
@@ -34,6 +40,9 @@ public class LangIndexAccess extends LangExpression {
 
     public void setTarget(LangASTNode target) {
         this.target = target;
+        if (target != null) {
+            addChild(target);
+        }
     }
 
     public LangASTNode getIndex() {
@@ -42,6 +51,9 @@ public class LangIndexAccess extends LangExpression {
 
     public void setIndex(LangASTNode index) {
         this.index = index;
+        if (index != null) {
+            addChild(index);
+        }
     }
 
     @Override

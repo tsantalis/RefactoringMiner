@@ -15,6 +15,9 @@ public class LangAwaitExpression extends LangExpression {
     public LangAwaitExpression(PositionInfo positionInfo, LangASTNode expression) {
         super(NodeTypeEnum.AWAIT_EXPRESSION, positionInfo);
         this.expression = expression;
+        if (expression != null) {
+            addChild(expression);
+        }
     }
 
     public LangAwaitExpression(PositionInfo positionInfo) {
@@ -27,6 +30,9 @@ public class LangAwaitExpression extends LangExpression {
 
     public void setExpression(LangASTNode expression) {
         this.expression = expression;
+        if (expression != null) {
+            addChild(expression);
+        }
     }
 
     @Override

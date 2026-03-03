@@ -371,8 +371,8 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable e to o in method public prepare_string(dist, digits, exact, tol, show_mask, str_outcomes) from class distribution.__module__",
+        "type": "Rename Parameter",
+        "description": "Rename Parameter e to o in method public prepare_string(dist, digits, exact, tol, show_mask, str_outcomes) from class distribution.__module__",
         "comment": "<p>This is a lambda parameter rename<br />events = map(lambda e: ''.join(e), events)<br />outcomes = map(lambda o: ''.join(o), outcomes)</p>",
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -1033,10 +1033,10 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable one in method public total_correlation(dist, rvs, crvs, rv_names) from class algorithms.total_correlation.__module__",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>The code has changed significantly to consider it as a valid refactoring.</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -1341,6 +1341,55 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable upper in method protected _downsample_componentL1(pmf, i, op, locs) from class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter ops in method public projections(pmf, subdivisions, ops) from class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter depth in method public projections(pmf, depth, base, method) from class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter base in method public projections(pmf, depth, base, method) from class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter method in method public projections(pmf, depth, base, method) from class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable projs in method public projections(pmf, subdivisions, ops) from class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method protected _downsample_componentL1(pmf, i, op, locs) extracted from public projections(pmf, depth, base, method) in class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable N to subdivisions in method public projections(pmf, subdivisions, ops) from class math.pmfops.__module__",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -2830,10 +2879,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable (downstream_node,downstream_label) to downstream_info in method public get_outgoing_edges(upstream_node, outgoing_edge_map) from class dag.__module__",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<div style='color: #000000; background-color: #fffffe; font-family: Menlo, Monaco, 'Courier New', monospace; font-weight: normal; font-size: 12px; line-height: 18px; white-space: pre;'><div><span style='color: #0000ff;'>for</span><span style='color: #000000;'> downstream_info </span><span style='color: #0000ff;'>in</span><span style='color: #000000;'> downstream_infos:</span></div><div><span style='color: #000000;'> downstream_node, downstream_label = downstream_info[:</span><span style='color: #098658;'>2</span><span style='color: #000000;'>]</span></div><div><span style='color: #000000;'>(downstream_node,downstream_label) is replaced with downstream_info, but there is no rename.</span></div></div>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -7600,6 +7649,13 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable w in method public add(record, weight) from class utils.average_recorder._SingleAverageRecorder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable w_pop in method public add(record, weight) from class utils.average_recorder._SingleAverageRecorder",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

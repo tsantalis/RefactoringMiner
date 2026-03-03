@@ -31,6 +31,7 @@ public enum OperatorEnum {
     RIGHT_SHIFT_ASSIGN(">>=", OperatorCategory.ASSIGNMENT),
     INCREMENT("++", OperatorCategory.ASSIGNMENT),
     DECREMENT("--", OperatorCategory.ASSIGNMENT),
+    WALRUS(":=", OperatorCategory.ASSIGNMENT),
 
     // Comparison operators
     GREATER_THAN(">", OperatorCategory.COMPARISON),

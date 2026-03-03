@@ -12,16 +12,25 @@ public class LangParenthesizedExpression extends LangExpression {
     public LangParenthesizedExpression(LangASTNode parenthesizedExpression) {
         super(NodeTypeEnum.PARENTHESIZED_EXPRESSION);
         this.parenthesizedExpression = parenthesizedExpression;
+        if (parenthesizedExpression != null) {
+            addChild(parenthesizedExpression);
+        }
     }
 
     public LangParenthesizedExpression(PositionInfo positionInfo, LangASTNode parenthesizedExpression) {
         super(NodeTypeEnum.PARENTHESIZED_EXPRESSION, positionInfo);
         this.parenthesizedExpression = parenthesizedExpression;
+        if (parenthesizedExpression != null) {
+            addChild(parenthesizedExpression);
+        }
     }
 
     public LangParenthesizedExpression(int startLine, int startChar, int endLine, int endChar, int startColumn, int endColumn, LangASTNode parenthesizedExpression) {
         super(NodeTypeEnum.PARENTHESIZED_EXPRESSION, startLine, startChar, endLine, endChar, startColumn, endColumn);
         this.parenthesizedExpression = parenthesizedExpression;
+        if (parenthesizedExpression != null) {
+            addChild(parenthesizedExpression);
+        }
     }
 
     public LangASTNode getParenthesizedExpression() {
@@ -30,6 +39,9 @@ public class LangParenthesizedExpression extends LangExpression {
 
     public void setParenthesizedExpression(LangASTNode parenthesizedExpression) {
         this.parenthesizedExpression = parenthesizedExpression;
+        if (parenthesizedExpression != null) {
+            addChild(parenthesizedExpression);
+        }
     }
 
     @Override

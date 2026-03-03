@@ -1043,6 +1043,11 @@
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tlogFile : LogFile in method package applicationNameLoggingToFileWhenDisabled() : void from class org.springframework.boot.logging.log4j2.Log4J2LoggingSystemTests",
           "validation": false
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\toutput : CapturedOutput to file : File in method package applicationNameLoggingToFileWhenDisabled() : void from class org.springframework.boot.logging.log4j2.Log4J2LoggingSystemTests",
+          "validation": true
         }
       ]
     },

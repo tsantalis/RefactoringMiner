@@ -6,11 +6,17 @@ public class Replacement {
 	private String before;
 	private String after;
 	private ReplacementType type;
+	private boolean inferred;
 	
 	public Replacement(String before, String after, ReplacementType type) {
+		this(before, after, type, false);
+	}
+	
+	public Replacement(String before, String after, ReplacementType type, boolean inferred) {
 		this.before = before;
 		this.after = after;
 		this.type = type;
+		this.inferred = inferred;
 	}
 
 	public String getBefore() {
@@ -23,6 +29,10 @@ public class Replacement {
 
 	public ReplacementType getType() {
 		return type;
+	}
+
+	public boolean isInferred() {
+		return inferred;
 	}
 
 	@Override

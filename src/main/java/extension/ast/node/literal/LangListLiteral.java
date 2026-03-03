@@ -16,6 +16,11 @@ public class LangListLiteral extends LangLiteral {
     public LangListLiteral(PositionInfo positionInfo, List<LangASTNode> elements) {
         super(NodeTypeEnum.LIST_LITERAL, positionInfo);
         this.elements = elements;
+        if (elements != null) {
+            for (LangASTNode element : elements) {
+                addChild(element);
+            }
+        }
     }
 
     public LangListLiteral(int startLine, int startChar, int endLine, int endChar, int startColumn, int endColumn) {

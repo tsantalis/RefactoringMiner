@@ -11,6 +11,7 @@ import java.util.List;
 
 public class LangTupleLiteral extends LangLiteral {
     private final List<LangASTNode> elements = new ArrayList<>();
+    private boolean parenthesized = true;
 
     public LangTupleLiteral(PositionInfo positionInfo) {
         super(NodeTypeEnum.TUPLE_LITERAL, positionInfo);
@@ -23,6 +24,14 @@ public class LangTupleLiteral extends LangLiteral {
                 addElement(element);
             }
         }
+    }
+
+    public boolean isParenthesized() {
+        return parenthesized;
+    }
+
+    public void setParenthesized(boolean parenthesized) {
+        this.parenthesized = parenthesized;
     }
 
     public void addElement(LangASTNode element) {

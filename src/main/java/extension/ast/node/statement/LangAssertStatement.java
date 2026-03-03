@@ -21,19 +21,25 @@ public class LangAssertStatement extends LangStatement {
     public LangAssertStatement(PositionInfo positionInfo, LangASTNode expression, LangASTNode message) {
         super(NodeTypeEnum.ASSERT_STATEMENT, positionInfo);
         this.expression = expression;
+        if (expression != null) addChild(expression);
         this.message = message;
+        if (message != null) addChild(message);
     }
 
     public LangAssertStatement(NodeTypeEnum nodeType, PositionInfo positionInfo, LangASTNode expression, LangASTNode message) {
         super(nodeType, positionInfo);
         this.expression = expression;
+        if (expression != null) addChild(expression);
         this.message = message;
+        if (message != null) addChild(message);
     }
 
     public LangAssertStatement(NodeTypeEnum nodeType, int startLine, int startChar, int endLine, int endChar, int startColumn, int endColumn, LangASTNode expression, LangASTNode message) {
         super(nodeType, startLine, startChar, endLine, endChar, startColumn, endColumn);
         this.expression = expression;
+        if (expression != null) addChild(expression);
         this.message = message;
+        if (message != null) addChild(message);
     }
 
     @Override

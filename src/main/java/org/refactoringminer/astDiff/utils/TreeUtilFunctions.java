@@ -147,7 +147,7 @@ public class TreeUtilFunctions {
 					return child;
 				if (child.getType().name.equals(LANG.MODIFIERS)) {
 					for (Tree grandChild : child.getChildren()) {
-						if (grandChild.getType().name.endsWith("_modifier") && grandChild.getChild(0).getLabel().equals(label))
+						if (grandChild.getType().name.endsWith("_modifier") && grandChild.getChildren().size() > 0 && grandChild.getChild(0).getLabel().equals(label))
 							return grandChild;
 					}
 				}

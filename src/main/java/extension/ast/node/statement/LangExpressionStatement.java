@@ -35,6 +35,9 @@ public class LangExpressionStatement extends LangStatement {
 
     public void setExpression(LangASTNode expression) {
         this.expression = expression;
+        if (expression != null) {
+            addChild(expression);
+        }
     }
 
 

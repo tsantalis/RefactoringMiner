@@ -1616,6 +1616,9 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						return true;
 					}
 				}
+				else if(initializer != null && initializer.comprehensionCoveringEntireFragment() != null) {
+					return true;
+				}
 				else if(initializer != null && initializer.getLambdas().size() > 0) {
 					boolean methodReference = false;
 					if(initializer.getLambdas().size() == 1 && initializer.getLambdas().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.METHOD_REFERENCE)) {

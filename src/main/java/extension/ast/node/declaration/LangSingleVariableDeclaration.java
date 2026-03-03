@@ -120,12 +120,17 @@ public class LangSingleVariableDeclaration extends LangDeclaration {
         isKwArgs = kwArgs;
     }
 
+    @Override
     public String toString() {
         return "LangSingleVariableDeclaration{" +
-                "langSimpleName='" + langSimpleName + '\'' +
-                "isParameter='" + isParameter + '\'' +
-                "isVarArgs='" + isVarArgs + '\'' +
-                "isKwArgs='" + isKwArgs + '\'' +
+                "langSimpleName=" + langSimpleName +
+                ", typeAnnotation=" + typeAnnotation +
+                ", defaultValue=" + defaultValue +
+                ", hasTypeAnnotation=" + hasTypeAnnotation +
+                ", isVarArgs=" + isVarArgs +
+                ", isKwArgs=" + isKwArgs +
+                ", isAttribute=" + isAttribute +
+                ", isParameter=" + isParameter +
                 '}';
     }
 }

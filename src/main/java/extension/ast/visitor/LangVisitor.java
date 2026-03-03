@@ -328,7 +328,7 @@ public class LangVisitor implements LangASTVisitor {
             langAssignment.getLeftSide().accept(this);
         }
         if (langAssignment.getRightSide() != null) {
-            langAssignment.getRightSide().accept(this);  // This will find the method invocation!
+            langAssignment.getRightSide().accept(this);
         }
 
         if (langAssignment.getLeftSide() instanceof LangSimpleName) {

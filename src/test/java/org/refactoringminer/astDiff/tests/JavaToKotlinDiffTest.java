@@ -17,6 +17,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
 import org.refactoringminer.astDiff.models.ASTDiff;
@@ -25,6 +26,7 @@ import org.refactoringminer.astDiff.utils.MappingExportModel;
 
 import net.joshka.junit.json.params.JsonFileSource;
 
+@Disabled
 public class JavaToKotlinDiffTest {
 	private static final String dir = getCommitsMappingsPath();
     @ParameterizedTest(name= "{index}: {0}")

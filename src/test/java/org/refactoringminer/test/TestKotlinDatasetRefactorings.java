@@ -77,9 +77,13 @@ public class TestKotlinDatasetRefactorings {
 					.or(Refactorings.AddParameterModifier.getValue())
 					.or(Refactorings.MergeClass.getValue())
 					.or(Refactorings.RemoveThrownExceptionType.getValue())
-					.or(Refactorings.ChangeClassAccessModifier.getValue());
+					.or(Refactorings.ChangeClassAccessModifier.getValue())
+					.or(Refactorings.RemoveMethodModifier.getValue())
+					.or(Refactorings.RemoveClassModifier.getValue())
+					.or(Refactorings.RemoveVariableModifier.getValue())
+					.or(Refactorings.MergeParameter.getValue());
 		TestBuilder test = new TestBuilder(detector, REPOS, types);
 		RefactoringPopulator.prepareKotlinRefactorings(test, types);
-		test.assertExpectationsWithGitHubAPI(1831, 4, 0);
+		test.assertExpectationsWithGitHubAPI(2034, 6, 0);
 	}
 }

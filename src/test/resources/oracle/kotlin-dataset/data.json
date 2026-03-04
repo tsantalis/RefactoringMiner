@@ -13471,4 +13471,1448 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 63,
+    "repository": "https://github.com/square/okhttp.git",
+    "sha1": "34bb12533b56eacd7b03c13b87dede4204d48629",
+    "url": "https://github.com/square/okhttp/commit/34bb12533b56eacd7b03c13b87dede4204d48629",
+    "author": "swankjesse",
+    "time": "12/31/22 01:24 PM",
+    "refactorings": [{
+        "type": "Rename Class",
+        "description": "Rename Class mockwebserver3.internal.duplex.MockDuplexResponseBody renamed to mockwebserver3.internal.duplex.MockStreamHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter duplexResponseBody : DuplexResponseBody to body : MockResponseBody in method public body(body MockResponseBody) from class mockwebserver3.MockResponse.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type duplexResponseBody : DuplexResponseBody to body : MockResponseBody in method public body(body MockResponseBody) from class mockwebserver3.MockResponse.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter value : Inferred in method public setWebSocketListener(value Inferred) from class mockwebserver3.MockResponse.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public setWebSocketListener(value Inferred) from class mockwebserver3.MockResponse.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute duplexResponseBody : DuplexResponseBody to streamHandler : StreamHandler in class mockwebserver3.MockResponse",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type duplexResponseBody : DuplexResponseBody to streamHandler : StreamHandler in class mockwebserver3.MockResponse",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Class Annotation",
+        "description": "Add Class Annotation @Suppress(\"deprecation\") in class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Class Annotation",
+        "description": "Remove Class Annotation @SuppressWarnings({\"ArraysAsListWithZeroOrOneArgument\",\"deprecation\"}) in class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Class Modifier",
+        "description": "Remove Class Modifier final in class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type platform : PlatformRule to platform : Inferred in class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type IOException in method public setUp(server MockWebServer) : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public tearDown() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type IOException in method public setBodyAdjustsHeaders() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type builder : MockResponse.Builder to builder : Inferred in method public defaultMockResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type builder : MockResponse.Builder to builder : Inferred in method public setResponseMockReason() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type expectedReason : String to expectedReason : Inferred in method public setResponseMockReason() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type reasons : String[] to reasons : Inferred in method public setResponseMockReason() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type i : int to i : Inferred in method public setResponseMockReason() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type builder : MockResponse.Builder to builder : Inferred in method public setStatusControlsWholeStatusLine() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type builder : MockResponse.Builder to builder : Inferred in method public setBodyAdjustsHeaders() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type response : MockResponse to response : Inferred in method public setBodyAdjustsHeaders() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type body : Buffer to body : Inferred in method public setBodyAdjustsHeaders() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type builder : MockResponse.Builder to builder : Inferred in method public mockResponseAddHeader() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable in : InputStream in method public regularResponse() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type url : URL to url : Inferred in method public regularResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type connection : HttpURLConnection to connection : Inferred in method public regularResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type reader : BufferedReader to reader : Inferred in method public regularResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type request : RecordedRequest to request : Inferred in method public regularResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public regularResponse() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable in : InputStream in method public redirect() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type connection : URLConnection to connection : Inferred in method public redirect() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type reader : BufferedReader to reader : Inferred in method public redirect() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type first : RecordedRequest to first : Inferred in method public redirect() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type redirect : RecordedRequest to redirect : Inferred in method public redirect() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public redirect() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable in : InputStream in method public dispatchBlocksWaitingForEnqueue() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type connection : URLConnection to connection : Inferred in method public dispatchBlocksWaitingForEnqueue() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type reader : BufferedReader to reader : Inferred in method public dispatchBlocksWaitingForEnqueue() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public dispatchBlocksWaitingForEnqueue() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable in : InputStream in method public nonHexadecimalChunkSize() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type connection : URLConnection to connection : Inferred in method public nonHexadecimalChunkSize() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public nonHexadecimalChunkSize() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type in : InputStream to inputStream : Inferred in method public responseTimeout() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type urlConnection : URLConnection to urlConnection : Inferred in method public responseTimeout() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type urlConnection2 : URLConnection to urlConnection2 : Inferred in method public responseTimeout() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type in2 : InputStream to in2 : Inferred in method public responseTimeout() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable in : InputStream to inputStream : Inferred in method public responseTimeout() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public responseTimeout() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public disconnectAtStart() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public clearDispatcherQueue() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type in : InputStream to inputStream : Inferred in method public throttleRequest() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type startNanos : long to startNanos : Inferred in method public throttleRequest() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type connection : URLConnection to connection : Inferred in method public throttleRequest() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type elapsedNanos : long to elapsedNanos : Inferred in method public throttleRequest() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type elapsedMillis : long to elapsedMillis : Inferred in method public throttleRequest() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable in : InputStream to inputStream : Inferred in method public throttleRequest() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public throttleRequest() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type in : InputStream to inputStream : Inferred in method public throttleResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type startNanos : long to startNanos : Inferred in method public throttleResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type connection : URLConnection to connection : Inferred in method public throttleResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type elapsedNanos : long to elapsedNanos : Inferred in method public throttleResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type elapsedMillis : long to elapsedMillis : Inferred in method public throttleResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable in : InputStream to inputStream : Inferred in method public throttleResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public throttleResponse() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type in : InputStream to inputStream : Inferred in method public delayResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type startNanos : long to startNanos : Inferred in method public delayResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type connection : URLConnection to connection : Inferred in method public delayResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type elapsedNanos : long to elapsedNanos : Inferred in method public delayResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type elapsedMillis : long to elapsedMillis : Inferred in method public delayResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable in : InputStream to inputStream : Inferred in method public delayResponse() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type IOException in method public delayResponse() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type connection : HttpURLConnection to connection : Inferred in method public disconnectRequestHalfway() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type out : OutputStream to out : Inferred in method public disconnectRequestHalfway() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type data : byte[] to data : Inferred in method public disconnectRequestHalfway() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type i : int to i : Inferred in method public disconnectRequestHalfway() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public disconnectRequestHalfway() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type in : InputStream to inputStream : Inferred in method public disconnectResponseHalfway() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type connection : URLConnection to connection : Inferred in method public disconnectResponseHalfway() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type byteRead : int to byteRead : Inferred in method public disconnectResponseHalfway() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable in : InputStream to inputStream : Inferred in method public disconnectResponseHalfway() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type IOException in method public disconnectResponseHalfway() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type IOException in method public shutdownWithoutStart() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type IOException in method public closeViaClosable() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type IOException in method public shutdownWithoutEnqueue() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type IOException in method public differentInstancesGetDifferentPorts() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public shutdownWhileBlockedDispatching() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public requestUrlReconstructed() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public shutdownServerAfterRequest() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public http100Continue() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public multiple1xxResponses() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public https() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public httpsWithClientAuth() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public proxiedRequestGetsCorrectRequestUrl() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type IOException in method public startTwice() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type IOException in method public shutdownTwice() : void from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type server : MockWebServer to server : Inferred in method public shutdownWithoutStart() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type server : MockWebServer to server : Inferred in method public shutdownWithoutEnqueue() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type other : MockWebServer to other : Inferred in method public differentInstancesGetDifferentPorts() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type connection : HttpURLConnection to connection : Inferred in method public shutdownWhileBlockedDispatching() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type url : URL to url : Inferred in method public requestUrlReconstructed() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type connection : HttpURLConnection to connection : Inferred in method public requestUrlReconstructed() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type reader : BufferedReader to reader : Inferred in method public requestUrlReconstructed() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type request : RecordedRequest to request : Inferred in method public requestUrlReconstructed() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type requestUrl : HttpUrl to requestUrl : Inferred in method public requestUrlReconstructed() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type url : URL to url : Inferred in method public shutdownServerAfterRequest() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type connection : HttpURLConnection to connection : Inferred in method public shutdownServerAfterRequest() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type refusedConnection : HttpURLConnection to refusedConnection : Inferred in method public shutdownServerAfterRequest() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type url : URL to url : Inferred in method public http100Continue() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type connection : HttpURLConnection to connection : Inferred in method public http100Continue() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type reader : BufferedReader to reader : Inferred in method public http100Continue() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type request : RecordedRequest to request : Inferred in method public http100Continue() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type url : URL to url : Inferred in method public multiple1xxResponses() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type connection : HttpURLConnection to connection : Inferred in method public multiple1xxResponses() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type reader : BufferedReader to reader : Inferred in method public multiple1xxResponses() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type request : RecordedRequest to request : Inferred in method public multiple1xxResponses() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type handshakeCertificates : HandshakeCertificates to handshakeCertificates : Inferred in method public https() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type url : HttpUrl to url : Inferred in method public https() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type connection : HttpsURLConnection to connection : Inferred in method public https() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type reader : BufferedReader to reader : Inferred in method public https() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type request : RecordedRequest to request : Inferred in method public https() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type handshake : Handshake to handshake : Inferred in method public https() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type clientCa : HeldCertificate to clientCa : Inferred in method public httpsWithClientAuth() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type serverCa : HeldCertificate to serverCa : Inferred in method public httpsWithClientAuth() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type serverCertificate : HeldCertificate to serverCertificate : Inferred in method public httpsWithClientAuth() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type serverHandshakeCertificates : HandshakeCertificates to serverHandshakeCertificates : Inferred in method public httpsWithClientAuth() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type clientCertificate : HeldCertificate to clientCertificate : Inferred in method public httpsWithClientAuth() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type clientHandshakeCertificates : HandshakeCertificates to clientHandshakeCertificates : Inferred in method public httpsWithClientAuth() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type url : HttpUrl to url : Inferred in method public httpsWithClientAuth() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type connection : HttpsURLConnection to connection : Inferred in method public httpsWithClientAuth() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type reader : BufferedReader to reader : Inferred in method public httpsWithClientAuth() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type request : RecordedRequest to request : Inferred in method public httpsWithClientAuth() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type handshake : Handshake to handshake : Inferred in method public httpsWithClientAuth() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type proxiedClient : OkHttpClient to proxiedClient : Inferred in method public proxiedRequestGetsCorrectRequestUrl() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type request : Request to request : Inferred in method public proxiedRequestGetsCorrectRequestUrl() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type recordedRequest : RecordedRequest to recordedRequest : Inferred in method public proxiedRequestGetsCorrectRequestUrl() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type server2 : MockWebServer to server2 : Inferred in method public startTwice() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type server2 : MockWebServer to server2 : Inferred in method public shutdownTwice() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to private in method private getPlatform() : String from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Modifier",
+        "description": "Remove Method Modifier static in method public getPlatform() : String from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type duplexResponseBody : DuplexResponseBody to duplexResponseBody : StreamHandler in method public setBody(mockResponseBuilder MockResponse.Builder, duplexResponseBody StreamHandler) from class mockwebserver3.MockWebServer.Companion.Companion.MwsDuplexAccess.instance.MwsDuplexAccess",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type url : URL to url : Inferred in method public simpleDispatch() from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type conn : HttpURLConnection to conn : Inferred in method public simpleDispatch() from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type requestsMade : List<RecordedRequest> to requestsMade : Inferred in method public simpleDispatch() from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type firstResponseCode : AtomicInteger to firstResponseCode : Inferred in method public outOfOrderResponses() from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type secondResponseCode : AtomicInteger to secondResponseCode : Inferred in method public outOfOrderResponses() from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type secondRequest : String to secondRequest : Inferred in method public outOfOrderResponses() from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type firstRequest : String to firstRequest : Inferred in method public outOfOrderResponses() from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type latch : CountDownLatch to latch : Inferred in method public outOfOrderResponses() from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type startsFirst : Thread to startsFirst : Inferred in method public outOfOrderResponses() from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type endsFirst : Thread to endsFirst : Inferred in method public outOfOrderResponses() from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type url : URL to url : Inferred in method private buildRequestThread(path String, responseCode AtomicInteger) : Thread from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @Override in method public dispatch(request RecordedRequest) : MockResponse from class mockwebserver3.CustomDispatcherTest.simpleDispatch.dispatcher.new Dispatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @Override in method public dispatch(request RecordedRequest) : MockResponse from class mockwebserver3.CustomDispatcherTest.outOfOrderResponses.dispatcher.new Dispatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public setUp(mockWebServer MockWebServer) : void from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public simpleDispatch() : void from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type InterruptedException in method public dispatch(request RecordedRequest) : MockResponse from class mockwebserver3.CustomDispatcherTest.outOfOrderResponses.dispatcher.new Dispatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Thrown Exception Type",
+        "description": "Remove Thrown Exception Type Exception in method public outOfOrderResponses() : void from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Variable Modifier",
+        "description": "Remove Variable Modifier final in variable dispatcher : Dispatcher in method public simpleDispatch() : void from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Variable Modifier",
+        "description": "Remove Variable Modifier final in variable url : URL in method public simpleDispatch() : void from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Variable Modifier",
+        "description": "Remove Variable Modifier final in variable conn : HttpURLConnection in method public simpleDispatch() : void from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Variable Modifier",
+        "description": "Remove Variable Modifier final in variable requestsMade : List<RecordedRequest> in method public simpleDispatch() : void from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Variable Modifier",
+        "description": "Remove Variable Modifier final in variable secondRequest : String in method public outOfOrderResponses() : void from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Variable Modifier",
+        "description": "Remove Variable Modifier final in variable firstRequest : String in method public outOfOrderResponses() : void from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Variable Modifier",
+        "description": "Remove Variable Modifier final in variable latch : CountDownLatch in method public outOfOrderResponses() : void from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Variable Modifier",
+        "description": "Remove Variable Modifier final in variable dispatcher : Dispatcher in method public outOfOrderResponses() : void from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Variable Modifier",
+        "description": "Remove Variable Modifier final in variable startsFirst : Thread in method public outOfOrderResponses() : void from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Variable Modifier",
+        "description": "Remove Variable Modifier final in variable endsFirst : Thread in method public outOfOrderResponses() : void from class mockwebserver3.CustomDispatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public trueDuplexClientWritesFirst() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public trueDuplexServerWritesFirst() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public clientReadsHeadersDataTrailers() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public serverReadsHeadersData() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public requestBodyEndsAfterResponseBody() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public duplexWith100Continue() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public duplexWithRedirect() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type mockResponseBody1 : MockDuplexResponseBody to mockResponseBody1 : MockStreamHandler in method public duplexWithAuthChallenge() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type mockResponseBody2 : MockDuplexResponseBody to mockResponseBody2 : MockStreamHandler in method public duplexWithAuthChallenge() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public fullCallTimeoutDoesNotApplyOnceConnected() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public duplexWithRewriteInterceptors() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public serverCancelsRequestBodyAndSendsResponseBody() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public trueDuplexClientWritesFirst() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public trueDuplexServerWritesFirst() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public clientReadsHeadersDataTrailers() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public serverReadsHeadersData() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public requestBodyEndsAfterResponseBody() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public duplexWith100Continue() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public duplexWithRedirect() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public fullCallTimeoutDoesNotApplyOnceConnected() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public duplexWithRewriteInterceptors() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable mockDuplexResponseBody : MockDuplexResponseBody to mockStreamHandler : MockStreamHandler in method public serverCancelsRequestBodyAndSendsResponseBody() : void from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type body : MockDuplexResponseBody to body : MockStreamHandler in method private enqueueResponseWithBody(builder MockResponse.Builder, body MockStreamHandler) : MockStreamHandler from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type MockDuplexResponseBody to MockStreamHandler in method private enqueueResponseWithBody(builder MockResponse.Builder, body MockStreamHandler) : MockStreamHandler from class okhttp3.DuplexTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onRequest(request RecordedRequest, http2Stream Http2Stream) renamed to public handle(stream Stream) in class mockwebserver3.internal.duplex.MockStreamHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [request : RecordedRequest, http2Stream : Http2Stream] to stream : Stream in method public handle(stream Stream) from class mockwebserver3.internal.duplex.MockStreamHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter errorCode : ErrorCode in method public cancelStream(errorCode ErrorCode) from class mockwebserver3.internal.duplex.MockDuplexResponseBody",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onRequest(request RecordedRequest, http2Stream Http2Stream) renamed to public handle(stream Stream) in class mockwebserver3.StreamHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class mockwebserver3.internal.duplex.DuplexResponseBody moved and renamed to mockwebserver3.StreamHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @Throws(IOException::class) in method public onRequest(request RecordedRequest, http2Stream Http2Stream) from class mockwebserver3.internal.duplex.DuplexResponseBody",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter http2Stream : Http2Stream in method private serviceStreamTask(request RecordedRequest, http2Stream Http2Stream) : FutureTask<Void> from class mockwebserver3.internal.duplex.MockDuplexResponseBody",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter request : RecordedRequest to stream : Stream in method private serviceStreamTask(stream Stream) : FutureTask<Void> from class mockwebserver3.internal.duplex.MockStreamHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type request : RecordedRequest to stream : Stream in method private serviceStreamTask(stream Stream) : FutureTask<Void> from class mockwebserver3.internal.duplex.MockStreamHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute isDuplex : Boolean to streamHandler : StreamHandler in class mockwebserver3.MockResponse",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type isDuplex : Boolean to streamHandler : StreamHandler in class mockwebserver3.MockResponse",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type builder : MockResponse.Builder to builder : Inferred in method public mockResponseSetHeaders() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type builder : MockResponse.Builder to builder : Inferred in method public mockResponseSetHeader() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

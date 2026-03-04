@@ -12,7 +12,7 @@ plugins {
 group = "com.github.tsantalis"
 version = project.hasProperty('buildVersion') ?
         project.buildVersion
-        : '3.0.13'
+        : '3.1.0'
 
 applicationName = rootProject.name
 mainClassName = "org.refactoringminer.RefactoringMiner"
@@ -69,18 +69,23 @@ tasks.processTestResources {
     }
 }
 dependencies {
+    implementation 'org.antlr:antlr4-runtime:4.13.2'
+    implementation 'org.jetbrains.kotlin:kotlin-compiler-embeddable:2.3.10'
     implementation 'org.eclipse.jgit:org.eclipse.jgit:6.10.1.202505221210-r'
     implementation 'org.slf4j:slf4j-api:2.0.17'
-    runtimeOnly 'ch.qos.logback:logback-classic:1.5.21'
+    runtimeOnly 'ch.qos.logback:logback-classic:1.5.32'
     implementation 'org.eclipse.jdt:org.eclipse.jdt.core:3.39.0'
-    implementation 'org.apache.commons:commons-text:1.14.0'
+    implementation 'org.apache.commons:commons-text:1.15.0'
     implementation 'org.kohsuke:github-api:1.330'
     implementation 'io.github.java-diff-utils:java-diff-utils:4.16'
     implementation 'com.github.gumtreediff:core:3.0.0'
     implementation 'com.github.gumtreediff:gen.jdt:3.0.0'
-    implementation 'org.jcommander:jcommander:2.0'
-    implementation 'org.jsoup:jsoup:1.21.2'
-    implementation 'com.perforce:p4java:2025.1.2785811'
+    implementation('com.github.gumtreediff:gen.treesitter-ng:4.0.0-beta3') {
+        exclude group: 'com.github.gumtreediff', module: 'core'
+    }
+    implementation 'org.jcommander:jcommander:3.0'
+    implementation 'org.jsoup:jsoup:1.22.1'
+    implementation 'com.perforce:p4java:2025.2.2872146'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.0'
@@ -115,7 +120,7 @@ mavenPublishing {
 }
 
 mavenPublishing {
-  coordinates("com.github.tsantalis", "refactoring-miner", "3.0.13")
+  coordinates("com.github.tsantalis", "refactoring-miner", "3.1.0")
 
   pom {
     name = "Refactoring Miner"

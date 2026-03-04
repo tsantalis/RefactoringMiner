@@ -11,7 +11,7 @@
 | Language | Refactoring detection | AST diff generation | Roadmap |
 |:-----------------------|:-----------|:--------|:--------|
 |<img src="https://upload.wikimedia.org/wikipedia/en/3/30/Java_programming_language_logo.svg" alt="Java" height="60"/> | ✅ | ✅ | |
-|<img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Python_logo_and_wordmark.svg" alt="Python" width="120"/> | ✅ | ✅ | <ul><li>- [ ] Support comments</li><li>- [ ] Support version 3.14</li></ul> |
+|<img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Python_logo_and_wordmark.svg" alt="Python" width="120"/> | ✅ | ✅ | <ul><li>- [ ] Support comments</li><li>- [x] Support version 3.14</li></ul> |
 |<img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Kotlin_logo_%282021-present%29.svg" alt="Kotlin" width="100"/> | ✅ | ✅ | <ul><li>- [ ] Validate precision/recall</li></ul> |
 
 

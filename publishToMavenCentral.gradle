@@ -12,7 +12,7 @@ plugins {
 group = "com.github.tsantalis"
 version = project.hasProperty('buildVersion') ?
         project.buildVersion
-        : '3.1.0'
+        : '3.1.1'
 
 applicationName = rootProject.name
 mainClassName = "org.refactoringminer.RefactoringMiner"
@@ -80,7 +80,7 @@ dependencies {
     implementation 'io.github.java-diff-utils:java-diff-utils:4.16'
     implementation 'com.github.gumtreediff:core:3.0.0'
     implementation 'com.github.gumtreediff:gen.jdt:3.0.0'
-    implementation('com.github.gumtreediff:gen.treesitter-ng:4.0.0-beta3') {
+    implementation('com.github.gumtreediff:gen.treesitter-ng:4.0.0-beta6') {
         exclude group: 'com.github.gumtreediff', module: 'core'
     }
     implementation 'org.jcommander:jcommander:3.0'
@@ -120,7 +120,7 @@ mavenPublishing {
 }
 
 mavenPublishing {
-  coordinates("com.github.tsantalis", "refactoring-miner", "3.1.0")
+  coordinates("com.github.tsantalis", "refactoring-miner", "3.1.1")
 
   pom {
     name = "Refactoring Miner"

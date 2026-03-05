@@ -79,7 +79,7 @@ dependencies {
     implementation 'io.github.java-diff-utils:java-diff-utils:4.16'
     implementation 'com.github.gumtreediff:core:3.0.0'
     implementation 'com.github.gumtreediff:gen.jdt:3.0.0'
-    implementation('com.github.gumtreediff:gen.treesitter-ng:4.0.0-beta6') {
+    implementation('com.github.gumtreediff:gen.treesitter-ng:4.0.0-beta3') {
         exclude group: 'com.github.gumtreediff', module: 'core'
     }
     implementation 'org.jcommander:jcommander:3.0'

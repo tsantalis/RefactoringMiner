@@ -12,7 +12,10 @@ public class LeafType extends UMLType implements Cloneable {
 	
 	public LeafType(String type) {
 		this.classType = type;
-		this.nonQualifiedClassType = simpleNameOf(type);
+		if(type.equals("..."))
+			this.nonQualifiedClassType = type;
+		else
+			this.nonQualifiedClassType = simpleNameOf(type);
 	}
 
 	public LeafType cloneAsQualified() {

@@ -252,7 +252,11 @@ public class MethodMatcher extends BodyMapperMatcher{
         }
         for (org.apache.commons.lang3.tuple.Pair<UMLAnnotation, UMLAnnotation>  umlAnnotationUMLAnnotationPair : umlOperationDiff.getAnnotationListDiff().getCommonAnnotations()) {
             Tree srcClassAnnotationTree = TreeUtilFunctions.findByLocationInfo(srcTree , umlAnnotationUMLAnnotationPair.getLeft().getLocationInfo(), LANG1);
+            if(srcClassAnnotationTree.getParent() != null && srcClassAnnotationTree.getParent().getType().name.equals(LANG1.DECORATOR))
+                srcClassAnnotationTree = srcClassAnnotationTree.getParent();
             Tree dstClassAnnotationTree = TreeUtilFunctions.findByLocationInfo(dstTree, umlAnnotationUMLAnnotationPair.getRight().getLocationInfo(), LANG2);
+            if(dstClassAnnotationTree.getParent() != null && dstClassAnnotationTree.getParent().getType().name.equals(LANG1.DECORATOR))
+                dstClassAnnotationTree = dstClassAnnotationTree.getParent();
             if (srcClassAnnotationTree == null || dstClassAnnotationTree == null) continue;
             if (srcClassAnnotationTree.isIsoStructuralTo(dstClassAnnotationTree))
                 mappingStore.addMappingRecursively(srcClassAnnotationTree, dstClassAnnotationTree);

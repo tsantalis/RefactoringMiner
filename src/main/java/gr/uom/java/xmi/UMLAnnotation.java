@@ -15,6 +15,7 @@ import org.jetbrains.kotlin.psi.KtAnnotationEntry;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.jetbrains.kotlin.psi.ValueArgument;
+import org.refactoringminer.util.PathFileUtils;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.metadata.LangAnnotation;
@@ -29,10 +30,12 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 	private AbstractExpression value;
 	private Map<String, AbstractExpression> memberValuePairs = new LinkedHashMap<>();
 	private List<AbstractExpression> arguments = new ArrayList<>();
+	private final Constants LANG;
 	
 	public UMLAnnotation(CompilationUnit cu, String sourceFolder, String filePath, Annotation annotation, String javaFileContent) {
 		this.typeName = annotation.getTypeName().getFullyQualifiedName();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, annotation, CodeElementType.ANNOTATION);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		if(annotation instanceof SingleMemberAnnotation) {
 			SingleMemberAnnotation singleMemberAnnotation = (SingleMemberAnnotation)annotation;
 			this.value = new AbstractExpression(cu, sourceFolder, filePath, singleMemberAnnotation.getValue(), CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, null, new LinkedHashMap<>(), javaFileContent);
@@ -50,6 +53,7 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 	public UMLAnnotation(KtFile ktFile, String sourceFolder, String filePath, KtAnnotationEntry annotationEntry, String fileContent) {
 		this.typeName = annotationEntry.getShortName().asString();
 		this.locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, annotationEntry, CodeElementType.ANNOTATION);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		for(ValueArgument argument : annotationEntry.getValueArguments()) {
 			AbstractExpression expression = new AbstractExpression(ktFile, sourceFolder, filePath, (KtValueArgument)argument, CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, null, new LinkedHashMap<>(), fileContent);
 			this.arguments.add(expression);
@@ -59,7 +63,7 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 	public UMLAnnotation(LangCompilationUnit cu, String sourceFolder, String filePath, LangAnnotation annotation, String fileContent) {
 		this.typeName = annotation.getName().getIdentifier();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, annotation, CodeElementType.ANNOTATION);
-
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		// Handle single-member annotations (e.g., @decorator(value))
 		if (annotation.isSingleMemberAnnotation()) {
 			this.value = new AbstractExpression(cu, sourceFolder, filePath,
@@ -188,6 +192,7 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 			return false;
 		UMLAnnotation other = (UMLAnnotation) obj;
 		boolean equalArguments = this.argumentEquals(other);
+		boolean equalArgumentsAndDifferentLanguage = equalArguments && !this.LANG.equals(other.LANG);
 		if (memberValuePairs == null) {
 			if (other.memberValuePairs != null)
 				return false;
@@ -204,12 +209,12 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 		} else if (!typeName.equals(other.typeName))
 			return false;
 		if (value == null) {
-			if (other.value != null && !equalArguments)
+			if (other.value != null && !equalArgumentsAndDifferentLanguage)
 				return false;
 		} else {
-			if (other.value == null && !equalArguments)
+			if (other.value == null && !equalArgumentsAndDifferentLanguage)
 				return false;
-			if (!equalArguments && !value.getExpression().equals(other.value.getExpression()))
+			if (!equalArgumentsAndDifferentLanguage && !value.getExpression().equals(other.value.getExpression()))
 				return false;
 		}
 		return true;
@@ -219,11 +224,11 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 		int thisSize = this.arguments.size();
 		int otherSize = other.arguments.size();
 		if(thisSize != otherSize) {
-			if(this.arguments.size() == 1 && other.arguments.size() == 0 && other.value != null) {
+			if(this.arguments.size() == 1 && other.arguments.size() == 0 && other.value != null && !this.LANG.equals(other.LANG)) {
 				if(this.arguments.get(0).getString().equals(other.value.getString()))
 					return true;
 			}
-			else if(other.arguments.size() == 1 && this.arguments.size() == 0 && this.value != null) {
+			else if(other.arguments.size() == 1 && this.arguments.size() == 0 && this.value != null && !this.LANG.equals(other.LANG)) {
 				if(other.arguments.get(0).getString().equals(this.value.getString()))
 					return true;
 			}

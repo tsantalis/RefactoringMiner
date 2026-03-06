@@ -10,6 +10,28 @@
   "firstEndPos" : 18547,
   "secondEndPos" : 19730
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "#!/usr/bin/env python",
+  "secondLabel" : "#!/usr/bin/env python",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 21,
+  "secondEndPos" : 21
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# -*- coding: utf-8 -*-",
+  "secondLabel" : "# -*- coding: utf-8 -*-",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 22,
+  "secondPos" : 22,
+  "firstEndPos" : 45,
+  "secondEndPos" : 45
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -5191,6 +5213,28 @@
   "firstEndPos" : 7445,
   "secondEndPos" : 8561
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# Subclasses should update these meta attributes *before* calling the base",
+  "secondLabel" : "# Subclasses should update these meta attributes *before* calling the base",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 7450,
+  "secondPos" : 8566,
+  "firstEndPos" : 7524,
+  "secondEndPos" : 8640
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# distribution's __init__ function.",
+  "secondLabel" : "# distribution's __init__ function.",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 7529,
+  "secondPos" : 8645,
+  "firstEndPos" : 7564,
+  "secondEndPos" : 8680
+}, {
   "firstType" : "assignment",
   "secondType" : "assignment",
   "firstLabel" : "",
@@ -5311,6 +5355,17 @@
   "secondPos" : 8746,
   "firstEndPos" : 7634,
   "secondEndPos" : 8750
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# These should be set in the subclass's init function.",
+  "secondLabel" : "# These should be set in the subclass's init function.",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 7647,
+  "secondPos" : 8763,
+  "firstEndPos" : 7701,
+  "secondEndPos" : 8817
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",

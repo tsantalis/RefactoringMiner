@@ -16,7 +16,7 @@ public class Constants {
 			TYPE_DECLARATION = "class_definition";
 			TYPE_DECLARATION_KIND = "class";
 			BLOCK_COMMENT = "string"; // this is a text-block comment style, Python does not support Java-like multi-line comment
-			LINE_COMMENT = "line_comment"; // TODO validate when Python comments get supported
+			LINE_COMMENT = "comment";
 			EXPRESSION_STATEMENT = "expression_statement";
 			TRY_STATEMENT = "try_statement";
 			CATCH_CLAUSE = "except_clause";

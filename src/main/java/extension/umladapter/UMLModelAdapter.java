@@ -18,6 +18,7 @@ import extension.base.LangASTUtil;
 import extension.base.LangSupportedEnum;
 import extension.umladapter.processor.UMLAdapterVariableProcessor;
 import gr.uom.java.xmi.*;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
@@ -28,6 +29,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.logging.Logger;
 
+import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
+
+import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.gen.treesitterng.PythonTreeSitterNgTreeGenerator;
 
@@ -54,6 +58,25 @@ public class UMLModelAdapter {
         populateUMLModel(langASTMap, langSupportedFiles);
     }
 
+    private static void distributeComments(List<UMLComment> compilationUnitComments, LocationInfo codeElementLocationInfo, List<UMLComment> codeElementComments) {
+        ListIterator<UMLComment> listIterator = compilationUnitComments.listIterator(compilationUnitComments.size());
+        while(listIterator.hasPrevious()) {
+            UMLComment comment = listIterator.previous();
+            LocationInfo commentLocationInfo = comment.getLocationInfo();
+            if(codeElementLocationInfo.subsumes(commentLocationInfo) ||
+                    codeElementLocationInfo.sameLine(commentLocationInfo) ||
+                    (commentLocationInfo.startsAtTheEndLineOf(codeElementLocationInfo) && !codeElementLocationInfo.getCodeElementType().equals(CodeElementType.ANONYMOUS_CLASS_DECLARATION)) ||
+                    (codeElementLocationInfo.nextLine(commentLocationInfo) && !codeElementLocationInfo.getCodeElementType().equals(CodeElementType.ANONYMOUS_CLASS_DECLARATION)) ||
+                    (codeElementComments.size() > 0 && codeElementComments.get(0).getLocationInfo().nextLine(commentLocationInfo))) {
+                codeElementComments.add(0, comment);
+            }
+            if(commentLocationInfo.nextLine(codeElementLocationInfo) || commentLocationInfo.rightAfterNextLine(codeElementLocationInfo)) {
+                comment.addPreviousLocation(codeElementLocationInfo);
+            }
+        }
+        compilationUnitComments.removeAll(codeElementComments);
+    }
+
     private Map<String, LangASTNode> parseLangSupportedFiles(Map<String, String> langSupportedFiles, boolean astDiff) throws IOException {
         Map<String, LangASTNode> result = new HashMap<>();
 
@@ -68,6 +91,15 @@ public class UMLModelAdapter {
                 ByteArrayInputStream is = new ByteArrayInputStream(entry.getValue().getBytes());
                 try {
                     TreeContext treeContext = new PythonTreeSitterNgTreeGenerator().generateFrom().stream(is);
+                    List<Tree> trees = TreeUtilFunctions.findChildrenByTypeRecursively(treeContext.getRoot(), "comment");
+                    List<UMLComment> comments = new ArrayList<UMLComment>();
+                    for(Tree t : trees) {
+                        String sourceFolder = UMLAdapterUtil.extractSourceFolder(entry.getKey());
+                        LocationInfo location = new LocationInfo(sourceFolder, entry.getKey(), t, CodeElementType.LINE_COMMENT);
+                        UMLComment comment = new UMLComment(t.getLabel(), location);
+                        comments.add(comment);
+                    }
+                    this.umlModel.getCommentMap().put(entry.getKey(), comments);
                     this.umlModel.getTreeContextMap().put(entry.getKey(), treeContext);
                 }
                 catch(Exception e) {
@@ -94,21 +126,22 @@ public class UMLModelAdapter {
         if (ast instanceof LangCompilationUnit compilationUnit) {
             // Process imports
             List<UMLImport> imports = extractUMLImports(compilationUnit, filename);
+            List<UMLComment> comments = model.getCommentMap().get(filename);
 
             for (LangTypeDeclaration typeDecl : compilationUnit.getTypes()) {
-                UMLClass umlClass = createUMLClass(model, typeDecl, filename, imports, fileContent);
+                UMLClass umlClass = createUMLClass(model, typeDecl, filename, imports, fileContent, comments);
                 model.addClass(umlClass);
             }
 
             // Handle top level methods
-            if (compilationUnit.getMethods().size() > 0 || compilationUnit.getComments().size() > 0 ||
-            		compilationUnit.getImports().size() > 0 || compilationUnit.getStatements().size() > 0){
-                handleTopLevelMethods(model, filename, compilationUnit, imports, fileContent);
+            if (compilationUnit.getMethods().size() > 0 || compilationUnit.getComments().size() > 0 || comments.size() > 0 ||
+                    compilationUnit.getImports().size() > 0 || compilationUnit.getStatements().size() > 0){
+                handleTopLevelMethods(model, filename, compilationUnit, imports, fileContent, comments);
             }
         }
     }
 
-    private void handleTopLevelMethods(UMLModel model, String filename, LangCompilationUnit compilationUnit, List<UMLImport> imports, String fileContent) {
+    private void handleTopLevelMethods(UMLModel model, String filename, LangCompilationUnit compilationUnit, List<UMLImport> imports, String fileContent, List<UMLComment> comments) {
         List<LangMethodDeclaration> topLevelMethods = compilationUnit.getMethods();
         UMLClass moduleClass = createModuleClass(compilationUnit, filename, imports, fileContent);
 
@@ -127,10 +160,14 @@ public class UMLModelAdapter {
             String filepath = UMLAdapterUtil.extractFilePath(filename);
             for (LangMethodDeclaration method : topLevelMethods) {
                 UMLOperation operation = createUMLOperation(method, moduleClass.getName(),
-                        sourceFolder, filepath, fileContent, convertToVariableDeclarationMap(moduleClass.getFieldDeclarationMap().values()), language);
+                        sourceFolder, filepath, fileContent, comments, convertToVariableDeclarationMap(moduleClass.getFieldDeclarationMap().values()), language);
                 moduleClass.addOperation(operation);
             }
         }
+        distributeComments(comments, moduleClass.getLocationInfo(), moduleClass.getComments());
+        //if there are still comments left, add them to module
+        if(comments.size() > 0)
+            moduleClass.getComments().addAll(comments);
         model.addClass(moduleClass);
     }
 
@@ -173,7 +210,7 @@ public class UMLModelAdapter {
         return moduleClass;
     }
 
-    private UMLClass createUMLClass(UMLModel model, LangTypeDeclaration typeDecl, String filename, List<UMLImport> imports, String fileContent) {
+    private UMLClass createUMLClass(UMLModel model, LangTypeDeclaration typeDecl, String filename, List<UMLImport> imports, String fileContent, List<UMLComment> comments) {
 
         String className = typeDecl.getName();
 
@@ -240,7 +277,7 @@ public class UMLModelAdapter {
         umlClass.setRecord(typeDecl.isRecord());
 
         for (LangMethodDeclaration methodDecl : typeDecl.getMethods()) {
-            UMLOperation umlOperation = createUMLOperation(methodDecl, umlClass.getName(), sourceFolder, filepath, fileContent, convertToVariableDeclarationMap(umlClass.getFieldDeclarationMap().values()), language);
+            UMLOperation umlOperation = createUMLOperation(methodDecl, umlClass.getName(), sourceFolder, filepath, fileContent, comments, convertToVariableDeclarationMap(umlClass.getFieldDeclarationMap().values()), language);
             umlClass.addOperation(umlOperation);
             if ("__init__".equals(methodDecl.getName()) || "_build".equals(methodDecl.getName())) {
                 List<UMLAttribute> attributes = getAttributes(methodDecl, umlClass.getName(), sourceFolder, filepath, umlOperation, fileContent);
@@ -255,7 +292,7 @@ public class UMLModelAdapter {
         if (typeDecl.getStatements().size() > 0) {
             ModuleContainer moduleContainer = new ModuleContainer(locationInfo, typeDecl.getName());
             OperationBody opBody = new OperationBody(
-            		typeDecl.getRootCompilationUnit(),
+                    typeDecl.getRootCompilationUnit(),
                     sourceFolder,
                     filepath,
                     typeDecl.getStatements(),
@@ -266,10 +303,11 @@ public class UMLModelAdapter {
             moduleContainer.addStatements(opBody.getCompositeStatement().getStatements());
             umlClass.setContainer(moduleContainer);
         }
+        distributeComments(comments, locationInfo, umlClass.getComments());
         return umlClass;
     }
 
-    public static UMLOperation createUMLOperation(LangMethodDeclaration methodDecl, String className, String sourceFolder, String filePath, String fileContent, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, LangSupportedEnum language) {
+    public static UMLOperation createUMLOperation(LangMethodDeclaration methodDecl, String className, String sourceFolder, String filePath, String fileContent, List<UMLComment> comments, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, LangSupportedEnum language) {
         int startSignatureOffset = methodDecl.getStartChar();
         LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, methodDecl, LocationInfo.CodeElementType.METHOD_DECLARATION);
 
@@ -362,6 +400,7 @@ public class UMLModelAdapter {
                 methodDecl.getStartChar() + methodDecl.getLength();
         String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
         umlOperation.setActualSignature(text);
+        distributeComments(comments, locationInfo, umlOperation.getComments());
         return umlOperation;
     }
 

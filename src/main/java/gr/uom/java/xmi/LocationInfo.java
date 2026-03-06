@@ -153,6 +153,15 @@ public class LocationInfo {
 		this.endColumn = 1;
 	}
 
+	public LocationInfo(String sourceFolder, String filePath, com.github.gumtreediff.tree.Tree tree, CodeElementType codeElementType) {
+		this.sourceFolder = sourceFolder;
+		this.filePath = filePath;
+		this.codeElementType = codeElementType;
+		this.startOffset = tree.getPos();
+		this.length = tree.getLength();
+		this.endOffset = tree.getEndPos();
+	}
+
 	public String getSourceFolder() {
 		return sourceFolder;
 	}

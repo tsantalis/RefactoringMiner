@@ -10,6 +10,28 @@
   "firstEndPos" : 10274,
   "secondEndPos" : 10271
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "#!/usr/bin/env python",
+  "secondLabel" : "#!/usr/bin/env python",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 21,
+  "secondEndPos" : 21
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# -*- coding: utf-8 -*-",
+  "secondLabel" : "# -*- coding: utf-8 -*-",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 22,
+  "secondPos" : 22,
+  "firstEndPos" : 45,
+  "secondEndPos" : 45
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -1758,6 +1780,17 @@
   "secondPos" : 1245,
   "firstEndPos" : 1802,
   "secondEndPos" : 1800
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "### Do we allow base == 'e' or should we convert to its numerical value?",
+  "secondLabel" : "### Do we allow base == 'e' or should we convert to its numerical value?",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 1807,
+  "secondPos" : 1805,
+  "firstEndPos" : 1879,
+  "secondEndPos" : 1877
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",

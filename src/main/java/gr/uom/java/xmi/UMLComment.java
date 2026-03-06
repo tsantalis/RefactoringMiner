@@ -66,6 +66,9 @@ public class UMLComment extends UMLAbstractDocumentation {
 			else if(text.startsWith("//")) {
 				text = text.substring(2);
 			}
+			else if(text.startsWith("#")) {
+				text = text.substring(1);
+			}
 			text = text.trim();
 			return text;
 		}

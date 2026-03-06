@@ -126,7 +126,7 @@ public class UMLModelAdapter {
         if (ast instanceof LangCompilationUnit compilationUnit) {
             // Process imports
             List<UMLImport> imports = extractUMLImports(compilationUnit, filename);
-            List<UMLComment> comments = model.getCommentMap().get(filename);
+            List<UMLComment> comments = model.getCommentMap().containsKey(filename) ? model.getCommentMap().get(filename) : new ArrayList<>();
 
             for (LangTypeDeclaration typeDecl : compilationUnit.getTypes()) {
                 UMLClass umlClass = createUMLClass(model, typeDecl, filename, imports, fileContent, comments);

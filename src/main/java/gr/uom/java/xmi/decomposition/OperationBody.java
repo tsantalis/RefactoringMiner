@@ -657,7 +657,7 @@ public class OperationBody {
 		else if(statement instanceof LangMethodDeclaration) {
 			LangMethodDeclaration methodDecl = (LangMethodDeclaration)statement;
 			String className = container.getClassName() + "." + container.getName();
-			UMLOperation nested = createUMLOperation(methodDecl, className, sourceFolder, filePath, fileContent, activeVariableDeclarations, LangSupportedEnum.fromFileName(filePath));
+			UMLOperation nested = createUMLOperation(methodDecl, className, sourceFolder, filePath, fileContent, comments, activeVariableDeclarations, LangSupportedEnum.fromFileName(filePath));
 			if(container instanceof UMLOperation) {
 				((UMLOperation)container).addNestedOperation(nested);
 			}

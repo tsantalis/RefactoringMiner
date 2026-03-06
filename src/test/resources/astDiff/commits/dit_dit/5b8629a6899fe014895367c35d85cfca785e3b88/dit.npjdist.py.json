@@ -10,6 +10,28 @@
   "firstEndPos" : 42720,
   "secondEndPos" : 41573
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "#!/usr/bin/env python",
+  "secondLabel" : "#!/usr/bin/env python",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 21,
+  "secondEndPos" : 21
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# -*- coding: utf-8 -*-",
+  "secondLabel" : "# -*- coding: utf-8 -*-",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 22,
+  "secondPos" : 22,
+  "firstEndPos" : 45,
+  "secondEndPos" : 45
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -3805,6 +3827,17 @@
   "firstEndPos" : 11469,
   "secondEndPos" : 10536
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "## Unadvertised attributes",
+  "secondLabel" : "## Unadvertised attributes",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 11474,
+  "secondPos" : 10541,
+  "firstEndPos" : 11500,
+  "secondEndPos" : 10567
+}, {
   "firstType" : "assignment",
   "secondType" : "assignment",
   "firstLabel" : "",
@@ -4343,6 +4376,17 @@
   "secondPos" : 10822,
   "firstEndPos" : 11759,
   "secondEndPos" : 10826
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "## Advertised attributes.",
+  "secondLabel" : "## Advertised attributes.",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 11765,
+  "secondPos" : 10832,
+  "firstEndPos" : 11790,
+  "secondEndPos" : 10857
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -12164,6 +12208,17 @@
   "secondPos" : 22920,
   "firstEndPos" : 23358,
   "secondEndPos" : 22986
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# Now just make sure that class is a sequence.",
+  "secondLabel" : "# to make sure that class is a sequence.",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 23312,
+  "secondPos" : 22995,
+  "firstEndPos" : 23358,
+  "secondEndPos" : 23035
 }, {
   "firstType" : "augmented_assignment",
   "secondType" : "augmented_assignment",

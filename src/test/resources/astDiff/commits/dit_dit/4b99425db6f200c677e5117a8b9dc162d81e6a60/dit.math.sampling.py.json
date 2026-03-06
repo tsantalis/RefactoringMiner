@@ -10,6 +10,28 @@
   "firstEndPos" : 4278,
   "secondEndPos" : 4284
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "#!/usr/bin/env python",
+  "secondLabel" : "#!/usr/bin/env python",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 21,
+  "secondEndPos" : 21
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# -*- coding: utf-8 -*-",
+  "secondLabel" : "# -*- coding: utf-8 -*-",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 22,
+  "secondPos" : 22,
+  "firstEndPos" : 45,
+  "secondEndPos" : 45
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -3595,6 +3617,17 @@
   "secondPos" : 3890,
   "firstEndPos" : 3889,
   "secondEndPos" : 3895
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# Load the cython function if possible",
+  "secondLabel" : "# Load the cython function if possible",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 3891,
+  "secondPos" : 3897,
+  "firstEndPos" : 3929,
+  "secondEndPos" : 3935
 }, {
   "firstType" : "try_statement",
   "secondType" : "try_statement",

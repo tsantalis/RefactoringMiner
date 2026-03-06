@@ -10,6 +10,28 @@
   "firstEndPos" : 10192,
   "secondEndPos" : 10316
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "#!/usr/bin/env python",
+  "secondLabel" : "#!/usr/bin/env python",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 21,
+  "secondEndPos" : 21
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# -*- coding: utf-8 -*-",
+  "secondLabel" : "# -*- coding: utf-8 -*-",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 22,
+  "secondPos" : 22,
+  "firstEndPos" : 45,
+  "secondEndPos" : 45
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -31,6 +53,17 @@
   "secondPos" : 47,
   "firstEndPos" : 106,
   "secondEndPos" : 106
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# Standard library",
+  "secondLabel" : "# Standard library",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 108,
+  "secondPos" : 108,
+  "firstEndPos" : 126,
+  "secondEndPos" : 126
 }, {
   "firstType" : "import_from_statement",
   "secondType" : "import_from_statement",
@@ -131,6 +164,17 @@
   "firstEndPos" : 175,
   "secondEndPos" : 175
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# Other",
+  "secondLabel" : "# Other",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 177,
+  "secondPos" : 177,
+  "firstEndPos" : 184,
+  "secondEndPos" : 184
+}, {
   "firstType" : "import_statement",
   "secondType" : "import_statement",
   "firstLabel" : "",
@@ -185,6 +229,17 @@
   "secondPos" : 201,
   "firstEndPos" : 203,
   "secondEndPos" : 203
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# dit",
+  "secondLabel" : "# dit",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 205,
+  "secondPos" : 205,
+  "firstEndPos" : 210,
+  "secondEndPos" : 210
 }, {
   "firstType" : "import_from_statement",
   "secondType" : "import_from_statement",
@@ -427,6 +482,83 @@
   "secondPos" : 317,
   "firstEndPos" : 330,
   "secondEndPos" : 330
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "#",
+  "secondLabel" : "#",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 334,
+  "secondPos" : 334,
+  "firstEndPos" : 335,
+  "secondEndPos" : 335
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# This dictionary is a registry (which could, in principle, be updated",
+  "secondLabel" : "# This dictionary is a registry (which could, in principle, be updated",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 336,
+  "secondPos" : 336,
+  "firstEndPos" : 406,
+  "secondEndPos" : 406
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# by users) that maps the outcome class (which is fixed for each distribution)",
+  "secondLabel" : "# by users) that maps the outcome class (which is fixed for each distribution)",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 407,
+  "secondPos" : 407,
+  "firstEndPos" : 485,
+  "secondEndPos" : 485
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# to an outcome constructor.  The constructor takes, as input, a tuple",
+  "secondLabel" : "# to an outcome constructor.  The constructor takes, as input, a tuple",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 486,
+  "secondPos" : 486,
+  "firstEndPos" : 556,
+  "secondEndPos" : 556
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# created by itertools.product and returns an object of the outcome class.",
+  "secondLabel" : "# created by itertools.product and returns an object of the outcome class.",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 557,
+  "secondPos" : 557,
+  "firstEndPos" : 631,
+  "secondEndPos" : 631
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# See get_outcome_constructor() and get_produc_func() for more details.",
+  "secondLabel" : "# See get_outcome_constructor() and get_produc_func() for more details.",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 632,
+  "secondPos" : 632,
+  "firstEndPos" : 703,
+  "secondEndPos" : 703
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "#",
+  "secondLabel" : "#",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 704,
+  "secondPos" : 704,
+  "firstEndPos" : 705,
+  "secondEndPos" : 705
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",

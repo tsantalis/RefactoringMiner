@@ -10,6 +10,28 @@
   "firstEndPos" : 44054,
   "secondEndPos" : 44014
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "#!/usr/bin/env python",
+  "secondLabel" : "#!/usr/bin/env python",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 21,
+  "secondEndPos" : 21
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# -*- coding: utf-8 -*-",
+  "secondLabel" : "# -*- coding: utf-8 -*-",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 22,
+  "secondPos" : 22,
+  "firstEndPos" : 45,
+  "secondEndPos" : 45
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -12726,6 +12748,17 @@
   "firstEndPos" : 17994,
   "secondEndPos" : 17109
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# Not initialize-able",
+  "secondLabel" : "# Not initialize-able",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 17995,
+  "secondPos" : 17110,
+  "firstEndPos" : 18016,
+  "secondEndPos" : 17131
+}, {
   "firstType" : "assignment",
   "secondType" : "assignment",
   "firstLabel" : "",
@@ -13022,6 +13055,17 @@
   "secondPos" : 17302,
   "firstEndPos" : 18191,
   "secondEndPos" : 17306
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# Not initialize-able",
+  "secondLabel" : "# Not initialize-able",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 18192,
+  "secondPos" : 17307,
+  "firstEndPos" : 18213,
+  "secondEndPos" : 17328
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -29345,6 +29389,28 @@
   "firstPos" : 36127,
   "secondPos" : 35981,
   "firstEndPos" : 36192,
+  "secondEndPos" : 36042
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# and _event_class is None. In that case, we don't know the event",
+  "secondLabel" : "# sample space (since we don't know the outcome class), and we",
+  "firstParentType" : "if_statement",
+  "secondParentType" : "if_statement",
+  "firstPos" : 36127,
+  "secondPos" : 36055,
+  "firstEndPos" : 36192,
+  "secondEndPos" : 36117
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# space (since we don't know the event class), and we should return",
+  "secondLabel" : "# and _outcome_class is None. In that case, we don't know the",
+  "firstParentType" : "if_statement",
+  "secondParentType" : "if_statement",
+  "firstPos" : 36205,
+  "secondPos" : 35981,
+  "firstEndPos" : 36272,
   "secondEndPos" : 36042
 }, {
   "firstType" : "comment",

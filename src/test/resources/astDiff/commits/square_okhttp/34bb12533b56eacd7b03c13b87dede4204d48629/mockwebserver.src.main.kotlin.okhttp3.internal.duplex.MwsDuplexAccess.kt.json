@@ -362,12 +362,23 @@
   "firstEndPos" : 1031,
   "secondEndPos" : 1005
 }, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1032,
+  "secondPos" : 1006,
+  "firstEndPos" : 1035,
+  "secondEndPos" : 1009
+}, {
   "firstType" : "property_declaration_keyword",
   "secondType" : "property_declaration_keyword",
   "firstLabel" : "var",
   "secondLabel" : "var",
-  "firstParentType" : "property_declaration",
-  "secondParentType" : "property_declaration",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
   "firstPos" : 1032,
   "secondPos" : 1006,
   "firstEndPos" : 1035,

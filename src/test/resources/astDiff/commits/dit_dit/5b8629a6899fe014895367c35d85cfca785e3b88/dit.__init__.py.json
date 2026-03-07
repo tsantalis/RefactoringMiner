@@ -131,6 +131,17 @@
   "firstEndPos" : 155,
   "secondEndPos" : 155
 }, {
+  "firstType" : "import",
+  "secondType" : "import",
+  "firstLabel" : "import",
+  "secondLabel" : "import",
+  "firstParentType" : "import_from_statement",
+  "secondParentType" : "import_from_statement",
+  "firstPos" : 156,
+  "secondPos" : 156,
+  "firstEndPos" : 162,
+  "secondEndPos" : 162
+}, {
   "firstType" : "dotted_name",
   "secondType" : "dotted_name",
   "firstLabel" : "",
@@ -218,6 +229,17 @@
   "secondPos" : 224,
   "firstEndPos" : 185,
   "secondEndPos" : 230
+}, {
+  "firstType" : "import",
+  "secondType" : "import",
+  "firstLabel" : "import",
+  "secondLabel" : "import",
+  "firstParentType" : "import_from_statement",
+  "secondParentType" : "import_from_statement",
+  "firstPos" : 186,
+  "secondPos" : 231,
+  "firstEndPos" : 192,
+  "secondEndPos" : 237
 }, {
   "firstType" : "dotted_name",
   "secondType" : "dotted_name",
@@ -307,16 +329,16 @@
   "firstEndPos" : 261,
   "secondEndPos" : 267
 }, {
-  "firstType" : "*",
-  "secondType" : "*",
-  "firstLabel" : "*",
-  "secondLabel" : "*",
-  "firstParentType" : "wildcard_import",
-  "secondParentType" : "wildcard_import",
-  "firstPos" : 269,
-  "secondPos" : 275,
-  "firstEndPos" : 270,
-  "secondEndPos" : 276
+  "firstType" : "import",
+  "secondType" : "import",
+  "firstLabel" : "import",
+  "secondLabel" : "import",
+  "firstParentType" : "import_from_statement",
+  "secondParentType" : "import_from_statement",
+  "firstPos" : 262,
+  "secondPos" : 268,
+  "firstEndPos" : 268,
+  "secondEndPos" : 274
 }, {
   "firstType" : "wildcard_import",
   "secondType" : "wildcard_import",

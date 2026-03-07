@@ -98,6 +98,10 @@ public class ImportMatcher implements TreeMatcher {
             if (froms != null) {
                 mappingStore.addMapping(froms.first,froms.second);
             }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> imports = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.IMPORT_KEYWORD, LANG2.IMPORT_KEYWORD);
+            if (imports != null) {
+                mappingStore.addMapping(imports.first,imports.second);
+            }
             com.github.gumtreediff.utils.Pair<Tree, Tree> relatives = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.RELATIVE_IMPORT, LANG2.RELATIVE_IMPORT);
             if (relatives != null) {
                 mappingStore.addMappingRecursively(relatives.first,relatives.second);
@@ -117,6 +121,10 @@ public class ImportMatcher implements TreeMatcher {
                 srcImportStatement.getParent().getType().name.equals(LANG1.IMPORT_DECLARATION) &&
                 dstImportStatement.getParent().getType().name.equals(LANG2.IMPORT_DECLARATION)) {
             mappingStore.addMapping(srcImportStatement.getParent(), dstImportStatement.getParent());
+            com.github.gumtreediff.utils.Pair<Tree, Tree> imports = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.IMPORT_KEYWORD, LANG2.IMPORT_KEYWORD);
+            if (imports != null) {
+                mappingStore.addMapping(imports.first,imports.second);
+            }
         }
         else if(srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
                 srcImportStatement.getParent().getType().name.equals(LANG1.FUTURE_IMPORT_STATEMENT) &&
@@ -125,6 +133,10 @@ public class ImportMatcher implements TreeMatcher {
             com.github.gumtreediff.utils.Pair<Tree, Tree> froms = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.FROM_KEYWORD, LANG2.FROM_KEYWORD);
             if (froms != null) {
                 mappingStore.addMapping(froms.first,froms.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> imports = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.IMPORT_KEYWORD, LANG2.IMPORT_KEYWORD);
+            if (imports != null) {
+                mappingStore.addMapping(imports.first,imports.second);
             }
             com.github.gumtreediff.utils.Pair<Tree, Tree> relatives = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.FUTURE, LANG2.FUTURE);
             if (relatives != null) {

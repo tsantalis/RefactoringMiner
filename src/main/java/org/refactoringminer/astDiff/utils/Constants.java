@@ -240,6 +240,7 @@ public class Constants {
     public final String ELIF_KEYWORD = "elif";
     public final String ELSE_KEYWORD = "else";
     public final String WHILE_KEYWORD = "while";
+    public final String IMPORT_KEYWORD = "import";
     public final String DECORATOR = "decorator";
     
     //Kotlin Specific

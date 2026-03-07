@@ -858,6 +858,9 @@ public class StringBasedHeuristics {
 			else if(diff1.isEmpty() && diff2.isEmpty() && (commonPrefix.endsWith("=") || commonPrefix.matches(".*=\\s*\\z"))) {
 				return true;
 			}
+			else if(s1.replaceAll("\s", "").equals(s2.replaceAll("\s", ""))) {
+				return true;
+			}
 		}
 		if(commonSuffix.equals(s1) && commonPrefix.isEmpty()) {
 			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();

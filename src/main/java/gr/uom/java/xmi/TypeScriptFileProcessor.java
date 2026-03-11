@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.caoccao.javet.swc4j.Swc4j;
@@ -41,7 +42,7 @@ public class TypeScriptFileProcessor {
 					.setParseMode(Swc4jParseMode.Module);
 			// Parse the code.
 			Swc4jParseOutput output = swc4j.parse(fileContent, options);
-			System.out.println(output.getProgram().toDebugString());
+			//System.out.println(output.getProgram().toDebugString());
 			if (astDiff) {
 				ByteArrayInputStream is = new ByteArrayInputStream(fileContent.getBytes());
 				TreeContext treeContext = new TypeScriptTreeSitterNgTreeGenerator().generateFrom().stream(is);
@@ -49,9 +50,12 @@ public class TypeScriptFileProcessor {
 			}
 			if(output.getProgram() instanceof Swc4jAstModule module) {
 				List<ISwc4jAstModuleItem> list = module.getBody();
+				List<UMLImport> imports = new ArrayList<>();
 				String sourceFolder = UMLAdapterUtil.extractSourceFolder(filePath);
-				String moduleName = filePath.contains("/") ? filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length() - 3) : "";
-				LocationInfo location = new LocationInfo(sourceFolder, filePath, module.getSpan(), CodeElementType.MODULE_DECLARATION);
+				String moduleName = filePath.contains("/") ? filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length() - 3) : filePath.substring(0, filePath.length() - 3);
+				LocationInfo location = new LocationInfo(sourceFolder, filePath, module.getSpan(), CodeElementType.TYPE_DECLARATION);
+				UMLClass moduleClass = new UMLClass(moduleName, "__module__", location, true, imports);
+				moduleClass.setModule(true);
 				ModuleContainer moduleContainer = new ModuleContainer(location, moduleName);
 				OperationBody opBody = new OperationBody(
 						module,
@@ -62,6 +66,9 @@ public class TypeScriptFileProcessor {
 						fileContent
 						);
 				moduleContainer.addStatements(opBody.getCompositeStatement().getStatements());
+				moduleClass.setContainer(moduleContainer);
+				moduleClass.setVisibility(Visibility.PUBLIC);
+				umlModel.addClass(moduleClass);
 			}
 			else if(output.getProgram() instanceof Swc4jAstScript script) {
 				List<ISwc4jAstStmt> list = script.getBody();

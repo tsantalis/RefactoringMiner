@@ -8,8 +8,11 @@ public enum Constants {
 			" -> ", "::", " + ", "raise ", "case ", "try", "{", "}", "{", "}", "self", "self.", "self\n", " if ", " else ", "assertRaises", "assertRaises", " and ", " or ", "not ", "None", "True", "False"),
 	
 	KOTLIN("\n", "return ", "return\n", "return true\n", "return false\n", "return null\n", "return this\n", " = ", "break\n", "continue\n",
-			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", "this\n", " if ", " else ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "null", "true", "false");
+			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", "this\n", " if ", " else ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "null", "true", "false"),
 	
+	TYPESCRIPT(";\n", "return ", "return;\n", "return true;\n", "return false;\n", "return null;\n", "return this;\n", "=", "break;\n", "continue;\n",
+			" => ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", "this;\n", " ? ", " : ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "null", "true", "false");
+
 	public final String STATEMENT_TERMINATION;
 	public final String RETURN_SPACE;
 	public final String RETURN_STATEMENT;

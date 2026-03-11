@@ -14,6 +14,8 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtFile;
 
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
+
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
 import gr.uom.java.xmi.Constants;
@@ -104,6 +106,15 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public CompositeStatementObject(KtFile ktFile, String sourceFolder, String filePath, KtElement statement, int depth, CodeElementType codeElementType, String fileContent) {
 		super(new LocationInfo(ktFile, sourceFolder, filePath, statement, codeElementType));
+		this.setDepth(depth);
+		this.statementList = new ArrayList<AbstractStatement>();
+		this.expressionList = new ArrayList<AbstractExpression>();
+		this.variableDeclarations = new ArrayList<VariableDeclaration>();
+		computeActualSignature(fileContent, this.locationInfo.getStartOffset(), this.locationInfo.getEndOffset());
+	}
+
+	public CompositeStatementObject(String sourceFolder, String filePath, ISwc4jAst statement, int depth, CodeElementType codeElementType, String fileContent) {
+		super(new LocationInfo(sourceFolder, filePath, statement.getSpan(), codeElementType));
 		this.setDepth(depth);
 		this.statementList = new ArrayList<AbstractStatement>();
 		this.expressionList = new ArrayList<AbstractExpression>();

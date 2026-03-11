@@ -68,6 +68,9 @@ public class Constants {
 			BOOLEAN_LITERAL = "boolean_literal";
 			METHOD_INVOCATION = "call_expression";
 		}
+		//else if(PathFileUtils.isTypeScriptFile(filePath)) {
+			
+		//}
 		else {
 			// Java values as default
 			CLASS_BLOCK = "";
@@ -290,4 +293,15 @@ public class Constants {
     public final String ANNOTATED_LAMBDA = "annotated_lambda";
     public final String ARITHMETIC_OPERATOR = "arithmetic_operator";
     public final String LONG_LITERAL = "long_literal";
+    
+    //TypeScript specific
+    public final String FOR_IN_STATEMENT = "for_in_statement";
+    public final String STATEMENT_BLOCK = "statement_block";
+    public final String OPENING_CURLY_BRACE = "{";
+    public final String CLOSING_CURLY_BRACE = "}";
+    public final String OPENING_PARENTHESIS = "(";
+    public final String CLOSING_PARENTHESIS = ")";
+    public final String OF_KEYWORD = "of";
+    public final String IN_KEYWORD = "in";
+    public final String FOR_KEYWORD = "for";
 }

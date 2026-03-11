@@ -13,6 +13,8 @@ import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtObjectDeclaration;
 import org.jetbrains.kotlin.psi.KtSuperTypeList;
 
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
+
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
 import extension.ast.visitor.LangVisitor;
@@ -43,6 +45,12 @@ public class LeafExpression extends AbstractCodeFragment {
 		if(expression.getParent() instanceof KtSuperTypeList parent && parent.getParent() instanceof KtObjectDeclaration anonymous) {
 			this.string = anonymous.getText();
 		}
+		this.container = container;
+	}
+
+	public LeafExpression(String sourceFolder, String filePath, ISwc4jAst expression, CodeElementType codeElementType, VariableDeclarationContainer container, String fileContent) {
+		super(new LocationInfo(sourceFolder, filePath, expression.getSpan(), codeElementType));
+		this.string = fileContent.substring(expression.getSpan().getStart(), expression.getSpan().getEnd());
 		this.container = container;
 	}
 

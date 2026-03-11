@@ -12,6 +12,8 @@ import org.jetbrains.kotlin.com.intellij.psi.PsiElement;
 import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtFile;
 
+import com.caoccao.javet.swc4j.span.Swc4jSpan;
+
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -160,6 +162,17 @@ public class LocationInfo {
 		this.startOffset = tree.getPos();
 		this.length = tree.getLength();
 		this.endOffset = tree.getEndPos();
+	}
+
+	public LocationInfo(String sourceFolder, String filePath, Swc4jSpan span, CodeElementType codeElementType) {
+		this.sourceFolder = sourceFolder;
+		this.filePath = filePath;
+		this.codeElementType = codeElementType;
+		this.startOffset = span.getStart();
+		this.length = span.getEnd() - span.getStart();
+		this.endOffset = span.getEnd();
+		this.startLine = span.getLine();
+		this.startColumn = span.getColumn();
 	}
 
 	public String getSourceFolder() {
@@ -382,6 +395,7 @@ public class LocationInfo {
 		CONTINUE_STATEMENT,
 		DEL_STATEMENT,
 		EMPTY_STATEMENT,
+		DEBUGGER_STATEMENT,
 		BLOCK("{"),
 		FINALLY_BLOCK("finally"),
 		WITH_STATEMENT("with"),

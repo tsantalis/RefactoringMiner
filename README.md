@@ -13,7 +13,7 @@
 |<img src="https://upload.wikimedia.org/wikipedia/en/3/30/Java_programming_language_logo.svg" alt="Java" height="60"/> | ✅ | ✅ | |
 |<img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Python_logo_and_wordmark.svg" alt="Python" width="120"/> | ✅ | ✅ | <ul><li>- [x] Support comments</li><li>- [x] Support version 3.14</li></ul> |
 |<img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Kotlin_logo_%282021-present%29.svg" alt="Kotlin" width="100"/> | ✅ | ✅ | <ul><li>- [ ] Validate precision/recall</li></ul> |
-|<img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" alt="TypeScript" width="30"/> | | [ ] swc4j Parser |
+|<img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" alt="TypeScript" width="30"/> | | | <ul><li>- [ ] swc4j Parser</li></ul> |
 
 ### Open source projects using RefactoringMiner diff tool for code reviews:
 [<img src="https://www.jabref.org/_nuxt/jabref.4Rtv1swz.svg" alt="JabRef" width="30"/>](https://github.com/JabRef/jabref)

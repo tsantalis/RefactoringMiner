@@ -166,7 +166,12 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 		UMLAnonymousClass anonymousClass =  new UMLAnonymousClass(container.getClassName(), codePath, codePath, anonymousLocationInfo, Collections.emptyList());
 		KotlinFileProcessor.processClassBody(cu, sourceFolder, filePath, fileContent, Collections.emptyList(), container.getComments(), anonymousClass, activeVariableDeclarations, objectDeclaration.getBody(), null);
 		if(container instanceof LambdaExpressionObject lambda) {
-			lambda.getOwner().getAnonymousClassList().add(anonymousClass);
+			VariableDeclarationContainer owner = lambda.getOwner();
+			owner.getAnonymousClassList().add(anonymousClass);
+			while(owner instanceof LambdaExpressionObject parentLambda && parentLambda.getOwner() != null) {
+				parentLambda.getOwner().getAnonymousClassList().add(anonymousClass);
+				owner = parentLambda.getOwner();
+			}
 		}
 		else {
 			container.getAnonymousClassList().add(anonymousClass);

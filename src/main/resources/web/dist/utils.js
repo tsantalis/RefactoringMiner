@@ -26,6 +26,8 @@ function getLanguage(config) {
             return "python";
         case "kt":
             return "kotlin";
+        case "ts":
+            return "typescript";
         default:
             return undefined;
     }

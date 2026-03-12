@@ -24,6 +24,8 @@ function getLanguage(config) {
             return "java";
         case "py":
             return "python";
+        case "kt":
+            return "kotlin";
         default:
             return undefined;
     }

@@ -6,8 +6,10 @@ import java.util.Map;
 import java.util.Set;
 
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstUsingDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.visitors.Swc4jAstVisitor;
 import com.caoccao.javet.swc4j.ast.visitors.Swc4jAstVisitorResponse;
 
@@ -58,8 +60,18 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 	}
 
 	public Swc4jAstVisitorResponse visitVarDeclarator(Swc4jAstVarDeclarator declarator) {
-		VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, declarator, container, activeVariableDeclarations, fileContent);
-		variableDeclarations.add(vd);
+		List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
+		if(identifiers.size() == 1) {
+			VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, declarator, container, activeVariableDeclarations, fileContent);
+			variableDeclarations.add(vd);
+		}
+		else {
+			Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(declarator.getName());
+			for(Swc4jAstBindingIdent identifier : identifiers) {
+				VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, container, activeVariableDeclarations, fileContent);
+				variableDeclarations.add(vd);
+			}
+		}
 		return super.visitVarDeclarator(declarator);
 	}
 

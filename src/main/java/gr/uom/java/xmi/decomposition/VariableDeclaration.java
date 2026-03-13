@@ -46,10 +46,14 @@ import org.refactoringminer.util.PathFileUtils;
 
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstForHead;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstObjectPatProp;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPropName;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstArrayPat;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstAssignPatProp;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstKeyValuePatProp;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstObjectPat;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstRestPat;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDecl;
@@ -944,11 +948,26 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		else if(namePat instanceof Swc4jAstBindingIdent binding) {
 			variables.add(binding);
 		}
-		//else if(namePat instanceof Swc4jAstObjectPat object) {
-		//}
-		//else if(namePat instanceof Swc4jAstRestPat rest) {
-		//	ISwc4jAstPat pat = rest.getArg();
-		//}
+		else if(namePat instanceof Swc4jAstObjectPat object) {
+			for(ISwc4jAstObjectPatProp prop : object.getProps()) {
+				if(prop instanceof Swc4jAstAssignPatProp assignPatProp) {
+					variables.addAll(extractVariables(assignPatProp.getKey()));
+				}
+				else if(prop instanceof Swc4jAstKeyValuePatProp keyValuePatProp) {
+					//ISwc4jAstPropName key = keyValuePatProp.getKey();
+					ISwc4jAstPat value = keyValuePatProp.getValue();
+					variables.addAll(extractVariables(value));
+				}
+				else if(prop instanceof Swc4jAstRestPat restPat) {
+					ISwc4jAstPat pat = restPat.getArg();
+					variables.addAll(extractVariables(pat));
+				}
+			}
+		}
+		else if(namePat instanceof Swc4jAstRestPat rest) {
+			ISwc4jAstPat pat = rest.getArg();
+			variables.addAll(extractVariables(pat));
+		}
 		return variables;
 	}
 
@@ -965,11 +984,26 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		else if(namePat instanceof Swc4jAstBindingIdent binding) {
 			names.add(binding.getId().getSym());
 		}
-		//else if(namePat instanceof Swc4jAstObjectPat object) {
-		//}
-		//else if(namePat instanceof Swc4jAstRestPat rest) {
-		//	ISwc4jAstPat pat = rest.getArg();
-		//}
+		else if(namePat instanceof Swc4jAstObjectPat object) {
+			for(ISwc4jAstObjectPatProp prop : object.getProps()) {
+				if(prop instanceof Swc4jAstAssignPatProp assignPatProp) {
+					names.addAll(extractVariableNames(assignPatProp.getKey()));
+				}
+				else if(prop instanceof Swc4jAstKeyValuePatProp keyValuePatProp) {
+					//ISwc4jAstPropName key = keyValuePatProp.getKey();
+					ISwc4jAstPat value = keyValuePatProp.getValue();
+					names.addAll(extractVariableNames(value));
+				}
+				else if(prop instanceof Swc4jAstRestPat restPat) {
+					ISwc4jAstPat pat = restPat.getArg();
+					names.addAll(extractVariableNames(pat));
+				}
+			}
+		}
+		else if(namePat instanceof Swc4jAstRestPat rest) {
+			ISwc4jAstPat pat = rest.getArg();
+			names.addAll(extractVariableNames(pat));
+		}
 		return names;
 	}
 }

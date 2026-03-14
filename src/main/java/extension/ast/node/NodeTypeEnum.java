@@ -40,7 +40,7 @@ public enum NodeTypeEnum {
     IMPORT_STATEMENT("LangImportStatement"),
     TRY_STATEMENT("LangTryStatement"),
     CATCH_CLAUSE("LangCatchClause"),
-    THROW_STATEMENT("LangThrowStatement"), // raise for python //TODO
+    THROW_STATEMENT("LangThrowStatement"), // raise for python
     BREAK_STATEMENT("LangBreakStatement"),
     CONTINUE_STATEMENT("LangContinueStatement"),
     SWITCH_STATEMENT("LangSwitchStatement"), // match for python
@@ -71,7 +71,8 @@ public enum NodeTypeEnum {
     /** PATTERN */
     PATTERN("LangPattern"),
     LITERAL_PATTERN("LangLiteralPattern"),
-    VARIABLE_PATTERN("LangVariablePattern");
+    VARIABLE_PATTERN("LangVariablePattern"),
+    AS_PATTERN("LangAsPattern");
 
     private final String name;
 

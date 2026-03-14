@@ -8,6 +8,7 @@ import extension.ast.node.expression.*;
 import extension.ast.node.literal.*;
 import extension.ast.node.metadata.LangAnnotation;
 import extension.ast.node.metadata.comment.LangComment;
+import extension.ast.node.pattern.LangAsPattern;
 import extension.ast.node.pattern.LangLiteralPattern;
 import extension.ast.node.pattern.LangVariablePattern;
 import extension.ast.node.statement.*;
@@ -557,6 +558,10 @@ public class CSharpASTFlattener implements LangASTFlattener {
     @Override
     public void visit(LangVariablePattern p) {
         builder.append(p.getVariableName());
+    }
+
+    @Override
+    public void visit(LangAsPattern p) {
     }
 
     @Override

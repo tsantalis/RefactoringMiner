@@ -353,7 +353,7 @@ public class PyStatementASTBuilder extends PyBaseASTBuilder {
         LangASTNode pattern = mainBuilder.visit(ctx.or_pattern());
         if (ctx.pattern_capture_target() != null) {
             LangASTNode target = mainBuilder.visit(ctx.pattern_capture_target());
-            return LangASTNodeFactory.createAssignment("as", target, pattern, ctx);
+            return LangASTNodeFactory.createAsPattern(ctx, pattern, target);
         }
         return pattern;
     }

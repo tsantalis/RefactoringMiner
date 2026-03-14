@@ -8,6 +8,7 @@ import extension.ast.node.expression.*;
 import extension.ast.node.literal.*;
 import extension.ast.node.metadata.LangAnnotation;
 import extension.ast.node.metadata.comment.LangComment;
+import extension.ast.node.pattern.LangAsPattern;
 import extension.ast.node.pattern.LangLiteralPattern;
 import extension.ast.node.pattern.LangVariablePattern;
 import extension.ast.node.statement.*;
@@ -440,6 +441,10 @@ public class LangASTNodeFactory {
 
     public static LangVariablePattern createVariablePattern(ParserRuleContext ctx, String name) {
         return new LangVariablePattern(PositionUtils.getPositionInfo(ctx), name);
+    }
+
+    public static LangAsPattern createAsPattern(ParserRuleContext ctx, LangASTNode pattern, LangASTNode target) {
+        return new LangAsPattern(PositionUtils.getPositionInfo(ctx), pattern, target);
     }
 
 

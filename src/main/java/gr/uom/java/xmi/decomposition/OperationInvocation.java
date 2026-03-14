@@ -427,7 +427,7 @@ public class OperationInvocation extends AbstractCall {
     			}
     			inferredArgumentTypes.add(UMLType.extractTypeObject(type));
     		}
-    		else if(indexOfOpeningParenthesis == 0 && arg.contains(")") && !arg.contains(LANG.LAMBDA_ARROW) && !arg.contains(LANG.METHOD_REFERENCE) && arg.indexOf(")") < arg.length()) {
+    		else if(indexOfOpeningParenthesis == 0 && arg.contains(")") && !arg.contains(LANG.LAMBDA_ARROW) && !arg.contains(LANG.METHOD_REFERENCE) && arg.indexOf(")") < arg.length() - 1) {
     			String cast = arg.substring(indexOfOpeningParenthesis + 1, arg.indexOf(")"));
     			if(cast.charAt(0) != '(') {
     				inferredArgumentTypes.add(UMLType.extractTypeObject(cast));

@@ -49,7 +49,6 @@ import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstForHead;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstObjectPatProp;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
-import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPropName;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstArrayPat;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstAssignPatProp;
@@ -869,6 +868,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		Swc4jAstTsTypeAnn typeAnnotation = extractTypeAnnotation(namePat);
 		if(typeAnnotation != null) {
 			ISwc4jAstTsType type = typeAnnotation.getTypeAnn();
+			this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, type, 0);
 		}
 		else {
 			this.type = new InferredType();
@@ -893,6 +893,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.variableName = fragment.getId().getSym();
 		if(typeAnnotation != null) {
 			ISwc4jAstTsType type = typeAnnotation.getTypeAnn();
+			this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, type, 0);
 		}
 		else {
 			this.type = new InferredType();

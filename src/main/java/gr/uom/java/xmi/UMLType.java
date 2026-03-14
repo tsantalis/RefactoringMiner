@@ -35,6 +35,16 @@ import org.jetbrains.kotlin.psi.KtTypeReference;
 import org.jetbrains.kotlin.psi.KtUserType;
 import org.refactoringminer.util.PathFileUtils;
 
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsEntityName;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsArrayType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsConditionalType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsKeywordType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsQualifiedName;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeLit;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeRef;
+
 import gr.uom.java.xmi.ListCompositeType.Kind;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.LeafExpression;
@@ -535,5 +545,54 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 				}
 			}
 		}
+	}
+
+	public static UMLType extractTypeObject(String sourceFolder, String filePath, String fileContent, ISwc4jAstTsType type, int extraDimensions) {
+		UMLType umlType = extractTypeObject(type, sourceFolder, filePath, fileContent);
+		if (!(umlType instanceof InferredType)) {
+			umlType.locationInfo = new LocationInfo(sourceFolder, filePath, type.getSpan(), CodeElementType.TYPE);
+			umlType.arrayDimension += extraDimensions;
+		}
+		return umlType;
+	}
+
+	private static UMLType extractTypeObject(ISwc4jAstTsType type, String sourceFolder, String filePath, String fileContent) {
+		if (type == null) {
+			return new InferredType();
+		}
+		else if(type instanceof Swc4jAstTsArrayType arrayType) {
+			UMLType elementType = extractTypeObject(arrayType.getElemType(), sourceFolder, filePath, fileContent);
+			elementType.arrayDimension += 1;
+			return elementType;
+		}
+		else if(type instanceof Swc4jAstTsConditionalType conditionalType) {
+			//TODO create UMLType subclass
+		}
+		else if(type instanceof Swc4jAstTsKeywordType keywordType) {
+			UMLType leafType = extractTypeObject(keywordType.getKind().getName());
+			return leafType;
+		}
+		else if(type instanceof Swc4jAstTsTypeRef typeRef) {
+			ISwc4jAstTsEntityName reference = typeRef.getTypeName();
+			if(reference instanceof Swc4jAstIdent typeIdentifier) {
+				UMLType leafType = extractTypeObject(typeIdentifier.getSym());
+				return leafType;
+			}
+			else if(reference instanceof Swc4jAstTsQualifiedName qualified) {
+				ISwc4jAstTsEntityName leftEntityName = qualified.getLeft();
+				UMLType left = null;
+				if(leftEntityName instanceof Swc4jAstIdent ident)
+					left = extractTypeObject(ident.getSym());
+				else if(leftEntityName instanceof Swc4jAstTsQualifiedName qualifiedName)
+					left = extractTypeObject((ISwc4jAstTsType)qualifiedName, sourceFolder, filePath, fileContent);
+				UMLType rightType = extractTypeObject(qualified.getRight().getSym());
+				return new CompositeType(left, (LeafType) rightType);
+			}
+		}
+		else if(type instanceof Swc4jAstTsTypeLit typeLiteral) {
+			//TODO create UMLType subclass
+		}
+		//TODO this should return null, when all type kinds are supported
+		return new InferredType();
 	}
 }

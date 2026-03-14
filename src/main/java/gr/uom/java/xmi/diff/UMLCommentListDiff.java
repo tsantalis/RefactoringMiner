@@ -31,6 +31,25 @@ public class UMLCommentListDiff {
 	private UMLOperationBodyMapper operationBodyMapper;
 	private UMLAbstractClassDiff classDiff;
 
+	public UMLCommentListDiff() {
+		//empty for use in ModuleContainers
+		this.commonComments = new ArrayList<Pair<UMLComment,UMLComment>>();
+		this.deletedComments = new ArrayList<UMLComment>();
+		this.addedComments = new ArrayList<UMLComment>();
+	}
+
+	public void append(UMLCommentListDiff other) {
+		if(this.commonComments != null) {
+			this.commonComments.addAll(other.getCommonComments());
+		}
+		if(this.addedComments != null) {
+			this.addedComments.addAll(other.getAddedComments());
+		}
+		if(this.deletedComments != null) {
+			this.deletedComments.addAll(other.getDeletedComments());
+		}
+	}
+
 	public UMLCommentListDiff(List<UMLComment> commentsBefore, List<UMLComment> commentsAfter, UMLOperationBodyMapper mapper) {
 		this.operationBodyMapper = mapper;
 		this.mappings = mapper.getMappings();

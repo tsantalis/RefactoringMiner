@@ -1973,12 +1973,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
 		this.parameterNameList1 = container1.getParameterNameList();
 		this.parameterNameList2 = container2.getParameterNameList();
+		this.commentListDiff = new UMLCommentListDiff();
 		processCompositeStatements(container1.getLeaves(), container2.getLeaves(), container1.getInnerNodes(), container2.getInnerNodes());
 		if(container1.getJavadoc() != null && container2.getJavadoc() != null) {
 			UMLJavadocDiff diff = new UMLJavadocDiff(container1.getJavadoc(), container2.getJavadoc());
 			this.javadocDiff = Optional.of(diff);
 		}
-		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this);
+		UMLCommentListDiff commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this);
+		this.commentListDiff.append(commentListDiff);
 		checkUnmatchedStatementsBeingCommented();
 	}
 
@@ -2032,6 +2034,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			processCompositeStatements(composite1.getLeaves(), leaves2, composite1.getInnerNodes(), Collections.emptyList());
 		}
 		this.commentListDiff = new UMLCommentListDiff(lambda1.getComments(), lambda2.getComments(), this);
+		if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT)) {
+			for(Pair<UMLComment, UMLComment> pair : this.commentListDiff.getCommonComments()) {
+				parentMapper.getContainer1().getComments().remove(pair.getLeft());
+				parentMapper.getContainer2().getComments().remove(pair.getRight());
+			}
+		}
 		checkUnmatchedStatementsBeingCommented();
 	}
 
@@ -10494,6 +10502,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
 						this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
 						this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
+						if(this.commentListDiff != null) {
+							this.commentListDiff.append(mapper.getCommentListDiff());
+						}
 						if(this.container1 != null && this.container2 != null) {
 							this.refactorings.addAll(mapper.getRefactorings());
 						}

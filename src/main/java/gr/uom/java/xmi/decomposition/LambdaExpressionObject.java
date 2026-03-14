@@ -25,6 +25,14 @@ import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtLambdaExpression;
 import org.refactoringminer.util.PathFileUtils;
 
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstBlockStmtOrExpr;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
+
 import extension.ast.node.LangASTNode;
 import extension.ast.node.declaration.LangSingleVariableDeclaration;
 import extension.ast.node.expression.LangExpression;
@@ -165,6 +173,33 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		KtBlockExpression lambdaBody = lambda.getBodyExpression();
 		if(lambdaBody != null) {
 			this.body = new OperationBody(ktFile, sourceFolder, filePath, lambdaBody, this, activeVariableDeclarations, fileContent);
+		}
+	}
+
+	public LambdaExpressionObject(String sourceFolder, String filePath, Swc4jAstArrowExpr arrowExpression, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this.owner = owner;
+		this.asString = fileContent.substring(arrowExpression.getSpan().getStart(), arrowExpression.getSpan().getEnd());
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, arrowExpression.getSpan(), CodeElementType.LAMBDA_EXPRESSION);
+		List<ISwc4jAstPat> params = arrowExpression.getParams();
+		for(ISwc4jAstPat param : params) {
+			List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(param);
+			Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(param);
+			for(Swc4jAstBindingIdent identifier : identifiers) {
+				VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, this, activeVariableDeclarations, fileContent);
+				this.parameters.add(vd);
+			}
+			//TODO if typeAnnotation exists create a UMLParameter
+		}
+		ISwc4jAstBlockStmtOrExpr body = arrowExpression.getBody();
+		if(body instanceof ISwc4jAstExpr expr) {
+			this.expression = new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, fileContent);
+			this.expression.setLambdaOwner(this);
+			for(VariableDeclaration parameter : parameters) {
+				parameter.addStatementInScope(expression, false);
+			}
+		}
+		else if(body instanceof Swc4jAstBlockStmt blockStatement) {
+			this.body = new OperationBody(sourceFolder, filePath, blockStatement, this, activeVariableDeclarations, fileContent);
 		}
 	}
 

@@ -9,6 +9,7 @@ import extension.ast.node.expression.*;
 import extension.ast.node.literal.*;
 import extension.ast.node.metadata.LangAnnotation;
 import extension.ast.node.metadata.comment.LangComment;
+import extension.ast.node.pattern.LangAsPattern;
 import extension.ast.node.pattern.LangLiteralPattern;
 import extension.ast.node.pattern.LangVariablePattern;
 import extension.ast.node.statement.*;
@@ -705,7 +706,19 @@ public class LangVisitor implements LangASTVisitor {
 
     @Override
     public void visit(LangVariablePattern langVariablePattern) {
+        if (langVariablePattern.getVariableName() != null) {
+            addVariableDeclaration(langVariablePattern.getVariableName());
+        }
+    }
 
+    @Override
+    public void visit(LangAsPattern langAsPattern) {
+        if (langAsPattern.getPattern() != null) {
+            langAsPattern.getPattern().accept(this);
+        }
+        if (langAsPattern.getTarget() != null) {
+            langAsPattern.getTarget().accept(this);
+        }
     }
 
     @Override

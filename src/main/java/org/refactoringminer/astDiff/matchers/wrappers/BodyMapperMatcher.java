@@ -227,6 +227,26 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
                 }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.FOR_KEYWORD, LANG2.FOR_KEYWORD);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.SEMICOLON, LANG2.SEMICOLON);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.LEXICAL_DECLARATION, LANG2.LEXICAL_DECLARATION);
+                if (matched != null) {
+                    mappingStore.addMappingRecursively(matched.first,matched.second);
+                }
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
             }
             else if (srcStatementNode.getType().name.equals(LANG1.FOR_IN_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.FOR_IN_STATEMENT)) {
@@ -249,6 +269,18 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.CONST_KEYWORD, LANG2.CONST_KEYWORD);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.LET_KEYWORD, LANG2.LET_KEYWORD);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ARRAY_PATTERN, LANG2.ARRAY_PATTERN);
+                if (matched != null) {
+                    mappingStore.addMappingRecursively(matched.first,matched.second);
                 }
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
             }

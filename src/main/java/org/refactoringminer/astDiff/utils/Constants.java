@@ -333,4 +333,9 @@ public class Constants {
     public final String FOR_KEYWORD = "for";
     public final String IF_KEYWORD = "if";
     public final String PARENTHESIZED_EXPRESSION = "parenthesized_expression";
+    public final String LEXICAL_DECLARATION = "lexical_declaration";
+    public final String SEMICOLON = ";";
+    public final String CONST_KEYWORD = "const";
+    public final String LET_KEYWORD = "let";
+    public final String ARRAY_PATTERN = "array_pattern";
 }

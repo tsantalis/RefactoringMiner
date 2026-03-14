@@ -38,8 +38,6 @@ public class LangASTNodeFactory {
         return new LangImportStatement(PositionUtils.getPositionInfo(ctx));
     }
 
-    /** Declarations */
-
     /** Generic type declaration creation for non-Python languages (e.g., C#) */
     public static LangTypeDeclaration createTypeDeclaration(String name, ParserRuleContext ctx) {
         LangTypeDeclaration type = new LangTypeDeclaration(PositionUtils.getPositionInfo(ctx));
@@ -99,7 +97,6 @@ public class LangASTNodeFactory {
     }
 
     /** Prefix and Postfix Expressions */
-    //TODO
     public static LangPrefixExpression createPrefixExpression(LangASTNode operand, String operatorSymbol, ParserRuleContext ctx) {
         LangPrefixExpression expression = new LangPrefixExpression(PositionUtils.getPositionInfo(ctx));
         expression.setOperand(operand);
@@ -376,6 +373,10 @@ public class LangASTNodeFactory {
 
     public static LangStringLiteral createStringLiteral(ParserRuleContext ctx, String value) {
         return new LangStringLiteral(PositionUtils.getPositionInfo(ctx), PyASTBuilderUtil.removeQuotes(value));
+    }
+
+    public static LangStringLiteral createStringLiteralWithRawStringValue(ParserRuleContext ctx, String value) {
+        return new LangStringLiteral(PositionUtils.getPositionInfo(ctx), value);
     }
 
     public static LangBooleanLiteral createBooleanLiteral(ParserRuleContext ctx, boolean value) {

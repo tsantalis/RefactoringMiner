@@ -24,16 +24,16 @@ public class PyASTBuilderUtil {
     }
 
     private static String extractComparisonOperator(PythonParser.Compare_op_bitwise_or_pairContext pair) {
-        if (pair.eq_bitwise_or() != null) return "==";
-        else if (pair.noteq_bitwise_or() != null) return "!=";
-        else if (pair.lte_bitwise_or() != null) return "<=";
-        else if (pair.lt_bitwise_or() != null) return "<";
-        else if (pair.gte_bitwise_or() != null) return ">=";
-        else if (pair.gt_bitwise_or() != null) return ">";
-        else if (pair.notin_bitwise_or() != null) return "notin";
-        else if (pair.in_bitwise_or() != null) return "in";
-        else if (pair.isnot_bitwise_or() != null) return "isnot";
-        else if (pair.is_bitwise_or() != null) return "is";
+        if (pair.eq_bitwise_or() != null) return OperatorEnum.EQUAL.getSymbol();
+        else if (pair.noteq_bitwise_or() != null) return OperatorEnum.NOT_EQUAL.getSymbol();
+        else if (pair.lte_bitwise_or() != null) return OperatorEnum.LESS_EQUAL.getSymbol();
+        else if (pair.lt_bitwise_or() != null) return OperatorEnum.LESS_THAN.getSymbol();
+        else if (pair.gte_bitwise_or() != null) return OperatorEnum.GREATER_EQUAL.getSymbol();
+        else if (pair.gt_bitwise_or() != null) return OperatorEnum.GREATER_THAN.getSymbol();
+        else if (pair.notin_bitwise_or() != null) return OperatorEnum.NOT_IN.getSymbol();
+        else if (pair.in_bitwise_or() != null) return OperatorEnum.IN.getSymbol();
+        else if (pair.isnot_bitwise_or() != null) return OperatorEnum.IS_NOT.getSymbol();
+        else if (pair.is_bitwise_or() != null) return OperatorEnum.IS.getSymbol();
 
         return null;
     }

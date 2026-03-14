@@ -68,9 +68,36 @@ public class Constants {
 			BOOLEAN_LITERAL = "boolean_literal";
 			METHOD_INVOCATION = "call_expression";
 		}
-		//else if(PathFileUtils.isTypeScriptFile(filePath)) {
-			
-		//}
+		else if(PathFileUtils.isTypeScriptFile(filePath)) {
+			CLASS_BLOCK = "block";
+			METHOD_DECLARATION = "function_definition";
+			SIMPLE_NAME = "identifier";
+			IMPORT_DECLARATION = "import_statement";
+			TYPE_DECLARATION = "class_definition";
+			TYPE_DECLARATION_KIND = "class";
+			BLOCK_COMMENT = "BlockComment"; // TODO
+			LINE_COMMENT = "comment";
+			EXPRESSION_STATEMENT = "expression_statement";
+			TRY_STATEMENT = "try_statement";
+			CATCH_CLAUSE = "except_clause";
+			IF_STATEMENT = "if_statement";
+			WHILE_STATEMENT = "while_statement";
+			FOR_STATEMENT = "for_statement";
+			ENHANCED_FOR_STATEMENT = "for_statement";
+			PACKAGE_DECLARATION = "";
+			FIELD_DECLARATION = "";
+			MODIFIER = "";
+			INITIALIZER = "";
+			CONSTRUCTOR_INVOCATION = "";
+			ENUM_DECLARATION = "class_definition";
+			ANNOTATION_TYPE_DECLARATION = "class_definition";
+			RECORD_DECLARATION = "class_definition";
+			PREFIX_EXPRESSION = "prefix_expression";
+			METHOD_INVOCATION_ARGUMENTS = "argument_list";
+			STRING_LITERAL = "string_literal";
+			BOOLEAN_LITERAL = "boolean_literal"; // True, False labels //TODO introduce List of values
+			METHOD_INVOCATION = "call";
+		}
 		else {
 			// Java values as default
 			CLASS_BLOCK = "";
@@ -304,4 +331,6 @@ public class Constants {
     public final String OF_KEYWORD = "of";
     public final String IN_KEYWORD = "in";
     public final String FOR_KEYWORD = "for";
+    public final String IF_KEYWORD = "if";
+    public final String PARENTHESIZED_EXPRESSION = "parenthesized_expression";
 }

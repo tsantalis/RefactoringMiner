@@ -181,6 +181,22 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         mappingStore.addMapping(elses.first,elses.second);
                     }
                 }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.IF_KEYWORD, LANG2.IF_KEYWORD);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                Pair<Tree, Tree> parenthesized = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.PARENTHESIZED_EXPRESSION, LANG2.PARENTHESIZED_EXPRESSION);
+                if (parenthesized != null) {
+                    mappingStore.addMapping(parenthesized.first,parenthesized.second);
+                    matched = Helpers.findPairOfType(parenthesized.first,parenthesized.second, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(parenthesized.first,parenthesized.second, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                }
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
             }
             else if (srcStatementNode.getType().name.equals(LANG1.WHEN_ENTRY) && dstStatementNode.getType().name.equals(LANG2.WHEN_ENTRY)) {

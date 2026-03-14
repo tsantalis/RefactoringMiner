@@ -75,7 +75,6 @@ public class TypeScriptFileProcessor {
 				moduleContainer.addStatements(opBody.getCompositeStatement().getStatements());
 				moduleClass.setContainer(moduleContainer);
 				moduleClass.setVisibility(Visibility.PUBLIC);
-				moduleClass.getComments().addAll(commentList);
 				umlModel.addClass(moduleClass);
 			}
 			else if(output.getProgram() instanceof Swc4jAstScript script) {

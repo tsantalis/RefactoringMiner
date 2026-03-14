@@ -70,6 +70,7 @@ tasks.processTestResources {
 dependencies {
     implementation 'com.caoccao.javet:swc4j:2.0.0'
     implementation 'com.caoccao.javet:swc4j-macos-arm64:2.0.0'
+    implementation 'com.caoccao.javet:swc4j-linux-x86_64:2.0.0'
     implementation 'org.antlr:antlr4-runtime:4.13.2'
     implementation 'org.jetbrains.kotlin:kotlin-compiler-embeddable:2.3.10'
     implementation 'org.eclipse.jgit:org.eclipse.jgit:6.10.1.202505221210-r'

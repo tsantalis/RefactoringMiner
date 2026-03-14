@@ -75,7 +75,7 @@ public class Constants {
 			IMPORT_DECLARATION = "import_statement";
 			TYPE_DECLARATION = "class_definition";
 			TYPE_DECLARATION_KIND = "class";
-			BLOCK_COMMENT = "BlockComment"; // TODO
+			BLOCK_COMMENT = "comment";
 			LINE_COMMENT = "comment";
 			EXPRESSION_STATEMENT = "expression_statement";
 			TRY_STATEMENT = "try_statement";

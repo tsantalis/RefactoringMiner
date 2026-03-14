@@ -185,10 +185,14 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(param);
 			Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(param);
 			for(Swc4jAstBindingIdent identifier : identifiers) {
-				VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, this, activeVariableDeclarations, fileContent);
-				this.parameters.add(vd);
+				VariableDeclaration parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, this, activeVariableDeclarations, fileContent);
+				this.parameters.add(parameter);
+				if(parameter.getType() != null) {
+					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
+					umlParameter.setVariableDeclaration(parameter);
+					umlParameters.add(umlParameter);
+				}
 			}
-			//TODO if typeAnnotation exists create a UMLParameter
 		}
 		ISwc4jAstBlockStmtOrExpr body = arrowExpression.getBody();
 		if(body instanceof ISwc4jAstExpr expr) {

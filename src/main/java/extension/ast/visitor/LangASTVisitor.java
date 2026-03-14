@@ -7,6 +7,7 @@ import extension.ast.node.expression.*;
 import extension.ast.node.literal.*;
 import extension.ast.node.metadata.LangAnnotation;
 import extension.ast.node.metadata.comment.LangComment;
+import extension.ast.node.pattern.LangAsPattern;
 import extension.ast.node.pattern.LangLiteralPattern;
 import extension.ast.node.pattern.LangVariablePattern;
 import extension.ast.node.statement.*;
@@ -59,6 +60,7 @@ public interface LangASTVisitor {
     void visit(LangSwitchStatement langSwitchStatement);
     void visit(LangCaseStatement langCaseStatement);
     void visit(LangVariablePattern langVariablePattern);
+    void visit(LangAsPattern langAsPattern);
     void visit(LangLiteralPattern langLiteralPattern);
     void visit(LangComment langComment);
     void visit(LangTernaryExpression langTernaryExpression);

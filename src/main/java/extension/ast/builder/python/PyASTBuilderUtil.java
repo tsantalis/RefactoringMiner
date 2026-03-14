@@ -69,6 +69,6 @@ public class PyASTBuilderUtil {
             // Regular quotes or single quotes
             unquotedValue = text.substring(1, text.length() - 1);
         }
-        return unquotedValue;
+        return unquotedValue != null ? unquotedValue : text;
     }
 }

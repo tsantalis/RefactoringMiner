@@ -1383,8 +1383,34 @@ public class OperationBody {
 		this.activeVariableDeclarations = null;
 	}
 
+	public OperationBody(String sourceFolder, String filePath, Swc4jAstBlockStmt block, VariableDeclarationContainer container, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this.compositeStatement = new CompositeStatementObject(sourceFolder, filePath, block, 0, CodeElementType.BLOCK, fileContent);
+		this.compositeStatement.setOwner(container);
+		this.comments = container.getComments();
+		this.container = container;
+		this.activeVariableDeclarations = new HashMap<>(activeVariableDeclarations);
+		for(ISwc4jAstStmt statement : block.getStmts()) {
+			processStatement(sourceFolder, filePath, compositeStatement, statement, fileContent);
+		}
+		this.activeVariableDeclarations = null;
+	}
+
 	private void processStatement(String sourceFolder, String filePath, CompositeStatementObject parent,
 			ISwc4jAstModuleItem statement, String fileContent) {
+		for(UMLComment comment : comments) {
+			if(comment.getParent() != null && comment.getParent().equals(parent))
+				continue;
+			if(parent.getLocationInfo().subsumes(comment.getLocationInfo())) {
+				if(comment.getParent() != null) {
+					if(!parent.getLocationInfo().subsumes(comment.getParent().getLocationInfo())) {
+						comment.setParent(parent);
+					}
+				}
+				else {
+					comment.setParent(parent);
+				}
+			}
+		}
 		if(statement instanceof Swc4jAstBlockStmt block) {
 			List<ISwc4jAstStmt> blockStatements = block.getStmts();
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, block, parent.getDepth()+1, CodeElementType.BLOCK, fileContent);

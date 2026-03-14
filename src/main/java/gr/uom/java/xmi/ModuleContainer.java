@@ -27,6 +27,7 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	private LocationInfo locationInfo;
 	private String name;
 	private String className;
+	private List<UMLComment> comments = new ArrayList<>();
 
 	public ModuleContainer(LocationInfo locationInfo, String name) {
 		this.statementList = new ArrayList<>();
@@ -37,6 +38,10 @@ public class ModuleContainer implements VariableDeclarationContainer {
 
 	public void addStatements(List<AbstractStatement> statements) {
 		statementList.addAll(statements);
+	}
+
+	public void addComments(List<UMLComment> comments) {
+		this.comments.addAll(comments);
 	}
 
 	public ModuleContainer(List<AbstractStatement> statements, LocationInfo locationInfo, String name) {
@@ -184,7 +189,7 @@ public class ModuleContainer implements VariableDeclarationContainer {
 
 	@Override
 	public List<UMLComment> getComments() {
-		return Collections.emptyList();
+		return comments;
 	}
 
 	@Override

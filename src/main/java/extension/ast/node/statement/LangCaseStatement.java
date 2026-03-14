@@ -20,6 +20,12 @@ public class LangCaseStatement extends LangStatement {
         super(NodeTypeEnum.CASE_STATEMENT, positionInfo);
         this.pattern = pattern;
         this.body = body;
+        if (pattern != null) {
+            addChild(pattern);
+        }
+        if (body != null) {
+            addChild(body);
+        }
     }
 
     public LangCaseStatement(PositionInfo positionInfo, LangASTNode pattern, LangASTNode guard, LangBlock body) {
@@ -27,6 +33,15 @@ public class LangCaseStatement extends LangStatement {
         this.pattern = pattern;
         this.guard = guard;
         this.body = body;
+        if (pattern != null) {
+            addChild(pattern);
+        }
+        if (guard != null) {
+            addChild(guard);
+        }
+        if (body != null) {
+            addChild(body);
+        }
     }
 
     public LangASTNode getPattern() {

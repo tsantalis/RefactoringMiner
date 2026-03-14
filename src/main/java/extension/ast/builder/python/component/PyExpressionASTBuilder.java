@@ -130,7 +130,7 @@ public class PyExpressionASTBuilder extends PyBaseASTBuilder {
                     invocation.addArgument(mainBuilder.visit(exprCtx));
                 } else if (child instanceof PythonParser.Starred_expressionContext starredCtx) {
                     // Old builder strips '*' prefix
-                    invocation.addArgument(mainBuilder.visit(starredCtx.expression()));
+                    invocation.addArgument(mainBuilder.visit(starredCtx));
                 } else if (child instanceof PythonParser.Assignment_expressionContext assignCtx) {
                     invocation.addArgument(mainBuilder.visit(assignCtx));
                 }
@@ -149,15 +149,11 @@ public class PyExpressionASTBuilder extends PyBaseASTBuilder {
             if (child.name() != null) {
                 invocation.addArgument(mainBuilder.visit(child.expression()));
             } else {
-                invocation.addArgument(mainBuilder.visit(child.starred_expression().expression()));
+                invocation.addArgument(mainBuilder.visit(child.starred_expression()));
             }
         }
         for (PythonParser.Kwarg_or_double_starredContext child : ctx.kwarg_or_double_starred()) {
-            if (child.name() != null) {
-                invocation.addArgument(mainBuilder.visit(child.expression()));
-            } else {
-                invocation.addArgument(mainBuilder.visit(child.expression()));
-            }
+            invocation.addArgument(mainBuilder.visit(child.expression()));
         }
     }
 
@@ -482,7 +478,7 @@ public class PyExpressionASTBuilder extends PyBaseASTBuilder {
 
     public LangASTNode visitStar_named_expression(PythonParser.Star_named_expressionContext ctx) {
         if (ctx.STAR() != null) {
-            LangASTNode expr = mainBuilder.visit(ctx.named_expression());
+            LangASTNode expr = mainBuilder.visit(ctx.bitwise_or());
             return LangASTNodeFactory.createPrefixExpression(expr, "*", ctx);
         }
         return mainBuilder.visit(ctx.named_expression());
@@ -502,7 +498,7 @@ public class PyExpressionASTBuilder extends PyBaseASTBuilder {
 
     public LangASTNode visitStar_expression(PythonParser.Star_expressionContext ctx) {
         if (ctx.STAR() != null) {
-            LangASTNode expr = mainBuilder.visit(ctx.expression());
+            LangASTNode expr = mainBuilder.visit(ctx.bitwise_or());
             return LangASTNodeFactory.createPrefixExpression(expr, "*", ctx);
         }
         return mainBuilder.visit(ctx.expression());
@@ -675,7 +671,6 @@ public class PyExpressionASTBuilder extends PyBaseASTBuilder {
     }
 
     public LangASTNode visitString(PythonParser.StringContext ctx) {
-        System.out.println("String: " + ctx.getText());
         return LangASTNodeFactory.createStringLiteral(ctx, ctx.getText());
     }
 
@@ -718,7 +713,7 @@ public class PyExpressionASTBuilder extends PyBaseASTBuilder {
             return mainBuilder.visit(ctx.fstring_replacement_field());
         } else if (ctx.FSTRING_MIDDLE() != null) {
             String text = ctx.FSTRING_MIDDLE().getText();
-            return LangASTNodeFactory.createStringLiteral(ctx, text);
+            return LangASTNodeFactory.createStringLiteralWithRawStringValue(ctx, text);
         }
         return null;
     }
@@ -764,7 +759,7 @@ public class PyExpressionASTBuilder extends PyBaseASTBuilder {
 
     public LangASTNode visitFstring_format_spec(PythonParser.Fstring_format_specContext ctx) {
         if (ctx.FSTRING_MIDDLE() != null) {
-            return LangASTNodeFactory.createStringLiteral(ctx, ctx.FSTRING_MIDDLE().getText());
+            return LangASTNodeFactory.createStringLiteralWithRawStringValue(ctx, ctx.FSTRING_MIDDLE().getText());
         }
         if (ctx.fstring_replacement_field() != null) {
             return mainBuilder.visit(ctx.fstring_replacement_field());
@@ -807,7 +802,7 @@ public class PyExpressionASTBuilder extends PyBaseASTBuilder {
             return mainBuilder.visit(ctx.tstring_replacement_field());
         } else if (ctx.TSTRING_MIDDLE() != null) {
             String text = ctx.TSTRING_MIDDLE().getText();
-            return LangASTNodeFactory.createStringLiteral(ctx, text);
+            return LangASTNodeFactory.createStringLiteralWithRawStringValue(ctx, text);
         }
         return null;
     }
@@ -846,7 +841,7 @@ public class PyExpressionASTBuilder extends PyBaseASTBuilder {
 
     public LangASTNode visitTstring_format_spec(PythonParser.Tstring_format_specContext ctx) {
         if (ctx.TSTRING_MIDDLE() != null) {
-            return LangASTNodeFactory.createStringLiteral(ctx, ctx.TSTRING_MIDDLE().getText());
+            return LangASTNodeFactory.createStringLiteralWithRawStringValue(ctx, ctx.TSTRING_MIDDLE().getText());
         }
         if (ctx.tstring_replacement_field() != null) {
             return mainBuilder.visit(ctx.tstring_replacement_field());

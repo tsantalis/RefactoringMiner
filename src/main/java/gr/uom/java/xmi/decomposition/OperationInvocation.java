@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,6 +53,18 @@ import org.jetbrains.kotlin.psi.KtTypeProjection;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.util.PrefixSuffixUtils;
+
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstComputedPropName;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateName;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstCallee;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstMemberProp;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamInstantiation;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.expression.LangAssignment;
@@ -1210,6 +1223,40 @@ public class OperationInvocation extends AbstractCall {
 		}
 		else if(expression instanceof KtNameReferenceExpression nameReference) {
 			subExpressions.add(0, nameReference.getText());
+		}
+	}
+
+	public OperationInvocation(String sourceFolder, String filePath, Swc4jAstCallExpr invocation, VariableDeclarationContainer container, String fileContent) {
+		super(sourceFolder, filePath, invocation, CodeElementType.METHOD_INVOCATION, container, fileContent);
+		ISwc4jAstCallee callee = invocation.getCallee();
+		if(callee instanceof Swc4jAstMemberExpr memberExpr) {
+			ISwc4jAstMemberProp prop = memberExpr.getProp();
+			if(prop instanceof Swc4jAstPrivateName privateName)
+				this.methodName = privateName.getName();
+			else if(prop instanceof Swc4jAstIdentName ident)
+				this.methodName = ident.getSym();
+			else if(prop instanceof Swc4jAstComputedPropName propName)
+				this.methodName = fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd());
+			ISwc4jAstExpr receiver = memberExpr.getObj();
+			this.expression = fileContent.substring(receiver.getSpan().getStart(), receiver.getSpan().getEnd());
+		}
+		this.arguments = new ArrayList<String>();
+		this.numberOfArguments = invocation.getArgs().size();
+		for(Swc4jAstExprOrSpread arg : invocation.getArgs()) {
+			ISwc4jAstExpr expression = arg.getExpr();
+			String s = fileContent.substring(expression.getSpan().getStart(), expression.getSpan().getEnd());
+			if(arg.getSpread().isPresent()) {
+				s = "..." + s;
+			}
+			this.arguments.add(s);
+		}
+		Optional<Swc4jAstTsTypeParamInstantiation> typeArgs = invocation.getTypeArgs();
+		if(typeArgs.isPresent()) {
+			List<ISwc4jAstTsType> typeArguments = typeArgs.get().getParams();
+			for(ISwc4jAstTsType typeArgument : typeArguments) {
+				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeArgument, 0);
+				this.typeArguments.add(type);
+			}
 		}
 	}
 }

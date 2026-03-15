@@ -5126,7 +5126,7 @@
         "validators": null
     }, {
         "type": "Rename Method",
-        "description": "Rename Method public load_en_vocab() renamed to public load_shared_vocab() in class transformer.data_load.__module__",
+        "description": "Rename Method public load_de_vocab() renamed to public load_shared_vocab() in class transformer.data_load.__module__",
         "comment": "<p>&nbsp;load_de_vocab() and load_en_vocab() have been merged to&nbsp;load_shared_vocab()</p>",
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",

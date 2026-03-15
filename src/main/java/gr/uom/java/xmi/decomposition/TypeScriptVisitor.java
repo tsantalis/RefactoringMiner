@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstUsingDecl;
@@ -89,6 +90,12 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		LambdaExpressionObject lambda = new LambdaExpressionObject(sourceFolder, filePath, node, container, activeVariableDeclarations, fileContent);
 		lambdas.add(lambda);
 		return super.visitArrowExpr(node);
+	}
+
+	public Swc4jAstVisitorResponse visitCallExpr(Swc4jAstCallExpr node) {
+		OperationInvocation invocation = new OperationInvocation(sourceFolder, filePath, node, container, fileContent);
+		methodInvocations.add(invocation);
+		return super.visitCallExpr(node);
 	}
 
 	public Swc4jAstVisitorResponse visitUsingDecl(Swc4jAstUsingDecl node) {

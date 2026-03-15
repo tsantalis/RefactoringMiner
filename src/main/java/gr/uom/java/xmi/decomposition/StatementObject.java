@@ -294,6 +294,9 @@ public class StatementObject extends AbstractStatement {
 		this.lambdas = visitor.getLambdas();
 		this.comprehensions = visitor.getComprehensions();
 		this.statement = fileContent.substring(statement.getSpan().getStart(), statement.getSpan().getEnd());
+		if(!this.statement.endsWith("\n")) {
+			this.statement += "\n";
+		}
 		this.actualSignature = this.statement;
 		setDepth(depth);
 	}

@@ -17,6 +17,7 @@ import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
+import org.refactoringminer.astDiff.matchers.statement.IgnoringCommentsLeafMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.Set;
@@ -92,6 +93,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             return;
         }
         mappingStore.addMapping(srcTypeDeclaration,dstTypeDeclaration);
+        if(srcTypeDeclaration.getParent() != null && dstTypeDeclaration.getParent() != null &&
+                srcTypeDeclaration.getParent().getType().name.equals(LANG1.DECORATED_METHOD) && dstTypeDeclaration.getParent().getType().name.equals(LANG1.DECORATED_METHOD)) {
+            mappingStore.addMapping(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent());
+        }
 
         String v1 = classDiff.getOriginalClass().getVisibility().toString();
         String v2 = classDiff.getNextClass().getVisibility().toString();
@@ -303,16 +308,20 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             Tree dstClassAnnotationTree = TreeUtilFunctions.findByLocationInfo(dstTree, umlAnnotationUMLAnnotationPair.getRight().getLocationInfo(), LANG2);
             if(dstClassAnnotationTree.getParent() != null && dstClassAnnotationTree.getParent().getType().name.equals(LANG1.DECORATOR))
                 dstClassAnnotationTree = dstClassAnnotationTree.getParent();
-            if(Constants.isCrossLanguage(LANG1, LANG2)) {
+            if (srcClassAnnotationTree == null || dstClassAnnotationTree == null) continue;
+            if (srcClassAnnotationTree.isIsoStructuralTo(dstClassAnnotationTree))
+                mappingStore.addMappingRecursively(srcClassAnnotationTree, dstClassAnnotationTree);
+            else if(Constants.isCrossLanguage(LANG1, LANG2)) {
                 JavaToKotlinMigration.handleAnnotationMapping(mappingStore, srcClassAnnotationTree, dstClassAnnotationTree, LANG1, LANG2);
             }
             else {
-                processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, umlAnnotationUMLAnnotationPair.getLeft(), umlAnnotationUMLAnnotationPair.getRight());
-                if(annotationListDiff.getCommonAnnotations().size() > 1 &&
-                        srcClassAnnotationTree.getParent() != null && srcClassAnnotationTree.getParent().getType().name.equals(LANG1.MODIFIERS) &&
-                        dstClassAnnotationTree.getParent() != null && dstClassAnnotationTree.getParent().getType().name.equals(LANG2.MODIFIERS)) {
-                    mappingStore.addMapping(srcClassAnnotationTree.getParent(), dstClassAnnotationTree.getParent());
-                }
+                new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcClassAnnotationTree, dstClassAnnotationTree, mappingStore);
+            }
+            //processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, umlAnnotationUMLAnnotationPair.getLeft(), umlAnnotationUMLAnnotationPair.getRight());
+            if(annotationListDiff.getCommonAnnotations().size() > 1 &&
+                    srcClassAnnotationTree.getParent() != null && srcClassAnnotationTree.getParent().getType().name.equals(LANG1.MODIFIERS) &&
+                    dstClassAnnotationTree.getParent() != null && dstClassAnnotationTree.getParent().getType().name.equals(LANG2.MODIFIERS)) {
+                mappingStore.addMapping(srcClassAnnotationTree.getParent(), dstClassAnnotationTree.getParent());
             }
         }
     }

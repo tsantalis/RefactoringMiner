@@ -6670,7 +6670,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					Set<AbstractCodeFragment> mergedCatchClauses = new LinkedHashSet<>();
 					mergedCatchClauses.add(composite1);
 					for(CompositeStatementObject comp1 : tryContainer1.getCatchClauses()) {
-						if(!comp1.equals(composite1) && !alreadyMatched1(comp1)) {
+						if(!comp1.equals(composite1) && !alreadyMatched1(comp1) && comp1.getVariableDeclarations().size() > 0 && composite2.getVariableDeclarations().size() > 0) {
 							VariableDeclaration exceptionDeclaration1 = comp1.getVariableDeclarations().get(0);
 							VariableDeclaration exceptionDeclaration2 = composite2.getVariableDeclarations().get(0);
 							if(exceptionDeclaration2.getType() instanceof ListCompositeType && ((ListCompositeType)exceptionDeclaration2.getType()).getTypes().contains(exceptionDeclaration1.getType())) {

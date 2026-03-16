@@ -20,7 +20,7 @@ public class PathFileUtils {
     }
 
     public static boolean isTypeScriptFile(String path){
-        return path.endsWith(".ts");
+        return path.endsWith(".ts") || path.endsWith(".tsx");
     }
 
     public static boolean isLangSupportedFile(String path){

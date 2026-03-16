@@ -130,6 +130,7 @@ import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLClass.ConditionallyCreated;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -632,6 +633,19 @@ public class OperationBody {
 		else if(statement instanceof LangTypeDeclaration) {
 			LangTypeDeclaration typeDecl = (LangTypeDeclaration)statement;
 			UMLClass nestedClass = createUMLClass(typeDecl, filePath, Collections.emptyList(), fileContent, comments);
+			if(parent.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && parent.getParent() != null && parent.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+				CompositeStatementObject ifParent = parent.getParent();
+				List<AbstractStatement> ifBlocks = ifParent.getStatements();
+				if(ifBlocks.size() > 0 && ifBlocks.get(0).equals(parent)) {
+					nestedClass.setConditionallyCreated(ConditionallyCreated.IF);
+				}
+				if(ifBlocks.size() > 1 && ifBlocks.get(1).equals(parent)) {
+					nestedClass.setConditionallyCreated(ConditionallyCreated.ELSE);
+				}
+			}
+			if(container instanceof ModuleContainer) {
+				((ModuleContainer)container).addNestedClass(nestedClass);
+			}
 		}
 	}
 

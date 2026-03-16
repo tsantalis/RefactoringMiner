@@ -174,6 +174,11 @@ public class UMLModelAdapter {
         if(comments.size() > 0)
             moduleClass.getComments().addAll(comments);
         model.addClass(moduleClass);
+        if(moduleClass.getContainer().isPresent()) {
+            for(UMLClass nestedClass : moduleClass.getContainer().get().getNestedClasses()) {
+                model.addClass(nestedClass);
+            }
+        }
     }
 
     private static UMLClass createModuleClass(LangCompilationUnit compilationUnit, String filename, List<UMLImport> imports, String fileContent) {

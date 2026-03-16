@@ -205,7 +205,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		processOperations();
 		createBodyMappers();
 		processAnonymousClasses();
-		checkForOperationSignatureChanges();
+		checkForOperationSignatureChanges(this.removedOperations, this.addedOperations);
+		if(removedNestedOperations.size() > 0 || addedNestedOperations.size() > 0) {
+			checkForOperationSignatureChanges(this.removedNestedOperations, this.addedNestedOperations);
+			if(removedNestedOperations.size() == addedOperations.size() && addedNestedOperations.size() == 0) {
+				checkForOperationSignatureChanges(this.removedNestedOperations, this.addedOperations);
+			}
+		}
 		processAttributes();
 		checkForAttributeChanges();
 		checkForInlinedOperations();
@@ -1513,7 +1519,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return false;
 	}
 
-	private void checkForOperationSignatureChanges() throws RefactoringMinerTimedOutException {
+	private void checkForOperationSignatureChanges(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) throws RefactoringMinerTimedOutException {
 		for(UMLOperation op1 : removedOperations) {
 			for(UMLOperation op2 : removedOperations) {
 				if(!op1.equals(op2) && op1.delegatesTo(op2, this, modelDiff) != null) {

@@ -46,6 +46,8 @@ import gr.uom.java.xmi.decomposition.replacement.SplitVariableReplacement;
 public abstract class UMLAbstractClassDiff {
 	protected List<UMLOperation> addedOperations;
 	protected List<UMLOperation> removedOperations;
+	protected List<UMLOperation> addedNestedOperations;
+	protected List<UMLOperation> removedNestedOperations;
 	protected List<UMLInitializer> addedInitializers;
 	protected List<UMLInitializer> removedInitializers;
 	protected List<UMLAttribute> addedAttributes;
@@ -84,6 +86,8 @@ public abstract class UMLAbstractClassDiff {
 		this.LANG2 = PathFileUtils.getLang(nextClass.getLocationInfo().getFilePath());
 		this.addedOperations = new ArrayList<UMLOperation>();
 		this.removedOperations = new ArrayList<UMLOperation>();
+		this.addedNestedOperations = new ArrayList<UMLOperation>();
+		this.removedNestedOperations = new ArrayList<UMLOperation>();
 		this.addedInitializers = new ArrayList<UMLInitializer>();
 		this.removedInitializers = new ArrayList<UMLInitializer>();
 		this.addedAttributes = new ArrayList<UMLAttribute>();
@@ -199,7 +203,7 @@ public abstract class UMLAbstractClassDiff {
 		for(UMLOperation operation : operation1.getNestedOperations()) {
 			UMLOperation operationWithTheSameSignature = operation2.nestedOperationWithTheSameSignatureIgnoringChangedTypes(operation);
 			if(operationWithTheSameSignature == null) {
-				this.removedOperations.add(operation);
+				this.removedNestedOperations.add(operation);
 			}
 			else if(!mapperListContainsOperation(operation, operationWithTheSameSignature)) {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation, operationWithTheSameSignature, this);
@@ -209,7 +213,7 @@ public abstract class UMLAbstractClassDiff {
 		for(UMLOperation operation : operation2.getNestedOperations()) {
 			UMLOperation operationWithTheSameSignature = operation1.nestedOperationWithTheSameSignatureIgnoringChangedTypes(operation);
 			if(operationWithTheSameSignature == null) {
-				this.addedOperations.add(operation);
+				this.addedNestedOperations.add(operation);
 			}
 			else if(!mapperListContainsOperation(operationWithTheSameSignature, operation)) {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operationWithTheSameSignature, operation, this);

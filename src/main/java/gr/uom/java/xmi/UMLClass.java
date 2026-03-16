@@ -12,6 +12,9 @@ import java.util.Optional;
 import org.refactoringminer.util.PathFileUtils;
 
 public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider {
+	public enum ConditionallyCreated {
+		IF, ELSE, NO;
+	}
 	private String qualifiedName;
     private String sourceFile;
     private String sourceFolder;
@@ -40,6 +43,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private List<UMLComment> packageDeclarationComments;
     private List<UMLTypeAlias> typeAliasList;
     private String actualSignature;
+    private ConditionallyCreated conditionallyCreated = ConditionallyCreated.NO;
     
     public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<UMLImport> importedTypes) {
     	super(packageName, name, locationInfo, importedTypes);
@@ -102,6 +106,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     	else
     		return "class";
     }
+
+	public ConditionallyCreated getConditionallyCreated() {
+		return conditionallyCreated;
+	}
+
+	public void setConditionallyCreated(ConditionallyCreated conditionallyCreated) {
+		this.conditionallyCreated = conditionallyCreated;
+	}
 
 	public String getActualSignature() {
 		return actualSignature;
@@ -417,7 +429,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     			String path2 = PathFileUtils.filePathWithoutExtension(umlClass.getSourceFile());
 				fileMatch = path1.equals(path2);
     		}
-    		return this.packageName.equals(umlClass.packageName) && this.name.equals(umlClass.name) && fileMatch;
+    		return this.packageName.equals(umlClass.packageName) && this.name.equals(umlClass.name) && fileMatch && this.conditionallyCreated.equals(umlClass.conditionallyCreated);
     	}
     	return false;
     }
@@ -428,6 +440,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		result = prime * result + ((packageName == null) ? 0 : packageName.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((sourceFile == null) ? 0 : sourceFile.hashCode());
+		result = prime * result + conditionallyCreated.hashCode();
 		return result;
 	}
 

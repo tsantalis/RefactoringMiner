@@ -136,6 +136,11 @@ public class UMLModelAdapter {
                     }
                 }
                 model.addClass(umlClass);
+                if(umlClass.getContainer().isPresent()) {
+                    for(UMLClass nestedClass : umlClass.getContainer().get().getNestedClasses()) {
+                        model.addClass(nestedClass);
+                    }
+                }
             }
 
             // Handle top level methods
@@ -231,6 +236,16 @@ public class UMLModelAdapter {
                 typeDecl,
                 LocationInfo.CodeElementType.TYPE_DECLARATION);
 
+        //handle nested type declarations
+        LangASTNode current = typeDecl;
+        List<String> parentClassNames = new ArrayList<>();
+        while(current.getParent() instanceof LangTypeDeclaration parentTypeDecl) {
+            parentClassNames.add(0, parentTypeDecl.getName());
+            current = current.getParent();
+        }
+        for(String s : parentClassNames) {
+            moduleName = moduleName + "." + s;
+        }
         UMLClass umlClass = new UMLClass(moduleName, className, locationInfo, typeDecl.isTopLevel(), imports);
 
         for (LangAnnotation langAnnotation : typeDecl.getAnnotations()) {

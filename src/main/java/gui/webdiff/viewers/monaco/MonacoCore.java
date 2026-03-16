@@ -48,7 +48,6 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
 import org.refactoringminer.astDiff.models.ASTDiff;
-import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.rendersnake.HtmlCanvas;
 

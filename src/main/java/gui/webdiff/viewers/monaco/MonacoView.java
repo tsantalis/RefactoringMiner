@@ -89,7 +89,9 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                         @Override
                         public String getLegendValue() {
                             return "<span class=&quot;deleted&quot;>&nbsp;&nbsp;</span> deleted<br>"
+                                    + "<span class=&quot;moveOut&quot;>&nbsp;&nbsp;</span> moved out<br>"
                                     + "<span class=&quot;inserted&quot;>&nbsp;&nbsp;</span> inserted<br>"
+                                    + "<span class=&quot;moveIn&quot;>&nbsp;&nbsp;</span> moved in<br>"
                                     + "<span class=&quot;moved&quot;>&nbsp;&nbsp;</span> moved<br>"
                                     + "<span class=&quot;updated&quot;>&nbsp;&nbsp;</span> updated<br>";
                         }

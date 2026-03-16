@@ -96,6 +96,7 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import extension.ast.node.LangASTNode;
 import extension.ast.node.declaration.LangMethodDeclaration;
 import extension.ast.node.declaration.LangSingleVariableDeclaration;
+import extension.ast.node.declaration.LangTypeDeclaration;
 import extension.ast.node.expression.LangSimpleName;
 import extension.ast.node.statement.LangAssertStatement;
 import extension.ast.node.statement.LangAsyncStatement;
@@ -121,13 +122,14 @@ import extension.ast.node.statement.LangWithStatement;
 import extension.ast.node.statement.LangYieldStatement;
 import extension.ast.node.unit.LangCompilationUnit;
 import extension.ast.visitor.LangVisitor;
-import extension.base.LangSupportedEnum;
+import static extension.umladapter.UMLModelAdapter.createUMLClass;
 import static extension.umladapter.UMLModelAdapter.createUMLOperation;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -626,6 +628,10 @@ public class OperationBody {
 			if(container instanceof UMLOperation) {
 				((UMLOperation)container).addNestedOperation(nested);
 			}
+		}
+		else if(statement instanceof LangTypeDeclaration) {
+			LangTypeDeclaration typeDecl = (LangTypeDeclaration)statement;
+			UMLClass nestedClass = createUMLClass(typeDecl, filePath, Collections.emptyList(), fileContent, comments);
 		}
 	}
 

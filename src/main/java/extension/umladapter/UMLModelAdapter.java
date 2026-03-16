@@ -122,7 +122,19 @@ public class UMLModelAdapter {
             List<UMLComment> comments = model.getCommentMap().containsKey(filename) ? model.getCommentMap().get(filename) : new ArrayList<>();
 
             for (LangTypeDeclaration typeDecl : compilationUnit.getTypes()) {
-                UMLClass umlClass = createUMLClass(model, typeDecl, filename, imports, fileContent, comments);
+                UMLClass umlClass = createUMLClass(typeDecl, filename, imports, fileContent, comments);
+                if (!typeDecl.getSuperClassNames().isEmpty()) {
+                    String packageName = UMLAdapterUtil.extractPackageName(filename);
+                    LangSimpleName primarySuperClassRaw = typeDecl.getSuperClassNames().get(0);
+                    String primarySuperClass = UMLAdapterUtil.resolveQualifiedTypeName(primarySuperClassRaw.getIdentifier(), imports, packageName);
+                    model.addGeneralization(new UMLGeneralization(umlClass, primarySuperClass));
+                    for (int i = 1; i < typeDecl.getSuperClassNames().size(); i++) {
+                        LangSimpleName additionalSuperClassRaw = typeDecl.getSuperClassNames().get(i);
+                        String additionalSuperClass = UMLAdapterUtil.resolveQualifiedTypeName(additionalSuperClassRaw.getIdentifier(), imports, packageName);
+                        // Create additional generalization for multiple inheritance support
+                        model.addGeneralization(new UMLGeneralization(umlClass, additionalSuperClass));
+                    }
+                }
                 model.addClass(umlClass);
             }
 
@@ -203,12 +215,9 @@ public class UMLModelAdapter {
         return moduleClass;
     }
 
-    private static UMLClass createUMLClass(UMLModel model, LangTypeDeclaration typeDecl, String filename, List<UMLImport> imports, String fileContent, List<UMLComment> comments) {
-
+    public static UMLClass createUMLClass(LangTypeDeclaration typeDecl, String filename, List<UMLImport> imports, String fileContent, List<UMLComment> comments) {
         String className = typeDecl.getName();
-
         String moduleName = UMLAdapterUtil.extractModuleName(filename);
-        String packageName = UMLAdapterUtil.extractPackageName(filename);
         String sourceFolder = UMLAdapterUtil.extractSourceFolder(filename);
         String filepath = UMLAdapterUtil.extractFilePath(filename);
 
@@ -232,17 +241,15 @@ public class UMLModelAdapter {
             // Qualify and set the first superclass as the main superclass
             LangSimpleName primarySuperClassRaw = typeDecl.getSuperClassNames().get(0);
             LocationInfo superTypeLocationInfo = new LocationInfo(sourceFolder, filepath, primarySuperClassRaw, LocationInfo.CodeElementType.TYPE);
-            String primarySuperClass = UMLAdapterUtil.resolveQualifiedTypeName(primarySuperClassRaw.getIdentifier(), imports, packageName);
             UMLType superClassType = UMLType.extractTypeObject(primarySuperClassRaw.getIdentifier(), "[", "]", superTypeLocationInfo);
             umlClass.setSuperclass(superClassType);
-            model.addGeneralization(new UMLGeneralization(umlClass, primarySuperClass));
 
             // For additional base classes, also add as generalizations (Python multiple inheritance)
             for (int i = 1; i < typeDecl.getSuperClassNames().size(); i++) {
                 LangSimpleName additionalSuperClassRaw = typeDecl.getSuperClassNames().get(i);
-                String additionalSuperClass = UMLAdapterUtil.resolveQualifiedTypeName(additionalSuperClassRaw.getIdentifier(), imports, packageName);
-                // Create additional generalization for multiple inheritance support
-                model.addGeneralization(new UMLGeneralization(umlClass, additionalSuperClass));
+                LocationInfo additionalSuperTypeLocationInfo = new LocationInfo(sourceFolder, filepath, additionalSuperClassRaw, LocationInfo.CodeElementType.TYPE);
+                UMLType additionalSuperClassType = UMLType.extractTypeObject(additionalSuperClassRaw.getIdentifier(), "[", "]", additionalSuperTypeLocationInfo);
+                umlClass.addImplementedInterface(additionalSuperClassType);
             }
         }
 

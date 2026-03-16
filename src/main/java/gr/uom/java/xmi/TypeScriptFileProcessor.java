@@ -40,7 +40,7 @@ public class TypeScriptFileProcessor {
 			URL specifier = Path.of(filePath).toUri().toURL();
 			Swc4jParseOptions options = new Swc4jParseOptions()
 					.setSpecifier(specifier)
-					.setMediaType(Swc4jMediaType.TypeScript)
+					.setMediaType(filePath.endsWith(".tsx") ? Swc4jMediaType.Tsx : Swc4jMediaType.TypeScript)
 					.setCaptureAst(true)
 					.setCaptureComments(true)
 					.setParseMode(Swc4jParseMode.Module);
@@ -57,7 +57,8 @@ public class TypeScriptFileProcessor {
 				List<ISwc4jAstModuleItem> list = module.getBody();
 				List<UMLImport> imports = new ArrayList<>();
 				String sourceFolder = UMLAdapterUtil.extractSourceFolder(filePath);
-				String moduleName = filePath.contains("/") ? filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length() - 3) : filePath.substring(0, filePath.length() - 3);
+				int extensionLength = filePath.endsWith(".tsx") ? 4 : 3;
+				String moduleName = filePath.contains("/") ? filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length() - extensionLength) : filePath.substring(0, filePath.length() - extensionLength);
 				LocationInfo location = new LocationInfo(sourceFolder, filePath, module.getSpan(), CodeElementType.TYPE_DECLARATION);
 				List<UMLComment> commentList = extractComments(comments, sourceFolder, filePath, fileContent);
 				UMLClass moduleClass = new UMLClass(moduleName, "__module__", location, true, imports);

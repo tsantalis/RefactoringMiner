@@ -99,6 +99,9 @@ public class MethodMatcher extends BodyMapperMatcher{
             new JavaDocMatcher(optimizationData, umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc(), umlOperationBodyMapper.getJavadocDiff(), LANG1, LANG2)
                     .match(srcOperationNode, dstOperationNode, mappingStore);
             mappingStore.addMapping(srcOperationNode, dstOperationNode);
+            if(srcOperationNode.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT) && dstOperationNode.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT)) {
+                mappingStore.addMapping(srcOperationNode.getParent(), dstOperationNode.getParent());
+            }
             }
         } else {
             //Static Initializers
@@ -179,6 +182,18 @@ public class MethodMatcher extends BodyMapperMatcher{
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.FUNCTION_BODY,LANG2.FUNCTION_BODY);
         if (matched != null) {
             mappingStore.addMapping(matched.first,matched.second);
+        }
+        matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.STATEMENT_BLOCK,LANG2.STATEMENT_BLOCK);
+        if (matched != null) {
+            mappingStore.addMapping(matched.first,matched.second);
+            com.github.gumtreediff.utils.Pair<Tree,Tree> opening = Helpers.findPairOfType(matched.first,matched.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+            if (opening != null) {
+                mappingStore.addMapping(opening.first,opening.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree,Tree> closing = Helpers.findPairOfType(matched.first,matched.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+            if (closing != null) {
+                mappingStore.addMapping(closing.first,closing.second);
+            }
         }
         if(Constants.isCrossLanguage(LANG1, LANG2)) {
             JavaToKotlinMigration.handleFunctionBodyMapping(mappingStore, srcOperationNode, dstOperationNode, LANG1, LANG2);

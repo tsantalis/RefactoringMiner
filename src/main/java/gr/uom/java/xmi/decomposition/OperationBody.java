@@ -64,11 +64,13 @@ import org.jetbrains.kotlin.psi.KtWhenExpression;
 import org.jetbrains.kotlin.psi.KtWhileExpression;
 
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstDecl;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstForHead;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstModuleItem;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstStmt;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstVarDeclOrExpr;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDecl;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.program.Swc4jAstModule;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
@@ -78,6 +80,7 @@ import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstDebuggerStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstDoWhileStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstEmptyStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstExprStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstFnDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstForInStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstForOfStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstForStmt;
@@ -127,6 +130,7 @@ import static extension.umladapter.UMLModelAdapter.createUMLOperation;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.ModuleContainer;
+import gr.uom.java.xmi.TypeScriptFileProcessor;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
@@ -1587,6 +1591,20 @@ public class OperationBody {
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
+		}
+		else if(statement instanceof Swc4jAstFnDecl functionDecl) {
+			String className = container.getClassName();
+			UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, functionDecl, activeVariableDeclarations, fileContent, className);
+			if(container instanceof UMLOperation) {
+				((UMLOperation)container).addNestedOperation(nested);
+			}
+			else if(container instanceof ModuleContainer) {
+				((ModuleContainer)container).addNestedOperation(nested);
+			}
+		}
+		else if(statement instanceof Swc4jAstExportDecl exportDecl) {
+			ISwc4jAstDecl decl = exportDecl.getDecl();
+			processStatement(sourceFolder, filePath, parent, decl, fileContent);
 		}
 	}
 

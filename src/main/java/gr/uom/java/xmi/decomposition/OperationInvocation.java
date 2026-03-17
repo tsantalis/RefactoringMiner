@@ -58,6 +58,7 @@ import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstComputedPropName;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateName;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstCallee;
@@ -1239,6 +1240,9 @@ public class OperationInvocation extends AbstractCall {
 				this.methodName = fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd());
 			ISwc4jAstExpr receiver = memberExpr.getObj();
 			this.expression = fileContent.substring(receiver.getSpan().getStart(), receiver.getSpan().getEnd());
+		}
+		else if(callee instanceof Swc4jAstIdent ident) {
+			this.methodName = ident.getSym();
 		}
 		this.arguments = new ArrayList<String>();
 		this.numberOfArguments = invocation.getArgs().size();

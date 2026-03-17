@@ -70,10 +70,10 @@ public class Constants {
 		}
 		else if(PathFileUtils.isTypeScriptFile(filePath)) {
 			CLASS_BLOCK = "block";
-			METHOD_DECLARATION = "function_definition";
+			METHOD_DECLARATION = "function_declaration";
 			SIMPLE_NAME = "identifier";
 			IMPORT_DECLARATION = "import_statement";
-			TYPE_DECLARATION = "class_definition";
+			TYPE_DECLARATION = "class_declaration";
 			TYPE_DECLARATION_KIND = "class";
 			BLOCK_COMMENT = "comment";
 			LINE_COMMENT = "comment";
@@ -89,9 +89,9 @@ public class Constants {
 			MODIFIER = "";
 			INITIALIZER = "";
 			CONSTRUCTOR_INVOCATION = "";
-			ENUM_DECLARATION = "class_definition";
-			ANNOTATION_TYPE_DECLARATION = "class_definition";
-			RECORD_DECLARATION = "class_definition";
+			ENUM_DECLARATION = "class_declaration";
+			ANNOTATION_TYPE_DECLARATION = "class_declaration";
+			RECORD_DECLARATION = "class_declaration";
 			PREFIX_EXPRESSION = "prefix_expression";
 			METHOD_INVOCATION_ARGUMENTS = "argument_list";
 			STRING_LITERAL = "string_literal";
@@ -338,4 +338,5 @@ public class Constants {
     public final String CONST_KEYWORD = "const";
     public final String LET_KEYWORD = "let";
     public final String ARRAY_PATTERN = "array_pattern";
+    public final String EXPORT_STATEMENT = "export_statement";
 }

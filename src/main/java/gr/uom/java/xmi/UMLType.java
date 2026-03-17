@@ -5,6 +5,7 @@ import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AnnotatableType;
@@ -37,12 +38,22 @@ import org.refactoringminer.util.PathFileUtils;
 
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsEntityName;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsFnParam;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsTypeElement;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstArrayPat;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstObjectPat;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstRestPat;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsArrayType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsConditionalType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsFnType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsKeywordType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsPropertySignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsQualifiedName;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeLit;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamInstantiation;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeRef;
 
 import gr.uom.java.xmi.ListCompositeType.Kind;
@@ -574,8 +585,22 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		}
 		else if(type instanceof Swc4jAstTsTypeRef typeRef) {
 			ISwc4jAstTsEntityName reference = typeRef.getTypeName();
+			Optional<Swc4jAstTsTypeParamInstantiation> instantiation = typeRef.getTypeParams();
+			List<UMLType> typeArguments = new ArrayList<>();
+			if(instantiation.isPresent()) {
+				List<ISwc4jAstTsType> params = instantiation.get().getParams();
+				for(ISwc4jAstTsType param : params) {
+					UMLType paramType = extractTypeObject(param, sourceFolder, filePath, fileContent);
+					typeArguments.add(paramType);
+				}
+			}
 			if(reference instanceof Swc4jAstIdent typeIdentifier) {
 				UMLType leafType = extractTypeObject(typeIdentifier.getSym());
+				if(typeArguments.size() > 0)
+					leafType.parameterized = true;
+				for(UMLType typeArg : typeArguments) {
+					leafType.typeArguments.add(typeArg);
+				}
 				return leafType;
 			}
 			else if(reference instanceof Swc4jAstTsQualifiedName qualified) {
@@ -590,9 +615,56 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 			}
 		}
 		else if(type instanceof Swc4jAstTsTypeLit typeLiteral) {
-			//TODO create UMLType subclass
+			List<ISwc4jAstTsTypeElement> members = typeLiteral.getMembers();
+			List<UMLType> memberTypeList = new ArrayList<>();
+			for(ISwc4jAstTsTypeElement member : members) {
+				if(member instanceof Swc4jAstTsPropertySignature signature) {
+					if(signature.getTypeAnn().isPresent()) {
+						Swc4jAstTsTypeAnn typeAnnotation = signature.getTypeAnn().get();
+						UMLType signatureType = extractTypeObject(typeAnnotation.getTypeAnn(), sourceFolder, filePath, fileContent);
+						memberTypeList.add(signatureType);
+					}
+				}
+			}
+			return new ListCompositeType(memberTypeList, Kind.LITERAL);
+		}
+		else if(type instanceof Swc4jAstTsFnType functionType) {
+			List<ISwc4jAstTsFnParam> functionParams = functionType.getParams();
+			List<UMLType> parameterTypeList = new ArrayList<>();
+			for (ISwc4jAstTsFnParam fnParam : functionParams) {
+				Swc4jAstTsTypeAnn typeAnnotation = extractTypeAnnotation(fnParam);
+				if(typeAnnotation != null) {
+					UMLType umlType = extractTypeObject(typeAnnotation.getTypeAnn(), sourceFolder, filePath, fileContent);
+					parameterTypeList.add(umlType);
+				}
+			}
+			Swc4jAstTsTypeAnn typeAnnotation = functionType.getTypeAnn();
+			UMLType returnType = extractTypeObject(typeAnnotation.getTypeAnn(), sourceFolder, filePath, fileContent);
+			FunctionType umlType = new FunctionType(null, returnType, parameterTypeList);
+			return umlType;
 		}
 		//TODO this should return null, when all type kinds are supported
 		return new InferredType();
+	}
+
+	private static Swc4jAstTsTypeAnn extractTypeAnnotation(ISwc4jAstTsFnParam namePat) {
+		Swc4jAstTsTypeAnn typeAnnotation = null;
+		if(namePat instanceof Swc4jAstArrayPat array) {
+			if(array.getTypeAnn().isPresent())
+				typeAnnotation =  array.getTypeAnn().get();
+		}
+		else if(namePat instanceof Swc4jAstBindingIdent binding) {
+			if(binding.getTypeAnn().isPresent())
+				typeAnnotation =  binding.getTypeAnn().get();
+		}
+		else if(namePat instanceof Swc4jAstObjectPat object) {
+			if(object.getTypeAnn().isPresent())
+				typeAnnotation =  object.getTypeAnn().get();
+		}
+		else if(namePat instanceof Swc4jAstRestPat rest) {
+			if(rest.getTypeAnn().isPresent())
+				typeAnnotation =  rest.getTypeAnn().get();
+		}
+		return typeAnnotation;
 	}
 }

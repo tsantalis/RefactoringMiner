@@ -79,7 +79,7 @@ public class Constants {
 			LINE_COMMENT = "comment";
 			EXPRESSION_STATEMENT = "expression_statement";
 			TRY_STATEMENT = "try_statement";
-			CATCH_CLAUSE = "except_clause";
+			CATCH_CLAUSE = "catch_clause";
 			IF_STATEMENT = "if_statement";
 			WHILE_STATEMENT = "while_statement";
 			FOR_STATEMENT = "for_statement";
@@ -335,8 +335,14 @@ public class Constants {
     public final String PARENTHESIZED_EXPRESSION = "parenthesized_expression";
     public final String LEXICAL_DECLARATION = "lexical_declaration";
     public final String SEMICOLON = ";";
+    public final String COLON = ":";
     public final String CONST_KEYWORD = "const";
     public final String LET_KEYWORD = "let";
     public final String ARRAY_PATTERN = "array_pattern";
     public final String EXPORT_STATEMENT = "export_statement";
+    public final String FUNCTION = "function";
+    public final String FORMAL_PARAMETERS = "formal_parameters";
+    public final String COMMA = ",";
+    public final String TYPE_ANNOTATION = "type_annotation";
+    public final String CATCH_KEYWORD = "catch";
 }

@@ -140,6 +140,7 @@ public class TypeScriptFileProcessor {
 			List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(pat);
 			for(Swc4jAstBindingIdent identifier : identifiers) {
 				VariableDeclaration parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, operation, activeVariableDeclarations, fileContent);
+				parameter.setParameter(true);
 				if(parameter.getType() != null) {
 					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
 					umlParameter.setVariableDeclaration(parameter);

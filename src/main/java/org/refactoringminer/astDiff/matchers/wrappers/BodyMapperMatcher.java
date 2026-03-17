@@ -355,6 +355,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if (excepts != null) {
                     mappingStore.addMapping(excepts.first,excepts.second);
                 }
+                Pair<Tree, Tree> catchKeywords = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.CATCH_KEYWORD, LANG2.CATCH_KEYWORD);
+                if (catchKeywords != null) {
+                    mappingStore.addMapping(catchKeywords.first,catchKeywords.second);
+                }
                 Pair<Tree, Tree> types = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.USER_TYPE, LANG2.USER_TYPE);
                 if (types != null) {
                     mappingStore.addMappingRecursively(types.first,types.second);

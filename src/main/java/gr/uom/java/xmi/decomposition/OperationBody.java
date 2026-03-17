@@ -68,8 +68,10 @@ import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstDecl;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstForHead;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstModuleItem;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstStmt;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstVarDeclOrExpr;
+import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstCatchClause;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDecl;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.program.Swc4jAstModule;
@@ -1568,7 +1570,44 @@ public class OperationBody {
 			
 		}
 		else if(statement instanceof Swc4jAstTryStmt tryStatement) {
-			
+			TryStatementObject child = new TryStatementObject(sourceFolder, filePath, tryStatement, parent.getDepth()+1, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
+			addAllInActiveVariableDeclarations(variableDeclarations);
+			processStatement(sourceFolder, filePath, child, tryStatement.getBlock(), fileContent);
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
+			Optional<Swc4jAstCatchClause> catchClause = tryStatement.getHandler();
+			if(catchClause.isPresent()) {
+				CompositeStatementObject catchClauseStatementObject = new CompositeStatementObject(sourceFolder, filePath, catchClause.get(), parent.getDepth()+1, CodeElementType.CATCH_CLAUSE, fileContent);
+				child.addCatchClause(catchClauseStatementObject);
+				parent.addStatement(catchClauseStatementObject);
+				catchClauseStatementObject.setTryContainer(child);
+				Optional<ISwc4jAstPat> param = catchClause.get().getParam();
+				if(param.isPresent()) {
+					ISwc4jAstPat pat = param.get();
+					List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(pat);
+					Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(pat);
+					for(Swc4jAstBindingIdent identifier : identifiers) {
+						VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, container, activeVariableDeclarations, fileContent);
+						child.addVariableDeclaration(vd);
+						AbstractExpression variableDeclarationName = new AbstractExpression(sourceFolder, filePath, identifier, CodeElementType.CATCH_CLAUSE_EXCEPTION_NAME, container, activeVariableDeclarations, fileContent);
+						child.addExpression(variableDeclarationName);
+					}
+				}
+				addStatementInVariableScopes(catchClauseStatementObject);
+				List<VariableDeclaration> catchClauseVariableDeclarations = catchClauseStatementObject.getVariableDeclarations();
+				addAllInActiveVariableDeclarations(catchClauseVariableDeclarations);
+				processStatement(sourceFolder, filePath, catchClauseStatementObject, catchClause.get().getBody(), fileContent);
+				removeAllFromActiveVariableDeclarations(catchClauseVariableDeclarations);
+			}
+			Optional<Swc4jAstBlockStmt> finallyClause = tryStatement.getFinalizer();
+			if(finallyClause.isPresent()) {
+				CompositeStatementObject finallyBlockStatementObject = new CompositeStatementObject(sourceFolder, filePath, finallyClause.get(), parent.getDepth()+1, CodeElementType.FINALLY_BLOCK, fileContent);
+				child.setFinallyClause(finallyBlockStatementObject);
+				parent.addStatement(finallyBlockStatementObject);
+				finallyBlockStatementObject.setTryContainer(child);
+			}
 		}
 		else if(statement instanceof Swc4jAstWhileStmt whileStatement) {
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, whileStatement, parent.getDepth()+1, CodeElementType.WHILE_STATEMENT, fileContent);

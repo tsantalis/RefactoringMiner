@@ -397,8 +397,8 @@ public class MethodMatcher extends BodyMapperMatcher{
                 if(leftTree.getParent() != null && rightTree.getParent() != null) {
                     int index1 = leftTree.getParent().getChildPosition(leftTree);
                     int index2 = rightTree.getParent().getChildPosition(rightTree);
-                    if(leftTree.getParent().getChildren().size() > index1 && leftTree.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
-                            rightTree.getParent().getChildren().size() > index2 && rightTree.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+                    if(leftTree.getParent().getChildren().size() > index1+1 && leftTree.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                            rightTree.getParent().getChildren().size() > index2+1 && rightTree.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
                         Tree t1 = leftTree.getParent().getChild(index1+1);
                         Tree t2 = rightTree.getParent().getChild(index2+1);
                         mappingStore.addMapping(t1,t2);

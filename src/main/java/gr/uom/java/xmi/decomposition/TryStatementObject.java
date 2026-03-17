@@ -8,6 +8,8 @@ import org.eclipse.jdt.core.dom.Statement;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtTryExpression;
 
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTryStmt;
+
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -21,13 +23,18 @@ public class TryStatementObject extends CompositeStatementObject {
 		this.catchClauses = new ArrayList<CompositeStatementObject>();
 	}
 
-	public TryStatementObject(CompilationUnit cu, String sourceFolder, String filePath, Statement statement, int depth, String javaFileContent) {
-		super(cu, sourceFolder, filePath, statement, depth, CodeElementType.TRY_STATEMENT, javaFileContent);
+	public TryStatementObject(CompilationUnit cu, String sourceFolder, String filePath, Statement statement, int depth, String fileContent) {
+		super(cu, sourceFolder, filePath, statement, depth, CodeElementType.TRY_STATEMENT, fileContent);
 		this.catchClauses = new ArrayList<CompositeStatementObject>();
 	}
 
-	public TryStatementObject(KtFile cu, String sourceFolder, String filePath, KtTryExpression statement, int depth, String javaFileContent) {
-		super(cu, sourceFolder, filePath, statement, depth, CodeElementType.TRY_STATEMENT, javaFileContent);
+	public TryStatementObject(KtFile cu, String sourceFolder, String filePath, KtTryExpression statement, int depth, String fileContent) {
+		super(cu, sourceFolder, filePath, statement, depth, CodeElementType.TRY_STATEMENT, fileContent);
+		this.catchClauses = new ArrayList<CompositeStatementObject>();
+	}
+
+	public TryStatementObject(String sourceFolder, String filePath, Swc4jAstTryStmt statement, int depth, String fileContent) {
+		super(sourceFolder, filePath, statement, depth, CodeElementType.TRY_STATEMENT, fileContent);
 		this.catchClauses = new ArrayList<CompositeStatementObject>();
 	}
 

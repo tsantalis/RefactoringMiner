@@ -10,7 +10,7 @@ public enum Constants {
 	KOTLIN("\n", "return ", "return\n", "return true\n", "return false\n", "return null\n", "return this\n", " = ", "break\n", "continue\n",
 			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", "this\n", " if ", " else ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "null", "true", "false"),
 	
-	TYPESCRIPT(";\n", "return ", "return;\n", "return true;\n", "return false;\n", "return null;\n", "return this;\n", "=", "break;\n", "continue;\n",
+	TYPESCRIPT(";\n", "return ", "return;\n", "return true;\n", "return false;\n", "return null;\n", "return this;\n", " = ", "break;\n", "continue;\n",
 			" => ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", "this;\n", " ? ", " : ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "null", "true", "false");
 
 	public final String STATEMENT_TERMINATION;

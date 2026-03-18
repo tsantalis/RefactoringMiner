@@ -12064,6 +12064,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private int callsToExtractedMethod(List<? extends AbstractCodeFragment> leaves2) {
 		int counter = 0;
+		List<AbstractCall> matchedCalls = new ArrayList<>();
 		for(AbstractCodeFragment leaf2 : leaves2) {
 			AbstractCall invocation = leaf2.invocationCoveringEntireFragment();
 			if(invocation == null) {
@@ -12074,7 +12075,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			else {
 				for(AbstractCall call : leaf2.getMethodInvocations()) {
-					if(!call.equals(invocation) && call.matchesOperation(container2, callSiteOperation, classDiff, modelDiff)) {
+					if(!call.equals(invocation) && !identicalLocationCall(call, matchedCalls) && call.matchesOperation(container2, callSiteOperation, classDiff, modelDiff)) {
+						matchedCalls.add(call);
 						counter++;
 						break;
 					}
@@ -12082,6 +12084,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return counter;
+	}
+
+	private static boolean identicalLocationCall(AbstractCall call, List<AbstractCall> matchedCalls) {
+		for(AbstractCall matchedCall : matchedCalls) {
+			if(matchedCall.getLocationInfo().equals(call.getLocationInfo())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean matchesAddedOperationWithIdenticalBody(UMLOperation removedOperation) {

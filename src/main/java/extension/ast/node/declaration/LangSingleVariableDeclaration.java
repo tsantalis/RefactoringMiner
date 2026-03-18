@@ -28,11 +28,20 @@ public class LangSingleVariableDeclaration extends LangDeclaration {
         super(NodeTypeEnum.SINGLE_VARIABLE_DECLARATION, positionInfo);
         this.langSimpleName = langSimpleName;
         this.defaultValue = defaultValue;
+        if (langSimpleName != null) {
+            addChild(langSimpleName);
+        }
+        if (defaultValue != null) {
+            addChild(defaultValue);
+        }
     }
 
     public LangSingleVariableDeclaration(LangSimpleName langSimpleName, int startLine, int startChar, int endLine, int endChar, int startColumn, int endColumn) {
         super(NodeTypeEnum.SINGLE_VARIABLE_DECLARATION, startLine, startChar, endLine, endChar, startColumn, endColumn);
         this.langSimpleName = langSimpleName;
+        if (langSimpleName != null) {
+            addChild(langSimpleName);
+        }
     }
 
     @Override

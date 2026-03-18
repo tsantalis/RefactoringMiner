@@ -406,12 +406,32 @@ public abstract class AbstractCall extends LeafExpression {
 				return false;
 			}
 		}
-		return arguments().equals(call.arguments());
+		return equalArgumentsIgnoringWhitespace(call);
+	}
+
+	private boolean equalArgumentsIgnoringWhitespace(AbstractCall call) {
+		if(arguments().equals(call.arguments())) {
+			return true;
+		}
+		if(arguments().size() == call.arguments().size()) {
+			int count = 0;
+			for(int i=0; i<arguments().size(); i++) {
+				String arg1 = arguments().get(i);
+				String arg2 = call.arguments().get(i);
+				String removeWhitespace1 = arg1.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+				String removeWhitespace2 = arg2.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+				if(removeWhitespace1.equals(removeWhitespace2)) {
+					count++;
+				}
+			}
+			return count == arguments().size() && count > 0;
+		}
+		return false;
 	}
 
 	public boolean reorderedArguments(AbstractCall call) {
 		return arguments().size() > 1 && arguments().size() == call.arguments().size() &&
-				!arguments().equals(call.arguments()) && arguments().containsAll(call.arguments());
+				!equalArgumentsIgnoringWhitespace(call) && arguments().containsAll(call.arguments());
 	}
 
 	public boolean identicalOrReplacedArguments(AbstractCall call, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap) {

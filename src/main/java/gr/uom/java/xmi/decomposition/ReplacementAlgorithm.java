@@ -1566,6 +1566,10 @@ public class ReplacementAlgorithm {
 			Set<String> declarations1 = variableDeclarations1.stream().map(d -> d.toString()).collect(Collectors.toSet());
 			Set<String> declarations2 = variableDeclarations2.stream().map(d -> d.toString()).collect(Collectors.toSet());
 			if(declarations1.containsAll(declarations2) || declarations2.containsAll(declarations1)) {
+				Set<Replacement> replacements = processAnonymousAndLambdas(statement1, statement2, parameterToArgumentMap, replacementInfo,
+						assignmentInvocationCoveringTheEntireStatement1 != null ? assignmentInvocationCoveringTheEntireStatement1 : assignmentCreationCoveringTheEntireStatement1,
+						assignmentInvocationCoveringTheEntireStatement2 != null ? assignmentInvocationCoveringTheEntireStatement2 : assignmentCreationCoveringTheEntireStatement2,
+						methodInvocationMap1, methodInvocationMap2,	anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, operationBodyMapper);
 				return replacementInfo.getReplacements();
 			}
 		}

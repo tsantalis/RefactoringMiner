@@ -1590,9 +1590,9 @@ public class OperationBody {
 					Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(pat);
 					for(Swc4jAstBindingIdent identifier : identifiers) {
 						VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, container, activeVariableDeclarations, fileContent);
-						child.addVariableDeclaration(vd);
+						catchClauseStatementObject.addVariableDeclaration(vd);
 						AbstractExpression variableDeclarationName = new AbstractExpression(sourceFolder, filePath, identifier, CodeElementType.CATCH_CLAUSE_EXCEPTION_NAME, container, activeVariableDeclarations, fileContent);
-						child.addExpression(variableDeclarationName);
+						catchClauseStatementObject.addExpression(variableDeclarationName);
 					}
 				}
 				addStatementInVariableScopes(catchClauseStatementObject);

@@ -714,7 +714,8 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			List<LeafExpression> variables = getVariables();
 			if(variables.size() > 0) {
 				String s = variables.get(0).getString() + LANG.ASSIGNMENT + expression + LANG.STATEMENT_TERMINATION;
-				if(statement.equals(s)) {
+				String sWithAwait = variables.get(0).getString() + LANG.ASSIGNMENT + "await " + expression + LANG.STATEMENT_TERMINATION;
+				if(statement.equals(s) || statement.equals(sWithAwait)) {
 					return true;
 				}
 				if(statement.startsWith(variables.get(0).getString() + LANG.ASSIGNMENT)) {

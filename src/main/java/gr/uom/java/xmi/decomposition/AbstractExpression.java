@@ -168,7 +168,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 	}
 
 	public AbstractExpression(String sourceFolder, String filePath, ISwc4jAst expression, CodeElementType codeElementType, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
-		super(new LocationInfo(sourceFolder, filePath, expression.getSpan(), codeElementType));
+		super(new LocationInfo(sourceFolder, filePath, expression.getSpan(), codeElementType, fileContent));
 		TypeScriptVisitor visitor = new TypeScriptVisitor(sourceFolder, filePath, container, activeVariableDeclarations, fileContent);
 		expression.visit(visitor);
 		this.variables = visitor.getVariables();

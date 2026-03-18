@@ -10164,6 +10164,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Pair<MutableList<String>,Long> to Pair<MutableSet<Long>,Long> in method private readHeapDumpMemoryStore(parser HprofParser, heapDumpMemoryStoreClassId Long) : Pair<MutableSet<Long>,Long> from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

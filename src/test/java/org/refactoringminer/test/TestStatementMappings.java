@@ -2221,6 +2221,38 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
+	@ParameterizedTest
+	@CsvSource({
+		"https://github.com/gabrielshufelt/soen390-commit-and-pray.git, 5f98a8aa11aca7828b6083f7c5ea81ccb3c757d8, soen390-commit-and-pray-5f98a8aa11aca7828b6083f7c5ea81ccb3c757d8.txt",
+		"https://github.com/srabm/HiveMaps.git, 9065c90b5d8b2245d7840cbeda07535adf4caba1, HiveMaps-9065c90b5d8b2245d7840cbeda07535adf4caba1.txt",
+		"https://github.com/srabm/HiveMaps.git, d130a1927944675fa48265631ec585786fd7335d, HiveMaps-d130a1927944675fa48265631ec585786fd7335d.txt",
+		"https://github.com/srabm/HiveMaps.git, c1f1c0b5b71a91770adbc6925a8ed1c874545733, HiveMaps-c1f1c0b5b71a91770adbc6925a8ed1c874545733.txt"
+	})
+	public void testExtractMethodStatementMappingsForTypeScript(String url, String commit, String testResultFileName) throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommitWithGitHubAPI(url, commit, new File(REPOS), (commitId, refactorings) -> {
+			List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+			for (Refactoring ref : refactorings) {
+				if(ref instanceof ExtractOperationRefactoring && ref.getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION)) {
+					ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+					UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+					if(!bodyMapper.isNested()) {
+						if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+							parentMappers.add(bodyMapper.getParentMapper());
+						}
+					}
+					mapperInfo(bodyMapper, actual);
+				}
+			}
+			for(UMLOperationBodyMapper parentMapper : parentMappers) {
+				mapperInfo(parentMapper, actual);
+			}
+		});
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
 	private void mapperInfo(UMLOperationBodyMapper bodyMapper, final List<String> actual) {
 		actual.add(bodyMapper.toString());
 		//System.out.println(bodyMapper.toString());

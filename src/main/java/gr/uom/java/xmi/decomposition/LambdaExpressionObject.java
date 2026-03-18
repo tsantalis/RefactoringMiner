@@ -189,7 +189,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	public LambdaExpressionObject(String sourceFolder, String filePath, Swc4jAstArrowExpr arrowExpression, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.owner = owner;
 		this.asString = fileContent.substring(arrowExpression.getSpan().getStart(), arrowExpression.getSpan().getEnd());
-		this.locationInfo = new LocationInfo(sourceFolder, filePath, arrowExpression.getSpan(), CodeElementType.LAMBDA_EXPRESSION);
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, arrowExpression.getSpan(), CodeElementType.LAMBDA_EXPRESSION, fileContent);
 		List<ISwc4jAstPat> params = arrowExpression.getParams();
 		for(ISwc4jAstPat param : params) {
 			List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(param);

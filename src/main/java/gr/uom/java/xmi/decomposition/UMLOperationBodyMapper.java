@@ -12335,7 +12335,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean containsMapping(AbstractCodeFragment fragment1, AbstractCodeFragment fragment2) {
+	public boolean containsMapping(AbstractCodeFragment fragment1, AbstractCodeFragment fragment2) {
 		if(fragment1 != null && fragment2 != null) {
 			for(AbstractCodeMapping mapping : this.mappings) {
 				if(mapping.getFragment1().equals(fragment1) && mapping.getFragment2().equals(fragment2)) {

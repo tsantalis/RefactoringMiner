@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ListCompositeType extends UMLType {
 	public enum Kind {
-		UNION("|"), INTERSECTION("&"), LITERAL(";");
+		UNION("|"), INTERSECTION("&"), LITERAL("|");
 		private String operand;
 		private Kind(String operand) {
 			this.operand = operand;

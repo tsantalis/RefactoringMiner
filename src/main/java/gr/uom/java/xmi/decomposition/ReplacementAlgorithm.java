@@ -6059,7 +6059,14 @@ public class ReplacementAlgorithm {
 					for(int j=0; j<lambdas2.size(); j++) {
 						LambdaExpressionObject lambda1 = lambdas1.get(i);
 						LambdaExpressionObject lambda2 = lambdas2.get(j);
-						processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper);
+						if(lambda1.getSwitchExpressionCase().isPresent() && lambda2.getSwitchExpressionCase().isPresent()) {
+							if(operationBodyMapper.containsMapping(lambda1.getSwitchExpressionCase().get(), lambda2.getSwitchExpressionCase().get())) {
+								processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper);
+							}
+						}
+						else {
+							processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper);
+						}
 					}
 				}
 				List<AbstractCodeMapping> mappings = new ArrayList<>(operationBodyMapper.getMappings());

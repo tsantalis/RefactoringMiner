@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.Block;
@@ -59,6 +60,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	private List<UMLParameter> umlParameters = new ArrayList<UMLParameter>();
 	private boolean hasParentheses = false;
 	private VariableDeclarationContainer owner;
+	private Optional<StatementObject> switchExpressionCase = Optional.empty();
 	private String asString;
 	
 	public LambdaExpressionObject(LangCompilationUnit cu, String sourceFolder, String filePath, LangLambdaExpression lambda, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
@@ -142,6 +144,14 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			//this.expression = new AbstractExpression(cu, filePath, (Expression)lambda.getBody(), CodeElementType.LAMBDA_EXPRESSION_BODY, this);
 			//this.expression.setLambdaOwner(this);
 		}
+	}
+
+	public void setSwitchExpressionCase(StatementObject s) {
+		this.switchExpressionCase = Optional.of(s);
+	}
+
+	public Optional<StatementObject> getSwitchExpressionCase() {
+		return switchExpressionCase;
 	}
 
 	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, ExpressionMethodReference reference, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {

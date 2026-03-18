@@ -32,6 +32,7 @@ import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SwitchCase;
+import org.eclipse.jdt.core.dom.SwitchExpression;
 import org.eclipse.jdt.core.dom.SwitchStatement;
 import org.eclipse.jdt.core.dom.SynchronizedStatement;
 import org.eclipse.jdt.core.dom.ThrowStatement;
@@ -801,9 +802,32 @@ public class OperationBody {
 		}
 		else if(statement instanceof ReturnStatement) {
 			ReturnStatement returnStatement = (ReturnStatement)statement;
+			CompositeStatementObject switchExpressionComp = null;
+			if(returnStatement.getExpression() instanceof SwitchExpression switchExpression) {
+				CompositeStatementObject child = new CompositeStatementObject(cu, sourceFolder, filePath, switchExpression, parent.getDepth()+1, CodeElementType.SWITCH_STATEMENT, javaFileContent);
+				parent.addStatement(child);
+				AbstractExpression abstractExpression = new AbstractExpression(cu, sourceFolder, filePath, switchExpression.getExpression(), CodeElementType.SWITCH_STATEMENT_CONDITION, container, activeVariableDeclarations, javaFileContent);
+				child.addExpression(abstractExpression);
+				addStatementInVariableScopes(child);
+				List<Statement> statements = switchExpression.statements();
+				for(Statement switchStatement : statements) {
+					processStatement(cu, sourceFolder, filePath, child, switchStatement, javaFileContent);
+				}
+				switchExpressionComp = child;
+			}
 			StatementObject child = new StatementObject(cu, sourceFolder, filePath, returnStatement, parent.getDepth()+1, CodeElementType.RETURN_STATEMENT, container, activeVariableDeclarations, javaFileContent);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
+			if(switchExpressionComp != null) {
+				for(LambdaExpressionObject lambda : child.getLambdas()) {
+					for(AbstractStatement switchStatement : switchExpressionComp.getStatements()) {
+						if(switchStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_CASE) && lambda.getLocationInfo().startsAtTheEndLineOf(switchStatement.getLocationInfo())) {
+							lambda.setSwitchExpressionCase((StatementObject)switchStatement);
+							break;
+						}
+					}
+				}
+			}
 		}
 		else if(statement instanceof SynchronizedStatement) {
 			SynchronizedStatement synchronizedStatement = (SynchronizedStatement)statement;

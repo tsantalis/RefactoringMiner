@@ -858,8 +858,12 @@ public class StringBasedHeuristics {
 			else if(diff1.isEmpty() && diff2.isEmpty() && (commonPrefix.endsWith("=") || commonPrefix.matches(".*=\\s*\\z"))) {
 				return true;
 			}
-			else if(s1.replaceAll("\s", "").equals(s2.replaceAll("\s", ""))) {
-				return true;
+			else {
+				String replaceWhitespace1 = s1.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+				String replaceWhitespace2 = s2.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+				if(replaceWhitespace1.equals(replaceWhitespace2)) {
+					return true;
+				}
 			}
 		}
 		if(commonSuffix.equals(s1) && commonPrefix.isEmpty()) {

@@ -164,7 +164,7 @@ public class LocationInfo {
 		this.endOffset = tree.getEndPos();
 	}
 
-	public LocationInfo(String sourceFolder, String filePath, Swc4jSpan span, CodeElementType codeElementType) {
+	public LocationInfo(String sourceFolder, String filePath, Swc4jSpan span, CodeElementType codeElementType, String fileContent) {
 		this.sourceFolder = sourceFolder;
 		this.filePath = filePath;
 		this.codeElementType = codeElementType;
@@ -173,6 +173,15 @@ public class LocationInfo {
 		this.endOffset = span.getEnd();
 		this.startLine = span.getLine();
 		this.startColumn = span.getColumn();
+		//compute end-line
+		String text = fileContent.substring(this.startOffset, this.endOffset);
+		long lines = text.lines().count();
+		if(lines == 0) {
+			this.endLine = this.startLine;
+		}
+		else {
+			this.endLine = (int) (this.startLine + lines - 1);
+		}
 	}
 
 	public String getSourceFolder() {

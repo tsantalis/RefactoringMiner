@@ -262,7 +262,7 @@ public class StatementObject extends AbstractStatement {
 	public StatementObject(String sourceFolder, String filePath,
 			ISwc4jAstStmt statement, int depth, CodeElementType codeElementType,
 			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
-		super(new LocationInfo(sourceFolder, filePath, statement.getSpan(), codeElementType));
+		super(new LocationInfo(sourceFolder, filePath, statement.getSpan(), codeElementType, fileContent));
 		TypeScriptVisitor visitor = new TypeScriptVisitor(sourceFolder, filePath, container, activeVariableDeclarations, fileContent);
 		statement.visit(visitor);
 		this.variables = visitor.getVariables();

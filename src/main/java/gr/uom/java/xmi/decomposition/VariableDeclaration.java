@@ -863,7 +863,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	public VariableDeclaration(String sourceFolder, String filePath, Swc4jAstVarDeclarator fragment, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
-		this.locationInfo = new LocationInfo(sourceFolder, filePath, fragment.getSpan(), extractVariableDeclarationType(fragment));
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, fragment.getSpan(), extractVariableDeclarationType(fragment), fileContent);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		ISwc4jAstPat namePat = fragment.getName();
 		Swc4jAstTsTypeAnn typeAnnotation = extractTypeAnnotation(namePat);
@@ -889,7 +889,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	public VariableDeclaration(String sourceFolder, String filePath, Swc4jAstTsTypeAnn typeAnnotation, Swc4jAstBindingIdent fragment, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
-		this.locationInfo = new LocationInfo(sourceFolder, filePath, fragment.getSpan(), CodeElementType.VARIABLE_DECLARATION_EXPRESSION);
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, fragment.getSpan(), CodeElementType.VARIABLE_DECLARATION_EXPRESSION, fileContent);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		this.variableName = fragment.getId().getSym();
 		if(typeAnnotation != null) {

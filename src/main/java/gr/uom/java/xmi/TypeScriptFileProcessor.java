@@ -69,7 +69,7 @@ public class TypeScriptFileProcessor {
 				String sourceFolder = UMLAdapterUtil.extractSourceFolder(filePath);
 				int extensionLength = filePath.endsWith(".tsx") ? 4 : 3;
 				String moduleName = filePath.contains("/") ? filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length() - extensionLength) : filePath.substring(0, filePath.length() - extensionLength);
-				LocationInfo location = new LocationInfo(sourceFolder, filePath, module.getSpan(), CodeElementType.TYPE_DECLARATION);
+				LocationInfo location = new LocationInfo(sourceFolder, filePath, module.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);
 				List<UMLComment> commentList = extractComments(comments, sourceFolder, filePath, fileContent);
 				UMLClass moduleClass = new UMLClass(moduleName, "__module__", location, true, imports);
 				moduleClass.setModule(true);
@@ -106,10 +106,10 @@ public class TypeScriptFileProcessor {
 			for(Swc4jComment comment : list) {
 				LocationInfo locationInfo = null;
 				if(comment.getKind().equals(Swc4jCommentKind.Line)) {
-					locationInfo = new LocationInfo(sourceFolder, filePath, comment.getSpan(), CodeElementType.LINE_COMMENT);
+					locationInfo = new LocationInfo(sourceFolder, filePath, comment.getSpan(), CodeElementType.LINE_COMMENT, fileContent);
 				}
 				else if(comment.getKind().equals(Swc4jCommentKind.Block)) {
-					locationInfo = new LocationInfo(sourceFolder, filePath, comment.getSpan(), CodeElementType.BLOCK_COMMENT);
+					locationInfo = new LocationInfo(sourceFolder, filePath, comment.getSpan(), CodeElementType.BLOCK_COMMENT, fileContent);
 				}
 				if(locationInfo != null) {
 					int start = locationInfo.getStartOffset();
@@ -124,7 +124,7 @@ public class TypeScriptFileProcessor {
 	}
 
 	public static UMLOperation processFunctionDeclaration(String sourceFolder, String filePath, Swc4jAstFnDecl functionDecl, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className) {
-		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl.getSpan(), CodeElementType.METHOD_DECLARATION);
+		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(functionDecl.getIdent().getSym(), location, className);
 		operation.setVisibility(Visibility.PRIVATE);
 		Swc4jAstFunction function = functionDecl.getFunction();

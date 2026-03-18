@@ -6770,6 +6770,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
 			return false;
 		}
+		else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY) &&
+				statement1.getExpressions().size() > 1 && statement2.getExpressions().size() > 1) {
+			if(!statement1.getExpressions().get(0).getString().equals(statement2.getExpressions().get(0).getString()) &&
+					!statement1.getExpressions().get(1).getString().equals(statement2.getExpressions().get(1).getString())) {
+				return false;
+			}
+		}
 		List<String> bodyStringRepresentation1 = statement1.bodyStringRepresentation();
 		List<String> bodyStringRepresentation2 = statement2.bodyStringRepresentation();
 		int size1 = bodyStringRepresentation1.size();

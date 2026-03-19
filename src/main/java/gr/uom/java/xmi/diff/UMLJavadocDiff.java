@@ -690,6 +690,24 @@ public class UMLJavadocDiff {
 			deletedDocElements.removeAll(deletedToBeDeleted);
 			addedDocElements.removeAll(addedToBeDeleted);
 		}
+		//cluster remaining changes based on matched tags
+		UnmatchedDocElementClustering cluster = new UnmatchedDocElementClustering(deletedDocElements, addedDocElements);
+		if(cluster.isValidDecomposition()) {
+			for(Pair<List<UMLDocElement>, List<UMLDocElement>> pair : cluster.getList()) {
+				handleFormattingChanges(pair.getLeft(), pair.getRight(), deletedToBeDeleted, addedToBeDeleted);
+			}
+		}
+		else {
+			handleFormattingChanges(deletedDocElements, addedDocElements, deletedToBeDeleted, addedToBeDeleted);
+		}
+		if(commonDocElements.size() > commonDocElementsBefore) {
+			return true;
+		}
+		return false;
+	}
+
+	private void handleFormattingChanges(List<UMLDocElement> deletedDocElements, List<UMLDocElement> addedDocElements,
+			List<UMLDocElement> deletedToBeDeleted, List<UMLDocElement> addedToBeDeleted) {
 		//check if all deleted docElements match all added docElements
 		StringBuilder deletedSB = new StringBuilder();
 		List<String> deletedTokenSequence = new ArrayList<String>();
@@ -711,6 +729,19 @@ public class UMLJavadocDiff {
 			addedTokenSequence.addAll(splitToWords);
 			addedTokenSequenceMap.put(addedDocElement, splitToWords);
 		}
+		if(deletedTokenSequence.equals(addedTokenSequence)) {
+			//make all pair combinations
+			for(UMLDocElement deletedDocElement : deletedDocElements) {
+				for(UMLDocElement addedDocElement : addedDocElements) {
+					Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+					commonDocElements.add(pair);
+				}
+			}
+			if(deletedDocElements.size() >= 1 && addedDocElements.size() >= 1) {
+				manyToManyReformat = true;
+			}
+			return;
+		}
 		String deletedWithoutTags = Jsoup.parse(deletedSB.toString()).text();
 		String addedWithoutTags = Jsoup.parse(addedSB.toString()).text();
 		if(deletedSB.toString().replaceAll("\\s", "").replaceAll("\\*", "").equals(addedSB.toString().replaceAll("\\s", "").replaceAll("\\*", ""))) {
@@ -724,7 +755,7 @@ public class UMLJavadocDiff {
 			if(deletedDocElements.size() >= 1 && addedDocElements.size() >= 1) {
 				manyToManyReformat = true;
 			}
-			return true;
+			return;
 		}
 		else if(deletedWithoutTags.replaceAll("\\s", "").equals(addedWithoutTags.replaceAll("\\s", ""))) {
 			//make all pair combinations
@@ -737,7 +768,7 @@ public class UMLJavadocDiff {
 			if(deletedDocElements.size() >= 1 && addedDocElements.size() >= 1) {
 				manyToManyReformat = true;
 			}
-			return true;
+			return;
 		}
 		else if(normalizedEditDistance(deletedWithoutTags.replaceAll("\\s", ""), addedWithoutTags.replaceAll("\\s", "")) < 0.1) {
 			//make all pair combinations
@@ -750,7 +781,7 @@ public class UMLJavadocDiff {
 			if(deletedDocElements.size() >= 1 && addedDocElements.size() >= 1) {
 				manyToManyReformat = true;
 			}
-			return true;
+			return;
 		}
 		else {
 			//match doc elements that one contains a subsequence of the other
@@ -938,10 +969,6 @@ public class UMLJavadocDiff {
 		}
 		this.deletedDocElements.addAll(deletedDocElements);
 		this.addedDocElements.addAll(addedDocElements);
-		if(commonDocElements.size() > commonDocElementsBefore) {
-			return true;
-		}
-		return false;
 	}
 
 	private double normalizedEditDistance(String s1, String s2) {
@@ -1020,6 +1047,53 @@ public class UMLJavadocDiff {
 				words.add(word);
 		}
 		return words;
+	}
+
+	private class UnmatchedDocElementClustering {
+		private List<Pair<List<UMLDocElement>, List<UMLDocElement>>> list = new ArrayList<>();
+		private boolean validDecomposition;
+		
+		public UnmatchedDocElementClustering(List<UMLDocElement> deletedDocElements, List<UMLDocElement> addedDocElements) {
+			List<UMLDocElement> newDeletedDocElements = new ArrayList<>(deletedDocElements);
+			List<UMLDocElement> newAddedDocElements = new ArrayList<>(addedDocElements);
+			for(int i=0; i<commonDocElements.size(); i++) {
+				Pair<UMLDocElement, UMLDocElement> pairI = commonDocElements.get(i);
+				for(int j=i+1; j<commonDocElements.size(); j++) {
+					Pair<UMLDocElement, UMLDocElement> pairJ = commonDocElements.get(j);
+					List<UMLDocElement> leftGroup = new ArrayList<>();
+					for(UMLDocElement deletedDocElement : newDeletedDocElements) {
+						if(deletedDocElement.isBetween(pairI.getLeft(), pairJ.getLeft())) {
+							leftGroup.add(deletedDocElement);
+						}
+					}
+					List<UMLDocElement> rightGroup = new ArrayList<>();
+					for(UMLDocElement addedDocElement : newAddedDocElements) {
+						if(addedDocElement.isBetween(pairI.getRight(), pairJ.getRight())) {
+							rightGroup.add(addedDocElement);
+						}
+					}
+					if(leftGroup.size() > 0 && rightGroup.size() > 0) {
+						list.add(Pair.of(leftGroup, rightGroup));
+						for(UMLDocElement left : leftGroup)
+							newDeletedDocElements.remove(left);
+						for(UMLDocElement right : rightGroup)
+							newAddedDocElements.remove(right);
+						break;
+					}
+				}
+			}
+			if(newDeletedDocElements.isEmpty() && newAddedDocElements.isEmpty()) {
+				validDecomposition = true;
+			}
+		}
+
+		public List<Pair<List<UMLDocElement>, List<UMLDocElement>>> getList() {
+			return list;
+		}
+
+		public boolean isValidDecomposition() {
+			return validDecomposition;
+		}
 	}
 
 	public UMLJavadoc getJavadocBefore() {

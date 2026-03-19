@@ -152,6 +152,32 @@ public class TestJavadocDiff {
 
 	@ParameterizedTest
 	@CsvSource({
+		"BracketedPattern-v1.txt, BracketedPattern-v2.txt, src/main/java/org/jabref/logic/citationkeypattern/BracketedPattern.java, jabRef-BracketedPattern-7469.txt",
+	})
+	public void testMethodJavadocMappings(String filePath1, String filePath2, String qualifiedName, String testResultFileName) throws Exception {
+		final List<String> actual = new ArrayList<>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + filePath1));
+		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + filePath2));
+		fileContentsBefore.put(qualifiedName, contentsV1);
+		fileContentsCurrent.put(qualifiedName, contentsV2);
+		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
+		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
+
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				javadocInfo(mapper, actual);
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@ParameterizedTest
+	@CsvSource({
 		"https://github.com/jOOQ/jOOQ.git, 58a4e74d28073e7c6f15d1f225ac1c2fd9aa4357, org.jooq.tools.Convert.ConvertAll, jOOQ-58a4e74d28073e7c6f15d1f225ac1c2fd9aa4357-comments.txt",
 		"https://github.com/thymeleaf/thymeleaf.git, 378ba37750a9cb1b19a6db434dfa59308f721ea6, org.thymeleaf.templateparser.reader.BlockAwareReader, thymeleaf-378ba37750a9cb1b19a6db434dfa59308f721ea6-comments.txt",
 		"https://github.com/eclipse-vertx/vert.x.git, 32a8c9086040fd6d6fa11a214570ee4f75a4301f, io.vertx.core.http.impl.HttpServerImpl.ServerHandler, vertx-32a8c9086040fd6d6fa11a214570ee4f75a4301f-comments.txt",

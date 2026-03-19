@@ -1,0 +1,469 @@
+public BracketedPattern() -> public BracketedPattern()
+public BracketedPattern(pattern String) -> public BracketedPattern(pattern String)
+public toString() : String -> public toString() : String
+public expand(bibentry BibEntry) : String -> public expand(bibentry BibEntry) : String
+public expand(bibentry BibEntry, database BibDatabase) : String -> public expand(bibentry BibEntry, database BibDatabase) : String
+line range:143-143==line range:185-185
+line range:143-143==line range:185-185
+line range:144-144==line range:186-186
+line range:144-144==line range:186-186
+line range:145-145==line range:187-187
+line range:141-141==line range:182-182
+line range:141-141==line range:183-183
+public expand(bibentry BibEntry, keywordDelimiter Character, database BibDatabase) : String -> public expand(bibentry BibEntry, keywordDelimiter Character, database BibDatabase) : String
+line range:154-154==line range:196-196
+line range:156-156==line range:198-198
+line range:156-156==line range:198-198
+line range:157-157==line range:199-199
+line range:157-157==line range:199-199
+line range:158-158==line range:200-200
+line range:158-158==line range:200-200
+line range:159-159==line range:201-201
+public expandBrackets(pattern String, keywordDelimiter Character, entry BibEntry, database BibDatabase) : String -> public expandBrackets(pattern String, keywordDelimiter Character, entry BibEntry, database BibDatabase) : String
+line range:167-167==line range:209-209
+line range:169-169==line range:211-211
+line range:169-169==line range:211-211
+line range:170-170==line range:212-212
+line range:170-170==line range:212-212
+line range:171-171==line range:213-213
+line range:171-171==line range:213-213
+line range:172-172==line range:214-214
+line range:172-172==line range:214-214
+line range:173-173==line range:215-215
+public expandBracketContent(keywordDelimiter Character, entry BibEntry, database BibDatabase) : Function<String,String> -> public expandBracketContent(keywordDelimiter Character, entry BibEntry, database BibDatabase) : Function<String,String>
+line range:182-182==line range:224-224
+line range:183-183==line range:225-225
+line range:185-185==line range:227-227
+line range:185-185==line range:227-227
+line range:186-186==line range:228-228
+line range:186-186==line range:228-228
+line range:186-186==line range:228-228
+line range:186-186==line range:228-228
+line range:187-187==line range:229-229
+line range:187-187==line range:229-229
+line range:187-187==line range:229-229
+line range:187-187==line range:229-229
+line range:188-188==line range:230-230
+public expandBrackets(pattern String, bracketContentHandler Function<String,String>) : String -> public expandBrackets(pattern String, bracketContentHandler Function<String,String>) : String
+line range:206-206==line range:248-248
+line range:208-208==line range:250-250
+line range:208-208==line range:250-250
+line range:211-211==line range:256-256
+line range:209-209==line range:252-252
+line range:209-209==line range:252-252
+line range:209-209==line range:253-253
+line range:209-209==line range:254-254
+line range:210-210==line range:252-252
+line range:210-210==line range:253-253
+line range:210-210==line range:254-254
+private contentBetweenBrackets(tokenizer StringTokenizer, pattern String) : String -> private contentBetweenBrackets(tokenizer StringTokenizer, pattern String) : String
+line range:241-241==line range:286-286
+line range:242-242==line range:287-287
+line range:242-242==line range:287-287
+line range:243-243==line range:288-288
+line range:243-243==line range:288-288
+line range:242-242==line range:287-287
+line range:243-243==line range:288-288
+line range:245-245==line range:290-290
+line range:245-245==line range:290-290
+line range:245-245==line range:290-290
+line range:245-245==line range:290-290
+line range:246-246==line range:291-291
+line range:246-246==line range:291-291
+line range:247-247==line range:292-292
+private appendQuote(stringBuilder StringBuilder, tokenizer StringTokenizer) : void -> private appendQuote(stringBuilder StringBuilder, tokenizer StringTokenizer) : void
+line range:272-272==line range:317-317
+line range:273-273==line range:318-318
+line range:273-273==line range:318-318
+line range:274-274==line range:319-319
+line range:273-273==line range:318-318
+line range:276-276==line range:321-321
+line range:276-276==line range:321-321
+line range:277-277==line range:322-322
+line range:277-277==line range:322-322
+public getFieldValue(entry BibEntry, pattern String, keywordDelimiter Character, database BibDatabase) : String -> public getFieldValue(entry BibEntry, pattern String, keywordDelimiter Character, database BibDatabase) : String
+line range:289-289==line range:334-334
+line range:291-291==line range:336-336
+line range:291-291==line range:336-336
+line range:292-292==line range:337-337
+line range:292-292==line range:337-337
+line range:293-293==line range:338-338
+line range:293-293==line range:338-338
+line range:294-294==line range:339-339
+line range:294-294==line range:339-339
+line range:295-295==line range:340-340
+private createAuthorList(unparsedAuthors String) : AuthorList -> private createAuthorList(unparsedAuthors String) : AuthorList
+line range:487-487==line range:532-532
+line range:487-487==line range:532-532
+line range:487-487==line range:532-532
+line range:488-488==line range:533-533
+line range:487-487==line range:532-532
+line range:487-487==line range:532-532
+line range:490-490==line range:535-535
+line range:490-490==line range:535-535
+line range:491-491==line range:536-536
+line range:491-491==line range:536-536
+line range:491-491==line range:536-536
+private isInstitution(author Author) : boolean -> private isInstitution(author Author) : boolean
+line range:514-514==line range:559-559
+line range:514-514==line range:559-559
+line range:514-514==line range:559-559
+line range:516-516==line range:561-561
+line range:516-516==line range:561-561
+line range:517-517==line range:563-563
+line range:517-517==line range:564-564
+package applyModifiers(label String, parts List<String>, offset int) : String -> package applyModifiers(label String, parts List<String>, offset int) : String
+line range:526-526==line range:576-576
+line range:528-528==line range:578-578
+line range:528-528==line range:578-578
+line range:529-529==line range:579-579
+line range:529-529==line range:579-579
+line range:530-530==line range:580-580
+line range:530-530==line range:580-580
+line range:531-531==line range:581-581
+public getTitleWords(number int, title String) : String -> public getTitleWords(number int, title String) : String
+line range:568-568==line range:618-618
+private formatTitle(title String) : String -> private formatTitle(title String) : String
+line range:575-575==line range:625-625
+public getCamelizedTitle(title String) : String -> public getCamelizedTitle(title String) : String
+line range:609-609==line range:659-659
+private camelizeTitle(title String) : String -> private camelizeTitle(title String) : String
+public camelizeSignificantWordsInTitle(title String) : String -> public camelizeSignificantWordsInTitle(title String) : String
+line range:637-637==line range:687-687
+public removeSmallWords(title String) : String -> public removeSmallWords(title String) : String
+private getTitleWordsWithSpaces(number int, title String) : String -> private getTitleWordsWithSpaces(number int, title String) : String
+private keepLettersAndDigitsOnly(in String) : String -> private keepLettersAndDigitsOnly(in String) : String
+private firstAuthor(authorList AuthorList) : String -> private firstAuthor(authorList AuthorList) : String
+line range:693-693==line range:743-743
+line range:695-695==line range:745-745
+line range:695-695==line range:745-745
+line range:695-695==line range:745-745
+line range:696-696==line range:746-746
+line range:697-697==line range:747-747
+private firstAuthorForenameInitials(authorList AuthorList) : String -> private firstAuthorForenameInitials(authorList AuthorList) : String
+line range:706-706==line range:756-756
+line range:708-708==line range:758-758
+line range:708-708==line range:758-758
+line range:708-708==line range:758-758
+line range:709-709==line range:759-759
+line range:710-710==line range:760-760
+private firstAuthorVonAndLast(authorList AuthorList) : String -> private firstAuthorVonAndLast(authorList AuthorList) : String
+line range:721-721==line range:771-771
+line range:723-723==line range:773-773
+line range:723-723==line range:773-773
+line range:723-723==line range:773-773
+line range:724-724==line range:774-774
+line range:725-725==line range:775-775
+private lastAuthor(authorList AuthorList) : String -> private lastAuthor(authorList AuthorList) : String
+line range:733-733==line range:783-783
+line range:735-735==line range:785-785
+line range:735-735==line range:785-785
+line range:735-735==line range:785-785
+line range:736-736==line range:786-786
+private lastAuthorForenameInitials(authorList AuthorList) : String -> private lastAuthorForenameInitials(authorList AuthorList) : String
+line range:746-746==line range:796-796
+line range:748-748==line range:798-798
+line range:748-748==line range:798-798
+line range:748-748==line range:798-798
+line range:749-749==line range:799-799
+line range:750-750==line range:800-800
+private allAuthors(authorList AuthorList) : String -> private allAuthors(authorList AuthorList) : String
+line range:761-761==line range:811-811
+line range:763-763==line range:813-813
+line range:763-763==line range:813-813
+line range:763-763==line range:813-813
+line range:764-764==line range:814-814
+private authorsAlpha(authorList AuthorList) : String -> private authorsAlpha(authorList AuthorList) : String
+line range:771-771==line range:821-821
+line range:773-773==line range:823-823
+line range:773-773==line range:823-823
+line range:773-773==line range:823-823
+line range:774-774==line range:824-824
+private joinAuthorsOnLastName(authorList AuthorList, maxAuthors int, delimiter String, suffix String) : String -> private joinAuthorsOnLastName(authorList AuthorList, maxAuthors int, delimiter String, suffix String) : String
+line range:812-812==line range:862-862
+line range:813-813==line range:863-863
+line range:815-815==line range:865-865
+line range:815-815==line range:865-865
+line range:816-816==line range:866-866
+line range:816-816==line range:866-866
+line range:817-817==line range:867-867
+line range:817-817==line range:867-867
+line range:818-818==line range:868-868
+line range:818-818==line range:868-868
+line range:819-819==line range:869-869
+line range:820-820==line range:870-870
+private nAuthors(authorList AuthorList, n int) : String -> private nAuthors(authorList AuthorList, n int) : String
+line range:830-830==line range:880-880
+line range:832-832==line range:882-882
+line range:832-832==line range:882-882
+line range:832-832==line range:882-882
+line range:833-833==line range:883-883
+line range:833-833==line range:883-883
+line range:834-834==line range:884-884
+private oneAuthorPlusInitials(authorList AuthorList) : String -> private oneAuthorPlusInitials(authorList AuthorList) : String
+line range:841-841==line range:891-891
+line range:842-842==line range:892-892
+line range:844-844==line range:894-894
+line range:844-844==line range:894-894
+line range:844-844==line range:894-894
+line range:845-845==line range:895-895
+private authAuthEa(authorList AuthorList) : String -> private authAuthEa(authorList AuthorList) : String
+line range:862-862==line range:912-912
+line range:863-863==line range:913-913
+line range:864-864==line range:914-914
+line range:865-865==line range:915-915
+line range:866-866==line range:916-916
+line range:867-867==line range:917-917
+line range:868-868==line range:918-918
+line range:869-869==line range:919-919
+line range:870-870==line range:920-920
+line range:871-871==line range:921-921
+private authEtal(authorList AuthorList, delim String, append String) : String -> private authEtal(authorList AuthorList, delim String, append String) : String
+line range:878-878==line range:928-928
+line range:879-879==line range:929-929
+line range:880-880==line range:930-930
+line range:881-881==line range:931-931
+line range:882-882==line range:932-932
+line range:883-883==line range:933-933
+line range:884-884==line range:934-934
+line range:885-885==line range:935-935
+line range:886-886==line range:936-936
+line range:887-887==line range:937-937
+line range:888-888==line range:938-938
+line range:889-889==line range:939-939
+line range:890-890==line range:940-940
+line range:891-891==line range:941-941
+line range:892-892==line range:942-942
+line range:893-893==line range:943-943
+line range:894-894==line range:944-944
+line range:895-895==line range:945-945
+line range:896-896==line range:946-946
+line range:897-897==line range:947-947
+private authNofMth(authorList AuthorList, n int, m int) : String -> private authNofMth(authorList AuthorList, n int, m int) : String
+line range:908-908==line range:958-958
+private authN(authorList AuthorList, num int) : String -> private authN(authorList AuthorList, num int) : String
+line range:924-924==line range:974-974
+private authshort(authorList AuthorList) : String -> private authshort(authorList AuthorList) : String
+line range:931-931==line range:981-981
+line range:932-932==line range:982-982
+line range:933-933==line range:983-983
+line range:934-934==line range:984-984
+line range:935-935==line range:985-985
+line range:936-936==line range:986-986
+line range:937-937==line range:987-987
+line range:938-938==line range:988-988
+line range:939-939==line range:989-989
+line range:940-940==line range:990-990
+line range:941-941==line range:991-991
+line range:942-942==line range:992-992
+line range:943-943==line range:993-993
+private authIniN(authorList AuthorList, n int) : String -> private authIniN(authorList AuthorList, n int) : String
+line range:964-964==line range:1014-1014
+line range:965-965==line range:1015-1015
+line range:966-966==line range:1016-1016
+line range:967-967==line range:1017-1017
+line range:968-968==line range:1018-1018
+line range:969-969==line range:1019-1019
+line range:970-970==line range:1020-1020
+line range:971-971==line range:1021-1021
+line range:972-972==line range:1022-1022
+line range:973-973==line range:1023-1023
+line range:974-974==line range:1024-1024
+line range:975-975==line range:1025-1025
+line range:976-976==line range:1026-1026
+line range:977-977==line range:1027-1027
+line range:978-978==line range:1028-1028
+line range:979-979==line range:1029-1029
+line range:980-980==line range:1030-1030
+line range:981-981==line range:1031-1031
+line range:982-982==line range:1032-1032
+line range:984-984==line range:1034-1034
+line range:984-984==line range:1034-1034
+line range:985-985==line range:1035-1035
+line range:985-985==line range:1035-1035
+line range:986-986==line range:1036-1036
+public firstPage(pages String) : String -> public firstPage(pages String) : String
+line range:1013-1013==line range:1063-1063
+line range:1015-1015==line range:1065-1065
+line range:1015-1015==line range:1065-1065
+line range:1016-1016==line range:1066-1066
+line range:1017-1017==line range:1067-1067
+line range:1017-1017==line range:1067-1067
+public pagePrefix(pages String) : String -> public pagePrefix(pages String) : String
+line range:1039-1039==line range:1089-1089
+line range:1041-1041==line range:1091-1091
+line range:1041-1041==line range:1091-1091
+line range:1042-1042==line range:1092-1092
+line range:1043-1043==line range:1093-1093
+line range:1043-1043==line range:1093-1093
+public lastPage(pages String) : String -> public lastPage(pages String) : String
+line range:1054-1054==line range:1104-1104
+line range:1056-1056==line range:1106-1106
+line range:1056-1056==line range:1106-1106
+line range:1057-1057==line range:1107-1107
+line range:1058-1058==line range:1108-1108
+line range:1058-1058==line range:1108-1108
+protected parseFieldAndModifiers(arg String) : List<String> -> protected parseFieldAndModifiers(arg String) : List<String>
+line range:1080-1080==line range:1131-1131
+line range:1080-1080==line range:1131-1131
+line range:1081-1081==line range:1132-1132
+line range:1078-1078==line range:1129-1129
+line range:1077-1077==line range:1127-1127
+line range:1077-1077==line range:1128-1128
+private generateInstitutionKey(content String) : String -> private generateInstitutionKey(content String) : String
+line range:1174-1174==line range:1249-1249
+line range:1174-1174==line range:1249-1249
+line range:1175-1175==line range:1250-1250
+line range:1176-1176==line range:1251-1251
+line range:1177-1177==line range:1252-1252
+line range:1178-1178==line range:1253-1253
+line range:1179-1179==line range:1254-1254
+line range:1118-1118==line range:1169-1169
+line range:1121-1121==line range:1174-1174
+line range:1123-1123==line range:1176-1176
+line range:1126-1126==line range:1182-1182
+line range:1127-1127==line range:1183-1183
+line range:1129-1129==line range:1185-1185
+line range:1131-1131==line range:1188-1188
+line range:1132-1132==line range:1189-1189
+line range:1134-1134==line range:1191-1191
+line range:1137-1137==line range:1194-1194
+line range:1139-1139==line range:1196-1196
+line range:1143-1143==line range:1206-1206
+line range:1144-1144==line range:1207-1207
+line range:1145-1145==line range:1208-1208
+line range:1146-1146==line range:1209-1209
+line range:1151-1151==line range:1221-1221
+line range:1152-1152==line range:1222-1222
+line range:1156-1156==line range:1231-1231
+line range:1157-1157==line range:1232-1232
+line range:1158-1158==line range:1233-1233
+line range:1159-1159==line range:1234-1234
+line range:1160-1160==line range:1235-1235
+line range:1161-1161==line range:1236-1236
+line range:1162-1162==line range:1237-1237
+line range:1163-1163==line range:1238-1238
+line range:1164-1164==line range:1239-1239
+line range:1165-1165==line range:1240-1240
+line range:1166-1166==line range:1241-1241
+line range:1167-1167==line range:1242-1242
+line range:1168-1168==line range:1243-1243
+line range:1169-1169==line range:1244-1244
+line range:1170-1170==line range:1245-1245
+line range:1171-1171==line range:1246-1246
+line range:1172-1172==line range:1247-1247
+line range:1119-1119==line range:1170-1170
+line range:1119-1119==line range:1171-1171
+line range:1119-1119==line range:1172-1172
+line range:1119-1119==line range:1173-1173
+line range:1120-1120==line range:1170-1170
+line range:1120-1120==line range:1171-1171
+line range:1120-1120==line range:1172-1172
+line range:1120-1120==line range:1173-1173
+line range:1124-1124==line range:1177-1177
+line range:1124-1124==line range:1179-1179
+line range:1124-1124==line range:1180-1180
+line range:1124-1124==line range:1181-1181
+line range:1125-1125==line range:1177-1177
+line range:1125-1125==line range:1179-1179
+line range:1125-1125==line range:1180-1180
+line range:1125-1125==line range:1181-1181
+line range:1130-1130==line range:1186-1186
+line range:1130-1130==line range:1187-1187
+line range:1135-1135==line range:1192-1192
+line range:1135-1135==line range:1193-1193
+line range:1136-1136==line range:1192-1192
+line range:1136-1136==line range:1193-1193
+line range:1140-1140==line range:1197-1197
+line range:1140-1140==line range:1198-1198
+line range:1140-1140==line range:1200-1200
+line range:1140-1140==line range:1202-1202
+line range:1140-1140==line range:1203-1203
+line range:1140-1140==line range:1204-1204
+line range:1141-1141==line range:1197-1197
+line range:1141-1141==line range:1198-1198
+line range:1141-1141==line range:1200-1200
+line range:1141-1141==line range:1202-1202
+line range:1141-1141==line range:1203-1203
+line range:1141-1141==line range:1204-1204
+line range:1142-1142==line range:1197-1197
+line range:1142-1142==line range:1198-1198
+line range:1142-1142==line range:1200-1200
+line range:1142-1142==line range:1202-1202
+line range:1142-1142==line range:1203-1203
+line range:1142-1142==line range:1204-1204
+line range:1147-1147==line range:1210-1210
+line range:1147-1147==line range:1211-1211
+line range:1147-1147==line range:1212-1212
+line range:1147-1147==line range:1213-1213
+line range:1147-1147==line range:1214-1214
+line range:1147-1147==line range:1215-1215
+line range:1147-1147==line range:1216-1216
+line range:1147-1147==line range:1217-1217
+line range:1147-1147==line range:1218-1218
+line range:1147-1147==line range:1219-1219
+line range:1147-1147==line range:1220-1220
+line range:1148-1148==line range:1210-1210
+line range:1148-1148==line range:1211-1211
+line range:1148-1148==line range:1212-1212
+line range:1148-1148==line range:1213-1213
+line range:1148-1148==line range:1214-1214
+line range:1148-1148==line range:1215-1215
+line range:1148-1148==line range:1216-1216
+line range:1148-1148==line range:1217-1217
+line range:1148-1148==line range:1218-1218
+line range:1148-1148==line range:1219-1219
+line range:1148-1148==line range:1220-1220
+line range:1149-1149==line range:1210-1210
+line range:1149-1149==line range:1211-1211
+line range:1149-1149==line range:1212-1212
+line range:1149-1149==line range:1213-1213
+line range:1149-1149==line range:1214-1214
+line range:1149-1149==line range:1215-1215
+line range:1149-1149==line range:1216-1216
+line range:1149-1149==line range:1217-1217
+line range:1149-1149==line range:1218-1218
+line range:1149-1149==line range:1219-1219
+line range:1149-1149==line range:1220-1220
+line range:1150-1150==line range:1210-1210
+line range:1150-1150==line range:1211-1211
+line range:1150-1150==line range:1212-1212
+line range:1150-1150==line range:1213-1213
+line range:1150-1150==line range:1214-1214
+line range:1150-1150==line range:1215-1215
+line range:1150-1150==line range:1216-1216
+line range:1150-1150==line range:1217-1217
+line range:1150-1150==line range:1218-1218
+line range:1150-1150==line range:1219-1219
+line range:1150-1150==line range:1220-1220
+line range:1153-1153==line range:1223-1223
+line range:1153-1153==line range:1225-1225
+line range:1153-1153==line range:1226-1226
+line range:1153-1153==line range:1227-1227
+line range:1153-1153==line range:1228-1228
+line range:1153-1153==line range:1229-1229
+line range:1154-1154==line range:1223-1223
+line range:1154-1154==line range:1225-1225
+line range:1154-1154==line range:1226-1226
+line range:1154-1154==line range:1227-1227
+line range:1154-1154==line range:1228-1228
+line range:1154-1154==line range:1229-1229
+line range:1155-1155==line range:1223-1223
+line range:1155-1155==line range:1225-1225
+line range:1155-1155==line range:1226-1226
+line range:1155-1155==line range:1227-1227
+line range:1155-1155==line range:1228-1228
+line range:1155-1155==line range:1229-1229
+private noOtherInstitutionKeyWord(word String) : boolean -> private noOtherInstitutionKeyWord(word String) : boolean
+line range:1277-1277==line range:1352-1352
+line range:1277-1277==line range:1352-1352
+line range:1278-1278==line range:1353-1353
+line range:1277-1277==line range:1352-1352
+line range:1280-1280==line range:1355-1355
+line range:1280-1280==line range:1355-1355
+private getValidInstitutionNameParts(name String) : List<String> -> private getValidInstitutionNameParts(name String) : List<String>
+public findTypes(nameParts List<String>) : EnumSet<Institution> -> public findTypes(nameParts List<String>) : EnumSet<Institution>
+line range:93-93==line range:134-134
+line range:95-95==line range:136-136
+line range:95-95==line range:136-136
+line range:96-96==line range:137-137

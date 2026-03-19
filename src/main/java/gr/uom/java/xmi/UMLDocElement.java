@@ -89,4 +89,10 @@ public class UMLDocElement implements LocationInfoProvider {
 	public boolean isHTMLTag() {
 		return text.startsWith("<") && text.endsWith(">");
 	}
+
+	public boolean isBetween(UMLDocElement start, UMLDocElement end) {
+		if(start.getLocationInfo().before(this.locationInfo) && this.locationInfo.before(end.getLocationInfo()))
+			return true;
+		return false;
+	}
 }

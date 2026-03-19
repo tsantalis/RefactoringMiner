@@ -42,6 +42,7 @@ import org.jetbrains.kotlin.psi.KtThisExpression;
 import org.jetbrains.kotlin.psi.KtTypeReference;
 import org.jetbrains.kotlin.psi.KtUserType;
 import org.jetbrains.kotlin.psi.KtValueArgument;
+import org.jetbrains.kotlin.psi.KtVariableDeclaration;
 import org.jetbrains.kotlin.psi.KtVisitor;
 import org.jetbrains.kotlin.psi.ValueArgument;
 
@@ -143,6 +144,8 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 			this.processLabeledExpression(labeledExpression, data);
 		} else if (expression instanceof KtDestructuringDeclaration destructuringDeclaration) {
 			this.processDestructuringDeclaration(destructuringDeclaration, data);
+		} else if (expression instanceof KtVariableDeclaration variableDeclaration) {
+			this.processVariableDeclaration(variableDeclaration, data);
 		}
 		return super.visitExpression(expression, data);
 	}
@@ -205,6 +208,13 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 	public Object visitSuperTypeEntry(KtSuperTypeEntry entry, Object data) {
 		visitTypeReference(entry.getTypeReference(), data);
 		return super.visitSuperTypeEntry(entry, data);
+	}
+
+	private void processVariableDeclaration(KtVariableDeclaration decl, Object data) {
+		KtExpression initializer = decl.getInitializer();
+		if(initializer != null) {
+			this.visitExpression(initializer, data);
+		}
 	}
 
 	private void processDestructuringDeclaration(KtDestructuringDeclaration decl, Object data) {

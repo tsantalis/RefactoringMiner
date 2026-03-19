@@ -9759,4 +9759,69 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 1160052,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "a4d5860e9255bf1bcf83f8a9956d2b0d8a162b9b",
+    "url": "https://github.com/asyml/texar/commit/a4d5860e9255bf1bcf83f8a9956d2b0d8a162b9b",
+    "author": "ZhitingHu",
+    "time": "3/19/18 01:53 AM",
+    "refactorings": [{
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected _shuffle_dataset(dataset, hparams, dataset_files) from class data.data.mono_text_data.MonoTextData to protected _shuffle_dataset(dataset, hparams, dataset_files) from class data.data.text_data_base.TextDataBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected _make_batch(dataset, hparams, element_length_func) from class data.data.mono_text_data.MonoTextData to protected _make_batch(dataset, hparams, element_length_func) from class data.data.text_data_base.TextDataBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter length_inc in method protected _run_and_test(hparams, test_batch_size, length_inc) from class data.data.text_data_test.MonoTextDataTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable other_trans to tgt_trans in method protected _perform_other_transformations(dataset) from class data.data.paired_text_data.PairedTextData",
+        "comment": "<p>Two potential matches for&nbsp;other_trans:&nbsp;tgt_trans or src_trans</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable other_trans_hparams to src_trans_hparams in method protected _perform_other_transformations(dataset) from class data.data.paired_text_data.PairedTextData",
+        "comment": "<p>Two potential matches for&nbsp;other_trans_hparams:&nbsp;src_trans_hparams or&nbsp;tgt_trans_hparams</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Move Method",
+        "description": "Move Method protected _perform_other_transformations(dataset) from class data.data.mono_text_data.MonoTextData to protected _perform_other_transformations(dataset) from class data.data.paired_text_data.PairedTextData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter data to text_data in method protected _transform(x, text_data) from class data.data.text_data_test.MonoTextDataTest.test_other_transformations",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter dataset in method protected _process_dataset(dataset) from class data.data.mono_text_data.MonoTextData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

@@ -1456,6 +1456,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			leaves1.remove(defaultExpression1);
+			updateNonMappedLeavesT1(leaves1);
+			leaves2.remove(defaultExpression2);
+			updateNonMappedLeavesT2(leaves2);
+			nonMappedInnerNodesT1.addAll(innerNodes1);
+			nonMappedInnerNodesT2.addAll(innerNodes2);
 		}
 		if(defaultExpression1 != null && body2 != null) {
 			List<AbstractCodeFragment> leaves1 = new ArrayList<AbstractCodeFragment>();
@@ -3554,7 +3560,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Set<CompositeStatementObject> addedInnerNodes2 = new LinkedHashSet<CompositeStatementObject>();
 			for(AbstractCodeFragment statement : new ArrayList<>(leaves2)) {
 				expandAnonymousAndLambdas(statement, leaves2, innerNodes2, addedLeaves2, addedInnerNodes2, anonymousClassList2(), codeFragmentOperationMap2, container2, false);
-				if(LANG2.equals(Constants.KOTLIN)) {
+				if(LANG2.equals(Constants.KOTLIN) || LANG2.equals(Constants.TYPESCRIPT)) {
 					for(LambdaExpressionObject lambda : statement.getLambdas()) {
 						expandLambda(lambda, leaves2, innerNodes2, addedLeaves2, addedInnerNodes2, codeFragmentOperationMap2, container2, true);
 					}

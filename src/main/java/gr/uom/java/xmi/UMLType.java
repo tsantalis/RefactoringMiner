@@ -50,6 +50,7 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsArrayType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsConditionalType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsFnType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsImportType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIndexedAccessType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsKeywordType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsLitType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsPropertySignature;
@@ -691,6 +692,11 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 			}
 			UMLType leafType = extractTypeObject("typeof " + ref);
 			return leafType;
+		}
+		else if(type instanceof Swc4jAstTsIndexedAccessType indexedAccessType) {
+			ISwc4jAstTsType objectType = indexedAccessType.getObjType();
+			UMLType umlType = extractTypeObject(objectType, sourceFolder, filePath, fileContent);
+			return umlType;
 		}
 		//TODO this should return null, when all type kinds are supported
 		return new InferredType();

@@ -47,6 +47,8 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnonymousClass;
+import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
@@ -186,27 +188,45 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		}
 	}
 
-	public LambdaExpressionObject(String sourceFolder, String filePath, Swc4jAstArrowExpr arrowExpression, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+	public LambdaExpressionObject(String sourceFolder, String filePath, Swc4jAstArrowExpr arrowExpression, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
 		this.owner = owner;
 		this.asString = fileContent.substring(arrowExpression.getSpan().getStart(), arrowExpression.getSpan().getEnd());
 		this.locationInfo = new LocationInfo(sourceFolder, filePath, arrowExpression.getSpan(), CodeElementType.LAMBDA_EXPRESSION, fileContent);
 		List<ISwc4jAstPat> params = arrowExpression.getParams();
 		for(ISwc4jAstPat param : params) {
 			List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(param);
+			List<UMLAttribute> attributes = new ArrayList<>();
 			Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(param);
+			if(typeAnnotation != null) {
+				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation.getTypeAnn(), 0);
+				for(UMLClass typeDeclaration : typeDeclarations) {
+					if(type.getClassType().equals(typeDeclaration.getNonQualifiedName())) {
+						attributes = new ArrayList<>(typeDeclaration.getAttributes());
+						break;
+					}
+				}
+			}
+			int index = 0;
 			for(Swc4jAstBindingIdent identifier : identifiers) {
-				VariableDeclaration parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, this, activeVariableDeclarations, fileContent);
+				VariableDeclaration parameter = null;
+				if(identifiers.size() == attributes.size()) {
+					parameter = new VariableDeclaration(sourceFolder, filePath, attributes.get(index).getType(), identifier, this, activeVariableDeclarations, fileContent);
+				}
+				else {
+					parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, this, activeVariableDeclarations, fileContent);
+				}
 				this.parameters.add(parameter);
 				if(parameter.getType() != null) {
 					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
 					umlParameter.setVariableDeclaration(parameter);
 					umlParameters.add(umlParameter);
 				}
+				index++;
 			}
 		}
 		ISwc4jAstBlockStmtOrExpr body = arrowExpression.getBody();
 		if(body instanceof ISwc4jAstExpr expr) {
-			this.expression = new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, fileContent);
+			this.expression = new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, fileContent, typeDeclarations);
 			this.expression.setLambdaOwner(this);
 			for(VariableDeclaration parameter : parameters) {
 				parameter.addStatementInScope(expression, false);

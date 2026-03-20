@@ -20,6 +20,7 @@ import extension.ast.visitor.LangVisitor;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLClass;
 
 public class AbstractExpression extends AbstractCodeFragment {
 	
@@ -167,9 +168,9 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.lambdaOwner = null;
 	}
 
-	public AbstractExpression(String sourceFolder, String filePath, ISwc4jAst expression, CodeElementType codeElementType, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+	public AbstractExpression(String sourceFolder, String filePath, ISwc4jAst expression, CodeElementType codeElementType, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
 		super(new LocationInfo(sourceFolder, filePath, expression.getSpan(), codeElementType, fileContent));
-		TypeScriptVisitor visitor = new TypeScriptVisitor(sourceFolder, filePath, container, activeVariableDeclarations, fileContent);
+		TypeScriptVisitor visitor = new TypeScriptVisitor(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
 		expression.visit(visitor);
 		this.variables = visitor.getVariables();
 		this.types = visitor.getTypes();

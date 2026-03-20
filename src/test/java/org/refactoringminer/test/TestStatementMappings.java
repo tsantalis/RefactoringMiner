@@ -2226,7 +2226,8 @@ public class TestStatementMappings {
 		"https://github.com/gabrielshufelt/soen390-commit-and-pray.git, 5f98a8aa11aca7828b6083f7c5ea81ccb3c757d8, soen390-commit-and-pray-5f98a8aa11aca7828b6083f7c5ea81ccb3c757d8.txt",
 		"https://github.com/srabm/HiveMaps.git, 9065c90b5d8b2245d7840cbeda07535adf4caba1, HiveMaps-9065c90b5d8b2245d7840cbeda07535adf4caba1.txt",
 		"https://github.com/srabm/HiveMaps.git, d130a1927944675fa48265631ec585786fd7335d, HiveMaps-d130a1927944675fa48265631ec585786fd7335d.txt",
-		"https://github.com/srabm/HiveMaps.git, c1f1c0b5b71a91770adbc6925a8ed1c874545733, HiveMaps-c1f1c0b5b71a91770adbc6925a8ed1c874545733.txt"
+		"https://github.com/srabm/HiveMaps.git, c1f1c0b5b71a91770adbc6925a8ed1c874545733, HiveMaps-c1f1c0b5b71a91770adbc6925a8ed1c874545733.txt",
+		"https://github.com/LamdaDev/GitToCampus.git, 47a78b7a52a700c52a2f32ebd88e52ab6101e40e, GitToCampus-47a78b7a52a700c52a2f32ebd88e52ab6101e40e.txt"
 	})
 	public void testExtractMethodStatementMappingsForTypeScript(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

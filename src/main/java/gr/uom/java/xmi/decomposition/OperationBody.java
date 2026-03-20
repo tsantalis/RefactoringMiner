@@ -1665,6 +1665,7 @@ public class OperationBody {
 				if(declarator.getInit().isPresent()) {
 					if(declarator.getInit().get() instanceof Swc4jAstArrowExpr arrowExpr) {
 						List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
+						Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(declarator.getName());
 						//Arrow function declaration style
 						LocationInfo location = new LocationInfo(sourceFolder, filePath, variableDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
 						UMLOperation operation = new UMLOperation(identifiers.get(0).getId().getSym(), location, container.getClassName());
@@ -1672,6 +1673,11 @@ public class OperationBody {
 						AbstractExpression expression = new AbstractExpression(sourceFolder, filePath, arrowExpr, CodeElementType.FUNCTION_INITIALIZER_EXPRESSION, operation, activeVariableDeclarations, fileContent, typeDeclarations);
 						if(arrowExpr.getReturnType().isPresent()) {
 							UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, arrowExpr.getReturnType().get().getTypeAnn(), 0);
+							UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
+							operation.addParameter(returnParameter);
+						}
+						else if(typeAnnotation != null) {
+							UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation.getTypeAnn(), 0);
 							UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
 							operation.addParameter(returnParameter);
 						}

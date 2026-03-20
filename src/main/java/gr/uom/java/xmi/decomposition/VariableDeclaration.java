@@ -46,17 +46,21 @@ import org.refactoringminer.util.PathFileUtils;
 
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstFunction;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstForHead;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstObjectPatProp;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstArrayPat;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstAssignPat;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstAssignPatProp;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstKeyValuePatProp;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstObjectPat;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstRestPat;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsTypeAliasDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
@@ -76,6 +80,7 @@ import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
+import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -860,7 +865,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.scope = new VariableScope(ktFile, filePath, this.locationInfo.getStartOffset(), parentLocation.getEndOffset());
 	}
 
-	public VariableDeclaration(String sourceFolder, String filePath, Swc4jAstVarDeclarator fragment, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+	public VariableDeclaration(String sourceFolder, String filePath, Swc4jAstVarDeclarator fragment, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
 		this.locationInfo = new LocationInfo(sourceFolder, filePath, fragment.getSpan(), extractVariableDeclarationType(fragment), fileContent);
@@ -878,7 +883,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		if(variableNames.size() == 1) {
 			this.variableName = variableNames.get(0);
 		}
-		this.initializer = fragment.getInit().isPresent() ? new AbstractExpression(sourceFolder, filePath, fragment.getInit().get(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent) : null;
+		this.initializer = fragment.getInit().isPresent() ? new AbstractExpression(sourceFolder, filePath, fragment.getInit().get(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent, typeDeclarations) : null;
 		//first parent is Swc4jAstVarDecl, next parent is either a block, module root, or a composite statement
 		ISwc4jAst scopeNode = getScopeNode(fragment);
 		int startOffset = fragment.getSpan().getStart();
@@ -906,6 +911,40 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.scope = new VariableScope(filePath, startOffset, endOffset);
 	}
 
+	public VariableDeclaration(String sourceFolder, String filePath, UMLType typeAnnotation, Swc4jAstBindingIdent fragment, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, fragment.getSpan(), CodeElementType.VARIABLE_DECLARATION_EXPRESSION, fileContent);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		this.variableName = fragment.getId().getSym();
+		this.type = typeAnnotation;
+		//this.initializer = fragment.getInit().isPresent() ? new AbstractExpression(sourceFolder, filePath, fragment.getInit().get(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent) : null;
+		ISwc4jAst scopeNode = getScopeNode(fragment);
+		int startOffset = fragment.getSpan().getStart();
+		int endOffset = scopeNode.getSpan().getEnd();
+		this.scope = new VariableScope(filePath, startOffset, endOffset);
+	}
+
+	public VariableDeclaration(String sourceFolder, String filePath, Swc4jAstTsTypeAnn typeAnnotation, Swc4jAstIdent fragment, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, fragment.getSpan(), CodeElementType.VARIABLE_DECLARATION_EXPRESSION, fileContent);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		this.variableName = fragment.getSym();
+		if(typeAnnotation != null) {
+			ISwc4jAstTsType type = typeAnnotation.getTypeAnn();
+			this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, type, 0);
+		}
+		else {
+			this.type = new InferredType();
+		}
+		//this.initializer = fragment.getInit().isPresent() ? new AbstractExpression(sourceFolder, filePath, fragment.getInit().get(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent) : null;
+		ISwc4jAst scopeNode = getScopeNode(fragment);
+		int startOffset = fragment.getSpan().getStart();
+		int endOffset = scopeNode.getSpan().getEnd();
+		this.scope = new VariableScope(filePath, startOffset, endOffset);
+	}
+
 	private ISwc4jAst getScopeNode(ISwc4jAst node) {
 		ISwc4jAst parent = node.getParent();
 		while(parent != null) {
@@ -913,6 +952,9 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 				return parent.getParent();
 			}
 			else if(parent instanceof Swc4jAstFunction) {
+				return parent;
+			}
+			else if(parent instanceof Swc4jAstTsTypeAliasDecl) {
 				return parent;
 			}
 			else if(parent instanceof Swc4jAstArrowExpr) {
@@ -928,6 +970,9 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		if(namePat instanceof Swc4jAstArrayPat array) {
 			if(array.getTypeAnn().isPresent())
 				typeAnnotation =  array.getTypeAnn().get();
+		}
+		else if(namePat instanceof Swc4jAstAssignPat assignPat) {
+			typeAnnotation = extractTypeAnnotation(assignPat.getLeft());
 		}
 		else if(namePat instanceof Swc4jAstBindingIdent binding) {
 			if(binding.getTypeAnn().isPresent())
@@ -953,6 +998,11 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 					variables.addAll(extractVariables(element.get()));
 				}
 			}
+		}
+		else if(namePat instanceof Swc4jAstAssignPat assignPat) {
+			ISwc4jAstPat pat = assignPat.getLeft();
+			variables.addAll(extractVariables(pat));
+			//ISwc4jAstExpr expr = assignPat.getRight();
 		}
 		else if(namePat instanceof Swc4jAstBindingIdent binding) {
 			variables.add(binding);
@@ -989,6 +1039,11 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 					names.addAll(extractVariableNames(element.get()));
 				}
 			}
+		}
+		else if(namePat instanceof Swc4jAstAssignPat assignPat) {
+			ISwc4jAstPat pat = assignPat.getLeft();
+			names.addAll(extractVariableNames(pat));
+			//ISwc4jAstExpr expr = assignPat.getRight();
 		}
 		else if(namePat instanceof Swc4jAstBindingIdent binding) {
 			names.add(binding.getId().getSym());

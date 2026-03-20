@@ -345,4 +345,6 @@ public class Constants {
     public final String COMMA = ",";
     public final String TYPE_ANNOTATION = "type_annotation";
     public final String CATCH_KEYWORD = "catch";
+    public final String VARIABLE_DECLARATOR = "variable_declarator";
+    public final String EXPORT_KEYWORD = "export";
 }

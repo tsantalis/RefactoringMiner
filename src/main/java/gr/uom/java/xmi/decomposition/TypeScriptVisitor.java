@@ -17,6 +17,7 @@ import com.caoccao.javet.swc4j.ast.visitors.Swc4jAstVisitorResponse;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLClass;
 
 public class TypeScriptVisitor extends Swc4jAstVisitor {
 	private String sourceFolder;
@@ -52,6 +53,7 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
 	private List<ComprehensionExpression> comprehensions = new ArrayList<ComprehensionExpression>();
+	private List<UMLClass> typeDeclarations = new ArrayList<>();
 
 	public TypeScriptVisitor(String sourceFolder, String filePath, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.sourceFolder = sourceFolder;
@@ -61,10 +63,19 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		this.fileContent = fileContent;
 	}
 
+	public TypeScriptVisitor(String sourceFolder, String filePath, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
+		this.sourceFolder = sourceFolder;
+		this.filePath = filePath;
+		this.container = container;
+		this.activeVariableDeclarations = activeVariableDeclarations;
+		this.fileContent = fileContent;
+		this.typeDeclarations = typeDeclarations;
+	}
+
 	public Swc4jAstVisitorResponse visitVarDeclarator(Swc4jAstVarDeclarator declarator) {
 		List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
 		if(identifiers.size() == 1) {
-			VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, declarator, container, activeVariableDeclarations, fileContent);
+			VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, declarator, container, activeVariableDeclarations, fileContent, typeDeclarations);
 			variableDeclarations.add(vd);
 		}
 		else {
@@ -87,7 +98,7 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 	}
 
 	public Swc4jAstVisitorResponse visitArrowExpr(Swc4jAstArrowExpr node) {
-		LambdaExpressionObject lambda = new LambdaExpressionObject(sourceFolder, filePath, node, container, activeVariableDeclarations, fileContent);
+		LambdaExpressionObject lambda = new LambdaExpressionObject(sourceFolder, filePath, node, container, activeVariableDeclarations, fileContent, typeDeclarations);
 		lambdas.add(lambda);
 		return super.visitArrowExpr(node);
 	}

@@ -4536,11 +4536,13 @@ Mapping state for Move Method refactoring purity:
     }
 
     private static boolean checkUsageWithinTheRefactoring(String variableName, ExtractOperationRefactoring refactoring, AbstractCodeFragment abstractCodeFragment) {
-        List<AbstractStatement> statementList = refactoring.getExtractedOperation().getBody().getCompositeStatement().getAllStatements();
-        for (AbstractStatement abstractStatement : statementList) {
-            if (abstractStatement.getString().contains(variableName) && !abstractStatement.equalFragment(abstractCodeFragment)) {
-                if (!isPrintOrLog(abstractStatement.getString())) {
-                    return false;
+        if(refactoring.getExtractedOperation().getBody() != null) {
+            List<AbstractStatement> statementList = refactoring.getExtractedOperation().getBody().getCompositeStatement().getAllStatements();
+            for (AbstractStatement abstractStatement : statementList) {
+                if (abstractStatement.getString().contains(variableName) && !abstractStatement.equalFragment(abstractCodeFragment)) {
+                    if (!isPrintOrLog(abstractStatement.getString())) {
+                        return false;
+                    }
                 }
             }
         }

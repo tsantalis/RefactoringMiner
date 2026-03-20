@@ -5644,6 +5644,10 @@ public class UMLModelDiff {
 					(mapping.getFragment2().getString().endsWith("++") || mapping.getFragment2().getString().contains(" == "))) {
 				mappings--;
 			}
+			if(mapping.getFragment1() instanceof StatementObject && mapping.getFragment2() instanceof StatementObject &&
+					mapping.getFragment1().getArrayAccesses().size() != mapping.getFragment2().getArrayAccesses().size()) {
+				mappings--;
+			}
 		}
 		for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
 			List<VariableDeclaration> variableDeclarations = fragment1.getVariableDeclarations();

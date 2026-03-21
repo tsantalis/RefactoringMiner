@@ -20,6 +20,7 @@ import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 
 public abstract class AbstractCodeFragment implements LocationInfoProvider {
+	private static final String AWAIT = "await ";
 	private int depth;
 	private int index;
 	private String codeFragmentAfterReplacingParametersWithArguments;
@@ -489,6 +490,10 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 
 	public AbstractCall invocationCoveringEntireFragment() {
 		String statement = getString();
+		if(statement.contains(" as ")) {
+			int index = statement.lastIndexOf(" as ");
+			statement = statement.substring(0, index);
+		}
 		for(AbstractCall invocation : getMethodInvocations()) {
 			String methodInvocation = invocation.getString();
 			if((methodInvocation + LANG.STATEMENT_TERMINATION).equals(statement) || methodInvocation.equals(statement) || (LANG.NOT + methodInvocation).equals(statement)) {
@@ -496,6 +501,14 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				return invocation;
 			}
 			else if((LANG.RETURN_SPACE + methodInvocation + LANG.STATEMENT_TERMINATION).equals(statement)) {
+				invocation.coverage = StatementCoverageType.RETURN_CALL;
+				return invocation;
+			}
+			else if((LANG.RETURN_SPACE + "(" + AWAIT + methodInvocation + ")").equals(statement)) {
+				invocation.coverage = StatementCoverageType.RETURN_CALL;
+				return invocation;
+			}
+			else if((LANG.RETURN_SPACE + AWAIT + methodInvocation + LANG.STATEMENT_TERMINATION).equals(statement)) {
 				invocation.coverage = StatementCoverageType.RETURN_CALL;
 				return invocation;
 			}
@@ -676,12 +689,22 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		List<VariableDeclaration> variableDeclarations = getVariableDeclarations();
 		if(variableDeclarations.size() > 0 && variableDeclarations.get(0).getInitializer() != null) {
 			String initializer = variableDeclarations.get(0).getInitializer().toString();
+			if(initializer.contains(" as ")) {
+				int index = initializer.lastIndexOf(" as ");
+				initializer = initializer.substring(0, index);
+			}
 			if(initializer.equals(expression))
 				return true;
 			if(initializer.startsWith("(")) {
 				//ignore casting
 				String initializerWithoutCasting = initializer.substring(initializer.indexOf(")")+1,initializer.length());
 				if(initializerWithoutCasting.equals(expression))
+					return true;
+			}
+			if(initializer.startsWith("(") && initializer.endsWith(")")) {
+				//ignore parenthesized
+				String initializerWithoutParenthesis = initializer.substring(1,initializer.length()-1);
+				if(initializerWithoutParenthesis.equals(expression) || initializerWithoutParenthesis.equals(AWAIT + expression))
 					return true;
 			}
 		}
@@ -714,7 +737,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			List<LeafExpression> variables = getVariables();
 			if(variables.size() > 0) {
 				String s = variables.get(0).getString() + LANG.ASSIGNMENT + expression + LANG.STATEMENT_TERMINATION;
-				String sWithAwait = variables.get(0).getString() + LANG.ASSIGNMENT + "await " + expression + LANG.STATEMENT_TERMINATION;
+				String sWithAwait = variables.get(0).getString() + LANG.ASSIGNMENT + AWAIT + expression + LANG.STATEMENT_TERMINATION;
 				if(statement.equals(s) || statement.equals(sWithAwait)) {
 					return true;
 				}

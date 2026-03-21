@@ -284,6 +284,59 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 }
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
             }
+            else if (srcStatementNode.getType().name.equals(LANG1.SWITCH_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.SWITCH_STATEMENT)) {
+                Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.SWITCH_KEYWORD, LANG2.SWITCH_KEYWORD);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                Pair<Tree, Tree> parenthesized = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.PARENTHESIZED_EXPRESSION, LANG2.PARENTHESIZED_EXPRESSION);
+                if (parenthesized != null) {
+                    mappingStore.addMapping(parenthesized.first,parenthesized.second);
+                    matched = Helpers.findPairOfType(parenthesized.first,parenthesized.second, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(parenthesized.first,parenthesized.second, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                }
+                Pair<Tree, Tree> blocks = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.SWITCH_BODY, LANG2.SWITCH_BODY);
+                if(blocks != null) {
+                    mappingStore.addMapping(blocks.first, blocks.second);
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> opening = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                    if (opening != null) {
+                        mappingStore.addMapping(opening.first,opening.second);
+                    }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> closing = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                    if (closing != null) {
+                        mappingStore.addMapping(closing.first,closing.second);
+                    }
+                }
+                new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
+            }
+            else if (srcStatementNode.getType().name.equals(LANG1.SWITCH_CASE) && dstStatementNode.getType().name.equals(LANG2.SWITCH_CASE)) {
+                Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.CASE_KEYWORD, LANG2.CASE_KEYWORD);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.COLON, LANG2.COLON);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
+            }
+            else if (srcStatementNode.getType().name.equals(LANG1.SWITCH_DEFAULT) && dstStatementNode.getType().name.equals(LANG2.SWITCH_DEFAULT)) {
+                Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.DEFAULT_KEYWORD, LANG2.DEFAULT_KEYWORD);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.COLON, LANG2.COLON);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
+            }
             else if (srcStatementNode.getType().name.equals(LANG1.WHILE_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.WHILE_STATEMENT)) {
                 Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.WHILE_KEYWORD, LANG2.WHILE_KEYWORD);
                 if (matched != null) {
@@ -359,6 +412,14 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if (catchKeywords != null) {
                     mappingStore.addMapping(catchKeywords.first,catchKeywords.second);
                 }
+                Pair<Tree, Tree> opening = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
+                if (opening != null) {
+                    mappingStore.addMapping(opening.first,opening.second);
+                }
+                Pair<Tree, Tree> closing = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
+                if (closing != null) {
+                    mappingStore.addMapping(closing.first,closing.second);
+                }
                 Pair<Tree, Tree> types = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.USER_TYPE, LANG2.USER_TYPE);
                 if (types != null) {
                     mappingStore.addMappingRecursively(types.first,types.second);
@@ -390,6 +451,34 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         if (srcStatementNode.getType().name.equals(dstStatementNode.getType().name))
             if(srcStatementNode.isIsoStructuralTo(dstStatementNode) && srcTree.getType().name.equals(LANG1.MODULE))
                 mappingStore.addMappingRecursively(srcStatementNode, dstStatementNode);
+            else if(srcStatementNode.getType().name.equals(LANG1.ARROW_FUNCTION) && dstStatementNode.getType().name.equals(LANG2.ARROW_FUNCTION)) {
+                mappingStore.addMapping(srcStatementNode, dstStatementNode);
+                Pair<Tree, Tree> formal_parameters = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.FORMAL_PARAMETERS, LANG2.FORMAL_PARAMETERS);
+                if(formal_parameters != null && formal_parameters.first.isIsoStructuralTo(formal_parameters.second)) {
+                    mappingStore.addMappingRecursively(formal_parameters.first, formal_parameters.second);
+                }
+                Pair<Tree, Tree> arrows = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ARROW_TOKEN, LANG2.ARROW_TOKEN);
+                if(arrows != null) {
+                    mappingStore.addMapping(arrows.first, arrows.second);
+                }
+                Pair<Tree, Tree> async = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ASYNC_KEYWORD, LANG2.ASYNC_KEYWORD);
+                if(async != null) {
+                    mappingStore.addMapping(async.first, async.second);
+                }
+                Pair<Tree, Tree> blocks = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.STATEMENT_BLOCK, LANG2.STATEMENT_BLOCK);
+                if(blocks != null) {
+                    mappingStore.addMapping(blocks.first, blocks.second);
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> opening = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                    if (opening != null) {
+                        mappingStore.addMapping(opening.first,opening.second);
+                    }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> closing = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                    if (closing != null) {
+                        mappingStore.addMapping(closing.first,closing.second);
+                    }
+                }
+                return;
+            }
             else
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
         else if(Constants.isCrossLanguage(LANG1, LANG2)) {

@@ -37,6 +37,8 @@ public class Constants {
 			STRING_LITERAL = "string";
 			BOOLEAN_LITERAL = "boolean_literal"; // True, False labels //TODO introduce List of values
 			METHOD_INVOCATION = "call";
+			SWITCH_STATEMENT = "";
+			SWITCH_CASE = "";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -67,6 +69,8 @@ public class Constants {
 			STRING_LITERAL = "string_literal";
 			BOOLEAN_LITERAL = "boolean_literal";
 			METHOD_INVOCATION = "call_expression";
+			SWITCH_STATEMENT = "";
+			SWITCH_CASE = "";
 		}
 		else if(PathFileUtils.isTypeScriptFile(filePath)) {
 			CLASS_BLOCK = "block";
@@ -97,6 +101,8 @@ public class Constants {
 			STRING_LITERAL = "string_literal";
 			BOOLEAN_LITERAL = "boolean_literal"; // True, False labels //TODO introduce List of values
 			METHOD_INVOCATION = "call";
+			SWITCH_STATEMENT = "switch_statement";
+			SWITCH_CASE = "switch_case";
 		}
 		else {
 			// Java values as default
@@ -128,6 +134,8 @@ public class Constants {
 			STRING_LITERAL = "StringLiteral";
 			BOOLEAN_LITERAL = "BooleanLiteral";
 			METHOD_INVOCATION = "MethodInvocation";
+			SWITCH_STATEMENT = "SwitchStatement";
+			SWITCH_CASE = "SwitchCase";
 		}
 	}
 
@@ -205,8 +213,8 @@ public class Constants {
     public final String IF_STATEMENT;
     public final String RETURN_STATEMENT = "ReturnStatement";
     public final String SUPER_CONSTRUCTOR_INVOCATION = "SuperConstructorInvocation";
-    public final String SWITCH_CASE = "SwitchCase";
-    public final String SWITCH_STATEMENT = "SwitchStatement";
+    public final String SWITCH_CASE;
+    public final String SWITCH_STATEMENT;
     public final String SYNCHRONIZED_STATEMENT = "SynchronizedStatement";
     public final String THROW_STATEMENT = "ThrowStatement";
     public final String WHILE_STATEMENT;
@@ -337,6 +345,7 @@ public class Constants {
     public final String SEMICOLON = ";";
     public final String COLON = ":";
     public final String CONST_KEYWORD = "const";
+    public final String ASYNC_KEYWORD = "async";
     public final String LET_KEYWORD = "let";
     public final String ARRAY_PATTERN = "array_pattern";
     public final String EXPORT_STATEMENT = "export_statement";
@@ -347,4 +356,11 @@ public class Constants {
     public final String CATCH_KEYWORD = "catch";
     public final String VARIABLE_DECLARATOR = "variable_declarator";
     public final String EXPORT_KEYWORD = "export";
+    public final String ARROW_FUNCTION = "arrow_function";
+    public final String ARROW_TOKEN = "=>";
+    public final String SWITCH_KEYWORD = "switch";
+    public final String CASE_KEYWORD = "case";
+    public final String SWITCH_DEFAULT = "switch_default";
+    public final String DEFAULT_KEYWORD = "default";
+    public final String SWITCH_BODY = "switch_body";
 }

@@ -328,6 +328,7 @@ public class Constants {
     public final String ANNOTATED_LAMBDA = "annotated_lambda";
     public final String ARITHMETIC_OPERATOR = "arithmetic_operator";
     public final String LONG_LITERAL = "long_literal";
+    public final String MULT_EXPRESSION = "multiplicative_expression";
     
     //TypeScript specific
     public final String FOR_IN_STATEMENT = "for_in_statement";

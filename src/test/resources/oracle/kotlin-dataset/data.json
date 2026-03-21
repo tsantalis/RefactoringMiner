@@ -1207,6 +1207,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable tasks : Inferred in method public deleteAllTasks_emptyListOfRetrievedTask() from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSourceTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable tasks : Inferred in method public getTasks_retrieveSavedTasks() from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSourceTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -7687,6 +7701,13 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method public parseHeaderOf(source BufferedSource) : HprofHeader extracted from public open(hprofFile File) : Hprof in class shark.HprofHeader.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Code",
+        "description": "Move Code from public render(context Context, heapDumpFile File, sourceWidth Int, sourceHeight Int, sourceBytesPerPixel Int) : Bitmap to public render(context Context, heapDumpFile File, sourceWidth Int, sourceHeight Int, sourceBytesPerPixel Int) : Bitmap in class leakcanary.internal.activity.screen.HeapDumpRenderer",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

@@ -293,11 +293,11 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **March 18, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **March 21, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|2035  |  5  |  0  | 0.998  | 1.000|
+|**Total**|2038  |  5  |  0  | 0.998  | 1.000|
 |Extract Method|11  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|43  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|53  |  0  |  0  | 1.000  | 1.000|
@@ -320,7 +320,7 @@ As of **March 18, 2026** the precision and recall of RefactoringMiner on this be
 |Move And Inline Method|24  |  0  |  0  | 1.000  | 1.000|
 |Rename Package| 3  |  0  |  0  | 1.000  | 1.000|
 |Move Package| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|16  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|18  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|14  |  1  |  0  | 0.933  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|52  |  1  |  0  | 0.981  | 1.000|
@@ -363,4 +363,4 @@ As of **March 18, 2026** the precision and recall of RefactoringMiner on this be
 |Merge Class| 1  |  0  |  0  | 1.000  | 1.000|
 |Invert Condition| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional| 2  |  0  |  0  | 1.000  | 1.000|
-|Move Code| 4  |  0  |  0  | 1.000  | 1.000|
+|Move Code| 5  |  0  |  0  | 1.000  | 1.000|

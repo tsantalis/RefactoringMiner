@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.caoccao.javet.swc4j.ast.enums.Swc4jAstBinaryOp;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstBinExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstUsingDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
@@ -107,6 +110,20 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		OperationInvocation invocation = new OperationInvocation(sourceFolder, filePath, node, container, fileContent);
 		methodInvocations.add(invocation);
 		return super.visitCallExpr(node);
+	}
+
+	public Swc4jAstVisitorResponse visitBinExpr(Swc4jAstBinExpr node) {
+		LeafExpression infix = new LeafExpression(sourceFolder, filePath, node, CodeElementType.INFIX_EXPRESSION, container, fileContent);
+		infixExpressions.add(infix);
+		Swc4jAstBinaryOp operator = node.getOp();
+		infixOperators.add(operator.getName());
+		return super.visitBinExpr(node);
+	}
+
+	public Swc4jAstVisitorResponse visitStr(Swc4jAstStr node) {
+		LeafExpression literal = new LeafExpression(sourceFolder, filePath, node, CodeElementType.STRING_LITERAL, container, fileContent);
+		stringLiterals.add(literal);
+		return super.visitStr(node);
 	}
 
 	public Swc4jAstVisitorResponse visitUsingDecl(Swc4jAstUsingDecl node) {

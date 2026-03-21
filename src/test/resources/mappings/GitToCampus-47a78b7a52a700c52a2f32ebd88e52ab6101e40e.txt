@@ -13,6 +13,7 @@ line range:287-287==line range:290-290
 line range:289-289==line range:292-292
 line range:291-297==line range:294-300
 line range:301-305==line range:304-308
+line range:308-308==line range:311-311
 line range:288-298==line range:291-301
 line range:290-298==line range:293-301
 line range:300-306==line range:303-309
@@ -40,4 +41,3 @@ line range:318-320==line range:327-329
 private fetchGoogleDirectionsCore(request DirectionsRequest, apiKey string, mode DirectionsTravelMode, fetchImpl typeof fetch) : Promise<ParsedDirectionsCoreResult> -> private fetchGoogleDirectionsCore(request DirectionsRequest, apiKey string, mode DirectionsTravelMode, fetchImpl typeof fetch) : Promise<ParsedDirectionsCoreResult>
 line range:284-284==line range:370-370
 line range:267-353==line range:364-373
-line range:308-308==line range:371-371

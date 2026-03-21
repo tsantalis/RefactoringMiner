@@ -133,7 +133,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         if (matched != null) {
                             mappingStore.addMapping(matched.first,matched.second);
                         }
-                	}
+                    }
                 }
                 if(srcStatementNode.getType().name.equals(LANG1.CONTROL_STRUCTURE_BODY) && dstStatementNode.getType().name.equals(LANG2.CONTROL_STRUCTURE_BODY)) {
                     if(srcStatementNode.getChildren().size() > 0 && dstStatementNode.getChildren().size() > 0) {
@@ -479,8 +479,23 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 }
                 return;
             }
-            else
+            else {
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
+                //special handling for multiplication expression following return
+                if(srcStatementNode.getType().name.equals(LANG1.JUMP_EXPRESSION) && dstStatementNode.getType().name.equals(LANG2.JUMP_EXPRESSION)) {
+                    Tree parent1 = srcStatementNode.getParent();
+                    Tree parent2 = dstStatementNode.getParent();
+                    int index1 = parent1.getChildPosition(srcStatementNode);
+                    int index2 = parent2.getChildPosition(dstStatementNode);
+                    if(index1 < parent1.getChildren().size()-1 && index2 < parent2.getChildren().size()-1) {
+                        Tree t1 = parent1.getChild(index1+1);
+                        Tree t2 = parent2.getChild(index2+1);
+                        if(t1.getType().name.equals(LANG1.MULT_EXPRESSION) && t2.getType().name.equals(LANG2.MULT_EXPRESSION) && t1.isIsomorphicTo(t2)) {
+                            mappingStore.addMappingRecursively(t1, t2);
+                        }
+                    }
+                }
+            }
         else if(Constants.isCrossLanguage(LANG1, LANG2)) {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);
             JavaToKotlinMigration.handleLeafMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2);

@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.refactoringminer.api.Refactoring;
-import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;

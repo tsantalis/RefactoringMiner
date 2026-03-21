@@ -76,6 +76,7 @@ import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsTypeElement;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstVarDeclOrExpr;
 import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstCatchClause;
+import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstSwitchCase;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDecl;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.program.Swc4jAstModule;
@@ -1602,7 +1603,24 @@ public class OperationBody {
 			}
 		}
 		else if(statement instanceof Swc4jAstSwitchStmt switchStatement) {
-			
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, switchStatement, parent.getDepth()+1, CodeElementType.SWITCH_STATEMENT, fileContent);
+			parent.addStatement(child);
+			AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, switchStatement.getDiscriminant(), CodeElementType.SWITCH_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent, typeDeclarations);
+			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
+			List<Swc4jAstSwitchCase> switchCases = switchStatement.getCases();
+			for(Swc4jAstSwitchCase switchCase : switchCases) {
+				CompositeStatementObject child2 = new CompositeStatementObject(sourceFolder, filePath, switchCase, parent.getDepth()+1, CodeElementType.SWITCH_CASE, fileContent);
+				child.addStatement(child2);
+				if(switchCase.getTest().isPresent()) {
+					AbstractExpression expression = new AbstractExpression(sourceFolder, filePath, switchCase.getTest().get(), CodeElementType.SWITCH_CASE_TEST, container, activeVariableDeclarations, fileContent, typeDeclarations);
+					child2.addExpression(expression);
+				}
+				addStatementInVariableScopes(child2);
+				for(ISwc4jAstStmt stmt : switchCase.getCons()) {
+					processStatement(sourceFolder, filePath, child2, stmt, fileContent);
+				}
+			}
 		}
 		else if(statement instanceof Swc4jAstTryStmt tryStatement) {
 			TryStatementObject child = new TryStatementObject(sourceFolder, filePath, tryStatement, parent.getDepth()+1, fileContent);

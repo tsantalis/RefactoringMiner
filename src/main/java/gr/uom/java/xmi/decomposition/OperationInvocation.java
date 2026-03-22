@@ -529,25 +529,8 @@ public class OperationInvocation extends AbstractCall {
     			if(exactlyMatchingArgumentType(parameterType, inferredArgumentTypes.get(i))) {
     				originalExactlyMatchingArguments++;
     			}
-    			boolean equalsParameterType = false;
-    			if(inferredArgumentTypes.get(i).getClassType().equals("ReturnType") && inferredArgumentTypes.get(i).getTypeArguments().size() > 0) {
-    				UMLType typeArgument = inferredArgumentTypes.get(i).getTypeArguments().get(0);
-    				if(typeArgument.getClassType().startsWith("typeof ")) {
-    					String methodName = typeArgument.getClassType().substring("typeof ".length(), typeArgument.getClassType().length());
-    					for(UMLOperation op : classDiff.getNextClass().getOperations()) {
-    						if(op.getName().equals(methodName) && op.getReturnParameter() != null) {
-    							UMLType type = op.getReturnParameter().getType();
-    							if(type.equals(parameterType)) {
-    								equalsParameterType = true;
-    								break;
-    							}
-    						}
-    					}
-    				}
-    			}
     			if(!parameterType.getClassType().equals(inferredArgumentTypes.get(i).toString()) &&
     					!parameterType.toString().equals(inferredArgumentTypes.get(i).toString()) &&
-    					!equalsParameterType &&
     					!compatibleTypes(parameter, inferredArgumentTypes.get(i), classDiff, modelDiff)) {
     				return false;
     			}
@@ -696,6 +679,20 @@ public class OperationInvocation extends AbstractCall {
     	if(type.getArrayDimension() > 0 && type1.equals("Object")) {
     		return true;
     	}
+		if(type.getClassType().equals("ReturnType") && type.getTypeArguments().size() > 0) {
+			UMLType typeArgument = type.getTypeArguments().get(0);
+			if(typeArgument.getClassType().startsWith("typeof ")) {
+				String methodName = typeArgument.getClassType().substring("typeof ".length(), typeArgument.getClassType().length());
+				for(UMLOperation op : classDiff.getNextClass().getOperations()) {
+					if(op.getName().equals(methodName) && op.getReturnParameter() != null) {
+						UMLType returnType = op.getReturnParameter().getType();
+						if(returnType.equals(parameterType)) {
+							return true;
+						}
+					}
+				}
+			}
+		}
 		if(modelDiff != null) {
 	    	UMLAbstractClass subClassInParentModel = modelDiff.findClassInParentModel(type2);
 	    	if(!varargsParameter && subClassInParentModel instanceof UMLClass) {

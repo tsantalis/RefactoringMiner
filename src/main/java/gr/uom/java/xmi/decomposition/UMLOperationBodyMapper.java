@@ -1240,7 +1240,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			List<CompositeStatementObject> innerNodes1 = new ArrayList<>();
 			List<CompositeStatementObject> innerNodes2 = new ArrayList<>();
-			if(lambdasWithBody1 != lambdasWithBody2 || nestedLambdas1.size() != nestedLambdas2.size()) {
+			if(lambdasWithBody1 != lambdasWithBody2 || nestedLambdas1.size() != nestedLambdas2.size() || LANG1.equals(Constants.TYPESCRIPT) || LANG2.equals(Constants.TYPESCRIPT)) {
 				for(LambdaExpressionObject lambda : lambdas1) {
 					expandLambda(lambda, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), codeFragmentOperationMap1, operation1, true);
 				}

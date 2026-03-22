@@ -424,6 +424,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	public List<LambdaExpressionObject> getAllLambdas() {
 		if(operationBody != null)
 			return operationBody.getAllLambdas();
+		if(defaultExpression != null)
+			return defaultExpression.getAllLambdas();
 		return Collections.emptyList();
 	}
 
@@ -436,6 +438,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	public List<String> getAllVariables() {
 		if(operationBody != null)
 			return operationBody.getAllVariables();
+		if(defaultExpression != null)
+			return defaultExpression.getAllVariables();
 		return Collections.emptyList();
 	}
 

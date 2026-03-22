@@ -4348,6 +4348,17 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return list;
 	}
 
+	protected boolean testAnnotationMismatch(UMLOperation op1, UMLOperation op2) {
+		if(op1.hasTestAnnotation() && !op2.hasTestAnnotation() && !op2.hasParameterizedTestAnnotation()) {
+			for(UMLOperation operation : nextClass.getOperations()) {
+				if(!operation.equals(op2) && operation.getName().equals(op1.getName())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	protected void createBodyMappers() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> removedOperationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperation> addedOperationsToBeRemoved = new ArrayList<UMLOperation>();
@@ -4441,7 +4452,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					addedOperationsToBeRemoved.add(addedOperation);
 				}
 				else if(removedOperation.equalsIgnoringTypeParameters(addedOperation) && !differentParameterNames(removedOperation, addedOperation) &&
-						Math.abs(removedOperations.size() - addedOperations.size()) <= 1) {
+						Math.abs(removedOperations.size() - addedOperations.size()) <= 1 && !testAnnotationMismatch(removedOperation, addedOperation)) {
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
 					this.addOperationBodyMapper(operationBodyMapper);
 					removedOperationsToBeRemoved.add(removedOperation);

@@ -11,6 +11,7 @@ import java.util.Set;
 import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.decomposition.AbstractCall;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -91,6 +92,10 @@ public class PrimaryConstructor implements VariableDeclarationContainer {
 
 	@Override
 	public OperationBody getBody() {
+		return null;
+	}
+
+	public AbstractExpression getDefaultExpression() {
 		return null;
 	}
 

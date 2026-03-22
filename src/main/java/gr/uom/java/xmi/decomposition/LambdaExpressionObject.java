@@ -245,6 +245,10 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		return body;
 	}
 
+	public AbstractExpression getDefaultExpression() {
+		return getExpression();
+	}
+
 	public AbstractExpression getExpression() {
 		return expression;
 	}

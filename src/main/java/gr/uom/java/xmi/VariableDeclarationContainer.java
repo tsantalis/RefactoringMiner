@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import gr.uom.java.xmi.decomposition.AbstractCall;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
@@ -30,6 +31,13 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 			allVariableDeclarations.addAll(operationBody.getAllVariableDeclarations());
 			return allVariableDeclarations;
 		}
+		AbstractExpression expression = getDefaultExpression();
+		if(expression != null) {
+			List<VariableDeclaration> allVariableDeclarations = new ArrayList<VariableDeclaration>();
+			allVariableDeclarations.addAll(this.getParameterDeclarationList());
+			allVariableDeclarations.addAll(expression.getAllVariableDeclarations());
+			return allVariableDeclarations;
+		}
 		return getParameterDeclarationList();
 	}
 
@@ -44,6 +52,10 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 		if(operationBody != null) {
 			variableDeclarations.addAll(operationBody.getVariableDeclarationsInScope(location));
 		}
+		AbstractExpression expression = getDefaultExpression();
+		if(expression != null) {
+			variableDeclarations.addAll(expression.getVariableDeclarationsInScope(location));
+		}
 		return variableDeclarations;
 	}
 
@@ -51,6 +63,13 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 		OperationBody operationBody = getBody();
 		if(operationBody != null) {
 			VariableDeclaration variableDeclatation = operationBody.getVariableDeclaration(variableName);
+			if(variableDeclatation != null) {
+				return variableDeclatation;
+			}
+		}
+		AbstractExpression expression = getDefaultExpression();
+		if(expression != null) {
+			VariableDeclaration variableDeclatation = expression.getVariableDeclaration(variableName);
 			if(variableDeclatation != null) {
 				return variableDeclatation;
 			}
@@ -113,6 +132,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 		return false;
 	}
 	OperationBody getBody();
+	AbstractExpression getDefaultExpression();
 	List<UMLAnonymousClass> getAnonymousClassList();
 	List<LambdaExpressionObject> getAllLambdas();
 	List<AbstractCall> getAllOperationInvocations();

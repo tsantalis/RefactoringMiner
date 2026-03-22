@@ -12,6 +12,7 @@ import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
@@ -116,6 +117,10 @@ public class ModuleContainer implements VariableDeclarationContainer {
 
 	@Override
 	public OperationBody getBody() {
+		return null;
+	}
+
+	public AbstractExpression getDefaultExpression() {
 		return null;
 	}
 

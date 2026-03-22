@@ -281,6 +281,62 @@ public class AbstractExpression extends AbstractCodeFragment {
 		return list;
 	}
 
+	public List<LambdaExpressionObject> getAllLambdas() {
+		List<LambdaExpressionObject> list = new ArrayList<>();
+		list.addAll(getLambdas());
+		for(LambdaExpressionObject lambda : this.getLambdas()) {
+			if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
+				list.addAll(lambda.getAllLambdas());
+			}
+		}
+		for(AnonymousClassDeclarationObject anonymous : this.getAnonymousClassDeclarations()) {
+			list.addAll(anonymous.getLambdas());
+		}
+		return list;
+	}
+
+	public List<VariableDeclaration> getAllVariableDeclarations() {
+		List<VariableDeclaration> list = new ArrayList<>();
+		list.addAll(getVariableDeclarations());
+		for(LambdaExpressionObject lambda : this.getLambdas()) {
+			if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
+				list.addAll(lambda.getAllVariableDeclarations());
+			}
+		}
+		for(AnonymousClassDeclarationObject anonymous : this.getAnonymousClassDeclarations()) {
+			list.addAll(anonymous.getVariableDeclarations());
+		}
+		return list;
+	}
+
+	public List<VariableDeclaration> getVariableDeclarationsInScope(LocationInfo location) {
+		List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
+		for(VariableDeclaration variableDeclaration : getAllVariableDeclarations()) {
+			if(variableDeclaration.getScope().subsumes(location)) {
+				variableDeclarations.add(variableDeclaration);
+			}
+		}
+		return variableDeclarations;
+	}
+
+	public List<String> getAllVariables() {
+		List<String> list = new ArrayList<>();
+		for(LeafExpression variable : getVariables()) {
+			list.add(variable.getString());
+		}
+		for(LambdaExpressionObject lambda : this.getLambdas()) {
+			if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
+				list.addAll(lambda.getAllVariables());
+			}
+		}
+		for(AnonymousClassDeclarationObject anonymous : this.getAnonymousClassDeclarations()) {
+			for(LeafExpression variable : anonymous.getVariables()) {
+				list.add(variable.getString());
+			}
+		}
+		return list;
+	}
+
 	@Override
 	public List<AbstractCall> getMethodInvocations() {
 		return methodInvocations;

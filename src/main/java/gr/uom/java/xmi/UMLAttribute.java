@@ -197,6 +197,10 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return null;
 	}
 
+	public AbstractExpression getDefaultExpression() {
+		return null;
+	}
+
 	private boolean match(AbstractExpression initializer, LambdaExpressionObject lambda) {
 		return lambda.getLocationInfo().getStartLine() == initializer.getLocationInfo().getStartLine() &&
 				lambda.getLocationInfo().getEndLine() == initializer.getLocationInfo().getEndLine();

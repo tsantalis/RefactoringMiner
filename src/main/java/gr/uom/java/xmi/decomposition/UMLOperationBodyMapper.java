@@ -3743,7 +3743,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					CompositeStatementObject parent1 = fragment1.getParent();
 					CompositeStatementObject parent2 = fragment2.getParent();
 					while(parent1 != null && parent2 != null && !composites1.contains(parent1) && !composites2.contains(parent2) &&
-							!alreadyMatched2(parent2) && operationBodyMapper.alreadyMatched1(parent1) && !parent2.equals(addedOperationBody.getCompositeStatement()) && parent1.getString().equals(parent2.getString())) {
+							!alreadyMatched2(parent2) && operationBodyMapper.alreadyMatched1(parent1) && addedOperationBody != null && !parent2.equals(addedOperationBody.getCompositeStatement()) && parent1.getString().equals(parent2.getString())) {
 						composites2.add(parent2);
 						composites1.add(parent1);
 						parent2 = parent2.getParent();

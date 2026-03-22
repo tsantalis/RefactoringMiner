@@ -1571,8 +1571,8 @@ public class OperationBody {
 					processForHead(sourceFolder, filePath, fileContent, child, varDecl, typeDeclarations);
 				}
 				else if(initializer.get() instanceof ISwc4jAstExpr expr) {
-				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.FOR_STATEMENT_INITIALIZER, container, activeVariableDeclarations, fileContent, typeDeclarations);
-				child.addExpression(abstractExpression);
+					AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.FOR_STATEMENT_INITIALIZER, container, activeVariableDeclarations, fileContent, typeDeclarations);
+					child.addExpression(abstractExpression);
 				}
 			}
 			Optional<ISwc4jAstExpr> expression = forStatement.getTest();

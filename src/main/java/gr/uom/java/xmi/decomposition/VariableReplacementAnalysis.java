@@ -547,7 +547,7 @@ public class VariableReplacementAnalysis {
 	}
 
 	private boolean existsMappingSubsumingRemovedVariable(UMLOperationBodyMapper mapper, VariableDeclaration removedVariable, AbstractCodeFragment statementContainingOperationInvocation) {
-		if(statementContainingOperationInvocation.getParent().getParent() == null) {
+		if(statementContainingOperationInvocation.getParent() != null && statementContainingOperationInvocation.getParent().getParent() == null) {
 			return true;
 		}
 		for(AbstractCodeMapping mapping : mapper.getMappings()) {

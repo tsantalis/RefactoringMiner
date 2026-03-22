@@ -79,19 +79,25 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 			UMLOperation operation2 = null;
 			if(index != -1) {
 				operation2 = nextClass.getOperations().get(index);
+				if(testAnnotationMismatch(operation, operation2)) {
+					this.reportRemovedOperation(operation);
+				}
 			}
-    		if(index == -1 || differentParameterNames(operation, operation2))
-    			this.reportRemovedOperation(operation);
-    	}
-    	for(UMLOperation operation : nextClass.getOperations()) {
-    		int index = originalClass.getOperations().indexOf(operation);
-    		UMLOperation operation1 = null;
-    		if(index != -1) {
-    			operation1 = originalClass.getOperations().get(index);
-    		}
-    		if(index == -1 || differentParameterNames(operation1, operation))
-    			this.reportAddedOperation(operation);
-    	}
+			if(index == -1 || differentParameterNames(operation, operation2))
+				this.reportRemovedOperation(operation);
+		}
+		for(UMLOperation operation : nextClass.getOperations()) {
+			int index = originalClass.getOperations().indexOf(operation);
+			UMLOperation operation1 = null;
+			if(index != -1) {
+				operation1 = originalClass.getOperations().get(index);
+				if(testAnnotationMismatch(operation1, operation)) {
+					this.reportAddedOperation(operation);
+				}
+			}
+			if(index == -1 || differentParameterNames(operation1, operation))
+				this.reportAddedOperation(operation);
+		}
 	}
 
 	public boolean matches(String className) {

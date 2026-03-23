@@ -453,30 +453,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 mappingStore.addMappingRecursively(srcStatementNode, dstStatementNode);
             else if(srcStatementNode.getType().name.equals(LANG1.ARROW_FUNCTION) && dstStatementNode.getType().name.equals(LANG2.ARROW_FUNCTION)) {
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
-                Pair<Tree, Tree> formal_parameters = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.FORMAL_PARAMETERS, LANG2.FORMAL_PARAMETERS);
-                if(formal_parameters != null && formal_parameters.first.isIsoStructuralTo(formal_parameters.second)) {
-                    mappingStore.addMappingRecursively(formal_parameters.first, formal_parameters.second);
-                }
-                Pair<Tree, Tree> arrows = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ARROW_TOKEN, LANG2.ARROW_TOKEN);
-                if(arrows != null) {
-                    mappingStore.addMapping(arrows.first, arrows.second);
-                }
-                Pair<Tree, Tree> async = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ASYNC_KEYWORD, LANG2.ASYNC_KEYWORD);
-                if(async != null) {
-                    mappingStore.addMapping(async.first, async.second);
-                }
-                Pair<Tree, Tree> blocks = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.STATEMENT_BLOCK, LANG2.STATEMENT_BLOCK);
-                if(blocks != null) {
-                    mappingStore.addMapping(blocks.first, blocks.second);
-                    com.github.gumtreediff.utils.Pair<Tree,Tree> opening = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
-                    if (opening != null) {
-                        mappingStore.addMapping(opening.first,opening.second);
-                    }
-                    com.github.gumtreediff.utils.Pair<Tree,Tree> closing = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
-                    if (closing != null) {
-                        mappingStore.addMapping(closing.first,closing.second);
-                    }
-                }
+                processArrowFunction(srcStatementNode, dstStatementNode, mappingStore, LANG1, LANG2);
                 return;
             }
             else {
@@ -531,6 +508,34 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
 
     }
+
+	public static void processArrowFunction(Tree srcStatementNode, Tree dstStatementNode,
+			ExtendedMultiMappingStore mappingStore, Constants LANG1, Constants LANG2) {
+		Pair<Tree, Tree> formal_parameters = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.FORMAL_PARAMETERS, LANG2.FORMAL_PARAMETERS);
+		if(formal_parameters != null && formal_parameters.first.isIsoStructuralTo(formal_parameters.second)) {
+		    mappingStore.addMappingRecursively(formal_parameters.first, formal_parameters.second);
+		}
+		Pair<Tree, Tree> arrows = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ARROW_TOKEN, LANG2.ARROW_TOKEN);
+		if(arrows != null) {
+		    mappingStore.addMapping(arrows.first, arrows.second);
+		}
+		Pair<Tree, Tree> async = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ASYNC_KEYWORD, LANG2.ASYNC_KEYWORD);
+		if(async != null) {
+		    mappingStore.addMapping(async.first, async.second);
+		}
+		Pair<Tree, Tree> blocks = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.STATEMENT_BLOCK, LANG2.STATEMENT_BLOCK);
+		if(blocks != null) {
+		    mappingStore.addMapping(blocks.first, blocks.second);
+		    com.github.gumtreediff.utils.Pair<Tree,Tree> opening = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+		    if (opening != null) {
+		        mappingStore.addMapping(opening.first,opening.second);
+		    }
+		    com.github.gumtreediff.utils.Pair<Tree,Tree> closing = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+		    if (closing != null) {
+		        mappingStore.addMapping(closing.first,closing.second);
+		    }
+		}
+	}
 
     private void additionallyMatchedStatements(Tree srcTree, Tree dstTree, Tree srcStatementNode, Tree dstStatementNode, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {
         if (abstractCodeMapping != null) {

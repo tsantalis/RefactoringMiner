@@ -118,6 +118,11 @@ public class MethodMatcher extends BodyMapperMatcher{
                     if (equals != null) {
                         mappingStore.addMapping(equals.first, equals.second);
                     }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> arrowFunctions = Helpers.findPairOfType(matched.first,matched.second,LANG1.ARROW_FUNCTION,LANG2.ARROW_FUNCTION);
+                    if(arrowFunctions != null) {
+                        mappingStore.addMapping(arrowFunctions.first, arrowFunctions.second);
+                        BodyMapperMatcher.processArrowFunction(arrowFunctions.first, arrowFunctions.second, mappingStore, LANG1, LANG2);
+                    }
                 }
                 matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.CONST_KEYWORD,LANG2.CONST_KEYWORD);
                 if(matched != null) {
@@ -174,7 +179,8 @@ public class MethodMatcher extends BodyMapperMatcher{
                 Tree dstOperationFunctionBody = dstOperationNode.getChild(dstOperationNode.getChildren().size()-1);
                 Tree srcAffectationKeyword = TreeUtilFunctions.findChildByType(srcOperationFunctionBody, LANG1.AFFECTATION_OPERATOR);
                 Tree dstAffectationKeyword = TreeUtilFunctions.findChildByType(dstOperationFunctionBody, LANG2.AFFECTATION_OPERATOR);
-                mappingStore.addMapping(srcAffectationKeyword, dstAffectationKeyword);
+                if(srcAffectationKeyword != null && dstAffectationKeyword != null)
+                    mappingStore.addMapping(srcAffectationKeyword, dstAffectationKeyword);
             }
             new BodyMapperMatcher(optimizationData, umlOperationBodyMapper, isPartOfExtractedMethod, LANG1, LANG2).match(srcOperationNode, dstOperationNode, mappingStore);
             processOperationDiff(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);

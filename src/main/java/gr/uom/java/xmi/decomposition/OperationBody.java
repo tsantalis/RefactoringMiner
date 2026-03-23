@@ -1740,6 +1740,8 @@ public class OperationBody {
 			LocationInfo location = new LocationInfo(sourceFolder, filePath, typeAliasDecl.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);
 			List<UMLImport> imports = new ArrayList<>();
 			UMLClass umlClass = new UMLClass(container.getClassName(), typeName, location, true, imports);
+			umlClass.setVisibility(Visibility.PRIVATE);
+			umlClass.setTypeAlias(true);
 			ISwc4jAstTsType typeAnnotation = typeAliasDecl.getTypeAnn();
 			if(typeAnnotation instanceof Swc4jAstTsTypeLit typeLiteral) {
 				List<ISwc4jAstTsTypeElement> members = typeLiteral.getMembers();

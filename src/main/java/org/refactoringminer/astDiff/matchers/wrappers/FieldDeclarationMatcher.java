@@ -99,6 +99,18 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         else if(Constants.isCrossLanguage(LANG1, LANG2)) {
             JavaToKotlinMigration.handleFieldDeclarationMapping(mappingStore, srcAttr, dstAttr, srcFieldDeclaration, dstFieldDeclaration, LANG1, LANG2);
         }
+        if(srcAttr.getType().name.equals(LANG1.PROPERTY_SIGNATURE) && dstAttr.getType().name.equals(LANG2.PROPERTY_SIGNATURE)) {
+            if(srcAttr.getParent() != null && dstAttr.getParent() != null) {
+                int index1 = srcAttr.getParent().getChildPosition(srcAttr);
+                int index2 = dstAttr.getParent().getChildPosition(dstAttr);
+                if(srcAttr.getParent().getChildren().size() > index1+1 && srcAttr.getParent().getChild(index1+1).getType().name.equals(LANG1.SEMICOLON) &&
+                		dstAttr.getParent().getChildren().size() > index2+1 && dstAttr.getParent().getChild(index2+1).getType().name.equals(LANG2.SEMICOLON)) {
+                    Tree t1 = srcAttr.getParent().getChild(index1+1);
+                    Tree t2 = dstAttr.getParent().getChild(index2+1);
+                    mappingStore.addMapping(t1,t2);
+                }
+            }
+        }
         mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
         matchFieldAllModifiers(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute,dstUMLAttribute,mappingStore);
         matchFieldAnnotations(srcFieldDeclaration, dstFieldDeclaration, mappingStore);

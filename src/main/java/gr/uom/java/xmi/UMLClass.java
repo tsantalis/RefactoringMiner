@@ -33,6 +33,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean isLocal;
 	private boolean isModule;
 	private boolean isObject;
+	private boolean isTypeAlias;
 	private boolean isFunctionalInterface;
     private List<UMLTypeParameter> typeParameters;
     private Optional<PrimaryConstructor> primaryConstructor;
@@ -297,6 +298,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void setFunctionalInterface(boolean isFunctionalInterface) {
 		this.isFunctionalInterface = isFunctionalInterface;
+	}
+
+	public boolean isTypeAlias() {
+		return isTypeAlias;
+	}
+
+	public void setTypeAlias(boolean isTypeAlias) {
+		this.isTypeAlias = isTypeAlias;
 	}
 
 	public UMLJavadoc getJavadoc() {

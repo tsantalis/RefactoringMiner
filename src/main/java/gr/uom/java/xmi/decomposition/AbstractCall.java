@@ -1499,6 +1499,11 @@ public abstract class AbstractCall extends LeafExpression {
 	private boolean equalsIgnoringExtraParenthesis(String s1, String s2) {
 		if(s1.equals(s2))
 			return true;
+		String removeWhitespace1 = s1.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+		String removeWhitespace2 = s2.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+		if(removeWhitespace1.equals(removeWhitespace2)) {
+			return true;
+		}
 		String parenthesizedS1 = "("+s1+")";
 		if(parenthesizedS1.equals(s2))
 			return true;

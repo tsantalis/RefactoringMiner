@@ -1,0 +1,25 @@
+private joinBoundariesToMeta(boundaries GeoJsonFeatureCollection<BuildingBoundaryProps>, metaById ReturnType<typeof buildMetadataMap>) : BuildingShape[] -> private toBuildingShape(feature GeoJsonFeatureCollection<BuildingBoundaryProps>, metaById Map<string,BuildingMetadata>) : BuildingShape|null
+line range:136-136==line range:127-127
+line range:137-137==line range:128-128
+line range:140-140==line range:131-131
+line range:143-143==line range:134-134
+line range:146-155==line range:137-146
+line range:141-141==line range:132-132
+line range:144-144==line range:135-135
+private buildMetadataMap(buildingList GeoJsonFeatureCollection<BuildingListProps>) : Map<string,{Campus;string;string;string;string[];Record<string,string>}> -> private toBuildingMetadataEntry(props BuildingListProps) : {string;BuildingMetadata}|null
+line range:115-115==line range:106-106
+line range:116-116==line range:107-107
+private joinBoundariesToMeta(boundaries GeoJsonFeatureCollection<BuildingBoundaryProps>, metaById ReturnType<typeof buildMetadataMap>) : BuildingShape[] -> private joinBoundariesToMeta(boundaries GeoJsonFeatureCollection<BuildingBoundaryProps>, metaById ReturnType<typeof buildMetadataMap>) : BuildingShape[]
+line range:134-134==line range:172-172
+line range:138-138==line range:175-175
+line range:157-157==line range:179-179
+line range:135-156==line range:173-178
+line range:138-138==line range:175-175
+line range:135-156==line range:173-178
+private buildMetadataMap(buildingList GeoJsonFeatureCollection<BuildingListProps>) : Map<string,{Campus;string;string;string;string[];Record<string,string>}> -> private buildMetadataMap(buildingList GeoJsonFeatureCollection<BuildingListProps>) : Map<string,BuildingMetadata>
+line range:117-117==line range:161-161
+line range:127-127==line range:165-165
+line range:114-114==line range:159-159
+line range:113-126==line range:158-164
+line range:117-117==line range:161-161
+line range:113-126==line range:158-164

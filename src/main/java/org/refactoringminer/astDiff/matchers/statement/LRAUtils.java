@@ -3,6 +3,7 @@ package org.refactoringminer.astDiff.matchers.statement;
 import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
+import org.refactoringminer.astDiff.utils.Constants;
 
 import java.util.List;
 
@@ -14,10 +15,10 @@ public class LRAUtils {
     //However breaking the whole tree, into left and right, prevents some matches (i.e. the entire Assignment statement)
     //For such instances, match can be passed and further optimized during the LRAify process.
 
-    public static List<Pair<Tree, Tree>> LRAify(Tree src, Tree dst, MappingStore match) {
+    public static List<Pair<Tree, Tree>> LRAify(Tree src, Tree dst, MappingStore match, Constants LANG1, Constants LANG2) {
         for (LRAScenarios value : LRAScenarios.values()) {
-            if (value.condition.test(src, dst)) {
-                return value.makePairs(src, dst, match);
+            if (value.condition.test(src, dst, LANG1, LANG2)) {
+                return value.makePairs(src, dst, match, LANG1, LANG2);
             }
         }
         return List.of(new Pair<>(src, dst)); // Fallback case if no scenario matches

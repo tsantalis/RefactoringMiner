@@ -12,6 +12,7 @@ import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
@@ -27,6 +28,9 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	private LocationInfo locationInfo;
 	private String name;
 	private String className;
+	private List<UMLComment> comments = new ArrayList<>();
+	private List<UMLClass> nestedClasses = new ArrayList<>();
+	private List<UMLOperation> nestedOperations = new ArrayList<>();
 
 	public ModuleContainer(LocationInfo locationInfo, String name) {
 		this.statementList = new ArrayList<>();
@@ -37,6 +41,26 @@ public class ModuleContainer implements VariableDeclarationContainer {
 
 	public void addStatements(List<AbstractStatement> statements) {
 		statementList.addAll(statements);
+	}
+
+	public void addComments(List<UMLComment> comments) {
+		this.comments.addAll(comments);
+	}
+
+	public void addNestedClass(UMLClass nestedClass) {
+		this.nestedClasses.add(nestedClass);
+	}
+
+	public List<UMLClass> getNestedClasses() {
+		return nestedClasses;
+	}
+
+	public void addNestedOperation(UMLOperation nested) {
+		this.nestedOperations.add(nested);
+	}
+
+	public List<UMLOperation> getNestedOperations() {
+		return nestedOperations;
 	}
 
 	public ModuleContainer(List<AbstractStatement> statements, LocationInfo locationInfo, String name) {
@@ -93,6 +117,10 @@ public class ModuleContainer implements VariableDeclarationContainer {
 
 	@Override
 	public OperationBody getBody() {
+		return null;
+	}
+
+	public AbstractExpression getDefaultExpression() {
 		return null;
 	}
 
@@ -184,7 +212,7 @@ public class ModuleContainer implements VariableDeclarationContainer {
 
 	@Override
 	public List<UMLComment> getComments() {
-		return Collections.emptyList();
+		return comments;
 	}
 
 	@Override

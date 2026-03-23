@@ -18,6 +18,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
+import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
@@ -47,9 +48,9 @@ public class TreeMatcherTest {
     @MethodSource("initData")
     public void testMappings(Tree srcTree, Tree dstTree, String expectedMappings, String folderPath)
     {
-        org.refactoringminer.astDiff.utils.Constants.setFilePath(".java");
-        ExtendedMultiMappingStore mappings = new ExtendedMultiMappingStore(srcTree,dstTree);
-        new LeafMatcher().match(srcTree,dstTree,mappings);
+        Constants LANG = new Constants(".java");
+        ExtendedMultiMappingStore mappings = new ExtendedMultiMappingStore(srcTree,dstTree,LANG,LANG);
+        new LeafMatcher(LANG, LANG).match(srcTree,dstTree,mappings);
         try {
             String actual = MappingExportModel.exportString(mappings).replaceAll("\\r\\n", "\n").replaceAll("\\r", "\n");
             assertEquals(expectedMappings,actual);

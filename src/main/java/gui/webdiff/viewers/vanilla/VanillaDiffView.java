@@ -42,7 +42,9 @@ public class VanillaDiffView extends AbstractDiffView implements Renderable {
                             @Override
                             public String getLegendValue() {
                                 return "<span class=&quot;del&quot;>&nbsp;&nbsp;</span> deleted<br>"
-                                        + "<span class=&quot;add&quot;>&nbsp;&nbsp;</span> added<br>"
+                                        + "<span class=&quot;moveOut&quot;>&nbsp;&nbsp;</span> moved out<br>"
+                                        + "<span class=&quot;add&quot;>&nbsp;&nbsp;</span> inserted<br>"
+                                        + "<span class=&quot;moveIn&quot;>&nbsp;&nbsp;</span> moved in<br>"
                                         + "<span class=&quot;mv&quot;>&nbsp;&nbsp;</span> moved<br>"
                                         + "<span class=&quot;upd&quot;>&nbsp;&nbsp;</span> updated<br>";
                             }

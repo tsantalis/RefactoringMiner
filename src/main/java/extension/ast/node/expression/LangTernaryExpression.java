@@ -34,6 +34,9 @@ public class LangTernaryExpression extends LangExpression {
         this.condition = condition;
         this.thenExpression = thenExpression;
         this.elseExpression = elseExpression;
+        if (condition != null) addChild(condition);
+        if (thenExpression != null) addChild(thenExpression);
+        if (elseExpression != null) addChild(elseExpression);
     }
 
     public LangASTNode getCondition() {
@@ -42,6 +45,7 @@ public class LangTernaryExpression extends LangExpression {
 
     public void setCondition(LangASTNode condition) {
         this.condition = condition;
+        if (condition != null) addChild(condition);
     }
 
     public LangASTNode getThenExpression() {
@@ -50,6 +54,7 @@ public class LangTernaryExpression extends LangExpression {
 
     public void setThenExpression(LangASTNode thenExpression) {
         this.thenExpression = thenExpression;
+        if (thenExpression != null) addChild(thenExpression);
     }
 
     public LangASTNode getElseExpression() {
@@ -58,6 +63,7 @@ public class LangTernaryExpression extends LangExpression {
 
     public void setElseExpression(LangASTNode elseExpression) {
         this.elseExpression = elseExpression;
+        if (elseExpression != null) addChild(elseExpression);
     }
 
     @Override

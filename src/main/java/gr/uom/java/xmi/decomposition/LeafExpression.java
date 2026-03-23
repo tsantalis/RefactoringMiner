@@ -10,6 +10,10 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.psi.KtObjectDeclaration;
+import org.jetbrains.kotlin.psi.KtSuperTypeList;
+
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
@@ -38,6 +42,15 @@ public class LeafExpression extends AbstractCodeFragment {
 		super(new LocationInfo(cu, sourceFolder, filePath, expression, codeElementType));
 		// TODO pretty-print with stringify
 		this.string = expression.getText();
+		if(expression.getParent() instanceof KtSuperTypeList parent && parent.getParent() instanceof KtObjectDeclaration anonymous) {
+			this.string = anonymous.getText();
+		}
+		this.container = container;
+	}
+
+	public LeafExpression(String sourceFolder, String filePath, ISwc4jAst expression, CodeElementType codeElementType, VariableDeclarationContainer container, String fileContent) {
+		super(new LocationInfo(sourceFolder, filePath, expression.getSpan(), codeElementType, fileContent));
+		this.string = fileContent.substring(expression.getSpan().getStart(), expression.getSpan().getEnd());
 		this.container = container;
 	}
 

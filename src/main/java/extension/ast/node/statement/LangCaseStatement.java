@@ -13,20 +13,43 @@ public class LangCaseStatement extends LangStatement {
      * The pattern for this case (can be null or a special value for 'default'/underscore).
      */
     private LangASTNode pattern;
-
-    /**
-     * The statements to execute if the pattern matches.
-     */
+    private LangASTNode guard;
     private LangBlock body;
 
     public LangCaseStatement(PositionInfo positionInfo, LangASTNode pattern, LangBlock body) {
         super(NodeTypeEnum.CASE_STATEMENT, positionInfo);
         this.pattern = pattern;
         this.body = body;
+        if (pattern != null) {
+            addChild(pattern);
+        }
+        if (body != null) {
+            addChild(body);
+        }
+    }
+
+    public LangCaseStatement(PositionInfo positionInfo, LangASTNode pattern, LangASTNode guard, LangBlock body) {
+        super(NodeTypeEnum.CASE_STATEMENT, positionInfo);
+        this.pattern = pattern;
+        this.guard = guard;
+        this.body = body;
+        if (pattern != null) {
+            addChild(pattern);
+        }
+        if (guard != null) {
+            addChild(guard);
+        }
+        if (body != null) {
+            addChild(body);
+        }
     }
 
     public LangASTNode getPattern() {
         return pattern;
+    }
+
+    public LangASTNode getGuard() {
+        return guard;
     }
 
     public LangBlock getBody() {
@@ -35,6 +58,10 @@ public class LangCaseStatement extends LangStatement {
 
     public void setPattern(LangASTNode pattern) {
         this.pattern = pattern;
+    }
+
+    public void setGuard(LangASTNode guard) {
+        this.guard = guard;
     }
 
     public void setBody(LangBlock body) {

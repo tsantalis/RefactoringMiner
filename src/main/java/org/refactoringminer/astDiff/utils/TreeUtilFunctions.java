@@ -6,6 +6,7 @@ import com.github.gumtreediff.tree.DefaultTree;
 import com.github.gumtreediff.tree.FakeTree;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
+import com.github.gumtreediff.tree.TypeSet;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.LocationInfo;
 
@@ -26,18 +27,18 @@ public class TreeUtilFunctions {
 
 	private static FakeTree _instance;
 
-	public static Tree findByLocationInfo(Tree tree, LocationInfo locationInfo){
+	public static Tree findByLocationInfo(Tree tree, LocationInfo locationInfo, Constants LANG){
 		if (locationInfo == null) return null;
 		int start_offset = locationInfo.getStartOffset();
 		int end_offset = locationInfo.getEndOffset();
 		if(end_offset == tree.getEndPos() + 1) {
 			end_offset = tree.getEndPos();
 		}
-		if (tree.getPos() > start_offset || tree.getEndPos() < end_offset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo) : null;
-		return findByLocationInfoNoLookAhead(tree, locationInfo);
+		if (tree.getPos() > start_offset || tree.getEndPos() < end_offset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo,LANG) : null;
+		return findByLocationInfoNoLookAhead(tree, locationInfo, LANG);
 	}
 
-	public static Tree findByLocationInfoNoLookAhead(Tree tree, LocationInfo locationInfo) {
+	public static Tree findByLocationInfoNoLookAhead(Tree tree, LocationInfo locationInfo, Constants LANG) {
 		int start_offset = locationInfo.getStartOffset();
 		int end_offset = locationInfo.getEndOffset();
 		if(end_offset == tree.getEndPos() + 1) {
@@ -45,7 +46,7 @@ public class TreeUtilFunctions {
 		}
 		Tree treeBetweenPositions = getTreeBetweenPositions(tree, start_offset, end_offset);
 		if (treeBetweenPositions == null) return null;
-		if (isFromType(treeBetweenPositions, Constants.get().METHOD_INVOCATION_ARGUMENTS))
+		if (isFromType(treeBetweenPositions, LANG.METHOD_INVOCATION_ARGUMENTS))
 		{
 			if (treeBetweenPositions.getChildren().size() > 0 )
 			{
@@ -63,7 +64,7 @@ public class TreeUtilFunctions {
 		return treeBetweenPositions;
 	}
 
-	public static Tree findByLocationInfo(Tree tree, LocationInfo locationInfo, String... type){
+	public static Tree findByLocationInfo(Tree tree, LocationInfo locationInfo, Constants LANG, String... type){
 		if (locationInfo == null) return null;
 		int startoffset = locationInfo.getStartOffset();
 		int endoffset = locationInfo.getEndOffset();
@@ -71,12 +72,12 @@ public class TreeUtilFunctions {
 			endoffset = tree.getEndPos();
 		}
 		// TODO hack until we fix the module offsets
-		if (type[0].equals(Constants.get().MODULE)) {
+		if (type[0].equals(LANG.MODULE)) {
 			startoffset = 0;
 			endoffset = tree.getEndPos();
 		}
-		if (tree.getPos() > startoffset || tree.getEndPos() < endoffset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo) : null;
-		return getTreeBetweenPositions(tree, startoffset, endoffset,type);
+		if (tree.getPos() > startoffset || tree.getEndPos() < endoffset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo,LANG) : null;
+		return getTreeBetweenPositions(tree, startoffset, endoffset, LANG, type);
 	}
 
 	public static Tree getTreeBetweenPositions(Tree tree, int position, int endPosition) {
@@ -87,13 +88,13 @@ public class TreeUtilFunctions {
 		return null;
 	}
 
-	public static Tree getTreeBetweenPositions(Tree tree, int position, int endPosition,String... type) {
+	public static Tree getTreeBetweenPositions(Tree tree, int position, int endPosition, Constants LANG, String... type) {
 		for (Tree t: tree.preOrder()) {
 			if (t.getPos() >= position && t.getEndPos() <= endPosition) {
 				if (isFromType(t, type))
 					return t;
-				else if (t.getType().name.equals(Constants.get().CLASS_KEYWORD) && type[0].equals(Constants.get().TYPE_DECLARATION) &&
-						t.getParent() != null && t.getParent().getType().name.equals(Constants.get().TYPE_DECLARATION)) {
+				else if (t.getType().name.equals(LANG.CLASS_KEYWORD) && type[0].equals(LANG.TYPE_DECLARATION) &&
+						t.getParent() != null && t.getParent().getType().name.equals(LANG.TYPE_DECLARATION)) {
 					return t.getParent();
 				}
 			}
@@ -123,15 +124,30 @@ public class TreeUtilFunctions {
 		return null;
 	}
 
-	public static Tree findChildByTypeAndLabel(Tree tree, String type,String label) {
+	public static List<Tree> findChildrenByTypeRecursively(Tree tree, String... type) {
+		List<Tree> children = new ArrayList<>();
+		if (!tree.getChildren().isEmpty())
+		{
+			for (Tree child: tree.getChildren()) {
+				if (isFromType(child, type))
+					children.add(child);
+				if(child.getChildren().size() > 0) {
+					children.addAll(findChildrenByTypeRecursively(child, type));
+				}
+			}
+		}
+		return children;
+	}
+
+	public static Tree findChildByTypeAndLabel(Tree tree, String type, String label, Constants LANG) {
 		if (!tree.getChildren().isEmpty())
 		{
 			for (Tree child: tree.getChildren()) {
 				if (isFromType(child, type) && child.getLabel().equals(label))
 					return child;
-				if (child.getType().name.equals(Constants.get().MODIFIERS)) {
+				if (child.getType().name.equals(LANG.MODIFIERS)) {
 					for (Tree grandChild : child.getChildren()) {
-						if (grandChild.getType().name.endsWith("_modifier") && grandChild.getChild(0).getLabel().equals(label))
+						if (grandChild.getType().name.endsWith("_modifier") && grandChild.getChildren().size() > 0 && grandChild.getChild(0).getLabel().equals(label))
 							return grandChild;
 					}
 				}
@@ -146,21 +162,21 @@ public class TreeUtilFunctions {
 		return null;
 	}
 
-	public static Pair<Tree,Tree> pruneTrees(Tree src, Tree dst, Map<Tree,Tree> srcCopy, Map<Tree,Tree> dstCopy)
+	public static Pair<Tree,Tree> pruneTrees(Tree src, Tree dst, Map<Tree,Tree> srcCopy, Map<Tree,Tree> dstCopy, Constants LANG1, Constants LANG2)
 	{
-		Tree prunedSrc = deepCopyWithMapPruning(src,srcCopy);
-		Tree prunedDst = deepCopyWithMapPruning(dst,dstCopy);
+		Tree prunedSrc = deepCopyWithMapPruning(src,srcCopy,LANG1);
+		Tree prunedDst = deepCopyWithMapPruning(dst,dstCopy,LANG2);
 		return new Pair<>(prunedSrc,prunedDst);
 	}
 
-	public static Tree deepCopyWithMapPruning(Tree tree, Map<Tree,Tree> cpyMap) {
-		if (isFromType(tree, Constants.get().BLOCK))
+	public static Tree deepCopyWithMapPruning(Tree tree, Map<Tree,Tree> cpyMap, Constants LANG) {
+		if (isFromType(tree, LANG.BLOCK))
 			if (tree.getChildren().size() != 0) return null;
 		Tree copy = makeDefaultTree(tree);
 		cpyMap.put(copy,tree);
-		if (isFromType(tree, Constants.get().ANONYMOUS_CLASS_DECLARATION)) return copy;
+		if (isFromType(tree, LANG.ANONYMOUS_CLASS_DECLARATION)) return copy;
 		for (Tree child : tree.getChildren()) {
-			Tree childCopy = deepCopyWithMapPruning(child,cpyMap);
+			Tree childCopy = deepCopyWithMapPruning(child,cpyMap,LANG);
 			if (childCopy != null)
 				copy.addChild(childCopy);
 		}
@@ -179,6 +195,42 @@ public class TreeUtilFunctions {
 		return defaultTree;
 	}
 
+	public static DefaultTree makeDefaultTreeWithTypeTranslation(Tree other, Constants LANG1, Constants LANG2) {
+		DefaultTree defaultTree = new DefaultTree(null);
+		String newType = null;
+		try {
+			for(java.lang.reflect.Field publicField : Constants.class.getFields()) {
+				String value = (String) publicField.get(LANG2);
+				if(value.equals(other.getType().name)) {
+					newType = (String) publicField.get(LANG1);
+					break;
+				}
+			}
+		} catch (SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			//e.printStackTrace();
+		}
+		if(newType == null) {
+			defaultTree.setType(other.getType());
+		}
+		else {
+			defaultTree.setType(TypeSet.type(newType));
+		}
+		defaultTree.setLabel(other.getLabel());
+		defaultTree.setPos(other.getPos());
+		defaultTree.setLength(other.getLength());
+		defaultTree.setChildren(new ArrayList<>());
+		defaultTree.setMetrics(other.getMetrics());
+		return defaultTree;
+	}
+
+	public static Tree deepCopyWithMapAndTypeTranslation(Tree tree,Map<Tree,Tree> cpyMap, Constants LANG1, Constants LANG2) {
+		Tree copy = makeDefaultTreeWithTypeTranslation(tree, LANG1, LANG2);
+		cpyMap.put(copy,tree);
+		for (Tree child : tree.getChildren())
+			copy.addChild(deepCopyWithMapAndTypeTranslation(child,cpyMap,LANG1, LANG2));
+		return copy;
+	}
+
 	public static Tree deepCopyWithMap(Tree tree,Map<Tree,Tree> cpyMap) {
 		Tree copy = makeDefaultTree(tree);
 		cpyMap.put(copy,tree);
@@ -187,13 +239,13 @@ public class TreeUtilFunctions {
 		return copy;
 	}
 
-	public static org.apache.commons.lang3.tuple.Pair<Tree, Tree> populateLeftAndRightBasedOnTheFirstChildOfType(Tree srcTree, Tree dstTree, String[] types)
+	public static org.apache.commons.lang3.tuple.Pair<Tree, Tree> populateLeftAndRightBasedOnTheFirstChildOfType(Tree srcTree, Tree dstTree, List<org.apache.commons.lang3.tuple.Pair<String, String>> types)
 	{
 		Tree srcRes = null;
 		Tree dstRes = null;
-		for (String type : types) {
-			srcRes = TreeUtilFunctions.findFirstByType(srcTree, type);
-			dstRes = TreeUtilFunctions.findFirstByType(dstTree, type);
+		for (org.apache.commons.lang3.tuple.Pair<String, String> pair : types) {
+			srcRes = TreeUtilFunctions.findFirstByType(srcTree, pair.getLeft());
+			dstRes = TreeUtilFunctions.findFirstByType(dstTree, pair.getRight());
 			if (srcRes != null && dstRes != null)
 				break;
 			else {
@@ -254,8 +306,8 @@ public class TreeUtilFunctions {
 		return isPartOf(srcSubTree.getParent(), type);
 	}
 
-	public static boolean isStatement(String type){
-		final Constants constants = Constants.get();
+	public static boolean isStatement(String type, Constants LANG){
+		final Constants constants = LANG;
 		if (
 			type.equals(constants.ASSERT_STATEMENT) || //Leaf
 			type.equals(constants.BLOCK) || // Composite
@@ -285,22 +337,22 @@ public class TreeUtilFunctions {
 			return false;
 	}
 
-	public static boolean isPartOfJavadoc(Tree srcSubTree) {
-		if (isFromType(srcSubTree, Constants.get().JAVA_DOC))
+	public static boolean isPartOfJavadoc(Tree srcSubTree, Constants LANG) {
+		if (isFromType(srcSubTree, LANG.JAVA_DOC))
 			return true;
 		if (srcSubTree.getParent() == null) return false;
-		return isPartOfJavadoc(srcSubTree.getParent());
+		return isPartOfJavadoc(srcSubTree.getParent(), LANG);
 	}
 
-	public static List<Tree> findVariable(Tree inputTree, String variableName) {
+	public static List<Tree> findVariable(Tree inputTree, String variableName, Constants LANG) {
 		if (inputTree == null) return null;
-		boolean _seen = false;
+		//boolean _seen = false;
 		List<Tree> refs = new ArrayList<>();
 		for (Tree tree : inputTree.preOrder()) {
-			if (isFromType(tree, Constants.get().SIMPLE_NAME) && tree.getLabel().equals(variableName))
+			if (isFromType(tree, LANG.SIMPLE_NAME) && tree.getLabel().equals(variableName))
 			{
 				refs.add(tree);
-				_seen = true;
+				//_seen = true;
 			}
 		}
 		return refs;
@@ -327,12 +379,12 @@ public class TreeUtilFunctions {
 		return true;
 	}
 
-    public static boolean areBothFromThisType(Mapping mapping, String simpleName) {
-        return areBothFromThisType(mapping.first,mapping.second, simpleName);
+    public static boolean areBothFromThisType(Mapping mapping, String type1, String type2) {
+        return areBothFromThisType(mapping.first,mapping.second, type1, type2);
     }
-	public static boolean areBothFromThisType(Tree t1, Tree t2, String type) {
-		return isFromType(t1, type)
-				&& isFromType(t2, type);
+	public static boolean areBothFromThisType(Tree t1, Tree t2, String type1, String type2) {
+		return isFromType(t1, type1)
+				&& isFromType(t2, type2);
 	}
 
 	public static boolean isFromType(Tree t1, String... type) {

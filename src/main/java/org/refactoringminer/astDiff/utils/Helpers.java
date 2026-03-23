@@ -51,10 +51,10 @@ public class Helpers {
                 moduleDiff.getNextModule().getLocationInfo().getFilePath()
         );
     }
-    public static Pair<Tree, Tree> findPairOfType(Tree srcOperationNode, Tree dstOperationNode, String searchingType) {
+    public static Pair<Tree, Tree> findPairOfType(Tree srcOperationNode, Tree dstOperationNode, String searchingType1, String searchingType2) {
         if (srcOperationNode == null || dstOperationNode == null) return null;
-        Tree srcModifier = TreeUtilFunctions.findChildByType(srcOperationNode,searchingType);
-        Tree dstModifier = TreeUtilFunctions.findChildByType(dstOperationNode,searchingType);
+        Tree srcModifier = TreeUtilFunctions.findChildByType(srcOperationNode,searchingType1);
+        Tree dstModifier = TreeUtilFunctions.findChildByType(dstOperationNode,searchingType2);
         if (srcModifier != null && dstModifier != null)
             return new Pair<>(srcModifier, dstModifier);
         return null;

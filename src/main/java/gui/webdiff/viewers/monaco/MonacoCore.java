@@ -48,7 +48,6 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
 import org.refactoringminer.astDiff.models.ASTDiff;
-import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.rendersnake.HtmlCanvas;
 
@@ -299,16 +298,15 @@ public class MonacoCore {
     private boolean isInterfile(ASTDiff astDiff, Tree t, Tree dst) {
         //find the most parent of t and dst
         //if they are not same as the astdiff src,dst return false
-    	Constants.setFilePath(astDiff.getSrcPath());
-        Tree t_outerP = TreeUtilFunctions.getParentUntilType(t, Constants.get().COMPILATION_UNIT);
-        Tree dst_outerP = TreeUtilFunctions.getParentUntilType(dst, Constants.get().COMPILATION_UNIT);
+        Tree t_outerP = TreeUtilFunctions.getParentUntilType(t, astDiff.LANG1.COMPILATION_UNIT);
+        Tree dst_outerP = TreeUtilFunctions.getParentUntilType(dst, astDiff.LANG2.COMPILATION_UNIT);
         if(t_outerP == null && dst_outerP == null) {
-            t_outerP = TreeUtilFunctions.getParentUntilType(t, Constants.get().MODULE);
-            dst_outerP = TreeUtilFunctions.getParentUntilType(dst, Constants.get().MODULE);
+            t_outerP = TreeUtilFunctions.getParentUntilType(t, astDiff.LANG1.MODULE);
+            dst_outerP = TreeUtilFunctions.getParentUntilType(dst, astDiff.LANG2.MODULE);
         }
         if(t_outerP == null && dst_outerP == null) {
-            t_outerP = TreeUtilFunctions.getParentUntilType(t, Constants.get().SOURCE_FILE);
-            dst_outerP = TreeUtilFunctions.getParentUntilType(dst, Constants.get().SOURCE_FILE);
+            t_outerP = TreeUtilFunctions.getParentUntilType(t, astDiff.LANG1.SOURCE_FILE);
+            dst_outerP = TreeUtilFunctions.getParentUntilType(dst, astDiff.LANG2.SOURCE_FILE);
         }
         if (t_outerP == null || dst_outerP == null) {
             return false;
@@ -331,7 +329,7 @@ public class MonacoCore {
     	String type = t.getType().toString();
     	return type.endsWith("Expression") || type.endsWith("Literal") || type.endsWith("Reference") || type.endsWith("Invocation") ||
     			type.endsWith("Creation") || type.endsWith("Access") || type.endsWith("Name") || type.endsWith("Annotation") || type.endsWith("Pattern") ||
-    			type.equals("Assignment") || type.equals("ArrayInitializer") || type.endsWith("_expression");
+    			type.equals("Assignment") || type.equals("ArrayInitializer") || type.endsWith("_expression") || type.endsWith("identifier");
     }
 
     private static boolean isComment(Tree t) {

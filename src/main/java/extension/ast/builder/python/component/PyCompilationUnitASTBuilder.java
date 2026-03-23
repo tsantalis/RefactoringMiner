@@ -14,7 +14,7 @@ import extension.ast.node.statement.LangExpressionStatement;
 import extension.ast.node.statement.LangImportStatement;
 import extension.ast.node.unit.LangCompilationUnit;
 import extension.base.LangSupportedEnum;
-import extension.base.lang.python.Python3Parser;
+import extension.base.lang.python.PythonParser;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,57 +26,53 @@ public class PyCompilationUnitASTBuilder extends PyBaseASTBuilder {
         super(mainBuilder);
     }
 
-    public LangASTNode visitFile_input(Python3Parser.File_inputContext ctx) {
+    public LangASTNode visitFile_input(PythonParser.File_inputContext ctx) {
         LangCompilationUnit compilationUnit = LangASTNodeFactory.createCompilationUnit(ctx);
         compilationUnit.setLanguage(LangSupportedEnum.PYTHON);
 
-        // Process each statement in the file
-        for (Python3Parser.StmtContext stmtCtx : ctx.stmt()) {
-            LangASTNode stmt = mainBuilder.visit(stmtCtx);
+        if (ctx.statements() != null) {
+            for (PythonParser.StatementContext stmtCtx : ctx.statements().statement()) {
+                LangASTNode stmt = mainBuilder.visit(stmtCtx);
 
-            if (stmt == null) continue;
+                if (stmt == null) continue;
 
-            // Sort statements by type
-            if (stmt instanceof LangTypeDeclaration) {
-                compilationUnit.addType((LangTypeDeclaration) stmt);
-            } else if (stmt instanceof LangMethodDeclaration) {
-                compilationUnit.addMethod((LangMethodDeclaration) stmt);
-            } else if (stmt instanceof LangComment){
-                compilationUnit.addComment((LangComment) stmt);
-            } else if (stmt instanceof LangImportStatement){
-                compilationUnit.addImport((LangImportStatement) stmt);
-            } else if (stmt instanceof LangExpressionStatement exprStatement) {
-                if (exprStatement.getExpression() instanceof LangAssignment assignment)
-                    compilationUnit.addAssignment(assignment);
-                else if (exprStatement.getExpression() instanceof LangStringLiteral str) {
-                    LangComment comment = LangASTNodeFactory.createComment(ctx, str.getValue(), false, true);
-                    compilationUnit.addComment(comment);
-                }
-                else {
+                if (stmt instanceof LangTypeDeclaration) {
+                    compilationUnit.addType((LangTypeDeclaration) stmt);
+                } else if (stmt instanceof LangMethodDeclaration) {
+                    compilationUnit.addMethod((LangMethodDeclaration) stmt);
+                } else if (stmt instanceof LangComment) {
+                    compilationUnit.addComment((LangComment) stmt);
+                } else if (stmt instanceof LangImportStatement) {
+                    compilationUnit.addImport((LangImportStatement) stmt);
+                } else if (stmt instanceof LangExpressionStatement exprStatement) {
+                    if (exprStatement.getExpression() instanceof LangAssignment assignment)
+                        compilationUnit.addAssignment(assignment);
+                    else if (exprStatement.getExpression() instanceof LangStringLiteral str) {
+                        LangComment comment = LangASTNodeFactory.createComment(ctx, str.getValue(), false, true);
+                        compilationUnit.addComment(comment);
+                    } else {
+                        compilationUnit.addStatement(stmt);
+                    }
+                } else {
                     compilationUnit.addStatement(stmt);
                 }
-            } else {
-                compilationUnit.addStatement(stmt);
             }
-
         }
 
         return compilationUnit;
     }
 
 
-    public LangASTNode visitImport_stmt(Python3Parser.Import_stmtContext ctx) {
+    public LangASTNode visitImport_stmt(PythonParser.Import_stmtContext ctx) {
         PositionInfo positionInfo = PositionUtils.getPositionInfo(ctx);
 
         List<LangImportStatement> importStatements = new ArrayList<>();
 
         if (ctx.import_name() != null) {
-            // Handle regular import statements like "import module" or "import module.submodule as alias"
-            Python3Parser.Import_nameContext importNameCtx = ctx.import_name();
-            Python3Parser.Dotted_as_namesContext dottedAsNames = importNameCtx.dotted_as_names();
+            PythonParser.Import_nameContext importNameCtx = ctx.import_name();
+            PythonParser.Dotted_as_namesContext dottedAsNames = importNameCtx.dotted_as_names();
             List<LangImportStatement.LangImportItem> importItems = new ArrayList<>();
-            for (Python3Parser.Dotted_as_nameContext dottedAsName : dottedAsNames.dotted_as_name()) {
-                // Get the full module path (e.g., "module.submodule")
+            for (PythonParser.Dotted_as_nameContext dottedAsName : dottedAsNames.dotted_as_name()) {
                 String modulePath = dottedAsName.dotted_name().getText();
                 PositionInfo importItemPositionInfo = PositionUtils.getPositionInfo(dottedAsName);
                 // Get the alias if present
@@ -96,8 +92,7 @@ public class PyCompilationUnitASTBuilder extends PyBaseASTBuilder {
             // Track all created import statements
             importStatements.add(importStmt);
         } else if (ctx.import_from() != null) {
-            // Handle from-import statements like "from module import name" or "from module import *"
-            Python3Parser.Import_fromContext importFromCtx = ctx.import_from();
+            PythonParser.Import_fromContext importFromCtx = ctx.import_from();
 
             // Get the module from which to import (could be null for relative imports like "from . import name")
             String fromModule = null;
@@ -109,38 +104,36 @@ public class PyCompilationUnitASTBuilder extends PyBaseASTBuilder {
             int relativeLevel = 0;
             if (importFromCtx.DOT() != null && !importFromCtx.DOT().isEmpty()) {
                 relativeLevel = importFromCtx.DOT().size();
-            } else if (importFromCtx.ELLIPSIS() != null) {
-                relativeLevel = 3; // ... is 3 dots
+            } else if (importFromCtx.ELLIPSIS() != null && !importFromCtx.ELLIPSIS().isEmpty()) {
+                relativeLevel = 3 * importFromCtx.ELLIPSIS().size(); // Each ... is 3 dots
             }
 
-            // Handle imports with specific names or *
-            if (importFromCtx.import_as_names() != null) {
-                // Import specific names, possibly with aliases
-                List<LangImportStatement.LangImportItem> importItems = new ArrayList<>();
-                for (Python3Parser.Import_as_nameContext importAsName : importFromCtx.import_as_names().import_as_name()) {
-                    PositionInfo importItemPositionInfo = PositionUtils.getPositionInfo(importAsName);
-                    String importedName = importAsName.name(0).getText();
-                    String alias = null;
-                    if (importAsName.AS() != null && importAsName.name().size() > 1) {
-                        alias = importAsName.name(1).getText();
+            if (importFromCtx.import_from_targets() != null) {
+                PythonParser.Import_from_targetsContext targets = importFromCtx.import_from_targets();
+                if (targets.STAR() != null) {
+                    LangImportStatement importStmt = new LangImportStatement(fromModule, relativeLevel, positionInfo, Collections.emptyList(), true);
+                    if (importStmt.getRootCompilationUnit() != null) {
+                        importStmt.getRootCompilationUnit().addImport(importStmt);
                     }
-                    LangImportStatement.LangImportItem importItem = new LangImportStatement.LangImportItem(importedName, alias, importItemPositionInfo);
-                    importItems.add(importItem);
+                    importStatements.add(importStmt);
+                } else if (targets.import_from_as_names() != null) {
+                    List<LangImportStatement.LangImportItem> importItems = new ArrayList<>();
+                    for (PythonParser.Import_from_as_nameContext importAsName : targets.import_from_as_names().import_from_as_name()) {
+                        PositionInfo importItemPositionInfo = PositionUtils.getPositionInfo(importAsName);
+                        String importedName = importAsName.name(0).getText();
+                        String alias = null;
+                        if (importAsName.AS() != null && importAsName.name().size() > 1) {
+                            alias = importAsName.name(1).getText();
+                        }
+                        LangImportStatement.LangImportItem importItem = new LangImportStatement.LangImportItem(importedName, alias, importItemPositionInfo);
+                        importItems.add(importItem);
+                    }
+                    LangImportStatement importStmt = new LangImportStatement(fromModule, relativeLevel, positionInfo, importItems, false);
+                    if (importStmt.getRootCompilationUnit() != null) {
+                        importStmt.getRootCompilationUnit().addImport(importStmt);
+                    }
+                    importStatements.add(importStmt);
                 }
-                LangImportStatement importStmt = new LangImportStatement(fromModule, relativeLevel, positionInfo, importItems, false);
-                if (importStmt.getRootCompilationUnit() != null) {
-                    importStmt.getRootCompilationUnit().addImport(importStmt);
-                }
-                importStatements.add(importStmt);
-            } else if (importFromCtx.STAR() != null) {
-                // Import all (*) from module
-                LangImportStatement importStmt = new LangImportStatement(fromModule, relativeLevel, positionInfo, Collections.emptyList(), true);
-
-                if (importStmt.getRootCompilationUnit() != null) {
-                    importStmt.getRootCompilationUnit().addImport(importStmt);
-                }
-
-                importStatements.add(importStmt);
             }
         }
 
@@ -149,10 +142,7 @@ public class PyCompilationUnitASTBuilder extends PyBaseASTBuilder {
             return importStatements.get(importStatements.size() - 1);
         }
 
-
         return null;
     }
-
-    // TODO: Handle comments
 
 }

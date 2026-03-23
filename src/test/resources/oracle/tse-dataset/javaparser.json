@@ -334,6 +334,21 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tsubListMetaModel : PropertyMetaModel to listMetaModel : null in method public output(node Node, name String, level int, builder StringBuilder) : void from class com.github.javaparser.printer.XmlPrinter",
           "validation": true
+        },
+        {
+          "type": "REPLACE_LOOP_WITH_PIPELINE",
+          "description": "Replace Loop With Pipeline\tfor(subListMetaModel: subLists) with allPropertyMetaModels.stream().filter(PropertyMetaModel::isNodeList).filter(nonNullNode).filter(nonEmptyList).forEach(listMetaModel -> { in method public output(node Node, name String, level int, builder StringBuilder) : void from class com.github.javaparser.printer.XmlPrinter",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_LOOP_WITH_PIPELINE",
+          "description": "Replace Loop With Pipeline\tfor(attributeMetaModel: attributes) with allPropertyMetaModels.stream().filter(PropertyMetaModel::isAttribute).filter(PropertyMetaModel::isSingular).forEach(attributeMetaModel -> { in method public output(node Node, name String, level int, builder StringBuilder) : void from class com.github.javaparser.printer.XmlPrinter",
+          "validation": true
+        },
+        {
+          "type": "REPLACE_LOOP_WITH_PIPELINE",
+          "description": "Replace Loop With Pipeline\tfor(subNodeMetaModel: subNodes) with allPropertyMetaModels.stream().filter(PropertyMetaModel::isNode).filter(PropertyMetaModel::isSingular).filter(nonNullNode).forEach(subNodeMetaModel -> { in method public output(node Node, name String, level int, builder StringBuilder) : void from class com.github.javaparser.printer.XmlPrinter",
+          "validation": true
         }
       ]
     },

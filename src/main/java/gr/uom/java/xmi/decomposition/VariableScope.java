@@ -88,6 +88,12 @@ public class VariableScope {
 		}
 	}
 
+	public VariableScope(String filePath, int startOffset, int endOffset) {
+		this.filePath = filePath;
+		this.startOffset = startOffset;
+		this.endOffset = endOffset;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

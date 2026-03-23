@@ -9,6 +9,7 @@ import extension.ast.node.expression.*;
 import extension.ast.node.literal.*;
 import extension.ast.node.metadata.LangAnnotation;
 import extension.ast.node.metadata.comment.LangComment;
+import extension.ast.node.pattern.LangAsPattern;
 import extension.ast.node.pattern.LangLiteralPattern;
 import extension.ast.node.pattern.LangVariablePattern;
 import extension.ast.node.statement.*;
@@ -27,7 +28,11 @@ public class PyASTFlattener implements LangASTFlattener {
     }
 
     public static String flattenNode(LangASTNode node) {
-        return new PyASTFlattener(node).getResult();
+        PyASTFlattener f = new PyASTFlattener(node);
+        if (node != null) {
+            node.accept(f);
+        }
+        return f.getResult();
     }
 
     @Override
@@ -204,7 +209,7 @@ public class PyASTFlattener implements LangASTFlattener {
     @Override
     public void visit(LangAssignment langAssignment) {
         langAssignment.getLeftSide().accept(this);
-        builder.append("=");
+        builder.append(langAssignment.getOperator());
         langAssignment.getRightSide().accept(this);
     }
 
@@ -274,7 +279,9 @@ public class PyASTFlattener implements LangASTFlattener {
 
     @Override
     public void visit(LangTupleLiteral langTupleLiteral) {
-        builder.append("(");
+        if (langTupleLiteral.isParenthesized()) {
+            builder.append("(");
+        }
         List<LangASTNode> elements = langTupleLiteral.getElements();
         int i = 0;
         for (LangASTNode expr : elements) {
@@ -285,7 +292,9 @@ public class PyASTFlattener implements LangASTFlattener {
             }
             i++;
         }
-        builder.append(")");
+        if (langTupleLiteral.isParenthesized()) {
+            builder.append(")");
+        }
     }
 
     @Override
@@ -365,10 +374,46 @@ public class PyASTFlattener implements LangASTFlattener {
     }
 
     @Override
+    public void visit(LangTemplateStringExpression expr) {
+        switch (expr.getKind()) {
+            case FSTRING -> builder.append("f\"");
+            case TSTRING -> builder.append("t\"");
+            default -> builder.append("\"");
+        }
+
+        for (LangTemplateExpressionPart part : expr.getParts()) {
+            part.accept(this);
+        }
+
+        builder.append("\"");
+    }
+
+    @Override
+    public void visit(LangTemplateExpressionPart part) {
+        if (part.getExpression() instanceof LangStringLiteral) {
+            part.getExpression().accept(this);
+        } else {
+            builder.append("{");
+            part.getExpression().accept(this);
+            if (part.isDebug()) {
+                builder.append("=");
+            }
+            if (part.getConversion() != null) {
+                builder.append("!").append(part.getConversion());
+            }
+            if (part.getFormatExpression() != null) {
+                builder.append(":");
+                part.getFormatExpression().accept(this);
+            }
+            builder.append("}");
+        }
+    }
+
+    @Override
     public void visit(LangPrefixExpression langPrefixExpression) {
         builder.append(langPrefixExpression.getOperator().getSymbol());
         if(langPrefixExpression.getOperator().equals(OperatorEnum.NOT)) {
-        	builder.append(" ");
+            builder.append(" ");
         }
         langPrefixExpression.getOperand().accept(this);
     }
@@ -580,6 +625,17 @@ public class PyASTFlattener implements LangASTFlattener {
     @Override
     public void visit(LangVariablePattern langVariablePattern) {
         builder.append(langVariablePattern.getVariableName());
+    }
+
+    @Override
+    public void visit(LangAsPattern langAsPattern) {
+        if (langAsPattern.getPattern() != null) {
+            langAsPattern.getPattern().accept(this);
+        }
+        builder.append(" as ");
+        if (langAsPattern.getTarget() != null) {
+            langAsPattern.getTarget().accept(this);
+        }
     }
 
     @Override

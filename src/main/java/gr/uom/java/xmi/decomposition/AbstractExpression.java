@@ -12,12 +12,15 @@ import org.eclipse.jdt.core.dom.Expression;
 import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtFile;
 
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
+
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
 import extension.ast.visitor.LangVisitor;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLClass;
 
 public class AbstractExpression extends AbstractCodeFragment {
 	
@@ -165,6 +168,43 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.lambdaOwner = null;
 	}
 
+	public AbstractExpression(String sourceFolder, String filePath, ISwc4jAst expression, CodeElementType codeElementType, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
+		super(new LocationInfo(sourceFolder, filePath, expression.getSpan(), codeElementType, fileContent));
+		TypeScriptVisitor visitor = new TypeScriptVisitor(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
+		expression.visit(visitor);
+		this.variables = visitor.getVariables();
+		this.types = visitor.getTypes();
+		this.variableDeclarations = visitor.getVariableDeclarations();
+		this.methodInvocations = visitor.getMethodInvocations();
+		this.anonymousClassDeclarations = visitor.getAnonymousClassDeclarations();
+		this.textBlocks = visitor.getTextBlocks();
+		this.stringLiterals = visitor.getStringLiterals();
+		this.charLiterals = visitor.getCharLiterals();
+		this.numberLiterals = visitor.getNumberLiterals();
+		this.nullLiterals = visitor.getNullLiterals();
+		this.booleanLiterals = visitor.getBooleanLiterals();
+		this.typeLiterals = visitor.getTypeLiterals();
+		this.creations = visitor.getCreations();
+		this.infixExpressions = visitor.getInfixExpressions();
+		this.assignments = visitor.getAssignments();
+		this.infixOperators = visitor.getInfixOperators();
+		this.arrayAccesses = visitor.getArrayAccesses();
+		this.prefixExpressions = visitor.getPrefixExpressions();
+		this.postfixExpressions = visitor.getPostfixExpressions();
+		this.thisExpressions = visitor.getThisExpressions();
+		this.arguments = visitor.getArguments();
+		this.parenthesizedExpressions = visitor.getParenthesizedExpressions();
+		this.castExpressions = visitor.getCastExpressions();
+		this.instanceofExpressions = visitor.getInstanceofExpressions();
+		this.patternInstanceofExpressions = visitor.getPatternInstanceofExpressions();
+		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
+		this.lambdas = visitor.getLambdas();
+		this.comprehensions = visitor.getComprehensions();
+		this.expression = fileContent.substring(expression.getSpan().getStart(), expression.getSpan().getEnd());
+		this.owner = null;
+		this.lambdaOwner = null;
+	}
+
     public void setOwner(CompositeStatementObject owner) {
     	this.owner = owner;
     }
@@ -237,6 +277,62 @@ public class AbstractExpression extends AbstractCodeFragment {
 		}
 		for(AnonymousClassDeclarationObject anonymous : this.getAnonymousClassDeclarations()) {
 			list.addAll(anonymous.getCreations());
+		}
+		return list;
+	}
+
+	public List<LambdaExpressionObject> getAllLambdas() {
+		List<LambdaExpressionObject> list = new ArrayList<>();
+		list.addAll(getLambdas());
+		for(LambdaExpressionObject lambda : this.getLambdas()) {
+			if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
+				list.addAll(lambda.getAllLambdas());
+			}
+		}
+		for(AnonymousClassDeclarationObject anonymous : this.getAnonymousClassDeclarations()) {
+			list.addAll(anonymous.getLambdas());
+		}
+		return list;
+	}
+
+	public List<VariableDeclaration> getAllVariableDeclarations() {
+		List<VariableDeclaration> list = new ArrayList<>();
+		list.addAll(getVariableDeclarations());
+		for(LambdaExpressionObject lambda : this.getLambdas()) {
+			if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
+				list.addAll(lambda.getAllVariableDeclarations());
+			}
+		}
+		for(AnonymousClassDeclarationObject anonymous : this.getAnonymousClassDeclarations()) {
+			list.addAll(anonymous.getVariableDeclarations());
+		}
+		return list;
+	}
+
+	public List<VariableDeclaration> getVariableDeclarationsInScope(LocationInfo location) {
+		List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
+		for(VariableDeclaration variableDeclaration : getAllVariableDeclarations()) {
+			if(variableDeclaration.getScope().subsumes(location)) {
+				variableDeclarations.add(variableDeclaration);
+			}
+		}
+		return variableDeclarations;
+	}
+
+	public List<String> getAllVariables() {
+		List<String> list = new ArrayList<>();
+		for(LeafExpression variable : getVariables()) {
+			list.add(variable.getString());
+		}
+		for(LambdaExpressionObject lambda : this.getLambdas()) {
+			if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
+				list.addAll(lambda.getAllVariables());
+			}
+		}
+		for(AnonymousClassDeclarationObject anonymous : this.getAnonymousClassDeclarations()) {
+			for(LeafExpression variable : anonymous.getVariables()) {
+				list.add(variable.getString());
+			}
 		}
 		return list;
 	}

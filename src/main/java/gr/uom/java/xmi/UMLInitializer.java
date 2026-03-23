@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import gr.uom.java.xmi.decomposition.AbstractCall;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -69,6 +70,10 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	@Override
 	public OperationBody getBody() {
 		return body;
+	}
+
+	public AbstractExpression getDefaultExpression() {
+		return null;
 	}
 
 	public void setBody(OperationBody body) {

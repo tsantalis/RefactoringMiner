@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AssertStatement;
@@ -31,6 +32,7 @@ import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SwitchCase;
+import org.eclipse.jdt.core.dom.SwitchExpression;
 import org.eclipse.jdt.core.dom.SwitchStatement;
 import org.eclipse.jdt.core.dom.SynchronizedStatement;
 import org.eclipse.jdt.core.dom.ThrowStatement;
@@ -62,9 +64,52 @@ import org.jetbrains.kotlin.psi.KtWhenEntry;
 import org.jetbrains.kotlin.psi.KtWhenExpression;
 import org.jetbrains.kotlin.psi.KtWhileExpression;
 
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstDecl;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstForHead;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstModuleItem;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstStmt;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsTypeElement;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstVarDeclOrExpr;
+import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstCatchClause;
+import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstSwitchCase;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDecl;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
+import com.caoccao.javet.swc4j.ast.program.Swc4jAstModule;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBreakStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstContinueStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstDebuggerStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstDoWhileStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstEmptyStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstExprStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstFnDecl;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstForInStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstForOfStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstForStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstIfStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstLabeledStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstReturnStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstSwitchStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstThrowStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTryStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsTypeAliasDecl;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDecl;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstWhileStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstWithStmt;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsPropertySignature;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeLit;
+
 import extension.ast.node.LangASTNode;
 import extension.ast.node.declaration.LangMethodDeclaration;
 import extension.ast.node.declaration.LangSingleVariableDeclaration;
+import extension.ast.node.declaration.LangTypeDeclaration;
 import extension.ast.node.expression.LangSimpleName;
 import extension.ast.node.statement.LangAssertStatement;
 import extension.ast.node.statement.LangAsyncStatement;
@@ -90,16 +135,23 @@ import extension.ast.node.statement.LangWithStatement;
 import extension.ast.node.statement.LangYieldStatement;
 import extension.ast.node.unit.LangCompilationUnit;
 import extension.ast.visitor.LangVisitor;
-import extension.base.LangSupportedEnum;
+import static extension.umladapter.UMLModelAdapter.createUMLClass;
 import static extension.umladapter.UMLModelAdapter.createUMLOperation;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.ModuleContainer;
+import gr.uom.java.xmi.TypeScriptFileProcessor;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLClass.ConditionallyCreated;
 import gr.uom.java.xmi.UMLComment;
+import gr.uom.java.xmi.UMLImport;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.UMLParameter;
+import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.Visibility;
 
 public class OperationBody {
 
@@ -408,27 +460,6 @@ public class OperationBody {
 			processStatement(cu, sourceFolder, filePath, child, forStatement.getBody(), fileContent);
 			removeAllFromActiveVariableDeclarations(variableDeclarations);
 		}
-		/*else if(statement instanceof EnhancedForStatement) {
-			EnhancedForStatement enhancedForStatement = (EnhancedForStatement)statement;
-			CompositeStatementObject child = new CompositeStatementObject(cu, sourceFolder, filePath, enhancedForStatement, parent.getDepth()+1, CodeElementType.ENHANCED_FOR_STATEMENT, javaFileContent);
-			parent.addStatement(child);
-			SingleVariableDeclaration variableDeclaration = enhancedForStatement.getParameter();
-			VariableDeclaration vd = new VariableDeclaration(cu, sourceFolder, filePath, variableDeclaration, container, activeVariableDeclarations, javaFileContent);
-			child.addVariableDeclaration(vd);
-			AbstractExpression variableDeclarationName = new AbstractExpression(cu, sourceFolder, filePath, variableDeclaration.getName(), CodeElementType.ENHANCED_FOR_STATEMENT_PARAMETER_NAME, container, activeVariableDeclarations, javaFileContent);
-			child.addExpression(variableDeclarationName);
-			if(variableDeclaration.getInitializer() != null) {
-				AbstractExpression variableDeclarationInitializer = new AbstractExpression(cu, sourceFolder, filePath, variableDeclaration.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, javaFileContent);
-				child.addExpression(variableDeclarationInitializer);
-			}
-			AbstractExpression abstractExpression = new AbstractExpression(cu, sourceFolder, filePath, enhancedForStatement.getExpression(), CodeElementType.ENHANCED_FOR_STATEMENT_EXPRESSION, container, activeVariableDeclarations, javaFileContent);
-			child.addExpression(abstractExpression);
-			addStatementInVariableScopes(child);
-			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
-			addAllInActiveVariableDeclarations(variableDeclarations);
-			processStatement(cu, sourceFolder, filePath, child, enhancedForStatement.getBody(), javaFileContent);
-			removeAllFromActiveVariableDeclarations(variableDeclarations);
-		}*/
 		else if(statement instanceof LangWhileStatement) {
 			LangWhileStatement whileStatement = (LangWhileStatement)statement;
 			CompositeStatementObject child = new CompositeStatementObject(cu, sourceFolder, filePath, whileStatement, parent.getDepth()+1, CodeElementType.WHILE_STATEMENT, fileContent);
@@ -438,15 +469,6 @@ public class OperationBody {
 			addStatementInVariableScopes(child);
 			processStatement(cu, sourceFolder, filePath, child, whileStatement.getBody(), fileContent);
 		}
-		/*else if(statement instanceof DoStatement) {
-			DoStatement doStatement = (DoStatement)statement;
-			CompositeStatementObject child = new CompositeStatementObject(cu, sourceFolder, filePath, doStatement, parent.getDepth()+1, CodeElementType.DO_STATEMENT, javaFileContent);
-			parent.addStatement(child);
-			AbstractExpression abstractExpression = new AbstractExpression(cu, sourceFolder, filePath, doStatement.getExpression(), CodeElementType.DO_STATEMENT_CONDITION, container, activeVariableDeclarations, javaFileContent);
-			child.addExpression(abstractExpression);
-			addStatementInVariableScopes(child);
-			processStatement(cu, sourceFolder, filePath, child, doStatement.getBody(), javaFileContent);
-		}*/
 		else if(statement instanceof LangExpressionStatement) {
 			LangExpressionStatement expressionStatement = (LangExpressionStatement)statement;
 			StatementObject child = new StatementObject(cu, sourceFolder, filePath, expressionStatement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);
@@ -482,29 +504,12 @@ public class OperationBody {
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 		}
-		/*else if(statement instanceof LabeledStatement) {
-			LabeledStatement labeledStatement = (LabeledStatement)statement;
-			SimpleName label = labeledStatement.getLabel();
-			CompositeStatementObject child = new CompositeStatementObject(cu, sourceFolder, filePath, labeledStatement, parent.getDepth()+1, CodeElementType.LABELED_STATEMENT.setName(label.getIdentifier()), javaFileContent);
-			parent.addStatement(child);
-			addStatementInVariableScopes(child);
-			processStatement(cu, sourceFolder, filePath, child, labeledStatement.getBody(), javaFileContent);
-		}*/
 		else if(statement instanceof LangReturnStatement) {
 			LangReturnStatement returnStatement = (LangReturnStatement)statement;
 			StatementObject child = new StatementObject(cu, sourceFolder, filePath, returnStatement, parent.getDepth()+1, CodeElementType.RETURN_STATEMENT, container, activeVariableDeclarations, fileContent);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 		}
-		/*else if(statement instanceof SynchronizedStatement) {
-			SynchronizedStatement synchronizedStatement = (SynchronizedStatement)statement;
-			CompositeStatementObject child = new CompositeStatementObject(cu, sourceFolder, filePath, synchronizedStatement, parent.getDepth()+1, CodeElementType.SYNCHRONIZED_STATEMENT, javaFileContent);
-			parent.addStatement(child);
-			AbstractExpression abstractExpression = new AbstractExpression(cu, sourceFolder, filePath, synchronizedStatement.getExpression(), CodeElementType.SYNCHRONIZED_STATEMENT_EXPRESSION, container, activeVariableDeclarations, javaFileContent);
-			child.addExpression(abstractExpression);
-			addStatementInVariableScopes(child);
-			processStatement(cu, sourceFolder, filePath, child, synchronizedStatement.getBody(), javaFileContent);
-		}*/
 		else if(statement instanceof LangThrowStatement) {
 			LangThrowStatement throwStatement = (LangThrowStatement)statement;
 			StatementObject child = new StatementObject(cu, sourceFolder, filePath, throwStatement, parent.getDepth()+1, CodeElementType.THROW_STATEMENT, container, activeVariableDeclarations, fileContent);
@@ -572,25 +577,6 @@ public class OperationBody {
 				}
 			}
 		}
-		/*else if(statement instanceof VariableDeclarationStatement) {
-			VariableDeclarationStatement variableDeclarationStatement = (VariableDeclarationStatement)statement;
-			StatementObject child = new StatementObject(cu, sourceFolder, filePath, variableDeclarationStatement, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, javaFileContent);
-			parent.addStatement(child);
-			addStatementInVariableScopes(child);
-			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
-		}
-		else if(statement instanceof ConstructorInvocation) {
-			ConstructorInvocation constructorInvocation = (ConstructorInvocation)statement;
-			StatementObject child = new StatementObject(cu, sourceFolder, filePath, constructorInvocation, parent.getDepth()+1, CodeElementType.CONSTRUCTOR_INVOCATION, container, activeVariableDeclarations, javaFileContent);
-			parent.addStatement(child);
-			addStatementInVariableScopes(child);
-		}
-		else if(statement instanceof SuperConstructorInvocation) {
-			SuperConstructorInvocation superConstructorInvocation = (SuperConstructorInvocation)statement;
-			StatementObject child = new StatementObject(cu, sourceFolder, filePath, superConstructorInvocation, parent.getDepth()+1, CodeElementType.SUPER_CONSTRUCTOR_INVOCATION, container, activeVariableDeclarations, javaFileContent);
-			parent.addStatement(child);
-			addStatementInVariableScopes(child);
-		}*/
 		else if(statement instanceof LangBreakStatement) {
 			LangBreakStatement breakStatement = (LangBreakStatement)statement;
 			StatementObject child = new StatementObject(cu, sourceFolder, filePath, breakStatement, parent.getDepth()+1, CodeElementType.BREAK_STATEMENT, container, activeVariableDeclarations, fileContent);
@@ -657,9 +643,26 @@ public class OperationBody {
 		else if(statement instanceof LangMethodDeclaration) {
 			LangMethodDeclaration methodDecl = (LangMethodDeclaration)statement;
 			String className = container.getClassName() + "." + container.getName();
-			UMLOperation nested = createUMLOperation(methodDecl, className, sourceFolder, filePath, fileContent, activeVariableDeclarations, LangSupportedEnum.fromFileName(filePath));
+			UMLOperation nested = createUMLOperation(methodDecl, className, sourceFolder, filePath, fileContent, comments, activeVariableDeclarations);
 			if(container instanceof UMLOperation) {
 				((UMLOperation)container).addNestedOperation(nested);
+			}
+		}
+		else if(statement instanceof LangTypeDeclaration) {
+			LangTypeDeclaration typeDecl = (LangTypeDeclaration)statement;
+			UMLClass nestedClass = createUMLClass(typeDecl, filePath, Collections.emptyList(), fileContent, comments);
+			if(parent.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && parent.getParent() != null && parent.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+				CompositeStatementObject ifParent = parent.getParent();
+				List<AbstractStatement> ifBlocks = ifParent.getStatements();
+				if(ifBlocks.size() > 0 && ifBlocks.get(0).equals(parent)) {
+					nestedClass.setConditionallyCreated(ConditionallyCreated.IF);
+				}
+				if(ifBlocks.size() > 1 && ifBlocks.get(1).equals(parent)) {
+					nestedClass.setConditionallyCreated(ConditionallyCreated.ELSE);
+				}
+			}
+			if(container instanceof ModuleContainer) {
+				((ModuleContainer)container).addNestedClass(nestedClass);
 			}
 		}
 	}
@@ -810,9 +813,32 @@ public class OperationBody {
 		}
 		else if(statement instanceof ReturnStatement) {
 			ReturnStatement returnStatement = (ReturnStatement)statement;
+			CompositeStatementObject switchExpressionComp = null;
+			if(returnStatement.getExpression() instanceof SwitchExpression switchExpression) {
+				CompositeStatementObject child = new CompositeStatementObject(cu, sourceFolder, filePath, switchExpression, parent.getDepth()+1, CodeElementType.SWITCH_STATEMENT, javaFileContent);
+				parent.addStatement(child);
+				AbstractExpression abstractExpression = new AbstractExpression(cu, sourceFolder, filePath, switchExpression.getExpression(), CodeElementType.SWITCH_STATEMENT_CONDITION, container, activeVariableDeclarations, javaFileContent);
+				child.addExpression(abstractExpression);
+				addStatementInVariableScopes(child);
+				List<Statement> statements = switchExpression.statements();
+				for(Statement switchStatement : statements) {
+					processStatement(cu, sourceFolder, filePath, child, switchStatement, javaFileContent);
+				}
+				switchExpressionComp = child;
+			}
 			StatementObject child = new StatementObject(cu, sourceFolder, filePath, returnStatement, parent.getDepth()+1, CodeElementType.RETURN_STATEMENT, container, activeVariableDeclarations, javaFileContent);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
+			if(switchExpressionComp != null) {
+				for(LambdaExpressionObject lambda : child.getLambdas()) {
+					for(AbstractStatement switchStatement : switchExpressionComp.getStatements()) {
+						if(switchStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_CASE) && lambda.getLocationInfo().startsAtTheEndLineOf(switchStatement.getLocationInfo())) {
+							lambda.setSwitchExpressionCase((StatementObject)switchStatement);
+							break;
+						}
+					}
+				}
+			}
 		}
 		else if(statement instanceof SynchronizedStatement) {
 			SynchronizedStatement synchronizedStatement = (SynchronizedStatement)statement;
@@ -1204,54 +1230,7 @@ public class OperationBody {
 			removeAllFromActiveVariableDeclarations(variableDeclarations);
 		}
 		else if(statement instanceof KtTryExpression tryStatement) {
-			TryStatementObject child = new TryStatementObject(ktFile, sourceFolder, filePath, tryStatement, parent.getDepth()+1, fileContent);
-			parent.addStatement(child);
-			addStatementInVariableScopes(child);
-			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
-			addAllInActiveVariableDeclarations(variableDeclarations);
-			KtBlockExpression tryBlock = tryStatement.getTryBlock();
-			for(KtExpression blockStatement : tryBlock.getStatements()) {
-				processStatement(ktFile, sourceFolder, filePath, child, blockStatement, fileContent);
-			}
-			removeAllFromActiveVariableDeclarations(variableDeclarations);
-			List<KtCatchClause> catchClauses = tryStatement.getCatchClauses();
-			for(KtCatchClause catchClause : catchClauses) {
-				KtExpression catchClauseBody = catchClause.getCatchBody();
-				CompositeStatementObject catchClauseStatementObject = new CompositeStatementObject(ktFile, sourceFolder, filePath, catchClause, parent.getDepth()+1, CodeElementType.CATCH_CLAUSE, fileContent);
-				child.addCatchClause(catchClauseStatementObject);
-				parent.addStatement(catchClauseStatementObject);
-				catchClauseStatementObject.setTryContainer(child);
-				KtParameter variableDeclaration = catchClause.getCatchParameter();
-				VariableDeclaration vd = new VariableDeclaration(ktFile, sourceFolder, filePath, variableDeclaration, container, activeVariableDeclarations, fileContent, catchClauseStatementObject.getLocationInfo());
-				catchClauseStatementObject.addVariableDeclaration(vd);
-				AbstractExpression variableDeclarationName = new AbstractExpression(ktFile, sourceFolder, filePath, variableDeclaration, CodeElementType.CATCH_CLAUSE_EXCEPTION_NAME, container, activeVariableDeclarations, fileContent);
-				catchClauseStatementObject.addExpression(variableDeclarationName);
-				if(variableDeclaration.getDefaultValue() != null) {
-					AbstractExpression variableDeclarationInitializer = new AbstractExpression(ktFile, sourceFolder, filePath, variableDeclaration.getDefaultValue(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent);
-					catchClauseStatementObject.addExpression(variableDeclarationInitializer);
-				}
-				addStatementInVariableScopes(catchClauseStatementObject);
-				List<VariableDeclaration> catchClauseVariableDeclarations = catchClauseStatementObject.getVariableDeclarations();
-				addAllInActiveVariableDeclarations(catchClauseVariableDeclarations);
-				if(catchClauseBody instanceof KtBlockExpression catchBlock) {
-					for(KtExpression blockStatement : catchBlock.getStatements()) {
-						processStatement(ktFile, sourceFolder, filePath, catchClauseStatementObject, blockStatement, fileContent);
-					}
-				}
-				removeAllFromActiveVariableDeclarations(catchClauseVariableDeclarations);
-			}
-			KtFinallySection finallyBlock = tryStatement.getFinallyBlock();
-			if(finallyBlock != null) {
-				CompositeStatementObject finallyClauseStatementObject = new CompositeStatementObject(ktFile, sourceFolder, filePath, finallyBlock, parent.getDepth()+1, CodeElementType.FINALLY_BLOCK, fileContent);
-				child.setFinallyClause(finallyClauseStatementObject);
-				parent.addStatement(finallyClauseStatementObject);
-				finallyClauseStatementObject.setTryContainer(child);
-				addStatementInVariableScopes(finallyClauseStatementObject);
-				KtBlockExpression finalExpression = finallyBlock.getFinalExpression();
-				for(KtExpression blockStatement : finalExpression.getStatements()) {
-					processStatement(ktFile, sourceFolder, filePath, finallyClauseStatementObject, blockStatement, fileContent);
-				}
-			}
+			processTryStatement(ktFile, sourceFolder, filePath, parent, fileContent, tryStatement);
 		}
 		else if(statement instanceof KtWhenExpression whenStatement) {
 			processWhenStatement(ktFile, sourceFolder, filePath, parent, fileContent, whenStatement);
@@ -1271,6 +1250,9 @@ public class OperationBody {
 			}
 			else if(returnedExpression instanceof KtIfExpression ifStatement) {
 				processIfStatement(ktFile, sourceFolder, filePath, parent, fileContent, ifStatement);
+			}
+			else if(returnedExpression instanceof KtTryExpression tryStatement) {
+				processTryStatement(ktFile, sourceFolder, filePath, parent, fileContent, tryStatement);
 			}
 			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, returnStatement, parent.getDepth()+1, CodeElementType.RETURN_STATEMENT, container, activeVariableDeclarations, fileContent);
 			parent.addStatement(child);
@@ -1332,6 +1314,63 @@ public class OperationBody {
 		}
 	}
 
+	private TryStatementObject processTryStatement(KtFile ktFile, String sourceFolder, String filePath,
+			CompositeStatementObject parent, String fileContent, KtTryExpression tryStatement) {
+		int depth = parent != null ? parent.getDepth()+1 : 0;
+		TryStatementObject child = new TryStatementObject(ktFile, sourceFolder, filePath, tryStatement, depth, fileContent);
+		if (parent != null)
+			parent.addStatement(child);
+		addStatementInVariableScopes(child);
+		List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
+		addAllInActiveVariableDeclarations(variableDeclarations);
+		KtBlockExpression tryBlock = tryStatement.getTryBlock();
+		for(KtExpression blockStatement : tryBlock.getStatements()) {
+			processStatement(ktFile, sourceFolder, filePath, child, blockStatement, fileContent);
+		}
+		removeAllFromActiveVariableDeclarations(variableDeclarations);
+		List<KtCatchClause> catchClauses = tryStatement.getCatchClauses();
+		for(KtCatchClause catchClause : catchClauses) {
+			KtExpression catchClauseBody = catchClause.getCatchBody();
+			CompositeStatementObject catchClauseStatementObject = new CompositeStatementObject(ktFile, sourceFolder, filePath, catchClause, parent.getDepth()+1, CodeElementType.CATCH_CLAUSE, fileContent);
+			child.addCatchClause(catchClauseStatementObject);
+			if (parent != null)
+				parent.addStatement(catchClauseStatementObject);
+			catchClauseStatementObject.setTryContainer(child);
+			KtParameter variableDeclaration = catchClause.getCatchParameter();
+			VariableDeclaration vd = new VariableDeclaration(ktFile, sourceFolder, filePath, variableDeclaration, container, activeVariableDeclarations, fileContent, catchClauseStatementObject.getLocationInfo());
+			catchClauseStatementObject.addVariableDeclaration(vd);
+			AbstractExpression variableDeclarationName = new AbstractExpression(ktFile, sourceFolder, filePath, variableDeclaration, CodeElementType.CATCH_CLAUSE_EXCEPTION_NAME, container, activeVariableDeclarations, fileContent);
+			catchClauseStatementObject.addExpression(variableDeclarationName);
+			if(variableDeclaration.getDefaultValue() != null) {
+				AbstractExpression variableDeclarationInitializer = new AbstractExpression(ktFile, sourceFolder, filePath, variableDeclaration.getDefaultValue(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent);
+				catchClauseStatementObject.addExpression(variableDeclarationInitializer);
+			}
+			addStatementInVariableScopes(catchClauseStatementObject);
+			List<VariableDeclaration> catchClauseVariableDeclarations = catchClauseStatementObject.getVariableDeclarations();
+			addAllInActiveVariableDeclarations(catchClauseVariableDeclarations);
+			if(catchClauseBody instanceof KtBlockExpression catchBlock) {
+				for(KtExpression blockStatement : catchBlock.getStatements()) {
+					processStatement(ktFile, sourceFolder, filePath, catchClauseStatementObject, blockStatement, fileContent);
+				}
+			}
+			removeAllFromActiveVariableDeclarations(catchClauseVariableDeclarations);
+		}
+		KtFinallySection finallyBlock = tryStatement.getFinallyBlock();
+		if(finallyBlock != null) {
+			CompositeStatementObject finallyClauseStatementObject = new CompositeStatementObject(ktFile, sourceFolder, filePath, finallyBlock, parent.getDepth()+1, CodeElementType.FINALLY_BLOCK, fileContent);
+			child.setFinallyClause(finallyClauseStatementObject);
+			if (parent != null)
+				parent.addStatement(finallyClauseStatementObject);
+			finallyClauseStatementObject.setTryContainer(child);
+			addStatementInVariableScopes(finallyClauseStatementObject);
+			KtBlockExpression finalExpression = finallyBlock.getFinalExpression();
+			for(KtExpression blockStatement : finalExpression.getStatements()) {
+				processStatement(ktFile, sourceFolder, filePath, finallyClauseStatementObject, blockStatement, fileContent);
+			}
+		}
+		return child;
+	}
+
 	private CompositeStatementObject processIfStatement(KtFile ktFile, String sourceFolder, String filePath,
 			CompositeStatementObject parent, String fileContent, KtIfExpression ifStatement) {
 		int depth = parent != null ? parent.getDepth()+1 : 0;
@@ -1391,5 +1430,363 @@ public class OperationBody {
 			}
 		}
 		return child;
+	}
+
+	public OperationBody(Swc4jAstModule module, String sourceFolder, String filePath, List<? extends ISwc4jAstModuleItem> statements, VariableDeclarationContainer container, String fileContent) {
+		this.compositeStatement = new CompositeStatementObject(sourceFolder, filePath, module, 0, CodeElementType.BLOCK, fileContent);
+		this.compositeStatement.setOwner(container);
+		this.comments = container.getComments();
+		this.container = container;
+		this.activeVariableDeclarations = new HashMap<>();
+		for(ISwc4jAstModuleItem statement : statements) {
+			processStatement(sourceFolder, filePath, compositeStatement, statement, fileContent);
+		}
+		this.activeVariableDeclarations = null;
+	}
+
+	public OperationBody(String sourceFolder, String filePath, Swc4jAstBlockStmt block, VariableDeclarationContainer container, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this.compositeStatement = new CompositeStatementObject(sourceFolder, filePath, block, 0, CodeElementType.BLOCK, fileContent);
+		this.compositeStatement.setOwner(container);
+		this.comments = container.getComments();
+		this.container = container;
+		this.activeVariableDeclarations = new HashMap<>(activeVariableDeclarations);
+		for(ISwc4jAstStmt statement : block.getStmts()) {
+			processStatement(sourceFolder, filePath, compositeStatement, statement, fileContent);
+		}
+		this.activeVariableDeclarations = null;
+	}
+
+	private void processStatement(String sourceFolder, String filePath, CompositeStatementObject parent,
+			ISwc4jAstModuleItem statement, String fileContent) {
+		for(UMLComment comment : comments) {
+			if(comment.getParent() != null && comment.getParent().equals(parent))
+				continue;
+			if(parent.getLocationInfo().subsumes(comment.getLocationInfo())) {
+				if(comment.getParent() != null) {
+					if(!parent.getLocationInfo().subsumes(comment.getParent().getLocationInfo())) {
+						comment.setParent(parent);
+					}
+				}
+				else {
+					comment.setParent(parent);
+				}
+			}
+		}
+		List<UMLClass> typeDeclarations = container instanceof ModuleContainer moduleContainer ? moduleContainer.getNestedClasses() : Collections.emptyList();
+		if(statement instanceof Swc4jAstBlockStmt block) {
+			List<ISwc4jAstStmt> blockStatements = block.getStmts();
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, block, parent.getDepth()+1, CodeElementType.BLOCK, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+			for(ISwc4jAstStmt blockStatement : blockStatements) {
+				processStatement(sourceFolder, filePath, child, blockStatement, fileContent);
+			}
+		}
+		else if(statement instanceof Swc4jAstBreakStmt breakStatement) {
+			StatementObject child = new StatementObject(sourceFolder, filePath, breakStatement, parent.getDepth()+1, CodeElementType.BREAK_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+		}
+		else if(statement instanceof Swc4jAstContinueStmt continueStatement) {
+			StatementObject child = new StatementObject(sourceFolder, filePath, continueStatement, parent.getDepth()+1, CodeElementType.CONTINUE_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+		}
+		else if(statement instanceof Swc4jAstEmptyStmt emptyStatement) {
+			StatementObject child = new StatementObject(sourceFolder, filePath, emptyStatement, parent.getDepth()+1, CodeElementType.EMPTY_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+		}
+		else if(statement instanceof Swc4jAstReturnStmt returnStatement) {
+			StatementObject child = new StatementObject(sourceFolder, filePath, returnStatement, parent.getDepth()+1, CodeElementType.RETURN_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+		}
+		else if(statement instanceof Swc4jAstExprStmt expressionStatement) {
+			StatementObject child = new StatementObject(sourceFolder, filePath, expressionStatement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+		}
+		else if(statement instanceof Swc4jAstDebuggerStmt debuggerStatement) {
+			StatementObject child = new StatementObject(sourceFolder, filePath, debuggerStatement, parent.getDepth()+1, CodeElementType.DEBUGGER_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+		}
+		else if(statement instanceof Swc4jAstThrowStmt throwStatement) {
+			StatementObject child = new StatementObject(sourceFolder, filePath, throwStatement, parent.getDepth()+1, CodeElementType.THROW_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+		}
+		else if(statement instanceof Swc4jAstDoWhileStmt doWhileStatement) {
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, doWhileStatement, parent.getDepth()+1, CodeElementType.DO_STATEMENT, fileContent);
+			parent.addStatement(child);
+			AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, doWhileStatement.getTest(), CodeElementType.DO_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent, typeDeclarations);
+			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
+			processStatement(sourceFolder, filePath, child, doWhileStatement.getBody(), fileContent);
+		}
+		else if(statement instanceof Swc4jAstLabeledStmt labeledStatement) {
+			Swc4jAstIdent label = labeledStatement.getLabel();
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, labeledStatement, parent.getDepth()+1, CodeElementType.LABELED_STATEMENT.setName(label.getSym()), fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+			processStatement(sourceFolder, filePath, child, labeledStatement.getBody(), fileContent);
+		}
+		else if(statement instanceof Swc4jAstForInStmt forInStatement) {
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, forInStatement, parent.getDepth()+1, CodeElementType.ENHANCED_FOR_STATEMENT, fileContent);
+			parent.addStatement(child);
+			ISwc4jAstForHead forHead = forInStatement.getLeft();
+			if(forHead instanceof Swc4jAstVarDecl varDecl) {
+				processForHead(sourceFolder, filePath, fileContent, child, varDecl, typeDeclarations);
+			}
+			AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, forInStatement.getRight(), CodeElementType.ENHANCED_FOR_STATEMENT_EXPRESSION, container, activeVariableDeclarations, fileContent, typeDeclarations);
+			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
+			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
+			addAllInActiveVariableDeclarations(variableDeclarations);
+			processStatement(sourceFolder, filePath, child, forInStatement.getBody(), fileContent);
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
+		}
+		else if(statement instanceof Swc4jAstForOfStmt forOfStatement) {
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, forOfStatement, parent.getDepth()+1, CodeElementType.ENHANCED_FOR_STATEMENT, fileContent);
+			parent.addStatement(child);
+			ISwc4jAstForHead forHead = forOfStatement.getLeft();
+			if(forHead instanceof Swc4jAstVarDecl varDecl) {
+				processForHead(sourceFolder, filePath, fileContent, child, varDecl, typeDeclarations);
+			}
+			AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, forOfStatement.getRight(), CodeElementType.ENHANCED_FOR_STATEMENT_EXPRESSION, container, activeVariableDeclarations, fileContent, typeDeclarations);
+			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
+			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
+			addAllInActiveVariableDeclarations(variableDeclarations);
+			processStatement(sourceFolder, filePath, child, forOfStatement.getBody(), fileContent);
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
+		}
+		else if(statement instanceof Swc4jAstForStmt forStatement) {
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, forStatement, parent.getDepth()+1, CodeElementType.FOR_STATEMENT, fileContent);
+			parent.addStatement(child);
+			Optional<ISwc4jAstVarDeclOrExpr> initializer = forStatement.getInit();
+			if(initializer.isPresent()) {
+				if(initializer.get() instanceof Swc4jAstVarDecl varDecl) {
+					processForHead(sourceFolder, filePath, fileContent, child, varDecl, typeDeclarations);
+				}
+				else if(initializer.get() instanceof ISwc4jAstExpr expr) {
+					AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.FOR_STATEMENT_INITIALIZER, container, activeVariableDeclarations, fileContent, typeDeclarations);
+					child.addExpression(abstractExpression);
+				}
+			}
+			Optional<ISwc4jAstExpr> expression = forStatement.getTest();
+			if(expression.isPresent()) {
+				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, expression.get(), CodeElementType.FOR_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent, typeDeclarations);
+				child.addExpression(abstractExpression);
+			}
+			Optional<ISwc4jAstExpr> updater = forStatement.getUpdate();
+			if(updater.isPresent()) {
+				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, updater.get(), CodeElementType.FOR_STATEMENT_UPDATER, container, activeVariableDeclarations, fileContent, typeDeclarations);
+				child.addExpression(abstractExpression);
+			}
+			addStatementInVariableScopes(child);
+			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
+			addAllInActiveVariableDeclarations(variableDeclarations);
+			processStatement(sourceFolder, filePath, child, forStatement.getBody(), fileContent);
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
+		}
+		else if(statement instanceof Swc4jAstIfStmt ifStatement) {
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, ifStatement, parent.getDepth()+1, CodeElementType.IF_STATEMENT, fileContent);
+			parent.addStatement(child);
+			AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, ifStatement.getTest(), CodeElementType.IF_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent, typeDeclarations);
+			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
+			processStatement(sourceFolder, filePath, child, ifStatement.getCons(), fileContent);
+			if(ifStatement.getAlt().isPresent()) {
+				processStatement(sourceFolder, filePath, child, ifStatement.getAlt().get(), fileContent);
+			}
+		}
+		else if(statement instanceof Swc4jAstSwitchStmt switchStatement) {
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, switchStatement, parent.getDepth()+1, CodeElementType.SWITCH_STATEMENT, fileContent);
+			parent.addStatement(child);
+			AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, switchStatement.getDiscriminant(), CodeElementType.SWITCH_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent, typeDeclarations);
+			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
+			List<Swc4jAstSwitchCase> switchCases = switchStatement.getCases();
+			for(Swc4jAstSwitchCase switchCase : switchCases) {
+				CompositeStatementObject child2 = new CompositeStatementObject(sourceFolder, filePath, switchCase, parent.getDepth()+1, CodeElementType.SWITCH_CASE, fileContent);
+				child.addStatement(child2);
+				if(switchCase.getTest().isPresent()) {
+					AbstractExpression expression = new AbstractExpression(sourceFolder, filePath, switchCase.getTest().get(), CodeElementType.SWITCH_CASE_TEST, container, activeVariableDeclarations, fileContent, typeDeclarations);
+					child2.addExpression(expression);
+				}
+				addStatementInVariableScopes(child2);
+				for(ISwc4jAstStmt stmt : switchCase.getCons()) {
+					processStatement(sourceFolder, filePath, child2, stmt, fileContent);
+				}
+			}
+		}
+		else if(statement instanceof Swc4jAstTryStmt tryStatement) {
+			TryStatementObject child = new TryStatementObject(sourceFolder, filePath, tryStatement, parent.getDepth()+1, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
+			addAllInActiveVariableDeclarations(variableDeclarations);
+			processStatement(sourceFolder, filePath, child, tryStatement.getBlock(), fileContent);
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
+			Optional<Swc4jAstCatchClause> catchClause = tryStatement.getHandler();
+			if(catchClause.isPresent()) {
+				CompositeStatementObject catchClauseStatementObject = new CompositeStatementObject(sourceFolder, filePath, catchClause.get(), parent.getDepth()+1, CodeElementType.CATCH_CLAUSE, fileContent);
+				child.addCatchClause(catchClauseStatementObject);
+				parent.addStatement(catchClauseStatementObject);
+				catchClauseStatementObject.setTryContainer(child);
+				Optional<ISwc4jAstPat> param = catchClause.get().getParam();
+				if(param.isPresent()) {
+					ISwc4jAstPat pat = param.get();
+					List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(pat);
+					Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(pat);
+					for(Swc4jAstBindingIdent identifier : identifiers) {
+						VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, container, activeVariableDeclarations, fileContent);
+						catchClauseStatementObject.addVariableDeclaration(vd);
+						AbstractExpression variableDeclarationName = new AbstractExpression(sourceFolder, filePath, identifier, CodeElementType.CATCH_CLAUSE_EXCEPTION_NAME, container, activeVariableDeclarations, fileContent, typeDeclarations);
+						catchClauseStatementObject.addExpression(variableDeclarationName);
+					}
+				}
+				addStatementInVariableScopes(catchClauseStatementObject);
+				List<VariableDeclaration> catchClauseVariableDeclarations = catchClauseStatementObject.getVariableDeclarations();
+				addAllInActiveVariableDeclarations(catchClauseVariableDeclarations);
+				processStatement(sourceFolder, filePath, catchClauseStatementObject, catchClause.get().getBody(), fileContent);
+				removeAllFromActiveVariableDeclarations(catchClauseVariableDeclarations);
+			}
+			Optional<Swc4jAstBlockStmt> finallyClause = tryStatement.getFinalizer();
+			if(finallyClause.isPresent()) {
+				CompositeStatementObject finallyBlockStatementObject = new CompositeStatementObject(sourceFolder, filePath, finallyClause.get(), parent.getDepth()+1, CodeElementType.FINALLY_BLOCK, fileContent);
+				child.setFinallyClause(finallyBlockStatementObject);
+				parent.addStatement(finallyBlockStatementObject);
+				finallyBlockStatementObject.setTryContainer(child);
+			}
+		}
+		else if(statement instanceof Swc4jAstWhileStmt whileStatement) {
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, whileStatement, parent.getDepth()+1, CodeElementType.WHILE_STATEMENT, fileContent);
+			parent.addStatement(child);
+			AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, whileStatement.getTest(), CodeElementType.WHILE_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent, typeDeclarations);
+			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
+			processStatement(sourceFolder, filePath, child, whileStatement.getBody(), fileContent);
+		}
+		else if(statement instanceof Swc4jAstWithStmt withStatement) {
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, withStatement, parent.getDepth()+1, CodeElementType.WITH_STATEMENT, fileContent);
+			parent.addStatement(child);
+			AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, withStatement.getObj(), CodeElementType.VARIABLE_DECLARATION_EXPRESSION, container, activeVariableDeclarations, fileContent, typeDeclarations);
+			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
+			processStatement(sourceFolder, filePath, child, withStatement.getBody(), fileContent);
+		}
+		else if(statement instanceof Swc4jAstVarDecl variableDecl) {
+			for(Swc4jAstVarDeclarator declarator : variableDecl.getDecls()) {
+				if(declarator.getInit().isPresent()) {
+					if(declarator.getInit().get() instanceof Swc4jAstArrowExpr arrowExpr) {
+						List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
+						Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(declarator.getName());
+						//Arrow function declaration style
+						LocationInfo location = new LocationInfo(sourceFolder, filePath, variableDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+						UMLOperation operation = new UMLOperation(identifiers.get(0).getId().getSym(), location, container.getClassName());
+						operation.setVisibility(Visibility.PRIVATE);
+						AbstractExpression expression = new AbstractExpression(sourceFolder, filePath, arrowExpr, CodeElementType.FUNCTION_INITIALIZER_EXPRESSION, operation, activeVariableDeclarations, fileContent, typeDeclarations);
+						if(arrowExpr.getReturnType().isPresent()) {
+							UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, arrowExpr.getReturnType().get().getTypeAnn(), 0);
+							UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
+							operation.addParameter(returnParameter);
+						}
+						else if(typeAnnotation != null) {
+							UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation.getTypeAnn(), 0);
+							UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
+							operation.addParameter(returnParameter);
+						}
+						List<LambdaExpressionObject> lambdas = expression.getLambdas();
+						if(lambdas.size() > 0) {
+							for(UMLParameter param : lambdas.get(0).getUmlParameters()) {
+								operation.addParameter(param);
+							}
+						}
+						operation.setDefaultExpression(expression);
+						if(container instanceof UMLOperation) {
+							((UMLOperation)container).addNestedOperation(operation);
+						}
+						else if(container instanceof ModuleContainer) {
+							((ModuleContainer)container).addNestedOperation(operation);
+						}
+						return;
+					}
+				}
+			}
+			StatementObject child = new StatementObject(sourceFolder, filePath, variableDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
+		}
+		else if(statement instanceof Swc4jAstFnDecl functionDecl) {
+			String className = container.getClassName();
+			UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, functionDecl, activeVariableDeclarations, fileContent, className);
+			if(container instanceof UMLOperation) {
+				((UMLOperation)container).addNestedOperation(nested);
+			}
+			else if(container instanceof ModuleContainer) {
+				((ModuleContainer)container).addNestedOperation(nested);
+			}
+		}
+		else if(statement instanceof Swc4jAstExportDecl exportDecl) {
+			ISwc4jAstDecl decl = exportDecl.getDecl();
+			processStatement(sourceFolder, filePath, parent, decl, fileContent);
+		}
+		else if(statement instanceof Swc4jAstTsTypeAliasDecl typeAliasDecl) {
+			String typeName = typeAliasDecl.getId().getSym();
+			LocationInfo location = new LocationInfo(sourceFolder, filePath, typeAliasDecl.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);
+			List<UMLImport> imports = new ArrayList<>();
+			UMLClass umlClass = new UMLClass(container.getClassName(), typeName, location, true, imports);
+			umlClass.setVisibility(Visibility.PRIVATE);
+			umlClass.setTypeAlias(true);
+			ISwc4jAstTsType typeAnnotation = typeAliasDecl.getTypeAnn();
+			if(typeAnnotation instanceof Swc4jAstTsTypeLit typeLiteral) {
+				List<ISwc4jAstTsTypeElement> members = typeLiteral.getMembers();
+				for(ISwc4jAstTsTypeElement member : members) {
+					if(member instanceof Swc4jAstTsPropertySignature signature) {
+						ISwc4jAstExpr key = signature.getKey();
+						if(key instanceof Swc4jAstIdent ident && signature.getTypeAnn().isPresent()) {
+							VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, signature.getTypeAnn().get(), ident, container, activeVariableDeclarations, fileContent);
+							vd.setAttribute(true);
+							LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, member.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+							UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
+							attribute.setVariableDeclaration(vd);
+							attribute.setVisibility(Visibility.PRIVATE);
+							umlClass.addAttribute(attribute);
+						}
+					}
+				}
+			}
+			if(container instanceof ModuleContainer) {
+				((ModuleContainer)container).addNestedClass(umlClass);
+			}
+		}
+	}
+
+	private void processForHead(String sourceFolder, String filePath, String fileContent,
+			CompositeStatementObject child, Swc4jAstVarDecl varDecl, List<UMLClass> typeDeclarations) {
+		for(Swc4jAstVarDeclarator variableDeclaration : varDecl.getDecls()) {
+			List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(variableDeclaration.getName());
+			if(identifiers.size() == 1) {
+				VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, variableDeclaration, container, activeVariableDeclarations, fileContent, typeDeclarations);
+				child.addVariableDeclaration(vd);
+				if(variableDeclaration.getName() instanceof Swc4jAstBindingIdent binding) {
+					AbstractExpression variableDeclarationName = new AbstractExpression(sourceFolder, filePath, binding.getId(), CodeElementType.ENHANCED_FOR_STATEMENT_PARAMETER_NAME, container, activeVariableDeclarations, fileContent, typeDeclarations);
+					child.addExpression(variableDeclarationName);
+				}
+			}
+			else {
+				Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(variableDeclaration.getName());
+				for(Swc4jAstBindingIdent identifier : identifiers) {
+					VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, container, activeVariableDeclarations, fileContent);
+					child.addVariableDeclaration(vd);
+					AbstractExpression variableDeclarationName = new AbstractExpression(sourceFolder, filePath, identifier, CodeElementType.ENHANCED_FOR_STATEMENT_PARAMETER_NAME, container, activeVariableDeclarations, fileContent, typeDeclarations);
+					child.addExpression(variableDeclarationName);
+				}
+			}
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import gr.uom.java.xmi.InferredType;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAbstractClass;
@@ -28,6 +29,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,6 +53,19 @@ import org.jetbrains.kotlin.psi.KtTypeProjection;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.util.PrefixSuffixUtils;
+
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstComputedPropName;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateName;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstCallee;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstMemberProp;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamInstantiation;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.expression.LangAssignment;
@@ -426,7 +441,7 @@ public class OperationInvocation extends AbstractCall {
     			}
     			inferredArgumentTypes.add(UMLType.extractTypeObject(type));
     		}
-    		else if(indexOfOpeningParenthesis == 0 && arg.contains(")") && !arg.contains(LANG.LAMBDA_ARROW) && !arg.contains(LANG.METHOD_REFERENCE) && arg.indexOf(")") < arg.length()) {
+    		else if(indexOfOpeningParenthesis == 0 && arg.contains(")") && !arg.contains(LANG.LAMBDA_ARROW) && !arg.contains(LANG.METHOD_REFERENCE) && arg.indexOf(")") < arg.length() - 1) {
     			String cast = arg.substring(indexOfOpeningParenthesis + 1, arg.indexOf(")"));
     			if(cast.charAt(0) != '(') {
     				inferredArgumentTypes.add(UMLType.extractTypeObject(cast));
@@ -575,11 +590,11 @@ public class OperationInvocation extends AbstractCall {
 			if(expression != null) {
 				return operation.getClassName().endsWith("." + expression) || operation.getClassName().equals(expression) || expression.equals(LANG.THIS);
 			}
-			else {
-				if(classDiff != null && classDiff.getNextClass().importsType(operation.getClassName() + "." + operationName)) {
+			else if(classDiff != null) {
+				if(classDiff.getNextClass().importsType(operation.getClassName() + "." + operationName)) {
 					return true;
 				}
-				if(classDiff != null && classDiff.getNextClass().getSuperclass() != null && modelDiff != null) {
+				if(classDiff.getNextClass().getSuperclass() != null && modelDiff != null) {
 					UMLClassBaseDiff superClassDiff = modelDiff.getUMLClassDiff(classDiff.getNextClass().getSuperclass());
 					if(superClassDiff != null && superClassDiff.getNextClass().importsType(operation.getClassName())) {
 						return true;
@@ -625,6 +640,8 @@ public class OperationInvocation extends AbstractCall {
 			UMLModelDiff modelDiff, boolean varargsParameter) {
 		String type1 = parameterType.toString();
     	String type2 = type.toString();
+    	if(type instanceof InferredType || parameterType instanceof InferredType)
+    		return true;
     	if(parameterType.getClassType().length() == 1) {
     		return true;
     	}
@@ -662,6 +679,20 @@ public class OperationInvocation extends AbstractCall {
     	if(type.getArrayDimension() > 0 && type1.equals("Object")) {
     		return true;
     	}
+		if(type.getClassType().equals("ReturnType") && type.getTypeArguments().size() > 0) {
+			UMLType typeArgument = type.getTypeArguments().get(0);
+			if(typeArgument.getClassType().startsWith("typeof ")) {
+				String methodName = typeArgument.getClassType().substring("typeof ".length(), typeArgument.getClassType().length());
+				for(UMLOperation op : classDiff.getNextClass().getOperations()) {
+					if(op.getName().equals(methodName) && op.getReturnParameter() != null) {
+						UMLType returnType = op.getReturnParameter().getType();
+						if(returnType.equals(parameterType)) {
+							return true;
+						}
+					}
+				}
+			}
+		}
 		if(modelDiff != null) {
 	    	UMLAbstractClass subClassInParentModel = modelDiff.findClassInParentModel(type2);
 	    	if(!varargsParameter && subClassInParentModel instanceof UMLClass) {
@@ -1176,6 +1207,19 @@ public class OperationInvocation extends AbstractCall {
 		}
 	}
 
+	public OperationInvocation(KtFile cu, String sourceFolder, String filePath, KtDotQualifiedExpression invocation, VariableDeclarationContainer container, String fileContent) {
+		super(cu, sourceFolder, filePath, invocation, CodeElementType.METHOD_INVOCATION, container);
+		this.methodName = invocation.getSelectorExpression().getText();
+		this.numberOfArguments = 0;
+		this.arguments = new ArrayList<String>();
+		KtExpression receiver = invocation.getReceiverExpression();
+		if(receiver != null) {
+			// TODO replace with stringify
+			this.expression = receiver.getText();
+			processExpression(receiver, this.subExpressions);
+		}
+	}
+
 	private static KtExpression input(KtCallExpression invocation) {
 		if(invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression)
 			return dotQualifiedExpression;
@@ -1194,6 +1238,43 @@ public class OperationInvocation extends AbstractCall {
 		}
 		else if(expression instanceof KtNameReferenceExpression nameReference) {
 			subExpressions.add(0, nameReference.getText());
+		}
+	}
+
+	public OperationInvocation(String sourceFolder, String filePath, Swc4jAstCallExpr invocation, VariableDeclarationContainer container, String fileContent) {
+		super(sourceFolder, filePath, invocation, CodeElementType.METHOD_INVOCATION, container, fileContent);
+		ISwc4jAstCallee callee = invocation.getCallee();
+		if(callee instanceof Swc4jAstMemberExpr memberExpr) {
+			ISwc4jAstMemberProp prop = memberExpr.getProp();
+			if(prop instanceof Swc4jAstPrivateName privateName)
+				this.methodName = privateName.getName();
+			else if(prop instanceof Swc4jAstIdentName ident)
+				this.methodName = ident.getSym();
+			else if(prop instanceof Swc4jAstComputedPropName propName)
+				this.methodName = fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd());
+			ISwc4jAstExpr receiver = memberExpr.getObj();
+			this.expression = fileContent.substring(receiver.getSpan().getStart(), receiver.getSpan().getEnd());
+		}
+		else if(callee instanceof Swc4jAstIdent ident) {
+			this.methodName = ident.getSym();
+		}
+		this.arguments = new ArrayList<String>();
+		this.numberOfArguments = invocation.getArgs().size();
+		for(Swc4jAstExprOrSpread arg : invocation.getArgs()) {
+			ISwc4jAstExpr expression = arg.getExpr();
+			String s = fileContent.substring(expression.getSpan().getStart(), expression.getSpan().getEnd());
+			if(arg.getSpread().isPresent()) {
+				s = "..." + s;
+			}
+			this.arguments.add(s);
+		}
+		Optional<Swc4jAstTsTypeParamInstantiation> typeArgs = invocation.getTypeArgs();
+		if(typeArgs.isPresent()) {
+			List<ISwc4jAstTsType> typeArguments = typeArgs.get().getParams();
+			for(ISwc4jAstTsType typeArgument : typeArguments) {
+				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeArgument, 0);
+				this.typeArguments.add(type);
+			}
 		}
 	}
 }

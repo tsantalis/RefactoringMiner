@@ -14,6 +14,10 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry;
+import org.jetbrains.kotlin.psi.KtSuperTypeListEntry;
+import org.refactoringminer.util.PathFileUtils;
+
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
@@ -59,6 +63,14 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public AbstractCall(KtFile cu, String sourceFolder, String filePath, KtSuperTypeCallEntry expression, CodeElementType codeElementType, VariableDeclarationContainer container) {
 		super(cu, sourceFolder, filePath, expression, codeElementType, container);
+	}
+
+	public AbstractCall(KtFile cu, String sourceFolder, String filePath, KtSuperTypeListEntry expression, CodeElementType codeElementType, VariableDeclarationContainer container) {
+		super(cu, sourceFolder, filePath, expression, codeElementType, container);
+	}
+
+	public AbstractCall(String sourceFolder, String filePath, Swc4jAstCallExpr expression, CodeElementType codeElementType, VariableDeclarationContainer container, String fileContent) {
+		super(sourceFolder, filePath, expression, codeElementType, container, fileContent);
 	}
 
 	protected AbstractCall(LocationInfo locationInfo) {
@@ -256,6 +268,8 @@ public abstract class AbstractCall extends LeafExpression {
 			String expression1 = getExpression();
 			String expression2 = call.getExpression();
 			String expression1AfterReplacements = new String(expression1);
+			Constants LANG1 = PathFileUtils.getLang(this.getLocationInfo().getFilePath());
+			Constants LANG2 = PathFileUtils.getLang(call.getLocationInfo().getFilePath());
 			for(Replacement replacement : replacementInfo.getReplacements()) {
 				if(replacement.getType().equals(ReplacementType.TYPE) ||
 						//allow only class names corresponding to static calls
@@ -264,7 +278,7 @@ public abstract class AbstractCall extends LeafExpression {
 							(parameterToArgumentMap.containsKey(expression2) && replacement.getAfter().equals(parameterToArgumentMap.get(expression2))))) {
 						return true;
 					}
-					expression1AfterReplacements = ReplacementUtil.performReplacement(expression1AfterReplacements, expression2, replacement.getBefore(), replacement.getAfter(), LANG);
+					expression1AfterReplacements = ReplacementUtil.performReplacement(expression1AfterReplacements, expression2, replacement.getBefore(), replacement.getAfter(), LANG1, LANG2);
 				}
 				else if(replacement instanceof MethodInvocationReplacement) {
 					MethodInvocationReplacement methodInvocationReplacement = (MethodInvocationReplacement)replacement;
@@ -392,12 +406,32 @@ public abstract class AbstractCall extends LeafExpression {
 				return false;
 			}
 		}
-		return arguments().equals(call.arguments());
+		return equalArgumentsIgnoringWhitespace(call);
+	}
+
+	private boolean equalArgumentsIgnoringWhitespace(AbstractCall call) {
+		if(arguments().equals(call.arguments())) {
+			return true;
+		}
+		if(arguments().size() == call.arguments().size()) {
+			int count = 0;
+			for(int i=0; i<arguments().size(); i++) {
+				String arg1 = arguments().get(i);
+				String arg2 = call.arguments().get(i);
+				String removeWhitespace1 = arg1.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+				String removeWhitespace2 = arg2.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+				if(removeWhitespace1.equals(removeWhitespace2)) {
+					count++;
+				}
+			}
+			return count == arguments().size() && count > 0;
+		}
+		return false;
 	}
 
 	public boolean reorderedArguments(AbstractCall call) {
 		return arguments().size() > 1 && arguments().size() == call.arguments().size() &&
-				!arguments().equals(call.arguments()) && arguments().containsAll(call.arguments());
+				!equalArgumentsIgnoringWhitespace(call) && arguments().containsAll(call.arguments());
 	}
 
 	public boolean identicalOrReplacedArguments(AbstractCall call, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap) {
@@ -1200,13 +1234,19 @@ public abstract class AbstractCall extends LeafExpression {
 				args.add(arg.substring(0, arg.indexOf("\n")));
 			}
 			else {
-				args.add(arg);
+				if(LANG.equals(Constants.KOTLIN) && arg.contains(LANG.ASSIGNMENT)) {
+					String afterAssignment = arg.substring(arg.indexOf(LANG.ASSIGNMENT) + LANG.ASSIGNMENT.length(), arg.length());
+					args.add(afterAssignment);
+				}
+				else {
+					args.add(arg);
+				}
 			}
 		}
 		return args;
 	}
 
-	private int argumentIntersectionSize(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
+	protected int argumentIntersectionSize(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
 		Set<String> argumentIntersection = argumentIntersection(call);
 		int argumentIntersectionSize = argumentIntersection.size();
 		for(String parameter : parameterToArgumentMap.keySet()) {
@@ -1369,10 +1409,15 @@ public abstract class AbstractCall extends LeafExpression {
 		return null;
 	}
 
-	public Replacement makeReplacementForWrappedCall(String statement) {
+	public Replacement makeReplacementForWrappedCall(String statement, ReplacementInfo info) {
 		int index = -1;
 		if((index = argumentIsReturned(statement)) != -1 && indexCondition(statement, index)) {
 			String arg = statement.substring(LANG.RETURN_SPACE.length(), statement.length()-LANG.STATEMENT_TERMINATION.length());
+			for(Replacement r : info.getReplacements()) {
+				if(r.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_LAMBDA) && r.getAfter().equals(arg)) {
+					return null;
+				}
+			}
 			return new Replacement(arg, arguments().get(index),
 					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 		}

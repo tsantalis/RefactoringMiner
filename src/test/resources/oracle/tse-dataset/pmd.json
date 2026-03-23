@@ -198,6 +198,11 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tresult : MutableInt to size : MutableOptionalInt in method private calculateExpression(expression ASTExpression) : int from class net.sourceforge.pmd.lang.java.rule.performance.InsufficientStringBufferDeclarationRule",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_ATTRIBUTE",
+          "description": "Extract Attribute\tpackage UNKNOWN_CAPACITY : int in class net.sourceforge.pmd.lang.java.rule.performance.InsufficientStringBufferDeclarationRule.State",
+          "validation": true
         }
       ]
     },

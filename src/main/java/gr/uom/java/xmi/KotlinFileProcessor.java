@@ -28,6 +28,7 @@ import org.jetbrains.kotlin.psi.KtAnonymousInitializer;
 import org.jetbrains.kotlin.psi.KtBlockExpression;
 import org.jetbrains.kotlin.psi.KtClass;
 import org.jetbrains.kotlin.psi.KtClassBody;
+import org.jetbrains.kotlin.psi.KtConstructorDelegationCall;
 import org.jetbrains.kotlin.psi.KtDeclaration;
 import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtEnumEntry;
@@ -185,7 +186,16 @@ public class KotlinFileProcessor {
 				if (importName != null) {
 					LocationInfo locationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, importDeclaration, CodeElementType.IMPORT_DECLARATION);
 					// kotlin does not have static keyword for method imports, you can import directly a method
-					UMLImport imported = new UMLImport(importName, importDeclaration.isAllUnder(), false, locationInfo);
+					// if the final part starts with lower case (static method) or all chars are in upper case (static attribute), then consider it static
+					boolean staticImport = false;
+					if(importName.contains(".")) {
+						String lastPart = importName.substring(importName.lastIndexOf(".") + 1, importName.length());
+						if(Character.isLowerCase(lastPart.charAt(0)))
+							staticImport = true;
+						else if(lastPart.equals(lastPart.toUpperCase()))
+							staticImport = true;
+					}
+					UMLImport imported = new UMLImport(importName, importDeclaration.isAllUnder(), staticImport, locationInfo);
 					importedTypes.add(imported);
 				}
 			}
@@ -516,11 +526,14 @@ public class KotlinFileProcessor {
 				LocationInfo constructorLocationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, constructor, CodeElementType.METHOD_DECLARATION);
 				UMLOperation umlConstructor = new UMLOperation(umlClass.getNonQualifiedName(), constructorLocationInfo, umlClass.getName());
 				umlConstructor.setConstructor(true);
-				umlConstructor.setVisibility(Visibility.PUBLIC);
+				KtModifierList modifierList = constructor.getModifierList();
+				int startSignatureOffset = processFunctionModifiers(ktFile, sourceFolder, filePath, fileContent, umlConstructor, modifierList);
 				UMLJavadoc constructorJavadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, constructor.getDocComment());
 				umlConstructor.setJavadoc(constructorJavadoc);
 				distributeComments(comments, constructorLocationInfo, umlConstructor.getComments());
-				int startSignatureOffset = constructorLocationInfo.getStartOffset();
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = constructorLocationInfo.getStartOffset();
+				}
 				List<KtParameter> parameters = constructor.getValueParameters();
 				for (KtParameter parameter : parameters) {
 					KtTypeReference typeReference = parameter.getTypeReference();
@@ -560,6 +573,11 @@ public class KotlinFileProcessor {
 				if (constructor.getBodyBlockExpression() != null) {
 					OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, constructor.getBodyBlockExpression(), umlConstructor, umlClass.getAttributes(), fileContent);
 					umlConstructor.setBody(operationBody);
+				}
+				if (constructor.getDelegationCall() != null) {
+					KtConstructorDelegationCall call = constructor.getDelegationCall();
+					AbstractExpression defaultExpression = new AbstractExpression(ktFile, sourceFolder, filePath, call, CodeElementType.FUNCTION_INITIALIZER_EXPRESSION, umlConstructor, activeVariableDeclarations, fileContent);
+					umlConstructor.setDefaultExpression(defaultExpression);
 				}
 				int endSignatureOffset = constructor.getBodyBlockExpression() != null ?
 						umlConstructor.getBody().getCompositeStatement().getLocationInfo().getStartOffset() + 1 :
@@ -608,8 +626,10 @@ public class KotlinFileProcessor {
 			}
 			for(KtObjectDeclaration companion : classBody.getAllCompanionObjects()) {
 				UMLClass companionObject = processObjectDeclaration(ktFile, companion, null, umlClass.getName(), sourceFolder, filePath, fileContent, importedTypes, comments, umlClass.getAttributes(), umlModel);
-				if(umlModel != null)
+				if(umlModel != null) {
 					umlModel.addClass(companionObject);
+					umlClass.addCompanion(companionObject);
+				}
 			}
 			for(KtDeclaration declaration : classBody.getDeclarations()) {
 				if(declaration instanceof KtClass ktClass) {

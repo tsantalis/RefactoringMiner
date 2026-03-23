@@ -18,16 +18,17 @@ import extension.base.LangASTUtil;
 import extension.base.LangSupportedEnum;
 import extension.umladapter.processor.UMLAdapterVariableProcessor;
 import gr.uom.java.xmi.*;
-import gr.uom.java.xmi.decomposition.AbstractStatement;
-import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Logger;
 
+import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
+
+import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.gen.treesitterng.PythonTreeSitterNgTreeGenerator;
 
@@ -35,11 +36,7 @@ import static extension.umladapter.UMLAdapterUtil.extractUMLImports;
 import static extension.umladapter.processor.UMLAdapterVariableProcessor.processVariableDeclarations;
 
 public class UMLModelAdapter {
-
     private final UMLModel umlModel;
-    private LangSupportedEnum language;
-
-    private static final Logger LOGGER = Logger.getLogger(UMLModelAdapter.class.getName());
 
     public UMLModelAdapter(Map<String, String> langSupportedFiles) throws IOException {
         this(langSupportedFiles, false);
@@ -54,13 +51,32 @@ public class UMLModelAdapter {
         populateUMLModel(langASTMap, langSupportedFiles);
     }
 
+    private static void distributeComments(List<UMLComment> compilationUnitComments, LocationInfo codeElementLocationInfo, List<UMLComment> codeElementComments) {
+        ListIterator<UMLComment> listIterator = compilationUnitComments.listIterator(compilationUnitComments.size());
+        while(listIterator.hasPrevious()) {
+            UMLComment comment = listIterator.previous();
+            LocationInfo commentLocationInfo = comment.getLocationInfo();
+            if(codeElementLocationInfo.subsumes(commentLocationInfo) ||
+                    codeElementLocationInfo.sameLine(commentLocationInfo) ||
+                    (commentLocationInfo.startsAtTheEndLineOf(codeElementLocationInfo) && !codeElementLocationInfo.getCodeElementType().equals(CodeElementType.ANONYMOUS_CLASS_DECLARATION)) ||
+                    (codeElementLocationInfo.nextLine(commentLocationInfo) && !codeElementLocationInfo.getCodeElementType().equals(CodeElementType.ANONYMOUS_CLASS_DECLARATION)) ||
+                    (codeElementComments.size() > 0 && codeElementComments.get(0).getLocationInfo().nextLine(commentLocationInfo))) {
+                codeElementComments.add(0, comment);
+            }
+            if(commentLocationInfo.nextLine(codeElementLocationInfo) || commentLocationInfo.rightAfterNextLine(codeElementLocationInfo)) {
+                comment.addPreviousLocation(codeElementLocationInfo);
+            }
+        }
+        compilationUnitComments.removeAll(codeElementComments);
+    }
+
     private Map<String, LangASTNode> parseLangSupportedFiles(Map<String, String> langSupportedFiles, boolean astDiff) throws IOException {
         Map<String, LangASTNode> result = new HashMap<>();
 
         for (Map.Entry<String, String> entry : langSupportedFiles.entrySet()) {
-            this.language = LangSupportedEnum.fromFileName(entry.getKey());
+            LangSupportedEnum language = LangSupportedEnum.fromFileName(entry.getKey());
             LangASTNode ast = LangASTUtil.getLangAST(
-                    this.language, // fileName for language detection
+                    language, // fileName for language detection
                     entry.getValue()); // code content
            // System.out.print("AST Structure: " + ast.toString());
             result.put(entry.getKey(), ast);
@@ -68,6 +84,15 @@ public class UMLModelAdapter {
                 ByteArrayInputStream is = new ByteArrayInputStream(entry.getValue().getBytes());
                 try {
                     TreeContext treeContext = new PythonTreeSitterNgTreeGenerator().generateFrom().stream(is);
+                    List<Tree> trees = TreeUtilFunctions.findChildrenByTypeRecursively(treeContext.getRoot(), "comment");
+                    List<UMLComment> comments = new ArrayList<UMLComment>();
+                    for(Tree t : trees) {
+                        String sourceFolder = UMLAdapterUtil.extractSourceFolder(entry.getKey());
+                        LocationInfo location = new LocationInfo(sourceFolder, entry.getKey(), t, CodeElementType.LINE_COMMENT);
+                        UMLComment comment = new UMLComment(t.getLabel(), location);
+                        comments.add(comment);
+                    }
+                    this.umlModel.getCommentMap().put(entry.getKey(), comments);
                     this.umlModel.getTreeContextMap().put(entry.getKey(), treeContext);
                 }
                 catch(Exception e) {
@@ -90,25 +115,43 @@ public class UMLModelAdapter {
         }
     }
 
-    private void extractUMLEntities(LangASTNode ast, UMLModel model, String filename, String fileContent) {
+    public static void extractUMLEntities(LangASTNode ast, UMLModel model, String filename, String fileContent) {
         if (ast instanceof LangCompilationUnit compilationUnit) {
             // Process imports
             List<UMLImport> imports = extractUMLImports(compilationUnit, filename);
+            List<UMLComment> comments = model.getCommentMap().containsKey(filename) ? model.getCommentMap().get(filename) : new ArrayList<>();
 
             for (LangTypeDeclaration typeDecl : compilationUnit.getTypes()) {
-                UMLClass umlClass = createUMLClass(model, typeDecl, filename, imports, fileContent);
+                UMLClass umlClass = createUMLClass(typeDecl, filename, imports, fileContent, comments);
+                if (!typeDecl.getSuperClassNames().isEmpty()) {
+                    String packageName = UMLAdapterUtil.extractPackageName(filename);
+                    LangSimpleName primarySuperClassRaw = typeDecl.getSuperClassNames().get(0);
+                    String primarySuperClass = UMLAdapterUtil.resolveQualifiedTypeName(primarySuperClassRaw.getIdentifier(), imports, packageName);
+                    model.addGeneralization(new UMLGeneralization(umlClass, primarySuperClass));
+                    for (int i = 1; i < typeDecl.getSuperClassNames().size(); i++) {
+                        LangSimpleName additionalSuperClassRaw = typeDecl.getSuperClassNames().get(i);
+                        String additionalSuperClass = UMLAdapterUtil.resolveQualifiedTypeName(additionalSuperClassRaw.getIdentifier(), imports, packageName);
+                        // Create additional generalization for multiple inheritance support
+                        model.addGeneralization(new UMLGeneralization(umlClass, additionalSuperClass));
+                    }
+                }
                 model.addClass(umlClass);
+                if(umlClass.getContainer().isPresent()) {
+                    for(UMLClass nestedClass : umlClass.getContainer().get().getNestedClasses()) {
+                        model.addClass(nestedClass);
+                    }
+                }
             }
 
             // Handle top level methods
-            if (compilationUnit.getMethods().size() > 0 || compilationUnit.getComments().size() > 0 ||
-            		compilationUnit.getImports().size() > 0 || compilationUnit.getStatements().size() > 0){
-                handleTopLevelMethods(model, filename, compilationUnit, imports, fileContent);
+            if (compilationUnit.getMethods().size() > 0 || compilationUnit.getComments().size() > 0 || comments.size() > 0 ||
+                    compilationUnit.getImports().size() > 0 || compilationUnit.getStatements().size() > 0){
+                handleTopLevelMethods(model, filename, compilationUnit, imports, fileContent, comments);
             }
         }
     }
 
-    private void handleTopLevelMethods(UMLModel model, String filename, LangCompilationUnit compilationUnit, List<UMLImport> imports, String fileContent) {
+    private static void handleTopLevelMethods(UMLModel model, String filename, LangCompilationUnit compilationUnit, List<UMLImport> imports, String fileContent, List<UMLComment> comments) {
         List<LangMethodDeclaration> topLevelMethods = compilationUnit.getMethods();
         UMLClass moduleClass = createModuleClass(compilationUnit, filename, imports, fileContent);
 
@@ -127,14 +170,23 @@ public class UMLModelAdapter {
             String filepath = UMLAdapterUtil.extractFilePath(filename);
             for (LangMethodDeclaration method : topLevelMethods) {
                 UMLOperation operation = createUMLOperation(method, moduleClass.getName(),
-                        sourceFolder, filepath, fileContent, convertToVariableDeclarationMap(moduleClass.getFieldDeclarationMap().values()), language);
+                        sourceFolder, filepath, fileContent, comments, convertToVariableDeclarationMap(moduleClass.getFieldDeclarationMap().values()));
                 moduleClass.addOperation(operation);
             }
         }
+        distributeComments(comments, moduleClass.getLocationInfo(), moduleClass.getComments());
+        //if there are still comments left, add them to module
+        if(comments.size() > 0)
+            moduleClass.getComments().addAll(comments);
         model.addClass(moduleClass);
+        if(moduleClass.getContainer().isPresent()) {
+            for(UMLClass nestedClass : moduleClass.getContainer().get().getNestedClasses()) {
+                model.addClass(nestedClass);
+            }
+        }
     }
 
-    private UMLClass createModuleClass(LangCompilationUnit compilationUnit, String filename, List<UMLImport> imports, String fileContent) {
+    private static UMLClass createModuleClass(LangCompilationUnit compilationUnit, String filename, List<UMLImport> imports, String fileContent) {
         String moduleName = UMLAdapterUtil.extractModuleName(filename);
         String sourceFolder = UMLAdapterUtil.extractSourceFolder(filename);
         String filepath = UMLAdapterUtil.extractFilePath(filename);
@@ -173,12 +225,9 @@ public class UMLModelAdapter {
         return moduleClass;
     }
 
-    private UMLClass createUMLClass(UMLModel model, LangTypeDeclaration typeDecl, String filename, List<UMLImport> imports, String fileContent) {
-
+    public static UMLClass createUMLClass(LangTypeDeclaration typeDecl, String filename, List<UMLImport> imports, String fileContent, List<UMLComment> comments) {
         String className = typeDecl.getName();
-
         String moduleName = UMLAdapterUtil.extractModuleName(filename);
-        String packageName = UMLAdapterUtil.extractPackageName(filename);
         String sourceFolder = UMLAdapterUtil.extractSourceFolder(filename);
         String filepath = UMLAdapterUtil.extractFilePath(filename);
 
@@ -187,6 +236,16 @@ public class UMLModelAdapter {
                 typeDecl,
                 LocationInfo.CodeElementType.TYPE_DECLARATION);
 
+        //handle nested type declarations
+        LangASTNode current = typeDecl;
+        List<String> parentClassNames = new ArrayList<>();
+        while(current.getParent() instanceof LangTypeDeclaration parentTypeDecl) {
+            parentClassNames.add(0, parentTypeDecl.getName());
+            current = current.getParent();
+        }
+        for(String s : parentClassNames) {
+            moduleName = moduleName + "." + s;
+        }
         UMLClass umlClass = new UMLClass(moduleName, className, locationInfo, typeDecl.isTopLevel(), imports);
 
         for (LangAnnotation langAnnotation : typeDecl.getAnnotations()) {
@@ -202,17 +261,15 @@ public class UMLModelAdapter {
             // Qualify and set the first superclass as the main superclass
             LangSimpleName primarySuperClassRaw = typeDecl.getSuperClassNames().get(0);
             LocationInfo superTypeLocationInfo = new LocationInfo(sourceFolder, filepath, primarySuperClassRaw, LocationInfo.CodeElementType.TYPE);
-            String primarySuperClass = UMLAdapterUtil.resolveQualifiedTypeName(primarySuperClassRaw.getIdentifier(), imports, packageName);
             UMLType superClassType = UMLType.extractTypeObject(primarySuperClassRaw.getIdentifier(), "[", "]", superTypeLocationInfo);
             umlClass.setSuperclass(superClassType);
-            model.addGeneralization(new UMLGeneralization(umlClass, primarySuperClass));
 
             // For additional base classes, also add as generalizations (Python multiple inheritance)
             for (int i = 1; i < typeDecl.getSuperClassNames().size(); i++) {
                 LangSimpleName additionalSuperClassRaw = typeDecl.getSuperClassNames().get(i);
-                String additionalSuperClass = UMLAdapterUtil.resolveQualifiedTypeName(additionalSuperClassRaw.getIdentifier(), imports, packageName);
-                // Create additional generalization for multiple inheritance support
-                model.addGeneralization(new UMLGeneralization(umlClass, additionalSuperClass));
+                LocationInfo additionalSuperTypeLocationInfo = new LocationInfo(sourceFolder, filepath, additionalSuperClassRaw, LocationInfo.CodeElementType.TYPE);
+                UMLType additionalSuperClassType = UMLType.extractTypeObject(additionalSuperClassRaw.getIdentifier(), "[", "]", additionalSuperTypeLocationInfo);
+                umlClass.addImplementedInterface(additionalSuperClassType);
             }
         }
 
@@ -240,7 +297,7 @@ public class UMLModelAdapter {
         umlClass.setRecord(typeDecl.isRecord());
 
         for (LangMethodDeclaration methodDecl : typeDecl.getMethods()) {
-            UMLOperation umlOperation = createUMLOperation(methodDecl, umlClass.getName(), sourceFolder, filepath, fileContent, convertToVariableDeclarationMap(umlClass.getFieldDeclarationMap().values()), language);
+            UMLOperation umlOperation = createUMLOperation(methodDecl, umlClass.getName(), sourceFolder, filepath, fileContent, comments, convertToVariableDeclarationMap(umlClass.getFieldDeclarationMap().values()));
             umlClass.addOperation(umlOperation);
             if ("__init__".equals(methodDecl.getName()) || "_build".equals(methodDecl.getName())) {
                 List<UMLAttribute> attributes = getAttributes(methodDecl, umlClass.getName(), sourceFolder, filepath, umlOperation, fileContent);
@@ -255,7 +312,7 @@ public class UMLModelAdapter {
         if (typeDecl.getStatements().size() > 0) {
             ModuleContainer moduleContainer = new ModuleContainer(locationInfo, typeDecl.getName());
             OperationBody opBody = new OperationBody(
-            		typeDecl.getRootCompilationUnit(),
+                    typeDecl.getRootCompilationUnit(),
                     sourceFolder,
                     filepath,
                     typeDecl.getStatements(),
@@ -266,13 +323,14 @@ public class UMLModelAdapter {
             moduleContainer.addStatements(opBody.getCompositeStatement().getStatements());
             umlClass.setContainer(moduleContainer);
         }
+        distributeComments(comments, locationInfo, umlClass.getComments());
         return umlClass;
     }
 
-    public static UMLOperation createUMLOperation(LangMethodDeclaration methodDecl, String className, String sourceFolder, String filePath, String fileContent, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, LangSupportedEnum language) {
+    public static UMLOperation createUMLOperation(LangMethodDeclaration methodDecl, String className, String sourceFolder, String filePath, String fileContent, List<UMLComment> comments, Map<String, Set<VariableDeclaration>> activeVariableDeclarations) {
         int startSignatureOffset = methodDecl.getStartChar();
         LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, methodDecl, LocationInfo.CodeElementType.METHOD_DECLARATION);
-
+        LangSupportedEnum language = LangSupportedEnum.fromFileName(filePath);
         String operationName = methodDecl.getName();
         UMLOperation umlOperation = new UMLOperation(operationName, locationInfo, className);
 
@@ -362,6 +420,7 @@ public class UMLModelAdapter {
                 methodDecl.getStartChar() + methodDecl.getLength();
         String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
         umlOperation.setActualSignature(text);
+        distributeComments(comments, locationInfo, umlOperation.getComments());
         return umlOperation;
     }
 
@@ -464,7 +523,7 @@ public class UMLModelAdapter {
         }
     }
 
-    private void processClassLevelAssignmentForAttribute(UMLClass typeDeclaration, LangAssignment assignment,
+    private static void processClassLevelAssignmentForAttribute(UMLClass typeDeclaration, LangAssignment assignment,
                                                String sourceFolder, String filePath, String fileContent) {
         LangASTNode leftSide = assignment.getLeftSide();
 
@@ -536,82 +595,6 @@ public class UMLModelAdapter {
         }
         return null;
     }
-
-    private static void logMethodDetails(CompositeStatementObject composite, UMLOperation container, List<VariableDeclaration> allMethodVarDecls) {
-        LOGGER.info("Method " + container.getName() + " has " +
-                composite.getVariableDeclarations().size() + " variable declarations:");
-
-
-        LOGGER.info("=== FINAL UML MODEL DEBUG ===");
-        LOGGER.info("Method " + container.getName() + " has " + allMethodVarDecls.size() + " variable declarations:");
-        for (VariableDeclaration vd : allMethodVarDecls) {
-            LOGGER.info("  - Variable: " + vd.getVariableName() +
-                    " | Type: " + vd.getType() +
-                    " | Scope: " + vd.getScope() +
-                    " | Initializer: " + (vd.getInitializer() != null ? vd.getInitializer().getString() : "null"));
-        }
-
-        LOGGER.info("Method body statements: " + composite.getStatements().size());
-        for (AbstractStatement stmt : composite.getStatements()) {
-            LOGGER.info("  - Statement: " + stmt.getClass().getSimpleName() +
-                    " | Variables: " + stmt.getVariables().size() +
-                    " | VarDecls: " + stmt.getVariableDeclarations().size());
-        }
-        LOGGER.info("=== END UML MODEL DEBUG ===");
-    }
-
-    private void logUMLClass(UMLClass umlClass) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("UMLClass created: ").append(umlClass)
-                .append("\nName: ").append(umlClass.getName())
-                .append("\nPackage: ").append(umlClass.getPackageName())
-                .append("\nSource Folder: ").append(umlClass.getLocationInfo().getSourceFolder())
-                .append("\nFile Path: ").append(umlClass.getLocationInfo().getFilePath())
-                .append("\nActual Signature: ").append(umlClass.getActualSignature())
-                .append("\nNon Qualified Name: ").append(umlClass.getNonQualifiedName())
-                .append("\nVisibility: ").append(umlClass.getVisibility())
-                .append("\nIs Interface: ").append(umlClass.isInterface())
-                .append("\nIs Abstract: ").append(umlClass.isAbstract())
-                .append("\nSuperclass: ").append(umlClass.getSuperclass())
-                .append("\nImplemented Interfaces: ").append(umlClass.getImplementedInterfaces())
-                .append("\nAttributes: ").append(umlClass.getAttributes())
-                .append("\nOperations (methods): \n");
-
-        for (UMLOperation op : umlClass.getOperations()) {
-            sb.append("  - ").append(op.getActualSignature())
-                    .append(" [Visibility: ").append(op.getVisibility())
-                    .append(", Parameters: ").append(op.getParameters())
-                    .append("]\n");
-        }
-
-        sb.append("\n");
-
-        LOGGER.info(sb.toString());
-    }
-
-//    private void logUMLOperation(UMLOperation umlOperation, LangMethodDeclaration methodDecl){
-//        String bodyString = stringify(methodDecl.getBody());
-//        LOGGER.info(
-//                "UMLOperation created: " + umlOperation +
-//                        "\nSignature: " + umlOperation.getActualSignature() +
-//                        "\nQualified Name: " + umlOperation.getClassName() + "." + umlOperation.getName() +
-//                        "\nName: " + umlOperation.getName() +
-//                        "\nClass: " + umlOperation.getClassName() +
-//                        "\nVisibility: " + umlOperation.getVisibility() +
-//                        "\nParameters: " + umlOperation.getParameters() +
-//                        "\nIs Constructor: " + umlOperation.isConstructor() +
-//                        "\nIs Final: " + umlOperation.isFinal() +
-//                        "\nIs Static: " + umlOperation.isStatic() +
-//                        "\nIs Abstract: " + umlOperation.isAbstract() +
-//                        "\nIs Native: " + umlOperation.isNative() +
-//                        "\nReturn Type: " + umlOperation.getReturnParameter() +
-//                        "\nBody Hash Code: " + umlOperation.getBody().getBodyHashCode() +
-//                        "\nMethod body stringify result for " + methodDecl.getName() + ": " + bodyString +
-//                        "\nString hash: " + bodyString.hashCode() +
-//                        "\n\n"
-//        );
-//
-//    }
 
     public UMLModel getUMLModel() {
         return umlModel;

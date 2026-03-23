@@ -161,6 +161,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				else if(o.referencesMapping(this)) {
 					return -1;
 				}
+				if(this.differOnlyInVal() && !o.differOnlyInVal()) {
+					return -1;
+				}
+				else if(!this.differOnlyInVal() && o.differOnlyInVal()) {
+					return 1;
+				}
 				Set<ReplacementType> thisReplacementTypes = this.getReplacementTypes();
 				Set<ReplacementType> otherReplacementTypes = o.getReplacementTypes();
 				Set<ReplacementType> intersection = new LinkedHashSet<>(thisReplacementTypes);
@@ -848,7 +854,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			AbstractCodeFragment oPrevious2 = oComp2.getStatements().get(o.getFragment2().getIndex()-1);
 			boolean thisEqualPrevious = thisPrevious1.getString().equals(thisPrevious2.getString());
 			if(thisEqualPrevious) {
-				if(!isFieldAssignment(thisPrevious1) && !isFieldAssignment(thisPrevious2)) {
+				if(!isFieldAssignment(thisPrevious1, LANG1) && !isFieldAssignment(thisPrevious2, LANG2)) {
 					this.identicalPreviousStatement = true;
 				}
 			}
@@ -857,7 +863,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			}
 			boolean oEqualPrevious = oPrevious1.getString().equals(oPrevious2.getString());
 			if(oEqualPrevious) {
-				if(!isFieldAssignment(oPrevious1) && !isFieldAssignment(oPrevious2)) {
+				if(!isFieldAssignment(oPrevious1, LANG1) && !isFieldAssignment(oPrevious2, LANG2)) {
 					o.identicalPreviousStatement = true;
 				}
 			}
@@ -875,7 +881,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			AbstractCodeFragment oPrevious2 = oComp2.getStatements().get(o.getFragment2().getIndex()-1);
 			boolean thisEqualPrevious = thisPrevious1.getString().equals(thisPrevious2.getString());
 			if(thisEqualPrevious) {
-				if(!isFieldAssignment(thisPrevious1) && !isFieldAssignment(thisPrevious2)) {
+				if(!isFieldAssignment(thisPrevious1, LANG1) && !isFieldAssignment(thisPrevious2, LANG2)) {
 					this.identicalPreviousStatement = true;
 				}
 			}
@@ -884,7 +890,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			}
 			boolean oEqualPrevious = oPrevious1.getString().equals(oPrevious2.getString());
 			if(oEqualPrevious) {
-				if(!isFieldAssignment(oPrevious1) && !isFieldAssignment(oPrevious2)) {
+				if(!isFieldAssignment(oPrevious1, LANG1) && !isFieldAssignment(oPrevious2, LANG2)) {
 					o.identicalPreviousStatement = true;
 				}
 			}
@@ -911,7 +917,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		}
 	}
 
-	private boolean isFieldAssignment(AbstractCodeFragment fragment) {
+	private boolean isFieldAssignment(AbstractCodeFragment fragment, Constants LANG) {
 		String statement = fragment.getString();
 		if(statement.contains(LANG.ASSIGNMENT)) {
 			List<LeafExpression> variables = fragment.getVariables();
@@ -992,6 +998,22 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		return false;
 	}
 
+	private boolean differOnlyInVal() {
+		String s1 = this.getFragment1().getString();
+		String s2 = this.getFragment2().getString();
+		if(!s1.equals(s2)) {
+			if(s1.equals("val " + s2))
+				return true;
+			else if(s1.equals("var " + s2))
+				return true;
+			if(s2.equals("val " + s1))
+				return true;
+			else if(s2.equals("var " + s1))
+				return true;
+		}
+		return false;
+	}
+
 	private static String removeGenericTypeAfterDot(String s) {
 		if(s.contains(".<")) {
 			int indexOfGenericTypeStart = s.indexOf(".<");
@@ -1032,7 +1054,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		if(parent1 != null && parent2 != null) {
 			if(parent1.getLocationInfo().getCodeElementType().equals(parent2.getLocationInfo().getCodeElementType()) &&
 					!parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
-				if(parent1.getString().equals(parent2.getString()) && !parent1.getString().equals(LANG.TRY)) {
+				if(parent1.getString().equals(parent2.getString()) && !parent1.getString().equals(LANG1.TRY)) {
 					return true;
 				}
 				return getFragment1().getDepth() == getFragment2().getDepth() && getFragment1().getIndex() == getFragment2().getIndex();
@@ -1054,7 +1076,8 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 	}
 
 	private int commonConditionalsInParent() {
-		Pattern SPLIT_CONDITIONAL_PATTERN = LANG.equals(Constants.PYTHON) ? SPLIT_CONDITIONAL_PATTERN_PYTHON : SPLIT_CONDITIONAL_PATTERN_JAVA;
+		Pattern SPLIT_CONDITIONAL_PATTERN_1 = LANG1.equals(Constants.PYTHON) ? SPLIT_CONDITIONAL_PATTERN_PYTHON : SPLIT_CONDITIONAL_PATTERN_JAVA;
+		Pattern SPLIT_CONDITIONAL_PATTERN_2 = LANG2.equals(Constants.PYTHON) ? SPLIT_CONDITIONAL_PATTERN_PYTHON : SPLIT_CONDITIONAL_PATTERN_JAVA;
 		CompositeStatementObject parent1 = getFragment1().getParent();
 		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 			parent1 = parent1.getParent();
@@ -1066,17 +1089,17 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		if(parent1 != null && parent2 != null && parent1.getExpressions().size() == 1 && parent2.getExpressions().size() == 1) {
 			AbstractExpression expr1 = parent1.getExpressions().get(0);
 			AbstractExpression expr2 = parent2.getExpressions().get(0);
-			String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(expr1.getString());
+			String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN_1.split(expr1.getString());
 			List<String> subConditionsAsList1 = new ArrayList<String>();
 			for(String s : subConditions1) {
 				subConditionsAsList1.add(s.trim());
 			}
-			String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(expr2.getString());
+			String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN_2.split(expr2.getString());
 			List<String> subConditionsAsList2 = new ArrayList<String>();
 			for(String s : subConditions2) {
 				subConditionsAsList2.add(s.trim());
 			}
-			Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2, LANG);
+			Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2, LANG1, LANG2);
 			int increment = 0;
 			for(String s1 : subConditions1) {
 				if(!intersection.contains(s1) && s1.contains(".")) {
@@ -1307,13 +1330,13 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		}
 		else if(parent1 == null && parent2 != null) {
 			String s2 = parent2.getString();
-			int distance = StringDistance.editDistance(LANG.OPEN_BLOCK, s2);
+			int distance = StringDistance.editDistance(LANG2.OPEN_BLOCK, s2);
 			double normalized = (double)distance/(double)Math.max(1, s2.length());
 			return normalized;
 		}
 		else if(parent1 != null && parent2 == null) {
 			String s1 = parent1.getString();
-			int distance = StringDistance.editDistance(s1, LANG.OPEN_BLOCK);
+			int distance = StringDistance.editDistance(s1, LANG1.OPEN_BLOCK);
 			double normalized = (double)distance/(double)Math.max(s1.length(), 1);
 			return normalized;
 		}
@@ -1443,5 +1466,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				return (double)intersection.size()/(double)union.size();
 		}
 		return 0;
+	}
+
+	public boolean sameVariableDeclarationName() {
+		if(this.getFragment1().getVariableDeclarations().size() > 0 && this.getFragment2().getVariableDeclarations().size() > 0) {
+			return this.getFragment1().getVariableDeclarations().get(0).getVariableName().equals(this.getFragment2().getVariableDeclarations().get(0).getVariableName());
+		}
+		return false;
 	}
 }

@@ -9,6 +9,7 @@ import extension.ast.node.expression.*;
 import extension.ast.node.literal.*;
 import extension.ast.node.metadata.LangAnnotation;
 import extension.ast.node.metadata.comment.LangComment;
+import extension.ast.node.pattern.LangAsPattern;
 import extension.ast.node.pattern.LangLiteralPattern;
 import extension.ast.node.pattern.LangVariablePattern;
 import extension.ast.node.statement.*;
@@ -328,7 +329,7 @@ public class LangVisitor implements LangASTVisitor {
             langAssignment.getLeftSide().accept(this);
         }
         if (langAssignment.getRightSide() != null) {
-            langAssignment.getRightSide().accept(this);  // This will find the method invocation!
+            langAssignment.getRightSide().accept(this);
         }
 
         if (langAssignment.getLeftSide() instanceof LangSimpleName) {
@@ -705,7 +706,19 @@ public class LangVisitor implements LangASTVisitor {
 
     @Override
     public void visit(LangVariablePattern langVariablePattern) {
+        if (langVariablePattern.getVariableName() != null) {
+            addVariableDeclaration(langVariablePattern.getVariableName());
+        }
+    }
 
+    @Override
+    public void visit(LangAsPattern langAsPattern) {
+        if (langAsPattern.getPattern() != null) {
+            langAsPattern.getPattern().accept(this);
+        }
+        if (langAsPattern.getTarget() != null) {
+            langAsPattern.getTarget().accept(this);
+        }
     }
 
     @Override
@@ -814,6 +827,31 @@ public class LangVisitor implements LangASTVisitor {
             }
         }
     }
+
+    @Override
+    public void visit(LangTemplateStringExpression langTemplateStringExpression) {
+        LeafExpression templateStringExpr = new LeafExpression(cu, sourceFolder, filePath,
+                langTemplateStringExpression, LocationInfo.CodeElementType.STRING_LITERAL, container);
+        stringLiterals.add(templateStringExpr);
+
+        // Visit all template expression parts
+        if (langTemplateStringExpression.getParts() != null) {
+            for (LangTemplateExpressionPart part : langTemplateStringExpression.getParts()) {
+                if (part.getExpression() != null) {
+                    part.getExpression().accept(this);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void visit(LangTemplateExpressionPart langTemplateExpressionPart) {
+        // Visit the contained expression
+        if (langTemplateExpressionPart.getExpression() != null) {
+            langTemplateExpressionPart.getExpression().accept(this);
+        }
+    }
+
 
 
     public LangCompilationUnit getCu() {

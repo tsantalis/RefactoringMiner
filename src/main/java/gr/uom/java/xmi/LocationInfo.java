@@ -12,6 +12,8 @@ import org.jetbrains.kotlin.com.intellij.psi.PsiElement;
 import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtFile;
 
+import com.caoccao.javet.swc4j.span.Swc4jSpan;
+
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -151,6 +153,35 @@ public class LocationInfo {
 		this.endLine = node.getEndLine();   	// 1-based
 		this.startColumn = 1;
 		this.endColumn = 1;
+	}
+
+	public LocationInfo(String sourceFolder, String filePath, com.github.gumtreediff.tree.Tree tree, CodeElementType codeElementType) {
+		this.sourceFolder = sourceFolder;
+		this.filePath = filePath;
+		this.codeElementType = codeElementType;
+		this.startOffset = tree.getPos();
+		this.length = tree.getLength();
+		this.endOffset = tree.getEndPos();
+	}
+
+	public LocationInfo(String sourceFolder, String filePath, Swc4jSpan span, CodeElementType codeElementType, String fileContent) {
+		this.sourceFolder = sourceFolder;
+		this.filePath = filePath;
+		this.codeElementType = codeElementType;
+		this.startOffset = span.getStart();
+		this.length = span.getEnd() - span.getStart();
+		this.endOffset = span.getEnd();
+		this.startLine = span.getLine();
+		this.startColumn = span.getColumn();
+		//compute end-line
+		String text = fileContent.substring(this.startOffset, this.endOffset);
+		long lines = text.lines().count();
+		if(lines == 0) {
+			this.endLine = this.startLine;
+		}
+		else {
+			this.endLine = (int) (this.startLine + lines - 1);
+		}
 	}
 
 	public String getSourceFolder() {
@@ -362,7 +393,8 @@ public class LocationInfo {
 		CATCH_CLAUSE("catch"),
 		CATCH_CLAUSE_EXCEPTION_NAME,
 		EXPRESSION_STATEMENT,
-		SWITCH_CASE,
+		SWITCH_CASE("case"),
+		SWITCH_CASE_TEST,
 		YIELD_STATEMENT,
 		ASSERT_STATEMENT,
 		RETURN_STATEMENT,
@@ -373,6 +405,7 @@ public class LocationInfo {
 		CONTINUE_STATEMENT,
 		DEL_STATEMENT,
 		EMPTY_STATEMENT,
+		DEBUGGER_STATEMENT,
 		BLOCK("{"),
 		FINALLY_BLOCK("finally"),
 		WITH_STATEMENT("with"),

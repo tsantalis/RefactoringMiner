@@ -7,7 +7,7 @@ import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
-import org.refactoringminer.astDiff.actions.editscript.SimplifiedExtendedChawatheScriptGenerator;
+import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 
 import java.util.*;
@@ -31,7 +31,9 @@ public abstract class MovedASTDiffGenerator {
             if(!mappings.isEmpty()) {
                 Tree leftRoot = treeContextPairs.first.getRoot();
                 Tree rightRoot = treeContextPairs.second.getRoot();
-                ExtendedMultiMappingStore store = new ExtendedMultiMappingStore(leftRoot, rightRoot);
+                Constants LANG1 = new Constants(pair.first);
+                Constants LANG2 = new Constants(pair.second);
+                ExtendedMultiMappingStore store = new ExtendedMultiMappingStore(leftRoot, rightRoot, LANG1, LANG2);
                 for(Mapping m : mappings) {
                     store.addMapping(m.first, m.second); //NOTE: SubClasses must provide all the mappings that are needed for the ASTDiff
                 }

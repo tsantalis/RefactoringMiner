@@ -18,6 +18,7 @@ import org.jetbrains.kotlin.psi.KtCallExpression;
 import org.jetbrains.kotlin.psi.KtConstantExpression;
 import org.jetbrains.kotlin.psi.KtConstructorCalleeExpression;
 import org.jetbrains.kotlin.psi.KtDelegatedSuperTypeEntry;
+import org.jetbrains.kotlin.psi.KtDestructuringDeclaration;
 import org.jetbrains.kotlin.psi.KtDotQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
@@ -41,6 +42,7 @@ import org.jetbrains.kotlin.psi.KtThisExpression;
 import org.jetbrains.kotlin.psi.KtTypeReference;
 import org.jetbrains.kotlin.psi.KtUserType;
 import org.jetbrains.kotlin.psi.KtValueArgument;
+import org.jetbrains.kotlin.psi.KtVariableDeclaration;
 import org.jetbrains.kotlin.psi.KtVisitor;
 import org.jetbrains.kotlin.psi.ValueArgument;
 
@@ -140,6 +142,10 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 			this.processObjectLiteralExpression(objectLiteralExpression, data);
 		} else if (expression instanceof KtLabeledExpression labeledExpression) {
 			this.processLabeledExpression(labeledExpression, data);
+		} else if (expression instanceof KtDestructuringDeclaration destructuringDeclaration) {
+			this.processDestructuringDeclaration(destructuringDeclaration, data);
+		} else if (expression instanceof KtVariableDeclaration variableDeclaration) {
+			this.processVariableDeclaration(variableDeclaration, data);
 		}
 		return super.visitExpression(expression, data);
 	}
@@ -149,6 +155,9 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 		UMLType type = null;
 		for(KtSuperTypeListEntry entry : objectDeclaration.getSuperTypeListEntries()) {
 			type = UMLType.extractTypeObject(cu, sourceFolder, filePath, fileContent, entry.getTypeReference(), 0);
+			ObjectCreation invocation = new ObjectCreation(cu, sourceFolder, filePath, entry, container, fileContent);
+			creations.add(invocation);
+			invocation.setAnonymousClassDeclaration(objectDeclaration.getBody().getText());
 			break;
 		}
 		LocationInfo anonymousLocationInfo = new LocationInfo(cu, sourceFolder, filePath, objectDeclaration, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
@@ -163,7 +172,12 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 		UMLAnonymousClass anonymousClass =  new UMLAnonymousClass(container.getClassName(), codePath, codePath, anonymousLocationInfo, Collections.emptyList());
 		KotlinFileProcessor.processClassBody(cu, sourceFolder, filePath, fileContent, Collections.emptyList(), container.getComments(), anonymousClass, activeVariableDeclarations, objectDeclaration.getBody(), null);
 		if(container instanceof LambdaExpressionObject lambda) {
-			lambda.getOwner().getAnonymousClassList().add(anonymousClass);
+			VariableDeclarationContainer owner = lambda.getOwner();
+			owner.getAnonymousClassList().add(anonymousClass);
+			while(owner instanceof LambdaExpressionObject parentLambda && parentLambda.getOwner() != null) {
+				parentLambda.getOwner().getAnonymousClassList().add(anonymousClass);
+				owner = parentLambda.getOwner();
+			}
 		}
 		else {
 			container.getAnonymousClassList().add(anonymousClass);
@@ -194,6 +208,20 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 	public Object visitSuperTypeEntry(KtSuperTypeEntry entry, Object data) {
 		visitTypeReference(entry.getTypeReference(), data);
 		return super.visitSuperTypeEntry(entry, data);
+	}
+
+	private void processVariableDeclaration(KtVariableDeclaration decl, Object data) {
+		KtExpression initializer = decl.getInitializer();
+		if(initializer != null) {
+			this.visitExpression(initializer, data);
+		}
+	}
+
+	private void processDestructuringDeclaration(KtDestructuringDeclaration decl, Object data) {
+		KtExpression initializer = decl.getInitializer();
+		if(initializer != null) {
+			this.visitExpression(initializer, data);
+		}
 	}
 
 	private void processLabeledExpression(KtLabeledExpression labeledExpression, Object data) {
@@ -244,8 +272,17 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 		for (KtValueArgument argument : arguments) {
 			processArgument(argument, data);
 		}
+		KtExpression calleeExpression = expression.getCalleeExpression();
+		if(calleeExpression instanceof KtNameReferenceExpression nameReference && Character.isUpperCase(nameReference.getReferencedName().charAt(0))) {
+			ObjectCreation creation = new ObjectCreation(cu, sourceFolder, filePath, expression, container, fileContent);
+			creations.add(creation);
+			types.add(creation.getType().toString());
+		}
 		OperationInvocation invocation = new OperationInvocation(cu, sourceFolder, filePath, expression, container, fileContent);
 		methodInvocations.add(invocation);
+		if(invocation.getExpression() != null && Character.isUpperCase(invocation.getExpression().charAt(0))) {
+			types.add(invocation.getExpression());
+		}
 		if(expression.getCalleeExpression() != null) {
 			this.visitExpression(expression.getCalleeExpression(), data);
 		}
@@ -308,6 +345,8 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 			this.visitExpression(expression.getLeft(), data);
 		if (expression.getRight() != null)
 			this.visitTypeReference(expression.getRight(), data);
+		LeafExpression cast = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.ASSIGNMENT, container);
+		castExpressions.add(cast);
 	}
 
 	public Object visitTypeReference(KtTypeReference entry, Object data) {
@@ -336,10 +375,11 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 	}
 
 	private void processDotQualifiedExpression(KtDotQualifiedExpression expression, Object data) {
-		//if(expression.getReceiverExpression() instanceof KtNameReferenceExpression && expression.getSelectorExpression() instanceof KtNameReferenceExpression) {
-		//	LeafExpression name = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.SIMPLE_NAME, container);
-		//	variables.add(name);
-		//}
+		if(expression.getReceiverExpression() instanceof KtNameReferenceExpression && expression.getSelectorExpression() instanceof KtNameReferenceExpression &&
+				expression.getParent() instanceof KtValueArgument) {
+			LeafExpression valueArgument = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.FIELD_ACCESS, container);
+			arguments.add(valueArgument);
+		}
 		this.visitExpression(expression.getReceiverExpression(), data);
 		if (expression.getSelectorExpression() != null)
 			this.visitExpression(expression.getSelectorExpression(), data);

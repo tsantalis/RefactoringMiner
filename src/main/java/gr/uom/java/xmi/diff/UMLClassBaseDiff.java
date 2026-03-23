@@ -205,7 +205,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		processOperations();
 		createBodyMappers();
 		processAnonymousClasses();
-		checkForOperationSignatureChanges();
+		checkForOperationSignatureChanges(this.removedOperations, this.addedOperations);
+		if(removedNestedOperations.size() > 0 || addedNestedOperations.size() > 0) {
+			checkForOperationSignatureChanges(this.removedNestedOperations, this.addedNestedOperations);
+			if(removedNestedOperations.size() == addedOperations.size() && addedNestedOperations.size() == 0) {
+				checkForOperationSignatureChanges(this.removedNestedOperations, this.addedOperations);
+			}
+		}
 		processAttributes();
 		checkForAttributeChanges();
 		checkForInlinedOperations();
@@ -225,7 +231,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					AbstractExpression expr2 = superCallEntries2.get(i);
 					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(expr1, expr2, getOriginalClass().getPrimaryConstructor().get(), getNextClass().getPrimaryConstructor().get(), this, modelDiff);
 					Set<Refactoring> refactorings2 = new LinkedHashSet<>();
-					VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(mapper, refactorings2, this, new LinkedHashSet<>());
+					VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(mapper, refactorings2, this, modelDiff, new LinkedHashSet<>());
 					refactorings.addAll(analysis.getVariableRenames());
 					refactorings.addAll(refactorings2);
 				}
@@ -1513,7 +1519,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return false;
 	}
 
-	private void checkForOperationSignatureChanges() throws RefactoringMinerTimedOutException {
+	private void checkForOperationSignatureChanges(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) throws RefactoringMinerTimedOutException {
 		for(UMLOperation op1 : removedOperations) {
 			for(UMLOperation op2 : removedOperations) {
 				if(!op1.equals(op2) && op1.delegatesTo(op2, this, modelDiff) != null) {
@@ -2591,7 +2597,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						if(methodSignature != null && openCurlyBrackets == 0) {
 							int indexOfSignature = comment.indexOf(methodSignature);
 							String commentSubString = comment.substring(indexOfSignature, comment.length());
-							int indexOfOpenCurlyBracket = commentSubString.indexOf(LANG.OPEN_BLOCK);
+							int indexOfOpenCurlyBracket = commentSubString.indexOf(LANG2.OPEN_BLOCK);
 							bodyStartOffset = indexOfSignature + indexOfOpenCurlyBracket;
 						}
 						openCurlyBrackets++;
@@ -2810,7 +2816,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				mapperSet.add(operationBodyMapper);
 			}
 			// in Python only one constructor is allowed
-			else if(LANG.equals(Constants.PYTHON) && removedOperation.isConstructor() && addedOperation.isConstructor()) {
+			else if((LANG1.equals(Constants.PYTHON) || LANG2.equals(Constants.PYTHON)) && removedOperation.isConstructor() && addedOperation.isConstructor()) {
 				mapperSet.add(operationBodyMapper);
 			}
 			else {
@@ -3199,7 +3205,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				boolean returnFound = false;
 				if(returnType1.getClassType().equals("void") && !returnType2.getClassType().equals("void")) {
 					for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
-						if(fragment1.getString().equals(LANG.RETURN_STATEMENT)) {
+						if(fragment1.getString().equals(LANG1.RETURN_STATEMENT)) {
 							returnFound = true;
 							break;
 						}
@@ -3207,7 +3213,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 				if(!returnFound) {
 					for(AbstractCodeFragment statement2 : operationBodyMapper.getNonMappedLeavesT2()) {
-						if(statement2.getVariables().size() > 0 && statement2.getString().equals(LANG.RETURN_SPACE + statement2.getVariables().get(0).getString() + LANG.STATEMENT_TERMINATION)) {
+						if(statement2.getVariables().size() > 0 && statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getVariables().get(0).getString() + LANG2.STATEMENT_TERMINATION)) {
 							VariableDeclaration variableDeclaration2 = operationBodyMapper.getContainer2().getVariableDeclaration(statement2.getVariables().get(0).getString());
 							if(variableDeclaration2 != null && variableDeclaration2.getType() != null && variableDeclaration2.getType().equals(returnType2)) {
 								nonMappedElementsT2--;
@@ -3219,7 +3225,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		}
 		boolean operationsWithSameName = operationBodyMapper.getContainer1().getName().equals(operationBodyMapper.getContainer2().getName()) &&
 				!operationBodyMapper.getContainer1().isConstructor() && !operationBodyMapper.getContainer2().isConstructor();
+		int inExactWhenEntries = 0;
 		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+			if((mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY) ||
+					mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_STATEMENT)) &&
+					!mapping.getFragment1().getString().replaceAll("\s", "").equals(mapping.getFragment2().getString().replaceAll("\s", ""))) {
+				inExactWhenEntries++;
+			}
 			if(mapping.isIdenticalWithInlinedVariable() || mapping.isIdenticalWithExtractedVariable()) {
 				for(Refactoring r : mapping.getRefactorings()) {
 					if(r instanceof InlineVariableRefactoring) {
@@ -3234,6 +3246,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 			}
+		}
+		if(inExactWhenEntries > 0 && inExactWhenEntries == operationBodyMapper.getMappings().size()) {
+			return false;
 		}
 		boolean identicalFixtureAnnotation = operationBodyMapper.getContainer1().identicalTextFixture(operationBodyMapper.getContainer2());
 		boolean migrateToExpected = false;
@@ -3271,7 +3286,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
-		return (mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
+		return operationBodyMapper.getMappings().size() > 100 ||
+				(mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 				(mappings > 0 && identicalFixtureAnnotation) ||
 				(mappings > 0 && migrateToExpected) ||
 				((operationsWithSameName || mappings > 10) && mappings >= nonMappedElementsT1 && mappings >= nonMappedElementsT2) ||
@@ -3393,7 +3409,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				for(AbstractCall invocation : operationInvocations2) {
 					if(!(invocation instanceof MethodReference) && invocation.matchesOperation(bestMapper.getContainer2(), operation2, this, modelDiff) && !invocation.matchesOperation(bestMapper.getContainer1(), operation2, this, modelDiff) &&
 							(!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, removedOperations) || commonParameterTypes > bestCommonParameterTypes) &&
-							(invocation.getExpression() == null || invocation.getExpression().equals(LANG.THIS))) {
+							(invocation.getExpression() == null || invocation.getExpression().equals(LANG2.THIS))) {
 						boolean skip = false;
 						for(UMLOperationBodyMapper m : operationBodyMapperList) {
 							if(m.getContainer1().getName().equals(operation2.getName()) && !m.getContainer1().stringRepresentation().equals(m.getContainer2().stringRepresentation())) {
@@ -3418,7 +3434,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				for(AbstractCall invocation : operationInvocations1) {
 					if(!(invocation instanceof MethodReference) && invocation.matchesOperation(bestMapper.getContainer1(), operation1, this, modelDiff) && !invocation.matchesOperation(bestMapper.getContainer2(), operation1, this, modelDiff) &&
 							!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, addedOperations) &&
-							(invocation.getExpression() == null || invocation.getExpression().equals(LANG.THIS))) {
+							(invocation.getExpression() == null || invocation.getExpression().equals(LANG1.THIS))) {
 						boolean skip = false;
 						for(UMLOperationBodyMapper m : operationBodyMapperList) {
 							if(m.getContainer2().getName().equals(operation1.getName()) && !m.getContainer1().stringRepresentation().equals(m.getContainer2().stringRepresentation())) {
@@ -3528,8 +3544,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						List<String> commonStatements = new ArrayList<String>();
 						List<String> addedOperationStringRepresentation = addedOperation.stringRepresentation();
 						for(String statement : addedOperationStringRepresentation) {
-							if(!statement.equals(LANG.OPEN_BLOCK) && !statement.equals(LANG.CLOSE_BLOCK) && !statement.equals(LANG.TRY) && !statement.startsWith("catch(") && !statement.startsWith(LANG.CASE_SPACE) && !statement.startsWith("default :") &&
-									!statement.equals(LANG.RETURN_TRUE) && !statement.equals(LANG.RETURN_FALSE) && !statement.equals(LANG.RETURN_THIS) && !statement.equals(LANG.RETURN_NULL) && !statement.equals(LANG.RETURN_STATEMENT)) {
+							if(!statement.equals(LANG2.OPEN_BLOCK) && !statement.equals(LANG2.CLOSE_BLOCK) && !statement.equals(LANG2.TRY) && !statement.startsWith("catch(") && !statement.startsWith(LANG2.CASE_SPACE) && !statement.startsWith("default :") &&
+									!statement.equals(LANG2.RETURN_TRUE) && !statement.equals(LANG2.RETURN_FALSE) && !statement.equals(LANG2.RETURN_THIS) && !statement.equals(LANG2.RETURN_NULL) && !statement.equals(LANG2.RETURN_STATEMENT)) {
 								if(stringRepresentation.contains(statement)) {
 									commonStatements.add(statement);
 								}
@@ -3600,8 +3616,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						List<String> commonStatements = new ArrayList<String>();
 						List<String> removedOperationStringRepresentation = removedOperation.stringRepresentation();
 						for(String statement : removedOperationStringRepresentation) {
-							if(!statement.equals(LANG.OPEN_BLOCK) && !statement.equals(LANG.CLOSE_BLOCK) && !statement.equals(LANG.TRY) && !statement.startsWith("catch(") && !statement.startsWith(LANG.CASE_SPACE) && !statement.startsWith("default :") &&
-									!statement.equals(LANG.RETURN_TRUE) && !statement.equals(LANG.RETURN_FALSE) && !statement.equals(LANG.RETURN_THIS) && !statement.equals(LANG.RETURN_NULL) && !statement.equals(LANG.RETURN_STATEMENT)) {
+							if(!statement.equals(LANG1.OPEN_BLOCK) && !statement.equals(LANG1.CLOSE_BLOCK) && !statement.equals(LANG1.TRY) && !statement.startsWith("catch(") && !statement.startsWith(LANG1.CASE_SPACE) && !statement.startsWith("default :") &&
+									!statement.equals(LANG1.RETURN_TRUE) && !statement.equals(LANG1.RETURN_FALSE) && !statement.equals(LANG1.RETURN_THIS) && !statement.equals(LANG1.RETURN_NULL) && !statement.equals(LANG1.RETURN_STATEMENT)) {
 								if(stringRepresentation.contains(statement)) {
 									commonStatements.add(statement);
 								}
@@ -3770,7 +3786,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(variables1.size() > 0) {
 			int count = 0;
 			for(UMLAttribute attribute : originalClass.getAttributes()) {
-				if(attribute.getName().equals(variables1.get(0)) || variables1.get(0).equals(LANG.THIS_DOT + attribute.getName())) {
+				if(attribute.getName().equals(variables1.get(0)) || variables1.get(0).equals(LANG1.THIS_DOT + attribute.getName())) {
 					index1 = count;
 					break;
 				}
@@ -3782,7 +3798,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(variables2.size() > 0) {
 			int count = 0;
 			for(UMLAttribute attribute : nextClass.getAttributes()) {
-				if(attribute.getName().equals(variables2.get(0)) || variables2.get(0).equals(LANG.THIS_DOT + attribute.getName())) {
+				if(attribute.getName().equals(variables2.get(0)) || variables2.get(0).equals(LANG2.THIS_DOT + attribute.getName())) {
 					index2 = count;
 					break;
 				}
@@ -4332,6 +4348,17 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return list;
 	}
 
+	protected boolean testAnnotationMismatch(UMLOperation op1, UMLOperation op2) {
+		if(op1.hasTestAnnotation() && !op2.hasTestAnnotation() && !op2.hasParameterizedTestAnnotation()) {
+			for(UMLOperation operation : nextClass.getOperations()) {
+				if(!operation.equals(op2) && operation.getName().equals(op1.getName()) && (operation.hasTestAnnotation() || operation.hasParameterizedTestAnnotation())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	protected void createBodyMappers() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> removedOperationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperation> addedOperationsToBeRemoved = new ArrayList<UMLOperation>();
@@ -4425,7 +4452,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					addedOperationsToBeRemoved.add(addedOperation);
 				}
 				else if(removedOperation.equalsIgnoringTypeParameters(addedOperation) && !differentParameterNames(removedOperation, addedOperation) &&
-						Math.abs(removedOperations.size() - addedOperations.size()) <= 1) {
+						Math.abs(removedOperations.size() - addedOperations.size()) <= 1 && !testAnnotationMismatch(removedOperation, addedOperation)) {
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
 					this.addOperationBodyMapper(operationBodyMapper);
 					removedOperationsToBeRemoved.add(removedOperation);

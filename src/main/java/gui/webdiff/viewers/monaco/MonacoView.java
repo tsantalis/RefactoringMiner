@@ -82,12 +82,16 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                     .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, metaInfo, deletedFilePaths, addedFilePaths, isMovedDiff){
                         @Override
                         public String getShortcutDescriptions() {
-                            return super.getShortcutDescriptions() + "<b>Alt + w</b> toggle word wrap";
+                            String OS = System.getProperty("os.name");
+                            String alt = OS.contains("Mac") ? "⌥" : "Alt";
+                            return super.getShortcutDescriptions() + "<b>" + alt + " + w</b> toggle word wrap";
                         }
                         @Override
                         public String getLegendValue() {
                             return "<span class=&quot;deleted&quot;>&nbsp;&nbsp;</span> deleted<br>"
+                                    + "<span class=&quot;moveOut&quot;>&nbsp;&nbsp;</span> moved out<br>"
                                     + "<span class=&quot;inserted&quot;>&nbsp;&nbsp;</span> inserted<br>"
+                                    + "<span class=&quot;moveIn&quot;>&nbsp;&nbsp;</span> moved in<br>"
                                     + "<span class=&quot;moved&quot;>&nbsp;&nbsp;</span> moved<br>"
                                     + "<span class=&quot;updated&quot;>&nbsp;&nbsp;</span> updated<br>";
                         }

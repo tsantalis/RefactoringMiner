@@ -3,22 +3,11 @@ package org.refactoringminer.astDiff.utils;
 import org.refactoringminer.util.PathFileUtils;
 
 public class Constants {
-	private static String filePath;
-	private static Constants singleton;
-
-	public static void setFilePath(String filePath) {
-		Constants.filePath = filePath;
-		singleton = new Constants(filePath);
+	public static boolean isCrossLanguage(Constants LANG1, Constants LANG2) {
+		return !LANG1.TYPE_DECLARATION.equals(LANG2.TYPE_DECLARATION);
 	}
 
-	public static Constants get() {
-		if(singleton == null) {
-			singleton = new Constants(filePath);
-		}
-		return singleton;
-	}
-
-	private Constants(String filePath) {
+	public Constants(String filePath) {
 		if(PathFileUtils.isPythonFile(filePath)) {
 			CLASS_BLOCK = "block";
 			METHOD_DECLARATION = "function_definition";
@@ -27,7 +16,7 @@ public class Constants {
 			TYPE_DECLARATION = "class_definition";
 			TYPE_DECLARATION_KIND = "class";
 			BLOCK_COMMENT = "string"; // this is a text-block comment style, Python does not support Java-like multi-line comment
-			LINE_COMMENT = "line_comment"; // TODO validate when Python comments get supported
+			LINE_COMMENT = "comment";
 			EXPRESSION_STATEMENT = "expression_statement";
 			TRY_STATEMENT = "try_statement";
 			CATCH_CLAUSE = "except_clause";
@@ -44,6 +33,12 @@ public class Constants {
 			ANNOTATION_TYPE_DECLARATION = "class_definition";
 			RECORD_DECLARATION = "class_definition";
 			PREFIX_EXPRESSION = "prefix_expression";
+			METHOD_INVOCATION_ARGUMENTS = "argument_list";
+			STRING_LITERAL = "string";
+			BOOLEAN_LITERAL = "boolean_literal"; // True, False labels //TODO introduce List of values
+			METHOD_INVOCATION = "call";
+			SWITCH_STATEMENT = "";
+			SWITCH_CASE = "";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -70,6 +65,44 @@ public class Constants {
 			ANNOTATION_TYPE_DECLARATION = "class_declaration";
 			RECORD_DECLARATION = "class_declaration";
 			PREFIX_EXPRESSION = "prefix_expression";
+			METHOD_INVOCATION_ARGUMENTS = "value_arguments";
+			STRING_LITERAL = "string_literal";
+			BOOLEAN_LITERAL = "boolean_literal";
+			METHOD_INVOCATION = "call_expression";
+			SWITCH_STATEMENT = "";
+			SWITCH_CASE = "";
+		}
+		else if(PathFileUtils.isTypeScriptFile(filePath)) {
+			CLASS_BLOCK = "block";
+			METHOD_DECLARATION = "function_declaration";
+			SIMPLE_NAME = "identifier";
+			IMPORT_DECLARATION = "import_statement";
+			TYPE_DECLARATION = "class_declaration";
+			TYPE_DECLARATION_KIND = "class";
+			BLOCK_COMMENT = "comment";
+			LINE_COMMENT = "comment";
+			EXPRESSION_STATEMENT = "expression_statement";
+			TRY_STATEMENT = "try_statement";
+			CATCH_CLAUSE = "catch_clause";
+			IF_STATEMENT = "if_statement";
+			WHILE_STATEMENT = "while_statement";
+			FOR_STATEMENT = "for_statement";
+			ENHANCED_FOR_STATEMENT = "for_statement";
+			PACKAGE_DECLARATION = "";
+			FIELD_DECLARATION = "";
+			MODIFIER = "";
+			INITIALIZER = "";
+			CONSTRUCTOR_INVOCATION = "";
+			ENUM_DECLARATION = "class_declaration";
+			ANNOTATION_TYPE_DECLARATION = "class_declaration";
+			RECORD_DECLARATION = "class_declaration";
+			PREFIX_EXPRESSION = "prefix_expression";
+			METHOD_INVOCATION_ARGUMENTS = "argument_list";
+			STRING_LITERAL = "string_literal";
+			BOOLEAN_LITERAL = "boolean_literal"; // True, False labels //TODO introduce List of values
+			METHOD_INVOCATION = "call";
+			SWITCH_STATEMENT = "switch_statement";
+			SWITCH_CASE = "switch_case";
 		}
 		else {
 			// Java values as default
@@ -97,12 +130,18 @@ public class Constants {
 			ANNOTATION_TYPE_DECLARATION = "AnnotationTypeDeclaration";
 			RECORD_DECLARATION = "RecordDeclaration";
 			PREFIX_EXPRESSION = "PrefixExpression";
+			METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
+			STRING_LITERAL = "StringLiteral";
+			BOOLEAN_LITERAL = "BooleanLiteral";
+			METHOD_INVOCATION = "MethodInvocation";
+			SWITCH_STATEMENT = "SwitchStatement";
+			SWITCH_CASE = "SwitchCase";
 		}
 	}
 
     // AST node type labels
     public final String ASSIGNMENT = "Assignment";
-    public final String METHOD_INVOCATION = "MethodInvocation";
+    public final String METHOD_INVOCATION;
     public final String METHOD_DECLARATION;
     public final String ANNOTATION_TYPE_MEMBER_DECLARATION = "AnnotationTypeMemberDeclaration";
     public final String TRY_STATEMENT;
@@ -128,6 +167,7 @@ public class Constants {
     public final String ENUM_CONSTANT_DECLARATION = "EnumConstantDeclaration";
     public final String TYPE_DECLARATION_STATEMENT = "TypeDeclarationStatement";
     public final String RECORD_COMPONENT = "SingleVariableDeclaration";
+    public final String SINGLE_VARIABLE_DECLARATION = "SingleVariableDeclaration";
 
     // AST node property labels
     public final String ASSIGNMENT_OPERATOR = "ASSIGNMENT_OPERATOR";
@@ -159,7 +199,7 @@ public class Constants {
     public final String INFIX = "infix";
     public final String INNER = "inner";
 
-    public final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
+    public final String METHOD_INVOCATION_ARGUMENTS;
     public final String METHOD_INVOCATION_RECEIVER = "METHOD_INVOCATION_RECEIVER";
 
     public final String ASSERT_STATEMENT = "AssertStatement";
@@ -173,19 +213,21 @@ public class Constants {
     public final String IF_STATEMENT;
     public final String RETURN_STATEMENT = "ReturnStatement";
     public final String SUPER_CONSTRUCTOR_INVOCATION = "SuperConstructorInvocation";
-    public final String SWITCH_CASE = "SwitchCase";
-    public final String SWITCH_STATEMENT = "SwitchStatement";
+    public final String SWITCH_CASE;
+    public final String SWITCH_STATEMENT;
     public final String SYNCHRONIZED_STATEMENT = "SynchronizedStatement";
     public final String THROW_STATEMENT = "ThrowStatement";
     public final String WHILE_STATEMENT;
     public final String CONDITIONAL_EXPRESSION = "ConditionalExpression";
+    public final String CAST_EXPRESSION = "CastExpression";
 
     public final String INFIX_EXPRESSION = "InfixExpression";
+    public final String LAMBDA_EXPRESSION = "LambdaExpression";
     public final String INFIX_EXPRESSION_OPERATOR = "INFIX_EXPRESSION_OPERATOR";
 
-    public final String STRING_LITERAL = "StringLiteral";
+    public final String STRING_LITERAL;
     public final String NUMBER_LITERAL = "NumberLiteral";
-    public final String BOOLEAN_LITERAL = "BooleanLiteral";
+    public final String BOOLEAN_LITERAL;
 
     public final String SINGLE_MEMBER_ANNOTATION = "SingleMemberAnnotation"; //@type(Expression), for instance
     public final String MARKER_ANNOTATION = "MarkerAnnotation"; //@Deprecated for instance
@@ -236,6 +278,8 @@ public class Constants {
     public final String ELIF_KEYWORD = "elif";
     public final String ELSE_KEYWORD = "else";
     public final String WHILE_KEYWORD = "while";
+    public final String IMPORT_KEYWORD = "import";
+    public final String DECORATOR = "decorator";
     
     //Kotlin Specific
     public final String FUNCTION_BODY = "function_body";
@@ -255,6 +299,7 @@ public class Constants {
     public final String AFFECTATION_OPERATOR = "affectation_operator";
     public final String COMPANION_OBJECT = "companion_object";
     public final String OBJECT_DECLARATION = "object_declaration";
+    public final String OBJECT_LITERAL = "object_literal";
     public final String WHEN_ENTRY = "when_entry";
     public final String ARROW = "arrow";
     public final String WHEN_EXPRESSION = "when_expression";
@@ -272,4 +317,55 @@ public class Constants {
     public final String ERROR = "ERROR";
     public final String ENUM_ENTRY = "enum_entry";
     public final String JUMP_EXPRESSION = "jump_expression";
+    public final String JUMP_KEYWORD = "jump_keyword";
+    public final String CALL_SUFFIX = "call_suffix";
+    public final String NAVIGATION_EXPRESSION = "navigation_expression";
+    public final String NAVIGATION_SUFFIX = "navigation_suffix";
+    public final String INTEGER_LITERAL = "integer_literal";
+    public final String VARIABLE_DECLARATION = "variable_declaration";
+    public final String CLASS_MODIFIER = "class_modifier";
+    public final String AS_EXPRESSION = "as_expression";
+    public final String ANNOTATED_LAMBDA = "annotated_lambda";
+    public final String ARITHMETIC_OPERATOR = "arithmetic_operator";
+    public final String LONG_LITERAL = "long_literal";
+    public final String MULT_EXPRESSION = "multiplicative_expression";
+    
+    //TypeScript specific
+    public final String FOR_IN_STATEMENT = "for_in_statement";
+    public final String STATEMENT_BLOCK = "statement_block";
+    public final String OPENING_CURLY_BRACE = "{";
+    public final String CLOSING_CURLY_BRACE = "}";
+    public final String OPENING_PARENTHESIS = "(";
+    public final String CLOSING_PARENTHESIS = ")";
+    public final String OF_KEYWORD = "of";
+    public final String IN_KEYWORD = "in";
+    public final String FOR_KEYWORD = "for";
+    public final String IF_KEYWORD = "if";
+    public final String TYPE_KEYWORD = "type";
+    public final String PARENTHESIZED_EXPRESSION = "parenthesized_expression";
+    public final String LEXICAL_DECLARATION = "lexical_declaration";
+    public final String SEMICOLON = ";";
+    public final String COLON = ":";
+    public final String CONST_KEYWORD = "const";
+    public final String ASYNC_KEYWORD = "async";
+    public final String LET_KEYWORD = "let";
+    public final String ARRAY_PATTERN = "array_pattern";
+    public final String EXPORT_STATEMENT = "export_statement";
+    public final String FUNCTION = "function";
+    public final String FORMAL_PARAMETERS = "formal_parameters";
+    public final String COMMA = ",";
+    public final String TYPE_ANNOTATION = "type_annotation";
+    public final String CATCH_KEYWORD = "catch";
+    public final String VARIABLE_DECLARATOR = "variable_declarator";
+    public final String EXPORT_KEYWORD = "export";
+    public final String ARROW_FUNCTION = "arrow_function";
+    public final String ARROW_TOKEN = "=>";
+    public final String SWITCH_KEYWORD = "switch";
+    public final String CASE_KEYWORD = "case";
+    public final String SWITCH_DEFAULT = "switch_default";
+    public final String DEFAULT_KEYWORD = "default";
+    public final String SWITCH_BODY = "switch_body";
+    public final String TYPE_ALIAS_DECLARATION = "type_alias_declaration";
+    public final String OBJECT_TYPE = "object_type";
+    public final String PROPERTY_SIGNATURE = "property_signature";
 }

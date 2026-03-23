@@ -9,7 +9,12 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Optional;
 
+import org.refactoringminer.util.PathFileUtils;
+
 public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider {
+	public enum ConditionallyCreated {
+		IF, ELSE, NO;
+	}
 	private String qualifiedName;
     private String sourceFile;
     private String sourceFolder;
@@ -28,6 +33,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean isLocal;
 	private boolean isModule;
 	private boolean isObject;
+	private boolean isTypeAlias;
 	private boolean isFunctionalInterface;
     private List<UMLTypeParameter> typeParameters;
     private Optional<PrimaryConstructor> primaryConstructor;
@@ -38,6 +44,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private List<UMLComment> packageDeclarationComments;
     private List<UMLTypeAlias> typeAliasList;
     private String actualSignature;
+    private ConditionallyCreated conditionallyCreated = ConditionallyCreated.NO;
     
     public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<UMLImport> importedTypes) {
     	super(packageName, name, locationInfo, importedTypes);
@@ -100,6 +107,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     	else
     		return "class";
     }
+
+	public ConditionallyCreated getConditionallyCreated() {
+		return conditionallyCreated;
+	}
+
+	public void setConditionallyCreated(ConditionallyCreated conditionallyCreated) {
+		this.conditionallyCreated = conditionallyCreated;
+	}
 
 	public String getActualSignature() {
 		return actualSignature;
@@ -285,6 +300,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		this.isFunctionalInterface = isFunctionalInterface;
 	}
 
+	public boolean isTypeAlias() {
+		return isTypeAlias;
+	}
+
+	public void setTypeAlias(boolean isTypeAlias) {
+		this.isTypeAlias = isTypeAlias;
+	}
+
 	public UMLJavadoc getJavadoc() {
 		return javadoc;
 	}
@@ -409,7 +432,13 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     	
     	if(o instanceof UMLClass) {
     		UMLClass umlClass = (UMLClass)o;
-    		return this.packageName.equals(umlClass.packageName) && this.name.equals(umlClass.name) && this.sourceFile.equals(umlClass.sourceFile);
+    		boolean fileMatch = this.sourceFile.equals(umlClass.sourceFile);
+    		if(!this.LANG.equals(umlClass.LANG)) {
+    			String path1 = PathFileUtils.filePathWithoutExtension(this.getSourceFile());
+    			String path2 = PathFileUtils.filePathWithoutExtension(umlClass.getSourceFile());
+				fileMatch = path1.equals(path2);
+    		}
+    		return this.packageName.equals(umlClass.packageName) && this.name.equals(umlClass.name) && fileMatch && this.conditionallyCreated.equals(umlClass.conditionallyCreated);
     	}
     	return false;
     }
@@ -420,6 +449,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		result = prime * result + ((packageName == null) ? 0 : packageName.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((sourceFile == null) ? 0 : sourceFile.hashCode());
+		result = prime * result + conditionallyCreated.hashCode();
 		return result;
 	}
 

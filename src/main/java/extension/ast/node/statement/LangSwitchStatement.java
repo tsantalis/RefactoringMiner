@@ -25,6 +25,14 @@ public class LangSwitchStatement extends LangStatement {
         super(NodeTypeEnum.SWITCH_STATEMENT, positionInfo);
         this.expression = expression;
         this.cases = cases;
+        if (expression != null) {
+            addChild(expression);
+        }
+        if (cases != null) {
+            for (LangCaseStatement caseStmt : cases) {
+                addChild(caseStmt);
+            }
+        }
     }
 
     public LangASTNode getExpression() {

@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.Block;
@@ -25,6 +26,14 @@ import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtLambdaExpression;
 import org.refactoringminer.util.PathFileUtils;
 
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstBlockStmtOrExpr;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
+
 import extension.ast.node.LangASTNode;
 import extension.ast.node.declaration.LangSingleVariableDeclaration;
 import extension.ast.node.expression.LangExpression;
@@ -38,6 +47,8 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnonymousClass;
+import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
@@ -51,6 +62,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	private List<UMLParameter> umlParameters = new ArrayList<UMLParameter>();
 	private boolean hasParentheses = false;
 	private VariableDeclarationContainer owner;
+	private Optional<StatementObject> switchExpressionCase = Optional.empty();
 	private String asString;
 	
 	public LambdaExpressionObject(LangCompilationUnit cu, String sourceFolder, String filePath, LangLambdaExpression lambda, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
@@ -136,6 +148,14 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		}
 	}
 
+	public void setSwitchExpressionCase(StatementObject s) {
+		this.switchExpressionCase = Optional.of(s);
+	}
+
+	public Optional<StatementObject> getSwitchExpressionCase() {
+		return switchExpressionCase;
+	}
+
 	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, ExpressionMethodReference reference, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
 		this.owner = owner;
 		this.asString = reference.toString();
@@ -168,12 +188,66 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		}
 	}
 
+	public LambdaExpressionObject(String sourceFolder, String filePath, Swc4jAstArrowExpr arrowExpression, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
+		this.owner = owner;
+		this.asString = fileContent.substring(arrowExpression.getSpan().getStart(), arrowExpression.getSpan().getEnd());
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, arrowExpression.getSpan(), CodeElementType.LAMBDA_EXPRESSION, fileContent);
+		List<ISwc4jAstPat> params = arrowExpression.getParams();
+		for(ISwc4jAstPat param : params) {
+			List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(param);
+			List<UMLAttribute> attributes = new ArrayList<>();
+			Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(param);
+			if(typeAnnotation != null) {
+				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation.getTypeAnn(), 0);
+				for(UMLClass typeDeclaration : typeDeclarations) {
+					if(type.getClassType().equals(typeDeclaration.getNonQualifiedName())) {
+						attributes = new ArrayList<>(typeDeclaration.getAttributes());
+						break;
+					}
+				}
+			}
+			int index = 0;
+			for(Swc4jAstBindingIdent identifier : identifiers) {
+				VariableDeclaration parameter = null;
+				if(identifiers.size() == attributes.size()) {
+					parameter = new VariableDeclaration(sourceFolder, filePath, attributes.get(index).getType(), identifier, this, activeVariableDeclarations, fileContent);
+				}
+				else {
+					parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, this, activeVariableDeclarations, fileContent);
+				}
+				this.parameters.add(parameter);
+				if(parameter.getType() != null) {
+					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
+					parameter.setParameter(true);
+					umlParameter.setVariableDeclaration(parameter);
+					umlParameters.add(umlParameter);
+				}
+				index++;
+			}
+		}
+		ISwc4jAstBlockStmtOrExpr body = arrowExpression.getBody();
+		if(body instanceof ISwc4jAstExpr expr) {
+			this.expression = new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, fileContent, typeDeclarations);
+			this.expression.setLambdaOwner(this);
+			for(VariableDeclaration parameter : parameters) {
+				parameter.addStatementInScope(expression, false);
+			}
+		}
+		else if(body instanceof Swc4jAstBlockStmt blockStatement) {
+			this.body = new OperationBody(sourceFolder, filePath, blockStatement, this, activeVariableDeclarations, fileContent);
+		}
+	}
+
 	public VariableDeclarationContainer getOwner() {
 		return owner;
 	}
 
 	public OperationBody getBody() {
 		return body;
+	}
+
+	public AbstractExpression getDefaultExpression() {
+		return getExpression();
 	}
 
 	public AbstractExpression getExpression() {

@@ -48883,6 +48883,17 @@
   "firstEndPos" : 35324,
   "secondEndPos" : 16120
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 35318,
+  "secondPos" : 16735,
+  "firstEndPos" : 35324,
+  "secondEndPos" : 16741
+}, {
   "firstType" : "SimpleType",
   "secondType" : "SimpleType",
   "firstLabel" : "",
@@ -48893,6 +48904,17 @@
   "secondPos" : 16114,
   "firstEndPos" : 35324,
   "secondEndPos" : 16120
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "FieldDeclaration",
+  "firstPos" : 35318,
+  "secondPos" : 16735,
+  "firstEndPos" : 35324,
+  "secondEndPos" : 16741
 }, {
   "firstType" : "VariableDeclarationFragment",
   "secondType" : "VariableDeclarationFragment",
@@ -48905,6 +48927,17 @@
   "firstEndPos" : 35359,
   "secondEndPos" : 16155
 }, {
+  "firstType" : "VariableDeclarationFragment",
+  "secondType" : "VariableDeclarationFragment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "FieldDeclaration",
+  "firstPos" : 35325,
+  "secondPos" : 16742,
+  "firstEndPos" : 35359,
+  "secondEndPos" : 16777
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "name",
@@ -48915,6 +48948,17 @@
   "secondPos" : 16121,
   "firstEndPos" : 35329,
   "secondEndPos" : 16125
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "name",
+  "secondLabel" : "name",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 35325,
+  "secondPos" : 16742,
+  "firstEndPos" : 35329,
+  "secondEndPos" : 16746
 }, {
   "firstType" : "StringLiteral",
   "secondType" : "StringLiteral",
@@ -48938,12 +48982,45 @@
   "firstEndPos" : 35398,
   "secondEndPos" : 16194
 }, {
+  "firstType" : "ParameterizedType",
+  "secondType" : "ParameterizedType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "FieldDeclaration",
+  "firstPos" : 35369,
+  "secondPos" : 16787,
+  "firstEndPos" : 35398,
+  "secondEndPos" : 16816
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "java.util.Map",
   "secondLabel" : "java.util.Map",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
+  "firstPos" : 35369,
+  "secondPos" : 16165,
+  "firstEndPos" : 35382,
+  "secondEndPos" : 16178
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "java.util.Map",
+  "secondLabel" : "java.util.Map",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 35369,
+  "secondPos" : 16787,
+  "firstEndPos" : 35382,
+  "secondEndPos" : 16800
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ParameterizedType",
+  "secondParentType" : "ParameterizedType",
   "firstPos" : 35369,
   "secondPos" : 16165,
   "firstEndPos" : 35382,
@@ -48956,9 +49033,9 @@
   "firstParentType" : "ParameterizedType",
   "secondParentType" : "ParameterizedType",
   "firstPos" : 35369,
-  "secondPos" : 16165,
+  "secondPos" : 16787,
   "firstEndPos" : 35382,
-  "secondEndPos" : 16178
+  "secondEndPos" : 16800
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -48971,6 +49048,17 @@
   "firstEndPos" : 35390,
   "secondEndPos" : 16186
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Integer",
+  "secondLabel" : "Integer",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 35383,
+  "secondPos" : 16801,
+  "firstEndPos" : 35390,
+  "secondEndPos" : 16808
+}, {
   "firstType" : "SimpleType",
   "secondType" : "SimpleType",
   "firstLabel" : "",
@@ -48981,6 +49069,17 @@
   "secondPos" : 16179,
   "firstEndPos" : 35390,
   "secondEndPos" : 16186
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ParameterizedType",
+  "secondParentType" : "ParameterizedType",
+  "firstPos" : 35383,
+  "secondPos" : 16801,
+  "firstEndPos" : 35390,
+  "secondEndPos" : 16808
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -48993,6 +49092,17 @@
   "firstEndPos" : 35397,
   "secondEndPos" : 16193
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 35391,
+  "secondPos" : 16809,
+  "firstEndPos" : 35397,
+  "secondEndPos" : 16815
+}, {
   "firstType" : "SimpleType",
   "secondType" : "SimpleType",
   "firstLabel" : "",
@@ -49003,6 +49113,17 @@
   "secondPos" : 16187,
   "firstEndPos" : 35397,
   "secondEndPos" : 16193
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ParameterizedType",
+  "secondParentType" : "ParameterizedType",
+  "firstPos" : 35391,
+  "secondPos" : 16809,
+  "firstEndPos" : 35397,
+  "secondEndPos" : 16815
 }, {
   "firstType" : "VariableDeclarationFragment",
   "secondType" : "VariableDeclarationFragment",
@@ -49015,6 +49136,17 @@
   "firstEndPos" : 35422,
   "secondEndPos" : 16218
 }, {
+  "firstType" : "VariableDeclarationFragment",
+  "secondType" : "VariableDeclarationFragment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "FieldDeclaration",
+  "firstPos" : 35399,
+  "secondPos" : 16817,
+  "firstEndPos" : 35422,
+  "secondEndPos" : 16840
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "jMap",
@@ -49025,6 +49157,17 @@
   "secondPos" : 16195,
   "firstEndPos" : 35403,
   "secondEndPos" : 16199
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jMap",
+  "secondLabel" : "jMap",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 35399,
+  "secondPos" : 16817,
+  "firstEndPos" : 35403,
+  "secondEndPos" : 16821
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",

@@ -371,8 +371,8 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable e to o in method public prepare_string(dist, digits, exact, tol, show_mask, str_outcomes) from class distribution.__module__",
+        "type": "Rename Parameter",
+        "description": "Rename Parameter e to o in method public prepare_string(dist, digits, exact, tol, show_mask, str_outcomes) from class distribution.__module__",
         "comment": "<p>This is a lambda parameter rename<br />events = map(lambda e: ''.join(e), events)<br />outcomes = map(lambda o: ''.join(o), outcomes)</p>",
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -1033,10 +1033,10 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable one in method public total_correlation(dist, rvs, crvs, rv_names) from class algorithms.total_correlation.__module__",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>The code has changed significantly to consider it as a valid refactoring.</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -1341,6 +1341,55 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable upper in method protected _downsample_componentL1(pmf, i, op, locs) from class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter ops in method public projections(pmf, subdivisions, ops) from class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter depth in method public projections(pmf, depth, base, method) from class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter base in method public projections(pmf, depth, base, method) from class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter method in method public projections(pmf, depth, base, method) from class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable projs in method public projections(pmf, subdivisions, ops) from class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method protected _downsample_componentL1(pmf, i, op, locs) extracted from public projections(pmf, depth, base, method) in class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable N to subdivisions in method public projections(pmf, subdivisions, ops) from class math.pmfops.__module__",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -2830,10 +2879,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable (downstream_node,downstream_label) to downstream_info in method public get_outgoing_edges(upstream_node, outgoing_edge_map) from class dag.__module__",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<div style='color: #000000; background-color: #fffffe; font-family: Menlo, Monaco, 'Courier New', monospace; font-weight: normal; font-size: 12px; line-height: 18px; white-space: pre;'><div><span style='color: #0000ff;'>for</span><span style='color: #000000;'> downstream_info </span><span style='color: #0000ff;'>in</span><span style='color: #000000;'> downstream_infos:</span></div><div><span style='color: #000000;'> downstream_node, downstream_label = downstream_info[:</span><span style='color: #098658;'>2</span><span style='color: #000000;'>]</span></div><div><span style='color: #000000;'>(downstream_node,downstream_label) is replaced with downstream_info, but there is no rename.</span></div></div>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -5077,7 +5126,7 @@
         "validators": null
     }, {
         "type": "Rename Method",
-        "description": "Rename Method public load_en_vocab() renamed to public load_shared_vocab() in class transformer.data_load.__module__",
+        "description": "Rename Method public load_de_vocab() renamed to public load_shared_vocab() in class transformer.data_load.__module__",
         "comment": "<p>&nbsp;load_de_vocab() and load_en_vocab() have been merged to&nbsp;load_shared_vocab()</p>",
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
@@ -7604,6 +7653,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable w_pop in method public add(record, weight) from class utils.average_recorder._SingleAverageRecorder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -9697,6 +9753,71 @@
     }, {
         "type": "Add Parameter",
         "description": "Add Parameter w_as in method public append(loss, g, ppl, df, dr, ds, af, ar, as_, w_loss, w_g, w_ppl, w_df, w_dr, w_ds, w_af, w_ar, w_as) from class tsf.stats.TSFClassifierStats",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 1160052,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "a4d5860e9255bf1bcf83f8a9956d2b0d8a162b9b",
+    "url": "https://github.com/asyml/texar/commit/a4d5860e9255bf1bcf83f8a9956d2b0d8a162b9b",
+    "author": "ZhitingHu",
+    "time": "3/19/18 01:53 AM",
+    "refactorings": [{
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected _shuffle_dataset(dataset, hparams, dataset_files) from class data.data.mono_text_data.MonoTextData to protected _shuffle_dataset(dataset, hparams, dataset_files) from class data.data.text_data_base.TextDataBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected _make_batch(dataset, hparams, element_length_func) from class data.data.mono_text_data.MonoTextData to protected _make_batch(dataset, hparams, element_length_func) from class data.data.text_data_base.TextDataBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter length_inc in method protected _run_and_test(hparams, test_batch_size, length_inc) from class data.data.text_data_test.MonoTextDataTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable other_trans to tgt_trans in method protected _perform_other_transformations(dataset) from class data.data.paired_text_data.PairedTextData",
+        "comment": "<p>Two potential matches for&nbsp;other_trans:&nbsp;tgt_trans or src_trans</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable other_trans_hparams to src_trans_hparams in method protected _perform_other_transformations(dataset) from class data.data.paired_text_data.PairedTextData",
+        "comment": "<p>Two potential matches for&nbsp;other_trans_hparams:&nbsp;src_trans_hparams or&nbsp;tgt_trans_hparams</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Move Method",
+        "description": "Move Method protected _perform_other_transformations(dataset) from class data.data.mono_text_data.MonoTextData to protected _perform_other_transformations(dataset) from class data.data.paired_text_data.PairedTextData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter data to text_data in method protected _transform(x, text_data) from class data.data.text_data_test.MonoTextDataTest.test_other_transformations",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter dataset in method protected _process_dataset(dataset) from class data.data.mono_text_data.MonoTextData",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

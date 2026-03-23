@@ -1255,6 +1255,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), containsCallToExtractedMethod(leaves2));
 			leaves1.remove(defaultExpression1);
 			updateNonMappedLeavesT1(leaves1);
 			leaves2.remove(defaultExpression2);

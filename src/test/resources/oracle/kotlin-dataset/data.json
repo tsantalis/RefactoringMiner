@@ -7708,10 +7708,10 @@
     }, {
         "type": "Move Code",
         "description": "Move Code from public render(context Context, heapDumpFile File, sourceWidth Int, sourceHeight Int, sourceBytesPerPixel Int) : Bitmap to public render(context Context, heapDumpFile File, sourceWidth Int, sourceHeight Int, sourceBytesPerPixel Int) : Bitmap in class leakcanary.internal.activity.screen.HeapDumpRenderer",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>There is some level of lambda nesting that is eliminated.</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {

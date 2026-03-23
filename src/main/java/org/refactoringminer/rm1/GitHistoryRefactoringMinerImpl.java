@@ -1262,7 +1262,22 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
 						String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
 						String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId).replace(encodedFileName, encodedPreviousFilename);
-						InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
+                        InputStream parentRawFileInputStream;
+
+                        attempts = 0;
+                        while (true) {
+                            try {
+                                parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
+                                break;
+                            } catch (IOException e) {
+                                if (attempts == 3) {
+                                    throw e;
+                                }
+                                attempts++;
+                                Thread.sleep(1000L * attempts); // linear backoff
+                            }
+                        }
+
 						parentRawFile = IOUtils.toString(parentRawFileInputStream);
 					}
 					if(!filesBefore.containsKey(previousFilename))

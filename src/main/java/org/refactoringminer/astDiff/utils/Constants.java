@@ -368,4 +368,5 @@ public class Constants {
     public final String TYPE_ALIAS_DECLARATION = "type_alias_declaration";
     public final String OBJECT_TYPE = "object_type";
     public final String PROPERTY_SIGNATURE = "property_signature";
+    public final String INTERSECTION_TYPE = "intersection_type";
 }

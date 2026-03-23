@@ -66,6 +66,7 @@ import org.jetbrains.kotlin.psi.KtWhileExpression;
 
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstDecl;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstForHead;
@@ -102,9 +103,11 @@ import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstWhileStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstWithStmt;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIntersectionType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsPropertySignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeLit;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsUnionType;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.declaration.LangMethodDeclaration;
@@ -1744,24 +1747,52 @@ public class OperationBody {
 			umlClass.setTypeAlias(true);
 			ISwc4jAstTsType typeAnnotation = typeAliasDecl.getTypeAnn();
 			if(typeAnnotation instanceof Swc4jAstTsTypeLit typeLiteral) {
-				List<ISwc4jAstTsTypeElement> members = typeLiteral.getMembers();
-				for(ISwc4jAstTsTypeElement member : members) {
-					if(member instanceof Swc4jAstTsPropertySignature signature) {
-						ISwc4jAstExpr key = signature.getKey();
-						if(key instanceof Swc4jAstIdent ident && signature.getTypeAnn().isPresent()) {
-							VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, signature.getTypeAnn().get(), ident, container, activeVariableDeclarations, fileContent);
-							vd.setAttribute(true);
-							LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, member.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
-							UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
-							attribute.setVariableDeclaration(vd);
-							attribute.setVisibility(Visibility.PRIVATE);
-							umlClass.addAttribute(attribute);
-						}
+				processTypeLiteral(sourceFolder, filePath, fileContent, umlClass, typeLiteral);
+			}
+			else if(typeAnnotation instanceof Swc4jAstTsIntersectionType intersectionType) {
+				for(ISwc4jAstTsType type : intersectionType.getTypes()) {
+					if(type instanceof Swc4jAstTsTypeLit typeLiteral) {
+						processTypeLiteral(sourceFolder, filePath, fileContent, umlClass, typeLiteral);
+					}
+				}
+			}
+			else if(typeAnnotation instanceof Swc4jAstTsUnionType unionType) {
+				for(ISwc4jAstTsType type : unionType.getTypes()) {
+					if(type instanceof Swc4jAstTsTypeLit typeLiteral) {
+						processTypeLiteral(sourceFolder, filePath, fileContent, umlClass, typeLiteral);
 					}
 				}
 			}
 			if(container instanceof ModuleContainer) {
 				((ModuleContainer)container).addNestedClass(umlClass);
+			}
+		}
+	}
+
+	private void processTypeLiteral(String sourceFolder, String filePath, String fileContent, UMLClass umlClass,
+			Swc4jAstTsTypeLit typeLiteral) {
+		List<ISwc4jAstTsTypeElement> members = typeLiteral.getMembers();
+		for(ISwc4jAstTsTypeElement member : members) {
+			if(member instanceof Swc4jAstTsPropertySignature signature) {
+				ISwc4jAstExpr key = signature.getKey();
+				if(key instanceof Swc4jAstIdent ident && signature.getTypeAnn().isPresent()) {
+					VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, signature.getTypeAnn().get(), ident, container, activeVariableDeclarations, fileContent);
+					vd.setAttribute(true);
+					LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, member.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+					UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
+					attribute.setVariableDeclaration(vd);
+					attribute.setVisibility(Visibility.PRIVATE);
+					umlClass.addAttribute(attribute);
+				}
+				else if(key instanceof Swc4jAstStr string) {
+					VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, signature.getTypeAnn().get(), string, container, activeVariableDeclarations, fileContent);
+					vd.setAttribute(true);
+					LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, member.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+					UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
+					attribute.setVariableDeclaration(vd);
+					attribute.setVisibility(Visibility.PRIVATE);
+					umlClass.addAttribute(attribute);
+				}
 			}
 		}
 	}

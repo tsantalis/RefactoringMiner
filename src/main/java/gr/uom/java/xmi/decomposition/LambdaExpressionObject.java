@@ -218,6 +218,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 				this.parameters.add(parameter);
 				if(parameter.getType() != null) {
 					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
+					parameter.setParameter(true);
 					umlParameter.setVariableDeclaration(parameter);
 					umlParameters.add(umlParameter);
 				}

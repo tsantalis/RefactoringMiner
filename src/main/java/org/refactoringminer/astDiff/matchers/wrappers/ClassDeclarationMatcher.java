@@ -15,6 +15,7 @@ import gr.uom.java.xmi.diff.UMLTypeAliasListDiff;
 
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
+import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.IgnoringCommentsLeafMatcher;
@@ -57,6 +58,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         String AST_type2 = astType(classDiff.getNextClass(), LANG2);
         Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,AST_type1);
         Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,AST_type2);
+        if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isTypeAlias() && classDiff.getNextClass().isTypeAlias()) {
+        	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.TYPE_ALIAS_DECLARATION);
+        	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.TYPE_ALIAS_DECLARATION);
+        }
         if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isObject() && classDiff.getNextClass().isObject()) {
         	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT_DECLARATION);
         	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT_DECLARATION);
@@ -215,6 +220,32 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             if (srcBlock != null && dstBlock != null) {
                 mappingStore.addMappingRecursively(srcBlock, dstBlock);
                 return;
+            }
+        }
+        if (srcTypeDeclaration.getType().name.equals(LANG1.TYPE_ALIAS_DECLARATION) && dstTypeDeclaration.getType().name.equals(LANG2.TYPE_ALIAS_DECLARATION)) {
+            Pair<Tree, Tree> object_types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.OBJECT_TYPE, LANG2.OBJECT_TYPE);
+            if (object_types != null) {
+                mappingStore.addMapping(object_types.first, object_types.second);
+                Pair<Tree,Tree> opening = Helpers.findPairOfType(object_types.first,object_types.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                if (opening != null) {
+                    mappingStore.addMapping(opening.first,opening.second);
+                }
+                Pair<Tree,Tree> closing = Helpers.findPairOfType(object_types.first,object_types.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                if (closing != null) {
+                    mappingStore.addMapping(closing.first,closing.second);
+                }
+            }
+            Pair<Tree, Tree> types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.TYPE_KEYWORD, LANG2.TYPE_KEYWORD);
+            if(types != null) {
+                mappingStore.addMapping(types.first, types.second);
+            }
+            Pair<Tree, Tree> equalOperators = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.EQUAL_OPERATOR, LANG2.EQUAL_OPERATOR);
+            if(equalOperators != null) {
+                mappingStore.addMapping(equalOperators.first, equalOperators.second);
+            }
+            Pair<Tree, Tree> semicolons = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.SEMICOLON, LANG2.SEMICOLON);
+            if(semicolons != null) {
+                mappingStore.addMapping(semicolons.first, semicolons.second);
             }
         }
         if (srcBlock == null || dstBlock == null) return;

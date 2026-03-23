@@ -341,6 +341,7 @@ public class Constants {
     public final String IN_KEYWORD = "in";
     public final String FOR_KEYWORD = "for";
     public final String IF_KEYWORD = "if";
+    public final String TYPE_KEYWORD = "type";
     public final String PARENTHESIZED_EXPRESSION = "parenthesized_expression";
     public final String LEXICAL_DECLARATION = "lexical_declaration";
     public final String SEMICOLON = ";";
@@ -364,4 +365,7 @@ public class Constants {
     public final String SWITCH_DEFAULT = "switch_default";
     public final String DEFAULT_KEYWORD = "default";
     public final String SWITCH_BODY = "switch_body";
+    public final String TYPE_ALIAS_DECLARATION = "type_alias_declaration";
+    public final String OBJECT_TYPE = "object_type";
+    public final String PROPERTY_SIGNATURE = "property_signature";
 }

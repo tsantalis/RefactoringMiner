@@ -47,6 +47,7 @@ import org.refactoringminer.util.PathFileUtils;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstFunction;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstForHead;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstObjectPatProp;
@@ -930,6 +931,26 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.locationInfo = new LocationInfo(sourceFolder, filePath, fragment.getSpan(), CodeElementType.VARIABLE_DECLARATION_EXPRESSION, fileContent);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		this.variableName = fragment.getSym();
+		if(typeAnnotation != null) {
+			ISwc4jAstTsType type = typeAnnotation.getTypeAnn();
+			this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, type, 0);
+		}
+		else {
+			this.type = new InferredType();
+		}
+		//this.initializer = fragment.getInit().isPresent() ? new AbstractExpression(sourceFolder, filePath, fragment.getInit().get(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent) : null;
+		ISwc4jAst scopeNode = getScopeNode(fragment);
+		int startOffset = fragment.getSpan().getStart();
+		int endOffset = scopeNode.getSpan().getEnd();
+		this.scope = new VariableScope(filePath, startOffset, endOffset);
+	}
+
+	public VariableDeclaration(String sourceFolder, String filePath, Swc4jAstTsTypeAnn typeAnnotation, Swc4jAstStr fragment, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, fragment.getSpan(), CodeElementType.VARIABLE_DECLARATION_EXPRESSION, fileContent);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		this.variableName = fragment.getRaw().isPresent() ? fragment.getRaw().get() : fragment.getValue();
 		if(typeAnnotation != null) {
 			ISwc4jAstTsType type = typeAnnotation.getTypeAnn();
 			this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, type, 0);

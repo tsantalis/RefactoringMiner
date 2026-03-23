@@ -235,6 +235,29 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     mappingStore.addMapping(closing.first,closing.second);
                 }
             }
+            else {
+                Pair<Tree, Tree> intersection_types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.INTERSECTION_TYPE, LANG2.INTERSECTION_TYPE);
+                if(intersection_types != null) {
+                    if(intersection_types.first.isIsoStructuralTo(intersection_types.second)) {
+                        mappingStore.addMappingRecursively(intersection_types.first, intersection_types.second);
+                    }
+                    else {
+                        mappingStore.addMapping(intersection_types.first, intersection_types.second);
+                        object_types = Helpers.findPairOfType(intersection_types.first, intersection_types.second, LANG1.OBJECT_TYPE, LANG2.OBJECT_TYPE);
+                        if (object_types != null) {
+                            mappingStore.addMapping(object_types.first, object_types.second);
+                            Pair<Tree,Tree> opening = Helpers.findPairOfType(object_types.first,object_types.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                            if (opening != null) {
+                                mappingStore.addMapping(opening.first,opening.second);
+                            }
+                            Pair<Tree,Tree> closing = Helpers.findPairOfType(object_types.first,object_types.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                            if (closing != null) {
+                                mappingStore.addMapping(closing.first,closing.second);
+                            }
+                        }
+                    }
+                }
+            }
             Pair<Tree, Tree> types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.TYPE_KEYWORD, LANG2.TYPE_KEYWORD);
             if(types != null) {
                 mappingStore.addMapping(types.first, types.second);
@@ -324,7 +347,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
 
     private void processTypeAliasList(Tree srcTree, Tree dstTree, UMLTypeAliasListDiff typeAliasListDiff, ExtendedMultiMappingStore mappingStore) {
         for (org.apache.commons.lang3.tuple.Pair<UMLTypeAlias, UMLTypeAlias> typeAliasPair : typeAliasListDiff.getCommonTypeAliases()) {
-        	Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree, typeAliasPair.getLeft().getLocationInfo(), LANG1);
+            Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree, typeAliasPair.getLeft().getLocationInfo(), LANG1);
             Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, typeAliasPair.getRight().getLocationInfo(), LANG2);
             if (srcSubTree == null || dstSubTree == null) return;
             mappingStore.addMappingRecursively(srcSubTree,dstSubTree);

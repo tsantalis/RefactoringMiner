@@ -3,7 +3,6 @@ package narrator.graph;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import org.jgrapht.Graph;
@@ -11,108 +10,157 @@ import org.refactoringminer.astDiff.utils.Constants;
 
 public class Context {
 
-    public static final HashMap<String, List<String>> semanticContext = new HashMap<>() {{
-        put(Constants.get().CLASS_INSTANCE_CREATION,
-                List.of(Constants.get().CLASS_INSTANCE_CREATION, Constants.get().METHOD_INVOCATION
-                        , Constants.get().METHOD_INVOCATION_RECEIVER,
-                        Constants.get().EXPRESSION_STATEMENT));
-        put(Constants.get().SIMPLE_NAME, List.of(Constants.get().VARIABLE_DECLARATION_STATEMENT,
-                Constants.get().METHOD_INVOCATION,
-                Constants.get().CLASS_INSTANCE_CREATION, Constants.get().EXPRESSION_STATEMENT,
-                Constants.get().IF_STATEMENT,
-                Constants.get().RETURN_STATEMENT, Constants.get().SUPER_CONSTRUCTOR_INVOCATION,
-                Constants.get().FIELD_DECLARATION,
-                Constants.get().TAG_ELEMENT, Constants.get().ENHANCED_FOR_STATEMENT));
-        put(Constants.get().PREFIX_EXPRESSION,
-                List.of(Constants.get().METHOD_INVOCATION, Constants.get().IF_STATEMENT));
-        put(Constants.get().INFIX_EXPRESSION,
-                List.of(Constants.get().METHOD_INVOCATION, Constants.get().EXPRESSION_STATEMENT,
-                        Constants.get().CLASS_INSTANCE_CREATION, Constants.get().IF_STATEMENT,
-                        Constants.get().VARIABLE_DECLARATION_STATEMENT));
-        put("FieldAccess",
-                List.of(Constants.get().METHOD_INVOCATION, Constants.get().CLASS_INSTANCE_CREATION,
-                        Constants.get().ENHANCED_FOR_STATEMENT));
-        put("NullLiteral", List.of(Constants.get().CONSTRUCTOR_INVOCATION,
-                Constants.get().VARIABLE_DECLARATION_STATEMENT,
-                Constants.get().METHOD_INVOCATION, Constants.get().CLASS_INSTANCE_CREATION,
-                Constants.get().ENUM_CONSTANT_DECLARATION,
-                Constants.get().IF_STATEMENT, Constants.get().RETURN_STATEMENT));
-        put(Constants.get().BOOLEAN_LITERAL, List.of(Constants.get().CONSTRUCTOR_INVOCATION,
-                Constants.get().VARIABLE_DECLARATION_STATEMENT, Constants.get().METHOD_INVOCATION,
-                Constants.get().CLASS_INSTANCE_CREATION, Constants.get().ENUM_CONSTANT_DECLARATION,
-                Constants.get().IF_STATEMENT,
-                Constants.get().RETURN_STATEMENT));
-        put(Constants.get().NUMBER_LITERAL, List.of(Constants.get().CONSTRUCTOR_INVOCATION,
-                Constants.get().VARIABLE_DECLARATION_STATEMENT, Constants.get().METHOD_INVOCATION,
-                Constants.get().CLASS_INSTANCE_CREATION, Constants.get().ENUM_CONSTANT_DECLARATION,
-                Constants.get().IF_STATEMENT,
-                Constants.get().RETURN_STATEMENT));
-        put(Constants.get().STRING_LITERAL, List.of(Constants.get().CONSTRUCTOR_INVOCATION,
-                Constants.get().VARIABLE_DECLARATION_STATEMENT, Constants.get().METHOD_INVOCATION,
-                Constants.get().CLASS_INSTANCE_CREATION, Constants.get().ENUM_CONSTANT_DECLARATION,
-                Constants.get().IF_STATEMENT,
-                Constants.get().RETURN_STATEMENT));
-        put(Constants.get().METHOD_INVOCATION,
-                List.of(Constants.get().IF_STATEMENT, Constants.get().METHOD_INVOCATION,
-                        Constants.get().CLASS_INSTANCE_CREATION, Constants.get().FOR_STATEMENT,
-                        Constants.get().RETURN_STATEMENT,
-                        Constants.get().BLOCK));
-        put("LambdaExpression", List.of(Constants.get().METHOD_INVOCATION,
-                Constants.get().VARIABLE_DECLARATION_STATEMENT));
-        put(Constants.get().MODIFIER, List.of(Constants.get().FIELD_DECLARATION));
-        put(Constants.get().BREAK_STATEMENT, List.of(Constants.get().SWITCH_STATEMENT));
-        put(Constants.get().SWITCH_CASE, List.of(Constants.get().SWITCH_STATEMENT));
-        put(Constants.get().MARKER_ANNOTATION, List.of(Constants.get().FIELD_DECLARATION,
-                Constants.get().VARIABLE_DECLARATION_STATEMENT,
-                Constants.get().METHOD_DECLARATION));
-        put(Constants.get().EXPRESSION_STATEMENT, List.of(Constants.get().BLOCK));
-        put(Constants.get().METHOD_INVOCATION_RECEIVER, List.of(Constants.get().METHOD_INVOCATION));
-        put(Constants.get().METHOD_INVOCATION_ARGUMENTS,
-                List.of(Constants.get().METHOD_INVOCATION));
-        put(Constants.get().TAG_ELEMENT, List.of(Constants.get().JAVA_DOC));
-        put(Constants.get().TEXT_ELEMENT,
-                List.of(Constants.get().JAVA_DOC, Constants.get().TAG_ELEMENT));
-        put("CastExpression", List.of(Constants.get().CLASS_INSTANCE_CREATION,
-                Constants.get().ENUM_CONSTANT_DECLARATION));
-        put("ArrayCreation", List.of(Constants.get().EXPRESSION_STATEMENT));
-        put("ParameterizedType", List.of(Constants.get().VARIABLE_DECLARATION_STATEMENT,
-                Constants.get().RECORD_COMPONENT,
-                Constants.get().ENHANCED_FOR_STATEMENT));
-        put(Constants.get().CATCH_CLAUSE, List.of(Constants.get().TRY_STATEMENT));
-        put("ParenthesizedExpression", List.of(Constants.get().VARIABLE_DECLARATION_STATEMENT,
-                Constants.get().IF_STATEMENT));
-        put(Constants.get().THROW_STATEMENT,
-                List.of(Constants.get().TRY_STATEMENT, Constants.get().IF_STATEMENT));
-        put(Constants.get().QUALIFIED_NAME,
-                List.of(Constants.get().FIELD_DECLARATION, "NormalAnnotation",
-                        Constants.get().IF_STATEMENT
-                        , Constants.get().METHOD_INVOCATION));
-        put(Constants.get().CONDITIONAL_EXPRESSION,
-                List.of(Constants.get().VARIABLE_DECLARATION_STATEMENT,
-                        Constants.get().RETURN_STATEMENT, Constants.get().METHOD_INVOCATION));
-        put("MethodRefParameter", List.of(Constants.get().TAG_ELEMENT));
-        put("ThisExpression", List.of(Constants.get().METHOD_INVOCATION,
-                Constants.get().CLASS_INSTANCE_CREATION));
-        put("ArrayAccess", List.of(Constants.get().INFIX_EXPRESSION));
-        put(Constants.get().IF_STATEMENT, List.of(Constants.get().BLOCK));
-    }};
+    public static List<String> getSemanticContext(String path, String treeType) {
+        Constants constants = new Constants(path);
+        if (treeType.equals(constants.CLASS_INSTANCE_CREATION)) {
+            return List.of(constants.CLASS_INSTANCE_CREATION, constants.METHOD_INVOCATION,
+                    constants.METHOD_INVOCATION_RECEIVER, constants.EXPRESSION_STATEMENT);
+        }
+        if (treeType.equals(constants.SIMPLE_NAME)) {
+            return List.of(constants.VARIABLE_DECLARATION_STATEMENT, constants.METHOD_INVOCATION,
+                    constants.CLASS_INSTANCE_CREATION, constants.EXPRESSION_STATEMENT,
+                    constants.IF_STATEMENT, constants.RETURN_STATEMENT,
+                    constants.SUPER_CONSTRUCTOR_INVOCATION, constants.FIELD_DECLARATION,
+                    constants.TAG_ELEMENT, constants.ENHANCED_FOR_STATEMENT);
+        }
+        if (treeType.equals(constants.PREFIX_EXPRESSION)) {
+            return List.of(constants.METHOD_INVOCATION, constants.IF_STATEMENT);
+        }
+        if (treeType.equals(constants.INFIX_EXPRESSION)) {
+            return List.of(constants.METHOD_INVOCATION, constants.EXPRESSION_STATEMENT,
+                    constants.CLASS_INSTANCE_CREATION, constants.IF_STATEMENT,
+                    constants.VARIABLE_DECLARATION_STATEMENT);
+        }
+        if (treeType.equals("FieldAccess")) {
+            return List.of(constants.METHOD_INVOCATION, constants.CLASS_INSTANCE_CREATION,
+                    constants.ENHANCED_FOR_STATEMENT);
+        }
+        if (treeType.equals("NullLiteral")) {
+            return List.of(constants.CONSTRUCTOR_INVOCATION,
+                    constants.VARIABLE_DECLARATION_STATEMENT, constants.METHOD_INVOCATION,
+                    constants.CLASS_INSTANCE_CREATION, constants.ENUM_CONSTANT_DECLARATION,
+                    constants.IF_STATEMENT, constants.RETURN_STATEMENT);
+        }
+        if (treeType.equals(constants.BOOLEAN_LITERAL)) {
+            return List.of(constants.CONSTRUCTOR_INVOCATION,
+                    constants.VARIABLE_DECLARATION_STATEMENT, constants.METHOD_INVOCATION,
+                    constants.CLASS_INSTANCE_CREATION, constants.ENUM_CONSTANT_DECLARATION,
+                    constants.IF_STATEMENT, constants.RETURN_STATEMENT);
+        }
+        if (treeType.equals(constants.NUMBER_LITERAL)) {
+            return List.of(constants.CONSTRUCTOR_INVOCATION,
+                    constants.VARIABLE_DECLARATION_STATEMENT, constants.METHOD_INVOCATION,
+                    constants.CLASS_INSTANCE_CREATION, constants.ENUM_CONSTANT_DECLARATION,
+                    constants.IF_STATEMENT, constants.RETURN_STATEMENT);
+        }
+        if (treeType.equals(constants.STRING_LITERAL)) {
+            return List.of(constants.CONSTRUCTOR_INVOCATION,
+                    constants.VARIABLE_DECLARATION_STATEMENT, constants.METHOD_INVOCATION,
+                    constants.CLASS_INSTANCE_CREATION, constants.ENUM_CONSTANT_DECLARATION,
+                    constants.IF_STATEMENT, constants.RETURN_STATEMENT);
+        }
+        if (treeType.equals(constants.METHOD_INVOCATION)) {
+            return List.of(constants.IF_STATEMENT, constants.METHOD_INVOCATION,
+                    constants.CLASS_INSTANCE_CREATION, constants.FOR_STATEMENT,
+                    constants.RETURN_STATEMENT, constants.BLOCK);
+        }
+        if (treeType.equals("LambdaExpression")) {
+            return List.of(constants.METHOD_INVOCATION, constants.VARIABLE_DECLARATION_STATEMENT);
+        }
+        if (treeType.equals(constants.MODIFIER)) {
+            return List.of(constants.FIELD_DECLARATION);
+        }
+        if (treeType.equals(constants.BREAK_STATEMENT)) {
+            return List.of(constants.SWITCH_STATEMENT);
+        }
+        if (treeType.equals(constants.SWITCH_CASE)) {
+            return List.of(constants.SWITCH_STATEMENT);
+        }
+        if (treeType.equals(constants.MARKER_ANNOTATION)) {
+            return List.of(constants.FIELD_DECLARATION, constants.VARIABLE_DECLARATION_STATEMENT,
+                    constants.METHOD_DECLARATION);
+        }
+        if (treeType.equals(constants.EXPRESSION_STATEMENT)) {
+            return List.of(constants.BLOCK);
+        }
+        if (treeType.equals(constants.METHOD_INVOCATION_RECEIVER)) {
+            return List.of(constants.METHOD_INVOCATION);
+        }
+        if (treeType.equals(constants.METHOD_INVOCATION_ARGUMENTS)) {
+            return List.of(constants.METHOD_INVOCATION);
+        }
+        if (treeType.equals(constants.TAG_ELEMENT)) {
+            return List.of(constants.JAVA_DOC);
+        }
+        if (treeType.equals(constants.TEXT_ELEMENT)) {
+            return List.of(constants.JAVA_DOC, constants.TAG_ELEMENT);
+        }
+        if (treeType.equals("CastExpression")) {
+            return List.of(constants.CLASS_INSTANCE_CREATION, constants.ENUM_CONSTANT_DECLARATION);
+        }
+        if (treeType.equals("ArrayCreation")) {
+            return List.of(constants.EXPRESSION_STATEMENT);
+        }
+        if (treeType.equals("ParameterizedType")) {
+            return List.of(constants.VARIABLE_DECLARATION_STATEMENT, constants.RECORD_COMPONENT,
+                    constants.ENHANCED_FOR_STATEMENT);
+        }
+        if (treeType.equals(constants.CATCH_CLAUSE)) {
+            return List.of(constants.TRY_STATEMENT);
+        }
+        if (treeType.equals("ParenthesizedExpression")) {
+            return List.of(constants.VARIABLE_DECLARATION_STATEMENT, constants.IF_STATEMENT);
+        }
+        if (treeType.equals(constants.THROW_STATEMENT)) {
+            return List.of(constants.TRY_STATEMENT, constants.IF_STATEMENT);
+        }
+        if (treeType.equals(constants.QUALIFIED_NAME)) {
+            return List.of(constants.FIELD_DECLARATION, "NormalAnnotation", constants.IF_STATEMENT,
+                    constants.METHOD_INVOCATION);
+        }
+        if (treeType.equals(constants.CONDITIONAL_EXPRESSION)) {
+            return List.of(constants.VARIABLE_DECLARATION_STATEMENT, constants.RETURN_STATEMENT,
+                    constants.METHOD_INVOCATION);
+        }
+        if (treeType.equals("MethodRefParameter")) {
+            return List.of(constants.TAG_ELEMENT);
+        }
+        if (treeType.equals("ThisExpression")) {
+            return List.of(constants.METHOD_INVOCATION, constants.CLASS_INSTANCE_CREATION);
+        }
+        if (treeType.equals("ArrayAccess")) {
+            return List.of(constants.INFIX_EXPRESSION);
+        }
+        if (treeType.equals(constants.IF_STATEMENT)) {
+            return List.of(constants.BLOCK);
+        }
+        return null;
+    }
 
+    private static boolean isLocationContext(String path, String treeType) {
+        Constants constants = new Constants(path);
 
-    private static final List<String> locationContext = new ArrayList<>() {{
-        // location context
-        add(Constants.get().COMPILATION_UNIT);
-        add(Constants.get().TYPE_DECLARATION);
-        add(Constants.get().ENUM_DECLARATION);
-        add(Constants.get().RECORD_DECLARATION);
-        add(Constants.get().METHOD_DECLARATION);
-    }};
+        if (treeType.equals(constants.COMPILATION_UNIT)) {
+            return true;
+        }
+        if (treeType.equals(constants.TYPE_DECLARATION)) {
+            return true;
+        }
+        if (treeType.equals(constants.ENUM_DECLARATION)) {
+            return true;
+        }
+        if (treeType.equals(constants.RECORD_DECLARATION)) {
+            return true;
+        }
+        return treeType.equals(constants.METHOD_DECLARATION);
+    }
 
-    public static List<Pair<Tree, NodeType>> get(Tree tree) {
+    public static List<Pair<Tree, NodeType>> get(String path, Tree tree) {
         List<Pair<Tree, NodeType>> contexts = new ArrayList<>();
 
         String treeType = tree.getType().name;
 
-        List<String> treeSemanticContexts = semanticContext.get(treeType);
+        List<String> treeSemanticContexts = getSemanticContext(path, treeType);
         Tree parent = tree;
         while (true) {
             parent = parent.getParent();
@@ -127,7 +175,7 @@ public class Context {
                 contexts.add(new Pair<>(parent, NodeType.SEMANTIC_CONTEXT));
             }
 
-            if (locationContext.contains(parentType)) {
+            if (isLocationContext(path, parentType)) {
                 contexts.add(new Pair<>(parent, NodeType.LOCATION_CONTEXT));
             }
         }

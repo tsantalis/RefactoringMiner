@@ -23,10 +23,6 @@ import org.refactoringminer.astDiff.utils.Constants;
 public class TraversalEngine {
 
     private final Util util;
-    private final List<String> unacceptedSuccessiveNodes = new ArrayList<>() {{
-        add(Constants.get().TYPE_DECLARATION);
-        add(Constants.get().METHOD_DECLARATION);
-    }};
     private final Graph<Node, Edge> graph;
     private final List<TraversalPattern> components = new ArrayList<>();
     private final Set<UsagePattern> usagePatterns = new HashSet<>();
@@ -116,8 +112,12 @@ public class TraversalEngine {
 
     private void addSuccessiveComponents() {
         List<Node> acceptedNodes =
-                graph.vertexSet().stream().filter(node -> !unacceptedSuccessiveNodes.contains(
-                        node.getTree().getType().name)).toList();
+                graph.vertexSet().stream().filter(node -> {
+                    Constants constants = new Constants(node.getPath());
+                    String type = node.getTree().getType().name;
+                    return type.equals(constants.TYPE_DECLARATION) || type.equals(
+                            constants.METHOD_DECLARATION);
+                }).toList();
 
         HashMap<Node, SuccessivePattern> successivePatterns = new HashMap<>();
         for (Node acceptedNode : acceptedNodes) {

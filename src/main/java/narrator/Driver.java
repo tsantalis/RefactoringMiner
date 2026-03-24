@@ -1,9 +1,9 @@
 package narrator;
 
-import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 import narrator.graph.Edge;
@@ -52,16 +52,12 @@ public class Driver {
 
         Set<String> diffSrcPaths = diffSet.stream().map(ASTDiff::getSrcPath)
                 .collect(Collectors.toSet());
-        List<Tree> deletedFiles = srcContexts.entrySet().stream()
-                .filter(entry -> !diffSrcPaths.contains(entry.getKey()))
-                .map(entry -> entry.getValue().getRoot())
-                .toList();
+        List<Entry<String, TreeContext>> deletedFiles = srcContexts.entrySet().stream()
+                .filter(entry -> !diffSrcPaths.contains(entry.getKey())).toList();
         Set<String> diffDstPaths = diffSet.stream().map(ASTDiff::getDstPath)
                 .collect(Collectors.toSet());
-        List<Tree> addedFiles = dstContexts.entrySet().stream()
-                .filter(entry -> !diffDstPaths.contains(entry.getKey()))
-                .map(entry -> entry.getValue().getRoot())
-                .toList();
+        List<Entry<String, TreeContext>> addedFiles = dstContexts.entrySet().stream()
+                .filter(entry -> !diffDstPaths.contains(entry.getKey())).toList();
         network.importFiles(deletedFiles, addedFiles);
 
 //            network.importHunks(new HashSet<>(addedTree.getChildren()), null);

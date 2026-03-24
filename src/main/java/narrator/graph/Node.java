@@ -181,18 +181,20 @@ public class Node {
 
     public String getContent() {
         if (nodeType.equals(NodeType.LOCATION_CONTEXT)) {
+            Constants constants = new Constants(this.getPath());
             String type = tree.getType().name;
-            if (type.equals(Constants.get().TYPE_DECLARATION) || type.equals(
-                    Constants.get().METHOD_DECLARATION) || type.equals(
-                    Constants.get().ENUM_DECLARATION) || type.equals(
-                    Constants.get().RECORD_DECLARATION)) {
-                Tree name = TreeUtilFunctions.findChildByType(tree, Constants.get().SIMPLE_NAME);
+
+            if (type.equals(constants.TYPE_DECLARATION) || type.equals(
+                    constants.METHOD_DECLARATION) || type.equals(
+                    constants.ENUM_DECLARATION) || type.equals(
+                    constants.RECORD_DECLARATION)) {
+                Tree name = TreeUtilFunctions.findChildByType(tree, constants.SIMPLE_NAME);
                 if (name != null) {
                     return name.getLabel();
                 }
             }
 
-            if (type.equals(Constants.get().COMPILATION_UNIT)) {
+            if (type.equals(constants.COMPILATION_UNIT)) {
                 return path;
             }
         }
@@ -231,7 +233,7 @@ public class Node {
         List<Tree> trees = new ArrayList<>(this.tree.getDescendants());
         trees.add(tree);
         List<Tree> simpleNameTrees = trees.stream()
-                .filter(tree -> tree.getType().name.equals(Constants.get().SIMPLE_NAME)).toList();
+                .filter(tree -> tree.getType().name.equals(new Constants(this.getPath()).SIMPLE_NAME)).toList();
         return simpleNameTrees.stream()
                 .map(tree -> fileContent.substring(tree.getPos(), tree.getEndPos())).toList();
     }

@@ -98,6 +98,7 @@ public class TraversalEngine {
         Set<Node> usedNodes = util.getUsedNodes(node);
         for (Node usedNode : usedNodes) {
             usageComponent.addEdge(usedNode, node, new Edge(EdgeType.DEF_USE));
+            addContext(usedNode, usageComponent);
 
             if (util.doesUse(usedNode)) {
                 addUsageComponent(usedNode, usagePatterns);
@@ -105,7 +106,6 @@ public class TraversalEngine {
                 UsagePattern usedComponent = usagePatterns.get(usedNode);
                 usageComponent.addRequirement(usedNode, usedComponent);
             } else {
-                addContext(usedNode, usageComponent);
                 addMapping(usedNode, usageComponent);
             }
         }

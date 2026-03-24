@@ -104,24 +104,34 @@ public class TypeScriptFileProcessor {
 		Map<Integer, List<Swc4jComment>> leading = comments.getLeading();
 		for(Integer key : leading.keySet()) {
 			List<Swc4jComment> list = leading.get(key);
-			for(Swc4jComment comment : list) {
-				LocationInfo locationInfo = null;
-				if(comment.getKind().equals(Swc4jCommentKind.Line)) {
-					locationInfo = new LocationInfo(sourceFolder, filePath, comment.getSpan(), CodeElementType.LINE_COMMENT, fileContent);
-				}
-				else if(comment.getKind().equals(Swc4jCommentKind.Block)) {
-					locationInfo = new LocationInfo(sourceFolder, filePath, comment.getSpan(), CodeElementType.BLOCK_COMMENT, fileContent);
-				}
-				if(locationInfo != null) {
-					int start = locationInfo.getStartOffset();
-					int end = locationInfo.getEndOffset();
-					String text = fileContent.substring(start, end);
-					UMLComment umlComment = new UMLComment(text, locationInfo);
-					commentList.add(umlComment);
-				}
-			}
+			processCommentList(sourceFolder, filePath, fileContent, commentList, list);
+		}
+		Map<Integer, List<Swc4jComment>> trailing = comments.getTrailing();
+		for(Integer key : trailing.keySet()) {
+			List<Swc4jComment> list = trailing.get(key);
+			processCommentList(sourceFolder, filePath, fileContent, commentList, list);
 		}
 		return commentList;
+	}
+
+	private void processCommentList(String sourceFolder, String filePath, String fileContent,
+			List<UMLComment> commentList, List<Swc4jComment> list) {
+		for(Swc4jComment comment : list) {
+			LocationInfo locationInfo = null;
+			if(comment.getKind().equals(Swc4jCommentKind.Line)) {
+				locationInfo = new LocationInfo(sourceFolder, filePath, comment.getSpan(), CodeElementType.LINE_COMMENT, fileContent);
+			}
+			else if(comment.getKind().equals(Swc4jCommentKind.Block)) {
+				locationInfo = new LocationInfo(sourceFolder, filePath, comment.getSpan(), CodeElementType.BLOCK_COMMENT, fileContent);
+			}
+			if(locationInfo != null) {
+				int start = locationInfo.getStartOffset();
+				int end = locationInfo.getEndOffset();
+				String text = fileContent.substring(start, end);
+				UMLComment umlComment = new UMLComment(text, locationInfo);
+				commentList.add(umlComment);
+			}
+		}
 	}
 
 	public static UMLOperation processFunctionDeclaration(String sourceFolder, String filePath, Swc4jAstFnDecl functionDecl, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className) {

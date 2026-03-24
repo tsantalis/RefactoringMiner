@@ -1709,6 +1709,11 @@ public class OperationBody {
 							}
 						}
 						operation.setDefaultExpression(expression);
+						for(UMLComment comment : comments) {
+							if(operation.getLocationInfo().subsumes(comment.getLocationInfo())) {
+								operation.getComments().add(comment);
+							}
+						}
 						if(container instanceof UMLOperation) {
 							((UMLOperation)container).addNestedOperation(operation);
 						}
@@ -1727,6 +1732,11 @@ public class OperationBody {
 		else if(statement instanceof Swc4jAstFnDecl functionDecl) {
 			String className = container.getClassName();
 			UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, functionDecl, activeVariableDeclarations, fileContent, className);
+			for(UMLComment comment : comments) {
+				if(nested.getLocationInfo().subsumes(comment.getLocationInfo())) {
+					nested.getComments().add(comment);
+				}
+			}
 			if(container instanceof UMLOperation) {
 				((UMLOperation)container).addNestedOperation(nested);
 			}
@@ -1761,6 +1771,11 @@ public class OperationBody {
 					if(type instanceof Swc4jAstTsTypeLit typeLiteral) {
 						processTypeLiteral(sourceFolder, filePath, fileContent, umlClass, typeLiteral);
 					}
+				}
+			}
+			for(UMLComment comment : comments) {
+				if(umlClass.getLocationInfo().subsumes(comment.getLocationInfo())) {
+					umlClass.getComments().add(comment);
 				}
 			}
 			if(container instanceof ModuleContainer) {

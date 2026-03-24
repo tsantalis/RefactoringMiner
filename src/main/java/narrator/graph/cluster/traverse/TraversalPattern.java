@@ -20,10 +20,8 @@ public class TraversalPattern extends GraphWrapper {
     }
 
     public String getId() {
-        Node lead = getLead();
-        Tree tree = lead.getTree();
-        return getClass().getSimpleName() + "-" + tree.getPos() + '-' + tree.getEndPos() + '-'
-                + System.identityHashCode(this);
+        Tree tree = getLead().getTree();
+        return getClass().getSimpleName() + "-" + tree.getPos() + '-' + tree.getEndPos();
     }
 
     public JsonObject stringify() {

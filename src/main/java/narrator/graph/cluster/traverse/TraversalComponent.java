@@ -18,6 +18,12 @@ public class TraversalComponent extends TraversalPattern {
     }
 
     @Override
+    public String getId() {
+        String baseId = super.getId();
+        return baseId + "-" + System.identityHashCode(this);
+    }
+
+    @Override
     public boolean containsNode(Node node) {
         Node foundNode =
                 getGraph().vertexSet().stream().filter(reasonNode -> reasonNode.equals(node))

@@ -472,6 +472,13 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         }
                     }
                 }
+                if(srcStatementNode.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT) && dstStatementNode.getParent().getType().name.equals(LANG2.EXPORT_STATEMENT)) {
+                    mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcStatementNode.getParent(),dstStatementNode.getParent(),LANG1.EXPORT_KEYWORD,LANG2.EXPORT_KEYWORD);
+                    if(matched != null) {
+                        mappingStore.addMapping(matched.first, matched.second);
+                    }
+                }
             }
         else if(Constants.isCrossLanguage(LANG1, LANG2)) {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);

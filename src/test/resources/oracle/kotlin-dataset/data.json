@@ -13323,10 +13323,10 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable trustManager : Inferred in method public newTrustManager(keyStoreType String, trustedCertificates List<X509Certificate>, insecureHosts List<String>) : X509TrustManager from class okhttp3.tls.internal.TlsUtil",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>The return statement is not getting matched to infer the Extract Variable refactoring</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Merge Class",
         "description": "Merge Class [okhttp3.recipes.kt.DevServerAndroid, okhttp3.recipes.kt.DevServerJvm] merged to okhttp3.recipes.kt.DevServer",

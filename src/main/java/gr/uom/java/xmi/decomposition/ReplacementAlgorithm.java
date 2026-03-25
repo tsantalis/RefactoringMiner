@@ -2868,6 +2868,11 @@ public class ReplacementAlgorithm {
 			addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
 			return replacementInfo.getReplacements();
 		}
+		else if(invocationCoveringTheEntireStatement1 != null && (r = invocationCoveringTheEntireStatement1.makeReplacementForAllArgumentsReturned(statement2.getString(), container2)) != null) {
+			replacementInfo.addReplacement(r);
+			addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
+			return replacementInfo.getReplacements();
+		}
 		for(String methodInvocation1 : methodInvocations1) {
 			for(AbstractCall operationInvocation1 : methodInvocationMap1.get(methodInvocation1)) {
 				if((statement1.getString().endsWith(methodInvocation1 + LANG1.STATEMENT_TERMINATION) || statement1.getString().startsWith(methodInvocation1 + ".")) && (r = operationInvocation1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {

@@ -3,6 +3,8 @@ package gr.uom.java.xmi;
 import java.util.ArrayList;
 import java.util.List;
 
+import gr.uom.java.xmi.decomposition.LeafExpression;
+
 public class ListCompositeType extends UMLType {
 	public enum Kind {
 		UNION("|"), INTERSECTION("&"), LITERAL(";");
@@ -11,6 +13,7 @@ public class ListCompositeType extends UMLType {
 			this.operand = operand;
 		}
 	}
+	private List<LeafExpression> keys = new ArrayList<LeafExpression>();
 	private List<UMLType> types = new ArrayList<UMLType>();
 	private Kind kind;
 
@@ -25,6 +28,14 @@ public class ListCompositeType extends UMLType {
 
 	public Kind getKind() {
 		return kind;
+	}
+
+	public List<LeafExpression> getKeys() {
+		return keys;
+	}
+
+	public void setKeys(List<LeafExpression> keys) {
+		this.keys = keys;
 	}
 
 	@Override

@@ -1148,25 +1148,47 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	protected static boolean oneIsVariableDeclarationTheOtherIsReturnStatement(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, Constants LANG1, Constants LANG2) {
-		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
+	protected static boolean oneIsVariableDeclarationTheOtherIsReturnStatement(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo, Constants LANG1, Constants LANG2) {
+		String trimmedS1 = s1;
+		String trimmedS2 = s2;
+		boolean noPrettyPrint = (LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT)) || (LANG1.equals(Constants.KOTLIN) && LANG2.equals(Constants.KOTLIN));
+		if(noPrettyPrint) {
+			trimmedS1 = trimmedS1.replaceAll("\s", "");
+			trimmedS2 = trimmedS2.replaceAll("\s", "");
+		}
+		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(trimmedS1, trimmedS2);
+		for(Replacement replacement : replacementInfo.getReplacements()) {
+			if(commonSuffix.equals(replacement.getAfter() + LANG2.STATEMENT_TERMINATION)) {
+				return false;
+			}
+		}
 		if(!commonSuffix.equals("null;\n") && !commonSuffix.equals("true;\n") && !commonSuffix.equals("false;\n") && !commonSuffix.equals("0;\n")) {
 			if(s1.startsWith(LANG1.RETURN_SPACE) && s1.substring(LANG1.RETURN_SPACE.length(), s1.length()).equals(commonSuffix) &&
-					s2.contains(LANG2.ASSIGNMENT) && s2.substring(s2.indexOf(LANG2.ASSIGNMENT)+1, s2.length()).equals(commonSuffix)) {
+					s2.contains(LANG2.ASSIGNMENT) && s2.substring(s2.indexOf(LANG2.ASSIGNMENT)+LANG2.ASSIGNMENT.length(), s2.length()).equals(commonSuffix)) {
+				return true;
+			}
+			if(noPrettyPrint &&
+					s1.startsWith(LANG1.RETURN_SPACE) && s1.substring(LANG1.RETURN_SPACE.length(), s1.length()).replaceAll("\s", "").equals(commonSuffix) &&
+					s2.contains(LANG2.ASSIGNMENT) && s2.substring(s2.indexOf(LANG2.ASSIGNMENT)+LANG2.ASSIGNMENT.length(), s2.length()).replaceAll("\s", "").equals(commonSuffix)) {
 				return true;
 			}
 			if(s2.startsWith(LANG2.RETURN_SPACE) && s2.substring(LANG2.RETURN_SPACE.length(), s2.length()).equals(commonSuffix) &&
-					s1.contains(LANG1.ASSIGNMENT) && s1.substring(s1.indexOf(LANG1.ASSIGNMENT)+1, s1.length()).equals(commonSuffix)) {
+					s1.contains(LANG1.ASSIGNMENT) && s1.substring(s1.indexOf(LANG1.ASSIGNMENT)+LANG1.ASSIGNMENT.length(), s1.length()).equals(commonSuffix)) {
+				return true;
+			}
+			if(noPrettyPrint &&
+					s2.startsWith(LANG2.RETURN_SPACE) && s2.substring(LANG2.RETURN_SPACE.length(), s2.length()).replaceAll("\s", "").equals(commonSuffix) &&
+					s1.contains(LANG1.ASSIGNMENT) && s1.substring(s1.indexOf(LANG1.ASSIGNMENT)+LANG1.ASSIGNMENT.length(), s1.length()).replaceAll("\s", "").equals(commonSuffix)) {
 				return true;
 			}
 		}
 		if(variableDeclarations1.size() == 0 && variableDeclarations2.size() == 0 && commonSuffix.equals("0;\n")) {
 			if(s1.startsWith(LANG1.RETURN_SPACE) && s1.substring(LANG1.RETURN_SPACE.length(), s1.length()).equals(commonSuffix) &&
-					s2.contains(LANG2.ASSIGNMENT) && s2.substring(s2.indexOf(LANG2.ASSIGNMENT)+1, s2.length()).equals(commonSuffix)) {
+					s2.contains(LANG2.ASSIGNMENT) && s2.substring(s2.indexOf(LANG2.ASSIGNMENT)+LANG2.ASSIGNMENT.length(), s2.length()).equals(commonSuffix)) {
 				return true;
 			}
 			if(s2.startsWith(LANG2.RETURN_SPACE) && s2.substring(LANG2.RETURN_SPACE.length(), s2.length()).equals(commonSuffix) &&
-					s1.contains(LANG1.ASSIGNMENT) && s1.substring(s1.indexOf(LANG1.ASSIGNMENT)+1, s1.length()).equals(commonSuffix)) {
+					s1.contains(LANG1.ASSIGNMENT) && s1.substring(s1.indexOf(LANG1.ASSIGNMENT)+LANG1.ASSIGNMENT.length(), s1.length()).equals(commonSuffix)) {
 				return true;
 			}
 		}

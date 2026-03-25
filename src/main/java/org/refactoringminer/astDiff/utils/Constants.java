@@ -369,4 +369,5 @@ public class Constants {
     public final String OBJECT_TYPE = "object_type";
     public final String PROPERTY_SIGNATURE = "property_signature";
     public final String INTERSECTION_TYPE = "intersection_type";
+    public final String REQUIRED_PARAMETER = "required_parameter";
 }

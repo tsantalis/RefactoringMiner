@@ -256,7 +256,7 @@ public class HunkNetwork {
         processSuccession();
         processMapping();
 
-        System.out.println(graph.edgeSet().size());
+        System.out.println(graph.vertexSet().size() + "-" + graph.edgeSet().size());
     }
 
     private void processMoves() {
@@ -462,12 +462,18 @@ public class HunkNetwork {
     private UMLClass getUMLClass(String path, Tree tree, SrcDst srcDst) {
         Constants constants = new Constants(path);
 
-        Tree hunkParentType = TreeUtilFunctions.getParentUntilType(tree,
-                constants.TYPE_DECLARATION);
-        if (hunkParentType == null) { // there is no need to process def-use when it is out of type
+        List<Tree> parents = new ArrayList<>();
+        parents.add(tree);
+        parents.addAll(tree.getParents());
+        Tree parentClass = parents.stream().filter(parent -> {
+            String parentType = parent.getType().name;
+            return parentType.equals(constants.TYPE_DECLARATION) || parentType.equals(
+                    constants.ENUM_DECLARATION);
+        }).findFirst().orElse(null);
+        if (parentClass == null) { // there is no need to process def-use when it is out of type
             return null;
         }
-        Tree parentTypeName = TreeUtilFunctions.findChildByType(hunkParentType,
+        Tree parentTypeName = TreeUtilFunctions.findChildByType(parentClass,
                 constants.SIMPLE_NAME);
         if (parentTypeName == null) {
             return null;

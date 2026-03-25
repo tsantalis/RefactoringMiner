@@ -56,11 +56,13 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstComputedPropName;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateName;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstParenExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstCallee;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstMemberProp;
@@ -1254,6 +1256,13 @@ public class OperationInvocation extends AbstractCall {
 				this.methodName = fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd());
 			ISwc4jAstExpr receiver = memberExpr.getObj();
 			this.expression = fileContent.substring(receiver.getSpan().getStart(), receiver.getSpan().getEnd());
+		}
+		else if(callee instanceof Swc4jAstParenExpr parenExpr) {
+			ISwc4jAstExpr expr = parenExpr.getExpr();
+			if(expr instanceof Swc4jAstArrowExpr arrowExpr) {
+				//self-invoking asynchronous arrow function (also known as an Immediately Invoked Function Expression, or IIFE)
+			}
+			this.methodName = "";
 		}
 		else if(callee instanceof Swc4jAstIdent ident) {
 			this.methodName = ident.getSym();

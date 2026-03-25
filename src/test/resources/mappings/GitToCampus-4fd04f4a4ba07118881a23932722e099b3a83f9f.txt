@@ -9,6 +9,7 @@ line range:144-144==line range:135-135
 private buildMetadataMap(buildingList GeoJsonFeatureCollection<BuildingListProps>) : Map<string,{Campus;string;string;string;string[];Record<string,string>}> -> private toBuildingMetadataEntry(props BuildingListProps) : {string;BuildingMetadata}|null
 line range:115-115==line range:106-106
 line range:116-116==line range:107-107
+line range:118-125==line range:110-120
 private joinBoundariesToMeta(boundaries GeoJsonFeatureCollection<BuildingBoundaryProps>, metaById ReturnType<typeof buildMetadataMap>) : BuildingShape[] -> private joinBoundariesToMeta(boundaries GeoJsonFeatureCollection<BuildingBoundaryProps>, metaById ReturnType<typeof buildMetadataMap>) : BuildingShape[]
 line range:134-134==line range:172-172
 line range:138-138==line range:175-175

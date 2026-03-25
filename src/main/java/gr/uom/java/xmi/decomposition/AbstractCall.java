@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry;
 import org.jetbrains.kotlin.psi.KtSuperTypeListEntry;
 import org.refactoringminer.util.PathFileUtils;
+import org.refactoringminer.util.PrefixSuffixUtils;
 
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
 
@@ -23,9 +24,11 @@ import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LeafType;
+import gr.uom.java.xmi.ListCompositeType;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN;
 
@@ -1378,6 +1381,60 @@ public abstract class AbstractCall extends LeafExpression {
 
 	private boolean indexCondition(String statement, int index) {
 		return (arguments().size() <= 2 && (index == 0 || this.getName().equals(LANG.ASSERT_THROWS) || this.getName().startsWith("assume") || "Assert".equals(this.getExpression()))) || (statement.contains(LANG.TERNARY_CONDITION) && statement.contains(LANG.TERNARY_ELSE));
+	}
+
+	public Replacement makeReplacementForAllArgumentsReturned(String statement, VariableDeclarationContainer containerWithReturnStatement) {
+		if(statement.startsWith(LANG.RETURN_SPACE) && containerWithReturnStatement instanceof UMLOperation operation) {
+			String s2 = statement.substring(LANG.RETURN_SPACE.length(), statement.length()-LANG.STATEMENT_TERMINATION.length());
+			StringBuilder reconstructReturn = new StringBuilder();
+			reconstructReturn.append("{");
+			for(String arg : arguments) {
+				reconstructReturn.append(arg).append(",");
+			}
+			reconstructReturn.append("}");
+			String s1 = reconstructReturn.toString();
+			String removeWhitespace1 = s1.replaceAll("\s", "").replaceAll("\n", "");
+			String removeWhitespace2 = s2.replaceAll("\s", "").replaceAll("\n", "");
+			if(removeWhitespace1.equals(removeWhitespace2)) {
+				return new Replacement(arguments().toString(), s2,
+						ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
+			}
+			String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(removeWhitespace1, removeWhitespace2);
+			String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(removeWhitespace1, removeWhitespace2);
+			if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty() && operation.getReturnParameter() != null) {
+				int beginIndexS1 = removeWhitespace1.indexOf(commonPrefix) + commonPrefix.length();
+				int endIndexS1 = removeWhitespace1.lastIndexOf(commonSuffix);
+				String diff1 = beginIndexS1 > endIndexS1 ? "" :	removeWhitespace1.substring(beginIndexS1, endIndexS1);
+				int beginIndexS2 = removeWhitespace2.indexOf(commonPrefix) + commonPrefix.length();
+				int endIndexS2 = removeWhitespace2.lastIndexOf(commonSuffix);
+				String diff2 = beginIndexS2 > endIndexS2 ? "" :	removeWhitespace2.substring(beginIndexS2, endIndexS2);
+				if(diff1.isEmpty()) {
+					UMLType returnType = operation.getReturnParameter().getType();
+					if(match(returnType, diff2)) {
+						return new Replacement(arguments().toString(), s2,
+								ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
+					}
+				}
+			}
+			
+		}
+		return null;
+	}
+
+	private static boolean match(UMLType returnType, String diff2) {
+		if(returnType instanceof ListCompositeType listType) {
+			for(LeafExpression expr : listType.getKeys()) {
+				if(diff2.equals(expr.getString() + ":")) {
+					return true;
+				}
+			}
+			for(UMLType nestedType : listType.getTypes()) {
+				if(match(nestedType, diff2)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public Replacement makeReplacementForReturnedArgument(String statement) {

@@ -37,6 +37,7 @@ import org.jetbrains.kotlin.psi.KtUserType;
 import org.refactoringminer.util.PathFileUtils;
 
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsEntityName;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsFnParam;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
@@ -638,8 +639,12 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		else if(type instanceof Swc4jAstTsTypeLit typeLiteral) {
 			List<ISwc4jAstTsTypeElement> members = typeLiteral.getMembers();
 			List<UMLType> memberTypeList = new ArrayList<>();
+			List<LeafExpression> keys = new ArrayList<>();
 			for(ISwc4jAstTsTypeElement member : members) {
 				if(member instanceof Swc4jAstTsPropertySignature signature) {
+					ISwc4jAstExpr key = signature.getKey();
+					LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, key, CodeElementType.KEY_EXPRESSION, null, fileContent);
+					keys.add(leafExpression);
 					if(signature.getTypeAnn().isPresent()) {
 						Swc4jAstTsTypeAnn typeAnnotation = signature.getTypeAnn().get();
 						UMLType signatureType = extractTypeObject(typeAnnotation.getTypeAnn(), sourceFolder, filePath, fileContent);
@@ -647,7 +652,9 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 					}
 				}
 			}
-			return new ListCompositeType(memberTypeList, Kind.LITERAL);
+			ListCompositeType listCompositeType = new ListCompositeType(memberTypeList, Kind.LITERAL);
+			listCompositeType.setKeys(keys);
+			return listCompositeType;
 		}
 		else if(type instanceof Swc4jAstTsLitType literalType) {
 			UMLType leafType = extractTypeObject("'" + literalType.getLit().toString() + "'");

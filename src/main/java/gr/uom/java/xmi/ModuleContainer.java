@@ -31,6 +31,7 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	private List<UMLComment> comments = new ArrayList<>();
 	private List<UMLClass> nestedClasses = new ArrayList<>();
 	private List<UMLOperation> nestedOperations = new ArrayList<>();
+	private List<UMLAttribute> nestedAttributes = new ArrayList<>();
 
 	public ModuleContainer(LocationInfo locationInfo, String name) {
 		this.statementList = new ArrayList<>();
@@ -61,6 +62,14 @@ public class ModuleContainer implements VariableDeclarationContainer {
 
 	public List<UMLOperation> getNestedOperations() {
 		return nestedOperations;
+	}
+
+	public void addNestedAttribute(UMLAttribute nested) {
+		this.nestedAttributes.add(nested);
+	}
+
+	public List<UMLAttribute> getNestedAttributes() {
+		return nestedAttributes;
 	}
 
 	public ModuleContainer(List<AbstractStatement> statements, LocationInfo locationInfo, String name) {

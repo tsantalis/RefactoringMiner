@@ -342,6 +342,7 @@ public class Constants {
     public final String FOR_KEYWORD = "for";
     public final String IF_KEYWORD = "if";
     public final String TYPE_KEYWORD = "type";
+    public final String RETURN_KEYWORD = "return";
     public final String INTERFACE_KEYWORD = "interface";
     public final String PARENTHESIZED_EXPRESSION = "parenthesized_expression";
     public final String LEXICAL_DECLARATION = "lexical_declaration";

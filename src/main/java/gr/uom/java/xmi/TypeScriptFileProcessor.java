@@ -89,6 +89,7 @@ public class TypeScriptFileProcessor {
 				moduleClass.setContainer(moduleContainer);
 				moduleClass.setVisibility(Visibility.PUBLIC);
 				moduleClass.operations.addAll(moduleContainer.getNestedOperations());
+				moduleClass.attributes.addAll(moduleContainer.getNestedAttributes());
 				umlModel.addClass(moduleClass);
 				umlModel.getClassList().addAll(moduleContainer.getNestedClasses());
 			}

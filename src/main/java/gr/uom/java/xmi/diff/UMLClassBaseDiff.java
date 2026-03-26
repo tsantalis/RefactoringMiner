@@ -3537,7 +3537,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			for(UMLOperation addedOperation : addedOperations) {
 				if(!mapper.getContainer2().equals(addedOperation)) {
 					OperationBody body = addedOperation.getBody();
-					if(body != null && body.getBodyHashCode() == operation1.getBody().getBodyHashCode()) {
+					if(body != null && body.getBodyHashCode() == operation1.getBodyHashCode()) {
 						return true;
 					}
 					else if(equalSignatureWithCommonParameterTypes(operation1, addedOperation)) {
@@ -3562,7 +3562,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					for(UMLOperation addedOperation : addedClass.getOperations()) {
 						OperationBody body = addedOperation.getBody();
 						List<String> parameterNameList = addedOperation.getParameterNameList();
-						if(body != null && body.getBodyHashCode() == operation1.getBody().getBodyHashCode() &&
+						if(body != null && body.getBodyHashCode() == operation1.getBodyHashCode() &&
 								parameterNameList.size() > 0 && parameterNameList.equals(mapper.getParameterNameList1())) {
 							return true;
 						}
@@ -3576,7 +3576,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				if(!mapper.getContainer2().equals(addedOperation)) {
 					OperationBody body = addedOperation.getBody();
 					List<String> parameterNameList = addedOperation.getParameterNameList();
-					if(body != null && body.getBodyHashCode() == operation1.getBody().getBodyHashCode() &&
+					if(body != null && body.getBodyHashCode() == operation1.getBodyHashCode() &&
 							parameterNameList.size() > 0 && parameterNameList.equals(mapper.getParameterNameList1())) {
 						counter++;
 					}
@@ -3587,7 +3587,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					for(UMLOperation addedOperation : addedClass.getOperations()) {
 						OperationBody body = addedOperation.getBody();
 						List<String> parameterNameList = addedOperation.getParameterNameList();
-						if(body != null && body.getBodyHashCode() == operation1.getBody().getBodyHashCode() &&
+						if(body != null && body.getBodyHashCode() == operation1.getBodyHashCode() &&
 								parameterNameList.size() > 0 && parameterNameList.equals(mapper.getParameterNameList1())) {
 							counter++;
 						}
@@ -3609,7 +3609,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			for(UMLOperation removedOperation : removedOperations) {
 				if(!mapper.getContainer1().equals(removedOperation)) {
 					OperationBody body = removedOperation.getBody();
-					if(body != null && body.getBodyHashCode() == operation2.getBody().getBodyHashCode()) {
+					if(body != null && body.getBodyHashCode() == operation2.getBodyHashCode()) {
 						return true;
 					}
 					else if(equalSignatureWithCommonParameterTypes(removedOperation, operation2)) {
@@ -3634,7 +3634,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					for(UMLOperation removedOperation : removedClass.getOperations()) {
 						OperationBody body = removedOperation.getBody();
 						List<String> parameterNameList = removedOperation.getParameterNameList();
-						if(body != null && body.getBodyHashCode() == operation2.getBody().getBodyHashCode() &&
+						if(body != null && body.getBodyHashCode() == operation2.getBodyHashCode() &&
 								parameterNameList.size() > 0 && parameterNameList.equals(mapper.getParameterNameList2())) {
 							return true;
 						}
@@ -3648,7 +3648,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				if(!mapper.getContainer1().equals(removedOperation)) {
 					OperationBody body = removedOperation.getBody();
 					List<String> parameterNameList = removedOperation.getParameterNameList();
-					if(body != null && body.getBodyHashCode() == operation2.getBody().getBodyHashCode() &&
+					if(body != null && body.getBodyHashCode() == operation2.getBodyHashCode() &&
 							parameterNameList.size() > 0 && parameterNameList.equals(mapper.getParameterNameList2())) {
 						counter++;
 					}
@@ -3659,7 +3659,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					for(UMLOperation removedOperation : removedClass.getOperations()) {
 						OperationBody body = removedOperation.getBody();
 						List<String> parameterNameList = removedOperation.getParameterNameList();
-						if(body != null && body.getBodyHashCode() == operation2.getBody().getBodyHashCode() &&
+						if(body != null && body.getBodyHashCode() == operation2.getBodyHashCode() &&
 								parameterNameList.size() > 0 && parameterNameList.equals(mapper.getParameterNameList2())) {
 							counter++;
 						}

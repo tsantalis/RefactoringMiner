@@ -260,6 +260,12 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 		OperationBody operationBody = getBody();
 		if(operationBody != null)
 			return operationBody.getBodyHashCode();
+		AbstractExpression expression = getDefaultExpression();
+		if(expression != null) {
+			if(expression.getLambdas().size() > 0 && expression.getLambdas().get(0).getBody() != null) {
+				return expression.getLambdas().get(0).getBody().getBodyHashCode();
+			}
+		}
 		return 0;
 	}
 
@@ -267,6 +273,12 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 		OperationBody operationBody = getBody();
 		if(operationBody != null)
 			return operationBody.stringRepresentation();
+		AbstractExpression expression = getDefaultExpression();
+		if(expression != null) {
+			if(expression.getLambdas().size() > 0 && expression.getLambdas().get(0).getBody() != null) {
+				return expression.getLambdas().get(0).getBody().stringRepresentation();
+			}
+		}
 		return Collections.emptyList();
 	}
 

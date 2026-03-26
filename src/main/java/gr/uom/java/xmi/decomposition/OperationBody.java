@@ -107,6 +107,8 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIntersectionType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsPropertySignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeLit;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParam;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamDecl;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsUnionType;
 
 import extension.ast.node.LangASTNode;
@@ -153,6 +155,7 @@ import gr.uom.java.xmi.UMLImport;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.UMLTypeParameter;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.Visibility;
 
@@ -1701,6 +1704,15 @@ public class OperationBody {
 							UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation.getTypeAnn(), 0);
 							UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
 							operation.addParameter(returnParameter);
+						}
+						Optional<Swc4jAstTsTypeParamDecl> typeParams = arrowExpr.getTypeParams();
+						if(typeParams.isPresent()) {
+							List<Swc4jAstTsTypeParam> list = typeParams.get().getParams();
+							for(Swc4jAstTsTypeParam param : list) {
+								LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param.getSpan(), CodeElementType.TYPE_PARAMETER, fileContent);
+								UMLTypeParameter umlTypeParameter = new UMLTypeParameter(param.getName().getSym(), locationInfo);
+								operation.addTypeParameter(umlTypeParameter);
+							}
 						}
 						List<LambdaExpressionObject> lambdas = expression.getLambdas();
 						if(lambdas.size() > 0) {

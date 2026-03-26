@@ -525,8 +525,24 @@ public abstract class UMLAbstractClass {
 		if(operation2.stringRepresentation().size() == 3) {
 			for(UMLOperation operation1 : operations) {
 				if(operation1.stringRepresentation().size() == 3) {
-					List<AbstractCodeFragment> leaves2 = operation2.getBody().getCompositeStatement().getLeaves();
-					List<AbstractCodeFragment> leaves1 = operation1.getBody().getCompositeStatement().getLeaves();
+					List<AbstractCodeFragment> leaves2 = new ArrayList<>();
+					List<AbstractCodeFragment> leaves1 = new ArrayList<>();
+					if(operation2.getBody() != null) {
+						leaves2 = operation2.getBody().getCompositeStatement().getLeaves();
+					}
+					else if(operation2.getDefaultExpression() != null) {
+						if(operation2.getDefaultExpression().getLambdas().size() > 0 && operation2.getDefaultExpression().getLambdas().get(0).getBody() != null) {
+							leaves2 = operation2.getDefaultExpression().getLambdas().get(0).getBody().getCompositeStatement().getLeaves();
+						}
+					}
+					if(operation1.getBody() != null) {
+						leaves1 = operation1.getBody().getCompositeStatement().getLeaves();
+					}
+					else if(operation1.getDefaultExpression() != null) {
+						if(operation1.getDefaultExpression().getLambdas().size() > 0 && operation1.getDefaultExpression().getLambdas().get(0).getBody() != null) {
+							leaves1 = operation1.getDefaultExpression().getLambdas().get(0).getBody().getCompositeStatement().getLeaves();
+						}
+					}
 					if(leaves2.size() == 1 && leaves1.size() == 1) {
 						AbstractCodeFragment leaf2 = leaves2.get(0);
 						AbstractCodeFragment leaf1 = leaves1.get(0);

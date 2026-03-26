@@ -22,6 +22,8 @@ import com.caoccao.javet.swc4j.ast.program.Swc4jAstScript;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstFnDecl;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParam;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamDecl;
 import com.caoccao.javet.swc4j.comments.Swc4jComment;
 import com.caoccao.javet.swc4j.comments.Swc4jCommentKind;
 import com.caoccao.javet.swc4j.comments.Swc4jComments;
@@ -144,6 +146,15 @@ public class TypeScriptFileProcessor {
 			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, returnType.get().getTypeAnn(), 0);
 			UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
 			operation.addParameter(returnParameter);
+		}
+		Optional<Swc4jAstTsTypeParamDecl> typeParams = function.getTypeParams();
+		if(typeParams.isPresent()) {
+			List<Swc4jAstTsTypeParam> list = typeParams.get().getParams();
+			for(Swc4jAstTsTypeParam param : list) {
+				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param.getSpan(), CodeElementType.TYPE_PARAMETER, fileContent);
+				UMLTypeParameter umlTypeParameter = new UMLTypeParameter(param.getName().getSym(), locationInfo);
+				operation.addTypeParameter(umlTypeParameter);
+			}
 		}
 		for(Swc4jAstParam param : function.getParams()) {
 			ISwc4jAstPat pat = param.getPat();

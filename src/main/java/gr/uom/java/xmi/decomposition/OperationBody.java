@@ -1456,6 +1456,7 @@ public class OperationBody {
 		this.comments = container.getComments();
 		this.container = container;
 		this.activeVariableDeclarations = new HashMap<>(activeVariableDeclarations);
+		addAllInActiveVariableDeclarations(container != null ? container.getParameterDeclarationList() : Collections.emptyList());
 		for(ISwc4jAstStmt statement : block.getStmts()) {
 			processStatement(sourceFolder, filePath, compositeStatement, statement, fileContent);
 		}

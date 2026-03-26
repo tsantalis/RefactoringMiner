@@ -9709,7 +9709,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				if(fragment2 != null) {
 					for(AbstractCodeMapping parentMapping : parentMapper.getMappings()) {
-						if(parentMapping.getFragment2().equals(fragment2) && !mapping.getFragment1().equals(parentMapping.getFragment1())) {
+						if(parentMapping.getFragment2().equals(fragment2) && !mapping.getFragment1().equals(parentMapping.getFragment1()) &&
+								!mapping.containsOnlyReplacement(ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION)) {
 							return true;
 						}
 					}

@@ -2227,6 +2227,7 @@ public class TestStatementMappings {
 		"https://github.com/srabm/HiveMaps.git, 9065c90b5d8b2245d7840cbeda07535adf4caba1, HiveMaps-9065c90b5d8b2245d7840cbeda07535adf4caba1.txt",
 		"https://github.com/srabm/HiveMaps.git, d130a1927944675fa48265631ec585786fd7335d, HiveMaps-d130a1927944675fa48265631ec585786fd7335d.txt",
 		"https://github.com/srabm/HiveMaps.git, c1f1c0b5b71a91770adbc6925a8ed1c874545733, HiveMaps-c1f1c0b5b71a91770adbc6925a8ed1c874545733.txt",
+		"https://github.com/srabm/HiveMaps.git, 3e145818d9f55c991bf9378622097e3e516c4fe5, HiveMaps-3e145818d9f55c991bf9378622097e3e516c4fe5.txt",
 		"https://github.com/LamdaDev/GitToCampus.git, 47a78b7a52a700c52a2f32ebd88e52ab6101e40e, GitToCampus-47a78b7a52a700c52a2f32ebd88e52ab6101e40e.txt",
 		"https://github.com/LamdaDev/GitToCampus.git, 4fd04f4a4ba07118881a23932722e099b3a83f9f, GitToCampus-4fd04f4a4ba07118881a23932722e099b3a83f9f.txt"
 	})

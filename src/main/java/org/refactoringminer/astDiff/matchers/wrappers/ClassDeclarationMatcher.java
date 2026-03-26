@@ -62,6 +62,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.TYPE_ALIAS_DECLARATION);
         	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.TYPE_ALIAS_DECLARATION);
         }
+        if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isInterface() && classDiff.getNextClass().isInterface()) {
+        	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.INTERFACE_DECLARATION);
+        	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.INTERFACE_DECLARATION);
+        }
         if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isObject() && classDiff.getNextClass().isObject()) {
         	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT_DECLARATION);
         	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT_DECLARATION);
@@ -90,6 +94,13 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             if (srcTypeDeclaration.getParent().getType().name.equals(LANG1.TYPE_DECLARATION_STATEMENT)
                     && dstTypeDeclaration.getParent().getType().name.equals(LANG2.TYPE_DECLARATION_STATEMENT)) {
                 mappingStore.addMapping(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent());
+            }
+            if(srcTypeDeclaration.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT) && dstTypeDeclaration.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT)) {
+                mappingStore.addMapping(srcTypeDeclaration.getParent(), dstTypeDeclaration.getParent());
+                com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent(),LANG1.EXPORT_KEYWORD,LANG2.EXPORT_KEYWORD);
+                if(matched != null) {
+                    mappingStore.addMapping(matched.first, matched.second);
+                }
             }
         }
 
@@ -299,6 +310,24 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             Pair<Tree, Tree> semicolons = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.SEMICOLON, LANG2.SEMICOLON);
             if(semicolons != null) {
                 mappingStore.addMapping(semicolons.first, semicolons.second);
+            }
+        }
+        if (srcTypeDeclaration.getType().name.equals(LANG1.INTERFACE_DECLARATION) && dstTypeDeclaration.getType().name.equals(LANG2.INTERFACE_DECLARATION)) {
+            Pair<Tree, Tree> types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.INTERFACE_KEYWORD, LANG2.INTERFACE_KEYWORD);
+            if(types != null) {
+                mappingStore.addMapping(types.first, types.second);
+            }
+            Pair<Tree, Tree> blocks = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.INTERFACE_BODY, LANG2.INTERFACE_BODY);
+            if(blocks != null) {
+                mappingStore.addMapping(blocks.first, blocks.second);
+                com.github.gumtreediff.utils.Pair<Tree,Tree> opening = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                if (opening != null) {
+                    mappingStore.addMapping(opening.first,opening.second);
+                }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> closing = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                if (closing != null) {
+                    mappingStore.addMapping(closing.first,closing.second);
+                }
             }
         }
         if (srcBlock == null || dstBlock == null) return;

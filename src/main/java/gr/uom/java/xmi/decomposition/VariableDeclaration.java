@@ -60,6 +60,7 @@ import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstKeyValuePatProp;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstObjectPat;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstRestPat;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsInterfaceDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsTypeAliasDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
@@ -975,6 +976,9 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 				return parent;
 			}
 			else if(parent instanceof Swc4jAstTsTypeAliasDecl) {
+				return parent;
+			}
+			else if(parent instanceof Swc4jAstTsInterfaceDecl) {
 				return parent;
 			}
 			else if(parent instanceof Swc4jAstArrowExpr) {

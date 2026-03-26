@@ -342,6 +342,7 @@ public class Constants {
     public final String FOR_KEYWORD = "for";
     public final String IF_KEYWORD = "if";
     public final String TYPE_KEYWORD = "type";
+    public final String INTERFACE_KEYWORD = "interface";
     public final String PARENTHESIZED_EXPRESSION = "parenthesized_expression";
     public final String LEXICAL_DECLARATION = "lexical_declaration";
     public final String SEMICOLON = ";";
@@ -368,10 +369,13 @@ public class Constants {
     public final String TYPE_ALIAS_DECLARATION = "type_alias_declaration";
     public final String OBJECT_TYPE = "object_type";
     public final String PROPERTY_SIGNATURE = "property_signature";
+    public final String PROPERTY_IDENTIFIER = "property_identifier";
     public final String INTERSECTION_TYPE = "intersection_type";
     public final String UNION_TYPE = "union_type";
     public final String GENERIC_TYPE = "generic_type";
     public final String REQUIRED_PARAMETER = "required_parameter";
     public final String OPENING_TAG = "<";
     public final String CLOSING_TAG = ">";
+    public final String INTERFACE_DECLARATION = "interface_declaration";
+    public final String INTERFACE_BODY = "interface_body";
 }

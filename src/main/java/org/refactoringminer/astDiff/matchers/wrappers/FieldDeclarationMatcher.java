@@ -8,6 +8,7 @@ import gr.uom.java.xmi.diff.UMLJavadocDiff;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
+import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
@@ -108,6 +109,15 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                     Tree t1 = srcAttr.getParent().getChild(index1+1);
                     Tree t2 = dstAttr.getParent().getChild(index2+1);
                     mappingStore.addMapping(t1,t2);
+                }
+            }
+            mappingStore.addMapping(srcAttr, dstAttr);
+            com.github.gumtreediff.utils.Pair<Tree, Tree> type_annotations = Helpers.findPairOfType(srcAttr,dstAttr, LANG1.TYPE_ANNOTATION, LANG2.TYPE_ANNOTATION);
+            if(type_annotations != null) {
+                mappingStore.addMapping(type_annotations.first,type_annotations.second);
+                com.github.gumtreediff.utils.Pair<Tree, Tree> colons = Helpers.findPairOfType(type_annotations.first,type_annotations.second, LANG1.COLON, LANG2.COLON);
+                if(colons != null) {
+                	mappingStore.addMapping(colons.first, colons.second);
                 }
             }
         }

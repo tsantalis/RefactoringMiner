@@ -98,13 +98,21 @@ import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstReturnStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstSwitchStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstThrowStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTryStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsInterfaceDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsTypeAliasDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstWhileStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstWithStmt;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsCallSignatureDecl;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsConstructSignatureDecl;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsGetterSignature;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIndexSignature;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsInterfaceBody;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIntersectionType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsMethodSignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsPropertySignature;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsSetterSignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeLit;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParam;
@@ -1757,6 +1765,25 @@ public class OperationBody {
 				((ModuleContainer)container).addNestedOperation(nested);
 			}
 		}
+		else if(statement instanceof Swc4jAstTsInterfaceDecl interfaceDecl) {
+			String typeName = interfaceDecl.getId().getSym();
+			LocationInfo location = new LocationInfo(sourceFolder, filePath, interfaceDecl.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);
+			List<UMLImport> imports = new ArrayList<>();
+			UMLClass umlClass = new UMLClass(container.getClassName(), typeName, location, true, imports);
+			umlClass.setVisibility(Visibility.PRIVATE);
+			umlClass.setInterface(true);
+			Swc4jAstTsInterfaceBody interfaceBody = interfaceDecl.getBody();
+			List<ISwc4jAstTsTypeElement> typeElements = interfaceBody.getBody();
+			processTypeElements(sourceFolder, filePath, fileContent, umlClass, typeElements);
+			for(UMLComment comment : comments) {
+				if(umlClass.getLocationInfo().subsumes(comment.getLocationInfo())) {
+					umlClass.getComments().add(comment);
+				}
+			}
+			if(container instanceof ModuleContainer) {
+				((ModuleContainer)container).addNestedClass(umlClass);
+			}
+		}
 		else if(statement instanceof Swc4jAstExportDecl exportDecl) {
 			ISwc4jAstDecl decl = exportDecl.getDecl();
 			processStatement(sourceFolder, filePath, parent, decl, fileContent);
@@ -1800,6 +1827,11 @@ public class OperationBody {
 	private void processTypeLiteral(String sourceFolder, String filePath, String fileContent, UMLClass umlClass,
 			Swc4jAstTsTypeLit typeLiteral) {
 		List<ISwc4jAstTsTypeElement> members = typeLiteral.getMembers();
+		processTypeElements(sourceFolder, filePath, fileContent, umlClass, members);
+	}
+
+	private void processTypeElements(String sourceFolder, String filePath, String fileContent, UMLClass umlClass,
+			List<ISwc4jAstTsTypeElement> members) {
 		for(ISwc4jAstTsTypeElement member : members) {
 			if(member instanceof Swc4jAstTsPropertySignature signature) {
 				ISwc4jAstExpr key = signature.getKey();
@@ -1821,6 +1853,24 @@ public class OperationBody {
 					attribute.setVisibility(Visibility.PRIVATE);
 					umlClass.addAttribute(attribute);
 				}
+			}
+			else if(member instanceof Swc4jAstTsMethodSignature methodSignature) {
+				
+			}
+			else if(member instanceof Swc4jAstTsSetterSignature setterSignature) {
+				
+			}
+			else if(member instanceof Swc4jAstTsGetterSignature getterSignature) {
+				
+			}
+			else if(member instanceof Swc4jAstTsIndexSignature indexSignature) {
+				
+			}
+			else if(member instanceof Swc4jAstTsCallSignatureDecl callSignatureDecl) {
+				
+			}
+			else if(member instanceof Swc4jAstTsConstructSignatureDecl constructSignatureDecl) {
+				
 			}
 		}
 	}

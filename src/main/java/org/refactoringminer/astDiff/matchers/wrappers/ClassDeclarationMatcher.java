@@ -257,6 +257,36 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                         }
                     }
                 }
+                Pair<Tree, Tree> union_types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.UNION_TYPE, LANG2.UNION_TYPE);
+                if(union_types != null) {
+                    if(union_types.first.isIsoStructuralTo(union_types.second)) {
+                        mappingStore.addMappingRecursively(union_types.first, union_types.second);
+                    }
+                    else {
+                        mappingStore.addMapping(union_types.first, union_types.second);
+                        object_types = Helpers.findPairOfType(union_types.first, union_types.second, LANG1.OBJECT_TYPE, LANG2.OBJECT_TYPE);
+                        if (object_types != null) {
+                            mappingStore.addMapping(object_types.first, object_types.second);
+                            Pair<Tree,Tree> opening = Helpers.findPairOfType(object_types.first,object_types.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                            if (opening != null) {
+                                mappingStore.addMapping(opening.first,opening.second);
+                            }
+                            Pair<Tree,Tree> closing = Helpers.findPairOfType(object_types.first,object_types.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                            if (closing != null) {
+                                mappingStore.addMapping(closing.first,closing.second);
+                            }
+                        }
+                    }
+                }
+                Pair<Tree, Tree> generic_types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.GENERIC_TYPE, LANG2.GENERIC_TYPE);
+                if(generic_types != null) {
+                    if(generic_types.first.isIsoStructuralTo(generic_types.second)) {
+                        mappingStore.addMappingRecursively(generic_types.first, generic_types.second);
+                    }
+                    else {
+                        mappingStore.addMapping(generic_types.first, generic_types.second);
+                    }
+                }
             }
             Pair<Tree, Tree> types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.TYPE_KEYWORD, LANG2.TYPE_KEYWORD);
             if(types != null) {

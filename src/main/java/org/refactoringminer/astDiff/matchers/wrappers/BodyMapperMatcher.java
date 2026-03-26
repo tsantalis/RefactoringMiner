@@ -444,11 +444,17 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.PROPERTY_DECLARATION_KEYWORD)) {
             srcStatementNode = srcStatementNode.getParent();
         }
+        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.RETURN_KEYWORD)) {
+            srcStatementNode = srcStatementNode.getParent();
+        }
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo(),LANG2);
         if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.STATEMENTS)) {
             dstStatementNode = dstStatementNode.getChild(0);
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.PROPERTY_DECLARATION_KEYWORD)) {
+            dstStatementNode = dstStatementNode.getParent();
+        }
+        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.RETURN_KEYWORD)) {
             dstStatementNode = dstStatementNode.getParent();
         }
         if (srcStatementNode == null || dstStatementNode == null) {

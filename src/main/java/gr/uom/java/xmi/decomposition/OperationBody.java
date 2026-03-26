@@ -1749,6 +1749,15 @@ public class OperationBody {
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
+			if(container instanceof ModuleContainer) {
+				for(VariableDeclaration vd : child.getVariableDeclarations()) {
+					vd.setAttribute(true);
+					UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), vd.getLocationInfo(), container.getName());
+					attribute.setVariableDeclaration(vd);
+					attribute.setVisibility(Visibility.PRIVATE);
+					((ModuleContainer)container).addNestedAttribute(attribute);
+				}
+			}
 		}
 		else if(statement instanceof Swc4jAstFnDecl functionDecl) {
 			String className = container.getClassName();

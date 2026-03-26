@@ -10,6 +10,7 @@ import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstBinExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstRegex;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstUsingDecl;
@@ -124,6 +125,12 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		LeafExpression literal = new LeafExpression(sourceFolder, filePath, node, CodeElementType.STRING_LITERAL, container, fileContent);
 		stringLiterals.add(literal);
 		return super.visitStr(node);
+	}
+
+	public Swc4jAstVisitorResponse visitRegex(Swc4jAstRegex node) {
+		LeafExpression literal = new LeafExpression(sourceFolder, filePath, node, CodeElementType.STRING_LITERAL, container, fileContent);
+		stringLiterals.add(literal);
+		return super.visitRegex(node);
 	}
 
 	public Swc4jAstVisitorResponse visitUsingDecl(Swc4jAstUsingDecl node) {

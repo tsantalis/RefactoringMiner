@@ -423,6 +423,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if (closing != null) {
                     mappingStore.addMapping(closing.first,closing.second);
                 }
+                Pair<Tree, Tree> typeAnnotation = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.TYPE_ANNOTATION, LANG2.TYPE_ANNOTATION);
+                if (typeAnnotation != null) {
+                    mappingStore.addMappingRecursively(typeAnnotation.first,typeAnnotation.second);
+                }
                 Pair<Tree, Tree> types = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.USER_TYPE, LANG2.USER_TYPE);
                 if (types != null) {
                     mappingStore.addMappingRecursively(types.first,types.second);

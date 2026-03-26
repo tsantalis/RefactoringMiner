@@ -794,7 +794,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 				if((variableName.equals(after) && initializer != null) || comprehensionMatch) {
 					checkForAliasedVariable(initializer, replacement, nonMappedLeavesT2, classDiff, insideExtractedOrInlinedMethod);
-					if(comprehensionMatch || initializer.toString().equals(before) ||
+					if(comprehensionMatch || initializer.toString().equals(before) || initializer.toString().replaceAll("\s", "").equals(before.replaceAll("\s", "")) ||
 							initializer.toString().equals(LANG2.THIS_DOT + before) ||
 							overlappingExtractVariable(initializer, before, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
 							initializer.toString().equals("(" + declaration.getType() + ")" + before) ||

@@ -360,6 +360,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode, dstStatementNode, mappingStore);
             }
         }
+        if (!abstractCodeMapping.getRefactorings().isEmpty()) {
+            leafMappingRefactoringAwareness(dstTree, abstractCodeMapping, mappingStore);
+        }
     }
 
     private void matchBlocks(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore) {

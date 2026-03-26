@@ -757,7 +757,8 @@ public class ReplacementAlgorithm {
 			if(infixExpressionCoveringTheEntireFragment != null) {
 				boolean skip = false;
 				if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) || statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT)) {
-					if(infixExpressionCoveringTheEntireFragment.contains(LANG1.OR) || infixExpressionCoveringTheEntireFragment.contains(LANG1.AND)) {
+					if(infixExpressionCoveringTheEntireFragment.contains(LANG1.OR) || infixExpressionCoveringTheEntireFragment.contains(LANG1.AND) ||
+							infixExpressionCoveringTheEntireFragment.contains(" ||\n") || infixExpressionCoveringTheEntireFragment.contains(" &&\n")) {
 						skip = true;
 					}
 				}

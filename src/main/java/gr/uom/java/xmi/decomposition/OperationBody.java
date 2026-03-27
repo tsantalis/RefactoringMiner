@@ -1738,6 +1738,11 @@ public class OperationBody {
 						if(container instanceof UMLOperation) {
 							((UMLOperation)container).addNestedOperation(operation);
 						}
+						else if(container instanceof LambdaExpressionObject lambda) {
+							if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
+								((UMLOperation)lambda.getOwner()).addNestedOperation(operation);
+							}
+						}
 						else if(container instanceof ModuleContainer) {
 							((ModuleContainer)container).addNestedOperation(operation);
 						}
@@ -1769,6 +1774,11 @@ public class OperationBody {
 			}
 			if(container instanceof UMLOperation) {
 				((UMLOperation)container).addNestedOperation(nested);
+			}
+			else if(container instanceof LambdaExpressionObject lambda) {
+				if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
+					((UMLOperation)lambda.getOwner()).addNestedOperation(nested);
+				}
 			}
 			else if(container instanceof ModuleContainer) {
 				((ModuleContainer)container).addNestedOperation(nested);

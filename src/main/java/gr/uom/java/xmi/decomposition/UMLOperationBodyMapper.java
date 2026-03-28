@@ -8238,38 +8238,40 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(removeWhitespace1.equals(removeWhitespace2)) {
 			return true;
 		}
-		if(removeWhitespace2.startsWith("(") && removeWhitespace2.endsWith(")") &&
-				!removeWhitespace1.startsWith("(") && !removeWhitespace1.endsWith(")")) {
-			removeWhitespace2 = removeWhitespace2.substring(1, removeWhitespace2.length()-1);
-		}
-		else if(removeWhitespace1.startsWith("(") && removeWhitespace1.endsWith(")") &&
-				!removeWhitespace2.startsWith("(") && !removeWhitespace2.endsWith(")")) {
-			removeWhitespace1 = removeWhitespace1.substring(1, removeWhitespace1.length()-1);
-		}
-		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(removeWhitespace1, removeWhitespace2);
-		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(removeWhitespace1, removeWhitespace2);
-		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty() && container2 instanceof UMLOperation operation && operation.getReturnParameter() != null) {
-			int beginIndexS1 = removeWhitespace1.indexOf(commonPrefix) + commonPrefix.length();
-			int endIndexS1 = removeWhitespace1.lastIndexOf(commonSuffix);
-			String diff1 = beginIndexS1 > endIndexS1 ? "" :	removeWhitespace1.substring(beginIndexS1, endIndexS1);
-			int beginIndexS2 = removeWhitespace2.indexOf(commonPrefix) + commonPrefix.length();
-			int endIndexS2 = removeWhitespace2.lastIndexOf(commonSuffix);
-			String diff2 = beginIndexS2 > endIndexS2 ? "" :	removeWhitespace2.substring(beginIndexS2, endIndexS2);
-			UMLType returnType = operation.getReturnParameter().getType();
-			if(returnType.getClassType().equals("Extract")) {
-				// Extract<Type, Union> utility type in TypeScript constructs a new type by selecting only the members from Type that are assignable to Union
-				if(returnType.getTypeArguments().size() > 0) {
-					returnType = returnType.getTypeArguments().get(0);
-				}
+		if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT)) {
+			if(removeWhitespace2.startsWith("(") && removeWhitespace2.endsWith(")") &&
+					!removeWhitespace1.startsWith("(") && !removeWhitespace1.endsWith(")")) {
+				removeWhitespace2 = removeWhitespace2.substring(1, removeWhitespace2.length()-1);
 			}
-			if(diff1.isEmpty()) {
-				if(match(returnType, diff2)) {
-					return true;
-				}
+			else if(removeWhitespace1.startsWith("(") && removeWhitespace1.endsWith(")") &&
+					!removeWhitespace2.startsWith("(") && !removeWhitespace2.endsWith(")")) {
+				removeWhitespace1 = removeWhitespace1.substring(1, removeWhitespace1.length()-1);
 			}
-			else if(diff2.isEmpty()) {
-				if(match(returnType, diff1)) {
-					return true;
+			String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(removeWhitespace1, removeWhitespace2);
+			String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(removeWhitespace1, removeWhitespace2);
+			if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty() && container2 instanceof UMLOperation operation && operation.getReturnParameter() != null) {
+				int beginIndexS1 = removeWhitespace1.indexOf(commonPrefix) + commonPrefix.length();
+				int endIndexS1 = removeWhitespace1.lastIndexOf(commonSuffix);
+				String diff1 = beginIndexS1 > endIndexS1 ? "" :	removeWhitespace1.substring(beginIndexS1, endIndexS1);
+				int beginIndexS2 = removeWhitespace2.indexOf(commonPrefix) + commonPrefix.length();
+				int endIndexS2 = removeWhitespace2.lastIndexOf(commonSuffix);
+				String diff2 = beginIndexS2 > endIndexS2 ? "" :	removeWhitespace2.substring(beginIndexS2, endIndexS2);
+				UMLType returnType = operation.getReturnParameter().getType();
+				if(returnType.getClassType().equals("Extract")) {
+					// Extract<Type, Union> utility type in TypeScript constructs a new type by selecting only the members from Type that are assignable to Union
+					if(returnType.getTypeArguments().size() > 0) {
+						returnType = returnType.getTypeArguments().get(0);
+					}
+				}
+				if(diff1.isEmpty()) {
+					if(match(returnType, diff2)) {
+						return true;
+					}
+				}
+				else if(diff2.isEmpty()) {
+					if(match(returnType, diff1)) {
+						return true;
+					}
 				}
 			}
 		}

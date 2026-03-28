@@ -90,8 +90,8 @@ public class TypeScriptFileProcessor {
 				moduleClass.setVisibility(Visibility.PUBLIC);
 				moduleClass.operations.addAll(moduleContainer.getNestedOperations());
 				moduleClass.attributes.addAll(moduleContainer.getNestedAttributes());
-				umlModel.addClass(moduleClass);
 				umlModel.getClassList().addAll(moduleContainer.getNestedClasses());
+				umlModel.addClass(moduleClass);
 			}
 			else if(output.getProgram() instanceof Swc4jAstScript script) {
 				List<ISwc4jAstStmt> list = script.getBody();

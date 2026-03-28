@@ -8292,9 +8292,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		else if(returnType instanceof LeafType leafType) {
 			if(modelDiff != null) {
 				UMLAbstractClass abstractClass = modelDiff.findClassInChildModel(leafType.getClassType());
-				for(UMLAttribute attr : abstractClass.getAttributes()) {
-					if(diff.equals(attr.getName() + ":")) {
-						return true;
+				if(abstractClass != null) {
+					for(UMLAttribute attr : abstractClass.getAttributes()) {
+						if(diff.equals(attr.getName() + ":")) {
+							return true;
+						}
 					}
 				}
 			}

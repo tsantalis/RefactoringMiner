@@ -384,7 +384,8 @@ public class MethodMatcher extends BodyMapperMatcher{
             else {
                 new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);
             }
-            if(srcNode.getParent().getType().name.equals(LANG1.TYPE_ANNOTATION) && dstNode.getParent().getType().name.equals(LANG2.TYPE_ANNOTATION)) {
+            if((srcNode.getParent().getType().name.equals(LANG1.TYPE_ANNOTATION) || srcNode.getParent().getType().name.equals(LANG1.TYPE_PREDICATE_ANNOTATION)) && 
+                    (dstNode.getParent().getType().name.equals(LANG2.TYPE_ANNOTATION) || dstNode.getParent().getType().name.equals(LANG2.TYPE_PREDICATE_ANNOTATION))) {
                 mappingStore.addMapping(srcNode.getParent(), dstNode.getParent());
                 com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcNode.getParent(),dstNode.getParent(),LANG1.COLON,LANG2.COLON);
                 if (matched != null) {

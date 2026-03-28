@@ -59,6 +59,7 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsQualifiedName;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeLit;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamInstantiation;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypePredicate;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeQuery;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeRef;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsUnionType;
@@ -585,6 +586,12 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		}
 		else if(type instanceof Swc4jAstTsConditionalType conditionalType) {
 			//TODO create UMLType subclass
+		}
+		else if(type instanceof Swc4jAstTsTypePredicate typePredicate) {
+			if(typePredicate.getTypeAnn().isPresent()) {
+				UMLType umlType = extractTypeObject(typePredicate.getTypeAnn().get().getTypeAnn(), sourceFolder, filePath, fileContent);
+				return umlType;
+			}
 		}
 		else if(type instanceof Swc4jAstTsUnionType unionType) {
 			List<ISwc4jAstTsType> types = unionType.getTypes();

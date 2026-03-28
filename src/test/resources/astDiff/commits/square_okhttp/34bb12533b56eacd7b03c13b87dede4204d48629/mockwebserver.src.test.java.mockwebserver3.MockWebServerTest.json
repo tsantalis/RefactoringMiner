@@ -17797,6 +17797,28 @@
   "firstEndPos" : 14282,
   "secondEndPos" : 12777
 }, {
+  "firstType" : "PostfixExpression",
+  "secondType" : "postfix_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ForStatement",
+  "secondParentType" : "statements",
+  "firstPos" : 14019,
+  "secondPos" : 12768,
+  "firstEndPos" : 14022,
+  "secondEndPos" : 12771
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "i",
+  "secondLabel" : "i",
+  "firstParentType" : "PostfixExpression",
+  "secondParentType" : "postfix_expression",
+  "firstPos" : 14019,
+  "secondPos" : 12768,
+  "firstEndPos" : 14020,
+  "secondEndPos" : 12769
+}, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
   "firstLabel" : "",

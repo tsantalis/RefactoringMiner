@@ -1384,7 +1384,7 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public Replacement makeReplacementForAllArgumentsReturned(String statement, VariableDeclarationContainer containerWithReturnStatement) {
-		if(statement.startsWith(LANG.RETURN_SPACE) && containerWithReturnStatement instanceof UMLOperation operation) {
+		if(LANG.equals(Constants.TYPESCRIPT) && statement.startsWith(LANG.RETURN_SPACE) && containerWithReturnStatement instanceof UMLOperation operation) {
 			String s2 = statement.substring(LANG.RETURN_SPACE.length(), statement.length()-LANG.STATEMENT_TERMINATION.length());
 			StringBuilder reconstructReturn = new StringBuilder();
 			reconstructReturn.append("{");

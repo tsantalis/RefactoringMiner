@@ -1408,9 +1408,15 @@ public abstract class AbstractCall extends LeafExpression {
 				int beginIndexS2 = removeWhitespace2.indexOf(commonPrefix) + commonPrefix.length();
 				int endIndexS2 = removeWhitespace2.lastIndexOf(commonSuffix);
 				String diff2 = beginIndexS2 > endIndexS2 ? "" :	removeWhitespace2.substring(beginIndexS2, endIndexS2);
+				UMLType returnType = operation.getReturnParameter().getType();
 				if(diff1.isEmpty()) {
-					UMLType returnType = operation.getReturnParameter().getType();
 					if(match(returnType, diff2)) {
+						return new Replacement(arguments().toString(), s2,
+								ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
+					}
+				}
+				else if(diff2.isEmpty()) {
+					if(match(returnType, diff1)) {
 						return new Replacement(arguments().toString(), s2,
 								ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 					}
@@ -1421,15 +1427,15 @@ public abstract class AbstractCall extends LeafExpression {
 		return null;
 	}
 
-	private static boolean match(UMLType returnType, String diff2) {
+	private static boolean match(UMLType returnType, String diff) {
 		if(returnType instanceof ListCompositeType listType) {
 			for(LeafExpression expr : listType.getKeys()) {
-				if(diff2.equals(expr.getString() + ":")) {
+				if(diff.equals(expr.getString() + ":")) {
 					return true;
 				}
 			}
 			for(UMLType nestedType : listType.getTypes()) {
-				if(match(nestedType, diff2)) {
+				if(match(nestedType, diff)) {
 					return true;
 				}
 			}

@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.InferredType;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -410,13 +411,23 @@ public class OperationInvocation extends AbstractCall {
     			}
     		}
     		else if(arg.startsWith("\"") && arg.endsWith("\"")) {
-    			inferredArgumentTypes.add(UMLType.extractTypeObject("String"));
+    			if(LANG.equals(Constants.TYPESCRIPT)) {
+    				inferredArgumentTypes.add(UMLType.extractTypeObject("string"));
+    			}
+    			else {
+    				inferredArgumentTypes.add(UMLType.extractTypeObject("String"));
+    			}
     		}
     		else if(StringDistance.isNumeric(arg)) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("int"));
     		}
     		else if(arg.startsWith("\'") && arg.endsWith("\'")) {
-    			inferredArgumentTypes.add(UMLType.extractTypeObject("char"));
+    			if(LANG.equals(Constants.TYPESCRIPT)) {
+    				inferredArgumentTypes.add(UMLType.extractTypeObject("string"));
+    			}
+    			else {
+    				inferredArgumentTypes.add(UMLType.extractTypeObject("char"));
+    			}
     		}
     		else if(arg.endsWith(".class")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("Class"));
@@ -719,6 +730,14 @@ public class OperationInvocation extends AbstractCall {
 	    			if(implementedInterface.equalClassType(parameterType))
 	    				return true;
 	    		}
+	    	}
+	    	UMLAbstractClass classInParentModel = modelDiff.findClassInParentModel(type1);
+	    	if(classInParentModel != null && classInParentModel instanceof UMLClass umlClass && umlClass.isTypeAlias()) {
+	    		return true;
+	    	}
+	    	UMLAbstractClass classInChildModel = modelDiff.findClassInChildModel(type1);
+	    	if(classInChildModel != null && classInChildModel instanceof UMLClass umlClass && umlClass.isTypeAlias()) {
+	    		return true;
 	    	}
     	}
     	if(!varargsParameter && type1.endsWith("Object") && !type2.endsWith("Object"))

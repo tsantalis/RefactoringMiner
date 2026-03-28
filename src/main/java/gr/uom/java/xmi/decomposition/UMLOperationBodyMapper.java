@@ -6,11 +6,14 @@ import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.Constants;
+import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.ListCompositeType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.ModuleContainer;
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 
 import static gr.uom.java.xmi.JavaFileProcessor.processBlock;
@@ -7300,7 +7303,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(!alreadyMatched2(leaf2)) {
 							String argumentizedString1 = preprocessInput1(leaf1, leaf2);
 							String argumentizedString2 = preprocessInput2(leaf1, leaf2);
-							if((leaf1.getString().equals(leaf2.getString()) || argumentizedString1.equals(argumentizedString2))) {
+							if((leaf1.getString().equals(leaf2.getString()) || match(argumentizedString1, argumentizedString2))) {
 								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 								mappingSet.add(mapping);
 							}
@@ -7793,7 +7796,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(!alreadyMatched1(leaf1)) {
 							String argumentizedString1 = preprocessInput1(leaf1, leaf2);
 							String argumentizedString2 = preprocessInput2(leaf1, leaf2);
-							if((leaf1.getString().equals(leaf2.getString()) || argumentizedString1.equals(argumentizedString2))) {
+							if((leaf1.getString().equals(leaf2.getString()) || match(argumentizedString1, argumentizedString2))) {
 								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 								mappingSet.add(mapping);
 							}
@@ -8224,6 +8227,79 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private boolean match(String s1, String s2) {
+		if(s1.equals(s2)) {
+			return true;
+		}
+		String removeWhitespace1 = s1.replaceAll("\s", "").replaceAll("\n", "");
+		String removeWhitespace2 = s2.replaceAll("\s", "").replaceAll("\n", "");
+		if(removeWhitespace1.equals(removeWhitespace2)) {
+			return true;
+		}
+		if(removeWhitespace2.startsWith("(") && removeWhitespace2.endsWith(")") &&
+				!removeWhitespace1.startsWith("(") && !removeWhitespace1.endsWith(")")) {
+			removeWhitespace2 = removeWhitespace2.substring(1, removeWhitespace2.length()-1);
+		}
+		else if(removeWhitespace1.startsWith("(") && removeWhitespace1.endsWith(")") &&
+				!removeWhitespace2.startsWith("(") && !removeWhitespace2.endsWith(")")) {
+			removeWhitespace1 = removeWhitespace1.substring(1, removeWhitespace1.length()-1);
+		}
+		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(removeWhitespace1, removeWhitespace2);
+		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(removeWhitespace1, removeWhitespace2);
+		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty() && container2 instanceof UMLOperation operation && operation.getReturnParameter() != null) {
+			int beginIndexS1 = removeWhitespace1.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS1 = removeWhitespace1.lastIndexOf(commonSuffix);
+			String diff1 = beginIndexS1 > endIndexS1 ? "" :	removeWhitespace1.substring(beginIndexS1, endIndexS1);
+			int beginIndexS2 = removeWhitespace2.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS2 = removeWhitespace2.lastIndexOf(commonSuffix);
+			String diff2 = beginIndexS2 > endIndexS2 ? "" :	removeWhitespace2.substring(beginIndexS2, endIndexS2);
+			UMLType returnType = operation.getReturnParameter().getType();
+			if(returnType.getClassType().equals("Extract")) {
+				// Extract<Type, Union> utility type in TypeScript constructs a new type by selecting only the members from Type that are assignable to Union
+				if(returnType.getTypeArguments().size() > 0) {
+					returnType = returnType.getTypeArguments().get(0);
+				}
+			}
+			if(diff1.isEmpty()) {
+				if(match(returnType, diff2)) {
+					return true;
+				}
+			}
+			else if(diff2.isEmpty()) {
+				if(match(returnType, diff1)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean match(UMLType returnType, String diff) {
+		if(returnType instanceof ListCompositeType listType) {
+			for(LeafExpression expr : listType.getKeys()) {
+				if(diff.equals(expr.getString() + ":")) {
+					return true;
+				}
+			}
+			for(UMLType nestedType : listType.getTypes()) {
+				if(match(nestedType, diff)) {
+					return true;
+				}
+			}
+		}
+		else if(returnType instanceof LeafType leafType) {
+			if(modelDiff != null) {
+				UMLAbstractClass abstractClass = modelDiff.findClassInChildModel(leafType.getClassType());
+				for(UMLAttribute attr : abstractClass.getAttributes()) {
+					if(diff.equals(attr.getName() + ":")) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private void checkForSwitchExpressionMatches(Set<AbstractCodeMapping> movedOutOfIfElseBranch,

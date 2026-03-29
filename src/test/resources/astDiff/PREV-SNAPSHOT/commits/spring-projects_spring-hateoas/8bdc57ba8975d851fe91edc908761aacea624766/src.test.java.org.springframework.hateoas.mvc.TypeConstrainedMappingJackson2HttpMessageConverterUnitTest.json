@@ -54,6 +54,17 @@
   "firstEndPos" : 705,
   "secondEndPos" : 705
 }, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 670,
+  "secondPos" : 670,
+  "firstEndPos" : 676,
+  "secondEndPos" : 676
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "org.hamcrest.CoreMatchers",
@@ -75,6 +86,17 @@
   "secondPos" : 706,
   "firstEndPos" : 739,
   "secondEndPos" : 739
+}, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 713,
+  "secondPos" : 713,
+  "firstEndPos" : 719,
+  "secondEndPos" : 719
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -152,28 +174,6 @@
   "secondPos" : 868,
   "firstEndPos" : 859,
   "secondEndPos" : 911
-}, {
-  "firstType" : "ImportDeclaration",
-  "secondType" : "ImportDeclaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "CompilationUnit",
-  "secondParentType" : "CompilationUnit",
-  "firstPos" : 861,
-  "secondPos" : 740,
-  "firstEndPos" : 903,
-  "secondEndPos" : 791
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.springframework.http.MediaType",
-  "secondLabel" : "org.springframework.http.MediaType",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 868,
-  "secondPos" : 754,
-  "firstEndPos" : 902,
-  "secondEndPos" : 788
 }, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",

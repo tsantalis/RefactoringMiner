@@ -1525,8 +1525,8 @@
   "secondParentType" : "TagElement",
   "firstPos" : 2676,
   "secondPos" : 2771,
-  "firstEndPos" : 3185,
-  "secondEndPos" : 3280
+  "firstEndPos" : 4066,
+  "secondEndPos" : 4161
 }, {
   "firstType" : "TAG_NAME",
   "secondType" : "TAG_NAME",
@@ -1629,25 +1629,25 @@
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
-  "firstLabel" : "public class Example ",
-  "secondLabel" : "public class Example ",
+  "firstLabel" : "public class Example {",
+  "secondLabel" : "public class Example {",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 3029,
   "secondPos" : 3124,
-  "firstEndPos" : 3050,
-  "secondEndPos" : 3145
+  "firstEndPos" : 3051,
+  "secondEndPos" : 3146
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
-  "firstLabel" : "public static class Person ",
-  "secondLabel" : "public static class Person ",
+  "firstLabel" : "public static class Person {",
+  "secondLabel" : "public static class Person {",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 3060,
   "secondPos" : 3155,
-  "firstEndPos" : 3087,
-  "secondEndPos" : 3182
+  "firstEndPos" : 3088,
+  "secondEndPos" : 3183
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1662,14 +1662,14 @@
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
-  "firstLabel" : "public Person(String name) ",
-  "secondLabel" : "public Person(String name) ",
+  "firstLabel" : "public Person(String name) {",
+  "secondLabel" : "public Person(String name) {",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 3130,
   "secondPos" : 3225,
-  "firstEndPos" : 3157,
-  "secondEndPos" : 3252
+  "firstEndPos" : 3158,
+  "secondEndPos" : 3253
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1684,14 +1684,25 @@
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
-  "firstLabel" : "public String getName() ",
-  "secondLabel" : "public String getName() ",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3193,
+  "secondPos" : 3288,
+  "firstEndPos" : 3194,
+  "secondEndPos" : 3289
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "public String getName() {",
+  "secondLabel" : "public String getName() {",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 3202,
   "secondPos" : 3297,
-  "firstEndPos" : 3226,
-  "secondEndPos" : 3321
+  "firstEndPos" : 3227,
+  "secondEndPos" : 3322
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1728,14 +1739,14 @@
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
-  "firstLabel" : "public static void main(String... args) throws Exception ",
-  "secondLabel" : "public static void main(String... args) throws Exception ",
+  "firstLabel" : "public static void main(String... args) throws Exception {",
+  "secondLabel" : "public static void main(String... args) throws Exception {",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 3274,
   "secondPos" : 3369,
-  "firstEndPos" : 3331,
-  "secondEndPos" : 3426
+  "firstEndPos" : 3332,
+  "secondEndPos" : 3427
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1827,14 +1838,14 @@
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
-  "firstLabel" : "chain.get(ctx -> ",
-  "secondLabel" : "chain.get(ctx -> ",
+  "firstLabel" : "chain.get(ctx -> {",
+  "secondLabel" : "chain.get(ctx -> {",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 3617,
   "secondPos" : 3712,
-  "firstEndPos" : 3634,
-  "secondEndPos" : 3729
+  "firstEndPos" : 3635,
+  "secondEndPos" : 3730
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1860,12 +1871,12 @@
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
-  "firstLabel" : "})",
-  "secondLabel" : "})",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
-  "firstPos" : 3774,
-  "secondPos" : 3869,
+  "firstPos" : 3775,
+  "secondPos" : 3870,
   "firstEndPos" : 3776,
   "secondEndPos" : 3871
 }, {
@@ -1882,14 +1893,14 @@
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
-  "firstLabel" : ").test(httpClient -> ",
-  "secondLabel" : ").test(httpClient -> ",
+  "firstLabel" : ").test(httpClient -> {",
+  "secondLabel" : ").test(httpClient -> {",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 3795,
   "secondPos" : 3890,
-  "firstEndPos" : 3816,
-  "secondEndPos" : 3911
+  "firstEndPos" : 3817,
+  "secondEndPos" : 3912
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1926,12 +1937,12 @@
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
-  "firstLabel" : "});",
-  "secondLabel" : "});",
+  "firstLabel" : ");",
+  "secondLabel" : ");",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
-  "firstPos" : 4046,
-  "secondPos" : 4141,
+  "firstPos" : 4047,
+  "secondPos" : 4142,
   "firstEndPos" : 4049,
   "secondEndPos" : 4144
 }, {
@@ -1959,12 +1970,12 @@
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
-  "firstLabel" : "}</pre>",
-  "secondLabel" : "}</pre>",
+  "firstLabel" : "</pre>",
+  "secondLabel" : "</pre>",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
-  "firstPos" : 4065,
-  "secondPos" : 4160,
+  "firstPos" : 4066,
+  "secondPos" : 4161,
   "firstEndPos" : 4072,
   "secondEndPos" : 4167
 }, {

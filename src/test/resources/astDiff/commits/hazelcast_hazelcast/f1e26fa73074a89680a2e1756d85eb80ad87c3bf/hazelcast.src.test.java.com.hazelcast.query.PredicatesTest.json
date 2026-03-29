@@ -428,6 +428,17 @@
   "firstEndPos" : 1407,
   "secondEndPos" : 1407
 }, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 1361,
+  "secondPos" : 1361,
+  "firstEndPos" : 1367,
+  "secondEndPos" : 1367
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.hazelcast.instance.TestUtil.toData",
@@ -450,17 +461,6 @@
   "firstEndPos" : 1466,
   "secondEndPos" : 1465
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "com.hazelcast.query.Predicates.AndPredicate",
-  "secondLabel" : "com.hazelcast.query.impl.predicates.AndPredicate",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 1422,
-  "secondPos" : 1416,
-  "firstEndPos" : 1465,
-  "secondEndPos" : 1464
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -472,17 +472,6 @@
   "firstEndPos" : 1527,
   "secondEndPos" : 1525
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "com.hazelcast.query.Predicates.EqualPredicate",
-  "secondLabel" : "com.hazelcast.query.impl.predicates.EqualPredicate",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 1481,
-  "secondPos" : 1474,
-  "firstEndPos" : 1526,
-  "secondEndPos" : 1524
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -493,6 +482,17 @@
   "secondPos" : 1526,
   "firstEndPos" : 1577,
   "secondEndPos" : 1575
+}, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 1535,
+  "secondPos" : 1533,
+  "firstEndPos" : 1541,
+  "secondEndPos" : 1539
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -516,6 +516,17 @@
   "firstEndPos" : 1631,
   "secondEndPos" : 1629
 }, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 1585,
+  "secondPos" : 1583,
+  "firstEndPos" : 1591,
+  "secondEndPos" : 1589
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.hazelcast.query.Predicates.between",
@@ -537,6 +548,17 @@
   "secondPos" : 1630,
   "firstEndPos" : 1683,
   "secondEndPos" : 1681
+}, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 1639,
+  "secondPos" : 1637,
+  "firstEndPos" : 1645,
+  "secondEndPos" : 1643
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -560,6 +582,17 @@
   "firstEndPos" : 1742,
   "secondEndPos" : 1740
 }, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 1691,
+  "secondPos" : 1689,
+  "firstEndPos" : 1697,
+  "secondEndPos" : 1695
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.hazelcast.query.Predicates.greaterEqual",
@@ -581,6 +614,17 @@
   "secondPos" : 1741,
   "firstEndPos" : 1800,
   "secondEndPos" : 1798
+}, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 1750,
+  "secondPos" : 1748,
+  "firstEndPos" : 1756,
+  "secondEndPos" : 1754
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -604,6 +648,17 @@
   "firstEndPos" : 1852,
   "secondEndPos" : 1850
 }, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 1808,
+  "secondPos" : 1806,
+  "firstEndPos" : 1814,
+  "secondEndPos" : 1812
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.hazelcast.query.Predicates.ilike",
@@ -625,6 +680,17 @@
   "secondPos" : 1851,
   "firstEndPos" : 1901,
   "secondEndPos" : 1899
+}, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 1860,
+  "secondPos" : 1858,
+  "firstEndPos" : 1866,
+  "secondEndPos" : 1864
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -648,6 +714,17 @@
   "firstEndPos" : 1958,
   "secondEndPos" : 1956
 }, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 1909,
+  "secondPos" : 1907,
+  "firstEndPos" : 1915,
+  "secondEndPos" : 1913
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.hazelcast.query.Predicates.instanceOf",
@@ -669,6 +746,17 @@
   "secondPos" : 1957,
   "firstEndPos" : 2014,
   "secondEndPos" : 2012
+}, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 1966,
+  "secondPos" : 1964,
+  "firstEndPos" : 1972,
+  "secondEndPos" : 1970
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -692,6 +780,17 @@
   "firstEndPos" : 2069,
   "secondEndPos" : 2067
 }, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 2022,
+  "secondPos" : 2020,
+  "firstEndPos" : 2028,
+  "secondEndPos" : 2026
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.hazelcast.query.Predicates.lessThan",
@@ -713,6 +812,17 @@
   "secondPos" : 2068,
   "firstEndPos" : 2120,
   "secondEndPos" : 2118
+}, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 2077,
+  "secondPos" : 2075,
+  "firstEndPos" : 2083,
+  "secondEndPos" : 2081
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -736,6 +846,17 @@
   "firstEndPos" : 2175,
   "secondEndPos" : 2173
 }, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 2128,
+  "secondPos" : 2126,
+  "firstEndPos" : 2134,
+  "secondEndPos" : 2132
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.hazelcast.query.Predicates.notEqual",
@@ -757,6 +878,17 @@
   "secondPos" : 2174,
   "firstEndPos" : 2224,
   "secondEndPos" : 2222
+}, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 2183,
+  "secondPos" : 2181,
+  "firstEndPos" : 2189,
+  "secondEndPos" : 2187
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -780,6 +912,17 @@
   "firstEndPos" : 2276,
   "secondEndPos" : 2274
 }, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 2232,
+  "secondPos" : 2230,
+  "firstEndPos" : 2238,
+  "secondEndPos" : 2236
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.hazelcast.query.Predicates.regex",
@@ -801,6 +944,17 @@
   "secondPos" : 2275,
   "firstEndPos" : 2334,
   "secondEndPos" : 2332
+}, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 2284,
+  "secondPos" : 2282,
+  "firstEndPos" : 2290,
+  "secondEndPos" : 2288
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -824,6 +978,17 @@
   "firstEndPos" : 2389,
   "secondEndPos" : 2387
 }, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 2342,
+  "secondPos" : 2340,
+  "firstEndPos" : 2348,
+  "secondEndPos" : 2346
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.hazelcast.query.SampleObjects.Value",
@@ -845,6 +1010,17 @@
   "secondPos" : 2388,
   "firstEndPos" : 2428,
   "secondEndPos" : 2426
+}, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 2397,
+  "secondPos" : 2395,
+  "firstEndPos" : 2403,
+  "secondEndPos" : 2401
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -868,6 +1044,17 @@
   "firstEndPos" : 2466,
   "secondEndPos" : 2464
 }, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 2436,
+  "secondPos" : 2434,
+  "firstEndPos" : 2442,
+  "secondEndPos" : 2440
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "java.lang.Boolean.TRUE",
@@ -889,6 +1076,17 @@
   "secondPos" : 2465,
   "firstEndPos" : 2501,
   "secondEndPos" : 2499
+}, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 2474,
+  "secondPos" : 2472,
+  "firstEndPos" : 2480,
+  "secondEndPos" : 2478
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -912,6 +1110,17 @@
   "firstEndPos" : 2545,
   "secondEndPos" : 2543
 }, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 2509,
+  "secondPos" : 2507,
+  "firstEndPos" : 2515,
+  "secondEndPos" : 2513
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "org.junit.Assert.assertFalse",
@@ -933,6 +1142,17 @@
   "secondPos" : 2544,
   "firstEndPos" : 2588,
   "secondEndPos" : 2586
+}, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 2553,
+  "secondPos" : 2551,
+  "firstEndPos" : 2559,
+  "secondEndPos" : 2557
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",

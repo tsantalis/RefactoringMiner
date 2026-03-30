@@ -2231,7 +2231,8 @@ public class TestStatementMappings {
 		"https://github.com/LamdaDev/GitToCampus.git, 47a78b7a52a700c52a2f32ebd88e52ab6101e40e, GitToCampus-47a78b7a52a700c52a2f32ebd88e52ab6101e40e.txt",
 		"https://github.com/LamdaDev/GitToCampus.git, 4fd04f4a4ba07118881a23932722e099b3a83f9f, GitToCampus-4fd04f4a4ba07118881a23932722e099b3a83f9f.txt",
 		"https://github.com/LamdaDev/GitToCampus.git, f915b2062644b587aaf9ed475b3af7190bdc3e77, GitToCampus-f915b2062644b587aaf9ed475b3af7190bdc3e77.txt",
-		"https://github.com/LamdaDev/GitToCampus.git, 8bbdd23d15fece69bec4db5cab94207043c675cb, GitToCampus-8bbdd23d15fece69bec4db5cab94207043c675cb.txt"
+		"https://github.com/LamdaDev/GitToCampus.git, 8bbdd23d15fece69bec4db5cab94207043c675cb, GitToCampus-8bbdd23d15fece69bec4db5cab94207043c675cb.txt",
+		"https://github.com/gabrielshufelt/soen390-commit-and-pray.git, 9792d7435d3ad89cc3df28070097ca093062b965, soen390-commit-and-pray-9792d7435d3ad89cc3df28070097ca093062b965.txt"
 	})
 	public void testExtractMethodStatementMappingsForTypeScript(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

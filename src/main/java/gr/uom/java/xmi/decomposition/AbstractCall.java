@@ -1602,10 +1602,25 @@ public abstract class AbstractCall extends LeafExpression {
 				}
 			}
 		}
-		String removeWhitespace1 = s1.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
-		String removeWhitespace2 = s2.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
-		if(removeWhitespace1.equals(removeWhitespace2)) {
-			return true;
+		if(LANG.equals(Constants.TYPESCRIPT)) {
+			String removeWhitespace1 = s1.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+			String removeWhitespace2 = s2.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+			if(removeWhitespace1.equals(removeWhitespace2)) {
+				return true;
+			}
+			String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(removeWhitespace1, removeWhitespace2);
+			String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(removeWhitespace1, removeWhitespace2);
+			if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+				int beginIndexS1 = removeWhitespace1.indexOf(commonPrefix) + commonPrefix.length();
+				int endIndexS1 = removeWhitespace1.lastIndexOf(commonSuffix);
+				String diff1 = beginIndexS1 > endIndexS1 ? "" :	removeWhitespace1.substring(beginIndexS1, endIndexS1);
+				int beginIndexS2 = removeWhitespace2.indexOf(commonPrefix) + commonPrefix.length();
+				int endIndexS2 = removeWhitespace2.lastIndexOf(commonSuffix);
+				String diff2 = beginIndexS2 > endIndexS2 ? "" :	removeWhitespace2.substring(beginIndexS2, endIndexS2);
+				if(diff1.startsWith(LANG.THIS_DOT) || diff2.startsWith(LANG.THIS_DOT)) {
+					return true;
+				}
+			}
 		}
 		String reservedTokens1 = ReplacementUtil.keepReservedTokens(s1);
 		String reservedTokens2 = ReplacementUtil.keepReservedTokens(s2);

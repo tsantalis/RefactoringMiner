@@ -695,6 +695,9 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			}
 			if(initializer.equals(expression))
 				return true;
+			if(initializer.equals(AWAIT + expression)) {
+				return true;
+			}
 			if(initializer.startsWith("(")) {
 				//ignore casting
 				String initializerWithoutCasting = initializer.substring(initializer.indexOf(")")+1,initializer.length());

@@ -380,4 +380,7 @@ public class Constants {
     public final String CLOSING_TAG = ">";
     public final String INTERFACE_DECLARATION = "interface_declaration";
     public final String INTERFACE_BODY = "interface_body";
+    public final String CLASS_DECLARATION = "class_declaration";
+    public final String CLASS_BODY = "class_body";
+    public final String METHOD_DEFINITION = "method_definition";
 }

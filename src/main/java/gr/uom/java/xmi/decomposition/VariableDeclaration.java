@@ -44,6 +44,7 @@ import org.jetbrains.kotlin.psi.KtTypeReference;
 import static org.jetbrains.kotlin.lexer.KtTokens.*;
 import org.refactoringminer.util.PathFileUtils;
 
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstConstructor;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstFunction;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
@@ -973,6 +974,9 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 				return parent.getParent();
 			}
 			else if(parent instanceof Swc4jAstFunction) {
+				return parent;
+			}
+			else if(parent instanceof Swc4jAstConstructor) {
 				return parent;
 			}
 			else if(parent instanceof Swc4jAstTsTypeAliasDecl) {

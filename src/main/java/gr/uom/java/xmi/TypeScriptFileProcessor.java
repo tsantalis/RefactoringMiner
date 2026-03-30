@@ -11,9 +11,12 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.caoccao.javet.swc4j.Swc4j;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassMethod;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstConstructor;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstFunction;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstParam;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstModuleItem;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstParamOrTsParamProp;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstStmt;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
@@ -142,6 +145,20 @@ public class TypeScriptFileProcessor {
 		UMLOperation operation = new UMLOperation(functionDecl.getIdent().getSym(), location, className);
 		operation.setVisibility(Visibility.PRIVATE);
 		Swc4jAstFunction function = functionDecl.getFunction();
+		return processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation);
+	}
+
+	public static UMLOperation processFunctionDeclaration(String sourceFolder, String filePath, Swc4jAstClassMethod functionDecl, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className) {
+		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+		UMLOperation operation = new UMLOperation(functionDecl.getKey().toString(), location, className);
+		operation.setVisibility(Visibility.PRIVATE);
+		Swc4jAstFunction function = functionDecl.getFunction();
+		return processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation);
+	}
+
+	private static UMLOperation processFunction(String sourceFolder, String filePath, Swc4jAstFunction function,
+			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent,
+			UMLOperation operation) {
 		Optional<Swc4jAstTsTypeAnn> returnType = function.getReturnType();
 		if(returnType.isPresent()) {
 			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, returnType.get().getTypeAnn(), 0);
@@ -172,6 +189,35 @@ public class TypeScriptFileProcessor {
 			}
 		}
 		Optional<Swc4jAstBlockStmt> body = function.getBody();
+		if(body.isPresent()) {
+			OperationBody operationBody = new OperationBody(sourceFolder, filePath, body.get(), operation, activeVariableDeclarations, fileContent);
+			operation.setBody(operationBody);
+		}
+		return operation;
+	}
+
+	public static UMLOperation processConstructor(String sourceFolder, String filePath, Swc4jAstConstructor functionDecl,
+			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className) {
+		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+		UMLOperation operation = new UMLOperation(functionDecl.getKey().toString(), location, className);
+		operation.setVisibility(Visibility.PRIVATE);
+		for(ISwc4jAstParamOrTsParamProp param : functionDecl.getParams()) {
+			if(param instanceof Swc4jAstParam p) {
+				ISwc4jAstPat pat = p.getPat();
+				Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(pat);
+				List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(pat);
+				for(Swc4jAstBindingIdent identifier : identifiers) {
+					VariableDeclaration parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, operation, activeVariableDeclarations, fileContent);
+					parameter.setParameter(true);
+					if(parameter.getType() != null) {
+						UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
+						umlParameter.setVariableDeclaration(parameter);
+						operation.addParameter(umlParameter);
+					}
+				}
+			}
+		}
+		Optional<Swc4jAstBlockStmt> body = functionDecl.getBody();
 		if(body.isPresent()) {
 			OperationBody operationBody = new OperationBody(sourceFolder, filePath, body.get(), operation, activeVariableDeclarations, fileContent);
 			operation.setBody(operationBody);

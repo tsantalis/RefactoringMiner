@@ -81,12 +81,16 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		if(identifiers.size() == 1) {
 			VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, declarator, container, activeVariableDeclarations, fileContent, typeDeclarations);
 			variableDeclarations.add(vd);
+			LeafExpression name = new LeafExpression(sourceFolder, filePath, identifiers.get(0), CodeElementType.SIMPLE_NAME, container, fileContent);
+			variables.add(name);
 		}
 		else {
 			Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(declarator.getName());
 			for(Swc4jAstBindingIdent identifier : identifiers) {
 				VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, container, activeVariableDeclarations, fileContent);
 				variableDeclarations.add(vd);
+				LeafExpression name = new LeafExpression(sourceFolder, filePath, identifier, CodeElementType.SIMPLE_NAME, container, fileContent);
+				variables.add(name);
 			}
 		}
 		return super.visitVarDeclarator(declarator);

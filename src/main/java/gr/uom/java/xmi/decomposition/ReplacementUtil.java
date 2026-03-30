@@ -123,7 +123,8 @@ public class ReplacementUtil {
 				temp = sb.toString();
 			}
 		}
-		if(!replacementOccurred && !containsMethodSignatureOfAnonymousClass(completeString1, LANG1) && !containsMethodSignatureOfAnonymousClass(completeString2, LANG2)) {
+		boolean resume = !replacementOccurred || (temp.contains(": " + subString1) && completeString2.contains(": " + subString2));
+		if(resume && !containsMethodSignatureOfAnonymousClass(completeString1, LANG1) && !containsMethodSignatureOfAnonymousClass(completeString2, LANG2)) {
 			for(String character : SPECIAL_CHARACTERS) {
 				if(temp.contains(character + subString1) && completeString2.contains(character + subString2)) {
 					StringBuffer sb = new StringBuffer();

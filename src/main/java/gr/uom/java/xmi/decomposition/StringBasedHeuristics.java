@@ -801,6 +801,13 @@ public class StringBasedHeuristics {
 		if(differOnlyInPrefix(s1, s2, "", LANG1.THIS_DOT, LANG2.THIS_DOT)) {
 			return true;
 		}
+		if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && s1.contains("\n") && s2.contains("\n")) {
+			s1 = s1.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+			s2 = s2.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+			if(s1.equals(s2)) {
+				return true;
+			}
+		}
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {

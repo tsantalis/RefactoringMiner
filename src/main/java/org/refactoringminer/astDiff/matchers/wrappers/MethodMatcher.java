@@ -143,6 +143,16 @@ public class MethodMatcher extends BodyMapperMatcher{
                     mappingStore.addMappingRecursively(modifiers.first, modifiers.second);
                 }
             }
+            if(srcOperationNode.getType().name.equals(LANG1.METHOD_DECLARATION) && dstOperationNode.getType().name.equals(LANG1.METHOD_DEFINITION)) {
+                com.github.gumtreediff.utils.Pair<Tree,Tree> identifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.SIMPLE_NAME,LANG2.PROPERTY_IDENTIFIER);
+                if (identifiers != null) {
+                    mappingStore.addMapping(identifiers.first, identifiers.second);
+                }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> modifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.ACCESSIBILITY_MODIFIER,LANG2.ACCESSIBILITY_MODIFIER);
+                if (modifiers != null) {
+                    mappingStore.addMappingRecursively(modifiers.first, modifiers.second);
+                }
+            }
             }
         } else {
             //Static Initializers

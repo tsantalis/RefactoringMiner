@@ -330,6 +330,24 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 }
             }
         }
+        if (srcTypeDeclaration.getType().name.equals(LANG1.CLASS_DECLARATION) && dstTypeDeclaration.getType().name.equals(LANG2.CLASS_DECLARATION)) {
+            Pair<Tree, Tree> types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.CLASS_KEYWORD, LANG2.CLASS_KEYWORD);
+            if(types != null) {
+                mappingStore.addMapping(types.first, types.second);
+            }
+            Pair<Tree, Tree> blocks = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.CLASS_BODY, LANG2.CLASS_BODY);
+            if(blocks != null) {
+                mappingStore.addMapping(blocks.first, blocks.second);
+                com.github.gumtreediff.utils.Pair<Tree,Tree> opening = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                if (opening != null) {
+                    mappingStore.addMapping(opening.first,opening.second);
+                }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> closing = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                if (closing != null) {
+                    mappingStore.addMapping(closing.first,closing.second);
+                }
+            }
+        }
         if (srcBlock == null || dstBlock == null) return;
         mappingStore.addMapping(srcBlock, dstBlock);
 

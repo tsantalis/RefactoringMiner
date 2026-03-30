@@ -2884,6 +2884,13 @@ public class ReplacementAlgorithm {
 						return replacementInfo.getReplacements();
 					}
 				}
+				else if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && (r = operationInvocation1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
+					if(!variableReturn2) {
+						replacementInfo.addReplacement(r);
+						addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
+						return replacementInfo.getReplacements();
+					}
+				}
 			}
 		}
 		//check if the argument of the method call in the second statement is returned in the first statement

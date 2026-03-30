@@ -306,6 +306,15 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             Pair<Tree, Tree> equalOperators = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.EQUAL_OPERATOR, LANG2.EQUAL_OPERATOR);
             if(equalOperators != null) {
                 mappingStore.addMapping(equalOperators.first, equalOperators.second);
+                //check if the aliased type is just a type_identifier
+                int index1 = srcTypeDeclaration.getChildPosition(equalOperators.first);
+                int index2 = dstTypeDeclaration.getChildPosition(equalOperators.second);
+                if(srcTypeDeclaration.getChildren().size() > index1+1 && srcTypeDeclaration.getChild(index1+1).getType().name.equals(LANG1.TYPE_IDENTIFIER) &&
+                        dstTypeDeclaration.getChildren().size() > index2+1 && dstTypeDeclaration.getChild(index2+1).getType().name.equals(LANG2.TYPE_IDENTIFIER)) {
+                    Tree t1 = srcTypeDeclaration.getChild(index1+1);
+                    Tree t2 = dstTypeDeclaration.getChild(index2+1);
+                    mappingStore.addMapping(t1,t2);
+                }
             }
             Pair<Tree, Tree> semicolons = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.SEMICOLON, LANG2.SEMICOLON);
             if(semicolons != null) {

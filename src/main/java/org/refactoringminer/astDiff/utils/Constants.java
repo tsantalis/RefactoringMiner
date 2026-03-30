@@ -383,4 +383,6 @@ public class Constants {
     public final String CLASS_DECLARATION = "class_declaration";
     public final String CLASS_BODY = "class_body";
     public final String METHOD_DEFINITION = "method_definition";
+    public final String ACCESSIBILITY_MODIFIER = "accessibility_modifier";
+    public final String PUBLIC_FIELD_DEFINITION = "public_field_definition";
 }

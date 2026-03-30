@@ -2,6 +2,7 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -227,6 +228,16 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		}
 		ISwc4jAstBlockStmtOrExpr body = arrowExpression.getBody();
 		if(body instanceof ISwc4jAstExpr expr) {
+			for(VariableDeclaration v : parameters) {
+				if(activeVariableDeclarations.containsKey(v.getVariableName())) {
+					activeVariableDeclarations.get(v.getVariableName()).add(v);
+				}
+				else {
+					Set<VariableDeclaration> set = new HashSet<VariableDeclaration>();
+					set.add(v);
+					activeVariableDeclarations.put(v.getVariableName(), set);
+				}
+			}
 			this.expression = new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, fileContent, typeDeclarations);
 			this.expression.setLambdaOwner(this);
 			for(VariableDeclaration parameter : parameters) {

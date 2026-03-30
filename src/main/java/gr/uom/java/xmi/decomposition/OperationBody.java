@@ -67,7 +67,9 @@ import org.jetbrains.kotlin.psi.KtWhileExpression;
 
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClass;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassMethod;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassProp;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstConstructor;
+import com.caoccao.javet.swc4j.ast.enums.Swc4jAstAccessibility;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
@@ -1834,7 +1836,7 @@ public class OperationBody {
 			}
 			Swc4jAstClass clazz = classDecl.getClazz();
 			List<ISwc4jAstClassMember> typeElements = clazz.getBody();
-			processClassMembers(sourceFolder, filePath, fileContent, umlClass, typeElements);
+			processClassMembers(sourceFolder, filePath, fileContent, umlClass, typeElements, typeDeclarations);
 			for(UMLComment comment : comments) {
 				if(umlClass.getLocationInfo().subsumes(comment.getLocationInfo())) {
 					umlClass.getComments().add(comment);
@@ -1941,7 +1943,7 @@ public class OperationBody {
 	}
 
 	private void processClassMembers(String sourceFolder, String filePath, String fileContent, UMLClass umlClass,
-			List<ISwc4jAstClassMember> members) {
+			List<ISwc4jAstClassMember> members, List<UMLClass> typeDeclarations) {
 		for(ISwc4jAstClassMember member : members) {
 			if(member instanceof Swc4jAstClassMethod classMethod) {
 				UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, classMethod, activeVariableDeclarations, fileContent, umlClass.getName());
@@ -1960,6 +1962,29 @@ public class OperationBody {
 					}
 				}
 				umlClass.addOperation(nested);
+			}
+			else if(member instanceof Swc4jAstClassProp classProperty) {
+				VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, classProperty, container, activeVariableDeclarations, fileContent, typeDeclarations);
+				vd.setAttribute(true);
+				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, member.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+				UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
+				attribute.setVariableDeclaration(vd);
+				if(classProperty.getAccessibility().isPresent()) {
+					Swc4jAstAccessibility accessibility = classProperty.getAccessibility().get();
+					if(accessibility.equals(Swc4jAstAccessibility.Public)) {
+						attribute.setVisibility(Visibility.PUBLIC);
+					}
+					else if(accessibility.equals(Swc4jAstAccessibility.Private)) {
+						attribute.setVisibility(Visibility.PRIVATE);
+					}
+					else if(accessibility.equals(Swc4jAstAccessibility.Protected)) {
+						attribute.setVisibility(Visibility.PROTECTED);
+					}
+				}
+				else {
+					attribute.setVisibility(Visibility.PUBLIC);
+				}
+				umlClass.addAttribute(attribute);
 			}
 		}
 	}

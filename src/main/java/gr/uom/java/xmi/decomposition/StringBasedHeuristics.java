@@ -4081,7 +4081,12 @@ public class StringBasedHeuristics {
 						}
 					}
 					if(count > 0 && !singleNullCheck && !invalidReplacement && info.getReplacements(ReplacementType.INFIX_OPERATOR).size() == count) {
-						onlyInfixOperatorReplacementsFound = true;
+						if(s1.contains(LANG1.AND) != s2.contains(LANG2.AND))
+							onlyInfixOperatorReplacementsFound = false;
+						else if(s1.contains(LANG1.OR) != s2.contains(LANG2.OR))
+							onlyInfixOperatorReplacementsFound = false;
+						else
+							onlyInfixOperatorReplacementsFound = true;
 					}
 				}
 				if((invertedConditionals > 0 || matches > 0 || onlyInfixOperatorReplacementsFound) && info.getReplacements(ReplacementType.TYPE).isEmpty() && validMethodInvocationReplacement(info) && !includesLocalVariable(statement1, statement2, intersection, container1, container2, LANG1, LANG2)) {
@@ -4098,6 +4103,18 @@ public class StringBasedHeuristics {
 							booleanOperatorReversed = true;
 						}
 						else if(r.getBefore().equals("!=") && r.getAfter().equals("==")) {
+							booleanOperatorReversed = true;
+						}
+						else if(r.getBefore().equals("<") && r.getAfter().equals(">=")) {
+							booleanOperatorReversed = true;
+						}
+						else if(r.getBefore().equals("<=") && r.getAfter().equals(">")) {
+							booleanOperatorReversed = true;
+						}
+						else if(r.getBefore().equals(">") && r.getAfter().equals("<=")) {
+							booleanOperatorReversed = true;
+						}
+						else if(r.getBefore().equals(">=") && r.getAfter().equals("<")) {
 							booleanOperatorReversed = true;
 						}
 					}

@@ -8257,8 +8257,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				int endIndexS2 = removeWhitespace2.lastIndexOf(commonSuffix);
 				String diff2 = beginIndexS2 > endIndexS2 ? "" :	removeWhitespace2.substring(beginIndexS2, endIndexS2);
 				UMLType returnType = operation.getReturnParameter().getType();
-				if(returnType.getClassType().equals("Extract")) {
+				if(returnType.getClassType().equals("Extract") || returnType.getClassType().equals("Exclude")) {
 					// Extract<Type, Union> utility type in TypeScript constructs a new type by selecting only the members from Type that are assignable to Union
+					// Exclude<UnionType, ExcludedMembers> utility type constructs a new type by removing all union members that are assignable to ExcludedMembers
 					if(returnType.getTypeArguments().size() > 0) {
 						returnType = returnType.getTypeArguments().get(0);
 					}

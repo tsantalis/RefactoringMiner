@@ -4081,11 +4081,9 @@ public class StringBasedHeuristics {
 						}
 					}
 					if(count > 0 && !singleNullCheck && !invalidReplacement && info.getReplacements(ReplacementType.INFIX_OPERATOR).size() == count) {
-						if(s1.contains(LANG1.AND) != s2.contains(LANG2.AND))
-							onlyInfixOperatorReplacementsFound = false;
-						else if(s1.contains(LANG1.OR) != s2.contains(LANG2.OR))
-							onlyInfixOperatorReplacementsFound = false;
-						else
+						boolean elseIf1 = isElseIfBranch(statement1, statement1.getParent());
+						boolean elseIf2 = isElseIfBranch(statement2, statement2.getParent());
+						if(elseIf1 == elseIf2)
 							onlyInfixOperatorReplacementsFound = true;
 					}
 				}

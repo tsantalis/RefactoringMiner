@@ -76,6 +76,45 @@ public class LeafType extends UMLType implements Cloneable {
 			if(this.classType.equals(((LeafType)type).classType) && equalTypeArgumentsAndArrayDimension(type)) {
 				return true;
 			}
+			if(equalsTypeScript(type)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean equalsTypeScript(UMLType type) {
+		// https://www.typescriptlang.org/docs/handbook/utility-types.html
+		// handle Extract and Exclude utility types in TypeScript
+		if(type instanceof LeafType leafType) {
+			if(this.classType.equals("Extract") && !leafType.classType.equals("Extract")) {
+				if(this.getTypeArguments().size() > 0) {
+					if(this.getTypeArguments().get(0).equals(type)) {
+						return true;
+					}
+				}
+			}
+			else if(!this.classType.equals("Extract") && leafType.classType.equals("Extract")) {
+				if(type.getTypeArguments().size() > 0) {
+					if(type.getTypeArguments().get(0).equals(this)) {
+						return true;
+					}
+				}
+			}
+			if(this.classType.equals("Exclude") && !leafType.classType.equals("Exclude")) {
+				if(this.getTypeArguments().size() > 0) {
+					if(this.getTypeArguments().get(0).equals(type)) {
+						return true;
+					}
+				}
+			}
+			else if(!this.classType.equals("Exclude") && leafType.classType.equals("Exclude")) {
+				if(type.getTypeArguments().size() > 0) {
+					if(type.getTypeArguments().get(0).equals(this)) {
+						return true;
+					}
+				}
+			}
 		}
 		return false;
 	}
@@ -103,6 +142,9 @@ public class LeafType extends UMLType implements Cloneable {
 	public boolean equalClassType(UMLType type) {
 		if(this.getClass() == type.getClass()) {
 			return this.nonQualifiedClassType.equals(((LeafType)type).nonQualifiedClassType);
+		}
+		if(equalsTypeScript(type)) {
+			return true;
 		}
 		return false;
 	}

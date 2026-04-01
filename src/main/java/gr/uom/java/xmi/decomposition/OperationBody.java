@@ -588,6 +588,19 @@ public class OperationBody {
 				}
 				removeAllFromActiveVariableDeclarations(catchClauseVariableDeclarations);
 			}
+			LangASTNode elseBlock = tryStatement.getElseBlock();
+			if(elseBlock != null) {
+				CompositeStatementObject elseStatementObject = new CompositeStatementObject(cu, sourceFolder, filePath, elseBlock, parent.getDepth()+1, CodeElementType.FINALLY_BLOCK, fileContent);
+				child.setElseClause(elseStatementObject);
+				parent.addStatement(elseStatementObject);
+				elseStatementObject.setTryContainer(child);
+				addStatementInVariableScopes(elseStatementObject);
+				if(elseBlock instanceof LangBlock elseBody) {
+					for(LangASTNode blockStatement : elseBody.getStatements()) {
+						processStatement(cu, sourceFolder, filePath, elseStatementObject, blockStatement, fileContent);
+					}
+				}
+			}
 			LangASTNode finallyBlock = tryStatement.getFinallyBlock();
 			if(finallyBlock != null) {
 				CompositeStatementObject finallyClauseStatementObject = new CompositeStatementObject(cu, sourceFolder, filePath, finallyBlock, parent.getDepth()+1, CodeElementType.FINALLY_BLOCK, fileContent);

@@ -16,6 +16,7 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 
 public class TryStatementObject extends CompositeStatementObject {
 	private List<CompositeStatementObject> catchClauses;
+	private CompositeStatementObject elseClause;
 	private CompositeStatementObject finallyClause;
 
 	public TryStatementObject(LangCompilationUnit cu, String sourceFolder, String filePath, LangASTNode statement, int depth, String fileContent) {
@@ -44,6 +45,14 @@ public class TryStatementObject extends CompositeStatementObject {
 
 	public List<CompositeStatementObject> getCatchClauses() {
 		return catchClauses;
+	}
+
+	public void setElseClause(CompositeStatementObject elseClause) {
+		this.elseClause = elseClause;
+	}
+
+	public CompositeStatementObject getElseClause() {
+		return elseClause;
 	}
 
 	public void setFinallyClause(CompositeStatementObject finallyClause) {

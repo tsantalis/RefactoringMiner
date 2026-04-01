@@ -1,6 +1,5 @@
 package extension.umladapter;
 
-
 import extension.ast.node.LangASTNode;
 import extension.ast.node.TypeObjectEnum;
 import extension.ast.node.declaration.LangMethodDeclaration;
@@ -14,7 +13,6 @@ import extension.ast.node.metadata.comment.LangComment;
 import extension.ast.node.statement.LangBlock;
 import extension.ast.node.statement.LangExpressionStatement;
 import extension.ast.node.unit.LangCompilationUnit;
-import extension.base.LangASTUtil;
 import extension.base.LangSupportedEnum;
 import extension.umladapter.processor.UMLAdapterVariableProcessor;
 import gr.uom.java.xmi.*;
@@ -22,15 +20,7 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.*;
-
-import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
-
-import com.github.gumtreediff.tree.Tree;
-import com.github.gumtreediff.tree.TreeContext;
-import com.github.gumtreediff.gen.treesitterng.PythonTreeSitterNgTreeGenerator;
 
 import static extension.umladapter.UMLAdapterUtil.extractUMLImports;
 import static extension.umladapter.processor.UMLAdapterVariableProcessor.processVariableDeclarations;

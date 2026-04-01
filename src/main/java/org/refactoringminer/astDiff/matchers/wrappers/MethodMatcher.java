@@ -488,6 +488,20 @@ public class MethodMatcher extends BodyMapperMatcher{
                         Tree t2 = rightTree.getParent().getChild(index2+1);
                         mappingStore.addMapping(t1,t2);
                     }
+                    if(leftTree.getParent().getType().name.equals(LANG1.DICTIONARY_SPLAT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.DICTIONARY_SPLAT_PATTERN)) {
+                        mappingStore.addMapping(leftTree.getParent(),rightTree.getParent());
+                        com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(),LANG1.SPLAT_DOUBLE,LANG2.SPLAT_DOUBLE);
+                        if(matched != null) {
+                            mappingStore.addMapping(matched.first,matched.second);
+                        }
+                    }
+                    if(leftTree.getParent().getType().name.equals(LANG1.LIST_SPLAT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.LIST_SPLAT_PATTERN)) {
+                        mappingStore.addMapping(leftTree.getParent(),rightTree.getParent());
+                        com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(),LANG1.SPLAT_SINGLE,LANG2.SPLAT_SINGLE);
+                        if(matched != null) {
+                            mappingStore.addMapping(matched.first,matched.second);
+                        }
+                    }
                 }
                 if(leftTree.getType().name.equals(LANG1.PARAMETER_MODIFIERS) && rightTree.getType().name.equals(LANG2.PARAMETER_MODIFIERS)) {
                     Tree leftParameter = TreeUtilFunctions.findByLocationInfo(leftTree.getParent(), leftVarDecl.getLocationInfo(), LANG1, LANG1.PARAMETER);

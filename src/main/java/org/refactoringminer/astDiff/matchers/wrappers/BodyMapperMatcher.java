@@ -231,6 +231,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
                 }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.PATTERN_LIST, LANG2.PATTERN_LIST);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
                 matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
@@ -418,6 +422,18 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     mappingStore.addMapping(finally_blocks.first,finally_blocks.second);
                 }
             }
+            Pair<Tree, Tree> elses = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ELSE, LANG2.ELSE);
+            if (elses != null) {
+                mappingStore.addMapping(elses.first,elses.second);
+                Pair<Tree, Tree> finally_keywords = Helpers.findPairOfType(elses.first,elses.second, LANG1.ELSE_KEYWORD, LANG2.ELSE_KEYWORD);
+                if (finally_keywords != null) {
+                    mappingStore.addMapping(finally_keywords.first,finally_keywords.second);
+                }
+                Pair<Tree, Tree> finally_blocks = Helpers.findPairOfType(elses.first,elses.second, LANG1.CLASS_BLOCK, LANG2.CLASS_BLOCK);
+                if (finally_blocks != null) {
+                    mappingStore.addMapping(finally_blocks.first,finally_blocks.second);
+                }
+            }
             if(srcStatementNode.getType().name.equals(LANG1.CATCH_CLAUSE) && dstStatementNode.getType().name.equals(LANG2.CATCH_CLAUSE)) {
                 Pair<Tree, Tree> excepts = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.EXCEPT_KEYWORD, LANG2.EXCEPT_KEYWORD);
                 if (excepts != null) {
@@ -426,6 +442,14 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 Pair<Tree, Tree> catchKeywords = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.CATCH_KEYWORD, LANG2.CATCH_KEYWORD);
                 if (catchKeywords != null) {
                     mappingStore.addMapping(catchKeywords.first,catchKeywords.second);
+                }
+                Pair<Tree, Tree> asPatterns = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.AS_PATTERN, LANG2.AS_PATTERN);
+                if (asPatterns != null) {
+                    mappingStore.addMappingRecursively(asPatterns.first,asPatterns.second);
+                }
+                Pair<Tree, Tree> identifiers = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.SIMPLE_NAME, LANG2.SIMPLE_NAME);
+                if (identifiers != null) {
+                    mappingStore.addMapping(identifiers.first,identifiers.second);
                 }
                 Pair<Tree, Tree> opening = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
                 if (opening != null) {

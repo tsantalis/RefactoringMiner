@@ -36,20 +36,6 @@ import static extension.umladapter.UMLAdapterUtil.extractUMLImports;
 import static extension.umladapter.processor.UMLAdapterVariableProcessor.processVariableDeclarations;
 
 public class UMLModelAdapter {
-    private final UMLModel umlModel;
-
-    public UMLModelAdapter(Map<String, String> langSupportedFiles) throws IOException {
-        this(langSupportedFiles, false);
-    }
-
-    public UMLModelAdapter(Map<String, String> langSupportedFiles, boolean astDiff) throws IOException {
-        this.umlModel = new UMLModel(Collections.emptySet());
-        // Parse files to custom AST
-        Map<String, LangASTNode> langASTMap = parseLangSupportedFiles(langSupportedFiles, astDiff);
-
-        // Create UML model directly from custom AST
-        populateUMLModel(langASTMap, langSupportedFiles);
-    }
 
     private static void distributeComments(List<UMLComment> compilationUnitComments, LocationInfo codeElementLocationInfo, List<UMLComment> codeElementComments) {
         ListIterator<UMLComment> listIterator = compilationUnitComments.listIterator(compilationUnitComments.size());
@@ -68,51 +54,6 @@ public class UMLModelAdapter {
             }
         }
         compilationUnitComments.removeAll(codeElementComments);
-    }
-
-    private Map<String, LangASTNode> parseLangSupportedFiles(Map<String, String> langSupportedFiles, boolean astDiff) throws IOException {
-        Map<String, LangASTNode> result = new HashMap<>();
-
-        for (Map.Entry<String, String> entry : langSupportedFiles.entrySet()) {
-            LangSupportedEnum language = LangSupportedEnum.fromFileName(entry.getKey());
-            LangASTNode ast = LangASTUtil.getLangAST(
-                    language, // fileName for language detection
-                    entry.getValue()); // code content
-           // System.out.print("AST Structure: " + ast.toString());
-            result.put(entry.getKey(), ast);
-            if (astDiff) {
-                ByteArrayInputStream is = new ByteArrayInputStream(entry.getValue().getBytes());
-                try {
-                    TreeContext treeContext = new PythonTreeSitterNgTreeGenerator().generateFrom().stream(is);
-                    List<Tree> trees = TreeUtilFunctions.findChildrenByTypeRecursively(treeContext.getRoot(), "comment");
-                    List<UMLComment> comments = new ArrayList<UMLComment>();
-                    for(Tree t : trees) {
-                        String sourceFolder = UMLAdapterUtil.extractSourceFolder(entry.getKey());
-                        LocationInfo location = new LocationInfo(sourceFolder, entry.getKey(), t, CodeElementType.LINE_COMMENT);
-                        UMLComment comment = new UMLComment(t.getLabel(), location);
-                        comments.add(comment);
-                    }
-                    this.umlModel.getCommentMap().put(entry.getKey(), comments);
-                    this.umlModel.getTreeContextMap().put(entry.getKey(), treeContext);
-                }
-                catch(Exception e) {
-                    
-                }
-            }
-        }
-
-        return result;
-    }
-
-    private void populateUMLModel(Map<String, LangASTNode> astMap, Map<String, String> langSupportedFiles) {
-        // Process each AST and populate the UML model
-        for (Map.Entry<String, LangASTNode> entry : astMap.entrySet()) {
-            String filename = entry.getKey();
-            LangASTNode ast = entry.getValue();
-
-            // Extract UML entities from AST
-            extractUMLEntities(ast, umlModel, filename, langSupportedFiles.get(filename));
-        }
     }
 
     public static void extractUMLEntities(LangASTNode ast, UMLModel model, String filename, String fileContent) {
@@ -594,9 +535,5 @@ public class UMLModelAdapter {
             ));
         }
         return null;
-    }
-
-    public UMLModel getUMLModel() {
-        return umlModel;
     }
 }

@@ -526,6 +526,16 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             System.err.println("Tree not found for " + abstractCodeMapping);
             return;
         }
+        if(srcStatementNode.getType().name.equals(LANG1.CLASS_BLOCK) && !dstStatementNode.getType().name.equals(LANG2.CLASS_BLOCK)) {
+            if(srcStatementNode.getChildren().size() == 1 && srcStatementNode.getChild(0).getType().name.equals(dstStatementNode.getType().name)) {
+                srcStatementNode = srcStatementNode.getChild(0);
+            }
+        }
+        else if(!srcStatementNode.getType().name.equals(LANG1.CLASS_BLOCK) && dstStatementNode.getType().name.equals(LANG2.CLASS_BLOCK)) {
+            if(dstStatementNode.getChildren().size() == 1 && dstStatementNode.getChild(0).getType().name.equals(srcStatementNode.getType().name)) {
+                dstStatementNode = dstStatementNode.getChild(0);
+            }
+        }
         if (srcStatementNode.getType().name.equals(dstStatementNode.getType().name))
             if(srcStatementNode.isIsoStructuralTo(dstStatementNode) && srcTree.getType().name.equals(LANG1.MODULE))
                 mappingStore.addMappingRecursively(srcStatementNode, dstStatementNode);

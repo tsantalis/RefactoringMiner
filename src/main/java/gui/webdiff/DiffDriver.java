@@ -27,6 +27,8 @@ public class DiffDriver {
     String repo;
     @Parameter(names = {"-c", "--commit"}, description = "Commit ID for locally cloned repo, or Perforce ChangeList number", order = 4)
     String commit;
+    @Parameter(names = {"--parent-index"}, description = "Parent index to diff against for merge commits")
+    Integer parentIndex;
     @Parameter(names = {"-h", "--help"}, description = "Help", help = true)
     boolean help;
     @Parameter(names = {"-e", "--export"}, description = "Export WebDiff/Mappings/Actions into files")
@@ -45,9 +47,11 @@ public class DiffDriver {
     private static final String HELP_MSG = """
 You can run the diff with the following options:
     --url <commit-url>                           \t\t      Run the diff with a GitHub commit url
+    --url <commit-url> --parent-index <n>        \t\t      Run the diff against merge parent <n> for a GitHub commit url
     --url <pr-url>                               \t\t      Run the diff with a GitHub PullRequest url
     --src <folder1> --dst <folder2>            \t\t              Run the diff with two local directories
     --repo <repo-folder-path> --commit <commitID>  \t\t      Run the diff with a locally cloned GitHub repo
+    --repo <repo-folder-path> --commit <commitID> --parent-index <n>  Run the diff against merge parent <n>
 
 To export the mappings/actions, add --export to the end of the command.
 """;
@@ -105,6 +109,7 @@ To export the mappings/actions, add --export to the end of the command.
         }
         //Export the webdiff
         WebDiff webDiff = new WebDiff(projectASTDiff);
+        webDiff.setStaticExport(true);
         webDiff.run();
         WebExporter webExporter = new WebExporter(webDiff);
         webExporter.export(exportDestination);
@@ -131,4 +136,3 @@ To export the mappings/actions, add --export to the end of the command.
         }
     }
 }
-

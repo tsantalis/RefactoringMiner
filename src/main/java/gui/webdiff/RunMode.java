@@ -35,10 +35,14 @@ public enum RunMode{
     }
 
     public ProjectASTDiff getProjectASTDIFF(DiffDriver runner) throws Exception {
+        if (runner.parentIndex != null && this != CLONED && this != URL) {
+            throw new IllegalArgumentException("--parent-index is currently supported only with commit URLs or with --repo and --commit");
+        }
         return switch (this) {
             case URL -> new GitHistoryRefactoringMinerImpl().diffAtCommit(
                     URLHelper.getRepo(runner.url),
                     URLHelper.getCommit(runner.url),
+                    runner.parentIndex != null ? runner.parentIndex : 0,
                     timeout);
             case PR -> new GitHistoryRefactoringMinerImpl().diffAtPullRequest(
                     URLHelper.getRepo(runner.url),
@@ -48,7 +52,9 @@ public enum RunMode{
                     runner.src.toAbsolutePath().normalize(),
                     runner.dst.toAbsolutePath().normalize());
             case CLONED -> new GitHistoryRefactoringMinerImpl().diffAtCommit(
-                    new GitServiceImpl().openRepository(runner.repo), runner.commit);
+                    new GitServiceImpl().openRepository(runner.repo),
+                    runner.commit,
+                    runner.parentIndex != null ? runner.parentIndex : 0);
             case PERFORCE_CL -> new PerforceHistoryRefactoringMinerImpl().diffAtChangeList(
                     runner.url,
                     runner.perforceUserName,

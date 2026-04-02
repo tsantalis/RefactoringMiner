@@ -37,15 +37,21 @@ public class DirectoryDiffView implements Renderable {
     protected final DirComparator comparator;
     private final boolean external;
     protected final DiffMetaInfo metaInfo;
+    protected final boolean showMergeParentBar;
 
     public DirectoryDiffView(DirComparator comparator, DiffMetaInfo metaInfo) {
-        this(comparator, false, metaInfo);
+        this(comparator, false, metaInfo, true);
     }
 
     public DirectoryDiffView(DirComparator comparator, boolean external, DiffMetaInfo metaInfo) {
+        this(comparator, external, metaInfo, true);
+    }
+
+    public DirectoryDiffView(DirComparator comparator, boolean external, DiffMetaInfo metaInfo, boolean showMergeParentBar) {
         this.comparator = comparator;
         this.external = external;
         this.metaInfo = metaInfo;
+        this.showMergeParentBar = showMergeParentBar;
     }
 
     protected boolean isMovedCode(TreeNodeInfo info) {
@@ -70,6 +76,7 @@ public class DirectoryDiffView implements Renderable {
                     .div(class_("row"))
                         .render(new MenuBar(external, metaInfo))
                     ._div()
+                    .render_if(new MergeParentBar(metaInfo), showMergeParentBar && metaInfo != null && metaInfo.supportsParentSelection())
                     .if_(!external)
                     .div(class_("row"))
                     .render(new RefactoringBar(comparator))
@@ -341,6 +348,42 @@ public class DirectoryDiffView implements Renderable {
         }
     }
 
+    private static class MergeParentBar implements Renderable {
+        private final DiffMetaInfo metaInfo;
+
+        private MergeParentBar(DiffMetaInfo metaInfo) {
+            this.metaInfo = metaInfo;
+        }
+
+        @Override
+        public void renderOn(HtmlCanvas html) throws IOException {
+            html
+                    .div(class_("row mt-3"))
+                        .div(class_("col"))
+                            .div(class_("alert alert-secondary d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mb-0"))
+                                .div(class_("mb-2 mb-lg-0"))
+                                    .strong().content("Merge parent diff")
+                                    .write(String.format(" Showing parent %d of %d for this merge commit. Parent 0 preserves the default first-parent compare.",
+                                            metaInfo.getSelectedParentIndex(),
+                                            metaInfo.getParentCount() - 1))
+                                ._div()
+                                .div(class_("btn-group"))
+            ;
+            for (Integer parentIndex : metaInfo.getAvailableParentIndices()) {
+                String buttonClass = parentIndex.equals(metaInfo.getSelectedParentIndex())
+                        ? "btn btn-primary btn-sm active"
+                        : "btn btn-outline-primary btn-sm";
+                html.a(class_(buttonClass).href("/switch-parent/" + parentIndex))
+                        .content("Parent " + parentIndex);
+            }
+            html
+                                ._div()
+                            ._div()
+                        ._div()
+                    ._div();
+        }
+    }
+
     static class Header implements Renderable {
         @Override
         public void renderOn(HtmlCanvas html) throws IOException {
@@ -378,9 +421,14 @@ public class DirectoryDiffView implements Renderable {
             html
             .div(class_("col"))
                 .div(class_("btn-toolbar justify-content-end"))
-                    .if_(metaInfo != null)
+                    .if_(metaInfo != null && metaInfo.hasUrl())
                     .div(class_("col"))
                     .a(href(metaInfo.getUrl()).target("_blank")).content(metaInfo.getInfo())
+                    ._div()
+                    ._if()
+                    .if_(metaInfo != null && !metaInfo.hasUrl())
+                    .div(class_("col"))
+                    .write(metaInfo.getInfo())
                     ._div()
                     ._if()
                     .div(class_("btn-group"))

@@ -110,7 +110,7 @@ public class DirComparator {
         Map<String, List<PullRequestReviewComment>> commentMap = new ConcurrentHashMap<>();
         DiffMetaInfo info = projectASTDiff.getMetaInfo();
 
-        if (info.getUrl().isEmpty()) {
+        if (!info.hasUrl() || !URLHelper.isPR(info.getUrl())) {
             return commentMap;
         }
 

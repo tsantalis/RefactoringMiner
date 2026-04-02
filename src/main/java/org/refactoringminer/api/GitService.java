@@ -59,5 +59,7 @@ public interface GitService {
 
 	void fileTreeDiff(Repository repository, RevCommit currentCommit, Set<String> filesBefore, Set<String> filesCurrent, Map<String, String> renamedFilesHint) throws Exception;
 
+	void fileTreeDiff(Repository repository, RevCommit parentCommit, RevCommit currentCommit, Set<String> filesBefore, Set<String> filesCurrent, Map<String, String> renamedFilesHint) throws Exception;
+
 	Churn churn(Repository repository, RevCommit currentCommit) throws Exception;
 }

@@ -13,7 +13,11 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 /* Created by pourya on 2024-07-22*/
 public class SinglePageView extends AbstractSinglePageView implements Renderable {
     public SinglePageView(DirComparator comparator, DiffMetaInfo metaInfo) {
-        super(comparator, metaInfo);
+        this(comparator, metaInfo, true);
+    }
+
+    public SinglePageView(DirComparator comparator, DiffMetaInfo metaInfo, boolean showMergeParentBar) {
+        super(comparator, metaInfo, showMergeParentBar);
     }
 
     protected void makeHead(HtmlCanvas html) throws IOException {

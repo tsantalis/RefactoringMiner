@@ -82,6 +82,8 @@ public interface GitHistoryRefactoringMiner {
 	 */
 	void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler);
 	void detectAtCommit(Path repositoryDirectory, String commitId, RefactoringHandler handler) throws Exception;
+	void detectAtCommit(Repository repository, String commitId, int parentIndex, RefactoringHandler handler);
+	void detectAtCommit(Path repositoryDirectory, String commitId, int parentIndex, RefactoringHandler handler) throws Exception;
 
 	/**
 	 * Detect refactorings performed in the specified commit.
@@ -93,6 +95,8 @@ public interface GitHistoryRefactoringMiner {
 	 */
 	void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler, int timeout);
 	void detectAtCommit(Path repositoryDirectory, String commitId, RefactoringHandler handler, int timeout) throws Exception;
+	void detectAtCommit(Repository repository, String commitId, int parentIndex, RefactoringHandler handler, int timeout);
+	void detectAtCommit(Path repositoryDirectory, String commitId, int parentIndex, RefactoringHandler handler, int timeout) throws Exception;
 
 	/**
 	 * Detect refactorings performed in the specified commit. All required information is extracted using the GitHub API.
@@ -103,6 +107,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @param timeout A timeout, in seconds. When timeout is reached, the operation stops and returns no refactorings.
 	 */
 	void detectAtCommit(String gitURL, String commitId, RefactoringHandler handler, int timeout);
+	void detectAtCommit(String gitURL, String commitId, int parentIndex, RefactoringHandler handler, int timeout);
 
 	/**
 	 * Detect refactorings performed in the specified pull request. All required information is extracted using the GitHub API.
@@ -179,6 +184,8 @@ public interface GitHistoryRefactoringMiner {
 	 */
 	ProjectASTDiff diffAtCommit(Repository repository, String commitId);
 	ProjectASTDiff diffAtCommit(Path repositoryDirectory, String commitId) throws Exception;
+	ProjectASTDiff diffAtCommit(Repository repository, String commitId, int parentIndex);
+	ProjectASTDiff diffAtCommit(Path repositoryDirectory, String commitId, int parentIndex) throws Exception;
 
 	/**
 	 * Generate the AST diff for the specified commit. All required information is extracted using the GitHub API.
@@ -189,6 +196,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
 	 */
 	ProjectASTDiff diffAtCommit(String gitURL, String commitId, int timeout);
+	ProjectASTDiff diffAtCommit(String gitURL, String commitId, int parentIndex, int timeout);
 
 	/**
 	 * Generate the AST diff for the specified Pull Request. All required information is extracted using the GitHub API.

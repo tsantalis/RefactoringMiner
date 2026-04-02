@@ -18,8 +18,8 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
     protected final String JQ_UI_CSS = "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css";
     protected final String JQ_UI_JS = "https://code.jquery.com/ui/1.12.1/jquery-ui.js";
 
-    public AbstractSinglePageView(DirComparator comparator, DiffMetaInfo metaInfo) {
-        super(comparator, metaInfo);
+    public AbstractSinglePageView(DirComparator comparator, DiffMetaInfo metaInfo, boolean showMergeParentBar) {
+        super(comparator, false, metaInfo, showMergeParentBar);
     }
 
     @Override
@@ -33,7 +33,7 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
                     .div(class_("container-fluid").style("padding-left: 0"))
                     .div(class_("row h-100"))
                     .div(class_("col-2 bg-light dir-diff"))
-                    .render(new DirectoryDiffView(comparator, true, metaInfo))
+                    .render(new DirectoryDiffView(comparator, true, metaInfo, showMergeParentBar))
                     ._div()
                     // Monaco editors 4/5 width
                     .div(class_("col-10 monaco-panel"))

@@ -292,38 +292,7 @@ public class GitServiceImpl implements GitService {
 
 	public void fileTreeDiff(Repository repository, RevCommit currentCommit, Set<String> javaFilesBefore, Set<String> javaFilesCurrent, Map<String, String> renamedFilesHint) throws Exception {
         if (currentCommit.getParentCount() > 0) {
-        	ObjectId oldTree = currentCommit.getParent(0).getTree();
-	        ObjectId newTree = currentCommit.getTree();
-        	final TreeWalk tw = new TreeWalk(repository);
-        	tw.setRecursive(true);
-        	tw.addTree(oldTree);
-        	tw.addTree(newTree);
-
-        	final RenameDetector rd = new RenameDetector(repository);
-        	rd.setRenameScore(55);
-        	rd.addAll(DiffEntry.scan(tw));
-
-        	for (DiffEntry diff : rd.compute(tw.getObjectReader(), null)) {
-        		ChangeType changeType = diff.getChangeType();
-        		String oldPath = diff.getOldPath();
-        		String newPath = diff.getNewPath();
-        		if (changeType != ChangeType.ADD) {
-	        		if (isJavafile(oldPath)) {
-	        			javaFilesBefore.add(oldPath);
-	        		}
-	        	}
-        		if (changeType != ChangeType.DELETE) {
-	        		if (isJavafile(newPath)) {
-	        			javaFilesCurrent.add(newPath);
-	        		}
-        		}
-        		if (changeType == ChangeType.RENAME && diff.getScore() >= rd.getRenameScore()) {
-        			if (isJavafile(oldPath) && isJavafile(newPath)) {
-        				renamedFilesHint.put(oldPath, newPath);
-        			}
-        		}
-        	}
-        	tw.close();
+            fileTreeDiff(repository, currentCommit.getParent(0), currentCommit, javaFilesBefore, javaFilesCurrent, renamedFilesHint);
         }
         else if(currentCommit.getParentCount() == 0) {
         	//initial commit of the repository
@@ -340,6 +309,42 @@ public class GitServiceImpl implements GitService {
         	}
         	tw.close();
         }
+	}
+
+	@Override
+	public void fileTreeDiff(Repository repository, RevCommit parentCommit, RevCommit currentCommit, Set<String> javaFilesBefore, Set<String> javaFilesCurrent, Map<String, String> renamedFilesHint) throws Exception {
+		ObjectId oldTree = parentCommit.getTree();
+		ObjectId newTree = currentCommit.getTree();
+		final TreeWalk tw = new TreeWalk(repository);
+		tw.setRecursive(true);
+		tw.addTree(oldTree);
+		tw.addTree(newTree);
+
+		final RenameDetector rd = new RenameDetector(repository);
+		rd.setRenameScore(55);
+		rd.addAll(DiffEntry.scan(tw));
+
+		for (DiffEntry diff : rd.compute(tw.getObjectReader(), null)) {
+			ChangeType changeType = diff.getChangeType();
+			String oldPath = diff.getOldPath();
+			String newPath = diff.getNewPath();
+			if (changeType != ChangeType.ADD) {
+				if (isJavafile(oldPath)) {
+					javaFilesBefore.add(oldPath);
+				}
+			}
+			if (changeType != ChangeType.DELETE) {
+				if (isJavafile(newPath)) {
+					javaFilesCurrent.add(newPath);
+				}
+			}
+			if (changeType == ChangeType.RENAME && diff.getScore() >= rd.getRenameScore()) {
+				if (isJavafile(oldPath) && isJavafile(newPath)) {
+					renamedFilesHint.put(oldPath, newPath);
+				}
+			}
+		}
+		tw.close();
 	}
 
 	private boolean isJavafile(String path) {

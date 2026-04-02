@@ -1183,9 +1183,31 @@
   "firstParentType" : "block",
   "secondParentType" : "block",
   "firstPos" : 3278,
+  "secondPos" : 2456,
+  "firstEndPos" : 4126,
+  "secondEndPos" : 2522
+}, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 3278,
   "secondPos" : 3296,
   "firstEndPos" : 4126,
   "secondEndPos" : 4144
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "    \n    An unsafe, but faster, initialization for distributions.\n\n    If used incorrectly, the data structure will be inconsistent.\n\n    This function can be useful when you are creating many distributions\n    in a loop and can guarantee that:\n\n        0) all outcomes are of the same type (eg tuple, str) and length.\n        1) the alphabet is in the desired order.\n        2) outcomes and pmf are in the same order as the sample space.\n           [Thus, `pmf` should not be a dictionary.]\n\n    This function will not order the sample space, nor will it reorder outcomes\n    or pmf.  It will not forcibly make outcomes and pmf to be sparse or dense.\n    It will simply declare the distribution to be sparse or dense. The\n    distribution is not validated either.\n\n    Returns\n    -------\n    d : Distribution\n        The new distribution.\n\n    \"\"\"",
+  "secondLabel" : "    \n    Core construction of alphabets. No sanity checks.\n\n    \"\"\"",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 3278,
+  "secondPos" : 2456,
+  "firstEndPos" : 4126,
+  "secondEndPos" : 2522
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -1308,6 +1330,17 @@
   "firstEndPos" : 4178,
   "secondEndPos" : 4186
 }, {
+  "firstType" : "assignment",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 4259,
+  "secondPos" : 19717,
+  "firstEndPos" : 4272,
+  "secondEndPos" : 19730
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -1315,42 +1348,64 @@
   "firstParentType" : "block",
   "secondParentType" : "block",
   "firstPos" : 4259,
-  "secondPos" : 4286,
+  "secondPos" : 19717,
   "firstEndPos" : 4272,
-  "secondEndPos" : 4329
+  "secondEndPos" : 19730
+}, {
+  "firstType" : "attribute",
+  "secondType" : "attribute",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 4259,
+  "secondPos" : 19717,
+  "firstEndPos" : 4265,
+  "secondEndPos" : 19723
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "d",
   "secondLabel" : "d",
   "firstParentType" : "attribute",
-  "secondParentType" : "argument_list",
+  "secondParentType" : "attribute",
   "firstPos" : 4259,
-  "secondPos" : 4312,
+  "secondPos" : 19717,
   "firstEndPos" : 4260,
-  "secondEndPos" : 4313
+  "secondEndPos" : 19718
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "prng",
+  "secondLabel" : "prng",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 4261,
+  "secondPos" : 19719,
+  "firstEndPos" : 4265,
+  "secondEndPos" : 19723
+}, {
+  "firstType" : "assignment_operator_literal",
+  "secondType" : "assignment_operator_literal",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 4266,
+  "secondPos" : 19724,
+  "firstEndPos" : 4267,
+  "secondEndPos" : 19725
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "prng",
   "secondLabel" : "prng",
   "firstParentType" : "assignment",
-  "secondParentType" : "argument_list",
+  "secondParentType" : "assignment",
   "firstPos" : 4268,
-  "secondPos" : 4324,
+  "secondPos" : 19726,
   "firstEndPos" : 4272,
-  "secondEndPos" : 4328
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "# Determine if the pmf represents log probabilities or not.",
-  "secondLabel" : "# Call init function of BaseDistribution, not of Distribution.",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 4278,
-  "secondPos" : 4193,
-  "firstEndPos" : 4337,
-  "secondEndPos" : 4255
+  "secondEndPos" : 19730
 }, {
   "firstType" : "if_statement",
   "secondType" : "if_statement",
@@ -1604,28 +1659,6 @@
   "secondPos" : 4436,
   "firstEndPos" : 4416,
   "secondEndPos" : 4440
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "## outcomes",
-  "secondLabel" : "# This sets the prng.",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 4423,
-  "secondPos" : 4260,
-  "firstEndPos" : 4434,
-  "secondEndPos" : 4281
-}, {
-  "firstType" : "assignment_operator_literal",
-  "secondType" : "assignment_operator_literal",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
-  "firstParentType" : "assignment",
-  "secondParentType" : "assignment",
-  "firstPos" : 4633,
-  "secondPos" : 4533,
-  "firstEndPos" : 4634,
-  "secondEndPos" : 4534
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -2121,6 +2154,17 @@
   "secondPos" : 2655,
   "firstEndPos" : 5397,
   "secondEndPos" : 2727
+}, {
+  "firstType" : "pattern_list",
+  "secondType" : "pattern_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "for_statement",
+  "secondParentType" : "for_statement",
+  "firstPos" : 5326,
+  "secondPos" : 2659,
+  "firstEndPos" : 5334,
+  "secondEndPos" : 2667
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -7380,6 +7424,28 @@
   "firstEndPos" : 20149,
   "secondEndPos" : 18184
 }, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 16729,
+  "secondPos" : 15808,
+  "firstEndPos" : 16783,
+  "secondEndPos" : 15879
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "        \n        The barebones initialization.\n\n        \"\"\"",
+  "secondLabel" : "        \n        Pre-initialization with various sanity checks.\n\n        \"\"\"",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 16729,
+  "secondPos" : 15808,
+  "firstEndPos" : 16783,
+  "secondEndPos" : 15879
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "# Attempt to grab outcomes and pmf from a dict-like object.",
@@ -7390,17 +7456,6 @@
   "secondPos" : 15888,
   "firstEndPos" : 17788,
   "secondEndPos" : 15947
-}, {
-  "firstType" : "block",
-  "secondType" : "block",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "else_clause",
-  "secondParentType" : "function_definition",
-  "firstPos" : 17801,
-  "secondPos" : 15808,
-  "firstEndPos" : 19408,
-  "secondEndPos" : 18184
 }, {
   "firstType" : "try_statement",
   "secondType" : "try_statement",
@@ -8380,17 +8435,6 @@
   "secondPos" : 16489,
   "firstEndPos" : 19235,
   "secondEndPos" : 17286
-}, {
-  "firstType" : "elif",
-  "secondType" : "elif",
-  "firstLabel" : "elif",
-  "secondLabel" : "elif",
-  "firstParentType" : "elif_clause",
-  "secondParentType" : "elif_clause",
-  "firstPos" : 18394,
-  "secondPos" : 16489,
-  "firstEndPos" : 18398,
-  "secondEndPos" : 16493
 }, {
   "firstType" : "comparison_operator",
   "secondType" : "comparison_operator",
@@ -12340,28 +12384,6 @@
   "secondPos" : 22847,
   "firstEndPos" : 23303,
   "secondEndPos" : 22911
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "# Now just make sure that class is a sequence.",
-  "secondLabel" : "# sample space is created by a product function. Now, we just need",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 23312,
-  "secondPos" : 22920,
-  "firstEndPos" : 23358,
-  "secondEndPos" : 22986
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "# Now just make sure that class is a sequence.",
-  "secondLabel" : "# to make sure that class is a sequence.",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 23312,
-  "secondPos" : 22995,
-  "firstEndPos" : 23358,
-  "secondEndPos" : 23035
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",

@@ -928,7 +928,15 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							break;
 						}
 					}
-					if(!mappingFound) {
+					boolean compositeVariableReplacement = false;
+					if(isVariableReference(initializer.toString(), statement.getVariables()) && !(this instanceof CompositeStatementObjectMapping)) {
+						for(Replacement r : replacements) {
+							if(r.getAfter().contains(".") && r.getAfter().contains(variableName + ".")) {
+								compositeVariableReplacement = true;
+							}
+						}
+					}
+					if(!mappingFound && !compositeVariableReplacement) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						List<LeafExpression> subExpressions = getFragment1().findExpression(initializer.getString());
 						for(LeafExpression subExpression : subExpressions) {

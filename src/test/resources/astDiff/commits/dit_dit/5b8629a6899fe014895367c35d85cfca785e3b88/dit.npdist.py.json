@@ -1022,27 +1022,82 @@
   "firstEndPos" : 2389,
   "secondEndPos" : 2416
 }, {
+  "firstType" : "assignment",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 2470,
+  "secondPos" : 15664,
+  "firstEndPos" : 2483,
+  "secondEndPos" : 15677
+}, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 2470,
+  "secondPos" : 15664,
+  "firstEndPos" : 2483,
+  "secondEndPos" : 15677
+}, {
+  "firstType" : "attribute",
+  "secondType" : "attribute",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 2470,
+  "secondPos" : 15664,
+  "firstEndPos" : 2476,
+  "secondEndPos" : 15670
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "d",
   "secondLabel" : "d",
   "firstParentType" : "attribute",
-  "secondParentType" : "argument_list",
+  "secondParentType" : "attribute",
   "firstPos" : 2470,
-  "secondPos" : 2448,
+  "secondPos" : 15664,
   "firstEndPos" : 2471,
-  "secondEndPos" : 2449
+  "secondEndPos" : 15665
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "prng",
+  "secondLabel" : "prng",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 2472,
+  "secondPos" : 15666,
+  "firstEndPos" : 2476,
+  "secondEndPos" : 15670
+}, {
+  "firstType" : "assignment_operator_literal",
+  "secondType" : "assignment_operator_literal",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 2477,
+  "secondPos" : 15671,
+  "firstEndPos" : 2478,
+  "secondEndPos" : 15672
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "prng",
   "secondLabel" : "prng",
   "firstParentType" : "assignment",
-  "secondParentType" : "argument_list",
+  "secondParentType" : "assignment",
   "firstPos" : 2479,
-  "secondPos" : 2460,
+  "secondPos" : 15673,
   "firstEndPos" : 2483,
-  "secondEndPos" : 2464
+  "secondEndPos" : 15677
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -1197,72 +1252,6 @@
   "secondPos" : 2577,
   "firstEndPos" : 2601,
   "secondEndPos" : 2583
-}, {
-  "firstType" : "assignment",
-  "secondType" : "assignment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 2679,
-  "secondPos" : 2589,
-  "firstEndPos" : 2704,
-  "secondEndPos" : 2610
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 2679,
-  "secondPos" : 2589,
-  "firstEndPos" : 2704,
-  "secondEndPos" : 2610
-}, {
-  "firstType" : "call",
-  "secondType" : "call",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "assignment",
-  "secondParentType" : "assignment",
-  "firstPos" : 2685,
-  "secondPos" : 2597,
-  "firstEndPos" : 2704,
-  "secondEndPos" : 2610
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "LogOperations",
-  "secondLabel" : "get_ops",
-  "firstParentType" : "call",
-  "secondParentType" : "call",
-  "firstPos" : 2685,
-  "secondPos" : 2597,
-  "firstEndPos" : 2698,
-  "secondEndPos" : 2604
-}, {
-  "firstType" : "argument_list",
-  "secondType" : "argument_list",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call",
-  "secondParentType" : "call",
-  "firstPos" : 2698,
-  "secondPos" : 2604,
-  "firstEndPos" : 2704,
-  "secondEndPos" : 2610
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "base",
-  "secondLabel" : "base",
-  "firstParentType" : "argument_list",
-  "secondParentType" : "argument_list",
-  "firstPos" : 2699,
-  "secondPos" : 2605,
-  "firstEndPos" : 2703,
-  "secondEndPos" : 2609
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -6709,6 +6698,28 @@
   "firstEndPos" : 15108,
   "secondEndPos" : 13779
 }, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 12501,
+  "secondPos" : 11931,
+  "firstEndPos" : 12555,
+  "secondEndPos" : 12002
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "        \n        The barebones initialization.\n\n        \"\"\"",
+  "secondLabel" : "        \n        Pre-initialization with various sanity checks.\n\n        \"\"\"",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 12501,
+  "secondPos" : 11931,
+  "firstEndPos" : 12555,
+  "secondEndPos" : 12002
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "## pmf",
@@ -6730,17 +6741,6 @@
   "secondPos" : 12026,
   "firstEndPos" : 13283,
   "secondEndPos" : 12078
-}, {
-  "firstType" : "block",
-  "secondType" : "block",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "else_clause",
-  "secondParentType" : "function_definition",
-  "firstPos" : 13296,
-  "secondPos" : 11931,
-  "firstEndPos" : 14558,
-  "secondEndPos" : 13779
 }, {
   "firstType" : "try_statement",
   "secondType" : "try_statement",
@@ -21514,17 +21514,6 @@
   "secondPos" : 29855,
   "firstEndPos" : 29684,
   "secondEndPos" : 30011
-}, {
-  "firstType" : "elif",
-  "secondType" : "elif",
-  "firstLabel" : "elif",
-  "secondLabel" : "elif",
-  "firstParentType" : "elif_clause",
-  "secondParentType" : "elif_clause",
-  "firstPos" : 29528,
-  "secondPos" : 29855,
-  "firstEndPos" : 29532,
-  "secondEndPos" : 29859
 }, {
   "firstType" : "boolean_operator",
   "secondType" : "boolean_operator",

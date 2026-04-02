@@ -3981,6 +3981,28 @@
   "firstEndPos" : 1634,
   "secondEndPos" : 1634
 }, {
+  "firstType" : "assignment",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 1640,
+  "secondPos" : 1640,
+  "firstEndPos" : 1692,
+  "secondEndPos" : 1692
+}, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 1640,
+  "secondPos" : 1640,
+  "firstEndPos" : 1692,
+  "secondEndPos" : 1692
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "non_ascii",
@@ -3991,6 +4013,17 @@
   "secondPos" : 1640,
   "firstEndPos" : 1649,
   "secondEndPos" : 1649
+}, {
+  "firstType" : "assignment_operator_literal",
+  "secondType" : "assignment_operator_literal",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 1650,
+  "secondPos" : 1650,
+  "firstEndPos" : 1651,
+  "secondEndPos" : 1651
 }, {
   "firstType" : "call",
   "secondType" : "call",

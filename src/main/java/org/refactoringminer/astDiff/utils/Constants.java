@@ -39,6 +39,7 @@ public class Constants {
 			METHOD_INVOCATION = "call";
 			SWITCH_STATEMENT = "";
 			SWITCH_CASE = "";
+			ASSIGNMENT = "assignment";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -71,6 +72,7 @@ public class Constants {
 			METHOD_INVOCATION = "call_expression";
 			SWITCH_STATEMENT = "";
 			SWITCH_CASE = "";
+			ASSIGNMENT = "assignment";
 		}
 		else if(PathFileUtils.isTypeScriptFile(filePath)) {
 			CLASS_BLOCK = "block";
@@ -103,6 +105,7 @@ public class Constants {
 			METHOD_INVOCATION = "call";
 			SWITCH_STATEMENT = "switch_statement";
 			SWITCH_CASE = "switch_case";
+			ASSIGNMENT = "assignment";
 		}
 		else {
 			// Java values as default
@@ -136,11 +139,12 @@ public class Constants {
 			METHOD_INVOCATION = "MethodInvocation";
 			SWITCH_STATEMENT = "SwitchStatement";
 			SWITCH_CASE = "SwitchCase";
+			ASSIGNMENT = "Assignment";
 		}
 	}
 
     // AST node type labels
-    public final String ASSIGNMENT = "Assignment";
+    public final String ASSIGNMENT;
     public final String METHOD_INVOCATION;
     public final String METHOD_DECLARATION;
     public final String ANNOTATION_TYPE_MEMBER_DECLARATION = "AnnotationTypeMemberDeclaration";

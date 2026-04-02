@@ -288,6 +288,8 @@ public class Constants {
     public final String LIST_SPLAT_PATTERN = "list_splat_pattern";
     public final String SPLAT_SINGLE = "*";
     public final String AS_PATTERN = "as_pattern";
+    public final String CALL = "call";
+    public final String SUBSCRIPT = "subscript";
     
     //Kotlin Specific
     public final String FUNCTION_BODY = "function_body";

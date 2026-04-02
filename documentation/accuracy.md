@@ -232,11 +232,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Invert Condition`
 * `Split Parameter`
 
-As of **March 19, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **April 2, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1122  |  6  |  3  | 0.995  | 0.997|
+|**Total**|1127  |  4  |  3  | 0.996  | 0.997|
 |Extract Method|38  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|13  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 5  |  0  |  0  | 1.000  | 1.000|
@@ -254,23 +254,23 @@ As of **March 19, 2026** the precision and recall of RefactoringMiner on this be
 |Extract Subclass| 2  |  0  |  0  | 1.000  | 1.000|
 |Extract Class| 3  |  0  |  0  | 1.000  | 1.000|
 |Extract And Move Method|15  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|57  |  1  |  0  | 0.983  | 1.000|
+|Extract Variable|59  |  1  |  0  | 0.983  | 1.000|
 |Inline Variable|21  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|118  |  1  |  1  | 0.992  | 0.992|
-|Rename Parameter|140  |  1  |  0  | 0.993  | 1.000|
-|Rename Attribute|27  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable|118  |  0  |  1  | 1.000  | 0.992|
+|Rename Parameter|139  |  1  |  0  | 0.993  | 1.000|
+|Rename Attribute|28  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 3  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Replace Attribute With Variable| 2  |  0  |  0  | 1.000  | 1.000|
+|Replace Attribute With Variable| 3  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Variable|12  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Change Variable Type|26  |  3  |  0  | 0.897  | 1.000|
+|Change Variable Type|26  |  2  |  0  | 0.929  | 1.000|
 |Add Method Annotation|26  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|19  |  0  |  0  | 1.000  | 1.000|
 |Add Class Annotation| 1  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|250  |  0  |  1  | 1.000  | 0.996|
-|Remove Parameter|77  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|251  |  0  |  1  | 1.000  | 0.996|
+|Remove Parameter|78  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter|18  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Conditional| 4  |  0  |  0  | 1.000  | 1.000|

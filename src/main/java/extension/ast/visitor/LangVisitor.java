@@ -231,7 +231,7 @@ public class LangVisitor implements LangASTVisitor {
         LeafExpression variable = new LeafExpression(cu, sourceFolder, filePath,
                 langSimpleName, LocationInfo.CodeElementType.SIMPLE_NAME, container);
         if(langSimpleName.getParent() instanceof LangMethodInvocation parent) {
-        	// Avoid adding function name as a variable
+            // Avoid adding function name as a variable
             String parentAsString = LangVisitor.stringify(parent);
             if(!parentAsString.contains(langSimpleName.getIdentifier() + "(") || parent.getArguments().contains(langSimpleName)) {
                 variables.add(variable);
@@ -241,7 +241,7 @@ public class LangVisitor implements LangASTVisitor {
             variables.add(variable);
         }
         else if("self".equals(langSimpleName.getIdentifier()) || "cls".equals(langSimpleName.getIdentifier())) {
-        	thisExpressions.add(variable);
+            thisExpressions.add(variable);
         }
     }
 
@@ -415,21 +415,17 @@ public class LangVisitor implements LangASTVisitor {
         // Check if this is a 'self' reference (Python's equivalent of 'this')
         LangASTNode expression = langFieldAccess.getExpression();
         if (expression instanceof LangSimpleName simpleName) {
-            if ("self".equals(simpleName.getIdentifier()) || "cls".equals(simpleName.getIdentifier())) {
-                // This is a 'this' expression in Python (self.something)
-                // Avoid adding self.functionName as a variable
-                if(langFieldAccess.getParent() != null) {
-                    String parentAsString = LangVisitor.stringify(langFieldAccess.getParent());
-                    String fieldAccessAsString = LangVisitor.stringify(langFieldAccess);
-                    if(!parentAsString.contains(fieldAccessAsString + "(")) {
-                        LeafExpression fieldAccessExpression = new LeafExpression(cu, sourceFolder, filePath, langFieldAccess, LocationInfo.CodeElementType.FIELD_ACCESS, container);
-                        variables.add(fieldAccessExpression);
-                    }
-                 }
-                 else {
+            if(langFieldAccess.getParent() != null) {
+                String parentAsString = LangVisitor.stringify(langFieldAccess.getParent());
+                String fieldAccessAsString = LangVisitor.stringify(langFieldAccess);
+                if(!parentAsString.contains(fieldAccessAsString + "(")) {
                     LeafExpression fieldAccessExpression = new LeafExpression(cu, sourceFolder, filePath, langFieldAccess, LocationInfo.CodeElementType.FIELD_ACCESS, container);
                     variables.add(fieldAccessExpression);
-            	}
+                }
+             }
+             else {
+                LeafExpression fieldAccessExpression = new LeafExpression(cu, sourceFolder, filePath, langFieldAccess, LocationInfo.CodeElementType.FIELD_ACCESS, container);
+                variables.add(fieldAccessExpression);
             }
         }
         else if (expression instanceof LangFieldAccess parentFieldAccess) {

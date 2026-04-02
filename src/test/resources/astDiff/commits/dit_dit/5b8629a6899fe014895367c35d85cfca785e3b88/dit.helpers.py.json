@@ -802,6 +802,17 @@
   "firstEndPos" : 1547,
   "secondEndPos" : 1547
 }, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 789,
+  "secondPos" : 2456,
+  "firstEndPos" : 1547,
+  "secondEndPos" : 2522
+}, {
   "firstType" : "string",
   "secondType" : "string",
   "firstLabel" : "    \n    Construct minimal alphabets for each random variable.\n\n    In the process, it verifies that each outcome is a sequence and that all\n    outcomes have the same length.\n\n    Parameters\n    ----------\n    outcomes : sequence\n        A nonempty sequence of outcomes.  Each outcome in `outcomes` should\n        be a sequence---these are the elements which determine the alphabet\n        for each random variable.\n\n    Returns\n    -------\n    alphabets : tuple\n        The constructed alphabet for each random variable.\n\n    Examples\n    --------\n    >>> construct_alphabets([(0,1), (1,1)])\n    (((0,1), (1,))\n\n    Raises\n    ------\n    ditException\n        When not every outcome is a sequence.\n        When not all outcomes have the same length.\n\n    \"\"\"",
@@ -812,6 +823,17 @@
   "secondPos" : 789,
   "firstEndPos" : 1547,
   "secondEndPos" : 1547
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "    \n    Construct minimal alphabets for each random variable.\n\n    In the process, it verifies that each outcome is a sequence and that all\n    outcomes have the same length.\n\n    Parameters\n    ----------\n    outcomes : sequence\n        A nonempty sequence of outcomes.  Each outcome in `outcomes` should\n        be a sequence---these are the elements which determine the alphabet\n        for each random variable.\n\n    Returns\n    -------\n    alphabets : tuple\n        The constructed alphabet for each random variable.\n\n    Examples\n    --------\n    >>> construct_alphabets([(0,1), (1,1)])\n    (((0,1), (1,))\n\n    Raises\n    ------\n    ditException\n        When not every outcome is a sequence.\n        When not all outcomes have the same length.\n\n    \"\"\"",
+  "secondLabel" : "    \n    Core construction of alphabets. No sanity checks.\n\n    \"\"\"",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 789,
+  "secondPos" : 2456,
+  "firstEndPos" : 1547,
+  "secondEndPos" : 2522
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -1252,72 +1274,6 @@
   "secondPos" : 2135,
   "firstEndPos" : 2180,
   "secondEndPos" : 2180
-}, {
-  "firstType" : "assignment",
-  "secondType" : "assignment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 2185,
-  "secondPos" : 2351,
-  "firstEndPos" : 2232,
-  "secondEndPos" : 2393
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 2185,
-  "secondPos" : 2351,
-  "firstEndPos" : 2232,
-  "secondEndPos" : 2393
-}, {
-  "firstType" : "assignment_operator_literal",
-  "secondType" : "assignment_operator_literal",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
-  "firstParentType" : "assignment",
-  "secondParentType" : "assignment",
-  "firstPos" : 2202,
-  "secondPos" : 2361,
-  "firstEndPos" : 2203,
-  "secondEndPos" : 2362
-}, {
-  "firstType" : "call",
-  "secondType" : "call",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "binary_operator",
-  "secondParentType" : "assignment",
-  "firstPos" : 2219,
-  "secondPos" : 2363,
-  "firstEndPos" : 2232,
-  "secondEndPos" : 2393
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "len",
-  "secondLabel" : "_construct_alphabets",
-  "firstParentType" : "call",
-  "secondParentType" : "call",
-  "firstPos" : 2219,
-  "secondPos" : 2363,
-  "firstEndPos" : 2222,
-  "secondEndPos" : 2383
-}, {
-  "firstType" : "argument_list",
-  "secondType" : "argument_list",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call",
-  "secondParentType" : "call",
-  "firstPos" : 2222,
-  "secondPos" : 2383,
-  "firstEndPos" : 2232,
-  "secondEndPos" : 2393
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -1777,17 +1733,6 @@
   "firstParentType" : "argument_list",
   "secondParentType" : "argument_list",
   "firstPos" : 2472,
-  "secondPos" : 2232,
-  "firstEndPos" : 2486,
-  "secondEndPos" : 2246
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "outcome_length",
-  "secondLabel" : "outcome_length",
-  "firstParentType" : "argument_list",
-  "secondParentType" : "argument_list",
-  "firstPos" : 2472,
   "secondPos" : 2601,
   "firstEndPos" : 2486,
   "secondEndPos" : 2615
@@ -1846,6 +1791,17 @@
   "secondPos" : 2655,
   "firstEndPos" : 2598,
   "secondEndPos" : 2727
+}, {
+  "firstType" : "pattern_list",
+  "secondType" : "pattern_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "for_statement",
+  "secondParentType" : "for_statement",
+  "firstPos" : 2530,
+  "secondPos" : 2659,
+  "firstEndPos" : 2538,
+  "secondEndPos" : 2667
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -2044,17 +2000,6 @@
   "secondPos" : 2733,
   "firstEndPos" : 2646,
   "secondEndPos" : 2775
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "alphabets",
-  "secondLabel" : "alphabets",
-  "firstParentType" : "assignment",
-  "secondParentType" : "assignment",
-  "firstPos" : 2604,
-  "secondPos" : 2351,
-  "firstEndPos" : 2613,
-  "secondEndPos" : 2360
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -2352,6 +2297,28 @@
   "secondPos" : 3405,
   "firstEndPos" : 3281,
   "secondEndPos" : 3410
+}, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 3278,
+  "secondPos" : 2456,
+  "firstEndPos" : 4126,
+  "secondEndPos" : 2522
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "    \n    An unsafe, but faster, initialization for distributions.\n\n    If used incorrectly, the data structure will be inconsistent.\n\n    This function can be useful when you are creating many distributions\n    in a loop and can guarantee that:\n\n        0) all outcomes are of the same type (eg tuple, str) and length.\n        1) the alphabet is in the desired order.\n        2) outcomes and pmf are in the same order as the sample space.\n           [Thus, `pmf` should not be a dictionary.]\n\n    This function will not order the sample space, nor will it reorder outcomes\n    or pmf.  It will not forcibly make outcomes and pmf to be sparse or dense.\n    It will simply declare the distribution to be sparse or dense. The\n    distribution is not validated either.\n\n    Returns\n    -------\n    d : Distribution\n        The new distribution.\n\n    \"\"\"",
+  "secondLabel" : "    \n    Core construction of alphabets. No sanity checks.\n\n    \"\"\"",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 3278,
+  "secondPos" : 2456,
+  "firstEndPos" : 4126,
+  "secondEndPos" : 2522
 }, {
   "firstType" : "function_definition",
   "secondType" : "function_definition",
@@ -3353,6 +3320,17 @@
   "secondPos" : 2655,
   "firstEndPos" : 5397,
   "secondEndPos" : 2727
+}, {
+  "firstType" : "pattern_list",
+  "secondType" : "pattern_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "for_statement",
+  "secondParentType" : "for_statement",
+  "firstPos" : 5326,
+  "secondPos" : 2659,
+  "firstEndPos" : 5334,
+  "secondEndPos" : 2667
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",

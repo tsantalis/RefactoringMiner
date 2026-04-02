@@ -116,7 +116,7 @@ public class TraversalEngine {
                 graph.vertexSet().stream().filter(node -> {
                     Constants constants = new Constants(node.getPath());
                     String type = node.getTree().getType().name;
-                    return type.equals(constants.TYPE_DECLARATION) || type.equals(
+                    return !type.equals(constants.TYPE_DECLARATION) && !type.equals(
                             constants.METHOD_DECLARATION);
                 }).toList();
 

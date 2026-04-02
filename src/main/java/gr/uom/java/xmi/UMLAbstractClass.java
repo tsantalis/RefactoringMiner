@@ -1253,6 +1253,14 @@ public abstract class UMLAbstractClass {
 			}
 			return identicalComments == multiLineComments && multiLineComments > 0;
 		}
+		if(this instanceof UMLClass class1 && umlClass instanceof UMLClass class2) {
+			UMLJavadoc doc1 = class1.getJavadoc();
+			UMLJavadoc doc2 = class2.getJavadoc();
+			if(doc1 != null && doc2 != null) {
+				if(doc1.getFullText().equals(doc2.getFullText()))
+					return true;
+			}
+		}
 		return false;
 	}
 

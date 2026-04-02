@@ -1,6 +1,8 @@
 package org.refactoringminer.astDiff.matchers.wrappers;
 
 import com.github.gumtreediff.tree.Tree;
+
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.diff.UMLCommentListDiff;
@@ -145,7 +147,17 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                 new LeafMatcher(LANG1, LANG2).match(srcType,dstType,mappingStore);
             }
             Tree srcVarDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getVariableDeclaration().getLocationInfo(),LANG1);
+            if(srcAttr.equals(srcVarDeclaration)) {
+                if(srcVarDeclaration.getParent().getType().name.equals(LANG1.ASSIGNMENT) && srcVarDeclaration.getParent().getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT)) {
+                    srcVarDeclaration = srcVarDeclaration.getParent().getParent();
+                }
+            }
             Tree dstVarDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getVariableDeclaration().getLocationInfo(),LANG2);
+            if(dstAttr.equals(dstVarDeclaration)) {
+                if(dstVarDeclaration.getParent().getType().name.equals(LANG2.ASSIGNMENT) && dstVarDeclaration.getParent().getParent().getType().name.equals(LANG2.EXPRESSION_STATEMENT)) {
+                    dstVarDeclaration = dstVarDeclaration.getParent().getParent();
+                }
+            }
             mappingStore.addMapping(srcVarDeclaration,dstVarDeclaration);
             new LeafMatcher(LANG1, LANG2).match(srcVarDeclaration,dstVarDeclaration,mappingStore);
             new JavaDocMatcher(optimizationData, srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc(), umlJavadocDiff, LANG1, LANG2)

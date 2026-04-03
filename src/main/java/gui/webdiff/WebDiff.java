@@ -112,10 +112,10 @@ public class WebDiff  {
         GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
         ProjectASTDiff projectASTDiff;
         if (metaInfo.getRepositoryPath() != null && !metaInfo.getRepositoryPath().isEmpty()) {
-            projectASTDiff = miner.diffAtCommit(Path.of(metaInfo.getRepositoryPath()), metaInfo.getCommitId(), parentIndex);
+            projectASTDiff = miner.diffAtMergeCommit(Path.of(metaInfo.getRepositoryPath()), metaInfo.getCommitId(), parentIndex);
         } else if (metaInfo.getCloneURL() != null && !metaInfo.getCloneURL().isEmpty()) {
             int timeout = metaInfo.getTimeout() != null ? metaInfo.getTimeout() : 1000;
-            projectASTDiff = miner.diffAtCommit(metaInfo.getCloneURL(), metaInfo.getCommitId(), parentIndex, timeout);
+            projectASTDiff = miner.diffAtMergeCommit(metaInfo.getCloneURL(), metaInfo.getCommitId(), parentIndex, timeout);
         } else {
             throw new IllegalArgumentException("Unable to reload the diff for a different merge parent");
         }

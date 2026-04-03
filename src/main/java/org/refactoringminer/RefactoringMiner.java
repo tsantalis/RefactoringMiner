@@ -197,7 +197,7 @@ public class RefactoringMiner {
 			String gitURL = repo.getConfig().getString("remote", "origin", "url");
 			GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
 			startJSON();
-			detector.detectAtCommit(repo, commitId, parentIndex, new RefactoringHandler() {
+			RefactoringHandler handler = new RefactoringHandler() {
 				@Override
 				public void handle(String commitId, List<Refactoring> refactorings) {
 					commitJSON(gitURL, commitId, refactorings);
@@ -208,7 +208,12 @@ public class RefactoringMiner {
 					System.err.println("Error processing commit " + commit);
 					e.printStackTrace(System.err);
 				}
-			});
+			};
+			if (hasParentIndex) {
+				detector.detectAtMergeCommit(repo, commitId, parentIndex, handler);
+			} else {
+				detector.detectAtCommit(repo, commitId, handler);
+			}
 			endJSON();
 		}
 	}
@@ -229,7 +234,7 @@ public class RefactoringMiner {
 		int parentIndex = hasParentIndex ? Integer.parseInt(args[5]) : 0;
 		GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
 		startJSON();
-		detector.detectAtCommit(gitURL, commitId, parentIndex, new RefactoringHandler() {
+		RefactoringHandler handler = new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				Comparator<Refactoring> comparator = (Refactoring r1, Refactoring r2) -> r1.toString().compareTo(r2.toString());
@@ -242,7 +247,12 @@ public class RefactoringMiner {
 				System.err.println("Error processing commit " + commit);
 				e.printStackTrace(System.err);
 			}
-		}, timeout);
+		};
+		if (hasParentIndex) {
+			detector.detectAtMergeCommit(gitURL, commitId, parentIndex, handler, timeout);
+		} else {
+			detector.detectAtCommit(gitURL, commitId, handler, timeout);
+		}
 		endJSON();
 	}
 

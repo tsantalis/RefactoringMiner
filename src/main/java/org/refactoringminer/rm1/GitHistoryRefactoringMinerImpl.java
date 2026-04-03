@@ -1082,23 +1082,23 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 	@Override
 	public void detectAtCommit(Path repositoryDirectory, String commitId, RefactoringHandler handler) throws Exception {
-		detectAtCommit(repositoryDirectory, commitId, 0, handler);
+		detectAtMergeCommit(repositoryDirectory, commitId, 0, handler);
 	}
 
 	@Override
-	public void detectAtCommit(Path repositoryDirectory, String commitId, int parentIndex, RefactoringHandler handler) throws Exception {
+	public void detectAtMergeCommit(Path repositoryDirectory, String commitId, int parentIndex, RefactoringHandler handler) throws Exception {
 		GitService gitService = new GitServiceImpl();
 		Repository repository = gitService.openRepository(repositoryDirectory.toString());
-		detectAtCommit(repository, commitId, parentIndex, handler);
+		detectAtMergeCommit(repository, commitId, parentIndex, handler);
 	}
 
 	@Override
 	public void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler) {
-		detectAtCommit(repository, commitId, 0, handler);
+		detectAtMergeCommit(repository, commitId, 0, handler);
 	}
 
 	@Override
-	public void detectAtCommit(Repository repository, String commitId, int parentIndex, RefactoringHandler handler) {
+	public void detectAtMergeCommit(Repository repository, String commitId, int parentIndex, RefactoringHandler handler) {
 		String cloneURL = repository.getConfig().getString("remote", "origin", "url");
 		File metadataFolder = repository.getDirectory();
 		File projectFolder = metadataFolder.getParentFile();
@@ -1130,27 +1130,27 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 	@Override
 	public void detectAtCommit(Path repositoryDirectory, String commitId, RefactoringHandler handler, int timeout) throws Exception {
-		detectAtCommit(repositoryDirectory, commitId, 0, handler, timeout);
+		detectAtMergeCommit(repositoryDirectory, commitId, 0, handler, timeout);
 	}
 
 	@Override
-	public void detectAtCommit(Path repositoryDirectory, String commitId, int parentIndex, RefactoringHandler handler, int timeout) throws Exception {
+	public void detectAtMergeCommit(Path repositoryDirectory, String commitId, int parentIndex, RefactoringHandler handler, int timeout) throws Exception {
 		GitService gitService = new GitServiceImpl();
 		Repository repository = gitService.openRepository(repositoryDirectory.toString());
-		detectAtCommit(repository, commitId, parentIndex, handler, timeout);
+		detectAtMergeCommit(repository, commitId, parentIndex, handler, timeout);
 	}
 
 	@Override
 	public void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler, int timeout) {
-		detectAtCommit(repository, commitId, 0, handler, timeout);
+		detectAtMergeCommit(repository, commitId, 0, handler, timeout);
 	}
 
 	@Override
-	public void detectAtCommit(Repository repository, String commitId, int parentIndex, RefactoringHandler handler, int timeout) {
+	public void detectAtMergeCommit(Repository repository, String commitId, int parentIndex, RefactoringHandler handler, int timeout) {
 		ExecutorService service = Executors.newSingleThreadExecutor();
 		Future<?> f = null;
 		try {
-			Runnable r = () -> detectAtCommit(repository, commitId, parentIndex, handler);
+			Runnable r = () -> detectAtMergeCommit(repository, commitId, parentIndex, handler);
 			f = service.submit(r);
 			f.get(timeout, TimeUnit.SECONDS);
 		} catch (TimeoutException e) {
@@ -1228,11 +1228,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 	@Override
 	public void detectAtCommit(String gitURL, String commitId, RefactoringHandler handler, int timeout) {
-		detectAtCommit(gitURL, commitId, 0, handler, timeout);
+		detectAtMergeCommit(gitURL, commitId, 0, handler, timeout);
 	}
 
 	@Override
-	public void detectAtCommit(String gitURL, String commitId, int parentIndex, RefactoringHandler handler, int timeout) {
+	public void detectAtMergeCommit(String gitURL, String commitId, int parentIndex, RefactoringHandler handler, int timeout) {
 		ExecutorService service = Executors.newSingleThreadExecutor();
 		Future<?> f = null;
 		try {
@@ -1971,23 +1971,23 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 	@Override
 	public ProjectASTDiff diffAtCommit(Path repositoryDirectory, String commitId) throws Exception {
-		return diffAtCommit(repositoryDirectory, commitId, 0);
+		return diffAtMergeCommit(repositoryDirectory, commitId, 0);
 	}
 
 	@Override
-	public ProjectASTDiff diffAtCommit(Path repositoryDirectory, String commitId, int parentIndex) throws Exception {
+	public ProjectASTDiff diffAtMergeCommit(Path repositoryDirectory, String commitId, int parentIndex) throws Exception {
 		GitService gitService = new GitServiceImpl();
 		Repository repository = gitService.openRepository(repositoryDirectory.toString());
-		return diffAtCommit(repository, commitId, parentIndex);
+		return diffAtMergeCommit(repository, commitId, parentIndex);
 	}
 
 	@Override
 	public ProjectASTDiff diffAtCommit(Repository repository, String commitId) {
-		return diffAtCommit(repository, commitId, 0);
+		return diffAtMergeCommit(repository, commitId, 0);
 	}
 
 	@Override
-	public ProjectASTDiff diffAtCommit(Repository repository, String commitId, int parentIndex) {
+	public ProjectASTDiff diffAtMergeCommit(Repository repository, String commitId, int parentIndex) {
 		String cloneURL = repository.getConfig().getString("remote", "origin", "url");
 		File metadataFolder = repository.getDirectory();
 		File projectFolder = metadataFolder.getParentFile();
@@ -2339,11 +2339,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 	@Override
 	public ProjectASTDiff diffAtCommit(String gitURL, String commitId, int timeout) {
-		return diffAtCommit(gitURL, commitId, 0, timeout);
+		return diffAtMergeCommit(gitURL, commitId, 0, timeout);
 	}
 
 	@Override
-	public ProjectASTDiff diffAtCommit(String gitURL, String commitId, int parentIndex, int timeout) {
+	public ProjectASTDiff diffAtMergeCommit(String gitURL, String commitId, int parentIndex, int timeout) {
 		Set<ProjectASTDiff> diffs = new HashSet<>();
 		ExecutorService service = Executors.newSingleThreadExecutor();
 		Future<?> f = null;

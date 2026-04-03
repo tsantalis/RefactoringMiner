@@ -39,11 +39,16 @@ public enum RunMode{
             throw new IllegalArgumentException("--parent-index is currently supported only with commit URLs or with --repo and --commit");
         }
         return switch (this) {
-            case URL -> new GitHistoryRefactoringMinerImpl().diffAtCommit(
-                    URLHelper.getRepo(runner.url),
-                    URLHelper.getCommit(runner.url),
-                    runner.parentIndex != null ? runner.parentIndex : 0,
-                    timeout);
+            case URL -> runner.parentIndex != null
+                    ? new GitHistoryRefactoringMinerImpl().diffAtMergeCommit(
+                            URLHelper.getRepo(runner.url),
+                            URLHelper.getCommit(runner.url),
+                            runner.parentIndex,
+                            timeout)
+                    : new GitHistoryRefactoringMinerImpl().diffAtCommit(
+                            URLHelper.getRepo(runner.url),
+                            URLHelper.getCommit(runner.url),
+                            timeout);
             case PR -> new GitHistoryRefactoringMinerImpl().diffAtPullRequest(
                     URLHelper.getRepo(runner.url),
                     URLHelper.getPullRequestID(runner.url),
@@ -51,10 +56,14 @@ public enum RunMode{
             case DIR -> new GitHistoryRefactoringMinerImpl().diffAtDirectories(
                     runner.src.toAbsolutePath().normalize(),
                     runner.dst.toAbsolutePath().normalize());
-            case CLONED -> new GitHistoryRefactoringMinerImpl().diffAtCommit(
-                    new GitServiceImpl().openRepository(runner.repo),
-                    runner.commit,
-                    runner.parentIndex != null ? runner.parentIndex : 0);
+            case CLONED -> runner.parentIndex != null
+                    ? new GitHistoryRefactoringMinerImpl().diffAtMergeCommit(
+                            new GitServiceImpl().openRepository(runner.repo),
+                            runner.commit,
+                            runner.parentIndex)
+                    : new GitHistoryRefactoringMinerImpl().diffAtCommit(
+                            new GitServiceImpl().openRepository(runner.repo),
+                            runner.commit);
             case PERFORCE_CL -> new PerforceHistoryRefactoringMinerImpl().diffAtChangeList(
                     runner.url,
                     runner.perforceUserName,

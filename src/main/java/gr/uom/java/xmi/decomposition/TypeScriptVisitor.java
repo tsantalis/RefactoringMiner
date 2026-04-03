@@ -9,7 +9,9 @@ import com.caoccao.javet.swc4j.ast.enums.Swc4jAstBinaryOp;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstBinExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstRegex;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
@@ -101,6 +103,18 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		if(activeVariableDeclarations.containsKey(identifier)) {
 			LeafExpression name = new LeafExpression(sourceFolder, filePath, node, CodeElementType.SIMPLE_NAME, container, fileContent);
 			variables.add(name);
+		}
+		else if(node.getParent() instanceof Swc4jAstExprOrSpread expr && expr.getParent() instanceof Swc4jAstCallExpr call && call.getArgs().contains(expr)) {
+			//identifier is argument of call
+			if(call.getCallee() instanceof Swc4jAstMemberExpr memberExpr) {
+				String propName = memberExpr.getProp().toString();
+				if(propName.equals("flatMap") || propName.equals("map") || propName.equals("filter") || propName.equals("collect") || propName.equals("reduce")) {
+					// the identifier is a function name
+					// Direct Method Passing (Point-Free Style)
+					OperationInvocation invocation = new OperationInvocation(sourceFolder, filePath, node, container, fileContent);
+					methodInvocations.add(invocation);
+				}
+			}
 		}
 		return super.visitIdent(node);
 	}

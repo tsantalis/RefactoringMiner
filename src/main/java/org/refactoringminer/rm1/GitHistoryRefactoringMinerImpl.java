@@ -694,7 +694,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			GHRepository repository = getGitHubRepository(cloneURL);
         	GHCommit commit = repository.getCommit(currentCommitId);
 			String parentCommitId = resolveGitHubParentCommitId(commit, currentCommitId, parentIndex);
-			List<GHCommit.File> commitFiles = parentCommitId != null
+			List<GHCommit.File> commitFiles = parentIndex > 0 && parentCommitId != null
 					? Arrays.asList(repository.getCompare(parentCommitId, commit.getSHA1()).getFiles())
 					: commit.listFiles().toList();
 			List<String> filesBefore = new ArrayList<String>();
@@ -1316,7 +1316,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		final String commitId = currentCommit.getSHA1();
 		logger.info("Processing {} {} ...", cloneURL, commitId);
 		final String parentCommitId = resolveGitHubParentCommitId(currentCommit, currentCommitId, parentIndex);
-		List<GHCommit.File> commitFiles = parentCommitId != null
+		List<GHCommit.File> commitFiles = parentIndex > 0 && parentCommitId != null
 				? Arrays.asList(repository.getCompare(parentCommitId, commitId).getFiles())
 				: currentCommit.listFiles().toList();
 		if (commitFiles.isEmpty()) {
@@ -1657,7 +1657,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		GHCommit currentCommit = repository.getCommit(currentCommitId);
 		final String commitId = currentCommit.getSHA1();
 		final String parentCommitId = resolveGitHubParentCommitId(currentCommit, currentCommitId, parentIndex);
-		List<GHCommit.File> commitFiles = parentCommitId != null
+		List<GHCommit.File> commitFiles = parentIndex > 0 && parentCommitId != null
 				? Arrays.asList(repository.getCompare(parentCommitId, commitId).getFiles())
 				: currentCommit.listFiles().toList();
 		Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();

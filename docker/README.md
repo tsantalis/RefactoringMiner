@@ -56,3 +56,15 @@ docker run -p 6789:6789 -e OAuthToken=ghp_Tz... tsantalis/refactoringminer diff 
 ```
 Replace `ghp_Tz...` with your own personal OAuth token.
 This is a [generated classic personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic)
+
+In case you want to store your token in a file (instead of having it in the bash history):
+
+```
+docker run -p 6789:6789  -v c:\users\{login}\.refactoringminer:/diff tsantalis/refactoringminer diff --url https://github.com/JabRef/jabref/pull/14138
+```
+
+In `c:\users\{login}\.refactoringminer` (`~/.refactoringminer` on Linux/macOS), you need to create a file `github-oauth.properties` where your personal GitHub OAuth resides:
+
+```properties
+OAuthToken=ghp_Tz...
+```

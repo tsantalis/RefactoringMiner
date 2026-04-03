@@ -156,6 +156,8 @@ import extension.ast.node.statement.LangWithStatement;
 import extension.ast.node.statement.LangYieldStatement;
 import extension.ast.node.unit.LangCompilationUnit;
 import extension.ast.visitor.LangVisitor;
+import extension.umladapter.UMLAdapterUtil;
+
 import static extension.umladapter.UMLModelAdapter.createUMLClass;
 import static extension.umladapter.UMLModelAdapter.createUMLOperation;
 import gr.uom.java.xmi.LocationInfo;
@@ -655,9 +657,14 @@ public class OperationBody {
 		}
 		else if(statement instanceof LangImportStatement) {	
 			LangImportStatement importStatement = (LangImportStatement)statement;
-			StatementObject child = new StatementObject(cu, sourceFolder, filePath, importStatement, parent.getDepth()+1, CodeElementType.EMPTY_STATEMENT, container, activeVariableDeclarations, fileContent);
-			parent.addStatement(child);
-			addStatementInVariableScopes(child);
+			if(container instanceof UMLOperation op) {
+				UMLAdapterUtil.createImports(op.getNestedImports(), sourceFolder, filePath, importStatement);
+			}
+			else {
+				StatementObject child = new StatementObject(cu, sourceFolder, filePath, importStatement, parent.getDepth()+1, CodeElementType.EMPTY_STATEMENT, container, activeVariableDeclarations, fileContent);
+				parent.addStatement(child);
+				addStatementInVariableScopes(child);
+			}
 		}
 		else if(statement instanceof LangGlobalStatement) {
 			// The global statement in Python is a keyword used within a function to declare that a variable being referenced or assigned to within that function refers to a global variable, rather than a local one.

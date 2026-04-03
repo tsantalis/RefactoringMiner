@@ -50,14 +50,14 @@ class GitHistoryRefactoringMinerImplMergeCommitTest {
 			assertEquals(1, webDiff.getProjectASTDiff().getMetaInfo().getSelectedParentIndex());
 			assertFalse(webDiff.getComparator().getDiffs().isEmpty());
 
-			ProjectASTDiff secondParentDiff = miner.diffAtCommit(repository, fixture.mergeCommit(), 1);
+			ProjectASTDiff secondParentDiff = miner.diffAtMergeCommit(repository, fixture.mergeCommit(), 1);
 			assertNotNull(secondParentDiff);
 			assertEquals(1, secondParentDiff.getMetaInfo().getSelectedParentIndex());
 			assertFalse(secondParentDiff.getDiffSet().isEmpty());
 			assertTrue(secondParentDiff.getRefactorings().stream()
 					.anyMatch(refactoring -> refactoring.getRefactoringType() == RefactoringType.RENAME_METHOD));
 
-			assertThrows(IllegalArgumentException.class, () -> miner.diffAtCommit(repository, fixture.mergeCommit(), 2));
+			assertThrows(IllegalArgumentException.class, () -> miner.diffAtMergeCommit(repository, fixture.mergeCommit(), 2));
 		}
 	}
 
@@ -72,7 +72,7 @@ class GitHistoryRefactoringMinerImplMergeCommitTest {
 			assertTrue(defaultHandler.refactorings.isEmpty());
 
 			CollectingHandler secondParentHandler = new CollectingHandler();
-			miner.detectAtCommit(repository, fixture.mergeCommit(), 1, secondParentHandler);
+			miner.detectAtMergeCommit(repository, fixture.mergeCommit(), 1, secondParentHandler);
 			assertTrue(secondParentHandler.refactorings.stream()
 					.anyMatch(refactoring -> refactoring.getRefactoringType() == RefactoringType.RENAME_METHOD));
 		}

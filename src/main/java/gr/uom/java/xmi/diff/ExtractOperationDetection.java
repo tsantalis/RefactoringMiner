@@ -653,6 +653,13 @@ public class ExtractOperationDetection {
 				}
 			}
 		}
+		else {
+			for(AbstractCodeFragment fragment2 : operationBodyMapper.getNonMappedLeavesT2()) {
+				if(fragment2.getStringLiterals().size() == 1 && fragment2.getString().equals(LANG2.RETURN_SPACE + fragment2.getStringLiterals().get(0).getString() + LANG2.STATEMENT_TERMINATION)) {
+					nonMappedElementsT2--;
+				}
+			}
+		}
 		exactMatchList.addAll(additionalExactMatches);
 		int exactMatches = exactMatchList.size();
 		if(exactMatches == 0 && operationBodyMapper.getMappings().size() >= 1 && operationBodyMapper.getMappings().size() <= 2) {

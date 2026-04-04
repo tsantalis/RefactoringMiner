@@ -897,6 +897,26 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return getGitHubRepository(cloneURL).getCommit(commitId).getParents().size();
 	}
 
+	private static List<String> resolveParentCommitIds(RevCommit currentCommit) {
+		List<String> parentCommitIds = new ArrayList<>();
+		for (RevCommit parent : currentCommit.getParents()) {
+			parentCommitIds.add(parent.getId().getName());
+		}
+		return parentCommitIds;
+	}
+
+	private static List<String> resolveGitHubParentCommitIds(GHCommit currentCommit) throws IOException {
+		List<String> parentCommitIds = new ArrayList<>();
+		for (GHCommit parent : currentCommit.getParents()) {
+			parentCommitIds.add(parent.getSHA1());
+		}
+		return parentCommitIds;
+	}
+
+	private List<String> resolveGitHubParentCommitIds(String cloneURL, String commitId) throws IOException {
+		return resolveGitHubParentCommitIds(getGitHubRepository(cloneURL).getCommit(commitId));
+	}
+
 	private static String parentIndexSuffix(int parentIndex) {
 		return parentIndex == 0 ? "" : "-parent-" + parentIndex;
 	}
@@ -906,7 +926,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	private static DiffMetaInfo createDiffMetaInfo(String cloneURL, String repositoryPath, String commitId,
-			int parentIndex, int parentCount, Integer timeout) {
+			int parentIndex, List<String> parentCommitIds, Integer timeout) {
 		String normalizedRepositoryPath = repositoryPath;
 		if (repositoryPath != null && !repositoryPath.isBlank()) {
 			normalizedRepositoryPath = Paths.get(repositoryPath).toAbsolutePath().normalize().toString();
@@ -922,11 +942,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		if (repositoryName.isEmpty()) {
 			repositoryName = "repository";
 		}
-		String url = hasBrowsableCloneURL ? extractCommitURL(cloneURL, commitId) : "";
-		return new DiffMetaInfo(
-				repositoryName + " " + URLHelper.shortenCommit(commitId),
-				url)
-				.setCommitContext(cloneURL, normalizedRepositoryPath, commitId, parentIndex, parentCount, timeout);
+			String url = hasBrowsableCloneURL ? extractCommitURL(cloneURL, commitId) : "";
+			return new DiffMetaInfo(
+					repositoryName + " " + URLHelper.shortenCommit(commitId),
+					url)
+					.setCommitContext(cloneURL, normalizedRepositoryPath, commitId, parentIndex, parentCommitIds.size(), timeout, parentCommitIds);
 	}
 
 	private static Map<String, String> retainOrderedFiles(List<String> fileNames, Map<String, String> fileContents) {
@@ -1999,8 +2019,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		RevWalk walk = new RevWalk(repository);
 		try {
 			RevCommit currentCommit = walk.parseCommit(repository.resolve(commitId));
-			DiffMetaInfo metaInfo = createDiffMetaInfo(cloneURL, projectFolder.getAbsolutePath(), commitId,
-					parentIndex, currentCommit.getParentCount(), null);
+				DiffMetaInfo metaInfo = createDiffMetaInfo(cloneURL, projectFolder.getAbsolutePath(), commitId,
+						parentIndex, resolveParentCommitIds(currentCommit), null);
 			Set<String> filePathsBefore = new LinkedHashSet<String>();
 			Set<String> filePathsCurrent = new LinkedHashSet<String>();
 			Map<String, String> renamedFilesHint = new HashMap<String, String>();
@@ -2037,8 +2057,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		} catch (MissingObjectException moe) {
 			try {
 				ChangedFileInfo changedFileInfo = populateWithGitHubAPI(projectFolder, cloneURL, commitId, parentIndex);
-				DiffMetaInfo metaInfo = createDiffMetaInfo(cloneURL, projectFolder.getAbsolutePath(), commitId,
-						parentIndex, resolveGitHubParentCount(cloneURL, commitId), null);
+					DiffMetaInfo metaInfo = createDiffMetaInfo(cloneURL, projectFolder.getAbsolutePath(), commitId,
+							parentIndex, resolveGitHubParentCommitIds(cloneURL, commitId), null);
 				String parentCommitId = changedFileInfo.getParentCommitId();
 				List<String> filesBefore = changedFileInfo.getFilesBefore();
 				List<String> filesCurrent = changedFileInfo.getFilesCurrent();
@@ -2354,8 +2374,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		try {
 			Runnable r = () -> {
 				try {
-					DiffMetaInfo metaInfo = createDiffMetaInfo(gitURL, null, commitId, parentIndex,
-							resolveGitHubParentCount(gitURL, commitId), timeout);
+						DiffMetaInfo metaInfo = createDiffMetaInfo(gitURL, null, commitId, parentIndex,
+								resolveGitHubParentCommitIds(gitURL, commitId), timeout);
 					Set<String> repositoryDirectoriesBefore = ConcurrentHashMap.newKeySet();
 					Set<String> repositoryDirectoriesCurrent = ConcurrentHashMap.newKeySet();
 					Map<String, String> fileContentsBefore = new ConcurrentHashMap<String, String>();

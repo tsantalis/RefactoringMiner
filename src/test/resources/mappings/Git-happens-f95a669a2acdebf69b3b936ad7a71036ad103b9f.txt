@@ -24,6 +24,11 @@ line range:179-192==line range:187-193
 line range:182-182==line range:189-189
 line range:180-191==line range:188-192
 line range:179-192==line range:187-193
+private toLocalizedNode(node RawMapNode) : LocalizedNode -> private resolveNodeType(rawType string|undefined, nodeId string) : LocalizedNodeType
+line range:205-205==line range:232-232
+line range:208-208==line range:235-235
+line range:205-205==line range:232-232
+line range:207-208==line range:234-235
 private getFloorPlanRegistryEntry(buildingId string, floorNumber FloorNumber) : FloorPlanRegistryEntry|null -> private matchesBuildingId(node RawMapNode, buildingId IndoorBuildingId) : boolean
 line range:232-243==line range:272-272
 private getFloorPlanRegistryEntry(buildingId string, floorNumber FloorNumber) : FloorPlanRegistryEntry|null -> private filterEdgesForNodes(edges RawEdge[], nodeIds Set<string>) : RawEdge[]
@@ -36,6 +41,8 @@ private getBuildingGraph(buildingId string) : {LocalizedNode[];RawEdge[]}|null -
 line range:299-299==line range:281-281
 line range:298-300==line range:281-281
 private buildCrossFloorEdges(buildingNodes RawMapNode[]) : RawEdge[] -> private buildCrossFloorEdges(buildingNodes RawMapNode[]) : RawEdge[]
+private toLocalizedNode(node RawMapNode) : LocalizedNode -> private toLocalizedNode(node RawMapNode) : LocalizedNode
+line range:209-216==line range:258-265
 private getFloorPlanRegistryEntry(buildingId string, floorNumber FloorNumber) : FloorPlanRegistryEntry|null -> private getFloorPlanRegistryEntry(buildingId string, floorNumber FloorNumber) : FloorPlanRegistryEntry|null
 line range:228-228==line range:289-289
 line range:247-247==line range:299-299

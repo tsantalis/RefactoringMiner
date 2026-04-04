@@ -23,6 +23,18 @@ public class DiffMetaInfo {
         this.url = url;
 	}
 
+    public DiffMetaInfo withUrl(String url) {
+        DiffMetaInfo copy = new DiffMetaInfo(info, url);
+        copy.comments = comments;
+        copy.cloneURL = cloneURL;
+        copy.repositoryPath = repositoryPath;
+        copy.commitId = commitId;
+        copy.selectedParentIndex = selectedParentIndex;
+        copy.parentCount = parentCount;
+        copy.timeout = timeout;
+        return copy;
+    }
+
     public DiffMetaInfo setCommitContext(String cloneURL, String repositoryPath, String commitId,
                                          Integer selectedParentIndex, Integer parentCount, Integer timeout) {
         this.cloneURL = cloneURL;

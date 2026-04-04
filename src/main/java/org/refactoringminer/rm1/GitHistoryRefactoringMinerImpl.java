@@ -497,10 +497,14 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	protected List<Refactoring> detectRefactorings(final RefactoringHandler handler, File projectFolder, String cloneURL, String currentCommitId) {
+		return detectRefactorings(handler, projectFolder, cloneURL, currentCommitId, 0);
+	}
+
+	protected List<Refactoring> detectRefactorings(final RefactoringHandler handler, File projectFolder, String cloneURL, String currentCommitId, int parentIndex) {
 		List<Refactoring> refactoringsAtRevision = Collections.emptyList();
 		UMLModelDiff modelDiff;
 		try {
-			ChangedFileInfo changedFileInfo = populateWithGitHubAPI(projectFolder, cloneURL, currentCommitId);
+			ChangedFileInfo changedFileInfo = populateWithGitHubAPI(projectFolder, cloneURL, currentCommitId, parentIndex);
 			String parentCommitId = changedFileInfo.getParentCommitId();
 			List<String> filesBefore = changedFileInfo.getFilesBefore();
 			List<String> filesCurrent = changedFileInfo.getFilesCurrent();
@@ -1116,7 +1120,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		} catch (IllegalArgumentException e) {
 			throw e;
 		} catch (MissingObjectException moe) {
-			this.detectRefactorings(handler, cloneURL, commitId, parentIndex);
+			this.detectRefactorings(handler, projectFolder, cloneURL, commitId, parentIndex);
 		} catch (RefactoringMinerTimedOutException e) {
 			logger.warn(String.format("Ignored revision %s due to timeout", commitId), e);
 		} catch (Exception e) {

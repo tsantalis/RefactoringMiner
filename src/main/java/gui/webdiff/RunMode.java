@@ -39,16 +39,22 @@ public enum RunMode{
             throw new IllegalArgumentException("--parent-index is currently supported only with commit URLs or with --repo and --commit");
         }
         return switch (this) {
-            case URL -> runner.parentIndex != null
-                    ? new GitHistoryRefactoringMinerImpl().diffAtMergeCommit(
-                            URLHelper.getRepo(runner.url),
-                            URLHelper.getCommit(runner.url),
-                            runner.parentIndex,
-                            timeout)
-                    : new GitHistoryRefactoringMinerImpl().diffAtCommit(
-                            URLHelper.getRepo(runner.url),
-                            URLHelper.getCommit(runner.url),
-                            timeout);
+            case URL -> {
+                ProjectASTDiff projectASTDiff = runner.parentIndex != null
+                        ? new GitHistoryRefactoringMinerImpl().diffAtMergeCommit(
+                                URLHelper.getRepo(runner.url),
+                                URLHelper.getCommit(runner.url),
+                                runner.parentIndex,
+                                timeout)
+                        : new GitHistoryRefactoringMinerImpl().diffAtCommit(
+                                URLHelper.getRepo(runner.url),
+                                URLHelper.getCommit(runner.url),
+                                timeout);
+                if (projectASTDiff.getMetaInfo() != null) {
+                    projectASTDiff.setMetaInfo(projectASTDiff.getMetaInfo().withUrl(URLHelper.clean(runner.url)));
+                }
+                yield projectASTDiff;
+            }
             case PR -> new GitHistoryRefactoringMinerImpl().diffAtPullRequest(
                     URLHelper.getRepo(runner.url),
                     URLHelper.getPullRequestID(runner.url),

@@ -4,6 +4,7 @@ import com.github.gumtreediff.utils.Pair;
 import gui.webdiff.dir.filters.DiffFilterer;
 import gui.webdiff.tree.TreeViewGenerator;
 
+import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHPullRequest;
 import org.kohsuke.github.GHPullRequestReview;
 import org.kohsuke.github.GHPullRequestReviewComment;
@@ -32,6 +33,7 @@ import java.util.concurrent.TimeUnit;
 
 public class DirComparator {
     private final static Logger logger = LoggerFactory.getLogger(DirComparator.class);
+    private static final String GITHUB_URL = "https://github.com/";
     private List<ASTDiff> diffs;
     private final ProjectASTDiff projectASTDiff;
     private final DefaultMutableTreeNode compressedTree;
@@ -110,58 +112,89 @@ public class DirComparator {
         Map<String, List<PullRequestReviewComment>> commentMap = new ConcurrentHashMap<>();
         DiffMetaInfo info = projectASTDiff.getMetaInfo();
 
-        if (!info.hasUrl() || !URLHelper.isPR(info.getUrl())) {
-            return commentMap;
-        }
-
         try {
-            String cloneURL = URLHelper.getRepo(info.getUrl());
-            int pullRequestId = URLHelper.getPullRequestID(info.getUrl());
-            GHRepository repository = new GitHistoryRefactoringMinerImpl().getGitHubRepository(cloneURL);
-            GHPullRequest pullRequest = repository.getPullRequest(pullRequestId);
-            PagedIterable<GHPullRequestReview> reviews = pullRequest.listReviews();
-            int size = reviews.toList().size();
-			ExecutorService pool = Executors.newFixedThreadPool(size == 0 ? 1 : size);
-            for (GHPullRequestReview review : reviews) {
-                Runnable r = () -> {
-                    try {
-                        PagedIterable<GHPullRequestReviewComment> comments = review.listReviewComments();
-                        for (GHPullRequestReviewComment comment : comments) {
-                            URL url = comment.getUrl();
-                            logger.info("Processing PR Review Comment: " + url);
-                            String path = comment.getPath();
-                            org.apache.commons.lang3.tuple.Pair<Side, Integer> pair = new GHRepositoryWrapper(repository).getGhPullRequestReviewCommentLine(url.toString());
-                            Side side = pair.getLeft();
-                            int lineNumber = pair.getRight();
-                            if (lineNumber != 0) {
-                                PullRequestReviewComment prComment = new PullRequestReviewComment(
-                                        comment.getUser().getLogin(),
-                                        comment.getBody(),
-                                        comment.getCreatedAt(),
-                                        lineNumber,
-                                        comment.getUser().getAvatarUrl(),
-                                        side
-                                );
-                                commentMap.computeIfAbsent(path, k -> new ArrayList<>()).add(prComment);
-                            }
-                        }
-                    }
-                    catch(IOException e) {
-                        e.printStackTrace();
-                    }
-                };
-                pool.submit(r);
+            String cloneURL = resolveGitHubCloneURL(info);
+            if (cloneURL == null) {
+                return commentMap;
             }
-            pool.shutdown();
-            pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+            GHRepository repository = new GitHistoryRefactoringMinerImpl().getGitHubRepository(cloneURL);
+            for (GHPullRequest pullRequest : resolvePullRequestsForComments(repository, info)) {
+                appendPullRequestComments(commentMap, repository, pullRequest);
+            }
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (NumberFormatException e) {
-            // the URL is not a PR URL
         } catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+            Thread.currentThread().interrupt();
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            // the URL does not contain a valid pull request identifier
+        }
         return commentMap;
+    }
+
+    private String resolveGitHubCloneURL(DiffMetaInfo info) {
+        if (info.getCloneURL() != null && info.getCloneURL().startsWith(GITHUB_URL)) {
+            return info.getCloneURL();
+        }
+        if (info.hasUrl() && info.getUrl().startsWith(GITHUB_URL)) {
+            return URLHelper.getRepo(info.getUrl());
+        }
+        return null;
+    }
+
+    private List<GHPullRequest> resolvePullRequestsForComments(GHRepository repository, DiffMetaInfo info) throws IOException {
+        if (info.hasUrl() && URLHelper.hasPullRequestContext(info.getUrl())) {
+            return Collections.singletonList(repository.getPullRequest(URLHelper.getPullRequestID(info.getUrl())));
+        }
+        if (info.getCommitId() == null || info.getCommitId().isEmpty()) {
+            return Collections.emptyList();
+        }
+        GHCommit commit = repository.getCommit(info.getCommitId());
+        Map<Integer, GHPullRequest> pullRequestsByNumber = new LinkedHashMap<>();
+        for (GHPullRequest pullRequest : commit.listPullRequests()) {
+            pullRequestsByNumber.putIfAbsent(pullRequest.getNumber(), pullRequest);
+        }
+        return new ArrayList<>(pullRequestsByNumber.values());
+    }
+
+    private void appendPullRequestComments(Map<String, List<PullRequestReviewComment>> commentMap,
+                                           GHRepository repository,
+                                           GHPullRequest pullRequest) throws IOException, InterruptedException {
+        PagedIterable<GHPullRequestReview> reviews = pullRequest.listReviews();
+        List<GHPullRequestReview> reviewList = reviews.toList();
+        ExecutorService pool = Executors.newFixedThreadPool(reviewList.isEmpty() ? 1 : reviewList.size());
+        for (GHPullRequestReview review : reviewList) {
+            Runnable r = () -> {
+                try {
+                    PagedIterable<GHPullRequestReviewComment> comments = review.listReviewComments();
+                    for (GHPullRequestReviewComment comment : comments) {
+                        URL url = comment.getUrl();
+                        logger.info("Processing PR Review Comment: " + url);
+                        String path = comment.getPath();
+                        org.apache.commons.lang3.tuple.Pair<Side, Integer> pair = new GHRepositoryWrapper(repository).getGhPullRequestReviewCommentLine(url.toString());
+                        Side side = pair.getLeft();
+                        int lineNumber = pair.getRight();
+                        if (lineNumber != 0) {
+                            PullRequestReviewComment prComment = new PullRequestReviewComment(
+                                    comment.getUser().getLogin(),
+                                    comment.getBody(),
+                                    comment.getCreatedAt(),
+                                    lineNumber,
+                                    comment.getUser().getAvatarUrl(),
+                                    side
+                            );
+                            commentMap.computeIfAbsent(path, k -> Collections.synchronizedList(new ArrayList<>())).add(prComment);
+                        }
+                    }
+                }
+                catch(IOException e) {
+                    e.printStackTrace();
+                }
+            };
+            pool.submit(r);
+        }
+        pool.shutdown();
+        pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
     }
 
     private void compare() {

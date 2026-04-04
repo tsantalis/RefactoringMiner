@@ -13,13 +13,18 @@ import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.util.GitServiceImpl;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -45,9 +50,15 @@ class GitHistoryRefactoringMinerImplMergeCommitTest {
 			assertTrue(defaultDiff.getMoveDiffSet().isEmpty());
 			assertTrue(defaultDiff.getMetaInfo().supportsParentSelection());
 			assertTrue(defaultDiff.getMetaInfo().getAvailableParentIndices().contains(1));
+			assertEquals(List.of(
+					runGit(fixture.repositoryPath(), "rev-parse", fixture.mergeCommit() + "^1").trim(),
+					runGit(fixture.repositoryPath(), "rev-parse", fixture.mergeCommit() + "^2").trim()),
+					defaultDiff.getMetaInfo().getParentCommitIds());
 			WebDiff webDiff = assertDoesNotThrow(() -> new WebDiff(defaultDiff));
 			assertDoesNotThrow(() -> webDiff.switchToParent(1));
 			assertEquals(1, webDiff.getProjectASTDiff().getMetaInfo().getSelectedParentIndex());
+			assertEquals(runGit(fixture.repositoryPath(), "rev-parse", fixture.mergeCommit() + "^2").trim(),
+					webDiff.getProjectASTDiff().getMetaInfo().getSelectedParentCommitId());
 			assertFalse(webDiff.getComparator().getDiffs().isEmpty());
 
 			ProjectASTDiff secondParentDiff = miner.diffAtMergeCommit(repository, fixture.mergeCommit(), 1);
@@ -95,6 +106,8 @@ class GitHistoryRefactoringMinerImplMergeCommitTest {
 
 		String json = Files.readString(jsonPath);
 		assertTrue(json.contains("Rename Method"));
+		assertTrue(json.contains("\"repository\": \"\""));
+		assertTrue(json.contains("\"url\": \"\""));
 	}
 
 	@Test
@@ -128,8 +141,30 @@ class GitHistoryRefactoringMinerImplMergeCommitTest {
 		}
 	}
 
+	@Test
+	void webDiffWarmsUpAlternateParents() throws Exception {
+		MergeCommitFixture fixture = createMergeCommitFixture();
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+
+		try (Repository repository = new GitServiceImpl().openRepository(fixture.repositoryPath().toString())) {
+			ProjectASTDiff defaultDiff = miner.diffAtCommit(repository, fixture.mergeCommit());
+			String secondParentCommitId = runGit(fixture.repositoryPath(), "rev-parse", fixture.mergeCommit() + "^2").trim();
+
+			WebDiff webDiff = new WebDiff(defaultDiff);
+			invokeWarmUpMergeParents(webDiff);
+
+			Map<Integer, CompletableFuture<?>> diffStates = getDiffStates(webDiff);
+			assertTrue(diffStates.containsKey(1));
+
+			Object warmedState = diffStates.get(1).get(30, TimeUnit.SECONDS);
+			ProjectASTDiff warmedDiff = getProjectDiff(warmedState);
+			assertEquals(1, warmedDiff.getMetaInfo().getSelectedParentIndex());
+			assertEquals(secondParentCommitId, warmedDiff.getMetaInfo().getSelectedParentCommitId());
+		}
+	}
+
 	private MergeCommitFixture createMergeCommitFixture() throws Exception {
-		return createTwoParentMergeFixture(true);
+		return createTwoParentMergeFixture(false);
 	}
 
 	private MergeCommitFixture createTwoParentMergeFixture(boolean addRemote) throws Exception {
@@ -266,6 +301,25 @@ class GitHistoryRefactoringMinerImplMergeCommitTest {
 			paths.add(astDiff.getDstPath());
 		}
 		return paths;
+	}
+
+	@SuppressWarnings("unchecked")
+	private Map<Integer, CompletableFuture<?>> getDiffStates(WebDiff webDiff) throws Exception {
+		Field field = WebDiff.class.getDeclaredField("diffStates");
+		field.setAccessible(true);
+		return (Map<Integer, CompletableFuture<?>>) field.get(webDiff);
+	}
+
+	private void invokeWarmUpMergeParents(WebDiff webDiff) throws Exception {
+		Method method = WebDiff.class.getDeclaredMethod("warmUpMergeParents");
+		method.setAccessible(true);
+		method.invoke(webDiff);
+	}
+
+	private ProjectASTDiff getProjectDiff(Object diffViewState) throws Exception {
+		Method method = diffViewState.getClass().getDeclaredMethod("projectASTDiff");
+		method.setAccessible(true);
+		return (ProjectASTDiff) method.invoke(diffViewState);
 	}
 
 	private String runGit(Path repositoryPath, String... args) throws Exception {

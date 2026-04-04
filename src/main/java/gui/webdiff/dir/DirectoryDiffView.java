@@ -9,6 +9,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.DiffMetaInfo;
+import org.refactoringminer.astDiff.utils.URLHelper;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
@@ -349,6 +350,18 @@ public class DirectoryDiffView implements Renderable {
     }
 
     private static class MergeParentBar implements Renderable {
+        private static final String MERGE_PARENT_SWITCH_SCRIPT = """
+                function handleMergeParentSwitch(anchor, parentLabel) {
+                    var mergeParentLinks = document.querySelectorAll('[data-merge-parent-link]');
+                    mergeParentLinks.forEach(function(link) {
+                        link.classList.add('disabled');
+                        link.style.pointerEvents = 'none';
+                        link.setAttribute('aria-disabled', 'true');
+                    });
+                    anchor.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>Loading ' + parentLabel;
+                    return true;
+                }
+                """;
         private final DiffMetaInfo metaInfo;
 
         private MergeParentBar(DiffMetaInfo metaInfo) {
@@ -357,13 +370,18 @@ public class DirectoryDiffView implements Renderable {
 
         @Override
         public void renderOn(HtmlCanvas html) throws IOException {
+            String selectedParentCommitId = metaInfo.getSelectedParentCommitId();
+            String selectedParentLabel = selectedParentCommitId != null
+                    ? URLHelper.shortenCommit(selectedParentCommitId)
+                    : "parent " + metaInfo.getSelectedParentIndex();
             html
                     .div(class_("row mt-3"))
                         .div(class_("col"))
                             .div(class_("alert alert-secondary d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mb-0"))
                                 .div(class_("mb-2 mb-lg-0"))
                                     .strong().content("Merge parent diff")
-                                    .write(String.format(" Showing parent %d of %d for this merge commit. Parent 0 preserves the default first-parent compare.",
+                                    .write(String.format(" Comparing this merge commit against %s (parent %d of %d). Parent 0 preserves the default first-parent compare.",
+                                            selectedParentLabel,
                                             metaInfo.getSelectedParentIndex(),
                                             metaInfo.getParentCount() - 1))
                                 ._div()
@@ -373,14 +391,32 @@ public class DirectoryDiffView implements Renderable {
                 String buttonClass = parentIndex.equals(metaInfo.getSelectedParentIndex())
                         ? "btn btn-primary btn-sm active"
                         : "btn btn-outline-primary btn-sm";
-                html.a(class_(buttonClass).href("/switch-parent/" + parentIndex))
-                        .content("Parent " + parentIndex);
+                String parentCommitId = metaInfo.getParentCommitId(parentIndex);
+                String parentLabel = parentCommitId != null
+                        ? URLHelper.shortenCommit(parentCommitId)
+                        : "Parent " + parentIndex;
+                if (parentCommitId != null) {
+                    html.a(class_(buttonClass)
+                                    .href("/switch-parent/" + parentIndex)
+                                    .title(parentCommitId)
+                                    .data("merge-parent-link", "true")
+                                    .onClick("return handleMergeParentSwitch(this, '" + parentLabel + "')"))
+                            .content(parentLabel);
+                }
+                else {
+                    html.a(class_(buttonClass)
+                                    .href("/switch-parent/" + parentIndex)
+                                    .data("merge-parent-link", "true")
+                                    .onClick("return handleMergeParentSwitch(this, '" + parentLabel + "')"))
+                            .content(parentLabel);
+                }
             }
             html
                                 ._div()
                             ._div()
                         ._div()
-                    ._div();
+                    ._div()
+                    .macros().script(MERGE_PARENT_SWITCH_SCRIPT);
         }
     }
 

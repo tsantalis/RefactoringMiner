@@ -17,6 +17,7 @@ public class DiffMetaInfo {
     private Integer selectedParentIndex;
     private Integer parentCount;
     private Integer timeout;
+    private List<String> parentCommitIds = Collections.emptyList();
 
 	public DiffMetaInfo(String info, String url) {
         this.info = info;
@@ -32,17 +33,20 @@ public class DiffMetaInfo {
         copy.selectedParentIndex = selectedParentIndex;
         copy.parentCount = parentCount;
         copy.timeout = timeout;
+        copy.parentCommitIds = parentCommitIds;
         return copy;
     }
 
     public DiffMetaInfo setCommitContext(String cloneURL, String repositoryPath, String commitId,
-                                         Integer selectedParentIndex, Integer parentCount, Integer timeout) {
+                                         Integer selectedParentIndex, Integer parentCount, Integer timeout,
+                                         List<String> parentCommitIds) {
         this.cloneURL = cloneURL;
         this.repositoryPath = repositoryPath;
         this.commitId = commitId;
         this.selectedParentIndex = selectedParentIndex;
         this.parentCount = parentCount;
         this.timeout = timeout;
+        this.parentCommitIds = parentCommitIds == null ? Collections.emptyList() : List.copyOf(parentCommitIds);
         return this;
     }
 
@@ -86,6 +90,24 @@ public class DiffMetaInfo {
         return timeout;
     }
 
+    public List<String> getParentCommitIds() {
+        return parentCommitIds;
+    }
+
+    public String getParentCommitId(int parentIndex) {
+        if (parentCommitIds == null || parentIndex < 0 || parentIndex >= parentCommitIds.size()) {
+            return null;
+        }
+        return parentCommitIds.get(parentIndex);
+    }
+
+    public String getSelectedParentCommitId() {
+        if (selectedParentIndex == null) {
+            return null;
+        }
+        return getParentCommitId(selectedParentIndex);
+    }
+
     public boolean hasUrl() {
         return url != null && !url.isEmpty();
     }
@@ -112,10 +134,11 @@ public class DiffMetaInfo {
 	public String toString() {
 		return "DiffMetaInfo{" +
 				"info='" + info + '\'' +
-				", url='" + url + '\'' +
+                ", url='" + url + '\'' +
                 ", commitId='" + commitId + '\'' +
                 ", selectedParentIndex=" + selectedParentIndex +
                 ", parentCount=" + parentCount +
-				'}';
+                ", parentCommitIds=" + parentCommitIds +
+                '}';
 	}
 }

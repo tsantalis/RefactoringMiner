@@ -32,7 +32,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static spark.Spark.*;
@@ -45,6 +51,7 @@ public class WebDiff  {
     public static final String HIGHLIGHT_JS_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js";
     public static final String HIGHLIGHT_JAVA_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js";
     public int port = 6789;
+    private static final AtomicInteger DIFF_LOADER_THREAD_SEQUENCE = new AtomicInteger();
 
     private String toolName = "RefactoringMiner";
     private boolean staticExport;
@@ -63,8 +70,17 @@ public class WebDiff  {
 
     private final String resourcesPath = "/web/";
     private final DiffFilterer diffFilterer;
-    private final Map<Integer, DiffViewState> diffStates = new ConcurrentHashMap<>();
+    private final Map<Integer, CompletableFuture<DiffViewState>> diffStates = new ConcurrentHashMap<>();
+    private final ExecutorService diffLoader = Executors.newCachedThreadPool(createDiffLoaderThreadFactory());
     private volatile DiffViewState currentState;
+
+    private static ThreadFactory createDiffLoaderThreadFactory() {
+        return runnable -> {
+            Thread thread = new Thread(runnable, "webdiff-merge-loader-" + DIFF_LOADER_THREAD_SEQUENCE.incrementAndGet());
+            thread.setDaemon(true);
+            return thread;
+        };
+    }
 
     public String getResources() {
         return resourcesPath;
@@ -86,7 +102,7 @@ public class WebDiff  {
         this.diffFilterer = diffFilterer;
         DiffViewState initialState = new DiffViewState(projectASTDiff, new DirComparator(projectASTDiff, diffFilterer));
         this.currentState = initialState;
-        this.diffStates.put(selectedParentIndex(projectASTDiff), initialState);
+        this.diffStates.put(selectedParentIndex(projectASTDiff), CompletableFuture.completedFuture(initialState));
     }
 
     public synchronized ProjectASTDiff switchToParent(int parentIndex) throws Exception {
@@ -97,15 +113,46 @@ public class WebDiff  {
         if (parentIndex < 0 || parentIndex >= metaInfo.getParentCount()) {
             throw new IllegalArgumentException(String.format("Parent index %d is out of range", parentIndex));
         }
-        DiffViewState state = diffStates.computeIfAbsent(parentIndex, ignored -> {
-            try {
-                return loadDiffState(metaInfo, parentIndex);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
+        DiffViewState state = awaitDiffState(metaInfo, parentIndex);
         currentState = state;
         return state.projectASTDiff();
+    }
+
+    private DiffViewState awaitDiffState(DiffMetaInfo metaInfo, int parentIndex) throws Exception {
+        try {
+            return diffStates.computeIfAbsent(parentIndex,
+                    ignored -> CompletableFuture.supplyAsync(() -> {
+                        try {
+                            return loadDiffState(metaInfo, parentIndex);
+                        } catch (Exception e) {
+                            throw new CompletionException(e);
+                        }
+                    }, diffLoader)).join();
+        } catch (CompletionException e) {
+            if (e.getCause() instanceof Exception exception) {
+                throw exception;
+            }
+            throw e;
+        }
+    }
+
+    private void warmUpMergeParents() {
+        DiffMetaInfo metaInfo = currentState.projectASTDiff().getMetaInfo();
+        if (staticExport || metaInfo == null || !metaInfo.supportsParentSelection()) {
+            return;
+        }
+        for (Integer parentIndex : metaInfo.getAvailableParentIndices()) {
+            if (!parentIndex.equals(metaInfo.getSelectedParentIndex())) {
+                diffStates.computeIfAbsent(parentIndex,
+                        ignored -> CompletableFuture.supplyAsync(() -> {
+                            try {
+                                return loadDiffState(metaInfo, parentIndex);
+                            } catch (Exception e) {
+                                throw new CompletionException(e);
+                            }
+                        }, diffLoader));
+            }
+        }
     }
 
     private DiffViewState loadDiffState(DiffMetaInfo metaInfo, int parentIndex) throws Exception {
@@ -133,10 +180,12 @@ public class WebDiff  {
     public void run() {
 //        killProcessOnPort(this.port);
         configureSpark(this.port);
+        warmUpMergeParents();
         awaitInitialization();
         System.out.println(String.format("Starting server: %s:%d.", "http://127.0.0.1", this.port));
     }
     public void terminate(){
+        diffLoader.shutdownNow();
         stop();
     }
 

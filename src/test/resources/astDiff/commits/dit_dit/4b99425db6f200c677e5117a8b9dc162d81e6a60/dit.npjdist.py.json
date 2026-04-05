@@ -9602,17 +9602,6 @@
   "firstEndPos" : 11444,
   "secondEndPos" : 10439
 }, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "# (Well, its costs us a bit in memory to keep events and events_.)",
-  "secondLabel" : "# space. Well, its costs us a bit in memory to keep outcomes and",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 11453,
-  "secondPos" : 10448,
-  "firstEndPos" : 11519,
-  "secondEndPos" : 10512
-}, {
   "firstType" : "if_statement",
   "secondType" : "if_statement",
   "firstLabel" : "",
@@ -10459,17 +10448,6 @@
   "secondPos" : 10976,
   "firstEndPos" : 12007,
   "secondEndPos" : 11041
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "# eventspace.",
-  "secondLabel" : "# sample space.",
-  "firstParentType" : "elif_clause",
-  "secondParentType" : "elif_clause",
-  "firstPos" : 12016,
-  "secondPos" : 11050,
-  "firstEndPos" : 12029,
-  "secondEndPos" : 11065
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -16587,17 +16565,6 @@
   "firstEndPos" : 23016,
   "secondEndPos" : 22296
 }, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "# The event length.",
-  "secondLabel" : "# The outcome length.",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 23031,
-  "secondPos" : 22311,
-  "firstEndPos" : 23050,
-  "secondEndPos" : 22332
-}, {
   "firstType" : "assignment",
   "secondType" : "assignment",
   "firstLabel" : "",
@@ -18962,17 +18929,6 @@
   "secondPos" : 23823,
   "firstEndPos" : 24511,
   "secondEndPos" : 23827
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "## events",
-  "secondLabel" : "## outcomes",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 24525,
-  "secondPos" : 23841,
-  "firstEndPos" : 24534,
-  "secondEndPos" : 23852
 }, {
   "firstType" : "if_statement",
   "secondType" : "if_statement",
@@ -24866,31 +24822,9 @@
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 31351,
-  "secondPos" : 30875,
-  "firstEndPos" : 31419,
-  "secondEndPos" : 30939
-}, {
-  "firstType" : "assignment",
-  "secondType" : "assignment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 31351,
   "secondPos" : 31015,
   "firstEndPos" : 31419,
   "secondEndPos" : 31046
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 31351,
-  "secondPos" : 30875,
-  "firstEndPos" : 31419,
-  "secondEndPos" : 30939
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -24913,17 +24847,6 @@
   "secondPos" : 31015,
   "firstEndPos" : 31358,
   "secondEndPos" : 31024
-}, {
-  "firstType" : "assignment_operator_literal",
-  "secondType" : "assignment_operator_literal",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
-  "firstParentType" : "assignment",
-  "secondParentType" : "assignment",
-  "firstPos" : 31359,
-  "secondPos" : 30885,
-  "firstEndPos" : 31360,
-  "secondEndPos" : 30886
 }, {
   "firstType" : "assignment_operator_literal",
   "secondType" : "assignment_operator_literal",
@@ -24957,17 +24880,6 @@
   "secondPos" : 31027,
   "firstEndPos" : 31367,
   "secondEndPos" : 31033
-}, {
-  "firstType" : "argument_list",
-  "secondType" : "argument_list",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call",
-  "secondParentType" : "call",
-  "firstPos" : 31367,
-  "secondPos" : 31033,
-  "firstEndPos" : 31419,
-  "secondEndPos" : 31046
 }, {
   "firstType" : "list_comprehension",
   "secondType" : "list_comprehension",
@@ -26013,17 +25925,6 @@
   "secondPos" : 31487,
   "firstEndPos" : 31922,
   "secondEndPos" : 31553
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "# all possible events. This will be the alphabet for each rv.",
-  "secondLabel" : "# to create all possible outcomes. This will define the alphabet",
-  "firstParentType" : "else_clause",
-  "secondParentType" : "else_clause",
-  "firstPos" : 31935,
-  "secondPos" : 31566,
-  "firstEndPos" : 31996,
-  "secondEndPos" : 31630
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -36068,17 +35969,6 @@
   "firstEndPos" : 43063,
   "secondEndPos" : 42963
 }, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "# Event class",
-  "secondLabel" : "# Outcome class",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 43074,
-  "secondPos" : 42974,
-  "firstEndPos" : 43087,
-  "secondEndPos" : 42989
-}, {
   "firstType" : "assignment",
   "secondType" : "assignment",
   "firstLabel" : "",
@@ -36397,17 +36287,6 @@
   "secondPos" : 43143,
   "firstEndPos" : 43242,
   "secondEndPos" : 43156
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "# Event length",
-  "secondLabel" : "# Outcome length",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 43253,
-  "secondPos" : 43167,
-  "firstEndPos" : 43267,
-  "secondEndPos" : 43183
 }, {
   "firstType" : "if_statement",
   "secondType" : "if_statement",

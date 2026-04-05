@@ -1691,6 +1691,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute _alphabet_set to _sample_space_set in class npdist.Distribution",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -2448,6 +2455,13 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute _eventspace_set to _alphabet_set in class npdist.Distribution",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Attribute With Variable",
+        "description": "Replace Attribute With Variable _eventspace to e1 in method public __add__(other) from class npdist.Distribution",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -3456,10 +3470,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter node to stream in method public get_args(stream) from class _run.__module__",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>There is no rename reference. node is replaced with stream.node<br /><span style='color: #000000;'>sorted_nodes, outgoing_edge_maps = topo_sort([node])<br /></span><span style='color: #000000;'>sorted_nodes, outgoing_edge_maps = topo_sort([stream.node])</span></p><p><span style='color: #000000;'>&nbsp;</span></p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Add Method Annotation",
         "description": "Add Method Annotation @output_operator in method public get_args(stream) from class _run.__module__",
@@ -3533,6 +3547,20 @@
     }, {
         "type": "Parameterize Variable",
         "description": "Parameterize Variable hash_strs to item in method public get_hash(item) from class _utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter stream in method public get_args(stream) from class _run.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter node in method public get_args(node) from class _run.__module__",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -4189,6 +4217,20 @@
     }, {
         "type": "Remove Method Annotation",
         "description": "Remove Method Annotation @operator in method public view(downstream_nodes, kwargs) from class _view.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable upstream_label in method public view(streams, kwargs) from class _view.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable downstream_label in method public view(streams, kwargs) from class _view.__module__",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

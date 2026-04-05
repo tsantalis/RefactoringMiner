@@ -83,6 +83,7 @@ public class OperationInvocation extends AbstractCall {
 	private String methodName;
 	private List<String> subExpressions = new ArrayList<String>();
 	private volatile int hashCode = 0;
+	private boolean directMethodPassing = false;
 	public static Map<String, String> PRIMITIVE_WRAPPER_CLASS_MAP;
     private static Map<String, List<String>> PRIMITIVE_TYPE_WIDENING_MAP;
     private static Map<String, List<String>> PRIMITIVE_TYPE_NARROWING_MAP;
@@ -615,6 +616,9 @@ public class OperationInvocation extends AbstractCall {
 				}
 				return callerOperation.getClassName().equals(operation.getClassName()) || callerOperation.getClassName().startsWith(operation.getClassName());
 			}
+		}
+		if(this.directMethodPassing) {
+			return true;
 		}
 		return result;
     }
@@ -1260,6 +1264,14 @@ public class OperationInvocation extends AbstractCall {
 		else if(expression instanceof KtNameReferenceExpression nameReference) {
 			subExpressions.add(0, nameReference.getText());
 		}
+	}
+
+	public OperationInvocation(String sourceFolder, String filePath, Swc4jAstIdent invocation, VariableDeclarationContainer container, String fileContent) {
+		super(sourceFolder, filePath, invocation, CodeElementType.METHOD_INVOCATION, container, fileContent);
+		this.directMethodPassing = true;
+		this.methodName = invocation.getSym();
+		this.arguments = new ArrayList<String>();
+		this.numberOfArguments = 0;
 	}
 
 	public OperationInvocation(String sourceFolder, String filePath, Swc4jAstCallExpr invocation, VariableDeclarationContainer container, String fileContent) {

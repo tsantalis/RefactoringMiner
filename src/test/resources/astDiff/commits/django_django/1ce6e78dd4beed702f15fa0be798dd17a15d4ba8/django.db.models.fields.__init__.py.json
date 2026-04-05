@@ -80370,11 +80370,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_definition",
-  "secondParentType" : "else_clause",
+  "secondParentType" : "function_definition",
   "firstPos" : 61926,
-  "secondPos" : 62826,
+  "secondPos" : 61926,
   "firstEndPos" : 62596,
-  "secondEndPos" : 63248
+  "secondEndPos" : 63266
 }, {
   "firstType" : "try_statement",
   "secondType" : "try_statement",
@@ -80650,6 +80650,17 @@
   "secondPos" : 62199,
   "firstEndPos" : 62310,
   "secondEndPos" : 62440
+}, {
+  "firstType" : "block",
+  "secondType" : "block",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "except_clause",
+  "secondParentType" : "except_clause",
+  "firstPos" : 62093,
+  "secondPos" : 63014,
+  "firstEndPos" : 62310,
+  "secondEndPos" : 63248
 }, {
   "firstType" : "return_statement",
   "secondType" : "return_statement",
@@ -81047,17 +81058,6 @@
   "firstEndPos" : 62527,
   "secondEndPos" : 63207
 }, {
-  "firstType" : "else",
-  "secondType" : "else",
-  "firstLabel" : "else",
-  "secondLabel" : "else",
-  "firstParentType" : "else_clause",
-  "secondParentType" : "else_clause",
-  "firstPos" : 62569,
-  "secondPos" : 62808,
-  "firstEndPos" : 62573,
-  "secondEndPos" : 62812
-}, {
   "firstType" : "return_statement",
   "secondType" : "return_statement",
   "firstLabel" : "",
@@ -81129,11 +81129,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_definition",
-  "secondParentType" : "else_clause",
+  "secondParentType" : "function_definition",
   "firstPos" : 62639,
-  "secondPos" : 64205,
+  "secondPos" : 63309,
   "firstEndPos" : 63286,
-  "secondEndPos" : 64608
+  "secondEndPos" : 64626
 }, {
   "firstType" : "try_statement",
   "secondType" : "try_statement",
@@ -81409,6 +81409,17 @@
   "secondPos" : 63578,
   "firstEndPos" : 63008,
   "secondEndPos" : 63815
+}, {
+  "firstType" : "block",
+  "secondType" : "block",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "except_clause",
+  "secondParentType" : "except_clause",
+  "firstPos" : 62795,
+  "secondPos" : 64382,
+  "firstEndPos" : 63008,
+  "secondEndPos" : 64608
 }, {
   "firstType" : "return_statement",
   "secondType" : "return_statement",
@@ -81805,17 +81816,6 @@
   "secondPos" : 64554,
   "firstEndPos" : 63217,
   "secondEndPos" : 64567
-}, {
-  "firstType" : "else",
-  "secondType" : "else",
-  "firstLabel" : "else",
-  "secondLabel" : "else",
-  "firstParentType" : "else_clause",
-  "secondParentType" : "else_clause",
-  "firstPos" : 63259,
-  "secondPos" : 64187,
-  "firstEndPos" : 63263,
-  "secondEndPos" : 64191
 }, {
   "firstType" : "return_statement",
   "secondType" : "return_statement",

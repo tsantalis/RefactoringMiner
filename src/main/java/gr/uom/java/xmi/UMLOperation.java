@@ -60,6 +60,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
 	private String actualSignature;
 	private List<UMLOperation> nestedOperations;
+	private List<UMLImport> nestedImports;
 	private final Constants LANG;
 	private boolean importsTestCase;
 	private Optional<UMLType> receiver;
@@ -76,6 +77,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
         this.modifiers = new ArrayList<UMLModifier>();
         this.comments = new ArrayList<UMLComment>();
         this.nestedOperations = new ArrayList<UMLOperation>();
+        this.nestedImports = new ArrayList<UMLImport>();
         this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
         this.propertyAccessor = Optional.empty();
         this.receiver = Optional.empty();
@@ -87,6 +89,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public List<UMLOperation> getNestedOperations() {
 		return nestedOperations;
+	}
+
+	public void addNestedImport(UMLImport imp) {
+		nestedImports.add(imp);
+	}
+
+	public List<UMLImport> getNestedImports() {
+		return nestedImports;
 	}
 
 	public void setReceiver(UMLType type) {

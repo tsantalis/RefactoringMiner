@@ -15,7 +15,7 @@ public class Constants {
 			IMPORT_DECLARATION = "import_statement";
 			TYPE_DECLARATION = "class_definition";
 			TYPE_DECLARATION_KIND = "class";
-			BLOCK_COMMENT = "string"; // this is a text-block comment style, Python does not support Java-like multi-line comment
+			BLOCK_COMMENT = ""; // this is a text-block comment style, Python does not support Java-like multi-line comment
 			LINE_COMMENT = "comment";
 			EXPRESSION_STATEMENT = "expression_statement";
 			TRY_STATEMENT = "try_statement";
@@ -39,6 +39,7 @@ public class Constants {
 			METHOD_INVOCATION = "call";
 			SWITCH_STATEMENT = "";
 			SWITCH_CASE = "";
+			ASSIGNMENT = "assignment";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -71,6 +72,7 @@ public class Constants {
 			METHOD_INVOCATION = "call_expression";
 			SWITCH_STATEMENT = "";
 			SWITCH_CASE = "";
+			ASSIGNMENT = "assignment";
 		}
 		else if(PathFileUtils.isTypeScriptFile(filePath)) {
 			CLASS_BLOCK = "block";
@@ -103,6 +105,7 @@ public class Constants {
 			METHOD_INVOCATION = "call";
 			SWITCH_STATEMENT = "switch_statement";
 			SWITCH_CASE = "switch_case";
+			ASSIGNMENT = "assignment";
 		}
 		else {
 			// Java values as default
@@ -136,11 +139,12 @@ public class Constants {
 			METHOD_INVOCATION = "MethodInvocation";
 			SWITCH_STATEMENT = "SwitchStatement";
 			SWITCH_CASE = "SwitchCase";
+			ASSIGNMENT = "Assignment";
 		}
 	}
 
     // AST node type labels
-    public final String ASSIGNMENT = "Assignment";
+    public final String ASSIGNMENT;
     public final String METHOD_INVOCATION;
     public final String METHOD_DECLARATION;
     public final String ANNOTATION_TYPE_MEMBER_DECLARATION = "AnnotationTypeMemberDeclaration";
@@ -280,6 +284,16 @@ public class Constants {
     public final String WHILE_KEYWORD = "while";
     public final String IMPORT_KEYWORD = "import";
     public final String DECORATOR = "decorator";
+    public final String PARAMETERS = "parameters";
+    public final String DEFAULT_PARAMETER = "default_parameter";
+    public final String PATTERN_LIST = "pattern_list";
+    public final String DICTIONARY_SPLAT_PATTERN = "dictionary_splat_pattern";
+    public final String SPLAT_DOUBLE = "**";
+    public final String LIST_SPLAT_PATTERN = "list_splat_pattern";
+    public final String SPLAT_SINGLE = "*";
+    public final String AS_PATTERN = "as_pattern";
+    public final String CALL = "call";
+    public final String SUBSCRIPT = "subscript";
     
     //Kotlin Specific
     public final String FUNCTION_BODY = "function_body";

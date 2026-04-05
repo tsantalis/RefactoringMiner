@@ -43,7 +43,7 @@ public class CommentMatcher extends OptimizationAwareMatcher {
                 else {
                     Tree srcComment = TreeUtilFunctions.findByLocationInfo(src, commonComment.getLeft().getLocationInfo(), LANG1, LANG1.LINE_COMMENT, LANG1.BLOCK_COMMENT);
                     Tree dstComment = TreeUtilFunctions.findByLocationInfo(dst, commonComment.getRight().getLocationInfo(), LANG2, LANG2.LINE_COMMENT, LANG2.BLOCK_COMMENT);
-                    if (srcComment != null && dstComment != null) {
+                    if (srcComment != null && dstComment != null && (srcComment.getType().equals(dstComment.getType()) || Constants.isCrossLanguage(LANG1, LANG2))) {
                         mappingStore.addMapping(srcComment, dstComment);
                         if (TreeUtilFunctions.areBothFromThisType(srcComment.getParent(), dstComment.getParent(), LANG1.EXPRESSION_STATEMENT, LANG2.EXPRESSION_STATEMENT))
                             mappingStore.addMapping(srcComment.getParent(), dstComment.getParent());

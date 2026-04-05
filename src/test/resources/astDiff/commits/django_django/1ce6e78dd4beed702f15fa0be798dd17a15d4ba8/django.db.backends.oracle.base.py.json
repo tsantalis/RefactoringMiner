@@ -1341,6 +1341,39 @@
   "firstEndPos" : 695,
   "secondEndPos" : 695
 }, {
+  "firstType" : "as_pattern",
+  "secondType" : "as_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "except_clause",
+  "secondParentType" : "except_clause",
+  "firstPos" : 696,
+  "secondPos" : 696,
+  "firstEndPos" : 712,
+  "secondEndPos" : 712
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "ImportError",
+  "secondLabel" : "ImportError",
+  "firstParentType" : "as_pattern",
+  "secondParentType" : "as_pattern",
+  "firstPos" : 696,
+  "secondPos" : 696,
+  "firstEndPos" : 707,
+  "secondEndPos" : 707
+}, {
+  "firstType" : "as",
+  "secondType" : "as",
+  "firstLabel" : "as",
+  "secondLabel" : "as",
+  "firstParentType" : "as_pattern",
+  "secondParentType" : "as_pattern",
+  "firstPos" : 708,
+  "secondPos" : 708,
+  "firstEndPos" : 710,
+  "secondEndPos" : 710
+}, {
   "firstType" : "as_pattern_target",
   "secondType" : "as_pattern_target",
   "firstLabel" : "",

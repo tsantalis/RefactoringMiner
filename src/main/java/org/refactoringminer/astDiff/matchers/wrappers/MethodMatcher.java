@@ -202,6 +202,9 @@ public class MethodMatcher extends BodyMapperMatcher{
                 if(srcAffectationKeyword != null && dstAffectationKeyword != null)
                     mappingStore.addMapping(srcAffectationKeyword, dstAffectationKeyword);
             }
+            if(umlOperationBodyMapper.getImportListDiff() != null) {
+                new ImportMatcher(umlOperationBodyMapper.getImportListDiff(), LANG1, LANG2).match(srcOperationNode, dstOperationNode, mappingStore);
+            }
             new BodyMapperMatcher(optimizationData, umlOperationBodyMapper, isPartOfExtractedMethod, LANG1, LANG2).match(srcOperationNode, dstOperationNode, mappingStore);
             processOperationDiff(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
             processMethodParameters(srcOperationNode, dstOperationNode, umlOperationBodyMapper.getMatchedVariables(), mappingStore);
@@ -228,6 +231,10 @@ public class MethodMatcher extends BodyMapperMatcher{
             mappingStore.addMapping(matched.first,matched.second);
         }
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.BLOCK,LANG2.BLOCK);
+        if (matched != null) {
+            mappingStore.addMapping(matched.first,matched.second);
+        }
+        matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.CLASS_BLOCK,LANG2.CLASS_BLOCK);
         if (matched != null) {
             mappingStore.addMapping(matched.first,matched.second);
         }
@@ -265,6 +272,17 @@ public class MethodMatcher extends BodyMapperMatcher{
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.FUNCTION_PARAMETERS,LANG2.FUNCTION_PARAMETERS);
         if (matched != null) {
             mappingStore.addMapping(matched.first,matched.second);
+        }
+        matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.PARAMETERS,LANG2.PARAMETERS);
+        if (matched != null) {
+            mappingStore.addMapping(matched.first,matched.second);
+            if(matched.first.getChildren().size() > 0 && matched.second.getChildren().size() > 0) {
+                Tree firstParam1 = matched.first.getChild(0);
+                Tree firstParam2 = matched.second.getChild(0);
+                if(firstParam1.getLabel().equals("self") && firstParam2.getLabel().equals("self")) {
+                    mappingStore.addMapping(firstParam1,firstParam2);
+                }
+            }
         }
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.FORMAL_PARAMETERS,LANG2.FORMAL_PARAMETERS);
         if (matched != null) {
@@ -401,7 +419,7 @@ public class MethodMatcher extends BodyMapperMatcher{
             else if(Constants.isCrossLanguage(LANG1, LANG2)) {
                 JavaToKotlinMigration.handleTypeMapping(mappingStore, srcNode, dstNode, LANG1, LANG2);
             }
-            else {
+            else if(!srcNode.getType().name.equals(LANG1.METHOD_DECLARATION) && !dstNode.getType().name.equals(LANG2.METHOD_DECLARATION)) {
                 new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);
             }
             if((srcNode.getParent().getType().name.equals(LANG1.TYPE_ANNOTATION) || srcNode.getParent().getType().name.equals(LANG1.TYPE_PREDICATE_ANNOTATION)) && 
@@ -422,7 +440,7 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (srcNode == null || dstNode == null) return;
             if (srcNode.isIsoStructuralTo(dstNode))
                 mappingStore.addMappingRecursively(srcNode,dstNode);
-            else {
+            else if(!srcNode.getType().name.equals(LANG1.METHOD_DECLARATION) && !dstNode.getType().name.equals(LANG2.METHOD_DECLARATION)) {
                 new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);
             }
         }
@@ -473,6 +491,20 @@ public class MethodMatcher extends BodyMapperMatcher{
                         Tree t2 = rightTree.getParent().getChild(index2+1);
                         mappingStore.addMapping(t1,t2);
                     }
+                    if(leftTree.getParent().getType().name.equals(LANG1.DICTIONARY_SPLAT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.DICTIONARY_SPLAT_PATTERN)) {
+                        mappingStore.addMapping(leftTree.getParent(),rightTree.getParent());
+                        com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(),LANG1.SPLAT_DOUBLE,LANG2.SPLAT_DOUBLE);
+                        if(matched != null) {
+                            mappingStore.addMapping(matched.first,matched.second);
+                        }
+                    }
+                    if(leftTree.getParent().getType().name.equals(LANG1.LIST_SPLAT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.LIST_SPLAT_PATTERN)) {
+                        mappingStore.addMapping(leftTree.getParent(),rightTree.getParent());
+                        com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(),LANG1.SPLAT_SINGLE,LANG2.SPLAT_SINGLE);
+                        if(matched != null) {
+                            mappingStore.addMapping(matched.first,matched.second);
+                        }
+                    }
                 }
                 if(leftTree.getType().name.equals(LANG1.PARAMETER_MODIFIERS) && rightTree.getType().name.equals(LANG2.PARAMETER_MODIFIERS)) {
                     Tree leftParameter = TreeUtilFunctions.findByLocationInfo(leftTree.getParent(), leftVarDecl.getLocationInfo(), LANG1, LANG1.PARAMETER);
@@ -493,6 +525,9 @@ public class MethodMatcher extends BodyMapperMatcher{
                     else {
                         new LeafMatcher(LANG1, LANG2).match(leftInitializerTree, rightInitializerTree,mappingStore);
                         mappingStore.addMapping(leftInitializerTree, rightInitializerTree);
+                    }
+                    if(leftInitializerTree.getParent().getType().name.equals(LANG1.DEFAULT_PARAMETER) && rightInitializerTree.getParent().getType().name.equals(LANG2.DEFAULT_PARAMETER)) {
+                        mappingStore.addMapping(leftInitializerTree.getParent(), rightInitializerTree.getParent());
                     }
                     int leftPosition = leftInitializerTree.positionInParent();
                     int rightPosition = rightInitializerTree.positionInParent();

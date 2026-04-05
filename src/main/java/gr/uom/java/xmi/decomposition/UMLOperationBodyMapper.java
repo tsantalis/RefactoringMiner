@@ -68,6 +68,7 @@ import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLClassMoveDiff;
 import gr.uom.java.xmi.diff.UMLCommentListDiff;
 import gr.uom.java.xmi.diff.UMLDocumentationDiffProvider;
+import gr.uom.java.xmi.diff.UMLImportListDiff;
 import gr.uom.java.xmi.diff.UMLJavadocDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
@@ -149,6 +150,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private UMLCommentListDiff commentListDiff;
 	private Set<Pair<AbstractCodeFragment, UMLComment>> commentedCode = new LinkedHashSet<>();
 	private Set<Pair<UMLComment, AbstractCodeFragment>> unCommentedCode = new LinkedHashSet<>();
+	private UMLImportListDiff importListDiff;
 	public final Constants LANG1;
 	public final Constants LANG2;
 	
@@ -1339,6 +1341,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this);
 		checkUnmatchedStatementsBeingCommented();
+		if(operation1.getNestedImports().size() > 0 && operation2.getNestedImports().size() > 0) {
+			this.importListDiff = new UMLImportListDiff(operation1.getNestedImports(), operation2.getNestedImports());
+		}
 	}
 
 	private void detectExtractVariableWithinUnmatchedStatements(UMLOperation operation1, UMLOperation operation2)
@@ -3312,6 +3317,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public UMLCommentListDiff getCommentListDiff() {
 		return commentListDiff;
+	}
+
+	public UMLImportListDiff getImportListDiff() {
+		return importListDiff;
 	}
 
 	public Set<Pair<AbstractCodeFragment, UMLComment>> getCommentedCode() {

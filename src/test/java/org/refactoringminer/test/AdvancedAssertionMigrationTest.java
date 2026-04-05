@@ -118,6 +118,70 @@ public class AdvancedAssertionMigrationTest {
 			"    }\n" +
 			"}\n";
 
+	private static final String ASSERTJ_TYPE_NARROWING_NEGATIVE_AFTER =
+			"package p;\n" +
+			"\n" +
+			"import static org.assertj.core.api.Assertions.assertThat;\n" +
+			"import org.junit.Test;\n" +
+			"\n" +
+			"class A {\n" +
+			"    @Test\n" +
+			"    public void m() {\n" +
+			"        Object result = names();\n" +
+			"        String[] expected = new String[]{\"a\", \"b\"};\n" +
+			"        assertThat(result).isEqualTo(expected);\n" +
+			"    }\n" +
+			"\n" +
+			"    Object names() {\n" +
+			"        return new String[]{\"a\", \"b\"};\n" +
+			"    }\n" +
+			"}\n";
+
+	private static final String ASSERT_THAT_THROWN_BY_NEGATIVE_BEFORE =
+			"package p;\n" +
+			"\n" +
+			"import static org.junit.Assert.assertThrows;\n" +
+			"import org.junit.Test;\n" +
+			"\n" +
+			"class A {\n" +
+			"    @Test\n" +
+			"    public void m() {\n" +
+			"        Throwable t = assertThrows(IllegalArgumentException.class, this::boom);\n" +
+			"        ExceptionUtils.assertThrowable(t, IllegalStateException.class);\n" +
+			"    }\n" +
+			"\n" +
+			"    void boom() {\n" +
+			"        throw new IllegalArgumentException();\n" +
+			"    }\n" +
+			"}\n" +
+			"\n" +
+			"class ExceptionUtils {\n" +
+			"    static void assertThrowable(Throwable t, Class<?> type) {\n" +
+			"    }\n" +
+			"}\n";
+
+	private static final String ASSERT_THAT_THROWN_BY_NEGATIVE_AFTER =
+			"package p;\n" +
+			"\n" +
+			"import static org.assertj.core.api.Assertions.assertThatThrownBy;\n" +
+			"import org.junit.Test;\n" +
+			"\n" +
+			"class A {\n" +
+			"    @Test\n" +
+			"    public void m() {\n" +
+			"        assertThatThrownBy(this::boom).isInstanceOf(IllegalArgumentException.class);\n" +
+			"    }\n" +
+			"\n" +
+			"    void boom() {\n" +
+			"        throw new IllegalArgumentException();\n" +
+			"    }\n" +
+			"}\n" +
+			"\n" +
+			"class ExceptionUtils {\n" +
+			"    static void assertThrowable(Throwable t, Class<?> type) {\n" +
+			"    }\n" +
+			"}\n";
+
 	@Test
 	public void testAssertJTypeNarrowingKeepsCollapsedAssertionsRelated() throws RefactoringMinerTimedOutException {
 		UMLModelDiff modelDiff = buildModelDiff(ASSERTJ_TYPE_NARROWING_BEFORE, ASSERTJ_TYPE_NARROWING_AFTER);
@@ -145,10 +209,76 @@ public class AdvancedAssertionMigrationTest {
 	}
 
 	@Test
+	public void testAssertJTypeNarrowingDoesNotOvermatchWithoutAsInstanceOf() throws RefactoringMinerTimedOutException {
+		UMLModelDiff modelDiff = buildModelDiff(ASSERTJ_TYPE_NARROWING_BEFORE, ASSERTJ_TYPE_NARROWING_NEGATIVE_AFTER);
+		modelDiff.getRefactorings();
+		UMLOperationBodyMapper mapper = mapperForMethod(modelDiff, "p.A", "m");
+
+		Assertions.assertTrue(containsUnmappedLeaf(mapper, "result instanceof String[]"));
+		Assertions.assertTrue(containsUnmappedLeaf(mapper, "assertThat(condition).isTrue();"));
+	}
+
+	@Test
+	public void testAssertThrowableDoesNotOvermatchWhenExceptionTypeDiffers() throws RefactoringMinerTimedOutException {
+		UMLModelDiff modelDiff = buildModelDiff(ASSERT_THAT_THROWN_BY_NEGATIVE_BEFORE, ASSERT_THAT_THROWN_BY_NEGATIVE_AFTER);
+		modelDiff.getRefactorings();
+		UMLOperationBodyMapper mapper = mapperForMethod(modelDiff, "p.A", "m");
+
+		Assertions.assertTrue(containsUnmappedLeaf(mapper, "ExceptionUtils.assertThrowable(t, IllegalStateException.class);"));
+	}
+
+	@Test
 	public void testSpringIssueCommitAdvancedAssertJMappingsAreFullyCovered() throws Exception {
 		UMLModelDiff modelDiff = buildSpringIssueModelDiff();
 		assertAdvancedMappersFullyCovered(modelDiff, this::containsAdvancedAssertJTypeNarrowing,
 				"Spring fixture to contain advanced AssertJ narrowing mappers");
+	}
+
+	@Test
+	public void testSpringIssueCommitDetectsConditionInlineVariables() throws Exception {
+		UMLModelDiff modelDiff = buildSpringIssueModelDiff();
+		Set<String> descriptions = new TreeSet<>();
+		modelDiff.getRefactorings().forEach(refactoring -> descriptions.add(normalizeForComparison(refactoring.toString())));
+
+		Assertions.assertTrue(descriptions.contains(normalizeForComparison(
+				"Inline Variable condition : boolean in method package resolveMultipartFileArray() : void from class " +
+						"org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests")));
+		Assertions.assertTrue(descriptions.contains(normalizeForComparison(
+				"Inline Variable condition : boolean in method package resolvePartArray() : void from class " +
+						"org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests")));
+		Assertions.assertTrue(descriptions.contains(normalizeForComparison(
+				"Inline Variable condition : boolean in method package resolveStringArrayWithEmptyArraySuffix() : void from class " +
+						"org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests")));
+		Assertions.assertTrue(descriptions.contains(normalizeForComparison(
+				"Inline Variable condition : boolean in method package resolveStringArray() : void from class " +
+						"org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests")));
+		Assertions.assertTrue(descriptions.contains(normalizeForComparison(
+				"Inline Variable condition : boolean in method package resolveStringArrayWithEmptyArraySuffix() : void from class " +
+						"org.springframework.web.reactive.result.method.annotation.RequestParamMethodArgumentResolverTests")));
+		Assertions.assertTrue(descriptions.contains(normalizeForComparison(
+				"Inline Variable condition : boolean in method package resolveStringArray() : void from class " +
+						"org.springframework.web.reactive.result.method.annotation.RequestParamMethodArgumentResolverTests")));
+		Assertions.assertFalse(descriptions.contains(normalizeForComparison(
+				"Inline Variable condition : boolean in method package resolveMultipartFile() : void from class " +
+						"org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests")));
+		Assertions.assertFalse(descriptions.contains(normalizeForComparison(
+				"Inline Variable condition : boolean in method package resolveMultipartFileList() : void from class " +
+						"org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests")));
+		Assertions.assertFalse(descriptions.contains(normalizeForComparison(
+				"Inline Variable condition : boolean in method package resolveMultipartFileListNotannot() : void from class " +
+						"org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests")));
+		Assertions.assertFalse(descriptions.contains(normalizeForComparison(
+				"Inline Variable condition : boolean in method package resolveMultipartFileNotAnnot() : void from class " +
+						"org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests")));
+		Assertions.assertFalse(descriptions.contains(normalizeForComparison(
+				"Inline Variable condition : boolean in method package resolvePart() : void from class " +
+						"org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests")));
+		Assertions.assertFalse(descriptions.contains(normalizeForComparison(
+				"Inline Variable condition : boolean in method package resolvePartList() : void from class " +
+						"org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests")));
+		Assertions.assertFalse(descriptions.contains(normalizeForComparison(
+				"Inline Variable condition : boolean in method package resolvePartNotAnnot() : void from class " +
+						"org.springframework.web.method.annotation.RequestParamMethodArgumentResolverTests")));
 	}
 
 	@Test
@@ -326,6 +456,16 @@ public class AdvancedAssertionMigrationTest {
 			}
 		}
 		return false;
+	}
+
+	private boolean containsUnmappedLeaf(UMLOperationBodyMapper mapper, String text) {
+		String normalizedText = normalizeForComparison(text);
+		return mapper.getNonMappedLeavesT1().stream()
+				.anyMatch(fragment -> normalizeForComparison(fragment.getString()).contains(normalizedText));
+	}
+
+	private String normalizeForComparison(String text) {
+		return text.replace(" ", "").replace("\n", "").replace("\t", "");
 	}
 
 	private record FixtureFilePair(Map<String, String> before, Map<String, String> after) {

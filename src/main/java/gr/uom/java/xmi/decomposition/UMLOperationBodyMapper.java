@@ -138,6 +138,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private boolean lambdaBodyMapper;
 	private boolean moveCode;
 	private boolean anonymousCollapse;
+	private transient AdvancedAssertionMigrationMatcher advancedAssertionMigrationMatcher;
 	private AbstractCall operationInvocation;
 	private Map<String, String> parameterToArgumentMap1;
 	private Map<String, String> parameterToArgumentMap2;
@@ -158,6 +159,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			this.invocationsInSourceOperationAfterExtraction = ExtractOperationDetection.getInvocationsInSourceOperationAfterExtraction(this);
 		}
 		return invocationsInSourceOperationAfterExtraction;
+	}
+
+	private AdvancedAssertionMigrationMatcher advancedAssertionMigrationMatcher() {
+		if(advancedAssertionMigrationMatcher == null) {
+			advancedAssertionMigrationMatcher = new AdvancedAssertionMigrationMatcher(this);
+		}
+		return advancedAssertionMigrationMatcher;
 	}
 
 	public boolean isNested() {
@@ -1473,25 +1481,29 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 								}
 							}
-							if(!matchingExtractedOperationLeaf && !anotherInlineVariableWithSameInitializer) {
-								InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, parentMapper != null);
-								ref.addUnmatchedStatementReference(nonMappedLeaf2);
-								List<LeafExpression> subExpressions = nonMappedLeaf2.findExpression(initializerAfterRename != null ? initializerAfterRename : initializer.getString());
-								if(subExpressions.isEmpty() && matchingString != null) {
-									subExpressions = nonMappedLeaf2.findExpression(matchingString);
+								if(!matchingExtractedOperationLeaf && !anotherInlineVariableWithSameInitializer) {
+									InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, parentMapper != null);
+									ref.addUnmatchedStatementReference(nonMappedLeaf2);
+									String initializerString = initializerAfterRename != null ? initializerAfterRename : initializer.getString();
+									List<LeafExpression> subExpressions = nonMappedLeaf2.findExpression(initializerString);
 									if(subExpressions.isEmpty()) {
-										subExpressions = nonMappedLeaf2.findExpression(matchingString + ".class");
+										subExpressions = advancedAssertionMigrationMatcher().findAssertJTypeNarrowingExpressions(nonMappedLeaf2, initializerString);
+									}
+									if(subExpressions.isEmpty() && matchingString != null) {
+										subExpressions = nonMappedLeaf2.findExpression(matchingString);
+										if(subExpressions.isEmpty()) {
+											subExpressions = nonMappedLeaf2.findExpression(matchingString + ".class");
+										}
+									}
+									for(LeafExpression subExpression : subExpressions) {
+										LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
+										ref.addSubExpressionMapping(leafMapping);
+									}
+									if(!refactorings.contains(ref)) {
+										refactorings.add(ref);
+										leavesToBeRemovedT1.add(statement);
 									}
 								}
-								for(LeafExpression subExpression : subExpressions) {
-									LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
-									ref.addSubExpressionMapping(leafMapping);
-								}
-								if(!refactorings.contains(ref)) {
-									refactorings.add(ref);
-									leavesToBeRemovedT1.add(statement);
-								}
-							}
 						}
 					}
 					for(Refactoring r : new ArrayList<>(refactorings)) {
@@ -4470,6 +4482,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public void computeRefactoringsWithinBody() throws RefactoringMinerTimedOutException {
+		advancedAssertionMigrationMatcher().postProcessBeforeRefactorings();
 		VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(this, refactorings, classDiff, modelDiff, matchedVariables);
 		refactorings.addAll(analysis.getVariableRenames());
 		refactorings.addAll(analysis.getVariableMerges());
@@ -4582,6 +4595,47 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	void addCompositeReplacement(AbstractCodeMapping mapping, Set<AbstractCodeFragment> additionallyMatchedStatements1,
+			Set<AbstractCodeFragment> additionallyMatchedStatements2) {
+		CompositeReplacement compositeReplacement = mapping.containsCompositeReplacement();
+		if(compositeReplacement != null) {
+			compositeReplacement.getAdditionallyMatchedStatements1().addAll(additionallyMatchedStatements1);
+			compositeReplacement.getAdditionallyMatchedStatements2().addAll(additionallyMatchedStatements2);
+		}
+		else {
+			mapping.addReplacement(new CompositeReplacement(mapping.getFragment1().getString(), mapping.getFragment2().getString(),
+					additionallyMatchedStatements1, additionallyMatchedStatements2));
+		}
+	}
+
+	void addSubExpressionMappings(AbstractCodeMapping mapping, List<LeafMapping> newLeafMappings) {
+		for(LeafMapping newLeafMapping : newLeafMappings) {
+			mapping.addSubExpressionMapping(newLeafMapping);
+			if(!mappings.contains(newLeafMapping)) {
+				mappings.add(newLeafMapping);
+				mappingHashcodesT1.add(newLeafMapping.getFragment1().hashCode());
+				mappingHashcodesT2.add(newLeafMapping.getFragment2().hashCode());
+			}
+		}
+	}
+
+	List<LeafExpression> findExpressionsInMappings(String expression) {
+		for(AbstractCodeMapping mapping : mappings) {
+			List<LeafExpression> matches = mapping.getFragment2().findExpression(expression);
+			if(!matches.isEmpty()) {
+				return matches;
+			}
+		}
+		return Collections.emptyList();
+	}
+
+	void removeMatchedVariables(AbstractCodeFragment fragment) {
+		if(removedVariables == null) {
+			return;
+		}
+		removedVariables.removeAll(fragment.getVariableDeclarations());
 	}
 
 	private void handleAdditionalAssertThrowMappings(AbstractCodeMapping firstMapping, AssertThrowsRefactoring ref) {

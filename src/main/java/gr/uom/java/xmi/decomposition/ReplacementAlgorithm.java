@@ -72,6 +72,193 @@ public class ReplacementAlgorithm {
 		return null;
 	}
 
+	private static boolean advancedAssertJTypeNarrowingConversion(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
+			Map<String, List<AbstractCall>> methodInvocationMap1, Map<String, List<AbstractCall>> methodInvocationMap2,
+			AbstractCall invocationCoveringTheEntireStatement1, AbstractCall invocationCoveringTheEntireStatement2,
+			VariableDeclarationContainer container1, VariableDeclarationContainer container2, ReplacementInfo replacementInfo) {
+		if(invocationCoveringTheEntireStatement1 == null || invocationCoveringTheEntireStatement2 == null) {
+			return false;
+		}
+		AbstractCall assertThatInvocation1 = singleArgumentInvocation(methodInvocationMap1, "assertThat");
+		AbstractCall assertThatInvocation2 = singleArgumentInvocation(methodInvocationMap2, "assertThat");
+		AbstractCall asInstanceOfInvocation2 = singleArgumentInvocation(methodInvocationMap2, "asInstanceOf");
+		if(assertThatInvocation1 == null || assertThatInvocation2 == null || asInstanceOfInvocation2 == null ||
+				assertThatInvocation2.arguments().size() != 1) {
+			return false;
+		}
+		String assertThatArgument1 = assertThatInvocation1.arguments().get(0);
+		String baseArgument2 = assertThatInvocation2.arguments().get(0);
+		String asInstanceOfText = asInstanceOfInvocation2.actualString();
+		if(matchCollapsedAssertJTypeCheck(statement1, statement2, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2,
+				assertThatArgument1, baseArgument2, asInstanceOfText, container1, container2, replacementInfo)) {
+			return true;
+		}
+		return matchCollapsedAssertJCastAssertion(statement1, statement2, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2,
+				assertThatArgument1, baseArgument2, asInstanceOfText, container1, container2, replacementInfo);
+	}
+
+	private static boolean matchCollapsedAssertJTypeCheck(AbstractCodeFragment statement1, AbstractCodeFragment statement2, AbstractCall invocationCoveringTheEntireStatement1,
+			AbstractCall invocationCoveringTheEntireStatement2, String assertThatArgument1, String baseArgument2, String asInstanceOfText,
+			VariableDeclarationContainer container1, VariableDeclarationContainer container2, ReplacementInfo replacementInfo) {
+		if(!invocationCoveringTheEntireStatement1.getName().equals("isTrue")) {
+			return false;
+		}
+		String assertThatArgument = assertThatArgument1;
+		if(assertThatArgument == null) {
+			return false;
+		}
+		AbstractCodeFragment typeCheckExpression = null;
+		String typeCheckString = assertThatArgument;
+		if(!typeCheckString.contains(" instanceof ")) {
+			VariableDeclaration declaration = statement1.searchVariableDeclaration(assertThatArgument);
+			if(declaration == null || declaration.getInitializer() == null) {
+				return false;
+			}
+			typeCheckExpression = declaration.getInitializer();
+			typeCheckString = typeCheckExpression.getString();
+		}
+		if(!matchesAssertJTypeNarrowing(typeCheckString, baseArgument2, asInstanceOfText)) {
+			return false;
+		}
+		if(typeCheckExpression == null) {
+			List<LeafExpression> matches = statement1.findExpression(typeCheckString);
+			if(matches.size() == 1) {
+				typeCheckExpression = matches.get(0);
+			}
+		}
+		addAssertionConversionReplacement(replacementInfo, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2);
+		addAssertJTypeNarrowingSubExpressionMapping(replacementInfo, typeCheckExpression, asInstanceOfText, statement2,
+				container1, container2);
+		return true;
+	}
+
+	private static boolean matchCollapsedAssertJCastAssertion(AbstractCodeFragment statement1, AbstractCodeFragment statement2, AbstractCall invocationCoveringTheEntireStatement1,
+			AbstractCall invocationCoveringTheEntireStatement2, String assertThatArgument1, String baseArgument2, String asInstanceOfText,
+			VariableDeclarationContainer container1, VariableDeclarationContainer container2, ReplacementInfo replacementInfo) {
+		if(!isCompatibleAssertJTypeNarrowingTerminal(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2)) {
+			return false;
+		}
+		String assertThatArgument = assertThatArgument1;
+		if(assertThatArgument == null || !matchesAssertJCastNarrowing(assertThatArgument, baseArgument2, asInstanceOfText)) {
+			return false;
+		}
+		addAssertionConversionReplacement(replacementInfo, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2);
+		List<LeafExpression> castExpressions = statement1.findExpression(assertThatArgument);
+		if(castExpressions.size() == 1) {
+			addAssertJTypeNarrowingSubExpressionMapping(replacementInfo, castExpressions.get(0), asInstanceOfText,
+					statement2, container1, container2);
+		}
+		AbstractCodeFragment typeCheckExpression = relatedAssertJTypeCheckExpression(statement1, container1, baseArgument2, asInstanceOfText);
+		addAssertJTypeNarrowingSubExpressionMapping(replacementInfo, typeCheckExpression, asInstanceOfText,
+				statement2, container1, container2);
+		return true;
+	}
+
+	private static void addAssertionConversionReplacement(ReplacementInfo replacementInfo,
+			AbstractCall invocationCoveringTheEntireStatement1, AbstractCall invocationCoveringTheEntireStatement2) {
+		Replacement replacement = new MethodInvocationReplacement(
+				invocationCoveringTheEntireStatement1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
+				invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
+		replacementInfo.addReplacement(replacement);
+	}
+
+	private static void addAssertJTypeNarrowingSubExpressionMapping(ReplacementInfo replacementInfo, AbstractCodeFragment expression1,
+			String asInstanceOfText, AbstractCodeFragment statement2,
+			VariableDeclarationContainer container1, VariableDeclarationContainer container2) {
+		if(expression1 == null) {
+			return;
+		}
+		List<LeafExpression> typeNarrowingExpressions = statement2.findExpression(asInstanceOfText);
+		if(typeNarrowingExpressions.size() == 1) {
+			replacementInfo.addSubExpressionMapping(new LeafMapping(expression1, typeNarrowingExpressions.get(0), container1, container2));
+		}
+	}
+
+	private static boolean isCompatibleAssertJTypeNarrowingTerminal(AbstractCall invocationCoveringTheEntireStatement1,
+			AbstractCall invocationCoveringTheEntireStatement2) {
+		if(invocationCoveringTheEntireStatement1.getName().equals(invocationCoveringTheEntireStatement2.getName())) {
+			return invocationCoveringTheEntireStatement1.equalArguments(invocationCoveringTheEntireStatement2);
+		}
+		if(invocationCoveringTheEntireStatement1.getName().equals("isEqualTo") &&
+				(invocationCoveringTheEntireStatement2.getName().equals("containsExactly") ||
+						invocationCoveringTheEntireStatement2.getName().equals("containsOnly") ||
+						invocationCoveringTheEntireStatement2.getName().equals("containsExactlyInAnyOrder"))) {
+			return invocationCoveringTheEntireStatement1.equalArguments(invocationCoveringTheEntireStatement2);
+		}
+		return false;
+	}
+
+	private static AbstractCall singleArgumentInvocation(Map<String, List<AbstractCall>> methodInvocationMap, String name) {
+		for(List<AbstractCall> invocations : methodInvocationMap.values()) {
+			for(AbstractCall invocation : invocations) {
+				if(invocation.getName().equals(name) && invocation.arguments().size() == 1) {
+					return invocation;
+				}
+			}
+		}
+		return null;
+	}
+
+	private static boolean matchesAssertJTypeNarrowing(String typeCheckString, String baseArgument2, String asInstanceOfText) {
+		if(typeCheckString == null || !typeCheckString.contains(" instanceof ")) {
+			return false;
+		}
+		String before = typeCheckString.substring(0, typeCheckString.indexOf(" instanceof ")).trim();
+		String after = typeCheckString.substring(typeCheckString.indexOf(" instanceof ") + " instanceof ".length()).trim();
+		return before.equals(baseArgument2) && asInstanceOfText.contains(after + ".class");
+	}
+
+	private static boolean matchesAssertJCastNarrowing(String castExpression, String baseArgument2, String asInstanceOfText) {
+		String castType = castType(castExpression);
+		String strippedExpression = stripCast(castExpression);
+		return castType != null && strippedExpression != null && strippedExpression.equals(baseArgument2) &&
+				asInstanceOfText.contains(castType + ".class");
+	}
+
+	private static AbstractCodeFragment relatedAssertJTypeCheckExpression(AbstractCodeFragment statement1,
+			VariableDeclarationContainer container1, String baseArgument2, String asInstanceOfText) {
+		for(VariableDeclaration declaration : container1.getAllVariableDeclarations()) {
+			if(declaration.getInitializer() != null &&
+					matchesAssertJTypeNarrowing(declaration.getInitializer().getString(), baseArgument2, asInstanceOfText)) {
+				return declaration.getInitializer();
+			}
+		}
+		for(LeafExpression expression : statement1.getInstanceofExpressions()) {
+			if(matchesAssertJTypeNarrowing(expression.getString(), baseArgument2, asInstanceOfText)) {
+				return expression;
+			}
+		}
+		return null;
+	}
+
+	private static String stripCast(String castExpression) {
+		if(castExpression == null) {
+			return null;
+		}
+		String trimmed = castExpression.trim();
+		if(trimmed.startsWith("(")) {
+			int closingParenthesis = trimmed.indexOf(')');
+			if(closingParenthesis > 0 && closingParenthesis < trimmed.length() - 1) {
+				return trimmed.substring(closingParenthesis + 1).trim();
+			}
+		}
+		return trimmed;
+	}
+
+	private static String castType(String castExpression) {
+		if(castExpression == null) {
+			return null;
+		}
+		String trimmed = castExpression.trim();
+		if(trimmed.startsWith("(")) {
+			int closingParenthesis = trimmed.indexOf(')');
+			if(closingParenthesis > 1) {
+				return trimmed.substring(1, closingParenthesis).trim();
+			}
+		}
+		return null;
+	}
+
 	protected static Set<Replacement> findReplacementsWithExactMatching(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo, boolean equalNumberOfAssertions, UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
 		VariableDeclarationContainer container1 = operationBodyMapper.getContainer1();
@@ -3222,11 +3409,15 @@ public class ReplacementAlgorithm {
 							}
 						}
 					}
+					}
 				}
-			}
-			//fluid assertThat().isTrue() to assertTrue() conversion
-			else if((invocationCoveringTheEntireStatement1.getName().equals("isTrue") && invocationCoveringTheEntireStatement2.getName().equals("assertTrue")) ||
-					(invocationCoveringTheEntireStatement1.getName().equals("isSameAs") && invocationCoveringTheEntireStatement2.getName().equals("assertSame")) ||
+				else if(advancedAssertJTypeNarrowingConversion(statement1, statement2, methodInvocationMap1, methodInvocationMap2,
+						invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, container1, container2, replacementInfo)) {
+					return replacementInfo.getReplacements();
+				}
+				//fluid assertThat().isTrue() to assertTrue() conversion
+				else if((invocationCoveringTheEntireStatement1.getName().equals("isTrue") && invocationCoveringTheEntireStatement2.getName().equals("assertTrue")) ||
+						(invocationCoveringTheEntireStatement1.getName().equals("isSameAs") && invocationCoveringTheEntireStatement2.getName().equals("assertSame")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("isFalse") && invocationCoveringTheEntireStatement2.getName().equals("assertFalse")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("isNull") && invocationCoveringTheEntireStatement2.getName().equals("assertNull")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("isNotNull") && invocationCoveringTheEntireStatement2.getName().equals("assertNotNull")) ||

@@ -13,11 +13,15 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 /* Created by pourya on 2024-07-22*/
 public class SinglePageView extends AbstractSinglePageView implements Renderable {
     public SinglePageView(DirComparator comparator, DiffMetaInfo metaInfo) {
-        this(comparator, metaInfo, true);
+        this(comparator, metaInfo, true, true);
     }
 
     public SinglePageView(DirComparator comparator, DiffMetaInfo metaInfo, boolean showMergeParentBar) {
-        super(comparator, metaInfo, showMergeParentBar);
+        this(comparator, metaInfo, showMergeParentBar, true);
+    }
+
+    public SinglePageView(DirComparator comparator, DiffMetaInfo metaInfo, boolean showMergeParentBar, boolean enableViewedFiles) {
+        super(comparator, metaInfo, showMergeParentBar, enableViewedFiles);
     }
 
     protected void makeHead(HtmlCanvas html) throws IOException {
@@ -41,8 +45,12 @@ public class SinglePageView extends AbstractSinglePageView implements Renderable
         core.addDiffContainers(html);
     }
     protected HtmlCanvas addJSMacros(HtmlCanvas html) throws IOException {
-        return html.
-                macros().javascript("/dist/single.js");
+        html.macros().javascript("/dist/single.js");
+        String viewedFilesBootstrapScript = getViewedFilesBootstrapScript();
+        if (viewedFilesBootstrapScript != null) {
+            html.macros().script(viewedFilesBootstrapScript);
+        }
+        return html;
     }
 
 }

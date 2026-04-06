@@ -10,37 +10,21 @@ import java.net.http.HttpResponse;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.refactoringminer.util.GitHubOAuthTokenProvider;
 
 public class MarkAsViewed {
 	private static final String API_URL = "https://api.github.com/graphql";
-	private static final String OAUTH_TOKEN = getOAuthToken();
+	private static final String OAUTH_TOKEN = GitHubOAuthTokenProvider.getOAuthToken();
 	
 	public static void main(String[] args) {
 		String prNodeId = getPullRequestNodeId("tsantalis", "RefactoringMiner", 897);
 		Map<String, Boolean> viewedMap = getViewedFiles("tsantalis", "RefactoringMiner", 1047);
 		markAsViewed(prNodeId, "README.md");
 		unmarkAsViewed(prNodeId, "README.md");
-	}
-
-	private static String getOAuthToken() {
-		try {
-			String oAuthToken = System.getenv("OAuthToken");
-			if (oAuthToken == null || oAuthToken.isEmpty()) {
-				Properties prop = new Properties();
-				InputStream input = new FileInputStream("github-oauth.properties");
-				prop.load(input);
-				oAuthToken = prop.getProperty("OAuthToken");
-			}
-			return oAuthToken;
-		} catch(IOException ioe) {
-			ioe.printStackTrace();
-		}
-		return null;
 	}
 
 	private static Map<String, Boolean> getViewedFiles(String owner, String repoName, int prNumber) {

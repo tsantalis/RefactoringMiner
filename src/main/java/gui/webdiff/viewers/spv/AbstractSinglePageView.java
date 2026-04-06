@@ -113,10 +113,6 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
         return GitHubOAuthTokenProvider.getOAuthToken();
     }
 
-    protected boolean supportsViewedFiles() {
-        return getViewedFilesBootstrapScript() != null;
-    }
-
     protected String getViewedFilesBootstrapScript() {
         if (!enableViewedFiles || metaInfo == null || !metaInfo.hasUrl() || !URLHelper.isPR(metaInfo.getUrl())) {
             return null;

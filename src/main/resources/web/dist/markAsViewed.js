@@ -8,6 +8,55 @@ async function unmarkFileAsViewed(OAUTH_TOKEN, owner, repoName, prNumber, filePa
     unmarkAsViewed(OAUTH_TOKEN, prNodeId, filePath);
 }
 
+async function getViewedFiles(OAUTH_TOKEN, owner, repoName, prNumber) {
+    query = `
+        query PullRequestViewedFiles($owner: String!, $name: String!, $number: Int!){
+          repository(owner: $owner, name: $name) {
+            pullRequest(number: $number) {
+              files(first: 100) {
+                nodes {
+                  path
+                  viewerViewedState
+                }
+              }
+            }
+          }
+        }`;
+    const requestBodyJson = {
+        query: query,
+        variables: {
+            owner: owner,
+            name: repoName,
+            number: prNumber
+        }
+    };
+    const map = {};
+    try {
+      const response = await fetch(`https://api.github.com/graphql`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${OAUTH_TOKEN}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBodyJson)
+      });
+
+      const root = await response.json();
+      const nodes = root?.data?.repository?.pullRequest?.files?.nodes;
+
+      if (nodes) {
+        nodes.forEach(next => {
+            const filePath = next.path;
+            const viewedState = next.viewerViewedState;
+            map[filePath] = (viewedState === "VIEWED");
+        });
+      }
+    } catch (error) {
+      console.error('Error making request:', error);
+    }
+    return map;
+}
+
 async function getPullRequestNodeId(OAUTH_TOKEN, owner, repoName, prNumber) {
     query = `
         query PullRequestId($owner: String!, $name: String!, $number: Int!) {
@@ -44,7 +93,6 @@ async function getPullRequestNodeId(OAUTH_TOKEN, owner, repoName, prNumber) {
       const root = await response.json();
 
       const ID = root?.data?.repository?.pullRequest?.id;
-      //console.log(ID);
       return ID;
     } catch (error) {
       console.error('Error making request:', error);

@@ -7,6 +7,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -19,6 +22,7 @@ public class MarkAsViewed {
 	
 	public static void main(String[] args) {
 		String prNodeId = getPullRequestNodeId("tsantalis", "RefactoringMiner", 897);
+		Map<String, Boolean> viewedMap = getViewedFiles("tsantalis", "RefactoringMiner", 1047);
 		markAsViewed(prNodeId, "README.md");
 		unmarkAsViewed(prNodeId, "README.md");
 	}
@@ -38,7 +42,72 @@ public class MarkAsViewed {
 		}
 		return null;
 	}
-	
+
+	private static Map<String, Boolean> getViewedFiles(String owner, String repoName, int prNumber) {
+		Map<String, Boolean> map = new LinkedHashMap<>();
+		try {
+			String query = """
+			query PullRequestViewedFiles($owner: String!, $name: String!, $number: Int!){
+			  repository(owner: $owner, name: $name) {
+			    pullRequest(number: $number) {
+			      files(first: 100) {
+			        nodes {
+			          path
+			          viewerViewedState
+			        }
+			      }
+			    }
+			  }
+			}
+			""";
+			ObjectMapper objectMapper = new ObjectMapper();
+			ObjectNode variables = objectMapper.createObjectNode();
+			variables.put("owner", owner);
+			variables.put("name", repoName);
+			variables.put("number", prNumber);
+			ObjectNode requestBodyJson = objectMapper.createObjectNode();
+			requestBodyJson.put("query", query);
+			requestBodyJson.set("variables", variables);
+
+			String requestBody = objectMapper.writeValueAsString(requestBodyJson);
+
+			HttpClient client = HttpClient.newHttpClient();
+			HttpRequest request = HttpRequest.newBuilder()
+					.uri(URI.create(API_URL))
+					.header("Authorization", "Bearer " + OAUTH_TOKEN)
+					.header("Content-Type", "application/json")
+					.POST(HttpRequest.BodyPublishers.ofString(requestBody))
+					.build();
+
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+			JsonNode root = objectMapper.readTree(response.body());
+			if(root.has("data") && !root.get("data").isNull()) {
+				JsonNode data = root.get("data");
+				if(data.has("repository")) {
+					JsonNode repository = data.get("repository");
+					if(repository.has("pullRequest")) {
+						JsonNode pullRequest = repository.get("pullRequest");
+						JsonNode files = pullRequest.get("files");
+						Iterator<JsonNode> nodeIterator = files.get("nodes").elements();
+						while (nodeIterator.hasNext()) {
+							JsonNode next = nodeIterator.next();
+							String filePath = next.get("path").textValue();
+							String viewedState = next.get("viewerViewedState").textValue();
+							boolean viewed = viewedState.equals("VIEWED") ? true : false;
+							map.put(filePath, viewed);
+						}
+					}
+				}
+			}
+		} catch(IOException ioe) {
+			ioe.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+
 	private static String getPullRequestNodeId(String owner, String repoName, int prNumber) {
 		try {
 			String query = """

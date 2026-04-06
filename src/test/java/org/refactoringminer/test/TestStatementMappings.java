@@ -1220,7 +1220,8 @@ public class TestStatementMappings {
 	@ParameterizedTest
 	@CsvSource({
 		"https://github.com/apache/camel.git, b57b72d0e85f2340cb2d55be44d2175c0caa7cc1, camel-b57b72d0e85f2340cb2d55be44d2175c0caa7cc1.txt",
-		"https://github.com/dropwizard/dropwizard.git, 9086577e29aba07058619a706701b6d07592aed9, dropwizard-9086577e29aba07058619a706701b6d07592aed9.txt"
+		"https://github.com/dropwizard/dropwizard.git, 9086577e29aba07058619a706701b6d07592aed9, dropwizard-9086577e29aba07058619a706701b6d07592aed9.txt",
+		"https://github.com/apache/commons-lang.git, 7995aad79fab336a4534a5290fdd760df7f55dde, commons-lang-7995aad79fab336a4534a5290fdd760df7f55dde.txt"
 	})
 	public void testParameterizedTestMappings(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

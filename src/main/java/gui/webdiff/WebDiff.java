@@ -307,7 +307,7 @@ public class WebDiff  {
         });
         get("/singleView", (request, response) -> {
             DiffViewState state = currentState;
-            return render(new SinglePageView(state.comparator(), state.projectASTDiff().getMetaInfo(), !staticExport));
+            return render(new SinglePageView(state.comparator(), state.projectASTDiff().getMetaInfo(), !staticExport, !staticExport));
         });
         get("/quit", (request, response) -> {
             System.exit(0);

@@ -1,15 +1,22 @@
 package gui.webdiff.viewers.spv;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.gumtreediff.utils.Pair;
 import gui.webdiff.viewers.monaco.MonacoCore;
 import gui.webdiff.dir.DirComparator;
 import gui.webdiff.dir.DirectoryDiffView;
+import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.DiffMetaInfo;
+import org.refactoringminer.astDiff.utils.URLHelper;
+import org.refactoringminer.util.GitHubOAuthTokenProvider;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
@@ -17,14 +24,18 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 public abstract class AbstractSinglePageView extends DirectoryDiffView implements Renderable {
     protected final String JQ_UI_CSS = "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css";
     protected final String JQ_UI_JS = "https://code.jquery.com/ui/1.12.1/jquery-ui.js";
+    private final boolean enableViewedFiles;
 
-    public AbstractSinglePageView(DirComparator comparator, DiffMetaInfo metaInfo, boolean showMergeParentBar) {
+    public AbstractSinglePageView(DirComparator comparator, DiffMetaInfo metaInfo, boolean showMergeParentBar, boolean enableViewedFiles) {
         super(comparator, false, metaInfo, showMergeParentBar);
+        this.enableViewedFiles = enableViewedFiles;
     }
 
     @Override
     public void renderOn(HtmlCanvas html) {
         int n = comparator.getNumOfDiffs();
+        String viewedFilesBootstrapScript = getViewedFilesBootstrapScript();
+        boolean viewedFilesEnabled = viewedFilesBootstrapScript != null;
         try {
                     makeHead(html);
                     html.render(DocType.HTML5)
@@ -37,7 +48,7 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
                     ._div()
                     // Monaco editors 4/5 width
                     .div(class_("col-10 monaco-panel"))
-                    .div(id("accordion"));
+                    .div(id("accordion").style(viewedFilesEnabled ? "visibility:hidden;" : null));
 
             // Generate panels for /monaco-0 to /monaco-n
             for (int i = 0; i < n; i++) {
@@ -58,7 +69,8 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
                                     .add("aria-controls", "collapse-" + i)).content(core.getDiffName())
                             ._h5()
                             ._div()
-                            .div(class_("text-end"))
+                            .div(class_("text-end d-flex align-items-center gap-2 justify-content-end"))
+                            .render_if(new ViewedFileToggle(i, comparator.getASTDiff(i)), viewedFilesEnabled)
                             .a(href("monaco-page/" + i).class_("btn btn-primary btn sm")).content("Details")
                             ._div()
                             ._div()
@@ -96,4 +108,71 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
     protected abstract void makeEachDiff(HtmlCanvas html, int i, MonacoCore core) throws IOException;
 
     protected abstract void makeHead(HtmlCanvas html) throws IOException;
+
+    protected String getOAuthToken() {
+        return GitHubOAuthTokenProvider.getOAuthToken();
+    }
+
+    protected boolean supportsViewedFiles() {
+        return getViewedFilesBootstrapScript() != null;
+    }
+
+    protected String getViewedFilesBootstrapScript() {
+        if (!enableViewedFiles || metaInfo == null || !metaInfo.hasUrl() || !URLHelper.isPR(metaInfo.getUrl())) {
+            return null;
+        }
+        String oAuthToken = getOAuthToken();
+        if (oAuthToken == null || oAuthToken.isBlank()) {
+            return null;
+        }
+        Map<String, Object> config = new LinkedHashMap<>();
+        config.put("oauthToken", oAuthToken);
+        config.put("owner", URLHelper.getOwnerStringOnly(metaInfo.getUrl()));
+        config.put("repoName", URLHelper.getRepoStringOnly(metaInfo.getUrl()));
+        config.put("prNumber", URLHelper.getPullRequestID(metaInfo.getUrl()));
+        try {
+            String json = new ObjectMapper().writeValueAsString(config);
+            return "document.addEventListener('DOMContentLoaded', function () { initializeViewedFiles(" + json + "); });";
+        } catch (JsonProcessingException e) {
+            return null;
+        }
+    }
+
+    private String getViewedFilePath(ASTDiff astDiff) {
+        if (astDiff == null) {
+            return null;
+        }
+        if (astDiff.getDstPath() != null && !astDiff.getDstPath().isEmpty()) {
+            return astDiff.getDstPath();
+        }
+        return astDiff.getSrcPath();
+    }
+
+    private class ViewedFileToggle implements Renderable {
+        private final int diffId;
+        private final ASTDiff astDiff;
+
+        private ViewedFileToggle(int diffId, ASTDiff astDiff) {
+            this.diffId = diffId;
+            this.astDiff = astDiff;
+        }
+
+        @Override
+        public void renderOn(HtmlCanvas html) throws IOException {
+            String filePath = getViewedFilePath(astDiff);
+            if (filePath == null || filePath.isEmpty()) {
+                return;
+            }
+            String inputId = "viewed-file-" + diffId;
+            html.div(class_("form-check d-inline-flex align-items-center mb-0"))
+                    .input(type("checkbox")
+                            .class_("form-check-input viewed-file-checkbox me-2")
+                            .id(inputId)
+                            .add("disabled", "disabled", true)
+                            .add("data-file-path", filePath, true)
+                            .add("data-collapse-target", "#collapse-" + diffId, true))
+                    .label(class_("form-check-label small text-nowrap").for_(inputId)).content("Viewed")
+                    ._div();
+        }
+    }
 }

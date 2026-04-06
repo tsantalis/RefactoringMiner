@@ -72,6 +72,7 @@ import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.astDiff.matchers.ProjectASTDiffer;
 import org.refactoringminer.util.GitServiceImpl;
+import org.refactoringminer.util.GitHubOAuthTokenProvider;
 import org.refactoringminer.util.PathFileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -752,13 +753,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	private GitHub connectToGitHub() {
 		if(gitHub == null) {
 			try {
-				String oAuthToken = System.getenv("OAuthToken");
-				if (oAuthToken == null || oAuthToken.isEmpty()) {
-					Properties prop = new Properties();
-					InputStream input = new FileInputStream("github-oauth.properties");
-					prop.load(input);
-					oAuthToken = prop.getProperty("OAuthToken");
-				}
+				String oAuthToken = GitHubOAuthTokenProvider.getOAuthToken();
 				if (oAuthToken != null) {
 					GitHub authenticatedGitHub = GitHub.connectUsingOAuth(oAuthToken);
 					if(authenticatedGitHub.isCredentialValid()) {
@@ -773,8 +768,6 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				else {
 					gitHub = GitHub.connectAnonymously();
 				}
-			} catch(FileNotFoundException e) {
-				logger.warn("File github-oauth.properties was not found in RefactoringMiner's execution directory", e);
 			} catch(IOException ioe) {
 				ioe.printStackTrace();
 			}

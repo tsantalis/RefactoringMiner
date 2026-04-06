@@ -93,9 +93,17 @@ public class URLHelper{
     }
 
 	public static String getRepoStringOnly(String url) {
+		url = removeAdditionalPart(url);
         int start = nthIndexOf(url,'/',4);
         int end = nthIndexOf(url,'/',5);
         return url.substring(start+1, end);
     }
+
+	public static String getOwnerStringOnly(String url) {
+		url = removeAdditionalPart(url);
+		int start = nthIndexOf(url,'/',3);
+		int end = nthIndexOf(url,'/',4);
+		return url.substring(start+1, end);
+	}
 
 }

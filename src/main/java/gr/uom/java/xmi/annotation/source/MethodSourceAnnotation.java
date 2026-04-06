@@ -102,9 +102,12 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
         else if(annotation.isSingleMemberAnnotation()) {
             ArrayList<String> values = new ArrayList<>();
             AbstractExpression value = annotation.getValue();
-            for(UMLAttribute attribute : declaringClass.getAttributes()) {
-                if(value.getString().equals(attribute.getName()) && attribute.getVariableDeclaration().getInitializer() !=  null) {
-                    values.addAll(extractLiteralFromValue(attribute.getVariableDeclaration().getInitializer()));
+            values.addAll(extractLiteralFromValue(value));
+            if(values.isEmpty()) {
+                for(UMLAttribute attribute : declaringClass.getAttributes()) {
+                    if(value.getString().equals(attribute.getName()) && attribute.getVariableDeclaration().getInitializer() !=  null) {
+                        values.addAll(extractLiteralFromValue(attribute.getVariableDeclaration().getInitializer()));
+                    }
                 }
             }
             return values;

@@ -22,6 +22,7 @@ public class Constants {
 			CATCH_CLAUSE = "except_clause";
 			IF_STATEMENT = "if_statement";
 			WHILE_STATEMENT = "while_statement";
+			DO_STATEMENT = "do_statement";
 			FOR_STATEMENT = "for_statement";
 			ENHANCED_FOR_STATEMENT = "for_statement";
 			PACKAGE_DECLARATION = "";
@@ -55,6 +56,7 @@ public class Constants {
 			CATCH_CLAUSE = "catch_block";
 			IF_STATEMENT = "if_expression";
 			WHILE_STATEMENT = "while_statement";
+			DO_STATEMENT = "do_statement";
 			FOR_STATEMENT = "for_statement";
 			ENHANCED_FOR_STATEMENT = "for_statement";
 			PACKAGE_DECLARATION = "package_header";
@@ -88,6 +90,7 @@ public class Constants {
 			CATCH_CLAUSE = "catch_clause";
 			IF_STATEMENT = "if_statement";
 			WHILE_STATEMENT = "while_statement";
+			DO_STATEMENT = "do_statement";
 			FOR_STATEMENT = "for_statement";
 			ENHANCED_FOR_STATEMENT = "for_statement";
 			PACKAGE_DECLARATION = "";
@@ -122,6 +125,7 @@ public class Constants {
 			CATCH_CLAUSE = "CatchClause";
 			IF_STATEMENT = "IfStatement";
 			WHILE_STATEMENT = "WhileStatement";
+			DO_STATEMENT = "DoStatement";
 			FOR_STATEMENT = "ForStatement";
 			ENHANCED_FOR_STATEMENT = "EnhancedForStatement";
 			PACKAGE_DECLARATION = "PackageDeclaration";
@@ -210,7 +214,7 @@ public class Constants {
     public final String BREAK_STATEMENT = "BreakStatement";
     public final String CONSTRUCTOR_INVOCATION;
     public final String CONTINUE_STATEMENT = "ContinueStatement";
-    public final String DO_STATEMENT = "DoStatement";
+    public final String DO_STATEMENT;
     public final String EMPTY_STATEMENT = "EmptyStatement";
     public final String ENHANCED_FOR_STATEMENT;
     public final String FOR_STATEMENT;
@@ -282,6 +286,7 @@ public class Constants {
     public final String ELIF_KEYWORD = "elif";
     public final String ELSE_KEYWORD = "else";
     public final String WHILE_KEYWORD = "while";
+    public final String DO_KEYWORD = "do";
     public final String IMPORT_KEYWORD = "import";
     public final String DECORATOR = "decorator";
     public final String PARAMETERS = "parameters";

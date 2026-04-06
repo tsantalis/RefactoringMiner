@@ -16,31 +16,20 @@ import java.util.stream.Collectors;
 public class MethodSourceAnnotation extends SourceAnnotation implements SingleMemberAnnotation, MarkerAnnotation {
     public static final String ANNOTATION_TYPENAME = "MethodSource";
     private final UMLOperation annotatedOperation;
+    private final UMLAbstractClass declaringClass;
 
     public MethodSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
         super(annotation, ANNOTATION_TYPENAME);
         this.annotatedOperation = operation;
+        this.declaringClass = declaringClass;
         List<String> values = getValue();
         if(values.size() > 0) {
             String methodSourceName = values.get(0);
             processMethodSourceName(operation, declaringClass, methodSourceName);
         }
-        else if(annotation.isSingleMemberAnnotation()) {
-            AbstractExpression value = annotation.getValue();
-            for(UMLAttribute attribute : declaringClass.getAttributes()) {
-                if(value.getString().equals(attribute.getName()) && attribute.getVariableDeclaration().getInitializer() !=  null) {
-                    values = extractLiteralFromValue(attribute.getVariableDeclaration().getInitializer());
-                    if(values.size() > 0) {
-                        String methodSourceName = values.get(0);
-                        processMethodSourceName(operation, declaringClass, methodSourceName);
-                    }
-                }
-            }
-            
-        }
     }
 
-    public void processMethodSourceName(UMLOperation operation, UMLAbstractClass declaringClass, String methodSourceName) {
+    private void processMethodSourceName(UMLOperation operation, UMLAbstractClass declaringClass, String methodSourceName) {
         List<UMLOperation> sameNameMethods = declaringClass.getOperations().stream().filter(op -> op.getName().equals(methodSourceName)).collect(Collectors.toList());
         for (int maxIterations = sameNameMethods.size(); sameNameMethods.size() > 1 && maxIterations-- > 0; ) {
             for (Iterator<UMLOperation> iterator = sameNameMethods.iterator(); iterator.hasNext(); ) {
@@ -107,6 +96,16 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
             ArrayList<String> values = new ArrayList<>();
             for (AbstractExpression value : annotation.getMemberValuePairs().values()) {
                 values.addAll(extractLiteralFromValue(value));
+            }
+            return values;
+        }
+        else if(annotation.isSingleMemberAnnotation()) {
+            ArrayList<String> values = new ArrayList<>();
+            AbstractExpression value = annotation.getValue();
+            for(UMLAttribute attribute : declaringClass.getAttributes()) {
+                if(value.getString().equals(attribute.getName()) && attribute.getVariableDeclaration().getInitializer() !=  null) {
+                    values.addAll(extractLiteralFromValue(attribute.getVariableDeclaration().getInitializer()));
+                }
             }
             return values;
         }

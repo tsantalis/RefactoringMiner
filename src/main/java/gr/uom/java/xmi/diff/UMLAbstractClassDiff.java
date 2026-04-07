@@ -31,6 +31,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.ObjectCreation;
@@ -1261,11 +1262,161 @@ public abstract class UMLAbstractClassDiff {
 				}
 			}
 		}
+		coalesceMoveAnnotationRefactorings(refactorings);
 		return refactorings;
 	}
 
 	public List<Refactoring> getRefactoringsBeforePostProcessing() {
 		return refactorings;
+	}
+
+	private void coalesceMoveAnnotationRefactorings(List<Refactoring> refactorings) {
+		Map<AnnotationMoveSignature, List<AnnotationMoveCandidate>> removedCandidates = new LinkedHashMap<>();
+		Map<AnnotationMoveSignature, List<AnnotationMoveCandidate>> addedCandidates = new LinkedHashMap<>();
+		for(Refactoring refactoring : refactorings) {
+			AnnotationMoveCandidate removedCandidate = createRemovedAnnotationCandidate(refactoring);
+			if(removedCandidate != null) {
+				removedCandidates.computeIfAbsent(AnnotationMoveSignature.of(removedCandidate.annotation), key -> new ArrayList<>()).add(removedCandidate);
+			}
+			AnnotationMoveCandidate addedCandidate = createAddedAnnotationCandidate(refactoring);
+			if(addedCandidate != null) {
+				addedCandidates.computeIfAbsent(AnnotationMoveSignature.of(addedCandidate.annotation), key -> new ArrayList<>()).add(addedCandidate);
+			}
+		}
+		List<Refactoring> refactoringsToRemove = new ArrayList<>();
+		Set<Refactoring> refactoringsToAdd = new LinkedHashSet<>();
+		for(Map.Entry<AnnotationMoveSignature, List<AnnotationMoveCandidate>> entry : removedCandidates.entrySet()) {
+			List<AnnotationMoveCandidate> matchedAddedCandidates = addedCandidates.get(entry.getKey());
+			if(entry.getValue().size() == 1 && matchedAddedCandidates != null && matchedAddedCandidates.size() == 1) {
+				AnnotationMoveCandidate removedCandidate = entry.getValue().get(0);
+				AnnotationMoveCandidate addedCandidate = matchedAddedCandidates.get(0);
+				refactoringsToRemove.add(removedCandidate.refactoring);
+				refactoringsToRemove.add(addedCandidate.refactoring);
+				refactoringsToAdd.add(new MoveAnnotationRefactoring(removedCandidate.annotation, addedCandidate.annotation,
+						removedCandidate.declaration, addedCandidate.declaration));
+			}
+		}
+		refactorings.removeAll(refactoringsToRemove);
+		refactorings.addAll(refactoringsToAdd);
+	}
+
+	private static class AnnotationMoveSignature {
+		private final String signature;
+
+		private AnnotationMoveSignature(String signature) {
+			this.signature = signature;
+		}
+
+		private static AnnotationMoveSignature of(UMLAnnotation annotation) {
+			StringBuilder sb = new StringBuilder(annotation.getTypeName());
+			if(annotation.getValue() != null) {
+				sb.append("|value=").append(normalizeAnnotationExpression(annotation.getValue()));
+			}
+			for(Map.Entry<String, AbstractExpression> entry : annotation.getMemberValuePairs().entrySet()) {
+				sb.append("|").append(entry.getKey()).append("=")
+						.append(normalizeAnnotationExpression(entry.getValue()));
+			}
+			for(int i = 0; i < annotation.getArguments().size(); i++) {
+				sb.append("|arg").append(i).append("=")
+						.append(normalizeAnnotationExpression(annotation.getArguments().get(i)));
+			}
+			return new AnnotationMoveSignature(sb.toString());
+		}
+
+		private static String normalizeAnnotationExpression(AbstractExpression expression) {
+			String text = expression.getExpression();
+			if(!text.contains("\n")) {
+				return text;
+			}
+			String[] lines = text.split("\n", -1);
+			int commonIndent = Integer.MAX_VALUE;
+			for(String line : lines) {
+				String trimmed = line.trim();
+				if(trimmed.isEmpty() || "\"\"\"".equals(trimmed)) {
+					continue;
+				}
+				int indent = 0;
+				while(indent < line.length() && Character.isWhitespace(line.charAt(indent))) {
+					indent++;
+				}
+				commonIndent = Math.min(commonIndent, indent);
+			}
+			if(commonIndent == Integer.MAX_VALUE || commonIndent == 0) {
+				return text;
+			}
+			StringBuilder normalized = new StringBuilder();
+			for(int i = 0; i < lines.length; i++) {
+				String line = lines[i];
+				int stripLength = 0;
+				while(stripLength < line.length() && stripLength < commonIndent && Character.isWhitespace(line.charAt(stripLength))) {
+					stripLength++;
+				}
+				normalized.append(line.substring(stripLength));
+				if(i < lines.length - 1) {
+					normalized.append("\n");
+				}
+			}
+			return normalized.toString();
+		}
+
+		@Override
+		public int hashCode() {
+			return signature.hashCode();
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if(this == obj)
+				return true;
+			if(obj == null || getClass() != obj.getClass())
+				return false;
+			AnnotationMoveSignature other = (AnnotationMoveSignature)obj;
+			return signature.equals(other.signature);
+		}
+	}
+
+	private AnnotationMoveCandidate createRemovedAnnotationCandidate(Refactoring refactoring) {
+		if(refactoring instanceof RemoveMethodAnnotationRefactoring removeMethodAnnotationRefactoring) {
+			return new AnnotationMoveCandidate(refactoring, removeMethodAnnotationRefactoring.getAnnotation(),
+					removeMethodAnnotationRefactoring.getOperationBefore());
+		}
+		if(refactoring instanceof RemoveClassAnnotationRefactoring removeClassAnnotationRefactoring) {
+			return new AnnotationMoveCandidate(refactoring, removeClassAnnotationRefactoring.getAnnotation(),
+					removeClassAnnotationRefactoring.getClassBefore());
+		}
+		if(refactoring instanceof RemoveAttributeAnnotationRefactoring removeAttributeAnnotationRefactoring) {
+			return new AnnotationMoveCandidate(refactoring, removeAttributeAnnotationRefactoring.getAnnotation(),
+					removeAttributeAnnotationRefactoring.getAttributeBefore());
+		}
+		return null;
+	}
+
+	private AnnotationMoveCandidate createAddedAnnotationCandidate(Refactoring refactoring) {
+		if(refactoring instanceof AddMethodAnnotationRefactoring addMethodAnnotationRefactoring) {
+			return new AnnotationMoveCandidate(refactoring, addMethodAnnotationRefactoring.getAnnotation(),
+					addMethodAnnotationRefactoring.getOperationAfter());
+		}
+		if(refactoring instanceof AddClassAnnotationRefactoring addClassAnnotationRefactoring) {
+			return new AnnotationMoveCandidate(refactoring, addClassAnnotationRefactoring.getAnnotation(),
+					addClassAnnotationRefactoring.getClassAfter());
+		}
+		if(refactoring instanceof AddAttributeAnnotationRefactoring addAttributeAnnotationRefactoring) {
+			return new AnnotationMoveCandidate(refactoring, addAttributeAnnotationRefactoring.getAnnotation(),
+					addAttributeAnnotationRefactoring.getAttributeAfter());
+		}
+		return null;
+	}
+
+	private static class AnnotationMoveCandidate {
+		private final Refactoring refactoring;
+		private final UMLAnnotation annotation;
+		private final Object declaration;
+
+		private AnnotationMoveCandidate(Refactoring refactoring, UMLAnnotation annotation, Object declaration) {
+			this.refactoring = refactoring;
+			this.annotation = annotation;
+			this.declaration = declaration;
+		}
 	}
 
 	protected void processMapperRefactorings(UMLOperationBodyMapper mapper, List<Refactoring> refactorings) throws RefactoringMinerTimedOutException {

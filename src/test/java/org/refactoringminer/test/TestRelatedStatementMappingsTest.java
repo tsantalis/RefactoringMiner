@@ -403,11 +403,16 @@ public class TestRelatedStatementMappingsTest {
                 annotations = Set.of(Pair.of(annotation, null));
             else if (ref instanceof AddMethodAnnotationRefactoring || ref instanceof AddClassAnnotationRefactoring)
                 annotations = Set.of(Pair.of(null, annotation));
-            if (!annotations.isEmpty() && "Test".equals(annotation.getTypeName()))
+            if (!annotations.isEmpty() && "Test".equals(annotation.getTypeName())) {
                 if (ref instanceof MethodLevelRefactoring m)
                     mapperInfo(annotations, m.getOperationBefore(), m.getOperationAfter());
                 else if (ref instanceof ClassLevelRefactoring c)
                     mapperInfo(annotations, c.getClassBefore(), c.getClassAfter());
+            }
+            else if (ref instanceof MoveAnnotationRefactoring moveRef && "Test".equals(moveRef.getAnnotation().getTypeName())) {
+                mapperInfo(Set.of(Pair.of(moveRef.getAnnotationBefore(), null)), moveRef.getSourceDeclaration(), moveRef.getSourceDeclaration());
+                mapperInfo(Set.of(Pair.of(null, moveRef.getAnnotationAfter())), moveRef.getTargetDeclaration(), moveRef.getTargetDeclaration());
+            }
         });
     }
 
@@ -488,6 +493,10 @@ public class TestRelatedStatementMappingsTest {
                     mapperInfo(annotations, c.getClassBefore(), c.getClassAfter());
                 else if (ref instanceof AttributeLevelRefactoring a)
                     mapperInfo(annotations, a.getAttributeBefore(), a.getAttributeAfter());
+            }
+            else if (ref instanceof MoveAnnotationRefactoring moveRef && set.contains(moveRef.getAnnotation().getTypeName())) {
+                mapperInfo(Set.of(Pair.of(moveRef.getAnnotationBefore(), null)), moveRef.getSourceDeclaration(), moveRef.getSourceDeclaration());
+                mapperInfo(Set.of(Pair.of(null, moveRef.getAnnotationAfter())), moveRef.getTargetDeclaration(), moveRef.getTargetDeclaration());
             }
         });
     }

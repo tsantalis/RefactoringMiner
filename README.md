@@ -150,7 +150,7 @@ Our tool can match Javadoc and inline comments with formatting changes. You can 
 </details>
 
 <details>
-<summary>API changes (52)</summary>
+<summary>API changes (53)</summary>
 
 	1. Rename Variable
 	2. Rename Parameter
@@ -177,33 +177,34 @@ Our tool can match Javadoc and inline comments with formatting changes. You can 
 	23. Add Class Annotation
 	24. Remove Class Annotation
 	25. Modify Class Annotation
-	26. Add Parameter Annotation
-	27. Remove Parameter Annotation
-	28. Modify Parameter Annotation
-	29. Add Variable Annotation
-	30. Remove Variable Annotation
-	31. Modify Variable Annotation
-	32. Add Parameter
-	33. Remove Parameter
-	34. Reorder Parameter
-	35. Add Thrown Exception Type
-	36. Remove Thrown Exception Type
-	37. Change Thrown Exception Type
-	38. Change Method Access Modifier
- 	39. Change Attribute Access Modifier
-	40. Replace Attribute with Variable
-	41. Add Method Modifier (final, static, abstract, synchronized)
-	42. Remove Method Modifier (final, static, abstract, synchronized)
-	43. Add Attribute Modifier (final, static, transient, volatile)
-	44. Remove Attribute Modifier (final, static, transient, volatile)
-	45. Add Variable Modifier (final)
-	46. Add Parameter Modifier (final)
-	47. Remove Variable Modifier (final)
-	48. Remove Parameter Modifier (final)
-	49. Change Class Access Modifier
-	50. Add Class Modifier (final, static, abstract)
-	51. Remove Class Modifier (final, static, abstract)
- 	52. Change Type Declaration Kind (class, interface, enum, annotation, record)
+	26. Move Annotation
+	27. Add Parameter Annotation
+	28. Remove Parameter Annotation
+	29. Modify Parameter Annotation
+	30. Add Variable Annotation
+	31. Remove Variable Annotation
+	32. Modify Variable Annotation
+	33. Add Parameter
+	34. Remove Parameter
+	35. Reorder Parameter
+	36. Add Thrown Exception Type
+	37. Remove Thrown Exception Type
+	38. Change Thrown Exception Type
+	39. Change Method Access Modifier
+	40. Change Attribute Access Modifier
+	41. Replace Attribute with Variable
+	42. Add Method Modifier (final, static, abstract, synchronized)
+	43. Remove Method Modifier (final, static, abstract, synchronized)
+	44. Add Attribute Modifier (final, static, transient, volatile)
+	45. Remove Attribute Modifier (final, static, transient, volatile)
+	46. Add Variable Modifier (final)
+	47. Add Parameter Modifier (final)
+	48. Remove Variable Modifier (final)
+	49. Remove Parameter Modifier (final)
+	50. Change Class Access Modifier
+	51. Add Class Modifier (final, static, abstract)
+	52. Remove Class Modifier (final, static, abstract)
+	53. Change Type Declaration Kind (class, interface, enum, annotation, record)
 </details>
 
 <details>

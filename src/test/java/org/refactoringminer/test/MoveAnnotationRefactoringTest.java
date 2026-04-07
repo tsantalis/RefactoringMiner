@@ -18,41 +18,45 @@ import java.util.stream.Collectors;
 class MoveAnnotationRefactoringTest {
     @Test
     void movesMethodAnnotationToClassDeclaration() throws Exception {
-        String before = "package org.springframework.boot.actuate.hazelcast;\n" +
-                "\n" +
-                "import static org.junit.jupiter.api.Assertions.assertTrue;\n" +
-                "\n" +
-                "import org.junit.jupiter.api.Test;\n" +
-                "import org.springframework.boot.test.support.classpath.resources.WithResource;\n" +
-                "\n" +
-                "class HazelcastHealthIndicatorTests {\n" +
-                "    @Test\n" +
-                "    @WithResource(name = \"hazelcast.xml\", content = \"<hazelcast/>\")\n" +
-                "    void hazelcastUp() {\n" +
-                "        assertTrue(true);\n" +
-                "    }\n" +
-                "}\n";
+        String before = """
+                package org.springframework.boot.actuate.hazelcast;
 
-        String after = "package org.springframework.boot.actuate.hazelcast;\n" +
-                "\n" +
-                "import static org.junit.jupiter.api.Assertions.assertFalse;\n" +
-                "import static org.junit.jupiter.api.Assertions.assertTrue;\n" +
-                "\n" +
-                "import org.junit.jupiter.api.Test;\n" +
-                "import org.springframework.boot.test.support.classpath.resources.WithResource;\n" +
-                "\n" +
-                "@WithResource(name = \"hazelcast.xml\", content = \"<hazelcast/>\")\n" +
-                "class HazelcastHealthIndicatorTests {\n" +
-                "    @Test\n" +
-                "    void hazelcastUp() {\n" +
-                "        assertTrue(true);\n" +
-                "    }\n" +
-                "\n" +
-                "    @Test\n" +
-                "    void hazelcastShutdown() {\n" +
-                "        assertFalse(false);\n" +
-                "    }\n" +
-                "}\n";
+                import static org.junit.jupiter.api.Assertions.assertTrue;
+
+                import org.junit.jupiter.api.Test;
+                import org.springframework.boot.test.support.classpath.resources.WithResource;
+
+                class HazelcastHealthIndicatorTests {
+                    @Test
+                    @WithResource(name = "hazelcast.xml", content = "<hazelcast/>")
+                    void hazelcastUp() {
+                        assertTrue(true);
+                    }
+                }
+                """;
+
+        String after = """
+                package org.springframework.boot.actuate.hazelcast;
+
+                import static org.junit.jupiter.api.Assertions.assertFalse;
+                import static org.junit.jupiter.api.Assertions.assertTrue;
+
+                import org.junit.jupiter.api.Test;
+                import org.springframework.boot.test.support.classpath.resources.WithResource;
+
+                @WithResource(name = "hazelcast.xml", content = "<hazelcast/>")
+                class HazelcastHealthIndicatorTests {
+                    @Test
+                    void hazelcastUp() {
+                        assertTrue(true);
+                    }
+
+                    @Test
+                    void hazelcastShutdown() {
+                        assertFalse(false);
+                    }
+                }
+                """;
 
         UMLModel beforeModel = new UMLModelASTReader(Map.of("HazelcastHealthIndicatorTests.java", before), Set.of("."), false).getUmlModel();
         UMLModel afterModel = new UMLModelASTReader(Map.of("HazelcastHealthIndicatorTests.java", after), Set.of("."), false).getUmlModel();

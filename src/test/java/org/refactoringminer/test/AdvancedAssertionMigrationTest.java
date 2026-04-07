@@ -36,151 +36,158 @@ public class AdvancedAssertionMigrationTest {
 	private static final String SPRING_BEFORE_COMMIT = "spring-framework-3d85ec23545f455d6d055c2e786c2ab0b4850f5f";
 	private static final String SPRING_AFTER_COMMIT = "spring-framework-bed36890019a1764f1ed846ec1c94325a2ac5c72";
 
-	private static final String ASSERTJ_TYPE_NARROWING_BEFORE =
-			"package p;\n" +
-			"\n" +
-			"import static org.assertj.core.api.Assertions.assertThat;\n" +
-			"import org.junit.Test;\n" +
-			"\n" +
-			"class A {\n" +
-			"    @Test\n" +
-			"    public void m() {\n" +
-			"        Object result = names();\n" +
-			"        String[] expected = new String[]{\"a\", \"b\"};\n" +
-			"        boolean condition = result instanceof String[];\n" +
-			"        assertThat(condition).isTrue();\n" +
-			"        assertThat((String[]) result).isEqualTo(expected);\n" +
-			"    }\n" +
-			"\n" +
-			"    Object names() {\n" +
-			"        return new String[]{\"a\", \"b\"};\n" +
-			"    }\n" +
-			"}\n";
+	private static final String ASSERTJ_TYPE_NARROWING_BEFORE = """
+			package p;
 
-	private static final String ASSERTJ_TYPE_NARROWING_AFTER =
-			"package p;\n" +
-			"\n" +
-			"import static org.assertj.core.api.Assertions.assertThat;\n" +
-			"import static org.assertj.core.api.InstanceOfAssertFactories.array;\n" +
-			"import org.junit.Test;\n" +
-			"\n" +
-			"class A {\n" +
-			"    @Test\n" +
-			"    public void m() {\n" +
-			"        Object result = names();\n" +
-			"        String[] expected = new String[]{\"a\", \"b\"};\n" +
-			"        assertThat(result).asInstanceOf(array(String[].class)).containsExactly(expected);\n" +
-			"    }\n" +
-			"\n" +
-			"    Object names() {\n" +
-			"        return new String[]{\"a\", \"b\"};\n" +
-			"    }\n" +
-			"}\n";
+			import static org.assertj.core.api.Assertions.assertThat;
+			import org.junit.Test;
 
-	private static final String EXPECTED_EXCEPTION_RULE_BEFORE =
-			"package p;\n" +
-			"\n" +
-			"import org.junit.Rule;\n" +
-			"import org.junit.Test;\n" +
-			"import org.junit.rules.ExpectedException;\n" +
-			"\n" +
-			"class A {\n" +
-			"    @Rule public ExpectedException thrown = ExpectedException.none();\n" +
-			"\n" +
-			"    @Test\n" +
-			"    public void m() {\n" +
-			"        thrown.expect(IllegalArgumentException.class);\n" +
-			"        thrown.expectMessage(\"bad\");\n" +
-			"        boom();\n" +
-			"    }\n" +
-			"\n" +
-			"    void boom() {\n" +
-			"        throw new IllegalArgumentException(\"bad\");\n" +
-			"    }\n" +
-			"}\n";
+			class A {
+			    @Test
+			    public void m() {
+			        Object result = names();
+			        String[] expected = new String[]{"a", "b"};
+			        boolean condition = result instanceof String[];
+			        assertThat(condition).isTrue();
+			        assertThat((String[]) result).isEqualTo(expected);
+			    }
 
-	private static final String EXPECTED_EXCEPTION_RULE_AFTER =
-			"package p;\n" +
-			"\n" +
-			"import static org.assertj.core.api.Assertions.assertThatThrownBy;\n" +
-			"import org.junit.Test;\n" +
-			"\n" +
-			"class A {\n" +
-			"    @Test\n" +
-			"    public void m() {\n" +
-			"        assertThatThrownBy(() -> boom())\n" +
-			"                .isInstanceOf(IllegalArgumentException.class)\n" +
-			"                .hasMessageContaining(\"bad\");\n" +
-			"    }\n" +
-			"\n" +
-			"    void boom() {\n" +
-			"        throw new IllegalArgumentException(\"bad\");\n" +
-			"    }\n" +
-			"}\n";
+			    Object names() {
+			        return new String[]{"a", "b"};
+			    }
+			}
+			""";
 
-	private static final String ASSERTJ_TYPE_NARROWING_NEGATIVE_AFTER =
-			"package p;\n" +
-			"\n" +
-			"import static org.assertj.core.api.Assertions.assertThat;\n" +
-			"import org.junit.Test;\n" +
-			"\n" +
-			"class A {\n" +
-			"    @Test\n" +
-			"    public void m() {\n" +
-			"        Object result = names();\n" +
-			"        String[] expected = new String[]{\"a\", \"b\"};\n" +
-			"        assertThat(result).isEqualTo(expected);\n" +
-			"    }\n" +
-			"\n" +
-			"    Object names() {\n" +
-			"        return new String[]{\"a\", \"b\"};\n" +
-			"    }\n" +
-			"}\n";
+	private static final String ASSERTJ_TYPE_NARROWING_AFTER = """
+			package p;
 
-	private static final String ASSERT_THAT_THROWN_BY_NEGATIVE_BEFORE =
-			"package p;\n" +
-			"\n" +
-			"import static org.junit.Assert.assertThrows;\n" +
-			"import org.junit.Test;\n" +
-			"\n" +
-			"class A {\n" +
-			"    @Test\n" +
-			"    public void m() {\n" +
-			"        Throwable t = assertThrows(IllegalArgumentException.class, this::boom);\n" +
-			"        ExceptionUtils.assertThrowable(t, IllegalStateException.class);\n" +
-			"    }\n" +
-			"\n" +
-			"    void boom() {\n" +
-			"        throw new IllegalArgumentException();\n" +
-			"    }\n" +
-			"}\n" +
-			"\n" +
-			"class ExceptionUtils {\n" +
-			"    static void assertThrowable(Throwable t, Class<?> type) {\n" +
-			"    }\n" +
-			"}\n";
+			import static org.assertj.core.api.Assertions.assertThat;
+			import static org.assertj.core.api.InstanceOfAssertFactories.array;
+			import org.junit.Test;
 
-	private static final String ASSERT_THAT_THROWN_BY_NEGATIVE_AFTER =
-			"package p;\n" +
-			"\n" +
-			"import static org.assertj.core.api.Assertions.assertThatThrownBy;\n" +
-			"import org.junit.Test;\n" +
-			"\n" +
-			"class A {\n" +
-			"    @Test\n" +
-			"    public void m() {\n" +
-			"        assertThatThrownBy(this::boom).isInstanceOf(IllegalArgumentException.class);\n" +
-			"    }\n" +
-			"\n" +
-			"    void boom() {\n" +
-			"        throw new IllegalArgumentException();\n" +
-			"    }\n" +
-			"}\n" +
-			"\n" +
-			"class ExceptionUtils {\n" +
-			"    static void assertThrowable(Throwable t, Class<?> type) {\n" +
-			"    }\n" +
-			"}\n";
+			class A {
+			    @Test
+			    public void m() {
+			        Object result = names();
+			        String[] expected = new String[]{"a", "b"};
+			        assertThat(result).asInstanceOf(array(String[].class)).containsExactly(expected);
+			    }
+
+			    Object names() {
+			        return new String[]{"a", "b"};
+			    }
+			}
+			""";
+
+	private static final String EXPECTED_EXCEPTION_RULE_BEFORE = """
+			package p;
+
+			import org.junit.Rule;
+			import org.junit.Test;
+			import org.junit.rules.ExpectedException;
+
+			class A {
+			    @Rule public ExpectedException thrown = ExpectedException.none();
+
+			    @Test
+			    public void m() {
+			        thrown.expect(IllegalArgumentException.class);
+			        thrown.expectMessage("bad");
+			        boom();
+			    }
+
+			    void boom() {
+			        throw new IllegalArgumentException("bad");
+			    }
+			}
+			""";
+
+	private static final String EXPECTED_EXCEPTION_RULE_AFTER = """
+			package p;
+
+			import static org.assertj.core.api.Assertions.assertThatThrownBy;
+			import org.junit.Test;
+
+			class A {
+			    @Test
+			    public void m() {
+			        assertThatThrownBy(() -> boom())
+			                .isInstanceOf(IllegalArgumentException.class)
+			                .hasMessageContaining("bad");
+			    }
+
+			    void boom() {
+			        throw new IllegalArgumentException("bad");
+			    }
+			}
+			""";
+
+	private static final String ASSERTJ_TYPE_NARROWING_NEGATIVE_AFTER = """
+			package p;
+
+			import static org.assertj.core.api.Assertions.assertThat;
+			import org.junit.Test;
+
+			class A {
+			    @Test
+			    public void m() {
+			        Object result = names();
+			        String[] expected = new String[]{"a", "b"};
+			        assertThat(result).isEqualTo(expected);
+			    }
+
+			    Object names() {
+			        return new String[]{"a", "b"};
+			    }
+			}
+			""";
+
+	private static final String ASSERT_THAT_THROWN_BY_NEGATIVE_BEFORE = """
+			package p;
+
+			import static org.junit.Assert.assertThrows;
+			import org.junit.Test;
+
+			class A {
+			    @Test
+			    public void m() {
+			        Throwable t = assertThrows(IllegalArgumentException.class, this::boom);
+			        ExceptionUtils.assertThrowable(t, IllegalStateException.class);
+			    }
+
+			    void boom() {
+			        throw new IllegalArgumentException();
+			    }
+			}
+
+			class ExceptionUtils {
+			    static void assertThrowable(Throwable t, Class<?> type) {
+			    }
+			}
+			""";
+
+	private static final String ASSERT_THAT_THROWN_BY_NEGATIVE_AFTER = """
+			package p;
+
+			import static org.assertj.core.api.Assertions.assertThatThrownBy;
+			import org.junit.Test;
+
+			class A {
+			    @Test
+			    public void m() {
+			        assertThatThrownBy(this::boom).isInstanceOf(IllegalArgumentException.class);
+			    }
+
+			    void boom() {
+			        throw new IllegalArgumentException();
+			    }
+			}
+
+			class ExceptionUtils {
+			    static void assertThrowable(Throwable t, Class<?> type) {
+			    }
+			}
+			""";
 
 	@Test
 	public void testAssertJTypeNarrowingKeepsCollapsedAssertionsRelated() throws RefactoringMinerTimedOutException {

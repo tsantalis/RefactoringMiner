@@ -9,17 +9,13 @@ import gr.uom.java.xmi.diff.UMLModelDiff;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.refactoringminer.api.Refactoring;
-import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 class MoveAnnotationRefactoringTest {
-    private static final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits";
-
     @Test
     void movesMethodAnnotationToClassDeclaration() throws Exception {
         String before = "package org.springframework.boot.actuate.hazelcast;\n" +
@@ -73,9 +69,59 @@ class MoveAnnotationRefactoringTest {
 
     @Test
     void detectsIssue1054MethodAnnotationHoist() throws Exception {
-        GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
-        UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/spring-projects/spring-boot.git",
-                "249620246f07f691c0dc79f2e219246b5f3a3340", new File(REPOS));
+        String before = """
+                package org.springframework.boot.actuate.hazelcast;
+
+                import org.junit.jupiter.api.Test;
+                import org.springframework.boot.test.support.classpath.resources.WithResource;
+
+                class HazelcastHealthIndicatorTests {
+                    @Test
+                    @WithResource(name = "hazelcast.xml", content = \"""
+                            <hazelcast xmlns="http://www.hazelcast.com/schema/config">
+                              <network>
+                                <join>
+                                  <auto-detection enabled="false"/>
+                                  <multicast enabled="false"/>
+                                </join>
+                              </network>
+                            </hazelcast>
+                            \""")
+                    void hazelcastUp() {
+                    }
+                }
+                """;
+
+        String after = """
+                package org.springframework.boot.actuate.hazelcast;
+
+                import org.junit.jupiter.api.Test;
+                import org.springframework.boot.test.support.classpath.resources.WithResource;
+
+                @WithResource(name = "hazelcast.xml", content = \"""
+                        <hazelcast xmlns="http://www.hazelcast.com/schema/config">
+                          <network>
+                            <join>
+                              <auto-detection enabled="false"/>
+                              <multicast enabled="false"/>
+                            </join>
+                          </network>
+                        </hazelcast>
+                        \""")
+                class HazelcastHealthIndicatorTests {
+                    @Test
+                    void hazelcastUp() {
+                    }
+
+                    @Test
+                    void hazelcastShutdown() {
+                    }
+                }
+                """;
+
+        UMLModel beforeModel = new UMLModelASTReader(Map.of("HazelcastHealthIndicatorTests.java", before), Set.of("."), false).getUmlModel();
+        UMLModel afterModel = new UMLModelASTReader(Map.of("HazelcastHealthIndicatorTests.java", after), Set.of("."), false).getUmlModel();
+        UMLModelDiff modelDiff = beforeModel.diff(afterModel);
         List<Refactoring> refactorings = modelDiff.getRefactorings();
 
         Assertions.assertAll(

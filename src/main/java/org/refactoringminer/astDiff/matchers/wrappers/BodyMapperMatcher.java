@@ -282,6 +282,22 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
                 }
+                Pair<Tree, Tree> objectPattern = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.OBJECT_PATTERN, LANG2.OBJECT_PATTERN);
+                if (objectPattern != null) {
+                    mappingStore.addMapping(objectPattern.first,objectPattern.second);
+                    matched = Helpers.findPairOfType(objectPattern.first,objectPattern.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(objectPattern.first,objectPattern.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(objectPattern.first,objectPattern.second, LANG1.COMMA, LANG2.COMMA);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                }
                 matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);

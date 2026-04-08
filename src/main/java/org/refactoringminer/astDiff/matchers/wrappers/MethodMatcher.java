@@ -505,6 +505,26 @@ public class MethodMatcher extends BodyMapperMatcher{
                             mappingStore.addMapping(matched.first,matched.second);
                         }
                     }
+                    if(leftTree.getParent().getType().name.equals(LANG1.OBJECT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.OBJECT_PATTERN)) {
+                        mappingStore.addMapping(leftTree.getParent(),rightTree.getParent());
+                        com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(), LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                        if (matched != null) {
+                            mappingStore.addMapping(matched.first,matched.second);
+                        }
+                        matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(), LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                        if (matched != null) {
+                            mappingStore.addMapping(matched.first,matched.second);
+                        }
+                        Tree requiredParameter1 = leftTree.getParent().getParent();
+                        Tree requiredParameter2 = rightTree.getParent().getParent();
+                        if(requiredParameter1 != null && requiredParameter2 != null && requiredParameter1.getType().name.equals(LANG1.REQUIRED_PARAMETER) && requiredParameter2.getType().name.equals(LANG2.REQUIRED_PARAMETER)) {
+                            mappingStore.addMapping(requiredParameter1,requiredParameter2);
+                            if(requiredParameter1.getChildren().size() > 1 && requiredParameter2.getChildren().size() > 1 &&
+                                    requiredParameter1.getChild(1).getType().name.equals(LANG1.TYPE_ANNOTATION) && requiredParameter2.getChild(1).getType().name.equals(LANG2.TYPE_ANNOTATION)) {
+                                mappingStore.addMappingRecursively(requiredParameter1.getChild(1), requiredParameter2.getChild(1));
+                            }
+                        }
+                    }
                 }
                 if(leftTree.getType().name.equals(LANG1.PARAMETER_MODIFIERS) && rightTree.getType().name.equals(LANG2.PARAMETER_MODIFIERS)) {
                     Tree leftParameter = TreeUtilFunctions.findByLocationInfo(leftTree.getParent(), leftVarDecl.getLocationInfo(), LANG1, LANG1.PARAMETER);

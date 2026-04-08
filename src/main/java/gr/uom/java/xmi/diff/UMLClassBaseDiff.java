@@ -219,6 +219,44 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		checkForExtractedOperationsWithCallsInOtherMappers();
 		checkForInlinedOperationsToExtractedOperations(extractedbodyMappers);
 		checkForMovedCodeBetweenOperations();
+		checkForMovedAnnotations();
+	}
+
+	public void checkForMovedAnnotations() {
+		if(this.getAnnotationListDiff().getAddedAnnotations().size() > 0) {
+			for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+				if(mapper.getOperationSignatureDiff().isPresent()) {
+					UMLAnnotationListDiff annotationListDiff = mapper.getOperationSignatureDiff().get().getAnnotationListDiff();
+					if(annotationListDiff.getRemovedAnnotations().size() > 0) {
+						for(UMLAnnotation removedAnnotation : annotationListDiff.getRemovedAnnotations()) {
+							for(UMLAnnotation addedAnnotation : this.getAnnotationListDiff().getAddedAnnotations()) {
+								if(removedAnnotation.equals(addedAnnotation)) {
+									//create Move Annotation instance
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		else if(this.getAnnotationListDiff().getRemovedAnnotations().size() > 0) {
+			for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+				if(mapper.getOperationSignatureDiff().isPresent()) {
+					UMLAnnotationListDiff annotationListDiff = mapper.getOperationSignatureDiff().get().getAnnotationListDiff();
+					if(annotationListDiff.getAddedAnnotations().size() > 0) {
+						for(UMLAnnotation addedAnnotation : annotationListDiff.getAddedAnnotations()) {
+							for(UMLAnnotation removedAnnotation : this.getAnnotationListDiff().getRemovedAnnotations()) {
+								if(removedAnnotation.equals(addedAnnotation)) {
+									//create Move Annotation instance
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	private void processPrimaryConstructors() throws RefactoringMinerTimedOutException {

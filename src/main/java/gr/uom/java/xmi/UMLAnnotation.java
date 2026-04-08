@@ -2,9 +2,12 @@ package gr.uom.java.xmi;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -22,6 +25,7 @@ import extension.ast.node.metadata.LangAnnotation;
 import extension.ast.node.unit.LangCompilationUnit;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.diff.CodeRange;
 
 public class UMLAnnotation implements Serializable, LocationInfoProvider {
@@ -268,7 +272,30 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 			} else {
 				if (m.get(thisKey) == null)
 					return false;
-				if (!thisValue.getExpression().equals(m.get(thisKey).getExpression()))
+				String expression1 = thisValue.getExpression();
+				String expression2 = m.get(thisKey).getExpression();
+				List<LeafExpression> textBlocks1 = thisValue.getTextBlocks();
+				List<LeafExpression> textBlocks2 = m.get(thisKey).getTextBlocks();
+				int textBlockMatches = 0;
+				if(textBlocks1.size() == textBlocks2.size()) {
+					Iterator<LeafExpression> it1 = textBlocks1.iterator();
+					Iterator<LeafExpression> it2 = textBlocks2.iterator();
+					while(it1.hasNext() && it2.hasNext()) {
+						String s1 = it1.next().getString();
+						String s2 = it2.next().getString();
+						String strippedText1 = Arrays.stream(s1.split("\\R"))
+								.map(String::stripLeading)
+								.collect(Collectors.joining("\n"));
+						String strippedText2 = Arrays.stream(s2.split("\\R"))
+								.map(String::stripLeading)
+								.collect(Collectors.joining("\n"));
+						if(strippedText1.equals(strippedText2)) {
+							textBlockMatches++;
+						}
+					}
+				}
+				boolean textBlockMatch = textBlockMatches > 0 && textBlockMatches == textBlocks1.size();
+				if (!expression1.equals(expression2) && !textBlockMatch)
 					return false;
 			}
 		}

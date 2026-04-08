@@ -1,10 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.AbstractMap.SimpleEntry;
-import java.util.stream.Collectors;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +9,6 @@ import java.util.Objects;
 
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
-import gr.uom.java.xmi.decomposition.LeafExpression;
 
 public class UMLAnnotationDiff {
 	private UMLAnnotation removedAnnotation;
@@ -67,34 +63,6 @@ public class UMLAnnotationDiff {
 				}
 				else {
 					addedMemberValuePairs.add(new SimpleEntry<>(key2, memberValuePairs2.get(key2)));
-				}
-			}
-		}
-		for(SimpleEntry<String, AbstractExpression> key : matchedMemberValuePairs.keySet()) {
-			SimpleEntry<String, AbstractExpression> value = matchedMemberValuePairs.get(key);
-			if(!key.getValue().getExpression().equals(value.getValue().getExpression())) {
-				List<LeafExpression> textBlocks1 = key.getValue().getTextBlocks();
-				List<LeafExpression> textBlocks2 = value.getValue().getTextBlocks();
-				boolean skip = false;
-				if(textBlocks1.size() == textBlocks2.size()) {
-					Iterator<LeafExpression> it1 = textBlocks1.iterator();
-					Iterator<LeafExpression> it2 = textBlocks2.iterator();
-					while(it1.hasNext() && it2.hasNext()) {
-						String s1 = it1.next().getString();
-						String s2 = it2.next().getString();
-						String strippedText1 = Arrays.stream(s1.split("\\R"))
-		                        .map(String::stripLeading)
-		                        .collect(Collectors.joining("\n"));
-						String strippedText2 = Arrays.stream(s2.split("\\R"))
-		                        .map(String::stripLeading)
-		                        .collect(Collectors.joining("\n"));
-						if(strippedText1.equals(strippedText2)) {
-							skip = true;
-						}
-					}
-				}
-				if(!skip) {
-					matchedMemberValuePairsWithDifferentExpressions.put(key, value);
 				}
 			}
 		}

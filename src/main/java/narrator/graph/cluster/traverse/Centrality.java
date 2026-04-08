@@ -34,10 +34,6 @@ public class Centrality {
         for (Node node : hunkNodes) {
             List<Edge> usedDeclarations = graph.incomingEdgesOf(node).stream()
                     .filter(edge -> edge.getType().equals(EdgeType.DEF_USE))
-                    .filter(edge -> {
-                        Node edgeSource = graph.getEdgeSource(edge);
-                        return edgeSource.isBase() || edgeSource.isExtension();
-                    })
                     .toList();
             if (usedDeclarations.isEmpty()) {
                 continue;

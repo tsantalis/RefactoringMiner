@@ -322,14 +322,17 @@ public class HunkNetwork {
     private void processDefUse() {
         List<Node> nodes = graph.vertexSet().stream().toList();
         for (Node node : nodes) {
-            if (node.isContext()) {
+            if (node.getNodeType().equals(NodeType.LOCATION_CONTEXT)) {
                 continue;
             }
 
             Tree tree = node.getTree();
 
-            List<Tree> subTrees = new ArrayList<>(tree.getDescendants());
+            List<Tree> subTrees = new ArrayList<>();
             subTrees.add(tree);
+            if (!node.isContext()) {
+                subTrees.addAll(tree.getDescendants());
+            }
 
             Constants constants = new Constants(node.getPath());
 
@@ -518,61 +521,66 @@ public class HunkNetwork {
             return;
         }
 
-        // TODO: it must be only one (findFirst)
-        List<VariableDeclaration> operationVariables = umlOperation.getAllVariableDeclarations()
+        Optional<VariableDeclaration> foundOperationVariable = umlOperation.getAllVariableDeclarations()
                 .stream()
                 .filter(operationVariable -> {
                     LocationInfo operationVariableLoc = operationVariable.getLocationInfo();
                     return operationVariableLoc.getStartOffset() == variableDeclarationTree.getPos()
                             && variableDeclarationTree.getEndPos()
                             == operationVariableLoc.getEndOffset();
-                }).toList();
-        for (VariableDeclaration operationVariable : operationVariables) {
-            VariableDeclaration variableDeclaration = operationVariable.getVariableDeclaration();
+                }).findFirst();
+        if (foundOperationVariable.isEmpty()) {
+            return;
+        }
 
-            node.addIdentifier(variableDeclaration.getVariableName());
+        VariableDeclaration variableDeclaration = foundOperationVariable.get();
 
-            List<Node> useNodes = findAccessNodes(variableDeclaration.getLocationInfo(),
-                    variableDeclaration.getScope().getStatementsInScopeUsingVariable(),
-                    node.isSrc() ? srcContexts : dstContexts, node);
-            for (Node useNode : useNodes) {
-                addEdge(node, useNode, EdgeType.DEF_USE);
-            }
+        node.addIdentifier(variableDeclaration.getVariableName());
 
-            AbstractExpression variableInitStatement = operationVariable.getInitializer();
-            if (variableInitStatement == null) {
+        List<Node> useNodes = findAccessNodes(variableDeclaration.getLocationInfo(),
+                variableDeclaration.getScope().getStatementsInScopeUsingVariable(),
+                node.isSrc() ? srcContexts : dstContexts, node);
+        for (Node useNode : useNodes) {
+            addEdge(node, useNode, EdgeType.DEF_USE);
+        }
+
+        if (node.isContext()) {
+            return;
+        }
+
+        AbstractExpression variableInitStatement = variableDeclaration.getInitializer();
+        if (variableInitStatement == null) {
+            return;
+        }
+
+        List<AbstractCall> variableInitInvocations = variableInitStatement.getMethodInvocations();
+        for (AbstractCall methodInvocation : variableInitInvocations) {
+            UMLOperation declaration =
+                    node.isSrc() ? modelDiff.findDeclarationsInParentModel(umlOperation,
+                            methodInvocation)
+                            : modelDiff.findDeclarationsInChildModel(umlOperation,
+                                    methodInvocation);
+            if (declaration == null) {
                 continue;
             }
 
-            List<AbstractCall> variableInitInvocations = variableInitStatement.getMethodInvocations();
-            for (AbstractCall methodInvocation : variableInitInvocations) {
-                UMLOperation declaration =
-                        node.isSrc() ? modelDiff.findDeclarationsInParentModel(umlOperation,
-                                methodInvocation)
-                                : modelDiff.findDeclarationsInChildModel(umlOperation,
-                                        methodInvocation);
-                if (declaration == null) {
-                    continue;
-                }
+            LocationInfo locationInfo = declaration.getLocationInfo();
+            String path = locationInfo.getFilePath();
 
-                LocationInfo locationInfo = declaration.getLocationInfo();
-                String path = locationInfo.getFilePath();
-
-                List<Node> declarationNodes = findOverlappingNodes(path, node.getSrcDst(),
-                        locationInfo.getStartOffset(),
-                        locationInfo.getEndOffset(), (n) -> !n.isContext() && !n.isExtension());
-                // those declaration nodes will establish this relation
-                if (!declarationNodes.isEmpty()) {
-                    continue;
-                }
-
-                Tree tree = TreeUtilFunctions.findByLocationInfo(
-                        (node.isSrc() ? srcContexts : dstContexts).get(path).getRoot(),
-                        locationInfo, new Constants(node.getPath()));
-                Node declarationNode = addExtensionNode(tree, node);
-                // used extension
-                addEdge(declarationNode, node, EdgeType.DEF_USE);
+            List<Node> declarationNodes = findOverlappingNodes(path, node.getSrcDst(),
+                    locationInfo.getStartOffset(),
+                    locationInfo.getEndOffset(), (n) -> !n.isContext() && !n.isExtension());
+            // those declaration nodes will establish this relation
+            if (!declarationNodes.isEmpty()) {
+                continue;
             }
+
+            Tree tree = TreeUtilFunctions.findByLocationInfo(
+                    (node.isSrc() ? srcContexts : dstContexts).get(path).getRoot(),
+                    locationInfo, new Constants(node.getPath()));
+            Node declarationNode = addExtensionNode(tree, node);
+            // used extension
+            addEdge(declarationNode, node, EdgeType.DEF_USE);
         }
     }
 
@@ -624,7 +632,7 @@ public class HunkNetwork {
         }
 
         // declaration change without any usage change
-        if (result.isEmpty()) {
+        if (result.isEmpty() && !node.isContext()) {
             List<LocationInfo> changedFilesUseStatementsLocation =
                     accessFragments.stream().map(LocationInfoProvider::getLocationInfo)
                             .filter(locationInfo -> contexts.containsKey(

@@ -484,12 +484,12 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tNO_OUTPUT : IntsRef in method private stem(word char[], offset int, length int, context WordContext, previous int, prevFlag char, prefixId int, recursionDepth int, doPrefix boolean, previousWasPrefix boolean, processor RootProcessor) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer",
-          "validation": true
+          "validation": false
         },
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tNO_OUTPUT : IntsRef in method private stem(word char[], offset int, length int, context WordContext, previous int, prevFlag char, prefixId int, recursionDepth int, doPrefix boolean, previousWasPrefix boolean, processor RootProcessor) : boolean from class org.apache.lucene.analysis.hunspell.Stemmer",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_VARIABLE",
@@ -517,6 +517,16 @@
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tids : null to prefixId : null in method private expandRoot(root Root<String>, misspelled String) : List<String> from class org.apache.lucene.analysis.hunspell.GeneratingSuggester",
           "validation": false
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpackage nextArc(fst FST<IntsRef>, arc FST.Arc<IntsRef>, reader FST.BytesReader, output IntsRef, ch int) : IntsRef extracted from private stem(word char[], offset int, length int, context WordContext, previous int, prevFlag char, prefixId int, recursionDepth int, doPrefix boolean, previousWasPrefix boolean, processor RootProcessor) : boolean in class org.apache.lucene.analysis.hunspell.Stemmer & moved to class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\tch : char to ch : int in method package nextArc(fst FST<IntsRef>, arc FST.Arc<IntsRef>, reader FST.BytesReader, output IntsRef, ch int) : IntsRef from class org.apache.lucene.analysis.hunspell.Dictionary",
+          "validation": true
         }
       ]
     },

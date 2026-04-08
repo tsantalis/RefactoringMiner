@@ -6009,6 +6009,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 												compositeChildMatchingScore(statement1.getParent(), statement2.getParent(), Optional.of(replacementInfo), mappings, removedOperations, addedOperations) > 0)) {
 									score = 0.99;
 								}
+								else if(replacements.isEmpty() && statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType()) &&
+										!statement1.getString().equals(statement2.getString())) {
+									score = 0.99;
+								}
 								if(score == 0.99) {
 									for(CompositeStatementObject matchingInnerNode1 : matchingInnerNodes1) {
 										if(!matchingInnerNode1.equals(statement1)) {
@@ -6400,6 +6404,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										statement2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
 										((alreadyMatched1(statement1.getParent()) && alreadyMatched2(statement2.getParent())) ||
 												compositeChildMatchingScore(statement1.getParent(), statement2.getParent(), Optional.of(replacementInfo), mappings, removedOperations, addedOperations) > 0)) {
+									score = 0.99;
+								}
+								else if(replacements.isEmpty() && statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType()) &&
+										!statement1.getString().equals(statement2.getString())) {
 									score = 0.99;
 								}
 								if(score == 0.99) {

@@ -143,11 +143,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Merge Parameter`
 * `Invert Condition`
 
-As of **March 3, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **April 8, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3546  | 40  | 76  | 0.989  | 0.979|
+|**Total**|3548  | 40  | 75  | 0.989  | 0.979|
 |Extract Method|375  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -166,12 +166,12 @@ As of **March 3, 2026** the precision and recall of RefactoringMiner on this ben
 |Extract Superclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|45  |  1  |  4  | 0.978  | 0.918|
-|Extract And Move Method|129  |  1  |  5  | 0.992  | 0.963|
+|Extract And Move Method|130  |  1  |  5  | 0.992  | 0.963|
 |Move And Inline Method|28  |  1  |  6  | 0.966  | 0.824|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|293  |  1  |  6  | 0.997  | 0.980|
 |Extract Attribute| 7  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|127  |  0  | 11  | 1.000  | 0.920|
+|Inline Variable|127  |  0  | 10  | 1.000  | 0.927|
 |Rename Variable|308  |  5  |  6  | 0.984  | 0.981|
 |Rename Attribute|112  |  4  |  6  | 0.966  | 0.949|
 |Merge Variable| 4  |  0  |  0  | 1.000  | 1.000|
@@ -179,7 +179,7 @@ As of **March 3, 2026** the precision and recall of RefactoringMiner on this ben
 |Replace Variable With Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|59  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|169  |  1  |  6  | 0.994  | 0.966|
-|Change Variable Type|379  |  6  |  2  | 0.984  | 0.995|
+|Change Variable Type|380  |  6  |  2  | 0.984  | 0.995|
 |Change Attribute Type|164  |  2  |  3  | 0.988  | 0.982|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Loop With Pipeline| 4  |  0  |  0  | 1.000  | 1.000|

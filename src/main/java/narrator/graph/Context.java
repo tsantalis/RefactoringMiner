@@ -61,8 +61,8 @@ public class Context {
         }
         if (treeType.equals(constants.METHOD_INVOCATION)) {
             return List.of(constants.IF_STATEMENT, constants.METHOD_INVOCATION,
-                    constants.CLASS_INSTANCE_CREATION, constants.FOR_STATEMENT,
-                    constants.RETURN_STATEMENT, constants.BLOCK);
+                    constants.FIELD_DECLARATION, constants.CLASS_INSTANCE_CREATION,
+                    constants.FOR_STATEMENT, constants.RETURN_STATEMENT, constants.BLOCK);
         }
         if (treeType.equals("LambdaExpression")) {
             return List.of(constants.METHOD_INVOCATION, constants.VARIABLE_DECLARATION_STATEMENT);

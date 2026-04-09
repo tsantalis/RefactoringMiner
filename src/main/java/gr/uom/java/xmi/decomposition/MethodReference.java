@@ -10,6 +10,8 @@ import org.eclipse.jdt.core.dom.ExpressionMethodReference;
 import org.eclipse.jdt.core.dom.SuperMethodReference;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeMethodReference;
+import org.jetbrains.kotlin.psi.KtCallableReferenceExpression;
+import org.jetbrains.kotlin.psi.KtFile;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -57,6 +59,12 @@ public class MethodReference extends AbstractCall {
 		for(Type typeArg : typeArgs) {
 			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
 		}
+	}
+
+	public MethodReference(KtFile cu, String sourceFolder, String filePath, KtCallableReferenceExpression reference, VariableDeclarationContainer container, String fileContent) {
+		super(cu, sourceFolder, filePath, reference, CodeElementType.METHOD_REFERENCE, container);
+		this.methodName = reference.getCallableReference().getReferencedName();
+		this.arguments = new ArrayList<String>();
 	}
 
 	public String getMethodName() {

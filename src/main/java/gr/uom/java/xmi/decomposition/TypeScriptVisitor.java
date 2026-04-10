@@ -146,7 +146,7 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 	}
 
 	public Swc4jAstVisitorResponse visitRegex(Swc4jAstRegex node) {
-		LeafExpression literal = new LeafExpression(sourceFolder, filePath, node, CodeElementType.STRING_LITERAL, container, fileContent);
+		LeafExpression literal = new LeafExpression(sourceFolder, filePath, node, CodeElementType.REGEX, container, fileContent);
 		stringLiterals.add(literal);
 		return super.visitRegex(node);
 	}

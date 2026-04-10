@@ -44,6 +44,18 @@ public class TraversalEngine {
         addSingularComponents();
 
         mergeByContext();
+
+        for (UsagePattern usagePattern : usagePatterns) {
+            usagePattern.breakCircularDependencies();
+
+            List<Node> emptyRequirementNodes = usagePattern.getRequirements().entrySet().stream()
+                    .filter(entry -> entry.getValue() == null).map(Entry::getKey).toList();
+            emptyRequirementNodes.forEach(node -> {
+                usagePattern.breakRequirement(node);
+                addMapping(node, usagePattern);
+            });
+        }
+
         // up until this point, they are merged per file.
         mergeByUsageChain();
     }
@@ -55,32 +67,7 @@ public class TraversalEngine {
             addUsageComponent(useNode, usagePatterns);
         }
 
-        for (UsagePattern usagePattern : usagePatterns.values()) {
-            breakCircularDependencies(usagePattern, new ArrayList<>());
-        }
-
         this.usagePatterns.addAll(usagePatterns.values());
-    }
-
-    // TODO: test and validate
-    private void breakCircularDependencies(UsagePattern usagePattern, List<UsagePattern> path) {
-        if (usagePattern.getRequirements().isEmpty()) {
-            return;
-        }
-
-        List<UsagePattern> newPath = new ArrayList<>(path);
-        newPath.add(usagePattern);
-
-        List<Node> circularRequirementNodes = usagePattern.getRequirements().entrySet().stream()
-                .filter(nodeRequirement -> newPath.contains(nodeRequirement.getValue())).map(
-                        Entry::getKey).toList();
-        for (Node circularRequirementNode : circularRequirementNodes) {
-            usagePattern.breakRequirement(circularRequirementNode);
-        }
-
-        for (UsagePattern requirement : usagePattern.getRequirements().values()) {
-            breakCircularDependencies(requirement, newPath);
-        }
     }
 
     private void addUsageComponent(Node node, HashMap<Node, UsagePattern> usagePatterns) {
@@ -105,6 +92,8 @@ public class TraversalEngine {
 
                 UsagePattern usedComponent = usagePatterns.get(usedNode);
                 usageComponent.addRequirement(usedNode, usedComponent);
+            } else if (usedNode.isContext()) {
+                usageComponent.addRequirement(usedNode, null);
             } else {
                 addMapping(usedNode, usageComponent);
             }
@@ -227,10 +216,8 @@ public class TraversalEngine {
                     .filter(descendant -> descendant.second == 0).toList();
             if (headDescendants.size() > 1) {
                 if (headMergeables.size() > 1) {
-                    mergeByContext(
-                            headMergeables.stream().map(headMergeable -> headMergeable.first)
-                                    .toList(),
-                            subjectContexts, componentsContexts);
+                    mergeByContext(headMergeables.stream().map(headMergeable -> headMergeable.first)
+                            .toList(), componentsContexts);
                 } else {
                     iteratedComponents.add(subject);
                 }
@@ -274,12 +261,19 @@ public class TraversalEngine {
             allDescendants.add(headMergeables.get(0).first);
             allDescendants.add(mappingDescendants.get(0).first);
 
-            mergeByContext(allDescendants, subjectContexts, componentsContexts);
+            mergeByContext(allDescendants, componentsContexts);
         }
     }
 
-    private void mergeByContext(List<TraversalPattern> mergeComponents, List<Node> subjectContexts,
+    private void mergeByContext(List<TraversalPattern> mergeComponents,
             Map<TraversalPattern, List<Node>> componentsContexts) {
+        List<List<Node>> subjectsContexts = componentsContexts.entrySet().stream()
+                .filter(entry -> mergeComponents.contains(entry.getKey()))
+                .map(Entry::getValue).toList();
+        Set<Node> heads = subjectsContexts.stream().map(subjectContexts -> subjectContexts.get(0))
+                .collect(Collectors.toSet());
+        List<Node> subjectContexts = subjectsContexts.get(0);
+
         for (TraversalPattern mergeComponent : mergeComponents) {
             componentsContexts.remove(mergeComponent);
             components.remove(mergeComponent);
@@ -289,14 +283,23 @@ public class TraversalEngine {
                 ReasonType.CONTEXT);
         components.add(mergedComponent);
 
+        for (UsagePattern usagePattern : usagePatterns) {
+            List<Node> existingHeads = heads.stream()
+                    .filter(head -> usagePattern.getRequirements().containsKey(head)).toList();
+            for (Node head : existingHeads) {
+                usagePattern.getRequirements().put(head, mergedComponent);
+            }
+        }
+
         if (subjectContexts.size() > 1) {
             componentsContexts.put(mergedComponent,
                     subjectContexts.subList(1, subjectContexts.size()));
         }
+
     }
 
     private void mergeByUsageChain() {
-        Map<UsagePattern, Set<UsagePattern>> usageRequirements = new HashMap<>();
+        Map<UsagePattern, Set<AggregatorPattern>> usageRequirements = new HashMap<>();
         for (UsagePattern usagePattern : usagePatterns) {
             usageRequirements.put(usagePattern,
                     new HashSet<>(usagePattern.getRequirements().values()));
@@ -313,10 +316,9 @@ public class TraversalEngine {
             Node useNode = subject.useNode;
             Set<Node> usedNodes = subject.getUsedNodes();
 
-            HashSet<TraversalPattern> mergeComponents = new HashSet<>();
             List<TraversalPattern> useComponents = components.stream()
                     .filter(component -> component.containsNode(useNode)).toList();
-            mergeComponents.addAll(useComponents);
+            HashSet<TraversalPattern> mergeComponents = new HashSet<>(useComponents);
             List<TraversalPattern> usedComponents = components.stream()
                     .filter(component -> usedNodes.stream().anyMatch(component::containsNode))
                     .toList();

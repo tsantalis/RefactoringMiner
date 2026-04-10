@@ -1,38 +1,22 @@
 package narrator.graph.cluster.traverse;
 
 import com.google.gson.JsonObject;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import narrator.graph.Node;
 import narrator.graph.NodeType;
 
-public class TraversalComponent extends TraversalPattern {
+public class TraversalComponent extends AggregatorPattern {
 
     private final List<TraversalPattern> components;
     private final ReasonType reasonType;
 
     TraversalComponent(List<TraversalPattern> components, ReasonType reasonType) {
         this.components = components;
+        subs = new HashSet<>(components);
         this.reasonType = reasonType;
-    }
-
-    @Override
-    public boolean containsNode(Node node) {
-        Node foundNode =
-                getGraph().vertexSet().stream().filter(reasonNode -> reasonNode.equals(node))
-                        .findFirst().orElse(null);
-        if (foundNode != null) {
-            return true;
-        }
-
-        for (TraversalPattern component : components) {
-            if (component.containsNode(node)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public List<TraversalPattern> getComponents() {
@@ -54,15 +38,6 @@ public class TraversalComponent extends TraversalPattern {
     }
 
     @Override
-    public Set<Node> vertexSet() {
-        Set<Node> result = new HashSet<>(getGraph().vertexSet());
-        for (TraversalPattern component : components) {
-            result.addAll(component.vertexSet());
-        }
-        return result;
-    }
-
-    @Override
     public JsonObject stringify() {
         JsonObject result = super.stringify();
 
@@ -70,5 +45,19 @@ public class TraversalComponent extends TraversalPattern {
         result.addProperty("reasonType", reasonType.name());
 
         return result;
+    }
+
+    @Override
+    public boolean containsNode(Node node) {
+        return this.containsNode(node, new HashSet<>());
+    }
+
+    @Override
+    public Set<Node> vertexSet() {
+        return this.vertexSet(new HashSet<>());
+    }
+
+    public void breakCircularDependencies() {
+        breakCircularDependencies(new ArrayList<>());
     }
 }

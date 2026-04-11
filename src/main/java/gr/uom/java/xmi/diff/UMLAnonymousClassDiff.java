@@ -278,6 +278,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 				for(ExtractOperationRefactoring refactoring : refs) {
 					refactorings.add(refactoring);
 					UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
+					refactorings.addAll(operationBodyMapper.getRefactoringsAfterPostProcessing());
 					mapper.addChildMapper(operationBodyMapper);
 					operationsToBeRemoved.add(addedOperation);
 				}
@@ -296,6 +297,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 				for(InlineOperationRefactoring refactoring : refs) {
 					refactorings.add(refactoring);
 					UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
+					refactorings.addAll(operationBodyMapper.getRefactoringsAfterPostProcessing());
 					mapper.addChildMapper(operationBodyMapper);
 					operationsToBeRemoved.add(removedOperation);
 				}

@@ -1,0 +1,884 @@
+package com.example.oncampusapp;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.graphics.Insets;
+import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Intent;
+import android.view.ViewGroup;
+
+import androidx.fragment.app.FragmentActivity;
+import androidx.test.espresso.idling.CountingIdlingResource;
+
+import android.Manifest;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.app.Dialog;
+
+import com.example.oncampusapp.navigation.NavigationHelper;
+import com.example.oncampusapp.navigation.Route;
+import com.example.oncampusapp.location.FusedLocationProvider;
+import com.example.oncampusapp.location.FusedLocationSource;
+import com.example.oncampusapp.location.ILocationProvider;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.example.oncampusapp.databinding.ActivityMapsBinding;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.maps.android.data.Feature;
+import com.google.maps.android.data.geojson.GeoJsonLayer;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+    public static final String EXTRA_OPEN_DIRECTIONS = "OPEN_DIRECTIONS";
+    public static final String EXTRA_OPEN_POI_ROUTE = "OPEN_POI_ROUTE";
+    public static final String EXTRA_POI_LAT = "POI_LAT";
+    public static final String EXTRA_POI_LNG = "POI_LNG";
+    public static final String EXTRA_POI_NAME = "POI_NAME";
+    public static final String EXTRA_NOTIFICATION_ID = "notification_id";
+    private GoogleMap mMap;
+    public static Map<String, Building> buildingsMap = new HashMap<>();
+    private ActivityMapsBinding binding;
+    // Managers
+    private RouteManager routeManager;
+    private BuildingDialogManager buildingDialogManager;
+    private IndoorNavigationController indoorNavController;
+    private LocationPermissionManager locationPermManager;
+    private EventBannerManager bannerManager;
+    private GeoJsonMapLoader geoJsonMapLoader;
+    private RoutePickerController routePickerController;
+
+    private BuildingClassifier buildingClassifier;
+    protected BuildingManager buildingManager;
+    private GeoJsonLayer layer;
+    public static final LatLng SGW_COORDS = new LatLng(45.496107243097704, -73.57725834380621);
+    public static final LatLng LOY_COORDS = new LatLng(45.4582, -73.6405);
+    public ILocationProvider fusedLocationClient;
+    private FusedLocationSource myLocationSource;
+
+    private ActivityResultLauncher<String[]> locationPermissionRequest;
+    private TextView btnSgwLoy;
+
+    private static final String CAMPUS = "campus";
+    private static final String SGW = "SGW";
+    private static final String LOY = "LOY";
+    private static final String TAG = "MapsActivity";
+    private static final String CURRENT_LOCATION = "Current Location";
+    private static final String KEY_NOTIFICATION_ID = "notification_id";
+
+    // Pending notification flag
+    private boolean pendingNotificationDirections = false;
+
+    // Cross-building navigation state
+    private boolean pendingCrossBuildingOutdoor = false;
+    private LatLng pendingPoiLatLng;
+    private String pendingPoiName;
+    private IndoorNode pendingCrossToDoor;
+    private IndoorNode pendingCrossToRoom;
+    private String pendingCrossFromBuilding;
+    private String pendingCrossToBuilding;
+    private boolean shouldStartOutdoorAfterIndoor = false;
+    private boolean pendingFinalIndoorAfterOutdoor = false;
+
+    // A counter that tells Espresso tests to wait for the map to load
+    public CountingIdlingResource mapIdlingResource = new CountingIdlingResource("MapReadyResource");
+
+    // Indoor room data – populated in background once map is ready
+    private final java.util.Map<String, IndoorNode> indoorRoomMap = new java.util.LinkedHashMap<>();
+    private ArrayAdapter<String> searchSuggestionsAdapter;
+
+
+
+
+
+    public GoogleMap getMap() {
+        return this.mMap;
+    }
+
+    // for tests. to mock location
+    public void setLocationProvider(ILocationProvider provider) {
+        this.fusedLocationClient = provider;
+        this.myLocationSource = new FusedLocationSource(this, this.fusedLocationClient);
+        if (mMap != null) {
+            mMap.setLocationSource(this.myLocationSource);
+        }
+
+        // Set it globally so the Service can use the mock too!
+        if (getApplication() instanceof OnCampusApplication) {
+            ((OnCampusApplication) getApplication()).setLocationProvider(provider);
+        }
+    }
+    private void checkLocationPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            // Request the permission
+            locationPermissionRequest.launch(new String[] {
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+            });
+        }
+    }
+
+    // Register for multiple permissions
+    private final ActivityResultLauncher<String[]> requestMultiplePermissionsLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), isGranted -> {
+                Boolean fineLocationGranted = isGranted.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false);
+                Boolean postNotificationsGranted = isGranted.getOrDefault(Manifest.permission.POST_NOTIFICATIONS, false);
+
+                if (Boolean.TRUE.equals(fineLocationGranted))
+                    Log.d("LocationPermission", "Precise location access granted.");
+                else if (Boolean.TRUE.equals(isGranted.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false)))
+                    Log.d("LocationPermission", "Only approximate location access granted.");
+
+                if (Boolean.TRUE.equals(postNotificationsGranted))
+                    Log.d("NotificationPermission", "Notifications granted.");
+                else
+                    Log.d("NotificationPermission", "Notifications denied.");
+            });
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        TextSizePreferences.apply(this);
+
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
+
+        // locationPermManager is initialized after fusedLocationClient — use direct launcher here
+        List<String> perms = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            perms.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            perms.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            perms.add(Manifest.permission.POST_NOTIFICATIONS);
+        }
+        if (!perms.isEmpty()) requestMultiplePermissionsLauncher.launch(perms.toArray(new String[0]));
+
+        // ViewBinding: inflate, then set content view ONCE
+        binding = ActivityMapsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        // Poi methods when user clicks on the button
+        handleIncomingPoiIntent();
+
+        // Preload shuttle route data from bundled JSON
+        ShuttleHelper.init(this);
+        View bannerView = findViewById(R.id.included_banner);
+        if (bannerView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(bannerView, (v, windowInsets) -> {
+                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+                ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+                // Push the banner down by the height of the status bar + 16 pixels for a nice gap
+                mlp.topMargin = insets.top + 16;
+                v.setLayoutParams(mlp);
+                return windowInsets; // Return the original insets untouched
+            });
+        }
+
+        buildingClassifier = new BuildingClassifier();
+
+        OnCampusApplication app = (OnCampusApplication) getApplication();
+
+        // If a mock hasn't been injected yet, set the default one
+        if (app.getLocationProvider() == null) {
+            app.setLocationProvider(new FusedLocationProvider(this));
+        }
+
+        // Use the provider from the application
+        fusedLocationClient = app.getLocationProvider();
+
+        // Initialize our custom Location Source
+        myLocationSource = new FusedLocationSource(this, fusedLocationClient);
+
+        // Initialize managers
+        routeManager = new RouteManager(this);
+        routeManager.setLocationClient(fusedLocationClient);
+        routeManager.setBuildingsMap(buildingsMap);
+
+        buildingDialogManager = new BuildingDialogManager(this);
+
+        indoorNavController = new IndoorNavigationController(this, indoorRoomMap);
+
+        bannerManager = new EventBannerManager(this);
+        geoJsonMapLoader = new GeoJsonMapLoader(this, buildingClassifier, buildingDialogManager);
+
+        routePickerController = new RoutePickerController(this, routeManager, indoorNavController, bannerManager);
+        routePickerController.setup();
+
+        binding.bottomNav.setSelectedItemId(R.id.nav_home);
+        binding.bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_home) {
+                return true;
+            }
+
+            if (id == R.id.nav_account) {
+                startActivity(new Intent(this, GoogleCalendarAuthActivity.class));
+                finish();
+                overridePendingTransition(0, 0);
+                return true;
+            }
+
+            if (id == R.id.nav_settings) {
+                startActivity(new Intent(this, SettingsActivity.class));
+                finish();
+                overridePendingTransition(0, 0);
+                return true;
+            }
+
+            return false;
+        });
+
+        locationPermManager = new LocationPermissionManager(this, requestMultiplePermissionsLauncher);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        assert mapFragment != null;
+
+        // Increment before starting the async task
+        mapIdlingResource.increment();
+        mapFragment.getMapAsync(this);
+
+        requestRemainingPermissions();
+
+        createNotificationChannel();
+        // Initialize the permission launcher
+        locationPermissionRequest = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+            result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false);
+            result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false);
+        });
+
+        // Check and Request on Startup
+        checkLocationPermissions();
+
+        // Load building details
+        buildingDialogManager.loadBuildingDetails();
+
+        bannerManager.checkAndDisplayNextEventBanner();
+
+        cancelNotificationIfPresent(getIntent());
+        handleNotificationDirectionsIntent(getIntent());
+    }
+
+    private void requestRemainingPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1001);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, 3001);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.POST_NOTIFICATIONS}, 2001);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (TextSizePreferences.apply(this)) {
+            recreate();
+            return;
+        }
+        bannerManager.start();
+
+        if (shouldStartOutdoorAfterIndoor && pendingCrossBuildingOutdoor) {
+            shouldStartOutdoorAfterIndoor = false;
+
+            LatLng startCoords = BuildingLookup.getLatLngFromBuildingName(pendingCrossFromBuilding, buildingsMap);
+            LatLng destCoords  = BuildingLookup.getLatLngFromBuildingName(pendingCrossToBuilding, buildingsMap);
+
+            if (startCoords == null || destCoords == null) {
+                Toast.makeText(this, "Could not find outdoor building coordinates.", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            NavigationHelper.fetchRoute(startCoords, destCoords, routeManager.getSelectedMode(),
+                    BuildConfig.MAPS_API_KEY,
+                    new NavigationHelper.RoutesCallback() {
+                        @Override
+                        public void onSuccess(Route route) {
+                            runOnUiThread(() -> {
+                                routeManager.drawRouteOnMap(route.getPoints(), route.getDuration(), route.getSteps());
+                                routeManager.startNavigationUpdates();
+                                routePickerController.toggleNavigationUI(true);
+                                pendingFinalIndoorAfterOutdoor = true;
+                                Toast.makeText(MapsActivity.this, "Outdoor navigation started", Toast.LENGTH_SHORT).show();
+                            });
+                        }
+                        @Override
+                        public void onError(Exception e) {
+                            runOnUiThread(() ->
+                                    Toast.makeText(MapsActivity.this, "Failed to load outdoor route", Toast.LENGTH_SHORT).show());
+                        }
+                    });
+
+            pendingCrossBuildingOutdoor = false;
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        bannerManager.stop();
+    }
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        routeManager.setMap(mMap);
+        routePickerController.setMap(mMap);
+        locationPermManager.setMap(mMap);
+
+        // Tell the map to use our custom FusedLocationSource
+        mMap.setLocationSource(myLocationSource);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+        }
+
+        // Enable the blue dot (Requires permission check)
+        locationPermManager.enableMyLocation();
+
+        btnSgwLoy = findViewById(R.id.btn_campus_switch);
+        ImageButton btnLocation = findViewById(R.id.btn_location);
+
+        // Get the last accessed campus from memory
+        SharedPreferences sharedPref = getSharedPreferences("OnCampusPrefs", MODE_PRIVATE);
+        String savedCampus = sharedPref.getString(CAMPUS, "SGW");
+        LatLng defaultLatLng;
+
+        if (savedCampus.equals(SGW)) {
+            defaultLatLng = SGW_COORDS;
+            btnSgwLoy.setText(LOY);
+        } else {
+            defaultLatLng = LOY_COORDS;
+            btnSgwLoy.setText(SGW);
+        }
+
+        // Move camera to the saved campus
+        locationPermManager.moveMapToLocation(defaultLatLng, 16f);
+
+        mMap.setBuildingsEnabled(false);
+        mMap.getUiSettings().setTiltGesturesEnabled(false);
+
+        // Set up marker click listener for shuttle stops
+        mMap.setOnMarkerClickListener(marker -> {
+            if (ShuttleHelper.isShuttleStopMarker(this, marker)) {
+                marker.showInfoWindow();
+                ShuttleHelper.openTimetable(this);
+                return true;
+            }
+            return false; // Let default behavior handle other markers
+        });
+
+        FrameLayout closeSearchLayout = findViewById(R.id.close_search);
+
+        geoJsonMapLoader.load(mMap,
+                new GeoJsonMapLoader.FeatureClickHandler() {
+                    @Override
+                    public void onBuildingPolygonClicked(Feature feature) {
+                        handleBuildingClick(feature);
+                    }
+                    @Override
+                    public void onDetailButtonClicked(String geojsonId) {
+                        handleBuildingDetailsButtonClick(geojsonId);
+                    }
+                },
+                (suggestions, loadedLayer, loadedBuildingManager) -> {
+                    layer = loadedLayer;
+                    buildingManager = loadedBuildingManager;
+
+                    // Create the adapter for building suggestions
+                    searchSuggestionsAdapter = new ArrayAdapter<>(this,
+                            android.R.layout.simple_dropdown_item_1line, suggestions);
+                    routePickerController.setSearchAdapter(searchSuggestionsAdapter);
+                    indoorNavController.setSearchSuggestionsAdapter(searchSuggestionsAdapter);
+                    indoorNavController.loadIndoorRoomsIntoAdapter();
+                });
+
+        btnSgwLoy.setOnClickListener(v -> switchCampus());
+        btnLocation.setOnClickListener(v -> goToCurrentLocation());
+        closeSearchLayout.setOnClickListener(v -> handleCloseSearch());
+
+        // Decrement to signal that the map is now Idle
+        if (!mapIdlingResource.isIdleNow())
+            mapIdlingResource.decrement();
+
+        ImageButton btnPoi = findViewById(R.id.btn_poi);
+        btnPoi.setOnClickListener(v -> {
+            Intent intent = new Intent(MapsActivity.this, PoiActivity.class);
+            startActivity(intent);
+        });
+
+        ImageButton btnIndoorMap = findViewById(R.id.btn_indoor_map);
+        btnIndoorMap.setOnClickListener(v -> {
+            BuildingFloorSelectDialog dialog = new BuildingFloorSelectDialog();
+            dialog.show(getSupportFragmentManager(), "BuildingFloorSelectDialog");
+        });
+
+        // start the route of the poi if pending
+        if (pendingPoiLatLng != null) {
+            openRouteToPoi();
+        }
+
+        tryGenerateDirectionsFromNotification();
+    }
+
+    private void switchCampus() {
+        String currentText = btnSgwLoy.getText().toString();
+        SharedPreferences sharedPref = getSharedPreferences("OnCampusPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        if (currentText.equals(SGW)) {
+            btnSgwLoy.setText(LOY);
+            moveMapToLocation(SGW_COORDS, 16f);
+            editor.putString(CAMPUS, SGW);
+        } else {
+            btnSgwLoy.setText(SGW);
+            moveMapToLocation(LOY_COORDS, 16f);
+            editor.putString(CAMPUS, LOY);
+        }
+        editor.apply();
+    }
+
+    private void goToCurrentLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        } else {
+            mMap.setMyLocationEnabled(true);
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, location -> {
+                        if (location != null) {
+                            double lat = location.getLatitude();
+                            double lng = location.getLongitude();
+                            LatLng currentLatLng = new LatLng(lat, lng);
+                            moveMapToLocation(currentLatLng, 16f);
+                        }
+                    });
+        }
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel =
+                    new NotificationChannel(
+                            "GEOFENCE_CHANNEL",
+                            "Geofence Notifications",
+                            NotificationManager.IMPORTANCE_HIGH
+                    );
+
+            NotificationManager manager =
+                    getSystemService(NotificationManager.class);
+
+            manager.createNotificationChannel(channel);
+        }
+    }
+
+    protected void handleBuildingDetailsButtonClick(String geojsonId) {
+        BuildingDetails details = buildingDialogManager.getGeoIdToBuildingDetailsMap().get(geojsonId);
+        if (details == null) {
+            Toast.makeText(this, "No details found for this building", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!routePickerController.tryFillFocusedField(details.getName())) {
+            showBuildingInfoDialog(details);
+        }
+    }
+
+    /**
+     * Handle on click for the building polygon on the map
+     * Set the name of the building into start destination search box
+     * @param feature feature representing the building
+     */
+    private void handleBuildingClick(Feature feature) {
+        routePickerController.tryFillFocusedField(feature.getProperty("name"));
+
+        if (!mapIdlingResource.isIdleNow())
+            mapIdlingResource.decrement();
+    }
+
+    private void showBuildingInfoDialog(BuildingDetails buildingDetails) {
+        buildingDialogManager.showBuildingInfoDialog(buildingDetails);
+    }
+
+
+
+    public GeoJsonLayer getLayer(){
+        return layer;
+    }
+    public Dialog getCurrentBuildingDialog(){
+        return buildingDialogManager.getCurrentBuildingDialog();
+    }
+    // ==========================================
+    // Main Branch Methods
+    // ==========================================
+
+    private void handleCloseSearch() {
+        getOnBackPressedDispatcher().onBackPressed();
+    }
+
+    public List<Polyline> getRoutePolylines() {
+        return routeManager.getRoutePolylines();
+    }
+
+    public void moveMapToLocation(LatLng location, float zoom) {
+        locationPermManager.moveMapToLocation(location, zoom);
+    }
+
+    // ── Notification / banner directions ─────────────────────────────────────
+
+    private void cancelNotificationIfPresent(Intent intent) {
+        if (intent == null || !intent.hasExtra(KEY_NOTIFICATION_ID)) return;
+        int notificationId = intent.getIntExtra(KEY_NOTIFICATION_ID, -1);
+        if (notificationId == -1) return;
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (manager != null) manager.cancel(notificationId);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        cancelNotificationIfPresent(intent);
+        handleNotificationDirectionsIntent(intent);
+    }
+
+    private void handleNotificationDirectionsIntent(Intent intent) {
+        if (intent == null) return;
+        if (!intent.getBooleanExtra(EXTRA_OPEN_DIRECTIONS, false)) return;
+        pendingNotificationDirections = true;
+        tryGenerateDirectionsFromNotification();
+    }
+
+    /*
+     Methods + boolean variable for POI
+     */
+
+    // Temp fix for exit navigation for POI.
+    public void reloadForPoiExit() {
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+        finish();
+        }
+
+    private boolean isPoiNavigationActive = false;
+
+    public boolean isPoiNavigationActive() {
+        return isPoiNavigationActive;
+    }
+
+    public void setPoiNavigationActive(boolean active) {
+        isPoiNavigationActive = active;
+    }
+
+    private void handleIncomingPoiIntent() {
+        Intent intent = getIntent(); // <-- Make sure you have this line!
+
+        if (intent == null || !intent.getBooleanExtra(EXTRA_OPEN_POI_ROUTE, false)) return;
+
+        double lat = intent.getDoubleExtra(EXTRA_POI_LAT, 0.0);
+        double lng = intent.getDoubleExtra(EXTRA_POI_LNG, 0.0);
+        String name = intent.getStringExtra(EXTRA_POI_NAME);
+
+        pendingPoiLatLng = new LatLng(lat, lng);
+        pendingPoiName = name;
+    }
+
+    private void openRouteToPoi() {
+        if (pendingPoiLatLng == null) return;
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Location permission is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, location -> {
+                    if (location == null) {
+                        return;
+                    }
+
+                    LatLng startCoords = new LatLng(location.getLatitude(), location.getLongitude());
+                    LatLng destCoords = pendingPoiLatLng;
+
+                    if (pendingPoiName != null && !pendingPoiName.isEmpty()) {
+                        setPoiNavigationActive(true);
+                        routePickerController.openWithStartAndDestination(CURRENT_LOCATION, pendingPoiName);
+
+                    }
+
+                    NavigationHelper.fetchRoute(
+                            startCoords,
+                            destCoords,
+                            routeManager.getSelectedMode(),
+                            BuildConfig.MAPS_API_KEY,
+                            new NavigationHelper.RoutesCallback() {
+                                @Override
+                                public void onSuccess(Route route) {
+                                    runOnUiThread(() -> {
+                                        if (pendingPoiName != null && !pendingPoiName.isEmpty()) {
+                                            routePickerController.openWithStartAndDestination(CURRENT_LOCATION, pendingPoiName);
+                                        }
+
+                                        routeManager.drawRouteOnMap(
+                                                route.getPoints(),
+                                                route.getDuration(),
+                                                route.getSteps()
+                                        );
+
+                                        // start actual navigation
+                                        routeManager.startNavigationUpdates();
+                                        routePickerController.toggleNavigationUI(true);
+
+                                        TextView txtNavInstruction = findViewById(R.id.txt_nav_instruction);
+                                        TextView txtDuration = findViewById(R.id.txt_duration);
+
+                                        if (txtNavInstruction != null && txtDuration != null) {
+                                            String instructionText;
+                                            if (txtDuration.getText() != null && txtDuration.getText().length() > 0) {
+                                                instructionText = txtDuration.getText() + " (" +
+                                                        routeManager.getSelectedMode().getValue() + ")";
+                                            } else {
+                                                instructionText = "Follow the route (" +
+                                                        routeManager.getSelectedMode().getValue() + ")";
+                                            }
+                                            txtNavInstruction.setText(instructionText);
+                                        }
+
+                                        Toast.makeText(MapsActivity.this, "Navigation Started", Toast.LENGTH_SHORT).show();
+                                    });
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    Log.e(TAG, "Failed to load POI route", e);
+                                    runOnUiThread(() ->
+                                            Toast.makeText(MapsActivity.this,
+                                                    "Failed to load POI route",
+                                                    Toast.LENGTH_SHORT).show());
+                                }
+                            }
+                    );
+                });
+    }
+
+    private void tryGenerateDirectionsFromNotification() {
+        if (!pendingNotificationDirections) return;
+        if (mMap == null || buildingsMap.isEmpty()) return;
+
+        String eventsJson = CalendarEventManager.globalEventsJson;
+        if (eventsJson == null || eventsJson.isEmpty()) {
+            Toast.makeText(this, "No calendar events available", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            JSONObject nextClass = CalendarEventManager.findNextUpcomingEvent(eventsJson);
+            if (nextClass == null) {
+                Toast.makeText(this, "No upcoming class found", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            NotificationRouteHelper.Result result = NotificationRouteHelper.resolveRoute(
+                    eventsJson, nextClass, buildingDialogManager.getGeoIdToBuildingDetailsMap());
+
+            if (result == null || result.getDestinationBuilding() == null
+                    || result.getDestinationBuilding().isEmpty()) {
+                Toast.makeText(this, "Could not determine next class location", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (result.shouldStartFromPreviousBuilding()) {
+                openRouteFromBuildings(result.getPreviousBuilding(), result.getDestinationBuilding());
+            } else {
+                openRouteFromCurrentLocation(result.getDestinationBuilding());
+            }
+            pendingNotificationDirections = false;
+
+        } catch (Exception e) {
+            Log.e(TAG, "Direction generation failed", e);
+            Toast.makeText(this, "Failed to generate directions", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void openRouteFromBuildings(String startBuilding, String destinationBuilding) {
+        routePickerController.openWithStartAndDestination(startBuilding, destinationBuilding);
+    }
+
+    @SuppressLint("MissingPermission")
+    private void openRouteFromCurrentLocation(String destinationBuilding) {
+        View bannerView = findViewById(R.id.included_banner);
+        if (bannerView != null) bannerView.setVisibility(View.GONE);
+
+        LatLng destCoords = BuildingLookup.getLatLngFromBuildingName(destinationBuilding, buildingsMap);
+        if (destCoords == null) {
+            Toast.makeText(this, "Could not find destination building", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Location permission not granted", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
+            if (location == null) {
+                Toast.makeText(this, "Could not get current location", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            LatLng startCoords = new LatLng(location.getLatitude(), location.getLongitude());
+            routePickerController.openWithStartAndDestination(CURRENT_LOCATION, destinationBuilding);
+            NavigationHelper.fetchRoute(startCoords, destCoords,
+                    routeManager.getSelectedMode(), BuildConfig.MAPS_API_KEY,
+                    new NavigationHelper.RoutesCallback() {
+                        @Override public void onSuccess(Route route) {
+                            runOnUiThread(() -> routeManager.drawRouteOnMap(
+                                    route.getPoints(), route.getDuration(), route.getSteps()));
+                        }
+                        @Override public void onError(Exception e) {
+                            Log.e(TAG, "Failed to open route from current location", e);
+                            runOnUiThread(() -> Toast.makeText(MapsActivity.this,
+                                    "Failed to load route", Toast.LENGTH_SHORT).show());
+                        }
+                    });
+        });
+    }
+
+    public void handleBannerDirectionsClick(JSONObject nextClass) {
+        View bannerView = findViewById(R.id.included_banner);
+        if (bannerView != null) bannerView.setVisibility(View.GONE);
+        try {
+            String eventsJson = CalendarEventManager.globalEventsJson;
+            NotificationRouteHelper.Result result = NotificationRouteHelper.resolveRoute(
+                    eventsJson, nextClass, buildingDialogManager.getGeoIdToBuildingDetailsMap());
+
+            if (result == null || result.getDestinationBuilding() == null
+                    || result.getDestinationBuilding().isEmpty()) {
+                Toast.makeText(this, "No location found for this class", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (result.shouldStartFromPreviousBuilding()) {
+                openRouteFromBuildings(result.getPreviousBuilding(), result.getDestinationBuilding());
+            } else {
+                openRouteFromCurrentLocation(result.getDestinationBuilding());
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to handle banner directions click", e);
+            Toast.makeText(this, "Failed to open directions", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void checkAndDisplayNextEventBannerForTest() {
+        bannerManager.checkAndDisplayNextEventBanner();
+    }
+
+    // ── Cross-building state helpers ──────────────────────────────────────────
+
+    /** Called by IndoorNavigationController when a cross-building route is initiated. */
+    void setPendingCrossBuilding(IndoorNode toDoor, IndoorNode toRoom,
+                                 String fromBuilding, String toBuilding) {
+        this.pendingCrossBuildingOutdoor  = true;
+        this.pendingCrossToDoor           = toDoor;
+        this.pendingCrossToRoom           = toRoom;
+        this.pendingCrossFromBuilding     = fromBuilding;
+        this.pendingCrossToBuilding       = toBuilding;
+        this.shouldStartOutdoorAfterIndoor = true;
+    }
+
+    boolean hasPendingFinalIndoorAfterOutdoor() {
+        return pendingFinalIndoorAfterOutdoor;
+    }
+
+    boolean tryLaunchPendingFinalIndoorRoute() {
+        if (!pendingFinalIndoorAfterOutdoor) {
+            return false;
+        }
+
+        if (pendingCrossToDoor == null || pendingCrossToRoom == null
+                || pendingCrossToBuilding == null || pendingCrossToBuilding.isEmpty()) {
+            clearPendingCrossBuildingData();
+            return false;
+        }
+
+        indoorNavController.loadIndoorPath(
+                pendingCrossToBuilding,
+                pendingCrossToDoor.getId(),
+                pendingCrossToRoom.getId(),
+                path -> {
+                    if (isDestroyed() || isFinishing()) {
+                        return;
+                    }
+
+                    if (path == null || path.isEmpty()) {
+                        Toast.makeText(this,
+                                "No indoor path found to destination room.",
+                                Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    Intent intent = new Intent(this, IndoorMapActivity.class);
+                    intent.putExtra("BUILDING_ID", pendingCrossToBuilding);
+                    intent.putExtra("FLOOR_ID", pendingCrossToDoor.getFloorMenuId());
+                    intent.putExtra("FROM_NODE_ID", pendingCrossToDoor.getId());
+                    intent.putExtra("TO_NODE_ID", pendingCrossToRoom.getId());
+                    intent.putExtra("PATH_NODE_IDS", String.join(",", path));
+                    intent.putExtra("CROSS_BUILDING_STAGE", "FINAL_INDOOR");
+                    intent.putExtra("DISPLAY_DEST_LABEL", pendingCrossToRoom.getLabel());
+                    startActivity(intent);
+                    clearPendingCrossBuildingData();
+                },
+                "Error loading destination building graph.");
+
+        return true;
+    }
+
+    private void clearPendingCrossBuildingData() {
+        pendingCrossBuildingOutdoor   = false;
+        pendingFinalIndoorAfterOutdoor = false;
+        shouldStartOutdoorAfterIndoor  = false;
+        pendingCrossToDoor            = null;
+        pendingCrossToRoom            = null;
+        pendingCrossFromBuilding      = null;
+        pendingCrossToBuilding        = null;
+    }
+
+}

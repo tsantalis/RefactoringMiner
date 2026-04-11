@@ -449,8 +449,10 @@ public class HunkNetwork {
                         classDeclarationLocation.getFilePath(), node.getSrcDst(),
                         classDeclarationLocation.getStartOffset(),
                         classDeclarationLocation.getEndOffset(),
-                        (n) -> !n.isExtension() && n.getTree().getType().name
-                                .equals(constants.TYPE_DECLARATION));
+                        (n) -> !n.isExtension()
+                                && n.getTree().getPos() == classDeclarationLocation.getStartOffset()
+                                && n.getTree().getEndPos()
+                                == classDeclarationLocation.getEndOffset());
                 for (Node classNode : classDeclarationNodes) {
                     if (classNode.equals(node)) {
                         continue;

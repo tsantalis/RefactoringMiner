@@ -51,6 +51,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		this.comments = new ArrayList<UMLComment>();
 		this.customGetter = Optional.empty();
 		this.customSetter = Optional.empty();
+		this.anonymousClassContainer = Optional.empty();
 	}
 
 	public void setCustomGetter(UMLOperation getter) {

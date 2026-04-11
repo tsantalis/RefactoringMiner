@@ -3186,7 +3186,7 @@ public class StringBasedHeuristics {
 		return null;
 	}
 
-	protected static Set<String> subConditionIntersection(List<String> subConditionsAsList1, List<String> subConditionsAsList2, Constants LANG1, Constants LANG2) {
+	protected static Set<String> subConditionIntersection(List<String> subConditionsAsList1, List<String> subConditionsAsList2, ReplacementInfo info, Constants LANG1, Constants LANG2) {
 		Set<String> intersection = new LinkedHashSet<String>();
 		for(String c1 : subConditionsAsList1) {
 			for(String c2 : subConditionsAsList2) {
@@ -3298,6 +3298,19 @@ public class StringBasedHeuristics {
 						if(pass) {
 							intersection.add(arg1);
 							break;
+						}
+					}
+				}
+				else if(info != null) {
+					for(AbstractCodeFragment fragment2 : info.getStatements2()) {
+						for(VariableDeclaration vd : fragment2.getVariableDeclarations()) {
+							if(vd.getInitializer() != null && ReplacementUtil.contains(c2, vd.getVariableName())) {
+								String tmp2 = ReplacementUtil.performReplacement(c2, vd.getVariableName(), vd.getInitializer().getString());
+								if(c1.equals(tmp2)) {
+									intersection.add(c1);
+									break;
+								}
+							}
 						}
 					}
 				}
@@ -3684,7 +3697,7 @@ public class StringBasedHeuristics {
 						}
 					}
 				}
-				Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2, LANG1, LANG2);
+				Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2, info, LANG1, LANG2);
 				Set<String> intersection2 = null;
 				int matches = matchCount(intersection, info, statement1, statement2, LANG1, LANG2);
 				boolean pass = pass(subConditionsAsList1, subConditionsAsList2, intersection, matches, LANG1, LANG2);
@@ -3784,7 +3797,7 @@ public class StringBasedHeuristics {
 										subConditionMap.put(trimmed, leafExpressions);
 									}
 								}
-								intersection2 = subConditionIntersection(subConditionsAsList1, subConditionsAsList, LANG1, LANG2);
+								intersection2 = subConditionIntersection(subConditionsAsList1, subConditionsAsList, info, LANG1, LANG2);
 								if(intersection2.isEmpty()) {
 									for(AbstractCodeFragment f2 : info.getStatements2()) {
 										if(f2.getVariableDeclarations().size() > 0) {
@@ -3857,7 +3870,7 @@ public class StringBasedHeuristics {
 											}
 										}
 									}
-									intersection2 = subConditionIntersection(subConditionsAsList1, subConditionsAsList, LANG1, LANG2);
+									intersection2 = subConditionIntersection(subConditionsAsList1, subConditionsAsList, info, LANG1, LANG2);
 								}
 								int matches2 = matchCount(intersection2, info, statement1, statement2, LANG1, LANG2);
 								boolean pass2 = pass(subConditionsAsList1, subConditionsAsList, intersection2, matches2, LANG1, LANG2);
@@ -3996,7 +4009,7 @@ public class StringBasedHeuristics {
 							for(Replacement compositeReplacement : compositeReplacements) {
 								splitConditionals.addAll(((CompositeReplacement)compositeReplacement).getAdditionallyMatchedStatements2());
 							}
-							if(sequentiallySplitConditionals(statement1, splitConditionals, mappings)) {
+							if(sequentiallySplitConditionals(statement1, splitConditionals, mappings, info)) {
 								SplitConditionalRefactoring split = new SplitConditionalRefactoring(statement1, splitConditionals, container1, container2);
 								//special handling for conflicting split conditionals
 								boolean splitConditionalConflict = false;
@@ -4278,7 +4291,7 @@ public class StringBasedHeuristics {
 						subConditionMap.put(temp1, leafExpressions);
 					}
 				}
-				intersection2 = subConditionIntersection(subConditionsAsList, subConditionsAsList2, LANG1, LANG2);
+				intersection2 = subConditionIntersection(subConditionsAsList, subConditionsAsList2, info, LANG1, LANG2);
 				int matches2 = matchCount(intersection2, info, statement1, statement2, LANG1, LANG2);
 				boolean pass2 = pass(subConditionsAsList, subConditionsAsList2, intersection2, matches2, LANG1, LANG2);
 				if(pass2 && !intersection.containsAll(intersection2)) {
@@ -4307,7 +4320,7 @@ public class StringBasedHeuristics {
 			for(Replacement compositeReplacement : compositeReplacements) {
 				mergedConditionals.addAll(((CompositeReplacement)compositeReplacement).getAdditionallyMatchedStatements1());
 			}
-			if(sequentiallyMergedConditionals(mergedConditionals, statement2, mappings)) {
+			if(sequentiallyMergedConditionals(mergedConditionals, statement2, mappings, info)) {
 				MergeConditionalRefactoring merge = new MergeConditionalRefactoring(mergedConditionals, statement2, container1, container2);
 				//special handling for conflicting merge conditionals
 				boolean mergeConditionalsConflict = false;
@@ -4491,7 +4504,7 @@ public class StringBasedHeuristics {
 		return null;
 	}
 
-	private static boolean sequentiallyMergedConditionals(Set<AbstractCodeFragment> mergedConditionals, AbstractCodeFragment statement2, Set<AbstractCodeMapping> mappings) {
+	private static boolean sequentiallyMergedConditionals(Set<AbstractCodeFragment> mergedConditionals, AbstractCodeFragment statement2, Set<AbstractCodeMapping> mappings, ReplacementInfo info) {
 		Constants LANG1 = PathFileUtils.getLang(mergedConditionals.iterator().next().getLocationInfo().getFilePath());
 		Constants LANG2 = PathFileUtils.getLang(statement2.getLocationInfo().getFilePath());
 		Pattern SPLIT_CONDITIONAL_PATTERN = LANG1.equals(Constants.PYTHON) || LANG2.equals(Constants.PYTHON) ? SPLIT_CONDITIONAL_PATTERN_PYTHON : SPLIT_CONDITIONAL_PATTERN_JAVA;
@@ -4538,7 +4551,7 @@ public class StringBasedHeuristics {
 						subConditionsAsList1.add(s.trim());
 					}
 				}
-				Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2, LANG1, LANG2);
+				Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2, info, LANG1, LANG2);
 				int invertedConditions = 0;
 				for(String intersectionElement : intersection) {
 					if(!subConditionsAsList2.contains(intersectionElement)) {
@@ -4606,7 +4619,7 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	private static boolean sequentiallySplitConditionals(AbstractCodeFragment statement1, Set<AbstractCodeFragment> splitConditionals, Set<AbstractCodeMapping> mappings) {
+	private static boolean sequentiallySplitConditionals(AbstractCodeFragment statement1, Set<AbstractCodeFragment> splitConditionals, Set<AbstractCodeMapping> mappings, ReplacementInfo info) {
 		Constants LANG1 = PathFileUtils.getLang(statement1.getLocationInfo().getFilePath());
 		Constants LANG2 = PathFileUtils.getLang(splitConditionals.iterator().next().getLocationInfo().getFilePath());
 		Pattern SPLIT_CONDITIONAL_PATTERN = LANG1.equals(Constants.PYTHON) || LANG2.equals(Constants.PYTHON) ? SPLIT_CONDITIONAL_PATTERN_PYTHON : SPLIT_CONDITIONAL_PATTERN_JAVA;
@@ -4653,7 +4666,7 @@ public class StringBasedHeuristics {
 						subConditionsAsList2.add(s.trim());
 					}
 				}
-				Set<String> intersection = subConditionIntersection(subConditionsAsList2, subConditionsAsList1, LANG1, LANG2);
+				Set<String> intersection = subConditionIntersection(subConditionsAsList2, subConditionsAsList1, info, LANG1, LANG2);
 				int invertedConditions = 0;
 				for(String intersectionElement : intersection) {
 					if(!subConditionsAsList1.contains(intersectionElement)) {

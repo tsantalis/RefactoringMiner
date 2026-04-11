@@ -10269,6 +10269,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			if(parentIfElseIfChain && ifFound && elseFound && mappingSet.first().getFragment2().getTernaryOperatorExpressions().size() > 0) {
+				return new LinkedHashSet<AbstractCodeMapping>(mappingSet);
+			}
 			boolean nestedTernary = mappingSet.first().getFragment2().getTernaryOperatorExpressions().size() > 1;
 			if(ifFound && (elseIfFound || (elseFound && parentMap.size() == grandParentMap.size()) || grandParentIfElseIfChain || nestedTernary) && (parentIfElseIfChain || grandParentIfElseIfChain)) {
 				Set<String> variableDeclarationNames1 = new LinkedHashSet<>();

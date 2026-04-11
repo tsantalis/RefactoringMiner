@@ -52,8 +52,10 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsConditionalType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsFnType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsImportType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIndexedAccessType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIntersectionType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsKeywordType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsLitType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsParenthesizedType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsPropertySignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsQualifiedName;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
@@ -602,6 +604,15 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 			}
 			return new ListCompositeType(unionTypes, Kind.UNION);
 		}
+		else if(type instanceof Swc4jAstTsIntersectionType intersectionType) {
+			List<ISwc4jAstTsType> types = intersectionType.getTypes();
+			List<UMLType> unionTypes = new ArrayList<>();
+			for(ISwc4jAstTsType t : types) {
+				UMLType umlType = extractTypeObject(t, sourceFolder, filePath, fileContent);
+				unionTypes.add(umlType);
+			}
+			return new ListCompositeType(unionTypes, Kind.INTERSECTION);
+		}
 		else if(type instanceof Swc4jAstTsKeywordType keywordType) {
 			UMLType leafType = extractTypeObject(keywordType.getKind().getName());
 			return leafType;
@@ -710,6 +721,11 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		else if(type instanceof Swc4jAstTsIndexedAccessType indexedAccessType) {
 			ISwc4jAstTsType objectType = indexedAccessType.getObjType();
 			UMLType umlType = extractTypeObject(objectType, sourceFolder, filePath, fileContent);
+			return umlType;
+		}
+		else if(type instanceof Swc4jAstTsParenthesizedType parenthesizedType) {
+			ISwc4jAstTsType parenType = parenthesizedType.getTypeAnn();
+			UMLType umlType = extractTypeObject(parenType, sourceFolder, filePath, fileContent);
 			return umlType;
 		}
 		//TODO this should return null, when all type kinds are supported

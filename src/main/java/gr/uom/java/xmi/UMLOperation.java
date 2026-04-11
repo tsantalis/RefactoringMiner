@@ -81,6 +81,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
         this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
         this.propertyAccessor = Optional.empty();
         this.receiver = Optional.empty();
+        this.anonymousClassContainer = Optional.empty();
     }
 
 	public void addNestedOperation(UMLOperation operation) {

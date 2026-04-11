@@ -920,6 +920,22 @@ public abstract class UMLAbstractClassDiff {
 						variableDeclarationsInMethodsCalledByAddedOperation.addAll(getVariableDeclarationNamesInMethodBody(operation));
 					}
 				}
+				if(addedOperation.getAnonymousClassContainer().isPresent()) {
+					//the extraction might be in the class containing the anonymous class
+					UMLAnonymousClass anonymous = addedOperation.getAnonymousClassContainer().get();
+					String outerClassName = anonymous.getPackageName();
+					UMLClassBaseDiff baseDiff = modelDiff.getUMLClassDiff(outerClassName);
+					if(baseDiff != null) {
+						for(UMLOperation operation : baseDiff.getAddedOperations()) {
+							if(addedOperationInvocation.matchesOperation(operation, addedOperation, this, modelDiff)) {
+								operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllOperationInvocations());
+								operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllCreations());
+								variableDeclarationsInMethodsCalledByAddedOperation.addAll(getVariableDeclarationNamesInMethodBody(operation));
+								break;
+							}
+						}
+					}
+				}
 			}
 		}
 		Set<AbstractCall> newIntersection = new LinkedHashSet<AbstractCall>(removedOperationInvocations);

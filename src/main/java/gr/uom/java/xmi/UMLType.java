@@ -73,7 +73,7 @@ import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLTypeParameterDiff;
 
-public abstract class UMLType implements Serializable, LocationInfoProvider {
+public abstract class UMLType implements Serializable, LocationInfoProvider, AnnotationProvider {
 	private LocationInfo locationInfo;
 	private int arrayDimension;
 	private boolean parameterized;

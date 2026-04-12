@@ -147,7 +147,13 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "MOVE_ANNOTATION",
+          "description": "Move Annotation\t@Transient from public getPluginDescriptor() : PluginDescriptor to com.intellij.serviceContainer.BaseKeyedLazyInstance",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/JetBrains/intellij-community.git",

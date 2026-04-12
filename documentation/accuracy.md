@@ -10,11 +10,11 @@
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **March 3, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **April 12, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12652  | 13  | 212  | 0.999  | 0.984|
+|**Total**|12649  | 13  | 212  | 0.999  | 0.984|
 |Extract Method|1018  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
@@ -61,14 +61,14 @@ As of **March 3, 2026** the precision and recall of RefactoringMiner on this ben
 |Change Variable Type|818  |  1  |  7  | 0.999  | 0.992|
 |Change Parameter Type|661  |  1  | 10  | 0.998  | 0.985|
 |Change Attribute Type|246  |  0  |  3  | 1.000  | 0.988|
-|Add Method Annotation|332  |  0  |  0  | 1.000  | 1.000|
-|Remove Method Annotation|100  |  0  |  0  | 1.000  | 1.000|
+|Add Method Annotation|329  |  0  |  0  | 1.000  | 1.000|
+|Remove Method Annotation|81  |  0  |  0  | 1.000  | 1.000|
 |Modify Method Annotation|29  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Annotation|62  |  0  |  1  | 1.000  | 0.984|
 |Remove Attribute Annotation|18  |  0  |  0  | 1.000  | 1.000|
 |Modify Attribute Annotation| 7  |  0  |  0  | 1.000  | 1.000|
-|Add Class Annotation|52  |  0  |  0  | 1.000  | 1.000|
-|Remove Class Annotation|20  |  0  |  0  | 1.000  | 1.000|
+|Add Class Annotation|49  |  0  |  0  | 1.000  | 1.000|
+|Remove Class Annotation|19  |  0  |  0  | 1.000  | 1.000|
 |Modify Class Annotation|35  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter Annotation|34  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
@@ -105,7 +105,7 @@ As of **March 3, 2026** the precision and recall of RefactoringMiner on this ben
 |Merge Class| 5  |  0  |  0  | 1.000  | 1.000|
 |Split Class| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Conditional|19  |  0  |  0  | 1.000  | 1.000|
-|Invert Condition|49  |  0  |  0  | 1.000  | 1.000|
+|Invert Condition|50  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional|14  |  0  |  0  | 1.000  | 1.000|
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
@@ -116,6 +116,7 @@ As of **March 3, 2026** the precision and recall of RefactoringMiner on this ben
 |Replace Generic With Diamond|77  |  0  |  0  | 1.000  | 1.000|
 |Replace Conditional With Ternary| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Fixture| 3  |  0  |  0  | 1.000  | 1.000|
+|Move Annotation|22  |  0  |  0  | 1.000  | 1.000|
 
 ## Java Benchmark 2
 **Source**: Bo Liu, Hui Liu, Nan Niu, Yuxia Zhang, Guangjie Li, He Jiang, and Yanjie Jiang, "An Automated Approach to Discovering Software Refactorings by Comparing Successive Versions," IEEE Transactions on Software Engineering, 2025.
@@ -143,11 +144,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Merge Parameter`
 * `Invert Condition`
 
-As of **April 8, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **April 12, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3548  | 40  | 75  | 0.989  | 0.979|
+|**Total**|3551  | 40  | 75  | 0.989  | 0.979|
 |Extract Method|375  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -189,6 +190,7 @@ As of **April 8, 2026** the precision and recall of RefactoringMiner on this ben
 |Merge Method| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 8  |  0  |  0  | 1.000  | 1.000|
 |Move Code|11  |  0  |  0  | 1.000  | 1.000|
+|Move Annotation| 3  |  0  |  0  | 1.000  | 1.000|
 
 ## Python Benchmark
 **Source**: Hassan Atwi, Bin Lin, Nikolaos Tsantalis, Yutaro Kashiwa, Yasutaka Kamei, Naoyasu Ubayashi, Gabriele Bavota, and Michele Lanza, "PyRef: Refactoring Detection in Python Projects," 21st IEEE International Working Conference on Source Code Analysis and Manipulation (SCAM'2021), Engineering Track, Luxembourg City, Luxembourg, September 27-28, 2021.

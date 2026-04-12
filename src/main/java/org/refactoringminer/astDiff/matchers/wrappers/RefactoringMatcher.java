@@ -335,6 +335,10 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 if (modifiedAnnotationRefactoring.getAnnotationBefore().getTypeName().equals(modifiedAnnotationRefactoring.getAnnotationAfter().getTypeName()))
                     processModifiedAnnotation(srcTree, dstTree, mappingStore, modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter());
             }
+            else if (refactoring instanceof MoveAnnotationRefactoring moveAnnotationRefactoring)
+            {
+                processModifiedAnnotation(srcTree, dstTree, mappingStore, moveAnnotationRefactoring.getOriginalAnnotation(), moveAnnotationRefactoring.getMovedAnnotation());
+            }
             else if (refactoring instanceof RenameAttributeRefactoring) {
                 RenameAttributeRefactoring renameAttributeRefactoring = (RenameAttributeRefactoring) refactoring;
                 for (AbstractCodeMapping reference : renameAttributeRefactoring.getReferences()) {

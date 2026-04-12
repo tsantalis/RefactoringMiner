@@ -224,6 +224,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	public void checkForMovedAnnotations() {
 		if(this.getAnnotationListDiff().getAddedAnnotations().size() > 0) {
+			List<UMLAnnotation> addedAnnotationsToBeRemoved = new ArrayList<>();
 			for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 				if(mapper.getOperationSignatureDiff().isPresent()) {
 					UMLAnnotationListDiff annotationListDiff = mapper.getOperationSignatureDiff().get().getAnnotationListDiff();
@@ -231,7 +232,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						for(UMLAnnotation removedAnnotation : annotationListDiff.getRemovedAnnotations()) {
 							for(UMLAnnotation addedAnnotation : this.getAnnotationListDiff().getAddedAnnotations()) {
 								if(removedAnnotation.equals(addedAnnotation)) {
-									//create Move Annotation instance
+									MoveAnnotationRefactoring moveAnnotation = new MoveAnnotationRefactoring(removedAnnotation, addedAnnotation, mapper.getOperation1(), nextClass);
+									refactorings.add(moveAnnotation);
+									addedAnnotationsToBeRemoved.add(addedAnnotation);
 									break;
 								}
 							}
@@ -239,8 +242,17 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 			}
+			this.getAnnotationListDiff().getAddedAnnotations().removeAll(addedAnnotationsToBeRemoved);
+			Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<>();
+			for(Refactoring r : refactorings) {
+				if(r instanceof AddClassAnnotationRefactoring addClassAnnotation && addedAnnotationsToBeRemoved.contains(addClassAnnotation.getAnnotation())) {
+					refactoringsToBeRemoved.add(addClassAnnotation);
+				}
+			}
+			this.refactorings.removeAll(refactoringsToBeRemoved);
 		}
 		else if(this.getAnnotationListDiff().getRemovedAnnotations().size() > 0) {
+			List<UMLAnnotation> removedAnnotationsToBeRemoved = new ArrayList<>();
 			for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 				if(mapper.getOperationSignatureDiff().isPresent()) {
 					UMLAnnotationListDiff annotationListDiff = mapper.getOperationSignatureDiff().get().getAnnotationListDiff();
@@ -248,7 +260,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						for(UMLAnnotation addedAnnotation : annotationListDiff.getAddedAnnotations()) {
 							for(UMLAnnotation removedAnnotation : this.getAnnotationListDiff().getRemovedAnnotations()) {
 								if(removedAnnotation.equals(addedAnnotation)) {
-									//create Move Annotation instance
+									MoveAnnotationRefactoring moveAnnotation = new MoveAnnotationRefactoring(removedAnnotation, addedAnnotation, originalClass, mapper.getOperation2());
+									refactorings.add(moveAnnotation);
+									removedAnnotationsToBeRemoved.add(removedAnnotation);
 									break;
 								}
 							}
@@ -256,6 +270,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 			}
+			this.getAnnotationListDiff().getRemovedAnnotations().removeAll(removedAnnotationsToBeRemoved);
+			Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<>();
+			for(Refactoring r : refactorings) {
+				if(r instanceof RemoveClassAnnotationRefactoring removeClassAnnotation && removedAnnotationsToBeRemoved.contains(removeClassAnnotation.getAnnotation())) {
+					refactoringsToBeRemoved.add(removeClassAnnotation);
+				}
+			}
+			this.refactorings.removeAll(refactoringsToBeRemoved);
 		}
 	}
 

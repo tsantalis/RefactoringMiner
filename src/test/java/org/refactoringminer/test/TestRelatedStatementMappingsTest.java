@@ -399,15 +399,21 @@ public class TestRelatedStatementMappingsTest {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
             Set<Pair<UMLAnnotation, UMLAnnotation>> annotations = Set.of();
             UMLAnnotation annotation = ref instanceof AnnotationRefactoring ? ((AnnotationRefactoring) ref).getAnnotation() : null;
+            if(ref instanceof MoveAnnotationRefactoring move)
+                annotation = move.getMovedAnnotation();
             if (ref instanceof RemoveMethodAnnotationRefactoring || ref instanceof RemoveClassAnnotationRefactoring)
                 annotations = Set.of(Pair.of(annotation, null));
             else if (ref instanceof AddMethodAnnotationRefactoring || ref instanceof AddClassAnnotationRefactoring)
                 annotations = Set.of(Pair.of(null, annotation));
+            else if (ref instanceof MoveAnnotationRefactoring move)
+                annotations = Set.of(Pair.of(move.getOriginalAnnotation(), move.getMovedAnnotation()));
             if (!annotations.isEmpty() && "Test".equals(annotation.getTypeName()))
                 if (ref instanceof MethodLevelRefactoring m)
                     mapperInfo(annotations, m.getOperationBefore(), m.getOperationAfter());
                 else if (ref instanceof ClassLevelRefactoring c)
                     mapperInfo(annotations, c.getClassBefore(), c.getClassAfter());
+                else if (ref instanceof MoveAnnotationRefactoring move)
+                    mapperInfo(annotations, move.getOriginalAnnotationProvider(), move.getMovedAnnotationProvider());
         });
     }
 
@@ -476,11 +482,15 @@ public class TestRelatedStatementMappingsTest {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
             Set<String> set = Set.of("RunWith", "Parameterized.Parameters", "ParameterizedTest", "Test", "Parameters", "Parameter", "DataProvider", "ExtendWith", "ValueSource", "NullSource", "EmptySource", "NullAndEmptySource", "EnumSource", "MethodSource", "FieldSource", "CsvSource", "CsvFileSource", "ArgumentsSource");
             UMLAnnotation annotation = ref instanceof AnnotationRefactoring ? ((AnnotationRefactoring) ref).getAnnotation() : null;
+            if(ref instanceof MoveAnnotationRefactoring move)
+                annotation = move.getMovedAnnotation();
             Set<Pair<UMLAnnotation, UMLAnnotation>> annotations = Set.of();
             if (ref instanceof RemoveMethodAnnotationRefactoring || ref instanceof RemoveAttributeAnnotationRefactoring || ref instanceof RemoveClassAnnotationRefactoring)
                 annotations = Set.of(Pair.of(annotation, null));
             else if (ref instanceof AddMethodAnnotationRefactoring || ref instanceof AddAttributeAnnotationRefactoring || ref instanceof AddClassAnnotationRefactoring)
                 annotations = Set.of(Pair.of(null, annotation));
+            else if (ref instanceof MoveAnnotationRefactoring move)
+                annotations = Set.of(Pair.of(move.getOriginalAnnotation(), move.getMovedAnnotation()));
             if (!annotations.isEmpty() && set.contains(annotation.getTypeName())) {
                 if (ref instanceof MethodLevelRefactoring m)
                     mapperInfo(annotations, m.getOperationBefore(), m.getOperationAfter());
@@ -488,6 +498,8 @@ public class TestRelatedStatementMappingsTest {
                     mapperInfo(annotations, c.getClassBefore(), c.getClassAfter());
                 else if (ref instanceof AttributeLevelRefactoring a)
                     mapperInfo(annotations, a.getAttributeBefore(), a.getAttributeAfter());
+                else if (ref instanceof MoveAnnotationRefactoring move)
+                    mapperInfo(annotations, move.getOriginalAnnotationProvider(), move.getMovedAnnotationProvider());
             }
         });
     }

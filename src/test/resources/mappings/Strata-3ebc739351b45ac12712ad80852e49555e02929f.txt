@@ -1,186 +1,150 @@
-com.opengamma.strata.examples.BlogsTest -> com.opengamma.strata.examples.BlogsTest
-@Test==null
-public test_multicurve1_pv01() : void -> public test_multicurve1_pv01() : void
-null==@Test
-public test_multicurve1_perf() : void -> public test_multicurve1_perf() : void
-null==@Test
-com.opengamma.strata.examples.ExamplesTest -> com.opengamma.strata.examples.ExamplesTest
-@Test==null
-public test_dsfPricing_standalone() : void -> public test_dsfPricing_standalone() : void
-null==@Test
-public test_dsfPricing_tool() : void -> public test_dsfPricing_tool() : void
-null==@Test
-public test_fraPricing_standalone() : void -> public test_fraPricing_standalone() : void
-null==@Test
-public test_fraPricing_tool() : void -> public test_fraPricing_tool() : void
-null==@Test
-public test_fxPricing_standalone() : void -> public test_fxPricing_standalone() : void
-null==@Test
-public test_fxPricing_tool() : void -> public test_fxPricing_tool() : void
-null==@Test
-public test_genericSecurityPricing_standalone() : void -> public test_genericSecurityPricing_standalone() : void
-null==@Test
-public test_genericSecurityPricing_tool() : void -> public test_genericSecurityPricing_tool() : void
-null==@Test
-public test_iborFuturePricing_standalone() : void -> public test_iborFuturePricing_standalone() : void
-null==@Test
-public test_iborFuturePricing_tool() : void -> public test_iborFuturePricing_tool() : void
-null==@Test
-public test_swapPricing_standalone() : void -> public test_swapPricing_standalone() : void
-null==@Test
-public test_swapPricing_tool() : void -> public test_swapPricing_tool() : void
-null==@Test
-public test_swapPricingCcp_standalone() : void -> public test_swapPricingCcp_standalone() : void
-null==@Test
-public test_swapPricingWithCalibration_standalone() : void -> public test_swapPricingWithCalibration_standalone() : void
-null==@Test
-public test_termDepositPricing_standalone() : void -> public test_termDepositPricing_standalone() : void
-null==@Test
-public test_termDepositPricing_tool() : void -> public test_termDepositPricing_tool() : void
-null==@Test
-public test_curveScenario() : void -> public test_curveScenario() : void
-null==@Test
-public test_historicalScenario() : void -> public test_historicalScenario() : void
-null==@Test
-public test_swapTrade() : void -> public test_swapTrade() : void
-null==@Test
-public test_portfolios() : void -> public test_portfolios() : void
-null==@Test
-public test_calibration() : void -> public test_calibration() : void
-null==@Test
-public test_calibration_xccy() : void -> public test_calibration_xccy() : void
-null==@Test
-public test_calibration_eur3() : void -> public test_calibration_eur3() : void
-null==@Test
-public test_calibration_simple_forward() : void -> public test_calibration_simple_forward() : void
-null==@Test
-public test_calibration_usd_ffs() : void -> public test_calibration_usd_ffs() : void
-null==@Test
-public test_calibration_cpi() : void -> public test_calibration_cpi() : void
-null==@Test
-public test_sabr_swaption_calibration() : void -> public test_sabr_swaption_calibration() : void
-null==@Test
-public test_sabr_swaption_calibration_pv_risk() : void -> public test_sabr_swaption_calibration_pv_risk() : void
-null==@Test
-com.opengamma.strata.examples.marketdata.ExampleMarketDataBuilderTest -> com.opengamma.strata.examples.marketdata.ExampleMarketDataBuilderTest
-@Test==null
-public test_directory() : void -> public test_directory() : void
-null==@Test
-public test_ofPath() : void -> public test_ofPath() : void
-null==@Test
-public test_ofPath_with_spaces() : void -> public test_ofPath_with_spaces() : void
-null==@Test
-public test_ofResource_directory() : void -> public test_ofResource_directory() : void
-null==@Test
-public test_ofResource_directory_extraSlashes() : void -> public test_ofResource_directory_extraSlashes() : void
-null==@Test
-public test_ofResource_directory_notFound() : void -> public test_ofResource_directory_notFound() : void
-null==@Test
-public test_ofResource_directory_with_spaces() : void -> public test_ofResource_directory_with_spaces() : void
-null==@Test
-com.opengamma.strata.examples.regression.SwapReportRegressionTest -> com.opengamma.strata.examples.regression.SwapReportRegressionTest
-@Test==null
-public testResults() : void -> public testResults() : void
-null==@Test
-com.opengamma.strata.report.ReportCalculationResultsTest -> com.opengamma.strata.report.ReportCalculationResultsTest
-@Test==null
-public test_of() : void -> public test_of() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-com.opengamma.strata.report.ReportRequirementsTest -> com.opengamma.strata.report.ReportRequirementsTest
-@Test==null
-public test_of() : void -> public test_of() : void
-null==@Test
-public test_of_array() : void -> public test_of_array() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-com.opengamma.strata.report.framework.expression.BeanTokenEvaluatorTest -> com.opengamma.strata.report.framework.expression.BeanTokenEvaluatorTest
-@Test==null
-public evaluate() : void -> public evaluate() : void
-null==@Test
-public tokens() : void -> public tokens() : void
-null==@Test
-public evaluateSingleProperty() : void -> public evaluateSingleProperty() : void
-null==@Test
-public tokensSingleProperty() : void -> public tokensSingleProperty() : void
-null==@Test
-com.opengamma.strata.report.framework.expression.CurrencyParameterSensitivitiesTokenEvaluatorTest -> com.opengamma.strata.report.framework.expression.CurrencyParameterSensitivitiesTokenEvaluatorTest
-@Test==null
-public tokens() : void -> public tokens() : void
-null==@Test
-public evaluate() : void -> public evaluate() : void
-null==@Test
-com.opengamma.strata.report.framework.expression.PositionTokenEvaluatorTest -> com.opengamma.strata.report.framework.expression.PositionTokenEvaluatorTest
-@Test==null
-public tokens() : void -> public tokens() : void
-null==@Test
-public evaluate() : void -> public evaluate() : void
-null==@Test
-com.opengamma.strata.report.framework.expression.SecurityTokenEvaluatorTest -> com.opengamma.strata.report.framework.expression.SecurityTokenEvaluatorTest
-@Test==null
-public tokens() : void -> public tokens() : void
-null==@Test
-public evaluate() : void -> public evaluate() : void
-null==@Test
-com.opengamma.strata.report.framework.expression.TradeTokenEvaluatorTest -> com.opengamma.strata.report.framework.expression.TradeTokenEvaluatorTest
-@Test==null
-public tokens() : void -> public tokens() : void
-null==@Test
-public evaluate() : void -> public evaluate() : void
-null==@Test
-com.opengamma.strata.report.framework.expression.ValuePathEvaluatorTest -> com.opengamma.strata.report.framework.expression.ValuePathEvaluatorTest
-@Test==null
-public measurePath() : void -> public measurePath() : void
-null==@Test
-public measurePath_failure_noDot() : void -> public measurePath_failure_noDot() : void
-null==@Test
-public measurePath_failure_noMeasureName() : void -> public measurePath_failure_noMeasureName() : void
-null==@Test
-public measurePath_failure_unknownMeasure() : void -> public measurePath_failure_unknownMeasure() : void
-null==@Test
-public measurePath_failure_nonQueriedMeasure() : void -> public measurePath_failure_nonQueriedMeasure() : void
-null==@Test
-public tradePath() : void -> public tradePath() : void
-null==@Test
-public productPath() : void -> public productPath() : void
-null==@Test
-com.opengamma.strata.report.framework.format.AdjustableDateValueFormatterTest -> com.opengamma.strata.report.framework.format.AdjustableDateValueFormatterTest
-@Test==null
-public formatForDisplay() : void -> public formatForDisplay() : void
-null==@Test
-public formatForCsv() : void -> public formatForCsv() : void
-null==@Test
-com.opengamma.strata.report.framework.format.CurrencyParameterSensitivityValueFormatterTest -> com.opengamma.strata.report.framework.format.CurrencyParameterSensitivityValueFormatterTest
-@Test==null
-public formatForCsv() : void -> public formatForCsv() : void
-null==@Test
-public formatForDisplay() : void -> public formatForDisplay() : void
-null==@Test
-com.opengamma.strata.report.framework.format.DoubleArrayValueFormatterTest -> com.opengamma.strata.report.framework.format.DoubleArrayValueFormatterTest
-@Test==null
-public formatForDisplay() : void -> public formatForDisplay() : void
-null==@Test
-public formatForCsv() : void -> public formatForCsv() : void
-null==@Test
-com.opengamma.strata.report.framework.format.FormatSettingsProviderTest -> com.opengamma.strata.report.framework.format.FormatSettingsProviderTest
-@Test==null
-public doubleArray() : void -> public doubleArray() : void
-null==@Test
-com.opengamma.strata.report.trade.TradeReportFormatterTest -> com.opengamma.strata.report.trade.TradeReportFormatterTest
-@Test==null
-public getColumnTypes() : void -> public getColumnTypes() : void
-null==@Test
-public getColumnTypesWithSomeFailures() : void -> public getColumnTypesWithSomeFailures() : void
-null==@Test
-public getColumnTypesWithAllFailures() : void -> public getColumnTypesWithAllFailures() : void
-null==@Test
-com.opengamma.strata.report.trade.TradeReportTemplateIniLoaderTest -> com.opengamma.strata.report.trade.TradeReportTemplateIniLoaderTest
-@Test==null
-public test_simple_values() : void -> public test_simple_values() : void
-null==@Test
-public test_path() : void -> public test_path() : void
-null==@Test
-public test_ignore_failures() : void -> public test_ignore_failures() : void
-null==@Test
+com.opengamma.strata.examples.BlogsTest -> public test_multicurve1_pv01() : void
+line range:20-20==line range:24-24
+com.opengamma.strata.examples.BlogsTest -> public test_multicurve1_perf() : void
+line range:20-20==line range:31-31
+com.opengamma.strata.examples.ExamplesTest -> public test_dsfPricing_standalone() : void
+line range:37-37==line range:41-41
+com.opengamma.strata.examples.ExamplesTest -> public test_dsfPricing_tool() : void
+line range:37-37==line range:46-46
+com.opengamma.strata.examples.ExamplesTest -> public test_fraPricing_standalone() : void
+line range:37-37==line range:52-52
+com.opengamma.strata.examples.ExamplesTest -> public test_fraPricing_tool() : void
+line range:37-37==line range:57-57
+com.opengamma.strata.examples.ExamplesTest -> public test_fxPricing_standalone() : void
+line range:37-37==line range:63-63
+com.opengamma.strata.examples.ExamplesTest -> public test_fxPricing_tool() : void
+line range:37-37==line range:68-68
+com.opengamma.strata.examples.ExamplesTest -> public test_genericSecurityPricing_standalone() : void
+line range:37-37==line range:74-74
+com.opengamma.strata.examples.ExamplesTest -> public test_genericSecurityPricing_tool() : void
+line range:37-37==line range:79-79
+com.opengamma.strata.examples.ExamplesTest -> public test_iborFuturePricing_standalone() : void
+line range:37-37==line range:85-85
+com.opengamma.strata.examples.ExamplesTest -> public test_iborFuturePricing_tool() : void
+line range:37-37==line range:90-90
+com.opengamma.strata.examples.ExamplesTest -> public test_swapPricing_standalone() : void
+line range:37-37==line range:96-96
+com.opengamma.strata.examples.ExamplesTest -> public test_swapPricing_tool() : void
+line range:37-37==line range:101-101
+com.opengamma.strata.examples.ExamplesTest -> public test_swapPricingCcp_standalone() : void
+line range:37-37==line range:107-107
+com.opengamma.strata.examples.ExamplesTest -> public test_swapPricingWithCalibration_standalone() : void
+line range:37-37==line range:113-113
+com.opengamma.strata.examples.ExamplesTest -> public test_termDepositPricing_standalone() : void
+line range:37-37==line range:119-119
+com.opengamma.strata.examples.ExamplesTest -> public test_termDepositPricing_tool() : void
+line range:37-37==line range:124-124
+com.opengamma.strata.examples.ExamplesTest -> public test_curveScenario() : void
+line range:37-37==line range:130-130
+com.opengamma.strata.examples.ExamplesTest -> public test_historicalScenario() : void
+line range:37-37==line range:138-138
+com.opengamma.strata.examples.ExamplesTest -> public test_swapTrade() : void
+line range:37-37==line range:146-146
+com.opengamma.strata.examples.ExamplesTest -> public test_portfolios() : void
+line range:37-37==line range:154-154
+com.opengamma.strata.examples.ExamplesTest -> public test_calibration() : void
+line range:37-37==line range:167-167
+com.opengamma.strata.examples.ExamplesTest -> public test_calibration_xccy() : void
+line range:37-37==line range:175-175
+com.opengamma.strata.examples.ExamplesTest -> public test_calibration_eur3() : void
+line range:37-37==line range:183-183
+com.opengamma.strata.examples.ExamplesTest -> public test_calibration_simple_forward() : void
+line range:37-37==line range:191-191
+com.opengamma.strata.examples.ExamplesTest -> public test_calibration_usd_ffs() : void
+line range:37-37==line range:199-199
+com.opengamma.strata.examples.ExamplesTest -> public test_calibration_cpi() : void
+line range:37-37==line range:207-207
+com.opengamma.strata.examples.ExamplesTest -> public test_sabr_swaption_calibration() : void
+line range:37-37==line range:215-215
+com.opengamma.strata.examples.ExamplesTest -> public test_sabr_swaption_calibration_pv_risk() : void
+line range:37-37==line range:223-223
+com.opengamma.strata.examples.marketdata.ExampleMarketDataBuilderTest -> public test_directory() : void
+line range:41-41==line range:79-79
+com.opengamma.strata.examples.marketdata.ExampleMarketDataBuilderTest -> public test_ofPath() : void
+line range:41-41==line range:86-86
+com.opengamma.strata.examples.marketdata.ExampleMarketDataBuilderTest -> public test_ofPath_with_spaces() : void
+line range:41-41==line range:93-93
+com.opengamma.strata.examples.marketdata.ExampleMarketDataBuilderTest -> public test_ofResource_directory() : void
+line range:41-41==line range:102-102
+com.opengamma.strata.examples.marketdata.ExampleMarketDataBuilderTest -> public test_ofResource_directory_extraSlashes() : void
+line range:41-41==line range:108-108
+com.opengamma.strata.examples.marketdata.ExampleMarketDataBuilderTest -> public test_ofResource_directory_notFound() : void
+line range:41-41==line range:114-114
+com.opengamma.strata.examples.marketdata.ExampleMarketDataBuilderTest -> public test_ofResource_directory_with_spaces() : void
+line range:41-41==line range:119-119
+com.opengamma.strata.examples.regression.SwapReportRegressionTest -> public testResults() : void
+line range:59-59==line range:66-66
+com.opengamma.strata.report.ReportCalculationResultsTest -> public test_of() : void
+line range:36-36==line range:63-63
+com.opengamma.strata.report.ReportCalculationResultsTest -> public coverage() : void
+line range:36-36==line range:74-74
+com.opengamma.strata.report.ReportRequirementsTest -> public test_of() : void
+line range:21-21==line range:27-27
+com.opengamma.strata.report.ReportRequirementsTest -> public test_of_array() : void
+line range:21-21==line range:33-33
+com.opengamma.strata.report.ReportRequirementsTest -> public coverage() : void
+line range:21-21==line range:40-40
+com.opengamma.strata.report.framework.expression.BeanTokenEvaluatorTest -> public evaluate() : void
+line range:32-32==line range:36-36
+com.opengamma.strata.report.framework.expression.BeanTokenEvaluatorTest -> public tokens() : void
+line range:32-32==line range:48-48
+com.opengamma.strata.report.framework.expression.BeanTokenEvaluatorTest -> public evaluateSingleProperty() : void
+line range:32-32==line range:80-80
+com.opengamma.strata.report.framework.expression.BeanTokenEvaluatorTest -> public tokensSingleProperty() : void
+line range:32-32==line range:104-104
+com.opengamma.strata.report.framework.expression.CurrencyParameterSensitivitiesTokenEvaluatorTest -> public tokens() : void
+line range:28-28==line range:32-32
+com.opengamma.strata.report.framework.expression.CurrencyParameterSensitivitiesTokenEvaluatorTest -> public evaluate() : void
+line range:28-28==line range:47-47
+com.opengamma.strata.report.framework.expression.PositionTokenEvaluatorTest -> public tokens() : void
+line range:32-32==line range:39-39
+com.opengamma.strata.report.framework.expression.PositionTokenEvaluatorTest -> public evaluate() : void
+line range:32-32==line range:54-54
+com.opengamma.strata.report.framework.expression.SecurityTokenEvaluatorTest -> public tokens() : void
+line range:29-29==line range:35-35
+com.opengamma.strata.report.framework.expression.SecurityTokenEvaluatorTest -> public evaluate() : void
+line range:29-29==line range:51-51
+com.opengamma.strata.report.framework.expression.TradeTokenEvaluatorTest -> public tokens() : void
+line range:32-32==line range:36-36
+com.opengamma.strata.report.framework.expression.TradeTokenEvaluatorTest -> public evaluate() : void
+line range:32-32==line range:55-55
+com.opengamma.strata.report.framework.expression.ValuePathEvaluatorTest -> public measurePath() : void
+line range:37-37==line range:39-39
+com.opengamma.strata.report.framework.expression.ValuePathEvaluatorTest -> public measurePath_failure_noDot() : void
+line range:37-37==line range:60-60
+com.opengamma.strata.report.framework.expression.ValuePathEvaluatorTest -> public measurePath_failure_noMeasureName() : void
+line range:37-37==line range:71-71
+com.opengamma.strata.report.framework.expression.ValuePathEvaluatorTest -> public measurePath_failure_unknownMeasure() : void
+line range:37-37==line range:82-82
+com.opengamma.strata.report.framework.expression.ValuePathEvaluatorTest -> public measurePath_failure_nonQueriedMeasure() : void
+line range:37-37==line range:94-94
+com.opengamma.strata.report.framework.expression.ValuePathEvaluatorTest -> public tradePath() : void
+line range:37-37==line range:105-105
+com.opengamma.strata.report.framework.expression.ValuePathEvaluatorTest -> public productPath() : void
+line range:37-37==line range:119-119
+com.opengamma.strata.report.framework.format.AdjustableDateValueFormatterTest -> public formatForDisplay() : void
+line range:21-21==line range:23-23
+com.opengamma.strata.report.framework.format.AdjustableDateValueFormatterTest -> public formatForCsv() : void
+line range:21-21==line range:29-29
+com.opengamma.strata.report.framework.format.CurrencyParameterSensitivityValueFormatterTest -> public formatForCsv() : void
+line range:20-20==line range:22-22
+com.opengamma.strata.report.framework.format.CurrencyParameterSensitivityValueFormatterTest -> public formatForDisplay() : void
+line range:20-20==line range:30-30
+com.opengamma.strata.report.framework.format.DoubleArrayValueFormatterTest -> public formatForDisplay() : void
+line range:15-15==line range:17-17
+com.opengamma.strata.report.framework.format.DoubleArrayValueFormatterTest -> public formatForCsv() : void
+line range:15-15==line range:23-23
+com.opengamma.strata.report.framework.format.FormatSettingsProviderTest -> public doubleArray() : void
+line range:15-15==line range:17-17
+com.opengamma.strata.report.trade.TradeReportFormatterTest -> public getColumnTypes() : void
+line range:25-25==line range:29-29
+com.opengamma.strata.report.trade.TradeReportFormatterTest -> public getColumnTypesWithSomeFailures() : void
+line range:25-25==line range:41-41
+com.opengamma.strata.report.trade.TradeReportFormatterTest -> public getColumnTypesWithAllFailures() : void
+line range:25-25==line range:54-54
+com.opengamma.strata.report.trade.TradeReportTemplateIniLoaderTest -> public test_simple_values() : void
+line range:18-18==line range:20-20
+com.opengamma.strata.report.trade.TradeReportTemplateIniLoaderTest -> public test_path() : void
+line range:18-18==line range:39-39
+com.opengamma.strata.report.trade.TradeReportTemplateIniLoaderTest -> public test_ignore_failures() : void
+line range:18-18==line range:52-52

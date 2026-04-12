@@ -1,429 +1,345 @@
-com.opengamma.strata.measure.AdvancedMeasuresTest -> com.opengamma.strata.measure.AdvancedMeasuresTest
-@Test==null
-public test_standard() : void -> public test_standard() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-com.opengamma.strata.measure.MeasuresTest -> com.opengamma.strata.measure.MeasuresTest
-@Test==null
-public test_standard() : void -> public test_standard() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-com.opengamma.strata.measure.StandardComponentsTest -> com.opengamma.strata.measure.StandardComponentsTest
-@Test==null
-public test_standard() : void -> public test_standard() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-com.opengamma.strata.measure.ValuationZoneTimeDefinitionTest -> com.opengamma.strata.measure.ValuationZoneTimeDefinitionTest
-@Test==null
-public test_of() : void -> public test_of() : void
-null==@Test
-public test_toZonedDateTime_scenario() : void -> public test_toZonedDateTime_scenario() : void
-null==@Test
-public test_toZonedDateTime_scenario_default() : void -> public test_toZonedDateTime_scenario_default() : void
-null==@Test
-public test_toZonedDateTime_scenario_long() : void -> public test_toZonedDateTime_scenario_long() : void
-null==@Test
-public test_toZonedDateTime_single() : void -> public test_toZonedDateTime_single() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-public test_serialization() : void -> public test_serialization() : void
-null==@Test
-com.opengamma.strata.measure.bond.BillTradeCalculationFunctionTest -> com.opengamma.strata.measure.bond.BillTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_target() : void -> public test_target() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_pv01_calibrated() : void -> public test_pv01_calibrated() : void
-null==@Test
-public test_pv01_quote() : void -> public test_pv01_quote() : void
-null==@Test
-public test_calculate_failure() : void -> public test_calculate_failure() : void
-null==@Test
-com.opengamma.strata.measure.bond.BillTradeCalculationsTest -> com.opengamma.strata.measure.bond.BillTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01_calibrated() : void -> public test_pv01_calibrated() : void
-null==@Test
-public test_pv01_quote() : void -> public test_pv01_quote() : void
-null==@Test
-com.opengamma.strata.measure.bond.BondFutureOptionMarketDataLookupTest -> com.opengamma.strata.measure.bond.BondFutureOptionMarketDataLookupTest
-@Test==null
-public test_of_single() : void -> public test_of_single() : void
-null==@Test
-public test_of_map() : void -> public test_of_map() : void
-null==@Test
-public test_marketDataView() : void -> public test_marketDataView() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-public test_serialization() : void -> public test_serialization() : void
-null==@Test
-com.opengamma.strata.measure.bond.BondFutureOptionTradeCalculationFunctionTest -> com.opengamma.strata.measure.bond.BondFutureOptionTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.bond.BondFutureTradeCalculationFunctionTest -> com.opengamma.strata.measure.bond.BondFutureTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_pv01_calibrated() : void -> public test_pv01_calibrated() : void
-null==@Test
-public test_pv01_quote() : void -> public test_pv01_quote() : void
-null==@Test
-com.opengamma.strata.measure.bond.BondFutureTradeCalculationsTest -> com.opengamma.strata.measure.bond.BondFutureTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01_calibrated() : void -> public test_pv01_calibrated() : void
-null==@Test
-public test_pv01_quote() : void -> public test_pv01_quote() : void
-null==@Test
-com.opengamma.strata.measure.bond.CapitalIndexedBondTradeCalculationFunctionTest -> com.opengamma.strata.measure.bond.CapitalIndexedBondTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.bond.CapitalIndexedBondTradeCalculationsTest -> com.opengamma.strata.measure.bond.CapitalIndexedBondTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.bond.FixedCouponBondTradeCalculationFunctionTest -> com.opengamma.strata.measure.bond.FixedCouponBondTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_pv01_calibrated() : void -> public test_pv01_calibrated() : void
-null==@Test
-public test_pv01_quote() : void -> public test_pv01_quote() : void
-null==@Test
-com.opengamma.strata.measure.bond.FixedCouponBondTradeCalculationsTest -> com.opengamma.strata.measure.bond.FixedCouponBondTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01_calibrated() : void -> public test_pv01_calibrated() : void
-null==@Test
-public test_pv01_quote() : void -> public test_pv01_quote() : void
-null==@Test
-com.opengamma.strata.measure.bond.LegalEntityDiscountingMarketDataLookupTest -> com.opengamma.strata.measure.bond.LegalEntityDiscountingMarketDataLookupTest
-@Test==null
-public test_of_map() : void -> public test_of_map() : void
-null==@Test
-public test_of_repoMap() : void -> public test_of_repoMap() : void
-null==@Test
-public test_of_map_invalid() : void -> public test_of_map_invalid() : void
-null==@Test
-public test_marketDataView() : void -> public test_marketDataView() : void
-null==@Test
-public test_bondDiscountingProvider() : void -> public test_bondDiscountingProvider() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-public test_serialization() : void -> public test_serialization() : void
-null==@Test
-com.opengamma.strata.measure.calc.TargetTypeCalculationParameterTest -> com.opengamma.strata.measure.calc.TargetTypeCalculationParameterTest
-@Test==null
-public test_of() : void -> public test_of() : void
-null==@Test
-public of_empty() : void -> public of_empty() : void
-null==@Test
-public of_badType() : void -> public of_badType() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-com.opengamma.strata.measure.calc.TradeCounterpartyCalculationParameterTest -> com.opengamma.strata.measure.calc.TradeCounterpartyCalculationParameterTest
-@Test==null
-public test_of() : void -> public test_of() : void
-null==@Test
-public of_empty() : void -> public of_empty() : void
-null==@Test
-public of_badType() : void -> public of_badType() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-com.opengamma.strata.measure.capfloor.IborCapFloorMarketDataLookupTest -> com.opengamma.strata.measure.capfloor.IborCapFloorMarketDataLookupTest
-@Test==null
-public test_of_single() : void -> public test_of_single() : void
-null==@Test
-public test_of_map() : void -> public test_of_map() : void
-null==@Test
-public test_marketDataView() : void -> public test_marketDataView() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-public test_serialization() : void -> public test_serialization() : void
-null==@Test
-com.opengamma.strata.measure.capfloor.IborCapFloorTradeCalculationFunctionTest -> com.opengamma.strata.measure.capfloor.IborCapFloorTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-com.opengamma.strata.measure.capfloor.IborCapFloorTradeCalculationsTest -> com.opengamma.strata.measure.capfloor.IborCapFloorTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.cms.CmsSabrExtrapolationParamsTest -> com.opengamma.strata.measure.cms.CmsSabrExtrapolationParamsTest
-@Test==null
-public test_of() : void -> public test_of() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-public test_serialization() : void -> public test_serialization() : void
-null==@Test
-com.opengamma.strata.measure.cms.CmsTradeCalculationFunctionTest -> com.opengamma.strata.measure.cms.CmsTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-com.opengamma.strata.measure.cms.CmsTradeCalculationsTest -> com.opengamma.strata.measure.cms.CmsTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.credit.CdsIndexTradeCalculationFunctionTest -> com.opengamma.strata.measure.credit.CdsIndexTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_curveSensitivityMeasures() : void -> public test_curveSensitivityMeasures() : void
-null==@Test
-com.opengamma.strata.measure.credit.CdsTradeCalculationFunctionTest -> com.opengamma.strata.measure.credit.CdsTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_curveSensitivityMeasures() : void -> public test_curveSensitivityMeasures() : void
-null==@Test
-com.opengamma.strata.measure.credit.CreditRatesMarketDataLookupTest -> com.opengamma.strata.measure.credit.CreditRatesMarketDataLookupTest
-@Test==null
-public test_map() : void -> public test_map() : void
-null==@Test
-public test_marketDataView() : void -> public test_marketDataView() : void
-null==@Test
-public test_bondDiscountingProvider() : void -> public test_bondDiscountingProvider() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-public test_serialization() : void -> public test_serialization() : void
-null==@Test
-com.opengamma.strata.measure.curve.CurveMarketDataFunctionTest -> com.opengamma.strata.measure.curve.CurveMarketDataFunctionTest
-@Test==null
-public test_singleCurve() : void -> public test_singleCurve() : void
-null==@Test
-public test_multipleCurves() : void -> public test_multipleCurves() : void
-null==@Test
-com.opengamma.strata.measure.curve.CurveParallelShiftsUsageTest -> com.opengamma.strata.measure.curve.CurveParallelShiftsUsageTest
-@Test==null
-public absoluteScenarios() : void -> public absoluteScenarios() : void
-null==@Test
-com.opengamma.strata.measure.deposit.TermDepositTradeCalculationFunctionTest -> com.opengamma.strata.measure.deposit.TermDepositTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.deposit.TermDepositTradeCalculationsTest -> com.opengamma.strata.measure.deposit.TermDepositTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.dsf.DsfTradeCalculationFunctionTest -> com.opengamma.strata.measure.dsf.DsfTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
+com.opengamma.strata.measure.AdvancedMeasuresTest -> public test_standard() : void
+line range:16-16==line range:18-18
+com.opengamma.strata.measure.AdvancedMeasuresTest -> public coverage() : void
+line range:16-16==line range:23-23
+com.opengamma.strata.measure.MeasuresTest -> public test_standard() : void
+line range:16-16==line range:18-18
+com.opengamma.strata.measure.MeasuresTest -> public coverage() : void
+line range:16-16==line range:32-32
+com.opengamma.strata.measure.StandardComponentsTest -> public test_standard() : void
+line range:24-24==line range:26-26
+com.opengamma.strata.measure.StandardComponentsTest -> public coverage() : void
+line range:24-24==line range:37-37
+com.opengamma.strata.measure.ValuationZoneTimeDefinitionTest -> public test_of() : void
+line range:27-27==line range:34-34
+com.opengamma.strata.measure.ValuationZoneTimeDefinitionTest -> public test_toZonedDateTime_scenario() : void
+line range:27-27==line range:43-43
+com.opengamma.strata.measure.ValuationZoneTimeDefinitionTest -> public test_toZonedDateTime_scenario_default() : void
+line range:27-27==line range:57-57
+com.opengamma.strata.measure.ValuationZoneTimeDefinitionTest -> public test_toZonedDateTime_scenario_long() : void
+line range:27-27==line range:70-70
+com.opengamma.strata.measure.ValuationZoneTimeDefinitionTest -> public test_toZonedDateTime_single() : void
+line range:27-27==line range:84-84
+com.opengamma.strata.measure.ValuationZoneTimeDefinitionTest -> public coverage() : void
+line range:27-27==line range:95-95
+com.opengamma.strata.measure.ValuationZoneTimeDefinitionTest -> public test_serialization() : void
+line range:27-27==line range:103-103
+com.opengamma.strata.measure.bond.BillTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:69-69==line range:103-103
+com.opengamma.strata.measure.bond.BillTradeCalculationFunctionTest -> public test_target() : void
+line range:69-69==line range:114-114
+com.opengamma.strata.measure.bond.BillTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:69-69==line range:123-123
+com.opengamma.strata.measure.bond.BillTradeCalculationFunctionTest -> public test_pv01_calibrated() : void
+line range:69-69==line range:149-149
+com.opengamma.strata.measure.bond.BillTradeCalculationFunctionTest -> public test_pv01_quote() : void
+line range:69-69==line range:170-170
+com.opengamma.strata.measure.bond.BillTradeCalculationFunctionTest -> public test_calculate_failure() : void
+line range:69-69==line range:191-191
+com.opengamma.strata.measure.bond.BillTradeCalculationsTest -> public test_presentValue() : void
+line range:29-29==line range:38-38
+com.opengamma.strata.measure.bond.BillTradeCalculationsTest -> public test_pv01_calibrated() : void
+line range:29-29==line range:54-54
+com.opengamma.strata.measure.bond.BillTradeCalculationsTest -> public test_pv01_quote() : void
+line range:29-29==line range:69-69
+com.opengamma.strata.measure.bond.BondFutureOptionMarketDataLookupTest -> public test_of_single() : void
+line range:35-35==line range:50-50
+com.opengamma.strata.measure.bond.BondFutureOptionMarketDataLookupTest -> public test_of_map() : void
+line range:35-35==line range:65-65
+com.opengamma.strata.measure.bond.BondFutureOptionMarketDataLookupTest -> public test_marketDataView() : void
+line range:35-35==line range:86-86
+com.opengamma.strata.measure.bond.BondFutureOptionMarketDataLookupTest -> public coverage() : void
+line range:35-35==line range:102-102
+com.opengamma.strata.measure.bond.BondFutureOptionMarketDataLookupTest -> public test_serialization() : void
+line range:35-35==line range:114-114
+com.opengamma.strata.measure.bond.BondFutureOptionTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:76-76==line range:141-141
+com.opengamma.strata.measure.bond.BondFutureOptionTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:76-76==line range:153-153
+com.opengamma.strata.measure.bond.BondFutureOptionTradeCalculationFunctionTest -> public test_pv01() : void
+line range:76-76==line range:175-175
+com.opengamma.strata.measure.bond.BondFutureTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:68-68==line range:92-92
+com.opengamma.strata.measure.bond.BondFutureTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:68-68==line range:104-104
+com.opengamma.strata.measure.bond.BondFutureTradeCalculationFunctionTest -> public test_pv01_calibrated() : void
+line range:68-68==line range:126-126
+com.opengamma.strata.measure.bond.BondFutureTradeCalculationFunctionTest -> public test_pv01_quote() : void
+line range:68-68==line range:147-147
+com.opengamma.strata.measure.bond.BondFutureTradeCalculationsTest -> public test_presentValue() : void
+line range:34-34==line range:40-40
+com.opengamma.strata.measure.bond.BondFutureTradeCalculationsTest -> public test_pv01_calibrated() : void
+line range:34-34==line range:52-52
+com.opengamma.strata.measure.bond.BondFutureTradeCalculationsTest -> public test_pv01_quote() : void
+line range:34-34==line range:66-66
+com.opengamma.strata.measure.bond.CapitalIndexedBondTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:70-70==line range:131-131
+com.opengamma.strata.measure.bond.CapitalIndexedBondTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:70-70==line range:142-142
+com.opengamma.strata.measure.bond.CapitalIndexedBondTradeCalculationFunctionTest -> public test_pv01() : void
+line range:70-70==line range:169-169
+com.opengamma.strata.measure.bond.CapitalIndexedBondTradeCalculationsTest -> public test_presentValue() : void
+line range:30-30==line range:38-38
+com.opengamma.strata.measure.bond.CapitalIndexedBondTradeCalculationsTest -> public test_pv01() : void
+line range:30-30==line range:53-53
+com.opengamma.strata.measure.bond.FixedCouponBondTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:74-74==line range:118-118
+com.opengamma.strata.measure.bond.FixedCouponBondTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:74-74==line range:129-129
+com.opengamma.strata.measure.bond.FixedCouponBondTradeCalculationFunctionTest -> public test_pv01_calibrated() : void
+line range:74-74==line range:155-155
+com.opengamma.strata.measure.bond.FixedCouponBondTradeCalculationFunctionTest -> public test_pv01_quote() : void
+line range:74-74==line range:176-176
+com.opengamma.strata.measure.bond.FixedCouponBondTradeCalculationsTest -> public test_presentValue() : void
+line range:33-33==line range:38-38
+com.opengamma.strata.measure.bond.FixedCouponBondTradeCalculationsTest -> public test_pv01_calibrated() : void
+line range:33-33==line range:52-52
+com.opengamma.strata.measure.bond.FixedCouponBondTradeCalculationsTest -> public test_pv01_quote() : void
+line range:33-33==line range:66-66
+com.opengamma.strata.measure.bond.LegalEntityDiscountingMarketDataLookupTest -> public test_of_map() : void
+line range:51-51==line range:78-78
+com.opengamma.strata.measure.bond.LegalEntityDiscountingMarketDataLookupTest -> public test_of_repoMap() : void
+line range:51-51==line range:123-123
+com.opengamma.strata.measure.bond.LegalEntityDiscountingMarketDataLookupTest -> public test_of_map_invalid() : void
+line range:51-51==line range:151-151
+com.opengamma.strata.measure.bond.LegalEntityDiscountingMarketDataLookupTest -> public test_marketDataView() : void
+line range:51-51==line range:172-172
+com.opengamma.strata.measure.bond.LegalEntityDiscountingMarketDataLookupTest -> public test_bondDiscountingProvider() : void
+line range:51-51==line range:199-199
+com.opengamma.strata.measure.bond.LegalEntityDiscountingMarketDataLookupTest -> public coverage() : void
+line range:51-51==line range:245-245
+com.opengamma.strata.measure.bond.LegalEntityDiscountingMarketDataLookupTest -> public test_serialization() : void
+line range:51-51==line range:287-287
+com.opengamma.strata.measure.calc.TargetTypeCalculationParameterTest -> public test_of() : void
+line range:27-27==line range:38-38
+com.opengamma.strata.measure.calc.TargetTypeCalculationParameterTest -> public of_empty() : void
+line range:27-27==line range:51-51
+com.opengamma.strata.measure.calc.TargetTypeCalculationParameterTest -> public of_badType() : void
+line range:27-27==line range:57-57
+com.opengamma.strata.measure.calc.TargetTypeCalculationParameterTest -> public coverage() : void
+line range:27-27==line range:64-64
+com.opengamma.strata.measure.calc.TradeCounterpartyCalculationParameterTest -> public test_of() : void
+line range:34-34==line range:60-60
+com.opengamma.strata.measure.calc.TradeCounterpartyCalculationParameterTest -> public of_empty() : void
+line range:34-34==line range:73-73
+com.opengamma.strata.measure.calc.TradeCounterpartyCalculationParameterTest -> public of_badType() : void
+line range:34-34==line range:79-79
+com.opengamma.strata.measure.calc.TradeCounterpartyCalculationParameterTest -> public coverage() : void
+line range:34-34==line range:86-86
+com.opengamma.strata.measure.capfloor.IborCapFloorMarketDataLookupTest -> public test_of_single() : void
+line range:38-38==line range:50-50
+com.opengamma.strata.measure.capfloor.IborCapFloorMarketDataLookupTest -> public test_of_map() : void
+line range:38-38==line range:65-65
+com.opengamma.strata.measure.capfloor.IborCapFloorMarketDataLookupTest -> public test_marketDataView() : void
+line range:38-38==line range:86-86
+com.opengamma.strata.measure.capfloor.IborCapFloorMarketDataLookupTest -> public coverage() : void
+line range:38-38==line range:102-102
+com.opengamma.strata.measure.capfloor.IborCapFloorMarketDataLookupTest -> public test_serialization() : void
+line range:38-38==line range:114-114
+com.opengamma.strata.measure.capfloor.IborCapFloorTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:60-60==line range:98-98
+com.opengamma.strata.measure.capfloor.IborCapFloorTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:60-60==line range:110-110
+com.opengamma.strata.measure.capfloor.IborCapFloorTradeCalculationsTest -> public test_presentValue() : void
+line range:28-28==line range:36-36
+com.opengamma.strata.measure.capfloor.IborCapFloorTradeCalculationsTest -> public test_pv01() : void
+line range:28-28==line range:50-50
+com.opengamma.strata.measure.cms.CmsSabrExtrapolationParamsTest -> public test_of() : void
+line range:18-18==line range:20-20
+com.opengamma.strata.measure.cms.CmsSabrExtrapolationParamsTest -> public coverage() : void
+line range:18-18==line range:28-28
+com.opengamma.strata.measure.cms.CmsSabrExtrapolationParamsTest -> public test_serialization() : void
+line range:18-18==line range:36-36
+com.opengamma.strata.measure.cms.CmsTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:67-67==line range:117-117
+com.opengamma.strata.measure.cms.CmsTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:67-67==line range:129-129
+com.opengamma.strata.measure.cms.CmsTradeCalculationsTest -> public test_presentValue() : void
+line range:32-32==line range:41-41
+com.opengamma.strata.measure.cms.CmsTradeCalculationsTest -> public test_pv01() : void
+line range:32-32==line range:59-59
+com.opengamma.strata.measure.credit.CdsIndexTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:43-43==line range:56-56
+com.opengamma.strata.measure.credit.CdsIndexTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:43-43==line range:70-70
+com.opengamma.strata.measure.credit.CdsIndexTradeCalculationFunctionTest -> public test_curveSensitivityMeasures() : void
+line range:43-43==line range:95-95
+com.opengamma.strata.measure.credit.CdsTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:43-43==line range:55-55
+com.opengamma.strata.measure.credit.CdsTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:43-43==line range:67-67
+com.opengamma.strata.measure.credit.CdsTradeCalculationFunctionTest -> public test_curveSensitivityMeasures() : void
+line range:43-43==line range:92-92
+com.opengamma.strata.measure.credit.CreditRatesMarketDataLookupTest -> public test_map() : void
+line range:52-52==line range:80-80
+com.opengamma.strata.measure.credit.CreditRatesMarketDataLookupTest -> public test_marketDataView() : void
+line range:52-52==line range:118-118
+com.opengamma.strata.measure.credit.CreditRatesMarketDataLookupTest -> public test_bondDiscountingProvider() : void
+line range:52-52==line range:132-132
+com.opengamma.strata.measure.credit.CreditRatesMarketDataLookupTest -> public coverage() : void
+line range:52-52==line range:179-179
+com.opengamma.strata.measure.credit.CreditRatesMarketDataLookupTest -> public test_serialization() : void
+line range:52-52==line range:198-198
+com.opengamma.strata.measure.curve.CurveMarketDataFunctionTest -> public test_singleCurve() : void
+line range:38-38==line range:48-48
+com.opengamma.strata.measure.curve.CurveMarketDataFunctionTest -> public test_multipleCurves() : void
+line range:38-38==line range:75-75
+com.opengamma.strata.measure.curve.CurveParallelShiftsUsageTest -> public absoluteScenarios() : void
+line range:36-36==line range:40-40
+com.opengamma.strata.measure.deposit.TermDepositTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:56-56==line range:84-84
+com.opengamma.strata.measure.deposit.TermDepositTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:56-56==line range:95-95
+com.opengamma.strata.measure.deposit.TermDepositTradeCalculationFunctionTest -> public test_pv01() : void
+line range:56-56==line range:129-129
+com.opengamma.strata.measure.deposit.TermDepositTradeCalculationsTest -> public test_presentValue() : void
+line range:30-30==line range:36-36
+com.opengamma.strata.measure.deposit.TermDepositTradeCalculationsTest -> public test_pv01() : void
+line range:30-30==line range:59-59
+com.opengamma.strata.measure.dsf.DsfTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:68-68==line range:112-112
+com.opengamma.strata.measure.dsf.DsfTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:68-68==line range:124-124
+com.opengamma.strata.measure.dsf.DsfTradeCalculationFunctionTest -> public test_pv01() : void
+line range:68-68==line range:150-150
 com.opengamma.strata.measure.dsf.DsfTradeCalculationsTest -> com.opengamma.strata.measure.dsf.DsfTradeCalculationsTest
 @Test==null
-com.opengamma.strata.measure.fra.FraTradeCalculationFunctionTest -> com.opengamma.strata.measure.fra.FraTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.fra.FraTradeCalculationsTest -> com.opengamma.strata.measure.fra.FraTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.fx.FxNdfTradeCalculationFunctionTest -> com.opengamma.strata.measure.fx.FxNdfTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.fx.FxNdfTradeCalculationsTest -> com.opengamma.strata.measure.fx.FxNdfTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.fx.FxRateConfigTest -> com.opengamma.strata.measure.fx.FxRateConfigTest
-@Test==null
-public containsPair() : void -> public containsPair() : void
-null==@Test
-public containsInversePair() : void -> public containsInversePair() : void
-null==@Test
-public missingPair() : void -> public missingPair() : void
-null==@Test
-public nonConventionPair() : void -> public nonConventionPair() : void
-null==@Test
-com.opengamma.strata.measure.fx.FxRateMarketDataFunctionTest -> com.opengamma.strata.measure.fx.FxRateMarketDataFunctionTest
-@Test==null
-public requirements() : void -> public requirements() : void
-null==@Test
-public requirementsInverse() : void -> public requirementsInverse() : void
-null==@Test
-public requirementsMissingConfig() : void -> public requirementsMissingConfig() : void
-null==@Test
-public requirementsNoConfigForPair() : void -> public requirementsNoConfigForPair() : void
-null==@Test
-public build() : void -> public build() : void
-null==@Test
-public buildInverse() : void -> public buildInverse() : void
-null==@Test
-public buildScenario() : void -> public buildScenario() : void
-null==@Test
-public buildMissingConfig() : void -> public buildMissingConfig() : void
-null==@Test
-public buildNoConfigForPair() : void -> public buildNoConfigForPair() : void
-null==@Test
-com.opengamma.strata.measure.fx.FxSingleTradeCalculationFunctionTest -> com.opengamma.strata.measure.fx.FxSingleTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.fx.FxSingleTradeCalculationsTest -> com.opengamma.strata.measure.fx.FxSingleTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.fx.FxSwapTradeCalculationFunctionTest -> com.opengamma.strata.measure.fx.FxSwapTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.fx.FxSwapTradeCalculationsTest -> com.opengamma.strata.measure.fx.FxSwapTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.fxopt.BlackFxOptionInterpolatedNodalSurfaceVolatilitiesSpecificationTest -> com.opengamma.strata.measure.fxopt.BlackFxOptionInterpolatedNodalSurfaceVolatilitiesSpecificationTest
-@Test==null
-public test_builder() : void -> public test_builder() : void
-null==@Test
-public test_volatilities() : void -> public test_volatilities() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-public serialization() : void -> public serialization() : void
-null==@Test
-com.opengamma.strata.measure.fxopt.BlackFxOptionSmileVolatilitiesSpecificationTest -> com.opengamma.strata.measure.fxopt.BlackFxOptionSmileVolatilitiesSpecificationTest
-@Test==null
-public test_builder() : void -> public test_builder() : void
-null==@Test
-public test_volatilities() : void -> public test_volatilities() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-public serialization() : void -> public serialization() : void
-null==@Test
-com.opengamma.strata.measure.fxopt.FxOptionMarketDataLookupTest -> com.opengamma.strata.measure.fxopt.FxOptionMarketDataLookupTest
-@Test==null
-public test_of_single() : void -> public test_of_single() : void
-null==@Test
-public test_of_map() : void -> public test_of_map() : void
-null==@Test
-public test_marketDataView() : void -> public test_marketDataView() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-public test_serialization() : void -> public test_serialization() : void
-null==@Test
-com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesDefinitionTest -> com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesDefinitionTest
-@Test==null
-public test_of() : void -> public test_of() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-public serialization() : void -> public serialization() : void
-null==@Test
-com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesMarketDataFunctionTest -> com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesMarketDataFunctionTest
-@Test==null
-public test_singleMarketData() : void -> public test_singleMarketData() : void
-null==@Test
-public test_scenarioMarketData() : void -> public test_scenarioMarketData() : void
-null==@Test
-public test_quote_secenarioDefinition() : void -> public test_quote_secenarioDefinition() : void
-null==@Test
-public test_parameter_secenarioDefinition() : void -> public test_parameter_secenarioDefinition() : void
-null==@Test
-public test_builtData() : void -> public test_builtData() : void
-null==@Test
-public test_surface() : void -> public test_surface() : void
-null==@Test
-com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesNodeTest -> com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesNodeTest
-@Test==null
-public test_builder() : void -> public test_builder() : void
-null==@Test
-public test_builder_noExp() : void -> public test_builder_noExp() : void
-null==@Test
-public test_of() : void -> public test_of() : void
-null==@Test
-public test_expiry() : void -> public test_expiry() : void
-null==@Test
-public test_expiry_standard() : void -> public test_expiry_standard() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-public serialization() : void -> public serialization() : void
-null==@Test
-com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionMethodTest -> com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionMethodTest
-@Test==null
+com.opengamma.strata.measure.fra.FraTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:56-56==line range:73-73
+com.opengamma.strata.measure.fra.FraTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:56-56==line range:85-85
+com.opengamma.strata.measure.fra.FraTradeCalculationFunctionTest -> public test_pv01() : void
+line range:56-56==line range:127-127
+com.opengamma.strata.measure.fra.FraTradeCalculationsTest -> public test_presentValue() : void
+line range:32-32==line range:38-38
+com.opengamma.strata.measure.fra.FraTradeCalculationsTest -> public test_pv01() : void
+line range:32-32==line range:60-60
+com.opengamma.strata.measure.fx.FxNdfTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:55-55==line range:83-83
+com.opengamma.strata.measure.fx.FxNdfTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:55-55==line range:95-95
+com.opengamma.strata.measure.fx.FxNdfTradeCalculationFunctionTest -> public test_pv01() : void
+line range:55-55==line range:125-125
+com.opengamma.strata.measure.fx.FxNdfTradeCalculationsTest -> public test_presentValue() : void
+line range:30-30==line range:36-36
+com.opengamma.strata.measure.fx.FxNdfTradeCalculationsTest -> public test_pv01() : void
+line range:30-30==line range:52-52
+com.opengamma.strata.measure.fx.FxRateConfigTest -> public containsPair() : void
+line range:21-21==line range:26-26
+com.opengamma.strata.measure.fx.FxRateConfigTest -> public containsInversePair() : void
+line range:21-21==line range:31-31
+com.opengamma.strata.measure.fx.FxRateConfigTest -> public missingPair() : void
+line range:21-21==line range:36-36
+com.opengamma.strata.measure.fx.FxRateConfigTest -> public nonConventionPair() : void
+line range:21-21==line range:41-41
+com.opengamma.strata.measure.fx.FxRateMarketDataFunctionTest -> public requirements() : void
+line range:31-31==line range:38-38
+com.opengamma.strata.measure.fx.FxRateMarketDataFunctionTest -> public requirementsInverse() : void
+line range:31-31==line range:45-45
+com.opengamma.strata.measure.fx.FxRateMarketDataFunctionTest -> public requirementsMissingConfig() : void
+line range:31-31==line range:52-52
+com.opengamma.strata.measure.fx.FxRateMarketDataFunctionTest -> public requirementsNoConfigForPair() : void
+line range:31-31==line range:60-60
+com.opengamma.strata.measure.fx.FxRateMarketDataFunctionTest -> public build() : void
+line range:31-31==line range:67-67
+com.opengamma.strata.measure.fx.FxRateMarketDataFunctionTest -> public buildInverse() : void
+line range:31-31==line range:79-79
+com.opengamma.strata.measure.fx.FxRateMarketDataFunctionTest -> public buildScenario() : void
+line range:31-31==line range:91-91
+com.opengamma.strata.measure.fx.FxRateMarketDataFunctionTest -> public buildMissingConfig() : void
+line range:31-31==line range:106-106
+com.opengamma.strata.measure.fx.FxRateMarketDataFunctionTest -> public buildNoConfigForPair() : void
+line range:31-31==line range:114-114
+com.opengamma.strata.measure.fx.FxSingleTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:53-53==line range:70-70
+com.opengamma.strata.measure.fx.FxSingleTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:53-53==line range:82-82
+com.opengamma.strata.measure.fx.FxSingleTradeCalculationFunctionTest -> public test_pv01() : void
+line range:53-53==line range:116-116
+com.opengamma.strata.measure.fx.FxSingleTradeCalculationsTest -> public test_presentValue() : void
+line range:28-28==line range:34-34
+com.opengamma.strata.measure.fx.FxSingleTradeCalculationsTest -> public test_pv01() : void
+line range:28-28==line range:50-50
+com.opengamma.strata.measure.fx.FxSwapTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:55-55==line range:79-79
+com.opengamma.strata.measure.fx.FxSwapTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:55-55==line range:91-91
+com.opengamma.strata.measure.fx.FxSwapTradeCalculationFunctionTest -> public test_pv01() : void
+line range:55-55==line range:122-122
+com.opengamma.strata.measure.fx.FxSwapTradeCalculationsTest -> public test_presentValue() : void
+line range:27-27==line range:33-33
+com.opengamma.strata.measure.fx.FxSwapTradeCalculationsTest -> public test_pv01() : void
+line range:27-27==line range:47-47
+com.opengamma.strata.measure.fxopt.BlackFxOptionInterpolatedNodalSurfaceVolatilitiesSpecificationTest -> public test_builder() : void
+line range:55-55==line range:83-83
+com.opengamma.strata.measure.fxopt.BlackFxOptionInterpolatedNodalSurfaceVolatilitiesSpecificationTest -> public test_volatilities() : void
+line range:55-55==line range:112-112
+com.opengamma.strata.measure.fxopt.BlackFxOptionInterpolatedNodalSurfaceVolatilitiesSpecificationTest -> public coverage() : void
+line range:55-55==line range:149-149
+com.opengamma.strata.measure.fxopt.BlackFxOptionInterpolatedNodalSurfaceVolatilitiesSpecificationTest -> public serialization() : void
+line range:55-55==line range:187-187
+com.opengamma.strata.measure.fxopt.BlackFxOptionSmileVolatilitiesSpecificationTest -> public test_builder() : void
+line range:54-54==line range:84-84
+com.opengamma.strata.measure.fxopt.BlackFxOptionSmileVolatilitiesSpecificationTest -> public test_volatilities() : void
+line range:54-54==line range:112-112
+com.opengamma.strata.measure.fxopt.BlackFxOptionSmileVolatilitiesSpecificationTest -> public coverage() : void
+line range:54-54==line range:139-139
+com.opengamma.strata.measure.fxopt.BlackFxOptionSmileVolatilitiesSpecificationTest -> public serialization() : void
+line range:54-54==line range:173-173
+com.opengamma.strata.measure.fxopt.FxOptionMarketDataLookupTest -> public test_of_single() : void
+line range:38-38==line range:53-53
+com.opengamma.strata.measure.fxopt.FxOptionMarketDataLookupTest -> public test_of_map() : void
+line range:38-38==line range:68-68
+com.opengamma.strata.measure.fxopt.FxOptionMarketDataLookupTest -> public test_marketDataView() : void
+line range:38-38==line range:89-89
+com.opengamma.strata.measure.fxopt.FxOptionMarketDataLookupTest -> public coverage() : void
+line range:38-38==line range:105-105
+com.opengamma.strata.measure.fxopt.FxOptionMarketDataLookupTest -> public test_serialization() : void
+line range:38-38==line range:117-117
+com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesDefinitionTest -> public test_of() : void
+line range:46-46==line range:86-86
+com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesDefinitionTest -> public coverage() : void
+line range:46-46==line range:98-98
+com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesDefinitionTest -> public serialization() : void
+line range:46-46==line range:114-114
+com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesMarketDataFunctionTest -> public test_singleMarketData() : void
+line range:114-114==line range:338-338
+com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesMarketDataFunctionTest -> public test_scenarioMarketData() : void
+line range:114-114==line range:349-349
+com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesMarketDataFunctionTest -> public test_quote_secenarioDefinition() : void
+line range:114-114==line range:363-363
+com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesMarketDataFunctionTest -> public test_parameter_secenarioDefinition() : void
+line range:114-114==line range:394-394
+com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesMarketDataFunctionTest -> public test_builtData() : void
+line range:114-114==line range:422-422
+com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesMarketDataFunctionTest -> public test_surface() : void
+line range:114-114==line range:513-513
+com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesNodeTest -> public test_builder() : void
+line range:43-43==line range:57-57
+com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesNodeTest -> public test_builder_noExp() : void
+line range:43-43==line range:80-80
+com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesNodeTest -> public test_of() : void
+line range:43-43==line range:102-102
+com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesNodeTest -> public test_expiry() : void
+line range:43-43==line range:116-116
+com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesNodeTest -> public test_expiry_standard() : void
+line range:43-43==line range:130-130
+com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesNodeTest -> public coverage() : void
+line range:43-43==line range:151-151
+com.opengamma.strata.measure.fxopt.FxOptionVolatilitiesNodeTest -> public serialization() : void
+line range:43-43==line range:166-166
+com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionMethodTest -> public test_of_lookup_notFound() : void
+line range:27-27==line range:53-53
+com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionMethodTest -> public test_of_lookup_null() : void
+line range:27-27==line range:58-58
+com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionMethodTest -> public test_filter() : void
+line range:27-27==line range:64-64
+com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionMethodTest -> public coverage() : void
+line range:27-27==line range:71-71
+com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionMethodTest -> public test_serialization() : void
+line range:27-27==line range:76-76
+com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionMethodTest -> public test_jodaConvert() : void
+line range:27-27==line range:81-81
 public data_name() : Object[][] -> public data_name() : Object[][]
 @DataProvider(name = "name")==null
 public test_toString(convention FxSingleBarrierOptionMethod, name String) : void -> public test_toString(convention FxSingleBarrierOptionMethod, name String) : void
@@ -438,34 +354,28 @@ public test_of_lookup(convention FxSingleBarrierOptionMethod, name String) : voi
 null==@MethodSource("data_name")
 public test_of_lookup(convention FxSingleBarrierOptionMethod, name String) : void -> public test_of_lookup(convention FxSingleBarrierOptionMethod, name String) : void
 @Test(dataProvider = "name")==null
-public test_of_lookup_notFound() : void -> public test_of_lookup_notFound() : void
-null==@Test
-public test_of_lookup_null() : void -> public test_of_lookup_null() : void
-null==@Test
-public test_filter() : void -> public test_filter() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-public test_serialization() : void -> public test_serialization() : void
-null==@Test
-public test_jodaConvert() : void -> public test_jodaConvert() : void
-null==@Test
-com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionTradeCalculationFunctionTest -> com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionTradeCalculationsTest -> com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.fxopt.FxVanillaOptionMethodTest -> com.opengamma.strata.measure.fxopt.FxVanillaOptionMethodTest
-@Test==null
+com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:72-72==line range:134-134
+com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:72-72==line range:146-146
+com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionTradeCalculationFunctionTest -> public test_pv01() : void
+line range:72-72==line range:173-173
+com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionTradeCalculationsTest -> public test_presentValue() : void
+line range:31-31==line range:40-40
+com.opengamma.strata.measure.fxopt.FxSingleBarrierOptionTradeCalculationsTest -> public test_pv01() : void
+line range:31-31==line range:54-54
+com.opengamma.strata.measure.fxopt.FxVanillaOptionMethodTest -> public test_of_lookup_notFound() : void
+line range:27-27==line range:53-53
+com.opengamma.strata.measure.fxopt.FxVanillaOptionMethodTest -> public test_of_lookup_null() : void
+line range:27-27==line range:58-58
+com.opengamma.strata.measure.fxopt.FxVanillaOptionMethodTest -> public test_filter() : void
+line range:27-27==line range:64-64
+com.opengamma.strata.measure.fxopt.FxVanillaOptionMethodTest -> public coverage() : void
+line range:27-27==line range:71-71
+com.opengamma.strata.measure.fxopt.FxVanillaOptionMethodTest -> public test_serialization() : void
+line range:27-27==line range:76-76
+com.opengamma.strata.measure.fxopt.FxVanillaOptionMethodTest -> public test_jodaConvert() : void
+line range:27-27==line range:81-81
 public data_name() : Object[][] -> public data_name() : Object[][]
 @DataProvider(name = "name")==null
 public test_toString(convention FxVanillaOptionMethod, name String) : void -> public test_toString(convention FxVanillaOptionMethod, name String) : void
@@ -480,235 +390,169 @@ public test_of_lookup(convention FxVanillaOptionMethod, name String) : void -> p
 null==@MethodSource("data_name")
 public test_of_lookup(convention FxVanillaOptionMethod, name String) : void -> public test_of_lookup(convention FxVanillaOptionMethod, name String) : void
 @Test(dataProvider = "name")==null
-public test_of_lookup_notFound() : void -> public test_of_lookup_notFound() : void
-null==@Test
-public test_of_lookup_null() : void -> public test_of_lookup_null() : void
-null==@Test
-public test_filter() : void -> public test_filter() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-public test_serialization() : void -> public test_serialization() : void
-null==@Test
-public test_jodaConvert() : void -> public test_jodaConvert() : void
-null==@Test
-com.opengamma.strata.measure.fxopt.FxVanillaOptionTradeCalculationFunctionTest -> com.opengamma.strata.measure.fxopt.FxVanillaOptionTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.fxopt.FxVanillaOptionTradeCalculationsTest -> com.opengamma.strata.measure.fxopt.FxVanillaOptionTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.index.IborFutureOptionMarketDataLookupTest -> com.opengamma.strata.measure.index.IborFutureOptionMarketDataLookupTest
-@Test==null
-public test_of_single() : void -> public test_of_single() : void
-null==@Test
-public test_of_map() : void -> public test_of_map() : void
-null==@Test
-public test_marketDataView() : void -> public test_marketDataView() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-public test_serialization() : void -> public test_serialization() : void
-null==@Test
-com.opengamma.strata.measure.index.IborFutureOptionTradeCalculationFunctionTest -> com.opengamma.strata.measure.index.IborFutureOptionTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-com.opengamma.strata.measure.index.IborFutureTradeCalculationFunctionTest -> com.opengamma.strata.measure.index.IborFutureTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-com.opengamma.strata.measure.index.IborFutureTradeCalculationsTest -> com.opengamma.strata.measure.index.IborFutureTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.index.OvernightFutureTradeCalculationFunctionTest -> com.opengamma.strata.measure.index.OvernightFutureTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-com.opengamma.strata.measure.index.OvernightFutureTradeCalculationsTest -> com.opengamma.strata.measure.index.OvernightFutureTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_parSpread() : void -> public test_parSpread() : void
-null==@Test
-public test_unitPrice() : void -> public test_unitPrice() : void
-null==@Test
-public test_pv01_calibrated() : void -> public test_pv01_calibrated() : void
-null==@Test
-public test_pv01_quote() : void -> public test_pv01_quote() : void
-null==@Test
-com.opengamma.strata.measure.payment.BulletPaymentTradeCalculationFunctionTest -> com.opengamma.strata.measure.payment.BulletPaymentTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.payment.BulletPaymentTradeCalculationsTest -> com.opengamma.strata.measure.payment.BulletPaymentTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.rate.CurveEndToEndTest -> com.opengamma.strata.measure.rate.CurveEndToEndTest
-@Test==null
-public roundTripFraAndFixedFloatSwap() : void -> public roundTripFraAndFixedFloatSwap() : void
-null==@Test
-com.opengamma.strata.measure.rate.DefaultRatesMarketDataLookupTest -> com.opengamma.strata.measure.rate.DefaultRatesMarketDataLookupTest
-@Test==null
-public validateObservableSourceDiscountCurves() : void -> public validateObservableSourceDiscountCurves() : void
-null==@Test
-public validateObservableSourceForwardCurves() : void -> public validateObservableSourceForwardCurves() : void
-null==@Test
-com.opengamma.strata.measure.rate.HistoricIndicesTest -> com.opengamma.strata.measure.rate.HistoricIndicesTest
-@Test==null
-public testHistoricIndex() : void -> public testHistoricIndex() : void
-null==@Test
-com.opengamma.strata.measure.rate.RatesCurveGroupMarketDataFunctionTest -> com.opengamma.strata.measure.rate.RatesCurveGroupMarketDataFunctionTest
-@Test==null
-public roundTripFra() : void -> public roundTripFra() : void
-null==@Test
-public roundTripFraAndFixedFloatSwap() : void -> public roundTripFraAndFixedFloatSwap() : void
-null==@Test
-public requirements() : void -> public requirements() : void
-null==@Test
-public metadata() : void -> public metadata() : void
-null==@Test
-public duplicateInputDataKeys() : void -> public duplicateInputDataKeys() : void
-null==@Test
-com.opengamma.strata.measure.rate.RatesCurveInputsMarketDataFunctionTest -> com.opengamma.strata.measure.rate.RatesCurveInputsMarketDataFunctionTest
-@Test==null
-public requirements() : void -> public requirements() : void
-null==@Test
-public requirementsMissingGroupConfig() : void -> public requirementsMissingGroupConfig() : void
-null==@Test
-public requirementsMissingCurveDefinition() : void -> public requirementsMissingCurveDefinition() : void
-null==@Test
-public build() : void -> public build() : void
-null==@Test
-public buildMissingGroupConfig() : void -> public buildMissingGroupConfig() : void
-null==@Test
-public buildMissingCurveDefinition() : void -> public buildMissingCurveDefinition() : void
-null==@Test
-public buildMissingMarketData() : void -> public buildMissingMarketData() : void
-null==@Test
-com.opengamma.strata.measure.rate.RatesMarketDataLookupTest -> com.opengamma.strata.measure.rate.RatesMarketDataLookupTest
-@Test==null
-public test_of_map() : void -> public test_of_map() : void
-null==@Test
-public test_of_groupNameAndMap() : void -> public test_of_groupNameAndMap() : void
-null==@Test
-public test_of_curveGroup() : void -> public test_of_curveGroup() : void
-null==@Test
-public test_of_curveGroupDefinition_and_observableSource() : void -> public test_of_curveGroupDefinition_and_observableSource() : void
-null==@Test
-public test_marketDataView() : void -> public test_marketDataView() : void
-null==@Test
-public test_ratesProvider() : void -> public test_ratesProvider() : void
-null==@Test
-public test_fxProvider() : void -> public test_fxProvider() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-public test_serialization() : void -> public test_serialization() : void
-null==@Test
-public test_jodaSerialization() : void -> public test_jodaSerialization() : void
-null==@Test
-com.opengamma.strata.measure.security.GenericSecurityPositionCalculationFunctionTest -> com.opengamma.strata.measure.security.GenericSecurityPositionCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-com.opengamma.strata.measure.security.GenericSecurityTradeCalculationFunctionTest -> com.opengamma.strata.measure.security.GenericSecurityTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-com.opengamma.strata.measure.security.SecurityPositionCalculationFunctionTest -> com.opengamma.strata.measure.security.SecurityPositionCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-com.opengamma.strata.measure.security.SecurityTradeCalculationFunctionTest -> com.opengamma.strata.measure.security.SecurityTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-com.opengamma.strata.measure.swap.SwapMeasureCalculationsTest -> com.opengamma.strata.measure.swap.SwapMeasureCalculationsTest
-@Test==null
-public test_legInitialNotional() : void -> public test_legInitialNotional() : void
-null==@Test
-public test_legInitialNotionalWithoutNotional() : void -> public test_legInitialNotionalWithoutNotional() : void
-null==@Test
-com.opengamma.strata.measure.swap.SwapPricingTest -> com.opengamma.strata.measure.swap.SwapPricingTest
-@Test==null
-public presentValueVanillaFixedVsLibor1mSwap() : void -> public presentValueVanillaFixedVsLibor1mSwap() : void
-null==@Test
-com.opengamma.strata.measure.swap.SwapTradeCalculationFunctionTest -> com.opengamma.strata.measure.swap.SwapTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.swap.SwapTradeCalculationsTest -> com.opengamma.strata.measure.swap.SwapTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
-com.opengamma.strata.measure.swaption.SwaptionMarketDataLookupTest -> com.opengamma.strata.measure.swaption.SwaptionMarketDataLookupTest
-@Test==null
-public test_of_single() : void -> public test_of_single() : void
-null==@Test
-public test_of_map() : void -> public test_of_map() : void
-null==@Test
-public test_marketDataView() : void -> public test_marketDataView() : void
-null==@Test
-public coverage() : void -> public coverage() : void
-null==@Test
-public test_serialization() : void -> public test_serialization() : void
-null==@Test
-com.opengamma.strata.measure.swaption.SwaptionTradeCalculationFunctionTest -> com.opengamma.strata.measure.swaption.SwaptionTradeCalculationFunctionTest
-@Test==null
-public test_requirementsAndCurrency() : void -> public test_requirementsAndCurrency() : void
-null==@Test
-public test_simpleMeasures() : void -> public test_simpleMeasures() : void
-null==@Test
-com.opengamma.strata.measure.swaption.SwaptionTradeCalculationsTest -> com.opengamma.strata.measure.swaption.SwaptionTradeCalculationsTest
-@Test==null
-public test_presentValue() : void -> public test_presentValue() : void
-null==@Test
-public test_pv01() : void -> public test_pv01() : void
-null==@Test
+com.opengamma.strata.measure.fxopt.FxVanillaOptionTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:68-68==line range:126-126
+com.opengamma.strata.measure.fxopt.FxVanillaOptionTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:68-68==line range:138-138
+com.opengamma.strata.measure.fxopt.FxVanillaOptionTradeCalculationFunctionTest -> public test_pv01() : void
+line range:68-68==line range:165-165
+com.opengamma.strata.measure.fxopt.FxVanillaOptionTradeCalculationsTest -> public test_presentValue() : void
+line range:31-31==line range:39-39
+com.opengamma.strata.measure.fxopt.FxVanillaOptionTradeCalculationsTest -> public test_pv01() : void
+line range:31-31==line range:53-53
+com.opengamma.strata.measure.index.IborFutureOptionMarketDataLookupTest -> public test_of_single() : void
+line range:38-38==line range:50-50
+com.opengamma.strata.measure.index.IborFutureOptionMarketDataLookupTest -> public test_of_map() : void
+line range:38-38==line range:65-65
+com.opengamma.strata.measure.index.IborFutureOptionMarketDataLookupTest -> public test_marketDataView() : void
+line range:38-38==line range:87-87
+com.opengamma.strata.measure.index.IborFutureOptionMarketDataLookupTest -> public coverage() : void
+line range:38-38==line range:103-103
+com.opengamma.strata.measure.index.IborFutureOptionMarketDataLookupTest -> public test_serialization() : void
+line range:38-38==line range:115-115
+com.opengamma.strata.measure.index.IborFutureOptionTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:65-65==line range:121-121
+com.opengamma.strata.measure.index.IborFutureOptionTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:65-65==line range:133-133
+com.opengamma.strata.measure.index.IborFutureTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:52-52==line range:73-73
+com.opengamma.strata.measure.index.IborFutureTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:52-52==line range:85-85
+com.opengamma.strata.measure.index.IborFutureTradeCalculationsTest -> public test_presentValue() : void
+line range:30-30==line range:37-37
+com.opengamma.strata.measure.index.IborFutureTradeCalculationsTest -> public test_pv01() : void
+line range:30-30==line range:49-49
+com.opengamma.strata.measure.index.OvernightFutureTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:65-65==line range:112-112
+com.opengamma.strata.measure.index.OvernightFutureTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:65-65==line range:124-124
+com.opengamma.strata.measure.index.OvernightFutureTradeCalculationsTest -> public test_presentValue() : void
+line range:46-46==line range:96-96
+com.opengamma.strata.measure.index.OvernightFutureTradeCalculationsTest -> public test_parSpread() : void
+line range:46-46==line range:104-104
+com.opengamma.strata.measure.index.OvernightFutureTradeCalculationsTest -> public test_unitPrice() : void
+line range:46-46==line range:112-112
+com.opengamma.strata.measure.index.OvernightFutureTradeCalculationsTest -> public test_pv01_calibrated() : void
+line range:46-46==line range:120-120
+com.opengamma.strata.measure.index.OvernightFutureTradeCalculationsTest -> public test_pv01_quote() : void
+line range:46-46==line range:134-134
+com.opengamma.strata.measure.payment.BulletPaymentTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:56-56==line range:82-82
+com.opengamma.strata.measure.payment.BulletPaymentTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:56-56==line range:93-93
+com.opengamma.strata.measure.payment.BulletPaymentTradeCalculationFunctionTest -> public test_pv01() : void
+line range:56-56==line range:117-117
+com.opengamma.strata.measure.payment.BulletPaymentTradeCalculationsTest -> public test_presentValue() : void
+line range:31-31==line range:37-37
+com.opengamma.strata.measure.payment.BulletPaymentTradeCalculationsTest -> public test_pv01() : void
+line range:31-31==line range:54-54
+com.opengamma.strata.measure.rate.CurveEndToEndTest -> public roundTripFraAndFixedFloatSwap() : void
+line range:65-65==line range:82-82
+com.opengamma.strata.measure.rate.DefaultRatesMarketDataLookupTest -> public validateObservableSourceDiscountCurves() : void
+line range:24-24==line range:29-29
+com.opengamma.strata.measure.rate.DefaultRatesMarketDataLookupTest -> public validateObservableSourceForwardCurves() : void
+line range:24-24==line range:46-46
+com.opengamma.strata.measure.rate.HistoricIndicesTest -> public testHistoricIndex() : void
+line range:67-67==line range:69-69
+com.opengamma.strata.measure.rate.RatesCurveGroupMarketDataFunctionTest -> public roundTripFra() : void
+line range:78-78==line range:90-90
+com.opengamma.strata.measure.rate.RatesCurveGroupMarketDataFunctionTest -> public roundTripFraAndFixedFloatSwap() : void
+line range:78-78==line range:142-142
+com.opengamma.strata.measure.rate.RatesCurveGroupMarketDataFunctionTest -> public requirements() : void
+line range:78-78==line range:193-193
+com.opengamma.strata.measure.rate.RatesCurveGroupMarketDataFunctionTest -> public metadata() : void
+line range:78-78==line range:228-228
+com.opengamma.strata.measure.rate.RatesCurveGroupMarketDataFunctionTest -> public duplicateInputDataKeys() : void
+line range:78-78==line range:292-292
+com.opengamma.strata.measure.rate.RatesCurveInputsMarketDataFunctionTest -> public requirements() : void
+line range:50-50==line range:58-58
+com.opengamma.strata.measure.rate.RatesCurveInputsMarketDataFunctionTest -> public requirementsMissingGroupConfig() : void
+line range:50-50==line range:94-94
+com.opengamma.strata.measure.rate.RatesCurveInputsMarketDataFunctionTest -> public requirementsMissingCurveDefinition() : void
+line range:50-50==line range:106-106
+com.opengamma.strata.measure.rate.RatesCurveInputsMarketDataFunctionTest -> public build() : void
+line range:50-50==line range:120-120
+com.opengamma.strata.measure.rate.RatesCurveInputsMarketDataFunctionTest -> public buildMissingGroupConfig() : void
+line range:50-50==line range:175-175
+com.opengamma.strata.measure.rate.RatesCurveInputsMarketDataFunctionTest -> public buildMissingCurveDefinition() : void
+line range:50-50==line range:189-189
+com.opengamma.strata.measure.rate.RatesCurveInputsMarketDataFunctionTest -> public buildMissingMarketData() : void
+line range:50-50==line range:206-206
+com.opengamma.strata.measure.rate.RatesMarketDataLookupTest -> public test_of_map() : void
+line range:76-76==line range:87-87
+com.opengamma.strata.measure.rate.RatesMarketDataLookupTest -> public test_of_groupNameAndMap() : void
+line range:76-76==line range:126-126
+com.opengamma.strata.measure.rate.RatesMarketDataLookupTest -> public test_of_curveGroup() : void
+line range:76-76==line range:142-142
+com.opengamma.strata.measure.rate.RatesMarketDataLookupTest -> public test_of_curveGroupDefinition_and_observableSource() : void
+line range:76-76==line range:159-159
+com.opengamma.strata.measure.rate.RatesMarketDataLookupTest -> public test_marketDataView() : void
+line range:76-76==line range:192-192
+com.opengamma.strata.measure.rate.RatesMarketDataLookupTest -> public test_ratesProvider() : void
+line range:76-76==line range:209-209
+com.opengamma.strata.measure.rate.RatesMarketDataLookupTest -> public test_fxProvider() : void
+line range:76-76==line range:271-271
+com.opengamma.strata.measure.rate.RatesMarketDataLookupTest -> public coverage() : void
+line range:76-76==line range:286-286
+com.opengamma.strata.measure.rate.RatesMarketDataLookupTest -> public test_serialization() : void
+line range:76-76==line range:311-311
+com.opengamma.strata.measure.rate.RatesMarketDataLookupTest -> public test_jodaSerialization() : void
+line range:76-76==line range:326-326
+com.opengamma.strata.measure.security.GenericSecurityPositionCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:41-41==line range:61-61
+com.opengamma.strata.measure.security.GenericSecurityPositionCalculationFunctionTest -> public test_presentValue() : void
+line range:41-41==line range:72-72
+com.opengamma.strata.measure.security.GenericSecurityPositionCalculationFunctionTest -> public coverage() : void
+line range:41-41==line range:96-96
+com.opengamma.strata.measure.security.GenericSecurityTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:41-41==line range:64-64
+com.opengamma.strata.measure.security.GenericSecurityTradeCalculationFunctionTest -> public test_presentValue() : void
+line range:41-41==line range:75-75
+com.opengamma.strata.measure.security.GenericSecurityTradeCalculationFunctionTest -> public coverage() : void
+line range:41-41==line range:99-99
+com.opengamma.strata.measure.security.SecurityPositionCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:41-41==line range:57-57
+com.opengamma.strata.measure.security.SecurityPositionCalculationFunctionTest -> public test_presentValue() : void
+line range:41-41==line range:68-68
+com.opengamma.strata.measure.security.SecurityPositionCalculationFunctionTest -> public coverage() : void
+line range:41-41==line range:92-92
+com.opengamma.strata.measure.security.SecurityTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:42-42==line range:65-65
+com.opengamma.strata.measure.security.SecurityTradeCalculationFunctionTest -> public test_presentValue() : void
+line range:42-42==line range:76-76
+com.opengamma.strata.measure.security.SecurityTradeCalculationFunctionTest -> public coverage() : void
+line range:42-42==line range:100-100
+com.opengamma.strata.measure.swap.SwapMeasureCalculationsTest -> public test_legInitialNotional() : void
+line range:27-27==line range:29-29
+com.opengamma.strata.measure.swap.SwapMeasureCalculationsTest -> public test_legInitialNotionalWithoutNotional() : void
+line range:27-27==line range:44-44
+com.opengamma.strata.measure.swap.SwapPricingTest -> public presentValueVanillaFixedVsLibor1mSwap() : void
+line range:62-62==line range:83-83
+com.opengamma.strata.measure.swap.SwapTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:55-55==line range:73-73
+com.opengamma.strata.measure.swap.SwapTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:55-55==line range:85-85
+com.opengamma.strata.measure.swap.SwapTradeCalculationFunctionTest -> public test_pv01() : void
+line range:55-55==line range:127-127
+com.opengamma.strata.measure.swap.SwapTradeCalculationsTest -> public test_presentValue() : void
+line range:30-30==line range:36-36
+com.opengamma.strata.measure.swap.SwapTradeCalculationsTest -> public test_pv01() : void
+line range:30-30==line range:58-58
+com.opengamma.strata.measure.swaption.SwaptionMarketDataLookupTest -> public test_of_single() : void
+line range:38-38==line range:50-50
+com.opengamma.strata.measure.swaption.SwaptionMarketDataLookupTest -> public test_of_map() : void
+line range:38-38==line range:67-67
+com.opengamma.strata.measure.swaption.SwaptionMarketDataLookupTest -> public test_marketDataView() : void
+line range:38-38==line range:90-90
+com.opengamma.strata.measure.swaption.SwaptionMarketDataLookupTest -> public coverage() : void
+line range:38-38==line range:106-106
+com.opengamma.strata.measure.swaption.SwaptionMarketDataLookupTest -> public test_serialization() : void
+line range:38-38==line range:118-118
+com.opengamma.strata.measure.swaption.SwaptionTradeCalculationFunctionTest -> public test_requirementsAndCurrency() : void
+line range:65-65==line range:107-107
+com.opengamma.strata.measure.swaption.SwaptionTradeCalculationFunctionTest -> public test_simpleMeasures() : void
+line range:65-65==line range:119-119
+com.opengamma.strata.measure.swaption.SwaptionTradeCalculationsTest -> public test_presentValue() : void
+line range:30-30==line range:39-39
+com.opengamma.strata.measure.swaption.SwaptionTradeCalculationsTest -> public test_pv01() : void
+line range:30-30==line range:56-56

@@ -5,7 +5,7 @@ import java.util.List;
 
 import gr.uom.java.xmi.diff.CodeRange;
 
-public class UMLTypeParameter implements LocationInfoProvider {
+public class UMLTypeParameter implements LocationInfoProvider, AnnotationProvider {
 	private String name;
 	private List<UMLType> typeBounds;
 	private List<UMLAnnotation> annotations;

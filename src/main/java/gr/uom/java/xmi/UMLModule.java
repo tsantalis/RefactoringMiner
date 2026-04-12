@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class UMLModule {
+public class UMLModule implements AnnotationProvider {
 	private LocationInfo locationInfo;
 	private boolean open;
 	private String name;

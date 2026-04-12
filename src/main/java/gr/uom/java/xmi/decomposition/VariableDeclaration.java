@@ -52,7 +52,6 @@ import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
-import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstForHead;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstObjectPatProp;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
@@ -80,6 +79,7 @@ import extension.ast.node.expression.LangSimpleName;
 import extension.ast.node.metadata.LangAnnotation;
 import extension.ast.node.statement.LangBlock;
 import extension.ast.node.unit.LangCompilationUnit;
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.InferredType;
 import gr.uom.java.xmi.LocationInfo;
@@ -93,7 +93,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.VariableDeclarationProvider;
 import gr.uom.java.xmi.diff.CodeRange;
 
-public class VariableDeclaration implements LocationInfoProvider, VariableDeclarationProvider {
+public class VariableDeclaration implements LocationInfoProvider, VariableDeclarationProvider, AnnotationProvider {
 	private String variableName;
 	private AbstractExpression initializer;
 	private UMLType type;

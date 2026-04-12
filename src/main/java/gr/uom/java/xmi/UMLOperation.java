@@ -30,7 +30,7 @@ import java.util.Set;
 import org.refactoringminer.util.AstUtils;
 import org.refactoringminer.util.PathFileUtils;
 
-public class UMLOperation implements Comparable<UMLOperation>, Serializable, VariableDeclarationContainer {
+public class UMLOperation implements Comparable<UMLOperation>, Serializable, VariableDeclarationContainer, AnnotationProvider {
 	private LocationInfo locationInfo;
 	private String name;
 	private Visibility visibility;

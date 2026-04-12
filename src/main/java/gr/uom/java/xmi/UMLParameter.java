@@ -7,7 +7,7 @@ import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class UMLParameter implements Serializable, VariableDeclarationProvider {
+public class UMLParameter implements Serializable, VariableDeclarationProvider, AnnotationProvider {
 	private String name;
 	private UMLType type;
 	private String kind;

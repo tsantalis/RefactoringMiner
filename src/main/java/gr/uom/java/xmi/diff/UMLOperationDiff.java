@@ -550,7 +550,10 @@ public class UMLOperationDiff {
 			for(Refactoring r : classDiff.getRefactoringsBeforePostProcessing()) {
 				if(r instanceof MoveAnnotationRefactoring move) {
 					if(move.getOriginalAnnotation().equals(annotation) || move.getMovedAnnotation().equals(annotation)) {
-						return true;
+						if((move.getOriginalAnnotationProvider() instanceof UMLOperation original && original.equals(removedOperation)) ||
+								(move.getMovedAnnotationProvider() instanceof UMLOperation moved && moved.equals(addedOperation))) {
+							return true;
+						}
 					}
 				}
 			}

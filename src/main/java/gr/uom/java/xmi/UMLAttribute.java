@@ -22,7 +22,7 @@ import java.util.Set;
 
 import org.refactoringminer.util.PathFileUtils;
 
-public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, VariableDeclarationProvider, VariableDeclarationContainer {
+public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, VariableDeclarationProvider, VariableDeclarationContainer, AnnotationProvider {
 	private LocationInfo locationInfo;
 	private LocationInfo fieldDeclarationLocationInfo;
 	private String name;
@@ -51,6 +51,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		this.comments = new ArrayList<UMLComment>();
 		this.customGetter = Optional.empty();
 		this.customSetter = Optional.empty();
+		this.anonymousClassContainer = Optional.empty();
 	}
 
 	public void setCustomGetter(UMLOperation getter) {

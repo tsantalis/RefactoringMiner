@@ -155,13 +155,25 @@ public class LocationInfo {
 		this.endColumn = 1;
 	}
 
-	public LocationInfo(String sourceFolder, String filePath, com.github.gumtreediff.tree.Tree tree, CodeElementType codeElementType) {
+	public LocationInfo(String sourceFolder, String filePath, com.github.gumtreediff.tree.Tree tree, CodeElementType codeElementType, String fileContent) {
 		this.sourceFolder = sourceFolder;
 		this.filePath = filePath;
 		this.codeElementType = codeElementType;
 		this.startOffset = tree.getPos();
 		this.length = tree.getLength();
 		this.endOffset = tree.getEndPos();
+		//compute start-line
+		String text = fileContent.substring(0, this.startOffset);
+		long lines = text.lines().count();
+		this.startLine = (int) lines;
+		String text2 = fileContent.substring(this.startOffset, this.endOffset);
+		long lines2 = text2.lines().count();
+		if(lines2 == 0) {
+			this.endLine = this.startLine;
+		}
+		else {
+			this.endLine = (int) (this.startLine + lines2 - 1);
+		}
 	}
 
 	public LocationInfo(String sourceFolder, String filePath, Swc4jSpan span, CodeElementType codeElementType, String fileContent) {
@@ -428,7 +440,7 @@ public class LocationInfo {
 		TYPE_PARAMETER,
 		ANNOTATION_TYPE_MEMBER_DEFAULT_EXPRESSION,
 		//expressions
-		STRING_LITERAL, TEXT_BLOCK, CHAR_LITERAL, ARRAY_ACCESS, PREFIX_EXPRESSION, POSTFIX_EXPRESSION, INFIX_EXPRESSION, THIS_EXPRESSION, NUMBER_LITERAL, NULL_LITERAL, BOOLEAN_LITERAL, TYPE_LITERAL, FIELD_ACCESS, SIMPLE_NAME, EXPRESSION, QUALIFIED_NAME, CAST_EXPRESSION, PARENTHESIZED_EXPRESSION, ASSIGNMENT, INSTANCEOF_EXPRESSION, PATTERN_INSTANCEOF_EXPRESSION,
+		STRING_LITERAL, REGEX, TEXT_BLOCK, CHAR_LITERAL, ARRAY_ACCESS, PREFIX_EXPRESSION, POSTFIX_EXPRESSION, INFIX_EXPRESSION, THIS_EXPRESSION, NUMBER_LITERAL, NULL_LITERAL, BOOLEAN_LITERAL, TYPE_LITERAL, FIELD_ACCESS, SIMPLE_NAME, EXPRESSION, QUALIFIED_NAME, CAST_EXPRESSION, PARENTHESIZED_EXPRESSION, ASSIGNMENT, INSTANCEOF_EXPRESSION, PATTERN_INSTANCEOF_EXPRESSION,
 		MODULE_DECLARATION,
 		REQUIRES_DIRECTIVE, PROVIDES_DIRECTIVE, USES_DIRECTIVE, EXPORTS_DIRECTIVE, OPENS_DIRECTIVE,
 		DIRECTIVE_NAME,
@@ -436,7 +448,8 @@ public class LocationInfo {
 		YIELD_EXPRESSION,
 		FUNCTION_INITIALIZER_EXPRESSION,
 		PRIMARY_CONSTRUCTOR,
-		SUPER_TYPE_CALL_ENTRY;
+		SUPER_TYPE_CALL_ENTRY,
+		KEY_EXPRESSION;
 		
 		private String name;
 		

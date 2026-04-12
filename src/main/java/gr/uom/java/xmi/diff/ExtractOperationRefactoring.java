@@ -24,6 +24,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.ObjectCreation;
@@ -189,7 +190,16 @@ public class ExtractOperationRefactoring implements Refactoring {
 				if(replacement.getBefore().equals(replacement.getAfter()) || replacement.getBefore().equals(LANG1.THIS_DOT + replacement.getAfter()) || replacement.getAfter().equals(LANG2.THIS_DOT + replacement.getBefore())) {
 					List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(replacement.getBefore());
 					if(expressions1.size() > 0) {
-						List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
+						List<AbstractCodeFragment> leaves = new ArrayList<>();
+						if(sourceOperationAfterExtraction.getBody() != null) {
+							leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
+						}
+						else if(sourceOperationAfterExtraction.getDefaultExpression() != null) {
+							List<LambdaExpressionObject> lambdas = sourceOperationAfterExtraction.getDefaultExpression().getLambdas();
+							if(lambdas.size() > 0 && lambdas.get(0).getBody() != null) {
+								leaves = lambdas.get(0).getBody().getCompositeStatement().getLeaves();
+							}
+						}
 						for(AbstractCodeFragment leaf : leaves) {
 							for(AbstractCall call : extractedOperationInvocations) {
 								if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {

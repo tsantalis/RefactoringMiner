@@ -10,11 +10,11 @@
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **March 3, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **April 12, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12652  | 13  | 212  | 0.999  | 0.984|
+|**Total**|12649  | 13  | 212  | 0.999  | 0.984|
 |Extract Method|1018  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
@@ -61,14 +61,14 @@ As of **March 3, 2026** the precision and recall of RefactoringMiner on this ben
 |Change Variable Type|818  |  1  |  7  | 0.999  | 0.992|
 |Change Parameter Type|661  |  1  | 10  | 0.998  | 0.985|
 |Change Attribute Type|246  |  0  |  3  | 1.000  | 0.988|
-|Add Method Annotation|332  |  0  |  0  | 1.000  | 1.000|
-|Remove Method Annotation|100  |  0  |  0  | 1.000  | 1.000|
+|Add Method Annotation|329  |  0  |  0  | 1.000  | 1.000|
+|Remove Method Annotation|81  |  0  |  0  | 1.000  | 1.000|
 |Modify Method Annotation|29  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Annotation|62  |  0  |  1  | 1.000  | 0.984|
 |Remove Attribute Annotation|18  |  0  |  0  | 1.000  | 1.000|
 |Modify Attribute Annotation| 7  |  0  |  0  | 1.000  | 1.000|
-|Add Class Annotation|52  |  0  |  0  | 1.000  | 1.000|
-|Remove Class Annotation|20  |  0  |  0  | 1.000  | 1.000|
+|Add Class Annotation|49  |  0  |  0  | 1.000  | 1.000|
+|Remove Class Annotation|19  |  0  |  0  | 1.000  | 1.000|
 |Modify Class Annotation|35  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter Annotation|34  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
@@ -105,7 +105,7 @@ As of **March 3, 2026** the precision and recall of RefactoringMiner on this ben
 |Merge Class| 5  |  0  |  0  | 1.000  | 1.000|
 |Split Class| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Conditional|19  |  0  |  0  | 1.000  | 1.000|
-|Invert Condition|49  |  0  |  0  | 1.000  | 1.000|
+|Invert Condition|50  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional|14  |  0  |  0  | 1.000  | 1.000|
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
@@ -116,6 +116,7 @@ As of **March 3, 2026** the precision and recall of RefactoringMiner on this ben
 |Replace Generic With Diamond|77  |  0  |  0  | 1.000  | 1.000|
 |Replace Conditional With Ternary| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Fixture| 3  |  0  |  0  | 1.000  | 1.000|
+|Move Annotation|22  |  0  |  0  | 1.000  | 1.000|
 
 ## Java Benchmark 2
 **Source**: Bo Liu, Hui Liu, Nan Niu, Yuxia Zhang, Guangjie Li, He Jiang, and Yanjie Jiang, "An Automated Approach to Discovering Software Refactorings by Comparing Successive Versions," IEEE Transactions on Software Engineering, 2025.
@@ -143,11 +144,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Merge Parameter`
 * `Invert Condition`
 
-As of **March 3, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **April 12, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3546  | 40  | 76  | 0.989  | 0.979|
+|**Total**|3551  | 40  | 75  | 0.989  | 0.979|
 |Extract Method|375  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -166,12 +167,12 @@ As of **March 3, 2026** the precision and recall of RefactoringMiner on this ben
 |Extract Superclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|45  |  1  |  4  | 0.978  | 0.918|
-|Extract And Move Method|129  |  1  |  5  | 0.992  | 0.963|
+|Extract And Move Method|130  |  1  |  5  | 0.992  | 0.963|
 |Move And Inline Method|28  |  1  |  6  | 0.966  | 0.824|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|293  |  1  |  6  | 0.997  | 0.980|
 |Extract Attribute| 7  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|127  |  0  | 11  | 1.000  | 0.920|
+|Inline Variable|127  |  0  | 10  | 1.000  | 0.927|
 |Rename Variable|308  |  5  |  6  | 0.984  | 0.981|
 |Rename Attribute|112  |  4  |  6  | 0.966  | 0.949|
 |Merge Variable| 4  |  0  |  0  | 1.000  | 1.000|
@@ -179,7 +180,7 @@ As of **March 3, 2026** the precision and recall of RefactoringMiner on this ben
 |Replace Variable With Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|59  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|169  |  1  |  6  | 0.994  | 0.966|
-|Change Variable Type|379  |  6  |  2  | 0.984  | 0.995|
+|Change Variable Type|380  |  6  |  2  | 0.984  | 0.995|
 |Change Attribute Type|164  |  2  |  3  | 0.988  | 0.982|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Loop With Pipeline| 4  |  0  |  0  | 1.000  | 1.000|
@@ -189,6 +190,7 @@ As of **March 3, 2026** the precision and recall of RefactoringMiner on this ben
 |Merge Method| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 8  |  0  |  0  | 1.000  | 1.000|
 |Move Code|11  |  0  |  0  | 1.000  | 1.000|
+|Move Annotation| 3  |  0  |  0  | 1.000  | 1.000|
 
 ## Python Benchmark
 **Source**: Hassan Atwi, Bin Lin, Nikolaos Tsantalis, Yutaro Kashiwa, Yasutaka Kamei, Naoyasu Ubayashi, Gabriele Bavota, and Michele Lanza, "PyRef: Refactoring Detection in Python Projects," 21st IEEE International Working Conference on Source Code Analysis and Manipulation (SCAM'2021), Engineering Track, Luxembourg City, Luxembourg, September 27-28, 2021.
@@ -232,11 +234,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Invert Condition`
 * `Split Parameter`
 
-As of **March 19, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **April 2, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1122  |  6  |  3  | 0.995  | 0.997|
+|**Total**|1127  |  4  |  3  | 0.996  | 0.997|
 |Extract Method|38  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|13  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 5  |  0  |  0  | 1.000  | 1.000|
@@ -254,23 +256,23 @@ As of **March 19, 2026** the precision and recall of RefactoringMiner on this be
 |Extract Subclass| 2  |  0  |  0  | 1.000  | 1.000|
 |Extract Class| 3  |  0  |  0  | 1.000  | 1.000|
 |Extract And Move Method|15  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|57  |  1  |  0  | 0.983  | 1.000|
+|Extract Variable|59  |  1  |  0  | 0.983  | 1.000|
 |Inline Variable|21  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|118  |  1  |  1  | 0.992  | 0.992|
-|Rename Parameter|140  |  1  |  0  | 0.993  | 1.000|
-|Rename Attribute|27  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable|118  |  0  |  1  | 1.000  | 0.992|
+|Rename Parameter|139  |  1  |  0  | 0.993  | 1.000|
+|Rename Attribute|28  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 3  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Replace Attribute With Variable| 2  |  0  |  0  | 1.000  | 1.000|
+|Replace Attribute With Variable| 3  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Variable|12  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Change Variable Type|26  |  3  |  0  | 0.897  | 1.000|
+|Change Variable Type|26  |  2  |  0  | 0.929  | 1.000|
 |Add Method Annotation|26  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|19  |  0  |  0  | 1.000  | 1.000|
 |Add Class Annotation| 1  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|250  |  0  |  1  | 1.000  | 0.996|
-|Remove Parameter|77  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|251  |  0  |  1  | 1.000  | 0.996|
+|Remove Parameter|78  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter|18  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Conditional| 4  |  0  |  0  | 1.000  | 1.000|
@@ -293,11 +295,11 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **March 21, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **March 25, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|2038  |  5  |  0  | 0.998  | 1.000|
+|**Total**|2036  |  5  |  0  | 0.998  | 1.000|
 |Extract Method|11  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|43  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|53  |  0  |  0  | 1.000  | 1.000|
@@ -320,7 +322,7 @@ As of **March 21, 2026** the precision and recall of RefactoringMiner on this be
 |Move And Inline Method|24  |  0  |  0  | 1.000  | 1.000|
 |Rename Package| 3  |  0  |  0  | 1.000  | 1.000|
 |Move Package| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|18  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|17  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|14  |  1  |  0  | 0.933  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|52  |  1  |  0  | 0.981  | 1.000|
@@ -363,4 +365,4 @@ As of **March 21, 2026** the precision and recall of RefactoringMiner on this be
 |Merge Class| 1  |  0  |  0  | 1.000  | 1.000|
 |Invert Condition| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional| 2  |  0  |  0  | 1.000  | 1.000|
-|Move Code| 5  |  0  |  0  | 1.000  | 1.000|
+|Move Code| 4  |  0  |  0  | 1.000  | 1.000|

@@ -11,9 +11,12 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.caoccao.javet.swc4j.Swc4j;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassMethod;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstConstructor;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstFunction;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstParam;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstModuleItem;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstParamOrTsParamProp;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstStmt;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
@@ -22,6 +25,8 @@ import com.caoccao.javet.swc4j.ast.program.Swc4jAstScript;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstFnDecl;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParam;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamDecl;
 import com.caoccao.javet.swc4j.comments.Swc4jComment;
 import com.caoccao.javet.swc4j.comments.Swc4jCommentKind;
 import com.caoccao.javet.swc4j.comments.Swc4jComments;
@@ -87,8 +92,9 @@ public class TypeScriptFileProcessor {
 				moduleClass.setContainer(moduleContainer);
 				moduleClass.setVisibility(Visibility.PUBLIC);
 				moduleClass.operations.addAll(moduleContainer.getNestedOperations());
-				umlModel.addClass(moduleClass);
+				moduleClass.attributes.addAll(moduleContainer.getNestedAttributes());
 				umlModel.getClassList().addAll(moduleContainer.getNestedClasses());
+				umlModel.addClass(moduleClass);
 			}
 			else if(output.getProgram() instanceof Swc4jAstScript script) {
 				List<ISwc4jAstStmt> list = script.getBody();
@@ -104,24 +110,34 @@ public class TypeScriptFileProcessor {
 		Map<Integer, List<Swc4jComment>> leading = comments.getLeading();
 		for(Integer key : leading.keySet()) {
 			List<Swc4jComment> list = leading.get(key);
-			for(Swc4jComment comment : list) {
-				LocationInfo locationInfo = null;
-				if(comment.getKind().equals(Swc4jCommentKind.Line)) {
-					locationInfo = new LocationInfo(sourceFolder, filePath, comment.getSpan(), CodeElementType.LINE_COMMENT, fileContent);
-				}
-				else if(comment.getKind().equals(Swc4jCommentKind.Block)) {
-					locationInfo = new LocationInfo(sourceFolder, filePath, comment.getSpan(), CodeElementType.BLOCK_COMMENT, fileContent);
-				}
-				if(locationInfo != null) {
-					int start = locationInfo.getStartOffset();
-					int end = locationInfo.getEndOffset();
-					String text = fileContent.substring(start, end);
-					UMLComment umlComment = new UMLComment(text, locationInfo);
-					commentList.add(umlComment);
-				}
-			}
+			processCommentList(sourceFolder, filePath, fileContent, commentList, list);
+		}
+		Map<Integer, List<Swc4jComment>> trailing = comments.getTrailing();
+		for(Integer key : trailing.keySet()) {
+			List<Swc4jComment> list = trailing.get(key);
+			processCommentList(sourceFolder, filePath, fileContent, commentList, list);
 		}
 		return commentList;
+	}
+
+	private void processCommentList(String sourceFolder, String filePath, String fileContent,
+			List<UMLComment> commentList, List<Swc4jComment> list) {
+		for(Swc4jComment comment : list) {
+			LocationInfo locationInfo = null;
+			if(comment.getKind().equals(Swc4jCommentKind.Line)) {
+				locationInfo = new LocationInfo(sourceFolder, filePath, comment.getSpan(), CodeElementType.LINE_COMMENT, fileContent);
+			}
+			else if(comment.getKind().equals(Swc4jCommentKind.Block)) {
+				locationInfo = new LocationInfo(sourceFolder, filePath, comment.getSpan(), CodeElementType.BLOCK_COMMENT, fileContent);
+			}
+			if(locationInfo != null) {
+				int start = locationInfo.getStartOffset();
+				int end = locationInfo.getEndOffset();
+				String text = fileContent.substring(start, end);
+				UMLComment umlComment = new UMLComment(text, locationInfo);
+				commentList.add(umlComment);
+			}
+		}
 	}
 
 	public static UMLOperation processFunctionDeclaration(String sourceFolder, String filePath, Swc4jAstFnDecl functionDecl, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className) {
@@ -129,11 +145,34 @@ public class TypeScriptFileProcessor {
 		UMLOperation operation = new UMLOperation(functionDecl.getIdent().getSym(), location, className);
 		operation.setVisibility(Visibility.PRIVATE);
 		Swc4jAstFunction function = functionDecl.getFunction();
+		return processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation);
+	}
+
+	public static UMLOperation processFunctionDeclaration(String sourceFolder, String filePath, Swc4jAstClassMethod functionDecl, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className) {
+		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+		UMLOperation operation = new UMLOperation(functionDecl.getKey().toString(), location, className);
+		operation.setVisibility(Visibility.PRIVATE);
+		Swc4jAstFunction function = functionDecl.getFunction();
+		return processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation);
+	}
+
+	private static UMLOperation processFunction(String sourceFolder, String filePath, Swc4jAstFunction function,
+			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent,
+			UMLOperation operation) {
 		Optional<Swc4jAstTsTypeAnn> returnType = function.getReturnType();
 		if(returnType.isPresent()) {
 			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, returnType.get().getTypeAnn(), 0);
 			UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
 			operation.addParameter(returnParameter);
+		}
+		Optional<Swc4jAstTsTypeParamDecl> typeParams = function.getTypeParams();
+		if(typeParams.isPresent()) {
+			List<Swc4jAstTsTypeParam> list = typeParams.get().getParams();
+			for(Swc4jAstTsTypeParam param : list) {
+				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param.getSpan(), CodeElementType.TYPE_PARAMETER, fileContent);
+				UMLTypeParameter umlTypeParameter = new UMLTypeParameter(param.getName().getSym(), locationInfo);
+				operation.addTypeParameter(umlTypeParameter);
+			}
 		}
 		for(Swc4jAstParam param : function.getParams()) {
 			ISwc4jAstPat pat = param.getPat();
@@ -150,6 +189,35 @@ public class TypeScriptFileProcessor {
 			}
 		}
 		Optional<Swc4jAstBlockStmt> body = function.getBody();
+		if(body.isPresent()) {
+			OperationBody operationBody = new OperationBody(sourceFolder, filePath, body.get(), operation, activeVariableDeclarations, fileContent);
+			operation.setBody(operationBody);
+		}
+		return operation;
+	}
+
+	public static UMLOperation processConstructor(String sourceFolder, String filePath, Swc4jAstConstructor functionDecl,
+			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className) {
+		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+		UMLOperation operation = new UMLOperation(functionDecl.getKey().toString(), location, className);
+		operation.setVisibility(Visibility.PRIVATE);
+		for(ISwc4jAstParamOrTsParamProp param : functionDecl.getParams()) {
+			if(param instanceof Swc4jAstParam p) {
+				ISwc4jAstPat pat = p.getPat();
+				Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(pat);
+				List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(pat);
+				for(Swc4jAstBindingIdent identifier : identifiers) {
+					VariableDeclaration parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, operation, activeVariableDeclarations, fileContent);
+					parameter.setParameter(true);
+					if(parameter.getType() != null) {
+						UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
+						umlParameter.setVariableDeclaration(parameter);
+						operation.addParameter(umlParameter);
+					}
+				}
+			}
+		}
+		Optional<Swc4jAstBlockStmt> body = functionDecl.getBody();
 		if(body.isPresent()) {
 			OperationBody operationBody = new OperationBody(sourceFolder, filePath, body.get(), operation, activeVariableDeclarations, fileContent);
 			operation.setBody(operationBody);

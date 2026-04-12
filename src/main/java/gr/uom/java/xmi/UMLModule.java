@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class UMLModule {
+import gr.uom.java.xmi.diff.CodeRange;
+
+public class UMLModule implements AnnotationProvider {
 	private LocationInfo locationInfo;
 	private boolean open;
 	private String name;
@@ -27,6 +29,10 @@ public class UMLModule {
 
 	public LocationInfo getLocationInfo() {
 		return locationInfo;
+	}
+
+	public CodeRange codeRange() {
+		return locationInfo.codeRange();
 	}
 
 	public List<UMLAbstractModuleDirective> getDirectives() {

@@ -1220,7 +1220,8 @@ public class TestStatementMappings {
 	@ParameterizedTest
 	@CsvSource({
 		"https://github.com/apache/camel.git, b57b72d0e85f2340cb2d55be44d2175c0caa7cc1, camel-b57b72d0e85f2340cb2d55be44d2175c0caa7cc1.txt",
-		"https://github.com/dropwizard/dropwizard.git, 9086577e29aba07058619a706701b6d07592aed9, dropwizard-9086577e29aba07058619a706701b6d07592aed9.txt"
+		"https://github.com/dropwizard/dropwizard.git, 9086577e29aba07058619a706701b6d07592aed9, dropwizard-9086577e29aba07058619a706701b6d07592aed9.txt",
+		"https://github.com/apache/commons-lang.git, 7995aad79fab336a4534a5290fdd760df7f55dde, commons-lang-7995aad79fab336a4534a5290fdd760df7f55dde.txt"
 	})
 	public void testParameterizedTestMappings(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
@@ -2221,13 +2222,56 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
+	@Test
+	public void testNestedExtractMethodFromAnonymousToParentClass() throws Exception {
+		final List<String> actual = new ArrayList<>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + "MapsActivity-v1.txt"));
+		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + "MapsActivity-v2.txt"));
+		fileContentsBefore.put("app/src/main/java/com/example/oncampusapp/MapsActivity.java", contentsV1);
+		fileContentsCurrent.put("app/src/main/java/com/example/oncampusapp/MapsActivity.java", contentsV2);
+		contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + "RoutePickerController-v1.txt"));
+		contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + "RoutePickerController-v2.txt"));
+		fileContentsBefore.put("app/src/main/java/com/example/oncampusapp/RoutePickerController.java", contentsV1);
+		fileContentsCurrent.put("app/src/main/java/com/example/oncampusapp/RoutePickerController.java", contentsV2);
+		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
+		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
+		
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+		for (Refactoring ref : modelDiff.getRefactorings()) {
+			if(ref instanceof ExtractOperationRefactoring) {
+				ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+				UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+				if(!bodyMapper.isNested()) {
+					if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+						parentMappers.add(bodyMapper.getParentMapper());
+					}
+				}
+				mapperInfo(bodyMapper, actual);
+			}
+		}
+		for(UMLOperationBodyMapper parentMapper : parentMappers) {
+			mapperInfo(parentMapper, actual);
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "OnCampusApp-169.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
 	@ParameterizedTest
 	@CsvSource({
 		"https://github.com/gabrielshufelt/soen390-commit-and-pray.git, 5f98a8aa11aca7828b6083f7c5ea81ccb3c757d8, soen390-commit-and-pray-5f98a8aa11aca7828b6083f7c5ea81ccb3c757d8.txt",
 		"https://github.com/srabm/HiveMaps.git, 9065c90b5d8b2245d7840cbeda07535adf4caba1, HiveMaps-9065c90b5d8b2245d7840cbeda07535adf4caba1.txt",
 		"https://github.com/srabm/HiveMaps.git, d130a1927944675fa48265631ec585786fd7335d, HiveMaps-d130a1927944675fa48265631ec585786fd7335d.txt",
 		"https://github.com/srabm/HiveMaps.git, c1f1c0b5b71a91770adbc6925a8ed1c874545733, HiveMaps-c1f1c0b5b71a91770adbc6925a8ed1c874545733.txt",
-		"https://github.com/LamdaDev/GitToCampus.git, 47a78b7a52a700c52a2f32ebd88e52ab6101e40e, GitToCampus-47a78b7a52a700c52a2f32ebd88e52ab6101e40e.txt"
+		"https://github.com/srabm/HiveMaps.git, 3e145818d9f55c991bf9378622097e3e516c4fe5, HiveMaps-3e145818d9f55c991bf9378622097e3e516c4fe5.txt",
+		"https://github.com/LamdaDev/GitToCampus.git, 47a78b7a52a700c52a2f32ebd88e52ab6101e40e, GitToCampus-47a78b7a52a700c52a2f32ebd88e52ab6101e40e.txt",
+		"https://github.com/LamdaDev/GitToCampus.git, 4fd04f4a4ba07118881a23932722e099b3a83f9f, GitToCampus-4fd04f4a4ba07118881a23932722e099b3a83f9f.txt",
+		"https://github.com/LamdaDev/GitToCampus.git, f915b2062644b587aaf9ed475b3af7190bdc3e77, GitToCampus-f915b2062644b587aaf9ed475b3af7190bdc3e77.txt",
+		"https://github.com/LamdaDev/GitToCampus.git, 8bbdd23d15fece69bec4db5cab94207043c675cb, GitToCampus-8bbdd23d15fece69bec4db5cab94207043c675cb.txt",
+		"https://github.com/gabrielshufelt/soen390-commit-and-pray.git, 9792d7435d3ad89cc3df28070097ca093062b965, soen390-commit-and-pray-9792d7435d3ad89cc3df28070097ca093062b965.txt",
+		"https://github.com/yassineAbdellatif/Git-happens.git, f95a669a2acdebf69b3b936ad7a71036ad103b9f, Git-happens-f95a669a2acdebf69b3b936ad7a71036ad103b9f.txt"
 	})
 	public void testExtractMethodStatementMappingsForTypeScript(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

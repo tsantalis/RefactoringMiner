@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.InferredType;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -56,11 +57,13 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstComputedPropName;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateName;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstParenExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstCallee;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstMemberProp;
@@ -80,6 +83,7 @@ public class OperationInvocation extends AbstractCall {
 	private String methodName;
 	private List<String> subExpressions = new ArrayList<String>();
 	private volatile int hashCode = 0;
+	private boolean directMethodPassing = false;
 	public static Map<String, String> PRIMITIVE_WRAPPER_CLASS_MAP;
     private static Map<String, List<String>> PRIMITIVE_TYPE_WIDENING_MAP;
     private static Map<String, List<String>> PRIMITIVE_TYPE_NARROWING_MAP;
@@ -408,13 +412,23 @@ public class OperationInvocation extends AbstractCall {
     			}
     		}
     		else if(arg.startsWith("\"") && arg.endsWith("\"")) {
-    			inferredArgumentTypes.add(UMLType.extractTypeObject("String"));
+    			if(LANG.equals(Constants.TYPESCRIPT)) {
+    				inferredArgumentTypes.add(UMLType.extractTypeObject("string"));
+    			}
+    			else {
+    				inferredArgumentTypes.add(UMLType.extractTypeObject("String"));
+    			}
     		}
     		else if(StringDistance.isNumeric(arg)) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("int"));
     		}
     		else if(arg.startsWith("\'") && arg.endsWith("\'")) {
-    			inferredArgumentTypes.add(UMLType.extractTypeObject("char"));
+    			if(LANG.equals(Constants.TYPESCRIPT)) {
+    				inferredArgumentTypes.add(UMLType.extractTypeObject("string"));
+    			}
+    			else {
+    				inferredArgumentTypes.add(UMLType.extractTypeObject("char"));
+    			}
     		}
     		else if(arg.endsWith(".class")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("Class"));
@@ -603,6 +617,9 @@ public class OperationInvocation extends AbstractCall {
 				return callerOperation.getClassName().equals(operation.getClassName()) || callerOperation.getClassName().startsWith(operation.getClassName());
 			}
 		}
+		if(this.directMethodPassing) {
+			return true;
+		}
 		return result;
     }
 
@@ -717,6 +734,14 @@ public class OperationInvocation extends AbstractCall {
 	    			if(implementedInterface.equalClassType(parameterType))
 	    				return true;
 	    		}
+	    	}
+	    	UMLAbstractClass classInParentModel = modelDiff.findClassInParentModel(type1);
+	    	if(classInParentModel != null && classInParentModel instanceof UMLClass umlClass && umlClass.isTypeAlias()) {
+	    		return true;
+	    	}
+	    	UMLAbstractClass classInChildModel = modelDiff.findClassInChildModel(type1);
+	    	if(classInChildModel != null && classInChildModel instanceof UMLClass umlClass && umlClass.isTypeAlias()) {
+	    		return true;
 	    	}
     	}
     	if(!varargsParameter && type1.endsWith("Object") && !type2.endsWith("Object"))
@@ -1241,6 +1266,14 @@ public class OperationInvocation extends AbstractCall {
 		}
 	}
 
+	public OperationInvocation(String sourceFolder, String filePath, Swc4jAstIdent invocation, VariableDeclarationContainer container, String fileContent) {
+		super(sourceFolder, filePath, invocation, CodeElementType.METHOD_INVOCATION, container, fileContent);
+		this.directMethodPassing = true;
+		this.methodName = invocation.getSym();
+		this.arguments = new ArrayList<String>();
+		this.numberOfArguments = 0;
+	}
+
 	public OperationInvocation(String sourceFolder, String filePath, Swc4jAstCallExpr invocation, VariableDeclarationContainer container, String fileContent) {
 		super(sourceFolder, filePath, invocation, CodeElementType.METHOD_INVOCATION, container, fileContent);
 		ISwc4jAstCallee callee = invocation.getCallee();
@@ -1254,6 +1287,13 @@ public class OperationInvocation extends AbstractCall {
 				this.methodName = fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd());
 			ISwc4jAstExpr receiver = memberExpr.getObj();
 			this.expression = fileContent.substring(receiver.getSpan().getStart(), receiver.getSpan().getEnd());
+		}
+		else if(callee instanceof Swc4jAstParenExpr parenExpr) {
+			ISwc4jAstExpr expr = parenExpr.getExpr();
+			if(expr instanceof Swc4jAstArrowExpr arrowExpr) {
+				//self-invoking asynchronous arrow function (also known as an Immediately Invoked Function Expression, or IIFE)
+			}
+			this.methodName = "";
 		}
 		else if(callee instanceof Swc4jAstIdent ident) {
 			this.methodName = ident.getSym();

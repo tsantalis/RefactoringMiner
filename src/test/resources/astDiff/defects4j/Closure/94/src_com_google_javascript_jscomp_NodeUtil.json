@@ -6541,8 +6541,8 @@
   "secondParentType" : "TagElement",
   "firstPos" : 6775,
   "secondPos" : 6775,
-  "firstEndPos" : 6781,
-  "secondEndPos" : 6781
+  "firstEndPos" : 6807,
+  "secondEndPos" : 6807
 }, {
   "firstType" : "TAG_NAME",
   "secondType" : "TAG_NAME",
@@ -6557,12 +6557,23 @@
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
-  "firstLabel" : " {'name': function() ...}}</li>",
-  "secondLabel" : " {'name': function() ...}}</li>",
+  "firstLabel" : " {'name': function() ...}",
+  "secondLabel" : " {'name': function() ...}",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 6781,
   "secondPos" : 6781,
+  "firstEndPos" : 6806,
+  "secondEndPos" : 6806
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "</li>",
+  "secondLabel" : "</li>",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6807,
+  "secondPos" : 6807,
   "firstEndPos" : 6812,
   "secondEndPos" : 6812
 }, {
@@ -6585,8 +6596,8 @@
   "secondParentType" : "TagElement",
   "firstPos" : 6822,
   "secondPos" : 6822,
-  "firstEndPos" : 6828,
-  "secondEndPos" : 6828
+  "firstEndPos" : 6852,
+  "secondEndPos" : 6852
 }, {
   "firstType" : "TAG_NAME",
   "secondType" : "TAG_NAME",
@@ -6601,12 +6612,23 @@
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
-  "firstLabel" : " {name: function() ...}}</li>",
-  "secondLabel" : " {name: function() ...}}</li>",
+  "firstLabel" : " {name: function() ...}",
+  "secondLabel" : " {name: function() ...}",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 6828,
   "secondPos" : 6828,
+  "firstEndPos" : 6851,
+  "secondEndPos" : 6851
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "</li>",
+  "secondLabel" : "</li>",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6852,
+  "secondPos" : 6852,
   "firstEndPos" : 6857,
   "secondEndPos" : 6857
 }, {

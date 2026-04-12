@@ -184,18 +184,20 @@ public class RefactoringMiner {
 	}
 
 	public static void detectAtCommit(String[] args) throws Exception {
-		int maxArgLength = processJSONoption(args, 3);
+		boolean hasParentIndex = containsParentIndexArgument(args);
+		int maxArgLength = processJSONoption(args, hasParentIndex ? 5 : 3);
 		if (args.length != maxArgLength) {
 			throw argumentException();
 		}
 		String folder = args[1];
 		String commitId = args[2];
+		int parentIndex = hasParentIndex ? Integer.parseInt(args[4]) : 0;
 		GitService gitService = new GitServiceImpl();
 		try (Repository repo = gitService.openRepository(folder)) {
 			String gitURL = repo.getConfig().getString("remote", "origin", "url");
 			GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
 			startJSON();
-			detector.detectAtCommit(repo, commitId, new RefactoringHandler() {
+			RefactoringHandler handler = new RefactoringHandler() {
 				@Override
 				public void handle(String commitId, List<Refactoring> refactorings) {
 					commitJSON(gitURL, commitId, refactorings);
@@ -206,22 +208,33 @@ public class RefactoringMiner {
 					System.err.println("Error processing commit " + commit);
 					e.printStackTrace(System.err);
 				}
-			});
+			};
+			if (hasParentIndex) {
+				detector.detectAtMergeCommit(repo, commitId, parentIndex, handler);
+			} else {
+				detector.detectAtCommit(repo, commitId, handler);
+			}
 			endJSON();
 		}
 	}
 
+	private static boolean containsParentIndexArgument(String[] args) {
+		return args.length >= 5 && args[3].equalsIgnoreCase("--parent-index");
+	}
+
 	public static void detectAtGitHubCommit(String[] args) throws Exception {
-		int maxArgLength = processJSONoption(args, 4);
+		boolean hasParentIndex = containsGitHubParentIndexArgument(args);
+		int maxArgLength = processJSONoption(args, hasParentIndex ? 6 : 4);
 		if (args.length != maxArgLength) {
 			throw argumentException();
 		}
 		String gitURL = args[1];
 		String commitId = args[2];
 		int timeout = Integer.parseInt(args[3]);
+		int parentIndex = hasParentIndex ? Integer.parseInt(args[5]) : 0;
 		GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
 		startJSON();
-		detector.detectAtCommit(gitURL, commitId, new RefactoringHandler() {
+		RefactoringHandler handler = new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				Comparator<Refactoring> comparator = (Refactoring r1, Refactoring r2) -> r1.toString().compareTo(r2.toString());
@@ -234,8 +247,17 @@ public class RefactoringMiner {
 				System.err.println("Error processing commit " + commit);
 				e.printStackTrace(System.err);
 			}
-		}, timeout);
+		};
+		if (hasParentIndex) {
+			detector.detectAtMergeCommit(gitURL, commitId, parentIndex, handler, timeout);
+		} else {
+			detector.detectAtCommit(gitURL, commitId, handler, timeout);
+		}
 		endJSON();
+	}
+
+	private static boolean containsGitHubParentIndexArgument(String[] args) {
+		return args.length >= 6 && args[4].equalsIgnoreCase("--parent-index");
 	}
 
 	public static void detectAtGitHubPullRequest(String[] args) throws Exception {
@@ -290,11 +312,15 @@ public class RefactoringMiner {
 
 	private static void commitJSON(String cloneURL, String currentCommitId, List<Refactoring> refactoringsAtRevision) {
 		if(path != null) {
+			String normalizedCloneURL = cloneURL == null ? "" : cloneURL;
+			boolean hasBrowsableCloneURL = normalizedCloneURL.startsWith("https://github.com/") ||
+					normalizedCloneURL.startsWith("https://gitlab.com/") ||
+					normalizedCloneURL.startsWith("https://bitbucket.org/");
 			StringBuilder sb = new StringBuilder();
 			sb.append("{").append("\n");
-			sb.append("\t").append("\"").append("repository").append("\"").append(": ").append("\"").append(cloneURL).append("\"").append(",").append("\n");
+			sb.append("\t").append("\"").append("repository").append("\"").append(": ").append("\"").append(normalizedCloneURL).append("\"").append(",").append("\n");
 			sb.append("\t").append("\"").append("sha1").append("\"").append(": ").append("\"").append(currentCommitId).append("\"").append(",").append("\n");
-			String url = GitHistoryRefactoringMinerImpl.extractCommitURL(cloneURL, currentCommitId);
+			String url = hasBrowsableCloneURL ? GitHistoryRefactoringMinerImpl.extractCommitURL(normalizedCloneURL, currentCommitId) : "";
 			sb.append("\t").append("\"").append("url").append("\"").append(": ").append("\"").append(url).append("\"").append(",").append("\n");
 			sb.append("\t").append("\"").append("refactorings").append("\"").append(": ");
 			sb.append("[");
@@ -367,7 +393,11 @@ public class RefactoringMiner {
 		System.out.println(
 				"-c <git-repo-folder> <commit-sha1> -json <path-to-json-file>\t\t\t\tDetect refactorings at specified commit <commit-sha1> for project <git-repo-folder>");
 		System.out.println(
+				"-c <git-repo-folder> <commit-sha1> --parent-index <n> -json <path-to-json-file>\tDetect refactorings against merge parent <n> for the specified commit");
+		System.out.println(
 				"-gc <git-URL> <commit-sha1> <timeout> -json <path-to-json-file>\t\t\t\tDetect refactorings at specified commit <commit-sha1> for project <git-URL> within the given <timeout> in seconds. All required information is obtained directly from GitHub using the OAuth token in github-oauth.properties");
+		System.out.println(
+				"-gc <git-URL> <commit-sha1> <timeout> --parent-index <n> -json <path-to-json-file>\tDetect refactorings against merge parent <n> for the specified GitHub commit");
 		System.out.println(
 				"-gp <git-URL> <pull-request> <timeout> -json <path-to-json-file>\t\t\tDetect refactorings at specified pull request <pull-request> for project <git-URL> within the given <timeout> in seconds for each commit in the pull request. All required information is obtained directly from GitHub using the OAuth token in github-oauth.properties");
 	}

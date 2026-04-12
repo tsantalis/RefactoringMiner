@@ -5,6 +5,7 @@ import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.tree.Tree;
 
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLDocElement;
 import gr.uom.java.xmi.UMLJavadoc;
 import gr.uom.java.xmi.UMLTagElement;
@@ -68,18 +69,28 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
 
     private void processJavaDocs(Tree srcTree, Tree dstTree, UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc, ExtendedMultiMappingStore mappingStore) {
         if (srcUMLJavaDoc != null && dstUMLJavaDoc != null) {
-            Tree srcJavaDocNode = TreeUtilFunctions.findByLocationInfo(srcTree,
-                    umlJavadocDiff.isPresent() ?
+            LocationInfo srcLocationInfo = umlJavadocDiff.isPresent() ?
                     umlJavadocDiff.get().getJavadocBefore().getLocationInfo() :
-                    srcUMLJavaDoc.getLocationInfo(), LANG1);
-            Tree dstJavaDocNode = TreeUtilFunctions.findByLocationInfo(dstTree,
-                    umlJavadocDiff.isPresent() ?
+                    srcUMLJavaDoc.getLocationInfo();
+            Tree srcJavaDocNode = TreeUtilFunctions.findByLocationInfo(srcTree, srcLocationInfo, LANG1);
+            LocationInfo dstLocationInfo = umlJavadocDiff.isPresent() ?
                     umlJavadocDiff.get().getJavadocAfter().getLocationInfo() :
-                    dstUMLJavaDoc.getLocationInfo(), LANG2);
+                    dstUMLJavaDoc.getLocationInfo();
+            Tree dstJavaDocNode = TreeUtilFunctions.findByLocationInfo(dstTree, dstLocationInfo, LANG2);
             if (srcJavaDocNode == null || dstJavaDocNode == null)
                 return;
+            if(srcJavaDocNode.getType().name.equals(LANG1.METHOD_DECLARATION) || srcJavaDocNode.getType().name.equals(LANG1.TYPE_DECLARATION)) {
+                srcJavaDocNode = TreeUtilFunctions.getTreeBetweenPositions(srcTree, srcLocationInfo.getStartOffset(), srcLocationInfo.getEndOffset(), LANG1, LANG1.EXPRESSION_STATEMENT);
+            }
+            if(dstJavaDocNode.getType().name.equals(LANG2.METHOD_DECLARATION) || dstJavaDocNode.getType().name.equals(LANG2.TYPE_DECLARATION)) {
+                dstJavaDocNode = TreeUtilFunctions.getTreeBetweenPositions(dstTree, dstLocationInfo.getStartOffset(), dstLocationInfo.getEndOffset(), LANG2, LANG2.EXPRESSION_STATEMENT);
+            }
             if (srcJavaDocNode.isIsoStructuralTo(dstJavaDocNode)) {
                 if (umlJavadocDiff.isPresent() && umlJavadocDiff.get().isManyToManyReformat()) {
+                    mappingStore.addMappingRecursively(srcJavaDocNode, dstJavaDocNode);
+                    return;
+                }
+                else if(srcJavaDocNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && dstJavaDocNode.getType().name.equals(LANG2.EXPRESSION_STATEMENT)) {
                     mappingStore.addMappingRecursively(srcJavaDocNode, dstJavaDocNode);
                     return;
                 }
@@ -90,7 +101,7 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
             if(!diff.getCommonTags().isEmpty() || !diff.getCommonDocElements().isEmpty() || srcUMLJavaDoc.isEmpty() || dstUMLJavaDoc.isEmpty()) {
                 MappingStore gtSimpleMappings = new CompositeMatchers.SimpleGumtree().match(srcJavaDocNode, dstJavaDocNode);
                 mappingStore.add(gtSimpleMappings);
-            	for (Pair<UMLTagElement, UMLTagElement> pair : diff.getCommonTags()) {
+                for (Pair<UMLTagElement, UMLTagElement> pair : diff.getCommonTags()) {
                     Tree srcTag = TreeUtilFunctions.findByLocationInfo(srcTree,pair.getLeft().getLocationInfo(),LANG1);
                     Tree dstTag = TreeUtilFunctions.findByLocationInfo(dstTree,pair.getRight().getLocationInfo(),LANG2);
                     if (srcTag != null && dstTag != null) {
@@ -129,7 +140,7 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
                     }
                 }
                 for(Pair<UMLDocElement, UMLDocElement> pair : diff.getCommonDocElements()) {
-            		Tree src = TreeUtilFunctions.findByLocationInfo(srcTree,pair.getLeft().getLocationInfo(),LANG1);
+                    Tree src = TreeUtilFunctions.findByLocationInfo(srcTree,pair.getLeft().getLocationInfo(),LANG1);
                     Tree dst = TreeUtilFunctions.findByLocationInfo(dstTree,pair.getRight().getLocationInfo(),LANG2);
                     if (src != null && dst != null) {
                         if (!mappingStore.isSrcMapped(src) || !mappingStore.isDstMapped(dst) || diff.isManyToManyReformat())

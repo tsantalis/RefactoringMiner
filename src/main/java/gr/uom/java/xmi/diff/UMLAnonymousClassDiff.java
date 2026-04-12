@@ -186,6 +186,11 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 					boolean emptyBodiesWithIdenticalComments = operation1.emptyBodiesWithIdenticalComments(operation2);
 					boolean emptyBodiesWithEqualSignature = operation1.hasEmptyBody() && operation2.hasEmptyBody() && (operation1.equals(operation2) || operation1.equalSignature(operation2));
 					boolean matchingEmptyBodies = emptyBodiesWithIdenticalComments || emptyBodiesWithEqualSignature;
+					if(mappings == 0 && isPartOfMethodExtracted(operation1, operation2)) {
+						addOperationBodyMapper(mapper);
+						removedOperations.remove(operation1);
+						addedOperations.remove(operation2);
+					}
 					if(mappings > 0 || matchingEmptyBodies) {
 						int nonMappedElementsT1 = mapper.nonMappedElementsT1();
 						int nonMappedElementsT2 = mapper.nonMappedElementsT2();
@@ -257,6 +262,14 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 
 	private void checkForExtractedOperations() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
+		List<UMLOperation> addedOperations = new ArrayList<>(this.addedOperations);
+		if(modelDiff != null) {
+			String outerClassName = nextClass.getPackageName();
+			UMLClassBaseDiff baseDiff = modelDiff.getUMLClassDiff(outerClassName);
+			if(baseDiff != null) {
+				addedOperations.addAll(baseDiff.getAddedOperations());
+			}
+		}
 		for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 			UMLOperation addedOperation = addedOperationIterator.next();
 			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
@@ -265,12 +278,13 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 				for(ExtractOperationRefactoring refactoring : refs) {
 					refactorings.add(refactoring);
 					UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
+					refactorings.addAll(operationBodyMapper.getRefactoringsAfterPostProcessing());
 					mapper.addChildMapper(operationBodyMapper);
 					operationsToBeRemoved.add(addedOperation);
 				}
 			}
 		}
-		addedOperations.removeAll(operationsToBeRemoved);
+		this.addedOperations.removeAll(operationsToBeRemoved);
 	}
 
 	private void checkForInlinedOperations() throws RefactoringMinerTimedOutException {
@@ -283,6 +297,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 				for(InlineOperationRefactoring refactoring : refs) {
 					refactorings.add(refactoring);
 					UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
+					refactorings.addAll(operationBodyMapper.getRefactoringsAfterPostProcessing());
 					mapper.addChildMapper(operationBodyMapper);
 					operationsToBeRemoved.add(removedOperation);
 				}

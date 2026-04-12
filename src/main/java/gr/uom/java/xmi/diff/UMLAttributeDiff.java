@@ -157,10 +157,11 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 				if(operationBodyMapper.getContainer1().isConstructor() && operationBodyMapper.getContainer2().isConstructor()) {
 					for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
 						String fragment = fragment1.getString();
-						if((fragment.startsWith(addedAttribute.getName() + "=") ||
-								fragment.startsWith("this." + addedAttribute.getName() + "=")) &&
-								fragment.endsWith(";\n")) {
-							String variableInitializer = fragment.substring(fragment.indexOf("=")+1, fragment.lastIndexOf(";\n"));
+						Constants LANG1 = fragment1.getLANG();
+						if((fragment.startsWith(addedAttribute.getName() + LANG1.ASSIGNMENT) ||
+								fragment.startsWith(LANG1.THIS_DOT + addedAttribute.getName() + LANG1.ASSIGNMENT)) &&
+								fragment.endsWith(LANG1.STATEMENT_TERMINATION)) {
+							String variableInitializer = fragment.substring(fragment.indexOf(LANG1.ASSIGNMENT)+LANG1.ASSIGNMENT.length(), fragment.lastIndexOf(LANG1.STATEMENT_TERMINATION));
 							List<LeafExpression> leafExpressions1 = fragment1.findExpression(variableInitializer);
 							if(leafExpressions1.size() == 1) {
 								this.mapper = new UMLOperationBodyMapper(fragment1, initializer2, operationBodyMapper.getContainer1(), operationBodyMapper.getContainer2(), classDiff, modelDiff);
@@ -176,10 +177,11 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 				if(operationBodyMapper.getContainer1().isConstructor() && operationBodyMapper.getContainer2().isConstructor()) {
 					for(AbstractCodeFragment fragment2 : operationBodyMapper.getNonMappedLeavesT2()) {
 						String fragment = fragment2.getString();
-						if((fragment.startsWith(removedAttribute.getName() + "=") ||
-								fragment.startsWith("this." + removedAttribute.getName() + "=")) &&
-								fragment.endsWith(";\n")) {
-							String variableInitializer = fragment.substring(fragment.indexOf("=")+1, fragment.lastIndexOf(";\n"));
+						Constants LANG2 = fragment2.getLANG();
+						if((fragment.startsWith(removedAttribute.getName() + LANG2.ASSIGNMENT) ||
+								fragment.startsWith(LANG2.THIS_DOT + removedAttribute.getName() + LANG2.ASSIGNMENT)) &&
+								fragment.endsWith(LANG2.STATEMENT_TERMINATION)) {
+							String variableInitializer = fragment.substring(fragment.indexOf(LANG2.ASSIGNMENT)+LANG2.ASSIGNMENT.length(), fragment.lastIndexOf(LANG2.STATEMENT_TERMINATION));
 							List<LeafExpression> leafExpressions2 = fragment2.findExpression(variableInitializer);
 							if(leafExpressions2.size() == 1) {
 								this.mapper = new UMLOperationBodyMapper(initializer1, fragment2, operationBodyMapper.getContainer1(), operationBodyMapper.getContainer2(), classDiff, modelDiff);

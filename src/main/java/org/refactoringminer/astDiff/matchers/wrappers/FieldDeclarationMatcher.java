@@ -1,6 +1,8 @@
 package org.refactoringminer.astDiff.matchers.wrappers;
 
 import com.github.gumtreediff.tree.Tree;
+
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.diff.UMLCommentListDiff;
@@ -8,6 +10,7 @@ import gr.uom.java.xmi.diff.UMLJavadocDiff;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
+import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
@@ -99,15 +102,25 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         else if(Constants.isCrossLanguage(LANG1, LANG2)) {
             JavaToKotlinMigration.handleFieldDeclarationMapping(mappingStore, srcAttr, dstAttr, srcFieldDeclaration, dstFieldDeclaration, LANG1, LANG2);
         }
-        if(srcAttr.getType().name.equals(LANG1.PROPERTY_SIGNATURE) && dstAttr.getType().name.equals(LANG2.PROPERTY_SIGNATURE)) {
+        if((srcAttr.getType().name.equals(LANG1.PROPERTY_SIGNATURE) && dstAttr.getType().name.equals(LANG2.PROPERTY_SIGNATURE)) ||
+                (srcAttr.getType().name.equals(LANG1.PUBLIC_FIELD_DEFINITION) && dstAttr.getType().name.equals(LANG2.PUBLIC_FIELD_DEFINITION))) {
             if(srcAttr.getParent() != null && dstAttr.getParent() != null) {
                 int index1 = srcAttr.getParent().getChildPosition(srcAttr);
                 int index2 = dstAttr.getParent().getChildPosition(dstAttr);
                 if(srcAttr.getParent().getChildren().size() > index1+1 && srcAttr.getParent().getChild(index1+1).getType().name.equals(LANG1.SEMICOLON) &&
-                		dstAttr.getParent().getChildren().size() > index2+1 && dstAttr.getParent().getChild(index2+1).getType().name.equals(LANG2.SEMICOLON)) {
+                        dstAttr.getParent().getChildren().size() > index2+1 && dstAttr.getParent().getChild(index2+1).getType().name.equals(LANG2.SEMICOLON)) {
                     Tree t1 = srcAttr.getParent().getChild(index1+1);
                     Tree t2 = dstAttr.getParent().getChild(index2+1);
                     mappingStore.addMapping(t1,t2);
+                }
+            }
+            mappingStore.addMapping(srcAttr, dstAttr);
+            com.github.gumtreediff.utils.Pair<Tree, Tree> type_annotations = Helpers.findPairOfType(srcAttr,dstAttr, LANG1.TYPE_ANNOTATION, LANG2.TYPE_ANNOTATION);
+            if(type_annotations != null) {
+                mappingStore.addMapping(type_annotations.first,type_annotations.second);
+                com.github.gumtreediff.utils.Pair<Tree, Tree> colons = Helpers.findPairOfType(type_annotations.first,type_annotations.second, LANG1.COLON, LANG2.COLON);
+                if(colons != null) {
+                	mappingStore.addMapping(colons.first, colons.second);
                 }
             }
         }
@@ -134,7 +147,17 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                 new LeafMatcher(LANG1, LANG2).match(srcType,dstType,mappingStore);
             }
             Tree srcVarDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getVariableDeclaration().getLocationInfo(),LANG1);
+            if(srcAttr.equals(srcVarDeclaration)) {
+                if(srcVarDeclaration.getParent().getType().name.equals(LANG1.ASSIGNMENT) && srcVarDeclaration.getParent().getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT)) {
+                    srcVarDeclaration = srcVarDeclaration.getParent().getParent();
+                }
+            }
             Tree dstVarDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getVariableDeclaration().getLocationInfo(),LANG2);
+            if(dstAttr.equals(dstVarDeclaration)) {
+                if(dstVarDeclaration.getParent().getType().name.equals(LANG2.ASSIGNMENT) && dstVarDeclaration.getParent().getParent().getType().name.equals(LANG2.EXPRESSION_STATEMENT)) {
+                    dstVarDeclaration = dstVarDeclaration.getParent().getParent();
+                }
+            }
             mappingStore.addMapping(srcVarDeclaration,dstVarDeclaration);
             new LeafMatcher(LANG1, LANG2).match(srcVarDeclaration,dstVarDeclaration,mappingStore);
             new JavaDocMatcher(optimizationData, srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc(), umlJavadocDiff, LANG1, LANG2)

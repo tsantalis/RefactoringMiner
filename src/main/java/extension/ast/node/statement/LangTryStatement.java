@@ -12,6 +12,7 @@ import java.util.List;
 public class LangTryStatement extends LangStatement {
     private LangASTNode body;
     private List<LangCatchClause> catchClauses = new ArrayList<>();
+    private LangASTNode elseBlock;
     private LangASTNode finallyBlock;
 
     public LangTryStatement() {
@@ -32,6 +33,7 @@ public class LangTryStatement extends LangStatement {
         super(NodeTypeEnum.TRY_STATEMENT, positionInfo);
         this.body = tryBlock;
         this.catchClauses = catchClauses;
+        this.elseBlock = elseBlock;
         this.finallyBlock = finallyBlock;
 
         if (tryBlock != null) addChild(tryBlock);
@@ -65,6 +67,14 @@ public class LangTryStatement extends LangStatement {
 
     public List<LangCatchClause> getCatchClauses() {
         return new ArrayList<>(catchClauses);
+    }
+
+    public LangASTNode getElseBlock() {
+        return elseBlock;
+    }
+
+    public boolean hasElseBlock() {
+        return elseBlock != null;
     }
 
     public LangASTNode getFinallyBlock() {

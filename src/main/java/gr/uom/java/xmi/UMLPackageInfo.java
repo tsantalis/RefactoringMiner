@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import gr.uom.java.xmi.diff.CodeRange;
 
-public class UMLPackageInfo implements LocationInfoProvider, Serializable {
+public class UMLPackageInfo implements LocationInfoProvider, Serializable, AnnotationProvider {
 	private String packageName;
 	private UMLJavadoc packageDoc;
 	private UMLPackage umlPackage;

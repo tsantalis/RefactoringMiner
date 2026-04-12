@@ -466,12 +466,16 @@ public class UMLOperationDiff {
 		}
 		if(annotationListDiff != null) {
 			for(UMLAnnotation annotation : annotationListDiff.getAddedAnnotations()) {
-				AddMethodAnnotationRefactoring refactoring = new AddMethodAnnotationRefactoring(annotation, removedOperation, addedOperation);
-				refactorings.add(refactoring);
+				if(!conflictingMoveAnnotationRefactoring(annotation)) {
+					AddMethodAnnotationRefactoring refactoring = new AddMethodAnnotationRefactoring(annotation, removedOperation, addedOperation);
+					refactorings.add(refactoring);
+				}
 			}
 			for(UMLAnnotation annotation : annotationListDiff.getRemovedAnnotations()) {
-				RemoveMethodAnnotationRefactoring refactoring = new RemoveMethodAnnotationRefactoring(annotation, removedOperation, addedOperation);
-				refactorings.add(refactoring);
+				if(!conflictingMoveAnnotationRefactoring(annotation)) {
+					RemoveMethodAnnotationRefactoring refactoring = new RemoveMethodAnnotationRefactoring(annotation, removedOperation, addedOperation);
+					refactorings.add(refactoring);
+				}
 			}
 			for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffs()) {
 				ModifyMethodAnnotationRefactoring refactoring = new ModifyMethodAnnotationRefactoring(annotationDiff.getRemovedAnnotation(), annotationDiff.getAddedAnnotation(), removedOperation, addedOperation);
@@ -539,6 +543,22 @@ public class UMLOperationDiff {
 			}
 		}
 		return refactorings;
+	}
+
+	private boolean conflictingMoveAnnotationRefactoring(UMLAnnotation annotation) {
+		if(classDiff != null) {
+			for(Refactoring r : classDiff.getRefactoringsBeforePostProcessing()) {
+				if(r instanceof MoveAnnotationRefactoring move) {
+					if(move.getOriginalAnnotation().equals(annotation) || move.getMovedAnnotation().equals(annotation)) {
+						if((move.getOriginalAnnotationProvider() instanceof UMLOperation original && original.equals(removedOperation)) ||
+								(move.getMovedAnnotationProvider() instanceof UMLOperation moved && moved.equals(addedOperation))) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private void checkForSplitMergeParameterBasedOnAttributeAssignments(Set<Refactoring> refactorings) {

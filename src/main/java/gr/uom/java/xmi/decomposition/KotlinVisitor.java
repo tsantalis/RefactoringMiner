@@ -15,6 +15,8 @@ import org.jetbrains.kotlin.psi.KtArrayAccessExpression;
 import org.jetbrains.kotlin.psi.KtBinaryExpression;
 import org.jetbrains.kotlin.psi.KtBinaryExpressionWithTypeRHS;
 import org.jetbrains.kotlin.psi.KtCallExpression;
+import org.jetbrains.kotlin.psi.KtCallableReferenceExpression;
+import org.jetbrains.kotlin.psi.KtClassLiteralExpression;
 import org.jetbrains.kotlin.psi.KtConstantExpression;
 import org.jetbrains.kotlin.psi.KtConstructorCalleeExpression;
 import org.jetbrains.kotlin.psi.KtDelegatedSuperTypeEntry;
@@ -146,8 +148,22 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 			this.processDestructuringDeclaration(destructuringDeclaration, data);
 		} else if (expression instanceof KtVariableDeclaration variableDeclaration) {
 			this.processVariableDeclaration(variableDeclaration, data);
+		} else if (expression instanceof KtCallableReferenceExpression callableReferenceExpression) {
+			this.processCallableReferenceExpression(callableReferenceExpression, data);
+		} else if (expression instanceof KtClassLiteralExpression classLiteralExpression) {
+			this.processClassLiteralExpression(classLiteralExpression, data);
 		}
 		return super.visitExpression(expression, data);
+	}
+
+	private void processCallableReferenceExpression(KtCallableReferenceExpression callableReferenceExpression, Object data) {
+		MethodReference reference = new MethodReference(cu, sourceFolder, filePath, callableReferenceExpression, container, fileContent);
+		methodInvocations.add(reference);
+	}
+
+	private void processClassLiteralExpression(KtClassLiteralExpression classLiteralExpression, Object data) {
+		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, classLiteralExpression, CodeElementType.TYPE_LITERAL, container);
+		typeLiterals.add(expression);
 	}
 
 	private void processObjectLiteralExpression(KtObjectLiteralExpression objectLiteralExpression, Object data) {

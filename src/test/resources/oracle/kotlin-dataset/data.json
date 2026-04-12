@@ -7708,10 +7708,10 @@
     }, {
         "type": "Move Code",
         "description": "Move Code from public render(context Context, heapDumpFile File, sourceWidth Int, sourceHeight Int, sourceBytesPerPixel Int) : Bitmap to public render(context Context, heapDumpFile File, sourceWidth Int, sourceHeight Int, sourceBytesPerPixel Int) : Bitmap in class leakcanary.internal.activity.screen.HeapDumpRenderer",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>There is some level of lambda nesting that is eliminated.</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -13323,10 +13323,10 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable trustManager : Inferred in method public newTrustManager(keyStoreType String, trustedCertificates List<X509Certificate>, insecureHosts List<String>) : X509TrustManager from class okhttp3.tls.internal.TlsUtil",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>The return statement is not getting matched to infer the Extract Variable refactoring</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Merge Class",
         "description": "Merge Class [okhttp3.recipes.kt.DevServerAndroid, okhttp3.recipes.kt.DevServerJvm] merged to okhttp3.recipes.kt.DevServer",

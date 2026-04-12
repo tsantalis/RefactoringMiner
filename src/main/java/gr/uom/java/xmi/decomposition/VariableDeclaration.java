@@ -44,13 +44,18 @@ import org.jetbrains.kotlin.psi.KtTypeReference;
 import static org.jetbrains.kotlin.lexer.KtTokens.*;
 import org.refactoringminer.util.PathFileUtils;
 
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClass;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassProp;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstConstructor;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstFunction;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstForHead;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstObjectPatProp;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPropName;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstArrayPat;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstAssignPat;
@@ -59,6 +64,7 @@ import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstKeyValuePatProp;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstObjectPat;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstRestPat;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsInterfaceDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsTypeAliasDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
@@ -73,6 +79,7 @@ import extension.ast.node.expression.LangSimpleName;
 import extension.ast.node.metadata.LangAnnotation;
 import extension.ast.node.statement.LangBlock;
 import extension.ast.node.unit.LangCompilationUnit;
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.InferredType;
 import gr.uom.java.xmi.LocationInfo;
@@ -86,7 +93,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.VariableDeclarationProvider;
 import gr.uom.java.xmi.diff.CodeRange;
 
-public class VariableDeclaration implements LocationInfoProvider, VariableDeclarationProvider {
+public class VariableDeclaration implements LocationInfoProvider, VariableDeclarationProvider, AnnotationProvider {
 	private String variableName;
 	private AbstractExpression initializer;
 	private UMLType type;
@@ -890,6 +897,28 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.scope = new VariableScope(filePath, startOffset, endOffset);
 	}
 
+	public VariableDeclaration(String sourceFolder, String filePath, Swc4jAstClassProp classProperty, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, classProperty.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		ISwc4jAstPropName key = classProperty.getKey();
+		Optional<Swc4jAstTsTypeAnn> typeAnnotation = classProperty.getTypeAnn();
+		if(typeAnnotation.isPresent()) {
+			ISwc4jAstTsType type = typeAnnotation.get().getTypeAnn();
+			this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, type, 0);
+		}
+		else {
+			this.type = new InferredType();
+		}
+		this.variableName = key.toString();
+		this.initializer = classProperty.getValue().isPresent() ? new AbstractExpression(sourceFolder, filePath, classProperty.getValue().get(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent, typeDeclarations) : null;
+		ISwc4jAst scopeNode = getScopeNode(classProperty);
+		int startOffset = classProperty.getSpan().getStart();
+		int endOffset = scopeNode.getSpan().getEnd();
+		this.scope = new VariableScope(filePath, startOffset, endOffset);
+	}
+
 	public VariableDeclaration(String sourceFolder, String filePath, Swc4jAstTsTypeAnn typeAnnotation, Swc4jAstBindingIdent fragment, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
@@ -944,6 +973,26 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.scope = new VariableScope(filePath, startOffset, endOffset);
 	}
 
+	public VariableDeclaration(String sourceFolder, String filePath, Swc4jAstTsTypeAnn typeAnnotation, Swc4jAstStr fragment, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, fragment.getSpan(), CodeElementType.VARIABLE_DECLARATION_EXPRESSION, fileContent);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		this.variableName = fragment.getRaw().isPresent() ? fragment.getRaw().get() : fragment.getValue();
+		if(typeAnnotation != null) {
+			ISwc4jAstTsType type = typeAnnotation.getTypeAnn();
+			this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, type, 0);
+		}
+		else {
+			this.type = new InferredType();
+		}
+		//this.initializer = fragment.getInit().isPresent() ? new AbstractExpression(sourceFolder, filePath, fragment.getInit().get(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent) : null;
+		ISwc4jAst scopeNode = getScopeNode(fragment);
+		int startOffset = fragment.getSpan().getStart();
+		int endOffset = scopeNode.getSpan().getEnd();
+		this.scope = new VariableScope(filePath, startOffset, endOffset);
+	}
+
 	private ISwc4jAst getScopeNode(ISwc4jAst node) {
 		ISwc4jAst parent = node.getParent();
 		while(parent != null) {
@@ -953,7 +1002,16 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			else if(parent instanceof Swc4jAstFunction) {
 				return parent;
 			}
+			else if(parent instanceof Swc4jAstConstructor) {
+				return parent;
+			}
 			else if(parent instanceof Swc4jAstTsTypeAliasDecl) {
+				return parent;
+			}
+			else if(parent instanceof Swc4jAstTsInterfaceDecl) {
+				return parent;
+			}
+			else if(parent instanceof Swc4jAstClass) {
 				return parent;
 			}
 			else if(parent instanceof Swc4jAstArrowExpr) {

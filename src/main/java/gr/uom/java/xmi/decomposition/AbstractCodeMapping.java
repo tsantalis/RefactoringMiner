@@ -794,7 +794,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 				if((variableName.equals(after) && initializer != null) || comprehensionMatch) {
 					checkForAliasedVariable(initializer, replacement, nonMappedLeavesT2, classDiff, insideExtractedOrInlinedMethod);
-					if(comprehensionMatch || initializer.toString().equals(before) ||
+					if(comprehensionMatch || initializer.toString().equals(before) || initializer.toString().replaceAll("\s", "").equals(before.replaceAll("\s", "")) ||
 							initializer.toString().equals(LANG2.THIS_DOT + before) ||
 							overlappingExtractVariable(initializer, before, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
 							initializer.toString().equals("(" + declaration.getType() + ")" + before) ||
@@ -928,7 +928,15 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							break;
 						}
 					}
-					if(!mappingFound) {
+					boolean compositeVariableReplacement = false;
+					if(isVariableReference(initializer.toString(), statement.getVariables()) && !(this instanceof CompositeStatementObjectMapping)) {
+						for(Replacement r : replacements) {
+							if(r.getAfter().contains(".") && r.getAfter().contains(variableName + ".")) {
+								compositeVariableReplacement = true;
+							}
+						}
+					}
+					if(!mappingFound && !compositeVariableReplacement) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						List<LeafExpression> subExpressions = getFragment1().findExpression(initializer.getString());
 						for(LeafExpression subExpression : subExpressions) {

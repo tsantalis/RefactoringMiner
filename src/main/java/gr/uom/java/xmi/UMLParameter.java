@@ -6,8 +6,9 @@ import java.util.List;
 import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.diff.CodeRange;
 
-public class UMLParameter implements Serializable, VariableDeclarationProvider {
+public class UMLParameter implements Serializable, VariableDeclarationProvider, AnnotationProvider {
 	private String name;
 	private UMLType type;
 	private String kind;
@@ -127,5 +128,15 @@ public class UMLParameter implements Serializable, VariableDeclarationProvider {
 				return name + " " + type.toQualifiedString();
 			}
 		}
+	}
+
+	@Override
+	public LocationInfo getLocationInfo() {
+		return variableDeclaration.getLocationInfo();
+	}
+
+	@Override
+	public CodeRange codeRange() {
+		return variableDeclaration.codeRange();
 	}
 }

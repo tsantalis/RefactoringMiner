@@ -15,13 +15,14 @@ public class Constants {
 			IMPORT_DECLARATION = "import_statement";
 			TYPE_DECLARATION = "class_definition";
 			TYPE_DECLARATION_KIND = "class";
-			BLOCK_COMMENT = "string"; // this is a text-block comment style, Python does not support Java-like multi-line comment
+			BLOCK_COMMENT = ""; // this is a text-block comment style, Python does not support Java-like multi-line comment
 			LINE_COMMENT = "comment";
 			EXPRESSION_STATEMENT = "expression_statement";
 			TRY_STATEMENT = "try_statement";
 			CATCH_CLAUSE = "except_clause";
 			IF_STATEMENT = "if_statement";
 			WHILE_STATEMENT = "while_statement";
+			DO_STATEMENT = "do_statement";
 			FOR_STATEMENT = "for_statement";
 			ENHANCED_FOR_STATEMENT = "for_statement";
 			PACKAGE_DECLARATION = "";
@@ -39,6 +40,7 @@ public class Constants {
 			METHOD_INVOCATION = "call";
 			SWITCH_STATEMENT = "";
 			SWITCH_CASE = "";
+			ASSIGNMENT = "assignment";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -54,6 +56,7 @@ public class Constants {
 			CATCH_CLAUSE = "catch_block";
 			IF_STATEMENT = "if_expression";
 			WHILE_STATEMENT = "while_statement";
+			DO_STATEMENT = "do_statement";
 			FOR_STATEMENT = "for_statement";
 			ENHANCED_FOR_STATEMENT = "for_statement";
 			PACKAGE_DECLARATION = "package_header";
@@ -71,6 +74,7 @@ public class Constants {
 			METHOD_INVOCATION = "call_expression";
 			SWITCH_STATEMENT = "";
 			SWITCH_CASE = "";
+			ASSIGNMENT = "assignment";
 		}
 		else if(PathFileUtils.isTypeScriptFile(filePath)) {
 			CLASS_BLOCK = "block";
@@ -86,6 +90,7 @@ public class Constants {
 			CATCH_CLAUSE = "catch_clause";
 			IF_STATEMENT = "if_statement";
 			WHILE_STATEMENT = "while_statement";
+			DO_STATEMENT = "do_statement";
 			FOR_STATEMENT = "for_statement";
 			ENHANCED_FOR_STATEMENT = "for_statement";
 			PACKAGE_DECLARATION = "";
@@ -103,6 +108,7 @@ public class Constants {
 			METHOD_INVOCATION = "call";
 			SWITCH_STATEMENT = "switch_statement";
 			SWITCH_CASE = "switch_case";
+			ASSIGNMENT = "assignment";
 		}
 		else {
 			// Java values as default
@@ -119,6 +125,7 @@ public class Constants {
 			CATCH_CLAUSE = "CatchClause";
 			IF_STATEMENT = "IfStatement";
 			WHILE_STATEMENT = "WhileStatement";
+			DO_STATEMENT = "DoStatement";
 			FOR_STATEMENT = "ForStatement";
 			ENHANCED_FOR_STATEMENT = "EnhancedForStatement";
 			PACKAGE_DECLARATION = "PackageDeclaration";
@@ -136,11 +143,12 @@ public class Constants {
 			METHOD_INVOCATION = "MethodInvocation";
 			SWITCH_STATEMENT = "SwitchStatement";
 			SWITCH_CASE = "SwitchCase";
+			ASSIGNMENT = "Assignment";
 		}
 	}
 
     // AST node type labels
-    public final String ASSIGNMENT = "Assignment";
+    public final String ASSIGNMENT;
     public final String METHOD_INVOCATION;
     public final String METHOD_DECLARATION;
     public final String ANNOTATION_TYPE_MEMBER_DECLARATION = "AnnotationTypeMemberDeclaration";
@@ -206,7 +214,7 @@ public class Constants {
     public final String BREAK_STATEMENT = "BreakStatement";
     public final String CONSTRUCTOR_INVOCATION;
     public final String CONTINUE_STATEMENT = "ContinueStatement";
-    public final String DO_STATEMENT = "DoStatement";
+    public final String DO_STATEMENT;
     public final String EMPTY_STATEMENT = "EmptyStatement";
     public final String ENHANCED_FOR_STATEMENT;
     public final String FOR_STATEMENT;
@@ -278,8 +286,19 @@ public class Constants {
     public final String ELIF_KEYWORD = "elif";
     public final String ELSE_KEYWORD = "else";
     public final String WHILE_KEYWORD = "while";
+    public final String DO_KEYWORD = "do";
     public final String IMPORT_KEYWORD = "import";
     public final String DECORATOR = "decorator";
+    public final String PARAMETERS = "parameters";
+    public final String DEFAULT_PARAMETER = "default_parameter";
+    public final String PATTERN_LIST = "pattern_list";
+    public final String DICTIONARY_SPLAT_PATTERN = "dictionary_splat_pattern";
+    public final String SPLAT_DOUBLE = "**";
+    public final String LIST_SPLAT_PATTERN = "list_splat_pattern";
+    public final String SPLAT_SINGLE = "*";
+    public final String AS_PATTERN = "as_pattern";
+    public final String CALL = "call";
+    public final String SUBSCRIPT = "subscript";
     
     //Kotlin Specific
     public final String FUNCTION_BODY = "function_body";
@@ -342,6 +361,8 @@ public class Constants {
     public final String FOR_KEYWORD = "for";
     public final String IF_KEYWORD = "if";
     public final String TYPE_KEYWORD = "type";
+    public final String RETURN_KEYWORD = "return";
+    public final String INTERFACE_KEYWORD = "interface";
     public final String PARENTHESIZED_EXPRESSION = "parenthesized_expression";
     public final String LEXICAL_DECLARATION = "lexical_declaration";
     public final String SEMICOLON = ";";
@@ -355,6 +376,7 @@ public class Constants {
     public final String FORMAL_PARAMETERS = "formal_parameters";
     public final String COMMA = ",";
     public final String TYPE_ANNOTATION = "type_annotation";
+    public final String TYPE_PREDICATE_ANNOTATION = "type_predicate_annotation";
     public final String CATCH_KEYWORD = "catch";
     public final String VARIABLE_DECLARATOR = "variable_declarator";
     public final String EXPORT_KEYWORD = "export";
@@ -368,4 +390,19 @@ public class Constants {
     public final String TYPE_ALIAS_DECLARATION = "type_alias_declaration";
     public final String OBJECT_TYPE = "object_type";
     public final String PROPERTY_SIGNATURE = "property_signature";
+    public final String PROPERTY_IDENTIFIER = "property_identifier";
+    public final String INTERSECTION_TYPE = "intersection_type";
+    public final String UNION_TYPE = "union_type";
+    public final String GENERIC_TYPE = "generic_type";
+    public final String REQUIRED_PARAMETER = "required_parameter";
+    public final String OPENING_TAG = "<";
+    public final String CLOSING_TAG = ">";
+    public final String INTERFACE_DECLARATION = "interface_declaration";
+    public final String INTERFACE_BODY = "interface_body";
+    public final String CLASS_DECLARATION = "class_declaration";
+    public final String CLASS_BODY = "class_body";
+    public final String METHOD_DEFINITION = "method_definition";
+    public final String ACCESSIBILITY_MODIFIER = "accessibility_modifier";
+    public final String PUBLIC_FIELD_DEFINITION = "public_field_definition";
+    public final String OBJECT_PATTERN = "object_pattern";
 }

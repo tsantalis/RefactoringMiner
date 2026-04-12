@@ -30,7 +30,7 @@ import java.util.Set;
 import org.refactoringminer.util.AstUtils;
 import org.refactoringminer.util.PathFileUtils;
 
-public class UMLOperation implements Comparable<UMLOperation>, Serializable, VariableDeclarationContainer {
+public class UMLOperation implements Comparable<UMLOperation>, Serializable, VariableDeclarationContainer, AnnotationProvider {
 	private LocationInfo locationInfo;
 	private String name;
 	private Visibility visibility;
@@ -60,6 +60,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
 	private String actualSignature;
 	private List<UMLOperation> nestedOperations;
+	private List<UMLImport> nestedImports;
 	private final Constants LANG;
 	private boolean importsTestCase;
 	private Optional<UMLType> receiver;
@@ -76,9 +77,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
         this.modifiers = new ArrayList<UMLModifier>();
         this.comments = new ArrayList<UMLComment>();
         this.nestedOperations = new ArrayList<UMLOperation>();
+        this.nestedImports = new ArrayList<UMLImport>();
         this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
         this.propertyAccessor = Optional.empty();
         this.receiver = Optional.empty();
+        this.anonymousClassContainer = Optional.empty();
     }
 
 	public void addNestedOperation(UMLOperation operation) {
@@ -87,6 +90,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public List<UMLOperation> getNestedOperations() {
 		return nestedOperations;
+	}
+
+	public void addNestedImport(UMLImport imp) {
+		nestedImports.add(imp);
+	}
+
+	public List<UMLImport> getNestedImports() {
+		return nestedImports;
 	}
 
 	public void setReceiver(UMLType type) {

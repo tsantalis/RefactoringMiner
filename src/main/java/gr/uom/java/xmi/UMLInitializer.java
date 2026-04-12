@@ -34,6 +34,7 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 		this.className = className;
 		this.comments = new ArrayList<UMLComment>();
 		this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
+		this.anonymousClassContainer = Optional.empty();
 	}
 
 	public boolean isStatic() {

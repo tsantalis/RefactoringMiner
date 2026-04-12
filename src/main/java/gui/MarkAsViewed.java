@@ -1,98 +1,108 @@
 package gui;
 
-import java.io.FileInputStream;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.refactoringminer.util.GitHubOAuthTokenProvider;
+
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Properties;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class MarkAsViewed {
 	private static final String API_URL = "https://api.github.com/graphql";
-	private static final String OAUTH_TOKEN = getOAuthToken();
-	
+	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+	private static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
+	private static final String OAUTH_TOKEN = GitHubOAuthTokenProvider.getOAuthToken();
+
 	public static void main(String[] args) {
-		String prNodeId = getPullRequestNodeId("tsantalis", "RefactoringMiner", 897);
+		PullRequestViewState state = getPullRequestViewState("tsantalis", "RefactoringMiner", 1047);
+		String prNodeId = state.pullRequestNodeId();
+		Map<String, Boolean> viewedMap = state.viewedFiles();
+		System.out.println("Loaded viewed state for " + viewedMap.size() + " files");
 		markAsViewed(prNodeId, "README.md");
 		unmarkAsViewed(prNodeId, "README.md");
 	}
 
-	private static String getOAuthToken() {
-		try {
-			String oAuthToken = System.getenv("OAuthToken");
-			if (oAuthToken == null || oAuthToken.isEmpty()) {
-				Properties prop = new Properties();
-				InputStream input = new FileInputStream("github-oauth.properties");
-				prop.load(input);
-				oAuthToken = prop.getProperty("OAuthToken");
-			}
-			return oAuthToken;
-		} catch(IOException ioe) {
-			ioe.printStackTrace();
-		}
-		return null;
-	}
-	
-	private static String getPullRequestNodeId(String owner, String repoName, int prNumber) {
-		try {
-			String query = """
-			query PullRequestId($owner: String!, $name: String!, $number: Int!) {
-			  repository(owner: $owner, name: $name) {
-			    pullRequest(number: $number) {
-			      id
-			      number
-			      title
-			    }
-			  }
-			}
-			""";
-			ObjectMapper objectMapper = new ObjectMapper();
-			ObjectNode variables = objectMapper.createObjectNode();
-			variables.put("owner", owner);
-			variables.put("name", repoName);
-			variables.put("number", prNumber);
-			ObjectNode requestBodyJson = objectMapper.createObjectNode();
-			requestBodyJson.put("query", query);
-			requestBodyJson.set("variables", variables);
-
-			String requestBody = objectMapper.writeValueAsString(requestBodyJson);
-
-			HttpClient client = HttpClient.newHttpClient();
-			HttpRequest request = HttpRequest.newBuilder()
-					.uri(URI.create(API_URL))
-					.header("Authorization", "Bearer " + OAUTH_TOKEN)
-					.header("Content-Type", "application/json")
-					.POST(HttpRequest.BodyPublishers.ofString(requestBody))
-					.build();
-
-			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-			JsonNode root = objectMapper.readTree(response.body());
-			if(root.has("data") && !root.get("data").isNull()) {
-				JsonNode data = root.get("data");
-				if(data.has("repository")) {
-					JsonNode repository = data.get("repository");
-					if(repository.has("pullRequest")) {
-						JsonNode pullRequest = repository.get("pullRequest");
-						if(pullRequest.has("id")) {
-							JsonNode id = pullRequest.get("id");
-							return id.textValue();
-						}
-					}
+	private static PullRequestViewState getPullRequestViewState(String owner, String repoName, int prNumber) {
+		Map<String, Boolean> viewedFiles = new LinkedHashMap<>();
+		String prNodeId = null;
+		String cursor = null;
+		String query = """
+				query PullRequestViewedFiles($owner: String!, $name: String!, $number: Int!, $cursor: String){
+				  repository(owner: $owner, name: $name) {
+				    pullRequest(number: $number) {
+				      id
+				      files(first: 100, after: $cursor) {
+				        pageInfo {
+				          hasNextPage
+				          endCursor
+				        }
+				        nodes {
+				          path
+				          viewerViewedState
+				        }
+				      }
+				    }
+				  }
 				}
-			}
-		} catch(IOException ioe) {
+				""";
+		try {
+			do {
+				ObjectNode variables = OBJECT_MAPPER.createObjectNode();
+				variables.put("owner", owner);
+				variables.put("name", repoName);
+				variables.put("number", prNumber);
+				if (cursor == null) {
+					variables.putNull("cursor");
+				} else {
+					variables.put("cursor", cursor);
+				}
+				JsonNode pullRequest = executeGitHubGraphQl(query, variables)
+						.path("repository")
+						.path("pullRequest");
+				if (pullRequest.isMissingNode() || pullRequest.isNull()) {
+					break;
+				}
+				PullRequestViewStatePage page = parsePullRequestViewStatePage(pullRequest);
+				if (page.pullRequestNodeId() != null) {
+					prNodeId = page.pullRequestNodeId();
+				}
+				viewedFiles.putAll(page.viewedFiles());
+				cursor = page.nextCursor();
+			} while (cursor != null);
+		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
 			e.printStackTrace();
 		}
-		return null;
+		return new PullRequestViewState(prNodeId, viewedFiles);
+	}
+
+	static PullRequestViewStatePage parsePullRequestViewStatePage(JsonNode pullRequest) {
+		String pullRequestNodeId = pullRequest.hasNonNull("id") ? pullRequest.get("id").textValue() : null;
+		Map<String, Boolean> viewedFiles = new LinkedHashMap<>();
+		JsonNode files = pullRequest.path("files");
+		JsonNode nodes = files.path("nodes");
+		if (nodes.isArray()) {
+			for (JsonNode next : nodes) {
+				JsonNode path = next.get("path");
+				if (path != null && !path.isNull()) {
+					viewedFiles.put(path.textValue(), "VIEWED".equals(next.path("viewerViewedState").textValue()));
+				}
+			}
+		}
+		String nextCursor = null;
+		JsonNode pageInfo = files.path("pageInfo");
+		if (pageInfo.path("hasNextPage").asBoolean(false)) {
+			nextCursor = pageInfo.path("endCursor").textValue();
+		}
+		return new PullRequestViewStatePage(pullRequestNodeId, nextCursor, viewedFiles);
 	}
 
 	private static void unmarkAsViewed(String prNodeId, String path) {
@@ -119,33 +129,42 @@ public class MarkAsViewed {
 
 	private static void process(String prNodeId, String path, String mutation) {
 		try {
-			ObjectMapper objectMapper = new ObjectMapper();
-			ObjectNode variables = objectMapper.createObjectNode();
+			ObjectNode variables = OBJECT_MAPPER.createObjectNode();
 			variables.put("path", path);
 			variables.put("pullRequestId", prNodeId);
-
-			ObjectNode requestBodyJson = objectMapper.createObjectNode();
-			requestBodyJson.put("query", mutation);
-			requestBodyJson.set("variables", variables);
-
-			String requestBody = objectMapper.writeValueAsString(requestBodyJson);
-
-			HttpClient client = HttpClient.newHttpClient();
-			HttpRequest request = HttpRequest.newBuilder()
-					.uri(URI.create(API_URL))
-					.header("Authorization", "Bearer " + OAUTH_TOKEN)
-					.header("Content-Type", "application/json")
-					.POST(HttpRequest.BodyPublishers.ofString(requestBody))
-					.build();
-
-			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-			System.out.println("Response status code: " + response.statusCode());
-			System.out.println("Response body: " + response.body());
-		} catch(IOException ioe) {
+			JsonNode response = executeGitHubGraphQl(mutation, variables);
+			System.out.println("Response body: " + response);
+		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
 			e.printStackTrace();
 		}
+	}
+
+	private static JsonNode executeGitHubGraphQl(String query, ObjectNode variables) throws IOException, InterruptedException {
+		ObjectNode requestBodyJson = OBJECT_MAPPER.createObjectNode();
+		requestBodyJson.put("query", query);
+		requestBodyJson.set("variables", variables);
+
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create(API_URL))
+				.header("Authorization", "Bearer " + OAUTH_TOKEN)
+				.header("Content-Type", "application/json")
+				.POST(HttpRequest.BodyPublishers.ofString(OBJECT_MAPPER.writeValueAsString(requestBodyJson)))
+				.build();
+
+		HttpResponse<String> response = HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+		JsonNode root = OBJECT_MAPPER.readTree(response.body());
+		if (response.statusCode() >= 400 || root.has("errors")) {
+			throw new IOException("GitHub GraphQL request failed: " + response.body());
+		}
+		return root.path("data");
+	}
+
+	static record PullRequestViewState(String pullRequestNodeId, Map<String, Boolean> viewedFiles) {
+	}
+
+	static record PullRequestViewStatePage(String pullRequestNodeId, String nextCursor, Map<String, Boolean> viewedFiles) {
 	}
 }

@@ -36,7 +36,7 @@ public class PythonFileProcessor {
 				List<UMLComment> comments = new ArrayList<UMLComment>();
 				for(Tree t : trees) {
 					String sourceFolder = UMLAdapterUtil.extractSourceFolder(filePath);
-					LocationInfo location = new LocationInfo(sourceFolder, filePath, t, CodeElementType.LINE_COMMENT);
+					LocationInfo location = new LocationInfo(sourceFolder, filePath, t, CodeElementType.LINE_COMMENT, fileContent);
 					UMLComment comment = new UMLComment(t.getLabel(), location);
 					comments.add(comment);
 				}

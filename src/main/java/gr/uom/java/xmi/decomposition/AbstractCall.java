@@ -16,16 +16,20 @@ import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry;
 import org.jetbrains.kotlin.psi.KtSuperTypeListEntry;
 import org.refactoringminer.util.PathFileUtils;
+import org.refactoringminer.util.PrefixSuffixUtils;
 
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LeafType;
+import gr.uom.java.xmi.ListCompositeType;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN;
 
@@ -70,6 +74,10 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public AbstractCall(String sourceFolder, String filePath, Swc4jAstCallExpr expression, CodeElementType codeElementType, VariableDeclarationContainer container, String fileContent) {
+		super(sourceFolder, filePath, expression, codeElementType, container, fileContent);
+	}
+
+	public AbstractCall(String sourceFolder, String filePath, Swc4jAstIdent expression, CodeElementType codeElementType, VariableDeclarationContainer container, String fileContent) {
 		super(sourceFolder, filePath, expression, codeElementType, container, fileContent);
 	}
 
@@ -1380,6 +1388,66 @@ public abstract class AbstractCall extends LeafExpression {
 		return (arguments().size() <= 2 && (index == 0 || this.getName().equals(LANG.ASSERT_THROWS) || this.getName().startsWith("assume") || "Assert".equals(this.getExpression()))) || (statement.contains(LANG.TERNARY_CONDITION) && statement.contains(LANG.TERNARY_ELSE));
 	}
 
+	public Replacement makeReplacementForAllArgumentsReturned(String statement, VariableDeclarationContainer containerWithReturnStatement) {
+		if(LANG.equals(Constants.TYPESCRIPT) && statement.startsWith(LANG.RETURN_SPACE) && containerWithReturnStatement instanceof UMLOperation operation) {
+			String s2 = statement.substring(LANG.RETURN_SPACE.length(), statement.length()-LANG.STATEMENT_TERMINATION.length());
+			StringBuilder reconstructReturn = new StringBuilder();
+			reconstructReturn.append("{");
+			for(String arg : arguments) {
+				reconstructReturn.append(arg).append(",");
+			}
+			reconstructReturn.append("}");
+			String s1 = reconstructReturn.toString();
+			String removeWhitespace1 = s1.replaceAll("\s", "").replaceAll("\n", "");
+			String removeWhitespace2 = s2.replaceAll("\s", "").replaceAll("\n", "");
+			if(removeWhitespace1.equals(removeWhitespace2)) {
+				return new Replacement(arguments().toString(), s2,
+						ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
+			}
+			String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(removeWhitespace1, removeWhitespace2);
+			String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(removeWhitespace1, removeWhitespace2);
+			if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty() && operation.getReturnParameter() != null) {
+				int beginIndexS1 = removeWhitespace1.indexOf(commonPrefix) + commonPrefix.length();
+				int endIndexS1 = removeWhitespace1.lastIndexOf(commonSuffix);
+				String diff1 = beginIndexS1 > endIndexS1 ? "" :	removeWhitespace1.substring(beginIndexS1, endIndexS1);
+				int beginIndexS2 = removeWhitespace2.indexOf(commonPrefix) + commonPrefix.length();
+				int endIndexS2 = removeWhitespace2.lastIndexOf(commonSuffix);
+				String diff2 = beginIndexS2 > endIndexS2 ? "" :	removeWhitespace2.substring(beginIndexS2, endIndexS2);
+				UMLType returnType = operation.getReturnParameter().getType();
+				if(diff1.isEmpty()) {
+					if(match(returnType, diff2)) {
+						return new Replacement(arguments().toString(), s2,
+								ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
+					}
+				}
+				else if(diff2.isEmpty()) {
+					if(match(returnType, diff1)) {
+						return new Replacement(arguments().toString(), s2,
+								ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
+					}
+				}
+			}
+			
+		}
+		return null;
+	}
+
+	private static boolean match(UMLType returnType, String diff) {
+		if(returnType instanceof ListCompositeType listType) {
+			for(LeafExpression expr : listType.getKeys()) {
+				if(diff.equals(expr.getString() + ":")) {
+					return true;
+				}
+			}
+			for(UMLType nestedType : listType.getTypes()) {
+				if(match(nestedType, diff)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public Replacement makeReplacementForReturnedArgument(String statement) {
 		int index = -1;
 		if((index = argumentIsReturned(statement)) != -1 && indexCondition(statement, index)) {
@@ -1535,6 +1603,26 @@ public abstract class AbstractCall extends LeafExpression {
 			if(methodReferenceName.equals("new")) {
 				String type = s2.substring(0, s2.indexOf(LANG.METHOD_REFERENCE));
 				if(s1.startsWith("new " + type)) {
+					return true;
+				}
+			}
+		}
+		if(LANG.equals(Constants.TYPESCRIPT)) {
+			String removeWhitespace1 = s1.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+			String removeWhitespace2 = s2.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+			if(removeWhitespace1.equals(removeWhitespace2)) {
+				return true;
+			}
+			String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(removeWhitespace1, removeWhitespace2);
+			String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(removeWhitespace1, removeWhitespace2);
+			if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+				int beginIndexS1 = removeWhitespace1.indexOf(commonPrefix) + commonPrefix.length();
+				int endIndexS1 = removeWhitespace1.lastIndexOf(commonSuffix);
+				String diff1 = beginIndexS1 > endIndexS1 ? "" :	removeWhitespace1.substring(beginIndexS1, endIndexS1);
+				int beginIndexS2 = removeWhitespace2.indexOf(commonPrefix) + commonPrefix.length();
+				int endIndexS2 = removeWhitespace2.lastIndexOf(commonSuffix);
+				String diff2 = beginIndexS2 > endIndexS2 ? "" :	removeWhitespace2.substring(beginIndexS2, endIndexS2);
+				if(diff1.startsWith(LANG.THIS_DOT) || diff2.startsWith(LANG.THIS_DOT)) {
 					return true;
 				}
 			}

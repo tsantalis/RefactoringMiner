@@ -37,6 +37,7 @@ import org.jetbrains.kotlin.psi.KtUserType;
 import org.refactoringminer.util.PathFileUtils;
 
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsEntityName;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsFnParam;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
@@ -51,13 +52,16 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsConditionalType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsFnType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsImportType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIndexedAccessType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIntersectionType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsKeywordType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsLitType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsParenthesizedType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsPropertySignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsQualifiedName;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeLit;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamInstantiation;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypePredicate;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeQuery;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeRef;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsUnionType;
@@ -69,7 +73,7 @@ import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLTypeParameterDiff;
 
-public abstract class UMLType implements Serializable, LocationInfoProvider {
+public abstract class UMLType implements Serializable, LocationInfoProvider, AnnotationProvider {
 	private LocationInfo locationInfo;
 	private int arrayDimension;
 	private boolean parameterized;
@@ -585,6 +589,12 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		else if(type instanceof Swc4jAstTsConditionalType conditionalType) {
 			//TODO create UMLType subclass
 		}
+		else if(type instanceof Swc4jAstTsTypePredicate typePredicate) {
+			if(typePredicate.getTypeAnn().isPresent()) {
+				UMLType umlType = extractTypeObject(typePredicate.getTypeAnn().get().getTypeAnn(), sourceFolder, filePath, fileContent);
+				return umlType;
+			}
+		}
 		else if(type instanceof Swc4jAstTsUnionType unionType) {
 			List<ISwc4jAstTsType> types = unionType.getTypes();
 			List<UMLType> unionTypes = new ArrayList<>();
@@ -593,6 +603,15 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 				unionTypes.add(umlType);
 			}
 			return new ListCompositeType(unionTypes, Kind.UNION);
+		}
+		else if(type instanceof Swc4jAstTsIntersectionType intersectionType) {
+			List<ISwc4jAstTsType> types = intersectionType.getTypes();
+			List<UMLType> unionTypes = new ArrayList<>();
+			for(ISwc4jAstTsType t : types) {
+				UMLType umlType = extractTypeObject(t, sourceFolder, filePath, fileContent);
+				unionTypes.add(umlType);
+			}
+			return new ListCompositeType(unionTypes, Kind.INTERSECTION);
 		}
 		else if(type instanceof Swc4jAstTsKeywordType keywordType) {
 			UMLType leafType = extractTypeObject(keywordType.getKind().getName());
@@ -638,8 +657,12 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		else if(type instanceof Swc4jAstTsTypeLit typeLiteral) {
 			List<ISwc4jAstTsTypeElement> members = typeLiteral.getMembers();
 			List<UMLType> memberTypeList = new ArrayList<>();
+			List<LeafExpression> keys = new ArrayList<>();
 			for(ISwc4jAstTsTypeElement member : members) {
 				if(member instanceof Swc4jAstTsPropertySignature signature) {
+					ISwc4jAstExpr key = signature.getKey();
+					LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, key, CodeElementType.KEY_EXPRESSION, null, fileContent);
+					keys.add(leafExpression);
 					if(signature.getTypeAnn().isPresent()) {
 						Swc4jAstTsTypeAnn typeAnnotation = signature.getTypeAnn().get();
 						UMLType signatureType = extractTypeObject(typeAnnotation.getTypeAnn(), sourceFolder, filePath, fileContent);
@@ -647,7 +670,9 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 					}
 				}
 			}
-			return new ListCompositeType(memberTypeList, Kind.LITERAL);
+			ListCompositeType listCompositeType = new ListCompositeType(memberTypeList, Kind.LITERAL);
+			listCompositeType.setKeys(keys);
+			return listCompositeType;
 		}
 		else if(type instanceof Swc4jAstTsLitType literalType) {
 			UMLType leafType = extractTypeObject("'" + literalType.getLit().toString() + "'");
@@ -696,6 +721,11 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		else if(type instanceof Swc4jAstTsIndexedAccessType indexedAccessType) {
 			ISwc4jAstTsType objectType = indexedAccessType.getObjType();
 			UMLType umlType = extractTypeObject(objectType, sourceFolder, filePath, fileContent);
+			return umlType;
+		}
+		else if(type instanceof Swc4jAstTsParenthesizedType parenthesizedType) {
+			ISwc4jAstTsType parenType = parenthesizedType.getTypeAnn();
+			UMLType umlType = extractTypeObject(parenType, sourceFolder, filePath, fileContent);
 			return umlType;
 		}
 		//TODO this should return null, when all type kinds are supported

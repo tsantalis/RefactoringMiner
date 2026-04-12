@@ -1700,6 +1700,16 @@
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic parameters() : String renamed to public parameterTypeNames() : String in class org.junit.platform.suite.api.SelectMethod",
           "validation": false
+        },
+        {
+          "type": "MOVE_ANNOTATION",
+          "description": "Move Annotation\t@SuppressWarnings(\"unused\") from org.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests.selectOneMethodWithOneParameters.TestClass to package testMethod(i int) : void",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ANNOTATION",
+          "description": "Move Annotation\t@SuppressWarnings(\"unused\") from org.junit.platform.suite.commons.SuiteLauncherDiscoveryRequestBuilderTests.selectOneMethodWithNoParameters.TestClass to package testMethod() : void",
+          "validation": true
         }
       ]
     },

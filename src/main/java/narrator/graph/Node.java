@@ -153,6 +153,10 @@ public class Node {
         this.identifiers.add(identifier);
     }
 
+    public Set<String> getIdentifiers() {
+        return this.identifiers;
+    }
+
     public String getId() {
         return id;
     }
@@ -233,7 +237,8 @@ public class Node {
         List<Tree> trees = new ArrayList<>(this.tree.getDescendants());
         trees.add(tree);
         List<Tree> simpleNameTrees = trees.stream()
-                .filter(tree -> tree.getType().name.equals(new Constants(this.getPath()).SIMPLE_NAME)).toList();
+                .filter(tree -> tree.getType().name.equals(
+                        new Constants(this.getPath()).SIMPLE_NAME)).toList();
         return simpleNameTrees.stream()
                 .map(tree -> fileContent.substring(tree.getPos(), tree.getEndPos())).toList();
     }

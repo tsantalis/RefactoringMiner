@@ -1,5 +1,6 @@
 package narrator.graph.cluster.traverse;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,6 +13,7 @@ public class TraversalComponent extends AggregatorPattern {
 
     private final List<TraversalPattern> components;
     private final ReasonType reasonType;
+    private final Set<String> identifiers = new HashSet<>();
 
     TraversalComponent(List<TraversalPattern> components, ReasonType reasonType) {
         this.components = components;
@@ -37,12 +39,25 @@ public class TraversalComponent extends AggregatorPattern {
         return cachedLead;
     }
 
+    public void addIdentifier(String identifier) {
+        this.identifiers.add(identifier);
+    }
+
     @Override
     public JsonObject stringify() {
         JsonObject result = super.stringify();
 
         result.addProperty("nodeType", NodeType.COMPONENT.name());
         result.addProperty("reasonType", reasonType.name());
+
+        if (!identifiers.isEmpty()) {
+            JsonArray identifiersArr = new JsonArray();
+            for (String identifier : identifiers) {
+                identifiersArr.add(identifier);
+            }
+
+            result.add("identifiers", identifiersArr);
+        }
 
         return result;
     }

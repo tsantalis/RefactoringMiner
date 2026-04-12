@@ -34,6 +34,7 @@ import gr.uom.java.xmi.JavaFileProcessor;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.UMLClassMatcher.MatchResult;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
@@ -325,6 +326,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		Set<UMLOperationBodyMapper> constructorMappers = new LinkedHashSet<>();
 		List<UMLOperationBodyMapper> moveCodeMappers = new ArrayList<>();
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			if(mapper.getContainer1() instanceof ModuleContainer && mapper.getContainer2() instanceof ModuleContainer) {
+				continue;
+			}
 			if(mapper.getContainer1().hasSetUpAnnotation() && mapper.getContainer2().hasSetUpAnnotation()) {
 				setUpMappers.add(mapper);
 			}

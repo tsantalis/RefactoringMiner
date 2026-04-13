@@ -808,6 +808,12 @@ public class StringBasedHeuristics {
 				return true;
 			}
 		}
+		if(s1.startsWith("(") && s1.endsWith(")") && !s2.startsWith("(") && !s2.endsWith(")")) {
+			s1 = s1.substring(1, s1.length()-1);
+		}
+		else if(s2.startsWith("(") && s2.endsWith(")") && !s1.startsWith("(") && !s1.endsWith(")")) {
+			s2 = s2.substring(1, s2.length()-1);
+		}
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
@@ -863,6 +869,13 @@ public class StringBasedHeuristics {
 				return true;
 			}
 			else if(diff1.isEmpty() && diff2.isEmpty() && (commonPrefix.endsWith("=") || commonPrefix.matches(".*=\\s*\\z"))) {
+				return true;
+			}
+			else if(diff1.isEmpty() && diff2.endsWith(":") && !diff2.endsWith(" :")) {
+				//check AbstractCall.makeReplacementForAllArgumentsReturned() && AbstractCall.match(UMLType returnType, String diff)
+				return true;
+			}
+			else if(diff2.isEmpty() && diff1.endsWith(":") && !diff1.endsWith(" :")) {
 				return true;
 			}
 			else {

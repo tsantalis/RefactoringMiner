@@ -284,7 +284,9 @@ public abstract class UMLAbstractClass implements AnnotationProvider {
 			//importedType.equals(targetClassPackage) -> special handling for import with asterisk (*) wildcard
 			String importedType = imported.getName();
 			if(importedType.equals(targetClass) || importedType.startsWith(targetClass) ||
-					importedType.endsWith("." + targetClass) || importedType.contains("." + targetClass)) {
+					importedType.endsWith("." + targetClass) || importedType.contains("." + targetClass) ||
+					// handle JavaScript and TypeScript imports prefixed with ./ or ../
+					importedType.contains("/" + targetClass)) {
 				return true;
 			}
 			if(targetClass.contains(".")) {

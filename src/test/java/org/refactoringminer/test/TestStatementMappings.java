@@ -2271,7 +2271,8 @@ public class TestStatementMappings {
 		"https://github.com/LamdaDev/GitToCampus.git, f915b2062644b587aaf9ed475b3af7190bdc3e77, GitToCampus-f915b2062644b587aaf9ed475b3af7190bdc3e77.txt",
 		"https://github.com/LamdaDev/GitToCampus.git, 8bbdd23d15fece69bec4db5cab94207043c675cb, GitToCampus-8bbdd23d15fece69bec4db5cab94207043c675cb.txt",
 		"https://github.com/gabrielshufelt/soen390-commit-and-pray.git, 9792d7435d3ad89cc3df28070097ca093062b965, soen390-commit-and-pray-9792d7435d3ad89cc3df28070097ca093062b965.txt",
-		"https://github.com/yassineAbdellatif/Git-happens.git, f95a669a2acdebf69b3b936ad7a71036ad103b9f, Git-happens-f95a669a2acdebf69b3b936ad7a71036ad103b9f.txt"
+		"https://github.com/yassineAbdellatif/Git-happens.git, f95a669a2acdebf69b3b936ad7a71036ad103b9f, Git-happens-f95a669a2acdebf69b3b936ad7a71036ad103b9f.txt",
+		"https://github.com/SOEN-390-MakeSoft/SOEN-390-MakeSoft.git, c5e64b290ffdb92655fa75abb70b5908926cb9d2, MakeSoft-c5e64b290ffdb92655fa75abb70b5908926cb9d2.txt"
 	})
 	public void testExtractMethodStatementMappingsForTypeScript(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
@@ -2279,7 +2280,7 @@ public class TestStatementMappings {
 		miner.detectAtCommitWithGitHubAPI(url, commit, new File(REPOS), (commitId, refactorings) -> {
 			List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
 			for (Refactoring ref : refactorings) {
-				if(ref instanceof ExtractOperationRefactoring && ref.getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION)) {
+				if(ref instanceof ExtractOperationRefactoring) {
 					ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
 					UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
 					if(!bodyMapper.isNested()) {

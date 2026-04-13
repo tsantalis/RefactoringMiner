@@ -6350,6 +6350,7 @@ public class UMLModelDiff {
 				if(nestedMapper.getMappings().size() > 1 && extractAndMoveMatchCondition(nestedMapper, mapper, node.getInvocation()) && !containsRefactoringWithIdenticalMappings(nestedMapper)) {
 					createExtractAndMoveMethodRefactoringBasedOnClassName(node.getInvokedOperation(), mapper,
 							className, List.of(node.getInvocation()), nestedMapper, true);
+					operationBodyMapper.addChildMapper(nestedMapper);
 				}
 			}
 		}
@@ -6626,7 +6627,7 @@ public class UMLModelDiff {
 		List<AbstractCodeMapping> exactMatchListWithoutMatchesInNestedContainers = operationBodyMapper.getExactMatchesWithoutMatchesInNestedContainers();
 		int exactMatches = exactMatchList.size();
 		int exactMatchesWithoutMatchesInNestedContainers = exactMatchListWithoutMatchesInNestedContainers.size();
-		return mappings > 0 && (mappings > nonMappedElementsT2 || (mappings > 1 && mappings >= nonMappedElementsT2) ||
+		return mappings > 0 && (mappings > nonMappedElementsT2 || (mappings > 1 && mappings >= nonMappedElementsT2) || operationBodyMapper.getChildMappers().size() > 0 ||
 				(exactMatches == mappings && nonMappedElementsT1 == 0) ||
 				(exactMatchesWithoutMatchesInNestedContainers == 1 && !exactMatchListWithoutMatchesInNestedContainers.get(0).getFragment1().throwsNewException() && nonMappedElementsT2-exactMatchesWithoutMatchesInNestedContainers <= 10) ||
 				(exactMatches > 1 && nonMappedElementsT2-exactMatches < 20) ||

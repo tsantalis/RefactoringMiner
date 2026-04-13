@@ -1879,6 +1879,7 @@ public class OperationBody {
 			}
 			if(container instanceof ModuleContainer) {
 				((ModuleContainer)container).addNestedClass(umlClass);
+				umlClass.getImportedTypes().addAll(((ModuleContainer)container).getNestedImports());
 			}
 		}
 		else if(statement instanceof Swc4jAstExportDecl exportDecl) {

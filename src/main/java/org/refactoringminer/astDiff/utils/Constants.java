@@ -405,4 +405,7 @@ public class Constants {
     public final String ACCESSIBILITY_MODIFIER = "accessibility_modifier";
     public final String PUBLIC_FIELD_DEFINITION = "public_field_definition";
     public final String OBJECT_PATTERN = "object_pattern";
+    public final String IMPLEMENTS_CLAUSE = "implements_clause";
+    public final String IMPLEMENTS_KEYWORD = "implements";
+    public final String CLASS_HERITAGE = "class_heritage";
 }

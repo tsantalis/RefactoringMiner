@@ -568,6 +568,13 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 		}
 	}
 
+	public static UMLType extractTypeObject(String sourceFolder, String filePath, String fileContent, Swc4jAstIdent type, int extraDimensions) {
+		UMLType umlType = UMLType.extractTypeObject(type.getSym());
+		umlType.locationInfo = new LocationInfo(sourceFolder, filePath, type.getSpan(), CodeElementType.TYPE, fileContent);
+		umlType.arrayDimension += extraDimensions;
+		return umlType;
+	}
+
 	public static UMLType extractTypeObject(String sourceFolder, String filePath, String fileContent, ISwc4jAstTsType type, int extraDimensions) {
 		UMLType umlType = extractTypeObject(type, sourceFolder, filePath, fileContent);
 		if (!(umlType instanceof InferredType)) {

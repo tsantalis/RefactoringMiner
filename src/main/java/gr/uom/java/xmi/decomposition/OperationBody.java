@@ -114,6 +114,7 @@ import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstWhileStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstWithStmt;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsCallSignatureDecl;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsConstructSignatureDecl;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsExprWithTypeArgs;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsGetterSignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIndexSignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsInterfaceBody;
@@ -1855,6 +1856,14 @@ public class OperationBody {
 				umlClass.setVisibility(Visibility.PRIVATE);
 			}
 			Swc4jAstClass clazz = classDecl.getClazz();
+			List<Swc4jAstTsExprWithTypeArgs> interfaces = clazz.getImplements();
+			for(Swc4jAstTsExprWithTypeArgs inter : interfaces) {
+				ISwc4jAstExpr expr = inter.getExpr();
+				if(expr instanceof Swc4jAstIdent ident) {
+					UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
+					umlClass.addImplementedInterface(type);
+				}
+			}
 			List<ISwc4jAstClassMember> typeElements = clazz.getBody();
 			processClassMembers(sourceFolder, filePath, fileContent, umlClass, typeElements, typeDeclarations);
 			for(UMLComment comment : comments) {

@@ -400,6 +400,16 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (srcSubTree == null || dstSubTree == null) return;
         if (srcSubTree.isIsoStructuralTo(dstSubTree))
             mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
+        if (srcSubTree.getParent().getType().name.equals(LANG1.IMPLEMENTS_CLAUSE) && dstSubTree.getParent().getType().name.equals(LANG2.IMPLEMENTS_CLAUSE)) {
+            mappingStore.addMapping(srcSubTree.getParent(), dstSubTree.getParent());
+            Pair<Tree, Tree> implement = Helpers.findPairOfType(srcSubTree.getParent(), dstSubTree.getParent(), LANG1.IMPLEMENTS_KEYWORD, LANG2.IMPLEMENTS_KEYWORD);
+            if (implement != null) {
+                mappingStore.addMapping(implement.first,implement.second);
+            }
+            if(srcSubTree.getParent().getParent().getType().name.equals(LANG1.CLASS_HERITAGE) && dstSubTree.getParent().getParent().getType().name.equals(LANG2.CLASS_HERITAGE)) {
+                mappingStore.addMapping(srcSubTree.getParent().getParent(), dstSubTree.getParent().getParent());
+            }
+        }
     }
     private void processSuperClasses(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
         UMLType srcParentUML = classDiff.getOldSuperclass();

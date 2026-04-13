@@ -77,6 +77,8 @@ import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstClassMember;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstDecl;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstForHead;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstImportSpecifier;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstModuleExportName;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstModuleItem;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstStmt;
@@ -86,6 +88,10 @@ import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstVarDeclOrExpr;
 import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstCatchClause;
 import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstSwitchCase;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDecl;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportDecl;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportDefaultSpecifier;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportNamedSpecifier;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportStarAsSpecifier;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.program.Swc4jAstModule;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
@@ -1916,6 +1922,31 @@ public class OperationBody {
 			}
 			if(container instanceof ModuleContainer) {
 				((ModuleContainer)container).addNestedClass(umlClass);
+			}
+		}
+		else if(statement instanceof Swc4jAstImportDecl importDecl) {
+			String source = importDecl.getSrc().getValue();
+			for(ISwc4jAstImportSpecifier specifier : importDecl.getSpecifiers()) {
+				UMLImport umlImport = null;
+				if(specifier instanceof Swc4jAstImportDefaultSpecifier defaultSpecifier) {
+					Swc4jAstIdent ident = defaultSpecifier.getLocal();
+					LocationInfo location = new LocationInfo(sourceFolder, filePath, ident.getSpan(), CodeElementType.IMPORT_DECLARATION, fileContent);
+					umlImport = new UMLImport(source + "." + ident.getSym(), false, false, location);
+				}
+				else if(specifier instanceof Swc4jAstImportNamedSpecifier namedSpecifier) {
+					Swc4jAstIdent ident = namedSpecifier.getLocal();
+					Optional<ISwc4jAstModuleExportName> imported = namedSpecifier.getImported();
+					LocationInfo location = new LocationInfo(sourceFolder, filePath, ident.getSpan(), CodeElementType.IMPORT_DECLARATION, fileContent);
+					umlImport = new UMLImport(source + "." + ident.getSym(), false, true, location);
+				}
+				else if(specifier instanceof Swc4jAstImportStarAsSpecifier star) {
+					Swc4jAstIdent ident = star.getLocal();
+					LocationInfo location = new LocationInfo(sourceFolder, filePath, ident.getSpan(), CodeElementType.IMPORT_DECLARATION, fileContent);
+					umlImport = new UMLImport(source + "." + ident.getSym(), true, false, location);
+				}
+				if(container instanceof ModuleContainer) {
+					((ModuleContainer)container).addNestedImport(umlImport);
+				}
 			}
 		}
 	}

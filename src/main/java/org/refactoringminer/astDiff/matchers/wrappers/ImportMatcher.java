@@ -148,5 +148,57 @@ public class ImportMatcher implements TreeMatcher {
                 dstImportStatement.getParent().getType().name.equals(LANG2.IMPORT_LIST)) {
             mappingStore.addMapping(srcImportStatement.getParent(), dstImportStatement.getParent());
         }
+        else if (srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
+                srcImportStatement.getParent().getType().name.equals(LANG1.NAMED_IMPORTS) &&
+                dstImportStatement.getParent().getType().name.equals(LANG2.NAMED_IMPORTS)) {
+            //handle comma
+            int index1 = srcImportStatement.getParent().getChildPosition(srcImportStatement);
+            int index2 = dstImportStatement.getParent().getChildPosition(dstImportStatement);
+            if(srcImportStatement.getParent().getChildren().size() > index1+1 && srcImportStatement.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                    dstImportStatement.getParent().getChildren().size() > index2+1 && dstImportStatement.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+                Tree t1 = srcImportStatement.getParent().getChild(index1+1);
+                Tree t2 = dstImportStatement.getParent().getChild(index2+1);
+                mappingStore.addMapping(t1,t2);
+            }
+            mappingStore.addMapping(srcImportStatement.getParent(), dstImportStatement.getParent());
+            com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+            if (matched != null) {
+                mappingStore.addMapping(matched.first,matched.second);
+            }
+            matched = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+            if (matched != null) {
+                mappingStore.addMapping(matched.first,matched.second);
+            }
+            Tree grandParent1 = srcImportStatement.getParent().getParent();
+            Tree grandParent2 = dstImportStatement.getParent().getParent();
+            if(grandParent1 != null && grandParent2 != null &&
+                    grandParent1.getType().name.equals(LANG1.IMPORT_CLAUSE) &&
+                    grandParent2.getType().name.equals(LANG2.IMPORT_CLAUSE)) {
+                mappingStore.addMapping(grandParent1, grandParent2);
+                if(grandParent1.getParent().getType().name.equals(LANG1.IMPORT_DECLARATION) && grandParent2.getParent().getType().name.equals(LANG2.IMPORT_DECLARATION)) {
+                    mappingStore.addMapping(grandParent1.getParent(), grandParent2.getParent());
+                    matched = Helpers.findPairOfType(grandParent1.getParent(),grandParent2.getParent(), LANG1.IMPORT_KEYWORD, LANG2.IMPORT_KEYWORD);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(grandParent1.getParent(),grandParent2.getParent(), LANG1.TYPE_KEYWORD, LANG2.TYPE_KEYWORD);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(grandParent1.getParent(),grandParent2.getParent(), LANG1.FROM_KEYWORD, LANG2.FROM_KEYWORD);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(grandParent1.getParent(),grandParent2.getParent(), LANG1.STRING, LANG2.STRING);
+                    if (matched != null) {
+                        mappingStore.addMappingRecursively(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(grandParent1.getParent(),grandParent2.getParent(), LANG1.SEMICOLON, LANG2.SEMICOLON);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                }
+            }
+        }
     }
 }

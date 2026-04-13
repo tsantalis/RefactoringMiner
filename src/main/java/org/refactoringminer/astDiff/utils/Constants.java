@@ -408,4 +408,7 @@ public class Constants {
     public final String IMPLEMENTS_CLAUSE = "implements_clause";
     public final String IMPLEMENTS_KEYWORD = "implements";
     public final String CLASS_HERITAGE = "class_heritage";
+    public final String NAMED_IMPORTS = "named_imports";
+    public final String IMPORT_CLAUSE = "import_clause";
+    public final String STRING = "string";
 }

@@ -7712,6 +7712,13 @@
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public readRecords(recordTypes Set<KClass<HprofRecord>>, listener OnHprofRecordListener) : Long extracted from public readHprofRecords(recordTypes Set<KClass<HprofRecord>>, listener OnHprofRecordListener) in class shark.HprofReader & moved to class shark.StreamingHprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -12188,6 +12195,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public readRecord() : ObjectArrayDumpRecord extracted from private computeRetainedSizes(graph HprofGraph, results List<Result>, dominatedInstances LongLongScatterMap, cleaners MutableList<Long>) : List<Int> in class leakcanary.HeapAnalyzer & moved to class leakcanary.GraphObjectRecord.GraphObjectArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -13244,6 +13258,20 @@
     }, {
         "type": "Change Attribute Access Modifier",
         "description": "Change Attribute Access Modifier private to public in attribute public connection : RealConnection from class okhttp3.internal.http2.Http2ExchangeCodec",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method internal exitNetworkInterceptorExchange(closeExchange Boolean) extracted from public intercept(chain Interceptor.Chain) : Response in class okhttp3.internal.http.RetryAndFollowUpInterceptor & moved to class okhttp3.internal.connection.RealCall",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method internal exchangeDoneDueToException() moved from class okhttp3.internal.connection.RealCall to class okhttp3.internal.http.RetryAndFollowUpInterceptor & inlined to public intercept(chain Interceptor.Chain) : Response",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

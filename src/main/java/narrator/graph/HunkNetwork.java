@@ -89,21 +89,21 @@ public class HunkNetwork {
         for (Entry<String, TreeContext> deletedFile : deletedFiles) {
             importTrees(aggregateTrees(getValidTrees(deletedFile.getKey(),
                             deletedFile.getValue().getRoot().getChildren())), new HashSet<>(),
-                    SrcDst.SRC, NodeType.DELETION, NodeType.SRC_MOVE, null);
+                    new HashSet<>(), SrcDst.SRC, null);
         }
         for (Entry<String, TreeContext> addedFile : addedFiles) {
             importTrees(aggregateTrees(getValidTrees(addedFile.getKey(),
                             addedFile.getValue().getRoot().getChildren())), new HashSet<>(),
-                    SrcDst.DST, NodeType.ADDITION, NodeType.DST_MOVE, null);
+                    new HashSet<>(), SrcDst.DST, null);
         }
     }
 
     public void importDiff(ASTDiff diff) {
         TreeClassifier classifier = diff.createRootNodesClassifier();
         importTrees(aggregateTrees(getValidTrees(diff.getSrcPath(), classifier.getDeletedSrcs())),
-                classifier.getMovedSrcs(), SrcDst.SRC, NodeType.DELETION, NodeType.SRC_MOVE, diff);
+                classifier.getMovedSrcs(), classifier.getUpdatedSrcs(), SrcDst.SRC, diff);
         importTrees(aggregateTrees(getValidTrees(diff.getDstPath(), classifier.getInsertedDsts())),
-                classifier.getMovedDsts(), SrcDst.DST, NodeType.ADDITION, NodeType.DST_MOVE, diff);
+                classifier.getMovedDsts(), classifier.getUpdatedDsts(), SrcDst.DST, diff);
     }
 
     private Set<Tree> getValidTrees(String path, Collection<Tree> trees) {
@@ -156,8 +156,8 @@ public class HunkNetwork {
         return result;
     }
 
-    private void importTrees(HashMap<Tree, Set<Tree>> trees, Set<Tree> allMoves, SrcDst srcDst,
-            NodeType baseType, NodeType moveType, ASTDiff diff) {
+    private void importTrees(HashMap<Tree, Set<Tree>> trees, Set<Tree> allMoves,
+            Set<Tree> allUpdates, SrcDst srcDst, ASTDiff diff) {
         Set<Tree> parentTrees = trees.keySet();
 
         HashMap<Tree, Set<Tree>> treesMoves = new HashMap<>();
@@ -175,7 +175,8 @@ public class HunkNetwork {
             Pair<SrcDst, String> treeLocation = localizeTree(tree);
             return new Node(getFileContent(treeLocation.first, treeLocation.second),
                     treeLocation.second, srcDst, tree, subTrees.isEmpty() ? null : subTrees,
-                    moveTrees.isEmpty() ? null : moveTrees, baseType, diff);
+                    moveTrees.isEmpty() ? null : moveTrees,
+                    srcDst.equals(SrcDst.SRC) ? NodeType.DELETION : NodeType.ADDITION, diff);
         }).forEach(this::addNode);
 
         List<Tree> pureMoves = allMoves.stream().filter(move -> parentTrees.stream()
@@ -184,7 +185,15 @@ public class HunkNetwork {
         pureMoves.stream().map(tree -> {
             Pair<SrcDst, String> treeLocation = localizeTree(tree);
             return new Node(getFileContent(treeLocation.first, treeLocation.second),
-                    treeLocation.second, srcDst, tree, null, null, moveType, diff);
+                    treeLocation.second, srcDst, tree, null, null,
+                    srcDst.equals(SrcDst.SRC) ? NodeType.SRC_MOVE : NodeType.DST_MOVE, diff);
+        }).forEach(this::addNode);
+
+        allUpdates.stream().map(tree -> {
+            Pair<SrcDst, String> treeLocation = localizeTree(tree);
+            return new Node(getFileContent(treeLocation.first, treeLocation.second),
+                    treeLocation.second, srcDst, tree, null, null,
+                    srcDst.equals(SrcDst.SRC) ? NodeType.SRC_UPDATE : NodeType.DST_UPDATE, diff);
         }).forEach(this::addNode);
     }
 
@@ -249,7 +258,6 @@ public class HunkNetwork {
     public void process() {
         processMoves();
         processDefUse();
-        // TODO: how does it contribute to usage pattern if it is connected to a context class?
         processClassInstanceCreations();
         // DEPRECATED
 //        processSimilarity();
@@ -786,7 +794,6 @@ public class HunkNetwork {
 //        }
 //    }
 
-    // TODO: pure moves can be handled here
     public void processMapping() {
         Set<Node> nodes = graph.vertexSet();
         for (Node subject : nodes) {

@@ -21,7 +21,8 @@ public class Context {
                     constants.CLASS_INSTANCE_CREATION, constants.EXPRESSION_STATEMENT,
                     constants.IF_STATEMENT, constants.RETURN_STATEMENT,
                     constants.SUPER_CONSTRUCTOR_INVOCATION, constants.FIELD_DECLARATION,
-                    constants.TAG_ELEMENT, constants.ENHANCED_FOR_STATEMENT);
+                    constants.TAG_ELEMENT, constants.ENHANCED_FOR_STATEMENT,
+                    constants.RECORD_COMPONENT);
         }
         if (treeType.equals(constants.PREFIX_EXPRESSION)) {
             return List.of(constants.METHOD_INVOCATION, constants.IF_STATEMENT);

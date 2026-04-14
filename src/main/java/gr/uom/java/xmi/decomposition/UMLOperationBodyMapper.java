@@ -3553,7 +3553,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				for(UMLOperationBodyMapper childMapper : operationBodyMapper.childMappers) {
-					if(childMapper.container1.getClassName().equals(addedOperation.getClassName()) || classDiff instanceof UMLClassMoveDiff) {
+					if(childMapper.container1.getClassName().equals(addedOperation.getClassName()) || classDiff instanceof UMLClassMoveDiff || nested) {
 						for(AbstractCodeMapping mapping : childMapper.getMappings()) {
 							AbstractCodeFragment fragment = mapping.getFragment1();
 							if(!returnWithVariableReplacement(mapping) && (leaves2AsStrings.contains(fragment.getString()) || !mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {

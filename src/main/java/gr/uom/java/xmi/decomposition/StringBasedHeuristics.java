@@ -878,6 +878,12 @@ public class StringBasedHeuristics {
 			else if(diff2.isEmpty() && diff1.endsWith(":") && !diff1.endsWith(" :")) {
 				return true;
 			}
+			else if(diff1.isEmpty() && diff2.equals("?")) {
+				return true;
+			}
+			else if(diff2.isEmpty() && diff1.equals("?")) {
+				return true;
+			}
 			else {
 				String replaceWhitespace1 = s1.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
 				String replaceWhitespace2 = s2.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");

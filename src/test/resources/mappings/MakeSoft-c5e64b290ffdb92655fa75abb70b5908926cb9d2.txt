@@ -18,6 +18,13 @@ line range:24-28==line range:36-40
 private execute(context ModeRouteStrategyContext) : Promise<ModeRoute|null> -> private mapGoogleLegSteps(steps GoogleLegStep[]|undefined) : NavigationStep[]
 line range:66-72==line range:107-113
 line range:38-75==line range:107-113
+private execute(context ModeRouteStrategyContext) : Promise<ModeRoute|null> -> private resolveFocusCoordinate(step GoogleLegStep) : LatLng|undefined
+line range:55-58==line range:88-91
+line range:60-63==line range:95-98
+line range:59-64==line range:94-99
+line range:54-64==line range:87-92
+line range:59-64==line range:94-99
+line range:54-59==line range:87-92
 private execute(context ModeRouteStrategyContext) : Promise<ModeRoute|null> -> private buildModeRouteFromGoogleLeg(route GoogleRoute, leg GoogleLeg, options {boolean}) : ModeRoute
 line range:32-34==line range:126-133
 private decodePolyline(encoded string) : LatLng[] -> private decodePolyline(encoded string) : LatLng[]

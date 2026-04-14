@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import gr.uom.java.xmi.Constants;
+import gr.uom.java.xmi.InferredType;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
@@ -167,7 +168,7 @@ public class UMLModelDiff {
 
 	public UMLAbstractClass findClassInParentModel(String className) {
 		for(UMLClass umlClass : parentModel.getClassList()) {
-			if(umlClass.getName().equals(className)) {
+			if(umlClass.getName().equals(className) || umlClass.getName().equals(className + ".__module__")) {
 				return umlClass;
 			}
 		}
@@ -195,7 +196,7 @@ public class UMLModelDiff {
 
 	public UMLAbstractClass findClassInChildModel(String className) {
 		for(UMLClass umlClass : childModel.getClassList()) {
-			if(umlClass.getName().equals(className)) {
+			if(umlClass.getName().equals(className) || umlClass.getName().equals(className + ".__module__")) {
 				return umlClass;
 			}
 		}
@@ -6417,7 +6418,7 @@ public class UMLModelDiff {
 						classDiff.getNewSuperclass().equals(type)) {
 					superclassRelationship = true;
 				}
-				if(type != null && !addedOperation.getNonQualifiedClassName().equals(type.getClassType()) && !superclassRelationship) {
+				if(type != null && !(type instanceof InferredType) && !addedOperation.getNonQualifiedClassName().equals(type.getClassType()) && !superclassRelationship) {
 					return true;
 				}
 			}
@@ -6435,7 +6436,7 @@ public class UMLModelDiff {
 					outerClassName = name;
 				}
 			}
-			if(type != null && !addedOperationClassName.equals(type.getClassType()) && !type.getClassType().equals(outerClassName) && !superclassRelationship) {
+			if(type != null && !(type instanceof InferredType) && !addedOperationClassName.equals(type.getClassType()) && !type.getClassType().equals(outerClassName) && !superclassRelationship) {
 				return true;
 			}
 		}

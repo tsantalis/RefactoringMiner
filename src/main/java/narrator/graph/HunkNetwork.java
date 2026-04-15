@@ -189,7 +189,13 @@ public class HunkNetwork {
                     srcDst.equals(SrcDst.SRC) ? NodeType.SRC_MOVE : NodeType.DST_MOVE, diff);
         }).forEach(this::addNode);
 
-        allUpdates.stream().map(tree -> {
+        List<Tree> pureUpdates = allUpdates.stream().filter(update -> parentTrees.stream()
+                        .noneMatch(parentTree -> parentTree.getPos() <= update.getPos()
+                                && update.getEndPos() <= parentTree.getEndPos()))
+                .filter(update -> pureMoves.stream()
+                        .noneMatch(pureMove -> pureMove.getPos() <= update.getPos()
+                                && update.getEndPos() <= pureMove.getEndPos())).toList();
+        pureUpdates.stream().map(tree -> {
             Pair<SrcDst, String> treeLocation = localizeTree(tree);
             return new Node(getFileContent(treeLocation.first, treeLocation.second),
                     treeLocation.second, srcDst, tree, null, null,

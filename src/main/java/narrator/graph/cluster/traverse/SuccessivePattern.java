@@ -12,6 +12,10 @@ public class SuccessivePattern extends TraversalPattern {
 
     Node cachedHead;
 
+    SuccessivePattern() {
+        nodeType = NodeType.SUCCESSIVE;
+    }
+
     private Node getHead() {
         if (cachedHead == null) {
             Graph<Node, Edge> graph = getGraph();
@@ -40,7 +44,6 @@ public class SuccessivePattern extends TraversalPattern {
         JsonObject result = super.stringify();
 
         result.addProperty("headId", getHead().getId());
-        result.addProperty("nodeType", NodeType.SUCCESSIVE.name());
 
         return result;
     }

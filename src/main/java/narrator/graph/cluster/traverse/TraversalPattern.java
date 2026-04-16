@@ -1,15 +1,20 @@
 package narrator.graph.cluster.traverse;
 
 import com.github.gumtreediff.tree.Tree;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.util.HashSet;
 import java.util.Set;
 import narrator.graph.Node;
+import narrator.graph.NodeType;
 import narrator.graph.cluster.GraphWrapper;
 
 public class TraversalPattern extends GraphWrapper {
 
     protected final Util util = new Util(getGraph());
+    protected final Set<String> identifiers = new HashSet<>();
     protected Node cachedLead = null;
+    protected NodeType nodeType;
 
     public Node getLead() {
         if (cachedLead == null) {
@@ -29,11 +34,25 @@ public class TraversalPattern extends GraphWrapper {
         JsonObject nodeObj = new JsonObject();
 
         nodeObj.addProperty("id", getId());
+        nodeObj.addProperty("nodeType", nodeType.name());
+
+        if (!identifiers.isEmpty()) {
+            JsonArray identifiersArr = new JsonArray();
+            for (String identifier : identifiers) {
+                identifiersArr.add(identifier);
+            }
+
+            nodeObj.add("identifiers", identifiersArr);
+        }
 
         return nodeObj;
     }
 
     public Set<Node> vertexSet() {
         return getGraph().vertexSet();
+    }
+
+    public void addIdentifier(String identifier) {
+        this.identifiers.add(identifier);
     }
 }

@@ -11,7 +11,6 @@ import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.Node;
 import narrator.graph.NodeType;
-import narrator.graph.cluster.traverse.AggregatorPattern;
 import narrator.graph.cluster.traverse.TraversalComponent;
 import narrator.graph.cluster.traverse.TraversalPattern;
 import narrator.graph.cluster.traverse.UsagePattern;
@@ -53,7 +52,7 @@ public class Stringifier {
     private static void stringifyComponentGraph(TraversalPattern traversalComponent,
             String aggregatorId, Map<String,
                     PreprocessedNode> preprocessedNodes, JsonArray edges) {
-        Map<Node, AggregatorPattern> requirements = new HashMap<>();
+        Map<Node, TraversalPattern> requirements = new HashMap<>();
         if (traversalComponent instanceof UsagePattern) {
             requirements.putAll(((UsagePattern) traversalComponent).getRequirements());
         }

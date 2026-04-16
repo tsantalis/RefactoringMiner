@@ -1,6 +1,5 @@
 package narrator.graph.cluster.traverse;
 
-import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,15 +18,16 @@ import org.jgrapht.Graph;
 
 public class UsagePattern extends AggregatorPattern {
 
-    private final HashMap<Node, AggregatorPattern> requirements = new HashMap<>();
+    private final HashMap<Node, TraversalPattern> requirements = new HashMap<>();
     Node useNode;
 
     UsagePattern(Node node) {
+        nodeType = NodeType.USAGE;
         addNode(node);
         useNode = node;
     }
 
-    public void addRequirement(Node node, AggregatorPattern requirement) {
+    public void addRequirement(Node node, TraversalPattern requirement) {
         subs.add(requirement);
         requirements.put(node, requirement);
     }
@@ -37,7 +37,7 @@ public class UsagePattern extends AggregatorPattern {
         requirements.remove(node);
     }
 
-    public HashMap<Node, AggregatorPattern> getRequirements() {
+    public HashMap<Node, TraversalPattern> getRequirements() {
         return requirements;
     }
 
@@ -59,15 +59,6 @@ public class UsagePattern extends AggregatorPattern {
 
     public Set<Node> getUsedNodes() {
         return util.getUsedNodes(useNode);
-    }
-
-    @Override
-    public JsonObject stringify() {
-        JsonObject result = super.stringify();
-
-        result.addProperty("nodeType", NodeType.USAGE.name());
-
-        return result;
     }
 
     @Override

@@ -1,8 +1,6 @@
 package narrator.graph.cluster.traverse;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,9 +11,9 @@ public class TraversalComponent extends AggregatorPattern {
 
     private final List<TraversalPattern> components;
     private final ReasonType reasonType;
-    private final Set<String> identifiers = new HashSet<>();
 
     TraversalComponent(List<TraversalPattern> components, ReasonType reasonType) {
+        nodeType = NodeType.COMPONENT;
         this.components = components;
         subs = new HashSet<>(components);
         this.reasonType = reasonType;
@@ -39,25 +37,12 @@ public class TraversalComponent extends AggregatorPattern {
         return cachedLead;
     }
 
-    public void addIdentifier(String identifier) {
-        this.identifiers.add(identifier);
-    }
 
     @Override
     public JsonObject stringify() {
         JsonObject result = super.stringify();
 
-        result.addProperty("nodeType", NodeType.COMPONENT.name());
         result.addProperty("reasonType", reasonType.name());
-
-        if (!identifiers.isEmpty()) {
-            JsonArray identifiersArr = new JsonArray();
-            for (String identifier : identifiers) {
-                identifiersArr.add(identifier);
-            }
-
-            result.add("identifiers", identifiersArr);
-        }
 
         return result;
     }
@@ -70,9 +55,5 @@ public class TraversalComponent extends AggregatorPattern {
     @Override
     public Set<Node> vertexSet() {
         return this.vertexSet(new HashSet<>());
-    }
-
-    public void breakCircularDependencies() {
-        breakCircularDependencies(new ArrayList<>());
     }
 }

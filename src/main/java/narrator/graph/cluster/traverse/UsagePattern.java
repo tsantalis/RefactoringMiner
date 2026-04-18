@@ -25,6 +25,10 @@ public class UsagePattern extends AggregatorPattern {
         nodeType = NodeType.USAGE;
         addNode(node);
         useNode = node;
+
+        for (String identifier : node.getIdentifiers()) {
+            this.addIdentifier(identifier);
+        }
     }
 
     public void addRequirement(Node node, TraversalPattern requirement) {

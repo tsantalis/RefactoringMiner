@@ -11,6 +11,10 @@ public class SingularPattern extends TraversalPattern {
         nodeType = NodeType.SINGULAR;
         this.node = node;
         addNode(node);
+
+        for (String identifier : node.getIdentifiers()) {
+            this.addIdentifier(identifier);
+        }
     }
 
     @Override

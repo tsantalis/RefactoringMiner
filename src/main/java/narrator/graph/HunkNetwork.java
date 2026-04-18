@@ -15,6 +15,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import java.util.ArrayList;
@@ -397,7 +398,8 @@ public class HunkNetwork {
 
                 node.addIdentifier(umlAttribute.getVariableDeclaration().getVariableName());
 
-                List<Node> useNodes = findAccessNodes(umlAttribute.getLocationInfo(),
+                List<Node> useNodes = findAccessNodes(umlAttribute.getName(),
+                        umlAttribute.getLocationInfo(),
                         node.isSrc()
                                 ? modelDiff.findFieldAccessesInParentModel(umlAttribute)
                                 : modelDiff.findFieldAccessesInChildModel(umlAttribute),
@@ -554,7 +556,8 @@ public class HunkNetwork {
 
         node.addIdentifier(variableDeclaration.getVariableName());
 
-        List<Node> useNodes = findAccessNodes(variableDeclaration.getLocationInfo(),
+        List<Node> useNodes = findAccessNodes(variableDeclaration.getVariableName(),
+                variableDeclaration.getLocationInfo(),
                 variableDeclaration.getScope().getStatementsInScopeUsingVariable(),
                 node.isSrc() ? srcContexts : dstContexts, node);
         for (Node useNode : useNodes) {
@@ -631,21 +634,29 @@ public class HunkNetwork {
         }
     }
 
-    private List<Node> findAccessNodes(LocationInfo declarationLocation,
+    private List<Node> findAccessNodes(String name, LocationInfo declarationLocation,
             Set<AbstractCodeFragment> accessFragments, Map<String, TreeContext> contexts,
             Node node) {
         ArrayList<Node> result = new ArrayList<>();
 
         for (AbstractCodeFragment accessFragment : accessFragments) {
-            // TODO: only the variable itself or fragment entirely?
-            // List<LeafExpression> useVariables =
-            //         accessFragment.getVariables().stream().filter(variable -> variable.getString()
-            //         .equals(variableName)).toList();
-            LocationInfo useLoc = accessFragment.getLocationInfo();
-            List<Node> overlappingNodes = findOverlappingNodes(useLoc.getFilePath(),
-                    node.getSrcDst(), useLoc.getStartOffset(), useLoc.getEndOffset(),
-                    n -> !n.isContext() && !n.isExtension());
-            result.addAll(overlappingNodes);
+            List<LeafExpression> useVariables =
+                    accessFragment.getVariables().stream().filter(variable -> variable.getString()
+                            .contains(name)).toList();
+
+            // TODO: check for potential false negatives
+            if (useVariables.isEmpty()) {
+                System.out.println(name + "-" + accessFragment.getVariables().stream().map(
+                        LeafExpression::getString).toList());
+            }
+
+            for (LeafExpression useVariable : useVariables) {
+                LocationInfo useLoc = useVariable.getLocationInfo();
+                List<Node> overlappingNodes = findOverlappingNodes(useLoc.getFilePath(),
+                        node.getSrcDst(), useLoc.getStartOffset(), useLoc.getEndOffset(),
+                        n -> !n.isContext() && !n.isExtension());
+                result.addAll(overlappingNodes);
+            }
         }
 
         // declaration change without any usage change

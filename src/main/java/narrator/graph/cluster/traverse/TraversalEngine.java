@@ -2,7 +2,6 @@ package narrator.graph.cluster.traverse;
 
 import com.github.gumtreediff.utils.Pair;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +14,6 @@ import narrator.graph.Context;
 import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.Node;
-import narrator.graph.SrcDst;
 import narrator.graph.cluster.Cluster;
 import org.jgrapht.Graph;
 import org.refactoringminer.astDiff.utils.Constants;
@@ -411,26 +409,19 @@ public class TraversalEngine {
         }
     }
 
+    // It creates duplicate singular patterns, but it is necessary for covering all hunks beneath contexts
     private void addSingularComponents() {
-        while (true) {
-            List<Node> singularNodes = graph.vertexSet().stream().filter(node -> !node.isContext())
-                    .filter(node -> {
-                        for (TraversalPattern traversalComponent : components) {
-                            boolean contains = traversalComponent.containsNode(node);
-                            if (contains) {
-                                return false;
-                            }
+        List<Node> singularNodes = graph.vertexSet().stream().filter(node -> !node.isContext())
+                .filter(node -> {
+                    for (TraversalPattern traversalComponent : components) {
+                        boolean contains = traversalComponent.containsNode(node);
+                        if (contains) {
+                            return false;
                         }
-                        return true;
-                    }).collect(Collectors.toCollection(ArrayList::new));
-            if (singularNodes.isEmpty()) {
-                break;
-            }
-            singularNodes.sort(Comparator.comparing(
-                    node -> !node.getSrcDst().equals(SrcDst.DST)
-            ));
-
-            Node singularNode = singularNodes.get(0);
+                    }
+                    return true;
+                }).collect(Collectors.toCollection(ArrayList::new));
+        for (Node singularNode : singularNodes) {
             SingularPattern singularComponent = new SingularPattern(singularNode);
             addContext(singularNode, singularComponent);
             addMapping(singularNode, singularComponent);

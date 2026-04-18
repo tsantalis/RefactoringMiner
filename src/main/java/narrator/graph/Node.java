@@ -78,6 +78,7 @@ public class Node {
         nodeObj.addProperty("srcDst", this.srcDst.name());
         nodeObj.addProperty("content", getContent());
         nodeObj.addProperty("nodeType", nodeType.name());
+        nodeObj.addProperty("treeType", tree.getType().name);
 
         List<String> descendantSimpleNames = getDescendantSimpleNames();
         JsonArray descendantSimpleNamesArr = new JsonArray();

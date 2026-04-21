@@ -34,6 +34,7 @@ import gr.uom.java.xmi.decomposition.CompositeStatementObjectMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.StatementObject;
+import gr.uom.java.xmi.decomposition.StringBasedHeuristics;
 import gr.uom.java.xmi.decomposition.TernaryOperatorExpression;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapperComparator;
@@ -7866,8 +7867,8 @@ public class UMLModelDiff {
 			if(c1.isLoop()) {
 				for(CompositeStatementObject c2 : operationBodyMapper.getNonMappedInnerNodesT2()) {
 					if(c2.isLoop()) {
-						Set<String> intersection = convertToStringSet(c1.getVariables());
-						intersection.retainAll(convertToStringSet(c2.getVariables()));
+						Set<String> intersection = StringBasedHeuristics.convertToStringSet(c1.getVariables());
+						intersection.retainAll(StringBasedHeuristics.convertToStringSet(c2.getVariables()));
 						if(!intersection.isEmpty()) {
 							nonMappedLoopsIteratingOverSameVariable++;
 						}
@@ -7924,14 +7925,6 @@ public class UMLModelDiff {
 			return true;
 		}
 		return false;
-	}
-
-	private static Set<String> convertToStringSet(List<? extends LeafExpression> expressions) {
-		Set<String> set = new LinkedHashSet<>();
-		for(LeafExpression expression : expressions) {
-			set.add(expression.getString());
-		}
-		return set;
 	}
 
 	private boolean isPartOfMethodInlined(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation, List<UMLOperation> removedOperations, UMLAbstractClassDiff classDiff) {

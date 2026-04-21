@@ -211,6 +211,28 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	}
 
 	@Override
+	public List<LeafExpression> getAllStringLiterals() {
+		List<LeafExpression> list = new ArrayList<>();
+		for(AbstractStatement statement : statementList) {
+			if(statement instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject)statement;
+				list.addAll(composite.getAllStringLiterals());
+			}
+			else if(statement instanceof StatementObject) {
+				StatementObject statementObject = (StatementObject)statement;
+				list.addAll(statementObject.getStringLiterals());
+				for(LambdaExpressionObject lambda : statementObject.getLambdas()) {
+					list.addAll(lambda.getAllStringLiterals());
+				}
+				for(AnonymousClassDeclarationObject anonymous : statementObject.getAnonymousClassDeclarations()) {
+					list.addAll(anonymous.getStringLiterals());
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
 	public List<String> getAllVariables() {
 		List<String> variables = new ArrayList<>();
 		for(AbstractStatement statement : statementList) {

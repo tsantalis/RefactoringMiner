@@ -63,6 +63,7 @@ import gr.uom.java.xmi.decomposition.MethodReference;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.VariableReplacementAnalysis;
 import gr.uom.java.xmi.decomposition.StatementObject;
+import gr.uom.java.xmi.decomposition.StringBasedHeuristics;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
@@ -2848,6 +2849,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			boolean containsAnonymousClassDiff = operationBodyMapper.getAnonymousClassDiffs().size() > 0 &&
 					!removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation();
 			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
+			List<LeafExpression> literals1 = removedOperation.getAllStringLiterals();
+			List<LeafExpression> literals2 = addedOperation.getAllStringLiterals();
+			Set<String> intersection = StringBasedHeuristics.convertToStringSet(literals1);
+			intersection.retainAll(StringBasedHeuristics.convertToStringSet(literals2));
 			if(exactMappings(operationBodyMapper) || (operationBodyMapper.allMappingsHaveSameDepthAndIndex() && !removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation())) {
 				mapperSet.add(operationBodyMapper);
 			}
@@ -2878,6 +2883,31 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			else if(absoluteDifferenceInPosition == 0 && !removedOperation.isConstructor() && !addedOperation.isConstructor() &&
 					removedOperation.getName().equals(addedOperation.getName()) && operationBodyMapper.exactMatches() > 0) {
 				mapperSet.add(operationBodyMapper);
+			}
+			else if(mappings == 0 && removedOperation.hasTestAnnotation() && addedOperation.hasParameterizedTestAnnotation() && literals1.size() == literals2.size() && literals1.size() > 0 && intersection.size() == literals1.size()) {
+				Set<AbstractCodeFragment> nonMappedLeavesT1ToBeRemoved = new LinkedHashSet<>();
+				Set<AbstractCodeFragment> nonMappedLeavesT2ToBeRemoved = new LinkedHashSet<>();
+				for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
+					Set<String> lit1 = StringBasedHeuristics.convertToStringSet(fragment1.getStringLiterals());
+					for(AbstractCodeFragment fragment2 : operationBodyMapper.getNonMappedLeavesT2()) {
+						Set<String> lit2 = StringBasedHeuristics.convertToStringSet(fragment2.getStringLiterals());
+						Set<String> inter = new LinkedHashSet<>(lit1);
+						inter.retainAll(lit2);
+						if(inter.size() > 0) {
+							LeafMapping mapping = new LeafMapping(fragment1, fragment2,
+									operationBodyMapper.getContainer1(),
+									operationBodyMapper.getContainer2());
+							operationBodyMapper.addMapping(mapping);
+							nonMappedLeavesT1ToBeRemoved.add(fragment1);
+							nonMappedLeavesT2ToBeRemoved.add(fragment2);
+						}
+					}
+				}
+				if(operationBodyMapper.getMappings().size() > 0) {
+					operationBodyMapper.getNonMappedLeavesT1().removeAll(nonMappedLeavesT1ToBeRemoved);
+					operationBodyMapper.getNonMappedLeavesT2().removeAll(nonMappedLeavesT2ToBeRemoved);
+					mapperSet.add(operationBodyMapper);
+				}
 			}
 			// in Python only one constructor is allowed
 			else if((LANG1.equals(Constants.PYTHON) || LANG2.equals(Constants.PYTHON)) && removedOperation.isConstructor() && addedOperation.isConstructor()) {

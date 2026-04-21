@@ -13,6 +13,7 @@ import org.refactoringminer.util.PathFileUtils;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
@@ -116,6 +117,11 @@ public class PrimaryConstructor implements VariableDeclarationContainer {
 
 	@Override
 	public List<AbstractCall> getAllCreations() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<LeafExpression> getAllStringLiterals() {
 		return Collections.emptyList();
 	}
 

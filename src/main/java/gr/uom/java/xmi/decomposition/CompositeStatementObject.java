@@ -572,6 +572,28 @@ public class CompositeStatementObject extends AbstractStatement {
 		return list;
 	}
 
+	public List<LeafExpression> getAllStringLiterals() {
+		List<LeafExpression> list = new ArrayList<>();
+		list.addAll(getStringLiterals());
+		for(AbstractStatement statement : statementList) {
+			if(statement instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject)statement;
+				list.addAll(composite.getAllStringLiterals());
+			}
+			else if(statement instanceof StatementObject) {
+				StatementObject statementObject = (StatementObject)statement;
+				list.addAll(statementObject.getStringLiterals());
+				for(LambdaExpressionObject lambda : statementObject.getLambdas()) {
+					list.addAll(lambda.getAllStringLiterals());
+				}
+				for(AnonymousClassDeclarationObject anonymous : statementObject.getAnonymousClassDeclarations()) {
+					list.addAll(anonymous.getStringLiterals());
+				}
+			}
+		}
+		return list;
+	}
+
 	public List<AbstractCall> getAllCreations() {
 		List<AbstractCall> list = new ArrayList<>();
 		list.addAll(getCreations());

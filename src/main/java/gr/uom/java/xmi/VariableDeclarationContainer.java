@@ -15,6 +15,7 @@ import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -137,6 +138,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	List<LambdaExpressionObject> getAllLambdas();
 	List<AbstractCall> getAllOperationInvocations();
 	List<AbstractCall> getAllCreations();
+	List<LeafExpression> getAllStringLiterals();
 	List<String> getAllVariables();
 	List<UMLComment> getComments();
 	default UMLJavadoc getJavadoc() {

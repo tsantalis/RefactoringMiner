@@ -394,6 +394,10 @@ public class OperationBody {
 		return new ArrayList<AbstractCall>(compositeStatement.getAllCreations());
 	}
 
+	public List<LeafExpression> getAllStringLiterals() {
+		return new ArrayList<LeafExpression>(compositeStatement.getAllStringLiterals());
+	}
+
 	public List<LambdaExpressionObject> getAllLambdas() {
 		return new ArrayList<LambdaExpressionObject>(compositeStatement.getAllLambdas());
 	}

@@ -426,6 +426,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return Collections.emptyList();
 	}
 
+	public List<LeafExpression> getAllStringLiterals() {
+		if(operationBody != null)
+			return operationBody.getAllStringLiterals();
+		if(defaultExpression != null)
+			return defaultExpression.getAllStringLiterals();
+		return Collections.emptyList();
+	}
+
 	public boolean containsAssertion() {
 		if(operationBody != null)
 			return operationBody.containsAssertion();

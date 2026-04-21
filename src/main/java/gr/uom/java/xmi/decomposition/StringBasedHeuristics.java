@@ -183,6 +183,19 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
+	public static Set<String> convertToStringSet(List<? extends LeafExpression> expressions) {
+		Set<String> set = new LinkedHashSet<>();
+		for(LeafExpression expression : expressions) {
+			String withoutQuotes = expression.getString();
+			if(withoutQuotes.startsWith("\""))
+				withoutQuotes = withoutQuotes.substring(1);
+			if(withoutQuotes.endsWith("\""))
+				withoutQuotes = withoutQuotes.substring(0, withoutQuotes.length()-1);
+			set.add(withoutQuotes.strip());
+		}
+		return set;
+	}
+
 	private static boolean compatibleDiffs(String s1, String s2, ReplacementInfo info, String diff1, String diff2) {
 		if(diff1.isEmpty() && diff2.isBlank() && !diff2.isEmpty()) {
 			return true;

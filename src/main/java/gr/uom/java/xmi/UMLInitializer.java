@@ -12,6 +12,7 @@ import java.util.Set;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
@@ -116,6 +117,11 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	@Override
 	public List<AbstractCall> getAllCreations() {
 		return body.getAllCreations();
+	}
+
+	@Override
+	public List<LeafExpression> getAllStringLiterals() {
+		return body.getAllStringLiterals();
 	}
 
 	@Override

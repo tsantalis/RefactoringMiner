@@ -2888,9 +2888,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				Set<AbstractCodeFragment> nonMappedLeavesT1ToBeRemoved = new LinkedHashSet<>();
 				Set<AbstractCodeFragment> nonMappedLeavesT2ToBeRemoved = new LinkedHashSet<>();
 				for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
-					Set<String> lit1 = StringBasedHeuristics.convertToStringSet(fragment1.getStringLiterals());
+					List<LeafExpression> stringLiterals1 = fragment1.getStringLiterals();
+					Set<String> lit1 = StringBasedHeuristics.convertToStringSet(stringLiterals1);
 					for(AbstractCodeFragment fragment2 : operationBodyMapper.getNonMappedLeavesT2()) {
-						Set<String> lit2 = StringBasedHeuristics.convertToStringSet(fragment2.getStringLiterals());
+						List<LeafExpression> stringLiterals2 = fragment2.getStringLiterals();
+						Set<String> lit2 = StringBasedHeuristics.convertToStringSet(stringLiterals2);
 						Set<String> inter = new LinkedHashSet<>(lit1);
 						inter.retainAll(lit2);
 						if(inter.size() > 0) {
@@ -2900,6 +2902,39 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							operationBodyMapper.addMapping(mapping);
 							nonMappedLeavesT1ToBeRemoved.add(fragment1);
 							nonMappedLeavesT2ToBeRemoved.add(fragment2);
+							if(stringLiterals1.size() > stringLiterals2.size()) {
+								for(int i=0; i<stringLiterals2.size(); i++) {
+									List<LeafExpression> leafExpressions1 = fragment1.findExpression(stringLiterals2.get(i).getString());
+									if(leafExpressions1.size() == 1) {
+										LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(0), stringLiterals2.get(i),
+												operationBodyMapper.getContainer1(),
+												operationBodyMapper.getContainer2());
+										operationBodyMapper.addMapping(leafMapping);
+									}
+									else if(leafExpressions1.size() == 0) {
+										String stripped2 = stringLiterals2.get(i).getString();
+										if(stripped2.startsWith("\""))
+											stripped2 = stripped2.substring(1);
+										if(stripped2.endsWith("\""))
+											stripped2 = stripped2.substring(0, stripped2.length()-1);
+										stripped2 = stripped2.strip();
+										for(int j=0; j<stringLiterals1.size(); j++) {
+											String stripped1 = stringLiterals1.get(j).getString();
+											if(stripped1.startsWith("\""))
+												stripped1 = stripped1.substring(1);
+											if(stripped1.endsWith("\""))
+												stripped1 = stripped1.substring(0, stripped1.length()-1);
+											stripped1 = stripped1.strip();
+											if(stripped1.equals(stripped2)) {
+												LeafMapping leafMapping = new LeafMapping(stringLiterals1.get(j), stringLiterals2.get(i),
+														operationBodyMapper.getContainer1(),
+														operationBodyMapper.getContainer2());
+												operationBodyMapper.addMapping(leafMapping);
+											}
+										}
+									}
+								}
+							}
 						}
 					}
 				}

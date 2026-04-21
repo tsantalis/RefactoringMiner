@@ -1,0 +1,55 @@
+package whenPackagesAreTangledTaskFailsAndWritesAReport() : void -> package whenPackagesAreTangledShouldFailAndWriteReport(task Task) : void
+line range:58-59==line range:72-72
+line range:58-58==line range:72-72
+line range:58-59==line range:73-73
+line range:59-59==line range:73-73
+package whenPackagesAreNotTangledTaskSucceedsAndWritesAnEmptyReport() : void -> package whenPackagesAreNotTangledShouldSucceedAndWriteEmptyReport(task Task) : void
+line range:64-64==line range:79-79
+package whenBeanPostProcessorBeanMethodIsNotStaticTaskFailsAndWritesAReport() : void -> package whenBeanPostProcessorBeanMethodIsNotStaticShouldFailAndWriteReport(task Task) : void
+line range:69-72==line range:86-86
+line range:69-69==line range:86-86
+line range:69-72==line range:87-89
+line range:71-71==line range:88-88
+line range:72-72==line range:89-89
+package whenBeanPostProcessorBeanMethodIsStaticAndHasUnsafeParametersTaskFailsAndWritesAReport() : void -> package whenBeanPostProcessorBeanMethodIsStaticAndHasUnsafeParametersShouldFailAndWriteReport(task Task) : void
+line range:77-80==line range:96-96
+line range:77-77==line range:96-96
+line range:77-80==line range:97-99
+line range:79-79==line range:98-98
+line range:80-80==line range:99-99
+package whenBeanPostProcessorBeanMethodIsStaticAndHasSafeParametersTaskSucceedsAndWritesAnEmptyReport() : void -> package whenBeanPostProcessorBeanMethodIsStaticAndHasSafeParametersShouldSucceedAndWriteEmptyReport(task Task) : void
+line range:86-86==line range:106-106
+package whenBeanPostProcessorBeanMethodIsStaticAndHasNoParametersTaskSucceedsAndWritesAnEmptyReport() : void -> package whenBeanPostProcessorBeanMethodIsStaticAndHasNoParametersShouldSucceedAndWriteEmptyReport(task Task) : void
+line range:92-92==line range:114-114
+package whenBeanFactoryPostProcessorBeanMethodIsStaticAndHasNoParametersTaskSucceedsAndWritesAnEmptyReport() : void -> package whenBeanFactoryPostProcessorBeanMethodIsStaticAndHasNoParametersShouldSucceedAndWriteEmptyReport(task Task) : void
+line range:112-112==line range:141-141
+package whenClassUsesResourceUtilsWithoutLoadingResourcesTaskSucceedsAndWritesAnEmptyReport() : void -> package whenClassUsesResourceUtilsWithoutLoadingResourcesShouldSucceedAndWriteEmptyReport(task Task) : void
+line range:123-123==line range:158-158
+package whenClassDoesNotCallObjectsRequireNonNullTaskSucceedsAndWritesAnEmptyReport() : void -> package whenClassDoesNotCallObjectsRequireNonNullShouldSucceedAndWriteEmptyReport(task Task) : void
+line range:128-128==line range:165-165
+package whenClassCallsObjectsRequireNonNullWithMessageTaskFailsAndWritesReport() : void -> package whenClassCallsObjectsRequireNonNullWithMessageShouldFailAndWriteReport(task Task) : void
+line range:133-134==line range:172-172
+line range:133-133==line range:172-172
+line range:133-134==line range:173-173
+line range:134-134==line range:173-173
+package whenClassCallsObjectsRequireNonNullWithSupplierTaskFailsAndWritesReport() : void -> package whenClassCallsObjectsRequireNonNullWithSupplierShouldFailAndWriteReport(task Task) : void
+line range:139-140==line range:187-187
+line range:139-139==line range:187-187
+line range:139-140==line range:188-188
+line range:140-140==line range:188-188
+package whenClassCallsStringToUpperCaseWithoutLocaleFailsAndWritesReport() : void -> package whenClassCallsStringToUpperCaseWithoutLocaleShouldFailAndWriteReport(task Task) : void
+line range:145-146==line range:202-202
+line range:145-145==line range:202-202
+line range:145-146==line range:203-203
+line range:146-146==line range:203-203
+package whenClassCallsStringToLowerCaseWithoutLocaleFailsAndWritesReport() : void -> package whenClassCallsStringToLowerCaseWithoutLocaleShouldFailAndWriteReport(task Task) : void
+line range:151-152==line range:209-209
+line range:151-151==line range:209-209
+line range:151-152==line range:210-210
+line range:152-152==line range:210-210
+package whenClassCallsStringToLowerCaseWithLocaleShouldNotFail() : void -> package whenClassCallsStringToLowerCaseWithLocaleShouldSucceedAndWriteEmptyReport(task Task) : void
+line range:157-157==line range:216-216
+package whenClassCallsStringToUpperCaseWithLocaleShouldNotFail() : void -> package whenClassCallsStringToUpperCaseWithLocaleShouldSucceedAndWriteEmptyReport(task Task) : void
+line range:162-162==line range:223-223
+package whenBeanMethodExposeNonPrivateTypeShouldNotFail() : void -> package whenBeanMethodExposesNonPrivateTypeShouldSucceedAndWriteEmptyReport(task Task) : void
+line range:177-177==line range:269-269

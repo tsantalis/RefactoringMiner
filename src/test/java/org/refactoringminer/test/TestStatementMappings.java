@@ -2091,20 +2091,24 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
-	@Test
-	public void testRenameMethod() throws Exception {
+	@ParameterizedTest
+	@CsvSource({
+		"https://github.com/junit-team/junit5.git, b2ba6b95138382f25ca757a5ca2a7295bee4c3b8, junit5-b2ba6b95138382f25ca757a5ca2a7295bee4c3b8.txt",
+		"https://github.com/spring-projects/spring-boot.git, bb8e8849993980ae658046eaa786502f42ce63bf, spring-boot-bb8e8849993980ae658046eaa786502f42ce63bf.txt"
+	})
+	public void testRenameMethod(String cloneURL, String commitId, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommitWithGitHubAPI("https://github.com/junit-team/junit5.git", "b2ba6b95138382f25ca757a5ca2a7295bee4c3b8", new File(REPOS), (commitId, refactorings) -> {
+		miner.detectAtCommitWithGitHubAPI(cloneURL, commitId, new File(REPOS), (commitId1, refactorings) -> {
             for (Refactoring ref : refactorings) {
                 if(ref instanceof RenameOperationRefactoring) {
                     RenameOperationRefactoring rename = (RenameOperationRefactoring)ref;
-                    mapperInfo(rename.getBodyMapper(), actual);
+                    mapperInfoWithLeafExpressionMappings(rename.getBodyMapper(), actual);
                 }
             }
         });
 		
-		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "junit5-b2ba6b95138382f25ca757a5ca2a7295bee4c3b8.txt"));
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
@@ -2305,6 +2309,16 @@ public class TestStatementMappings {
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
 			if(mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression)
 				continue;
+			String line = mapping.getFragment1().getLocationInfo() + "==" + mapping.getFragment2().getLocationInfo();
+			actual.add(line);
+			//System.out.println(line);
+		}
+	}
+
+	private void mapperInfoWithLeafExpressionMappings(UMLOperationBodyMapper bodyMapper, final List<String> actual) {
+		actual.add(bodyMapper.toString());
+		//System.out.println(bodyMapper.toString());
+		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
 			String line = mapping.getFragment1().getLocationInfo() + "==" + mapping.getFragment2().getLocationInfo();
 			actual.add(line);
 			//System.out.println(line);

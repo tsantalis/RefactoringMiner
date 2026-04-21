@@ -24,6 +24,7 @@ public class TraversalEngine {
     private final Graph<Node, Edge> graph;
     private final List<TraversalPattern> components = new ArrayList<>();
     private final Set<UsagePattern> usagePatterns = new HashSet<>();
+    private final HashMap<Node, SingularPattern> singularPatternsLeads = new HashMap<>();
 
     public TraversalEngine(Cluster cluster) {
         graph = cluster.getGraph();
@@ -116,12 +117,15 @@ public class TraversalEngine {
                 // It will be populated after merging
                 usageComponent.addRequirement(usedNode, null);
             } else {
-                SingularPattern usedComponent = new SingularPattern(usedNode);
-                addContext(usedNode, usedComponent);
-                addMapping(usedNode, usedComponent);
-                components.add(usedComponent);
-
-                usageComponent.addRequirement(usedNode, usedComponent);
+                if (!singularPatternsLeads.containsKey(usedNode)) {
+                    SingularPattern usedComponent = new SingularPattern(usedNode);
+                    addContext(usedNode, usedComponent);
+                    addMapping(usedNode, usedComponent);
+                    components.add(usedComponent);
+                    singularPatternsLeads.put(usedNode, usedComponent);
+                }
+                SingularPattern existingSingularComponent = singularPatternsLeads.get(usedNode);
+                usageComponent.addRequirement(usedNode, existingSingularComponent);
             }
         }
     }
@@ -413,8 +417,8 @@ public class TraversalEngine {
     private void addSingularComponents() {
         List<Node> singularNodes = graph.vertexSet().stream().filter(node -> !node.isContext())
                 .filter(node -> {
-                    for (TraversalPattern traversalComponent : components) {
-                        boolean contains = traversalComponent.containsNode(node);
+                    for (TraversalPattern traversalPattern : components) {
+                        boolean contains = traversalPattern.containsNode(node);
                         if (contains) {
                             return false;
                         }
@@ -426,6 +430,7 @@ public class TraversalEngine {
             addContext(singularNode, singularComponent);
             addMapping(singularNode, singularComponent);
             components.add(singularComponent);
+            singularPatternsLeads.put(singularNode, singularComponent);
         }
     }
 }

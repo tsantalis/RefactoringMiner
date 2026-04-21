@@ -2810,6 +2810,40 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return false;
 	}
 
+	private boolean literalIntersectionOrFormatting(List<LeafExpression> literals1, List<LeafExpression> literals2) {
+		Set<String> strippedLiterals1 = StringBasedHeuristics.convertToStringSet(literals1);
+		Set<String> intersection = new LinkedHashSet<>(strippedLiterals1);
+		Set<String> strippedLiterals2 = StringBasedHeuristics.convertToStringSet(literals2);
+		intersection.retainAll(strippedLiterals2);
+		if(literals1.size() == literals2.size() && literals1.size() > 0 && intersection.size() == literals1.size()) {
+			return true;
+		}
+		else {
+			StringBuilder sb1 = new StringBuilder();
+			for(LeafExpression expression : literals1) {
+				String withoutQuotes = expression.getString();
+				if(withoutQuotes.startsWith("\""))
+					withoutQuotes = withoutQuotes.substring(1);
+				if(withoutQuotes.endsWith("\""))
+					withoutQuotes = withoutQuotes.substring(0, withoutQuotes.length()-1);
+				sb1.append(withoutQuotes);
+			}
+			StringBuilder sb2 = new StringBuilder();
+			for(LeafExpression expression : literals2) {
+				String withoutQuotes = expression.getString();
+				if(withoutQuotes.startsWith("\""))
+					withoutQuotes = withoutQuotes.substring(1);
+				if(withoutQuotes.endsWith("\""))
+					withoutQuotes = withoutQuotes.substring(0, withoutQuotes.length()-1);
+				sb2.append(withoutQuotes);
+			}
+			if(sb1.toString().equals(sb2.toString())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void updateMapperSet(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperation removedOperation, UMLOperation addedOperation, int differenceInPosition) throws RefactoringMinerTimedOutException {
 		boolean mapperWithZeroNonMappedStatementsOrIdenticalMethodName = false;
 		for(UMLOperationBodyMapper mapper : mapperSet) {
@@ -2851,8 +2885,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
 			List<LeafExpression> literals1 = removedOperation.getAllStringLiterals();
 			List<LeafExpression> literals2 = addedOperation.getAllStringLiterals();
-			Set<String> intersection = StringBasedHeuristics.convertToStringSet(literals1);
-			intersection.retainAll(StringBasedHeuristics.convertToStringSet(literals2));
 			if(exactMappings(operationBodyMapper) || (operationBodyMapper.allMappingsHaveSameDepthAndIndex() && !removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation())) {
 				mapperSet.add(operationBodyMapper);
 			}
@@ -2884,7 +2916,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					removedOperation.getName().equals(addedOperation.getName()) && operationBodyMapper.exactMatches() > 0) {
 				mapperSet.add(operationBodyMapper);
 			}
-			else if(mappings == 0 && removedOperation.hasTestAnnotation() && addedOperation.hasParameterizedTestAnnotation() && literals1.size() == literals2.size() && literals1.size() > 0 && intersection.size() == literals1.size()) {
+			else if(mappings == 0 && removedOperation.hasTestAnnotation() && addedOperation.hasParameterizedTestAnnotation() && literalIntersectionOrFormatting(literals1, literals2)) {
 				Set<AbstractCodeFragment> nonMappedLeavesT1ToBeRemoved = new LinkedHashSet<>();
 				Set<AbstractCodeFragment> nonMappedLeavesT2ToBeRemoved = new LinkedHashSet<>();
 				for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
@@ -2893,9 +2925,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					for(AbstractCodeFragment fragment2 : operationBodyMapper.getNonMappedLeavesT2()) {
 						List<LeafExpression> stringLiterals2 = fragment2.getStringLiterals();
 						Set<String> lit2 = StringBasedHeuristics.convertToStringSet(stringLiterals2);
-						Set<String> inter = new LinkedHashSet<>(lit1);
-						inter.retainAll(lit2);
-						if(inter.size() > 0) {
+						Set<String> intersection = new LinkedHashSet<>(lit1);
+						intersection.retainAll(lit2);
+						if(intersection.size() > 0) {
 							LeafMapping mapping = new LeafMapping(fragment1, fragment2,
 									operationBodyMapper.getContainer1(),
 									operationBodyMapper.getContainer2());
@@ -2931,6 +2963,55 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 														operationBodyMapper.getContainer2());
 												operationBodyMapper.addMapping(leafMapping);
 											}
+										}
+									}
+								}
+							}
+						}
+						else if(intersection.size() == 0) {
+							StringBuilder sb1 = new StringBuilder();
+							for(LeafExpression expression : stringLiterals1) {
+								boolean alreadyMapped = false;
+								for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+									if(mapping.getFragment1().equals(expression)) {
+										alreadyMapped = true;
+										break;
+									}
+								}
+								if(!alreadyMapped) {
+									String withoutQuotes = expression.getString();
+									if(withoutQuotes.startsWith("\""))
+										withoutQuotes = withoutQuotes.substring(1);
+									if(withoutQuotes.endsWith("\""))
+										withoutQuotes = withoutQuotes.substring(0, withoutQuotes.length()-1);
+									sb1.append(withoutQuotes);
+								}
+							}
+							StringBuilder sb2 = new StringBuilder();
+							for(LeafExpression expression : stringLiterals2) {
+								String withoutQuotes = expression.getString();
+								if(withoutQuotes.startsWith("\""))
+									withoutQuotes = withoutQuotes.substring(1);
+								if(withoutQuotes.endsWith("\""))
+									withoutQuotes = withoutQuotes.substring(0, withoutQuotes.length()-1);
+								sb2.append(withoutQuotes);
+							}
+							if(sb1.toString().equals(sb2.toString())) {
+								//make all combinations, formatting change
+								for(LeafExpression expression1 : stringLiterals1) {
+									boolean alreadyMapped = false;
+									for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+										if(mapping.getFragment1().equals(expression1)) {
+											alreadyMapped = true;
+											break;
+										}
+									}
+									if(!alreadyMapped) {
+										for(LeafExpression expression2 : stringLiterals2) {
+											LeafMapping leafMapping = new LeafMapping(expression1, expression2,
+													operationBodyMapper.getContainer1(),
+													operationBodyMapper.getContainer2());
+											operationBodyMapper.addMapping(leafMapping);
 										}
 									}
 								}

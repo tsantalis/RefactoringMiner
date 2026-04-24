@@ -102,7 +102,7 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
             if (!isMappingUnique){
                 Set<Tree> dsts = multiMappings.getDsts(src);
                 boolean tooAmbiguous = false;
-                if (dsts.size() > 5) {
+                if (dsts.size() > tooAmbiguousThreshold) {
                     Tree anyDst = dsts.stream().findAny().get();
                     Set<Tree> srcs = multiMappings.getSrcs(anyDst);
                     if (srcs.size() > tooAmbiguousThreshold) {

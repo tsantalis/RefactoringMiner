@@ -180,6 +180,11 @@ public class Node {
         return tree;
     }
 
+    @Nullable
+    public Set<Tree> getSubTrees() {
+        return this.subTrees;
+    }
+
     public NodeType getNodeType() {
         return nodeType;
     }

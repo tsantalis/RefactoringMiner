@@ -257,6 +257,7 @@ public class HunkNetwork {
         List<Node> nodes = graph.vertexSet().stream().toList();
         List<Node> srcNodes = nodes.stream().filter(Node::isSrc).toList();
         List<Node> dstNodes = nodes.stream().filter(Node::isDst).toList();
+
         for (Node srcNode : srcNodes) {
             ASTDiff diff = srcNode.getDiff();
             if (diff == null) {
@@ -281,6 +282,16 @@ public class HunkNetwork {
 
                 return dstNodeTrees.stream().anyMatch(dstTrees::contains);
             }).toList();
+            if (srcNode.getNodeType().equals(NodeType.SEMANTIC_CONTEXT) || srcNode.getNodeType()
+                    .equals(NodeType.LOCATION_CONTEXT)) {
+                mappedDstNodes = mappedDstNodes.stream().filter(dstNode -> {
+                    if (!dstNode.getNodeType().equals(NodeType.SEMANTIC_CONTEXT)
+                            && !dstNode.getNodeType().equals(NodeType.LOCATION_CONTEXT)) {
+                        return true;
+                    }
+                    return srcNode.getNodeType().equals(dstNode.getNodeType());
+                }).toList();
+            }
             for (Node mappedDstNode : mappedDstNodes) {
                 addEdge(srcNode, mappedDstNode, EdgeType.MAPPING);
             }

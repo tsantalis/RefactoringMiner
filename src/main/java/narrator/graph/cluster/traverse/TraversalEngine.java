@@ -251,11 +251,11 @@ public class TraversalEngine {
                     .filter(descendant -> descendant.second == 0)
                     .map(headMergeable -> headMergeable.first).toList();
             if (headDescendants.size() > 1) {
-                if (headMergeables.size() > 1) {
+                if (headMergeables.size() < headDescendants.size()) {
+                    iteratedComponents.add(subject);
+                } else {
                     mergeByContext(headMergeables, subjectContexts, heads, componentsContexts,
                             traversalComponentsTracker);
-                } else {
-                    iteratedComponents.add(subject);
                 }
 
                 continue;

@@ -6267,7 +6267,7 @@ public class ReplacementAlgorithm {
 				for(int i=0; i<lambdas1.size(); i++) {
 					LambdaExpressionObject lambda1 = lambdas1.get(i);
 					LambdaExpressionObject lambda2 = lambdas2.get(i);
-					processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper);
+					processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper, true);
 				}
 			}
 			else {
@@ -6278,11 +6278,11 @@ public class ReplacementAlgorithm {
 						LambdaExpressionObject lambda2 = lambdas2.get(j);
 						if(lambda1.getSwitchExpressionCase().isPresent() && lambda2.getSwitchExpressionCase().isPresent()) {
 							if(operationBodyMapper.containsMapping(lambda1.getSwitchExpressionCase().get(), lambda2.getSwitchExpressionCase().get())) {
-								processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper);
+								processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper, false);
 							}
 						}
 						else {
-							processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper);
+							processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper, false);
 						}
 					}
 				}
@@ -6365,10 +6365,27 @@ public class ReplacementAlgorithm {
 	}
 
 	protected static void processLambdas(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2,
-			ReplacementInfo replacementInfo, UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
+			ReplacementInfo replacementInfo, UMLOperationBodyMapper operationBodyMapper, boolean sameNumberOfLambdas) throws RefactoringMinerTimedOutException {
 		boolean methodReference1 = lambda1.getLocationInfo().getCodeElementType().equals(CodeElementType.METHOD_REFERENCE);
 		boolean methodReference2 = lambda2.getLocationInfo().getCodeElementType().equals(CodeElementType.METHOD_REFERENCE);
 		UMLAbstractClassDiff classDiff = operationBodyMapper.getClassDiff();
+		boolean alreadyMatched = false;
+		if(!sameNumberOfLambdas) {
+			for(UMLOperationBodyMapper previousLambdaMapper : replacementInfo.getLambdaMappers()) {
+				for(AbstractCodeMapping mapping : previousLambdaMapper.getMappings()) {
+					boolean functionBody = mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && mapping.getFragment1().getParent() == null;
+					if(!functionBody && mapping.getFragment1().getLocationInfo().subsumes(lambda1.getLocationInfo())) {
+						alreadyMatched = true;
+						break;
+					}
+				}
+				if(alreadyMatched)
+					break;
+			}
+		}
+		if(alreadyMatched) {
+			return;
+		}
 		UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(lambda1, lambda2, operationBodyMapper);
 		int mappings = mapper.mappingsWithoutBlocks();
 		if(mappings > 0) {

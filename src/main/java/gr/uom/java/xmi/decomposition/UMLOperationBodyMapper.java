@@ -6057,7 +6057,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 												for(int i=0; i<lambdas1.size(); i++) {
 													LambdaExpressionObject lambda1 = lambdas1.get(i);
 													LambdaExpressionObject lambda2 = lambdas2.get(i);
-													processLambdas(lambda1, lambda2, replacementInfo, this);
+													processLambdas(lambda1, lambda2, replacementInfo, this, true);
 												}
 											}
 											break;
@@ -6079,7 +6079,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 												for(int i=0; i<lambdas1.size(); i++) {
 													LambdaExpressionObject lambda1 = lambdas1.get(i);
 													LambdaExpressionObject lambda2 = lambdas2.get(i);
-													processLambdas(lambda1, lambda2, replacementInfo, this);
+													processLambdas(lambda1, lambda2, replacementInfo, this, true);
 												}
 											}
 											break;
@@ -6445,7 +6445,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 												for(int i=0; i<lambdas1.size(); i++) {
 													LambdaExpressionObject lambda1 = lambdas1.get(i);
 													LambdaExpressionObject lambda2 = lambdas2.get(i);
-													processLambdas(lambda1, lambda2, replacementInfo, this);
+													processLambdas(lambda1, lambda2, replacementInfo, this, true);
 												}
 											}
 											break;
@@ -8636,7 +8636,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(int i=0; i<lambdas1.size(); i++) {
 						LambdaExpressionObject lambda1 = lambdas1.get(i);
 						LambdaExpressionObject lambda2 = lambdas2.get(i);
-						processLambdas(lambda1, lambda2, replacementInfo, this);
+						processLambdas(lambda1, lambda2, replacementInfo, this, true);
 					}
 				}
 				break;
@@ -8665,7 +8665,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(int i=0; i<lambdas1.size(); i++) {
 						LambdaExpressionObject lambda1 = lambdas1.get(i);
 						LambdaExpressionObject lambda2 = lambdas2.get(i);
-						processLambdas(lambda1, lambda2, replacementInfo, this);
+						processLambdas(lambda1, lambda2, replacementInfo, this, true);
 					}
 				}
 				break;
@@ -8682,7 +8682,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						for(int i=0; i<lambdas1.size(); i++) {
 							LambdaExpressionObject lambda1 = lambdas1.get(i);
 							LambdaExpressionObject lambda2 = lambdas2.get(i);
-							processLambdas(lambda1, lambda2, replacementInfo, this);
+							processLambdas(lambda1, lambda2, replacementInfo, this, true);
 						}
 					}
 					break;

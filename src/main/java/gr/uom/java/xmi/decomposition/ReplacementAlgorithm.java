@@ -6373,8 +6373,7 @@ public class ReplacementAlgorithm {
 		if(!sameNumberOfLambdas) {
 			for(UMLOperationBodyMapper previousLambdaMapper : replacementInfo.getLambdaMappers()) {
 				for(AbstractCodeMapping mapping : previousLambdaMapper.getMappings()) {
-					boolean functionBody = mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && mapping.getFragment1().getParent() == null;
-					if(!functionBody && mapping.getFragment1().getLocationInfo().subsumes(lambda1.getLocationInfo())) {
+					if(mapping.getFragment1().getLocationInfo().subsumes(lambda1.getLocationInfo())) {
 						alreadyMatched = true;
 						break;
 					}

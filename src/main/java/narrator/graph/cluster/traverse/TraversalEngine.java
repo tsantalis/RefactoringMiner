@@ -384,6 +384,7 @@ public class TraversalEngine {
                                 .toList();
                 return duplicateEdges.isEmpty();
             });
+            addMapping(context, traversalPattern);
 
             currentNode = context;
         }

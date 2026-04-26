@@ -411,4 +411,8 @@ public class Constants {
     public final String NAMED_IMPORTS = "named_imports";
     public final String IMPORT_CLAUSE = "import_clause";
     public final String STRING = "string";
+    public final String NAMESPACE_IMPORT = "namespace_import";
+    public final String AS_KEYWORD = "as";
+    public final String IMPORT_STAR = "*";
+    public final String IMPORT_SPECIFIER = "import_specifier";
 }

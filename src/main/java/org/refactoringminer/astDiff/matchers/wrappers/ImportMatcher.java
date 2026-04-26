@@ -40,10 +40,10 @@ public class ImportMatcher implements TreeMatcher {
                 Tree dstImportStatement = TreeUtilFunctions.findByLocationInfo(dstTree, pair.getRight().getLocationInfo(), LANG2);
                 boolean isLast = counter == commonImports.size()-1;
                 if(isLast && srcImportStatement != null && dstImportStatement != null && srcImportStatement.getType().name.equals(LANG1.IMPORT_IDENTIFIER) && !dstImportStatement.getType().name.equals(LANG2.IMPORT_IDENTIFIER)) {
-                	srcImportStatement = srcImportStatement.getParent();
+                    srcImportStatement = srcImportStatement.getParent();
                 }
                 if(isLast && srcImportStatement != null && dstImportStatement != null && !srcImportStatement.getType().name.equals(LANG1.IMPORT_IDENTIFIER) && dstImportStatement.getType().name.equals(LANG2.IMPORT_IDENTIFIER)) {
-                	dstImportStatement = dstImportStatement.getParent();
+                    dstImportStatement = dstImportStatement.getParent();
                 }
                 if (srcImportStatement != null && dstImportStatement != null) {
                     mappingStore.addMappingRecursively(srcImportStatement, dstImportStatement);
@@ -125,6 +125,18 @@ public class ImportMatcher implements TreeMatcher {
             if (imports != null) {
                 mappingStore.addMapping(imports.first,imports.second);
             }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> froms = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.FROM_KEYWORD, LANG2.FROM_KEYWORD);
+            if (froms != null) {
+                mappingStore.addMapping(froms.first,froms.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> strings = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.STRING, LANG2.STRING);
+            if (strings != null) {
+                mappingStore.addMappingRecursively(strings.first,strings.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> semicolons = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.SEMICOLON, LANG2.SEMICOLON);
+            if (semicolons != null) {
+                mappingStore.addMapping(semicolons.first,semicolons.second);
+            }
         }
         else if(srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
                 srcImportStatement.getParent().getType().name.equals(LANG1.FUTURE_IMPORT_STATEMENT) &&
@@ -149,6 +161,30 @@ public class ImportMatcher implements TreeMatcher {
             mappingStore.addMapping(srcImportStatement.getParent(), dstImportStatement.getParent());
         }
         else if (srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
+                srcImportStatement.getParent().getType().name.equals(LANG1.IMPORT_SPECIFIER) &&
+                dstImportStatement.getParent().getType().name.equals(LANG2.IMPORT_SPECIFIER)) {
+            mappingStore.addMapping(srcImportStatement.getParent(), dstImportStatement.getParent());
+            com.github.gumtreediff.utils.Pair<Tree, Tree> types = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.TYPE_KEYWORD, LANG2.TYPE_KEYWORD);
+            if (types != null) {
+                mappingStore.addMapping(types.first,types.second);
+            }
+            handleParent(mappingStore, srcImportStatement.getParent(),dstImportStatement.getParent());
+        }
+        else if (srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
+                srcImportStatement.getParent().getType().name.equals(LANG1.NAMESPACE_IMPORT) &&
+                dstImportStatement.getParent().getType().name.equals(LANG2.NAMESPACE_IMPORT)) {
+            mappingStore.addMapping(srcImportStatement.getParent(), dstImportStatement.getParent());
+            com.github.gumtreediff.utils.Pair<Tree, Tree> as = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.AS_KEYWORD, LANG2.AS_KEYWORD);
+            if (as != null) {
+                mappingStore.addMapping(as.first,as.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> star = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.IMPORT_STAR, LANG2.IMPORT_STAR);
+            if (star != null) {
+                mappingStore.addMapping(star.first,star.second);
+            }
+            handleGrandParent(mappingStore, srcImportStatement, dstImportStatement);
+        }
+        else if (srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
                 srcImportStatement.getParent().getType().name.equals(LANG1.NAMED_IMPORTS) &&
                 dstImportStatement.getParent().getType().name.equals(LANG2.NAMED_IMPORTS)) {
             //handle comma
@@ -169,34 +205,52 @@ public class ImportMatcher implements TreeMatcher {
             if (matched != null) {
                 mappingStore.addMapping(matched.first,matched.second);
             }
-            Tree grandParent1 = srcImportStatement.getParent().getParent();
-            Tree grandParent2 = dstImportStatement.getParent().getParent();
-            if(grandParent1 != null && grandParent2 != null &&
-                    grandParent1.getType().name.equals(LANG1.IMPORT_CLAUSE) &&
-                    grandParent2.getType().name.equals(LANG2.IMPORT_CLAUSE)) {
-                mappingStore.addMapping(grandParent1, grandParent2);
-                if(grandParent1.getParent().getType().name.equals(LANG1.IMPORT_DECLARATION) && grandParent2.getParent().getType().name.equals(LANG2.IMPORT_DECLARATION)) {
-                    mappingStore.addMapping(grandParent1.getParent(), grandParent2.getParent());
-                    matched = Helpers.findPairOfType(grandParent1.getParent(),grandParent2.getParent(), LANG1.IMPORT_KEYWORD, LANG2.IMPORT_KEYWORD);
-                    if (matched != null) {
-                        mappingStore.addMapping(matched.first,matched.second);
-                    }
-                    matched = Helpers.findPairOfType(grandParent1.getParent(),grandParent2.getParent(), LANG1.TYPE_KEYWORD, LANG2.TYPE_KEYWORD);
-                    if (matched != null) {
-                        mappingStore.addMapping(matched.first,matched.second);
-                    }
-                    matched = Helpers.findPairOfType(grandParent1.getParent(),grandParent2.getParent(), LANG1.FROM_KEYWORD, LANG2.FROM_KEYWORD);
-                    if (matched != null) {
-                        mappingStore.addMapping(matched.first,matched.second);
-                    }
-                    matched = Helpers.findPairOfType(grandParent1.getParent(),grandParent2.getParent(), LANG1.STRING, LANG2.STRING);
-                    if (matched != null) {
-                        mappingStore.addMappingRecursively(matched.first,matched.second);
-                    }
-                    matched = Helpers.findPairOfType(grandParent1.getParent(),grandParent2.getParent(), LANG1.SEMICOLON, LANG2.SEMICOLON);
-                    if (matched != null) {
-                        mappingStore.addMapping(matched.first,matched.second);
-                    }
+            handleGrandParent(mappingStore, srcImportStatement, dstImportStatement);
+        }
+        else if (srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
+                srcImportStatement.getParent().getType().name.equals(LANG1.IMPORT_CLAUSE) &&
+                dstImportStatement.getParent().getType().name.equals(LANG2.IMPORT_CLAUSE)) {
+            //handle comma
+            int index1 = srcImportStatement.getParent().getChildPosition(srcImportStatement);
+            int index2 = dstImportStatement.getParent().getChildPosition(dstImportStatement);
+            if(srcImportStatement.getParent().getChildren().size() > index1+1 && srcImportStatement.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                    dstImportStatement.getParent().getChildren().size() > index2+1 && dstImportStatement.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+                Tree t1 = srcImportStatement.getParent().getChild(index1+1);
+                Tree t2 = dstImportStatement.getParent().getChild(index2+1);
+                mappingStore.addMapping(t1,t2);
+            }
+        }
+    }
+
+    public void handleGrandParent(ExtendedMultiMappingStore mappingStore, Tree srcImportStatement, Tree dstImportStatement) {
+        com.github.gumtreediff.utils.Pair<Tree, Tree> matched;
+        Tree grandParent1 = srcImportStatement.getParent().getParent();
+        Tree grandParent2 = dstImportStatement.getParent().getParent();
+        if(grandParent1 != null && grandParent2 != null &&
+                grandParent1.getType().name.equals(LANG1.IMPORT_CLAUSE) &&
+                grandParent2.getType().name.equals(LANG2.IMPORT_CLAUSE)) {
+            mappingStore.addMapping(grandParent1, grandParent2);
+            if(grandParent1.getParent().getType().name.equals(LANG1.IMPORT_DECLARATION) && grandParent2.getParent().getType().name.equals(LANG2.IMPORT_DECLARATION)) {
+                mappingStore.addMapping(grandParent1.getParent(), grandParent2.getParent());
+                matched = Helpers.findPairOfType(grandParent1.getParent(),grandParent2.getParent(), LANG1.IMPORT_KEYWORD, LANG2.IMPORT_KEYWORD);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(grandParent1.getParent(),grandParent2.getParent(), LANG1.TYPE_KEYWORD, LANG2.TYPE_KEYWORD);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(grandParent1.getParent(),grandParent2.getParent(), LANG1.FROM_KEYWORD, LANG2.FROM_KEYWORD);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(grandParent1.getParent(),grandParent2.getParent(), LANG1.STRING, LANG2.STRING);
+                if (matched != null) {
+                    mappingStore.addMappingRecursively(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(grandParent1.getParent(),grandParent2.getParent(), LANG1.SEMICOLON, LANG2.SEMICOLON);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
                 }
             }
         }

@@ -24,6 +24,9 @@ public class Context {
                     constants.TAG_ELEMENT, constants.ENHANCED_FOR_STATEMENT,
                     constants.RECORD_COMPONENT);
         }
+        if (treeType.equals(constants.RECORD_COMPONENT)) {
+            return List.of(constants.METHOD_DECLARATION);
+        }
         if (treeType.equals(constants.PREFIX_EXPRESSION)) {
             return List.of(constants.METHOD_INVOCATION, constants.IF_STATEMENT);
         }

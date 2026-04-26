@@ -5794,6 +5794,36 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	private boolean continueBecomesReturn(CompositeStatementObject statement1, CompositeStatementObject statement2) {
+		boolean continueBody = false;
+		if(statement1.getStatements().size() > 0) {
+			AbstractStatement firstStatement = statement1.getStatements().get(0);
+			if(firstStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.CONTINUE_STATEMENT)) {
+				continueBody = true;
+			}
+			else if(firstStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+				CompositeStatementObject comp = (CompositeStatementObject) firstStatement;
+				if(comp.getStatements().size() > 0 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.CONTINUE_STATEMENT)) {
+					continueBody = true;
+				}
+			}
+		}
+		boolean returnBody = false;
+		if(statement2.getStatements().size() > 0) {
+			AbstractStatement firstStatement = statement2.getStatements().get(0);
+			if(firstStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT)) {
+				returnBody = true;
+			}
+			else if(firstStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+				CompositeStatementObject comp = (CompositeStatementObject) firstStatement;
+				if(comp.getStatements().size() > 0 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT)) {
+					returnBody = true;
+				}
+			}
+		}
+		return continueBody && returnBody;
+	}
+
 	private void processInnerNodes(List<CompositeStatementObject> innerNodes1, List<CompositeStatementObject> innerNodes2, List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2,
 			Map<String, String> parameterToArgumentMap, List<UMLOperation> removedOperations, List<UMLOperation> addedOperations, boolean tryWithResourceMigration, boolean containsCallToExtractedMethod,
 			Map<String, List<CompositeStatementObject>> map1, Map<String, List<CompositeStatementObject>> map2) throws RefactoringMinerTimedOutException {
@@ -5833,6 +5863,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, matchingInnerNodes1, matchingInnerNodes2);
 								double score = computeScore(statement1, statement2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 								if(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0) {
+									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
+									mappingSet.add(mapping);
+								}
+								else if(score == 0 && continueBecomesReturn(statement1, statement2)) {
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 									mappingSet.add(mapping);
 								}
@@ -6214,6 +6248,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, matchingInnerNodes1, matchingInnerNodes2);
 								double score = computeScore(statement1, statement2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 								if(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0) {
+									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
+									mappingSet.add(mapping);
+								}
+								else if(score == 0 && continueBecomesReturn(statement1, statement2)) {
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 									mappingSet.add(mapping);
 								}

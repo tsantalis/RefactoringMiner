@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -8,7 +9,10 @@ import extension.ast.node.unit.LangCompilationUnit;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
 
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCondExpr;
+
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
@@ -41,6 +45,13 @@ public class TernaryOperatorExpression extends LeafExpression {
 		else {
 			this.elseExpression = new AbstractExpression(cu, sourceFolder, filePath, expression.getElseExpression(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION, container, activeVariableDeclarations, javaFileContent);
 		}
+	}
+
+	public TernaryOperatorExpression(String sourceFolder, String filePath, Swc4jAstCondExpr expression, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
+		super(sourceFolder, filePath, expression, CodeElementType.TERNARY_OPERATOR, container, fileContent);
+		this.condition = new AbstractExpression(sourceFolder, filePath, expression.getTest(), CodeElementType.TERNARY_OPERATOR_CONDITION, container, activeVariableDeclarations, fileContent, typeDeclarations);
+		this.thenExpression = new AbstractExpression(sourceFolder, filePath, expression.getCons(), CodeElementType.TERNARY_OPERATOR_THEN_EXPRESSION, container, activeVariableDeclarations, fileContent, typeDeclarations);
+		this.elseExpression = new AbstractExpression(sourceFolder, filePath, expression.getAlt(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION, container, activeVariableDeclarations, fileContent, typeDeclarations);
 	}
 
 	public LeafExpression asLeafExpression() {

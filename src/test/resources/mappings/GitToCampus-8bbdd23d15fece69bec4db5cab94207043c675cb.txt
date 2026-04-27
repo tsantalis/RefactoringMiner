@@ -2,6 +2,9 @@ private matchDestinationBuilding(normalizedLocation string) : {BuildingShape;Des
 line range:199-199==line range:170-170
 line range:179-179==line range:166-173
 line range:174-174==line range:171-171
+line range:175-175==line range:172-172
+private matchDestinationBuilding(normalizedLocation string) : {BuildingShape;DestinationMatchMethod}|null -> private getShortCodeMatch(code string, indexes ReturnType<typeof buildDestinationIndexes>) : {BuildingShape;DestinationMatchMethod}|null
+line range:189-189==line range:166-173
 private matchDestinationBuilding(normalizedLocation string) : {BuildingShape;DestinationMatchMethod}|null -> private getShortCodeMatch(code string, indexes ReturnType<typeof buildDestinationIndexes>) : {BuildingShape;DestinationMatchMethod}|null
 line range:189-189==line range:166-173
 private matchDestinationBuilding(normalizedLocation string) : {BuildingShape;DestinationMatchMethod}|null -> private matchByAnyShortCodeToken(tokens string[], indexes ReturnType<typeof buildDestinationIndexes>) : {BuildingShape;DestinationMatchMethod}|null

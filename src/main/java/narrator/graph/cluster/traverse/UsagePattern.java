@@ -32,7 +32,9 @@ public class UsagePattern extends AggregatorPattern {
     }
 
     public void addRequirement(Node node, TraversalPattern requirement) {
-        subs.add(requirement);
+        if (requirement != null) {
+            subs.add(requirement);
+        }
         requirements.put(node, requirement);
     }
 

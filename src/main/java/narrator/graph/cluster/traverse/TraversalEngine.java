@@ -62,7 +62,7 @@ public class TraversalEngine {
                 for (String identifier : nullRequirementNode.getIdentifiers()) {
                     topRequirementComponent.addIdentifier(identifier);
                 }
-                usagePattern.getRequirements().put(nullRequirementNode, topRequirementComponent);
+                usagePattern.addRequirement(nullRequirementNode, topRequirementComponent);
             }
 
             List<Node> remainingNullRequirementNodes = usagePattern.getRequirements().entrySet()

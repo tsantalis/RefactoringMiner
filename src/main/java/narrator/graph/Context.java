@@ -10,7 +10,7 @@ import org.refactoringminer.astDiff.utils.Constants;
 
 public class Context {
 
-    public static List<String> getSemanticContext(String path, String treeType) {
+    private static List<String> getSemanticContext(String path, String treeType) {
         Constants constants = new Constants(path);
         if (treeType.equals(constants.CLASS_INSTANCE_CREATION)) {
             return List.of(constants.CLASS_INSTANCE_CREATION, constants.METHOD_INVOCATION,
@@ -22,7 +22,7 @@ public class Context {
                     constants.IF_STATEMENT, constants.RETURN_STATEMENT,
                     constants.SUPER_CONSTRUCTOR_INVOCATION, constants.FIELD_DECLARATION,
                     constants.TAG_ELEMENT, constants.ENHANCED_FOR_STATEMENT,
-                    constants.RECORD_COMPONENT);
+                    constants.RECORD_COMPONENT, constants.METHOD_DECLARATION);
         }
         if (treeType.equals(constants.RECORD_COMPONENT)) {
             return List.of(constants.METHOD_DECLARATION);

@@ -125,6 +125,10 @@ public class ImportMatcher implements TreeMatcher {
             if (imports != null) {
                 mappingStore.addMapping(imports.first,imports.second);
             }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> types = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.TYPE_KEYWORD, LANG2.TYPE_KEYWORD);
+            if (types != null) {
+                mappingStore.addMapping(types.first,types.second);
+            }
             com.github.gumtreediff.utils.Pair<Tree, Tree> froms = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.FROM_KEYWORD, LANG2.FROM_KEYWORD);
             if (froms != null) {
                 mappingStore.addMapping(froms.first,froms.second);
@@ -167,6 +171,14 @@ public class ImportMatcher implements TreeMatcher {
             com.github.gumtreediff.utils.Pair<Tree, Tree> types = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.TYPE_KEYWORD, LANG2.TYPE_KEYWORD);
             if (types != null) {
                 mappingStore.addMapping(types.first,types.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> as = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.AS_KEYWORD, LANG2.AS_KEYWORD);
+            if (as != null) {
+                mappingStore.addMapping(as.first,as.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> identifiers = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.SIMPLE_NAME, LANG2.SIMPLE_NAME);
+            if (identifiers != null) {
+                mappingStore.addMapping(identifiers.first,identifiers.second);
             }
             handleParent(mappingStore, srcImportStatement.getParent(),dstImportStatement.getParent());
         }

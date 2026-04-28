@@ -484,6 +484,7 @@ public class UMLCommentListDiff {
 		}
 		if(!currentGroup.getGroup().isEmpty())
 			groups.add(currentGroup);
+		Collections.sort(groups);
 		return groups;
 	}
 

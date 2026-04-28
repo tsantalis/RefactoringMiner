@@ -10680,7 +10680,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private void processAnonymousClassDeclarationsInIdenticalStatements(LeafMapping minStatementMapping) throws RefactoringMinerTimedOutException {
-		if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && minStatementMapping.getFragment1().getString().equals(minStatementMapping.getFragment2().getString())) {
+		if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && minStatementMapping.getFragment1().getString().equals(minStatementMapping.getFragment2().getString()) &&
+				(minStatementMapping.getFragment1().getString().startsWith("describe(") || minStatementMapping.getFragment1().getString().startsWith("it("))) {
 			return;
 		}
 		List<AnonymousClassDeclarationObject> anonymousClassDeclarations1 = minStatementMapping.getFragment1().getAnonymousClassDeclarations();

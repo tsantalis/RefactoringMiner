@@ -2039,16 +2039,16 @@ public class ReplacementAlgorithm {
 					elseIfChain.add(current);
 				}
 			}
-			Set<StatementObject> switchCases = new LinkedHashSet<StatementObject>(); 
+			Set<AbstractStatement> switchCases = new LinkedHashSet<AbstractStatement>(); 
 			for(AbstractStatement statement : switch2.getStatements()) {
 				if(statement.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_CASE) && !statement.getString().equals("default:")) {
-					switchCases.add((StatementObject)statement);
+					switchCases.add(statement);
 				}
 			}
 			List<LeafExpression> switchLeafExpression = switch2.findExpression(switch2.getExpressions().get(0).getString());
 			Set<LeafMapping> caseLeafMappings = new LinkedHashSet<LeafMapping>();
 			Set<LeafMapping> switchExpressionLeafMappings = new LinkedHashSet<LeafMapping>(); 
-			for(StatementObject switchCase : switchCases) {
+			for(AbstractStatement switchCase : switchCases) {
 				String string = switchCase.getString();
 				if(string.startsWith("case ")) {
 					String caseExpression = string.substring(5, string.length()-1);

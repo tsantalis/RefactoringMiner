@@ -49,9 +49,13 @@ public class TraversalEngine {
                     .filter(entry -> entry.getValue() == null).map(
                             Entry::getKey).toList();
             for (Node nullRequirementNode : nullRequirementsNode) {
+                List<Node> contextNodes = Context.get(graph, nullRequirementNode);
+                List<Node> sameContextNodes = contextNodes.stream().filter(contextNode -> contextNode.getTree().equals(nullRequirementNode.getTree())).toList();
+                Node targetNode = sameContextNodes.isEmpty() ? nullRequirementNode : sameContextNodes.get(sameContextNodes.size() - 1);
+
                 List<TraversalPattern> requirementComponents = traversalComponentsTracker.stream()
                         .filter(nodesTraversalComponent -> nodesTraversalComponent.first.contains(
-                                nullRequirementNode))
+                                targetNode))
                         .sorted((nrn1, nrn2) -> nrn2.first.size() - nrn1.first.size())
                         .map(nodesTraversalComponent -> nodesTraversalComponent.second).toList();
                 if (requirementComponents.isEmpty()) {
@@ -116,7 +120,7 @@ public class TraversalEngine {
             } else if (usedNode.isContext()) {
                 // It will be populated after merging
                 usageComponent.addRequirement(usedNode, null);
-            } else {
+            } else if (!usedNode.isExtension()) {
                 if (!singularPatternsLeads.containsKey(usedNode)) {
                     SingularPattern usedComponent = new SingularPattern(usedNode);
                     addContext(usedNode, usedComponent);

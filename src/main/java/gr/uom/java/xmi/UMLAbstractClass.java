@@ -17,7 +17,6 @@ import gr.uom.java.xmi.UMLClassMatcher.MatchResult;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
-import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.RenamePattern;
@@ -120,10 +119,6 @@ public abstract class UMLAbstractClass implements AnnotationProvider {
 		else {
 			operationIdentifierSignatureMap.put(signature, 1);
 		}
-	}
-
-	public void setContainer(List<AbstractStatement> statements) {
-		this.container = Optional.of(new ModuleContainer(statements, locationInfo, name));
 	}
 
 	public void setContainer(ModuleContainer container) {

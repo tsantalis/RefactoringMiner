@@ -33,6 +33,7 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	private List<UMLOperation> nestedOperations = new ArrayList<>();
 	private List<UMLAttribute> nestedAttributes = new ArrayList<>();
 	private List<UMLImport> nestedImports = new ArrayList<>();
+	private Map<String, AbstractStatement> describeMap = new LinkedHashMap<>();
 
 	public ModuleContainer(LocationInfo locationInfo, String name) {
 		this.statementList = new ArrayList<>();
@@ -42,7 +43,20 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	}
 
 	public void addStatements(List<AbstractStatement> statements) {
-		statementList.addAll(statements);
+		//statementList.addAll(statements);
+		for(AbstractStatement s : statements) {
+			AbstractCall call = s.invocationCoveringEntireFragment();
+			if(call != null && call.getName().equals("describe") && call.arguments().size() > 0) {
+				describeMap.put(call.arguments().get(0), s);
+			}
+			else {
+				statementList.add(s);
+			}
+		}
+	}
+
+	public Map<String, AbstractStatement> getDescribeMap() {
+		return describeMap;
 	}
 
 	public void addComments(List<UMLComment> comments) {
@@ -79,13 +93,6 @@ public class ModuleContainer implements VariableDeclarationContainer {
 
 	public List<UMLImport> getNestedImports() {
 		return nestedImports;
-	}
-
-	public ModuleContainer(List<AbstractStatement> statements, LocationInfo locationInfo, String name) {
-		this.statementList = statements;
-		this.locationInfo = locationInfo;
-		this.name = name;
-		this.className = name;
 	}
 
 	public List<AbstractStatement> getStatementList() {

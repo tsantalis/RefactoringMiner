@@ -15,6 +15,7 @@ import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstParenExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsAsExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstUnaryExpr;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstBool;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstNull;
@@ -197,6 +198,12 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		LeafExpression expression = new LeafExpression(sourceFolder, filePath, node, CodeElementType.ASSIGNMENT, container, fileContent);
 		assignments.add(expression);
 		return super.visitAssignExpr(node);
+	}
+
+	public Swc4jAstVisitorResponse visitTsAsExpr(Swc4jAstTsAsExpr node) {
+		LeafExpression expression = new LeafExpression(sourceFolder, filePath, node, CodeElementType.CAST_EXPRESSION, container, fileContent);
+		castExpressions.add(expression);
+		return super.visitTsAsExpr(node);
 	}
 
 	public List<LeafExpression> getVariables() {

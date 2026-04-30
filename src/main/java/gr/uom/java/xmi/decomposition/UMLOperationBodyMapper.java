@@ -2019,6 +2019,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.parameterNameList1 = container1.getParameterNameList();
 		this.parameterNameList2 = container2.getParameterNameList();
 		this.commentListDiff = new UMLCommentListDiff();
+		Map<String, AbstractStatement> describeMap1 = container1.getDescribeMap();
+		Map<String, AbstractStatement> describeMap2 = container2.getDescribeMap();
+		if(describeMap1.size() <= describeMap2.size()) {
+			for(String key : describeMap1.keySet()) {
+				AbstractStatement statement1 = describeMap1.get(key);
+				if(describeMap2.containsKey(key)) {
+					AbstractStatement statement2 = describeMap2.get(key);
+					LeafMapping mapping = createLeafMapping(statement1, statement2, new LinkedHashMap<String, String>(), true);
+					addMapping(mapping);
+				}
+			}
+		}
+		else {
+			for(String key : describeMap2.keySet()) {
+				AbstractStatement statement2 = describeMap2.get(key);
+				if(describeMap1.containsKey(key)) {
+					AbstractStatement statement1 = describeMap1.get(key);
+					LeafMapping mapping = createLeafMapping(statement1, statement2, new LinkedHashMap<String, String>(), true);
+					addMapping(mapping);
+				}
+			}
+		}
 		processCompositeStatements(container1.getLeaves(), container2.getLeaves(), container1.getInnerNodes(), container2.getInnerNodes());
 		if(container1.getJavadoc() != null && container2.getJavadoc() != null) {
 			UMLJavadocDiff diff = new UMLJavadocDiff(container1.getJavadoc(), container2.getJavadoc());
@@ -10680,10 +10702,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private void processAnonymousClassDeclarationsInIdenticalStatements(LeafMapping minStatementMapping) throws RefactoringMinerTimedOutException {
-		if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && minStatementMapping.getFragment1().getString().equals(minStatementMapping.getFragment2().getString()) &&
-				(minStatementMapping.getFragment1().getString().startsWith("describe(") || minStatementMapping.getFragment1().getString().startsWith("it("))) {
-			return;
-		}
 		List<AnonymousClassDeclarationObject> anonymousClassDeclarations1 = minStatementMapping.getFragment1().getAnonymousClassDeclarations();
 		List<AnonymousClassDeclarationObject> anonymousClassDeclarations2 = minStatementMapping.getFragment2().getAnonymousClassDeclarations();
 		if(!anonymousClassDeclarations1.isEmpty() && !anonymousClassDeclarations2.isEmpty() && container1 != null && container2 != null &&

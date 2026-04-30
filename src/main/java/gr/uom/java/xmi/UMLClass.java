@@ -37,6 +37,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean isFunctionalInterface;
     private List<UMLTypeParameter> typeParameters;
     private Optional<PrimaryConstructor> primaryConstructor;
+    private Optional<UMLType> functionType;
     private List<AbstractExpression> superTypeCallEntries;
     private UMLJavadoc javadoc;
     private Optional<UMLPackage> packageDeclaration;
@@ -87,6 +88,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.topLevel = topLevel;
         this.typeParameters = new ArrayList<UMLTypeParameter>();
         this.primaryConstructor = Optional.empty();
+        this.functionType = Optional.empty();
         this.superTypeCallEntries = new ArrayList<>();
         this.packageDeclarationComments = new ArrayList<UMLComment>();
         this.packageDeclaration = Optional.empty();
@@ -150,6 +152,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public List<AbstractExpression> getSuperTypeCallEntries() {
 		return superTypeCallEntries;
+	}
+
+	public void setFunctionType(UMLType type) {
+		functionType = Optional.of(type);
+	}
+
+	public Optional<UMLType> getFunctionType() {
+		return functionType;
 	}
 
 	public void setPrimaryConstructor(PrimaryConstructor primary) {

@@ -100,6 +100,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private Set<Pair<UMLOperationBodyMapper, UMLOperationBodyMapper>> calledBy = new LinkedHashSet<>();
 	private Optional<Pair<UMLType, UMLType>> implementedInterfaceBecomesSuperclass;
 	private Optional<Pair<UMLType, UMLType>> superclassBecomesImplementedInterface;
+	private Optional<Pair<UMLType, UMLType>> commonFunctionType;
 	private Optional<UMLJavadocDiff> javadocDiff;
 	private Optional<UMLJavadocDiff> packageDeclarationJavadocDiff;
 	private Optional<UMLParameterListDiff> primaryConstructorParameterListDiff;
@@ -118,6 +119,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		this.consistentMethodInvocationRenamesInModel = findConsistentMethodInvocationRenamesInModelDiff();
 		this.implementedInterfaceBecomesSuperclass = Optional.empty();
 		this.superclassBecomesImplementedInterface = Optional.empty();
+		this.commonFunctionType = Optional.empty();
 		this.extractMethodCandidates = new LinkedHashSet<>();
 		if(originalClass.getJavadoc() != null && nextClass.getJavadoc() != null) {
 			UMLJavadocDiff diff = new UMLJavadocDiff(originalClass.getJavadoc(), nextClass.getJavadoc());
@@ -188,6 +190,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	public void process() throws RefactoringMinerTimedOutException {
 		processPrimaryConstructors();
+		if(getOriginalClass().getFunctionType().isPresent() && getNextClass().getFunctionType().isPresent()) {
+			UMLType type1 = getOriginalClass().getFunctionType().get();
+			UMLType type2 = getNextClass().getFunctionType().get();
+			if(type1.equals(type2)) {
+				this.commonFunctionType = Optional.of(Pair.of(type1, type2));
+			}
+		}
 		if(getOriginalClass().getTypeAliasList().size() > 0 && getNextClass().getTypeAliasList().size() > 0) {
 			UMLTypeAliasListDiff typeAliasListDiff = new UMLTypeAliasListDiff(getOriginalClass().getTypeAliasList(), getNextClass().getTypeAliasList());
 			this.typeAliasListDiff = Optional.of(typeAliasListDiff);
@@ -1224,6 +1233,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	public Optional<Pair<UMLType, UMLType>> getSuperclassBecomesImplementedInterface() {
 		return superclassBecomesImplementedInterface;
+	}
+
+	public Optional<Pair<UMLType, UMLType>> getCommonFunctionType() {
+		return commonFunctionType;
 	}
 
 	public boolean containsOperationWithTheSameSignatureInOriginalClass(UMLOperation operation) {

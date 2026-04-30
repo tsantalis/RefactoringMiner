@@ -189,7 +189,14 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     mappingStore.addMapping(matched.first,matched.second);
             }
         }
-        
+        if (classDiff.getCommonFunctionType().isPresent()) {
+            org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> pair = classDiff.getCommonFunctionType().get();
+            Tree srcFunctionType = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, pair.getLeft().getLocationInfo(), LANG1);
+            Tree dstFunctionType = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, pair.getRight().getLocationInfo(), LANG2);
+            if (srcFunctionType != null && dstFunctionType != null) {
+                mappingStore.addMappingRecursively(srcFunctionType, dstFunctionType);
+            }
+        }
         processSuperClasses(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processClassImplementedInterfaces(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processClassPermittedTypes(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);

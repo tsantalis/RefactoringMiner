@@ -194,6 +194,12 @@ public class TypeScriptFileProcessor {
 			OperationBody operationBody = new OperationBody(sourceFolder, filePath, body.get(), operation, activeVariableDeclarations, fileContent);
 			operation.setBody(operationBody);
 		}
+		int startSignatureOffset = function.getSpan().getStart();
+		int endSignatureOffset = body.isPresent() ?
+				body.get().getSpan().getStart() + 1 :
+				function.getSpan().getEnd();
+		String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
+		operation.setActualSignature(text);
 		return operation;
 	}
 
@@ -223,6 +229,12 @@ public class TypeScriptFileProcessor {
 			OperationBody operationBody = new OperationBody(sourceFolder, filePath, body.get(), operation, activeVariableDeclarations, fileContent);
 			operation.setBody(operationBody);
 		}
+		int startSignatureOffset = functionDecl.getSpan().getStart();
+		int endSignatureOffset = body.isPresent() ?
+				body.get().getSpan().getStart() + 1 :
+				functionDecl.getSpan().getEnd();
+		String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
+		operation.setActualSignature(text);
 		return operation;
 	}
 }

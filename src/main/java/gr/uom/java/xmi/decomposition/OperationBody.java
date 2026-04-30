@@ -1776,6 +1776,10 @@ public class OperationBody {
 							}
 						}
 						operation.setDefaultExpression(expression);
+						int startSignatureOffset = variableDecl.getSpan().getStart();
+						int endSignatureOffset = arrowExpr.getSpan().getStart() + 1;
+						String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
+						operation.setActualSignature(text);
 						for(UMLComment comment : comments) {
 							if(operation.getLocationInfo().subsumes(comment.getLocationInfo())) {
 								operation.getComments().add(comment);

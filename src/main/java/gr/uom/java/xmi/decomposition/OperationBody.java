@@ -1854,6 +1854,14 @@ public class OperationBody {
 					umlClass.getComments().add(comment);
 				}
 			}
+			List<Swc4jAstTsExprWithTypeArgs> interfaces = interfaceDecl.getExtends();
+			for(Swc4jAstTsExprWithTypeArgs inter : interfaces) {
+				ISwc4jAstExpr expr = inter.getExpr();
+				if(expr instanceof Swc4jAstIdent ident) {
+					UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
+					umlClass.addImplementedInterface(type);
+				}
+			}
 			if(container instanceof ModuleContainer) {
 				((ModuleContainer)container).addNestedClass(umlClass);
 			}

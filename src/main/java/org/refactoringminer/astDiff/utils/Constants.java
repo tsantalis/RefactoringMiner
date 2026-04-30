@@ -415,4 +415,6 @@ public class Constants {
     public final String AS_KEYWORD = "as";
     public final String IMPORT_STAR = "*";
     public final String IMPORT_SPECIFIER = "import_specifier";
+    public final String EXTENDS_TYPE_CLAUSE = "extends_type_clause";
+    public final String EXTENDS_KEYWORD = "extends";
 }

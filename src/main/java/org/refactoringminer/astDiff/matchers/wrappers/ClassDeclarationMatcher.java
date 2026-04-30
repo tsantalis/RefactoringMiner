@@ -382,7 +382,14 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (classDiff.getOriginalClass().isInterface())
             keyword = EXTENDS_KEYWORD_LABEL;
         new KeywordMatcher(LANG1, LANG2, LANG1.TYPE_INHERITANCE_KEYWORD, LANG2.TYPE_INHERITANCE_KEYWORD, keyword).match(srcTree, dstTree, mappingStore);
-
+        Pair<Tree, Tree> extendTypeClause = Helpers.findPairOfType(srcTree,dstTree, LANG1.EXTENDS_TYPE_CLAUSE, LANG2.EXTENDS_TYPE_CLAUSE);
+        if(extendTypeClause != null) {
+            mappingStore.addMapping(extendTypeClause.first,extendTypeClause.second);
+            Pair<Tree, Tree> extendKeywords = Helpers.findPairOfType(extendTypeClause.first,extendTypeClause.second, LANG1.EXTENDS_KEYWORD, LANG2.EXTENDS_KEYWORD);
+            if(extendKeywords != null) {
+                mappingStore.addMapping(extendKeywords.first,extendKeywords.second);
+            }
+        }
     }
 
 

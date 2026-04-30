@@ -2029,6 +2029,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					LeafMapping mapping = createLeafMapping(statement1, statement2, new LinkedHashMap<String, String>(), true);
 					addMapping(mapping);
 				}
+				else {
+					Map<String, AbstractStatement> nestedDescribeMap1 = nestedDescribeMap(statement1);
+					for(String key2 : describeMap2.keySet()) {
+						AbstractStatement statement2 = describeMap2.get(key2);
+						Map<String, AbstractStatement> nestedDescribeMap2 = nestedDescribeMap(statement2);
+						if(nestedDescribeMap1.keySet().equals(nestedDescribeMap2.keySet())) {
+							LeafMapping mapping = createLeafMapping(statement1, statement2, new LinkedHashMap<String, String>(), true);
+							addMapping(mapping);
+							break;
+						}
+					}
+				}
 			}
 		}
 		else {
@@ -2049,6 +2061,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		UMLCommentListDiff commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this);
 		this.commentListDiff.append(commentListDiff);
 		checkUnmatchedStatementsBeingCommented();
+	}
+
+	public Map<String, AbstractStatement> nestedDescribeMap(AbstractStatement statement) {
+		Map<String, AbstractStatement> nestedDescribeMap = new LinkedHashMap<>();
+		if(statement.getLambdas().size()  > 0) {
+			LambdaExpressionObject lambda = statement.getLambdas().get(0);
+			if(lambda.getBody() != null) {
+				List<AbstractStatement> statements = lambda.getBody().getCompositeStatement().getStatements();
+				for(AbstractStatement s : statements) {
+					AbstractCall call = s.invocationCoveringEntireFragment();
+					if(call != null && call.getName().equals("describe") && call.arguments().size() > 0) {
+						nestedDescribeMap.put(call.arguments().get(0), s);
+					}
+				}
+			}
+		}
+		return nestedDescribeMap;
 	}
 
 	protected UMLOperationBodyMapper(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2, UMLOperationBodyMapper parentMapper) throws RefactoringMinerTimedOutException {

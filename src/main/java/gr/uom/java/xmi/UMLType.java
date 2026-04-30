@@ -58,8 +58,11 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsLitType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsParenthesizedType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsPropertySignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsQualifiedName;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTupleElement;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTupleType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeLit;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeOperator;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamInstantiation;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypePredicate;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeQuery;
@@ -734,6 +737,21 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			ISwc4jAstTsType parenType = parenthesizedType.getTypeAnn();
 			UMLType umlType = extractTypeObject(parenType, sourceFolder, filePath, fileContent);
 			return umlType;
+		}
+		else if(type instanceof Swc4jAstTsTypeOperator typeOperator) {
+			ISwc4jAstTsType operatorType = typeOperator.getTypeAnn();
+			UMLType umlType = extractTypeObject(operatorType, sourceFolder, filePath, fileContent);
+			return umlType;
+		}
+		else if(type instanceof Swc4jAstTsTupleType tupleType) {
+			List<UMLType> elementTypeList = new ArrayList<>();
+			List<Swc4jAstTsTupleElement> elements = tupleType.getElemTypes();
+			for(Swc4jAstTsTupleElement element : elements) {
+				UMLType elementType = extractTypeObject(element.getTy(), sourceFolder, filePath, fileContent);
+				elementTypeList.add(elementType);
+			}
+			ListCompositeType listCompositeType = new ListCompositeType(elementTypeList, Kind.TUPLE);
+			return listCompositeType;
 		}
 		//TODO this should return null, when all type kinds are supported
 		return new InferredType();

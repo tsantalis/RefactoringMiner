@@ -7,7 +7,7 @@ import gr.uom.java.xmi.decomposition.LeafExpression;
 
 public class ListCompositeType extends UMLType {
 	public enum Kind {
-		UNION("|"), INTERSECTION("&"), LITERAL(";");
+		UNION("|"), INTERSECTION("&"), LITERAL(";"), TUPLE(",");
 		private String operand;
 		private Kind(String operand) {
 			this.operand = operand;
@@ -72,6 +72,9 @@ public class ListCompositeType extends UMLType {
 		if(kind.equals(Kind.LITERAL)) {
 			sb.append("{");
 		}
+		else if(kind.equals(Kind.TUPLE)) {
+			sb.append("[");
+		}
 		for(int i = 0; i < types.size(); i++) {
 			sb.append(types.get(i).toString());
 			if(i < types.size() - 1)
@@ -79,6 +82,9 @@ public class ListCompositeType extends UMLType {
 		}
 		if(kind.equals(Kind.LITERAL)) {
 			sb.append("}");
+		}
+		else if(kind.equals(Kind.TUPLE)) {
+			sb.append("]");
 		}
 		return sb.toString();
 	}
@@ -89,6 +95,9 @@ public class ListCompositeType extends UMLType {
 		if(kind.equals(Kind.LITERAL)) {
 			sb.append("{");
 		}
+		else if(kind.equals(Kind.TUPLE)) {
+			sb.append("[");
+		}
 		for(int i = 0; i < types.size(); i++) {
 			sb.append(types.get(i).toQualifiedString());
 			if(i < types.size() - 1)
@@ -96,6 +105,9 @@ public class ListCompositeType extends UMLType {
 		}
 		if(kind.equals(Kind.LITERAL)) {
 			sb.append("}");
+		}
+		else if(kind.equals(Kind.TUPLE)) {
+			sb.append("]");
 		}
 		return sb.toString();
 	}

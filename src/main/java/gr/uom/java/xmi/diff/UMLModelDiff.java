@@ -6914,7 +6914,9 @@ public class UMLModelDiff {
 					UMLOperation removedOperation = removedOperationIterator.next();
 
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(removedOperation, addedOperation);
-					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation) && !removedOperation.getClassName().equals(addedOperation.getClassName()) &&
+					boolean sameClassNameButDifferentFilePath = removedOperation.getClassName().equals(addedOperation.getClassName()) &&
+							!removedOperation.getLocationInfo().getFilePath().equals(addedOperation.getLocationInfo().getFilePath());
+					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation) && (!removedOperation.getClassName().equals(addedOperation.getClassName()) || sameClassNameButDifferentFilePath) &&
 							removedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD) {
 						UMLClassBaseDiff umlClassDiff = getUMLClassDiff(removedOperation.getClassName());
 						if(umlClassDiff == null) {
@@ -7093,7 +7095,9 @@ public class UMLModelDiff {
 					UMLOperation addedOperation = addedOperationIterator.next();
 
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(removedOperation, addedOperation);
-					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation) && !removedOperation.getClassName().equals(addedOperation.getClassName()) &&
+					boolean sameClassNameButDifferentFilePath = removedOperation.getClassName().equals(addedOperation.getClassName()) &&
+							!removedOperation.getLocationInfo().getFilePath().equals(addedOperation.getLocationInfo().getFilePath());
+					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation) && (!removedOperation.getClassName().equals(addedOperation.getClassName()) || sameClassNameButDifferentFilePath) &&
 							removedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD) {
 						UMLClassBaseDiff umlClassDiff = getUMLClassDiff(removedOperation.getClassName());
 						if(umlClassDiff == null) {
@@ -7389,7 +7393,8 @@ public class UMLModelDiff {
 				if(isMovedClass(firstMapper)) {
 					refactoring = new RenameOperationRefactoring(firstMapper.getOperation1(), firstMapper.getOperation2());
 				}
-				else if(!firstMapper.getContainer1().getClassName().equals(firstMapper.getContainer2().getClassName())) {
+				else if(!firstMapper.getContainer1().getClassName().equals(firstMapper.getContainer2().getClassName()) ||
+						!firstMapper.getContainer1().getLocationInfo().getFilePath().equals(firstMapper.getContainer2().getLocationInfo().getFilePath())) {
 					refactoring = new MoveOperationRefactoring(firstMapper);
 				}
 			}
@@ -8064,7 +8069,7 @@ public class UMLModelDiff {
 		Constants LANG2 = mapper.LANG2;
 		boolean default1 = removedOperation.getDefaultExpression() != null;
 		boolean default2 = addedOperation.getDefaultExpression() != null;
-		if(default1 != default2) {
+		if(default1 != default2 && LANG1.equals(Constants.KOTLIN) && LANG2.equals(Constants.KOTLIN)) {
 			return false;
 		}
 		List<AbstractCodeMapping> exactMatchListWithoutMatchesInNestedContainers = mapper.getExactMatchesWithoutMatchesInNestedContainers();

@@ -119,8 +119,9 @@ public abstract class UMLAbstractClassDiff {
 		for(Refactoring r : refactorings) {
 			if(r instanceof ExtractOperationRefactoring) {
 				ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
-				if(!operations.contains(extract.getExtractedOperation())) {
-					operations.add(extract.getExtractedOperation());
+				VariableDeclarationContainer extractedOperation = extract.getExtractedOperation();
+				if(!operations.contains(extractedOperation) && extractedOperation instanceof UMLOperation op) {
+					operations.add(op);
 				}
 			}
 		}
@@ -1894,7 +1895,7 @@ public abstract class UMLAbstractClassDiff {
 			if(ref instanceof ExtractOperationRefactoring) {
 				ExtractOperationRefactoring extractRef = (ExtractOperationRefactoring)ref;
 				if(extractRef.getSourceOperationBeforeExtraction().equals(sourceOperationBeforeExtraction) &&
-						extractRef.getExtractedOperation().equalSignature(extractedOperation)) {
+						extractRef.getExtractedOperation() instanceof UMLOperation op && op.equalSignature(extractedOperation)) {
 					return true;
 				}
 			}

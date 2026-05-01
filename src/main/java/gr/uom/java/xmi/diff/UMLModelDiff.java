@@ -2615,6 +2615,15 @@ public class UMLModelDiff {
 		return false;
 	}
 
+	public List<UMLAttribute> getAttributesInAddedClasses() {
+		List<UMLAttribute> addedAttributes = new ArrayList<UMLAttribute>();
+		for(UMLClass umlClass : addedClasses) {
+			addedAttributes.addAll(umlClass.getAttributes());
+			addedAttributes.addAll(umlClass.getEnumConstants());
+		}
+		return addedAttributes;
+	}
+
 	public List<UMLAttribute> getAddedAttributesInCommonClasses() {
 		List<UMLAttribute> addedAttributes = new ArrayList<UMLAttribute>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
@@ -2715,7 +2724,9 @@ public class UMLModelDiff {
 			for(Refactoring ref : classDiff.getRefactoringsBeforePostProcessing()) {
 				if(ref instanceof ExtractOperationRefactoring) {
 					ExtractOperationRefactoring extractRef = (ExtractOperationRefactoring)ref;
-					addedOperations.add(extractRef.getExtractedOperation());
+					VariableDeclarationContainer extractedOperation = extractRef.getExtractedOperation();
+					if(extractedOperation instanceof UMLOperation op)
+						addedOperations.add(op);
 				}
 			}
 		}
@@ -4311,6 +4322,36 @@ public class UMLModelDiff {
 			checkForExtractedAndMovedOperations(getOperationBodyMappersInCommonAndRenamedClasses(), allOperationsInAddedClasses);
 			processedOperationPairs.clear();
 			checkForExtractedAndMovedOperations(getOperationBodyMappersInMovedClasses(), allOperationsInAddedClasses);
+		}
+		List<UMLAttribute> attributesInAddedClasses = getAttributesInAddedClasses();
+		for(UMLClassBaseDiff classDiff : commonClassDiffList) {
+			for(UMLAttributeDiff attributeDiff : classDiff.getAttributeDiffList()) {
+				if(attributeDiff.getInitializerMapper().isPresent()) {
+					List<AbstractCall> calls = attributeDiff.getInitializerMapper().get().getContainer2().getAllOperationInvocations();
+					for(AbstractCall call : calls) {
+						for(UMLAttribute addedAttribute : classDiff.getAddedAttributes()) {
+							if(call.getName().equals(addedAttribute.getName())) {
+								UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(attributeDiff.getRemovedAttribute(), addedAttribute, classDiff, this);
+								if(mapper.getMappings().size() > 0) {
+									ExtractOperationRefactoring extractOperationRefactoring =
+											new ExtractOperationRefactoring(mapper, attributeDiff.getAddedAttribute(), List.of(call));
+									refactorings.add(extractOperationRefactoring);
+								}
+							}
+						}
+						for(UMLAttribute addedAttribute : attributesInAddedClasses) {
+							if(call.getName().equals(addedAttribute.getName())) {
+								UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(attributeDiff.getRemovedAttribute(), addedAttribute, classDiff, this);
+								if(mapper.getMappings().size() > 0) {
+									ExtractOperationRefactoring extractOperationRefactoring =
+											new ExtractOperationRefactoring(mapper, attributeDiff.getAddedAttribute(), List.of(call));
+									refactorings.add(extractOperationRefactoring);
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		checkForMovedCodeBetweenTestFixtures();
 		checkForMovedCodeWithoutCalls();
@@ -8328,7 +8369,7 @@ public class UMLModelDiff {
 		return false;
 	}
 
-	public boolean refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(UMLOperation addedOperation) {
+	public boolean refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(VariableDeclarationContainer addedOperation) {
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof MoveOperationRefactoring) {
 				MoveOperationRefactoring moveRefactoring = (MoveOperationRefactoring)refactoring;

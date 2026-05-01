@@ -579,7 +579,7 @@ public class OperationInvocation extends AbstractCall {
 				for(Refactoring r : modelDiff.getDetectedRefactorings()) {
 					if(r instanceof ExtractOperationRefactoring) {
 						ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
-						UMLOperation addedOperation = extract.getExtractedOperation();
+						VariableDeclarationContainer addedOperation = extract.getExtractedOperation();
 						if(!addedOperation.equals(operation) && addedOperation.getName().equals(operationName) && addedOperation.getParameterDeclarationList().size() == operation.getParameterDeclarationList().size()) {
 							int j = 0;
 							int exactlyMatchingArguments = 0;

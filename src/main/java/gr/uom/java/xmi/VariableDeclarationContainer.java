@@ -194,6 +194,9 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	default boolean isConstructor() {
 		return false;
 	}
+	default boolean isSynchronized() {
+		return false;
+	}
 	default AbstractCall isDelegate() {
 		return null;
 	}

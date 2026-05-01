@@ -30,7 +30,9 @@ import com.caoccao.javet.swc4j.ast.visitors.Swc4jAstVisitorResponse;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLImport;
 
 public class TypeScriptVisitor extends Swc4jAstVisitor {
 	private String sourceFolder;
@@ -120,6 +122,19 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 					// Direct Method Passing (Point-Free Style)
 					OperationInvocation invocation = new OperationInvocation(sourceFolder, filePath, node, container, fileContent);
 					methodInvocations.add(invocation);
+				}
+			}
+			else if(call.getCallee() instanceof Swc4jAstIdent ident) {
+				String name = ident.getSym();
+				if(container instanceof ModuleContainer module) {
+					for(UMLImport imp : module.getNestedImports()) {
+						if(imp.getName().endsWith(name)) {
+							// the identifier is a function name
+							// Direct Method Passing (Point-Free Style)
+							OperationInvocation invocation = new OperationInvocation(sourceFolder, filePath, node, container, fileContent);
+							methodInvocations.add(invocation);
+						}
+					}
 				}
 			}
 		}

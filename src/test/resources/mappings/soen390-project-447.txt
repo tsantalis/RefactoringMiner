@@ -1,8 +1,8 @@
 private connectVerticalNodesBySuffix(nodes Map<string,IndoorNode>, adjacency Map<string,{string;number}>, noStairs boolean, noEscalators boolean, noElevators boolean) : void -> private shouldSkipInterFloorConnection(a IndoorNode, noStairs boolean, noEscalators boolean, noElevators boolean)
 line range:280-280==line range:277-277
+line range:281-281==line range:278-278
 line range:282-282==line range:279-279
 line range:283-283==line range:280-285
-line range:281-281==line range:278-278
 private dijkstra(nodes Map<string,IndoorNode>, adjacency Map<string,{string;number}>, startId string, endId string, restrictToFloor number|null, restrictToBuildingId string|null, excludeVerticalTransit boolean) : {string[];number}|null -> private shouldSkipDijkstraNeighbor(neighbor string, visited Set<string>, hasRestrictions boolean, nodes Map<string,IndoorNode>, restrictToFloor number|null, restrictToBuildingId string|null, excludeVerticalTransit boolean)
 line range:461-461==line range:460-460
 line range:463-473==line range:462-473
@@ -37,13 +37,6 @@ line range:265-265==line range:190-190
 line range:264-264==line range:189-189
 line range:262-266==line range:187-191
 line range:262-266==line range:187-191
-private findNearestWashroomTarget(category WashroomCategory, campusBuildings FindNearestWashroomParams, actualOriginPoint FindNearestWashroomParams, originBuildingCode FindNearestWashroomParams, originRoom FindNearestWashroomParams, destinationBuildingCode FindNearestWashroomParams, destinationRoom FindNearestWashroomParams) : NearestWashroomTarget|null -> private getNearestFromFirstFloor(washrooms WashroomRoom[])
-line range:263-263==line range:188-188
-line range:264-264==line range:189-189
-line range:265-265==line range:190-190
-line range:264-264==line range:189-189
-line range:262-266==line range:187-191
-line range:262-266==line range:187-191
 private findNearestWashroomTarget(category WashroomCategory, campusBuildings FindNearestWashroomParams, actualOriginPoint FindNearestWashroomParams, originBuildingCode FindNearestWashroomParams, originRoom FindNearestWashroomParams, destinationBuildingCode FindNearestWashroomParams, destinationRoom FindNearestWashroomParams) : NearestWashroomTarget|null -> private findNearestWashroomInContextBuilding(washroomsForCategory WashroomRoom[], roomContext {string|null;string}) : NearestWashroomTarget|null
 line range:224-224==line range:208-208
 line range:216-218==line range:199-201
@@ -62,9 +55,9 @@ line range:246-249==line range:230-233
 line range:241-251==line range:225-235
 line range:255-258==line range:239-242
 line range:268-271==line range:248-251
+line range:224-224==line range:208-208
 line range:238-259==line range:222-243
 line range:227-260==line range:211-244
-line range:224-224==line range:208-208
 line range:220-272==line range:203-203
 line range:238-259==line range:222-243
 line range:227-260==line range:211-244
@@ -166,8 +159,6 @@ line range:286-286==line range:300-300
 line range:293-293==line range:307-307
 line range:294-294==line range:308-308
 line range:296-299==line range:310-313
-line range:224-224==line range:287-287
 line range:198-198==line range:267-267
 line range:283-283==line range:297-297
 line range:294-294==line range:308-308
-line range:224-224==line range:287-287

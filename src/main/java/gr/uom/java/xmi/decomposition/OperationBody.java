@@ -73,6 +73,7 @@ import com.caoccao.javet.swc4j.ast.enums.Swc4jAstAccessibility;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstBlockStmtOrExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstClassMember;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstDecl;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
@@ -1776,7 +1777,15 @@ public class OperationBody {
 								operation.addParameter(param);
 							}
 						}
-						operation.setDefaultExpression(expression);
+						ISwc4jAstBlockStmtOrExpr body = arrowExpr.getBody();
+						if(body instanceof Swc4jAstBlockStmt blockStmt) {
+							OperationBody operationBody = new OperationBody(sourceFolder, filePath, blockStmt, operation, activeVariableDeclarations, fileContent);
+							operation.setBody(operationBody);
+						}
+						else if(body instanceof ISwc4jAstExpr expr) {
+							AbstractExpression bodyExpr = new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.FUNCTION_INITIALIZER_EXPRESSION, operation, activeVariableDeclarations, fileContent, typeDeclarations);
+							operation.setDefaultExpression(bodyExpr);
+						}
 						int startSignatureOffset = variableDecl.getSpan().getStart();
 						int endSignatureOffset = arrowExpr.getSpan().getStart() + 1;
 						String text = fileContent.substring(startSignatureOffset, endSignatureOffset);

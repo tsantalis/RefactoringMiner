@@ -298,7 +298,9 @@ public class JavaToKotlinMigration {
             }
             else {
                 Tree simpleName = TreeUtilFunctions.findChildByType(child2, LANG2.SIMPLE_NAME);
-                callNames2.add(simpleName.getLabel());
+                if(simpleName != null) {
+                    callNames2.add(simpleName.getLabel());
+                }
             }
         }
         if(callNames1.size() <= callNames2.size()) {

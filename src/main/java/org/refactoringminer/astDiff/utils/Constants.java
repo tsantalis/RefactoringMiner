@@ -105,7 +105,7 @@ public class Constants {
 			METHOD_INVOCATION_ARGUMENTS = "argument_list";
 			STRING_LITERAL = "string_literal";
 			BOOLEAN_LITERAL = "boolean_literal"; // True, False labels //TODO introduce List of values
-			METHOD_INVOCATION = "call";
+			METHOD_INVOCATION = "call_expression";
 			SWITCH_STATEMENT = "switch_statement";
 			SWITCH_CASE = "switch_case";
 			ASSIGNMENT = "assignment";
@@ -417,4 +417,5 @@ public class Constants {
     public final String IMPORT_SPECIFIER = "import_specifier";
     public final String EXTENDS_TYPE_CLAUSE = "extends_type_clause";
     public final String EXTENDS_KEYWORD = "extends";
+    public final String MEMBER_EXPRESSION = "member_expression";
 }

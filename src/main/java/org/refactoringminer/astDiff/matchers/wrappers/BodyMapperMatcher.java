@@ -18,6 +18,7 @@ import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
+import org.refactoringminer.util.PathFileUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -581,7 +582,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             if(srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION))
                 srcStatementNode = srcStatementNode.getParent();
         }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION)) {
+        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) &&
+                PathFileUtils.isTypeScriptFile(leafMapping.getFragment1().getLocationInfo().getFilePath()) &&
+                !srcStatementNode.getParent().getType().name.equals(LANG1.ARROW_FUNCTION)) {
             srcStatementNode = srcStatementNode.getParent();
         }
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo(),LANG2);
@@ -599,7 +602,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION))
                 dstStatementNode = dstStatementNode.getParent();
         }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION)) {
+        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) &&
+                PathFileUtils.isTypeScriptFile(leafMapping.getFragment2().getLocationInfo().getFilePath()) &&
+                !dstStatementNode.getParent().getType().name.equals(LANG2.ARROW_FUNCTION)) {
             dstStatementNode = dstStatementNode.getParent();
         }
         if (srcStatementNode == null || dstStatementNode == null) {

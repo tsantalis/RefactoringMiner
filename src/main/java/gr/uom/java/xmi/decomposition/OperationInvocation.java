@@ -1280,6 +1280,9 @@ public class OperationInvocation extends AbstractCall {
 	public OperationInvocation(String sourceFolder, String filePath, Swc4jAstCallExpr invocation, VariableDeclarationContainer container, String fileContent) {
 		super(sourceFolder, filePath, invocation, CodeElementType.METHOD_INVOCATION, container, fileContent);
 		ISwc4jAstCallee callee = invocation.getCallee();
+		if(callee instanceof Swc4jAstCallExpr callExpr) {
+			callee = callExpr.getCallee();
+		}
 		if(callee instanceof Swc4jAstMemberExpr memberExpr) {
 			ISwc4jAstMemberProp prop = memberExpr.getProp();
 			if(prop instanceof Swc4jAstPrivateName privateName)

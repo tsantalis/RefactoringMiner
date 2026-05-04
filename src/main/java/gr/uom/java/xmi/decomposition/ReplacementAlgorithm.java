@@ -4068,7 +4068,7 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(variableDeclarationWithArrayInitializer1 != null && invocationCoveringTheEntireStatement2 != null && !(invocationCoveringTheEntireStatement2 instanceof MethodReference) && variableDeclarations2.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s2.contains("(") && s2.contains(")")) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s2.contains("(") && s2.contains(")") && s2.indexOf("(") < s2.lastIndexOf(")")) {
 			String args1 = s1.substring(s1.indexOf(LANG1.OPEN_ARRAY_INITIALIZER)+1, s1.lastIndexOf(LANG1.CLOSE_ARRAY_INITIALIZER));
 			String args2 = s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"));
 			if(args1.equals(args2)) {
@@ -4078,7 +4078,7 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.getAnonymousClassDeclaration() != null && invocationCoveringTheEntireStatement2 != null && !(invocationCoveringTheEntireStatement2 instanceof MethodReference) && variableDeclarations2.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s2.contains("(") && s2.contains(")")) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s2.contains("(") && s2.contains(")") && s2.indexOf("(") < s2.lastIndexOf(")")) {
 			String arrayInitializer = creationCoveringTheEntireStatement1.getAnonymousClassDeclaration();
 			String args1 = arrayInitializer.substring(arrayInitializer.indexOf(LANG1.OPEN_ARRAY_INITIALIZER)+1, arrayInitializer.lastIndexOf(LANG1.CLOSE_ARRAY_INITIALIZER));
 			String args2 = s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"));
@@ -4089,7 +4089,7 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(variableDeclarationWithArrayInitializer2 != null && invocationCoveringTheEntireStatement1 != null && !(invocationCoveringTheEntireStatement1 instanceof MethodReference) && variableDeclarations1.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s1.contains("(") && s1.contains(")")) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s1.contains("(") && s1.contains(")") && s1.indexOf("(") < s1.lastIndexOf(")")) {
 			String args1 = s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")"));
 			String args2 = s2.substring(s2.indexOf(LANG2.OPEN_ARRAY_INITIALIZER)+1, s2.lastIndexOf(LANG2.CLOSE_ARRAY_INITIALIZER));
 			if(args1.equals(args2)) {
@@ -4099,7 +4099,7 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(creationCoveringTheEntireStatement2 != null && creationCoveringTheEntireStatement2.getAnonymousClassDeclaration() != null && invocationCoveringTheEntireStatement1 != null && !(invocationCoveringTheEntireStatement1 instanceof MethodReference) && variableDeclarations1.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s1.contains("(") && s1.contains(")")) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s1.contains("(") && s1.contains(")") && s1.indexOf("(") < s1.lastIndexOf(")")) {
 			String args1 = s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")"));
 			String arrayInitializer = creationCoveringTheEntireStatement2.getAnonymousClassDeclaration();
 			String args2 = arrayInitializer.substring(arrayInitializer.indexOf(LANG2.OPEN_ARRAY_INITIALIZER)+1, arrayInitializer.lastIndexOf(LANG2.CLOSE_ARRAY_INITIALIZER));

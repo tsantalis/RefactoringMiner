@@ -56,11 +56,11 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (dstOperationNode != null && dstOperationNode.getType().name.equals(LANG2.CLASS_BLOCK)) {
                 dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2, LANG2.METHOD_DECLARATION);
             }
-            if (srcOperationNode != null && srcOperationNode.getType().name.equals(LANG1.CONST_KEYWORD)) {
-                srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.LEXICAL_DECLARATION);
+            if (srcOperationNode != null && (srcOperationNode.getType().name.equals(LANG1.CONST_KEYWORD) || srcOperationNode.getType().name.equals(LANG1.ASYNC_KEYWORD))) {
+                srcOperationNode = srcOperationNode.getParent();
             }
-            if (dstOperationNode != null && dstOperationNode.getType().name.equals(LANG2.CONST_KEYWORD)) {
-                dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2, LANG2.LEXICAL_DECLARATION);
+            if (dstOperationNode != null && (dstOperationNode.getType().name.equals(LANG2.CONST_KEYWORD) || dstOperationNode.getType().name.equals(LANG2.ASYNC_KEYWORD))) {
+                dstOperationNode = dstOperationNode.getParent();
             }
             if (srcOperationNode != null && srcOperationNode.getType().name.endsWith("_comment")) {
                 srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.METHOD_DECLARATION);

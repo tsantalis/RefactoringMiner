@@ -107,11 +107,41 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG1.IF_KEYWORD)) {
             dstStatementNode = dstStatementNode.getParent();
         }
+        if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.WHILE_KEYWORD)) {
+            srcStatementNode = srcStatementNode.getParent();
+        }
+        if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG1.WHILE_KEYWORD)) {
+            dstStatementNode = dstStatementNode.getParent();
+        }
         if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.OPENING_CURLY_BRACE)) {
             srcStatementNode = srcStatementNode.getParent();
         }
         if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG1.OPENING_CURLY_BRACE)) {
             dstStatementNode = dstStatementNode.getParent();
+        }
+        if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CLOSING_PARENTHESIS)) {
+            //find the first parent that has a statementBlock as last child
+            Tree srcParent = srcStatementNode.getParent();
+            while(srcParent != null) {
+                List<Tree> children = srcParent.getChildren();
+                if(children.size() > 0 && children.get(children.size()-1).getType().name.equals(LANG1.STATEMENT_BLOCK) ) {
+                    srcStatementNode = children.get(children.size()-1);
+                    break;
+                }
+                srcParent = srcParent.getParent();
+            }
+        }
+        if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.CLOSING_PARENTHESIS)) {
+            //find the first parent that has a statementBlock as last child
+            Tree dstParent = dstStatementNode.getParent();
+            while(dstParent != null) {
+                List<Tree> children = dstParent.getChildren();
+                if(children.size() > 0 && children.get(children.size()-1).getType().name.equals(LANG2.STATEMENT_BLOCK) ) {
+                    dstStatementNode = children.get(children.size()-1);
+                    break;
+                }
+                dstParent = dstParent.getParent();
+            }
         }
         //handle case where the parent block has only a single statement and the locationInfo of compositeStatement is identical with the parent block locationInfo in Python
         //the solution uses reflection to obtain the value of Constants value from the CodeElementType constant name
@@ -577,6 +607,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.RETURN_KEYWORD)) {
             srcStatementNode = srcStatementNode.getParent();
         }
+        else if(srcStatementNode != null && (srcStatementNode.getType().name.equals(LANG1.CONST_KEYWORD) || srcStatementNode.getType().name.equals(LANG1.LET_KEYWORD))) {
+            srcStatementNode = srcStatementNode.getParent();
+        }
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.MEMBER_EXPRESSION)) {
             srcStatementNode = srcStatementNode.getParent();
             if(srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION))
@@ -595,6 +628,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             dstStatementNode = dstStatementNode.getParent();
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.RETURN_KEYWORD)) {
+            dstStatementNode = dstStatementNode.getParent();
+        }
+        else if(dstStatementNode != null && (dstStatementNode.getType().name.equals(LANG2.CONST_KEYWORD) || dstStatementNode.getType().name.equals(LANG2.LET_KEYWORD))) {
             dstStatementNode = dstStatementNode.getParent();
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.MEMBER_EXPRESSION)) {

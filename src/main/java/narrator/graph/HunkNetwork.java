@@ -208,12 +208,12 @@ public class HunkNetwork {
     graph.addVertex(node);
     nodeMap.put(node.getId(), node);
 
-    addNodeContext(node);
+    addNodeContexts(node);
 
     return node;
   }
 
-  private void addNodeContext(Node node) {
+  private void addNodeContexts(Node node) {
     String path = node.getPath();
     SrcDst srcDst = node.getSrcDst();
 
@@ -231,6 +231,8 @@ public class HunkNetwork {
       Node contextNode = nodeMap.get(potentialContextId);
       injectContextNode(contextNode);
     }
+
+    injectContextNode(node);
   }
 
   private void injectContextNode(Node contextNode) {
@@ -254,14 +256,15 @@ public class HunkNetwork {
 
     List<Node> predecessors = graph.vertexSet().stream().filter(contextNode::isDescendantOf)
         .toList();
-    List<Node> immediatePredecessors = predecessors.stream().filter(
+    Optional<Node> immediatePredecessor = predecessors.stream().filter(
             subject -> predecessors.stream().noneMatch(object -> object.isDescendantOf(subject)))
-        .toList();
-    for (Node immediatePredecessor : immediatePredecessors) {
-      Optional<Edge> existingEdge = graph.getAllEdges(contextNode, immediatePredecessor).stream()
+        .findFirst();
+    if (immediatePredecessor.isPresent()) {
+      Optional<Edge> existingEdge = graph.getAllEdges(contextNode, immediatePredecessor.get())
+          .stream()
           .filter(edge -> edge.getType().equals(EdgeType.CONTEXT)).findFirst();
       if (existingEdge.isEmpty()) {
-        addEdge(contextNode, immediatePredecessor, EdgeType.CONTEXT);
+        addEdge(contextNode, immediatePredecessor.get(), EdgeType.CONTEXT);
       }
     }
   }

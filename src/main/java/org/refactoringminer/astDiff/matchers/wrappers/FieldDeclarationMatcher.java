@@ -74,6 +74,13 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         if (dstFieldDeclaration == null) {
             dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.RECORD_COMPONENT);
         }
+        //handle lexical declarations in TypeScript
+        if (srcFieldDeclaration == null && srcAttr.getType().name.equals(LANG1.VARIABLE_DECLARATOR)) {
+            srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.LEXICAL_DECLARATION);
+        }
+        if (dstFieldDeclaration == null && dstAttr.getType().name.equals(LANG2.VARIABLE_DECLARATOR)) {
+            dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.LEXICAL_DECLARATION);
+        }
         if (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment")) {
             srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo(), LANG1, LANG1.FIELD_DECLARATION);
         }
@@ -120,11 +127,17 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                 mappingStore.addMapping(type_annotations.first,type_annotations.second);
                 com.github.gumtreediff.utils.Pair<Tree, Tree> colons = Helpers.findPairOfType(type_annotations.first,type_annotations.second, LANG1.COLON, LANG2.COLON);
                 if(colons != null) {
-                	mappingStore.addMapping(colons.first, colons.second);
+                    mappingStore.addMapping(colons.first, colons.second);
                 }
             }
         }
         mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
+        if(srcFieldDeclaration != null && srcFieldDeclaration.getType().name.equals(LANG1.LEXICAL_DECLARATION) && dstFieldDeclaration != null && dstFieldDeclaration.getType().name.equals(LANG2.LEXICAL_DECLARATION)) {
+            com.github.gumtreediff.utils.Pair<Tree, Tree> constKeywords = Helpers.findPairOfType(srcFieldDeclaration,dstFieldDeclaration, LANG1.CONST_KEYWORD, LANG2.CONST_KEYWORD);
+            if(constKeywords != null) {
+                mappingStore.addMapping(constKeywords.first, constKeywords.second);
+            }
+        }
         matchFieldAllModifiers(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute,dstUMLAttribute,mappingStore);
         matchFieldAnnotations(srcFieldDeclaration, dstFieldDeclaration, mappingStore);
         if (srcUMLAttribute.getType().getLocationInfo() == null || dstUMLAttribute.getType().getLocationInfo() == null) {

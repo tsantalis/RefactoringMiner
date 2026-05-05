@@ -68,6 +68,7 @@ tasks.processTestResources {
     }
 }
 dependencies {
+    implementation 'com.vdurmont:emoji-java:5.1.1'
     implementation 'com.caoccao.javet:swc4j:2.1.0'
     implementation 'com.caoccao.javet:swc4j-macos-arm64:2.1.0'
     implementation 'com.caoccao.javet:swc4j-linux-x86_64:2.1.0'

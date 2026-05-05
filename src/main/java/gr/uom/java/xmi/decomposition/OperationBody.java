@@ -134,6 +134,7 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeLit;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParam;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamDecl;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamInstantiation;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsUnionType;
 
 import extension.ast.node.LangASTNode;
@@ -1869,6 +1870,14 @@ public class OperationBody {
 				ISwc4jAstExpr expr = inter.getExpr();
 				if(expr instanceof Swc4jAstIdent ident) {
 					UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
+					if(inter.getTypeArgs().isPresent()) {
+						Swc4jAstTsTypeParamInstantiation instantiation = inter.getTypeArgs().get();
+						List<ISwc4jAstTsType> typeParams = instantiation.getParams();
+						for(ISwc4jAstTsType typeParam : typeParams) {
+							UMLType umlTypeParam = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeParam, 0);
+							type.getTypeArguments().add(umlTypeParam);
+						}
+					}
 					umlClass.addImplementedInterface(type);
 				}
 			}

@@ -414,6 +414,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (srcSubTree == null || dstSubTree == null) return;
         if (srcSubTree.isIsoStructuralTo(dstSubTree))
             mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
+        if (srcSubTree.getParent().getType().name.equals(LANG1.GENERIC_TYPE) && dstSubTree.getParent().getType().name.equals(LANG2.GENERIC_TYPE)) {
+            if (srcSubTree.getParent().isIsoStructuralTo(dstSubTree.getParent()))
+                mappingStore.addMappingRecursively(srcSubTree.getParent(),dstSubTree.getParent());
+        }
         if (srcSubTree.getParent().getType().name.equals(LANG1.IMPLEMENTS_CLAUSE) && dstSubTree.getParent().getType().name.equals(LANG2.IMPLEMENTS_CLAUSE)) {
             mappingStore.addMapping(srcSubTree.getParent(), dstSubTree.getParent());
             Pair<Tree, Tree> implement = Helpers.findPairOfType(srcSubTree.getParent(), dstSubTree.getParent(), LANG1.IMPLEMENTS_KEYWORD, LANG2.IMPLEMENTS_KEYWORD);

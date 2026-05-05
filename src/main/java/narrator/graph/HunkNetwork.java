@@ -131,7 +131,13 @@ public class HunkNetwork {
     }};
 
     return trees.stream()
-        .filter(addition -> !invalidTypes.contains(addition.getType().name)).collect(
+        .filter(addition -> {
+          HashSet<Tree> precedents = new HashSet<>(addition.getParents());
+          precedents.add(addition);
+
+          return precedents.stream()
+              .noneMatch(precedent -> invalidTypes.contains(precedent.getType().name));
+        }).collect(
             Collectors.toSet());
   }
 
@@ -211,10 +217,10 @@ public class HunkNetwork {
     String path = node.getPath();
     SrcDst srcDst = node.getSrcDst();
 
-    Node lastNode = node;
     List<Pair<Tree, NodeType>> contexts = Context.get(node.getPath(), node.getTree());
     for (Pair<Tree, NodeType> context : contexts) {
       String potentialContextId = Node.formatId(path, srcDst, context.second, context.first);
+
       if (!nodeMap.containsKey(potentialContextId)) {
         Node contextNode = new Node(node.getFileContent(), path, srcDst, context.first,
             null, null, context.second, node.getDiff());
@@ -223,12 +229,40 @@ public class HunkNetwork {
       }
 
       Node contextNode = nodeMap.get(potentialContextId);
-      if (graph.getEdge(lastNode, contextNode) != null) {
-        break;
-      }
-      graph.addEdge(lastNode, contextNode, new Edge(EdgeType.CONTEXT));
+      injectContextNode(contextNode);
+    }
+  }
 
-      lastNode = contextNode;
+  private void injectContextNode(Node contextNode) {
+    List<Node> descendantNodes = graph.vertexSet().stream()
+        .filter(node -> node.isDescendantOf(contextNode))
+        .toList();
+    List<Node> immediateDescendants = descendantNodes.stream().filter(
+            subject -> descendantNodes.stream().noneMatch(subject::isDescendantOf))
+        .toList();
+    for (Node immediateDescendant : immediateDescendants) {
+      Optional<Edge> contextEdge = graph.outgoingEdgesOf(immediateDescendant).stream()
+          .filter(edge -> edge.getType().equals(EdgeType.CONTEXT)).findFirst();
+      contextEdge.ifPresent(graph::removeEdge);
+
+      Optional<Edge> existingEdge = graph.getAllEdges(immediateDescendant, contextNode).stream()
+          .filter(edge -> edge.getType().equals(EdgeType.CONTEXT)).findFirst();
+      if (existingEdge.isEmpty()) {
+        addEdge(immediateDescendant, contextNode, EdgeType.CONTEXT);
+      }
+    }
+
+    List<Node> predecessors = graph.vertexSet().stream().filter(contextNode::isDescendantOf)
+        .toList();
+    List<Node> immediatePredecessors = predecessors.stream().filter(
+            subject -> predecessors.stream().noneMatch(object -> object.isDescendantOf(subject)))
+        .toList();
+    for (Node immediatePredecessor : immediatePredecessors) {
+      Optional<Edge> existingEdge = graph.getAllEdges(contextNode, immediatePredecessor).stream()
+          .filter(edge -> edge.getType().equals(EdgeType.CONTEXT)).findFirst();
+      if (existingEdge.isEmpty()) {
+        addEdge(contextNode, immediatePredecessor, EdgeType.CONTEXT);
+      }
     }
   }
 

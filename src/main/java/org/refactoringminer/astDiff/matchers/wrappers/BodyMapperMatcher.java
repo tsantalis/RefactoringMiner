@@ -642,6 +642,17 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         if(formal_parameters != null && formal_parameters.first.isIsoStructuralTo(formal_parameters.second)) {
             mappingStore.addMappingRecursively(formal_parameters.first, formal_parameters.second);
         }
+        else if(formal_parameters != null) {
+            mappingStore.addMapping(formal_parameters.first, formal_parameters.second);
+            Pair<Tree, Tree> open_parenthesis = Helpers.findPairOfType(formal_parameters.first, formal_parameters.second, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
+            if(open_parenthesis != null) {
+                mappingStore.addMapping(open_parenthesis.first, open_parenthesis.second);
+            }
+            Pair<Tree, Tree> close_parenthesis = Helpers.findPairOfType(formal_parameters.first, formal_parameters.second, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
+            if(close_parenthesis != null) {
+                mappingStore.addMapping(close_parenthesis.first, close_parenthesis.second);
+            }
+        }
         Pair<Tree, Tree> arrows = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ARROW_TOKEN, LANG2.ARROW_TOKEN);
         if(arrows != null) {
             mappingStore.addMapping(arrows.first, arrows.second);

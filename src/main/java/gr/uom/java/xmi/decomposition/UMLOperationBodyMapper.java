@@ -5204,7 +5204,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		int mappingsWithTypeReplacement = 0;
 		int mappingsWithVariableReplacement = 0;
 		int mappingsWithMethodInvocationRename = 0;
-		int jumpMappings = 0;
 		for(AbstractCodeMapping mapping : this.getMappings()) {
 			if(mapping.getFragment1().getString().equals(LANG1.TRY) && mapping.getFragment2().getString().equals(LANG2.TRY)) {
 				tryMappings++;
@@ -5231,22 +5230,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			if(mapping.getFragment1().getString().equals(LANG1.BREAK_STATEMENT) || 
-					mapping.getFragment1().getString().equals(LANG1.CONTINUE_STATEMENT)) {
-				jumpMappings++;
-			}
 		}
 		int exactMatches = this.exactMatches();
-		if(mappings == exactMatches + jumpMappings + tryMappings) {
+		if(mappings == exactMatches + tryMappings) {
 			return true;
 		}
-		if(mappings == exactMatches + jumpMappings + tryMappings + mappingsWithTypeReplacement && mappings > mappingsWithTypeReplacement) {
+		if(mappings == exactMatches + tryMappings + mappingsWithTypeReplacement && mappings > mappingsWithTypeReplacement) {
 			return true;
 		}
-		if(mappings == exactMatches + jumpMappings + tryMappings + mappingsWithVariableReplacement && mappings > mappingsWithVariableReplacement) {
+		if(mappings == exactMatches + tryMappings + mappingsWithVariableReplacement && mappings > mappingsWithVariableReplacement) {
 			return true;
 		}
-		if(mappings == exactMatches + jumpMappings + tryMappings + mappingsWithMethodInvocationRename && mappings > mappingsWithMethodInvocationRename) {
+		if(mappings == exactMatches + tryMappings + mappingsWithMethodInvocationRename && mappings > mappingsWithMethodInvocationRename) {
 			return true;
 		}
 		return false;

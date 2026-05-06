@@ -147,6 +147,10 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             if(constKeywords != null) {
                 mappingStore.addMapping(constKeywords.first, constKeywords.second);
             }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> semicolons = Helpers.findPairOfType(srcFieldDeclaration,dstFieldDeclaration, LANG1.SEMICOLON, LANG2.SEMICOLON);
+            if(semicolons != null) {
+                mappingStore.addMapping(semicolons.first, semicolons.second);
+            }
         }
         matchFieldAllModifiers(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute,dstUMLAttribute,mappingStore);
         matchFieldAnnotations(srcFieldDeclaration, dstFieldDeclaration, mappingStore);

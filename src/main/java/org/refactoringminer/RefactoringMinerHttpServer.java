@@ -50,15 +50,24 @@ public class RefactoringMinerHttpServer {
 			if (!oAuthToken.isEmpty()) {
 				miner.connectToGitHub(oAuthToken);
 			}
-			miner.detectAtCommit(gitURL, commitId, (commitId1, refactorings) -> detectedRefactorings.addAll(refactorings), timeout);
-
-			String response = JSON(gitURL, commitId, detectedRefactorings);
-			System.out.println(response);
-			exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-			exchange.sendResponseHeaders(200, response.length());
-			OutputStream os = exchange.getResponseBody();
-			os.write(response.getBytes());
-			os.close();
+            try {
+				miner.detectAtCommit(gitURL, commitId, (commitId1, refactorings) -> detectedRefactorings.addAll(refactorings), timeout);
+				String response = JSON(gitURL, commitId, detectedRefactorings);
+				System.out.println(response);
+				exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+				exchange.sendResponseHeaders(200, response.length());
+				OutputStream os = exchange.getResponseBody();
+				os.write(response.getBytes());
+				os.close();
+			} catch (Exception e) {
+				String error = "{\"error\":\"" + e.getMessage().replace("\"", "'") + "\"}";
+				exchange.sendResponseHeaders(500, error.length());
+				OutputStream os = exchange.getResponseBody();
+				os.write(error.getBytes());
+				os.close();
+			} finally {
+				exchange.close();
+			}
 		});
 		server.setExecutor(new ThreadPoolExecutor(4, 8, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<>(100)));
 		server.start();

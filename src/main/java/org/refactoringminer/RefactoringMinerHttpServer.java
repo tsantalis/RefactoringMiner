@@ -35,10 +35,12 @@ public class RefactoringMinerHttpServer {
 	);
 	public static void main(String[] args) throws Exception {
 		Properties prop = new Properties();
-		InputStream input = new FileInputStream("server.properties");
-		prop.load(input);
-		String hostName = prop.getProperty("hostname");
-		int port = Integer.parseInt(prop.getProperty("port"));
+		try {
+			InputStream input = new FileInputStream("server.properties");
+			prop.load(input);
+		} catch (Exception ignored) {}
+		String hostName = prop.getProperty("hostname", System.getenv("hostname"));
+		int port = Integer.parseInt(prop.getProperty("port", System.getenv("port")));
 		
 		InetSocketAddress inetSocketAddress = new InetSocketAddress(InetAddress.getByName(hostName), port);
 		HttpServer server = HttpServer.create(inetSocketAddress, 0);

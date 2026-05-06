@@ -19,11 +19,16 @@ import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstModuleItem;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstParamOrTsParamProp;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstStmt;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsFnParam;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstArrayPat;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstObjectPat;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstRestPat;
 import com.caoccao.javet.swc4j.ast.program.Swc4jAstModule;
 import com.caoccao.javet.swc4j.ast.program.Swc4jAstScript;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstFnDecl;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsMethodSignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParam;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamDecl;
@@ -233,6 +238,68 @@ public class TypeScriptFileProcessor {
 		int endSignatureOffset = body.isPresent() ?
 				body.get().getSpan().getStart() + 1 :
 				functionDecl.getSpan().getEnd();
+		String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
+		operation.setActualSignature(text);
+		return operation;
+	}
+
+	public static UMLOperation processFunctionSignature(String sourceFolder, String filePath, Swc4jAstTsMethodSignature methodSignature,
+			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className) {
+		LocationInfo location = new LocationInfo(sourceFolder, filePath, methodSignature.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+		UMLOperation operation = new UMLOperation(methodSignature.getKey().toString(), location, className);
+		operation.setVisibility(Visibility.PUBLIC);
+		Optional<Swc4jAstTsTypeAnn> returnType = methodSignature.getTypeAnn();
+		if(returnType.isPresent()) {
+			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, returnType.get().getTypeAnn(), 0);
+			UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
+			operation.addParameter(returnParameter);
+		}
+		Optional<Swc4jAstTsTypeParamDecl> typeParams = methodSignature.getTypeParams();
+		if(typeParams.isPresent()) {
+			List<Swc4jAstTsTypeParam> list = typeParams.get().getParams();
+			for(Swc4jAstTsTypeParam param : list) {
+				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param.getSpan(), CodeElementType.TYPE_PARAMETER, fileContent);
+				UMLTypeParameter umlTypeParameter = new UMLTypeParameter(param.getName().getSym(), locationInfo);
+				operation.addTypeParameter(umlTypeParameter);
+			}
+		}
+		for(ISwc4jAstTsFnParam param : methodSignature.getParams()) {
+			ISwc4jAstPat pat = null;
+			if(param instanceof Swc4jAstArrayPat arrayPat) {
+				pat = arrayPat;
+			}
+			else if(param instanceof Swc4jAstObjectPat objectPat) {
+				pat = objectPat;
+			}
+			else if(param instanceof Swc4jAstRestPat restPat) {
+				pat = restPat;
+			}
+			else if(param instanceof Swc4jAstBindingIdent identifier) {
+				Swc4jAstTsTypeAnn typeAnnotation = identifier.getTypeAnn().isPresent() ? identifier.getTypeAnn().get() : null;
+				VariableDeclaration parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, operation, activeVariableDeclarations, fileContent);
+				parameter.setParameter(true);
+				if(parameter.getType() != null) {
+					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
+					umlParameter.setVariableDeclaration(parameter);
+					operation.addParameter(umlParameter);
+				}
+			}
+			if(pat != null) {
+				Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(pat);
+				List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(pat);
+				for(Swc4jAstBindingIdent identifier : identifiers) {
+					VariableDeclaration parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, operation, activeVariableDeclarations, fileContent);
+					parameter.setParameter(true);
+					if(parameter.getType() != null) {
+						UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
+						umlParameter.setVariableDeclaration(parameter);
+						operation.addParameter(umlParameter);
+					}
+				}
+			}
+		}
+		int startSignatureOffset = methodSignature.getSpan().getStart();
+		int endSignatureOffset = methodSignature.getSpan().getEnd();
 		String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
 		operation.setActualSignature(text);
 		return operation;

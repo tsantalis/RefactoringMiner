@@ -2022,7 +2022,9 @@ public class OperationBody {
 				}
 			}
 			else if(member instanceof Swc4jAstTsMethodSignature methodSignature) {
-				
+				String className = container.getClassName();
+				UMLOperation operation = TypeScriptFileProcessor.processFunctionSignature(sourceFolder, filePath, methodSignature, activeVariableDeclarations, fileContent, className);
+				umlClass.addOperation(operation);
 			}
 			else if(member instanceof Swc4jAstTsSetterSignature setterSignature) {
 				

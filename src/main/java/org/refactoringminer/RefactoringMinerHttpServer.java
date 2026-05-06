@@ -12,8 +12,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.Refactoring;
@@ -25,6 +28,11 @@ import com.sun.net.httpserver.HttpServer;
 
 public class RefactoringMinerHttpServer {
 
+	private static final ExecutorService MINER_POOL = new ThreadPoolExecutor(
+			4, 16, 60L, TimeUnit.SECONDS,
+			new ArrayBlockingQueue<>(200),
+			new ThreadPoolExecutor.CallerRunsPolicy()
+	);
 	public static void main(String[] args) throws Exception {
 		Properties prop = new Properties();
 		InputStream input = new FileInputStream("server.properties");
@@ -50,8 +58,20 @@ public class RefactoringMinerHttpServer {
 			if (!oAuthToken.isEmpty()) {
 				miner.connectToGitHub(oAuthToken);
 			}
-            try {
-				miner.detectAtCommit(gitURL, commitId, (commitId1, refactorings) -> detectedRefactorings.addAll(refactorings), timeout);
+			Future<?> future = MINER_POOL.submit(() -> miner.detectAtCommit(gitURL, commitId, (commitId1, refactorings) -> detectedRefactorings.addAll(refactorings), timeout));
+			int responseStatusCode = 200;
+			try {
+				try {
+					future.get(Math.max(timeout, 30L), TimeUnit.SECONDS);
+				} catch (InterruptedException e) {
+					responseStatusCode = 503;
+					Thread.currentThread().interrupt();
+					throw new RuntimeException("Handler interrupted");
+				} catch (TimeoutException te) {
+					responseStatusCode = 503;
+					future.cancel(true);
+					throw new RuntimeException("Server-side timeout");
+				}
 				String response = JSON(gitURL, commitId, detectedRefactorings);
 				System.out.println(response);
 				exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
@@ -61,7 +81,7 @@ public class RefactoringMinerHttpServer {
 				os.close();
 			} catch (Exception e) {
 				String error = "{\"error\":\"" + e.getMessage().replace("\"", "'") + "\"}";
-				exchange.sendResponseHeaders(500, error.length());
+				exchange.sendResponseHeaders(responseStatusCode == 200 ? 500 : responseStatusCode, error.length());
 				OutputStream os = exchange.getResponseBody();
 				os.write(error.getBytes());
 				os.close();

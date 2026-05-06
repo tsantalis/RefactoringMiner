@@ -128,6 +128,10 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                 }
             }
             mappingStore.addMapping(srcAttr, dstAttr);
+            com.github.gumtreediff.utils.Pair<Tree, Tree> optionals = Helpers.findPairOfType(srcAttr,dstAttr, LANG1.OPTIONAL_KEYWORD, LANG2.OPTIONAL_KEYWORD);
+            if(optionals != null) {
+                mappingStore.addMapping(optionals.first,optionals.second);
+            }
             com.github.gumtreediff.utils.Pair<Tree, Tree> type_annotations = Helpers.findPairOfType(srcAttr,dstAttr, LANG1.TYPE_ANNOTATION, LANG2.TYPE_ANNOTATION);
             if(type_annotations != null) {
                 mappingStore.addMapping(type_annotations.first,type_annotations.second);

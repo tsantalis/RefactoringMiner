@@ -960,6 +960,25 @@ public abstract class UMLAbstractClassDiff {
 		int numberOfVariableDeclarationsInRemovedOperationFoundInOtherAddedOperations = newVariableDeclarationIntersection.size();
 		int numberOfVariableDeclarationsMissingFromRemovedOperationWithoutThoseFoundInOtherAddedOperations = numberOfVariableDeclarationsMissingFromRemovedOperation - numberOfVariableDeclarationsInRemovedOperationFoundInOtherAddedOperations;
 		
+		//check for indirect method invocations
+		List<String> variableReferences = addedOperation.getAllVariables();
+		for(UMLAttribute attribute : nextClass.getAttributes()) {
+			if(variableReferences.contains(attribute.getName()) && attribute.getVariableDeclaration().getInitializer() != null) {
+				List<AbstractCall> invocations = attribute.getVariableDeclaration().getInitializer().getAllOperationInvocations();
+				int matches = 0;
+				for(AbstractCall invocation : invocations) {
+					for(UMLOperation op : addedOperations) {
+						if(op.getName().equals(invocation.getName())) {
+							matches++;
+							break;
+						}
+					}
+				}
+				if(matches > 0 && invocations.size() == matches) {
+					return true;
+				}
+			}
+		}
 		return numberOfInvocationsOriginallyCalledByRemovedOperationFoundInOtherAddedOperations > numberOfInvocationsMissingFromRemovedOperationWithoutThoseFoundInOtherAddedOperations ||
 				numberOfInvocationsOriginallyCalledByRemovedOperationFoundInOtherAddedOperations > removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.size() ||
 				numberOfVariableDeclarationsInRemovedOperationFoundInOtherAddedOperations > numberOfVariableDeclarationsMissingFromRemovedOperationWithoutThoseFoundInOtherAddedOperations;

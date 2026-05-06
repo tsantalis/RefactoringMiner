@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstKeyValueProp;
 import com.caoccao.javet.swc4j.ast.enums.Swc4jAstBinaryOp;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstAssignExpr;
@@ -33,6 +34,7 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLImport;
+import gr.uom.java.xmi.UMLOperation;
 
 public class TypeScriptVisitor extends Swc4jAstVisitor {
 	private String sourceFolder;
@@ -133,7 +135,22 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 							// Direct Method Passing (Point-Free Style)
 							OperationInvocation invocation = new OperationInvocation(sourceFolder, filePath, node, container, fileContent);
 							methodInvocations.add(invocation);
+							break;
 						}
+					}
+				}
+			}
+		}
+		else if(node.getParent() instanceof Swc4jAstKeyValueProp prop && prop.getValue().equals(node)) {
+			String name = node.getSym();
+			if(container instanceof ModuleContainer module) {
+				for(UMLOperation op : module.getNestedOperations()) {
+					if(op.getName().equals(name)) {
+						// the identifier is a function name
+						// Direct Method Passing (Point-Free Style)
+						OperationInvocation invocation = new OperationInvocation(sourceFolder, filePath, node, container, fileContent);
+						methodInvocations.add(invocation);
+						break;
 					}
 				}
 			}

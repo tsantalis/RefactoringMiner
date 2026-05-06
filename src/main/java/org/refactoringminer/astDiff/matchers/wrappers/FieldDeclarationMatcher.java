@@ -120,6 +120,12 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                     Tree t2 = dstAttr.getParent().getChild(index2+1);
                     mappingStore.addMapping(t1,t2);
                 }
+                else if(srcAttr.getParent().getChildren().size() > index1+1 && srcAttr.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                        dstAttr.getParent().getChildren().size() > index2+1 && dstAttr.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+                    Tree t1 = srcAttr.getParent().getChild(index1+1);
+                    Tree t2 = dstAttr.getParent().getChild(index2+1);
+                    mappingStore.addMapping(t1,t2);
+                }
             }
             mappingStore.addMapping(srcAttr, dstAttr);
             com.github.gumtreediff.utils.Pair<Tree, Tree> type_annotations = Helpers.findPairOfType(srcAttr,dstAttr, LANG1.TYPE_ANNOTATION, LANG2.TYPE_ANNOTATION);

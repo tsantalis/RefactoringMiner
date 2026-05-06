@@ -89,7 +89,7 @@ public class RefactoringMinerHttpServer {
 				exchange.close();
 			}
 		});
-		server.setExecutor(new ThreadPoolExecutor(4, 8, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<>(100)));
+		server.setExecutor(new ThreadPoolExecutor(4, 8, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<>(100), new ThreadPoolExecutor.CallerRunsPolicy()));
 		server.start();
 		System.out.println(InetAddress.getLocalHost());
 	}

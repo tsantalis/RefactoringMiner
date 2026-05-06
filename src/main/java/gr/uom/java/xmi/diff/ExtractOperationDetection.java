@@ -425,7 +425,10 @@ public class ExtractOperationDetection {
 			for(UMLAttribute attribute : mapper.getClassDiff().getNextClass().getAttributes()) {
 				if(variableReferences.contains(attribute.getName()) && attribute.getVariableDeclaration().getInitializer() != null) {
 					List<AbstractCall> invocations = attribute.getVariableDeclaration().getInitializer().getAllOperationInvocations();
-					operationInvocations.addAll(invocations);
+					for(AbstractCall invocation : invocations) {
+						if(!operationInvocations.contains(invocation))
+							operationInvocations.add(invocation);
+					}
 				}
 			}
 		}

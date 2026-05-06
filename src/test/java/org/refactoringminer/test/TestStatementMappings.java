@@ -2300,6 +2300,39 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
+	@Test
+	public void testIndirectExtractionWithPolymorphism() throws Exception {
+		final List<String> actual = new ArrayList<>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + "export-detection-v1.txt"));
+		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + "export-detection-v2.txt"));
+		fileContentsBefore.put("gitnexus/src/core/ingestion/export-detection.ts", contentsV1);
+		fileContentsCurrent.put("gitnexus/src/core/ingestion/export-detection.ts", contentsV2);
+		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
+		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
+		
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+		for (Refactoring ref : modelDiff.getRefactorings()) {
+			if(ref instanceof ExtractOperationRefactoring) {
+				ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+				UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+				if(!bodyMapper.isNested()) {
+					if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+						parentMappers.add(bodyMapper.getParentMapper());
+					}
+				}
+				mapperInfo(bodyMapper, actual);
+			}
+		}
+		for(UMLOperationBodyMapper parentMapper : parentMappers) {
+			mapperInfo(parentMapper, actual);
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "GitNexus-1afe9166aa9557a6f2616141a6878dc0bf07eccf.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
 	@ParameterizedTest
 	@CsvSource({
 		"https://github.com/gabrielshufelt/soen390-commit-and-pray.git, 5f98a8aa11aca7828b6083f7c5ea81ccb3c757d8, soen390-commit-and-pray-5f98a8aa11aca7828b6083f7c5ea81ccb3c757d8.txt",

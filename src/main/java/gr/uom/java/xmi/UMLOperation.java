@@ -1429,6 +1429,23 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				return true;
 			}
 		}
+		List<VariableDeclaration> parameterDeclarationList1 = this.getParameterDeclarationList();
+		List<VariableDeclaration> parameterDeclarationList2 = removedOperation.getParameterDeclarationList();
+		if(parameterDeclarationList1.size() == parameterDeclarationList2.size()) {
+			int matches = 0;
+			for(int i=0; i<parameterDeclarationList1.size(); i++) {
+				VariableDeclaration v1 = parameterDeclarationList1.get(i);
+				VariableDeclaration v2 = parameterDeclarationList2.get(i);
+				if(v1.getType() instanceof InferredType || v2.getType() instanceof InferredType) {
+					if(v1.getVariableName().equals(v2.getVariableName()) || v1.getVariableName().contains(v2.getVariableName()) || v2.getVariableName().contains(v1.getVariableName())) {
+						matches++;
+					}
+				}
+			}
+			if(matches > 0 && matches == parameterDeclarationList1.size()) {
+				return true;
+			}
+		}
 		return (this.equalReturnParameter(removedOperation) && (equalParameterTypes(removedOperation) || overloadedParameterTypes(removedOperation) || equalParameterNames(removedOperation))) || replacedParameterTypes(removedOperation);
 	}
 

@@ -33,6 +33,7 @@ import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.MergeOperationRefactoring;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring;
+import gr.uom.java.xmi.diff.MoveOperationRefactoring;
 import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
 import gr.uom.java.xmi.diff.PullUpOperationRefactoring;
 import gr.uom.java.xmi.diff.PushDownOperationRefactoring;
@@ -2346,7 +2347,8 @@ public class TestStatementMappings {
 		"https://github.com/LamdaDev/GitToCampus.git, 8bbdd23d15fece69bec4db5cab94207043c675cb, GitToCampus-8bbdd23d15fece69bec4db5cab94207043c675cb.txt",
 		"https://github.com/gabrielshufelt/soen390-commit-and-pray.git, 9792d7435d3ad89cc3df28070097ca093062b965, soen390-commit-and-pray-9792d7435d3ad89cc3df28070097ca093062b965.txt",
 		"https://github.com/yassineAbdellatif/Git-happens.git, f95a669a2acdebf69b3b936ad7a71036ad103b9f, Git-happens-f95a669a2acdebf69b3b936ad7a71036ad103b9f.txt",
-		"https://github.com/SOEN-390-MakeSoft/SOEN-390-MakeSoft.git, c5e64b290ffdb92655fa75abb70b5908926cb9d2, MakeSoft-c5e64b290ffdb92655fa75abb70b5908926cb9d2.txt"
+		"https://github.com/SOEN-390-MakeSoft/SOEN-390-MakeSoft.git, c5e64b290ffdb92655fa75abb70b5908926cb9d2, MakeSoft-c5e64b290ffdb92655fa75abb70b5908926cb9d2.txt",
+		"https://github.com/abhigyanpatwari/GitNexus.git, 43098784cfbcbdc44ae5893109c4fc2e23f45c29, GitNexus-43098784cfbcbdc44ae5893109c4fc2e23f45c29.txt"
 	})
 	public void testExtractMethodStatementMappingsForTypeScript(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
@@ -2362,6 +2364,16 @@ public class TestStatementMappings {
 							parentMappers.add(bodyMapper.getParentMapper());
 						}
 					}
+					mapperInfo(bodyMapper, actual);
+				}
+				else if(ref instanceof MoveOperationRefactoring) {
+					MoveOperationRefactoring ex = (MoveOperationRefactoring)ref;
+					UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+					mapperInfo(bodyMapper, actual);
+				}
+				else if(ref instanceof RenameOperationRefactoring) {
+					RenameOperationRefactoring ex = (RenameOperationRefactoring)ref;
+					UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
 					mapperInfo(bodyMapper, actual);
 				}
 			}

@@ -223,6 +223,28 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                             }
                         }
                     }
+                    else {
+                        for(UMLType type2 : types2) {
+                            int index = types1.indexOf(type2);
+                            if(index != -1) {
+                                matchFound = true;
+                                UMLType type1 = types1.get(index);
+                                Tree t1 = TreeUtilFunctions.findByLocationInfo(srcFunctionType, type1.getLocationInfo(), LANG1);
+                                Tree t2 = TreeUtilFunctions.findByLocationInfo(dstFunctionType, type2.getLocationInfo(), LANG2);
+                                mappingStore.addMappingRecursively(t1, t2);
+                                int index1 = t1.getParent().getChildPosition(t1);
+                                int index2 = t2.getParent().getChildPosition(t2);
+                                if(index1 > 0 && t1.getParent().getChild(index1-1).getType().name.equals(LANG1.UNION) &&
+                                        index2 > 0 && t2.getParent().getChild(index2-1).getType().name.equals(LANG2.UNION)) {
+                                    Tree tt1 = t1.getParent().getChild(index1-1);
+                                    Tree tt2 = t2.getParent().getChild(index2-1);
+                                    mappingStore.addMapping(tt1,tt2);
+                                    //parent is a union type
+                                    mappingStore.addMapping(t1.getParent(),t2.getParent());
+                                }
+                            }
+                        }
+                    }
                     if(matchFound) {
                         mappingStore.addMapping(srcFunctionType, dstFunctionType);
                     }

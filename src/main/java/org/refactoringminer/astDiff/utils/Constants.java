@@ -420,4 +420,5 @@ public class Constants {
     public final String MEMBER_EXPRESSION = "member_expression";
     public final String METHOD_SIGNATURE = "method_signature";
     public final String OPTIONAL_KEYWORD = "?";
+    public final String UNION = "|";
 }

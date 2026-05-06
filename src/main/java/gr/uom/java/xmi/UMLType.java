@@ -609,7 +609,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			List<ISwc4jAstTsType> types = unionType.getTypes();
 			List<UMLType> unionTypes = new ArrayList<>();
 			for(ISwc4jAstTsType t : types) {
-				UMLType umlType = extractTypeObject(t, sourceFolder, filePath, fileContent);
+				UMLType umlType = extractTypeObject(sourceFolder, filePath, fileContent, t, 0);
 				unionTypes.add(umlType);
 			}
 			return new ListCompositeType(unionTypes, Kind.UNION);
@@ -618,7 +618,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			List<ISwc4jAstTsType> types = intersectionType.getTypes();
 			List<UMLType> unionTypes = new ArrayList<>();
 			for(ISwc4jAstTsType t : types) {
-				UMLType umlType = extractTypeObject(t, sourceFolder, filePath, fileContent);
+				UMLType umlType = extractTypeObject(sourceFolder, filePath, fileContent, t, 0);
 				unionTypes.add(umlType);
 			}
 			return new ListCompositeType(unionTypes, Kind.INTERSECTION);
@@ -675,7 +675,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 					keys.add(leafExpression);
 					if(signature.getTypeAnn().isPresent()) {
 						Swc4jAstTsTypeAnn typeAnnotation = signature.getTypeAnn().get();
-						UMLType signatureType = extractTypeObject(typeAnnotation.getTypeAnn(), sourceFolder, filePath, fileContent);
+						UMLType signatureType = extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation.getTypeAnn(), 0);
 						memberTypeList.add(signatureType);
 					}
 				}
@@ -747,7 +747,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			List<UMLType> elementTypeList = new ArrayList<>();
 			List<Swc4jAstTsTupleElement> elements = tupleType.getElemTypes();
 			for(Swc4jAstTsTupleElement element : elements) {
-				UMLType elementType = extractTypeObject(element.getTy(), sourceFolder, filePath, fileContent);
+				UMLType elementType = extractTypeObject(sourceFolder, filePath, fileContent, element.getTy(), 0);
 				elementTypeList.add(elementType);
 			}
 			ListCompositeType listCompositeType = new ListCompositeType(elementTypeList, Kind.TUPLE);

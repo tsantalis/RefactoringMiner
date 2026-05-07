@@ -1951,6 +1951,8 @@ public class OperationBody {
 						processTypeLiteral(sourceFolder, filePath, fileContent, umlClass, typeLiteral);
 					}
 				}
+				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation, 0);
+				umlClass.setFunctionType(type);
 			}
 			else if(typeAnnotation instanceof Swc4jAstTsUnionType unionType) {
 				for(ISwc4jAstTsType type : unionType.getTypes()) {
@@ -1958,9 +1960,13 @@ public class OperationBody {
 						processTypeLiteral(sourceFolder, filePath, fileContent, umlClass, typeLiteral);
 					}
 				}
+				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation, 0);
+				umlClass.setFunctionType(type);
 			}
-			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation, 0);
-			umlClass.setFunctionType(type);
+			else {
+				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation, 0);
+				umlClass.setFunctionType(type);
+			}
 			for(UMLComment comment : comments) {
 				if(umlClass.getLocationInfo().subsumes(comment.getLocationInfo())) {
 					umlClass.getComments().add(comment);

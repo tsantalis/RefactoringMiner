@@ -3347,13 +3347,31 @@ public class UMLModelDiff {
 				if(!operation.isAbstract() && !operation.hasEmptyBody() &&
 						!refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(operation) &&
 						newInvocation.matchesOperation(operation, addedOperation, classDiff, this)) {
-					ExtractOperationDetection detection = new ExtractOperationDetection(movedMethodMapper, potentiallyMovedOperations, addedOperations, getUMLClassDiff(operation.getClassName()), this);
-					List<ExtractOperationRefactoring> refs = detection.check(operation);
-					for(ExtractOperationRefactoring extractRefactoring : refs) {
-						if(!refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(extractRefactoring.getExtractedOperation()) &&
-								!containsRefactoringWithIdenticalMappings(extractRefactoring.getBodyMapper())) {
-							this.refactorings.add(extractRefactoring);
-							refactorings.addAll(extractRefactoring.getBodyMapper().getRefactorings());
+					//check if removedOperation has nested operation with the same name. possible extraction of nested operation to parent container
+					boolean nestedOperationExtraction = false;
+					if(removedOperation instanceof UMLOperation umlRemovedOperation) {
+						for(UMLOperation nestedOperation : umlRemovedOperation.getNestedOperations()) {
+							if(nestedOperation.getName().equals(operation.getName())) {
+								UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(nestedOperation, operation, classDiff);
+								if(movedMethodSignature(nestedOperation, operation, mapper, false) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(nestedOperation, operation)) {
+									MoveOperationRefactoring refactoring = new MoveOperationRefactoring(mapper);
+									this.refactorings.add(refactoring);
+									refactorings.addAll(refactoring.getBodyMapper().getRefactorings());
+									nestedOperationExtraction = true;
+									break;
+								}
+							}
+						}
+					}
+					if(!nestedOperationExtraction) {
+						ExtractOperationDetection detection = new ExtractOperationDetection(movedMethodMapper, potentiallyMovedOperations, addedOperations, getUMLClassDiff(operation.getClassName()), this);
+						List<ExtractOperationRefactoring> refs = detection.check(operation);
+						for(ExtractOperationRefactoring extractRefactoring : refs) {
+							if(!refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(extractRefactoring.getExtractedOperation()) &&
+									!containsRefactoringWithIdenticalMappings(extractRefactoring.getBodyMapper())) {
+								this.refactorings.add(extractRefactoring);
+								refactorings.addAll(extractRefactoring.getBodyMapper().getRefactorings());
+							}
 						}
 					}
 				}

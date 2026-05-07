@@ -6,6 +6,7 @@ import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLComment;
+import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.*;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring.Type;
 
@@ -95,6 +96,9 @@ public class UnifiedModelDiffRefactoringsMatcher {
                 Constants LANG1 = new Constants(srcPath);
                 Constants LANG2 = new Constants(dstPath);
                 findDiffsAndApplyMatcher(srcPath, dstPath, new MethodMatcher(moveOperationRefactoring.getBodyMapper(), true, true, LANG1, LANG2));
+                for(UMLOperationBodyMapper nestedMapper : moveOperationRefactoring.getNestedMappers()) {
+                    findDiffsAndApplyMatcher(srcPath, dstPath, new MethodMatcher(nestedMapper, true, true, LANG1, LANG2));
+                }
                 if (moveOperationRefactoring.getOriginalOperation().getJavadoc() == null && moveOperationRefactoring.getMovedOperation().getJavadoc() != null) {
                     UMLClass originalClass = modelDiff.getRemovedClass(moveOperationRefactoring.getOriginalOperation().getClassName());
                     if (originalClass != null && originalClass.getJavadoc() != null) {

@@ -7,8 +7,10 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
@@ -18,12 +20,24 @@ public class MoveOperationRefactoring implements Refactoring {
 	protected VariableDeclarationContainer movedOperation;
 	private Set<Replacement> replacements;
 	private UMLOperationBodyMapper bodyMapper;
+	private List<UMLOperationBodyMapper> nestedMappers;
 
-	public MoveOperationRefactoring(UMLOperationBodyMapper bodyMapper) {
+	public MoveOperationRefactoring(UMLOperationBodyMapper bodyMapper) throws RefactoringMinerTimedOutException {
 		this.bodyMapper = bodyMapper;
 		this.originalOperation = bodyMapper.getContainer1();
 		this.movedOperation = bodyMapper.getContainer2();
 		this.replacements = bodyMapper.getReplacements();
+		this.nestedMappers = new ArrayList<>();
+		if(bodyMapper.getOperation1() != null && bodyMapper.getOperation2() != null &&
+				(bodyMapper.getOperation1().getNestedOperations().size() > 0 || bodyMapper.getOperation2().getNestedOperations().size() > 0)) {
+			for(UMLOperation operation : bodyMapper.getOperation1().getNestedOperations()) {
+				UMLOperation operationWithTheSameSignature = bodyMapper.getOperation2().nestedOperationWithTheSameSignatureIgnoringChangedTypes(operation);
+				if(operationWithTheSameSignature != null) {
+					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation, operationWithTheSameSignature, bodyMapper.getClassDiff());
+					addNestedMapper(mapper);
+				}
+			}
+		}
 	}
 
 	public String toString() {
@@ -48,6 +62,14 @@ public class MoveOperationRefactoring implements Refactoring {
 			return RefactoringType.MOVE_AND_RENAME_OPERATION;
 		}
 		return RefactoringType.MOVE_OPERATION;
+	}
+
+	public void addNestedMapper(UMLOperationBodyMapper mapper) {
+		nestedMappers.add(mapper);
+	}
+
+	public List<UMLOperationBodyMapper> getNestedMappers() {
+		return nestedMappers;
 	}
 
 	public UMLOperationBodyMapper getBodyMapper() {

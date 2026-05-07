@@ -5084,6 +5084,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return nonMappedLeafCount + nonMappedInnerNodeCount;
 	}
 
+	public int exactMatchesWithoutLeafExpressions() {
+		int count = 0;
+		Set<LeafMapping> subExpressionMappings = new LinkedHashSet<>();
+		for(AbstractCodeMapping mapping : getMappings()) {
+			if(mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression)
+				continue;
+			subExpressionMappings.addAll(mapping.getSubExpressionMappings());
+			if(mapping.isExact() && mapping.getFragment1().countableStatement() && mapping.getFragment2().countableStatement() &&
+					!mapping.getFragment1().getString().equals(LANG1.TRY) && !subExpressionMappings.contains(mapping))
+				count++;
+		}
+		return count;
+	}
+
 	public int exactMatches() {
 		int count = 0;
 		Set<LeafMapping> subExpressionMappings = new LinkedHashSet<>();

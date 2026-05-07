@@ -61,6 +61,9 @@ line range:219-227==line range:92-100
 line range:210-229==line range:83-102
 line range:166-185==line range:39-58
 line range:185-230==line range:58-103
+private resolvePhpImport(rawImportPath string, _filePath string, ctx ResolveCtx) : ImportResult -> private phpPsr4Strategy(rawImportPath Inferred, _filePath Inferred, ctx Inferred) : ImportResolverStrategy
+line range:101-108==line range:12-19
+line range:109-109==line range:20-20
 private resolvePythonImport(rawImportPath string, filePath string, ctx ResolveCtx) : ImportResult -> private pythonImportStrategy(rawImportPath Inferred, filePath Inferred, ctx Inferred) : ImportResolverStrategy
 line range:87-87==line range:17-17
 line range:91-91==line range:19-19

@@ -23,6 +23,7 @@ import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLOperation;
@@ -194,9 +195,25 @@ public abstract class UMLAbstractClassDiff {
 
 	public void addOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
 		this.operationBodyMapperList.add(operationBodyMapper);
-		if(operationBodyMapper.getOperation1() != null && operationBodyMapper.getOperation2() != null &&
-				(operationBodyMapper.getOperation1().getNestedOperations().size() > 0 || operationBodyMapper.getOperation2().getNestedOperations().size() > 0)) {
-			processNestedOperations(operationBodyMapper.getOperation1(), operationBodyMapper.getOperation2());
+		if(operationBodyMapper.getOperation1() != null && operationBodyMapper.getOperation2() != null) {
+			if(operationBodyMapper.getOperation1().getNestedOperations().size() > 0 || operationBodyMapper.getOperation2().getNestedOperations().size() > 0) {
+				processNestedOperations(operationBodyMapper.getOperation1(), operationBodyMapper.getOperation2());
+			}
+			if(operationBodyMapper.getOperation1().getNestedClasses().size() > 0 || operationBodyMapper.getOperation2().getNestedClasses().size() > 0) {
+				processNestedClasses(operationBodyMapper.getOperation1(), operationBodyMapper.getOperation2());
+			}
+		}
+	}
+
+	private void processNestedClasses(UMLOperation operation1, UMLOperation operation2) throws RefactoringMinerTimedOutException {
+		for(UMLClass class1 : operation1.getNestedClasses()) {
+			for(UMLClass class2 : operation2.getNestedClasses()) {
+				if(class1.getName().equals(class2.getName())) {
+					UMLClassDiff classDiff = new UMLClassDiff(class1, class2, modelDiff);
+					classDiff.process();
+					modelDiff.addUMLClassDiff(classDiff);
+				}
+			}
 		}
 	}
 

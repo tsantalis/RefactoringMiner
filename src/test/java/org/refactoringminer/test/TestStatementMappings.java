@@ -2348,7 +2348,8 @@ public class TestStatementMappings {
 		"https://github.com/gabrielshufelt/soen390-commit-and-pray.git, 9792d7435d3ad89cc3df28070097ca093062b965, soen390-commit-and-pray-9792d7435d3ad89cc3df28070097ca093062b965.txt",
 		"https://github.com/yassineAbdellatif/Git-happens.git, f95a669a2acdebf69b3b936ad7a71036ad103b9f, Git-happens-f95a669a2acdebf69b3b936ad7a71036ad103b9f.txt",
 		"https://github.com/SOEN-390-MakeSoft/SOEN-390-MakeSoft.git, c5e64b290ffdb92655fa75abb70b5908926cb9d2, MakeSoft-c5e64b290ffdb92655fa75abb70b5908926cb9d2.txt",
-		"https://github.com/abhigyanpatwari/GitNexus.git, 43098784cfbcbdc44ae5893109c4fc2e23f45c29, GitNexus-43098784cfbcbdc44ae5893109c4fc2e23f45c29.txt"
+		"https://github.com/abhigyanpatwari/GitNexus.git, 43098784cfbcbdc44ae5893109c4fc2e23f45c29, GitNexus-43098784cfbcbdc44ae5893109c4fc2e23f45c29.txt",
+		"https://github.com/abhigyanpatwari/GitNexus.git, 06f18ada159ab88ab4f18bd72471a0c8928c1f3f, GitNexus-06f18ada159ab88ab4f18bd72471a0c8928c1f3f.txt"
 	})
 	public void testExtractMethodStatementMappingsForTypeScript(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
@@ -2360,7 +2361,7 @@ public class TestStatementMappings {
 					ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
 					UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
 					if(!bodyMapper.isNested()) {
-						if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+						if(bodyMapper.getParentMapper() != null && !parentMappers.contains(bodyMapper.getParentMapper())) {
 							parentMappers.add(bodyMapper.getParentMapper());
 						}
 					}

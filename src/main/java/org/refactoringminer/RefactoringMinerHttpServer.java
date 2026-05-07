@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.URI;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,8 @@ import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
+
+import javax.annotation.Nonnull;
 
 public class RefactoringMinerHttpServer implements RefactoringHandler {
 
@@ -76,7 +79,7 @@ public class RefactoringMinerHttpServer implements RefactoringHandler {
 		api.detectRefactorings(this, gitURL, commitId);
 	}
 
-	private void prepareResponse() {
+	void prepareResponse() {
 		try {
 			future.get(timeout, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
@@ -112,16 +115,8 @@ public class RefactoringMinerHttpServer implements RefactoringHandler {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Properties prop = new Properties();
-		try {
-			InputStream input = new FileInputStream("server.properties");
-			prop.load(input);
-		} catch (Exception ignored) {}
-		String hostName = prop.getProperty("hostname", System.getenv("hostname"));
-		int port = Integer.parseInt(prop.getProperty("port", System.getenv("port")));
-		
-		InetSocketAddress inetSocketAddress = new InetSocketAddress(InetAddress.getByName(hostName), port);
-		HttpServer server = HttpServer.create(inetSocketAddress, 0);
+		Properties prop = getProperties();
+        HttpServer server = HttpServer.create(setupSocket(prop), 0);
 		server.createContext("/RefactoringMiner", (HttpExchange exchange) -> {
 			exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
 			RefactoringMinerHttpServer miner = RefactoringMinerHttpServer.from(exchange);
@@ -131,6 +126,25 @@ public class RefactoringMinerHttpServer implements RefactoringHandler {
 		server.setExecutor(new ThreadPoolExecutor(4, 8, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<>(100), new ThreadPoolExecutor.CallerRunsPolicy()));
 		server.start();
 		System.out.println(InetAddress.getLocalHost());
+	}
+
+	@Nonnull
+	public static InetSocketAddress setupSocket(Properties prop) throws UnknownHostException {
+		String hostName = prop.getProperty("hostname", System.getenv("hostname"));
+		int port = Integer.parseInt(prop.getProperty("port", System.getenv("port")));
+
+		InetSocketAddress inetSocketAddress = new InetSocketAddress(InetAddress.getByName(hostName), port);
+		return inetSocketAddress;
+	}
+
+	@Nonnull
+	public static Properties getProperties() {
+		Properties prop = new Properties();
+		try {
+			InputStream input = new FileInputStream("server.properties");
+			prop.load(input);
+		} catch (Exception ignored) {}
+		return prop;
 	}
 
 	private static Map<String, String> queryToMap(String query) {

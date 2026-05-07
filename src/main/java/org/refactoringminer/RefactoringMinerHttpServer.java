@@ -1,6 +1,7 @@
 package org.refactoringminer;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
@@ -12,27 +13,104 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringHandler;
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
-public class RefactoringMinerHttpServer {
+public class RefactoringMinerHttpServer implements RefactoringHandler {
 
 	private static final ExecutorService MINER_POOL = new ThreadPoolExecutor(
 			4, 16, 60L, TimeUnit.SECONDS,
 			new ArrayBlockingQueue<>(200),
 			new ThreadPoolExecutor.CallerRunsPolicy()
 	);
+	private final GitHistoryRefactoringMinerImpl api = new GitHistoryRefactoringMinerImpl();
+	private final List<Refactoring> detectedRefactorings = new ArrayList<>();
+	private final Future<?> future;
+	private final String gitURL, commitId;
+	private final int timeout;
+	private Throwable error = null;
+	private int responseCode = 0;
+	private String responseMessage;
+
+	RefactoringMinerHttpServer(String url, String sha, int timeout, String token) {
+		gitURL = url;
+		commitId = sha;
+		this.timeout = timeout;
+		if (!token.isEmpty()) {
+			api.connectToGitHub(token);
+		}
+		future = MINER_POOL.submit(this::act);
+	}
+
+	static RefactoringMinerHttpServer from(HttpExchange exchange) {
+		printRequestInfo(exchange);
+		URI requestURI = exchange.getRequestURI();
+		String query = requestURI.getQuery();
+		Map<String, String> queryToMap = queryToMap(query);
+
+		return new RefactoringMinerHttpServer(queryToMap.get("gitURL"), queryToMap.get("commitId"), Integer.parseInt(queryToMap.get("timeout")), queryToMap.getOrDefault("token", ""));
+	}
+
+	public void sendResponse(HttpExchange exchange) throws IOException {
+		assert responseCode != 0 : "Please, invoke prepareResponse before sending a response";
+		exchange.sendResponseHeaders(responseCode, responseMessage.length());
+		OutputStream os = exchange.getResponseBody();
+		os.write(responseMessage.getBytes());
+		os.close();
+	}
+
+	private void act() {
+		api.detectRefactorings(this, gitURL, commitId);
+	}
+
+	private void prepareResponse() {
+		try {
+			future.get(timeout, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			error = e;
+		} catch (ExecutionException e) {
+			error = e.getCause();
+		} catch (Exception e) {
+			error = e;
+		}
+		if (error == null) {
+			responseMessage = JSON(gitURL, commitId, detectedRefactorings);
+			responseCode = 200;
+		} else {
+			responseMessage = "{\"error\":\"" + error.getMessage().replace("\"", "'") + "\"}";
+			if (error instanceof RefactoringMinerTimedOutException || error instanceof TimeoutException) {
+				future.cancel(true);
+				responseCode = 503;
+			} else {
+				responseCode = 500;
+			}
+		}
+	}
+
+	@Override
+	public void handle(String commitId, List<Refactoring> refactorings) {
+		detectedRefactorings.addAll(refactorings);
+	}
+
+	@Override
+	public void handleException(String commitId, Exception e) {
+		error = e;
+	}
+
 	public static void main(String[] args) throws Exception {
 		Properties prop = new Properties();
 		try {
@@ -45,51 +123,10 @@ public class RefactoringMinerHttpServer {
 		InetSocketAddress inetSocketAddress = new InetSocketAddress(InetAddress.getByName(hostName), port);
 		HttpServer server = HttpServer.create(inetSocketAddress, 0);
 		server.createContext("/RefactoringMiner", (HttpExchange exchange) -> {
-			printRequestInfo(exchange);
-			URI requestURI = exchange.getRequestURI();
-			String query = requestURI.getQuery();
-			Map<String, String> queryToMap = queryToMap(query);
-
-			String gitURL = queryToMap.get("gitURL");
-			String commitId = queryToMap.get("commitId");
-			String oAuthToken = queryToMap.getOrDefault("token", "");
-			int timeout = Integer.parseInt(queryToMap.get("timeout"));
-			List<Refactoring> detectedRefactorings = new ArrayList<Refactoring>();
-
-			GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-			if (!oAuthToken.isEmpty()) {
-				miner.connectToGitHub(oAuthToken);
-			}
-			Future<?> future = MINER_POOL.submit(() -> miner.detectAtCommit(gitURL, commitId, (commitId1, refactorings) -> detectedRefactorings.addAll(refactorings), timeout));
-			int responseStatusCode = 200;
-			try {
-				try {
-					future.get(Math.max(timeout, 30L), TimeUnit.SECONDS);
-				} catch (InterruptedException e) {
-					responseStatusCode = 503;
-					Thread.currentThread().interrupt();
-					throw new RuntimeException("Handler interrupted");
-				} catch (TimeoutException te) {
-					responseStatusCode = 503;
-					future.cancel(true);
-					throw new RuntimeException("Server-side timeout");
-				}
-				String response = JSON(gitURL, commitId, detectedRefactorings);
-				System.out.println(response);
-				exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-				exchange.sendResponseHeaders(200, response.length());
-				OutputStream os = exchange.getResponseBody();
-				os.write(response.getBytes());
-				os.close();
-			} catch (Exception e) {
-				String error = "{\"error\":\"" + e.getMessage().replace("\"", "'") + "\"}";
-				exchange.sendResponseHeaders(responseStatusCode == 200 ? 500 : responseStatusCode, error.length());
-				OutputStream os = exchange.getResponseBody();
-				os.write(error.getBytes());
-				os.close();
-			} finally {
-				exchange.close();
-			}
+			exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+			RefactoringMinerHttpServer miner = RefactoringMinerHttpServer.from(exchange);
+			miner.prepareResponse();
+			miner.sendResponse(exchange);
 		});
 		server.setExecutor(new ThreadPoolExecutor(4, 8, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<>(100), new ThreadPoolExecutor.CallerRunsPolicy()));
 		server.start();

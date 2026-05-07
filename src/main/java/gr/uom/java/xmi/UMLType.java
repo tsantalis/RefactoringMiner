@@ -38,6 +38,7 @@ import org.refactoringminer.util.PathFileUtils;
 
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsEntityName;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsFnParam;
@@ -56,6 +57,7 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIndexedAccessType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIntersectionType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsKeywordType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsLitType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsMethodSignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsParenthesizedType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsPropertySignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsQualifiedName;
@@ -680,6 +682,16 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 						memberTypeList.add(signatureType);
 					}
 				}
+				else if(member instanceof Swc4jAstTsMethodSignature signature) {
+					ISwc4jAstExpr key = signature.getKey();
+					LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, key, CodeElementType.KEY_EXPRESSION, null, fileContent);
+					keys.add(leafExpression);
+					if(signature.getTypeAnn().isPresent()) {
+						Swc4jAstTsTypeAnn typeAnnotation = signature.getTypeAnn().get();
+						UMLType signatureType = extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation.getTypeAnn(), 0);
+						memberTypeList.add(signatureType);
+					}
+				}
 			}
 			ListCompositeType listCompositeType = new ListCompositeType(memberTypeList, Kind.LITERAL);
 			listCompositeType.setKeys(keys);
@@ -758,6 +770,10 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			}
 			ListCompositeType listCompositeType = new ListCompositeType(elementTypeList, Kind.TUPLE);
 			return listCompositeType;
+		}
+		else if(type instanceof Swc4jAstTsImportType importType) {
+			Swc4jAstStr arg = importType.getArg();
+			return extractTypeObject(arg.getValue());
 		}
 		//TODO this should return null, when all type kinds are supported
 		return new InferredType();

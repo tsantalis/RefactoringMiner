@@ -122,7 +122,6 @@ import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstWithStmt;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsCallSignatureDecl;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsConstructSignatureDecl;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsExprWithTypeArgs;
-import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsFnType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsGetterSignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIndexSignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsInterfaceBody;
@@ -1943,8 +1942,6 @@ public class OperationBody {
 						processTypeLiteral(sourceFolder, filePath, fileContent, umlClass, typeLiteral);
 					}
 				}
-				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, intersectionType, 0);
-				umlClass.setFunctionType(type);
 			}
 			else if(typeAnnotation instanceof Swc4jAstTsUnionType unionType) {
 				for(ISwc4jAstTsType type : unionType.getTypes()) {
@@ -1952,13 +1949,9 @@ public class OperationBody {
 						processTypeLiteral(sourceFolder, filePath, fileContent, umlClass, typeLiteral);
 					}
 				}
-				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, unionType, 0);
-				umlClass.setFunctionType(type);
 			}
-			else if(typeAnnotation instanceof Swc4jAstTsFnType functionType) {
-				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, functionType, 0);
-				umlClass.setFunctionType(type);
-			}
+			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation, 0);
+			umlClass.setFunctionType(type);
 			for(UMLComment comment : comments) {
 				if(umlClass.getLocationInfo().subsumes(comment.getLocationInfo())) {
 					umlClass.getComments().add(comment);

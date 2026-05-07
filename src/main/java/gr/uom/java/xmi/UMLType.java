@@ -37,6 +37,7 @@ import org.jetbrains.kotlin.psi.KtUserType;
 import org.refactoringminer.util.PathFileUtils;
 
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsEntityName;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsFnParam;
@@ -715,8 +716,10 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 					UMLType left = null;
 					if(leftEntityName instanceof Swc4jAstIdent ident)
 						left = extractTypeObject(ident.getSym());
-					else if(leftEntityName instanceof Swc4jAstTsQualifiedName qualifiedName)
-						left = extractTypeObject((ISwc4jAstTsType)qualifiedName, sourceFolder, filePath, fileContent);
+					else if(leftEntityName instanceof Swc4jAstTsQualifiedName qualifiedName) {
+						String q = qualifiedName(qualifiedName);
+						left = extractTypeObject(q);
+					}
 					UMLType rightType = extractTypeObject(qualified.getRight().getSym());
 					UMLType compositeType = new CompositeType(left, (LeafType) rightType);
 					ref = compositeType.toString();
@@ -730,8 +733,11 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 		}
 		else if(type instanceof Swc4jAstTsIndexedAccessType indexedAccessType) {
 			ISwc4jAstTsType objectType = indexedAccessType.getObjType();
-			UMLType umlType = extractTypeObject(objectType, sourceFolder, filePath, fileContent);
-			return umlType;
+			UMLType umlObjectType = extractTypeObject(objectType, sourceFolder, filePath, fileContent);
+			ISwc4jAstTsType indexType = indexedAccessType.getIndexType();
+			UMLType umlIndexType = extractTypeObject(indexType, sourceFolder, filePath, fileContent);
+			IndexedAccessType umlIndexedAccessType = new IndexedAccessType(umlObjectType, umlIndexType);
+			return umlIndexedAccessType;
 		}
 		else if(type instanceof Swc4jAstTsParenthesizedType parenthesizedType) {
 			ISwc4jAstTsType parenType = parenthesizedType.getTypeAnn();
@@ -755,6 +761,21 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 		}
 		//TODO this should return null, when all type kinds are supported
 		return new InferredType();
+	}
+
+	private static String qualifiedName(Swc4jAstTsQualifiedName type) {
+		StringBuilder sb = new StringBuilder();
+		ISwc4jAstTsEntityName left = type.getLeft();
+		if(left instanceof Swc4jAstTsQualifiedName qualified) {
+			sb.append(qualifiedName(qualified));
+		}
+		else if(left instanceof Swc4jAstIdent ident) {
+			sb.append(ident.getSym());
+		}
+		Swc4jAstIdentName right = type.getRight();
+		sb.append(".");
+		sb.append(right.getSym());
+		return sb.toString();
 	}
 
 	private static Swc4jAstTsTypeAnn extractTypeAnnotation(ISwc4jAstTsFnParam namePat) {

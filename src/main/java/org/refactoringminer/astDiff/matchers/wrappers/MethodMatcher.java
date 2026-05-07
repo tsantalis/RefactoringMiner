@@ -142,6 +142,14 @@ public class MethodMatcher extends BodyMapperMatcher{
                 if (modifiers != null) {
                     mappingStore.addMappingRecursively(modifiers.first, modifiers.second);
                 }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> get = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.GET_KEYWORD,LANG2.GET_KEYWORD);
+                if (get != null) {
+                    mappingStore.addMappingRecursively(get.first, get.second);
+                }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> set = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.SET_KEYWORD,LANG2.SET_KEYWORD);
+                if (set != null) {
+                    mappingStore.addMappingRecursively(set.first, set.second);
+                }
             }
             if(srcOperationNode.getType().name.equals(LANG1.METHOD_SIGNATURE) && dstOperationNode.getType().name.equals(LANG1.METHOD_SIGNATURE)) {
                 com.github.gumtreediff.utils.Pair<Tree,Tree> identifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.PROPERTY_IDENTIFIER,LANG2.PROPERTY_IDENTIFIER);

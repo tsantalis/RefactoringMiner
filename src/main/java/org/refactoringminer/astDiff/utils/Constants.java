@@ -421,4 +421,6 @@ public class Constants {
     public final String METHOD_SIGNATURE = "method_signature";
     public final String OPTIONAL_KEYWORD = "?";
     public final String UNION = "|";
+    public final String GET_KEYWORD = "get";
+    public final String SET_KEYWORD = "set";
 }

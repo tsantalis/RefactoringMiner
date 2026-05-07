@@ -1827,6 +1827,9 @@ public class OperationBody {
 		else if(statement instanceof Swc4jAstFnDecl functionDecl) {
 			String className = container.getClassName();
 			UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, functionDecl, activeVariableDeclarations, fileContent, className);
+			if(functionDecl.getParent() instanceof Swc4jAstExportDecl) {
+				nested.setVisibility(Visibility.PUBLIC);
+			}
 			for(UMLComment comment : comments) {
 				if(nested.getLocationInfo().subsumes(comment.getLocationInfo())) {
 					nested.getComments().add(comment);

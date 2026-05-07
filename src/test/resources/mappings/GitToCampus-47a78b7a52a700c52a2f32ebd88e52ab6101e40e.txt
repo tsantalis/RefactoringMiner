@@ -23,7 +23,7 @@ line range:288-290==line range:291-293
 line range:290-298==line range:293-301
 line range:300-306==line range:303-309
 line range:283-283==line range:372-372
-private fetchGoogleDirectionsCore(request DirectionsRequest, apiKey string, mode DirectionsTravelMode, fetchImpl typeof fetch) : Promise<ParsedDirectionsCoreResult> -> private parseDirectionsRoute(data GoogleDirectionsResponse, units DirectionsRequest) : ParsedDirectionsCoreResult
+private fetchGoogleDirectionsCore(request DirectionsRequest, apiKey string, mode DirectionsTravelMode, fetchImpl typeof fetch) : Promise<ParsedDirectionsCoreResult> -> private parseDirectionsRoute(data GoogleDirectionsResponse, units DirectionsRequest['units']) : ParsedDirectionsCoreResult
 line range:310-310==line range:319-319
 line range:311-314==line range:320-323
 line range:317-317==line range:326-326

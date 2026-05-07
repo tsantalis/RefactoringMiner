@@ -1,4 +1,4 @@
-private decodePolyline(encoded string) : LatLng[] -> private decodeNextValue(encoded string, cursor {number}) : number
+public decodePolyline(encoded string) : LatLng[] -> private decodeNextValue(encoded string, cursor {number}) : number
 line range:12-12==line range:32-32
 line range:13-13==line range:33-33
 line range:14-14==line range:34-34
@@ -7,7 +7,7 @@ line range:18-18==line range:39-39
 line range:16-16==line range:37-37
 line range:15-19==line range:36-40
 line range:15-19==line range:36-40
-private decodePolyline(encoded string) : LatLng[] -> private decodeNextValue(encoded string, cursor {number}) : number
+public decodePolyline(encoded string) : LatLng[] -> private decodeNextValue(encoded string, cursor {number}) : number
 line range:26-26==line range:38-38
 line range:27-27==line range:39-39
 line range:22-22==line range:33-33
@@ -15,7 +15,7 @@ line range:7-7==line range:34-34
 line range:25-25==line range:37-37
 line range:24-28==line range:36-40
 line range:24-28==line range:36-40
-private execute(context ModeRouteStrategyContext) : Promise<ModeRoute|null> -> private mapGoogleLegSteps(steps GoogleLegStep[]|undefined) : NavigationStep[]
+private execute(context ModeRouteStrategyContext) : Promise<ModeRoute|null> -> public mapGoogleLegSteps(steps GoogleLegStep[]|undefined) : NavigationStep[]
 line range:66-72==line range:107-113
 line range:38-75==line range:107-113
 private execute(context ModeRouteStrategyContext) : Promise<ModeRoute|null> -> private resolveFocusCoordinate(step GoogleLegStep) : LatLng|undefined
@@ -25,9 +25,9 @@ line range:59-64==line range:94-99
 line range:54-64==line range:87-92
 line range:59-64==line range:94-99
 line range:54-59==line range:87-92
-private execute(context ModeRouteStrategyContext) : Promise<ModeRoute|null> -> private buildModeRouteFromGoogleLeg(route GoogleRoute, leg GoogleLeg, options {boolean}) : ModeRoute
+private execute(context ModeRouteStrategyContext) : Promise<ModeRoute|null> -> public buildModeRouteFromGoogleLeg(route GoogleRoute, leg GoogleLeg, options {boolean}) : ModeRoute
 line range:32-34==line range:126-133
-private decodePolyline(encoded string) : LatLng[] -> private decodePolyline(encoded string) : LatLng[]
+public decodePolyline(encoded string) : LatLng[] -> public decodePolyline(encoded string) : LatLng[]
 line range:6-6==line range:46-46
 line range:8-8==line range:48-48
 line range:9-9==line range:49-49

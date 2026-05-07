@@ -1,6 +1,6 @@
-private useGoogleCalendarAuth() -> private buildGoogleCalendarSession(data GoogleUserData, tokens GoogleTokens) : GoogleCalendarSession
+public useGoogleCalendarAuth() -> private buildGoogleCalendarSession(data GoogleUserData, tokens GoogleTokens) : GoogleCalendarSession
 line range:47-54==line range:39-46
-private useGoogleCalendarAuth() -> private buildGoogleCalendarSession(data GoogleUserData, tokens GoogleTokens) : GoogleCalendarSession
+public useGoogleCalendarAuth() -> private buildGoogleCalendarSession(data GoogleUserData, tokens GoogleTokens) : GoogleCalendarSession
 line range:47-54==line range:39-46
 private connect() -> private getErrorStatus(currentSession GoogleCalendarSession|null) : AuthStatus
 line range:84-84==line range:50-50
@@ -27,7 +27,7 @@ line range:123-125==line range:61-63
 line range:125-127==line range:65-67
 line range:127-129==line range:69-71
 line range:133-135==line range:78-80
-private useGoogleCalendarAuth() -> private useGoogleCalendarAuth()
+public useGoogleCalendarAuth() -> public useGoogleCalendarAuth()
 line range:26-26==line range:88-88
 line range:27-27==line range:89-89
 line range:28-28==line range:90-90

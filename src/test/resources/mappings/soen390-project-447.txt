@@ -13,7 +13,7 @@ line range:478-478==line range:490-490
 line range:479-479==line range:491-491
 line range:476-480==line range:488-492
 line range:476-480==line range:488-492
-private findRouteToNearestExit(buildingCode string, startRoomLabel string, noStairs Inferred, noEscalators Inferred, noElevators Inferred) : IndoorRoute|null -> private findStartNode(nodes Map<string,IndoorNode>, buildingCode string, startRoomLabel string) : IndoorNode|undefined
+public findRouteToNearestExit(buildingCode string, startRoomLabel string, noStairs Inferred, noEscalators Inferred, noElevators Inferred) : IndoorRoute|null -> private findStartNode(nodes Map<string,IndoorNode>, buildingCode string, startRoomLabel string) : IndoorNode|undefined
 line range:1441-1441==line range:1493-1493
 line range:1442-1442==line range:1494-1494
 line range:1444-1444==line range:1497-1497
@@ -23,21 +23,21 @@ line range:1443-1446==line range:1496-1498
 line range:1440-1447==line range:1492-1499
 line range:1443-1446==line range:1496-1498
 line range:1440-1447==line range:1492-1499
-private findRouteToNearestExit(buildingCode string, startRoomLabel string, noStairs Inferred, noEscalators Inferred, noElevators Inferred) : IndoorRoute|null -> private findExitNodes(nodes Map<string,IndoorNode>, buildingCode string) : IndoorNode[]
+public findRouteToNearestExit(buildingCode string, startRoomLabel string, noStairs Inferred, noEscalators Inferred, noElevators Inferred) : IndoorRoute|null -> private findExitNodes(nodes Map<string,IndoorNode>, buildingCode string) : IndoorNode[]
 line range:1450-1450==line range:1508-1508
 line range:1453-1453==line range:1515-1515
 line range:1452-1454==line range:1511-1516
 line range:1451-1455==line range:1510-1517
 line range:1452-1454==line range:1514-1516
 line range:1451-1455==line range:1510-1517
-private findNearestWashroomTarget(category WashroomCategory, campusBuildings FindNearestWashroomParams, actualOriginPoint FindNearestWashroomParams, originBuildingCode FindNearestWashroomParams, originRoom FindNearestWashroomParams, destinationBuildingCode FindNearestWashroomParams, destinationRoom FindNearestWashroomParams) : NearestWashroomTarget|null -> private getNearestFromFirstFloor(washrooms WashroomRoom[])
+public findNearestWashroomTarget(category WashroomCategory, campusBuildings FindNearestWashroomParams, actualOriginPoint FindNearestWashroomParams, originBuildingCode FindNearestWashroomParams, originRoom FindNearestWashroomParams, destinationBuildingCode FindNearestWashroomParams, destinationRoom FindNearestWashroomParams) : NearestWashroomTarget|null -> private getNearestFromFirstFloor(washrooms WashroomRoom[])
 line range:263-263==line range:188-188
 line range:264-264==line range:189-189
 line range:265-265==line range:190-190
 line range:264-264==line range:189-189
 line range:262-266==line range:187-191
 line range:262-266==line range:187-191
-private findNearestWashroomTarget(category WashroomCategory, campusBuildings FindNearestWashroomParams, actualOriginPoint FindNearestWashroomParams, originBuildingCode FindNearestWashroomParams, originRoom FindNearestWashroomParams, destinationBuildingCode FindNearestWashroomParams, destinationRoom FindNearestWashroomParams) : NearestWashroomTarget|null -> private findNearestWashroomInContextBuilding(washroomsForCategory WashroomRoom[], roomContext {string|null;string}) : NearestWashroomTarget|null
+public findNearestWashroomTarget(category WashroomCategory, campusBuildings FindNearestWashroomParams, actualOriginPoint FindNearestWashroomParams, originBuildingCode FindNearestWashroomParams, originRoom FindNearestWashroomParams, destinationBuildingCode FindNearestWashroomParams, destinationRoom FindNearestWashroomParams) : NearestWashroomTarget|null -> private findNearestWashroomInContextBuilding(washroomsForCategory WashroomRoom[], roomContext {string|null;string}) : NearestWashroomTarget|null
 line range:224-224==line range:208-208
 line range:216-218==line range:199-201
 line range:218-218==line range:201-201
@@ -114,7 +114,7 @@ line range:452-482==line range:518-544
 line range:484-484==line range:546-546
 line range:460-481==line range:526-543
 line range:452-482==line range:518-544
-private findRouteToNearestExit(buildingCode string, startRoomLabel string, noStairs Inferred, noEscalators Inferred, noElevators Inferred) : IndoorRoute|null -> private findRouteToNearestExit(buildingCode string, startRoomLabel string, noStairs Inferred, noEscalators Inferred, noElevators Inferred) : IndoorRoute|null
+public findRouteToNearestExit(buildingCode string, startRoomLabel string, noStairs Inferred, noEscalators Inferred, noElevators Inferred) : IndoorRoute|null -> public findRouteToNearestExit(buildingCode string, startRoomLabel string, noStairs Inferred, noEscalators Inferred, noElevators Inferred) : IndoorRoute|null
 line range:1434-1434==line range:1530-1530
 line range:1435-1435==line range:1531-1531
 line range:1437-1437==line range:1533-1533
@@ -137,7 +137,7 @@ line range:1461-1467==line range:1544-1550
 line range:1469-1469==line range:1552-1552
 line range:1463-1466==line range:1546-1549
 line range:1461-1467==line range:1544-1550
-private findNearestWashroomTarget(category WashroomCategory, campusBuildings FindNearestWashroomParams, actualOriginPoint FindNearestWashroomParams, originBuildingCode FindNearestWashroomParams, originRoom FindNearestWashroomParams, destinationBuildingCode FindNearestWashroomParams, destinationRoom FindNearestWashroomParams) : NearestWashroomTarget|null -> private findNearestWashroomTarget(category WashroomCategory, campusBuildings FindNearestWashroomParams, actualOriginPoint FindNearestWashroomParams, originBuildingCode FindNearestWashroomParams, originRoom FindNearestWashroomParams, destinationBuildingCode FindNearestWashroomParams, destinationRoom FindNearestWashroomParams) : NearestWashroomTarget|null
+public findNearestWashroomTarget(category WashroomCategory, campusBuildings FindNearestWashroomParams, actualOriginPoint FindNearestWashroomParams, originBuildingCode FindNearestWashroomParams, originRoom FindNearestWashroomParams, destinationBuildingCode FindNearestWashroomParams, destinationRoom FindNearestWashroomParams) : NearestWashroomTarget|null -> public findNearestWashroomTarget(category WashroomCategory, campusBuildings FindNearestWashroomParams, actualOriginPoint FindNearestWashroomParams, originBuildingCode FindNearestWashroomParams, originRoom FindNearestWashroomParams, destinationBuildingCode FindNearestWashroomParams, destinationRoom FindNearestWashroomParams) : NearestWashroomTarget|null
 line range:195-197==line range:264-266
 line range:196-196==line range:265-265
 line range:198-198==line range:267-267

@@ -1,6 +1,6 @@
-private buildCrossFloorEdges(buildingNodes RawMapNode[]) : RawEdge[] -> private isCrossFloorNode(node RawMapNode)
+public buildCrossFloorEdges(buildingNodes RawMapNode[]) : RawEdge[] -> private isCrossFloorNode(node RawMapNode)
 line range:166-166==line range:182-182
-private buildCrossFloorEdges(buildingNodes RawMapNode[]) : RawEdge[] -> private groupCrossFloorNodes(nodes RawMapNode[])
+public buildCrossFloorEdges(buildingNodes RawMapNode[]) : RawEdge[] -> private groupCrossFloorNodes(nodes RawMapNode[])
 line range:163-163==line range:166-166
 line range:170-170==line range:169-169
 line range:169-169==line range:171-171
@@ -11,11 +11,11 @@ line range:170-170==line range:172-172
 line range:165-174==line range:168-177
 line range:165-174==line range:168-177
 line range:178-178==line range:179-179
-private buildCrossFloorEdges(buildingNodes RawMapNode[]) : RawEdge[] -> private sameFloor(a RawMapNode, b RawMapNode)
+public buildCrossFloorEdges(buildingNodes RawMapNode[]) : RawEdge[] -> private sameFloor(a RawMapNode, b RawMapNode)
 line range:182-182==line range:198-198
-private buildCrossFloorEdges(buildingNodes RawMapNode[]) : RawEdge[] -> private createEdge(a RawMapNode, b RawMapNode) : RawEdge
+public buildCrossFloorEdges(buildingNodes RawMapNode[]) : RawEdge[] -> private createEdge(a RawMapNode, b RawMapNode) : RawEdge
 line range:184-190==line range:202-208
-private buildCrossFloorEdges(buildingNodes RawMapNode[]) : RawEdge[] -> private createEdgesForGroup(nodes RawMapNode[]) : RawEdge[]
+public buildCrossFloorEdges(buildingNodes RawMapNode[]) : RawEdge[] -> private createEdgesForGroup(nodes RawMapNode[]) : RawEdge[]
 line range:176-176==line range:185-185
 line range:182-182==line range:189-189
 line range:195-195==line range:195-195
@@ -39,7 +39,7 @@ line range:290-290==line range:273-273
 private getBuildingGraph(buildingId string) : {LocalizedNode[];RawEdge[]}|null -> private filterEdgesForNodes(edges RawEdge[], nodeIds Set<string>) : RawEdge[]
 line range:299-299==line range:281-281
 line range:298-300==line range:281-281
-private buildCrossFloorEdges(buildingNodes RawMapNode[]) : RawEdge[] -> private buildCrossFloorEdges(buildingNodes RawMapNode[]) : RawEdge[]
+public buildCrossFloorEdges(buildingNodes RawMapNode[]) : RawEdge[] -> public buildCrossFloorEdges(buildingNodes RawMapNode[]) : RawEdge[]
 private toLocalizedNode(node RawMapNode) : LocalizedNode -> private toLocalizedNode(node RawMapNode) : LocalizedNode
 line range:209-216==line range:258-265
 private getFloorPlanRegistryEntry(buildingId string, floorNumber FloorNumber) : FloorPlanRegistryEntry|null -> private getFloorPlanRegistryEntry(buildingId string, floorNumber FloorNumber) : FloorPlanRegistryEntry|null

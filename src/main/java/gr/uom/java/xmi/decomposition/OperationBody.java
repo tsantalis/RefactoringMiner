@@ -1756,7 +1756,12 @@ public class OperationBody {
 						//Arrow function declaration style
 						LocationInfo location = new LocationInfo(sourceFolder, filePath, variableDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
 						UMLOperation operation = new UMLOperation(identifiers.get(0).getId().getSym(), location, container.getClassName());
-						operation.setVisibility(Visibility.PRIVATE);
+						if(variableDecl.getParent() instanceof Swc4jAstExportDecl) {
+							operation.setVisibility(Visibility.PUBLIC);
+						}
+						else {
+							operation.setVisibility(Visibility.PRIVATE);
+						}
 						AbstractExpression expression = new AbstractExpression(sourceFolder, filePath, arrowExpr, CodeElementType.FUNCTION_INITIALIZER_EXPRESSION, operation, activeVariableDeclarations, fileContent, typeDeclarations);
 						if(arrowExpr.getReturnType().isPresent()) {
 							UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, arrowExpr.getReturnType().get().getTypeAnn(), 0);

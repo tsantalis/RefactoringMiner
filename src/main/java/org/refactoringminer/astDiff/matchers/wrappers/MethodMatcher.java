@@ -387,6 +387,14 @@ public class MethodMatcher extends BodyMapperMatcher{
                 if(matched != null) {
                     mappingStore.addMapping(matched.first, matched.second);
                 }
+                int index1 = srcTypeParam.getParent().getChildPosition(srcTypeParam);
+                int index2 = dstTypeParam.getParent().getChildPosition(dstTypeParam);
+                if(srcTypeParam.getParent().getChildren().size() > index1+1 && srcTypeParam.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                        dstTypeParam.getParent().getChildren().size() > index2+1 && dstTypeParam.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+                    Tree t1 = srcTypeParam.getParent().getChild(index1+1);
+                    Tree t2 = dstTypeParam.getParent().getChild(index2+1);
+                    mappingStore.addMapping(t1,t2);
+                }
             }
         }
         for (org.apache.commons.lang3.tuple.Pair<UMLAnnotation, UMLAnnotation>  umlAnnotationUMLAnnotationPair : umlOperationDiff.getAnnotationListDiff().getCommonAnnotations()) {

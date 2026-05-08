@@ -425,4 +425,6 @@ public class Constants {
     public final String SET_KEYWORD = "set";
     public final String EXPORT_SPECIFIER = "export_specifier";
     public final String EXPORT_CLAUSE = "export_clause";
+    public final String LABELED = "labeled_statement";
+    public final String STATEMENT_IDENTIFIER = "statement_identifier";
 }

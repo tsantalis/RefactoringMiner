@@ -29,13 +29,20 @@ public class UMLNamedExportListDiff {
 						Pair<UMLNamedExport, UMLNamedExport> pair = Pair.of(oldExport, newExport);
 						commonExports.add(pair);
 					}
-					else {
-						UMLNamedExportDiff diff = new UMLNamedExportDiff(oldExport, newExport);
-						changedExports.add(diff);
-					}
 				}
 				else {
-					removedNamedExports.add(oldExport);
+					boolean matchFound = false;
+					for(UMLNamedExport newExport : newExports) {
+						if(oldExport.getSource() != null && newExport.getSource() != null && oldExport.getSource().getString().equals(newExport.getSource().getString())) {
+							UMLNamedExportDiff diff = new UMLNamedExportDiff(oldExport, newExport);
+							changedExports.add(diff);
+							matchFound = true;
+							break;
+						}
+					}
+					if(!matchFound) {
+						removedNamedExports.add(oldExport);
+					}
 				}
 			}
 		}
@@ -48,13 +55,20 @@ public class UMLNamedExportListDiff {
 						Pair<UMLNamedExport, UMLNamedExport> pair = Pair.of(oldExport, newExport);
 						commonExports.add(pair);
 					}
-					else {
-						UMLNamedExportDiff diff = new UMLNamedExportDiff(oldExport, newExport);
-						changedExports.add(diff);
-					}
 				}
 				else {
-					addedNamedExports.add(newExport);
+					boolean matchFound = false;
+					for(UMLNamedExport oldExport : oldExports) {
+						if(oldExport.getSource() != null && newExport.getSource() != null && oldExport.getSource().getString().equals(newExport.getSource().getString())) {
+							UMLNamedExportDiff diff = new UMLNamedExportDiff(oldExport, newExport);
+							changedExports.add(diff);
+							matchFound = true;
+							break;
+						}
+					}
+					if(!matchFound) {
+						addedNamedExports.add(newExport);
+					}
 				}
 			}
 		}

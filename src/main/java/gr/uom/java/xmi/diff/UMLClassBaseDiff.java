@@ -106,6 +106,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private Optional<UMLJavadocDiff> packageDeclarationJavadocDiff;
 	private Optional<UMLParameterListDiff> primaryConstructorParameterListDiff;
 	private Optional<UMLTypeAliasListDiff> typeAliasListDiff;
+	private Optional<UMLNamedExportListDiff> namedExportListDiff;
 	private UMLCommentListDiff packageDeclarationCommentListDiff;
 	private Set<UMLOperationBodyMapper> extractMethodCandidates;
 	private int removedOperationDelegates;
@@ -121,6 +122,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		this.implementedInterfaceBecomesSuperclass = Optional.empty();
 		this.superclassBecomesImplementedInterface = Optional.empty();
 		this.commonFunctionType = Optional.empty();
+		this.namedExportListDiff = Optional.empty();
 		this.extractMethodCandidates = new LinkedHashSet<>();
 		if(originalClass.getJavadoc() != null && nextClass.getJavadoc() != null) {
 			UMLJavadocDiff diff = new UMLJavadocDiff(originalClass.getJavadoc(), nextClass.getJavadoc());
@@ -161,6 +163,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	public Optional<UMLTypeAliasListDiff> getTypeAliasListDiff() {
 		return typeAliasListDiff;
+	}
+
+	public Optional<UMLNamedExportListDiff> getNamedExportListDiff() {
+		return namedExportListDiff;
 	}
 
 	public UMLCommentListDiff getPackageDeclarationCommentListDiff() {
@@ -213,8 +219,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			this.typeAliasListDiff = Optional.empty();
 		}
 		if(originalClass.getContainer().isPresent() && nextClass.getContainer().isPresent()) {
-			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(originalClass.getContainer().get(), nextClass.getContainer().get(), this);
+			ModuleContainer container1 = originalClass.getContainer().get();
+			ModuleContainer container2 = nextClass.getContainer().get();
+			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(container1, container2, this);
 			addOperationBodyMapper(mapper);
+			if(container1.getNamedExports().size() > 0 || container2.getNamedExports().size() > 0) {
+				UMLNamedExportListDiff diff = new UMLNamedExportListDiff(container1.getNamedExports(), container2.getNamedExports());
+				this.namedExportListDiff = Optional.of(diff);
+			}
 		}
 		processInitializers();
 		processModifiers();

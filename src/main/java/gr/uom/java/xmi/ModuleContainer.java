@@ -33,6 +33,7 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	private List<UMLOperation> nestedOperations = new ArrayList<>();
 	private List<UMLAttribute> nestedAttributes = new ArrayList<>();
 	private List<UMLImport> nestedImports = new ArrayList<>();
+	private List<UMLNamedExport> namedExports = new ArrayList<>();
 	private Map<String, AbstractStatement> describeMap = new LinkedHashMap<>();
 
 	public ModuleContainer(LocationInfo locationInfo, String name) {
@@ -93,6 +94,14 @@ public class ModuleContainer implements VariableDeclarationContainer {
 
 	public List<UMLImport> getNestedImports() {
 		return nestedImports;
+	}
+
+	public void addNamedExport(UMLNamedExport nested) {
+		this.namedExports.add(nested);
+	}
+
+	public List<UMLNamedExport> getNamedExports() {
+		return namedExports;
 	}
 
 	public List<AbstractStatement> getStatementList() {

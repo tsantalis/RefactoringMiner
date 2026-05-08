@@ -423,4 +423,6 @@ public class Constants {
     public final String UNION = "|";
     public final String GET_KEYWORD = "get";
     public final String SET_KEYWORD = "set";
+    public final String EXPORT_SPECIFIER = "export_specifier";
+    public final String EXPORT_CLAUSE = "export_clause";
 }

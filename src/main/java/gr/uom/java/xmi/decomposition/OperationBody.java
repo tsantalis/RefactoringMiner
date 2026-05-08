@@ -76,6 +76,7 @@ import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstBlockStmtOrExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstClassMember;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstDecl;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExportSpecifier;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstForHead;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstImportSpecifier;
@@ -89,10 +90,14 @@ import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstVarDeclOrExpr;
 import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstCatchClause;
 import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstSwitchCase;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDecl;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDefaultSpecifier;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportNamedSpecifier;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportNamespaceSpecifier;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportDecl;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportDefaultSpecifier;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportNamedSpecifier;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportStarAsSpecifier;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstNamedExport;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.program.Swc4jAstModule;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
@@ -179,6 +184,7 @@ import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLClass.ConditionallyCreated;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLImport;
+import gr.uom.java.xmi.UMLNamedExport;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
@@ -1928,6 +1934,48 @@ public class OperationBody {
 		else if(statement instanceof Swc4jAstExportDecl exportDecl) {
 			ISwc4jAstDecl decl = exportDecl.getDecl();
 			processStatement(sourceFolder, filePath, parent, decl, fileContent);
+		}
+		else if(statement instanceof Swc4jAstNamedExport namedExport) {
+			List<LeafExpression> specifiers = new ArrayList<>();
+			for(ISwc4jAstExportSpecifier specifier : namedExport.getSpecifiers()) {
+				if(specifier instanceof Swc4jAstExportNamedSpecifier namedSpecifier) {
+					ISwc4jAstModuleExportName moduleExportName = namedSpecifier.getOrig();
+					if(moduleExportName instanceof Swc4jAstIdent ident) {
+						LeafExpression name = new LeafExpression(sourceFolder, filePath, ident, CodeElementType.SIMPLE_NAME, container, fileContent);
+						specifiers.add(name);
+					}
+					else if(moduleExportName instanceof Swc4jAstStr str) {
+						LeafExpression name = new LeafExpression(sourceFolder, filePath, str, CodeElementType.STRING_LITERAL, container, fileContent);
+						specifiers.add(name);
+					}
+				}
+				else if(specifier instanceof Swc4jAstExportNamespaceSpecifier namespaceSpecifier) {
+					ISwc4jAstModuleExportName moduleExportName = namespaceSpecifier.getName();
+					if(moduleExportName instanceof Swc4jAstIdent ident) {
+						LeafExpression name = new LeafExpression(sourceFolder, filePath, ident, CodeElementType.SIMPLE_NAME, container, fileContent);
+						specifiers.add(name);
+					}
+					else if(moduleExportName instanceof Swc4jAstStr str) {
+						LeafExpression name = new LeafExpression(sourceFolder, filePath, str, CodeElementType.STRING_LITERAL, container, fileContent);
+						specifiers.add(name);
+					}
+				}
+				else if(specifier instanceof Swc4jAstExportDefaultSpecifier defaultSpecifier) {
+					Swc4jAstIdent ident = defaultSpecifier.getExported();
+					LeafExpression name = new LeafExpression(sourceFolder, filePath, ident, CodeElementType.SIMPLE_NAME, container, fileContent);
+					specifiers.add(name);
+				}
+			}
+			LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, namedExport.getSpan(), CodeElementType.NAMED_EXPORT, fileContent);
+			UMLNamedExport export = new UMLNamedExport(locationInfo, specifiers);
+			if(namedExport.getSrc().isPresent()) {
+				Swc4jAstStr str = namedExport.getSrc().get();
+				LeafExpression source = new LeafExpression(sourceFolder, filePath, str, CodeElementType.STRING_LITERAL, container, fileContent);
+				export.setSource(source);
+			}
+			if(container instanceof ModuleContainer) {
+				((ModuleContainer)container).addNamedExport(export);
+			}
 		}
 		else if(statement instanceof Swc4jAstTsTypeAliasDecl typeAliasDecl) {
 			String typeName = typeAliasDecl.getId().getSym();

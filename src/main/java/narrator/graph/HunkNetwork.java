@@ -26,6 +26,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.jgrapht.Graph;
@@ -444,8 +445,6 @@ public class HunkNetwork {
   }
 
   private void processExtensions(SrcDst srcDst) {
-    HashMap<Node, Set<LocationInfo>> isolatedNodesExtensionLocations = new HashMap<>();
-
     UMLModel umlModel =
         srcDst.equals(SrcDst.SRC) ? modelDiff.getParentModel() : modelDiff.getChildModel();
     for (UMLClass umlClass : umlModel.getClassList()) {
@@ -462,8 +461,7 @@ public class HunkNetwork {
             srcDst.equals(SrcDst.SRC) ? modelDiff.findFieldAccessesInParentModel(fieldDeclaration)
                 : modelDiff.findFieldAccessesInChildModel(fieldDeclaration);
         Set<Node> accessNodes = findAccessNodes(fieldDeclaration.getName(), fieldAccesses, srcDst);
-        addIsolatedNodesLocations(isolatedNodesExtensionLocations, accessNodes,
-            declarationLocation);
+        extendIsolatedNodes(accessNodes, declarationLocation, Tree::getParent, srcDst);
       }
 
       for (UMLOperation operation : umlClass.getOperations()) {
@@ -478,8 +476,7 @@ public class HunkNetwork {
 
           Set<Node> accessNodes = findAccessNodes(variableDeclaration.getVariableName(),
               variableDeclaration.getScope().getStatementsInScopeUsingVariable(), srcDst);
-          addIsolatedNodesLocations(isolatedNodesExtensionLocations, accessNodes,
-              declarationLocation);
+          extendIsolatedNodes(accessNodes, declarationLocation, null, srcDst);
         }
       }
 
@@ -493,38 +490,30 @@ public class HunkNetwork {
         }
 
         Set<Node> invocationNodes = getInvocationNodes(operation, srcDst);
-        addIsolatedNodesLocations(isolatedNodesExtensionLocations, invocationNodes,
-            operationLocation);
-      }
-    }
-
-    for (Entry<Node, Set<LocationInfo>> nodeLocationCandidates : isolatedNodesExtensionLocations.entrySet()) {
-      Node node = nodeLocationCandidates.getKey();
-      Constants constants = new Constants(node.getPath());
-
-      for (LocationInfo locationCandidate : nodeLocationCandidates.getValue()) {
-        Tree candidateRootTree = (srcDst.equals(SrcDst.SRC) ? srcContexts : dstContexts).get(
-            locationCandidate.getFilePath()).getRoot();
-        Tree candidateTree = TreeUtilFunctions.findByLocationInfo(candidateRootTree,
-            locationCandidate, constants);
-        // used extension
-        Node extension = addExtensionNode(candidateTree, node);
-        addEdge(extension, node, EdgeType.DEF_USE);
+        extendIsolatedNodes(invocationNodes, operationLocation, null, srcDst);
       }
     }
   }
 
-  private void addIsolatedNodesLocations(
-      HashMap<Node, Set<LocationInfo>> isolatedNodesExtensionLocations, Set<Node> nodes,
-      LocationInfo locationInfo) {
+  private void extendIsolatedNodes(Set<Node> nodes, LocationInfo extendLocation,
+      Function<Tree, Tree> treeTransformer, SrcDst srcDst) {
+    Tree extendRootTree = (srcDst.equals(SrcDst.SRC) ? srcContexts : dstContexts).get(
+        extendLocation.getFilePath()).getRoot();
+    Tree extendTree = TreeUtilFunctions.findByLocationInfo(extendRootTree, extendLocation,
+        new Constants(extendLocation.getFilePath()));
+    if (treeTransformer != null) {
+      extendTree = treeTransformer.apply(extendTree);
+    }
+
     List<Node> isolatedNodes = nodes.stream().filter(n -> graph.incomingEdgesOf(n).stream()
             .filter(edge -> edge.getType().equals(EdgeType.DEF_USE)).toList().isEmpty())
         .toList();
-
     for (Node isolatedNode : isolatedNodes) {
-      isolatedNodesExtensionLocations.putIfAbsent(isolatedNode, new HashSet<>());
-      isolatedNodesExtensionLocations.get(isolatedNode).add(locationInfo);
+      // used extension
+      Node extension = addExtensionNode(extendTree, isolatedNode);
+      addEdge(extension, isolatedNode, EdgeType.DEF_USE);
     }
+
   }
 
   private void addParameterArgumentEdges(Node node, Tree parameterDeclarationTree) {

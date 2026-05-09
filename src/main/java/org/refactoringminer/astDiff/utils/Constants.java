@@ -427,4 +427,5 @@ public class Constants {
     public final String EXPORT_CLAUSE = "export_clause";
     public final String LABELED = "labeled_statement";
     public final String STATEMENT_IDENTIFIER = "statement_identifier";
+    public final String PROGRAM = "program"; // This is the root of all trees in TypeScript
 }

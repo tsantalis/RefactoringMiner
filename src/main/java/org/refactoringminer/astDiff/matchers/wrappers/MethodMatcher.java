@@ -182,11 +182,11 @@ public class MethodMatcher extends BodyMapperMatcher{
             }
         } else {
             //Static Initializers
-            if(srcTree.getType().name.equals(LANG1.MODULE))
+            if(srcTree.getType().name.equals(LANG1.MODULE) || srcTree.getType().name.equals(LANG1.PROGRAM))
                 srcOperationNode = srcTree;
             else
                 srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getContainer1().getLocationInfo(), LANG1);
-            if(dstTree.getType().name.equals(LANG2.MODULE))
+            if(dstTree.getType().name.equals(LANG2.MODULE) || dstTree.getType().name.equals(LANG2.PROGRAM))
                 dstOperationNode = dstTree;
             else
                 dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getContainer2().getLocationInfo(), LANG2);

@@ -6351,6 +6351,13 @@ public class ReplacementAlgorithm {
 		else if(lambdaMappers.size() > 0 && lambdaMappers.size() == lambdas1.size()-1 && lambdaMappers.size() == lambdas2.size()-1) {
 			return replacementInfo.getReplacements();
 		}
+		else if(lambdaMappers.size() > 0) {
+			for(AbstractCodeMapping mapping : lambdaMappers.get(0).getMappings()) {
+				if(mapping.getLambdaMappers().size() == lambdas1.size()-1 && mapping.getLambdaMappers().size() == lambdas2.size()-1) {
+					return replacementInfo.getReplacements();
+				}
+			}
+		}
 		if(lambdaMappers.size() > 0 && lambdas1.size() != lambdas2.size() && (lambdaMappers.size() == lambdas1.size() || lambdaMappers.size() == lambdas2.size())) {
 			if(lambdas1.size() > lambdaMappers.size() && statement1.getTypes().size() > 0) {
 				int followedByAs = 0;

@@ -58,6 +58,7 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIntersectionType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsKeywordType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsLitType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsMethodSignature;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsOptionalType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsParenthesizedType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsPropertySignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsQualifiedName;
@@ -774,6 +775,11 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 		else if(type instanceof Swc4jAstTsImportType importType) {
 			Swc4jAstStr arg = importType.getArg();
 			return extractTypeObject(arg.getValue());
+		}
+		else if(type instanceof Swc4jAstTsOptionalType optionalType) {
+			ISwc4jAstTsType operatorType = optionalType.getTypeAnn();
+			UMLType umlType = extractTypeObject(operatorType, sourceFolder, filePath, fileContent);
+			return umlType;
 		}
 		//TODO this should return null, when all type kinds are supported
 		return new InferredType();

@@ -11689,6 +11689,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				otherMappings++;
 			}
 		}
+		if(this.involvesTestMethods() && operationBodyMapper.involvesTestMethods()) {
+			List<String> intersection1 = this.stringLiteralIntersection();
+			List<String> intersection2 = operationBodyMapper.stringLiteralIntersection();
+			if(intersection1.size() > intersection2.size()) {
+				return -1;
+			}
+			else if(intersection1.size() < intersection2.size()) {
+				return 1;
+			}
+		}
 		int thisExactMatches = this.exactMatches();
 		int otherExactMatches = operationBodyMapper.exactMatches();
 		boolean thisEqualSignature = this.getOperation1().equalsIgnoringTypeParameters(this.getOperation2());
@@ -11814,6 +11824,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private List<String> stringLiteralIntersection() {
+		List<LeafExpression> stringLiterals1 = this.getContainer1().getAllStringLiterals();
+		List<LeafExpression> stringLiterals2 = this.getContainer2().getAllStringLiterals();
+		List<String> lit1 = StringBasedHeuristics.convertToStringList(stringLiterals1);
+		List<String> lit2 = StringBasedHeuristics.convertToStringList(stringLiterals2);
+		List<String> intersection1 = new ArrayList<>(lit1);
+		intersection1.retainAll(lit2);
+		List<String> intersection2 = new ArrayList<>(lit2);
+		intersection2.retainAll(lit1);
+		//return the smaller
+		if(intersection1.size() < intersection2.size())
+			return intersection1;
+		return intersection2;
 	}
 
 	private boolean identicalBody() {

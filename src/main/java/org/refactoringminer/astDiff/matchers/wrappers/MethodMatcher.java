@@ -123,6 +123,10 @@ public class MethodMatcher extends BodyMapperMatcher{
                         mappingStore.addMapping(arrowFunctions.first, arrowFunctions.second);
                         BodyMapperMatcher.processArrowFunction(arrowFunctions.first, arrowFunctions.second, mappingStore, LANG1, LANG2);
                     }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> typeAnnotations = Helpers.findPairOfType(matched.first,matched.second,LANG1.TYPE_ANNOTATION,LANG2.TYPE_ANNOTATION);
+                    if(typeAnnotations != null) {
+                        mappingStore.addMappingRecursively(typeAnnotations.first, typeAnnotations.second);
+                    }
                 }
                 matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.CONST_KEYWORD,LANG2.CONST_KEYWORD);
                 if(matched != null) {

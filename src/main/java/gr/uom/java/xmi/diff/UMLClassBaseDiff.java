@@ -30,6 +30,7 @@ import org.refactoringminer.util.PathFileUtils;
 import gr.uom.java.xmi.SourceAnnotation;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.Constants;
+import gr.uom.java.xmi.FunctionType;
 import gr.uom.java.xmi.JavaFileProcessor;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.ListCompositeType;
@@ -202,6 +203,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			UMLType type2 = getNextClass().getFunctionType().get();
 			if(type1.equals(type2)) {
 				this.commonFunctionType = Optional.of(Pair.of(type1, type2));
+			}
+			else if(type1 instanceof FunctionType functionType1 && type2 instanceof FunctionType functionType2) {
+				this.commonFunctionType = Optional.of(Pair.of(functionType1, functionType2));
 			}
 			else if(type1 instanceof ListCompositeType listType1 && type2 instanceof ListCompositeType listType2) {
 				List<UMLType> types1 = listType1.getTypes();

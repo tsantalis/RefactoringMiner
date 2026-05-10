@@ -1759,7 +1759,16 @@ public class OperationBody {
 						Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(declarator.getName());
 						//Arrow function declaration style
 						LocationInfo location = new LocationInfo(sourceFolder, filePath, variableDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
-						UMLOperation operation = new UMLOperation(identifiers.get(0).getId().getSym(), location, container.getClassName());
+						String append = "";
+						if(container instanceof UMLOperation) {
+							append = "." + ((UMLOperation)container).getName();
+						}
+						else if(container instanceof LambdaExpressionObject lambda) {
+							if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
+								append = "." + ((UMLOperation)lambda.getOwner()).getName();
+							}
+						}
+						UMLOperation operation = new UMLOperation(identifiers.get(0).getId().getSym(), location, container.getClassName() + append);
 						if(variableDecl.getParent() instanceof Swc4jAstExportDecl) {
 							operation.setVisibility(Visibility.PUBLIC);
 						}

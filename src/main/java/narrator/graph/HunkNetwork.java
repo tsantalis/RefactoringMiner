@@ -281,11 +281,11 @@ public class HunkNetwork {
   }
 
   public void process() {
-    processMapping();
     processDefUse();
     processClassInstanceCreations();
     processExtensions(SrcDst.SRC);
     processExtensions(SrcDst.DST);
+    processMapping();
     processSuccession();
 
     System.out.println(graph.vertexSet().size() + "-" + graph.edgeSet().size());
@@ -445,75 +445,74 @@ public class HunkNetwork {
   }
 
   private void processExtensions(SrcDst srcDst) {
+    HashMap<Node, Set<Node>> nodesExtensions = new HashMap<>();
+
     UMLModel umlModel =
         srcDst.equals(SrcDst.SRC) ? modelDiff.getParentModel() : modelDiff.getChildModel();
     for (UMLClass umlClass : umlModel.getClassList()) {
       for (UMLAttribute fieldDeclaration : umlClass.getAttributes()) {
         LocationInfo declarationLocation = fieldDeclaration.getLocationInfo();
-        List<Node> declarationNodes = findOverlappingNodes(declarationLocation.getFilePath(),
-            srcDst, declarationLocation.getStartOffset(), declarationLocation.getEndOffset(),
-            (n) -> !n.isContext() && !n.isExtension());
-        if (!declarationNodes.isEmpty()) {
-          continue;
-        }
-
         Set<AbstractCodeFragment> fieldAccesses =
             srcDst.equals(SrcDst.SRC) ? modelDiff.findFieldAccessesInParentModel(fieldDeclaration)
                 : modelDiff.findFieldAccessesInChildModel(fieldDeclaration);
         Set<Node> accessNodes = findAccessNodes(fieldDeclaration.getName(), fieldAccesses, srcDst);
-        extendIsolatedNodes(accessNodes, declarationLocation, Tree::getParent, srcDst);
-      }
-
-      for (UMLOperation operation : umlClass.getOperations()) {
-        for (VariableDeclaration variableDeclaration : operation.getAllVariableDeclarations()) {
-          LocationInfo declarationLocation = variableDeclaration.getLocationInfo();
-          List<Node> declarationNodes = findOverlappingNodes(declarationLocation.getFilePath(),
-              srcDst, declarationLocation.getStartOffset(), declarationLocation.getEndOffset(),
-              (n) -> !n.isContext() && !n.isExtension());
-          if (!declarationNodes.isEmpty()) {
-            continue;
-          }
-
-          Set<Node> accessNodes = findAccessNodes(variableDeclaration.getVariableName(),
-              variableDeclaration.getScope().getStatementsInScopeUsingVariable(), srcDst);
-          extendIsolatedNodes(accessNodes, declarationLocation, null, srcDst);
-        }
+        pushNodesExtensions(nodesExtensions, accessNodes, declarationLocation, Tree::getParent,
+            srcDst);
       }
 
       for (UMLOperation operation : umlClass.getOperations()) {
         LocationInfo operationLocation = operation.getLocationInfo();
-        List<Node> operationNodes = findOverlappingNodes(operationLocation.getFilePath(),
-            srcDst, operationLocation.getStartOffset(), operationLocation.getEndOffset(),
-            (n) -> !n.isContext() && !n.isExtension());
-        if (!operationNodes.isEmpty()) {
-          continue;
-        }
-
         Set<Node> invocationNodes = getInvocationNodes(operation, srcDst);
-        extendIsolatedNodes(invocationNodes, operationLocation, null, srcDst);
+        pushNodesExtensions(nodesExtensions, invocationNodes, operationLocation, null, srcDst);
+
+        for (VariableDeclaration variableDeclaration : operation.getAllVariableDeclarations()) {
+          LocationInfo declarationLocation = variableDeclaration.getLocationInfo();
+          Set<Node> accessNodes = findAccessNodes(variableDeclaration.getVariableName(),
+              variableDeclaration.getScope().getStatementsInScopeUsingVariable(), srcDst);
+          pushNodesExtensions(nodesExtensions, accessNodes, declarationLocation, null, srcDst);
+        }
+      }
+    }
+
+    for (Entry<Node, Set<Node>> nodeExtensions : nodesExtensions.entrySet()) {
+      for (Node extension : nodeExtensions.getValue()) {
+        addEdge(extension, nodeExtensions.getKey(), EdgeType.DEF_USE);
       }
     }
   }
 
-  private void extendIsolatedNodes(Set<Node> nodes, LocationInfo extendLocation,
-      Function<Tree, Tree> treeTransformer, SrcDst srcDst) {
-    Tree extendRootTree = (srcDst.equals(SrcDst.SRC) ? srcContexts : dstContexts).get(
-        extendLocation.getFilePath()).getRoot();
-    Tree extendTree = TreeUtilFunctions.findByLocationInfo(extendRootTree, extendLocation,
-        new Constants(extendLocation.getFilePath()));
-    if (treeTransformer != null) {
-      extendTree = treeTransformer.apply(extendTree);
+  private void pushNodesExtensions(HashMap<Node, Set<Node>> nodesExtensions,
+      Set<Node> useNodes, LocationInfo usedLocation, Function<Tree, Tree> treeTransformer,
+      SrcDst srcDst) {
+    List<Node> usedNodes = findOverlappingNodes(usedLocation.getFilePath(), srcDst,
+        usedLocation.getStartOffset(), usedLocation.getEndOffset(),
+        (n) -> !n.isContext() && !n.isExtension());
+    if (!usedNodes.isEmpty()) {
+      return;
     }
 
-    List<Node> isolatedNodes = nodes.stream().filter(n -> graph.incomingEdgesOf(n).stream()
+    // TODO: only isolated nodes can take advantage of extensions?
+    List<Node> isolatedUseNodes = useNodes.stream().filter(n -> graph.incomingEdgesOf(n).stream()
             .filter(edge -> edge.getType().equals(EdgeType.DEF_USE)).toList().isEmpty())
         .toList();
-    for (Node isolatedNode : isolatedNodes) {
-      // used extension
-      Node extension = addExtensionNode(extendTree, isolatedNode);
-      addEdge(extension, isolatedNode, EdgeType.DEF_USE);
+    if (isolatedUseNodes.isEmpty()) {
+      return;
     }
 
+    Tree usedRootTree = (srcDst.equals(SrcDst.SRC) ? srcContexts : dstContexts).get(
+        usedLocation.getFilePath()).getRoot();
+    Constants constants = new Constants(usedLocation.getFilePath());
+    Tree usedTree = TreeUtilFunctions.findByLocationInfo(usedRootTree, usedLocation, constants);
+    if (treeTransformer != null) {
+      usedTree = treeTransformer.apply(usedTree);
+    }
+
+    for (Node isolatedUseNode : isolatedUseNodes) {
+      Node usedExtensionNode = addExtensionNode(usedTree, isolatedUseNode);
+
+      nodesExtensions.putIfAbsent(isolatedUseNode, new HashSet<>());
+      nodesExtensions.get(isolatedUseNode).add(usedExtensionNode);
+    }
   }
 
   private void addParameterArgumentEdges(Node node, Tree parameterDeclarationTree) {

@@ -98,7 +98,7 @@ public class Constants {
 			MODIFIER = "";
 			INITIALIZER = "";
 			CONSTRUCTOR_INVOCATION = "";
-			ENUM_DECLARATION = "class_declaration";
+			ENUM_DECLARATION = "enum_declaration";
 			ANNOTATION_TYPE_DECLARATION = "class_declaration";
 			RECORD_DECLARATION = "class_declaration";
 			PREFIX_EXPRESSION = "prefix_expression";
@@ -428,4 +428,7 @@ public class Constants {
     public final String LABELED = "labeled_statement";
     public final String STATEMENT_IDENTIFIER = "statement_identifier";
     public final String PROGRAM = "program"; // This is the root of all trees in TypeScript
+    public final String ENUM_KEYWORD = "enum";
+    public final String ENUM_BODY = "enum_body";
+    public final String ENUM_ASSIGNMENT = "enum_assignment";
 }

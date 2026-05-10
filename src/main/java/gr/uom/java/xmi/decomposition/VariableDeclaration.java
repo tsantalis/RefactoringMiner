@@ -64,6 +64,7 @@ import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstKeyValuePatProp;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstObjectPat;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstRestPat;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsEnumDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsInterfaceDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsTypeAliasDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDecl;
@@ -479,6 +480,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		return initializer;
 	}
 
+	public void setInitializer(AbstractExpression initializer) {
+		this.initializer = initializer;
+	}
+
 	public UMLType getType() {
 		return type;
 	}
@@ -509,6 +514,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public boolean isEnumConstant() {
 		return isEnumConstant;
+	}
+
+	public void setEnumConstant(boolean isEnumConstant) {
+		this.isEnumConstant = isEnumConstant;
 	}
 
 	public boolean isVarargsParameter() {
@@ -1009,6 +1018,9 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 				return parent;
 			}
 			else if(parent instanceof Swc4jAstTsInterfaceDecl) {
+				return parent;
+			}
+			else if(parent instanceof Swc4jAstTsEnumDecl) {
 				return parent;
 			}
 			else if(parent instanceof Swc4jAstClass) {

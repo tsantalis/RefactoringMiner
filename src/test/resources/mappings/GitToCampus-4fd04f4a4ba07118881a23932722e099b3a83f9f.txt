@@ -1,4 +1,4 @@
-private joinBoundariesToMeta(boundaries GeoJsonFeatureCollection<BuildingBoundaryProps>, metaById ReturnType<typeof buildMetadataMap>) : BuildingShape[] -> private toBuildingShape(feature GeoJsonFeatureCollection<BuildingBoundaryProps>, metaById Map<string,BuildingMetadata>) : BuildingShape|null
+private joinBoundariesToMeta(boundaries GeoJsonFeatureCollection<BuildingBoundaryProps>, metaById ReturnType<typeof buildMetadataMap>) : BuildingShape[] -> private toBuildingShape(feature GeoJsonFeatureCollection<BuildingBoundaryProps>['features'][number], metaById Map<string,BuildingMetadata>) : BuildingShape|null
 line range:136-136==line range:127-127
 line range:137-137==line range:128-128
 line range:140-140==line range:131-131

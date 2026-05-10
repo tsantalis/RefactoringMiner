@@ -37,6 +37,8 @@ import org.jetbrains.kotlin.psi.KtUserType;
 import org.refactoringminer.util.PathFileUtils;
 
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsEntityName;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsFnParam;
@@ -55,11 +57,16 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIndexedAccessType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIntersectionType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsKeywordType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsLitType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsMethodSignature;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsOptionalType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsParenthesizedType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsPropertySignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsQualifiedName;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTupleElement;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTupleType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeLit;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeOperator;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamInstantiation;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypePredicate;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeQuery;
@@ -568,6 +575,13 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 		}
 	}
 
+	public static UMLType extractTypeObject(String sourceFolder, String filePath, String fileContent, Swc4jAstIdent type, int extraDimensions) {
+		UMLType umlType = UMLType.extractTypeObject(type.getSym());
+		umlType.locationInfo = new LocationInfo(sourceFolder, filePath, type.getSpan(), CodeElementType.TYPE, fileContent);
+		umlType.arrayDimension += extraDimensions;
+		return umlType;
+	}
+
 	public static UMLType extractTypeObject(String sourceFolder, String filePath, String fileContent, ISwc4jAstTsType type, int extraDimensions) {
 		UMLType umlType = extractTypeObject(type, sourceFolder, filePath, fileContent);
 		if (!(umlType instanceof InferredType)) {
@@ -599,7 +613,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			List<ISwc4jAstTsType> types = unionType.getTypes();
 			List<UMLType> unionTypes = new ArrayList<>();
 			for(ISwc4jAstTsType t : types) {
-				UMLType umlType = extractTypeObject(t, sourceFolder, filePath, fileContent);
+				UMLType umlType = extractTypeObject(sourceFolder, filePath, fileContent, t, 0);
 				unionTypes.add(umlType);
 			}
 			return new ListCompositeType(unionTypes, Kind.UNION);
@@ -608,7 +622,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			List<ISwc4jAstTsType> types = intersectionType.getTypes();
 			List<UMLType> unionTypes = new ArrayList<>();
 			for(ISwc4jAstTsType t : types) {
-				UMLType umlType = extractTypeObject(t, sourceFolder, filePath, fileContent);
+				UMLType umlType = extractTypeObject(sourceFolder, filePath, fileContent, t, 0);
 				unionTypes.add(umlType);
 			}
 			return new ListCompositeType(unionTypes, Kind.INTERSECTION);
@@ -665,7 +679,17 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 					keys.add(leafExpression);
 					if(signature.getTypeAnn().isPresent()) {
 						Swc4jAstTsTypeAnn typeAnnotation = signature.getTypeAnn().get();
-						UMLType signatureType = extractTypeObject(typeAnnotation.getTypeAnn(), sourceFolder, filePath, fileContent);
+						UMLType signatureType = extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation.getTypeAnn(), 0);
+						memberTypeList.add(signatureType);
+					}
+				}
+				else if(member instanceof Swc4jAstTsMethodSignature signature) {
+					ISwc4jAstExpr key = signature.getKey();
+					LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, key, CodeElementType.KEY_EXPRESSION, null, fileContent);
+					keys.add(leafExpression);
+					if(signature.getTypeAnn().isPresent()) {
+						Swc4jAstTsTypeAnn typeAnnotation = signature.getTypeAnn().get();
+						UMLType signatureType = extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation.getTypeAnn(), 0);
 						memberTypeList.add(signatureType);
 					}
 				}
@@ -705,8 +729,10 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 					UMLType left = null;
 					if(leftEntityName instanceof Swc4jAstIdent ident)
 						left = extractTypeObject(ident.getSym());
-					else if(leftEntityName instanceof Swc4jAstTsQualifiedName qualifiedName)
-						left = extractTypeObject((ISwc4jAstTsType)qualifiedName, sourceFolder, filePath, fileContent);
+					else if(leftEntityName instanceof Swc4jAstTsQualifiedName qualifiedName) {
+						String q = qualifiedName(qualifiedName);
+						left = extractTypeObject(q);
+					}
 					UMLType rightType = extractTypeObject(qualified.getRight().getSym());
 					UMLType compositeType = new CompositeType(left, (LeafType) rightType);
 					ref = compositeType.toString();
@@ -720,16 +746,58 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 		}
 		else if(type instanceof Swc4jAstTsIndexedAccessType indexedAccessType) {
 			ISwc4jAstTsType objectType = indexedAccessType.getObjType();
-			UMLType umlType = extractTypeObject(objectType, sourceFolder, filePath, fileContent);
-			return umlType;
+			UMLType umlObjectType = extractTypeObject(objectType, sourceFolder, filePath, fileContent);
+			ISwc4jAstTsType indexType = indexedAccessType.getIndexType();
+			UMLType umlIndexType = extractTypeObject(indexType, sourceFolder, filePath, fileContent);
+			IndexedAccessType umlIndexedAccessType = new IndexedAccessType(umlObjectType, umlIndexType);
+			return umlIndexedAccessType;
 		}
 		else if(type instanceof Swc4jAstTsParenthesizedType parenthesizedType) {
 			ISwc4jAstTsType parenType = parenthesizedType.getTypeAnn();
 			UMLType umlType = extractTypeObject(parenType, sourceFolder, filePath, fileContent);
 			return umlType;
 		}
+		else if(type instanceof Swc4jAstTsTypeOperator typeOperator) {
+			ISwc4jAstTsType operatorType = typeOperator.getTypeAnn();
+			UMLType umlType = extractTypeObject(operatorType, sourceFolder, filePath, fileContent);
+			return umlType;
+		}
+		else if(type instanceof Swc4jAstTsTupleType tupleType) {
+			List<UMLType> elementTypeList = new ArrayList<>();
+			List<Swc4jAstTsTupleElement> elements = tupleType.getElemTypes();
+			for(Swc4jAstTsTupleElement element : elements) {
+				UMLType elementType = extractTypeObject(sourceFolder, filePath, fileContent, element.getTy(), 0);
+				elementTypeList.add(elementType);
+			}
+			ListCompositeType listCompositeType = new ListCompositeType(elementTypeList, Kind.TUPLE);
+			return listCompositeType;
+		}
+		else if(type instanceof Swc4jAstTsImportType importType) {
+			Swc4jAstStr arg = importType.getArg();
+			return extractTypeObject(arg.getValue());
+		}
+		else if(type instanceof Swc4jAstTsOptionalType optionalType) {
+			ISwc4jAstTsType operatorType = optionalType.getTypeAnn();
+			UMLType umlType = extractTypeObject(operatorType, sourceFolder, filePath, fileContent);
+			return umlType;
+		}
 		//TODO this should return null, when all type kinds are supported
 		return new InferredType();
+	}
+
+	private static String qualifiedName(Swc4jAstTsQualifiedName type) {
+		StringBuilder sb = new StringBuilder();
+		ISwc4jAstTsEntityName left = type.getLeft();
+		if(left instanceof Swc4jAstTsQualifiedName qualified) {
+			sb.append(qualifiedName(qualified));
+		}
+		else if(left instanceof Swc4jAstIdent ident) {
+			sb.append(ident.getSym());
+		}
+		Swc4jAstIdentName right = type.getRight();
+		sb.append(".");
+		sb.append(right.getSym());
+		return sb.toString();
 	}
 
 	private static Swc4jAstTsTypeAnn extractTypeAnnotation(ISwc4jAstTsFnParam namePat) {

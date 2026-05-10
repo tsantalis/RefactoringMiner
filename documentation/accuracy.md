@@ -10,11 +10,11 @@
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **April 12, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **April 14, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12649  | 13  | 212  | 0.999  | 0.984|
+|**Total**|12650  | 13  | 211  | 0.999  | 0.984|
 |Extract Method|1018  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
@@ -35,7 +35,7 @@ As of **April 12, 2026** the precision and recall of RefactoringMiner on this be
 |Extract Superclass|74  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|108  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|130  |  0  | 60  | 1.000  | 0.684|
+|Extract And Move Method|131  |  0  | 59  | 1.000  | 0.689|
 |Move And Inline Method|12  |  0  |  4  | 1.000  | 0.750|
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
@@ -234,11 +234,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Invert Condition`
 * `Split Parameter`
 
-As of **April 2, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **April 14, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1127  |  4  |  3  | 0.996  | 0.997|
+|**Total**|1128  |  4  |  3  | 0.996  | 0.997|
 |Extract Method|38  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|13  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 5  |  0  |  0  | 1.000  | 1.000|
@@ -258,7 +258,7 @@ As of **April 2, 2026** the precision and recall of RefactoringMiner on this ben
 |Extract And Move Method|15  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|59  |  1  |  0  | 0.983  | 1.000|
 |Inline Variable|21  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|118  |  0  |  1  | 1.000  | 0.992|
+|Rename Variable|119  |  0  |  1  | 1.000  | 0.992|
 |Rename Parameter|139  |  1  |  0  | 0.993  | 1.000|
 |Rename Attribute|28  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 3  |  0  |  0  | 1.000  | 1.000|
@@ -295,11 +295,11 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **March 25, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **April 14, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|2036  |  5  |  0  | 0.998  | 1.000|
+|**Total**|2040  |  5  |  0  | 0.998  | 1.000|
 |Extract Method|11  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|43  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|53  |  0  |  0  | 1.000  | 1.000|
@@ -318,8 +318,8 @@ As of **March 25, 2026** the precision and recall of RefactoringMiner on this be
 |Extract Superclass| 9  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 2  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|13  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|19  |  1  |  0  | 0.950  | 1.000|
-|Move And Inline Method|24  |  0  |  0  | 1.000  | 1.000|
+|Extract And Move Method|22  |  1  |  0  | 0.957  | 1.000|
+|Move And Inline Method|25  |  0  |  0  | 1.000  | 1.000|
 |Rename Package| 3  |  0  |  0  | 1.000  | 1.000|
 |Move Package| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|17  |  0  |  0  | 1.000  | 1.000|

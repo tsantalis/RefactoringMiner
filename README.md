@@ -128,29 +128,29 @@ Our tool can match Javadoc and inline comments with formatting changes. You can 
 	19. Extract Variable
 	20. Inline Variable
 	21. Parameterize Variable
- 	22. Extract Attribute
+	22. Extract Attribute
 	23. Move and Rename Method
 	24. Move and Inline Method
- 	25. Encapsulate Attribute
+	25. Encapsulate Attribute
 	26. Parameterize Attribute
- 	27. Move Package
+	27. Move Package
 	28. Split Package
 	29. Merge Package
 	30. Localize Parameter
- 	31. Collapse Hierarchy
-  	32. Merge Class
+	31. Collapse Hierarchy
+	32. Merge Class
 	33. Inline Attribute
- 	34. Split Class
+	34. Split Class
 	35. Split Conditional
 	36. Invert Condition
 	37. Merge Conditional
 	38. Merge Method
 	39. Split Method
- 	40. Move Code (between methods)
+	40. Move Code (between methods)
 </details>
 
 <details>
-<summary>API changes (52)</summary>
+<summary>API changes (53)</summary>
 
 	1. Rename Variable
 	2. Rename Parameter
@@ -190,7 +190,7 @@ Our tool can match Javadoc and inline comments with formatting changes. You can 
 	36. Remove Thrown Exception Type
 	37. Change Thrown Exception Type
 	38. Change Method Access Modifier
- 	39. Change Attribute Access Modifier
+	39. Change Attribute Access Modifier
 	40. Replace Attribute with Variable
 	41. Add Method Modifier (final, static, abstract, synchronized)
 	42. Remove Method Modifier (final, static, abstract, synchronized)
@@ -203,7 +203,8 @@ Our tool can match Javadoc and inline comments with formatting changes. You can 
 	49. Change Class Access Modifier
 	50. Add Class Modifier (final, static, abstract)
 	51. Remove Class Modifier (final, static, abstract)
- 	52. Change Type Declaration Kind (class, interface, enum, annotation, record)
+	52. Change Type Declaration Kind (class, interface, enum, annotation, record)
+	53. Move Annotation
 </details>
 
 <details>
@@ -211,10 +212,10 @@ Our tool can match Javadoc and inline comments with formatting changes. You can 
 
 	1. Replace Loop with Pipeline
 	2. Replace Anonymous with Lambda
- 	3. Replace Pipeline with Loop
-  	4. Merge Catch
-   	5. Replace Anonymous with Class
-   	6. Replace Generic With Diamond
+	3. Replace Pipeline with Loop
+	4. Merge Catch
+	5. Replace Anonymous with Class
+	6. Replace Generic With Diamond
 	7. Try With Resources
 	8. Replace Conditional With Ternary
 </details>

@@ -30,10 +30,13 @@ import org.refactoringminer.util.PathFileUtils;
 import gr.uom.java.xmi.SourceAnnotation;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.Constants;
+import gr.uom.java.xmi.FunctionType;
 import gr.uom.java.xmi.JavaFileProcessor;
 import gr.uom.java.xmi.LeafType;
+import gr.uom.java.xmi.ListCompositeType;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.UMLClassMatcher.MatchResult;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
@@ -62,6 +65,7 @@ import gr.uom.java.xmi.decomposition.MethodReference;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.VariableReplacementAnalysis;
 import gr.uom.java.xmi.decomposition.StatementObject;
+import gr.uom.java.xmi.decomposition.StringBasedHeuristics;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
@@ -98,10 +102,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private Set<Pair<UMLOperationBodyMapper, UMLOperationBodyMapper>> calledBy = new LinkedHashSet<>();
 	private Optional<Pair<UMLType, UMLType>> implementedInterfaceBecomesSuperclass;
 	private Optional<Pair<UMLType, UMLType>> superclassBecomesImplementedInterface;
+	private Optional<Pair<UMLType, UMLType>> commonFunctionType;
 	private Optional<UMLJavadocDiff> javadocDiff;
 	private Optional<UMLJavadocDiff> packageDeclarationJavadocDiff;
 	private Optional<UMLParameterListDiff> primaryConstructorParameterListDiff;
 	private Optional<UMLTypeAliasListDiff> typeAliasListDiff;
+	private Optional<UMLNamedExportListDiff> namedExportListDiff;
 	private UMLCommentListDiff packageDeclarationCommentListDiff;
 	private Set<UMLOperationBodyMapper> extractMethodCandidates;
 	private int removedOperationDelegates;
@@ -116,6 +122,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		this.consistentMethodInvocationRenamesInModel = findConsistentMethodInvocationRenamesInModelDiff();
 		this.implementedInterfaceBecomesSuperclass = Optional.empty();
 		this.superclassBecomesImplementedInterface = Optional.empty();
+		this.commonFunctionType = Optional.empty();
+		this.namedExportListDiff = Optional.empty();
 		this.extractMethodCandidates = new LinkedHashSet<>();
 		if(originalClass.getJavadoc() != null && nextClass.getJavadoc() != null) {
 			UMLJavadocDiff diff = new UMLJavadocDiff(originalClass.getJavadoc(), nextClass.getJavadoc());
@@ -158,6 +166,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return typeAliasListDiff;
 	}
 
+	public Optional<UMLNamedExportListDiff> getNamedExportListDiff() {
+		return namedExportListDiff;
+	}
+
 	public UMLCommentListDiff getPackageDeclarationCommentListDiff() {
 		if(packageDeclarationCommentListDiff == null)
 			packageDeclarationCommentListDiff = new UMLCommentListDiff(getOriginalClass().getPackageDeclarationComments(), getNextClass().getPackageDeclarationComments());
@@ -186,6 +198,23 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	public void process() throws RefactoringMinerTimedOutException {
 		processPrimaryConstructors();
+		if(getOriginalClass().getFunctionType().isPresent() && getNextClass().getFunctionType().isPresent()) {
+			UMLType type1 = getOriginalClass().getFunctionType().get();
+			UMLType type2 = getNextClass().getFunctionType().get();
+			if(type1.equals(type2)) {
+				this.commonFunctionType = Optional.of(Pair.of(type1, type2));
+			}
+			else if(type1 instanceof FunctionType functionType1 && type2 instanceof FunctionType functionType2) {
+				this.commonFunctionType = Optional.of(Pair.of(functionType1, functionType2));
+			}
+			else if(type1 instanceof ListCompositeType listType1 && type2 instanceof ListCompositeType listType2) {
+				List<UMLType> types1 = listType1.getTypes();
+				List<UMLType> types2 = listType2.getTypes();
+				if(types1.containsAll(types2) || types2.containsAll(types1)) {
+					this.commonFunctionType = Optional.of(Pair.of(type1, type2));
+				}
+			}
+		}
 		if(getOriginalClass().getTypeAliasList().size() > 0 && getNextClass().getTypeAliasList().size() > 0) {
 			UMLTypeAliasListDiff typeAliasListDiff = new UMLTypeAliasListDiff(getOriginalClass().getTypeAliasList(), getNextClass().getTypeAliasList());
 			this.typeAliasListDiff = Optional.of(typeAliasListDiff);
@@ -194,8 +223,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			this.typeAliasListDiff = Optional.empty();
 		}
 		if(originalClass.getContainer().isPresent() && nextClass.getContainer().isPresent()) {
-			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(originalClass.getContainer().get(), nextClass.getContainer().get(), this);
+			ModuleContainer container1 = originalClass.getContainer().get();
+			ModuleContainer container2 = nextClass.getContainer().get();
+			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(container1, container2, this);
 			addOperationBodyMapper(mapper);
+			if(container1.getNamedExports().size() > 0 || container2.getNamedExports().size() > 0) {
+				UMLNamedExportListDiff diff = new UMLNamedExportListDiff(container1.getNamedExports(), container2.getNamedExports());
+				this.namedExportListDiff = Optional.of(diff);
+			}
 		}
 		processInitializers();
 		processModifiers();
@@ -325,6 +360,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		Set<UMLOperationBodyMapper> constructorMappers = new LinkedHashSet<>();
 		List<UMLOperationBodyMapper> moveCodeMappers = new ArrayList<>();
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			if(mapper.getContainer1() instanceof ModuleContainer && mapper.getContainer2() instanceof ModuleContainer) {
+				continue;
+			}
 			if(mapper.getContainer1().hasSetUpAnnotation() && mapper.getContainer2().hasSetUpAnnotation()) {
 				setUpMappers.add(mapper);
 			}
@@ -1219,6 +1257,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	public Optional<Pair<UMLType, UMLType>> getSuperclassBecomesImplementedInterface() {
 		return superclassBecomesImplementedInterface;
+	}
+
+	public Optional<Pair<UMLType, UMLType>> getCommonFunctionType() {
+		return commonFunctionType;
 	}
 
 	public boolean containsOperationWithTheSameSignatureInOriginalClass(UMLOperation operation) {
@@ -2805,6 +2847,40 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return false;
 	}
 
+	private boolean literalIntersectionOrFormatting(List<LeafExpression> literals1, List<LeafExpression> literals2) {
+		Set<String> strippedLiterals1 = StringBasedHeuristics.convertToStringSet(literals1);
+		Set<String> intersection = new LinkedHashSet<>(strippedLiterals1);
+		Set<String> strippedLiterals2 = StringBasedHeuristics.convertToStringSet(literals2);
+		intersection.retainAll(strippedLiterals2);
+		if(literals1.size() == literals2.size() && literals1.size() > 0 && intersection.size() == literals1.size()) {
+			return true;
+		}
+		else {
+			StringBuilder sb1 = new StringBuilder();
+			for(LeafExpression expression : literals1) {
+				String withoutQuotes = expression.getString();
+				if(withoutQuotes.startsWith("\""))
+					withoutQuotes = withoutQuotes.substring(1);
+				if(withoutQuotes.endsWith("\""))
+					withoutQuotes = withoutQuotes.substring(0, withoutQuotes.length()-1);
+				sb1.append(withoutQuotes);
+			}
+			StringBuilder sb2 = new StringBuilder();
+			for(LeafExpression expression : literals2) {
+				String withoutQuotes = expression.getString();
+				if(withoutQuotes.startsWith("\""))
+					withoutQuotes = withoutQuotes.substring(1);
+				if(withoutQuotes.endsWith("\""))
+					withoutQuotes = withoutQuotes.substring(0, withoutQuotes.length()-1);
+				sb2.append(withoutQuotes);
+			}
+			if(sb1.toString().equals(sb2.toString())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void updateMapperSet(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperation removedOperation, UMLOperation addedOperation, int differenceInPosition) throws RefactoringMinerTimedOutException {
 		boolean mapperWithZeroNonMappedStatementsOrIdenticalMethodName = false;
 		for(UMLOperationBodyMapper mapper : mapperSet) {
@@ -2844,6 +2920,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			boolean containsAnonymousClassDiff = operationBodyMapper.getAnonymousClassDiffs().size() > 0 &&
 					!removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation();
 			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
+			List<LeafExpression> literals1 = removedOperation.getAllStringLiterals();
+			List<LeafExpression> literals2 = addedOperation.getAllStringLiterals();
 			if(exactMappings(operationBodyMapper) || (operationBodyMapper.allMappingsHaveSameDepthAndIndex() && !removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation())) {
 				mapperSet.add(operationBodyMapper);
 			}
@@ -2874,6 +2952,115 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			else if(absoluteDifferenceInPosition == 0 && !removedOperation.isConstructor() && !addedOperation.isConstructor() &&
 					removedOperation.getName().equals(addedOperation.getName()) && operationBodyMapper.exactMatches() > 0) {
 				mapperSet.add(operationBodyMapper);
+			}
+			else if(mappings == 0 && removedOperation.hasTestAnnotation() && addedOperation.hasParameterizedTestAnnotation() && literalIntersectionOrFormatting(literals1, literals2)) {
+				Set<AbstractCodeFragment> nonMappedLeavesT1ToBeRemoved = new LinkedHashSet<>();
+				Set<AbstractCodeFragment> nonMappedLeavesT2ToBeRemoved = new LinkedHashSet<>();
+				for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
+					List<LeafExpression> stringLiterals1 = fragment1.getStringLiterals();
+					Set<String> lit1 = StringBasedHeuristics.convertToStringSet(stringLiterals1);
+					for(AbstractCodeFragment fragment2 : operationBodyMapper.getNonMappedLeavesT2()) {
+						List<LeafExpression> stringLiterals2 = fragment2.getStringLiterals();
+						Set<String> lit2 = StringBasedHeuristics.convertToStringSet(stringLiterals2);
+						Set<String> intersection = new LinkedHashSet<>(lit1);
+						intersection.retainAll(lit2);
+						if(intersection.size() > 0) {
+							LeafMapping mapping = new LeafMapping(fragment1, fragment2,
+									operationBodyMapper.getContainer1(),
+									operationBodyMapper.getContainer2());
+							operationBodyMapper.addMapping(mapping);
+							nonMappedLeavesT1ToBeRemoved.add(fragment1);
+							nonMappedLeavesT2ToBeRemoved.add(fragment2);
+							if(stringLiterals1.size() > stringLiterals2.size()) {
+								for(int i=0; i<stringLiterals2.size(); i++) {
+									List<LeafExpression> leafExpressions1 = fragment1.findExpression(stringLiterals2.get(i).getString());
+									if(leafExpressions1.size() == 1) {
+										LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(0), stringLiterals2.get(i),
+												operationBodyMapper.getContainer1(),
+												operationBodyMapper.getContainer2());
+										operationBodyMapper.addMapping(leafMapping);
+									}
+									else if(leafExpressions1.size() == 0) {
+										String stripped2 = stringLiterals2.get(i).getString();
+										if(stripped2.startsWith("\""))
+											stripped2 = stripped2.substring(1);
+										if(stripped2.endsWith("\""))
+											stripped2 = stripped2.substring(0, stripped2.length()-1);
+										stripped2 = stripped2.strip();
+										for(int j=0; j<stringLiterals1.size(); j++) {
+											String stripped1 = stringLiterals1.get(j).getString();
+											if(stripped1.startsWith("\""))
+												stripped1 = stripped1.substring(1);
+											if(stripped1.endsWith("\""))
+												stripped1 = stripped1.substring(0, stripped1.length()-1);
+											stripped1 = stripped1.strip();
+											if(stripped1.equals(stripped2)) {
+												LeafMapping leafMapping = new LeafMapping(stringLiterals1.get(j), stringLiterals2.get(i),
+														operationBodyMapper.getContainer1(),
+														operationBodyMapper.getContainer2());
+												operationBodyMapper.addMapping(leafMapping);
+											}
+										}
+									}
+								}
+							}
+						}
+						else if(intersection.size() == 0) {
+							StringBuilder sb1 = new StringBuilder();
+							for(LeafExpression expression : stringLiterals1) {
+								boolean alreadyMapped = false;
+								for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+									if(mapping.getFragment1().equals(expression)) {
+										alreadyMapped = true;
+										break;
+									}
+								}
+								if(!alreadyMapped) {
+									String withoutQuotes = expression.getString();
+									if(withoutQuotes.startsWith("\""))
+										withoutQuotes = withoutQuotes.substring(1);
+									if(withoutQuotes.endsWith("\""))
+										withoutQuotes = withoutQuotes.substring(0, withoutQuotes.length()-1);
+									sb1.append(withoutQuotes);
+								}
+							}
+							StringBuilder sb2 = new StringBuilder();
+							for(LeafExpression expression : stringLiterals2) {
+								String withoutQuotes = expression.getString();
+								if(withoutQuotes.startsWith("\""))
+									withoutQuotes = withoutQuotes.substring(1);
+								if(withoutQuotes.endsWith("\""))
+									withoutQuotes = withoutQuotes.substring(0, withoutQuotes.length()-1);
+								sb2.append(withoutQuotes);
+							}
+							if(sb1.toString().equals(sb2.toString())) {
+								//make all combinations, formatting change
+								for(LeafExpression expression1 : stringLiterals1) {
+									boolean alreadyMapped = false;
+									for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+										if(mapping.getFragment1().equals(expression1)) {
+											alreadyMapped = true;
+											break;
+										}
+									}
+									if(!alreadyMapped) {
+										for(LeafExpression expression2 : stringLiterals2) {
+											LeafMapping leafMapping = new LeafMapping(expression1, expression2,
+													operationBodyMapper.getContainer1(),
+													operationBodyMapper.getContainer2());
+											operationBodyMapper.addMapping(leafMapping);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				if(operationBodyMapper.getMappings().size() > 0) {
+					operationBodyMapper.getNonMappedLeavesT1().removeAll(nonMappedLeavesT1ToBeRemoved);
+					operationBodyMapper.getNonMappedLeavesT2().removeAll(nonMappedLeavesT2ToBeRemoved);
+					mapperSet.add(operationBodyMapper);
+				}
 			}
 			// in Python only one constructor is allowed
 			else if((LANG1.equals(Constants.PYTHON) || LANG2.equals(Constants.PYTHON)) && removedOperation.isConstructor() && addedOperation.isConstructor()) {

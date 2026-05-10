@@ -17,7 +17,6 @@ import gr.uom.java.xmi.UMLClassMatcher.MatchResult;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
-import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.RenamePattern;
@@ -120,10 +119,6 @@ public abstract class UMLAbstractClass implements AnnotationProvider {
 		else {
 			operationIdentifierSignatureMap.put(signature, 1);
 		}
-	}
-
-	public void setContainer(List<AbstractStatement> statements) {
-		this.container = Optional.of(new ModuleContainer(statements, locationInfo, name));
 	}
 
 	public void setContainer(ModuleContainer container) {
@@ -284,7 +279,9 @@ public abstract class UMLAbstractClass implements AnnotationProvider {
 			//importedType.equals(targetClassPackage) -> special handling for import with asterisk (*) wildcard
 			String importedType = imported.getName();
 			if(importedType.equals(targetClass) || importedType.startsWith(targetClass) ||
-					importedType.endsWith("." + targetClass) || importedType.contains("." + targetClass)) {
+					importedType.endsWith("." + targetClass) || importedType.contains("." + targetClass) ||
+					// handle JavaScript and TypeScript imports prefixed with ./ or ../
+					importedType.contains("/" + targetClass)) {
 				return true;
 			}
 			if(targetClass.contains(".")) {

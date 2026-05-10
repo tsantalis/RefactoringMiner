@@ -183,6 +183,32 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
+	public static Set<String> convertToStringSet(List<? extends LeafExpression> expressions) {
+		Set<String> set = new LinkedHashSet<>();
+		for(LeafExpression expression : expressions) {
+			String withoutQuotes = expression.getString();
+			if(withoutQuotes.startsWith("\""))
+				withoutQuotes = withoutQuotes.substring(1);
+			if(withoutQuotes.endsWith("\""))
+				withoutQuotes = withoutQuotes.substring(0, withoutQuotes.length()-1);
+			set.add(withoutQuotes.strip());
+		}
+		return set;
+	}
+
+	public static List<String> convertToStringList(List<? extends LeafExpression> expressions) {
+		List<String> list = new ArrayList<>();
+		for(LeafExpression expression : expressions) {
+			String withoutQuotes = expression.getString();
+			if(withoutQuotes.startsWith("\""))
+				withoutQuotes = withoutQuotes.substring(1);
+			if(withoutQuotes.endsWith("\""))
+				withoutQuotes = withoutQuotes.substring(0, withoutQuotes.length()-1);
+			list.add(withoutQuotes.strip());
+		}
+		return list;
+	}
+
 	private static boolean compatibleDiffs(String s1, String s2, ReplacementInfo info, String diff1, String diff2) {
 		if(diff1.isEmpty() && diff2.isBlank() && !diff2.isEmpty()) {
 			return true;
@@ -808,6 +834,12 @@ public class StringBasedHeuristics {
 				return true;
 			}
 		}
+		if(s1.startsWith("(") && s1.endsWith(")") && !s2.startsWith("(") && !s2.endsWith(")")) {
+			s1 = s1.substring(1, s1.length()-1);
+		}
+		else if(s2.startsWith("(") && s2.endsWith(")") && !s1.startsWith("(") && !s1.endsWith(")")) {
+			s2 = s2.substring(1, s2.length()-1);
+		}
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
@@ -863,6 +895,19 @@ public class StringBasedHeuristics {
 				return true;
 			}
 			else if(diff1.isEmpty() && diff2.isEmpty() && (commonPrefix.endsWith("=") || commonPrefix.matches(".*=\\s*\\z"))) {
+				return true;
+			}
+			else if(diff1.isEmpty() && diff2.endsWith(":") && !diff2.endsWith(" :")) {
+				//check AbstractCall.makeReplacementForAllArgumentsReturned() && AbstractCall.match(UMLType returnType, String diff)
+				return true;
+			}
+			else if(diff2.isEmpty() && diff1.endsWith(":") && !diff1.endsWith(" :")) {
+				return true;
+			}
+			else if(diff1.isEmpty() && diff2.equals("?")) {
+				return true;
+			}
+			else if(diff2.isEmpty() && diff1.equals("?")) {
 				return true;
 			}
 			else {

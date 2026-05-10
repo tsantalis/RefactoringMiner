@@ -61,6 +61,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private String actualSignature;
 	private List<UMLOperation> nestedOperations;
 	private List<UMLImport> nestedImports;
+	private List<UMLClass> nestedClasses;
 	private final Constants LANG;
 	private boolean importsTestCase;
 	private Optional<UMLType> receiver;
@@ -78,6 +79,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
         this.comments = new ArrayList<UMLComment>();
         this.nestedOperations = new ArrayList<UMLOperation>();
         this.nestedImports = new ArrayList<UMLImport>();
+        this.nestedClasses = new ArrayList<UMLClass>();
         this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
         this.propertyAccessor = Optional.empty();
         this.receiver = Optional.empty();
@@ -98,6 +100,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public List<UMLImport> getNestedImports() {
 		return nestedImports;
+	}
+
+	public void addNestedClass(UMLClass umlClass) {
+		nestedClasses.add(umlClass);
+	}
+
+	public List<UMLClass> getNestedClasses() {
+		return nestedClasses;
 	}
 
 	public void setReceiver(UMLType type) {
@@ -423,6 +433,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			return operationBody.getAllCreations();
 		if(defaultExpression != null)
 			return defaultExpression.getAllCreations();
+		return Collections.emptyList();
+	}
+
+	public List<LeafExpression> getAllStringLiterals() {
+		if(operationBody != null)
+			return operationBody.getAllStringLiterals();
+		if(defaultExpression != null)
+			return defaultExpression.getAllStringLiterals();
 		return Collections.emptyList();
 	}
 
@@ -1418,6 +1436,23 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			String prefix1 = this.getName().substring(0, this.getName().indexOf("."));
 			String prefix2 = removedOperation.getName().substring(0, removedOperation.getName().indexOf("."));
 			if(prefix1.equals(prefix2) && this.equalReturnParameter(removedOperation)) {
+				return true;
+			}
+		}
+		List<VariableDeclaration> parameterDeclarationList1 = this.getParameterDeclarationList();
+		List<VariableDeclaration> parameterDeclarationList2 = removedOperation.getParameterDeclarationList();
+		if(parameterDeclarationList1.size() == parameterDeclarationList2.size()) {
+			int matches = 0;
+			for(int i=0; i<parameterDeclarationList1.size(); i++) {
+				VariableDeclaration v1 = parameterDeclarationList1.get(i);
+				VariableDeclaration v2 = parameterDeclarationList2.get(i);
+				if(v1.getType() instanceof InferredType || v2.getType() instanceof InferredType) {
+					if(v1.getVariableName().equals(v2.getVariableName()) || v1.getVariableName().contains(v2.getVariableName()) || v2.getVariableName().contains(v1.getVariableName())) {
+						matches++;
+					}
+				}
+			}
+			if(matches > 0 && matches == parameterDeclarationList1.size()) {
 				return true;
 			}
 		}

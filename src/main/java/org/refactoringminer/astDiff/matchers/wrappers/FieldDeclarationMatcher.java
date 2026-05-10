@@ -74,6 +74,13 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         if (dstFieldDeclaration == null) {
             dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.RECORD_COMPONENT);
         }
+        //handle lexical declarations in TypeScript
+        if (srcFieldDeclaration == null && srcAttr.getType().name.equals(LANG1.VARIABLE_DECLARATOR)) {
+            srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.LEXICAL_DECLARATION);
+        }
+        if (dstFieldDeclaration == null && dstAttr.getType().name.equals(LANG2.VARIABLE_DECLARATOR)) {
+            dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.LEXICAL_DECLARATION);
+        }
         if (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment")) {
             srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo(), LANG1, LANG1.FIELD_DECLARATION);
         }
@@ -102,8 +109,16 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         else if(Constants.isCrossLanguage(LANG1, LANG2)) {
             JavaToKotlinMigration.handleFieldDeclarationMapping(mappingStore, srcAttr, dstAttr, srcFieldDeclaration, dstFieldDeclaration, LANG1, LANG2);
         }
+        if(srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT) && dstFieldDeclaration.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT)) {
+            mappingStore.addMapping(srcFieldDeclaration.getParent(), dstFieldDeclaration.getParent());
+            com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcFieldDeclaration.getParent(),dstFieldDeclaration.getParent(),LANG1.EXPORT_KEYWORD,LANG2.EXPORT_KEYWORD);
+            if(matched != null) {
+                mappingStore.addMapping(matched.first, matched.second);
+            }
+        }
         if((srcAttr.getType().name.equals(LANG1.PROPERTY_SIGNATURE) && dstAttr.getType().name.equals(LANG2.PROPERTY_SIGNATURE)) ||
-                (srcAttr.getType().name.equals(LANG1.PUBLIC_FIELD_DEFINITION) && dstAttr.getType().name.equals(LANG2.PUBLIC_FIELD_DEFINITION))) {
+                (srcAttr.getType().name.equals(LANG1.PUBLIC_FIELD_DEFINITION) && dstAttr.getType().name.equals(LANG2.PUBLIC_FIELD_DEFINITION)) ||
+                (srcAttr.getType().name.equals(LANG1.ENUM_ASSIGNMENT) && dstAttr.getType().name.equals(LANG2.ENUM_ASSIGNMENT))) {
             if(srcAttr.getParent() != null && dstAttr.getParent() != null) {
                 int index1 = srcAttr.getParent().getChildPosition(srcAttr);
                 int index2 = dstAttr.getParent().getChildPosition(dstAttr);
@@ -113,18 +128,38 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                     Tree t2 = dstAttr.getParent().getChild(index2+1);
                     mappingStore.addMapping(t1,t2);
                 }
+                else if(srcAttr.getParent().getChildren().size() > index1+1 && srcAttr.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                        dstAttr.getParent().getChildren().size() > index2+1 && dstAttr.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+                    Tree t1 = srcAttr.getParent().getChild(index1+1);
+                    Tree t2 = dstAttr.getParent().getChild(index2+1);
+                    mappingStore.addMapping(t1,t2);
+                }
             }
             mappingStore.addMapping(srcAttr, dstAttr);
+            com.github.gumtreediff.utils.Pair<Tree, Tree> optionals = Helpers.findPairOfType(srcAttr,dstAttr, LANG1.OPTIONAL_KEYWORD, LANG2.OPTIONAL_KEYWORD);
+            if(optionals != null) {
+                mappingStore.addMapping(optionals.first,optionals.second);
+            }
             com.github.gumtreediff.utils.Pair<Tree, Tree> type_annotations = Helpers.findPairOfType(srcAttr,dstAttr, LANG1.TYPE_ANNOTATION, LANG2.TYPE_ANNOTATION);
             if(type_annotations != null) {
                 mappingStore.addMapping(type_annotations.first,type_annotations.second);
                 com.github.gumtreediff.utils.Pair<Tree, Tree> colons = Helpers.findPairOfType(type_annotations.first,type_annotations.second, LANG1.COLON, LANG2.COLON);
                 if(colons != null) {
-                	mappingStore.addMapping(colons.first, colons.second);
+                    mappingStore.addMapping(colons.first, colons.second);
                 }
             }
         }
         mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
+        if(srcFieldDeclaration != null && srcFieldDeclaration.getType().name.equals(LANG1.LEXICAL_DECLARATION) && dstFieldDeclaration != null && dstFieldDeclaration.getType().name.equals(LANG2.LEXICAL_DECLARATION)) {
+            com.github.gumtreediff.utils.Pair<Tree, Tree> constKeywords = Helpers.findPairOfType(srcFieldDeclaration,dstFieldDeclaration, LANG1.CONST_KEYWORD, LANG2.CONST_KEYWORD);
+            if(constKeywords != null) {
+                mappingStore.addMapping(constKeywords.first, constKeywords.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> semicolons = Helpers.findPairOfType(srcFieldDeclaration,dstFieldDeclaration, LANG1.SEMICOLON, LANG2.SEMICOLON);
+            if(semicolons != null) {
+                mappingStore.addMapping(semicolons.first, semicolons.second);
+            }
+        }
         matchFieldAllModifiers(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute,dstUMLAttribute,mappingStore);
         matchFieldAnnotations(srcFieldDeclaration, dstFieldDeclaration, mappingStore);
         if (srcUMLAttribute.getType().getLocationInfo() == null || dstUMLAttribute.getType().getLocationInfo() == null) {

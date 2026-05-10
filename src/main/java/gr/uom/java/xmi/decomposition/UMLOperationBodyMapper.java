@@ -2019,6 +2019,40 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.parameterNameList1 = container1.getParameterNameList();
 		this.parameterNameList2 = container2.getParameterNameList();
 		this.commentListDiff = new UMLCommentListDiff();
+		Map<String, AbstractStatement> describeMap1 = container1.getDescribeMap();
+		Map<String, AbstractStatement> describeMap2 = container2.getDescribeMap();
+		if(describeMap1.size() <= describeMap2.size()) {
+			for(String key : describeMap1.keySet()) {
+				AbstractStatement statement1 = describeMap1.get(key);
+				if(describeMap2.containsKey(key)) {
+					AbstractStatement statement2 = describeMap2.get(key);
+					LeafMapping mapping = createLeafMapping(statement1, statement2, new LinkedHashMap<String, String>(), true);
+					addMapping(mapping);
+				}
+				else {
+					Map<String, AbstractStatement> nestedDescribeMap1 = nestedDescribeMap(statement1);
+					for(String key2 : describeMap2.keySet()) {
+						AbstractStatement statement2 = describeMap2.get(key2);
+						Map<String, AbstractStatement> nestedDescribeMap2 = nestedDescribeMap(statement2);
+						if(nestedDescribeMap1.keySet().equals(nestedDescribeMap2.keySet())) {
+							LeafMapping mapping = createLeafMapping(statement1, statement2, new LinkedHashMap<String, String>(), true);
+							addMapping(mapping);
+							break;
+						}
+					}
+				}
+			}
+		}
+		else {
+			for(String key : describeMap2.keySet()) {
+				AbstractStatement statement2 = describeMap2.get(key);
+				if(describeMap1.containsKey(key)) {
+					AbstractStatement statement1 = describeMap1.get(key);
+					LeafMapping mapping = createLeafMapping(statement1, statement2, new LinkedHashMap<String, String>(), true);
+					addMapping(mapping);
+				}
+			}
+		}
 		processCompositeStatements(container1.getLeaves(), container2.getLeaves(), container1.getInnerNodes(), container2.getInnerNodes());
 		if(container1.getJavadoc() != null && container2.getJavadoc() != null) {
 			UMLJavadocDiff diff = new UMLJavadocDiff(container1.getJavadoc(), container2.getJavadoc());
@@ -2027,6 +2061,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		UMLCommentListDiff commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this);
 		this.commentListDiff.append(commentListDiff);
 		checkUnmatchedStatementsBeingCommented();
+	}
+
+	public Map<String, AbstractStatement> nestedDescribeMap(AbstractStatement statement) {
+		Map<String, AbstractStatement> nestedDescribeMap = new LinkedHashMap<>();
+		if(statement.getLambdas().size()  > 0) {
+			LambdaExpressionObject lambda = statement.getLambdas().get(0);
+			if(lambda.getBody() != null) {
+				List<AbstractStatement> statements = lambda.getBody().getCompositeStatement().getStatements();
+				for(AbstractStatement s : statements) {
+					AbstractCall call = s.invocationCoveringEntireFragment();
+					if(call != null && call.getName().equals("describe") && call.arguments().size() > 0) {
+						nestedDescribeMap.put(call.arguments().get(0), s);
+					}
+				}
+			}
+		}
+		return nestedDescribeMap;
 	}
 
 	protected UMLOperationBodyMapper(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2, UMLOperationBodyMapper parentMapper) throws RefactoringMinerTimedOutException {
@@ -3553,7 +3604,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				for(UMLOperationBodyMapper childMapper : operationBodyMapper.childMappers) {
-					if(childMapper.container1.getClassName().equals(addedOperation.getClassName()) || classDiff instanceof UMLClassMoveDiff) {
+					if(childMapper.container1.getClassName().equals(addedOperation.getClassName()) || classDiff instanceof UMLClassMoveDiff || nested) {
 						for(AbstractCodeMapping mapping : childMapper.getMappings()) {
 							AbstractCodeFragment fragment = mapping.getFragment1();
 							if(!returnWithVariableReplacement(mapping) && (leaves2AsStrings.contains(fragment.getString()) || !mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
@@ -5033,6 +5084,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return nonMappedLeafCount + nonMappedInnerNodeCount;
 	}
 
+	public int exactMatchesWithoutLeafExpressions() {
+		int count = 0;
+		Set<LeafMapping> subExpressionMappings = new LinkedHashSet<>();
+		for(AbstractCodeMapping mapping : getMappings()) {
+			if(mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression)
+				continue;
+			subExpressionMappings.addAll(mapping.getSubExpressionMappings());
+			if(mapping.isExact() && mapping.getFragment1().countableStatement() && mapping.getFragment2().countableStatement() &&
+					!mapping.getFragment1().getString().equals(LANG1.TRY) && !subExpressionMappings.contains(mapping))
+				count++;
+		}
+		return count;
+	}
+
 	public int exactMatches() {
 		int count = 0;
 		Set<LeafMapping> subExpressionMappings = new LinkedHashSet<>();
@@ -5180,16 +5245,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		if(mappings == this.exactMatches() + tryMappings) {
+		int exactMatches = this.exactMatches();
+		if(mappings == exactMatches + tryMappings) {
 			return true;
 		}
-		if(mappings == this.exactMatches() + tryMappings + mappingsWithTypeReplacement && mappings > mappingsWithTypeReplacement) {
+		if(mappings == exactMatches + tryMappings + mappingsWithTypeReplacement && mappings > mappingsWithTypeReplacement) {
 			return true;
 		}
-		if(mappings == this.exactMatches() + tryMappings + mappingsWithVariableReplacement && mappings > mappingsWithVariableReplacement) {
+		if(mappings == exactMatches + tryMappings + mappingsWithVariableReplacement && mappings > mappingsWithVariableReplacement) {
 			return true;
 		}
-		if(mappings == this.exactMatches() + tryMappings + mappingsWithMethodInvocationRename && mappings > mappingsWithMethodInvocationRename) {
+		if(mappings == exactMatches + tryMappings + mappingsWithMethodInvocationRename && mappings > mappingsWithMethodInvocationRename) {
 			return true;
 		}
 		return false;
@@ -5794,6 +5860,36 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	private boolean continueBecomesReturn(CompositeStatementObject statement1, CompositeStatementObject statement2) {
+		boolean continueBody = false;
+		if(statement1.getStatements().size() > 0) {
+			AbstractStatement firstStatement = statement1.getStatements().get(0);
+			if(firstStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.CONTINUE_STATEMENT)) {
+				continueBody = true;
+			}
+			else if(firstStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+				CompositeStatementObject comp = (CompositeStatementObject) firstStatement;
+				if(comp.getStatements().size() > 0 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.CONTINUE_STATEMENT)) {
+					continueBody = true;
+				}
+			}
+		}
+		boolean returnBody = false;
+		if(statement2.getStatements().size() > 0) {
+			AbstractStatement firstStatement = statement2.getStatements().get(0);
+			if(firstStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT)) {
+				returnBody = true;
+			}
+			else if(firstStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+				CompositeStatementObject comp = (CompositeStatementObject) firstStatement;
+				if(comp.getStatements().size() > 0 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT)) {
+					returnBody = true;
+				}
+			}
+		}
+		return continueBody && returnBody;
+	}
+
 	private void processInnerNodes(List<CompositeStatementObject> innerNodes1, List<CompositeStatementObject> innerNodes2, List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2,
 			Map<String, String> parameterToArgumentMap, List<UMLOperation> removedOperations, List<UMLOperation> addedOperations, boolean tryWithResourceMigration, boolean containsCallToExtractedMethod,
 			Map<String, List<CompositeStatementObject>> map1, Map<String, List<CompositeStatementObject>> map2) throws RefactoringMinerTimedOutException {
@@ -5833,6 +5929,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, matchingInnerNodes1, matchingInnerNodes2);
 								double score = computeScore(statement1, statement2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 								if(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0) {
+									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
+									mappingSet.add(mapping);
+								}
+								else if(score == 0 && continueBecomesReturn(statement1, statement2)) {
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 									mappingSet.add(mapping);
 								}
@@ -6057,7 +6157,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 												for(int i=0; i<lambdas1.size(); i++) {
 													LambdaExpressionObject lambda1 = lambdas1.get(i);
 													LambdaExpressionObject lambda2 = lambdas2.get(i);
-													processLambdas(lambda1, lambda2, replacementInfo, this);
+													processLambdas(lambda1, lambda2, replacementInfo, this, true);
 												}
 											}
 											break;
@@ -6079,7 +6179,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 												for(int i=0; i<lambdas1.size(); i++) {
 													LambdaExpressionObject lambda1 = lambdas1.get(i);
 													LambdaExpressionObject lambda2 = lambdas2.get(i);
-													processLambdas(lambda1, lambda2, replacementInfo, this);
+													processLambdas(lambda1, lambda2, replacementInfo, this, true);
 												}
 											}
 											break;
@@ -6214,6 +6314,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, matchingInnerNodes1, matchingInnerNodes2);
 								double score = computeScore(statement1, statement2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 								if(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0) {
+									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
+									mappingSet.add(mapping);
+								}
+								else if(score == 0 && continueBecomesReturn(statement1, statement2)) {
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 									mappingSet.add(mapping);
 								}
@@ -6445,7 +6549,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 												for(int i=0; i<lambdas1.size(); i++) {
 													LambdaExpressionObject lambda1 = lambdas1.get(i);
 													LambdaExpressionObject lambda2 = lambdas2.get(i);
-													processLambdas(lambda1, lambda2, replacementInfo, this);
+													processLambdas(lambda1, lambda2, replacementInfo, this, true);
 												}
 											}
 											break;
@@ -8636,7 +8740,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(int i=0; i<lambdas1.size(); i++) {
 						LambdaExpressionObject lambda1 = lambdas1.get(i);
 						LambdaExpressionObject lambda2 = lambdas2.get(i);
-						processLambdas(lambda1, lambda2, replacementInfo, this);
+						processLambdas(lambda1, lambda2, replacementInfo, this, true);
 					}
 				}
 				break;
@@ -8665,7 +8769,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(int i=0; i<lambdas1.size(); i++) {
 						LambdaExpressionObject lambda1 = lambdas1.get(i);
 						LambdaExpressionObject lambda2 = lambdas2.get(i);
-						processLambdas(lambda1, lambda2, replacementInfo, this);
+						processLambdas(lambda1, lambda2, replacementInfo, this, true);
 					}
 				}
 				break;
@@ -8682,7 +8786,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						for(int i=0; i<lambdas1.size(); i++) {
 							LambdaExpressionObject lambda1 = lambdas1.get(i);
 							LambdaExpressionObject lambda2 = lambdas2.get(i);
-							processLambdas(lambda1, lambda2, replacementInfo, this);
+							processLambdas(lambda1, lambda2, replacementInfo, this, true);
 						}
 					}
 					break;
@@ -11585,6 +11689,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				otherMappings++;
 			}
 		}
+		if(this.involvesTestMethods() && operationBodyMapper.involvesTestMethods()) {
+			List<String> intersection1 = this.stringLiteralIntersection();
+			List<String> intersection2 = operationBodyMapper.stringLiteralIntersection();
+			if(intersection1.size() > intersection2.size()) {
+				return -1;
+			}
+			else if(intersection1.size() < intersection2.size()) {
+				return 1;
+			}
+		}
 		int thisExactMatches = this.exactMatches();
 		int otherExactMatches = operationBodyMapper.exactMatches();
 		boolean thisEqualSignature = this.getOperation1().equalsIgnoringTypeParameters(this.getOperation2());
@@ -11710,6 +11824,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private List<String> stringLiteralIntersection() {
+		List<LeafExpression> stringLiterals1 = this.getContainer1().getAllStringLiterals();
+		List<LeafExpression> stringLiterals2 = this.getContainer2().getAllStringLiterals();
+		List<String> lit1 = StringBasedHeuristics.convertToStringList(stringLiterals1);
+		List<String> lit2 = StringBasedHeuristics.convertToStringList(stringLiterals2);
+		List<String> intersection1 = new ArrayList<>(lit1);
+		intersection1.retainAll(lit2);
+		List<String> intersection2 = new ArrayList<>(lit2);
+		intersection2.retainAll(lit1);
+		//return the smaller
+		if(intersection1.size() < intersection2.size())
+			return intersection1;
+		return intersection2;
 	}
 
 	private boolean identicalBody() {

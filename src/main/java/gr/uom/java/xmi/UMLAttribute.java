@@ -241,6 +241,14 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return Collections.emptyList();
 	}
 
+	public List<LeafExpression> getAllStringLiterals() {
+		AbstractExpression initializer = variableDeclaration.getInitializer();
+		if(initializer != null) {
+			return new ArrayList<>(initializer.getStringLiterals());
+		}
+		return Collections.emptyList();
+	}
+
 	public List<String> getAllVariables() {
 		AbstractExpression initializer = variableDeclaration.getInitializer();
 		if(initializer != null) {

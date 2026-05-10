@@ -18,6 +18,7 @@ import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
+import org.refactoringminer.util.PathFileUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -231,6 +232,18 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
             }
             else if (srcStatementNode.getType().name.equals(LANG1.FOR_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.FOR_STATEMENT)) {
+                if(srcStatementNode.getParent() != null && srcStatementNode.getParent().getType().name.equals(LANG1.LABELED) &&
+                        dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.LABELED)) {
+                    mappingStore.addMapping(srcStatementNode.getParent(),dstStatementNode.getParent());
+                    Pair<Tree, Tree> identifiers = Helpers.findPairOfType(srcStatementNode.getParent(),dstStatementNode.getParent(), LANG1.STATEMENT_IDENTIFIER, LANG2.STATEMENT_IDENTIFIER);
+                    if (identifiers != null) {
+                        mappingStore.addMapping(identifiers.first,identifiers.second);
+                    }
+                    Pair<Tree, Tree> colons = Helpers.findPairOfType(srcStatementNode.getParent(),dstStatementNode.getParent(), LANG1.COLON, LANG2.COLON);
+                    if (colons != null) {
+                        mappingStore.addMapping(colons.first,colons.second);
+                    }
+                }
                 Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.COLLECTION_ITERATED, LANG2.COLLECTION_ITERATED);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
@@ -270,6 +283,18 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
             }
             else if (srcStatementNode.getType().name.equals(LANG1.FOR_IN_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.FOR_IN_STATEMENT)) {
+                if(srcStatementNode.getParent() != null && srcStatementNode.getParent().getType().name.equals(LANG1.LABELED) &&
+                        dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.LABELED)) {
+                    mappingStore.addMapping(srcStatementNode.getParent(),dstStatementNode.getParent());
+                    Pair<Tree, Tree> identifiers = Helpers.findPairOfType(srcStatementNode.getParent(),dstStatementNode.getParent(), LANG1.STATEMENT_IDENTIFIER, LANG2.STATEMENT_IDENTIFIER);
+                    if (identifiers != null) {
+                        mappingStore.addMapping(identifiers.first,identifiers.second);
+                    }
+                    Pair<Tree, Tree> colons = Helpers.findPairOfType(srcStatementNode.getParent(),dstStatementNode.getParent(), LANG1.COLON, LANG2.COLON);
+                    if (colons != null) {
+                        mappingStore.addMapping(colons.first,colons.second);
+                    }
+                }
                 Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.FOR_KEYWORD, LANG2.FOR_KEYWORD);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
@@ -284,19 +309,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 }
                 Pair<Tree, Tree> objectPattern = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.OBJECT_PATTERN, LANG2.OBJECT_PATTERN);
                 if (objectPattern != null) {
-                    mappingStore.addMapping(objectPattern.first,objectPattern.second);
-                    matched = Helpers.findPairOfType(objectPattern.first,objectPattern.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
-                    if (matched != null) {
-                        mappingStore.addMapping(matched.first,matched.second);
-                    }
-                    matched = Helpers.findPairOfType(objectPattern.first,objectPattern.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
-                    if (matched != null) {
-                        mappingStore.addMapping(matched.first,matched.second);
-                    }
-                    matched = Helpers.findPairOfType(objectPattern.first,objectPattern.second, LANG1.COMMA, LANG2.COMMA);
-                    if (matched != null) {
-                        mappingStore.addMapping(matched.first,matched.second);
-                    }
+                    mappingStore.addMappingRecursively(objectPattern.first,objectPattern.second);
                 }
                 matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
                 if (matched != null) {
@@ -652,6 +665,17 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         Pair<Tree, Tree> formal_parameters = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.FORMAL_PARAMETERS, LANG2.FORMAL_PARAMETERS);
         if(formal_parameters != null && formal_parameters.first.isIsoStructuralTo(formal_parameters.second)) {
             mappingStore.addMappingRecursively(formal_parameters.first, formal_parameters.second);
+        }
+        else if(formal_parameters != null) {
+            mappingStore.addMapping(formal_parameters.first, formal_parameters.second);
+            Pair<Tree, Tree> open_parenthesis = Helpers.findPairOfType(formal_parameters.first, formal_parameters.second, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
+            if(open_parenthesis != null) {
+                mappingStore.addMapping(open_parenthesis.first, open_parenthesis.second);
+            }
+            Pair<Tree, Tree> close_parenthesis = Helpers.findPairOfType(formal_parameters.first, formal_parameters.second, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
+            if(close_parenthesis != null) {
+                mappingStore.addMapping(close_parenthesis.first, close_parenthesis.second);
+            }
         }
         Pair<Tree, Tree> arrows = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ARROW_TOKEN, LANG2.ARROW_TOKEN);
         if(arrows != null) {

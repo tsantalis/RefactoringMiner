@@ -281,6 +281,20 @@ public class AbstractExpression extends AbstractCodeFragment {
 		return list;
 	}
 
+	public List<LeafExpression> getAllStringLiterals() {
+		List<LeafExpression> list = new ArrayList<>();
+		list.addAll(getStringLiterals());
+		for(LambdaExpressionObject lambda : this.getLambdas()) {
+			if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
+				list.addAll(lambda.getAllStringLiterals());
+			}
+		}
+		for(AnonymousClassDeclarationObject anonymous : this.getAnonymousClassDeclarations()) {
+			list.addAll(anonymous.getStringLiterals());
+		}
+		return list;
+	}
+
 	public List<LambdaExpressionObject> getAllLambdas() {
 		List<LambdaExpressionObject> list = new ArrayList<>();
 		list.addAll(getLambdas());

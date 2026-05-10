@@ -32,6 +32,9 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	private List<UMLClass> nestedClasses = new ArrayList<>();
 	private List<UMLOperation> nestedOperations = new ArrayList<>();
 	private List<UMLAttribute> nestedAttributes = new ArrayList<>();
+	private List<UMLImport> nestedImports = new ArrayList<>();
+	private List<UMLNamedExport> namedExports = new ArrayList<>();
+	private Map<String, AbstractStatement> describeMap = new LinkedHashMap<>();
 
 	public ModuleContainer(LocationInfo locationInfo, String name) {
 		this.statementList = new ArrayList<>();
@@ -41,7 +44,20 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	}
 
 	public void addStatements(List<AbstractStatement> statements) {
-		statementList.addAll(statements);
+		//statementList.addAll(statements);
+		for(AbstractStatement s : statements) {
+			AbstractCall call = s.invocationCoveringEntireFragment();
+			if(call != null && call.getName().equals("describe") && call.arguments().size() > 0) {
+				describeMap.put(call.arguments().get(0), s);
+			}
+			else {
+				statementList.add(s);
+			}
+		}
+	}
+
+	public Map<String, AbstractStatement> getDescribeMap() {
+		return describeMap;
 	}
 
 	public void addComments(List<UMLComment> comments) {
@@ -72,11 +88,20 @@ public class ModuleContainer implements VariableDeclarationContainer {
 		return nestedAttributes;
 	}
 
-	public ModuleContainer(List<AbstractStatement> statements, LocationInfo locationInfo, String name) {
-		this.statementList = statements;
-		this.locationInfo = locationInfo;
-		this.name = name;
-		this.className = name;
+	public void addNestedImport(UMLImport nested) {
+		this.nestedImports.add(nested);
+	}
+
+	public List<UMLImport> getNestedImports() {
+		return nestedImports;
+	}
+
+	public void addNamedExport(UMLNamedExport nested) {
+		this.namedExports.add(nested);
+	}
+
+	public List<UMLNamedExport> getNamedExports() {
+		return namedExports;
 	}
 
 	public List<AbstractStatement> getStatementList() {
@@ -195,6 +220,28 @@ public class ModuleContainer implements VariableDeclarationContainer {
 				}
 				for(AnonymousClassDeclarationObject anonymous : statementObject.getAnonymousClassDeclarations()) {
 					list.addAll(anonymous.getCreations());
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<LeafExpression> getAllStringLiterals() {
+		List<LeafExpression> list = new ArrayList<>();
+		for(AbstractStatement statement : statementList) {
+			if(statement instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject)statement;
+				list.addAll(composite.getAllStringLiterals());
+			}
+			else if(statement instanceof StatementObject) {
+				StatementObject statementObject = (StatementObject)statement;
+				list.addAll(statementObject.getStringLiterals());
+				for(LambdaExpressionObject lambda : statementObject.getLambdas()) {
+					list.addAll(lambda.getAllStringLiterals());
+				}
+				for(AnonymousClassDeclarationObject anonymous : statementObject.getAnonymousClassDeclarations()) {
+					list.addAll(anonymous.getStringLiterals());
 				}
 			}
 		}

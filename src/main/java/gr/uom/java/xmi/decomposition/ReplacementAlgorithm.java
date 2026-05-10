@@ -2039,16 +2039,16 @@ public class ReplacementAlgorithm {
 					elseIfChain.add(current);
 				}
 			}
-			Set<StatementObject> switchCases = new LinkedHashSet<StatementObject>(); 
+			Set<AbstractStatement> switchCases = new LinkedHashSet<AbstractStatement>(); 
 			for(AbstractStatement statement : switch2.getStatements()) {
 				if(statement.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_CASE) && !statement.getString().equals("default:")) {
-					switchCases.add((StatementObject)statement);
+					switchCases.add(statement);
 				}
 			}
 			List<LeafExpression> switchLeafExpression = switch2.findExpression(switch2.getExpressions().get(0).getString());
 			Set<LeafMapping> caseLeafMappings = new LinkedHashSet<LeafMapping>();
 			Set<LeafMapping> switchExpressionLeafMappings = new LinkedHashSet<LeafMapping>(); 
-			for(StatementObject switchCase : switchCases) {
+			for(AbstractStatement switchCase : switchCases) {
 				String string = switchCase.getString();
 				if(string.startsWith("case ")) {
 					String caseExpression = string.substring(5, string.length()-1);
@@ -4068,7 +4068,7 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(variableDeclarationWithArrayInitializer1 != null && invocationCoveringTheEntireStatement2 != null && !(invocationCoveringTheEntireStatement2 instanceof MethodReference) && variableDeclarations2.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s2.contains("(") && s2.contains(")")) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s2.contains("(") && s2.contains(")") && s2.indexOf("(") < s2.lastIndexOf(")")) {
 			String args1 = s1.substring(s1.indexOf(LANG1.OPEN_ARRAY_INITIALIZER)+1, s1.lastIndexOf(LANG1.CLOSE_ARRAY_INITIALIZER));
 			String args2 = s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"));
 			if(args1.equals(args2)) {
@@ -4078,7 +4078,7 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.getAnonymousClassDeclaration() != null && invocationCoveringTheEntireStatement2 != null && !(invocationCoveringTheEntireStatement2 instanceof MethodReference) && variableDeclarations2.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s2.contains("(") && s2.contains(")")) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s2.contains("(") && s2.contains(")") && s2.indexOf("(") < s2.lastIndexOf(")")) {
 			String arrayInitializer = creationCoveringTheEntireStatement1.getAnonymousClassDeclaration();
 			String args1 = arrayInitializer.substring(arrayInitializer.indexOf(LANG1.OPEN_ARRAY_INITIALIZER)+1, arrayInitializer.lastIndexOf(LANG1.CLOSE_ARRAY_INITIALIZER));
 			String args2 = s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"));
@@ -4089,7 +4089,7 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(variableDeclarationWithArrayInitializer2 != null && invocationCoveringTheEntireStatement1 != null && !(invocationCoveringTheEntireStatement1 instanceof MethodReference) && variableDeclarations1.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s1.contains("(") && s1.contains(")")) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s1.contains("(") && s1.contains(")") && s1.indexOf("(") < s1.lastIndexOf(")")) {
 			String args1 = s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")"));
 			String args2 = s2.substring(s2.indexOf(LANG2.OPEN_ARRAY_INITIALIZER)+1, s2.lastIndexOf(LANG2.CLOSE_ARRAY_INITIALIZER));
 			if(args1.equals(args2)) {
@@ -4099,7 +4099,7 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(creationCoveringTheEntireStatement2 != null && creationCoveringTheEntireStatement2.getAnonymousClassDeclaration() != null && invocationCoveringTheEntireStatement1 != null && !(invocationCoveringTheEntireStatement1 instanceof MethodReference) && variableDeclarations1.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s1.contains("(") && s1.contains(")")) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s1.contains("(") && s1.contains(")") && s1.indexOf("(") < s1.lastIndexOf(")")) {
 			String args1 = s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")"));
 			String arrayInitializer = creationCoveringTheEntireStatement2.getAnonymousClassDeclaration();
 			String args2 = arrayInitializer.substring(arrayInitializer.indexOf(LANG2.OPEN_ARRAY_INITIALIZER)+1, arrayInitializer.lastIndexOf(LANG2.CLOSE_ARRAY_INITIALIZER));
@@ -6267,7 +6267,7 @@ public class ReplacementAlgorithm {
 				for(int i=0; i<lambdas1.size(); i++) {
 					LambdaExpressionObject lambda1 = lambdas1.get(i);
 					LambdaExpressionObject lambda2 = lambdas2.get(i);
-					processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper);
+					processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper, true);
 				}
 			}
 			else {
@@ -6278,11 +6278,11 @@ public class ReplacementAlgorithm {
 						LambdaExpressionObject lambda2 = lambdas2.get(j);
 						if(lambda1.getSwitchExpressionCase().isPresent() && lambda2.getSwitchExpressionCase().isPresent()) {
 							if(operationBodyMapper.containsMapping(lambda1.getSwitchExpressionCase().get(), lambda2.getSwitchExpressionCase().get())) {
-								processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper);
+								processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper, false);
 							}
 						}
 						else {
-							processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper);
+							processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper, false);
 						}
 					}
 				}
@@ -6348,6 +6348,16 @@ public class ReplacementAlgorithm {
 		if(lambdaMappers.size() > 0 && lambdaMappers.size() == lambdas1.size() && lambdaMappers.size() == lambdas2.size()) {
 			return replacementInfo.getReplacements();
 		}
+		else if(lambdaMappers.size() > 0 && lambdaMappers.size() == lambdas1.size()-1 && lambdaMappers.size() == lambdas2.size()-1) {
+			return replacementInfo.getReplacements();
+		}
+		else if(lambdaMappers.size() > 0) {
+			for(AbstractCodeMapping mapping : lambdaMappers.get(0).getMappings()) {
+				if(mapping.getLambdaMappers().size() == lambdas1.size()-1 && mapping.getLambdaMappers().size() == lambdas2.size()-1) {
+					return replacementInfo.getReplacements();
+				}
+			}
+		}
 		if(lambdaMappers.size() > 0 && lambdas1.size() != lambdas2.size() && (lambdaMappers.size() == lambdas1.size() || lambdaMappers.size() == lambdas2.size())) {
 			if(lambdas1.size() > lambdaMappers.size() && statement1.getTypes().size() > 0) {
 				int followedByAs = 0;
@@ -6365,10 +6375,26 @@ public class ReplacementAlgorithm {
 	}
 
 	protected static void processLambdas(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2,
-			ReplacementInfo replacementInfo, UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
+			ReplacementInfo replacementInfo, UMLOperationBodyMapper operationBodyMapper, boolean sameNumberOfLambdas) throws RefactoringMinerTimedOutException {
 		boolean methodReference1 = lambda1.getLocationInfo().getCodeElementType().equals(CodeElementType.METHOD_REFERENCE);
 		boolean methodReference2 = lambda2.getLocationInfo().getCodeElementType().equals(CodeElementType.METHOD_REFERENCE);
 		UMLAbstractClassDiff classDiff = operationBodyMapper.getClassDiff();
+		boolean alreadyMatched = false;
+		if(!sameNumberOfLambdas) {
+			for(UMLOperationBodyMapper previousLambdaMapper : replacementInfo.getLambdaMappers()) {
+				for(AbstractCodeMapping mapping : previousLambdaMapper.getMappings()) {
+					if(mapping.getFragment1().getLocationInfo().subsumes(lambda1.getLocationInfo())) {
+						alreadyMatched = true;
+						break;
+					}
+				}
+				if(alreadyMatched)
+					break;
+			}
+		}
+		if(alreadyMatched) {
+			return;
+		}
 		UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(lambda1, lambda2, operationBodyMapper);
 		int mappings = mapper.mappingsWithoutBlocks();
 		if(mappings > 0) {

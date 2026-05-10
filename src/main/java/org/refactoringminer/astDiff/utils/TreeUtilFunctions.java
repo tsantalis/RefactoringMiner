@@ -98,6 +98,9 @@ public class TreeUtilFunctions {
 					return t.getParent();
 				}
 			}
+			else if(t.getPos() == position && isFromType(t, type)) {
+				return t;
+			}
 		}
 		return null;
 	}

@@ -17,6 +17,7 @@ import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -419,6 +420,18 @@ public class ExtractOperationDetection {
 
 	private static List<AbstractCall> getInvocationsInSourceOperationAfterExtractionExcludingInvocationsInExactlyMappedStatements(UMLOperationBodyMapper mapper) {
 		List<AbstractCall> operationInvocations = mapper.getContainer2().getAllOperationInvocations();
+		if(mapper.getClassDiff() != null) {
+			List<String> variableReferences = mapper.getContainer2().getAllVariables();
+			for(UMLAttribute attribute : mapper.getClassDiff().getNextClass().getAttributes()) {
+				if(variableReferences.contains(attribute.getName()) && attribute.getVariableDeclaration().getInitializer() != null) {
+					List<AbstractCall> invocations = attribute.getVariableDeclaration().getInitializer().getAllOperationInvocations();
+					for(AbstractCall invocation : invocations) {
+						if(!operationInvocations.contains(invocation))
+							operationInvocations.add(invocation);
+					}
+				}
+			}
+		}
 		for(AbstractCodeMapping mapping : mapper.getMappings()) {
 			if(mapping.isExact() && mapping.getReplacementsInvolvingMethodInvocation().isEmpty()) {
 				for(AbstractCall invocation : mapping.getFragment2().getMethodInvocations()) {

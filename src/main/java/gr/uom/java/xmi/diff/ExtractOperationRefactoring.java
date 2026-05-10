@@ -34,7 +34,7 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
 public class ExtractOperationRefactoring implements Refactoring {
-	private UMLOperation extractedOperation;
+	private VariableDeclarationContainer extractedOperation;
 	private VariableDeclarationContainer sourceOperationBeforeExtraction;
 	private VariableDeclarationContainer sourceOperationAfterExtraction;
 	private List<AbstractCall> extractedOperationInvocations;
@@ -51,7 +51,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 		this.LANG1 = bodyMapper.LANG1;
 		this.LANG2 = bodyMapper.LANG2;
 		this.bodyMapper = bodyMapper;
-		this.extractedOperation = bodyMapper.getOperation2();
+		this.extractedOperation = bodyMapper.getContainer2();
 		this.sourceOperationBeforeExtraction = bodyMapper.getContainer1();
 		this.sourceOperationAfterExtraction = sourceOperationAfterExtraction;
 		this.extractedOperationInvocations = operationInvocations;
@@ -369,7 +369,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 		return bodyMapper;
 	}
 
-	public UMLOperation getExtractedOperation() {
+	public VariableDeclarationContainer getExtractedOperation() {
 		return extractedOperation;
 	}
 

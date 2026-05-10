@@ -3,13 +3,14 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
 public class PullUpOperationRefactoring extends MoveOperationRefactoring {
 
-	public PullUpOperationRefactoring(UMLOperationBodyMapper bodyMapper) {
+	public PullUpOperationRefactoring(UMLOperationBodyMapper bodyMapper) throws RefactoringMinerTimedOutException {
 		super(bodyMapper);
 	}
 

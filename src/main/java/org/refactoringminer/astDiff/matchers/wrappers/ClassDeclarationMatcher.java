@@ -2,15 +2,21 @@ package org.refactoringminer.astDiff.matchers.wrappers;
 
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
+
+import gr.uom.java.xmi.ListCompositeType;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLNamedExport;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.UMLTypeAlias;
 import gr.uom.java.xmi.UMLTypeParameter;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLAnnotationListDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
+import gr.uom.java.xmi.diff.UMLNamedExportDiff;
+import gr.uom.java.xmi.diff.UMLNamedExportListDiff;
 import gr.uom.java.xmi.diff.UMLTypeAliasListDiff;
 
 import org.refactoringminer.astDiff.models.OptimizationData;
@@ -21,6 +27,7 @@ import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.IgnoringCommentsLeafMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.refactoringminer.astDiff.utils.Helpers.findPairOfType;
@@ -59,35 +66,38 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,AST_type1);
         Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,AST_type2);
         if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isTypeAlias() && classDiff.getNextClass().isTypeAlias()) {
-        	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.TYPE_ALIAS_DECLARATION);
-        	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.TYPE_ALIAS_DECLARATION);
+            srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.TYPE_ALIAS_DECLARATION);
+            dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.TYPE_ALIAS_DECLARATION);
         }
         if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isInterface() && classDiff.getNextClass().isInterface()) {
-        	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.INTERFACE_DECLARATION);
-        	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.INTERFACE_DECLARATION);
+            srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.INTERFACE_DECLARATION);
+            dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.INTERFACE_DECLARATION);
         }
         if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isObject() && classDiff.getNextClass().isObject()) {
-        	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT_DECLARATION);
-        	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT_DECLARATION);
+            srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT_DECLARATION);
+            dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT_DECLARATION);
         }
         if(classDiff.getOriginalClass().isObject() && !classDiff.getNextClass().isObject()) {
-        	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT_DECLARATION);
-        	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.TYPE_DECLARATION);
+            srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT_DECLARATION);
+            dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.TYPE_DECLARATION);
         }
         else if(!classDiff.getOriginalClass().isObject() && classDiff.getNextClass().isObject()) {
-        	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.TYPE_DECLARATION);
-        	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT_DECLARATION);
+            srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.TYPE_DECLARATION);
+            dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT_DECLARATION);
         }
         if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isModule() && classDiff.getNextClass().isModule()) {
-        	srcTypeDeclaration = srcTree;
-        	dstTypeDeclaration = dstTree;
+            srcTypeDeclaration = srcTree;
+            dstTypeDeclaration = dstTree;
         }
         if (srcTypeDeclaration == null && dstTypeDeclaration == null) {
-        	srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.ERROR);
-        	dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.ERROR);
+            srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.ERROR);
+            dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.ERROR);
         }
         if(classDiff.getTypeAliasListDiff().isPresent()) {
-        	processTypeAliasList(srcTree, dstTree, classDiff.getTypeAliasListDiff().get(), mappingStore);
+            processTypeAliasList(srcTree, dstTree, classDiff.getTypeAliasListDiff().get(), mappingStore);
+        }
+        if(classDiff.getNamedExportListDiff().isPresent()) {
+            processNamedExportList(srcTree, dstTree, classDiff.getNamedExportListDiff().get(), mappingStore);
         }
         if (srcTypeDeclaration == null || dstTypeDeclaration == null) return;
         if (srcTypeDeclaration.getParent() != null && dstTypeDeclaration.getParent() != null) {
@@ -189,7 +199,68 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     mappingStore.addMapping(matched.first,matched.second);
             }
         }
-        
+        if (classDiff.getCommonFunctionType().isPresent()) {
+            org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> pair = classDiff.getCommonFunctionType().get();
+            Tree srcFunctionType = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, pair.getLeft().getLocationInfo(), LANG1);
+            Tree dstFunctionType = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, pair.getRight().getLocationInfo(), LANG2);
+            if (srcFunctionType != null && dstFunctionType != null) {
+                if(!srcFunctionType.isIsomorphicTo(dstFunctionType) && pair.getLeft() instanceof ListCompositeType listType1 && pair.getRight() instanceof ListCompositeType listType2) {
+                    List<UMLType> types1 = listType1.getTypes();
+                    List<UMLType> types2 = listType2.getTypes();
+                    boolean matchFound = false;
+                    if(types1.size() <= types2.size()) {
+                        for(UMLType type1 : types1) {
+                            int index = types2.indexOf(type1);
+                            if(index != -1) {
+                                matchFound = true;
+                                UMLType type2 = types2.get(index);
+                                Tree t1 = TreeUtilFunctions.findByLocationInfo(srcFunctionType, type1.getLocationInfo(), LANG1);
+                                Tree t2 = TreeUtilFunctions.findByLocationInfo(dstFunctionType, type2.getLocationInfo(), LANG2);
+                                mappingStore.addMappingRecursively(t1, t2);
+                                int index1 = t1.getParent().getChildPosition(t1);
+                                int index2 = t2.getParent().getChildPosition(t2);
+                                if(index1 > 0 && t1.getParent().getChild(index1-1).getType().name.equals(LANG1.UNION) &&
+                                        index2 > 0 && t2.getParent().getChild(index2-1).getType().name.equals(LANG2.UNION)) {
+                                    Tree tt1 = t1.getParent().getChild(index1-1);
+                                    Tree tt2 = t2.getParent().getChild(index2-1);
+                                    mappingStore.addMapping(tt1,tt2);
+                                    //parent is a union type
+                                    mappingStore.addMapping(t1.getParent(),t2.getParent());
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        for(UMLType type2 : types2) {
+                            int index = types1.indexOf(type2);
+                            if(index != -1) {
+                                matchFound = true;
+                                UMLType type1 = types1.get(index);
+                                Tree t1 = TreeUtilFunctions.findByLocationInfo(srcFunctionType, type1.getLocationInfo(), LANG1);
+                                Tree t2 = TreeUtilFunctions.findByLocationInfo(dstFunctionType, type2.getLocationInfo(), LANG2);
+                                mappingStore.addMappingRecursively(t1, t2);
+                                int index1 = t1.getParent().getChildPosition(t1);
+                                int index2 = t2.getParent().getChildPosition(t2);
+                                if(index1 > 0 && t1.getParent().getChild(index1-1).getType().name.equals(LANG1.UNION) &&
+                                        index2 > 0 && t2.getParent().getChild(index2-1).getType().name.equals(LANG2.UNION)) {
+                                    Tree tt1 = t1.getParent().getChild(index1-1);
+                                    Tree tt2 = t2.getParent().getChild(index2-1);
+                                    mappingStore.addMapping(tt1,tt2);
+                                    //parent is a union type
+                                    mappingStore.addMapping(t1.getParent(),t2.getParent());
+                                }
+                            }
+                        }
+                    }
+                    if(matchFound) {
+                        mappingStore.addMapping(srcFunctionType, dstFunctionType);
+                    }
+                }
+                else {
+                    mappingStore.addMappingRecursively(srcFunctionType, dstFunctionType);
+                }
+            }
+        }
         processSuperClasses(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processClassImplementedInterfaces(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processClassPermittedTypes(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
@@ -214,7 +285,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         else if (umlClass.isRecord())
             type = LANG.RECORD_DECLARATION;
         else if (umlClass.isModule())
-        	type = LANG.MODULE;
+            type = LANG.MODULE;
         else if (umlClass.isObject())
             type = LANG.COMPANION_OBJECT;
         else if (umlClass.isFunctionalInterface())
@@ -357,6 +428,24 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 }
             }
         }
+        if (srcTypeDeclaration.getType().name.equals(LANG1.ENUM_DECLARATION) && dstTypeDeclaration.getType().name.equals(LANG2.ENUM_DECLARATION)) {
+            Pair<Tree, Tree> types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.ENUM_KEYWORD, LANG2.ENUM_KEYWORD);
+            if(types != null) {
+                mappingStore.addMapping(types.first, types.second);
+            }
+            Pair<Tree, Tree> blocks = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.ENUM_BODY, LANG2.ENUM_BODY);
+            if(blocks != null) {
+                mappingStore.addMapping(blocks.first, blocks.second);
+                com.github.gumtreediff.utils.Pair<Tree,Tree> opening = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                if (opening != null) {
+                    mappingStore.addMapping(opening.first,opening.second);
+                }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> closing = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                if (closing != null) {
+                    mappingStore.addMapping(closing.first,closing.second);
+                }
+            }
+        }
         if (srcBlock == null || dstBlock == null) return;
         mappingStore.addMapping(srcBlock, dstBlock);
 
@@ -382,7 +471,14 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (classDiff.getOriginalClass().isInterface())
             keyword = EXTENDS_KEYWORD_LABEL;
         new KeywordMatcher(LANG1, LANG2, LANG1.TYPE_INHERITANCE_KEYWORD, LANG2.TYPE_INHERITANCE_KEYWORD, keyword).match(srcTree, dstTree, mappingStore);
-
+        Pair<Tree, Tree> extendTypeClause = Helpers.findPairOfType(srcTree,dstTree, LANG1.EXTENDS_TYPE_CLAUSE, LANG2.EXTENDS_TYPE_CLAUSE);
+        if(extendTypeClause != null) {
+            mappingStore.addMapping(extendTypeClause.first,extendTypeClause.second);
+            Pair<Tree, Tree> extendKeywords = Helpers.findPairOfType(extendTypeClause.first,extendTypeClause.second, LANG1.EXTENDS_KEYWORD, LANG2.EXTENDS_KEYWORD);
+            if(extendKeywords != null) {
+                mappingStore.addMapping(extendKeywords.first,extendKeywords.second);
+            }
+        }
     }
 
 
@@ -400,6 +496,20 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (srcSubTree == null || dstSubTree == null) return;
         if (srcSubTree.isIsoStructuralTo(dstSubTree))
             mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
+        if (srcSubTree.getParent().getType().name.equals(LANG1.GENERIC_TYPE) && dstSubTree.getParent().getType().name.equals(LANG2.GENERIC_TYPE)) {
+            if (srcSubTree.getParent().isIsoStructuralTo(dstSubTree.getParent()))
+                mappingStore.addMappingRecursively(srcSubTree.getParent(),dstSubTree.getParent());
+        }
+        if (srcSubTree.getParent().getType().name.equals(LANG1.IMPLEMENTS_CLAUSE) && dstSubTree.getParent().getType().name.equals(LANG2.IMPLEMENTS_CLAUSE)) {
+            mappingStore.addMapping(srcSubTree.getParent(), dstSubTree.getParent());
+            Pair<Tree, Tree> implement = Helpers.findPairOfType(srcSubTree.getParent(), dstSubTree.getParent(), LANG1.IMPLEMENTS_KEYWORD, LANG2.IMPLEMENTS_KEYWORD);
+            if (implement != null) {
+                mappingStore.addMapping(implement.first,implement.second);
+            }
+            if(srcSubTree.getParent().getParent().getType().name.equals(LANG1.CLASS_HERITAGE) && dstSubTree.getParent().getParent().getType().name.equals(LANG2.CLASS_HERITAGE)) {
+                mappingStore.addMapping(srcSubTree.getParent().getParent(), dstSubTree.getParent().getParent());
+            }
+        }
     }
     private void processSuperClasses(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
         UMLType srcParentUML = classDiff.getOldSuperclass();
@@ -437,6 +547,79 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, typeAliasPair.getRight().getLocationInfo(), LANG2);
             if (srcSubTree == null || dstSubTree == null) return;
             mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
+        }
+    }
+
+    private void processNamedExportList(Tree srcTree, Tree dstTree, UMLNamedExportListDiff namedExportListDiff, ExtendedMultiMappingStore mappingStore) {
+        for (org.apache.commons.lang3.tuple.Pair<UMLNamedExport, UMLNamedExport> namedExportPair : namedExportListDiff.getCommonExports()) {
+            Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree, namedExportPair.getLeft().getLocationInfo(), LANG1);
+            Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, namedExportPair.getRight().getLocationInfo(), LANG2);
+            if (srcSubTree == null || dstSubTree == null) return;
+            mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
+        }
+        for (UMLNamedExportDiff diff : namedExportListDiff.getChangedExports()) {
+            Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree, diff.getOriginalNamedExport().getLocationInfo(), LANG1);
+            Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, diff.getNextNamedExport().getLocationInfo(), LANG2);
+            if (srcSubTree == null || dstSubTree == null) return;
+            mappingStore.addMapping(srcSubTree,dstSubTree);
+            Pair<Tree, Tree> exports = Helpers.findPairOfType(srcSubTree,dstSubTree, LANG1.EXPORT_KEYWORD, LANG2.EXPORT_KEYWORD);
+            if(exports != null) {
+                mappingStore.addMapping(exports.first, exports.second);
+            }
+            Pair<Tree, Tree> export_clauses = Helpers.findPairOfType(srcSubTree,dstSubTree, LANG1.EXPORT_CLAUSE, LANG2.EXPORT_CLAUSE);
+            if(export_clauses != null) {
+                mappingStore.addMapping(export_clauses.first, export_clauses.second);
+                Pair<Tree,Tree> opening = Helpers.findPairOfType(export_clauses.first,export_clauses.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                if (opening != null) {
+                    mappingStore.addMapping(opening.first,opening.second);
+                }
+                Pair<Tree,Tree> closing = Helpers.findPairOfType(export_clauses.first,export_clauses.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                if (closing != null) {
+                    mappingStore.addMapping(closing.first,closing.second);
+                }
+            }
+            Pair<Tree, Tree> froms = Helpers.findPairOfType(srcSubTree,dstSubTree, LANG1.FROM_KEYWORD, LANG2.FROM_KEYWORD);
+            if(froms != null) {
+                mappingStore.addMapping(froms.first, froms.second);
+            }
+            Pair<Tree, Tree> strings = Helpers.findPairOfType(srcSubTree,dstSubTree, LANG1.STRING, LANG2.STRING);
+            if(strings != null) {
+                mappingStore.addMappingRecursively(strings.first, strings.second);
+            }
+            Pair<Tree, Tree> semicolons = Helpers.findPairOfType(srcSubTree,dstSubTree, LANG1.SEMICOLON, LANG2.SEMICOLON);
+            if(semicolons != null) {
+                mappingStore.addMapping(semicolons.first, semicolons.second);
+            }
+            for(org.apache.commons.lang3.tuple.Pair<LeafExpression, LeafExpression> pair : diff.getCommonSpecifiers()) {
+                Tree srcSpecifier = TreeUtilFunctions.findByLocationInfo(srcSubTree, pair.getLeft().getLocationInfo(), LANG1);
+                Tree dstSpecifier = TreeUtilFunctions.findByLocationInfo(dstSubTree, pair.getRight().getLocationInfo(), LANG2);
+                if (srcSpecifier != null && dstSpecifier != null) {
+                    mappingStore.addMappingRecursively(srcSpecifier,dstSpecifier);
+                    Tree srcParent = srcSpecifier.getParent();
+                    Tree dstParent = dstSpecifier.getParent();
+                    if(srcParent.getType().name.equals(LANG1.EXPORT_SPECIFIER) && dstParent.getType().name.equals(LANG2.EXPORT_SPECIFIER)) {
+                        mappingStore.addMappingRecursively(srcParent, dstParent);
+                        int index1 = srcParent.getParent().getChildPosition(srcParent);
+                        int index2 = dstParent.getParent().getChildPosition(dstParent);
+                        if(srcParent.getParent().getChildren().size() > index1+1 && srcParent.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                                dstParent.getParent().getChildren().size() > index2+1 && dstParent.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+                            Tree t1 = srcParent.getParent().getChild(index1+1);
+                            Tree t2 = dstParent.getParent().getChild(index2+1);
+                            mappingStore.addMapping(t1,t2);
+                        }
+                    }
+                    else if(srcSpecifier.getType().name.equals(LANG1.EXPORT_SPECIFIER) && dstSpecifier.getType().name.equals(LANG2.EXPORT_SPECIFIER)) {
+                        int index1 = srcSpecifier.getParent().getChildPosition(srcSpecifier);
+                        int index2 = dstSpecifier.getParent().getChildPosition(dstSpecifier);
+                        if(srcSpecifier.getParent().getChildren().size() > index1+1 && srcSpecifier.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                                dstSpecifier.getParent().getChildren().size() > index2+1 && dstSpecifier.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+                            Tree t1 = srcSpecifier.getParent().getChild(index1+1);
+                            Tree t2 = dstSpecifier.getParent().getChild(index2+1);
+                            mappingStore.addMapping(t1,t2);
+                        }
+                    }
+                }
+            }
         }
     }
 

@@ -5,17 +5,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstKeyValueProp;
 import com.caoccao.javet.swc4j.ast.enums.Swc4jAstBinaryOp;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstAssignExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstBinExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCondExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstParenExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsAsExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstUnaryExpr;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstBool;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstNull;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstNumber;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstRegex;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
-import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstUsingDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.visitors.Swc4jAstVisitor;
@@ -23,7 +31,10 @@ import com.caoccao.javet.swc4j.ast.visitors.Swc4jAstVisitorResponse;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLImport;
+import gr.uom.java.xmi.UMLOperation;
 
 public class TypeScriptVisitor extends Swc4jAstVisitor {
 	private String sourceFolder;
@@ -115,8 +126,42 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 					methodInvocations.add(invocation);
 				}
 			}
+			else if(call.getCallee() instanceof Swc4jAstIdent ident) {
+				String name = ident.getSym();
+				if(container instanceof ModuleContainer module) {
+					for(UMLImport imp : module.getNestedImports()) {
+						if(imp.getName().endsWith(name)) {
+							// the identifier is a function name
+							// Direct Method Passing (Point-Free Style)
+							OperationInvocation invocation = new OperationInvocation(sourceFolder, filePath, node, container, fileContent);
+							methodInvocations.add(invocation);
+							break;
+						}
+					}
+				}
+			}
+		}
+		else if(node.getParent() instanceof Swc4jAstKeyValueProp prop && prop.getValue().equals(node)) {
+			String name = node.getSym();
+			if(container instanceof ModuleContainer module) {
+				for(UMLOperation op : module.getNestedOperations()) {
+					if(op.getName().equals(name)) {
+						// the identifier is a function name
+						// Direct Method Passing (Point-Free Style)
+						OperationInvocation invocation = new OperationInvocation(sourceFolder, filePath, node, container, fileContent);
+						methodInvocations.add(invocation);
+						break;
+					}
+				}
+			}
 		}
 		return super.visitIdent(node);
+	}
+
+	public Swc4jAstVisitorResponse visitCondExpr(Swc4jAstCondExpr node) {
+		TernaryOperatorExpression ternary = new TernaryOperatorExpression(sourceFolder, filePath, node, container, activeVariableDeclarations, fileContent, typeDeclarations);
+		ternaryOperatorExpressions.add(ternary);
+		return super.visitCondExpr(node);
 	}
 
 	public Swc4jAstVisitorResponse visitArrowExpr(Swc4jAstArrowExpr node) {
@@ -151,9 +196,46 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		return super.visitRegex(node);
 	}
 
-	public Swc4jAstVisitorResponse visitUsingDecl(Swc4jAstUsingDecl node) {
-		
-		return super.visitUsingDecl(node);
+	public Swc4jAstVisitorResponse visitNull(Swc4jAstNull node) {
+		LeafExpression literal = new LeafExpression(sourceFolder, filePath, node, CodeElementType.NULL_LITERAL, container, fileContent);
+		nullLiterals.add(literal);
+		return super.visitNull(node);
+	}
+
+	public Swc4jAstVisitorResponse visitBool(Swc4jAstBool node) {
+		LeafExpression literal = new LeafExpression(sourceFolder, filePath, node, CodeElementType.BOOLEAN_LITERAL, container, fileContent);
+		booleanLiterals.add(literal);
+		return super.visitBool(node);
+	}
+
+	public Swc4jAstVisitorResponse visitNumber(Swc4jAstNumber node) {
+		LeafExpression literal = new LeafExpression(sourceFolder, filePath, node, CodeElementType.NUMBER_LITERAL, container, fileContent);
+		numberLiterals.add(literal);
+		return super.visitNumber(node);
+	}
+
+	public Swc4jAstVisitorResponse visitParenExpr(Swc4jAstParenExpr node) {
+		LeafExpression expression = new LeafExpression(sourceFolder, filePath, node, CodeElementType.PARENTHESIZED_EXPRESSION, container, fileContent);
+		parenthesizedExpressions.add(expression);
+		return super.visitParenExpr(node);
+	}
+
+	public Swc4jAstVisitorResponse visitUnaryExpr(Swc4jAstUnaryExpr node) {
+		LeafExpression expression = new LeafExpression(sourceFolder, filePath, node, CodeElementType.PREFIX_EXPRESSION, container, fileContent);
+		prefixExpressions.add(expression);
+		return super.visitUnaryExpr(node);
+	}
+
+	public Swc4jAstVisitorResponse visitAssignExpr(Swc4jAstAssignExpr node) {
+		LeafExpression expression = new LeafExpression(sourceFolder, filePath, node, CodeElementType.ASSIGNMENT, container, fileContent);
+		assignments.add(expression);
+		return super.visitAssignExpr(node);
+	}
+
+	public Swc4jAstVisitorResponse visitTsAsExpr(Swc4jAstTsAsExpr node) {
+		LeafExpression expression = new LeafExpression(sourceFolder, filePath, node, CodeElementType.CAST_EXPRESSION, container, fileContent);
+		castExpressions.add(expression);
+		return super.visitTsAsExpr(node);
 	}
 
 	public List<LeafExpression> getVariables() {

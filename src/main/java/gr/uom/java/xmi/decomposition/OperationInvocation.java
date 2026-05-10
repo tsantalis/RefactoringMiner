@@ -57,6 +57,7 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstComputedPropName;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateName;
+import com.caoccao.javet.swc4j.ast.enums.Swc4jAstImportPhase;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
@@ -64,10 +65,12 @@ import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstParenExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsNonNullExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstCallee;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstMemberProp;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstImport;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamInstantiation;
 
 import extension.ast.node.LangASTNode;
@@ -579,7 +582,7 @@ public class OperationInvocation extends AbstractCall {
 				for(Refactoring r : modelDiff.getDetectedRefactorings()) {
 					if(r instanceof ExtractOperationRefactoring) {
 						ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
-						UMLOperation addedOperation = extract.getExtractedOperation();
+						VariableDeclarationContainer addedOperation = extract.getExtractedOperation();
 						if(!addedOperation.equals(operation) && addedOperation.getName().equals(operationName) && addedOperation.getParameterDeclarationList().size() == operation.getParameterDeclarationList().size()) {
 							int j = 0;
 							int exactlyMatchingArguments = 0;
@@ -1277,6 +1280,9 @@ public class OperationInvocation extends AbstractCall {
 	public OperationInvocation(String sourceFolder, String filePath, Swc4jAstCallExpr invocation, VariableDeclarationContainer container, String fileContent) {
 		super(sourceFolder, filePath, invocation, CodeElementType.METHOD_INVOCATION, container, fileContent);
 		ISwc4jAstCallee callee = invocation.getCallee();
+		if(callee instanceof Swc4jAstCallExpr callExpr) {
+			callee = callExpr.getCallee();
+		}
 		if(callee instanceof Swc4jAstMemberExpr memberExpr) {
 			ISwc4jAstMemberProp prop = memberExpr.getProp();
 			if(prop instanceof Swc4jAstPrivateName privateName)
@@ -1297,6 +1303,24 @@ public class OperationInvocation extends AbstractCall {
 		}
 		else if(callee instanceof Swc4jAstIdent ident) {
 			this.methodName = ident.getSym();
+		}
+		else if(callee instanceof Swc4jAstTsNonNullExpr nonNullExpr) {
+			ISwc4jAstExpr expr = nonNullExpr.getExpr();
+			if(expr instanceof Swc4jAstMemberExpr memberExpr) {
+				ISwc4jAstMemberProp prop = memberExpr.getProp();
+				if(prop instanceof Swc4jAstPrivateName privateName)
+					this.methodName = privateName.getName();
+				else if(prop instanceof Swc4jAstIdentName ident)
+					this.methodName = ident.getSym();
+				else if(prop instanceof Swc4jAstComputedPropName propName)
+					this.methodName = fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd());
+				ISwc4jAstExpr receiver = memberExpr.getObj();
+				this.expression = fileContent.substring(receiver.getSpan().getStart(), receiver.getSpan().getEnd());
+			}
+		}
+		else if(callee instanceof Swc4jAstImport astImport) {
+			Swc4jAstImportPhase phase = astImport.getPhase();
+			this.methodName = phase.getName();
 		}
 		this.arguments = new ArrayList<String>();
 		this.numberOfArguments = invocation.getArgs().size();

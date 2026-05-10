@@ -5,7 +5,7 @@ import java.util.List;
 
 import gr.uom.java.xmi.diff.UMLCommentListDiff;
 
-public class UMLCommentGroup {
+public class UMLCommentGroup implements Comparable<UMLCommentGroup> {
 	private List<UMLComment> group;
 
 	public UMLCommentGroup() {
@@ -89,5 +89,25 @@ public class UMLCommentGroup {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public int compareTo(UMLCommentGroup o) {
+		int thisStart = -1;
+		for(UMLComment c : this.group) {
+			if(thisStart == -1)
+				thisStart = c.getLocationInfo().getStartLine();
+			else if(c.getLocationInfo().getStartLine() < thisStart)
+				thisStart = c.getLocationInfo().getStartLine();
+		}
+		
+		int otherStart = -1;
+		for(UMLComment c : o.group) {
+			if(otherStart == -1)
+				otherStart = c.getLocationInfo().getStartLine();
+			else if(c.getLocationInfo().getStartLine() < otherStart)
+				otherStart = c.getLocationInfo().getStartLine();
+		}
+		return Integer.compare(thisStart, otherStart);
 	}
 }

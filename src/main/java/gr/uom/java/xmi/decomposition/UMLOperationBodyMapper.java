@@ -7098,7 +7098,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			return false;
 		}
-		if(this.lambdaBodyMapper && parentMapper != null && parentMapper.operationInvocation == null) {
+		if(fragment.getLANG().equals(Constants.KOTLIN) && this.lambdaBodyMapper && parentMapper != null && parentMapper.operationInvocation == null) {
 			if(parentMapper.mappingHashcodesT1.contains(fragment.hashCode()))
 				return true;
 		}
@@ -7122,7 +7122,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			return false;
 		}
-		if(this.lambdaBodyMapper && parentMapper != null && parentMapper.operationInvocation == null) {
+		if(fragment.getLANG().equals(Constants.KOTLIN) && this.lambdaBodyMapper && parentMapper != null && parentMapper.operationInvocation == null) {
 			if(parentMapper.mappingHashcodesT2.contains(fragment.hashCode()))
 				return true;
 		}
@@ -10894,7 +10894,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		addMapping(mapping);
 		CompositeReplacement compositeReplacement = mapping.containsCompositeReplacement();
 		for(LeafMapping leafMapping : mappingSet) {
-			if(!leafMapping.equals(mapping)) {
+			boolean nested = (leafMapping.getFragment1().getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo()) &&
+					leafMapping.getFragment2().getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo())) ||
+					(mapping.getFragment1().getLocationInfo().subsumes(leafMapping.getFragment1().getLocationInfo()) &&
+					mapping.getFragment2().getLocationInfo().subsumes(leafMapping.getFragment2().getLocationInfo()));
+			if(!leafMapping.equals(mapping) && !nested) {
 				if(compositeReplacement != null) {
 					if(compositeReplacement.getAdditionallyMatchedStatements1().contains(leafMapping.getFragment1()) ||
 							compositeReplacement.getAdditionallyMatchedStatements2().contains(leafMapping.getFragment2())) {

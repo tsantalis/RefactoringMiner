@@ -34,9 +34,13 @@ public importDatabase(filePath Path) : ParserResult -> private mergeCandidates(c
 line range:121-121==line range:167-167
 line range:124-124==line range:174-174
 line range:126-126==line range:177-177
+line range:136-136==line range:190-190
 line range:123-125==line range:173-175
 line range:123-125==line range:173-175
 line range:122-139==line range:172-191
+line range:135-135==line range:189-189
+line range:131-131==line range:187-187
+line range:130-131==line range:186-187
 line range:127-138==line range:179-190
 line range:122-139==line range:172-191
 public importDatabase(filePath Path) : ParserResult -> public importDatabase(filePath Path, document PDDocument) : List<BibEntry>

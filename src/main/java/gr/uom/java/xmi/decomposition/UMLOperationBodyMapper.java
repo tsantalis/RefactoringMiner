@@ -11689,18 +11689,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				otherMappings++;
 			}
 		}
+		int thisExactMatches = this.exactMatches();
+		int otherExactMatches = operationBodyMapper.exactMatches();
 		if(this.involvesTestMethods() && operationBodyMapper.involvesTestMethods()) {
 			List<String> intersection1 = this.stringLiteralIntersection();
 			List<String> intersection2 = operationBodyMapper.stringLiteralIntersection();
-			if(intersection1.size() > intersection2.size()) {
+			if(intersection1.size() > intersection2.size() && thisExactMatches >= otherExactMatches) {
 				return -1;
 			}
-			else if(intersection1.size() < intersection2.size()) {
+			else if(intersection1.size() < intersection2.size() && thisExactMatches <= otherExactMatches) {
 				return 1;
 			}
 		}
-		int thisExactMatches = this.exactMatches();
-		int otherExactMatches = operationBodyMapper.exactMatches();
 		boolean thisEqualSignature = this.getOperation1().equalsIgnoringTypeParameters(this.getOperation2());
 		boolean otherEqualSignature = operationBodyMapper.getOperation1().equalsIgnoringTypeParameters(operationBodyMapper.getOperation2());
 		boolean thisConstructor = this.getOperation1().isConstructor() && this.getOperation2().isConstructor();

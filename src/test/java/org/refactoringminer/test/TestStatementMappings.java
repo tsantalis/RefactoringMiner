@@ -2095,7 +2095,8 @@ public class TestStatementMappings {
 	@ParameterizedTest
 	@CsvSource({
 		"https://github.com/junit-team/junit5.git, b2ba6b95138382f25ca757a5ca2a7295bee4c3b8, junit5-b2ba6b95138382f25ca757a5ca2a7295bee4c3b8.txt",
-		"https://github.com/spring-projects/spring-boot.git, bb8e8849993980ae658046eaa786502f42ce63bf, spring-boot-bb8e8849993980ae658046eaa786502f42ce63bf.txt"
+		"https://github.com/spring-projects/spring-boot.git, bb8e8849993980ae658046eaa786502f42ce63bf, spring-boot-bb8e8849993980ae658046eaa786502f42ce63bf.txt",
+		"https://github.com/spring-projects/spring-boot.git, 08cc62a6b602506425da3829ef25e6278a86b00e, spring-boot-08cc62a6b602506425da3829ef25e6278a86b00e.txt"
 	})
 	public void testRenameMethod(String cloneURL, String commitId, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

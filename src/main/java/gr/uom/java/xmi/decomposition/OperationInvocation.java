@@ -57,6 +57,7 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstComputedPropName;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateName;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstSuper;
 import com.caoccao.javet.swc4j.ast.enums.Swc4jAstImportPhase;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
@@ -1321,6 +1322,9 @@ public class OperationInvocation extends AbstractCall {
 		else if(callee instanceof Swc4jAstImport astImport) {
 			Swc4jAstImportPhase phase = astImport.getPhase();
 			this.methodName = phase.getName();
+		}
+		else if(callee instanceof Swc4jAstSuper superCall) {
+			this.methodName = "super";
 		}
 		this.arguments = new ArrayList<String>();
 		this.numberOfArguments = invocation.getArgs().size();

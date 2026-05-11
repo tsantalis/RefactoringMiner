@@ -6338,7 +6338,7 @@ public class UMLModelDiff {
 		}
 		UMLClassBaseDiff umlClassDiff = null;
 		List<UMLAttribute> attributes = new ArrayList<UMLAttribute>();
-		if(className.contains(".") && isAnonymousClassName(className)) {
+		if(className.contains(".") && isAnonymousClassName(className) && addedOperationInvocation.getLANG().equals(Constants.JAVA)) {
 			//add enclosing class fields + anonymous class fields
 			String[] tokens = className.split("\\.");
 			String anonymousID = "";

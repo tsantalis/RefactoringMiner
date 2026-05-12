@@ -18,11 +18,10 @@ public class Context {
     }
     if (treeType.equals(constants.SIMPLE_NAME)) {
       return List.of(constants.VARIABLE_DECLARATION_STATEMENT, constants.METHOD_INVOCATION,
-          constants.CLASS_INSTANCE_CREATION, constants.EXPRESSION_STATEMENT,
-          constants.IF_STATEMENT, constants.RETURN_STATEMENT,
-          constants.SUPER_CONSTRUCTOR_INVOCATION, constants.FIELD_DECLARATION,
-          constants.TAG_ELEMENT, constants.ENHANCED_FOR_STATEMENT,
-          constants.RECORD_COMPONENT, constants.METHOD_DECLARATION);
+          constants.CLASS_INSTANCE_CREATION, constants.EXPRESSION_STATEMENT, constants.IF_STATEMENT,
+          constants.RETURN_STATEMENT, constants.SUPER_CONSTRUCTOR_INVOCATION,
+          constants.FIELD_DECLARATION, constants.TAG_ELEMENT, constants.ENHANCED_FOR_STATEMENT,
+          constants.RECORD_COMPONENT, constants.METHOD_DECLARATION, constants.METHOD_DECLARATION);
     }
     if (treeType.equals(constants.RECORD_COMPONENT)) {
       return List.of(constants.METHOD_DECLARATION);

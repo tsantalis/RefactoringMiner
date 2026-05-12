@@ -2034,7 +2034,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(String key2 : describeMap2.keySet()) {
 						AbstractStatement statement2 = describeMap2.get(key2);
 						Map<String, AbstractStatement> nestedDescribeMap2 = nestedDescribeMap(statement2);
-						if(nestedDescribeMap1.keySet().equals(nestedDescribeMap2.keySet())) {
+						if(!nestedDescribeMap1.keySet().isEmpty() && nestedDescribeMap1.keySet().equals(nestedDescribeMap2.keySet())) {
 							LeafMapping mapping = createLeafMapping(statement1, statement2, new LinkedHashMap<String, String>(), true);
 							addMapping(mapping);
 							break;
@@ -2050,6 +2050,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					AbstractStatement statement1 = describeMap1.get(key);
 					LeafMapping mapping = createLeafMapping(statement1, statement2, new LinkedHashMap<String, String>(), true);
 					addMapping(mapping);
+				}
+				else {
+					Map<String, AbstractStatement> nestedDescribeMap2 = nestedDescribeMap(statement2);
+					for(String key1 : describeMap1.keySet()) {
+						AbstractStatement statement1 = describeMap1.get(key1);
+						Map<String, AbstractStatement> nestedDescribeMap1 = nestedDescribeMap(statement1);
+						if(!nestedDescribeMap1.keySet().isEmpty() && nestedDescribeMap1.keySet().equals(nestedDescribeMap2.keySet())) {
+							LeafMapping mapping = createLeafMapping(statement1, statement2, new LinkedHashMap<String, String>(), true);
+							addMapping(mapping);
+							break;
+						}
+					}
 				}
 			}
 		}

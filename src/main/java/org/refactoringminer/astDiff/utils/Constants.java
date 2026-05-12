@@ -416,6 +416,7 @@ public class Constants {
     public final String IMPORT_STAR = "*";
     public final String IMPORT_SPECIFIER = "import_specifier";
     public final String EXTENDS_TYPE_CLAUSE = "extends_type_clause";
+    public final String EXTENDS_CLAUSE = "extends_clause";
     public final String EXTENDS_KEYWORD = "extends";
     public final String MEMBER_EXPRESSION = "member_expression";
     public final String METHOD_SIGNATURE = "method_signature";

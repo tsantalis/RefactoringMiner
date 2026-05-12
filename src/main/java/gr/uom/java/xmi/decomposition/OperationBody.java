@@ -1926,6 +1926,14 @@ public class OperationBody {
 				umlClass.setVisibility(Visibility.PRIVATE);
 			}
 			Swc4jAstClass clazz = classDecl.getClazz();
+			Optional<ISwc4jAstExpr> superclass = clazz.getSuperClass();
+			if(superclass.isPresent()) {
+				ISwc4jAstExpr expr = superclass.get();
+				if(expr instanceof Swc4jAstIdent ident) {
+					UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
+					umlClass.setSuperclass(type);
+				}
+			}
 			List<Swc4jAstTsExprWithTypeArgs> interfaces = clazz.getImplements();
 			for(Swc4jAstTsExprWithTypeArgs inter : interfaces) {
 				ISwc4jAstExpr expr = inter.getExpr();

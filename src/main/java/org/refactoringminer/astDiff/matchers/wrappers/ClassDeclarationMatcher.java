@@ -520,6 +520,18 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
 
         }
         new KeywordMatcher(LANG1, LANG2, LANG1.TYPE_INHERITANCE_KEYWORD, LANG2.TYPE_INHERITANCE_KEYWORD, EXTENDS_KEYWORD_LABEL).match(srcTree, dstTree, mappingStore);
+        Pair<Tree, Tree> classHeritage = Helpers.findPairOfType(srcTree,dstTree, LANG1.CLASS_HERITAGE, LANG2.CLASS_HERITAGE);
+        if(classHeritage != null) {
+            mappingStore.addMapping(classHeritage.first,classHeritage.second);
+            Pair<Tree, Tree> extendClauses = Helpers.findPairOfType(classHeritage.first,classHeritage.second, LANG1.EXTENDS_CLAUSE, LANG2.EXTENDS_CLAUSE);
+            if(extendClauses != null) {
+                mappingStore.addMapping(extendClauses.first,extendClauses.second);
+            }
+            Pair<Tree, Tree> extendKeywords = Helpers.findPairOfType(extendClauses.first,extendClauses.second, LANG1.EXTENDS_KEYWORD, LANG2.EXTENDS_KEYWORD);
+            if(extendKeywords != null) {
+                mappingStore.addMapping(extendKeywords.first,extendKeywords.second);
+            }
+        }
     }
 
     private void processArgumentList(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore, UMLType left, UMLType right) {

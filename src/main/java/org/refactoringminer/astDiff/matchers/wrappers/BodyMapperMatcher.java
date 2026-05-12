@@ -568,6 +568,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.RETURN_KEYWORD)) {
             srcStatementNode = srcStatementNode.getParent();
         }
+        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.MEMBER_EXPRESSION) && srcStatementNode.getParent().getType().name.equals(LANG1.METHOD_INVOCATION) &&
+                srcStatementNode.getParent().getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT)) {
+            srcStatementNode = srcStatementNode.getParent().getParent();
+        }
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo(),LANG2);
         if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.STATEMENTS)) {
             dstStatementNode = dstStatementNode.getChild(0);
@@ -577,6 +581,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.RETURN_KEYWORD)) {
             dstStatementNode = dstStatementNode.getParent();
+        }
+        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.MEMBER_EXPRESSION) && dstStatementNode.getParent().getType().name.equals(LANG2.METHOD_INVOCATION) &&
+                dstStatementNode.getParent().getParent().getType().name.equals(LANG2.EXPRESSION_STATEMENT)) {
+            dstStatementNode = dstStatementNode.getParent().getParent();
         }
         if (srcStatementNode == null || dstStatementNode == null) {
             System.err.println("Tree not found for " + abstractCodeMapping);

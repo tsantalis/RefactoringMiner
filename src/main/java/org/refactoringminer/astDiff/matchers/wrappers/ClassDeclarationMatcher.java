@@ -463,6 +463,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             if(types != null) {
                 mappingStore.addMapping(types.first, types.second);
             }
+            Pair<Tree, Tree> names = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.STRING, LANG2.STRING);
+            if(names != null) {
+                mappingStore.addMappingRecursively(names.first, names.second);
+            }
             Pair<Tree, Tree> blocks = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.STATEMENT_BLOCK, LANG2.STATEMENT_BLOCK);
             if(blocks != null) {
                 mappingStore.addMapping(blocks.first, blocks.second);

@@ -136,6 +136,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private List<Set<AbstractCodeMapping>> internalParameterizeTestMultiMappings = new ArrayList<Set<AbstractCodeMapping>>();
 	private boolean nested;
 	private boolean lambdaBodyMapper;
+	private boolean identicalLambdaBodyMapper;
 	private boolean moveCode;
 	private boolean anonymousCollapse;
 	private transient AdvancedAssertionMigrationMatcher advancedAssertionMigrationMatcher;
@@ -2109,6 +2110,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.parameterNameList1 = container1.getParameterNameList();
 		this.parameterNameList2 = container2.getParameterNameList();
 		if(lambda1.getExpression() != null && lambda2.getExpression() != null) {
+			if(lambda1.toString().equals(lambda2.toString())) {
+				this.identicalLambdaBodyMapper = true;
+			}
 			List<AbstractExpression> leaves1 = new ArrayList<AbstractExpression>();
 			leaves1.add(lambda1.getExpression());
 			List<AbstractExpression> leaves2 = new ArrayList<AbstractExpression>();
@@ -2124,7 +2128,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			else {
 				this.lambdaBodyMapper = true;
-				processCompositeStatements(composite1.getLeaves(), composite2.getLeaves(), composite1.getInnerNodes(), composite2.getInnerNodes());
+				if(lambda1.toString().equals(lambda2.toString())) {
+					this.identicalLambdaBodyMapper = true;
+					if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && lambda1.getOwner().getAllLambdas().size() >= 20) {
+						CompositeStatementObjectMapping mapping = createCompositeMapping(composite1, composite2, new LinkedHashMap<String, String>(), 1);
+						addMapping(mapping);
+					}
+					else {
+						processCompositeStatements(composite1.getLeaves(), composite2.getLeaves(), composite1.getInnerNodes(), composite2.getInnerNodes());
+					}
+				}
+				else {
+					processCompositeStatements(composite1.getLeaves(), composite2.getLeaves(), composite1.getInnerNodes(), composite2.getInnerNodes());
+				}
 			}
 		}
 		else if(lambda1.getExpression() != null && lambda2.getBody() != null) {
@@ -7368,6 +7384,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										mappingSet.add(mapping);
 									}
 								}
+								else if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && leaf1.getLambdas().size() == leaf2.getLambdas().size() && leaf1.getLambdas().size() > 0) {
+									LambdaExpressionObject lambda1 = leaf1.getLambdas().get(0);
+									LambdaExpressionObject lambda2 = leaf2.getLambdas().get(0);
+									if((leaf1.getLocationInfo().getStartLine() == lambda1.getLocationInfo().getStartLine() || leaf1.getLocationInfo().getStartLine() == lambda1.getLocationInfo().getStartLine()-1) &&
+											(leaf2.getLocationInfo().getStartLine() == lambda2.getLocationInfo().getStartLine() || leaf2.getLocationInfo().getStartLine() == lambda2.getLocationInfo().getStartLine()-1)) {
+										if(lambda1.toString().equals(lambda2.toString())) {
+											matchCount++;
+											if(leaf1.getDepth() == leaf2.getDepth() && equalCatchClauseIndex(leaf1, leaf2)) {
+												LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
+												mappingSet.add(mapping);
+											}
+										}
+									}
+								}
 							}
 						}
 						if(parentMapper != null && !this.lambdaBodyMapper && matchCount > 1) {
@@ -7893,6 +7923,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(leaf1.getDepth() == leaf2.getDepth() && equalCatchClauseIndex(leaf1, leaf2)) {
 										LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 										mappingSet.add(mapping);
+									}
+								}
+								else if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && leaf1.getLambdas().size() == leaf2.getLambdas().size() && leaf1.getLambdas().size() > 0) {
+									LambdaExpressionObject lambda1 = leaf1.getLambdas().get(0);
+									LambdaExpressionObject lambda2 = leaf2.getLambdas().get(0);
+									if((leaf1.getLocationInfo().getStartLine() == lambda1.getLocationInfo().getStartLine() || leaf1.getLocationInfo().getStartLine() == lambda1.getLocationInfo().getStartLine()-1) &&
+											(leaf2.getLocationInfo().getStartLine() == lambda2.getLocationInfo().getStartLine() || leaf2.getLocationInfo().getStartLine() == lambda2.getLocationInfo().getStartLine()-1)) {
+										if(lambda1.toString().equals(lambda2.toString())) {
+											matchCount++;
+											if(leaf1.getDepth() == leaf2.getDepth() && equalCatchClauseIndex(leaf1, leaf2)) {
+												LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
+												mappingSet.add(mapping);
+											}
+										}
 									}
 								}
 							}
@@ -10809,7 +10853,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(this.commentListDiff != null) {
 							this.commentListDiff.append(mapper.getCommentListDiff());
 						}
-						if(this.container1 != null && this.container2 != null) {
+						if(this.container1 != null && this.container2 != null && !mapper.identicalLambdaBodyMapper) {
 							this.refactorings.addAll(mapper.getRefactorings());
 						}
 					}

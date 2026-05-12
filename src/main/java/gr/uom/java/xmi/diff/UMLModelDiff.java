@@ -73,7 +73,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
-import org.refactoringminer.util.PathFileUtils;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 public class UMLModelDiff {

@@ -1322,7 +1322,8 @@ public class UMLModelDiff {
 			if(matchResult.isMatch() || matchingMovedInnerClasses > 0) {
 				if(!conflictingMoveOfTopLevelClass(removedClass, addedClass) && !innerClassWithTheSameName(removedClass, addedClass)) {
 					UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
-					if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName())) {
+					if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName()) ||
+							classRenameDiff.getOriginalClass().isModule()) {
 						diffSet.add(classRenameDiff);
 					}
 				}
@@ -1330,7 +1331,8 @@ public class UMLModelDiff {
 			else if(matchResult.getMatchedAttributes() > 0 && matchResult.getMatchedOperations() > 0 && removedClass.identicalMultiLineBlockComments(addedClass) &&
 					!conflictingMoveOfTopLevelClass(removedClass, addedClass) && !innerClassWithTheSameName(removedClass, addedClass)) {
 				UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
-				if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName())) {
+				if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName()) ||
+						classRenameDiff.getOriginalClass().isModule()) {
 					diffSet.add(classRenameDiff);
 				}
 			}
@@ -1399,7 +1401,8 @@ public class UMLModelDiff {
 			if(matchResult.isMatch() || matchingMovedInnerClasses > 0) {
 				if(!conflictingMoveOfTopLevelClass(removedClass, addedClass) && !innerClassWithTheSameName(removedClass, addedClass)) {
 					UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
-					if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName())) {
+					if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName()) ||
+							classRenameDiff.getOriginalClass().isModule()) {
 						diffSet.add(classRenameDiff);
 					}
 				}

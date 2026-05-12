@@ -85,6 +85,8 @@ import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstModuleItem;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstStmt;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsEnumMemberId;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsModuleName;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsNamespaceBody;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsTypeElement;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstVarDeclOrExpr;
@@ -99,6 +101,8 @@ import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportDefaultSpecifier;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportNamedSpecifier;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportStarAsSpecifier;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstNamedExport;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstTsModuleBlock;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstTsNamespaceDecl;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.program.Swc4jAstModule;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
@@ -121,6 +125,7 @@ import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstThrowStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTryStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsEnumDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsInterfaceDecl;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsModuleDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsTypeAliasDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
@@ -1912,6 +1917,39 @@ public class OperationBody {
 			}
 			else if(container instanceof UMLOperation) {
 				((UMLOperation)container).addNestedClass(umlClass);
+			}
+		}
+		else if(statement instanceof Swc4jAstTsModuleDecl moduleDecl) {
+			ISwc4jAstTsModuleName moduleId = moduleDecl.getId();
+			String typeName = null;
+			if(moduleId instanceof Swc4jAstIdent ident) {
+				typeName = ident.getSym();
+			}
+			else if(moduleId instanceof Swc4jAstStr str) {
+				typeName = str.getValue();
+			}
+			LocationInfo location = new LocationInfo(sourceFolder, filePath, moduleDecl.getSpan(), CodeElementType.MODULE_DECLARATION, fileContent);
+			List<UMLImport> imports = new ArrayList<>();
+			UMLClass umlClass = new UMLClass(container.getClassName(), typeName, location, true, imports);
+			if(moduleDecl.getParent() instanceof Swc4jAstExportDecl) {
+				umlClass.setVisibility(Visibility.PUBLIC);
+			}
+			else {
+				umlClass.setVisibility(Visibility.PRIVATE);
+			}
+			Optional<ISwc4jAstTsNamespaceBody> body = moduleDecl.getBody();
+			if(body.isPresent()) {
+				ISwc4jAstTsNamespaceBody namespaceBody = body.get();
+				if(namespaceBody instanceof Swc4jAstTsModuleBlock moduleBlock) {
+					CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, moduleBlock, 0, CodeElementType.BLOCK, fileContent);
+					List<ISwc4jAstModuleItem> moduleItems = moduleBlock.getBody();
+					for(ISwc4jAstModuleItem moduleItem : moduleItems) {
+						processStatement(sourceFolder, filePath, child, moduleItem, fileContent);
+					}
+				}
+				else if(namespaceBody instanceof Swc4jAstTsNamespaceDecl namespaceDecl) {
+					ISwc4jAstTsNamespaceBody namespaceBody2 = namespaceDecl.getBody();
+				}
 			}
 		}
 		else if(statement instanceof Swc4jAstClassDecl classDecl) {

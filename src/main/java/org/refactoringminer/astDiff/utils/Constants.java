@@ -420,6 +420,7 @@ public class Constants {
     public final String EXTENDS_KEYWORD = "extends";
     public final String MEMBER_EXPRESSION = "member_expression";
     public final String METHOD_SIGNATURE = "method_signature";
+    public final String FUNCTION_SIGNATURE = "function_signature";
     public final String OPTIONAL_KEYWORD = "?";
     public final String UNION = "|";
     public final String GET_KEYWORD = "get";
@@ -432,4 +433,6 @@ public class Constants {
     public final String ENUM_KEYWORD = "enum";
     public final String ENUM_BODY = "enum_body";
     public final String ENUM_ASSIGNMENT = "enum_assignment";
+    public final String AMBIENT_DECLARATION = "ambient_declaration";
+    public final String DECLARE_KEYWORD = "declare";
 }

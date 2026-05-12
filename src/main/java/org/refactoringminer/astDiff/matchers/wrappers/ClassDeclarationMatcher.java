@@ -446,6 +446,36 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 }
             }
         }
+        if (srcTypeDeclaration.getType().name.equals(LANG1.MODULE) && dstTypeDeclaration.getType().name.equals(LANG2.MODULE)) {
+            Tree ambient1 = srcTypeDeclaration.getParent();
+            Tree ambient2 = dstTypeDeclaration.getParent();
+            if(ambient1 != null && ambient2 != null && ambient1.getType().name.equals(LANG1.AMBIENT_DECLARATION) && ambient2.getType().name.equals(LANG2.AMBIENT_DECLARATION)) {
+                mappingStore.addMapping(ambient1, ambient2);
+                Pair<Tree, Tree> declares = Helpers.findPairOfType(ambient1, ambient2, LANG1.DECLARE_KEYWORD, LANG2.DECLARE_KEYWORD);
+                if(declares != null) {
+                    mappingStore.addMapping(declares.first, declares.second);
+                }
+                if(ambient1.getParent().getType().name.equals(LANG1.PROGRAM) && ambient2.getParent().getType().name.equals(LANG2.PROGRAM)) {
+                    mappingStore.addMapping(ambient1.getParent(), ambient2.getParent());
+                }
+            }
+            Pair<Tree, Tree> types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.MODULE, LANG2.MODULE);
+            if(types != null) {
+                mappingStore.addMapping(types.first, types.second);
+            }
+            Pair<Tree, Tree> blocks = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.STATEMENT_BLOCK, LANG2.STATEMENT_BLOCK);
+            if(blocks != null) {
+                mappingStore.addMapping(blocks.first, blocks.second);
+                com.github.gumtreediff.utils.Pair<Tree,Tree> opening = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                if (opening != null) {
+                    mappingStore.addMapping(opening.first,opening.second);
+                }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> closing = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                if (closing != null) {
+                    mappingStore.addMapping(closing.first,closing.second);
+                }
+            }
+        }
         if (srcBlock == null || dstBlock == null) return;
         mappingStore.addMapping(srcBlock, dstBlock);
 

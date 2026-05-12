@@ -97,6 +97,13 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         if (srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash) {
             //IsoStructural can't be a good idea here, i.e. anonymous class
             mappingStore.addMappingRecursively(srcFieldDeclaration, dstFieldDeclaration);
+            if(srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT) && dstFieldDeclaration.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT)) {
+                mappingStore.addMapping(srcFieldDeclaration.getParent(), dstFieldDeclaration.getParent());
+                com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcFieldDeclaration.getParent(),dstFieldDeclaration.getParent(),LANG1.EXPORT_KEYWORD,LANG2.EXPORT_KEYWORD);
+                if(matched != null) {
+                    mappingStore.addMapping(matched.first, matched.second);
+                }
+            }
             return;
         }
         if (srcAttr.getMetrics().hash == dstAttr.getMetrics().hash) {

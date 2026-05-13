@@ -17,6 +17,7 @@ import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstNewExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstParenExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTpl;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsAsExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstUnaryExpr;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstBool;
@@ -24,6 +25,7 @@ import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstNull;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstNumber;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstRegex;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
+import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstTplElement;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
@@ -243,6 +245,16 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		ObjectCreation creation = new ObjectCreation(sourceFolder, filePath, node, container, fileContent);
 		creations.add(creation);
 		return super.visitNewExpr(node);
+	}
+
+	public Swc4jAstVisitorResponse visitTpl(Swc4jAstTpl node) {
+		//List<ISwc4jAstExpr> expressions = node.getExprs();
+		List<Swc4jAstTplElement> quasis = node.getQuasis();
+		for(Swc4jAstTplElement element : quasis) {
+			LeafExpression literal = new LeafExpression(sourceFolder, filePath, element, CodeElementType.STRING_LITERAL, container, fileContent);
+			stringLiterals.add(literal);
+		}
+		return super.visitTpl(node);
 	}
 
 	public List<LeafExpression> getVariables() {

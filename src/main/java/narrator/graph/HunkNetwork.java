@@ -390,11 +390,11 @@ public class HunkNetwork {
       for (Tree methodDeclaration : methodDeclarations) {
         UMLClass umlClass = getUMLClass(node.getPath(), methodDeclaration, node.getSrcDst());
         if (umlClass == null) {
-          return;
+          continue;
         }
         UMLOperation operation = findUMLOperation(umlClass, methodDeclaration);
         if (operation == null) {
-          return;
+          continue;
         }
 
         node.addIdentifier(operation.getName());

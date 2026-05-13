@@ -47,8 +47,16 @@ public class ModuleContainer implements VariableDeclarationContainer {
 		//statementList.addAll(statements);
 		for(AbstractStatement s : statements) {
 			AbstractCall call = s.invocationCoveringEntireFragment();
+			AbstractCall nestedCall = null;
 			if(call != null && call.getName().equals("describe") && call.arguments().size() > 0) {
 				describeMap.put(call.arguments().get(0), s);
+			}
+			else if(call != null && call.arguments().size() > 0 && s.getLambdas().size() > 0 && s.getLambdas().get(0).getBody() != null &&
+					s.getLambdas().get(0).getBody().getCompositeStatement().getStatements().size() > 0 &&
+					(nestedCall = s.getLambdas().get(0).getBody().getCompositeStatement().getStatements().get(0).invocationCoveringEntireFragment()) != null &&
+					nestedCall.getName().equals("describe") && nestedCall.arguments().size() > 0) {
+				describeMap.put(call.arguments().get(0), s);
+				//describeMap.put(nestedCall.arguments().get(0), s.getLambdas().get(0).getBody().getCompositeStatement().getStatements().get(0));
 			}
 			else {
 				statementList.add(s);

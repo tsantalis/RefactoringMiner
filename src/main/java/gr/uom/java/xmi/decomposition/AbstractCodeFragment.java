@@ -490,7 +490,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 
 	public AbstractCall invocationCoveringEntireFragment() {
 		String statement = getString();
-		if(LANG.equals(Constants.TYPESCRIPT) && getCastExpressions().size() > 0 && statement.contains(" as ") && !statement.startsWith("describe(")) {
+		if(LANG.equals(Constants.TYPESCRIPT) && getCastExpressions().size() > 0 && statement.contains(" as ") && !statement.contains("describe(")) {
 			int index = statement.lastIndexOf(" as ");
 			statement = statement.substring(0, index);
 		}

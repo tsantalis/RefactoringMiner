@@ -69,13 +69,17 @@ import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClass;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassMethod;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassProp;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstConstructor;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstFunction;
 import com.caoccao.javet.swc4j.ast.enums.Swc4jAstAccessibility;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstClassExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstFnExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstBlockStmtOrExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstClassMember;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstDecl;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstDefaultDecl;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExportSpecifier;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstForHead;
@@ -93,6 +97,8 @@ import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstVarDeclOrExpr;
 import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstCatchClause;
 import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstSwitchCase;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDecl;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDefaultDecl;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDefaultExpr;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDefaultSpecifier;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportNamedSpecifier;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportNamespaceSpecifier;
@@ -2091,6 +2097,45 @@ public class OperationBody {
 			if(container instanceof ModuleContainer) {
 				((ModuleContainer)container).addNamedExport(export);
 			}
+		}
+		else if(statement instanceof Swc4jAstExportDefaultDecl exportDefaultDecl) {
+			ISwc4jAstDefaultDecl defaultDecl = exportDefaultDecl.getDecl();
+			if(defaultDecl instanceof Swc4jAstFnExpr functionExpr) {
+				LocationInfo location = new LocationInfo(sourceFolder, filePath, functionExpr.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+				String name = functionExpr.getIdent().isPresent() ? functionExpr.getIdent().get().getSym() : "";
+				String className = container.getClassName();
+				UMLOperation nested = new UMLOperation(name, location, className);
+				nested.setVisibility(Visibility.PUBLIC);
+				Swc4jAstFunction function = functionExpr.getFunction();
+				TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, nested);
+				for(UMLComment comment : comments) {
+					if(nested.getLocationInfo().subsumes(comment.getLocationInfo())) {
+						nested.getComments().add(comment);
+					}
+				}
+				if(container instanceof UMLOperation) {
+					((UMLOperation)container).addNestedOperation(nested);
+				}
+				else if(container instanceof LambdaExpressionObject lambda) {
+					if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
+						((UMLOperation)lambda.getOwner()).addNestedOperation(nested);
+					}
+				}
+				else if(container instanceof ModuleContainer) {
+					((ModuleContainer)container).addNestedOperation(nested);
+				}
+			}
+			else if(defaultDecl instanceof Swc4jAstClassExpr classExpr) {
+				//TODO
+			}
+			else if(defaultDecl instanceof Swc4jAstTsInterfaceDecl interfaceDecl) {
+				//TODO
+			}
+		}
+		else if(statement instanceof Swc4jAstExportDefaultExpr exportDefaultExpr) {
+			StatementObject child = new StatementObject(sourceFolder, filePath, exportDefaultExpr, parent.getDepth()+1, CodeElementType.EXPORT_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof Swc4jAstTsTypeAliasDecl typeAliasDecl) {
 			String typeName = typeAliasDecl.getId().getSym();

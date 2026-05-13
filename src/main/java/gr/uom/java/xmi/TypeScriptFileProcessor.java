@@ -162,7 +162,7 @@ public class TypeScriptFileProcessor {
 		return processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation);
 	}
 
-	private static UMLOperation processFunction(String sourceFolder, String filePath, Swc4jAstFunction function,
+	public static UMLOperation processFunction(String sourceFolder, String filePath, Swc4jAstFunction function,
 			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent,
 			UMLOperation operation) {
 		Optional<Swc4jAstTsTypeAnn> returnType = function.getReturnType();

@@ -44,24 +44,29 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	}
 
 	public void addStatements(List<AbstractStatement> statements) {
-		//statementList.addAll(statements);
 		for(AbstractStatement s : statements) {
 			AbstractCall call = s.invocationCoveringEntireFragment();
-			AbstractCall nestedCall = null;
 			if(call != null && call.getName().equals("describe") && call.arguments().size() > 0) {
 				describeMap.put(call.arguments().get(0), s);
 			}
 			else if(call != null && call.arguments().size() > 0 && s.getLambdas().size() > 0 && s.getLambdas().get(0).getBody() != null &&
-					s.getLambdas().get(0).getBody().getCompositeStatement().getStatements().size() > 0 &&
-					(nestedCall = s.getLambdas().get(0).getBody().getCompositeStatement().getStatements().get(0).invocationCoveringEntireFragment()) != null &&
-					nestedCall.getName().equals("describe") && nestedCall.arguments().size() > 0) {
+					containsDescribe(s.getLambdas().get(0).getBody().getCompositeStatement().getStatements())) {
 				describeMap.put(call.arguments().get(0), s);
-				//describeMap.put(nestedCall.arguments().get(0), s.getLambdas().get(0).getBody().getCompositeStatement().getStatements().get(0));
 			}
 			else {
 				statementList.add(s);
 			}
 		}
+	}
+
+	private static boolean containsDescribe(List<AbstractStatement> statements) {
+		for(AbstractStatement statement : statements) {
+			AbstractCall nestedCall = statement.invocationCoveringEntireFragment();
+			if(nestedCall != null && nestedCall.getName().equals("describe") && nestedCall.arguments().size() > 0) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public Map<String, AbstractStatement> getDescribeMap() {

@@ -68,6 +68,9 @@ tasks.processTestResources {
     }
 }
 dependencies {
+    implementation platform("io.modelcontextprotocol.sdk:mcp-bom:1.1.2")
+    implementation "io.modelcontextprotocol.sdk:mcp-core"
+    implementation "io.modelcontextprotocol.sdk:mcp-json-jackson2"
     implementation 'com.vdurmont:emoji-java:5.1.1'
     implementation 'com.caoccao.javet:swc4j:2.1.0'
     implementation 'com.caoccao.javet:swc4j-macos-arm64:2.1.0'
@@ -176,4 +179,28 @@ shadowJar {
         attributes 'Main-Class': 'org.refactoringminer.RefactoringMiner'
     }
     archiveFileName = jarName
+}
+
+tasks.register('runMcp', JavaExec) {
+    group = 'application'
+    description = 'Runs RefactoringMiner as a local stdio MCP server.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.refactoringminer.mcp.RefactoringMinerMcpServer'
+}
+
+tasks.register('mcpSmoke', JavaExec) {
+    group = 'verification'
+    description = 'Starts the RefactoringMiner MCP server entrypoint in smoke mode and fails on stdout output.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.refactoringminer.mcp.RefactoringMinerMcpServer'
+    args '--smoke'
+
+    def stdout = new ByteArrayOutputStream()
+    standardOutput = stdout
+
+    doLast {
+        if (stdout.size() != 0) {
+            throw new GradleException("MCP smoke wrote to stdout: ${stdout.toString('UTF-8')}")
+        }
+    }
 }

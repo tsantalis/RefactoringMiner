@@ -73,6 +73,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.util.PathFileUtils;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 public class UMLModelDiff {
@@ -1322,8 +1323,9 @@ public class UMLModelDiff {
 			if(matchResult.isMatch() || matchingMovedInnerClasses > 0) {
 				if(!conflictingMoveOfTopLevelClass(removedClass, addedClass) && !innerClassWithTheSameName(removedClass, addedClass)) {
 					UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
+					boolean renamedTypeScriptModule = PathFileUtils.isTypeScriptFile(classRenameDiff.getOriginalClass().getSourceFile()) && classRenameDiff.getOriginalClass().isModule() && !classRenameDiff.getOriginalClass().getPackageName().equals(classRenameDiff.getRenamedClass().getPackageName());
 					if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName()) ||
-							classRenameDiff.getOriginalClass().isModule()) {
+							renamedTypeScriptModule) {
 						diffSet.add(classRenameDiff);
 					}
 				}
@@ -1331,8 +1333,9 @@ public class UMLModelDiff {
 			else if(matchResult.getMatchedAttributes() > 0 && matchResult.getMatchedOperations() > 0 && removedClass.identicalMultiLineBlockComments(addedClass) &&
 					!conflictingMoveOfTopLevelClass(removedClass, addedClass) && !innerClassWithTheSameName(removedClass, addedClass)) {
 				UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
+				boolean renamedTypeScriptModule = PathFileUtils.isTypeScriptFile(classRenameDiff.getOriginalClass().getSourceFile()) && classRenameDiff.getOriginalClass().isModule() && !classRenameDiff.getOriginalClass().getPackageName().equals(classRenameDiff.getRenamedClass().getPackageName());
 				if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName()) ||
-						classRenameDiff.getOriginalClass().isModule()) {
+						renamedTypeScriptModule) {
 					diffSet.add(classRenameDiff);
 				}
 			}
@@ -1401,8 +1404,9 @@ public class UMLModelDiff {
 			if(matchResult.isMatch() || matchingMovedInnerClasses > 0) {
 				if(!conflictingMoveOfTopLevelClass(removedClass, addedClass) && !innerClassWithTheSameName(removedClass, addedClass)) {
 					UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
+					boolean renamedTypeScriptModule = PathFileUtils.isTypeScriptFile(classRenameDiff.getOriginalClass().getSourceFile()) && classRenameDiff.getOriginalClass().isModule() && !classRenameDiff.getOriginalClass().getPackageName().equals(classRenameDiff.getRenamedClass().getPackageName());
 					if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName()) ||
-							classRenameDiff.getOriginalClass().isModule()) {
+							renamedTypeScriptModule) {
 						diffSet.add(classRenameDiff);
 					}
 				}

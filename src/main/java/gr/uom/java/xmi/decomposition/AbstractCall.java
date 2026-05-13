@@ -20,6 +20,7 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstNewExpr;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
@@ -74,6 +75,10 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public AbstractCall(String sourceFolder, String filePath, Swc4jAstCallExpr expression, CodeElementType codeElementType, VariableDeclarationContainer container, String fileContent) {
+		super(sourceFolder, filePath, expression, codeElementType, container, fileContent);
+	}
+
+	public AbstractCall(String sourceFolder, String filePath, Swc4jAstNewExpr expression, CodeElementType codeElementType, VariableDeclarationContainer container, String fileContent) {
 		super(sourceFolder, filePath, expression, codeElementType, container, fileContent);
 	}
 

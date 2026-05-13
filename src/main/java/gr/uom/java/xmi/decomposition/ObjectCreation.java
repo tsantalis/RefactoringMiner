@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.eclipse.jdt.core.dom.ArrayCreation;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
@@ -24,6 +25,20 @@ import org.jetbrains.kotlin.psi.KtSuperTypeListEntry;
 import org.jetbrains.kotlin.psi.KtTypeProjection;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.jetbrains.kotlin.psi.ValueArgument;
+
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstComputedPropName;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateName;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstNewExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsNonNullExpr;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstCallee;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstMemberProp;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamInstantiation;
 
 import extension.ast.node.LangASTNode;
 import extension.ast.node.expression.LangFieldAccess;
@@ -290,5 +305,60 @@ public class ObjectCreation extends AbstractCall {
 		super(cu, sourceFolder, filePath, invocation, CodeElementType.CLASS_INSTANCE_CREATION, container);
 		this.type = UMLType.extractTypeObject(cu, sourceFolder, filePath, fileContent, invocation.getTypeReference(), 0);
 		this.arguments = new ArrayList<String>();
+	}
+
+	public ObjectCreation(String sourceFolder, String filePath, Swc4jAstNewExpr invocation, VariableDeclarationContainer container, String fileContent) {
+		super(sourceFolder, filePath, invocation, CodeElementType.CLASS_INSTANCE_CREATION, container, fileContent);
+		ISwc4jAstCallee callee = invocation.getCallee();
+		if(callee instanceof Swc4jAstMemberExpr memberExpr) {
+			ISwc4jAstMemberProp prop = memberExpr.getProp();
+			if(prop instanceof Swc4jAstPrivateName privateName)
+				this.type = UMLType.extractTypeObject(privateName.getName());
+			else if(prop instanceof Swc4jAstIdentName ident)
+				this.type = UMLType.extractTypeObject(ident.getSym());
+			else if(prop instanceof Swc4jAstComputedPropName propName)
+				this.type = UMLType.extractTypeObject(fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd()));
+			ISwc4jAstExpr receiver = memberExpr.getObj();
+			this.expression = fileContent.substring(receiver.getSpan().getStart(), receiver.getSpan().getEnd());
+		}
+		else if(callee instanceof Swc4jAstIdent ident) {
+			this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
+		}
+		else if(callee instanceof Swc4jAstTsNonNullExpr nonNullExpr) {
+			ISwc4jAstExpr expr = nonNullExpr.getExpr();
+			if(expr instanceof Swc4jAstMemberExpr memberExpr) {
+				ISwc4jAstMemberProp prop = memberExpr.getProp();
+				if(prop instanceof Swc4jAstPrivateName privateName)
+					this.type = UMLType.extractTypeObject(privateName.getName());
+				else if(prop instanceof Swc4jAstIdentName ident)
+					this.type = UMLType.extractTypeObject(ident.getSym());
+				else if(prop instanceof Swc4jAstComputedPropName propName)
+					this.type = UMLType.extractTypeObject(fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd()));
+				ISwc4jAstExpr receiver = memberExpr.getObj();
+				this.expression = fileContent.substring(receiver.getSpan().getStart(), receiver.getSpan().getEnd());
+			}
+		}
+		this.arguments = new ArrayList<String>();
+		Optional<List<Swc4jAstExprOrSpread>> args = invocation.getArgs();
+		if(args.isPresent()) {
+			List<Swc4jAstExprOrSpread> arguments = args.get();
+			this.numberOfArguments = arguments.size();
+			for(Swc4jAstExprOrSpread arg : arguments) {
+				ISwc4jAstExpr expression = arg.getExpr();
+				String s = fileContent.substring(expression.getSpan().getStart(), expression.getSpan().getEnd());
+				if(arg.getSpread().isPresent()) {
+					s = "..." + s;
+				}
+				this.arguments.add(s);
+			}
+		}
+		Optional<Swc4jAstTsTypeParamInstantiation> typeArgs = invocation.getTypeArgs();
+		if(typeArgs.isPresent()) {
+			List<ISwc4jAstTsType> typeArguments = typeArgs.get().getParams();
+			for(ISwc4jAstTsType typeArgument : typeArguments) {
+				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeArgument, 0);
+				this.typeArguments.add(type);
+			}
+		}
 	}
 }

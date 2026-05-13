@@ -1970,24 +1970,7 @@ public class OperationBody {
 				umlClass.setVisibility(Visibility.PRIVATE);
 			}
 			Swc4jAstClass clazz = classDecl.getClazz();
-			Optional<ISwc4jAstExpr> superclass = clazz.getSuperClass();
-			if(superclass.isPresent()) {
-				ISwc4jAstExpr expr = superclass.get();
-				if(expr instanceof Swc4jAstIdent ident) {
-					UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
-					umlClass.setSuperclass(type);
-				}
-			}
-			List<Swc4jAstTsExprWithTypeArgs> interfaces = clazz.getImplements();
-			for(Swc4jAstTsExprWithTypeArgs inter : interfaces) {
-				ISwc4jAstExpr expr = inter.getExpr();
-				if(expr instanceof Swc4jAstIdent ident) {
-					UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
-					umlClass.addImplementedInterface(type);
-				}
-			}
-			List<ISwc4jAstClassMember> typeElements = clazz.getBody();
-			processClassMembers(sourceFolder, filePath, fileContent, umlClass, typeElements, typeDeclarations);
+			processTypeScriptClass(sourceFolder, filePath, fileContent, typeDeclarations, umlClass, clazz);
 			for(UMLComment comment : comments) {
 				if(umlClass.getLocationInfo().subsumes(comment.getLocationInfo())) {
 					umlClass.getComments().add(comment);
@@ -2126,10 +2109,28 @@ public class OperationBody {
 				}
 			}
 			else if(defaultDecl instanceof Swc4jAstClassExpr classExpr) {
-				//TODO
+				String typeName = classExpr.getIdent().isPresent() ? classExpr.getIdent().get().getSym() : "";
+				LocationInfo location = new LocationInfo(sourceFolder, filePath, classExpr.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);
+				List<UMLImport> imports = new ArrayList<>();
+				UMLClass umlClass = new UMLClass(container.getClassName(), typeName, location, true, imports);
+				umlClass.setVisibility(Visibility.PUBLIC);
+				Swc4jAstClass clazz = classExpr.getClazz();
+				processTypeScriptClass(sourceFolder, filePath, fileContent, typeDeclarations, umlClass, clazz);
+				for(UMLComment comment : comments) {
+					if(umlClass.getLocationInfo().subsumes(comment.getLocationInfo())) {
+						umlClass.getComments().add(comment);
+					}
+				}
+				if(container instanceof ModuleContainer) {
+					((ModuleContainer)container).addNestedClass(umlClass);
+					umlClass.getImportedTypes().addAll(((ModuleContainer)container).getNestedImports());
+				}
+				else if(container instanceof UMLOperation) {
+					((UMLOperation)container).addNestedClass(umlClass);
+				}
 			}
 			else if(defaultDecl instanceof Swc4jAstTsInterfaceDecl interfaceDecl) {
-				//TODO
+				processStatement(sourceFolder, filePath, parent, interfaceDecl, fileContent);
 			}
 		}
 		else if(statement instanceof Swc4jAstExportDefaultExpr exportDefaultExpr) {
@@ -2212,6 +2213,28 @@ public class OperationBody {
 				}
 			}
 		}
+	}
+
+	private void processTypeScriptClass(String sourceFolder, String filePath, String fileContent,
+			List<UMLClass> typeDeclarations, UMLClass umlClass, Swc4jAstClass clazz) {
+		Optional<ISwc4jAstExpr> superclass = clazz.getSuperClass();
+		if(superclass.isPresent()) {
+			ISwc4jAstExpr expr = superclass.get();
+			if(expr instanceof Swc4jAstIdent ident) {
+				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
+				umlClass.setSuperclass(type);
+			}
+		}
+		List<Swc4jAstTsExprWithTypeArgs> interfaces = clazz.getImplements();
+		for(Swc4jAstTsExprWithTypeArgs inter : interfaces) {
+			ISwc4jAstExpr expr = inter.getExpr();
+			if(expr instanceof Swc4jAstIdent ident) {
+				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
+				umlClass.addImplementedInterface(type);
+			}
+		}
+		List<ISwc4jAstClassMember> typeElements = clazz.getBody();
+		processClassMembers(sourceFolder, filePath, fileContent, umlClass, typeElements, typeDeclarations);
 	}
 
 	private void processTypeLiteral(String sourceFolder, String filePath, String fileContent, UMLClass umlClass,

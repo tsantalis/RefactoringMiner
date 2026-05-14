@@ -14,29 +14,38 @@ public class RefactoringMinerMcpService {
 	private final CommitDiffer commitDiffer;
 	private final PullRequestDiffer pullRequestDiffer;
 	private final DirectoryDiffer directoryDiffer;
+	private final DiffBrowserLauncher diffBrowserLauncher;
 
 	public RefactoringMinerMcpService() {
 		this(new GitHistoryRefactoringMinerImpl());
 	}
 
 	RefactoringMinerMcpService(GitHistoryRefactoringMiner miner) {
-		this(miner::diffAtFileContents, miner::diffAtMergeCommit, miner::diffAtPullRequest, miner::diffAtDirectories);
+		this(miner::diffAtFileContents, miner::diffAtMergeCommit, miner::diffAtPullRequest, miner::diffAtDirectories,
+				new WebDiffBrowserLauncher());
 	}
 
 	RefactoringMinerMcpService(FileContentDiffer differ) {
-		this.differ = differ;
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+		this.differ = differ;
 		this.commitDiffer = miner::diffAtMergeCommit;
 		this.pullRequestDiffer = miner::diffAtPullRequest;
 		this.directoryDiffer = miner::diffAtDirectories;
+		this.diffBrowserLauncher = new WebDiffBrowserLauncher();
 	}
 
 	RefactoringMinerMcpService(FileContentDiffer differ, CommitDiffer commitDiffer, PullRequestDiffer pullRequestDiffer,
 			DirectoryDiffer directoryDiffer) {
+		this(differ, commitDiffer, pullRequestDiffer, directoryDiffer, new WebDiffBrowserLauncher());
+	}
+
+	RefactoringMinerMcpService(FileContentDiffer differ, CommitDiffer commitDiffer, PullRequestDiffer pullRequestDiffer,
+			DirectoryDiffer directoryDiffer, DiffBrowserLauncher diffBrowserLauncher) {
 		this.differ = differ;
 		this.commitDiffer = commitDiffer;
 		this.pullRequestDiffer = pullRequestDiffer;
 		this.directoryDiffer = directoryDiffer;
+		this.diffBrowserLauncher = diffBrowserLauncher;
 	}
 
 	public McpAnalysisResult analyzeFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
@@ -277,6 +286,93 @@ public class RefactoringMinerMcpService {
 		}
 	}
 
+	public McpDiffBrowserResult diffFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
+			int port) {
+		if (beforeFiles == null || afterFiles == null) {
+			return McpDiffBrowserResult.error("beforeFiles and afterFiles are required.", port,
+					"Explicit file contents",
+					List.of("beforeFiles and afterFiles must be JSON objects mapping paths to file contents."));
+		}
+		if (beforeFiles.isEmpty() && afterFiles.isEmpty()) {
+			return McpDiffBrowserResult.error("At least one before or after file is required.", port,
+					"Explicit file contents", List.of("beforeFiles and afterFiles cannot both be empty."));
+		}
+
+		String inputSummary = String.format("Explicit file contents: %d before files, %d after files.",
+				beforeFiles.size(), afterFiles.size());
+		try {
+			ProjectASTDiff diff = differ.diffAtFileContents(beforeFiles, afterFiles);
+			return launchDiffBrowser(diff, port, inputSummary, List.of());
+		} catch (Exception e) {
+			return McpDiffBrowserResult.error("File-content diff browser failed: " + e.getMessage(), port,
+					inputSummary, List.of(e.getClass().getName()));
+		}
+	}
+
+	public McpDiffBrowserResult diffWorktree(Path repositoryPath, String baseRef, boolean includeUntracked,
+			int maxFiles, int maxBytesPerFile, int port) {
+		String resolvedBaseRef = baseRef == null || baseRef.isBlank() ? "HEAD" : baseRef;
+		String inputSummary = "Worktree changes in " + repositoryPath + " against " + resolvedBaseRef + ".";
+		try {
+			WorktreeChangeCollector.WorktreeChanges changes = new WorktreeChangeCollector()
+					.collect(repositoryPath, resolvedBaseRef, includeUntracked, maxFiles, maxBytesPerFile);
+			ProjectASTDiff diff = differ.diffAtFileContents(changes.beforeFiles(), changes.afterFiles());
+			return launchDiffBrowser(diff, port, inputSummary, changes.warnings());
+		} catch (Exception e) {
+			return McpDiffBrowserResult.error("Worktree diff browser failed: " + e.getMessage(), port,
+					inputSummary, List.of(e.getClass().getName()));
+		}
+	}
+
+	public McpDiffBrowserResult diffCommit(Path repositoryPath, String commitId, Integer parentIndex, int port) {
+		if (commitId == null || commitId.isBlank()) {
+			return McpDiffBrowserResult.error("commitId must be a non-empty string.", port, "Commit diff",
+					List.of("commitId is required."));
+		}
+		int resolvedParentIndex = parentIndex == null ? 0 : parentIndex;
+		if (resolvedParentIndex < 0) {
+			return McpDiffBrowserResult.error("parentIndex must be greater than or equal to 0.", port,
+					"Commit diff", List.of("parentIndex=" + resolvedParentIndex));
+		}
+
+		String inputSummary = String.format("Commit %s in %s against parent index %d.", commitId, repositoryPath,
+				resolvedParentIndex);
+		try {
+			requireExistingAbsolutePath(repositoryPath, "repositoryPath");
+			Path analysisRepositoryPath = resolveCommitRepositoryPath(repositoryPath);
+			ProjectASTDiff diff = commitDiffer.diffAtMergeCommit(analysisRepositoryPath, commitId,
+					resolvedParentIndex);
+			return launchDiffBrowser(diff, port, inputSummary, List.of());
+		} catch (Exception e) {
+			return McpDiffBrowserResult.error("Commit diff browser failed: " + e.getMessage(), port, inputSummary,
+					List.of(e.getClass().getName()));
+		}
+	}
+
+	public McpDiffBrowserResult diffPullRequest(String cloneUrl, int pullRequestId, int timeoutSeconds, int port) {
+		if (cloneUrl == null || cloneUrl.isBlank()) {
+			return McpDiffBrowserResult.error("cloneUrl must be a non-empty string.", port, "Pull-request diff",
+					List.of("cloneUrl is required."));
+		}
+		if (pullRequestId <= 0) {
+			return McpDiffBrowserResult.error("pullRequestId must be greater than 0.", port, "Pull-request diff",
+					List.of("pullRequestId=" + pullRequestId));
+		}
+		if (timeoutSeconds <= 0) {
+			return McpDiffBrowserResult.error("timeoutSeconds must be greater than 0.", port, "Pull-request diff",
+					List.of("timeoutSeconds=" + timeoutSeconds));
+		}
+
+		String inputSummary = String.format("Pull request #%d in %s.", pullRequestId, cloneUrl);
+		try {
+			ProjectASTDiff diff = pullRequestDiffer.diffAtPullRequest(cloneUrl, pullRequestId, timeoutSeconds);
+			return launchDiffBrowser(diff, port, inputSummary, List.of());
+		} catch (Exception e) {
+			return McpDiffBrowserResult.error("Pull-request diff browser failed: " + e.getMessage(), port,
+					inputSummary, List.of(e.getClass().getName()));
+		}
+	}
+
 	private static void requireExistingAbsolutePath(Path path, String name) {
 		if (path == null) {
 			throw new IllegalArgumentException(name + " is required.");
@@ -328,6 +424,15 @@ public class RefactoringMinerMcpService {
 					List.of("RefactoringMiner returned null."));
 		}
 		return McpAnalysisResult.ok(diff, maxRefactorings);
+	}
+
+	private McpDiffBrowserResult launchDiffBrowser(ProjectASTDiff diff, int port, String inputSummary,
+			List<String> warnings) throws Exception {
+		if (diff == null) {
+			return McpDiffBrowserResult.error("Analysis did not produce a diff.", port, inputSummary,
+					List.of("RefactoringMiner returned null."));
+		}
+		return diffBrowserLauncher.launch(diff, port, inputSummary, warnings);
 	}
 
 	@FunctionalInterface

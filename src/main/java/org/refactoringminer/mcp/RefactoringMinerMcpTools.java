@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gui.webdiff.WebDiff;
 import io.modelcontextprotocol.server.McpServerFeatures.SyncToolSpecification;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.spec.McpSchema.CallToolRequest;
@@ -27,11 +28,16 @@ public final class RefactoringMinerMcpTools {
 	static final String VALIDATE_COMMIT = "refactoringminer_validate_commit";
 	static final String VALIDATE_PULL_REQUEST = "refactoringminer_validate_pull_request";
 	static final String VALIDATE_DIRECTORIES = "refactoringminer_validate_directories";
+	static final String DIFF_FILE_CONTENTS = "refactoringminer_diff_file_contents";
+	static final String DIFF_WORKTREE = "refactoringminer_diff_worktree";
+	static final String DIFF_COMMIT = "refactoringminer_diff_commit";
+	static final String DIFF_PULL_REQUEST = "refactoringminer_diff_pull_request";
 	private static final int DEFAULT_MAX_REFACTORINGS = 20;
 	private static final int DEFAULT_MAX_CANDIDATES = 20;
 	private static final int DEFAULT_MAX_FILES = 100;
 	private static final int DEFAULT_MAX_BYTES_PER_FILE = 200_000;
 	private static final int DEFAULT_TIMEOUT_SECONDS = 300;
+	private static final int DEFAULT_WEB_DIFF_PORT = WebDiff.DEFAULT_PORT;
 
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
@@ -49,7 +55,8 @@ public final class RefactoringMinerMcpTools {
 		return new SyncToolSpecification[] { analyzeFileContentsTool(service), analyzeWorktreeTool(service),
 				analyzeCommitTool(service), analyzePullRequestTool(service), analyzeDirectoriesTool(service),
 				validateFileContentsTool(service), validateWorktreeTool(service), validateCommitTool(service),
-				validatePullRequestTool(service), validateDirectoriesTool(service) };
+				validatePullRequestTool(service), validateDirectoriesTool(service), diffFileContentsTool(service),
+				diffWorktreeTool(service), diffCommitTool(service), diffPullRequestTool(service) };
 	}
 
 	static SyncToolSpecification analyzeFileContentsTool(RefactoringMinerMcpService service) {
@@ -189,6 +196,66 @@ public final class RefactoringMinerMcpTools {
 						.annotations(new ToolAnnotations("Validate directories", true, false, true, false, false))
 						.build())
 				.callHandler((exchange, request) -> handleValidateDirectories(service, request))
+				.build();
+	}
+
+	static SyncToolSpecification diffFileContentsTool(RefactoringMinerMcpService service) {
+		return SyncToolSpecification.builder()
+				.tool(Tool.builder()
+						.name(DIFF_FILE_CONTENTS)
+						.title("Open AST diff browser for file contents")
+						.description("Read-only launch of a local RefactoringMiner AST diff browser for explicit before/after file-content maps. Returns a localhost URL; it does not open a browser automatically.")
+						.inputSchema(diffFileContentsInputSchema())
+						.outputSchema(diffBrowserOutputSchema())
+						.annotations(new ToolAnnotations("Open file-content AST diff browser", true, false, true, false,
+								false))
+						.build())
+				.callHandler((exchange, request) -> handleDiffFileContents(service, request))
+				.build();
+	}
+
+	static SyncToolSpecification diffWorktreeTool(RefactoringMinerMcpService service) {
+		return SyncToolSpecification.builder()
+				.tool(Tool.builder()
+						.name(DIFF_WORKTREE)
+						.title("Open AST diff browser for worktree changes")
+						.description("Read-only launch of a local RefactoringMiner AST diff browser for local modified, added, deleted, and optional untracked files. Returns a localhost URL; it does not open a browser automatically.")
+						.inputSchema(diffWorktreeInputSchema())
+						.outputSchema(diffBrowserOutputSchema())
+						.annotations(new ToolAnnotations("Open worktree AST diff browser", true, false, true, false,
+								false))
+						.build())
+				.callHandler((exchange, request) -> handleDiffWorktree(service, request))
+				.build();
+	}
+
+	static SyncToolSpecification diffCommitTool(RefactoringMinerMcpService service) {
+		return SyncToolSpecification.builder()
+				.tool(Tool.builder()
+						.name(DIFF_COMMIT)
+						.title("Open AST diff browser for a local commit")
+						.description("Read-only launch of a local RefactoringMiner AST diff browser for a local repository commit with optional merge parent. Returns a localhost URL; it does not open a browser automatically.")
+						.inputSchema(diffCommitInputSchema())
+						.outputSchema(diffBrowserOutputSchema())
+						.annotations(new ToolAnnotations("Open commit AST diff browser", true, false, true, false,
+								false))
+						.build())
+				.callHandler((exchange, request) -> handleDiffCommit(service, request))
+				.build();
+	}
+
+	static SyncToolSpecification diffPullRequestTool(RefactoringMinerMcpService service) {
+		return SyncToolSpecification.builder()
+				.tool(Tool.builder()
+						.name(DIFF_PULL_REQUEST)
+						.title("Open AST diff browser for a GitHub pull request")
+						.description("Read-only launch of a local RefactoringMiner AST diff browser for a GitHub pull request through existing GitHub API reads. Returns a localhost URL; it does not open a browser automatically.")
+						.inputSchema(diffPullRequestInputSchema())
+						.outputSchema(diffBrowserOutputSchema())
+						.annotations(new ToolAnnotations("Open pull request AST diff browser", true, false, true, true,
+								false))
+						.build())
+				.callHandler((exchange, request) -> handleDiffPullRequest(service, request))
 				.build();
 	}
 
@@ -409,11 +476,109 @@ public final class RefactoringMinerMcpTools {
 		}
 	}
 
+	private static CallToolResult handleDiffFileContents(RefactoringMinerMcpService service, CallToolRequest request) {
+		McpDiffBrowserResult result = diffFileContents(service, request.arguments());
+		return toCallToolResult(result);
+	}
+
+	static McpDiffBrowserResult diffFileContents(RefactoringMinerMcpService service, Map<String, Object> arguments) {
+		if (arguments == null) {
+			return McpDiffBrowserResult.error("Tool arguments are required.", null, "Explicit file contents",
+					List.of("arguments=null"));
+		}
+		try {
+			Map<String, String> beforeFiles = stringMap(arguments.get("beforeFiles"), "beforeFiles");
+			Map<String, String> afterFiles = stringMap(arguments.get("afterFiles"), "afterFiles");
+			int port = integerValue(arguments.get("port"), DEFAULT_WEB_DIFF_PORT, "port");
+			return service.diffFileContents(beforeFiles, afterFiles, port);
+		} catch (IllegalArgumentException e) {
+			return McpDiffBrowserResult.error(e.getMessage(), null, "Explicit file contents",
+					List.of("Invalid tool arguments."));
+		}
+	}
+
+	private static CallToolResult handleDiffWorktree(RefactoringMinerMcpService service, CallToolRequest request) {
+		McpDiffBrowserResult result = diffWorktree(service, request.arguments());
+		return toCallToolResult(result);
+	}
+
+	static McpDiffBrowserResult diffWorktree(RefactoringMinerMcpService service, Map<String, Object> arguments) {
+		if (arguments == null) {
+			return McpDiffBrowserResult.error("Tool arguments are required.", null, "Worktree changes",
+					List.of("arguments=null"));
+		}
+		try {
+			String repositoryPath = stringValue(arguments.get("repositoryPath"), "repositoryPath");
+			String baseRef = optionalStringValue(arguments.get("baseRef"), "HEAD");
+			boolean includeUntracked = booleanValue(arguments.get("includeUntracked"), false);
+			int maxFiles = integerValue(arguments.get("maxFiles"), DEFAULT_MAX_FILES, "maxFiles");
+			int maxBytesPerFile = integerValue(arguments.get("maxBytesPerFile"), DEFAULT_MAX_BYTES_PER_FILE,
+					"maxBytesPerFile");
+			int port = integerValue(arguments.get("port"), DEFAULT_WEB_DIFF_PORT, "port");
+			return service.diffWorktree(Path.of(repositoryPath), baseRef, includeUntracked, maxFiles, maxBytesPerFile,
+					port);
+		} catch (IllegalArgumentException e) {
+			return McpDiffBrowserResult.error(e.getMessage(), null, "Worktree changes",
+					List.of("Invalid tool arguments."));
+		}
+	}
+
+	private static CallToolResult handleDiffCommit(RefactoringMinerMcpService service, CallToolRequest request) {
+		McpDiffBrowserResult result = diffCommit(service, request.arguments());
+		return toCallToolResult(result);
+	}
+
+	static McpDiffBrowserResult diffCommit(RefactoringMinerMcpService service, Map<String, Object> arguments) {
+		if (arguments == null) {
+			return McpDiffBrowserResult.error("Tool arguments are required.", null, "Commit diff",
+					List.of("arguments=null"));
+		}
+		try {
+			String repositoryPath = stringValue(arguments.get("repositoryPath"), "repositoryPath");
+			String commitId = stringValue(arguments.get("commitId"), "commitId");
+			Integer parentIndex = optionalIntegerValue(arguments.get("parentIndex"), "parentIndex");
+			int port = integerValue(arguments.get("port"), DEFAULT_WEB_DIFF_PORT, "port");
+			return service.diffCommit(Path.of(repositoryPath), commitId, parentIndex, port);
+		} catch (IllegalArgumentException e) {
+			return McpDiffBrowserResult.error(e.getMessage(), null, "Commit diff", List.of("Invalid tool arguments."));
+		}
+	}
+
+	private static CallToolResult handleDiffPullRequest(RefactoringMinerMcpService service, CallToolRequest request) {
+		McpDiffBrowserResult result = diffPullRequest(service, request.arguments());
+		return toCallToolResult(result);
+	}
+
+	static McpDiffBrowserResult diffPullRequest(RefactoringMinerMcpService service, Map<String, Object> arguments) {
+		if (arguments == null) {
+			return McpDiffBrowserResult.error("Tool arguments are required.", null, "Pull-request diff",
+					List.of("arguments=null"));
+		}
+		try {
+			String cloneUrl = stringValue(arguments.get("cloneUrl"), "cloneUrl");
+			int pullRequestId = integerValue(arguments.get("pullRequestId"), 0, "pullRequestId");
+			int timeoutSeconds = integerValue(arguments.get("timeoutSeconds"), DEFAULT_TIMEOUT_SECONDS, "timeoutSeconds");
+			int port = integerValue(arguments.get("port"), DEFAULT_WEB_DIFF_PORT, "port");
+			return service.diffPullRequest(cloneUrl, pullRequestId, timeoutSeconds, port);
+		} catch (IllegalArgumentException e) {
+			return McpDiffBrowserResult.error(e.getMessage(), null, "Pull-request diff",
+					List.of("Invalid tool arguments."));
+		}
+	}
+
 	private static CallToolResult toCallToolResult(McpAnalysisResult result) {
 		return CallToolResult.builder()
 				.addContent(new TextContent(writeResult(result)))
 				.structuredContent(result)
 				.isError("error".equals(result.status()))
+				.build();
+	}
+
+	private static CallToolResult toCallToolResult(McpDiffBrowserResult result) {
+		return CallToolResult.builder()
+				.addContent(new TextContent(writeResult(result)))
+				.structuredContent(result)
+				.isError(McpDiffBrowserResult.ERROR.equals(result.status()))
 				.build();
 	}
 
@@ -642,6 +807,49 @@ public final class RefactoringMinerMcpTools {
 		return new JsonSchema("object", properties, List.of("beforePath", "afterPath", "intent"), false, null, null);
 	}
 
+	private static JsonSchema diffFileContentsInputSchema() {
+		Map<String, Object> properties = new LinkedHashMap<>();
+		properties.put("beforeFiles", fileMapSchema());
+		properties.put("afterFiles", fileMapSchema());
+		putDiffBrowserProperties(properties);
+		return new JsonSchema("object", properties, List.of("beforeFiles", "afterFiles"), false, null, null);
+	}
+
+	private static JsonSchema diffWorktreeInputSchema() {
+		Map<String, Object> properties = new LinkedHashMap<>();
+		properties.put("repositoryPath", Map.of("type", "string"));
+		properties.put("baseRef", Map.of("type", "string", "default", "HEAD"));
+		properties.put("includeUntracked", Map.of("type", "boolean", "default", false));
+		properties.put("maxFiles", Map.of("type", "integer", "minimum", 1, "default", DEFAULT_MAX_FILES));
+		properties.put("maxBytesPerFile", Map.of("type", "integer", "minimum", 1, "default", DEFAULT_MAX_BYTES_PER_FILE));
+		putDiffBrowserProperties(properties);
+		return new JsonSchema("object", properties, List.of("repositoryPath"), false, null, null);
+	}
+
+	private static JsonSchema diffCommitInputSchema() {
+		Map<String, Object> properties = new LinkedHashMap<>();
+		properties.put("repositoryPath", Map.of("type", "string"));
+		properties.put("commitId", Map.of("type", "string"));
+		properties.put("parentIndex", Map.of("type", "integer", "minimum", 0));
+		putDiffBrowserProperties(properties);
+		return new JsonSchema("object", properties, List.of("repositoryPath", "commitId"), false, null, null);
+	}
+
+	private static JsonSchema diffPullRequestInputSchema() {
+		Map<String, Object> properties = new LinkedHashMap<>();
+		properties.put("cloneUrl", Map.of("type", "string"));
+		properties.put("pullRequestId", Map.of("type", "integer", "minimum", 1));
+		properties.put("timeoutSeconds", Map.of("type", "integer", "minimum", 1, "default", DEFAULT_TIMEOUT_SECONDS));
+		putDiffBrowserProperties(properties);
+		return new JsonSchema("object", properties, List.of("cloneUrl", "pullRequestId"), false, null, null);
+	}
+
+	private static void putDiffBrowserProperties(Map<String, Object> properties) {
+		properties.put("port", Map.of("type", "integer", "minimum", 1, "maximum", 65535,
+				"default", DEFAULT_WEB_DIFF_PORT,
+				"description", "Local WebDiff port. Defaults to 6789."));
+	}
+
 	private static void putValidationProperties(Map<String, Object> properties) {
 		properties.put("intent", intentSchema());
 		properties.put("maxCandidates", Map.of("type", "integer", "minimum", 0, "default", DEFAULT_MAX_CANDIDATES));
@@ -710,5 +918,27 @@ public final class RefactoringMinerMcpTools {
 				"properties", properties,
 				"required", List.of("status", "summary", "refactoringCount", "astDiffCount", "moveAstDiffCount",
 						"filesBefore", "filesAfter", "refactorings", "warnings"));
+	}
+
+	private static Map<String, Object> diffBrowserOutputSchema() {
+		Map<String, Object> properties = new LinkedHashMap<>();
+		properties.put("status", Map.of("type", "string", "enum", List.of("ok", "error")));
+		properties.put("summary", Map.of("type", "string"));
+		properties.put("message", Map.of("type", "string"));
+		properties.put("url", Map.of("type", "string"));
+		properties.put("port", Map.of("type", "integer"));
+		properties.put("inputSummary", Map.of("type", "string"));
+		properties.put("refactoringCount", Map.of("type", "integer"));
+		properties.put("astDiffCount", Map.of("type", "integer"));
+		properties.put("moveAstDiffCount", Map.of("type", "integer"));
+		properties.put("filesBefore", Map.of("type", "integer"));
+		properties.put("filesAfter", Map.of("type", "integer"));
+		properties.put("affectedFiles", Map.of("type", "array", "items", Map.of("type", "string")));
+		properties.put("warnings", Map.of("type", "array", "items", Map.of("type", "string")));
+		return Map.of(
+				"type", "object",
+				"properties", properties,
+				"required", List.of("status", "summary", "inputSummary", "refactoringCount", "astDiffCount",
+						"moveAstDiffCount", "filesBefore", "filesAfter", "affectedFiles", "warnings"));
 	}
 }

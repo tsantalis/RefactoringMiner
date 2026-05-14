@@ -50,7 +50,9 @@ public class WebDiff  {
     public static final String HIGHLIGHT_CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css";
     public static final String HIGHLIGHT_JS_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js";
     public static final String HIGHLIGHT_JAVA_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js";
-    public int port = 6789;
+    public static final String LOCAL_URL_PREFIX = "http://127.0.0.1";
+    public static final int DEFAULT_PORT = 6789;
+    public int port = DEFAULT_PORT;
     private static final AtomicInteger DIFF_LOADER_THREAD_SEQUENCE = new AtomicInteger();
 
     private String toolName = "RefactoringMiner";
@@ -177,12 +179,28 @@ public class WebDiff  {
     private record DiffViewState(ProjectASTDiff projectASTDiff, DirComparator comparator) {
     }
 
-    public void run() {
+    public String localUrl() {
+        return localUrl(this.port);
+    }
+
+    public static String localUrl(int port) {
+        return LOCAL_URL_PREFIX + ":" + port;
+    }
+
+    public static String startupMessage(int port) {
+        return "Starting server: " + localUrl(port);
+    }
+
+    public String start() {
 //        killProcessOnPort(this.port);
         configureSpark(this.port);
         warmUpMergeParents();
         awaitInitialization();
-        System.out.println(String.format("Starting server: %s:%d.", "http://127.0.0.1", this.port));
+        return startupMessage(this.port);
+    }
+
+    public void run() {
+        System.out.println(start() + ".");
     }
     public void terminate(){
         diffLoader.shutdownNow();
@@ -194,7 +212,7 @@ public class WebDiff  {
         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
             try {
-                desktop.browse(new URI("http://127.0.0.1" + ":" + this.port));
+                desktop.browse(new URI(localUrl()));
             } catch (Exception e) {
                 e.printStackTrace();
             }

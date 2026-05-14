@@ -16,6 +16,7 @@ import io.modelcontextprotocol.server.McpServerFeatures.SyncToolSpecification;
 import io.modelcontextprotocol.spec.McpSchema.CallToolRequest;
 import io.modelcontextprotocol.spec.McpSchema.CallToolResult;
 import io.modelcontextprotocol.spec.McpSchema.TextContent;
+import org.eclipse.jgit.api.Git;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -58,7 +59,7 @@ class RefactoringMinerMcpToolsTest {
 	void toolSpecificationsExposeFullReadOnlyV1Surface() {
 		SyncToolSpecification[] tools = RefactoringMinerMcpTools.toolSpecifications();
 
-		assertEquals(10, tools.length);
+		assertEquals(14, tools.length);
 		assertTrue(java.util.Arrays.stream(tools)
 				.anyMatch(tool -> RefactoringMinerMcpTools.ANALYZE_FILE_CONTENTS.equals(tool.tool().name())));
 		assertTrue(java.util.Arrays.stream(tools)
@@ -79,6 +80,14 @@ class RefactoringMinerMcpToolsTest {
 				.anyMatch(tool -> RefactoringMinerMcpTools.VALIDATE_PULL_REQUEST.equals(tool.tool().name())));
 		assertTrue(java.util.Arrays.stream(tools)
 				.anyMatch(tool -> RefactoringMinerMcpTools.VALIDATE_DIRECTORIES.equals(tool.tool().name())));
+		assertTrue(java.util.Arrays.stream(tools)
+				.anyMatch(tool -> RefactoringMinerMcpTools.DIFF_FILE_CONTENTS.equals(tool.tool().name())));
+		assertTrue(java.util.Arrays.stream(tools)
+				.anyMatch(tool -> RefactoringMinerMcpTools.DIFF_WORKTREE.equals(tool.tool().name())));
+		assertTrue(java.util.Arrays.stream(tools)
+				.anyMatch(tool -> RefactoringMinerMcpTools.DIFF_COMMIT.equals(tool.tool().name())));
+		assertTrue(java.util.Arrays.stream(tools)
+				.anyMatch(tool -> RefactoringMinerMcpTools.DIFF_PULL_REQUEST.equals(tool.tool().name())));
 		assertTrue(java.util.Arrays.stream(tools).allMatch(tool -> tool.tool().annotations().readOnlyHint()));
 		assertTrue(java.util.Arrays.stream(tools).noneMatch(tool -> tool.tool().annotations().destructiveHint()));
 	}
@@ -100,6 +109,32 @@ class RefactoringMinerMcpToolsTest {
 		assertTrue(directoriesTool.tool().annotations().readOnlyHint());
 		assertTrue(directoriesTool.tool().inputSchema().required().contains("beforePath"));
 		assertTrue(directoriesTool.tool().inputSchema().required().contains("afterPath"));
+	}
+
+	@Test
+	void diffBrowserToolMetadataIsReadOnlyAndUsesLocalhostPortDefault() {
+		RefactoringMinerMcpService service = fakeDiffBrowserService();
+		SyncToolSpecification fileTool = RefactoringMinerMcpTools.diffFileContentsTool(service);
+		SyncToolSpecification worktreeTool = RefactoringMinerMcpTools.diffWorktreeTool(service);
+		SyncToolSpecification commitTool = RefactoringMinerMcpTools.diffCommitTool(service);
+		SyncToolSpecification pullRequestTool = RefactoringMinerMcpTools.diffPullRequestTool(service);
+
+		for (SyncToolSpecification tool : List.of(fileTool, worktreeTool, commitTool, pullRequestTool)) {
+			assertTrue(tool.tool().annotations().readOnlyHint());
+			assertFalse(tool.tool().annotations().destructiveHint());
+			assertTrue(tool.tool().description().contains("localhost URL"));
+			Object portSchema = tool.tool().inputSchema().properties().get("port");
+			assertTrue(portSchema instanceof Map<?, ?>);
+			assertEquals(6789, ((Map<?, ?>) portSchema).get("default"));
+		}
+		assertTrue(fileTool.tool().inputSchema().required().contains("beforeFiles"));
+		assertTrue(fileTool.tool().inputSchema().required().contains("afterFiles"));
+		assertTrue(worktreeTool.tool().inputSchema().required().contains("repositoryPath"));
+		assertTrue(commitTool.tool().inputSchema().required().contains("repositoryPath"));
+		assertTrue(commitTool.tool().inputSchema().required().contains("commitId"));
+		assertTrue(pullRequestTool.tool().annotations().openWorldHint());
+		assertTrue(pullRequestTool.tool().inputSchema().required().contains("cloneUrl"));
+		assertTrue(pullRequestTool.tool().inputSchema().required().contains("pullRequestId"));
 	}
 
 	@Test
@@ -342,6 +377,98 @@ class RefactoringMinerMcpToolsTest {
 		assertTrue(json.get("summary").asText().contains("Unknown refactoring type"));
 	}
 
+	@Test
+	void fileContentsDiffToolReturnsJsonTextAndStructuredContent() throws Exception {
+		SyncToolSpecification tool = RefactoringMinerMcpTools.diffFileContentsTool(fakeDiffBrowserService());
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF_FILE_CONTENTS, Map.of(
+				"beforeFiles", Map.of("src/main/java/A.java", "class A { void f() {} }"),
+				"afterFiles", Map.of("src/main/java/A.java", "class A { void g() {} }"),
+				"port", 6790));
+
+		CallToolResult result = tool.callHandler().apply(null, request);
+
+		assertFalse(result.isError());
+		assertTrue(result.structuredContent() instanceof McpDiffBrowserResult);
+		TextContent content = (TextContent) result.content().get(0);
+		JsonNode json = OBJECT_MAPPER.readTree(content.text());
+		assertEquals("ok", json.get("status").asText());
+		assertEquals("http://127.0.0.1:6790", json.get("url").asText());
+		assertEquals("Starting server: http://127.0.0.1:6790", json.get("message").asText());
+		assertEquals(1, json.get("affectedFiles").size());
+	}
+
+	@Test
+	void worktreeDiffToolReturnsJsonTextAndStructuredContentWithoutNetwork(@TempDir Path tempDir) throws Exception {
+		Path repo = tempDir.resolve("repo");
+		try (Git git = Git.init().setDirectory(repo.toFile()).call()) {
+			write(repo, "src/main/java/A.java", "class A { void f() {} }");
+			git.add().addFilepattern(".").call();
+			git.commit().setMessage("initial").setAuthor("Test", "test@example.com")
+					.setCommitter("Test", "test@example.com").call();
+			write(repo, "src/main/java/A.java", "class A { void g() {} }");
+		}
+		SyncToolSpecification tool = RefactoringMinerMcpTools.diffWorktreeTool(fakeDiffBrowserService());
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF_WORKTREE, Map.of(
+				"repositoryPath", repo.toString(),
+				"baseRef", "HEAD",
+				"port", 6793));
+
+		CallToolResult result = tool.callHandler().apply(null, request);
+
+		assertFalse(result.isError());
+		assertTrue(result.structuredContent() instanceof McpDiffBrowserResult);
+		TextContent content = (TextContent) result.content().get(0);
+		JsonNode json = OBJECT_MAPPER.readTree(content.text());
+		assertEquals("ok", json.get("status").asText());
+		assertEquals("http://127.0.0.1:6793", json.get("url").asText());
+		assertEquals("src/main/java/A.java", json.get("affectedFiles").get(0).asText());
+	}
+
+	@Test
+	void repositoryBackedDiffBrowserHandlersReturnStructuredContentWithoutNetwork(@TempDir Path tempDir)
+			throws Exception {
+		RefactoringMinerMcpService service = fakeDiffBrowserService();
+
+		List<CallToolResult> results = List.of(
+				RefactoringMinerMcpTools.diffCommitTool(service).callHandler().apply(null,
+						new CallToolRequest(RefactoringMinerMcpTools.DIFF_COMMIT, Map.of(
+								"repositoryPath", tempDir.toString(),
+								"commitId", "abc123",
+								"port", 6791))),
+				RefactoringMinerMcpTools.diffPullRequestTool(service).callHandler().apply(null,
+						new CallToolRequest(RefactoringMinerMcpTools.DIFF_PULL_REQUEST, Map.of(
+								"cloneUrl", "https://github.com/tsantalis/RefactoringMiner.git",
+								"pullRequestId", 1,
+								"timeoutSeconds", 30,
+								"port", 6792))));
+
+		for (CallToolResult result : results) {
+			assertFalse(result.isError());
+			assertTrue(result.structuredContent() instanceof McpDiffBrowserResult);
+			TextContent content = (TextContent) result.content().get(0);
+			JsonNode json = OBJECT_MAPPER.readTree(content.text());
+			assertEquals("ok", json.get("status").asText());
+			assertTrue(json.get("url").asText().startsWith("http://127.0.0.1:"));
+		}
+	}
+
+	@Test
+	void diffBrowserToolReturnsErrorShapeForInvalidPort() throws Exception {
+		SyncToolSpecification tool = RefactoringMinerMcpTools.diffFileContentsTool(fakeDiffBrowserService());
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF_FILE_CONTENTS, Map.of(
+				"beforeFiles", Map.of("src/main/java/A.java", "class A {}"),
+				"afterFiles", Map.of("src/main/java/A.java", "class A { int x; }"),
+				"port", 0));
+
+		CallToolResult result = tool.callHandler().apply(null, request);
+
+		assertTrue(result.isError());
+		TextContent content = (TextContent) result.content().get(0);
+		JsonNode json = OBJECT_MAPPER.readTree(content.text());
+		assertEquals("error", json.get("status").asText());
+		assertTrue(json.get("summary").asText().contains("port must be between 1 and 65535"));
+	}
+
 	private static RefactoringMinerMcpService fakeService() {
 		return new RefactoringMinerMcpService(
 				(before, after) -> new ProjectASTDiff(before, after),
@@ -370,6 +497,26 @@ class RefactoringMinerMcpToolsTest {
 						Map.of("src/main/java/A.java", "class A { void g() {} }")));
 	}
 
+	private static RefactoringMinerMcpService fakeDiffBrowserService() {
+		return new RefactoringMinerMcpService(
+				(before, after) -> diffWithRefactoring(before, after),
+				(repositoryPath, commitId, parentIndex) -> diffWithRefactoring(
+						Map.of("src/main/java/A.java", "class A { void f() {} }"),
+						Map.of("src/main/java/A.java", "class A { void g() {} }")),
+				(cloneUrl, pullRequestId, timeoutSeconds) -> diffWithRefactoring(
+						Map.of("src/main/java/A.java", "class A { void f() {} }"),
+						Map.of("src/main/java/A.java", "class A { void g() {} }")),
+				(beforePath, afterPath) -> diffWithRefactoring(
+						Map.of("src/main/java/A.java", "class A { void f() {} }"),
+						Map.of("src/main/java/A.java", "class A { void g() {} }")),
+				(diff, port, inputSummary, warnings) -> {
+					if (port < 1 || port > 65535) {
+						throw new IllegalArgumentException("port must be between 1 and 65535.");
+					}
+					return McpDiffBrowserResult.ok(diff, port, inputSummary, warnings);
+				});
+	}
+
 	private static ProjectASTDiff diffWithRefactoring(Map<String, String> before, Map<String, String> after) {
 		ProjectASTDiff diff = new ProjectASTDiff(before, after);
 		diff.setRefactorings(List.of(new FakeRefactoring()));
@@ -378,6 +525,12 @@ class RefactoringMinerMcpToolsTest {
 
 	private static Map<String, Object> renameMethodIntent() {
 		return Map.of("type", "Rename Method", "methodNames", List.of("g"));
+	}
+
+	private static void write(Path repo, String relativePath, String content) throws Exception {
+		Path file = repo.resolve(relativePath);
+		Files.createDirectories(file.getParent());
+		Files.writeString(file, content);
 	}
 
 	private static class FakeRefactoring implements Refactoring {

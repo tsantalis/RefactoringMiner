@@ -69,6 +69,9 @@ tasks.processTestResources {
     }
 }
 dependencies {
+    implementation platform("io.modelcontextprotocol.sdk:mcp-bom:1.1.2")
+    implementation "io.modelcontextprotocol.sdk:mcp-core"
+    implementation "io.modelcontextprotocol.sdk:mcp-json-jackson2"
     implementation 'com.vdurmont:emoji-java:5.1.1'
     implementation 'com.caoccao.javet:swc4j:2.1.0'
     implementation 'com.caoccao.javet:swc4j-macos-arm64:2.1.0'

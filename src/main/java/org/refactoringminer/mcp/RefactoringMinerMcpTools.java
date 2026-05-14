@@ -273,7 +273,11 @@ public final class RefactoringMinerMcpTools {
 			Map<String, String> afterFiles = stringMap(arguments.get("afterFiles"), "afterFiles");
 			int maxRefactorings = integerValue(arguments.get("maxRefactorings"), DEFAULT_MAX_REFACTORINGS,
 					"maxRefactorings");
-			return service.analyzeFileContents(beforeFiles, afterFiles, maxRefactorings);
+			int maxFiles = integerValue(arguments.get("maxFiles"), DEFAULT_MAX_FILES, "maxFiles");
+			int maxBytesPerFile = integerValue(arguments.get("maxBytesPerFile"), DEFAULT_MAX_BYTES_PER_FILE,
+					"maxBytesPerFile");
+			return service.analyzeFileContents(beforeFiles, afterFiles, maxRefactorings, maxFiles,
+					maxBytesPerFile);
 		} catch (IllegalArgumentException e) {
 			return McpAnalysisResult.error(e.getMessage(), List.of("Invalid tool arguments."));
 		}
@@ -381,7 +385,11 @@ public final class RefactoringMinerMcpTools {
 			Map<String, String> afterFiles = stringMap(arguments.get("afterFiles"), "afterFiles");
 			McpRefactoringIntent intent = intentValue(arguments.get("intent"));
 			int maxCandidates = integerValue(arguments.get("maxCandidates"), DEFAULT_MAX_CANDIDATES, "maxCandidates");
-			return service.validateFileContents(beforeFiles, afterFiles, intent, maxCandidates);
+			int maxFiles = integerValue(arguments.get("maxFiles"), DEFAULT_MAX_FILES, "maxFiles");
+			int maxBytesPerFile = integerValue(arguments.get("maxBytesPerFile"), DEFAULT_MAX_BYTES_PER_FILE,
+					"maxBytesPerFile");
+			return service.validateFileContents(beforeFiles, afterFiles, intent, maxCandidates, maxFiles,
+					maxBytesPerFile);
 		} catch (IllegalArgumentException e) {
 			return McpValidationResult.error(e.getMessage(), null, List.of("Invalid tool arguments."));
 		}
@@ -490,7 +498,10 @@ public final class RefactoringMinerMcpTools {
 			Map<String, String> beforeFiles = stringMap(arguments.get("beforeFiles"), "beforeFiles");
 			Map<String, String> afterFiles = stringMap(arguments.get("afterFiles"), "afterFiles");
 			int port = integerValue(arguments.get("port"), DEFAULT_WEB_DIFF_PORT, "port");
-			return service.diffFileContents(beforeFiles, afterFiles, port);
+			int maxFiles = integerValue(arguments.get("maxFiles"), DEFAULT_MAX_FILES, "maxFiles");
+			int maxBytesPerFile = integerValue(arguments.get("maxBytesPerFile"), DEFAULT_MAX_BYTES_PER_FILE,
+					"maxBytesPerFile");
+			return service.diffFileContents(beforeFiles, afterFiles, port, maxFiles, maxBytesPerFile);
 		} catch (IllegalArgumentException e) {
 			return McpDiffBrowserResult.error(e.getMessage(), null, "Explicit file contents",
 					List.of("Invalid tool arguments."));
@@ -721,6 +732,7 @@ public final class RefactoringMinerMcpTools {
 		properties.put("beforeFiles", fileMapSchema);
 		properties.put("afterFiles", fileMapSchema);
 		properties.put("maxRefactorings", maxRefactoringsSchema);
+		putFileContentBoundsProperties(properties);
 		return new JsonSchema("object", properties, List.of("beforeFiles", "afterFiles"), false, null, null);
 	}
 
@@ -765,6 +777,7 @@ public final class RefactoringMinerMcpTools {
 		Map<String, Object> properties = new LinkedHashMap<>();
 		properties.put("beforeFiles", fileMapSchema());
 		properties.put("afterFiles", fileMapSchema());
+		putFileContentBoundsProperties(properties);
 		putValidationProperties(properties);
 		return new JsonSchema("object", properties, List.of("beforeFiles", "afterFiles", "intent"), false, null, null);
 	}
@@ -811,6 +824,7 @@ public final class RefactoringMinerMcpTools {
 		Map<String, Object> properties = new LinkedHashMap<>();
 		properties.put("beforeFiles", fileMapSchema());
 		properties.put("afterFiles", fileMapSchema());
+		putFileContentBoundsProperties(properties);
 		putDiffBrowserProperties(properties);
 		return new JsonSchema("object", properties, List.of("beforeFiles", "afterFiles"), false, null, null);
 	}
@@ -848,6 +862,12 @@ public final class RefactoringMinerMcpTools {
 		properties.put("port", Map.of("type", "integer", "minimum", 1, "maximum", 65535,
 				"default", DEFAULT_WEB_DIFF_PORT,
 				"description", "Local WebDiff port. Defaults to 6789."));
+	}
+
+	private static void putFileContentBoundsProperties(Map<String, Object> properties) {
+		properties.put("maxFiles", Map.of("type", "integer", "minimum", 1, "default", DEFAULT_MAX_FILES));
+		properties.put("maxBytesPerFile", Map.of("type", "integer", "minimum", 1,
+				"default", DEFAULT_MAX_BYTES_PER_FILE));
 	}
 
 	private static void putValidationProperties(Map<String, Object> properties) {

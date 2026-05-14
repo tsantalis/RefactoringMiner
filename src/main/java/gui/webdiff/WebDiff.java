@@ -50,13 +50,15 @@ public class WebDiff  {
     public static final String HIGHLIGHT_CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css";
     public static final String HIGHLIGHT_JS_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js";
     public static final String HIGHLIGHT_JAVA_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js";
-    public static final String LOCAL_URL_PREFIX = "http://127.0.0.1";
+    public static final String LOCAL_HOST = "127.0.0.1";
+    public static final String LOCAL_URL_PREFIX = "http://" + LOCAL_HOST;
     public static final int DEFAULT_PORT = 6789;
     public int port = DEFAULT_PORT;
     private static final AtomicInteger DIFF_LOADER_THREAD_SEQUENCE = new AtomicInteger();
 
     private String toolName = "RefactoringMiner";
     private boolean staticExport;
+    private boolean exitJvmOnQuit = true;
 
     public void setPort(int port) {
         this.port = port;
@@ -68,6 +70,10 @@ public class WebDiff  {
 
     public void setStaticExport(boolean staticExport) {
         this.staticExport = staticExport;
+    }
+
+    public void setExitJvmOnQuit(boolean exitJvmOnQuit) {
+        this.exitJvmOnQuit = exitJvmOnQuit;
     }
 
     private final String resourcesPath = "/web/";
@@ -241,6 +247,7 @@ public class WebDiff  {
     }
 
     public void configureSpark(int port) {
+        ipAddress(LOCAL_HOST);
         port(port);
         staticFiles.location(getResources());
         get("/", (request, response) -> {
@@ -328,8 +335,21 @@ public class WebDiff  {
             return render(new SinglePageView(state.comparator(), state.projectASTDiff().getMetaInfo(), !staticExport, !staticExport));
         });
         get("/quit", (request, response) -> {
-            System.exit(0);
-            return "";
+            if (exitJvmOnQuit) {
+                System.exit(0);
+                return "";
+            }
+            Thread stopper = new Thread(() -> {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                terminate();
+            }, "webdiff-quit");
+            stopper.setDaemon(true);
+            stopper.start();
+            return "WebDiff server stopping.";
         });
         get("/content", (request, response) -> {
             DiffViewState state = currentState;
@@ -374,7 +394,7 @@ public class WebDiff  {
                         }}
                 );
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
 
             ASTDiff astDiff;

@@ -64,6 +64,42 @@ class WebDiffBrowserLauncherTest {
 	}
 
 	@Test
+	void launchKeepsPreviousViewWhenDifferentNewPortIsUnavailable() throws Exception {
+		List<FakeWebDiffView> views = new ArrayList<>();
+		WebDiffBrowserLauncher launcher = new WebDiffBrowserLauncher(diff -> {
+			FakeWebDiffView view = new FakeWebDiffView();
+			views.add(view);
+			return view;
+		}, port -> {
+			if (port == 6791) {
+				throw new IllegalArgumentException("port is already in use: " + port);
+			}
+		});
+
+		launcher.launch(projectDiff(), 6790, "first", List.of());
+		IllegalArgumentException occupied = assertThrows(IllegalArgumentException.class,
+				() -> launcher.launch(projectDiff(), 6791, "second", List.of()));
+
+		assertTrue(occupied.getMessage().contains("port is already in use"));
+		assertEquals(1, views.size());
+		assertTrue(views.get(0).started);
+		assertFalse(views.get(0).terminated);
+	}
+
+	@Test
+	void launchTerminatesNewViewWhenStartFails() throws Exception {
+		FakeWebDiffView failingView = new FakeWebDiffView();
+		failingView.failOnStart = true;
+		WebDiffBrowserLauncher launcher = new WebDiffBrowserLauncher(diff -> failingView, port -> {
+		});
+
+		assertThrows(IllegalStateException.class, () -> launcher.launch(projectDiff(), 6790, "input", List.of()));
+
+		assertTrue(failingView.started);
+		assertTrue(failingView.terminated);
+	}
+
+	@Test
 	void launchRejectsInvalidOrOccupiedPortsBeforeStartingView() {
 		WebDiffBrowserLauncher invalidPortLauncher = new WebDiffBrowserLauncher(diff -> new FakeWebDiffView(),
 				port -> {
@@ -104,6 +140,7 @@ class WebDiffBrowserLauncherTest {
 	private static final class FakeWebDiffView implements WebDiffBrowserLauncher.WebDiffView {
 		private boolean started;
 		private boolean terminated;
+		private boolean failOnStart;
 
 		@Override
 		public void setPort(int port) {
@@ -112,6 +149,9 @@ class WebDiffBrowserLauncherTest {
 		@Override
 		public String start() {
 			started = true;
+			if (failOnStart) {
+				throw new IllegalStateException("failed to start");
+			}
 			return "unused";
 		}
 

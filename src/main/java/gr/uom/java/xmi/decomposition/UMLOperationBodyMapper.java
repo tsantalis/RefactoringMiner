@@ -2084,7 +2084,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				List<AbstractStatement> statements = lambda.getBody().getCompositeStatement().getStatements();
 				for(AbstractStatement s : statements) {
 					AbstractCall call = s.invocationCoveringEntireFragment();
-					if(call != null && call.getName().equals("describe") && call.arguments().size() > 0) {
+					if(call != null && call.getName().startsWith("describe") && call.arguments().size() > 0) {
 						nestedDescribeMap.put(call.arguments().get(0), s);
 					}
 				}

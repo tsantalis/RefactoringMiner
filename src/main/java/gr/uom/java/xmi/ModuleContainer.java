@@ -46,7 +46,7 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	public void addStatements(List<AbstractStatement> statements) {
 		for(AbstractStatement s : statements) {
 			AbstractCall call = s.invocationCoveringEntireFragment();
-			if(call != null && call.getName().equals("describe") && call.arguments().size() > 0) {
+			if(call != null && call.getName().startsWith("describe") && call.arguments().size() > 0) {
 				describeMap.put(call.arguments().get(0), s);
 			}
 			else if(call != null && call.arguments().size() > 0 && s.getLambdas().size() > 0 && s.getLambdas().get(0).getBody() != null &&
@@ -62,7 +62,7 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	private static boolean containsDescribe(List<AbstractStatement> statements) {
 		for(AbstractStatement statement : statements) {
 			AbstractCall nestedCall = statement.invocationCoveringEntireFragment();
-			if(nestedCall != null && nestedCall.getName().equals("describe") && nestedCall.arguments().size() > 0) {
+			if(nestedCall != null && nestedCall.getName().startsWith("describe") && nestedCall.arguments().size() > 0) {
 				return true;
 			}
 		}

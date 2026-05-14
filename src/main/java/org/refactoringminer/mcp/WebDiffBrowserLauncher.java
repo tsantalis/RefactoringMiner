@@ -121,7 +121,7 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 			try {
 				spark.Spark.awaitStop();
 			} catch (IllegalStateException ignored) {
-				// Spark was not fully initialized; there is nothing to wait for.
+				// Spark never finished starting, so there is nothing to wait for.
 			}
 		}
 	}

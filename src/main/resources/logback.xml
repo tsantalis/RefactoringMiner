@@ -12,7 +12,7 @@
 
     <logger name="org.refactoringminer" level="INFO" />
 
-    <!-- Suppress noisy logs -->
+    <!-- Keep dependency logs quiet. -->
     <logger name="org.eclipse.jetty" level="WARN" />
     <logger name="org.eclipse.jetty.util.log" level="WARN" />
     <logger name="spark.embeddedserver" level="WARN" />

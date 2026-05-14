@@ -36,7 +36,7 @@ class RefactoringMinerMcpToolsTest {
 				new RefactoringMinerMcpService((before, after) -> new ProjectASTDiff(before, after)));
 
 		assertEquals(RefactoringMinerMcpTools.ANALYZE_FILE_CONTENTS, tool.tool().name());
-		assertTrue(tool.tool().description().contains("Read-only structural analysis"));
+		assertTrue(tool.tool().description().contains("Find refactorings"));
 		assertTrue(tool.tool().annotations().readOnlyHint());
 		assertFalse(tool.tool().annotations().destructiveHint());
 		assertTrue(tool.tool().inputSchema().required().contains("beforeFiles"));

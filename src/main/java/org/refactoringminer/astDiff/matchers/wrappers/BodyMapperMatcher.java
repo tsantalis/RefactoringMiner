@@ -636,6 +636,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     if(matched != null) {
                         mappingStore.addMapping(matched.first, matched.second);
                     }
+                    matched = Helpers.findPairOfType(srcStatementNode.getParent(),dstStatementNode.getParent(), LANG1.DEFAULT_KEYWORD, LANG2.DEFAULT_KEYWORD);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
                 }
             }
         else if(Constants.isCrossLanguage(LANG1, LANG2)) {

@@ -105,6 +105,10 @@ public class MethodMatcher extends BodyMapperMatcher{
                 if(matched != null) {
                     mappingStore.addMapping(matched.first, matched.second);
                 }
+                matched = Helpers.findPairOfType(srcOperationNode.getParent(),dstOperationNode.getParent(),LANG1.DEFAULT_KEYWORD,LANG2.DEFAULT_KEYWORD);
+                if(matched != null) {
+                    mappingStore.addMapping(matched.first, matched.second);
+                }
             }
             if(srcOperationNode.getType().name.equals(LANG1.LEXICAL_DECLARATION) && dstOperationNode.getType().name.equals(LANG1.LEXICAL_DECLARATION)) {
                 com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.VARIABLE_DECLARATOR,LANG2.VARIABLE_DECLARATOR);

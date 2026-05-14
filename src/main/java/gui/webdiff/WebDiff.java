@@ -51,7 +51,10 @@ public class WebDiff  {
     public static final String HIGHLIGHT_JS_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js";
     public static final String HIGHLIGHT_JAVA_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js";
     public static final String LOCAL_HOST = "127.0.0.1";
-    public static final String LOCAL_URL_PREFIX = "http://" + LOCAL_HOST;
+    public static final String BIND_HOST_PROPERTY = "refactoringminer.webdiff.bindHost";
+    public static final String PUBLIC_HOST_PROPERTY = "refactoringminer.webdiff.publicHost";
+    public static final String BIND_HOST_ENV = "REFACTORINGMINER_WEBDIFF_BIND_HOST";
+    public static final String PUBLIC_HOST_ENV = "REFACTORINGMINER_WEBDIFF_PUBLIC_HOST";
     public static final int DEFAULT_PORT = 6789;
     public int port = DEFAULT_PORT;
     private static final AtomicInteger DIFF_LOADER_THREAD_SEQUENCE = new AtomicInteger();
@@ -59,9 +62,19 @@ public class WebDiff  {
     private String toolName = "RefactoringMiner";
     private boolean staticExport;
     private boolean exitJvmOnQuit = true;
+    private String bindHost = configuredBindHost();
+    private String publicHost = configuredPublicHost();
 
     public void setPort(int port) {
         this.port = port;
+    }
+
+    public void setBindHost(String bindHost) {
+        this.bindHost = normalizeHost(bindHost, "bindHost");
+    }
+
+    public void setPublicHost(String publicHost) {
+        this.publicHost = normalizeHost(publicHost, "publicHost");
     }
 
     public void setToolName(String toolName) {
@@ -186,15 +199,50 @@ public class WebDiff  {
     }
 
     public String localUrl() {
-        return localUrl(this.port);
+        return localUrl(this.publicHost, this.port);
     }
 
     public static String localUrl(int port) {
-        return LOCAL_URL_PREFIX + ":" + port;
+        return localUrl(LOCAL_HOST, port);
+    }
+
+    public static String localUrl(String publicHost, int port) {
+        return "http://" + normalizeHost(publicHost, "publicHost") + ":" + port;
     }
 
     public static String startupMessage(int port) {
         return "Starting server: " + localUrl(port);
+    }
+
+    public static String startupMessage(String publicHost, int port) {
+        return "Starting server: " + localUrl(publicHost, port);
+    }
+
+    public static String configuredBindHost() {
+        return configuredHost(BIND_HOST_PROPERTY, BIND_HOST_ENV, LOCAL_HOST);
+    }
+
+    public static String configuredPublicHost() {
+        return configuredHost(PUBLIC_HOST_PROPERTY, PUBLIC_HOST_ENV, LOCAL_HOST);
+    }
+
+    private static String configuredHost(String propertyName, String envName, String defaultValue) {
+        String propertyValue = System.getProperty(propertyName);
+        if (propertyValue != null && !propertyValue.isBlank()) {
+            return normalizeHost(propertyValue, propertyName);
+        }
+        String envValue = System.getenv(envName);
+        if (envValue != null && !envValue.isBlank()) {
+            return normalizeHost(envValue, envName);
+        }
+        return defaultValue;
+    }
+
+    private static String normalizeHost(String value, String name) {
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException(name + " must be a non-empty host.");
+        }
+        return value.trim();
     }
 
     public String start() {
@@ -202,7 +250,7 @@ public class WebDiff  {
         configureSpark(this.port);
         warmUpMergeParents();
         awaitInitialization();
-        return startupMessage(this.port);
+        return startupMessage(this.publicHost, this.port);
     }
 
     public void run() {
@@ -247,7 +295,7 @@ public class WebDiff  {
     }
 
     public void configureSpark(int port) {
-        ipAddress(LOCAL_HOST);
+        ipAddress(bindHost);
         port(port);
         staticFiles.location(getResources());
         get("/", (request, response) -> {

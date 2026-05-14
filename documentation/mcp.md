@@ -97,6 +97,71 @@ Then ask Claude Code to call a browser tool, for example:
 Call refactoringminer_diff_worktree for repositoryPath "/absolute/path/to/repo", baseRef "HEAD", includeUntracked false, port 6789. Return only the URL and keep this session open.
 ```
 
+## Docker
+
+The Docker image can run the MCP server over stdio:
+
+```bash
+docker run --rm -i \
+  --pull always \
+  -e OAuthToken=$OAuthToken \
+  tsantalis/refactoringminer:latest mcp
+```
+
+Mount a repository when using local worktree or commit tools:
+
+```bash
+docker run --rm -i \
+  --pull always \
+  -v "$PWD:/workspace" \
+  -w /workspace \
+  -e OAuthToken=$OAuthToken \
+  tsantalis/refactoringminer:latest mcp
+```
+
+For AST diff browser tools, publish the WebDiff port:
+
+```bash
+docker run --rm -i \
+  --pull always \
+  -v "$PWD:/workspace" \
+  -w /workspace \
+  -p 6789:6789 \
+  -e OAuthToken=$OAuthToken \
+  tsantalis/refactoringminer:latest mcp
+```
+
+The Docker image sets `REFACTORINGMINER_WEBDIFF_BIND_HOST=0.0.0.0` so the published port is reachable from the host. The URL returned to the user still uses `127.0.0.1`.
+
+A Claude Code config can use Docker as the stdio command:
+
+```json
+{
+  "mcpServers": {
+    "refactoringminer": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i", "--pull", "always",
+        "-v", "/absolute/path/to/repo:/workspace",
+        "-w", "/workspace",
+        "-p", "6789:6789",
+        "-e", "OAuthToken",
+        "tsantalis/refactoringminer:latest",
+        "mcp"
+      ]
+    }
+  }
+}
+```
+
+Outside Docker, WebDiff binds to `127.0.0.1` by default. These settings can be overridden with environment variables or JVM system properties:
+
+| Setting | Environment variable | JVM system property | Default |
+|---------|----------------------|---------------------|---------|
+| WebDiff bind host | `REFACTORINGMINER_WEBDIFF_BIND_HOST` | `refactoringminer.webdiff.bindHost` | `127.0.0.1` |
+| Returned URL host | `REFACTORINGMINER_WEBDIFF_PUBLIC_HOST` | `refactoringminer.webdiff.publicHost` | `127.0.0.1` |
+
 ## Analysis tools
 
 Analysis tools report the refactorings RefactoringMiner detects. They return `status`, `summary`, `refactoringCount`, `astDiffCount`, `moveAstDiffCount`, `filesBefore`, `filesAfter`, a limited `refactorings` list, and `warnings`.
@@ -175,7 +240,7 @@ The default port is `6789`. The returned `message` uses the same wording as the 
 Starting server: http://127.0.0.1:6789
 ```
 
-MCP tools do not auto-open the desktop browser. They bind WebDiff to `127.0.0.1` and return the URL in the tool result so the user or client can decide when to open it.
+MCP tools do not auto-open the desktop browser. They bind WebDiff to `127.0.0.1` by default and return the URL in the tool result so the user or client can decide when to open it.
 
 The returned URL is only available while the MCP server process is still running. If an MCP client starts RefactoringMiner for a single command and immediately exits, the local WebDiff server can disappear before the user opens the URL. Use an interactive client session for browser tools, or use the direct WebDiff CLI when the goal is only manual browser inspection.
 

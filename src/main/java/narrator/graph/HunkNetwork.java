@@ -102,22 +102,26 @@ public class HunkNetwork {
   public void importDiff(ASTDiff diff) {
     TreeClassifier classifier = diff.createRootNodesClassifier();
 
-    Set<Pair<Tree, NodeType>> srcTrees = new HashSet<>();
-    srcTrees.addAll(getValidTrees(diff.getSrcPath(), classifier.getDeletedSrcs()).stream()
-        .map(tree -> new Pair<>(tree, NodeType.DELETION)).toList());
-    srcTrees.addAll(getValidTrees(diff.getSrcPath(), classifier.getMovedSrcs()).stream()
-        .map(tree -> new Pair<>(tree, NodeType.SRC_MOVE)).toList());
-    srcTrees.addAll(getValidTrees(diff.getSrcPath(), classifier.getUpdatedSrcs()).stream()
-        .map(tree -> new Pair<>(tree, NodeType.SRC_UPDATE)).toList());
+    Set<Pair<Tree, NodeType>> srcTrees = new HashSet<>(
+        getValidTrees(diff.getSrcPath(), classifier.getMovedSrcs()).stream()
+            .map(tree -> new Pair<>(tree, NodeType.SRC_MOVE)).toList());
+    if (diff.getSrcPath().equals(diff.getDstPath())) {
+      srcTrees.addAll(getValidTrees(diff.getSrcPath(), classifier.getDeletedSrcs()).stream()
+          .map(tree -> new Pair<>(tree, NodeType.DELETION)).toList());
+      srcTrees.addAll(getValidTrees(diff.getSrcPath(), classifier.getUpdatedSrcs()).stream()
+          .map(tree -> new Pair<>(tree, NodeType.SRC_UPDATE)).toList());
+    }
     importTrees(aggregateTrees(srcTrees), SrcDst.SRC, diff);
 
-    Set<Pair<Tree, NodeType>> dstTrees = new HashSet<>();
-    dstTrees.addAll(getValidTrees(diff.getDstPath(), classifier.getInsertedDsts()).stream()
-        .map(tree -> new Pair<>(tree, NodeType.ADDITION)).toList());
-    dstTrees.addAll(getValidTrees(diff.getDstPath(), classifier.getMovedDsts()).stream()
-        .map(tree -> new Pair<>(tree, NodeType.DST_MOVE)).toList());
-    dstTrees.addAll(getValidTrees(diff.getDstPath(), classifier.getUpdatedDsts()).stream()
-        .map(tree -> new Pair<>(tree, NodeType.DST_UPDATE)).toList());
+    Set<Pair<Tree, NodeType>> dstTrees = new HashSet<>(
+        getValidTrees(diff.getDstPath(), classifier.getMovedDsts()).stream()
+            .map(tree -> new Pair<>(tree, NodeType.DST_MOVE)).toList());
+    if (diff.getSrcPath().equals(diff.getDstPath())) {
+      dstTrees.addAll(getValidTrees(diff.getDstPath(), classifier.getInsertedDsts()).stream()
+          .map(tree -> new Pair<>(tree, NodeType.ADDITION)).toList());
+      dstTrees.addAll(getValidTrees(diff.getDstPath(), classifier.getUpdatedDsts()).stream()
+          .map(tree -> new Pair<>(tree, NodeType.DST_UPDATE)).toList());
+    }
     importTrees(aggregateTrees(dstTrees), SrcDst.DST, diff);
   }
 

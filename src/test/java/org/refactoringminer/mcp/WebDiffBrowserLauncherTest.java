@@ -16,6 +16,8 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 
+import gui.webdiff.WebDiff;
+
 class WebDiffBrowserLauncherTest {
 	@Test
 	void launchStartsViewWithoutWritingStartupMessageToStdout() throws Exception {
@@ -132,15 +134,71 @@ class WebDiffBrowserLauncherTest {
 		assertSame(diff, received.get(0));
 	}
 
+	@Test
+	void launchUsesConfiguredBindAndPublicHosts() throws Exception {
+		List<FakeWebDiffView> views = new ArrayList<>();
+		WebDiffBrowserLauncher launcher = new WebDiffBrowserLauncher(diff -> {
+			FakeWebDiffView view = new FakeWebDiffView();
+			views.add(view);
+			return view;
+		}, port -> {
+		}, "0.0.0.0", "localhost");
+
+		McpDiffBrowserResult result = launcher.launch(projectDiff(), 6790, "input", List.of());
+
+		assertEquals("http://localhost:6790", result.url());
+		assertEquals("Starting server: http://localhost:6790", result.message());
+		assertEquals("0.0.0.0", views.get(0).bindHost);
+		assertEquals("localhost", views.get(0).publicHost);
+	}
+
+	@Test
+	void webDiffReadsSystemPropertyHostDefaults() {
+		String originalBindHost = System.getProperty(WebDiff.BIND_HOST_PROPERTY);
+		String originalPublicHost = System.getProperty(WebDiff.PUBLIC_HOST_PROPERTY);
+		try {
+			System.setProperty(WebDiff.BIND_HOST_PROPERTY, "0.0.0.0");
+			System.setProperty(WebDiff.PUBLIC_HOST_PROPERTY, "localhost");
+
+			assertEquals("0.0.0.0", WebDiff.configuredBindHost());
+			assertEquals("localhost", WebDiff.configuredPublicHost());
+			assertEquals("http://localhost:6790", WebDiff.localUrl(WebDiff.configuredPublicHost(), 6790));
+			assertEquals("Starting server: http://localhost:6790", WebDiff.startupMessage("localhost", 6790));
+		} finally {
+			restoreProperty(WebDiff.BIND_HOST_PROPERTY, originalBindHost);
+			restoreProperty(WebDiff.PUBLIC_HOST_PROPERTY, originalPublicHost);
+		}
+	}
+
 	private static ProjectASTDiff projectDiff() {
 		return new ProjectASTDiff(Map.of("src/main/java/A.java", "class A {}"),
 				Map.of("src/main/java/A.java", "class A { int x; }"));
+	}
+
+	private static void restoreProperty(String name, String value) {
+		if (value == null) {
+			System.clearProperty(name);
+		} else {
+			System.setProperty(name, value);
+		}
 	}
 
 	private static final class FakeWebDiffView implements WebDiffBrowserLauncher.WebDiffView {
 		private boolean started;
 		private boolean terminated;
 		private boolean failOnStart;
+		private String bindHost;
+		private String publicHost;
+
+		@Override
+		public void setBindHost(String bindHost) {
+			this.bindHost = bindHost;
+		}
+
+		@Override
+		public void setPublicHost(String publicHost) {
+			this.publicHost = publicHost;
+		}
 
 		@Override
 		public void setPort(int port) {

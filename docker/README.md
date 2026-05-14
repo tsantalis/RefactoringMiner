@@ -10,13 +10,51 @@ In addition to this image which relies on JDK, you can try our native-image whic
 
 ## Usage
 
-To use the Docker `refactoringminer` image, you need to bind the port `6789` of the container to access web interface and run the 
+To use the Docker `refactoringminer` image with the WebDiff browser, publish the container port `6789`.
 
 The classical way to run the container is the command `docker run --pull always -v /my/original-folder:/diff/left -v /my/modified-folder:/diff/right -p 6789:6789 tsantalis/refactoringminer diff --src left/ --dst right/`. You can consult the diff at the URL `http://localhost:6789`.
 
 Of course, all other RefactoringMiner's commands are available.
 
 > **Note:** `--pull always` ensures Docker always pulls the latest image from Docker Hub before running. Since RefactoringMiner is actively developed and the image is regularly updated, this guarantees you benefit from the latest features and fixes without having to manually run `docker pull`.
+
+## MCP server
+
+The Docker image can also run RefactoringMiner's stdio MCP server. This keeps MCP updates on the same Docker Hub path as the command-line tool.
+
+```terminal
+docker run --rm -i --pull always -e OAuthToken=$OAuthToken tsantalis/refactoringminer:latest mcp
+```
+
+For local worktree or commit tools, mount the repository into the container:
+
+```terminal
+docker run --rm -i \
+  --pull always \
+  -v "$PWD:/workspace" \
+  -w /workspace \
+  -e OAuthToken=$OAuthToken \
+  tsantalis/refactoringminer:latest mcp
+```
+
+For MCP AST diff browser tools, also publish the WebDiff port:
+
+```terminal
+docker run --rm -i \
+  --pull always \
+  -v "$PWD:/workspace" \
+  -w /workspace \
+  -p 6789:6789 \
+  -e OAuthToken=$OAuthToken \
+  tsantalis/refactoringminer:latest mcp
+```
+
+The Docker image binds WebDiff inside the container to `0.0.0.0`, but returned links still use `http://127.0.0.1:<port>` for the host browser. Override these only if your Docker setup needs a different address:
+
+```terminal
+-e REFACTORINGMINER_WEBDIFF_BIND_HOST=0.0.0.0
+-e REFACTORINGMINER_WEBDIFF_PUBLIC_HOST=localhost
+```
 
 ## Git integration
 

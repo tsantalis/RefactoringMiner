@@ -12,16 +12,28 @@ import org.refactoringminer.astDiff.models.ProjectASTDiff;
 final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 	private final WebDiffViewFactory factory;
 	private final PortProbe portProbe;
+	private final String bindHost;
+	private final String publicHost;
 	private WebDiffView activeView;
 	private Integer activePort;
 
 	WebDiffBrowserLauncher() {
-		this(WebDiffBrowserLauncher::defaultView, WebDiffBrowserLauncher::requireAvailablePort);
+		this(WebDiff.configuredBindHost(), WebDiff.configuredPublicHost());
+	}
+
+	private WebDiffBrowserLauncher(String bindHost, String publicHost) {
+		this(WebDiffBrowserLauncher::defaultView, port -> requireAvailablePort(bindHost, port), bindHost, publicHost);
 	}
 
 	WebDiffBrowserLauncher(WebDiffViewFactory factory, PortProbe portProbe) {
+		this(factory, portProbe, WebDiff.LOCAL_HOST, WebDiff.LOCAL_HOST);
+	}
+
+	WebDiffBrowserLauncher(WebDiffViewFactory factory, PortProbe portProbe, String bindHost, String publicHost) {
 		this.factory = factory;
 		this.portProbe = portProbe;
+		this.bindHost = bindHost;
+		this.publicHost = publicHost;
 	}
 
 	@Override
@@ -41,6 +53,8 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 		}
 
 		WebDiffView view = factory.create(diff);
+		view.setBindHost(bindHost);
+		view.setPublicHost(publicHost);
 		view.setPort(port);
 		try {
 			view.start();
@@ -50,7 +64,7 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 		}
 		activeView = view;
 		activePort = port;
-		return McpDiffBrowserResult.ok(diff, port, inputSummary, warnings);
+		return McpDiffBrowserResult.ok(diff, port, publicHost, inputSummary, warnings);
 	}
 
 	private void stopActiveView() {
@@ -67,10 +81,10 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 		}
 	}
 
-	private static void requireAvailablePort(int port) throws IOException {
+	private static void requireAvailablePort(String bindHost, int port) throws IOException {
 		try (ServerSocket socket = new ServerSocket()) {
 			socket.setReuseAddress(false);
-			socket.bind(new InetSocketAddress("127.0.0.1", port));
+			socket.bind(new InetSocketAddress(bindHost, port));
 		} catch (BindException e) {
 			throw new IllegalArgumentException("port is already in use: " + port, e);
 		}
@@ -93,6 +107,12 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 	}
 
 	interface WebDiffView {
+		default void setBindHost(String bindHost) {
+		}
+
+		default void setPublicHost(String publicHost) {
+		}
+
 		void setPort(int port);
 		String start();
 		void terminate();
@@ -108,6 +128,16 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 		@Override
 		public void setPort(int port) {
 			webDiff.setPort(port);
+		}
+
+		@Override
+		public void setBindHost(String bindHost) {
+			webDiff.setBindHost(bindHost);
+		}
+
+		@Override
+		public void setPublicHost(String publicHost) {
+			webDiff.setPublicHost(publicHost);
 		}
 
 		@Override

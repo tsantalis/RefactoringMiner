@@ -27,6 +27,11 @@ public record McpDiffBrowserResult(String status, String summary, String message
 
 	public static McpDiffBrowserResult ok(ProjectASTDiff diff, int port, String inputSummary,
 			List<String> additionalWarnings) {
+		return ok(diff, port, WebDiff.LOCAL_HOST, inputSummary, additionalWarnings);
+	}
+
+	public static McpDiffBrowserResult ok(ProjectASTDiff diff, int port, String publicHost, String inputSummary,
+			List<String> additionalWarnings) {
 		List<Refactoring> refactorings = diff.getRefactorings() == null ? Collections.emptyList() : diff.getRefactorings();
 		int astDiffCount = diff.getDiffSet() == null ? 0 : diff.getDiffSet().size();
 		int moveAstDiffCount = diff.getMoveDiffSet() == null ? 0 : diff.getMoveDiffSet().size();
@@ -38,11 +43,11 @@ public record McpDiffBrowserResult(String status, String summary, String message
 			warnings.addAll(additionalWarnings);
 		}
 		List<String> affectedFiles = affectedFiles(diff, warnings);
-		String url = WebDiff.localUrl(port);
+		String url = WebDiff.localUrl(publicHost, port);
 		String summary = String.format("Started local AST diff browser with %d refactorings, %d AST diffs, %d moved AST diffs across %d before files and %d after files.",
 				refactorings.size(), astDiffCount, moveAstDiffCount, filesBefore, filesAfter);
 
-		return new McpDiffBrowserResult(OK, summary, WebDiff.startupMessage(port), url, port, inputSummary,
+		return new McpDiffBrowserResult(OK, summary, WebDiff.startupMessage(publicHost, port), url, port, inputSummary,
 				refactorings.size(), astDiffCount, moveAstDiffCount, filesBefore, filesAfter, affectedFiles, warnings);
 	}
 

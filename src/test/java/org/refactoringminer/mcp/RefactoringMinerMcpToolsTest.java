@@ -205,6 +205,38 @@ class RefactoringMinerMcpToolsTest {
 	}
 
 	@Test
+	void explicitFileContentToolsRejectOversizedInput() throws Exception {
+		Map<String, String> beforeFiles = Map.of("src/main/java/A.java", "class A { void f() {} }");
+		Map<String, String> afterFiles = Map.of("src/main/java/A.java", "class A { void g() {} }");
+		List<CallToolResult> results = List.of(
+				RefactoringMinerMcpTools.analyzeFileContentsTool(fakeService()).callHandler().apply(null,
+						new CallToolRequest(RefactoringMinerMcpTools.ANALYZE_FILE_CONTENTS, Map.of(
+								"beforeFiles", beforeFiles,
+								"afterFiles", afterFiles,
+								"maxBytesPerFile", 4))),
+				RefactoringMinerMcpTools.validateFileContentsTool(fakeServiceWithRefactoring()).callHandler().apply(null,
+						new CallToolRequest(RefactoringMinerMcpTools.VALIDATE_FILE_CONTENTS, Map.of(
+								"beforeFiles", beforeFiles,
+								"afterFiles", afterFiles,
+								"intent", renameMethodIntent(),
+								"maxBytesPerFile", 4))),
+				RefactoringMinerMcpTools.diffFileContentsTool(fakeDiffBrowserService()).callHandler().apply(null,
+						new CallToolRequest(RefactoringMinerMcpTools.DIFF_FILE_CONTENTS, Map.of(
+								"beforeFiles", beforeFiles,
+								"afterFiles", afterFiles,
+								"port", 6790,
+								"maxBytesPerFile", 4))));
+
+		for (CallToolResult result : results) {
+			assertTrue(result.isError());
+			TextContent content = (TextContent) result.content().get(0);
+			JsonNode json = OBJECT_MAPPER.readTree(content.text());
+			assertEquals("error", json.get("status").asText());
+			assertTrue(json.get("summary").asText().contains("exceeds maxBytesPerFile=4"));
+		}
+	}
+
+	@Test
 	void worktreeToolReturnsErrorShapeForInvalidRepositoryPath() throws Exception {
 		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeWorktreeTool(
 				new RefactoringMinerMcpService((before, after) -> new ProjectASTDiff(before, after)));
@@ -218,6 +250,22 @@ class RefactoringMinerMcpToolsTest {
 		JsonNode json = OBJECT_MAPPER.readTree(content.text());
 		assertEquals("error", json.get("status").asText());
 		assertTrue(json.get("summary").asText().contains("repositoryPath must be absolute"));
+	}
+
+	@Test
+	void worktreeToolRejectsNegativeMaxRefactorings(@TempDir Path tempDir) throws Exception {
+		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeWorktreeTool(fakeService());
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE_WORKTREE, Map.of(
+				"repositoryPath", tempDir.toString(),
+				"maxRefactorings", -1));
+
+		CallToolResult result = tool.callHandler().apply(null, request);
+
+		assertTrue(result.isError());
+		TextContent content = (TextContent) result.content().get(0);
+		JsonNode json = OBJECT_MAPPER.readTree(content.text());
+		assertEquals("error", json.get("status").asText());
+		assertTrue(json.get("summary").asText().contains("maxRefactorings must be greater than or equal to 0"));
 	}
 
 	@Test

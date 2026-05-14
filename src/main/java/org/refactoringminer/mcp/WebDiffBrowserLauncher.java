@@ -13,6 +13,7 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 	private final WebDiffViewFactory factory;
 	private final PortProbe portProbe;
 	private WebDiffView activeView;
+	private Integer activePort;
 
 	WebDiffBrowserLauncher() {
 		this(WebDiffBrowserLauncher::defaultView, WebDiffBrowserLauncher::requireAvailablePort);
@@ -30,13 +31,25 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 			throw new IllegalArgumentException("ProjectASTDiff is required.");
 		}
 		validatePort(port);
+		boolean replacingSamePort = activePort != null && activePort == port;
+		if (!replacingSamePort) {
+			portProbe.requireAvailable(port);
+		}
 		stopActiveView();
-		portProbe.requireAvailable(port);
+		if (replacingSamePort) {
+			portProbe.requireAvailable(port);
+		}
 
 		WebDiffView view = factory.create(diff);
 		view.setPort(port);
-		view.start();
+		try {
+			view.start();
+		} catch (Exception e) {
+			view.terminate();
+			throw e;
+		}
 		activeView = view;
+		activePort = port;
 		return McpDiffBrowserResult.ok(diff, port, inputSummary, warnings);
 	}
 
@@ -44,6 +57,7 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 		if (activeView != null) {
 			activeView.terminate();
 			activeView = null;
+			activePort = null;
 		}
 	}
 
@@ -63,7 +77,9 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 	}
 
 	private static WebDiffView defaultView(ProjectASTDiff diff) {
-		return new ManagedWebDiffView(new WebDiff(diff));
+		WebDiff webDiff = new WebDiff(diff);
+		webDiff.setExitJvmOnQuit(false);
+		return new ManagedWebDiffView(webDiff);
 	}
 
 	@FunctionalInterface

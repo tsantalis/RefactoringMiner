@@ -69,13 +69,13 @@ Analysis tools report the structural refactorings RefactoringMiner detects. They
 
 | Tool | Required inputs | Optional inputs |
 |------|-----------------|-----------------|
-| `refactoringminer_analyze_file_contents` | `beforeFiles`, `afterFiles` | `maxRefactorings` |
+| `refactoringminer_analyze_file_contents` | `beforeFiles`, `afterFiles` | `maxFiles`, `maxBytesPerFile`, `maxRefactorings` |
 | `refactoringminer_analyze_worktree` | `repositoryPath` | `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `maxRefactorings` |
 | `refactoringminer_analyze_commit` | `repositoryPath`, `commitId` | `parentIndex`, `maxRefactorings` |
 | `refactoringminer_analyze_pull_request` | `cloneUrl`, `pullRequestId` | `timeoutSeconds`, `maxRefactorings` |
 | `refactoringminer_analyze_directories` | `beforePath`, `afterPath` | `maxRefactorings` |
 
-Local paths must be absolute. File-content maps use repository-relative paths as keys and file contents as values.
+Local paths must be absolute. File-content maps use repository-relative paths as keys and file contents as values. Explicit file-content tools default to `maxFiles=100` and `maxBytesPerFile=200000` to keep MCP calls bounded.
 
 ## Intent Validation Tools
 
@@ -83,7 +83,7 @@ Validation tools let an agent state the refactoring it intended and ask Refactor
 
 | Tool | Required inputs | Optional inputs |
 |------|-----------------|-----------------|
-| `refactoringminer_validate_file_contents` | `beforeFiles`, `afterFiles`, `intent` | `maxCandidates` |
+| `refactoringminer_validate_file_contents` | `beforeFiles`, `afterFiles`, `intent` | `maxFiles`, `maxBytesPerFile`, `maxCandidates` |
 | `refactoringminer_validate_worktree` | `repositoryPath`, `intent` | `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `maxCandidates` |
 | `refactoringminer_validate_commit` | `repositoryPath`, `commitId`, `intent` | `parentIndex`, `maxCandidates` |
 | `refactoringminer_validate_pull_request` | `cloneUrl`, `pullRequestId`, `intent` | `timeoutSeconds`, `maxCandidates` |
@@ -128,7 +128,7 @@ Diff browser tools generate a RefactoringMiner AST diff, start the existing loca
 
 | Tool | Required inputs | Optional inputs |
 |------|-----------------|-----------------|
-| `refactoringminer_diff_file_contents` | `beforeFiles`, `afterFiles` | `port` |
+| `refactoringminer_diff_file_contents` | `beforeFiles`, `afterFiles` | `maxFiles`, `maxBytesPerFile`, `port` |
 | `refactoringminer_diff_worktree` | `repositoryPath` | `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `port` |
 | `refactoringminer_diff_commit` | `repositoryPath`, `commitId` | `parentIndex`, `port` |
 | `refactoringminer_diff_pull_request` | `cloneUrl`, `pullRequestId` | `timeoutSeconds`, `port` |
@@ -139,7 +139,7 @@ The default port is `6789`. The returned `message` uses the same wording as the 
 Starting server: http://127.0.0.1:6789
 ```
 
-MCP tools do not auto-open the desktop browser. They return the URL in the tool result so the user or client can decide when to open it. Repeated browser-tool calls replace the active local WebDiff view in the MCP server process. If the requested port is invalid or already occupied by another process, the tool returns an `error` result with a warning instead of corrupting the stdio protocol.
+MCP tools do not auto-open the desktop browser. They bind WebDiff to `127.0.0.1` and return the URL in the tool result so the user or client can decide when to open it. Repeated browser-tool calls replace the active local WebDiff view in the MCP server process. If the requested port is invalid or already occupied by another process, the tool returns an `error` result with a diagnostic summary and warnings instead of corrupting the stdio protocol.
 
 Example file-content browser request:
 

@@ -1,15 +1,21 @@
 package org.refactoringminer.mcp;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 public class RefactoringMinerMcpService {
+	private static final int DEFAULT_MAX_FILES = 100;
+	private static final int DEFAULT_MAX_BYTES_PER_FILE = 200_000;
+
 	private final FileContentDiffer differ;
 	private final CommitDiffer commitDiffer;
 	private final PullRequestDiffer pullRequestDiffer;
@@ -50,6 +56,12 @@ public class RefactoringMinerMcpService {
 
 	public McpAnalysisResult analyzeFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
 			int maxRefactorings) {
+		return analyzeFileContents(beforeFiles, afterFiles, maxRefactorings, DEFAULT_MAX_FILES,
+				DEFAULT_MAX_BYTES_PER_FILE);
+	}
+
+	public McpAnalysisResult analyzeFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
+			int maxRefactorings, int maxFiles, int maxBytesPerFile) {
 		if (maxRefactorings < 0) {
 			return McpAnalysisResult.error("maxRefactorings must be greater than or equal to 0.",
 					List.of("maxRefactorings=" + maxRefactorings));
@@ -61,6 +73,11 @@ public class RefactoringMinerMcpService {
 		if (beforeFiles.isEmpty() && afterFiles.isEmpty()) {
 			return McpAnalysisResult.error("At least one before or after file is required.",
 					List.of("beforeFiles and afterFiles cannot both be empty."));
+		}
+		try {
+			validateFileContentBounds(beforeFiles, afterFiles, maxFiles, maxBytesPerFile);
+		} catch (IllegalArgumentException e) {
+			return McpAnalysisResult.error(e.getMessage(), List.of("Invalid file-content bounds."));
 		}
 
 		try {
@@ -74,6 +91,12 @@ public class RefactoringMinerMcpService {
 
 	public McpValidationResult validateFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
 			McpRefactoringIntent intent, int maxCandidates) {
+		return validateFileContents(beforeFiles, afterFiles, intent, maxCandidates, DEFAULT_MAX_FILES,
+				DEFAULT_MAX_BYTES_PER_FILE);
+	}
+
+	public McpValidationResult validateFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
+			McpRefactoringIntent intent, int maxCandidates, int maxFiles, int maxBytesPerFile) {
 		if (maxCandidates < 0) {
 			return McpValidationResult.error("maxCandidates must be greater than or equal to 0.", intent,
 					List.of("maxCandidates=" + maxCandidates));
@@ -88,6 +111,11 @@ public class RefactoringMinerMcpService {
 		if (beforeFiles.isEmpty() && afterFiles.isEmpty()) {
 			return McpValidationResult.error("At least one before or after file is required.", intent,
 					List.of("beforeFiles and afterFiles cannot both be empty."));
+		}
+		try {
+			validateFileContentBounds(beforeFiles, afterFiles, maxFiles, maxBytesPerFile);
+		} catch (IllegalArgumentException e) {
+			return McpValidationResult.error(e.getMessage(), intent, List.of("Invalid file-content bounds."));
 		}
 
 		try {
@@ -203,6 +231,10 @@ public class RefactoringMinerMcpService {
 
 	public McpAnalysisResult analyzeWorktree(Path repositoryPath, String baseRef, boolean includeUntracked, int maxFiles,
 			int maxBytesPerFile, int maxRefactorings) {
+		if (maxRefactorings < 0) {
+			return McpAnalysisResult.error("maxRefactorings must be greater than or equal to 0.",
+					List.of("maxRefactorings=" + maxRefactorings));
+		}
 		try {
 			WorktreeChangeCollector.WorktreeChanges changes = new WorktreeChangeCollector()
 					.collect(repositoryPath, baseRef, includeUntracked, maxFiles, maxBytesPerFile);
@@ -288,6 +320,11 @@ public class RefactoringMinerMcpService {
 
 	public McpDiffBrowserResult diffFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
 			int port) {
+		return diffFileContents(beforeFiles, afterFiles, port, DEFAULT_MAX_FILES, DEFAULT_MAX_BYTES_PER_FILE);
+	}
+
+	public McpDiffBrowserResult diffFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
+			int port, int maxFiles, int maxBytesPerFile) {
 		if (beforeFiles == null || afterFiles == null) {
 			return McpDiffBrowserResult.error("beforeFiles and afterFiles are required.", port,
 					"Explicit file contents",
@@ -296,6 +333,12 @@ public class RefactoringMinerMcpService {
 		if (beforeFiles.isEmpty() && afterFiles.isEmpty()) {
 			return McpDiffBrowserResult.error("At least one before or after file is required.", port,
 					"Explicit file contents", List.of("beforeFiles and afterFiles cannot both be empty."));
+		}
+		try {
+			validateFileContentBounds(beforeFiles, afterFiles, maxFiles, maxBytesPerFile);
+		} catch (IllegalArgumentException e) {
+			return McpDiffBrowserResult.error(e.getMessage(), port, "Explicit file contents",
+					List.of("Invalid file-content bounds."));
 		}
 
 		String inputSummary = String.format("Explicit file contents: %d before files, %d after files.",
@@ -433,6 +476,37 @@ public class RefactoringMinerMcpService {
 					List.of("RefactoringMiner returned null."));
 		}
 		return diffBrowserLauncher.launch(diff, port, inputSummary, warnings);
+	}
+
+	private static void validateFileContentBounds(Map<String, String> beforeFiles, Map<String, String> afterFiles,
+			int maxFiles, int maxBytesPerFile) {
+		if (maxFiles < 1) {
+			throw new IllegalArgumentException("maxFiles must be greater than 0.");
+		}
+		if (maxBytesPerFile < 1) {
+			throw new IllegalArgumentException("maxBytesPerFile must be greater than 0.");
+		}
+		Set<String> paths = new LinkedHashSet<>();
+		paths.addAll(beforeFiles.keySet());
+		paths.addAll(afterFiles.keySet());
+		if (paths.size() > maxFiles) {
+			throw new IllegalArgumentException("File-content input count " + paths.size()
+					+ " exceeds maxFiles=" + maxFiles + ".");
+		}
+		validateFileContentMap(beforeFiles, "beforeFiles", maxBytesPerFile);
+		validateFileContentMap(afterFiles, "afterFiles", maxBytesPerFile);
+	}
+
+	private static void validateFileContentMap(Map<String, String> files, String name, int maxBytesPerFile) {
+		for (Map.Entry<String, String> entry : files.entrySet()) {
+			if (entry.getValue() == null) {
+				throw new IllegalArgumentException(name + " contains null content for path: " + entry.getKey());
+			}
+			int bytes = entry.getValue().getBytes(StandardCharsets.UTF_8).length;
+			if (bytes > maxBytesPerFile) {
+				throw new IllegalArgumentException(entry.getKey() + " exceeds maxBytesPerFile=" + maxBytesPerFile + ".");
+			}
+		}
 	}
 
 	@FunctionalInterface

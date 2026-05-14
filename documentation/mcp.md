@@ -29,7 +29,29 @@ npx -y @modelcontextprotocol/inspector --cli --method tools/list --transport std
   java -jar build/libs/RM-fat.jar mcp
 ```
 
-## Claude Code Or Stdio Client Configuration
+## Manual WebDiff Browser Check
+
+If you only want to inspect the browser output yourself, run the existing WebDiff CLI directly. This is the simplest path because the WebDiff server stays attached to the terminal process while you use the browser.
+
+```bash
+java -jar build/libs/RM-fat.jar diff --url https://github.com/tsantalis/RefactoringMiner/pull/1234
+```
+
+For a local repository commit:
+
+```bash
+java -jar build/libs/RM-fat.jar diff --repo /absolute/path/to/repo --commit abc123
+```
+
+Open the printed URL, usually:
+
+```text
+http://127.0.0.1:6789
+```
+
+Keep the terminal process alive while inspecting the page. Use the browser's Quit button or stop the terminal process when finished.
+
+## Claude Code And Stdio Client Configuration
 
 Create `.mcp.json` in the project that should use RefactoringMiner. Use the absolute path to the built RefactoringMiner jar.
 
@@ -63,6 +85,18 @@ claude -p --mcp-config .mcp.json --strict-mcp-config \
   "Use RefactoringMiner to validate whether my current worktree contains the Rename Method refactoring I intended."
 ```
 
+One-shot `claude -p` calls are appropriate for analysis and validation tools that only return JSON. For AST diff browser tools, prefer an interactive Claude Code session so the MCP process, and therefore the local WebDiff server it started, remains alive while you open the returned URL:
+
+```bash
+claude --mcp-config .mcp.json --strict-mcp-config
+```
+
+Then ask Claude Code to call a browser tool, for example:
+
+```text
+Call refactoringminer_diff_worktree for repositoryPath "/absolute/path/to/repo", baseRef "HEAD", includeUntracked false, port 6789. Return only the URL and keep this session open.
+```
+
 ## Analysis Tools
 
 Analysis tools report the structural refactorings RefactoringMiner detects. They return `status`, `summary`, `refactoringCount`, `astDiffCount`, `moveAstDiffCount`, `filesBefore`, `filesAfter`, bounded `refactorings`, and `warnings`.
@@ -75,7 +109,7 @@ Analysis tools report the structural refactorings RefactoringMiner detects. They
 | `refactoringminer_analyze_pull_request` | `cloneUrl`, `pullRequestId` | `timeoutSeconds`, `maxRefactorings` |
 | `refactoringminer_analyze_directories` | `beforePath`, `afterPath` | `maxRefactorings` |
 
-Local paths must be absolute. File-content maps use repository-relative paths as keys and file contents as values. Explicit file-content tools default to `maxFiles=100` and `maxBytesPerFile=200000` to keep MCP calls bounded.
+Local paths must be absolute. File-content maps use repository-relative paths as keys and file contents as values. Explicit file-content tools default to `maxFiles=100` and `maxBytesPerFile=200000` to keep MCP calls bounded. Analysis tools default to `maxRefactorings=20`; set a higher value when the agent needs more returned evidence, or `0` when only counts and warnings are needed.
 
 ## Intent Validation Tools
 
@@ -88,6 +122,8 @@ Validation tools let an agent state the refactoring it intended and ask Refactor
 | `refactoringminer_validate_commit` | `repositoryPath`, `commitId`, `intent` | `parentIndex`, `maxCandidates` |
 | `refactoringminer_validate_pull_request` | `cloneUrl`, `pullRequestId`, `intent` | `timeoutSeconds`, `maxCandidates` |
 | `refactoringminer_validate_directories` | `beforePath`, `afterPath`, `intent` | `maxCandidates` |
+
+Validation tools default to `maxCandidates=20`. This only bounds the evidence returned to the MCP client; it does not change the underlying RefactoringMiner detection pass.
 
 The `intent` object has one required field:
 
@@ -139,7 +175,11 @@ The default port is `6789`. The returned `message` uses the same wording as the 
 Starting server: http://127.0.0.1:6789
 ```
 
-MCP tools do not auto-open the desktop browser. They bind WebDiff to `127.0.0.1` and return the URL in the tool result so the user or client can decide when to open it. Repeated browser-tool calls replace the active local WebDiff view in the MCP server process. If the requested port is invalid or already occupied by another process, the tool returns an `error` result with a diagnostic summary and warnings instead of corrupting the stdio protocol.
+MCP tools do not auto-open the desktop browser. They bind WebDiff to `127.0.0.1` and return the URL in the tool result so the user or client can decide when to open it.
+
+The returned URL is only available while the MCP server process is still running. If an MCP client starts RefactoringMiner for a single command and immediately exits, the local WebDiff server can disappear before the user opens the URL. Use an interactive client session for browser tools, or use the direct WebDiff CLI when the goal is only manual browser inspection.
+
+Repeated browser-tool calls replace the active local WebDiff view in the MCP server process. The WebDiff Quit button stops the active local WebDiff view but does not exit the MCP JVM. If the requested port is invalid or already occupied by another process, the tool returns an `error` result with a diagnostic summary and warnings instead of corrupting the stdio protocol or discarding the previous view on another port.
 
 Example file-content browser request:
 
@@ -182,7 +222,7 @@ Example pull-request browser request:
 ```json
 {
   "cloneUrl": "https://github.com/tsantalis/RefactoringMiner.git",
-  "pullRequestId": 1058,
+  "pullRequestId": 1234,
   "timeoutSeconds": 300,
   "port": 6789
 }
@@ -225,10 +265,10 @@ Codex:
 Generic MCP clients:
 
 - "Call `refactoringminer_validate_commit` for commit `abc123` in `/path/to/repo` with intent `{ \"type\": \"Rename Class\", \"classNames\": [\"OrderService\"] }`."
-- "Call `refactoringminer_validate_pull_request` for PR 1058 in `https://github.com/tsantalis/RefactoringMiner.git` with intent `{ \"type\": \"Move Method\", \"methodNames\": [\"detect\"] }`."
+- "Call `refactoringminer_validate_pull_request` for PR 1234 in `https://github.com/tsantalis/RefactoringMiner.git` with intent `{ \"type\": \"Move Method\", \"methodNames\": [\"detect\"] }`."
 - "Call `refactoringminer_validate_directories` for `/path/to/before` and `/path/to/after` with intent `{ \"type\": \"Extract Method\" }`."
 - "Call `refactoringminer_diff_worktree` for `/path/to/repo` and return the local URL."
-- "Call `refactoringminer_diff_pull_request` for PR 1058 in `https://github.com/tsantalis/RefactoringMiner.git` and return the startup message and URL."
+- "Call `refactoringminer_diff_pull_request` for PR 1234 in `https://github.com/tsantalis/RefactoringMiner.git` and return the startup message and URL."
 
 ## GitHub Pull Requests
 
@@ -240,7 +280,7 @@ Pull-request analysis and validation read GitHub data through the existing Refac
 
 The MCP tool only reads pull-request data. It does not post comments, mark files viewed, edit pull requests, or change repository state.
 
-For pull-request diff browser tools, the returned WebDiff URL is local to the machine running the MCP server. It is not a hosted report link.
+Use a GitHub number that identifies a pull request, not a plain issue. For pull-request diff browser tools, the returned WebDiff URL is local to the machine running the MCP server. It is not a hosted report link.
 
 ## Safety Boundaries
 
@@ -255,6 +295,13 @@ The MCP server is read-only.
 
 Intent validation is structural evidence, not a behavior-preservation proof. A `matched` result means RefactoringMiner detected a structural refactoring matching the requested type and filters. It does not prove tests pass, specifications still hold, side effects are unchanged, or the edit contains no non-refactoring behavior changes.
 
-Use test results, review, specifications, or domain-specific checks as complementary evidence. PurityChecker can become a useful companion for the subset of refactoring types it supports, but default MCP validation does not run PurityChecker in v1.1.
+Use test results, review, specifications, or domain-specific checks as complementary evidence. PurityChecker can become a useful companion for the subset of refactoring types it supports, but default MCP validation does not run PurityChecker in this release.
 
 Deferred features include GitHub Action comments, static hosted HTML reports, hosted HTTP MCP, write tools, commit-range MCP analysis, large artifact or resource streaming, and PurityChecker-backed validation results.
+
+## Troubleshooting
+
+- If a returned WebDiff URL refuses the connection, confirm the MCP client session that started it is still running. For manual inspection, use the direct `diff` CLI instead.
+- If port `6789` is already in use, call the MCP browser tool with another `port` value, or stop the existing local WebDiff process.
+- If pull-request tools fail on a private repository or after many calls, configure `OAuthToken` through the environment, JVM system property, or `github-oauth.properties`.
+- If file-content validation returns `missing` for tiny snippets, retry with complete parseable Java compilation units so RefactoringMiner can build a full model.

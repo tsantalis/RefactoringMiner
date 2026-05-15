@@ -71,7 +71,7 @@ public class Context {
       return List.of(constants.METHOD_INVOCATION, constants.VARIABLE_DECLARATION_STATEMENT);
     }
     if (treeType.equals(constants.MODIFIER)) {
-      return List.of(constants.FIELD_DECLARATION);
+      return List.of(constants.FIELD_DECLARATION, constants.METHOD_DECLARATION);
     }
     if (treeType.equals(constants.BREAK_STATEMENT)) {
       return List.of(constants.SWITCH_STATEMENT);
@@ -115,7 +115,7 @@ public class Context {
       return List.of(constants.VARIABLE_DECLARATION_STATEMENT, constants.IF_STATEMENT);
     }
     if (treeType.equals(constants.THROW_STATEMENT)) {
-      return List.of(constants.TRY_STATEMENT, constants.IF_STATEMENT);
+      return List.of(constants.TRY_STATEMENT, constants.IF_STATEMENT, constants.METHOD_DECLARATION);
     }
     if (treeType.equals(constants.QUALIFIED_NAME)) {
       return List.of(constants.FIELD_DECLARATION, "NormalAnnotation", constants.IF_STATEMENT,
@@ -139,6 +139,9 @@ public class Context {
     }
     if (treeType.equals(constants.BLOCK)) {
       return List.of(constants.METHOD_INVOCATION);
+    }
+    if (treeType.equals(constants.ASSERT_STATEMENT)) {
+      return List.of(constants.BLOCK, constants.METHOD_DECLARATION);
     }
     return null;
   }

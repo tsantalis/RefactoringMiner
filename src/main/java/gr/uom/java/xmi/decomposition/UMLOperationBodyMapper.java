@@ -11052,26 +11052,35 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		boolean ownedByLambda1 = fragment1.ownedByLambda();
 		AbstractCodeFragment fragment2 = minStatementMapping.getFragment2();
 		boolean ownedByLambda2 = fragment2.ownedByLambda();
-		for(Refactoring r : refactorings) {
-			if(r instanceof ExtractVariableRefactoring) {
-				ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
-				if(minStatementMapping.getFragment2().getVariableDeclarations().contains(extract.getVariableDeclaration())) {
-					if(ownedByLambda1 == ownedByLambda2) {
-						conflictingMappingFound = true;
+		List<LambdaExpressionObject> lambdas1 = minStatementMapping.getFragment1().getLambdas();
+		List<LambdaExpressionObject> lambdas2 = minStatementMapping.getFragment2().getLambdas();
+		boolean isLambdaRoot = minStatementMapping.getLambdaMappers().size() > 0 &&
+				lambdas1.size() > 1 &&
+				lambdas2.size() > 1 &&
+				minStatementMapping.getLambdaMappers().get(0).getContainer1().equals(lambdas1.get(0).getOwner()) &&
+				minStatementMapping.getLambdaMappers().get(0).getContainer2().equals(lambdas2.get(0).getOwner());
+		if(!isLambdaRoot) {
+			for(Refactoring r : refactorings) {
+				if(r instanceof ExtractVariableRefactoring) {
+					ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
+					if(minStatementMapping.getFragment2().getVariableDeclarations().contains(extract.getVariableDeclaration())) {
+						if(ownedByLambda1 == ownedByLambda2) {
+							conflictingMappingFound = true;
+						}
+						else {
+							refactorings.remove(r);
+						}
+						break;
 					}
-					else {
-						refactorings.remove(r);
-					}
-					break;
 				}
-			}
-			else if(r instanceof SplitConditionalRefactoring) {
-				SplitConditionalRefactoring split = (SplitConditionalRefactoring)r;
-				if(split.getOriginalConditional() instanceof CompositeStatementObject) {
-					CompositeStatementObject comp = (CompositeStatementObject)split.getOriginalConditional();
-					if(comp.getExpressions().contains(minStatementMapping.getFragment1()) && minStatementMapping.getFragment2() instanceof StatementObject &&
-							minStatementMapping.getFragment2().getVariableDeclarations().size() > 0) {
-						conflictingMappingFound = true;
+				else if(r instanceof SplitConditionalRefactoring) {
+					SplitConditionalRefactoring split = (SplitConditionalRefactoring)r;
+					if(split.getOriginalConditional() instanceof CompositeStatementObject) {
+						CompositeStatementObject comp = (CompositeStatementObject)split.getOriginalConditional();
+						if(comp.getExpressions().contains(minStatementMapping.getFragment1()) && minStatementMapping.getFragment2() instanceof StatementObject &&
+								minStatementMapping.getFragment2().getVariableDeclarations().size() > 0) {
+							conflictingMappingFound = true;
+						}
 					}
 				}
 			}

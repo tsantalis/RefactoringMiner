@@ -440,4 +440,5 @@ public class Constants {
     public final String ENUM_ASSIGNMENT = "enum_assignment";
     public final String AMBIENT_DECLARATION = "ambient_declaration";
     public final String DECLARE_KEYWORD = "declare";
+    public final String GENERATOR_FUNCTION_DECLARATION = "generator_function_declaration";
 }

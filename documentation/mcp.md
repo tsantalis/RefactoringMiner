@@ -97,6 +97,43 @@ Then ask Claude Code to call a browser tool, for example:
 Call refactoringminer_diff with source type "worktree", baseRef "HEAD", includeUntracked false, and port 6789. Return only the URL and keep this session open.
 ```
 
+## Agent skill for review workflows
+
+The repository includes a project skill at `.claude/skills/refactoringminer-review/SKILL.md`. It gives Claude Code a repeatable review workflow for requests such as:
+
+```text
+Use the refactoringminer-review skill to review the non-refactoring changes in this pull request.
+```
+
+The skill uses the configured `refactoringminer` MCP server first and treats RefactoringMiner's analysis and AST diff view as the refactoring-aware source of truth. Ordinary GitHub/git diffs are still useful for changed-file discovery, line references, and residual review context, but they do not preserve code-move mappings the way RefactoringMiner's AST diff does.
+
+The intended review focus is the code that is not explained by detected refactoring structure, plus mixed regions where a refactoring and a behavior-relevant edit appear together. Detected refactorings are review guidance, not a proof that behavior is preserved.
+
+The skill does not start RefactoringMiner by itself. Configure the MCP server first with either the local jar or Docker setup above, then start the agent from a repository that can see the skill.
+
+Claude Code can load this project skill automatically when started from the RefactoringMiner checkout. To make it available across projects, copy the skill directory to your personal skills directory:
+
+```bash
+mkdir -p ~/.claude/skills
+cp -R .claude/skills/refactoringminer-review ~/.claude/skills/
+```
+
+Codex can use the same skill folder after copying it into the Codex skills directory:
+
+```bash
+mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
+cp -R .claude/skills/refactoringminer-review "${CODEX_HOME:-$HOME/.codex}/skills/"
+```
+
+Restart Codex after copying the skill so the next session discovers it.
+
+OpenCode can also use the same `SKILL.md` shape. Either keep it in `.claude/skills/refactoringminer-review/` for project-local use, or copy it to OpenCode's global skills directory:
+
+```bash
+mkdir -p ~/.config/opencode/skills
+cp -R .claude/skills/refactoringminer-review ~/.config/opencode/skills/
+```
+
 ## Docker
 
 RefactoringMiner is recommended to run via Docker to avoid local environment setup and ensure stability.
@@ -330,6 +367,8 @@ The MCP server is read-only.
 Detected refactorings are not a behavior-preservation proof. They do not prove tests pass, specifications still hold, side effects are unchanged, or the edit contains no non-refactoring behavior changes.
 
 Use tests, review, specifications, or domain-specific checks alongside MCP results.
+
+MCP JSON results summarize detected refactorings, AST diff counts, moved AST diff counts, and affected files. They do not stream full machine-readable AST mappings or moved-node ranges in this release. Use the WebDiff browser tools when a review needs mapping-level evidence for moved, renamed, extracted, or inlined code.
 
 This release does not include GitHub Action comments, static hosted HTML reports, hosted HTTP MCP, write tools, commit-range MCP analysis, large artifact or resource streaming, or PurityChecker-backed validation results.
 

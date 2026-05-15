@@ -1255,7 +1255,7 @@ public class ReplacementAlgorithm {
 		if(stringLiterals1.size() > 0 && methodInvocationMap2.size() > 0) {
 			for(String stringLiteral1 : stringLiterals1) {
 				List<LeafExpression> leafExpressions1 = statement1.findExpression(stringLiteral1);
-				String value1 = stringLiteral1.startsWith("\"") && stringLiteral1.endsWith("\"") ? stringLiteral1.substring(1, stringLiteral1.length()-1) : stringLiteral1;
+				String value1 = stringLiteral1.startsWith("\"") && stringLiteral1.endsWith("\"") && stringLiteral1.length() > 1 ? stringLiteral1.substring(1, stringLiteral1.length()-1) : stringLiteral1;
 				if(!value1.isEmpty()) {
 					for(AbstractCall call2 : statement2.getMethodInvocations()) {
 						String expression = call2.getExpression();

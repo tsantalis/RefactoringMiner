@@ -50,6 +50,7 @@ Table of Contents
       * [Refactoring detection command line options](documentation/how-to.md#refactoring-detection-command-line-options)
       * [AST diff command line options](documentation/how-to.md#ast-diff-command-line-options)
    * [How to run RefactoringMiner as a local MCP server](documentation/mcp.md#refactoringminer-mcp-server)
+      * [Agent skill for review workflows](documentation/mcp.md#agent-skill-for-review-workflows)
    * [Research](documentation/research.md#research)
       * [How to cite RefactoringMiner](documentation/research.md#how-to-cite-refactoringminer)
       * [Talks about RefactoringMiner](documentation/research.md#talks-about-refactoringminer)

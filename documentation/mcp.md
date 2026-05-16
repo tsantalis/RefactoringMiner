@@ -94,7 +94,7 @@ claude --mcp-config .mcp.json --strict-mcp-config
 Then ask Claude Code to call a browser tool, for example:
 
 ```text
-Call refactoringminer_diff_worktree for repositoryPath "/absolute/path/to/repo", baseRef "HEAD", includeUntracked false, port 6789. Return only the URL and keep this session open.
+Call refactoringminer_diff_worktree with baseRef "HEAD", includeUntracked false, port 6789. Return only the URL and keep this session open.
 ```
 
 ## Docker
@@ -118,6 +118,8 @@ docker run --rm -i \
   -e OAuthToken=$OAuthToken \
   tsantalis/refactoringminer:latest mcp
 ```
+
+For the command above, worktree and commit tools default to `/workspace` because Docker starts the MCP process there with `-w /workspace`. If you pass `repositoryPath` explicitly, use the container path, not the host path. For example, use `/workspace`, not `C:/RefactoringMiner` or `/Users/me/RefactoringMiner`.
 
 For AST diff browser tools, publish the WebDiff port:
 
@@ -169,12 +171,14 @@ Analysis tools report the refactorings RefactoringMiner detects. They return `st
 | Tool | Required inputs | Optional inputs |
 |------|-----------------|-----------------|
 | `refactoringminer_analyze_file_contents` | `beforeFiles`, `afterFiles` | `maxFiles`, `maxBytesPerFile`, `maxRefactorings` |
-| `refactoringminer_analyze_worktree` | `repositoryPath` | `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `maxRefactorings` |
-| `refactoringminer_analyze_commit` | `repositoryPath`, `commitId` | `parentIndex`, `maxRefactorings` |
+| `refactoringminer_analyze_worktree` | None | `repositoryPath`, `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `maxRefactorings` |
+| `refactoringminer_analyze_commit` | `commitId` | `repositoryPath`, `parentIndex`, `maxRefactorings` |
 | `refactoringminer_analyze_pull_request` | `cloneUrl`, `pullRequestId` | `timeoutSeconds`, `maxRefactorings` |
 | `refactoringminer_analyze_directories` | `beforePath`, `afterPath` | `maxRefactorings` |
 
-Local paths must be absolute. File-content maps use repository-relative paths as keys and file contents as values. Explicit file-content tools default to `maxFiles=100` and `maxBytesPerFile=200000` to keep calls small. Analysis tools default to `maxRefactorings=20`; set a higher value when the agent needs more returned detail, or `0` when counts and warnings are enough.
+Local paths must be absolute when provided. Worktree and commit tools default `repositoryPath` to the MCP server working directory, which is usually the directory where the agent was started. File-content maps use repository-relative paths as keys and file contents as values. Explicit file-content tools default to `maxFiles=100` and `maxBytesPerFile=200000` to keep calls small. Analysis tools default to `maxRefactorings=20`; set a higher value when the agent needs more returned detail, or `0` when counts and warnings are enough.
+
+Commit tools first try the GitHub API when the working tree has a GitHub `origin` remote. If the commit is not available from GitHub, they fall back to the local repository. This keeps pushed commits small for MCP clients while still supporting local-only commits.
 
 ## Intent validation tools
 
@@ -183,8 +187,8 @@ Validation tools let an agent state the refactoring it intended and ask Refactor
 | Tool | Required inputs | Optional inputs |
 |------|-----------------|-----------------|
 | `refactoringminer_validate_file_contents` | `beforeFiles`, `afterFiles`, `intent` | `maxFiles`, `maxBytesPerFile`, `maxCandidates` |
-| `refactoringminer_validate_worktree` | `repositoryPath`, `intent` | `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `maxCandidates` |
-| `refactoringminer_validate_commit` | `repositoryPath`, `commitId`, `intent` | `parentIndex`, `maxCandidates` |
+| `refactoringminer_validate_worktree` | `intent` | `repositoryPath`, `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `maxCandidates` |
+| `refactoringminer_validate_commit` | `commitId`, `intent` | `repositoryPath`, `parentIndex`, `maxCandidates` |
 | `refactoringminer_validate_pull_request` | `cloneUrl`, `pullRequestId`, `intent` | `timeoutSeconds`, `maxCandidates` |
 | `refactoringminer_validate_directories` | `beforePath`, `afterPath`, `intent` | `maxCandidates` |
 
@@ -230,8 +234,8 @@ Diff browser tools generate a RefactoringMiner AST diff, start the existing loca
 | Tool | Required inputs | Optional inputs |
 |------|-----------------|-----------------|
 | `refactoringminer_diff_file_contents` | `beforeFiles`, `afterFiles` | `maxFiles`, `maxBytesPerFile`, `port` |
-| `refactoringminer_diff_worktree` | `repositoryPath` | `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `port` |
-| `refactoringminer_diff_commit` | `repositoryPath`, `commitId` | `parentIndex`, `port` |
+| `refactoringminer_diff_worktree` | None | `repositoryPath`, `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `port` |
+| `refactoringminer_diff_commit` | `commitId` | `repositoryPath`, `parentIndex`, `port` |
 | `refactoringminer_diff_pull_request` | `cloneUrl`, `pullRequestId` | `timeoutSeconds`, `port` |
 
 The default port is `6789`. The returned `message` uses the same wording as the WebDiff CLI startup line:
@@ -264,7 +268,6 @@ Example worktree browser request:
 
 ```json
 {
-  "repositoryPath": "/absolute/path/to/repo",
   "baseRef": "HEAD",
   "includeUntracked": false,
   "port": 6789
@@ -275,7 +278,6 @@ Example commit browser request:
 
 ```json
 {
-  "repositoryPath": "/absolute/path/to/repo",
   "commitId": "abc123",
   "parentIndex": 0,
   "port": 6789
@@ -329,10 +331,10 @@ Codex:
 
 Generic MCP clients:
 
-- "Call `refactoringminer_validate_commit` for commit `abc123` in `/path/to/repo` with intent `{ \"type\": \"Rename Class\", \"classNames\": [\"OrderService\"] }`."
+- "Call `refactoringminer_validate_commit` for commit `abc123` with intent `{ \"type\": \"Rename Class\", \"classNames\": [\"OrderService\"] }`."
 - "Call `refactoringminer_validate_pull_request` for PR 1234 in `https://github.com/tsantalis/RefactoringMiner.git` with intent `{ \"type\": \"Move Method\", \"methodNames\": [\"detect\"] }`."
 - "Call `refactoringminer_validate_directories` for `/path/to/before` and `/path/to/after` with intent `{ \"type\": \"Extract Method\" }`."
-- "Call `refactoringminer_diff_worktree` for `/path/to/repo` and return the local URL."
+- "Call `refactoringminer_diff_worktree` and return the local URL."
 - "Call `refactoringminer_diff_pull_request` for PR 1234 in `https://github.com/tsantalis/RefactoringMiner.git` and return the startup message and URL."
 
 ## GitHub pull requests
@@ -368,5 +370,6 @@ This release does not include GitHub Action comments, static hosted HTML reports
 
 - If a returned WebDiff URL refuses the connection, confirm the MCP client session that started it is still running. For manual inspection, use the direct `diff` CLI instead.
 - If port `6789` is already in use, call the MCP browser tool with another `port` value, or stop the existing local WebDiff process.
+- If Docker-based worktree or commit tools use the wrong repository, set `-w /workspace` in the Docker command or pass `repositoryPath: "/workspace"` explicitly. The MCP server cannot resolve host paths from inside the container.
 - If pull-request tools fail on a private repository or after many calls, configure `OAuthToken` through the environment, JVM system property, or `github-oauth.properties`.
 - If file-content validation returns `missing` for tiny snippets, retry with complete parseable Java compilation units so RefactoringMiner can build a full model.

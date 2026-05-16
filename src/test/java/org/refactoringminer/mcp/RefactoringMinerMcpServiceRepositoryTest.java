@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -128,5 +129,70 @@ class RefactoringMinerMcpServiceRepositoryTest {
 
 		assertEquals("error", result.status());
 		assertTrue(result.summary().contains("pullRequestId must be greater than 0"));
+	}
+
+	@Test
+	void analyzeCommitPrefersGitHubOriginWhenAvailable() throws Exception {
+		Path repositoryPath = tempDir.resolve("remote-first-repo");
+		try (Git git = Git.init().setDirectory(repositoryPath.toFile()).call()) {
+			git.remoteAdd()
+					.setName("origin")
+					.setUri(new org.eclipse.jgit.transport.URIish("git@github.com:tsantalis/RefactoringMiner.git"))
+					.call();
+		}
+		AtomicBoolean remoteCalled = new AtomicBoolean(false);
+		RefactoringMinerMcpService service = new RefactoringMinerMcpService(
+				(before, after) -> new ProjectASTDiff(before, after),
+				(localRepositoryPath, commitId, parentIndex) -> {
+					throw new AssertionError("local commit differ should not run when GitHub succeeds");
+				},
+				(cloneUrl, commitId, parentIndex, timeoutSeconds) -> {
+					remoteCalled.set(true);
+					assertEquals("https://github.com/tsantalis/RefactoringMiner.git", cloneUrl);
+					return new ProjectASTDiff(
+							Map.of("src/main/java/A.java", "class A {}"),
+							Map.of("src/main/java/A.java", "class A { int x; }"));
+				},
+				(cloneUrl, pullRequestId, timeoutSeconds) -> new ProjectASTDiff(Map.of(), Map.of()),
+				(beforePath, afterPath) -> new ProjectASTDiff(Map.of(), Map.of()));
+
+		McpAnalysisResult result = service.analyzeCommit(repositoryPath.toAbsolutePath(), "abc123", null, 20);
+
+		assertEquals("ok", result.status());
+		assertTrue(remoteCalled.get());
+		assertEquals(1, result.filesBefore());
+		assertEquals(1, result.filesAfter());
+	}
+
+	@Test
+	void analyzeCommitFallsBackToLocalWhenGitHubLookupFails() throws Exception {
+		Path repositoryPath = tempDir.resolve("local-fallback-repo");
+		try (Git git = Git.init().setDirectory(repositoryPath.toFile()).call()) {
+			git.remoteAdd()
+					.setName("origin")
+					.setUri(new org.eclipse.jgit.transport.URIish("https://github.com/tsantalis/RefactoringMiner.git"))
+					.call();
+		}
+		AtomicBoolean localCalled = new AtomicBoolean(false);
+		RefactoringMinerMcpService service = new RefactoringMinerMcpService(
+				(before, after) -> new ProjectASTDiff(before, after),
+				(localRepositoryPath, commitId, parentIndex) -> {
+					localCalled.set(true);
+					return new ProjectASTDiff(
+							Map.of("src/main/java/A.java", "class A {}"),
+							Map.of("src/main/java/A.java", "class A { int x; }"));
+				},
+				(cloneUrl, commitId, parentIndex, timeoutSeconds) -> {
+					throw new IllegalArgumentException("commit was not found on GitHub");
+				},
+				(cloneUrl, pullRequestId, timeoutSeconds) -> new ProjectASTDiff(Map.of(), Map.of()),
+				(beforePath, afterPath) -> new ProjectASTDiff(Map.of(), Map.of()));
+
+		McpAnalysisResult result = service.analyzeCommit(repositoryPath.toAbsolutePath(), "local-only", null, 20);
+
+		assertEquals("ok", result.status());
+		assertTrue(localCalled.get());
+		assertEquals(1, result.filesBefore());
+		assertEquals(1, result.filesAfter());
 	}
 }

@@ -5,12 +5,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.jgit.lib.Repository;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
+import org.refactoringminer.util.GitServiceImpl;
 
 public class RefactoringMinerMcpService {
 	private static final int DEFAULT_MAX_FILES = 100;
@@ -18,6 +21,7 @@ public class RefactoringMinerMcpService {
 
 	private final FileContentDiffer differ;
 	private final CommitDiffer commitDiffer;
+	private final RemoteCommitDiffer remoteCommitDiffer;
 	private final PullRequestDiffer pullRequestDiffer;
 	private final DirectoryDiffer directoryDiffer;
 	private final DiffBrowserLauncher diffBrowserLauncher;
@@ -27,7 +31,10 @@ public class RefactoringMinerMcpService {
 	}
 
 	RefactoringMinerMcpService(GitHistoryRefactoringMiner miner) {
-		this(miner::diffAtFileContents, miner::diffAtMergeCommit, miner::diffAtPullRequest, miner::diffAtDirectories,
+		this(miner::diffAtFileContents, miner::diffAtMergeCommit,
+				(cloneUrl, commitId, parentIndex, timeoutSeconds) -> miner.diffAtMergeCommit(cloneUrl, commitId,
+						parentIndex, timeoutSeconds),
+				miner::diffAtPullRequest, miner::diffAtDirectories,
 				new WebDiffBrowserLauncher());
 	}
 
@@ -35,6 +42,8 @@ public class RefactoringMinerMcpService {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		this.differ = differ;
 		this.commitDiffer = miner::diffAtMergeCommit;
+		this.remoteCommitDiffer = (cloneUrl, commitId, parentIndex, timeoutSeconds) -> miner.diffAtMergeCommit(
+				cloneUrl, commitId, parentIndex, timeoutSeconds);
 		this.pullRequestDiffer = miner::diffAtPullRequest;
 		this.directoryDiffer = miner::diffAtDirectories;
 		this.diffBrowserLauncher = new WebDiffBrowserLauncher();
@@ -42,13 +51,24 @@ public class RefactoringMinerMcpService {
 
 	RefactoringMinerMcpService(FileContentDiffer differ, CommitDiffer commitDiffer, PullRequestDiffer pullRequestDiffer,
 			DirectoryDiffer directoryDiffer) {
-		this(differ, commitDiffer, pullRequestDiffer, directoryDiffer, new WebDiffBrowserLauncher());
+		this(differ, commitDiffer, null, pullRequestDiffer, directoryDiffer, new WebDiffBrowserLauncher());
+	}
+
+	RefactoringMinerMcpService(FileContentDiffer differ, CommitDiffer commitDiffer, RemoteCommitDiffer remoteCommitDiffer,
+			PullRequestDiffer pullRequestDiffer, DirectoryDiffer directoryDiffer) {
+		this(differ, commitDiffer, remoteCommitDiffer, pullRequestDiffer, directoryDiffer, new WebDiffBrowserLauncher());
 	}
 
 	RefactoringMinerMcpService(FileContentDiffer differ, CommitDiffer commitDiffer, PullRequestDiffer pullRequestDiffer,
 			DirectoryDiffer directoryDiffer, DiffBrowserLauncher diffBrowserLauncher) {
+		this(differ, commitDiffer, null, pullRequestDiffer, directoryDiffer, diffBrowserLauncher);
+	}
+
+	RefactoringMinerMcpService(FileContentDiffer differ, CommitDiffer commitDiffer, RemoteCommitDiffer remoteCommitDiffer,
+			PullRequestDiffer pullRequestDiffer, DirectoryDiffer directoryDiffer, DiffBrowserLauncher diffBrowserLauncher) {
 		this.differ = differ;
 		this.commitDiffer = commitDiffer;
+		this.remoteCommitDiffer = remoteCommitDiffer;
 		this.pullRequestDiffer = pullRequestDiffer;
 		this.directoryDiffer = directoryDiffer;
 		this.diffBrowserLauncher = diffBrowserLauncher;
@@ -137,8 +157,9 @@ public class RefactoringMinerMcpService {
 					List.of("maxCandidates=" + maxCandidates));
 		}
 		try {
+			Path resolvedRepositoryPath = resolveRepositoryPath(repositoryPath);
 			WorktreeChangeCollector.WorktreeChanges changes = new WorktreeChangeCollector()
-					.collect(repositoryPath, baseRef, includeUntracked, maxFiles, maxBytesPerFile);
+					.collect(resolvedRepositoryPath, baseRef, includeUntracked, maxFiles, maxBytesPerFile);
 			ProjectASTDiff diff = differ.diffAtFileContents(changes.beforeFiles(), changes.afterFiles());
 			return new McpIntentValidator().validate(diff, intent, maxCandidates, changes.warnings());
 		} catch (Exception e) {
@@ -167,9 +188,7 @@ public class RefactoringMinerMcpService {
 		}
 
 		try {
-			requireExistingAbsolutePath(repositoryPath, "repositoryPath");
-			Path analysisRepositoryPath = resolveCommitRepositoryPath(repositoryPath);
-			ProjectASTDiff diff = commitDiffer.diffAtMergeCommit(analysisRepositoryPath, commitId, resolvedParentIndex);
+			ProjectASTDiff diff = diffCommit(repositoryPath, commitId, resolvedParentIndex, 300);
 			return new McpIntentValidator().validate(diff, intent, maxCandidates);
 		} catch (Exception e) {
 			return McpValidationResult.error("Commit validation failed: " + e.getMessage(), intent,
@@ -236,8 +255,9 @@ public class RefactoringMinerMcpService {
 					List.of("maxRefactorings=" + maxRefactorings));
 		}
 		try {
+			Path resolvedRepositoryPath = resolveRepositoryPath(repositoryPath);
 			WorktreeChangeCollector.WorktreeChanges changes = new WorktreeChangeCollector()
-					.collect(repositoryPath, baseRef, includeUntracked, maxFiles, maxBytesPerFile);
+					.collect(resolvedRepositoryPath, baseRef, includeUntracked, maxFiles, maxBytesPerFile);
 			ProjectASTDiff diff = differ.diffAtFileContents(changes.beforeFiles(), changes.afterFiles());
 			if (diff == null) {
 				return McpAnalysisResult.error("Worktree analysis did not produce a diff.",
@@ -265,9 +285,7 @@ public class RefactoringMinerMcpService {
 		}
 
 		try {
-			requireExistingAbsolutePath(repositoryPath, "repositoryPath");
-			Path analysisRepositoryPath = resolveCommitRepositoryPath(repositoryPath);
-			ProjectASTDiff diff = commitDiffer.diffAtMergeCommit(analysisRepositoryPath, commitId, resolvedParentIndex);
+			ProjectASTDiff diff = diffCommit(repositoryPath, commitId, resolvedParentIndex, 300);
 			return toResult(diff, maxRefactorings, "Commit");
 		} catch (Exception e) {
 			return McpAnalysisResult.error("Commit analysis failed: " + e.getMessage(), List.of(e.getClass().getName()));
@@ -355,10 +373,11 @@ public class RefactoringMinerMcpService {
 	public McpDiffBrowserResult diffWorktree(Path repositoryPath, String baseRef, boolean includeUntracked,
 			int maxFiles, int maxBytesPerFile, int port) {
 		String resolvedBaseRef = baseRef == null || baseRef.isBlank() ? "HEAD" : baseRef;
-		String inputSummary = "Worktree changes in " + repositoryPath + " against " + resolvedBaseRef + ".";
+		Path resolvedRepositoryPath = resolveRepositoryPath(repositoryPath);
+		String inputSummary = "Worktree changes in " + resolvedRepositoryPath + " against " + resolvedBaseRef + ".";
 		try {
 			WorktreeChangeCollector.WorktreeChanges changes = new WorktreeChangeCollector()
-					.collect(repositoryPath, resolvedBaseRef, includeUntracked, maxFiles, maxBytesPerFile);
+					.collect(resolvedRepositoryPath, resolvedBaseRef, includeUntracked, maxFiles, maxBytesPerFile);
 			ProjectASTDiff diff = differ.diffAtFileContents(changes.beforeFiles(), changes.afterFiles());
 			return launchDiffBrowser(diff, port, inputSummary, changes.warnings());
 		} catch (Exception e) {
@@ -381,10 +400,10 @@ public class RefactoringMinerMcpService {
 		String inputSummary = String.format("Commit %s in %s against parent index %d.", commitId, repositoryPath,
 				resolvedParentIndex);
 		try {
-			requireExistingAbsolutePath(repositoryPath, "repositoryPath");
-			Path analysisRepositoryPath = resolveCommitRepositoryPath(repositoryPath);
-			ProjectASTDiff diff = commitDiffer.diffAtMergeCommit(analysisRepositoryPath, commitId,
+			Path resolvedRepositoryPath = resolveRepositoryPath(repositoryPath);
+			inputSummary = String.format("Commit %s in %s against parent index %d.", commitId, resolvedRepositoryPath,
 					resolvedParentIndex);
+			ProjectASTDiff diff = diffCommit(resolvedRepositoryPath, commitId, resolvedParentIndex, 300);
 			return launchDiffBrowser(diff, port, inputSummary, List.of());
 		} catch (Exception e) {
 			return McpDiffBrowserResult.error("Commit diff browser failed: " + e.getMessage(), port, inputSummary,
@@ -416,6 +435,26 @@ public class RefactoringMinerMcpService {
 		}
 	}
 
+	private ProjectASTDiff diffCommit(Path repositoryPath, String commitId, int parentIndex, int timeoutSeconds)
+			throws Exception {
+		Path resolvedRepositoryPath = resolveRepositoryPath(repositoryPath);
+		requireExistingAbsolutePath(resolvedRepositoryPath, "repositoryPath");
+		Path analysisRepositoryPath = resolveCommitRepositoryPath(resolvedRepositoryPath);
+		String cloneUrl = gitHubCloneUrl(analysisRepositoryPath);
+		if (cloneUrl != null && remoteCommitDiffer != null) {
+			try {
+				ProjectASTDiff remoteDiff = remoteCommitDiffer.diffAtMergeCommit(cloneUrl, commitId, parentIndex,
+						timeoutSeconds);
+				if (remoteDiff != null) {
+					return remoteDiff;
+				}
+			} catch (Exception ignored) {
+				// The commit may be local-only, or GitHub may be unreachable. Fall back to the mounted repository.
+			}
+		}
+		return commitDiffer.diffAtMergeCommit(analysisRepositoryPath, commitId, parentIndex);
+	}
+
 	private static void requireExistingAbsolutePath(Path path, String name) {
 		if (path == null) {
 			throw new IllegalArgumentException(name + " is required.");
@@ -426,6 +465,42 @@ public class RefactoringMinerMcpService {
 		if (!Files.exists(path)) {
 			throw new IllegalArgumentException(name + " does not exist: " + path);
 		}
+	}
+
+	private static Path resolveRepositoryPath(Path repositoryPath) {
+		if (repositoryPath != null) {
+			return repositoryPath;
+		}
+		return Path.of(System.getProperty("user.dir"));
+	}
+
+	static String gitHubCloneUrl(Path repositoryPath) {
+		try (Repository repository = new GitServiceImpl().openRepository(repositoryPath.toString())) {
+			return normalizeGitHubCloneUrl(repository.getConfig().getString("remote", "origin", "url"));
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	static String normalizeGitHubCloneUrl(String cloneUrl) {
+		if (cloneUrl == null || cloneUrl.isBlank()) {
+			return null;
+		}
+		String trimmed = cloneUrl.trim();
+		String lower = trimmed.toLowerCase(Locale.ROOT);
+		if (lower.startsWith("https://github.com/")) {
+			return trimmed;
+		}
+		if (lower.startsWith("http://github.com/")) {
+			return "https://" + trimmed.substring("http://".length());
+		}
+		if (lower.startsWith("git@github.com:")) {
+			return "https://github.com/" + trimmed.substring("git@github.com:".length());
+		}
+		if (lower.startsWith("ssh://git@github.com/")) {
+			return "https://github.com/" + trimmed.substring("ssh://git@github.com/".length());
+		}
+		return null;
 	}
 
 	static Path resolveCommitRepositoryPath(Path repositoryPath) throws Exception {
@@ -517,6 +592,12 @@ public class RefactoringMinerMcpService {
 	@FunctionalInterface
 	interface CommitDiffer {
 		ProjectASTDiff diffAtMergeCommit(Path repositoryPath, String commitId, int parentIndex) throws Exception;
+	}
+
+	@FunctionalInterface
+	interface RemoteCommitDiffer {
+		ProjectASTDiff diffAtMergeCommit(String cloneUrl, String commitId, int parentIndex, int timeoutSeconds)
+				throws Exception;
 	}
 
 	@FunctionalInterface

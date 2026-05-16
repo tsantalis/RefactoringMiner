@@ -28,9 +28,6 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 public class Service {
 
     @Autowired
-    private CacheManager cacheManager;
-
-    @Autowired
     @Qualifier("taskExecutor")
     private TaskExecutor taskExecutor;
 
@@ -40,15 +37,9 @@ public class Service {
         taskExecutor.execute(
                 () -> { // Use @Async with ThreadPoolTaskExecutor (virtual threads recommended)
                     try {
-                        String cachedClusters = cacheManager.getClusters(url);
-                        if (cachedClusters != null) {
-                            emitter.send(SseEmitter.event().data(cachedClusters));
-                        } else {
-                            Graph<Node, Edge> graph = Driver.getCommitGraph(url);
-                            String result = respondClusters(graph);
-                            cacheManager.putClusters(url, result);
-                            emitter.send(SseEmitter.event().data(result));
-                        }
+                        Graph<Node, Edge> graph = Driver.getCommitGraph(url);
+                        String result = respondClusters(graph);
+                        emitter.send(SseEmitter.event().data(result));
                     } catch (Exception e) {
                         emitter.completeWithError(e);
                     } finally {
@@ -64,15 +55,9 @@ public class Service {
         taskExecutor.execute(
                 () -> { // Use @Async with ThreadPoolTaskExecutor (virtual threads recommended)
                     try {
-                        String cachedClusters = cacheManager.getClusters(url);
-                        if (cachedClusters != null) {
-                            emitter.send(SseEmitter.event().data(cachedClusters));
-                        } else {
-                            Graph<Node, Edge> graph = Driver.getPullRequestGraph(url);
-                            String result = respondClusters(graph);
-                            cacheManager.putClusters(url, result);
-                            emitter.send(SseEmitter.event().data(result));
-                        }
+                        Graph<Node, Edge> graph = Driver.getPullRequestGraph(url);
+                        String result = respondClusters(graph);
+                        emitter.send(SseEmitter.event().data(result));
                     } catch (Exception e) {
                         emitter.completeWithError(e);
                     } finally {
@@ -97,15 +82,9 @@ public class Service {
         taskExecutor.execute(
                 () -> { // Use @Async with ThreadPoolTaskExecutor (virtual threads recommended)
                     try {
-                        String cachedHierarchy = cacheManager.getHierarchy(url);
-                        if (cachedHierarchy != null) {
-                            emitter.send(SseEmitter.event().data(cachedHierarchy));
-                        } else {
-                            Graph<Node, Edge> graph = Driver.getCommitGraph(url);
-                            String result = respondHierarchy(graph);
-                            cacheManager.putHierarchy(url, result);
-                            emitter.send(SseEmitter.event().data(result));
-                        }
+                        Graph<Node, Edge> graph = Driver.getCommitGraph(url);
+                        String result = respondHierarchy(graph);
+                        emitter.send(SseEmitter.event().data(result));
                     } catch (Exception e) {
                         emitter.completeWithError(e);
                     } finally {
@@ -121,15 +100,9 @@ public class Service {
         taskExecutor.execute(
                 () -> { // Use @Async with ThreadPoolTaskExecutor (virtual threads recommended)
                     try {
-                        String cachedHierarchy = cacheManager.getHierarchy(url);
-                        if (cachedHierarchy != null) {
-                            emitter.send(SseEmitter.event().data(cachedHierarchy));
-                        } else {
-                            Graph<Node, Edge> graph = Driver.getPullRequestGraph(url);
-                            String result = respondHierarchy(graph);
-                            cacheManager.putHierarchy(url, result);
-                            emitter.send(SseEmitter.event().data(result));
-                        }
+                        Graph<Node, Edge> graph = Driver.getPullRequestGraph(url);
+                        String result = respondHierarchy(graph);
+                        emitter.send(SseEmitter.event().data(result));
                     } catch (Exception e) {
                         emitter.completeWithError(e);
                     } finally {

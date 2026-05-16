@@ -1,10 +1,8 @@
-package narrator.restapi;
+package narrator.mcp;
 
-import org.springframework.stereotype.Component;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 
-@Component
 public class CacheManager {
     private final Map<String, String> clustersCache = new ConcurrentHashMap<>();
     private final Map<String, String> hierarchyCache = new ConcurrentHashMap<>();

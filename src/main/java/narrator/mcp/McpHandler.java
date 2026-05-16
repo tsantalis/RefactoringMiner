@@ -3,7 +3,6 @@ package narrator.mcp;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import narrator.Driver;
 import narrator.graph.Edge;
 import narrator.graph.Node;
@@ -16,7 +15,7 @@ import org.jgrapht.Graph;
 import java.util.List;
 
 public class McpHandler {
-    private static final Gson gson = new Gson();
+    private static final CacheManager cacheManager = new CacheManager();
 
     public JsonObject handle(JsonObject request) {
         String method = request.get("method").getAsString();
@@ -124,6 +123,9 @@ public class McpHandler {
     }
 
     private String fetchClusters(String url) throws Exception {
+        String cached = cacheManager.getClusters(url);
+        if (cached != null) return cached;
+
         Graph<Node, Edge> graph;
         if (url.contains("/pull/") || url.contains("/pr/")) {
             graph = Driver.getPullRequestGraph(url);
@@ -135,10 +137,15 @@ public class McpHandler {
         List<Cluster> clusters = clusterer.getClusters();
         JsonArray stringifiedClusters = new JsonArray();
         clusters.forEach(cluster -> stringifiedClusters.add(Stringifier.graph(cluster.getGraph())));
-        return stringifiedClusters.toString();
+        String result = stringifiedClusters.toString();
+        cacheManager.putClusters(url, result);
+        return result;
     }
 
     private String fetchHierarchy(String url) throws Exception {
+        String cached = cacheManager.getHierarchy(url);
+        if (cached != null) return cached;
+
         Graph<Node, Edge> graph;
         if (url.contains("/pull/") || url.contains("/pr/")) {
             graph = Driver.getPullRequestGraph(url);
@@ -153,7 +160,9 @@ public class McpHandler {
                         .filter(components -> !components.isEmpty()).toList();
         
         JsonObject stringifiedCommit = Stringifier.hierarchy(clustersComponents);
-        return stringifiedCommit.toString();
+        String result = stringifiedCommit.toString();
+        cacheManager.putHierarchy(url, result);
+        return result;
     }
 
     private void sendMethodNotFound(JsonObject response, JsonObject request) {

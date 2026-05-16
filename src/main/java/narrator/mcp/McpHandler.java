@@ -123,8 +123,12 @@ public class McpHandler {
     }
 
     private String fetchClusters(String url) throws Exception {
-        String cached = cacheManager.getClusters(url);
-        if (cached != null) return cached;
+        List<Cluster> cached = cacheManager.getClusters(url);
+        if (cached != null) {
+            JsonArray stringifiedClusters = new JsonArray();
+            cached.forEach(cluster -> stringifiedClusters.add(Stringifier.graph(cluster.getGraph())));
+            return stringifiedClusters.toString();
+        }
 
         Graph<Node, Edge> graph;
         if (url.contains("/pull/") || url.contains("/pr/")) {
@@ -135,16 +139,18 @@ public class McpHandler {
         
         Clusterer clusterer = new Clusterer(graph);
         List<Cluster> clusters = clusterer.getClusters();
+        cacheManager.putClusters(url, clusters);
+        
         JsonArray stringifiedClusters = new JsonArray();
         clusters.forEach(cluster -> stringifiedClusters.add(Stringifier.graph(cluster.getGraph())));
-        String result = stringifiedClusters.toString();
-        cacheManager.putClusters(url, result);
-        return result;
+        return stringifiedClusters.toString();
     }
 
     private String fetchHierarchy(String url) throws Exception {
-        String cached = cacheManager.getHierarchy(url);
-        if (cached != null) return cached;
+        List<List<TraversalPattern>> cached = cacheManager.getHierarchy(url);
+        if (cached != null) {
+            return Stringifier.hierarchy(cached).toString();
+        }
 
         Graph<Node, Edge> graph;
         if (url.contains("/pull/") || url.contains("/pr/")) {
@@ -159,10 +165,8 @@ public class McpHandler {
                 clusters.stream().map(TraversalEngine::new).map(TraversalEngine::getComponents)
                         .filter(components -> !components.isEmpty()).toList();
         
-        JsonObject stringifiedCommit = Stringifier.hierarchy(clustersComponents);
-        String result = stringifiedCommit.toString();
-        cacheManager.putHierarchy(url, result);
-        return result;
+        cacheManager.putHierarchy(url, clustersComponents);
+        return Stringifier.hierarchy(clustersComponents).toString();
     }
 
     private void sendMethodNotFound(JsonObject response, JsonObject request) {

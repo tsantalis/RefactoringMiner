@@ -2,24 +2,27 @@ package narrator.mcp;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
+import java.util.List;
+import narrator.graph.cluster.Cluster;
+import narrator.graph.cluster.traverse.TraversalPattern;
 
 public class CacheManager {
-    private final Map<String, String> clustersCache = new ConcurrentHashMap<>();
-    private final Map<String, String> hierarchyCache = new ConcurrentHashMap<>();
+    private final Map<String, List<Cluster>> clustersCache = new ConcurrentHashMap<>();
+    private final Map<String, List<List<TraversalPattern>>> hierarchyCache = new ConcurrentHashMap<>();
 
-    public String getClusters(String url) {
+    public List<Cluster> getClusters(String url) {
         return clustersCache.get(url);
     }
 
-    public void putClusters(String url, String clusters) {
+    public void putClusters(String url, List<Cluster> clusters) {
         clustersCache.put(url, clusters);
     }
 
-    public String getHierarchy(String url) {
+    public List<List<TraversalPattern>> getHierarchy(String url) {
         return hierarchyCache.get(url);
     }
 
-    public void putHierarchy(String url, String hierarchy) {
+    public void putHierarchy(String url, List<List<TraversalPattern>> hierarchy) {
         hierarchyCache.put(url, hierarchy);
     }
 

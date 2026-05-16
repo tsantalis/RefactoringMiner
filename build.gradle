@@ -196,3 +196,9 @@ bootJar {
     archiveFileName = 'ChangeNarrator.jar'
     mainClass.set('narrator.restapi.RestAPI')
 }
+
+bootJarMcp {
+    enabled = true
+    archiveFileName = 'ChangeNarratorMCP.jar'
+    mainClass.set('narrator.mcp.McpServer')
+}
